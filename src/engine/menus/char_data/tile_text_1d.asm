@@ -39,9 +39,9 @@ WriteNameStringTiles:
 	ld a, [hl+] ; $47b0
 	or a ; $47b1
 	ret z ; $47b2
-	cp $de ; $47b3
+	cp TX_DAKUTEN ; $47b3
 	jr z, .nameTilePtrUpOneRow ; $47b5
-	cp $df ; $47b7
+	cp TX_HANDAKUTEN ; $47b7
 	jr z, .nameTilePtrUpOneRow ; $47b9
 	ld b, a ; $47bb
 	wram_bank WRAM_SCREEN ; $47bc
@@ -219,7 +219,7 @@ CharDataValuesSyncTask:
 	ld a, [wCharDataSyncSource] ; $48cd
 	or a ; $48d0
 	jr nz, .fromGameTimer ; $48d1
-	ld hl, wCharDataSyncValues ; $48d3
+	ld hl, wSavedGameTimer + 2 ; $48d3
 	jr .copyPair ; $48d6
 .fromGameTimer:
 	ld hl, wGameTimer + 2 ; $48d8
@@ -442,13 +442,13 @@ BuildMainCharStatPage:
 	ld [wStoryCharacterSlot], a ; $4aec
 	call BuildCharStatDisplay ; $4aef
 	wram_bank WRAM_SCENE ; $4af2
-	ld a, [wCharDataLevels] ; $4af8
+	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $4af8
 	ld [wCharStatPageMain], a ; $4afb
-	ld a, [wCharDataLevels + 1] ; $4afe
+	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $4afe
 	ld [wCharStatPageMain + 1], a ; $4b01
-	ld a, [wCharDataLevels + 2] ; $4b04
+	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $4b04
 	ld [wCharStatPageMain + 2], a ; $4b07
-	ld a, [wCharDataLevels + 3] ; $4b0a
+	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $4b0a
 	ld [wCharStatPageMain + 3], a ; $4b0d
 	ld hl, MainCharStatPageTilemapPatch00 ; $4b10
 	ld bc, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 16 ; $4b13

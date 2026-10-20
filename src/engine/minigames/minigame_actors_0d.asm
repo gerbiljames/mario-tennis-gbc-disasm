@@ -84,8 +84,8 @@ SetMinigameActorHandler:
 	ld [hl], d ; $445b
 	ld hl, MGACTOR_FLAGS ; $445c
 	add hl, bc ; $445f
-	set 0, [hl] ; $4460
-	set 1, [hl] ; $4462
+	set MGACTORB_ENABLED, [hl] ; $4460
+	set MGACTORB_HAS_HANDLER, [hl] ; $4462
 	ret ; $4464
 SetMinigameActorPosition:
 	wram_bank WRAM_ACTORS ; $4465
@@ -164,7 +164,7 @@ UpdateMinigameActors:
 	jr nz, .actorLoop ; $44d0
 	ret ; $44d2
 UpdateMinigameActor:
-	bit 0, [hl] ; $44d3
+	bit MGACTORB_ENABLED, [hl] ; $44d3
 	ret z ; $44d5
 	push af ; $44d6
 	push bc ; $44d7
@@ -199,14 +199,16 @@ InitMinigame_TennisMachine1:
 	ret ; $4514
 MinigameHooks_TennisMachine1:
 	; $4515, 16 bytes (mode_hooks)
-	dw TennisMachine1Hook_PerFrame ; record 0
-	dw TennisMachine1Hook_PointStart ; record 1
-	dw TennisMachine1Hook_PointEnd ; record 2
-	dw TennisMachine1Hook_MinigameStart ; record 3
-	dw TennisMachine1Hook_BallHit ; record 4
-	dw TennisMachine1Hook_Bounce ; record 5
-	dw TennisMachine1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TennisMachine1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TennisMachine1Hook_PointStart ; MODEHOOK_POINT_START
+	dw TennisMachine1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw TennisMachine1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TennisMachine1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw TennisMachine1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw TennisMachine1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine1Hook_MinigameStart ; $4525
 TennisMachine1Hook_PerFrame:
 	call DrawMinigameScoreHud ; $452e
@@ -229,7 +231,9 @@ TennisMachine1Hook_BallHit:
 MinigameShotDifficultyRamp:
 	; $4546, 1 bytes (bytes:4)
 	db $01 ; 0x00
-EndMinigamePoint_PointOutcomeTable:
+; Byte 1 of each 4-byte wMinigameServeSpeed record (byte 0 is
+; MinigameShotDifficultyRamp, byte 2 LaunchBallTable): a MinigameShotIntervalByTempo index.
+LaunchBallTableTempoColumn:
 	db $01 ; $4547
 LaunchBallTable:
 	INCBIN "data/engine/minigames/LaunchBallTable.bin" ; $4548, 102 bytes
@@ -316,7 +320,7 @@ DrawMinigameScoreHud:
 	jr z, .done ; $46e1
 	push_wram_bank WRAM_CHAR1 ; $46e3
 	ld hl, wCharSpriteSlot + 1 ; $46ec
-	res 5, [hl] ; $46ef
+	res B_OAM_XFLIP, [hl] ; $46ef
 	pop_wram_bank ; $46f1
 .done:
 	ret ; $46f6
@@ -384,7 +388,7 @@ EndMinigamePoint:
 	ld a, [wMinigameServeSpeed] ; $4779
 	add a ; $477c
 	add a ; $477d
-	ld_hl_indexed EndMinigamePoint_PointOutcomeTable ; $477e
+	ld_hl_indexed LaunchBallTableTempoColumn ; $477e
 	ld a, [hl] ; $4785
 	ld_hl_indexed MinigameShotIntervalByTempo ; $4786
 	ld a, [hl] ; $478d

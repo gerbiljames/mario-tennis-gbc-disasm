@@ -1,22 +1,22 @@
 PracticeDrillPointTable:
 	; $4300, 32 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
-	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 1
-	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 2
-	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 3
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
 	; $4320, 1 bytes (fill)
 	ds 1, $ff
 StrokePracticePointTable:
 	; $4321, 32 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 0
-	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 1
-	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 2
-	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 3
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
 	; $4341, 1 bytes (fill)
 	ds 1, $ff
-TargetPositions_0b_0:
+Unused_0b_TargetPositions16:
 	; $4342, 64 bytes (records:4)
 ; 16 records x 4 bytes
 	dw $fe40, $fd40 ; record 0
@@ -37,7 +37,7 @@ TargetPositions_0b_0:
 	dw $01c0, $0000 ; record 15
 	; $4382, 2 bytes (fill)
 	ds 2, $ff
-TargetPositions_0b_1:
+Unused_0b_TargetPositions8:
 	; $4384, 32 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe40, $fd40 ; record 0
@@ -98,8 +98,8 @@ PlayDrillPointEndSequence:
 	ret ; $4403
 LoadDrillOpponentChar:
 	ld b, a ; $4404
-	ld c, $02 ; $4405
-	farcall InitCa00RecordFromCharId ; $4407
+	ld c, MATCHREC_P2_MAIN ; $4405
+	farcall InitMatchRecordFromCharId ; $4407
 	push_wram_bank WRAM_TEXT ; $440a
 	farcall LoadCharacterAttributes ; $4413
 	pop_wram_bank ; $4416
@@ -123,7 +123,7 @@ Unused_0b_SetAiReactionDelayFar:
 	ld hl, $007a ; $4440
 	call Unused_0b_WriteCharStructByte ; $4443
 	ret ; $4446
-TestCharStateBit4:
+IsCharNearNet:
 	ld b, a ; $4447
 	ldh a, [hWramBank] ; $4448
 	push af ; $444a
@@ -131,10 +131,10 @@ TestCharStateBit4:
 	add b ; $444d
 	wram_bank a ; $444e
 	ld de, wCharPosX ; $4453
-	ld hl, $0050 ; $4456
+	ld hl, wCharBallReachFlags - wCharPosX ; $4456
 	add hl, de ; $4459
 	ld a, [hl] ; $445a
-	bit 4, a ; $445b
+	bit BALLREACHB_NEAR_NET, a ; $445b
 	jr z, .clear ; $445d
 	pop_wram_bank ; $445f
 	ld a, $01 ; $4464
@@ -157,9 +157,9 @@ Unused_0b_QueueDrillOutcomeMessage:
 	cp POINTOUTCOME_LET ; $448b
 	jr z, .hideMessage ; $448d
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $448f
-	ld a, $01 ; $4491
+	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $4491
 	jr z, .checkCurrentServingPlayer ; $4493
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
+	ld a, [wCurrentMatchIndex] ; $4495
 	cp MINIGAME_SERVICE_MATCH_2 ; $4498
 	jr nz, .checkRallyLength ; $449a
 	ld hl, wDrillServeTargetResult ; $449c
@@ -168,7 +168,7 @@ Unused_0b_QueueDrillOutcomeMessage:
 	ld a, [hl] ; $44a7
 	or a ; $44a8
 	jr nz, .checkRallyLength ; $44a9
-	ld a, $03 ; $44ab
+	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED ; $44ab
 	jr .checkCurrentServingPlayer ; $44ad
 .checkRallyLength:
 	ld a, [wRallyLength] ; $44af
@@ -177,32 +177,32 @@ Unused_0b_QueueDrillOutcomeMessage:
 	ld a, [wServiceAceFlag] ; $44b6
 	or a ; $44b9
 	jr z, .notAce ; $44ba
-	ld a, $01 ; $44bc
+	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $44bc
 	jr .checkCurrentServingPlayer ; $44be
 .notAce:
-	ld a, $02 ; $44c0
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED ; $44c0
 	jr .checkCurrentServingPlayer ; $44c2
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $44c4
 	or a ; $44c7
 	jr nz, .compare ; $44c8
-	ld a, $04 ; $44ca
+	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $44ca
 	jr .checkCurrentServingPlayer ; $44cc
 .compare:
-	cp $07 ; $44ce
-	ld a, $06 ; $44d0
+	cp POINTOUTCOME_SERVE_VOLLEYED ; $44ce
+	ld a, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET ; $44d0
 	jr z, .checkCurrentServingPlayer ; $44d2
-	cp $09 ; $44d4
-	ld a, $01 ; $44d6
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $44d4
+	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $44d6
 	jr z, .checkCurrentServingPlayer ; $44d8
-	ld a, $05 ; $44da
+	ld a, DRILLMSG_I_TOUCHED_IT_SO_YOU_FAILED ; $44da
 	jr .checkCurrentServingPlayer ; $44dc
 .checkCurrentServingPlayer:
 	ld b, a ; $44de
 	ld a, [wCurrentServingPlayer] ; $44df
 	or a ; $44e2
 	jr z, .storeMessage ; $44e3
-	ld a, $06 ; $44e5
+	ld a, DRILLWORDING_SERVICE ; $44e5
 .storeMessage:
 	add b ; $44e7
 	ld [wDrillMessageId], a ; $44e8
@@ -217,10 +217,10 @@ QueueDrillOutcomeMessage:
 	jr z, .hide ; $44f7
 	cp POINTOUTCOME_LET ; $44f9
 	jr z, .hide ; $44fb
-	call CheckDrillTargetZoneMissed ; $44fd
+	call CheckDrillTargetZoneHit ; $44fd
 	or a ; $4500
 	jr nz, .checkRallyLength ; $4501
-	ld a, $10 ; $4503
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4503
 	jr .store ; $4505
 .checkRallyLength:
 	ld a, [wRallyLength] ; $4507
@@ -229,19 +229,19 @@ QueueDrillOutcomeMessage:
 	ld a, [wServiceAceFlag] ; $450e
 	or a ; $4511
 	jr z, .notAce ; $4512
-	ld a, $0d ; $4514
+	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4514
 	jr .store ; $4516
 .notAce:
-	ld a, $0e ; $4518
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4518
 	jr .store ; $451a
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $451c
 	or a ; $451f
 	jr nz, .otherOutcome ; $4520
-	ld a, $10 ; $4522
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4522
 	jr .store ; $4524
 .otherOutcome:
-	ld a, $10 ; $4526
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4526
 	jr .store ; $4528
 .store:
 	ld [wDrillMessageId], a ; $452a
@@ -278,7 +278,7 @@ SetDrillMessageByServer:
 	ld [wDrillMessageId], a ; $4554
 	ret ; $4557
 SetDrillMessageByRallyParity:
-	cp $ff ; $4558
+	cp DRILLMSG_HIDE ; $4558
 	jr z, .store ; $455a
 	ld c, a ; $455c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $455d
@@ -515,7 +515,7 @@ ENDC
 	dw Text_DrillCoachDoubleFaultYourPoint ; record 106
 	dw Text_DrillCoachReturnedServeEarlyYourPoint ; record 107
 	dw Text_DrillNoMessageForCase ; record 108
-Unused_0b_1:
+Unused_0b_DrillMessageTableTail:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
 QueueDrillMarker1_0b:

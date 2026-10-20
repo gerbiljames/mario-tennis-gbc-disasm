@@ -17,21 +17,14 @@ wStorySaveSignature:: ds 4
 wStorySlotBlockTag:: ds 3
 	ds 7
 
-; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer)
-wSavedGameTimer:: dw
-
-; [2 bytes] The pair CharDataValuesSyncTask pushes into the character-data screen at $d14c when $d149 is clear (wGameTimer + 2 when set)
-wCharDataSyncValues:: dw
+; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer). Its minutes and hours are what CharDataValuesSyncTask shows when wCharDataSyncSource is clear and what the save-slot summaries store
+wSavedGameTimer:: ds 4
 	ds 17
 
-; [8-bit] Sound options. Bit 0 is music on/off: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when clear. Other bits are preserved
+; [8-bit] Sound options. SOUNDOPTB_MUSIC_OFF: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncMusicMuteOption copies it into hMusicFlags' MUSICB_MUTED, stopping the BGM when set. Other bits are preserved
 wSoundOptionBits:: db
 
-; [8-bit] Message Speed
-;
-; 0x00 - Fast
-; 0x01 - Normal
-; 0x02 - Slow
+; [8-bit] Message speed: MSGSPEED_FAST/NORMAL/SLOW in bits 0-6 (ApplyMessageSpeed). Bit 7, MSGSPEEDB_INSTANT, draws text at once whatever the speed: set by ShowLocationNamePopup, the Tennis Dictionary redraw, Unused_1a_ForceInstantMessageSpeed and ToggleCutsceneFastForward (as it clears FLAG_CUTSCENE_FAST_FORWARD), tested by ApplyMessageSpeed, FlushGlyphRow and UploadLastGlyphTiles, and cleared before saving
 wMessageSpeed:: db
 
 ; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the results screen and saves the slot, and clears it with wKeepMatchStatsFlag
@@ -51,13 +44,13 @@ wSaveAndQuitRequest:: db
 ; 0x09 - Link-cable Versus Match
 ; 0x0a - Story Mode - Dream Match
 ;
-; See GAMEMODE_* in include/constants/. Bank $38 sets 0x09 right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
+; See GAMEMODE_* in include/constants/. Bank $38 sets GAMEMODE_LINK_MATCH right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
 wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState keep the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps them); cleared after use
 wKeepMatchStatsFlag:: db
 
-; [8-bit] Nonzero selects VictoryScoreTable1 over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
+; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
 wVictoryScoreTableAlt:: db
 
 ; [8-bit] Location SaveStoryReturnPoint recorded to return to; called with b = $ff it snapshots the live position instead of a door
@@ -202,7 +195,8 @@ wCurrentlyUsedCourt:: db
 ; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). At 2, SelectScoreboardLayout forces the doubles scoreboard and InitViewFlipPreference the fixed court view
 wMatchContext:: db
 
-; [16-bit BE] Current Minigame/Story Match
+UNION
+; [16-bit BE] Current Minigame/Story Match: wCurrentMatchList, then wCurrentMatchIndex
 ;
 ; 0x0000 - Singles Junior Practice Match
 ; 0x0001 - Singles Junior #4
@@ -277,6 +271,12 @@ wMatchContext:: db
 ; 0x0223 - Medallion Match
 ; 0x0224 - Two-On-One
 wCurrentMinigameStoryMatch:: dw
+NEXTU
+; [8-bit] Match list (MATCHLIST_*), the word's high byte
+wCurrentMatchList:: db
+; [8-bit] Match within the list, the low byte: STORYMATCH_* under the singles and doubles lists, MINIGAME_* under MATCHLIST_TRAINING
+wCurrentMatchIndex:: db
+ENDU
 
 ; [8-bit] BGM id (wCurrentBGM values) for the current match/court; a tiebreak overrides it with $0e
 wMatchBGM:: db

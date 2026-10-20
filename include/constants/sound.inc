@@ -1,7 +1,7 @@
 ; --- Notes (snd_note in a sound channel script: the low nibble of the note byte) ---
-; Index into NotePeriodTable's twelve semitones; snd_tone_flag picks which
-; of the table's two octaves, and the note's octave argument halves the
-; period that many times.
+; Index into NotePeriodTable's twelve semitones; snd_quarter_tone picks the
+; table's second half, the same twelve a quarter tone higher, and the note's
+; octave argument halves the period that many times.
 def C_ equ 0
 def C# equ 1
 def D_ equ 2
@@ -63,7 +63,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
 	const BGM_ACADEMY_BUILDING      ; $1a story_location: the Academy Main Building and the Academy Wing
 	const BGM_ACADEMY_OUTDOORS      ; $1b story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
-	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomNpc03_13
+	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomEntry0fScene
 	const BGM_ACADEMY_ROOMS         ; $1d story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
 	const BGM_TENNIS_MACHINE        ; $1e the Tennis Machine Room's drill_defs
 	const BGM_WALL_PRACTICE         ; $1f the Wall Practice Room's drill_defs
@@ -83,13 +83,13 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayScreenSequence1/2)
 def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 
-; Jingles ($40-$45, PlaySoundManaged only). The handler stores the id in
-; hActiveJingle, plays JingleSoundIds[id - $40] (a music id) and leaves
-; ResumeBGMAfterJingle/WaitJingleEnd to restore wCurrentBGM when the music
-; channels fall idle. Only one is used.
+; Jingles ($40-$45), through the `sound` macro or PlaySoundManaged. The
+; handler stores the id in hActiveJingle, plays JingleSoundIds[id - $40] (a
+; music id) and leaves ResumeBGMAfterJingle/WaitJingleEnd to restore
+; wCurrentBGM when the music channels fall idle. These three are the ones used.
 def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
-def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the save-slot debug editor
+def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomEntry0fScene, DormRoomEntry02Scene) and the save-slot debug editor
 
 ; Sound effects, named for the event they play for.
 def SFX_STOP                 equ $50 ; silences the two effect channels
@@ -148,7 +148,7 @@ def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNe
 	const SFX_BANNER_GAME_WON ; $6b the GAME, SET MATCH and MATCH banners (rows 11-13)
 	const SFX_BANNER_CALL     ; $6c the LET, NET, OUT and START banners (rows 3-6)
 def SFX_LOGO_JINGLE            equ $65 ; the intro logo screen, and TriggerCheatUnlock
-def SFX_DEUCE                  equ $69 ; the deuce call after a point (DelayAfterPointResolution $08)
+def SFX_DEUCE                  equ $69 ; the deuce call after a point (ShowPointScoreSequence $08)
 def SFX_LANDING_MARKER         equ $6d ; the landing marker appearing (StartLandingMarker $08)
 def SFX_DEBUG_ALARM            equ $6f ; QueueVRAMCopy on queue overflow, debug step mode only
 def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/DecodeInput), the debug window demo
@@ -181,12 +181,21 @@ def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTarget
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
 def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
 
+; --- Music flags (hMusicFlags) ---
+def MUSICB_MUTED equ 0 ; PlaySoundCmd drops BGM and jingle requests
+def MUSICF_MUTED equ 1 << MUSICB_MUTED
+
+; --- Sound options (wSoundOptionBits) ---
+; Unused_00_SyncMusicMuteOption copies bit 0 into MUSICB_MUTED.
+def SOUNDOPTB_MUSIC_OFF equ 0
+def SOUNDOPTF_MUSIC_OFF equ 1 << SOUNDOPTB_MUSIC_OFF
+
 ; --- Sound channel type (wSndChannelType) ---
-; `hSndChannelType & 3`, latched by RunSoundChannelScript with
-; `wSndRegBase = type * 5` (the stride of the four sound-register blocks), so
-; the type is the hardware channel. The wave channel loads wave RAM and skips
-; duty, volume slide and instrument envelope; the noise channel sends the note
-; through NoiseNoteTable and skips vibrato.
+; `hSndChannelType & 3` (snd_channel's second operand), latched by
+; UpdateSoundChannels with `wSndRegBase = type * 5` (the stride of the four
+; sound-register blocks), so the type is the hardware channel. The wave
+; channel loads wave RAM and skips duty, volume slide and instrument envelope;
+; the noise channel sends the note through NoiseNoteTable and skips vibrato.
 	const_def
 	const SNDCHANTYPE_SQUARE1 ; $00 $ff10 block -- the only one with a sweep unit (NR10)
 	const SNDCHANTYPE_SQUARE2 ; $01 $ff15 block; takes every default path

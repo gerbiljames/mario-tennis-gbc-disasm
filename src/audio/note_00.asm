@@ -1,9 +1,9 @@
 NoiseNoteTable:
 	; $3836, 16 bytes (bytes:16)
 	db $00, $01, $11, $12, $14, $23, $07, $15, $17, $32, $33, $60, $61, $45, $53, $62 ; 0x00
-SndTriggerNoteBody:
+SndTriggerRest:
 	xor a ; $3846
-	ldh [hSndRestFlag], a ; $3847
+	ldh [hSndGateTimer], a ; $3847
 	ld a, [wSndChannelType] ; $3849
 	cp SNDCHANTYPE_WAVE ; $384c
 	jr z, .checkPeriod ; $384e
@@ -33,30 +33,30 @@ SndTriggerNote:
 	sub c ; $3874
 	ldh [hSndNoteTimer], a ; $3875
 	pop de ; $3877
-	jr .checkRest ; $3878
+	jr .setGate ; $3878
 .read:
 	ld a, [hl] ; $387a
 	ldh [hSndNoteTimer], a ; $387b
-.checkRest:
+.setGate:
 	push bc ; $387d
 	ld c, a ; $387e
-	ldh a, [hSndNoteOffset] ; $387f
+	ldh a, [hSndGateTime] ; $387f
 	bit 7, a ; $3881
 	jr z, .restore ; $3883
 	add c ; $3885
-	jr z, .minRest ; $3886
+	jr z, .minGate ; $3886
 	jr c, .restore ; $3888
-.minRest:
+.minGate:
 	ld a, $01 ; $388a
 .restore:
 	pop bc ; $388c
-	ldh [hSndRestFlag], a ; $388d
+	ldh [hSndGateTimer], a ; $388d
 	ld a, [wSndChannelType] ; $388f
 	cp SNDCHANTYPE_NOISE ; $3892
 	jr nz, .tonePeriod ; $3894
 	ld a, b ; $3896
 	cp $1f ; $3897
-	jr z, SndTriggerNoteBody ; $3899
+	jr z, SndTriggerRest ; $3899
 	cp $10 ; $389b
 	jr nc, .rawNoisePeriod ; $389d
 	ld hl, NoiseNoteTable ; $389f
@@ -76,7 +76,7 @@ SndTriggerNote:
 	ld a, b ; $38b2
 	and $0f ; $38b3
 	cp $0c ; $38b5
-	jr nc, SndTriggerNoteBody ; $38b7
+	jr nc, SndTriggerRest ; $38b7
 	add a ; $38b9
 	ld e, a ; $38ba
 	ldh a, [hSndToneCtrl] ; $38bb
@@ -126,10 +126,10 @@ SndTriggerNote:
 	ld a, [wSndChannelType] ; $38fe
 	and a ; $3901
 	ldh a, [hSndWaveId] ; $3902
-	ld c, $10 ; $3904
+	ld c, LOW(rAUD1SWEEP) ; $3904
 	call z, WriteChannelReg ; $3906
 	ld a, l ; $3909
-	ld c, $13 ; $390a
+	ld c, LOW(rAUD1LOW) ; $390a
 	call WriteChannelReg ; $390c
 	ld a, l ; $390f
 	cp $02 ; $3910
@@ -150,7 +150,7 @@ SndTriggerNote:
 	ldh a, [hSndToneCtrl] ; $392b
 	and $c0 ; $392d
 	or $3f ; $392f
-	ld c, $11 ; $3931
+	ld c, LOW(rAUD1LEN) ; $3931
 	call WriteChannelReg ; $3933
 .triggerPeriodHi:
 	ld a, h ; $3936
@@ -159,7 +159,7 @@ SndTriggerNote:
 .writePeriodHi:
 	or $20 ; $393b
 	ldh [hSndPeriodHi], a ; $393d
-	ld c, $14 ; $393f
+	ld c, LOW(rAUD1HIGH) ; $393f
 	call WriteChannelReg ; $3941
 	call ResetChannelLength ; $3944
 .checkSndChannelPanMask:
@@ -202,7 +202,7 @@ TickVolumeSlide:
 	ld b, a ; $3980
 	ldh a, [hSndVolSlideReload] ; $3981
 	ldh [hSndVolSlideTimer], a ; $3983
-	ld hl, $ffe0 ; $3985
+	ld hl, hSndVolSlide ; $3985
 	ld a, [hl] ; $3988
 	bit 7, a ; $3989
 	jr nz, .bump ; $398b
@@ -228,7 +228,7 @@ TickVibrato:
 	ld a, [wSndChannelType] ; $39aa
 	cp SNDCHANTYPE_NOISE ; $39ad
 	ret z ; $39af
-	ldh a, [hSndNoteLenTimer] ; $39b0
+	ldh a, [hSndVibratoTimer] ; $39b0
 	and a ; $39b2
 	ret nz ; $39b3
 	ldh a, [hSndChannelType] ; $39b4
@@ -245,13 +245,13 @@ TickVibrato:
 	add hl, de ; $39c8
 	ldh a, [hSndPeriodLo] ; $39c9
 	add [hl] ; $39cb
-	ld c, $13 ; $39cc
+	ld c, LOW(rAUD1LOW) ; $39cc
 	jr WriteChannelReg ; $39ce
 ApplyChannelVolumeEnvelope:
 	ld a, [wSndChannelType] ; $39d0
 	cp SNDCHANTYPE_WAVE ; $39d3
-	jr z, WriteChannelReg.writeChannelReg ; $39d5
-	ldh a, [hSndEnvRate] ; $39d7
+	jr z, WriteChannelReg.writeVolume ; $39d5
+	ldh a, [hSndEnvShape] ; $39d7
 	and a ; $39d9
 	jp nz, TickInstrumentEnvelope.readEnvelope ; $39da
 	ldh a, [hSndVolume] ; $39dd
@@ -259,7 +259,7 @@ ApplyChannelEnvelope:
 	ld b, a ; $39df
 	and $f0 ; $39e0
 	jr z, .checkRate ; $39e2
-	ldh a, [hSndRestFlag] ; $39e4
+	ldh a, [hSndGateTimer] ; $39e4
 	or a ; $39e6
 	jr nz, .checkRate ; $39e7
 	ld a, b ; $39e9
@@ -281,7 +281,7 @@ ApplyChannelEnvelope:
 	ld b, a ; $39fe
 .writeReg:
 	ld a, [wSndRegBase] ; $39ff
-	add $12 ; $3a02
+	add LOW(rAUD1ENV) ; $3a02
 	ld c, a ; $3a04
 	ldh a, [c] ; $3a05
 	cp b ; $3a06
@@ -289,7 +289,7 @@ ApplyChannelEnvelope:
 	ld a, b ; $3a08
 	ldh [c], a ; $3a09
 	ldh a, [hSndPeriodHi] ; $3a0a
-	ld c, $14 ; $3a0c
+	ld c, LOW(rAUD1HIGH) ; $3a0c
 	call WriteChannelReg ; $3a0e
 	jp ResetChannelLength ; $3a11
 WriteChannelReg:
@@ -300,12 +300,12 @@ WriteChannelReg:
 	ld a, b ; $3a1a
 	ldh [c], a ; $3a1b
 	ret ; $3a1c
-.writeChannelReg:
+.writeVolume:
 	ldh a, [hSndVolume] ; $3a1d
-	ld c, $12 ; $3a1f
+	ld c, LOW(rAUD1ENV) ; $3a1f
 	jr WriteChannelReg ; $3a21
 ResetChannelLength:
-	ld c, $11 ; $3a23
+	ld c, LOW(rAUD1LEN) ; $3a23
 	ld a, [wSndRegBase] ; $3a25
 	add c ; $3a28
 	ld c, a ; $3a29
@@ -313,7 +313,7 @@ ResetChannelLength:
 	and $c0 ; $3a2b
 	ldh [c], a ; $3a2d
 	ret ; $3a2e
-.loop:
+.setWaveEnvelopeLevel:
 	ld a, e ; $3a2f
 	srl a ; $3a30
 	add $02 ; $3a32
@@ -332,7 +332,7 @@ TickInstrumentEnvelope:
 	ld a, [wSndChannelType] ; $3a4a
 	cp SNDCHANTYPE_WAVE ; $3a4d
 	jr z, .readEnvelope ; $3a4f
-	ldh a, [hSndEnvRate] ; $3a51
+	ldh a, [hSndEnvShape] ; $3a51
 	and a ; $3a53
 	ret z ; $3a54
 .readEnvelope:
@@ -355,8 +355,8 @@ TickInstrumentEnvelope:
 	jr nz, .loop ; $3a69
 	ld a, [wSndChannelType] ; $3a6b
 	cp SNDCHANTYPE_WAVE ; $3a6e
-	jr z, ResetChannelLength.loop ; $3a70
-	ldh a, [hSndEnvRate] ; $3a72
+	jr z, ResetChannelLength.setWaveEnvelopeLevel ; $3a70
+	ldh a, [hSndEnvShape] ; $3a72
 	or e ; $3a74
 	ld e, a ; $3a75
 	ld d, $00 ; $3a76
@@ -426,13 +426,13 @@ TickInstrumentEnvelope:
 	ld b, a ; $3ad3
 	bit 0, h ; $3ad4
 	jr z, .compareDirection ; $3ad6
-	ld hl, SoundChannelMaskTable ; $3ad8
+	ld hl, SoundVolumeScaleTable ; $3ad8
 	add hl, de ; $3adb
 	ld a, [hl] ; $3adc
 	or b ; $3add
 	jp ApplyChannelEnvelope ; $3ade
 .compareDirection:
-	ld c, $12 ; $3ae1
+	ld c, LOW(rAUD1ENV) ; $3ae1
 	ld a, [wSndRegBase] ; $3ae3
 	add c ; $3ae6
 	ld c, a ; $3ae7
@@ -443,7 +443,7 @@ TickInstrumentEnvelope:
 	and $08 ; $3aed
 	cp l ; $3aef
 	ret z ; $3af0
-	ld hl, SoundChannelMaskTable ; $3af1
+	ld hl, SoundVolumeScaleTable ; $3af1
 	add hl, de ; $3af4
 	ld a, [hl] ; $3af5
 	or b ; $3af6

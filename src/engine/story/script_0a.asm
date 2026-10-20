@@ -10,13 +10,13 @@ ToggleCutsceneFastForward:
 	jr z, .enableFastForward ; $40b1
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $40b3
 	ld a, [wMessageSpeed] ; $40b6
-	or $80 ; $40b9
+	or MSGSPEEDF_INSTANT ; $40b9
 	ld [wMessageSpeed], a ; $40bb
 	jr .done ; $40be
 .enableFastForward:
 	set_flag FLAG_CUTSCENE_FAST_FORWARD ; $40c0
 	ld a, [wMessageSpeed] ; $40c3
-	and $7f ; $40c6
+	and MSGSPEED_MASK ; $40c6
 	ld [wMessageSpeed], a ; $40c8
 .done:
 	pop hl ; $40cb
@@ -72,9 +72,10 @@ EndCutsceneScriptMode:
 	pop bc ; $4138
 	pop af ; $4139
 	ret ; $413a
-Unused_0a_0:
-	; $413b, 4 bytes (bytes:4)
-	db $0b, $0c, $fe, $ff ; 0x00
+Unused_0a_ActorScriptFollowWaypoints:
+	; $413b, 4 bytes (actor_script)
+	as_follow_wp
+	as_jump Unused_0a_ActorScriptFollowWaypoints
 WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140

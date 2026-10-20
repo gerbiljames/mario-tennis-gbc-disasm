@@ -1,4 +1,4 @@
-RGBDS   ?= tools/rgbds/
+RGBDS   ?= $(if $(wildcard tools/rgbds/rgbasm),tools/rgbds/,)
 RGBASM  := $(RGBDS)rgbasm
 RGBLINK := $(RGBDS)rgblink
 RGBFIX  := $(RGBDS)rgbfix
@@ -32,12 +32,20 @@ else
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 endif
 
+.DELETE_ON_ERROR:
+
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
+
 # The mods/ overlay: edited data files a fork commits (mods/README.md) are
 # copied over data/ before anything is built, at parse time so no target can
 # race it. A copy is newer than the .bin it covers, so a PNG or grid from
 # mods/ is re-encoded by the rules below.
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(info $(shell python3 tools/mods.py apply))
+MODS_APPLIED := $(shell $(PYTHON) tools/mods.py apply)
+ifneq ($(.SHELLSTATUS),0)
+$(error tools/mods.py apply failed)
+endif
+$(info $(MODS_APPLIED))
 endif
 
 .PHONY: all compare check test shift-test event-test slot-audit ap-export ap-test ap-event-test ap-client-test venv previews clean
@@ -56,24 +64,29 @@ $(ROM): $(OBJS)
 # of main.asm.
 PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc include/text_codes.inc include/ram_mirrored.inc include/actor_roles.inc
 
-$(BUILD)/main.o: main.asm $(PRELUDE) $(wildcard include/*/*.inc) | $(BUILD)/rgbdscheck.o
-	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -o $@ $<
+# Each assembly also writes the files it read to a .d file (-M), included
+# below, so an edit to any include rebuilds the object; -MP keeps a deleted
+# one from stopping make. data/ files are left to deps.mk: a renamed data file
+# would otherwise match the data/ pattern rules and be "rebuilt" from nothing.
+$(BUILD)/main.o: main.asm $(PRELUDE) | $(BUILD)/rgbdscheck.o
+	$(RGBASM) -E $(ASDEFS) -I include $(PRELUDE:%=-P %) -M $(BUILD)/main.d -MP -o $@ $<
+	sed -e '/data\//d' $(BUILD)/main.d > $(BUILD)/main.d.tmp && mv $(BUILD)/main.d.tmp $(BUILD)/main.d
 
 $(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o
-	$(RGBASM) -E $(ASDEFS) -I include -I . -o $@ ram.asm
+	$(RGBASM) -E $(ASDEFS) -I include -I . -M $(BUILD)/ram.d -MP -o $@ ram.asm
 
 # A graphics blob whose PNG (written by extract.py beside it) is newer is
 # re-encoded from the image -- and re-compressed if it is an LZ stream. The
 # PNG only exists for blobs the manifest tags gfx, and extract.py writes the
 # .bin last, so an untouched tree never triggers this.
 data/%.bin: data/%.png
-	python3 tools/gfx.py encode $< $@
+	$(PYTHON) tools/gfx.py encode $< $@
 
 # A tilemap or attribute-map blob whose grid (.tilemap, written by extract.py
 # beside it) is newer is re-encoded from the text, and re-compressed if it is
 # an LZ stream. Same discipline as the PNGs: an untouched tree never triggers it.
 data/%.bin: data/%.tilemap
-	python3 tools/tilemap.py encode $< $@
+	$(PYTHON) tools/tilemap.py encode $< $@
 
 # `DEF <Label>_SIZE EQU <decoded length>` for an LZ stream the source copies
 # whole after decompressing (`ld c, Label_SIZE / 16`): the assembler cannot
@@ -89,11 +102,11 @@ $(BUILD)/rgbdscheck.o: rgbdscheck.asm | $(BUILD)
 # they INCBIN or INCLUDE; tools/deps.py lists them.
 FRAGMENTS := $(shell find src -mindepth 2 -name '*.asm')
 
-$(BUILD)/deps.mk: main.asm $(FRAGMENTS) tools/deps.py tools/banksrc.py | $(BUILD)
+$(BUILD)/deps.mk: main.asm $(FRAGMENTS) include/lz_sizes.inc tools/deps.py tools/banksrc.py | $(BUILD)
 	python3 tools/deps.py $(BUILD) > $@
 
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
--include $(BUILD)/deps.mk
+-include $(BUILD)/deps.mk $(BUILD)/main.d $(BUILD)/ram.d
 endif
 
 $(BUILD):
@@ -108,24 +121,25 @@ compare: $(ROM)
 # regions do not overlap, and that every PNG and tilemap grid encodes back to
 # its blob. See tools/check.py.
 check: $(ROM)
-	python3 tools/check.py
+	$(PYTHON) tools/check.py
 
-# Redraw the view-only scene pictures (data/<bank>/<Tilemap>.preview.png)
-# from the current grids, tiles and palettes, e.g. after editing a grid.
+# Redraw the view-only scene pictures (the <Tilemap>.preview.png beside each
+# grid in data/) from the current grids, tiles and palettes, e.g. after
+# editing a grid.
 previews:
-	python3 tools/tilemap.py previews data.previews data/
+	$(PYTHON) tools/tilemap.py previews data.previews data/
 
 # The unit tests need no ROM; the regression pins in tests/test_rom.py skip
 # themselves when baserom.gbc is absent, and otherwise read the build.
-PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 test: $(if $(wildcard baserom.gbc),$(ROM))
 	$(PYTHON) -m unittest discover -s tests -t . -v
 
-# shift-test, event-test and slot-audit read build/ and mariotennis.gbc, the
-# USA byte-perfect build.
-ifneq ($(filter shift-test event-test slot-audit,$(MAKECMDGOALS)),)
+# check, test, shift-test, event-test and slot-audit read build/ and
+# mariotennis.gbc, the USA byte-perfect build.
+USA_ONLY := check test shift-test event-test slot-audit
+ifneq ($(filter $(USA_ONLY),$(MAKECMDGOALS)),)
 ifneq ($(filter 1,$(FIXES) $(EUROPE)),)
-$(error $(filter shift-test event-test slot-audit,$(MAKECMDGOALS)) runs on the USA build only, without FIXES or EUROPE)
+$(error $(filter $(USA_ONLY),$(MAKECMDGOALS)) runs on the USA build only, without FIXES or EUROPE)
 endif
 endif
 

@@ -38,7 +38,7 @@ LoadN64RingShotRecords:
 	ld de, wRingShotEntryList ; $524a
 	ld bc, wRingShotEntryList_SIZE ; $524d
 	call CopyMemoryBC ; $5250
-	ld hl, wN64RecordsBlock + 344 ; $5253
+	ld hl, wN64RecordsBlock + N64REC_STAR_UNLOCKS ; $5253
 	ld a, [hl] ; $5256
 	ld b, a ; $5257
 	and $01 ; $5258
@@ -62,36 +62,36 @@ N64RingShot:
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 Unused_3b_SeedDefaultRingShotRecords:
 	ld hl, DefaultRingShot0 ; $5288
-	ld de, wN64RecordsBlock + 24 ; $528b
-	ld bc, $0010 ; $528e
+	ld de, wN64RecordsBlock + N64REC_RING_CLEARS ; $528b
+	ld bc, 4 * N64_RING_CLEARS_SIZE ; $528e
 	call CopyMemoryBC ; $5291
 	ld hl, DefaultRingShot0 ; $5294
-	ld de, wN64RecordsBlock + 40 ; $5297
-	ld bc, $0010 ; $529a
+	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 4 * N64_RING_CLEARS_SIZE ; $5297
+	ld bc, 4 * N64_RING_CLEARS_SIZE ; $529a
 	call CopyMemoryBC ; $529d
 	ld hl, DefaultRingShot0 ; $52a0
-	ld de, wN64RecordsBlock + 56 ; $52a3
-	ld bc, $0010 ; $52a6
+	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 8 * N64_RING_CLEARS_SIZE ; $52a3
+	ld bc, 4 * N64_RING_CLEARS_SIZE ; $52a6
 	call CopyMemoryBC ; $52a9
 	ld hl, DefaultRingShot0 ; $52ac
-	ld de, wN64RecordsBlock + 72 ; $52af
-	ld bc, $0010 ; $52b2
+	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 12 * N64_RING_CLEARS_SIZE ; $52af
+	ld bc, 4 * N64_RING_CLEARS_SIZE ; $52b2
 	call CopyMemoryBC ; $52b5
 	ld hl, DefaultRingShot1 ; $52b8
-	ld de, wN64RecordsBlock + 88 ; $52bb
-	ld bc, $0020 ; $52be
+	ld de, wN64RecordsBlock + N64REC_RING_SCORES ; $52bb
+	ld bc, 4 * N64_RING_SCORES_SIZE ; $52be
 	call CopyMemoryBC ; $52c1
 	ld hl, DefaultRingShot1 ; $52c4
-	ld de, wN64RecordsBlock + 120 ; $52c7
-	ld bc, $0020 ; $52ca
+	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 4 * N64_RING_SCORES_SIZE ; $52c7
+	ld bc, 4 * N64_RING_SCORES_SIZE ; $52ca
 	call CopyMemoryBC ; $52cd
 	ld hl, DefaultRingShot1 ; $52d0
-	ld de, wN64RecordsBlock + 152 ; $52d3
-	ld bc, $0020 ; $52d6
+	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 8 * N64_RING_SCORES_SIZE ; $52d3
+	ld bc, 4 * N64_RING_SCORES_SIZE ; $52d6
 	call CopyMemoryBC ; $52d9
 	ld hl, DefaultRingShot1 ; $52dc
-	ld de, wN64RecordsBlock + 184 ; $52df
-	ld bc, $0020 ; $52e2
+	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 12 * N64_RING_SCORES_SIZE ; $52df
+	ld bc, 4 * N64_RING_SCORES_SIZE ; $52e2
 	call CopyMemoryBC ; $52e5
 	ret ; $52e8
 DefaultRingShot0:
@@ -149,7 +149,7 @@ CopyRingShotCharScores:
 	add a ; $536d
 	add a ; $536e
 	add a ; $536f
-	ld hl, wN64RecordsBlock + 88 ; $5370
+	ld hl, wN64RecordsBlock + N64REC_RING_SCORES ; $5370
 	add_hl_a ; $5373
 	ld c, $00 ; $5378
 .loop:
@@ -179,7 +179,7 @@ DecodeRingShotCharClears:
 	ld a, b ; $5392
 	add a ; $5393
 	add a ; $5394
-	ld hl, wN64RecordsBlock + 24 ; $5395
+	ld hl, wN64RecordsBlock + N64REC_RING_CLEARS ; $5395
 	add_hl_a ; $5398
 	ld c, $00 ; $539d
 .loop:

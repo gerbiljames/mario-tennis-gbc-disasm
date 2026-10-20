@@ -22,16 +22,16 @@ PrepareScoreboardGfx:
 	dw PrepareScoreboardGfx.reloadFourChars ; $4941 jumptable
 .reloadFourChars:
 	wram_bank WRAM_SCENE ; $4943
-	farcall ReloadCharFrameGfx ; $4949
+	farcall ReloadCharPalette ; $4949
 .reloadThreeChars:
 	wram_bank WRAM_SOUND ; $494c
-	farcall ReloadCharFrameGfx ; $4952
+	farcall ReloadCharPalette ; $4952
 .reloadTwoChars:
 	wram_bank WRAM_TEXT ; $4955
-	farcall ReloadCharFrameGfx ; $495b
+	farcall ReloadCharPalette ; $495b
 .reloadOneChar:
 	wram_bank WRAM_ACTORS ; $495e
-	farcall ReloadCharFrameGfx ; $4964
+	farcall ReloadCharPalette ; $4964
 	farcall StepMatchFrame ; $4967
 	ld a, [wMatchContext] ; $496a
 	cp MATCHCONTEXT_MINIGAME ; $496d

@@ -6,14 +6,14 @@ VolleyMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $68a5
 	script_wait_frames 5 ; $68a8
 	and a ; $68af
-	jp nz, .done ; $68b0
+	jp nz, .declined ; $68b0
 	farcall AdvanceDialogueTextCursor ; $68b3
 	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68b6
 	farcall RunDialogueYesNoPrompt ; $68bb
 	farcall ScriptCloseDialogueWindow ; $68be
 	script_wait_frames 5 ; $68c1
 	and a ; $68c8
-	jp nz, .done ; $68c9
+	jp nz, .declined ; $68c9
 	farcall AdvanceDialogueTextCursor ; $68cc
 	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68cf
 	farcall RunDialogueYesNoPrompt ; $68d4
@@ -48,7 +48,7 @@ VolleyMatchChallengeScene:
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $6957
 	farcall RunTrainingDrillByID ; $6959
 	ret ; $695c
-.done:
+.declined:
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $695d
 	ret ; $6962
 SmashMatchChallengeScene:
@@ -308,7 +308,7 @@ ReturnMatchChallengeScene:
 	ld a, MINIGAME_STROKE_MATCH_3 ; $6da8
 	farcall RunTrainingDrillByID ; $6daa
 	ret ; $6dad
-.loop:
+.declined:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6dae
 	ret ; $6db3
 ReturnCoachReturnLessonScene:
@@ -324,14 +324,14 @@ ReturnCoachReturnLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6dd8
 	script_wait_frames 5 ; $6ddb
 	and a ; $6de2
-	jp nz, ReturnMatchChallengeScene.loop ; $6de3
+	jp nz, ReturnMatchChallengeScene.declined ; $6de3
 	farcall AdvanceDialogueTextCursor ; $6de6
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6de9
 	farcall RunDialogueYesNoPrompt ; $6dee
 	farcall ScriptCloseDialogueWindow ; $6df1
 	script_wait_frames 5 ; $6df4
 	and a ; $6dfb
-	jp nz, ReturnMatchChallengeScene.loop ; $6dfc
+	jp nz, ReturnMatchChallengeScene.declined ; $6dfc
 	farcall AdvanceDialogueTextCursor ; $6dff
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6e02
 	call MovePartyToReturnCoachSpot ; $6e07
@@ -341,7 +341,7 @@ ReturnCoachReturnLessonScene:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6e1c
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6e23
 	ld a, MINIGAME_STROKE_PRACTICE_1 ; $6e28
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6e2a
+	ld [wCurrentMatchIndex], a ; $6e2a
 	ld a, STORYLOC_TRAINING_COURT ; $6e2d
 	ld [wStoryModeCurrentLocation], a ; $6e2f
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6e32
@@ -361,14 +361,14 @@ ReturnCoachLobLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6e61
 	script_wait_frames 5 ; $6e64
 	and a ; $6e6b
-	jp nz, ReturnMatchChallengeScene.loop ; $6e6c
+	jp nz, ReturnMatchChallengeScene.declined ; $6e6c
 	farcall AdvanceDialogueTextCursor ; $6e6f
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6e72
 	farcall RunDialogueYesNoPrompt ; $6e77
 	farcall ScriptCloseDialogueWindow ; $6e7a
 	script_wait_frames 5 ; $6e7d
 	and a ; $6e84
-	jp nz, ReturnMatchChallengeScene.loop ; $6e85
+	jp nz, ReturnMatchChallengeScene.declined ; $6e85
 	farcall AdvanceDialogueTextCursor ; $6e88
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6e8b
 	call MovePartyToReturnCoachSpot ; $6e90
@@ -377,7 +377,7 @@ ReturnCoachLobLessonScene:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6e9f
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6ea6
 	ld a, MINIGAME_STROKE_PRACTICE_2 ; $6eab
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6ead
+	ld [wCurrentMatchIndex], a ; $6ead
 	ld a, STORYLOC_TRAINING_COURT ; $6eb0
 	ld [wStoryModeCurrentLocation], a ; $6eb2
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6eb5
@@ -397,14 +397,14 @@ ReturnCoachPassingShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6ee4
 	script_wait_frames 5 ; $6ee7
 	and a ; $6eee
-	jp nz, ReturnMatchChallengeScene.loop ; $6eef
+	jp nz, ReturnMatchChallengeScene.declined ; $6eef
 	farcall AdvanceDialogueTextCursor ; $6ef2
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6ef5
 	farcall RunDialogueYesNoPrompt ; $6efa
 	farcall ScriptCloseDialogueWindow ; $6efd
 	script_wait_frames 5 ; $6f00
 	and a ; $6f07
-	jp nz, ReturnMatchChallengeScene.loop ; $6f08
+	jp nz, ReturnMatchChallengeScene.declined ; $6f08
 	farcall AdvanceDialogueTextCursor ; $6f0b
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6f0e
 	call MovePartyToReturnCoachSpot ; $6f13
@@ -413,7 +413,7 @@ ReturnCoachPassingShotLessonScene:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6f22
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6f29
 	ld a, MINIGAME_STROKE_PRACTICE_3 ; $6f2e
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6f30
+	ld [wCurrentMatchIndex], a ; $6f30
 	ld a, STORYLOC_TRAINING_COURT ; $6f33
 	ld [wStoryModeCurrentLocation], a ; $6f35
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6f38

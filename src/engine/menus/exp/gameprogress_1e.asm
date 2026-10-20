@@ -4,7 +4,7 @@ ShowGameProgressScreen:
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
 	jr z, .setFlag ; $726b
-	set_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $726d
+	set_flag FLAG_TEMP_COURT_STAR_EARNED ; $726d
 .setFlag:
 	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
 	call BuildGameProgressScreen ; $7273
@@ -44,10 +44,10 @@ BuildGameProgressScreen:
 	call DisableLCDSafely ; $72c0
 	call InitGameProgressScreen ; $72c3
 	call LoadGameProgressScreenAssets ; $72c6
-	test_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $72c9
-	jr nz, .isTempProgressScreenOpen ; $72cc
+	test_flag FLAG_TEMP_COURT_STAR_EARNED ; $72c9
+	jr nz, .courtStarEarned ; $72cc
 	jr .runRewardCategoryList ; $72ce
-.isTempProgressScreenOpen:
+.courtStarEarned:
 	ld a, $05 ; $72d0
 	call RunRewardCategoryList ; $72d2
 .runRewardCategoryList:
@@ -108,11 +108,11 @@ BuildGameProgressScreen:
 	ldh a, [hInputPressed] ; $735c
 	bit PADB_UP, a ; $735e
 	call nz, ScrollProgressListUp ; $7360
-	bit 7, a ; $7363
+	bit PADB_DOWN, a ; $7363
 	call nz, ScrollProgressListDown ; $7365
-	bit 0, a ; $7368
+	bit PADB_A, a ; $7368
 	jr nz, .playSelectSfx ; $736a
-	bit 1, a ; $736c
+	bit PADB_B, a ; $736c
 	jr nz, .playCancelSfx ; $736e
 	jr .loop ; $7370
 .playCancelSfx:
@@ -236,29 +236,29 @@ RunRewardCategoryList:
 	ret ; $7444
 RewardCategoryEntryListPtrs_1e:
 	; $7445, 12 bytes (records:2)
-	dw RewardCategoryEntryList0_1e ; record 0
-	dw RewardCategoryEntryList1_1e ; record 1
-	dw RewardCategoryEntryList2_1e ; record 2
-	dw RewardCategoryEntryList3_1e ; record 3
-	dw RewardCategoryEntryList4_1e ; record 4
-	dw RewardCategoryEntryList5_1e ; record 5
-RewardCategoryEntryList0_1e:
+	dw RewardCategoryEntryListBase_1e ; record 0
+	dw RewardCategoryEntryListJuniorSinglesChamp_1e ; record 1
+	dw RewardCategoryEntryListSeniorSinglesChamp_1e ; record 2
+	dw RewardCategoryEntryListVarsitySinglesRank4_1e ; record 3
+	dw RewardCategoryEntryListIslandOpenSinglesFinal_1e ; record 4
+	dw RewardCategoryEntryListCourtStar_1e ; record 5
+RewardCategoryEntryListBase_1e:
 	; $7451, 21 bytes (bytes:16)
 	db $03, $04, $05, $06, $07, $08, $0b, $0e, $11, $14, $17, $1a, $1d, $1e, $1f, $20 ; 0x00
 	db $21, $22, $23, $24, $ff ; 0x10
-RewardCategoryEntryList1_1e:
+RewardCategoryEntryListJuniorSinglesChamp_1e:
 	; $7466, 7 bytes (bytes:16)
 	db $0c, $0f, $12, $15, $18, $1b, $ff ; 0x00
-RewardCategoryEntryList2_1e:
+RewardCategoryEntryListSeniorSinglesChamp_1e:
 	; $746d, 7 bytes (bytes:16)
 	db $0d, $10, $13, $16, $19, $1c, $ff ; 0x00
-RewardCategoryEntryList3_1e:
+RewardCategoryEntryListVarsitySinglesRank4_1e:
 	; $7474, 3 bytes (bytes:16)
 	db $09, $0a, $ff ; 0x00
-RewardCategoryEntryList4_1e:
+RewardCategoryEntryListIslandOpenSinglesFinal_1e:
 	; $7477, 3 bytes (bytes:16)
 	db $01, $02, $ff ; 0x00
-RewardCategoryEntryList5_1e:
+RewardCategoryEntryListCourtStar_1e:
 	; $747a, 2 bytes (bytes:16)
 	db $00, $ff ; 0x00
 BuildVisibleProgressEntryList:

@@ -18,11 +18,11 @@
 	ld a, [hl]
 	ld [wGameMode], a
 	ld a, MATCHLIST_TRAINING
-	ld [wCurrentMinigameStoryMatch], a
+	ld [wCurrentMatchList], a
 	ld hl, DRILLDEF_MATCH
 	add hl, bc
 	ld a, [hl]
-	ld [wCurrentMinigameStoryMatch + 1], a
+	ld [wCurrentMatchIndex], a
 	ld hl, DRILLDEF_BGM
 	add hl, bc
 	ld a, [hl]
@@ -31,16 +31,16 @@
 	ld hl, DRILLDEF_PLAYER
 	add hl, bc
 	ld b, [hl]
-	ld c, $00
-	farcall InitCa00RecordFromCharId
+	ld c, MATCHREC_P1_MAIN
+	farcall InitMatchRecordFromCharId
 	ld a, [wStoryMainChar]
 	ld [wMatchPlayerChar], a
 	ld a, [wMatchOpponentChar]
 	cp CHAR_NONE
 	jr z, .restore
 	ld b, a
-	ld c, $02
-	farcall InitCa00RecordFromCharId
+	ld c, MATCHREC_P2_MAIN
+	farcall InitMatchRecordFromCharId
 .restore:
 	pop bc
 	ld hl, DRILLDEF_HOOKS

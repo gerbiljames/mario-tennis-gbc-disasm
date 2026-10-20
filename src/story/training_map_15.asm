@@ -51,12 +51,12 @@ TournamentCourtyardNpc05_15:
 	test_flag FLAG_DOUBLES ; $4111
 	jr z, .altText ; $4114
 	test_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $4116
-	jr nz, .done ; $4119
+	jr nz, .alreadyTalked ; $4119
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $411b
 	jr .speak ; $411e
 .altText:
 	test_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4120
-	jr nz, .done ; $4123
+	jr nz, .alreadyTalked ; $4123
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4125
 .speak:
 	script_speak ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4128
@@ -64,7 +64,7 @@ TournamentCourtyardNpc05_15:
 	script_wait_idle ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4134
 	script_speak ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4139
 	ret ; $413e
-.done:
+.alreadyTalked:
 	script_set_text Text_UnionFanRootForYou ; $413f
 	script_speak ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4145
 	ret ; $414a

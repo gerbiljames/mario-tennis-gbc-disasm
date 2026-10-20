@@ -47,7 +47,7 @@ ApFrontGateTile_11:
 ApGateBackOffScript_11:
 	as_anim ANIM_WALK
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_target_rel 0.0, -2.0
+	as_move_by 0.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt

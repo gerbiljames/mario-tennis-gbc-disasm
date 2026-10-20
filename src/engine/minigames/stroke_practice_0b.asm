@@ -105,7 +105,7 @@ StrokePractice1JudgePoint:
 	add_hl_a ; $6d16
 	ld a, [hl] ; $6d1b
 	ld a, a ; $6d1c
-	ld b, $00 ; $6d1d
+	ld b, DRILLWORDING_SAME ; $6d1d
 	call QueueDrillResultMessage ; $6d1f
 	ld a, [wPointOutcome] ; $6d22
 	ld hl, EvenRallyVerdicts ; $6d25
@@ -137,7 +137,7 @@ StrokePractice1Cases1:
 	add_hl_a ; $6d50
 	ld a, [hl] ; $6d55
 	ld a, a ; $6d56
-	ld b, $00 ; $6d57
+	ld b, DRILLWORDING_SAME ; $6d57
 	call QueueDrillResultMessage ; $6d59
 	ld a, [wPointOutcome] ; $6d5c
 	ld hl, OddRallyVerdicts ; $6d5f
@@ -157,14 +157,16 @@ StrokePractice2DrillInit:
 	ret ; $6dc3
 StrokePractice2Hooks:
 	; $6dc4, 16 bytes (mode_hooks)
-	dw StrokePractice2Hook_PerFrame ; record 0
-	dw StrokePractice2Hook_PointStart ; record 1
-	dw StrokePractice2Hook_PointEnd ; record 2
-	dw StrokePractice2Hook_MinigameStart ; record 3
-	dw StrokePractice2Hook_BallHit ; record 4
-	dw StrokePractice2Hook_Bounce ; record 5
-	dw StrokePractice2Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw StrokePractice2Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw StrokePractice2Hook_PointStart ; MODEHOOK_POINT_START
+	dw StrokePractice2Hook_PointEnd ; MODEHOOK_POINT_END
+	dw StrokePractice2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw StrokePractice2Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw StrokePractice2Hook_Bounce ; MODEHOOK_BOUNCE
+	dw StrokePractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 StrokePractice2Hook_MinigameStart:
 	xor a ; $6dd4
 	ld [wDrillCounters + DRILLCTR_LOBS], a ; $6dd5
@@ -224,7 +226,7 @@ StrokePractice2EvaluateResult:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $6e47
 	ld [wDrillLessonResult], a ; $6e48
-	ld a, $01 ; $6e4b
+	ld a, WINLOSE_WIN ; $6e4b
 	ret ; $6e4d
 .checkCounter7:
 	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e4e
@@ -232,14 +234,14 @@ StrokePractice2EvaluateResult:
 	jr c, .checkCounter2 ; $6e53
 	ld a, LESSON_LOB_ALMOST ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
-	jr .notFound ; $6e5a
+	jr .lessonFailed ; $6e5a
 .checkCounter2:
 	ld a, [wDrillCounters + DRILLCTR_LOBS] ; $6e5c
 	cp DRILL_LESSON_POINTS ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
 	ld a, LESSON_LOB_TOO_FEW ; $6e63
 	ld [wDrillLessonResult], a ; $6e65
-	jr .notFound ; $6e68
+	jr .lessonFailed ; $6e68
 .checkRallyLength:
 	ld a, [wRallyLength] ; $6e6a
 	cp $03 ; $6e6d
@@ -249,18 +251,18 @@ StrokePractice2EvaluateResult:
 	jr nz, .compare ; $6e76
 	ld a, LESSON_LOB_VOLLEYED ; $6e78
 	ld [wDrillLessonResult], a ; $6e7a
-	jr .notFound ; $6e7d
+	jr .lessonFailed ; $6e7d
 .compare:
 	cp $02 ; $6e7f
 	jr nz, .result4 ; $6e81
 	ld a, LESSON_LOB_SMASHED ; $6e83
 	ld [wDrillLessonResult], a ; $6e85
-	jr .notFound ; $6e88
+	jr .lessonFailed ; $6e88
 .result4:
 	ld a, LESSON_LOB_NO_CONTROL ; $6e8a
 	ld [wDrillLessonResult], a ; $6e8c
-.notFound:
-	ld a, $ff ; $6e8f
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $6e8f
 	ret ; $6e91
 StrokePractice2Hook_RallyTick:
 	call StrokePractice2JudgeOnRallyTick ; $6e92
@@ -287,7 +289,7 @@ StrokePractice2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6ec9
 	ld a, [wDrillPointJudgement] ; $6ecc
 	ld [wPointWinLoseFlag], a ; $6ecf
-	cp $01 ; $6ed2
+	cp WINLOSE_WIN ; $6ed2
 	jr nz, .recordDrillPointResultBits ; $6ed4
 	ld hl, wDrillCounters + DRILLCTR_LOB_PASSES ; $6ed6
 	inc [hl] ; $6ed9
@@ -357,7 +359,7 @@ StrokePractice2JudgePoint:
 	add_hl_a ; $6f5e
 	ld a, [hl] ; $6f63
 	ld a, a ; $6f64
-	ld b, $00 ; $6f65
+	ld b, DRILLWORDING_SAME ; $6f65
 	call QueueDrillResultMessage ; $6f67
 	ld a, [wPointOutcome] ; $6f6a
 	ld hl, EvenRallyVerdicts ; $6f6d
@@ -389,7 +391,7 @@ StrokePractice2Cases1:
 	add_hl_a ; $6f98
 	ld a, [hl] ; $6f9d
 	ld a, a ; $6f9e
-	ld b, $00 ; $6f9f
+	ld b, DRILLWORDING_SAME ; $6f9f
 	call QueueDrillResultMessage ; $6fa1
 	ld a, [wPointOutcome] ; $6fa4
 	ld hl, OddRallyVerdicts ; $6fa7
@@ -404,7 +406,7 @@ StrokePractice2Cases2:
 	or a ; $6fbe
 	ret z ; $6fbf
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LOB_SO_YOU_FAIL ; $6fc0
-	ld b, $00 ; $6fc2
+	ld b, DRILLWORDING_SAME ; $6fc2
 	call QueueDrillResultMessage ; $6fc4
 	ld a, [wCurrentShotType] ; $6fc7
 	cp SHOTTYPE_LOB ; $6fca
@@ -419,14 +421,14 @@ StrokePractice2Cases2:
 	ld a, $00 ; $6fda
 	ret nz ; $6fdc
 	ld a, DRILLMSG_NICE_LOB_YOU_DID_IT ; $6fdd
-	ld b, $00 ; $6fdf
+	ld b, DRILLWORDING_SAME ; $6fdf
 	call QueueDrillResultMessage ; $6fe1
-	call RecordDrillTargetZoneHit ; $6fe4
-	call CheckDrillTargetZoneMissed ; $6fe7
+	call RecordDrillTargetZoneMiss ; $6fe4
+	call CheckDrillTargetZoneHit ; $6fe7
 	or a ; $6fea
 	jp nz, .hitTarget ; $6feb
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
-	ld b, $00 ; $6ff0
+	ld b, DRILLWORDING_SAME ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $6ff5
 	inc [hl] ; $6ff8
@@ -437,12 +439,12 @@ StrokePractice2Cases2:
 .hitTarget:
 	ld a, MATCHABORT_POINT ; $6ffe
 	ld [wMatchAbortFlag], a ; $7000
-	ld a, $01 ; $7003
+	ld a, WINLOSE_WIN ; $7003
 	ret ; $7005
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $7006
 	ld [wMatchAbortFlag], a ; $7008
-	ld a, $ff ; $700b
+	ld a, WINLOSE_LOSE ; $700b
 	ret ; $700d
 StrokePractice3Drill:
 	; $700e, 16 bytes
@@ -453,14 +455,16 @@ StrokePractice3DrillInit:
 	ret ; $7023
 StrokePractice3Hooks:
 	; $7024, 16 bytes (mode_hooks)
-	dw StrokePractice3Hook_PerFrame ; record 0
-	dw StrokePractice3Hook_PointStart ; record 1
-	dw StrokePractice3Hook_PointEnd ; record 2
-	dw StrokePractice3Hook_MinigameStart ; record 3
-	dw StrokePractice3Hook_BallHit ; record 4
-	dw StrokePractice3Hook_Bounce ; record 5
-	dw StrokePractice3Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw StrokePractice3Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw StrokePractice3Hook_PointStart ; MODEHOOK_POINT_START
+	dw StrokePractice3Hook_PointEnd ; MODEHOOK_POINT_END
+	dw StrokePractice3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw StrokePractice3Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw StrokePractice3Hook_Bounce ; MODEHOOK_BOUNCE
+	dw StrokePractice3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named stroke_practice1_hook_minigame_start, StrokePractice3Hook_MinigameStart ; $7034
 StrokePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $7041
@@ -579,7 +583,7 @@ StrokePractice3JudgePoint:
 	add_hl_a ; $71c0
 	ld a, [hl] ; $71c5
 	ld a, a ; $71c6
-	ld b, $00 ; $71c7
+	ld b, DRILLWORDING_SAME ; $71c7
 	call QueueDrillResultMessage ; $71c9
 	ld a, [wPointOutcome] ; $71cc
 	ld hl, EvenRallyVerdicts ; $71cf
@@ -611,7 +615,7 @@ StrokePractice3Cases1:
 	add_hl_a ; $71fa
 	ld a, [hl] ; $71ff
 	ld a, a ; $7200
-	ld b, $00 ; $7201
+	ld b, DRILLWORDING_SAME ; $7201
 	call QueueDrillResultMessage ; $7203
 	ld a, [wPointOutcome] ; $7206
 	ld hl, OddRallyVerdicts ; $7209
@@ -629,9 +633,9 @@ RunDoublesDrillMatch:
 	ld a, GAMEMODE_MARIO_MINIGAME ; $725c
 	ld [wGameMode], a ; $725e
 	ld a, MATCHLIST_TRAINING ; $7261
-	ld [wCurrentMinigameStoryMatch], a ; $7263
+	ld [wCurrentMatchList], a ; $7263
 	ld a, MINIGAME_TWO_ON_ONE ; $7266
-	ld [wCurrentMinigameStoryMatch + 1], a ; $7268
+	ld [wCurrentMatchIndex], a ; $7268
 	ld a, BGM_TWO_ON_ONE ; $726b
 	ld [wMatchBGM], a ; $726d
 	ld a, $01 ; $7270
@@ -643,16 +647,16 @@ RunDoublesDrillMatch:
 	ld b, CHAR_BOWSER ; $727f
 	ld a, b ; $7281
 	ld [wMatchPlayerChar], a ; $7282
-	ld c, $00 ; $7285
-	farcall InitCa00RecordFromCharId ; $7287
+	ld c, MATCHREC_P1_MAIN ; $7285
+	farcall InitMatchRecordFromCharId ; $7287
 	ld b, CHAR_WALUIGI ; $728a
 	ld a, b ; $728c
 	ld [wMatchOpponentChar], a ; $728d
-	ld c, $02 ; $7290
-	farcall InitCa00RecordFromCharId ; $7292
+	ld c, MATCHREC_P2_MAIN ; $7290
+	farcall InitMatchRecordFromCharId ; $7292
 	ld b, CHAR_WARIO ; $7295
-	ld c, $03 ; $7297
-	farcall InitCa00RecordFromCharId ; $7299
+	ld c, MATCHREC_P2_PARTNER ; $7297
+	farcall InitMatchRecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a ; $729f
 	ld_hl_indexed TwoOnOneLevelSettingsPtrs ; $72a0

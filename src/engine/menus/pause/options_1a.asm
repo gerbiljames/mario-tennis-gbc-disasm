@@ -93,7 +93,7 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ret ; $40af
 .checkMessageSpeed:
 	ld a, [wMessageSpeed] ; $40b0
-	and $7f ; $40b3
+	and MSGSPEED_MASK ; $40b3
 	jr z, .maskClear ; $40b5
 	dec a ; $40b7
 	jr z, .countDone ; $40b8
@@ -106,7 +106,7 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ld l, $72 ; $40ca
 	ld_cell de, $0c, $05 ; $40cc
 	call Unused_1a_QueueWindowTileWrite ; $40cf
-	jr .checkMusic ; $40d2
+	jr .checkMusicFlags ; $40d2
 .countDone:
 	ld l, $8c ; $40d4
 	ld_cell de, $0a, $05 ; $40d6
@@ -117,7 +117,7 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ld l, $73 ; $40e4
 	ld_cell de, $0c, $05 ; $40e6
 	call Unused_1a_QueueWindowTileWrite ; $40e9
-	jr .checkMusic ; $40ec
+	jr .checkMusicFlags ; $40ec
 .maskClear:
 	ld l, $8a ; $40ee
 	ld_cell de, $0a, $05 ; $40f0
@@ -128,9 +128,9 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ld l, $72 ; $40fe
 	ld_cell de, $0c, $05 ; $4100
 	call Unused_1a_QueueWindowTileWrite ; $4103
-	jr .checkMusic ; $4106
-.checkMusic:
-	ldh a, [hMusic] ; $4108
+	jr .checkMusicFlags ; $4106
+.checkMusicFlags:
+	ldh a, [hMusicFlags] ; $4108
 	push af ; $410a
 	push bc ; $410b
 	push de ; $410c
@@ -227,14 +227,14 @@ Unused_1a_ShowGameProgressScreenThunk:
 	jp Unused_1a_RunPauseMenuWindow.done ; $41af
 Unused_1a_AdjustMessageSpeedSettingThunk:
 	call Unused_1a_AdjustMessageSpeedSetting ; $41b2
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41b5
+	ld a, [wMenuCursorRow] ; $41b5
 	ld [wMenuInitialRow], a ; $41b8
 	ld bc, MessageSpeedSettingPtrs ; $41bb
 	ld a, [wPauseMenuWindowId] ; $41be
 	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $41c1
 Unused_1a_ToggleMusicSettingThunk:
 	call Unused_1a_ToggleMusicSetting ; $41c4
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41c7
+	ld a, [wMenuCursorRow] ; $41c7
 	ld [wMenuInitialRow], a ; $41ca
 	ld bc, MessageSpeedSettingPtrs ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
@@ -264,7 +264,7 @@ Unused_1a_MusicSettingHandler0:
 	ld a, [wPauseMenuOptionBits] ; $41f8
 	or $c0 ; $41fb
 	ld [wPauseMenuOptionBits], a ; $41fd
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $4200
+	ld a, [wMenuCursorRow] ; $4200
 	ld [wMenuInitialRow], a ; $4203
 	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
@@ -287,7 +287,7 @@ Unused_1a_MusicSettingHandler1:
 	ld a, [wPauseMenuOptionBits] ; $4227
 	or $c0 ; $422a
 	ld [wPauseMenuOptionBits], a ; $422c
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $422f
+	ld a, [wMenuCursorRow] ; $422f
 	ld [wMenuInitialRow], a ; $4232
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
@@ -322,32 +322,32 @@ Unused_1a_AdjustMessageSpeedSetting:
 	sound SFX_MENU_MOVE ; $427a
 	ld hl, wMessageSpeed ; $427c
 	ld a, [hl] ; $427f
-	and $7f ; $4280
+	and MSGSPEED_MASK ; $4280
 	inc a ; $4282
 	ld b, a ; $4283
-	sub $03 ; $4284
+	sub NUM_MSGSPEEDS ; $4284
 	jr z, .wrapToZero ; $4286
 	ld a, b ; $4288
-	or $80 ; $4289
+	or MSGSPEEDF_INSTANT ; $4289
 	ld [hl], a ; $428b
 	jr .done ; $428c
 .wrapToZero:
-	ld a, $80 ; $428e
+	ld a, MSGSPEEDF_INSTANT | MSGSPEED_FAST ; $428e
 	ld [hl], a ; $4290
 	jr .done ; $4291
 .decreaseSpeed:
 	sound SFX_MENU_MOVE ; $4293
 	ld hl, wMessageSpeed ; $4295
 	ld a, [hl] ; $4298
-	and $7f ; $4299
+	and MSGSPEED_MASK ; $4299
 	dec a ; $429b
 	bit 7, a ; $429c
 	jr nz, .negative ; $429e
-	or $80 ; $42a0
+	or MSGSPEEDF_INSTANT ; $42a0
 	ld [hl], a ; $42a2
 	jr .done ; $42a3
 .negative:
-	ld a, $82 ; $42a5
+	ld a, MSGSPEEDF_INSTANT | MSGSPEED_SLOW ; $42a5
 	ld [hl], a ; $42a7
 .done:
 	ret ; $42a8
@@ -355,22 +355,22 @@ Unused_1a_ToggleMusicSetting:
 	sound SFX_MENU_MOVE ; $42a9
 	ld a, [wSoundOptionBits] ; $42ab
 	ld b, a ; $42ae
-	and $01 ; $42af
-	xor $01 ; $42b1
+	and SOUNDOPTF_MUSIC_OFF ; $42af
+	xor SOUNDOPTF_MUSIC_OFF ; $42b1
 	ld c, a ; $42b3
 	ld a, b ; $42b4
-	and $fe ; $42b5
+	and ~SOUNDOPTF_MUSIC_OFF ; $42b5
 	or c ; $42b7
 	ld [wSoundOptionBits], a ; $42b8
 	ret ; $42bb
 Unused_1a_ForceInstantMessageSpeed:
 	ld a, [wMessageSpeed] ; $42bc
-	set 7, a ; $42bf
+	set MSGSPEEDB_INSTANT, a ; $42bf
 	ld [wMessageSpeed], a ; $42c1
 	ret ; $42c4
 Unused_1a_RestoreMessageSpeed:
 	ld a, [wMessageSpeed] ; $42c5
-	res 7, a ; $42c8
+	res MSGSPEEDB_INSTANT, a ; $42c8
 	ld [wMessageSpeed], a ; $42ca
 	ret ; $42cd
 .scriptShowSpeakerDialogueRestoreBG:
@@ -385,7 +385,7 @@ Unused_1a_RestoreMessageSpeed:
 	ld a, $01 ; $42ec
 	ld [wSaveAndQuitRequest], a ; $42ee
 	ld a, [wMessageSpeed] ; $42f1
-	res 7, a ; $42f4
+	res MSGSPEEDB_INSTANT, a ; $42f4
 	ld [wMessageSpeed], a ; $42f6
 	ld bc, $ffff ; $42f9
 	farcall SaveStoryReturnPoint ; $42fc

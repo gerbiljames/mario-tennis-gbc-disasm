@@ -12,9 +12,9 @@ VBlankHandler:
 	ldh a, [hVBlankOccurred] ; $2759
 	or a ; $275b
 	jr nz, .skipVideo ; $275c
-	ldh a, [hShowDebugConsole] ; $275e
+	ldh a, [hBGViewMode] ; $275e
 	or a ; $2760
-	jr nz, .compare ; $2761
+	jr nz, .checkMode ; $2761
 	ldh a, [hScrollX] ; $2763
 	ldh [rSCX], a ; $2765
 	ldh a, [hScrollY] ; $2767
@@ -23,8 +23,8 @@ VBlankHandler:
 	and ~LCDC_BG_MAP ; $276d
 	ldh [rLCDC], a ; $276f
 	jr .checkSpriteBufferPage ; $2771
-.compare:
-	cp $01 ; $2773
+.checkMode:
+	cp BGVIEW_DEBUG_CONSOLE ; $2773
 	jr nz, .keepBgMap ; $2775
 	xor a ; $2777
 	ldh [rSCX], a ; $2778
@@ -41,7 +41,7 @@ VBlankHandler:
 	ldh [rSCY], a ; $278c
 .checkSpriteBufferPage:
 	ld a, [wSpriteBufferPage] ; $278e
-	xor $05 ; $2791
+	xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2) ; $2791
 	ldh [hOAMDMARoutine + 1], a ; $2793
 	call hOAMDMARoutine ; $2795
 	call ProcessBGBlitQueue ; $2798
@@ -181,7 +181,7 @@ ReadJoypadThunk:
 	call ReadJoypad ; $2851
 	ret ; $2854
 SoftResetIfABStartSelect:
-	xor $0f ; $2855
+	xor PADF_BUTTONS ; $2855
 	jr nz, .done ; $2857
 	jp SoftReset ; $2859
 .done:

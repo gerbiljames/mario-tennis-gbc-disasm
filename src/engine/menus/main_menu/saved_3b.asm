@@ -27,13 +27,13 @@ BuildMarioCastUnlockMask:
 	ld [wMarioCastUnlockMask], a ; $66a5
 	ret ; $66a8
 MarioCastUnlockMaskTable:
-	; $66a9, 12 bytes (records:2)
-	dw $01e0 ; record 0
-	dw $01a0 ; record 1
-	dw $0180 ; record 2
-	dw $0160 ; record 3
-	dw $0140 ; record 4
-	dw $01c0 ; record 5
+	; $66a9, 12 bytes (save_flag_ids)
+	dw SAVEFLAG_UNLOCKED_ELDEN ; record 0
+	dw SAVEFLAG_UNLOCKED_SEAN ; record 1
+	dw SAVEFLAG_UNLOCKED_MARK ; record 2
+	dw SAVEFLAG_UNLOCKED_CURT ; record 3
+	dw SAVEFLAG_UNLOCKED_FAY ; record 4
+	dw SAVEFLAG_UNLOCKED_SAMMI ; record 5
 GetUnlockedMarioCastCharAtGridSlot:
 	ld a, [ApOptMinigames]
 	and a
@@ -50,12 +50,12 @@ GetUnlockedMarioCastCharAtGridSlot:
 	call GetMarioCastCharAtGridSlot ; $66b5
 	cp CHAR_LUIGI ; $66b8
 	ret z ; $66ba
-	cp $19 ; $66bb
+	cp CHAR_BABY_MARIO ; $66bb
 	ret z ; $66bd
-	cp $18 ; $66be
+	cp CHAR_DK ; $66be
 	ret z ; $66c0
 	ld d, a ; $66c1
-	sub $1a ; $66c2
+	sub CHAR_MARIO ; $66c2
 	ld hl, UnlockedMarioCastCharAtGridSlotTable ; $66c4
 	add_hl_a ; $66c7
 	ld b, [hl] ; $66cc
@@ -102,9 +102,9 @@ MinigameSelectSlideIn6:
 	ld c, $00 ; $6704
 .slideForwardLoop:
 	call AdvanceFrame ; $6706
-	ld b, $16 ; $6709
+	ld b, PANELANIM_MINIGAME_GRID6_IN ; $6709
 	farcall RestoreMenuBgAndDrawPanel ; $670b
-	ld b, $02 ; $670e
+	ld b, MAPROWS_BANDS_4_9 ; $670e
 	farcall FlushWram3MapRows ; $6710
 	ld a, c ; $6713
 	inc a ; $6714
@@ -116,9 +116,9 @@ MinigameSelectSlideIn6:
 	ld c, $0c ; $671b
 .slideBackLoop:
 	call AdvanceFrame ; $671d
-	ld b, $17 ; $6720
+	ld b, PANELANIM_MINIGAME_GRID6_OUT ; $6720
 	farcall RestoreMenuBgAndDrawPanel ; $6722
-	ld b, $02 ; $6725
+	ld b, MAPROWS_BANDS_4_9 ; $6725
 	farcall FlushWram3MapRows ; $6727
 	ld a, c ; $672a
 	dec a ; $672b
@@ -133,9 +133,9 @@ MinigameSelectSlideOut6:
 	ld c, $00 ; $6736
 .slideForwardLoop:
 	call AdvanceFrame ; $6738
-	ld b, $17 ; $673b
+	ld b, PANELANIM_MINIGAME_GRID6_OUT ; $673b
 	farcall RestoreMenuBgAndDrawPanel ; $673d
-	ld b, $02 ; $6740
+	ld b, MAPROWS_BANDS_4_9 ; $6740
 	farcall FlushWram3MapRows ; $6742
 	ld a, c ; $6745
 	inc a ; $6746
@@ -147,9 +147,9 @@ MinigameSelectSlideOut6:
 	ld c, $0d ; $674d
 .slideBackLoop:
 	call AdvanceFrame ; $674f
-	ld b, $16 ; $6752
+	ld b, PANELANIM_MINIGAME_GRID6_IN ; $6752
 	farcall RestoreMenuBgAndDrawPanel ; $6754
-	ld b, $02 ; $6757
+	ld b, MAPROWS_BANDS_4_9 ; $6757
 	farcall FlushWram3MapRows ; $6759
 	ld a, c ; $675c
 	dec a ; $675d
@@ -242,12 +242,12 @@ RunSavedDataSourceSelect:
 	add a ; $6820
 	add a ; $6821
 	add a ; $6822
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6823
+	ld bc, wSaveSlotSummaries ; $6823
 	add_bc_a ; $6826
-	ld hl, $0000 ; $682b
+	ld hl, SLOTSUM_CHAR ; $682b
 	add hl, bc ; $682e
 	ld a, [hl] ; $682f
-	cp $3f ; $6830
+	cp CHAR_EMPTY_SLOT ; $6830
 	jr z, .rejectEmptySlot ; $6832
 	jr .playSelectSfx ; $6834
 .rejectEmptySlot:
@@ -298,7 +298,7 @@ LoadSavedDataSourceGfx:
 	wram_bank WRAM_SCREEN ; $68a7
 	ld a, $00 ; $68ad
 	ld [wCurrentStorySlot], a ; $68af
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $68b2
+	ld a, [wSaveSlotSummaries + SLOTSUM_CHAR] ; $68b2
 	farcall LoadCharMugshotToBuffer ; $68b5
 	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
@@ -306,7 +306,7 @@ LoadSavedDataSourceGfx:
 	wram_bank WRAM_SCREEN ; $68c1
 	ld a, $01 ; $68c7
 	ld [wCurrentStorySlot], a ; $68c9
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $68cc
+	ld a, [wSaveSlotSummaries + SLOTSUM_SIZE + SLOTSUM_CHAR] ; $68cc
 	farcall LoadCharMugshotToBuffer ; $68cf
 	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
@@ -314,7 +314,7 @@ LoadSavedDataSourceGfx:
 	wram_bank WRAM_SCREEN ; $68db
 	ld a, $02 ; $68e1
 	ld [wCurrentStorySlot], a ; $68e3
-	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $68e6
+	ld a, [wSaveSlotSummaries + 2 * SLOTSUM_SIZE + SLOTSUM_CHAR] ; $68e6
 	farcall LoadCharMugshotToBuffer ; $68e9
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
@@ -368,13 +368,13 @@ Unused_3b_TableAfterLoadSavedDataSourceGfx:
 	db $6a, $3c ; 0x08
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
-	db $00, $a8 ; 0x0e
-	db $00, $a9 ; 0x10
-	db $00, $aa ; 0x12
-	db $00, $ab ; 0x14
-	db $00, $ac ; 0x16
-	db $00, $ad ; 0x18
-	db $00, $ae ; 0x1a
+	dw vTiles1 + VRAM_BANK1 ; 0x0e
+	dw vTiles1 tile $10 + VRAM_BANK1 ; 0x10
+	dw vTiles1 tile $20 + VRAM_BANK1 ; 0x12
+	dw vTiles1 tile $30 + VRAM_BANK1 ; 0x14
+	dw vTiles1 tile $40 + VRAM_BANK1 ; 0x16
+	dw vTiles1 tile $50 + VRAM_BANK1 ; 0x18
+	dw vTiles1 tile $60 + VRAM_BANK1 ; 0x1a
 ; MainMenuSlideIn with different start columns, end test (`cp $0c`) and row count: the same panel slide-in for a panel the bank never shows. Nothing calls it.
 Unused_3b_SlideMenuPanel_1:
 	ld a, b ; $6979
@@ -383,9 +383,9 @@ Unused_3b_SlideMenuPanel_1:
 	ld c, $00 ; $697d
 .slideForwardLoop:
 	call AdvanceFrame ; $697f
-	ld b, $06 ; $6982
+	ld b, PANELANIM_UNUSED_PANEL_IN ; $6982
 	farcall RestoreMenuBgAndDrawPanel ; $6984
-	ld b, $02 ; $6987
+	ld b, MAPROWS_BANDS_4_9 ; $6987
 	farcall FlushWram3MapRows ; $6989
 	ld a, c ; $698c
 	inc a ; $698d
@@ -397,9 +397,9 @@ Unused_3b_SlideMenuPanel_1:
 	ld c, $0a ; $6994
 .slideBackLoop:
 	call AdvanceFrame ; $6996
-	ld b, $07 ; $6999
+	ld b, PANELANIM_UNUSED_PANEL_OUT ; $6999
 	farcall RestoreMenuBgAndDrawPanel ; $699b
-	ld b, $02 ; $699e
+	ld b, MAPROWS_BANDS_4_9 ; $699e
 	farcall FlushWram3MapRows ; $69a0
 	ld a, c ; $69a3
 	dec a ; $69a4
@@ -415,9 +415,9 @@ Unused_3b_SlideMenuPanel_2:
 	ld c, $00 ; $69af
 .slideForwardLoop:
 	call AdvanceFrame ; $69b1
-	ld b, $07 ; $69b4
+	ld b, PANELANIM_UNUSED_PANEL_OUT ; $69b4
 	farcall RestoreMenuBgAndDrawPanel ; $69b6
-	ld b, $02 ; $69b9
+	ld b, MAPROWS_BANDS_4_9 ; $69b9
 	farcall FlushWram3MapRows ; $69bb
 	ld a, c ; $69be
 	inc a ; $69bf
@@ -429,9 +429,9 @@ Unused_3b_SlideMenuPanel_2:
 	ld c, $0c ; $69c6
 .slideBackLoop:
 	call AdvanceFrame ; $69c8
-	ld b, $06 ; $69cb
+	ld b, PANELANIM_UNUSED_PANEL_IN ; $69cb
 	farcall RestoreMenuBgAndDrawPanel ; $69cd
-	ld b, $02 ; $69d0
+	ld b, MAPROWS_BANDS_4_9 ; $69d0
 	farcall FlushWram3MapRows ; $69d2
 	ld a, c ; $69d5
 	dec a ; $69d6
@@ -444,11 +444,11 @@ SavedDataSourceCursorSpriteTask:
 	ld c, $03 ; $69df
 	call GetMenuCursorIndex_3b ; $69e1
 	push af ; $69e4
-	ld hl, SavedDataSourceCursorSpriteTaskTable1 ; $69e5
+	ld hl, SavedDataSourceCursorTileBases ; $69e5
 	add_hl_a ; $69e8
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
-	ld hl, SavedDataSourceCursorSpriteTaskTable0 ; $69ef
+	ld hl, SavedDataSourceCursorPositions ; $69ef
 	add a ; $69f2
 	add_hl_a ; $69f3
 	ld a, [hl+] ; $69f8
@@ -484,14 +484,25 @@ SavedDataSourceCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-SavedDataSourceCursorSpriteTaskTable0:
+SavedDataSourceCursorPositions:
 	; $6a43, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $0c, $60, $4d, $60, $3e ; 0x00
-SavedDataSourceCursorSpriteTaskTable1:
-	; $6a4f, 47 bytes (bytes:16)
-	db $00, $10, $20, $40, $30, $40, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
-	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
-	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
+SavedDataSourceCursorTileBases:
+	; $6a4f, 6 bytes (bytes:6)
+	db $00, $10, $20, $40, $30, $40 ; 0x00
+Unused_3b_SavedDataSourceCursorWideTemplate:
+	; $6a55, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 DrawSavedDataSourceGrid:
 	wram_bank WRAM_SCREEN ; $6a7e
 	ld b, $00 ; $6a84
@@ -516,9 +527,9 @@ DrawSavedDataSourceGrid:
 	add a ; $6aa7
 	add a ; $6aa8
 	add a ; $6aa9
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6aaa
+	ld bc, wSaveSlotSummaries ; $6aaa
 	add_bc_a ; $6aad
-	ld hl, $0001 ; $6ab2
+	ld hl, SLOTSUM_PALETTE ; $6ab2
 	add hl, bc ; $6ab5
 	ld a, [hl] ; $6ab6
 	ld d, $04 ; $6ab7
@@ -637,14 +648,14 @@ DrawSavedDataSourceCaption:
 	add a ; $6b98
 	add a ; $6b99
 	add a ; $6b9a
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6b9b
+	ld bc, wSaveSlotSummaries ; $6b9b
 	add_bc_a ; $6b9e
-	ld hl, $0000 ; $6ba3
+	ld hl, SLOTSUM_CHAR ; $6ba3
 	add hl, bc ; $6ba6
 	ld a, [hl] ; $6ba7
-	cp $3f ; $6ba8
+	cp CHAR_EMPTY_SLOT ; $6ba8
 	jr z, .emptySlot ; $6baa
-	ld hl, $0003 ; $6bac
+	ld hl, SLOTSUM_NAME ; $6bac
 	add hl, bc ; $6baf
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6bb0
 	call DrawNameWithDiacritics_3b ; $6bb3
@@ -656,7 +667,7 @@ DrawSavedDataSourceCaption:
 	push bc ; $6bc1
 	push de ; $6bc2
 	push hl ; $6bc3
-	ld hl, $0002 ; $6bc4
+	ld hl, SLOTSUM_LEVEL ; $6bc4
 	add hl, bc ; $6bc7
 	ld a, [hl] ; $6bc8
 	ld h, $00 ; $6bc9
@@ -672,7 +683,7 @@ DrawSavedDataSourceCaption:
 	push bc ; $6bda
 	push de ; $6bdb
 	push hl ; $6bdc
-	ld hl, $000f ; $6bdd
+	ld hl, SLOTSUM_HOURS ; $6bdd
 	add hl, bc ; $6be0
 	ld a, [hl] ; $6be1
 	ld h, $00 ; $6be2
@@ -684,7 +695,7 @@ DrawSavedDataSourceCaption:
 	pop de ; $6bef
 	pop bc ; $6bf0
 	pop af ; $6bf1
-	ld hl, $000e ; $6bf2
+	ld hl, SLOTSUM_MINUTES ; $6bf2
 	add hl, bc ; $6bf5
 	ld a, [hl] ; $6bf6
 	ld h, $00 ; $6bf7

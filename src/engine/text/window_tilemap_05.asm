@@ -315,10 +315,10 @@ Unused_05_CopyTilemapRowsAnimated:
 	sub $07 ; $4290
 	jr c, .undoSubtract ; $4292
 	jr z, .undoSubtract ; $4294
-	jr .storeRemainder ; $4296
+	jr .gotRemainder ; $4296
 .undoSubtract:
 	add $07 ; $4298
-.storeRemainder:
+.gotRemainder:
 	ld e, a ; $429a
 	ld a, c ; $429b
 	ld c, $00 ; $429c

@@ -235,12 +235,12 @@ TennisMachineRoomInitScript_14:
 	ret ; $42af
 MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42b0
-	jr z, .win ; $42b3
+	jr z, .placeAttendant ; $42b3
 	script_null_script ACTOR_PARTNER ; $42b5
 	script_wait_frames 10 ; $42ba
 	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $42c1
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $42cc
-.win:
+.placeAttendant:
 	script_set_position ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, 45.0, 41.0 ; $42d3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, FACE_DOWN ; $42de
 	script_fade_in 6 ; $42e5
@@ -312,7 +312,7 @@ ComputeMachineCourtProgress:
 	script_copy_scene_rect 30, 56, 48, 56, 2, 2 ; $43ef
 	ld a, MACHINECOURTSTAGE_MASTER ; $43fe
 	ld b, a ; $4400
-	ld a, $01 ; $4401
+	ld a, MGRECORD_MACHINE ; $4401
 	farcall ReadMinigameRecord ; $4403
 	push_wram_bank WRAM_SOUND ; $4406
 	ld hl, wMinigameRecordValue ; $440f
@@ -344,7 +344,7 @@ TennisMachineRoomNpc05_14:
 	cp MACHINECOURTSTAGE_EXPERT ; $4447
 	jr c, .prompt ; $4449
 	push_wram_bank WRAM_SOUND ; $444b
-	ld a, $01 ; $4454
+	ld a, MGRECORD_MACHINE ; $4454
 	farcall ReadMinigameRecord ; $4456
 	ld hl, wMinigameRecordValue ; $4459
 	ld a, [hl+] ; $445c
@@ -360,18 +360,18 @@ TennisMachineRoomNpc05_14:
 	farcall ScriptCloseDialogueWindow ; $447d
 	script_wait_frames 5 ; $4480
 	and a ; $4487
-	jr nz, .accepted ; $4488
+	jr nz, .declined ; $4488
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
 	farcall AdvanceDialogueTextCursor ; $448d
 	ld a, [wMapSceneStage] ; $4490
 	and a ; $4493
-	jr nz, .declined ; $4494
+	jr nz, .nodAndStart ; $4494
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4496
-.declined:
+.nodAndStart:
 	script_set_anim ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, ANIM_NOD ; $449b
 	script_wait_idle ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $44a2
 	jr nz, MachineCourtStartLevelScene ; $44a7
-.accepted:
+.declined:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
 	jr z, .done ; $44ac
 	script_set_text Text_MachineAttendantPracticeCleared ; $44ae

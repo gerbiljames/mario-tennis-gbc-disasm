@@ -93,16 +93,16 @@ wShotAimDeltaDepth:: dw
 wShotAimAngle:: dw
 	ds 2
 
-; [16-bit] Base lateral aim spread for a rally shot's target, set at match init: $0220 singles, $0320 doubles. ComputeAimBaseOffset returns (this + |wCharPosDepth|/8) scaled by the character's aim stat $df69, which ComputeShotTargetX adds to or subtracts from wBallX before clamping
+; [16-bit] Base lateral aim spread for a rally shot's target, set at match init: $0220 singles, $0320 doubles. ComputeAimBaseOffset returns (this + |wCharPosDepth|/8) scaled by the character's aim stat wCharAimOffsetScale, which ComputeShotTargetX adds to or subtracts from wBallX before clamping
 wAimSpreadBase:: dw
 
-; [16-bit] Match camera current X (projected space). SnapCameraTo sets it with the target; UpdateMatchCamera eases it toward wMatchCameraTargetX and derives wCameraOffsetX from it
+; [16-bit] Match camera current X (projected space). SnapCameraTo_08 sets it with the target; UpdateMatchCamera eases it toward wMatchCameraTargetX and derives wCameraOffsetX from it
 wMatchCameraX:: dw
 
 ; [16-bit] Match camera current Y (projected space); eased toward wMatchCameraTargetY, shifted into wCameraOffsetY
 wMatchCameraY:: dw
 
-; [16-bit] Match camera target X, written by SetCameraTarget and SnapCameraTo (and bank $0d's SnapCameraTo_0d), and every frame from wBallGroundProjX while wCameraFollowBall is set. UpdateMatchCamera steps wMatchCameraX toward it by $0040, snapping on overshoot
+; [16-bit] Match camera target X, written by SetCameraTarget and SnapCameraTo_08 (and bank $0d's SnapCameraTo_0d), and every frame from wBallGroundProjX while wCameraFollowBall is set. UpdateMatchCamera steps wMatchCameraX toward it by $0040, snapping on overshoot
 wMatchCameraTargetX:: dw
 
 ; [16-bit] Match camera target Y; same writers and stepping as wMatchCameraTargetX
@@ -114,7 +114,7 @@ wBallRelCharX:: dw
 ; [16-bit] Ball depth minus the current character's depth, signed. Read by CheckBallContactWindow, CheckBallInSwingRange, Unused_08_ComputeBallEtaToChar (divided by wBallVelocityDepth for frames to arrival), PredictBallLateralOffset and the AI
 wBallRelCharDepth:: dw
 
-; [16-bit] Ball height minus the current character's height, signed; the reach/height gates compare |value| with the character's reach field $df70
+; [16-bit] Ball height minus the current character's height, signed; the reach/height gates compare |value| with the character's reach field wCharReachHeight
 wBallRelCharHeight:: dw
 	ds 2
 
@@ -235,7 +235,7 @@ wCurrentShotType:: db
 ; [8-bit] Recoil kind for the shot in flight, from the ShotTypePresets_07 record (ApplyShotTypePresets); ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it
 wShotRecoilVariant:: db
 
-; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's $df4b clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and WeakenShotByCharge / BoostShotByCharge; $3f (fully charged) picks the special hit flash over the normal spark
+; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's wCharSwingFrames clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and WeakenShotByCharge / BoostShotByCharge; $3f (fully charged) picks the special hit flash over the normal spark
 wShotChargeLevel:: db
 
 ; [8-bit] The striker's wCharQuickSwing copied by ExecuteShot, so the shot keeps the value the swing started with
@@ -250,7 +250,7 @@ wSpecialShotFlag:: db
 ; [8-bit] Set to 1 by each ExecuteShotPower* variant, cleared by ExecuteShot at every swing: marks the power version of topspin/slice/flat. Write-only
 wLastShotWasPowerShot:: db
 
-; [8-bit] When 1, the shot's lateral aim offsets are negated. ExecuteShot sets it to the parity of four conditions (hitter state $df15 == 6, == $0a, $df94 nonzero, wRallyLength == 0). LoadShotPlacementEntry negates the placement angle offset with it, and every court bank's SetBallVelocityFromEntry6 negates the entry's angle delta before adding it to wShotAimAngle
+; [8-bit] When 1, the shot's lateral aim offsets are negated. ExecuteShot sets it to the parity of four conditions (hitter wCharSwingAnim == 6, == $0a, wCharMirrorAttrMask nonzero, wRallyLength == 0). LoadShotPlacementEntry negates the placement angle offset with it, and every court bank's SetBallVelocityFromEntry6 negates the entry's angle delta before adding it to wShotAimAngle
 wShotAimMirror:: db
 
 ; [8-bit] Frames left of the ball-bounce dust effect (starts at $14)
@@ -271,7 +271,7 @@ wCourtSurfaceFriction:: db
 ; [8-bit] Court vertical restitution (8-bit fraction) from the same per-court record; ApplyCourtBounceDamping multiplies the height velocity by it
 wCourtSurfaceBounce:: db
 
-; [8-bit] Set to 1 when the ball reaches a character's body (which also sets bit 2 of $df50 and forces the character to state 0). HandleBallTouchCharEvent consumes it: sound $77, the effect, ApplyBallTouchOutcome. Cleared by ResetPointState
+; [8-bit] Set to 1 when the ball reaches a character's body (which also sets bit 2 of wCharBallReachFlags and forces the character to state 0). HandleBallTouchCharEvent consumes it: sound $77, the effect, ApplyBallTouchOutcome. Cleared by ResetPointState
 wBallTouchCharFlag:: db
 
 ; [8-bit] Character index (0-3) the ball touched, from wCharIndex. DrawBallTouchCharEffect maps it through CharIndexToWramBank for the screen position; its low bit gives the point outcome's +1/-1 side sign
@@ -352,19 +352,19 @@ wMatchExitRequest:: db
 ; [8-bit] Set by InitViewFlipPreference when the court view is fixed instead of following the saved preference (link matches, game modes $08/$09, any minigame); the pause menus then lock the view row
 wCourtViewLocked:: db
 
-; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
+; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo_08 and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
 wCameraFollowBall:: db
 
 ; [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters
 wStandingShadowsEnabled:: db
 
-; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of $c8cf), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set
+; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of wPrevCourtPos), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set
 wCourtViewFlipped:: db
 
 ; [8-bit] Nonzero makes RunChangeoverSequence walk the characters to their new ends without the CHANGE ENDS banner. Set at the start of a set, at set end and when a tiebreak begins; cleared by the sequence
 wChangeoverSkipBanner:: db
 
-; [8-bit] Set to 1 when bit 1 of the game-count state $c8cf toggles (players change ends). RunChangeoverSequence then shows court banner $00, walks the characters over and clears it; also cleared at match setup
+; [8-bit] Set to 1 by CheckServerEndChanged when bit 1 of wPrevCourtPos toggles (players change ends). RunChangeoverSequence then shows court banner $00, walks the characters over and clears it; also cleared at match setup
 wChangeEndsPending:: db
 
 ; [8-bit] Nonzero when wCourtViewFlipped changed on the last UpdateViewFlipState (old minus new). RefreshCourtAfterEndChange returns at once on 0; ReinitPointAfterPause uses it to decide whether to redraw the court
@@ -433,7 +433,7 @@ wTilemapDirtyFlag:: db
 ; [16-bit] Base position of the match scoreboard layout (low byte x, high byte y), added to each element's fixed offset. Set by PrepareScoreboardGfx ($0002 or $0202 by wScoreboardLayout) and ShowMatchScoreboardScreen (low byte 5). Read by the ScoreboardCaption_* handlers, DrawScoreboard, the pip drawers, and (shifted left 3) DrawScoreboardSprites and DrawScoreboardModeTitle
 wScoreboardOrigin:: dw
 
-; [8-bit] Rules/description page list to display, set by ShowMatchRulesPages (from wRulesSetsIndex/wRulesGamesIndex), ShowTrainingRulesPages (wCurrentMinigameStoryMatch + 1) and the minigame variant (drill id * 3 + wMinigameLevel). Indexes a 4-byte-per-record page list (MatchRulesPageLists and siblings)
+; [8-bit] Rules/description page list to display, set by ShowMatchRulesPages (from wRulesSetsIndex/wRulesGamesIndex), ShowTrainingRulesPages (wCurrentMatchIndex) and the minigame variant (drill id * 3 + wMinigameLevel). Indexes a 4-byte-per-record page list (MatchRulesPageLists and siblings)
 wRulesPageListIndex:: db
 
 ; [8-bit] menu_def record the pause menu system should run, set before every RunMatchMenu / RunMatchQuitMenu / RunStoryMenu call in bank $06. GetMatchMenuItemCount and GetStoryMenuItemCount index their 8-byte menu_def tables with it
@@ -448,7 +448,7 @@ wRulesFirstPageTextId:: dw
 ; [16-bit] Text id of the caption above the rules pages: a fixed base plus wRulesPageListIndex ($2c25 + n match, $2c2b + n training, $2c47 + n minigame); passed to DrawMenuCaptionWindow
 wRulesTitleTextId:: dw
 
-; [16-bit] Saved best score for the current minigame, copied from the record ReadMinigameRecord returns (WRAM bank 7, $de00). Drawn instead of wMinigamesTargetScore when $c7bc marks a high-score attempt; bank $0d compares the current score against it
+; [16-bit] Saved best score for the current minigame, copied from the record ReadMinigameRecord returns (WRAM bank 7, $de00). Drawn instead of wMinigamesTargetScore when wMinigameHighScoreMode marks a high-score attempt; bank $0d compares the current score against it
 wMinigameHighScore:: dw
 
 ; [8-bit] Flags for the built-in debug test match; $fe from Unused_07_RunDebugTestMatch. Bit 1 makes character setup call OverrideCharStatsForDebug; bit 0 makes the frame-stepping loop skip the input wait

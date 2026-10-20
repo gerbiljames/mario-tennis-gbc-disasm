@@ -38,7 +38,7 @@ Unused_1a_DrawCharViewerCursorSprite:
 	jr nz, .secondRow ; $6c32
 	ld a, [wCharViewerCursor] ; $6c34
 	rlca ; $6c37
-	ld_hl_indexed DrawCharViewerCursorSpriteTable0 ; $6c38
+	ld_hl_indexed CharViewerGridCursorCoords ; $6c38
 	ld a, [hl+] ; $6c3f
 	ld d, [hl] ; $6c40
 	ld e, a ; $6c41
@@ -46,7 +46,7 @@ Unused_1a_DrawCharViewerCursorSprite:
 .secondRow:
 	ld a, [wCharViewerCursor] ; $6c44
 	rlca ; $6c47
-	ld_hl_indexed DrawCharViewerCursorSpriteTable1 ; $6c48
+	ld_hl_indexed CharViewerLowerRowCursorCoords ; $6c48
 	ld a, [hl+] ; $6c4f
 	ld d, [hl] ; $6c50
 	ld e, a ; $6c51
@@ -62,13 +62,13 @@ Unused_1a_DrawCharViewerCursorSprite:
 	sprite_attr_tile OAM_BANK1 | 5, $82 ; $6c61
 	call QueueSprite ; $6c65
 	ret ; $6c68
-DrawCharViewerCursorSpriteTable0:
+CharViewerGridCursorCoords:
 	; $6c69, 44 bytes (bytes:16)
 	db $50, $38, $50, $40, $50, $48, $50, $50, $50, $58, $50, $60, $50, $68, $50, $70 ; 0x00
 	db $50, $78, $50, $80, $50, $88, $58, $38, $58, $40, $58, $48, $58, $50, $58, $58 ; 0x10
 	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88 ; 0x20
-DrawCharViewerCursorSpriteTable1:
-	INCLUDE "data/engine/menus/debug/DrawCharViewerCursorSpriteTable1.asm" ; $6c95, 10 bytes (bytes:2)
+CharViewerLowerRowCursorCoords:
+	INCLUDE "data/engine/menus/debug/CharViewerLowerRowCursorCoords.asm" ; $6c95, 10 bytes (bytes:2)
 Unused_1a_RunCharViewerInputLoop:
 	call Unused_1a_DrawCharViewerCharSprite ; $6c9f
 	wram_bank WRAM_SCENE ; $6ca2
@@ -86,9 +86,9 @@ Unused_1a_RunCharViewerInputLoop:
 	jp nz, .confirm ; $6cc1
 	bit PADB_B, a ; $6cc4
 	jp nz, .exit ; $6cc6
-	bit 3, a ; $6cc9
+	bit PADB_START, a ; $6cc9
 	jp nz, .prevPose ; $6ccb
-	bit 2, a ; $6cce
+	bit PADB_SELECT, a ; $6cce
 	jp nz, .nextPose ; $6cd0
 	jr Unused_1a_RunCharViewerInputLoop ; $6cd3
 .up:
@@ -282,19 +282,11 @@ Unused_1a_RefreshCharViewerSelection:
 	ld a, [wCharViewerSavedCursor] ; $6e73
 	cp $0b ; $6e76
 	jr nc, .secondRowCursor ; $6e78
-	add $28 ; $6e7a
-	ld l, a ; $6e7c
-	adc $d1 ; $6e7d
-	sub l ; $6e7f
-	ld h, a ; $6e80
+	ld_hl_indexed wScreenAttrmap + 9 * TILEMAP_WIDTH + 8 ; $6e7a
 	jr .markCursorAttr ; $6e81
 .secondRowCursor:
 	sub $0b ; $6e83
-	add $48 ; $6e85
-	ld l, a ; $6e87
-	adc $d1 ; $6e88
-	sub l ; $6e8a
-	ld h, a ; $6e8b
+	ld_hl_indexed wScreenAttrmap + 10 * TILEMAP_WIDTH + 8 ; $6e85
 .markCursorAttr:
 	wram_bank WRAM_COURT_PLANES ; $6e8c
 	ld a, $08 ; $6e92
@@ -305,11 +297,7 @@ Unused_1a_RefreshCharViewerSelection:
 	call QueueVRAMCopy ; $6e9d
 	wram_bank WRAM_SCENE ; $6ea0
 	ld a, [wCharViewerPalette] ; $6ea6
-	add $c8 ; $6ea9
-	ld l, a ; $6eab
-	adc $d1 ; $6eac
-	sub l ; $6eae
-	ld h, a ; $6eaf
+	ld_hl_indexed wScreenAttrmap + 14 * TILEMAP_WIDTH + 8 ; $6ea9
 	wram_bank WRAM_COURT_PLANES ; $6eb0
 	ld a, $08 ; $6eb6
 	ld [hl], a ; $6eb8

@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.helpers import TOOLS, assemble, needs_rgbasm
+from tests.helpers import BASEROM, ROOT, TOOLS, assemble, needs_rgbasm, needs_rom
 
 import lz
 
@@ -39,6 +39,28 @@ class LzRoundTrip(unittest.TestCase):
         stream = lz.compress(bytes(range(200)) * 3)
         with self.assertRaises(ValueError):
             lz.decompress(stream[:-3], 0, len(stream) - 3)
+
+    @needs_rom
+    def test_reencodes_rom_streams_exactly(self):
+        """compress() is the original encoder: a real stream's decoded data
+        encodes back to the stream itself, pad byte included."""
+        rom = BASEROM.read_bytes()
+        streams = []
+        for line in (ROOT / "data.manifest").read_text().splitlines():
+            f = line.split()
+            if f and "/lz_" in f[0]:
+                streams.append((f[0], int(f[1], 16), int(f[2], 16)))
+        longest = max(streams, key=lambda t: t[2])
+        for path, off, n in streams[:4] + [longest]:
+            stream = rom[off:off + n]
+            try:
+                data, used = lz.decompress(stream, 0, n)
+            except ValueError:
+                used = None
+            if used != n:
+                self.skipTest("baserom.gbc is not the USA ROM data.manifest describes")
+            with self.subTest(path):
+                self.assertEqual(lz.compress(data), stream)
 
 
 class TileImages(unittest.TestCase):
@@ -116,7 +138,8 @@ class TileImages(unittest.TestCase):
             tiles = bytes([0xFF, 0x00] * 8) + bytes([0x00, 0xFF] * 8)   # tile 0 colour 1, tile 1 colour 2
             tm = bytes([0, 1, 0x90, 0] * 8)                                # 4 wide x 8 rows
             am = bytes([0x0A, 0x2B, 0x08, 0x00] * 8)                       # bank 1 pal 2 / flipped pal 3 / glyph id / bank 0
-            pal = "".join(f"\tdw $0000, $001f, $03e0, $7c00 ; pal {i}\n" for i in range(8))
+            pal = "".join(f"\tpalette  0, 0, 0,  31, 0, 0,   0,31, 0,   0, 0,31 ; pal {i}\n"
+                          for i in range(8))
             paths = [os.path.join(d, n) for n in ("Map.bin", "Attr.bin", "Tiles.bin", "Pal.asm")]
             for pth, data in zip(paths, (tm, am, tiles, pal)):
                 with open(pth, "wb" if isinstance(data, bytes) else "w") as f:
@@ -130,6 +153,7 @@ class TileImages(unittest.TestCase):
             self.assertEqual(img.getpixel((8, 0)), (0, 255, 0))       # tile 1, pal 3 colour 2 = green
             self.assertEqual(img.getpixel((16, 0)), (224, 224, 224))  # a glyph-buffer id: grey
             self.assertEqual(img.getpixel((24, 0)), (224, 224, 224))  # VRAM bank 0: grey
+            self.assertTrue(any(len(set(c)) > 1 for _n, c in img.convert("RGB").getcolors()))
 
     def test_plain_image_grows_when_drawn_past_its_end(self):
         rng = random.Random(5)
@@ -184,7 +208,7 @@ class TileImages(unittest.TestCase):
             with open(grid) as f:
                 gtext = f.read()
             with open(grid, "w") as f:
-                f.write(gtext.replace("tilemap_row $", "tilemap_row $ff, $", 1).replace("$ff, $", "$ff,$", 0))
+                f.write(gtext.replace("tilemap_row $", "tilemap_row $ff, $", 1))
             stale = os.path.join(out, "bank_000", "old.bin")
             with open(stale, "wb") as f:
                 f.write(b"x")
@@ -224,6 +248,29 @@ class TileImages(unittest.TestCase):
             self.gfx.encode(lzp[:-4] + ".png", lzp)
             self.assertEqual(lz.decompress(Path(lzp).read_bytes(), 0)[0], data)
 
+    def test_png_without_text_chunks_uses_the_manifest(self):
+        from PIL import Image
+        rng = random.Random(7)
+        frame = bytes(rng.getrandbits(8) for _ in range(15 * 16))
+        font = bytes(rng.getrandbits(8) | 1 for _ in range(102 * 16))
+        with tempfile.TemporaryDirectory() as d:
+            man = Path(d) / "data.manifest"
+            man.write_text("sprites/Frame.bin 000000 f0 gfx:3x4+3\n"
+                           "text/lz_Font.bin 0000f0 10 gfx\n")
+            for rel, data in (("sprites/Frame.bin", frame), ("text/lz_Font.bin", font)):
+                binp = Path(d) / "data" / rel
+                binp.parent.mkdir(parents=True)
+                before = lz.compress(data) if self.gfx.is_lz(binp) else data
+                binp.write_bytes(before)
+                png = binp.with_suffix(".png")
+                self.gfx.decode(binp, png, "3x4+3" if "Frame" in rel else None)
+                img = Image.open(png)
+                img.load()
+                img.save(png)
+                self.assertNotIn("tiles", Image.open(png).text)
+                self.gfx.encode(png, binp, man)
+                self.assertEqual(binp.read_bytes(), before)
+
     def test_rejects_partial_tiles(self):
         with tempfile.TemporaryDirectory() as d:
             p = os.path.join(d, "d_4000.bin")
@@ -233,15 +280,25 @@ class TileImages(unittest.TestCase):
 
 
 class SoundScript(unittest.TestCase):
-    """The channel-script codec: two-byte commands, the four-byte snd_call
-    with a byte-offset target, and the rendering round trip."""
+    """The channel-script codec: the four-byte header, two-byte commands,
+    the four-byte snd_call with a byte-offset target, and the rendering
+    round trip."""
+
+    HEADER = bytes([0x06, 0x00, 0x09, 0x00])
 
     def test_round_trip(self):
         import snd
-        track = bytes([0xa0, 0x1e, 0x41, 0x08, 0xfd, 0xf0, 0x2f, 0x04, 0xb2, 0xf0,
-                       0xac, 0x03, 0x10, 0x00, 0xff, 0xff, 0x53, 0x02, 0xad, 0x00])
+        track = self.HEADER + bytes([
+            0xa0, 0x1e, 0x41, 0x08, 0xfd, 0xf0, 0x2f, 0x04, 0xb2, 0xf0,
+            0xa3, 0x25, 0xa4, 0xfa, 0xa3, 0xfe, 0xaa, 0x23,
+            0xac, 0x03, 0x1c, 0x00, 0xff, 0xff, 0x53, 0x02, 0xad, 0x00])
         text = snd.render(track, "T", "pulse")
+        self.assertIn("snd_header 6, $00, 9, $00", text)
         self.assertIn("snd_note C#, 4, 8", text)
+        self.assertIn("snd_vibrato 2, 10", text)
+        self.assertIn("snd_gate -6", text)
+        self.assertIn("snd_vibrato_off", text)
+        self.assertIn("snd_echo 2, 3", text)
         self.assertIn("snd_call 3, .call0", text)
         self.assertIn(".call0:", text)
         self.assertEqual(snd.encode(text), track)
@@ -250,9 +307,13 @@ class SoundScript(unittest.TestCase):
     def test_rejects_bad_scripts(self):
         import snd
         with self.assertRaises(ValueError):
-            snd.decode(bytes([0xa0, 0x1e, 0xff]))          # odd length
+            snd.decode(bytes([0x06, 0x00, 0x09]))          # no whole header
         with self.assertRaises(ValueError):
-            snd.decode(bytes([0xac, 0x01, 0x03, 0x00, 0xff, 0xff]))   # target mid-command
+            snd.decode(self.HEADER + bytes([0xa0, 0x1e, 0xff]))          # odd length
+        with self.assertRaises(ValueError):
+            snd.decode(self.HEADER + bytes([0xac, 0x01, 0x07, 0x00, 0xff, 0xff]))   # target mid-command
+        with self.assertRaises(ValueError):
+            snd.decode(self.HEADER + bytes([0xac, 0x01, 0x00, 0x00, 0xff, 0xff]))   # target in the header
 
 
 @needs_rgbasm
@@ -331,6 +392,17 @@ class MacroBytes(unittest.TestCase):
         self.assertEqual(out[:3], bytes.fromhex("11e005"))
         self.assertEqual(out[3:5], bytes.fromhex("e005"))
         self.assertEqual(out[5:8], bytes.fromhex("e7" "e005"))  # rst $20; db bit<<5, byte
+
+    def test_sound_macros_match_the_codec(self):
+        sys.path.insert(0, str(TOOLS))
+        import snd
+        rows = ("\tsnd_track T\nT:\n\tsnd_header $a0, $02, 15, $03\n\tsnd_vibrato 13, 30\n"
+                "\tsnd_vibrato_off\n\tsnd_gate -9\n\tsnd_gate 5\n\tsnd_wait 12\n"
+                "\tsnd_switch $f2\n\tsnd_echo 3, 8\n\tsnd_quarter_tone 1\n\tsnd_tempo 7\n"
+                "\tsnd_envelope 14, $20\n\tsnd_end")
+        want = snd.encode(rows.replace("T:\n", ""))
+        self.assertEqual(want[:6], bytes.fromhex("a002" "0f03" "a3df"))
+        self.assertEqual(self.bytes_of(rows)[:len(want)], want)
 
 
 if __name__ == "__main__":

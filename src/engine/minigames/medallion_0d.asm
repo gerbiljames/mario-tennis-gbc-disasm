@@ -45,7 +45,7 @@ DrawTreasureBoxSprite:
 	call QueueSprite16 ; $5c8e
 	ld a, [wMinigameSceneActor + MGACTOR_SUBTYPE] ; $5c91
 	ld b, a ; $5c94
-	ld hl, wTreasureBoxState ; $5c95
+	ld hl, wTreasureBoxAnimTimer ; $5c95
 	ld a, [hl] ; $5c98
 	inc [hl] ; $5c99
 	and $1f ; $5c9a
@@ -74,14 +74,16 @@ MinigameConfig_MedallionMatch:
 	twin_named init_minigame_medallion_match, InitMinigame_MedallionMatch ; $5cfa
 MinigameHooks_MedallionMatch:
 	; $5d0c, 16 bytes (mode_hooks)
-	dw MedallionMatchHook_PerFrame ; record 0
-	dw MedallionMatchHook_PointStart ; record 1
-	dw MedallionMatchHook_PointEnd ; record 2
-	dw MedallionMatchHook_MinigameStart ; record 3
-	dw MedallionMatchHook_BallHit ; record 4
-	dw MedallionMatchHook_Bounce ; record 5
-	dw MedallionMatchHook_RallyTick ; record 6
-	dw MedallionMatchHook_Draw ; record 7
+	table_width 2
+	dw MedallionMatchHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw MedallionMatchHook_PointStart ; MODEHOOK_POINT_START
+	dw MedallionMatchHook_PointEnd ; MODEHOOK_POINT_END
+	dw MedallionMatchHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw MedallionMatchHook_BallHit ; MODEHOOK_BALL_HIT
+	dw MedallionMatchHook_Bounce ; MODEHOOK_BOUNCE
+	dw MedallionMatchHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw MedallionMatchHook_Draw ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 MedallionMatchHook_MinigameStart:
 	call SpawnMedallionMatchTargets ; $5d1c
 	ld a, $01 ; $5d1f
@@ -310,14 +312,16 @@ InitMinigame_FruitFantasy:
 	ret ; $5f60
 MinigameHooks_FruitFantasy:
 	; $5f61, 16 bytes (mode_hooks)
-	dw FruitFantasyHook_PerFrame ; record 0
-	dw FruitFantasyHook_PointStart ; record 1
-	dw FruitFantasyHook_PointEnd ; record 2
-	dw FruitFantasyHook_MinigameStart ; record 3
-	dw FruitFantasyHook_BallHit ; record 4
-	dw FruitFantasyHook_Bounce ; record 5
-	dw FruitFantasyHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw FruitFantasyHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw FruitFantasyHook_PointStart ; MODEHOOK_POINT_START
+	dw FruitFantasyHook_PointEnd ; MODEHOOK_POINT_END
+	dw FruitFantasyHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw FruitFantasyHook_BallHit ; MODEHOOK_BALL_HIT
+	dw FruitFantasyHook_Bounce ; MODEHOOK_BOUNCE
+	dw FruitFantasyHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 FruitFantasyHook_MinigameStart:
 	ret ; $5f71
 FruitFantasyHook_PerFrame:

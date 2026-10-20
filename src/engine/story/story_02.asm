@@ -25,11 +25,11 @@ Unused_02_ValidateN64TransferRecord:
 .returnZero:
 	xor a ; $4064
 	ret ; $4065
-InitCa00RecordFromCharId:
+InitMatchRecordFromCharId:
 	ld a, b ; $4066
 	push af ; $4067
 	ld a, c ; $4068
-	call GetCa00RecordPtr ; $4069
+	call GetMatchRecordPtr ; $4069
 	ld l, c ; $406c
 	ld h, b ; $406d
 	pop af ; $406e
@@ -44,7 +44,7 @@ InitCa00RecordFromCharId:
 	cp $0f ; $407f
 	jr z, .skip ; $4081
 	push hl ; $4083
-	ld c, $04 ; $4084
+	ld c, CHAR_RECORD_SIZE / 16 ; $4084
 	call ClearMemory16 ; $4086
 	pop de ; $4089
 	ld a, b ; $408a
@@ -52,19 +52,15 @@ InitCa00RecordFromCharId:
 	swap a ; $408d
 	add a ; $408f
 	add a ; $4090
-	add $00 ; $4091
-	ld l, a ; $4093
-	adc $c9 ; $4094
-	sub l ; $4096
-	ld h, a ; $4097
-	ld c, $04 ; $4098
+	ld_hl_indexed wStoryMain ; $4091
+	ld c, CHAR_RECORD_SIZE / 16 ; $4098
 	call CopyMemoryFast ; $409a
 	ret ; $409d
 .skip:
 	ret ; $409e
 .mainCharacter:
 	push hl ; $409f
-	ld c, $04 ; $40a0
+	ld c, CHAR_RECORD_SIZE / 16 ; $40a0
 	call ClearMemory16 ; $40a2
 	pop de ; $40a5
 	ld a, [wStoryMainName] ; $40a6
@@ -80,17 +76,17 @@ InitCa00RecordFromCharId:
 	ret ; $40b5
 .emptySlot:
 	push hl ; $40b6
-	ld c, $04 ; $40b7
+	ld c, CHAR_RECORD_SIZE / 16 ; $40b7
 	call ClearMemory16 ; $40b9
 	pop de ; $40bc
-	ld hl, $000b ; $40bd
+	ld hl, CHARREC_CHAR ; $40bd
 	add hl, de ; $40c0
 	ld [hl], $ff ; $40c1
 	ret ; $40c3
 .fromRoster:
 	push af ; $40c4
 	push hl ; $40c5
-	ld c, $04 ; $40c6
+	ld c, CHAR_RECORD_SIZE / 16 ; $40c6
 	call ClearMemory16 ; $40c8
 	pop de ; $40cb
 	pop af ; $40cc
@@ -99,9 +95,9 @@ InitCa00RecordFromCharId:
 	call GetStoryCharacterRecordPtr ; $40cf
 	ld b, a ; $40d2
 	push de ; $40d3
-	ld a, $0f ; $40d4
+	ld a, CHARREC_PHYSICS ; $40d4
 	add_de_a ; $40d6
-	ld c, $1d ; $40db
+	ld c, CHARREC_EXP - CHARREC_PHYSICS ; $40db
 .copyLoop:
 	ld a, [hl+] ; $40dd
 	ld [de], a ; $40de
@@ -111,21 +107,21 @@ InitCa00RecordFromCharId:
 	pop de ; $40e3
 	ld a, b ; $40e4
 	call RemapExtendedCharId ; $40e5
-	ld hl, $000b ; $40e8
+	ld hl, CHARREC_CHAR ; $40e8
 	add hl, de ; $40eb
 	ld [hl], a ; $40ec
 	ld a, b ; $40ed
 	call GetCharPaletteIndex ; $40ee
-	ld hl, $000c ; $40f1
+	ld hl, CHARREC_PALETTE ; $40f1
 	add hl, de ; $40f4
 	ld [hl], a ; $40f5
-	ld hl, $000b ; $40f6
+	ld hl, CHARREC_CHAR ; $40f6
 	add hl, de ; $40f9
 	ld a, [hl] ; $40fa
-	ld hl, $001b ; $40fb
+	ld hl, Text_NameAlex ; $40fb
 	add_hl_a ; $40fe
 	push hl ; $4103
-	ld hl, $0000 ; $4104
+	ld hl, CHARREC_NAME ; $4104
 	add hl, de ; $4107
 	ld d, h ; $4108
 	ld e, l ; $4109
@@ -197,16 +193,12 @@ GetPlayerRecordPtr:
 	ret z ; $420a
 	ld c, $40 ; $420b
 	ret ; $420d
-GetCa00RecordPtr:
+GetMatchRecordPtr:
 	and $03 ; $420e
 	swap a ; $4210
 	add a ; $4212
 	add a ; $4213
-	add $00 ; $4214
-	ld c, a ; $4216
-	adc $ca ; $4217
-	sub c ; $4219
-	ld b, a ; $421a
+	ld_bc_indexed wPlayer1Main ; $4214
 	ret ; $421b
 InitStoryModeState:
 	call CacheStorySlotSummaries ; $421c
@@ -226,7 +218,7 @@ InitStoryModeState:
 	ld a, [ApOptTextSpeed]
 	sub 1
 	jr nc, .storeMessageSpeed
-	ld a, $01 ; $423f
+	ld a, MSGSPEED_NORMAL ; $423f
 .storeMessageSpeed:
 	ld [wMessageSpeed], a ; $4241
 	farcall InitDefaultMatchSettings ; $4244
@@ -437,7 +429,7 @@ InitPlayerRecordFromTemplate:
 	push bc ; $43ae
 	ld l, c ; $43af
 	ld h, b ; $43b0
-	ld c, $04 ; $43b1
+	ld c, CHAR_RECORD_SIZE / 16 ; $43b1
 	call ClearMemory16 ; $43b3
 	pop bc ; $43b6
 	ld a, d ; $43b7
@@ -452,12 +444,8 @@ InitPlayerRecordFromTemplate:
 	ld [hl], a ; $43c8
 	ld a, d ; $43c9
 	push de ; $43ca
-	add $1b ; $43cb
-	ld l, a ; $43cd
-	adc $00 ; $43ce
-	sub l ; $43d0
-	ld h, a ; $43d1
-	ld a, $00 ; $43d2
+	ld_hl_indexed Text_NameAlex ; $43cb
+	ld a, CHARREC_NAME ; $43d2
 	add c ; $43d4
 	ld e, a ; $43d5
 	ld d, b ; $43d6
@@ -482,11 +470,11 @@ InitPlayerRecordFromTemplate:
 	add hl, bc ; $43fb
 	ld [hl], a ; $43fc
 	pop hl ; $43fd
-	ld a, $30 ; $43fe
+	ld a, CHARREC_PHYSICS_TEMPLATE ; $43fe
 	add c ; $4400
 	ld e, a ; $4401
 	ld d, b ; $4402
-	ld c, $0c ; $4403
+	ld c, CHARREC_EQUIPMENT - CHARREC_PHYSICS_TEMPLATE ; $4403
 .copyLoop:
 	ld a, [hl+] ; $4405
 	ld [de], a ; $4406

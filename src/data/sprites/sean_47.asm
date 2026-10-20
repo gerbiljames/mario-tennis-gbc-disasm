@@ -320,7 +320,7 @@ SeanSpriteFrame54:
 SeanSpriteFrame55:
 	INCBIN "data/sprites/SeanSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-SeanSpriteFramesUnused:
+Unused_47_SeanSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/SeanSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/SeanSpriteFrame01.bin" ; $7740, 240 bytes

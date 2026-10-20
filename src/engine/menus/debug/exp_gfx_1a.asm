@@ -263,14 +263,14 @@ Unused_1a_LoadCharViewerGridTilemap:
 	ld de, wDecompBuffer ; $69f4
 	call DecompressData ; $69f7
 	ld hl, wDecompBuffer ; $69fa
-	ld bc, $0240 ; $69fd
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $69fd
 	call Unused_1a_CopyBank1ToBank3Buffer ; $6a00
 	wram_bank WRAM_STAGING ; $6a03
 	ld hl, CharViewerGridTilemap1 ; $6a09
 	ld de, wDecompBuffer ; $6a0c
 	call DecompressData ; $6a0f
 	ld hl, wDecompBuffer ; $6a12
-	ld bc, $0240 ; $6a15
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $6a15
 	call Unused_1a_CopyBank1ToBank2Buffer ; $6a18
 	wram_bank WRAM_COURT_PLANES ; $6a1b
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 1 ; $6a21
@@ -429,14 +429,14 @@ Unused_1a_LoadCharViewerScreenGfx:
 	ld de, wDecompBuffer ; $6b8c
 	call DecompressData ; $6b8f
 	ld hl, wDecompBuffer ; $6b92
-	ld bc, $0240 ; $6b95
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $6b95
 	call Unused_1a_CopyBank1ToBank3Buffer ; $6b98
 	wram_bank WRAM_STAGING ; $6b9b
 	ld hl, CharViewerScreenGfx2 ; $6ba1
 	ld de, wDecompBuffer ; $6ba4
 	call DecompressData ; $6ba7
 	ld hl, wDecompBuffer ; $6baa
-	ld bc, $0240 ; $6bad
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $6bad
 	call Unused_1a_CopyBank1ToBank2Buffer ; $6bb0
 	wram_bank WRAM_COURT_PLANES ; $6bb3
 	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 1 ; $6bb9

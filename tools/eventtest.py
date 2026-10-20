@@ -2,7 +2,7 @@
 """Play two builds through the story under the same inputs and report where
 the game's own events stop agreeing.
 
-The dynamic half of `make shift-test`: build a padded ROM with
+What `make event-test` runs: build a padded ROM with
 `tools/shifttest.py --out padded.gbc` (which writes padded.sym beside it),
 then
 
@@ -62,7 +62,7 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from banksrc import bank_lines, build_addresses, holders, placed_original
+from banksrc import SYM, bank_lines, build_addresses, holders, placed_original, read_sym
 from reach import MNEMONICS
 import routes
 
@@ -108,10 +108,8 @@ SYNC = {"pad": ("ReadJoypad", 0x0317), "frame": [("AdvanceFrame", 0x2644), ("Wai
 
 def symbols(path):
     out = {}
-    for line in Path(path).read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line)
-        if m:
-            out.setdefault(m.group(3), (int(m.group(1), 16), int(m.group(2), 16)))
+    for bank, addr, name in read_sym(path):
+        out.setdefault(name, (bank, addr))
     return out
 
 
@@ -183,14 +181,14 @@ PLUGINS = []
 # labels hooked for an event of their own (a list, talk or char record, an
 # interrupt), never logged as entered
 EVENT_LABELS = {"VBlankHandler", "LCDStatHandler", "TimerHandler", "SerialHandler",
-                "InitLocationActors", "RunNpcInteraction", "InitCa00RecordFromCharId"}
+                "InitLocationActors", "RunNpcInteraction", "InitMatchRecordFromCharId"}
 
 
 class Game:
     def __init__(self, rom, sym, save, cap, skip=(), learn_irq=False, extra=None):
         from pyboy import PyBoy
         self.sym = symbols(sym)
-        base = symbols(ROOT / "build" / "mariotennis.sym")
+        base = symbols(SYM)
         # under the sweep's run directory when there is one, so a worker
         # killed on a timeout does not leave its copy behind in /tmp
         self.tmp = Path(tempfile.mkdtemp(prefix="eventtest-", dir=os.environ.get("EVENTTEST_TMP")))
@@ -268,7 +266,7 @@ class Game:
         add(self.sym["RunNpcInteraction"],
             lambda: self.log("talk", f"{label_at(mem[w['wStoryLocationBank']], mem[w['wMapNpcScriptsPtr']] | mem[w['wMapNpcScriptsPtr'] + 1] << 8)}"
                                      f"/{rf.A:02x}"))
-        add(self.sym["InitCa00RecordFromCharId"], lambda: self.log("char", f"{rf.B:02x}"))
+        add(self.sym["InitMatchRecordFromCharId"], lambda: self.log("char", f"{rf.B:02x}"))
         self.sync_points = set(hooks)
         self.names = {}
         for name in code_labels():
@@ -990,6 +988,8 @@ def main():
             res = chunk(rom, sym, args.save, state_file, int(si), int(li), args.frames, args.cap, skip)
             Path(out).write_text(json.dumps(res))
         return 0
+    if not args.rom:
+        ap.error("the rom argument is required")
     try:
         import pyboy  # noqa: F401
     except ImportError:

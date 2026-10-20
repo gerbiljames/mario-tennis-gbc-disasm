@@ -98,31 +98,31 @@ DrawCharGridSlotIcons:
 CharGridSlotIconListPtrs_38:
 	; $59ba, 12 bytes (records:2)
 	table_width 2
-	dw CharGridSlotIconList0 ; record 0
-	dw CharGridSlotIconList1 ; record 1
-	dw CharGridSlotIconList2 ; record 2
-	dw CharGridSlotIconList2 ; record 3
-	dw CharGridSlotIconList3 ; record 4
-	dw CharGridSlotIconList3 ; record 5
+	dw CharGridSlotIconsExhibitionSingles ; record 0
+	dw CharGridSlotIconsExhibitionDoubles ; record 1
+	dw CharGridSlotIconsLinkSingles ; record 2
+	dw CharGridSlotIconsLinkSingles ; record 3
+	dw CharGridSlotIconsLinkDoubles ; record 4
+	dw CharGridSlotIconsLinkDoubles ; record 5
 	assert_table_length NUM_CHARSELECTMODES
-CharGridSlotIconList0:
+CharGridSlotIconsExhibitionSingles:
 	; $59c6, 9 bytes (bytes:4)
 	db $01, $00, $cc, $d0 ; 0x00
 	db $02, $01, $2c, $d1 ; 0x04
 	db $00 ; 0x08
-CharGridSlotIconList1:
+CharGridSlotIconsExhibitionDoubles:
 	; $59cf, 17 bytes (bytes:4)
 	db $01, $00, $cb, $d0 ; 0x00
 	db $03, $01, $cf, $d0 ; 0x04
 	db $02, $01, $2b, $d1 ; 0x08
 	db $04, $01, $2f, $d1 ; 0x0c
 	db $00 ; 0x10
-CharGridSlotIconList2:
+CharGridSlotIconsLinkSingles:
 	; $59e0, 9 bytes (bytes:4)
 	db $01, $00, $cc, $d0 ; 0x00
 	db $02, $00, $2c, $d1 ; 0x04
 	db $00 ; 0x08
-CharGridSlotIconList3:
+CharGridSlotIconsLinkDoubles:
 	; $59e9, 17 bytes (bytes:4)
 	db $01, $00, $cb, $d0 ; 0x00
 	db $03, $01, $cf, $d0 ; 0x04
@@ -198,7 +198,7 @@ BuildCharUnlockFlags:
 .flagLoop:
 	ld a, b ; $5a96
 	add a ; $5a97
-	ld hl, CharUnlockFlagsTable0 ; $5a98
+	ld hl, CharUnlockSaveFlags ; $5a98
 	add_hl_a ; $5a9b
 	ld a, [hl+] ; $5aa0
 	ld d, [hl] ; $5aa1
@@ -240,7 +240,7 @@ BuildCharUnlockFlags:
 .charLoop:
 	ld a, b ; $5ade
 	add a ; $5adf
-	ld hl, CharUnlockFlagsTable1 ; $5ae0
+	ld hl, CharUnlockCheatFlags ; $5ae0
 	add_hl_a ; $5ae3
 	ld a, [hl+] ; $5ae8
 	ld d, [hl] ; $5ae9
@@ -270,7 +270,7 @@ BuildCharUnlockFlags:
 	ld [wCurrentStorySlot], a ; $5b0e
 	pop_wram_bank ; $5b11
 	ret ; $5b16
-CharUnlockFlagsTable0:
+CharUnlockSaveFlags:
 	; $5b17, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_UNLOCKED_SAMMI
 	dw $ffff
@@ -281,7 +281,7 @@ CharUnlockFlagsTable0:
 	dw SAVEFLAG_UNLOCKED_SEAN
 	dw SAVEFLAG_UNLOCKED_FAY
 	dw SAVEFLAG_UNLOCKED_MARK
-CharUnlockFlagsTable1:
+CharUnlockCheatFlags:
 	; $5b29, 26 bytes (flag_ids)
 	flag_id FLAG_CHEAT_UNLOCK_0
 	flag_id FLAG_CHEAT_UNLOCK_1
@@ -332,7 +332,7 @@ BuildCharGridFromUnlockFlags:
 ; sitting immediately in front of that routine's own
 ; CharGridFromUnlockFlagsTable. Slots $09-$0e are zero and the rest are
 ; $01. Nothing loads its address.
-CharGridUnlockMask_38:
+Unused_38_CharGridUnlockMask:
 	; $5b6f, 36 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
@@ -377,7 +377,7 @@ AddCreatedCharsToCharGrid:
 .slotLoop:
 	ld a, [hl] ; $5be9
 	cp $ff ; $5bea
-	jr z, .storeCount ; $5bec
+	jr z, .emptySlot ; $5bec
 	push hl ; $5bee
 	ld hl, wCharGridEntries + 36 ; $5bef
 	ld a, b ; $5bf2
@@ -401,7 +401,7 @@ AddCreatedCharsToCharGrid:
 	add a ; $5c08
 	ld [de], a ; $5c09
 	dec hl ; $5c0a
-	ld de, $0020 ; $5c0b
+	ld de, CREATED_CHAR_RECORD_SIZE ; $5c0b
 	add hl, de ; $5c0e
 	push hl ; $5c0f
 	ld hl, wCharGridEntries + 36 ; $5c10
@@ -428,14 +428,14 @@ AddCreatedCharsToCharGrid:
 	inc de ; $5c2c
 	ld [de], a ; $5c2d
 	dec hl ; $5c2e
-	ld de, $0020 ; $5c2f
+	ld de, CREATED_CHAR_RECORD_SIZE ; $5c2f
 	add hl, de ; $5c32
 	inc b ; $5c33
-	jr .done ; $5c34
-.storeCount:
-	ld de, $0040 ; $5c36
+	jr .nextSlot ; $5c34
+.emptySlot:
+	ld de, 2 * CREATED_CHAR_RECORD_SIZE ; $5c36
 	add hl, de ; $5c39
-.done:
+.nextSlot:
 	ld a, c ; $5c3a
 	inc a ; $5c3b
 	ld c, a ; $5c3c

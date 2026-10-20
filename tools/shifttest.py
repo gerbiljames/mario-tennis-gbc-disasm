@@ -29,6 +29,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from banksrc import SYM, read_sym  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 BANK = 0x4000
 ROM0_PAD_BEFORE = "CallHLInBankA:\n"     # first label after the fixed header
@@ -85,12 +88,7 @@ def pad_tree(tree, pad, free, only=None):
 
 
 def symbols(path):
-    out = {}
-    for line in path.read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line)
-        if m and int(m.group(2), 16) < 0x8000:
-            out[m.group(3)] = (int(m.group(1), 16), int(m.group(2), 16))
-    return out
+    return {name: (bank, addr) for bank, addr, name in read_sym(path, rom_only=True)}
 
 
 def displacements(sym_a, sym_b, padded):
@@ -165,11 +163,10 @@ def main():
         print(r.stdout[-2000:], r.stderr[-2000:])
         sys.exit("the padded tree does not build")
 
-    sym = (tree / "build" / "mariotennis.sym").read_text()
-    rom0_start = int(re.search(r"00:([0-9a-f]{4}) CallHLInBankA", sym).group(1), 16)
+    sym = symbols(tree / "build" / "mariotennis.sym")
+    rom0_start = sym["CallHLInBankA"][1]
     a, b = rom.read_bytes(), (tree / "mariotennis.gbc").read_bytes()
-    steps = displacements(symbols(ROOT / "build" / "mariotennis.sym"),
-                          symbols(tree / "build" / "mariotennis.sym"), padded)
+    steps = displacements(symbols(SYM), sym, padded)
     moved, carried, odd = compare(a, b, padded, steps, rom0_start - args.pad)
 
     # A high byte one up with no low byte beside it is the adc half of a

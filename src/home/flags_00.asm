@@ -442,7 +442,7 @@ ClearGameFlagCmd:
 	ret ; $2577
 Start:
 	and a ; $2578
-	cp $11 ; $2579
+	cp BOOTUP_A_CGB ; $2579
 	ld a, $00 ; $257b
 	jr nz, .store ; $257d
 	inc a ; $257f
@@ -560,7 +560,7 @@ AdvanceFrame:
 	call RunFrameTasks ; $2648
 	ld a, [wSpriteBufferPage] ; $264b
 	and $cf ; $264e
-	xor $05 ; $2650
+	xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2) ; $2650
 	ld [wSpriteBufferPage], a ; $2652
 	push_wram_bank WRAM_SOUND ; $2655
 	call ResumeBGMAfterJingle ; $265e

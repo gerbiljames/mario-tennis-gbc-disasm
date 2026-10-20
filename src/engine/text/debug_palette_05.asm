@@ -25,12 +25,12 @@ DebugDrawColorComponents:
 	push de ; $6971
 	ld h, $00 ; $6972
 	ld l, a ; $6974
-	ld de, wDebugMenuWindowId ; $6975
+	ld de, wDebugColorRedDigits ; $6975
 	ld a, $03 ; $6978
 	call FormatDecimalNumber ; $697a
 	ld h, $00 ; $697d
 	ld l, b ; $697f
-	ld de, wDebugWarpCursorRow ; $6980
+	ld de, wDebugColorGreenDigits ; $6980
 	ld a, $03 ; $6983
 	call FormatDecimalNumber ; $6985
 	ld h, $00 ; $6988
@@ -42,15 +42,11 @@ DebugDrawColorComponents:
 	ld a, e ; $6994
 	add a ; $6995
 	add e ; $6996
-	add $00 ; $6997
-	ld l, a ; $6999
-	adc $c7 ; $699a
-	sub l ; $699c
-	ld h, a ; $699d
+	ld_hl_indexed wDebugColorRedDigits ; $6997
 	ld [hl], $0d ; $699e
 	xor a ; $69a0
 	ld [wDebugColorDigitsEnd], a ; $69a1
-	ld hl, wDebugMenuWindowId ; $69a4
+	ld hl, wDebugColorRedDigits ; $69a4
 	ld_cell de, $01, $02 ; $69a7
 	ld a, [wDebugColorEditorWindowId] ; $69aa
 	call WriteStringToWindow ; $69ad
@@ -87,17 +83,17 @@ RunDebugColorEditor:
 	dec e ; $69f4
 	jr .wrapComponent ; $69f5
 .checkRight:
-	bit 4, a ; $69f7
+	bit PADB_RIGHT, a ; $69f7
 	jr z, .checkUp ; $69f9
 	inc e ; $69fb
 	jr .wrapComponent ; $69fc
 .checkUp:
-	bit 6, a ; $69fe
+	bit PADB_UP, a ; $69fe
 	jr z, .checkDown ; $6a00
 	ld d, $01 ; $6a02
 	jr .getSelectedBGPaletteColorPtr ; $6a04
 .checkDown:
-	bit 7, a ; $6a06
+	bit PADB_DOWN, a ; $6a06
 	jr z, .advanceFrame ; $6a08
 	ld d, $ff ; $6a0a
 	jr .getSelectedBGPaletteColorPtr ; $6a0c
@@ -207,17 +203,17 @@ RunDebugPaletteViewer:
 	dec d ; $6acd
 	jr .wrapCursor ; $6ace
 .checkRight:
-	bit 4, a ; $6ad0
+	bit PADB_RIGHT, a ; $6ad0
 	jr z, .checkUp ; $6ad2
 	inc d ; $6ad4
 	jr .wrapCursor ; $6ad5
 .checkUp:
-	bit 6, a ; $6ad7
+	bit PADB_UP, a ; $6ad7
 	jr z, .checkDown ; $6ad9
 	dec e ; $6adb
 	jr .wrapCursor ; $6adc
 .checkDown:
-	bit 7, a ; $6ade
+	bit PADB_DOWN, a ; $6ade
 	jr z, .wrapCursor ; $6ae0
 	inc e ; $6ae2
 	jr .wrapCursor ; $6ae3
@@ -328,9 +324,9 @@ Unused_05_WriteStringToTilemap:
 	ld [de], a ; $6b88
 	inc hl ; $6b89
 	ld a, [hl] ; $6b8a
-	cp $de ; $6b8b
+	cp TX_DAKUTEN ; $6b8b
 	jr z, .applyDiacritic ; $6b8d
-	cp $df ; $6b8f
+	cp TX_HANDAKUTEN ; $6b8f
 	jr nz, .nextCell ; $6b91
 .applyDiacritic:
 	push hl ; $6b93
@@ -375,9 +371,9 @@ Unused_05_WriteStringToTilemapAlt:
 	ld [de], a ; $6bbf
 	inc hl ; $6bc0
 	ld a, [hl] ; $6bc1
-	cp $de ; $6bc2
+	cp TX_DAKUTEN ; $6bc2
 	jr z, .applyDiacritic ; $6bc4
-	cp $df ; $6bc6
+	cp TX_HANDAKUTEN ; $6bc6
 	jr nz, .nextCell ; $6bc8
 .applyDiacritic:
 	push hl ; $6bca
@@ -471,9 +467,9 @@ Unused_05_WriteStringToTilemapStreamed:
 	ld [de], a ; $6c48
 	inc hl ; $6c49
 	ld a, [hl] ; $6c4a
-	cp $de ; $6c4b
+	cp TX_DAKUTEN ; $6c4b
 	jr z, .applyDiacritic ; $6c4d
-	cp $df ; $6c4f
+	cp TX_HANDAKUTEN ; $6c4f
 	jr nz, .nextCell ; $6c51
 .applyDiacritic:
 	push hl ; $6c53
@@ -525,24 +521,24 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [wTextArgShortTextWriteIndex], a ; $6c97
 	ld [wTextArgShortTextMeasureIndex], a ; $6c9a
 	ld a, e ; $6c9d
-	ld [wGlyphVramDest], a ; $6c9e
+	ld [wTextRowStartPtr], a ; $6c9e
 	ld a, d ; $6ca1
-	ld [wGlyphVramDest + 1], a ; $6ca2
+	ld [wTextRowStartPtr + 1], a ; $6ca2
 	ld b, $ff ; $6ca5
 	ld a, c ; $6ca7
 	cpl ; $6ca8
 	inc a ; $6ca9
 	ld c, a ; $6caa
-	ld [wTextRowIndent], a ; $6cab
+	ld [wTextRowPitchNeg], a ; $6cab
 	call FetchDialogueText ; $6cae
 	ld hl, wTextBuffer ; $6cb1
 	pop_wram_bank ; $6cb4
 .charLoop:
 	ld a, [hl] ; $6cb9
 	or a ; $6cba
-	jr z, .checkWramBank ; $6cbb
+	jr z, .resetTextArgs ; $6cbb
 	cp $03 ; $6cbd
-	jr z, .checkWramBank ; $6cbf
+	jr z, .resetTextArgs ; $6cbf
 	inc hl ; $6cc1
 	push af ; $6cc2
 	ld a, [hl] ; $6cc3
@@ -560,9 +556,9 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [de], a ; $6cd6
 	inc hl ; $6cd7
 	ld a, [hl] ; $6cd8
-	cp $de ; $6cd9
+	cp TX_DAKUTEN ; $6cd9
 	jr z, .applyDiacritic ; $6cdb
-	cp $df ; $6cdd
+	cp TX_HANDAKUTEN ; $6cdd
 	jr nz, .nextCell ; $6cdf
 .applyDiacritic:
 	push hl ; $6ce1
@@ -593,10 +589,10 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld e, l ; $6cfe
 	pop hl ; $6cff
 	jr .charLoop ; $6d00
-.checkWramBank:
+.resetTextArgs:
 	push_wram_bank WRAM_TEXT ; $6d02
 	xor a ; $6d0b
-	ld [wTextRowIndent], a ; $6d0c
+	ld [wTextRowPitchNeg], a ; $6d0c
 	ld [wTextArgStringWriteIndex], a ; $6d0f
 	ld [wTextArgStringMeasureIndex], a ; $6d12
 	ld [wTextArgNumberWriteIndex], a ; $6d15

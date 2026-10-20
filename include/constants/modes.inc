@@ -1,7 +1,8 @@
 ; --- Drill result messages (wDrillMessageId, DrillMessageTextIds_0b) ---
 ; Named after the text each id shows. QueueDrillResultMessage adds an offset
-; in b when the other side served, to reach the same outcome's other
-; wording. Ids 72-86 point past text bank $25 (docs/bugs.md) and get no name.
+; in b (DRILLWORDING_*) when the other side served, to reach the same
+; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md)
+; and get no name.
 def DRILLMSG_NONE equ $00 ; ShowQueuedDrillMessage substitutes DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE
 def DRILLMSG_HIDE equ $ff ; show nothing
 	const_def $01
@@ -100,15 +101,21 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_I_RETURNED_YOUR_SERVE_BEFORE_IT_BOUNCED_YOUR_POINT     ; $6b
 	const DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE                      ; $6c
 
+; b for QueueDrillResultMessage and its siblings: "you" wording to "I" wording
+def DRILLWORDING_SAME    equ 0
+def DRILLWORDING_SERVICE equ DRILLMSG_SERVICE_ACE_I_GET_A_POINT - DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $06
+def DRILLWORDING_NET     equ DRILLMSG_NICE_VOLLEY_I_GET_A_POINT - DRILLMSG_NICE_VOLLEY_YOU_GET_A_POINT ; $0d
+def DRILLWORDING_STROKE  equ DRILLMSG_NICE_STROKE_MY_POINT - DRILLMSG_NICE_STROKE_YOUR_POINT ; $07
+
 ; --- Training drill definitions (drill_def rows, read by StartDrillFromDefinition) ---
 	const_def
 	const DRILLDEF_OPPONENT ; $00 -> wMatchOpponentChar
 	const DRILLDEF_COURT    ; $01 -> wCurrentlyUsedCourt
 	const DRILLDEF_CHARS    ; $02 -> wOnCourtCharCount
 	const DRILLDEF_MODE     ; $03 -> wGameMode
-	const DRILLDEF_MATCH    ; $04 -> wCurrentMinigameStoryMatch + 1, under MATCHLIST_TRAINING
+	const DRILLDEF_MATCH    ; $04 -> wCurrentMatchIndex, under MATCHLIST_TRAINING
 	const DRILLDEF_BGM      ; $05 -> wMatchBGM
-def DRILLDEF_PLAYER       equ $07 ; the player's character, for InitCa00RecordFromCharId
+def DRILLDEF_PLAYER       equ $07 ; the player's character, for InitMatchRecordFromCharId
 def DRILLDEF_HOOKS        equ $08 ; word: SetModeHookTable
 def DRILLDEF_POINT_TABLE  equ $0a ; word: SetMinigamePointTable
 def DRILLDEF_INIT         equ $0c ; word: called if nonzero
@@ -236,7 +243,7 @@ def LESSON_PASSED equ $00
 	const GAMEMODE_DREAM_MATCH    ; $0a story Dream Match against the Mario cast
 def NUM_GAMEMODES equ const_value
 
-; --- Match-list category (wCurrentMinigameStoryMatch high byte) ---
+; --- Match-list category (wCurrentMatchList) ---
 ; The 16-bit selector is (category, index). 0/1: the index is a row of
 ; SinglesMatchSettingsTable_0a / DoublesMatchSettingsTable_0a; 2: the index is
 ; a MINIGAME_* id (written by every drill and minigame setup path).
@@ -245,7 +252,7 @@ def NUM_GAMEMODES equ const_value
 	const MATCHLIST_DOUBLES  ; $01
 	const MATCHLIST_TRAINING ; $02
 
-; --- Story match ids (wCurrentMinigameStoryMatch low byte under
+; --- Story match ids (wCurrentMatchIndex under
 ; MATCHLIST_SINGLES / MATCHLIST_DOUBLES): the row of the match settings table.
 ; The ranked matches count down to #1. $0f, $14 and $15 are table rows no
 ; documented match uses (two grass practice matches and an empty row).
@@ -275,7 +282,7 @@ def NUM_GAMEMODES equ const_value
 	const STORYMATCH_DREAM_INTENSE ; $17
 	const STORYMATCH_DREAM_HARD    ; $18
 
-; --- Training/minigame ids (wCurrentMinigameStoryMatch low byte, $c8f7) ---
+; --- Training/minigame ids (wCurrentMatchIndex, $c8f7) ---
 ; The argument of RunTrainingDrillByID, the single entry point for
 ; MATCHLIST_TRAINING: below $12 it indexes DrillDefinitionPtrs, otherwise
 ; StartMinigameByID indexes MinigameConfigTable with id - $12 ($24 is
@@ -346,6 +353,25 @@ def NUM_GAMEMODES equ const_value
 	const MARIOGAME_TWO_ON_ONE      ; $08 Bowser
 def NUM_MARIOGAMES equ const_value
 
+; --- Minigame record id (a to ReadMinigameRecord, UpdateMinigameRecord,
+; GetDefaultMinigameRecordValue and CheckUnlockCondition) ---
+; The word index into the SAVEBLOCK_MINIGAME_RECORDS block: the wall and
+; machine records are per story slot, the Mario-minigame records sit in slot
+; 0's block for every slot.
+	const_def
+	const MGRECORD_WALL    ; $00
+	const MGRECORD_MACHINE ; $01
+def MGRECORD_BOO_BLAST       equ const_value + MARIOGAME_BOO_BLAST
+def MGRECORD_SHOOTING_STAR   equ const_value + MARIOGAME_SHOOTING_STAR
+def MGRECORD_PERFECT_SHOT    equ const_value + MARIOGAME_PERFECT_SHOT
+def MGRECORD_TARGET_SHOT     equ const_value + MARIOGAME_TARGET_SHOT
+def MGRECORD_FRUIT_FANTASY   equ const_value + MARIOGAME_FRUIT_FANTASY
+def MGRECORD_BANANA_BUNCH    equ const_value + MARIOGAME_BANANA_BUNCH
+def MGRECORD_TREASURE_BOX    equ const_value + MARIOGAME_TREASURE_BOX
+def MGRECORD_MEDALLION_MATCH equ const_value + MARIOGAME_MEDALLION_MATCH
+def MGRECORD_TWO_ON_ONE      equ const_value + MARIOGAME_TWO_ON_ONE
+def NUM_MGRECORDS equ const_value + NUM_MARIOGAMES
+
 ; --- Minigame level (wMinigameLevel, level - 1) ---
 def MINIGAMELEVEL_HIGH_SCORE equ $02 ; a Mario minigame's third level sets wMinigameHighScoreMode
 
@@ -353,7 +379,7 @@ def MINIGAMELEVEL_HIGH_SCORE equ $02 ; a Mario minigame's third level sets wMini
 ; UpdateMinigameActor copies each live record into wMinigameSceneActor, runs
 ; its handler on that copy, and copies it back.
 	rsreset
-def MGACTOR_FLAGS    rb ; $00 bit 0 enabled, bit 1 has a handler
+def MGACTOR_FLAGS    rb ; $00 MGACTORB_*
 def MGACTOR_SUBTYPE  rb ; $01 per minigame: the treasure box type, the medallion index
 def MGACTOR_STATE    rb ; $02 the handler's RST00 sub-state
 def MGACTOR_TIMER    rb ; $03
@@ -365,12 +391,16 @@ def MGACTOR_SCREEN_Y rw ; $0c
 def MGACTOR_HANDLER  rw ; $0e
 def MGACTOR_SIZE equ _RS
 	ASSERT MGACTOR_SIZE == $10
+; MGACTOR_FLAGS bits
+	const_def
+	const MGACTORB_ENABLED     ; $00 UpdateMinigameActor runs the handler
+	const MGACTORB_HAS_HANDLER ; $01 set with MGACTOR_HANDLER. Never read
 
 ; --- Minigame target fields (wMinigameTargets, wMinigameTargetWork) ---
 ; UpdateMinigameTarget copies each live record into wMinigameTargetWork, runs
 ; its script, movement, draw and hit checks there, and copies it back.
 	rsreset
-def MGTARGET_FLAGS        rb ; $00 bit 0 live, bit 1 moving toward the goal, bit 2 hit by the ball
+def MGTARGET_FLAGS        rb ; $00 MGTARGETB_*
 def MGTARGET_KIND         rb ; $01 0-3: sprite, deflection, wMinigameHitTargetType
 def MGTARGET_HIT_TIMER    rb ; $02 $20 on a hit, counts down; the low nibble shakes the sprite
 def MGTARGET_SCRIPT_DELAY rb ; $03 frames before the script runs again
@@ -381,3 +411,8 @@ def MGTARGET_GOAL_X       rw ; $0a MoveMinigameTargetTowardGoal steps $10 a fram
 def MGTARGET_GOAL_DEPTH   rw ; $0c
 def MGTARGET_SIZE equ _RS
 	ASSERT MGTARGET_SIZE == 14
+; MGTARGET_FLAGS bits
+	const_def
+	const MGTARGETB_LIVE   ; $00
+	const MGTARGETB_MOVING ; $01 moving toward the goal
+	const MGTARGETB_HIT    ; $02 hit by the ball

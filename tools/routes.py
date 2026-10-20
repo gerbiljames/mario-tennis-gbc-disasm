@@ -82,8 +82,9 @@ def scan():
         ws = [m.group(1) for line in body(tree) for m in [re.match(r"\tdw (\w+)", line)] if m]
         return ws[k] if len(ws) > k else None
 
-    trees = {int(m.group(1), 16): re.sub(r"^DataPtr_", "", m.group(2)) for line in lines
-             for m in [re.match(r"\tstory_location \$([0-9a-f]+), \w+, (\w+),", line)] if m}
+    locs = consts.constants()
+    trees = {locs[m.group(1)]: re.sub(r"^DataPtr_", "", m.group(2)) for line in lines
+             for m in [re.match(r"\tstory_location (\w+), \w+, (\w+),", line)] if m}
     prefix = {re.sub(r"MapScripts(_\w\w)?$", "", t): loc for loc, t in trees.items()}
 
     def loc_of(name):

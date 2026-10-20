@@ -1,12 +1,12 @@
-CompareEquippedRacketToMinigameFlag:
+CheckEquipmentUnchanged:
 	ld a, [wMapScratch + 8] ; $5005
 	ld b, a ; $5008
 	ld a, [wStoryMainEquipment] ; $5009
 	cp b ; $500c
-	jr z, .failed ; $500d
+	jr z, .unchanged ; $500d
 	ld a, $00 ; $500f
 	ret ; $5011
-.failed:
+.unchanged:
 	ld a, $ff ; $5012
 	ret ; $5014
 RepairCounterCheckEquipChanged:
@@ -14,9 +14,9 @@ RepairCounterCheckEquipChanged:
 	ld [wStoryModeShowLocationName], a ; $5016
 	script_fade_in 8 ; $5019
 	call WaitFadeEnd ; $501e
-	call CompareEquippedRacketToMinigameFlag ; $5021
+	call CheckEquipmentUnchanged ; $5021
 	cp $ff ; $5024
-	jp nz, .repairRacket ; $5026
+	jp nz, .equipmentChanged ; $5026
 	ld a, [wMapScratch + 10] ; $5029
 	ld hl, Text_RepairCounterAlreadyUsingRacket ; $502c
 	add_hl_a ; $502f
@@ -29,8 +29,8 @@ RepairCounterCheckEquipChanged:
 	and a ; $504c
 	jp nz, .noChange ; $504d
 	ld a, [wMapScratch + 10] ; $5050
-	jp RepairCounterServiceMenu.loop ; $5053
-.repairRacket:
+	jp RepairCounterServiceMenu.handleChoice ; $5053
+.equipmentChanged:
 	ld a, [wStoryMainEquipment] ; $5056
 	ld [wMapScratch + 8], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
@@ -70,7 +70,7 @@ RepairCounterReopenServiceMenu:
 	xor a ; $50dd
 	ld [wStoryModeShowLocationName], a ; $50de
 	script_set_text Text_RepairCounterPlayerEquipped ; $50e1
-	ld hl, $00e6 ; $50e7
+	ld hl, Text_RacketLarge ; $50e7
 	call PushShortTextArg_0e ; $50ea
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $50f0
@@ -163,11 +163,11 @@ ActorScript_0e_05:
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0010
 .pace:
-	as_target_rel -2.0, 0.0
+	as_move_by -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_target_rel 2.0, 0.0
+	as_move_by 2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 75
@@ -362,17 +362,17 @@ ComputeMarioWorldProgressIndex:
 	jr nz, .doublesStage ; $5560
 	ld a, $00 ; $5562
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $5564
-	jr z, .loop ; $5567
+	jr z, .store ; $5567
 	inc a ; $5569
-.loop:
+.store:
 	ld [wMapSceneStage], a ; $556a
 	ret ; $556d
 .doublesStage:
 	ld a, $02 ; $556e
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $5570
-	jr z, .loop ; $5573
+	jr z, .store ; $5573
 	inc a ; $5575
-	jr .loop ; $5576
+	jr .store ; $5576
 	ret ; $5578
 MarioWorldArrivalSingles:
 	test_flag FLAG_DOUBLES ; $5579
@@ -426,14 +426,14 @@ MarioWorldArrivalSingles:
 	script_move_target ACTOR_MARIO_WORLD_TOAD, 13.0, 19.0 ; $5694
 	script_wait_move ACTOR_MARIO_WORLD_PEACH ; $569f
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $56a4
-	jr z, .done ; $56a7
+	jr z, .welcome ; $56a7
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $56a9
 	script_wait_frames 20 ; $56b0
 	ld a, EXIT_PEACHS_CASTLE_FLY_HOME ; $56b7
 	ld [wUnusedExitTriggerIdMirror], a ; $56b9
 	ld [wStoryModeExitTriggerRequest], a ; $56bc
 	ret ; $56bf
-.done:
+.welcome:
 	call MarioWorldWelcomeCutscene ; $56c0
 	script_set_speed ACTOR_MARIO_WORLD_BOWSER, 1.0 ; $56c3
 	script_set_speed ACTOR_MARIO_WORLD_BALLOON_ANGRY, 1.0 ; $56cb

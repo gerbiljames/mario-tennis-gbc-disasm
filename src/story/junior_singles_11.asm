@@ -123,11 +123,11 @@ JuniorClassCourtSinglesNpc08_11:
 	farcall ScriptCloseDialogueWindow ; $6a2e
 	script_wait_frames 5 ; $6a31
 	and a ; $6a38
-	jr z, .done ; $6a39
+	jr z, .offerAccepted ; $6a39
 .speak:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a3b
 	ret ; $6a40
-.done:
+.offerAccepted:
 	farcall AdvanceDialogueTextCursor ; $6a41
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a44
 	farcall RunDialogueYesNoPrompt ; $6a49
@@ -270,10 +270,10 @@ JuniorClassCourtSinglesDNpc0A_11:
 	farcall AdvanceDialogueTextCursor ; $6cd6
 .speak:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6cd9
-	jr nz, .done ; $6cdc
+	jr nz, .wonDoublesFinal ; $6cdc
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cde
 	ret ; $6ce3
-.done:
+.wonDoublesFinal:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, ANIM_NOD ; $6ce4
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6ceb
 	script_set_text Text_AllieJuniorCourtServiceAceTreat ; $6cf0
@@ -304,7 +304,7 @@ JuniorClassCourtSinglesInitScript_11:
 	jr nz, .islandOpen
 	ap_pass AP_ARC_SINGLES, 2
 	jr nz, .placeActors
-	jr .done
+	jr .juniorChampion
 .storyComplete:
 	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d3f
@@ -325,7 +325,7 @@ JuniorClassCourtSinglesInitScript_11:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, ActorScript_11_47 ; $6d7a
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 63.0, 41.0 ; $6d85
 	ret ; $6d90
-.done:
+.juniorChampion:
 	ld hl, JuniorClassCourtSinglesNpcScriptsA_11 ; $6d91
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d94
 	farcall WriteStoryStateWord ; $6d97
@@ -431,8 +431,8 @@ JuniorClassCourtSinglesEntry0eScene:
 JuniorClassCourtSinglesEntry0dScene:
 	xor a ; $6e9e
 	ld [wStoryModeShowLocationName], a ; $6e9f
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
-	sub $01 ; $6ea5
+	ld a, [wCurrentMatchIndex] ; $6ea2
+	sub STORYMATCH_JUNIOR_4 ; $6ea5
 	jumptable a ; $6ea7
 	dw JuniorClassCourtSinglesEntry0dScene.wonRank4 ; $6ea9 jumptable
 	dw JuniorClassCourtSinglesEntry0dScene.wonRank3 ; $6eab jumptable

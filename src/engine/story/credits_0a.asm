@@ -35,7 +35,7 @@ CheckBallHitsMinigameTargetAlt:
 	bit 7, h ; $6e36
 	jr nz, .done ; $6e38
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6e3a
-	set 2, [hl] ; $6e3d
+	set MGTARGETB_HIT, [hl] ; $6e3d
 .done:
 	ret ; $6e3f
 EndingCutsceneLocationList:
@@ -128,7 +128,7 @@ RunEndingCreditsSequence:
 .nextScene:
 	jr .sceneLoop ; $6f01
 .done:
-	farcall ShowStoryResultScreen ; $6f03
+	farcall ShowFinalCreditsCard ; $6f03
 	script_fade_out 8 ; $6f06
 	call WaitFadeEnd ; $6f0b
 	xor a ; $6f0e
@@ -150,7 +150,7 @@ FreezeAllActors:
 	jp z, .next ; $6f2c
 	ld hl, ACTORF_FLAGS ; $6f2f
 	add hl, de ; $6f32
-	set 0, [hl] ; $6f33
+	set ACTORFLAGB_PAUSED, [hl] ; $6f33
 	set 1, [hl] ; $6f35
 .next:
 	ld hl, ACTOR_SIZE ; $6f37
@@ -161,7 +161,7 @@ FreezeAllActors:
 	jp nz, .actorLoop ; $6f3e
 	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
-Unused_0a_2:
-	; $6f45, 4 bytes (bytes:4)
-	db $df, $3a, $03, $c9 ; 0x00
+Unused_0a_FarcallUpdateSceneAnimation:
+	farcall UpdateSceneAnimation ; $6f45
+	ret ; $6f48
 	; $6f49, 4279 bytes fill to bank end (linker-padded)

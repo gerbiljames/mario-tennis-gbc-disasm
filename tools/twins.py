@@ -33,7 +33,7 @@ _CODE_WORDS = frozenset(
     "push res ret reti rl rla rlc rlca rr rra rrc rrca rst sbc scf set sla sra srl stop sub "
     "swap xor farcall push_wram_bank pop_wram_bank wram_bank ld_hl_indexed wait_frames lb "
     "set_flag clear_flag test_flag ld_flag_id sound ld_slot ld_de_indexed ld_bc_indexed ld_xy ld_oam "
-    "ld_size ld_tile_run rect_size rect_cell map_cell sprite_xy sprite_attr_tile sprite_tile_attr "
+    "ld_size ld_tile_run ld_bg_cell rect_size rect_cell map_cell sprite_xy sprite_attr_tile sprite_tile_attr "
     "ld_bg_pals ld_obj_pals ld_cell rect_ptrs rect_pair add_hl_a add_de_a add_bc_a "
     "neg_hl neg_de neg_bc abs_hl abs_de abs_bc sub_hl_de sub_hl_bc ld_story_char_field rom_bank "
     "push_rom_bank pop_rom_bank sram_bank jumptable frame_task".split())

@@ -285,13 +285,13 @@ MatchRulesMenuGraphicsTable:
 	dslot DataPtr_FiveSetsLabelTiles ; record 6
 MatchRulesMenuTable:
 	; $46e6, 14 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $ab00 ; record 3
-	dw $ac00 ; record 4
-	dw $ad00 ; record 5
-	dw $ae00 ; record 6
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
 OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a ; $46f5
@@ -299,9 +299,9 @@ OpenMatchRulesPanel:
 	ld c, $00 ; $46f8
 .slideForwardLoop:
 	call AdvanceFrame ; $46fa
-	ld b, $02 ; $46fd
+	ld b, PANELANIM_MATCH_FORMAT_IN ; $46fd
 	farcall RestoreMenuBgAndDrawPanel ; $46ff
-	ld b, $00 ; $4702
+	ld b, MAPROWS_BANDS_3_7_11 ; $4702
 	farcall FlushWram3MapRows ; $4704
 	ld a, c ; $4707
 	inc a ; $4708
@@ -314,9 +314,9 @@ OpenMatchRulesPanel:
 	ld c, $0a ; $4712
 .slideBackLoop:
 	call AdvanceFrame ; $4714
-	ld b, $03 ; $4717
+	ld b, PANELANIM_MATCH_FORMAT_OUT ; $4717
 	farcall RestoreMenuBgAndDrawPanel ; $4719
-	ld b, $00 ; $471c
+	ld b, MAPROWS_BANDS_3_7_11 ; $471c
 	farcall FlushWram3MapRows ; $471e
 	ld a, c ; $4721
 	dec a ; $4722

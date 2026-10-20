@@ -3,122 +3,127 @@ home/NintendoLogo.bin 000104 30 gfx:logo
 audio/JingleSoundIds.asm 002fe0 6 sound_data
 audio/MusicIndexTable.asm 003151 64 sound_index
 audio/SfxIndexTable.asm 0031b5 e2 sound_index
-audio/SoundChannelMaskTable.asm 003b4d 100 sound_data
+audio/SoundVolumeScaleTable.asm 003b4d 100 sound_data
 audio/SoundPitchTable.asm 003c4d f0 sound_data
-audio/SoundEnvelopeTable.asm 003ed6 2 sound_data
 audio/SoundEnvelopes.asm 003ed8 f0 sound_data
 engine/menus/main_menu/MenuWindowTiles_01.bin 004210 100 gfx
 engine/menus/main_menu/MenuFontTiles_01.bin 004410 200 gfx
 engine/menus/main_menu/MenuTilesBStagedTiles0.bin 004610 200 gfx
 engine/menus/main_menu/MenuTilesBStagedTiles1.bin 004810 200 gfx
 engine/menus/main_menu/MenuFontPalettes_01.asm 005010 40 palettes
-engine/menus/main_menu/DebugMenuPalettes_01.asm 0050f6 80 palettes
+engine/menus/main_menu/CharObjPalettes_01.asm 0050f6 80 palettes
 engine/menus/main_menu/Unused_01_JpWindowTiles.bin 0051b0 100 gfx
 engine/menus/main_menu/Unused_01_JpFontTiles.bin 0053b0 c40 gfx
 engine/menus/main_menu/Unused_01_JpFontPalettes.asm 005ff0 40 palettes
 engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin 00607c 887 gfx
 engine/menus/main_menu/lz_DmgLockoutTilemapLZ_01.bin 006903 158 tilemap:32
-engine/menus/main_menu/SoundTestStrings_01.asm 006b64 6 sound_data
-engine/menus/main_menu/SoundTestString0.asm 006b6a 7
+engine/menus/main_menu/SoundTestMusicString.asm 006b64 6 text
+engine/menus/main_menu/SoundTestEffectString.asm 006b6a 7 text
+engine/menus/main_menu/SoundTestCursorString.asm 006b71 2 text
+engine/menus/main_menu/SoundTestCursorBlankString.asm 006b73 2 text
 engine/menus/main_menu/SoundTestSoundsA_01.asm 006b75 3f sound_data
 engine/menus/main_menu/SoundTestSoundsB_01.asm 006bb4 72 sound_data
-engine/story/DebugStoryStatsScreenString0.asm 009202 8
-engine/story/DebugStoryStatsScreenString1.asm 00920a 10
+engine/story/SaveResultFailedString_02.asm 0091fa 8 text
+engine/story/SaveResultLoadedString_02.asm 009202 8 text
+engine/story/SaveResultSavedString_02.asm 00920a 8 text
+engine/story/Unused_02_SaveResultDeletedString.asm 009212 8 text
+engine/story/SaveResultBlankString_02.asm 00921a 8 text
+engine/story/Unused_02_MarioGolfSignature.asm 009237 10 text
 engine/save/SaveSignature.asm 00c7e9 10
 engine/save/SaveEditorCursorTiles_03.bin 00d2f0 20 gfx
 engine/cutscenes/ScrollTextPalette_03.asm 00db20 8 palettes
 engine/cutscenes/SceneAnimObjPalette0_03.asm 00e5bc 8 palettes
 engine/cutscenes/SceneAnimObjPalette1_03.asm 00e5c4 8 palettes
-engine/cutscenes/lz_CutsceneAnimFrameLZ_00.bin 00e5d0 2a
-engine/cutscenes/lz_CutsceneAnimFrameLZ_01.bin 00e5fa 2e
-engine/cutscenes/lz_CutsceneAnimFrameLZ_02.bin 00e628 30
-engine/cutscenes/lz_CutsceneAnimFrameLZ_03.bin 00e658 41
-engine/cutscenes/lz_CutsceneAnimFrameLZ_04.bin 00e699 42
-engine/cutscenes/lz_CutsceneAnimFrameLZ_05.bin 00e6db 48
-engine/cutscenes/lz_CutsceneAnimFrameLZ_06.bin 00e723 49
-engine/cutscenes/lz_CutsceneAnimFrameLZ_07.bin 00e76c 49
-engine/cutscenes/lz_CutsceneAnimFrameLZ_08.bin 00e7b5 47
-engine/cutscenes/lz_CutsceneAnimFrameLZ_09.bin 00e7fc 26
-engine/cutscenes/lz_CutsceneAnimFrameLZ_0a.bin 00e822 2e
-engine/cutscenes/lz_CutsceneAnimFrameLZ_0b.bin 00e850 2e
-engine/cutscenes/lz_CutsceneAnimFrameLZ_0c.bin 00e87e 43
-engine/cutscenes/lz_CutsceneAnimFrameLZ_0d.bin 00e8c1 4b
-engine/cutscenes/lz_CutsceneAnimFrameLZ_0e.bin 00e90c 4b
-engine/cutscenes/lz_CutsceneAnimFrameLZ_0f.bin 00e957 4b
-engine/cutscenes/lz_CutsceneAnimFrameLZ_10.bin 00e9a2 4a
-engine/cutscenes/lz_CutsceneAnimFrameLZ_11.bin 00e9ec 49
-engine/cutscenes/lz_CutsceneAnimFrameLZ_12.bin 00ea35 27
-engine/cutscenes/lz_CutsceneAnimFrameLZ_13.bin 00ea5c 31
-engine/cutscenes/lz_CutsceneAnimFrameLZ_14.bin 00ea8d 35
-engine/cutscenes/lz_CutsceneAnimFrameLZ_15.bin 00eac2 42
-engine/cutscenes/lz_CutsceneAnimFrameLZ_16.bin 00eb04 45
-engine/cutscenes/lz_CutsceneAnimFrameLZ_17.bin 00eb49 49
-engine/cutscenes/lz_CutsceneAnimFrameLZ_18.bin 00eb92 4a
-engine/cutscenes/lz_CutsceneAnimFrameLZ_19.bin 00ebdc 4a
-engine/cutscenes/lz_CutsceneAnimFrameLZ_1a.bin 00ec26 45
-engine/cutscenes/lz_CutsceneAnimFrameLZ_1b.bin 00ec6b f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_1c.bin 00ec7a f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_1d.bin 00ec89 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_1e.bin 00ec98 13
-engine/cutscenes/lz_CutsceneAnimFrameLZ_1f.bin 00ecab 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_20.bin 00ecc1 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_21.bin 00ecd7 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_22.bin 00eced 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_23.bin 00ed03 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_24.bin 00ed19 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_25.bin 00ed28 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_26.bin 00ed37 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_27.bin 00ed46 14
-engine/cutscenes/lz_CutsceneAnimFrameLZ_28.bin 00ed5a 15
-engine/cutscenes/lz_CutsceneAnimFrameLZ_29.bin 00ed6f 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_2a.bin 00ed85 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_2b.bin 00ed9b 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_2c.bin 00edb1 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_2d.bin 00edc7 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_2e.bin 00edd6 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_2f.bin 00ede5 f
-engine/cutscenes/lz_CutsceneAnimFrameLZ_30.bin 00edf4 13
-engine/cutscenes/lz_CutsceneAnimFrameLZ_31.bin 00ee07 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_32.bin 00ee1d 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_33.bin 00ee33 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_34.bin 00ee49 16
-engine/cutscenes/lz_CutsceneAnimFrameLZ_35.bin 00ee5f 16
-engine/text/HexDigitChars_05.bin 016488 10 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_00.bin 00e5d0 2a gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_01.bin 00e5fa 2e gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_02.bin 00e628 30 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_03.bin 00e658 41 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_04.bin 00e699 42 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_05.bin 00e6db 48 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_06.bin 00e723 49 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_07.bin 00e76c 49 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_08.bin 00e7b5 47 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_09.bin 00e7fc 26 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_0a.bin 00e822 2e gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_0b.bin 00e850 2e gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_0c.bin 00e87e 43 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_0d.bin 00e8c1 4b gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_0e.bin 00e90c 4b gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_0f.bin 00e957 4b gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_10.bin 00e9a2 4a gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_11.bin 00e9ec 49 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_12.bin 00ea35 27 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_13.bin 00ea5c 31 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_14.bin 00ea8d 35 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_15.bin 00eac2 42 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_16.bin 00eb04 45 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_17.bin 00eb49 49 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_18.bin 00eb92 4a gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_19.bin 00ebdc 4a gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_1a.bin 00ec26 45 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_1b.bin 00ec6b f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_1c.bin 00ec7a f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_1d.bin 00ec89 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_1e.bin 00ec98 13 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_1f.bin 00ecab 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_20.bin 00ecc1 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_21.bin 00ecd7 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_22.bin 00eced 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_23.bin 00ed03 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_24.bin 00ed19 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_25.bin 00ed28 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_26.bin 00ed37 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_27.bin 00ed46 14 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_28.bin 00ed5a 15 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_29.bin 00ed6f 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_2a.bin 00ed85 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_2b.bin 00ed9b 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_2c.bin 00edb1 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_2d.bin 00edc7 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_2e.bin 00edd6 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_2f.bin 00ede5 f gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_30.bin 00edf4 13 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_31.bin 00ee07 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_32.bin 00ee1d 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_33.bin 00ee33 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_34.bin 00ee49 16 gfx
+engine/cutscenes/lz_CutsceneAnimFrameLZ_35.bin 00ee5f 16 gfx
+engine/text/HexDigitChars_05.asm 016488 10 bytes:16
 engine/text/PaletteEditorCursorTiles_05.bin 016890 c0 gfx
 engine/text/FontGlyphs.bin 017920 660 gfx
-engine/menus/pause/ScoreboardModeGfxTail.bin 019280 40
-engine/menus/pause/lz_MatchMenuItemGfx_Rules.bin 0192c0 82
-engine/menus/pause/lz_MatchMenuItemGfx_Controls.bin 019342 c0
-engine/menus/pause/lz_MatchMenuItemGfx_Options.bin 019402 93
-engine/menus/pause/lz_MatchMenuItemGfx_Save.bin 019495 84
-engine/menus/pause/lz_MatchMenuItemGfx_CameraMode.bin 019519 ac
-engine/menus/pause/lz_MatchMenuItemGfx_Music.bin 0195c5 83
-engine/menus/pause/lz_MatchMenuItemGfx_Normal.bin 019648 79
-engine/menus/pause/lz_MatchMenuItemGfx_Player.bin 0196c1 84
-engine/menus/pause/lz_MatchMenuItemGfx_On.bin 019745 7c
-engine/menus/pause/lz_MatchMenuItemGfx_Off.bin 0197c1 83
-engine/menus/pause/lz_MatchMenuItemGfx_Cancel.bin 019844 81
-engine/menus/pause/lz_MatchMenuItemGfx_SaveNarrow.bin 0198c5 73
-engine/menus/pause/lz_MatchMenuItemGfx_ToMainMenu.bin 019938 b0
-engine/menus/pause/lz_MatchMenuItemGfx_ToLevelSelect.bin 0199e8 b2
-engine/menus/pause/lz_MatchMenuItemGfx_TryAgain.bin 019a9a 9b
-engine/menus/pause/lz_MatchMenuItemGfx_QuitMatch.bin 019b35 a5
-engine/menus/pause/lz_MatchMenuItemGfx_QuitMinigame.bin 019bda b0
-engine/menus/pause/lz_ScoreboardModeGfx_RankingMatch.bin 019d40 b5
-engine/menus/pause/lz_ScoreboardModeGfx_IslandOpen.bin 019df5 bc
-engine/menus/pause/lz_ScoreboardModeGfx_PracticeMatch.bin 019eb1 c5
-engine/menus/pause/lz_ScoreboardModeGfx_Exhibition.bin 019f76 81
-engine/menus/pause/lz_ScoreboardModeGfx_MiniGames.bin 019ff7 94
-engine/menus/pause/lz_ScoreboardModeGfx_TennisMachine.bin 01a08b b3
-engine/menus/pause/lz_ScoreboardModeGfx_WallPractice.bin 01a13e b8
-engine/menus/pause/lz_ScoreboardModeGfx_MarioMiniGames.bin 01a1f6 c5
-engine/menus/pause/lz_ScoreboardModeGfx_LinkedMatch.bin 01a2bb aa
-engine/menus/pause/lz_ScoreboardModeGfx_ServiceMatch.bin 01a365 ad
-engine/menus/pause/lz_ScoreboardModeGfx_ServicePractice.bin 01a412 ca
-engine/menus/pause/lz_ScoreboardModeGfx_NetPlayMatch.bin 01a4dc d3
-engine/menus/pause/lz_ScoreboardModeGfx_NetPlayPractice.bin 01a5af d8
-engine/menus/pause/lz_ScoreboardModeGfx_StrokeMatch.bin 01a687 ad
-engine/menus/pause/lz_ScoreboardModeGfx_StrokePractice.bin 01a734 ce
+engine/menus/pause/ScoreboardModeGfxTail.bin 019280 40 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Rules.bin 0192c0 82 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Controls.bin 019342 c0 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Options.bin 019402 93 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Save.bin 019495 84 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_CameraMode.bin 019519 ac gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Music.bin 0195c5 83 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Normal.bin 019648 79 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Player.bin 0196c1 84 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_On.bin 019745 7c gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Off.bin 0197c1 83 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_Cancel.bin 019844 81 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_SaveNarrow.bin 0198c5 73 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_ToMainMenu.bin 019938 b0 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_ToLevelSelect.bin 0199e8 b2 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_TryAgain.bin 019a9a 9b gfx
+engine/menus/pause/lz_MatchMenuItemGfx_QuitMatch.bin 019b35 a5 gfx
+engine/menus/pause/lz_MatchMenuItemGfx_QuitMinigame.bin 019bda b0 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_RankingMatch.bin 019d40 b5 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_IslandOpen.bin 019df5 bc gfx
+engine/menus/pause/lz_ScoreboardModeGfx_PracticeMatch.bin 019eb1 c5 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_Exhibition.bin 019f76 81 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_MiniGames.bin 019ff7 94 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_TennisMachine.bin 01a08b b3 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_WallPractice.bin 01a13e b8 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_MarioMiniGames.bin 01a1f6 c5 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_LinkedMatch.bin 01a2bb aa gfx
+engine/menus/pause/lz_ScoreboardModeGfx_ServiceMatch.bin 01a365 ad gfx
+engine/menus/pause/lz_ScoreboardModeGfx_ServicePractice.bin 01a412 ca gfx
+engine/menus/pause/lz_ScoreboardModeGfx_NetPlayMatch.bin 01a4dc d3 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_NetPlayPractice.bin 01a5af d8 gfx
+engine/menus/pause/lz_ScoreboardModeGfx_StrokeMatch.bin 01a687 ad gfx
+engine/menus/pause/lz_ScoreboardModeGfx_StrokePractice.bin 01a734 ce gfx
 engine/menus/pause/DebugStatName_Speed.asm 01aa57 7
 engine/menus/pause/DebugStatName_Add.asm 01aa5e 5
 engine/menus/pause/DebugStatName_Brake.asm 01aa63 7
@@ -134,14 +139,14 @@ engine/menus/pause/DebugStatName_High.asm 01aaa1 6
 engine/menus/pause/DebugStatName_Reach.asm 01aaa7 7
 engine/menus/pause/DebugStatName_Jump.asm 01aaae 6
 engine/menus/pause/DebugStatName_Dive.asm 01aab4 6
-engine/menus/pause/lz_StoryMenuItemGfx_Status.bin 01b310 a0
-engine/menus/pause/lz_StoryMenuItemGfx_ClearStatus.bin 01b3b0 b7
-engine/menus/pause/lz_StoryMenuItemGfx_Messages.bin 01b467 ab
-engine/menus/pause/lz_StoryMenuItemGfx_Slow.bin 01b512 76
-engine/menus/pause/lz_StoryMenuItemGfx_Fast.bin 01b588 79
-engine/menus/pause/lz_StoryMenuItemGfx_CharData.bin 01b601 af
-engine/menus/pause/lz_StoryMenuItemGfx_Items.bin 01b6b0 7d
-engine/menus/pause/lz_StoryMenuItemGfx_Normal.bin 01b72d 79
+engine/menus/pause/lz_StoryMenuItemGfx_Status.bin 01b310 a0 gfx
+engine/menus/pause/lz_StoryMenuItemGfx_ClearStatus.bin 01b3b0 b7 gfx
+engine/menus/pause/lz_StoryMenuItemGfx_Messages.bin 01b467 ab gfx
+engine/menus/pause/lz_StoryMenuItemGfx_Slow.bin 01b512 76 gfx
+engine/menus/pause/lz_StoryMenuItemGfx_Fast.bin 01b588 79 gfx
+engine/menus/pause/lz_StoryMenuItemGfx_CharData.bin 01b601 af gfx
+engine/menus/pause/lz_StoryMenuItemGfx_Items.bin 01b6b0 7d gfx
+engine/menus/pause/lz_StoryMenuItemGfx_Normal.bin 01b72d 79 gfx
 engine/match/ShotPlacementDataTopspin_07.asm 01cd31 50 words:4
 engine/match/ShotPlacementDataPowerTopspin_07.asm 01cd81 50 words:4
 engine/match/ShotPlacementDataSlice_07.asm 01cdd1 50 words:4
@@ -175,17 +180,17 @@ engine/match/MoveCurve14_09.asm 024854 a move_curve
 engine/match/MoveCurve13_09.asm 02485e a move_curve
 engine/match/MoveCurve12_09.asm 024868 b move_curve
 engine/match/TilesetTiles_09.bin 024900 1800 gfx
-engine/match/PointsDigitGfx0_09.bin 026180 180
-engine/match/PointsDigitGfx1_09.bin 026300 240
-engine/match/Player1ScoreDigitGfx0_09.bin 026540 140
-engine/match/Player1ScoreDigitGfx1_09.bin 026680 200
-engine/match/Player2ScoreDigitGfx0_09.bin 026880 140
-engine/match/Player2ScoreDigitGfx1_09.bin 0269c0 200
+engine/match/PointsDigitGfx0_09.bin 026180 180 gfx
+engine/match/PointsDigitGfx1_09.bin 026300 240 gfx
+engine/match/Player1ScoreDigitGfx0_09.bin 026540 140 gfx
+engine/match/Player1ScoreDigitGfx1_09.bin 026680 200 gfx
+engine/match/Player2ScoreDigitGfx0_09.bin 026880 140 gfx
+engine/match/Player2ScoreDigitGfx1_09.bin 0269c0 200 gfx
 engine/match/DeuceAdvantageTiles.bin 026bc0 80 gfx
-engine/match/ServeGfx0_09.bin 026c80 100
-engine/match/ServeGfx1_09.bin 026d80 100
-engine/match/ServeGfx2_09.bin 026e80 100
-engine/match/ServeGfx3_09.bin 026f80 100
+engine/match/ServeGfx0_09.bin 026c80 100 gfx
+engine/match/ServeGfx1_09.bin 026d80 100 gfx
+engine/match/ServeGfx2_09.bin 026e80 100 gfx
+engine/match/ServeGfx3_09.bin 026f80 100 gfx
 engine/story/StoryObjPalettes.asm 029341 28 palettes
 engine/story/DrawMinigameTargetTable.asm 02a6fe 10 bytes:16
 engine/story/MinigameTargetFormation0Script0.asm 02a8e1 a target_script
@@ -289,10 +294,10 @@ story/StarWarpTiles.bin 03b2e0 180 gfx
 story/StarWarpSparkleTiles.bin 03b460 20 gfx
 story/TourPointerTiles_13.bin 04cd30 40 gfx
 story/TourPointerPalette_13.asm 04cd70 8 palettes
-story/lz_VarsityCourtTourLz0_13.bin 04e793 9e
-story/lz_VarsityCourtTourLz1_13.bin 04e831 9d
-story/lz_VarsityCourtTourLz2_13.bin 04e8ce a1
-story/lz_VarsityCourtTourLz3_13.bin 04e96f 99
+story/lz_VarsityCourtTourGfx0_13.bin 04e793 9e gfx:4x4
+story/lz_VarsityCourtTourGfx1_13.bin 04e831 9d gfx:4x4
+story/lz_VarsityCourtTourGfx2_13.bin 04e8ce a1 gfx:4x4
+story/lz_VarsityCourtTourGfx3_13.bin 04e96f 99 gfx:4x4
 story/VarsityCourtTourPalette_13.asm 04ea08 8 palettes
 story/PlaneObjTiles_14.bin 051650 400 gfx
 story/IslandObjTiles_14.bin 051a50 400 gfx
@@ -312,7 +317,7 @@ story/TwinkleObjGfx.bin 053580 100 gfx
 story/TwinkleObjPalette_14.asm 053680 8 palettes
 story/WaterSpriteHudTiles_15.bin 0557d0 c0 gfx
 story/WaterSpriteHudPalette_15.asm 055890 8 palettes
-story/Palettes_15_0.asm 055900 10 palettes
+story/Unused_15_WaterSpriteRacketRewardPalettes.asm 055900 10 palettes
 story/WaterSpriteRacketRewardScenePalettes0.asm 055910 40 palettes
 story/WaterSpriteRacketRewardScenePalettes1.asm 055950 40 palettes
 story/WaterSpriteRacketRewardScenePalettes2.asm 055990 30 palettes
@@ -321,27 +326,27 @@ engine/menus/results/lz_MatchWinLoseScreenGfx1.bin 058784 170 gfx
 engine/menus/results/MatchWinLoseScreenPalettes.asm 0588f4 18 palettes
 engine/menus/results/MatchResultPalettes0.asm 058a46 8 palettes
 engine/menus/results/MatchResultPalettes1.asm 058a4e 8 palettes
-engine/menus/results/lz_MatchResultGfxA0.bin 058f4d c7
-engine/menus/results/lz_MatchResultGfxB0.bin 059014 7f
-engine/menus/results/lz_MatchResultGfxA1.bin 059093 cd
-engine/menus/results/lz_MatchResultGfxB1.bin 059160 b2
-engine/menus/results/lz_MatchResultGfxB2.bin 059212 ab
-engine/menus/results/lz_MatchResultGfxB3.bin 0592bd 9a
-engine/menus/results/lz_MatchResultGfxA2.bin 059357 6a
-engine/menus/results/lz_MatchResultGfxB4.bin 0593c1 6d
+engine/menus/results/lz_MatchResultGfxA0.bin 058f4d c7 gfx
+engine/menus/results/lz_MatchResultGfxB0.bin 059014 7f gfx
+engine/menus/results/lz_MatchResultGfxA1.bin 059093 cd gfx
+engine/menus/results/lz_MatchResultGfxB1.bin 059160 b2 gfx
+engine/menus/results/lz_MatchResultGfxB2.bin 059212 ab gfx
+engine/menus/results/lz_MatchResultGfxB3.bin 0592bd 9a gfx
+engine/menus/results/lz_MatchResultGfxA2.bin 059357 6a gfx
+engine/menus/results/lz_MatchResultGfxB4.bin 0593c1 6d gfx
 engine/menus/results/lz_MatchResultTitleGfx.bin 05942e 8f gfx
-engine/menus/results/lz_MatchResultTitleGfxAlt.bin 0594bd 84
-engine/menus/results/lz_MatchResultGfxC0.bin 059541 5d
-engine/menus/results/lz_MatchResultGfxC1.bin 05959e a4
-engine/menus/results/lz_MatchResultGfxC2.bin 059642 b0
-engine/menus/results/lz_MatchResultGfxC3.bin 0596f2 ba
-engine/menus/results/lz_MatchResultGfxC4.bin 0597ac a1
-engine/menus/results/lz_MatchResultGfxC5.bin 05984d ad
-engine/menus/results/lz_MatchResultGfxC6.bin 0598fa ac
-engine/menus/results/lz_MatchResultGfxC7.bin 0599a6 a9
-engine/menus/results/lz_MatchResultGfxC8.bin 059a4f c0
-engine/menus/results/lz_MatchResultGfxCUnused.bin 059b0f e6
-engine/menus/results/lz_MatchResultGfxC9.bin 059bf5 1c
+engine/menus/results/lz_MatchResultTitleGfxAlt.bin 0594bd 84 gfx
+engine/menus/results/lz_MatchResultGfxC0.bin 059541 5d gfx
+engine/menus/results/lz_MatchResultGfxC1.bin 05959e a4 gfx
+engine/menus/results/lz_MatchResultGfxC2.bin 059642 b0 gfx
+engine/menus/results/lz_MatchResultGfxC3.bin 0596f2 ba gfx
+engine/menus/results/lz_MatchResultGfxC4.bin 0597ac a1 gfx
+engine/menus/results/lz_MatchResultGfxC5.bin 05984d ad gfx
+engine/menus/results/lz_MatchResultGfxC6.bin 0598fa ac gfx
+engine/menus/results/lz_MatchResultGfxC7.bin 0599a6 a9 gfx
+engine/menus/results/lz_MatchResultGfxC8.bin 059a4f c0 gfx
+engine/menus/results/lz_Unused_16_MatchResultGfxC.bin 059b0f e6 gfx
+engine/menus/results/lz_MatchResultGfxC9.bin 059bf5 1c gfx
 engine/menus/results/lz_WinLosePortrait0.bin 05a101 113 gfx
 engine/menus/results/lz_WinLosePortrait1.bin 05a214 101 gfx
 engine/menus/results/lz_WinLosePortrait2.bin 05a315 10d gfx
@@ -350,36 +355,36 @@ engine/menus/results/lz_WinLosePortrait4.bin 05a536 fe gfx
 engine/menus/results/lz_WinLosePortrait5.bin 05a634 f3 gfx
 engine/menus/results/lz_WinLosePortrait6.bin 05a727 123 gfx
 engine/menus/results/lz_WinLosePortrait7.bin 05a84a 10b gfx
-engine/menus/results/lz_PortraitGfxAlex_16.bin 05a9a8 9e
-engine/menus/results/lz_PortraitGfxNina_16.bin 05aa46 a3
-engine/menus/results/lz_PortraitGfxHarry_16.bin 05aae9 92
-engine/menus/results/lz_PortraitGfxKate_16.bin 05ab7b a5
-engine/menus/results/lz_PortraitGfxAllie_16.bin 05ac20 86
-engine/menus/results/lz_PortraitGfxJoy_16.bin 05aca6 94
-engine/menus/results/lz_PortraitGfxBrian_16.bin 05ad3a 90
-engine/menus/results/lz_PortraitGfxPam_16.bin 05adca 89
-engine/menus/results/lz_PortraitGfxBob_16.bin 05ae53 8d
-engine/menus/results/lz_PortraitGfxBeth_16.bin 05aee0 93
-engine/menus/results/lz_PortraitGfxFay_16.bin 05af73 93
-engine/menus/results/lz_PortraitGfxCurt_16.bin 05b006 a1
-engine/menus/results/lz_PortraitGfxMark_16.bin 05b0a7 a1
-engine/menus/results/lz_PortraitGfxSean_16.bin 05b148 9d
-engine/menus/results/lz_PortraitGfxSammi_16.bin 05b1e5 96
-engine/menus/results/lz_PortraitGfxElden_16.bin 05b27b 95
-engine/menus/results/lz_PortraitGfxSpike_16.bin 05b310 a2
-engine/menus/results/lz_PortraitGfxEmily_16.bin 05b3b2 97
-engine/menus/results/lz_PortraitGfxBCoz_16.bin 05b449 93
-engine/menus/results/lz_PortraitGfxACoz_16.bin 05b4dc 79
-engine/menus/results/lz_PortraitGfxPlaceholder_16.bin 05b555 7e
-engine/menus/results/lz_PortraitGfxLuigi_16.bin 05b5d3 9a
-engine/menus/results/lz_PortraitGfxDK_16.bin 05b66d 9c
-engine/menus/results/lz_PortraitGfxBabyMario_16.bin 05b709 9b
-engine/menus/results/lz_PortraitGfxMario_16.bin 05b7a4 a2
-engine/menus/results/lz_PortraitGfxWaluigi_16.bin 05b846 9e
-engine/menus/results/lz_PortraitGfxYoshi_16.bin 05b8e4 8b
-engine/menus/results/lz_PortraitGfxBowser_16.bin 05b96f a5
-engine/menus/results/lz_PortraitGfxWario_16.bin 05ba14 a2
-engine/menus/results/lz_PortraitGfxPeach_16.bin 05bab6 99
+engine/menus/results/lz_PortraitGfxAlex_16.bin 05a9a8 9e gfx
+engine/menus/results/lz_PortraitGfxNina_16.bin 05aa46 a3 gfx
+engine/menus/results/lz_PortraitGfxHarry_16.bin 05aae9 92 gfx
+engine/menus/results/lz_PortraitGfxKate_16.bin 05ab7b a5 gfx
+engine/menus/results/lz_PortraitGfxAllie_16.bin 05ac20 86 gfx
+engine/menus/results/lz_PortraitGfxJoy_16.bin 05aca6 94 gfx
+engine/menus/results/lz_PortraitGfxBrian_16.bin 05ad3a 90 gfx
+engine/menus/results/lz_PortraitGfxPam_16.bin 05adca 89 gfx
+engine/menus/results/lz_PortraitGfxBob_16.bin 05ae53 8d gfx
+engine/menus/results/lz_PortraitGfxBeth_16.bin 05aee0 93 gfx
+engine/menus/results/lz_PortraitGfxFay_16.bin 05af73 93 gfx
+engine/menus/results/lz_PortraitGfxCurt_16.bin 05b006 a1 gfx
+engine/menus/results/lz_PortraitGfxMark_16.bin 05b0a7 a1 gfx
+engine/menus/results/lz_PortraitGfxSean_16.bin 05b148 9d gfx
+engine/menus/results/lz_PortraitGfxSammi_16.bin 05b1e5 96 gfx
+engine/menus/results/lz_PortraitGfxElden_16.bin 05b27b 95 gfx
+engine/menus/results/lz_PortraitGfxSpike_16.bin 05b310 a2 gfx
+engine/menus/results/lz_PortraitGfxEmily_16.bin 05b3b2 97 gfx
+engine/menus/results/lz_PortraitGfxBCoz_16.bin 05b449 93 gfx
+engine/menus/results/lz_PortraitGfxACoz_16.bin 05b4dc 79 gfx
+engine/menus/results/lz_PortraitGfxPlaceholder_16.bin 05b555 7e gfx
+engine/menus/results/lz_PortraitGfxLuigi_16.bin 05b5d3 9a gfx
+engine/menus/results/lz_PortraitGfxDK_16.bin 05b66d 9c gfx
+engine/menus/results/lz_PortraitGfxBabyMario_16.bin 05b709 9b gfx
+engine/menus/results/lz_PortraitGfxMario_16.bin 05b7a4 a2 gfx
+engine/menus/results/lz_PortraitGfxWaluigi_16.bin 05b846 9e gfx
+engine/menus/results/lz_PortraitGfxYoshi_16.bin 05b8e4 8b gfx
+engine/menus/results/lz_PortraitGfxBowser_16.bin 05b96f a5 gfx
+engine/menus/results/lz_PortraitGfxWario_16.bin 05ba14 a2 gfx
+engine/menus/results/lz_PortraitGfxPeach_16.bin 05bab6 99 gfx
 engine/menus/briefing/Unused_17_Palette.asm 05c6c2 8 palettes
 engine/menus/briefing/lz_CourtDiagramTiles.bin 05cb17 24e gfx
 engine/menus/briefing/lz_CourtDiagramTilemap.bin 05cd65 dd tilemap:32
@@ -445,15 +450,25 @@ engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.asm 0
 engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.asm 05e20c 4 bytes:4
 engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm 05e210 10 words:2
 engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.asm 05e220 10 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_PlayerPosTable.asm 05e4bd 10 words:2
 engine/menus/briefing/DrillBriefing_ServeAndSmash_OpponentPosTable.asm 05e4cd 10 words:2
-engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.asm 05e4dd 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.asm 05e4dd 10 words:2
+engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerDirTable0.asm 05e4ed 4 bytes:4
+engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerPosTable0.asm 05e4f1 10 words:2
 engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerDirTable.asm 05e501 4 bytes:4
-engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.asm 05e505 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.asm 05e505 10 words:2
+engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerDirTable1.asm 05e515 4 bytes:4
+engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerPosTable1.asm 05e519 10 words:2
 engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm 05e529 10 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_PlayerPosTable.asm 05e7c6 10 words:2
 engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.asm 05e7d6 10 words:2
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm 05e7e6 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm 05e7e6 10 words:2
+engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerDirTable0.asm 05e7f6 4 bytes:4
+engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerPosTable0.asm 05e7fa 10 words:2
 engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.asm 05e80a 4 bytes:4
-engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.asm 05e80e 24 words:2
+engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.asm 05e80e 10 words:2
+engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerDirTable1.asm 05e81e 4 bytes:4
+engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerPosTable1.asm 05e822 10 words:2
 engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm 05e832 10 words:2
 engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm 05ea1b 10 words:2
 engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm 05ea2b 10 words:2
@@ -493,24 +508,24 @@ engine/menus/common/FontTiles.bin 0600a0 200 gfx
 engine/menus/common/MenuHandCursorGfx.bin 0602a0 40 gfx
 engine/menus/common/MenuHandCursorPalette.asm 0602e0 20 palettes
 engine/menus/common/AllIndexedPalettes_18.asm 060300 28 palettes
-engine/menus/common/lz_ConfirmScreenGfx0.bin 06067a 8b9 gfx
-engine/menus/common/ConfirmScreenPalette0.asm 060f33 40 palettes
-engine/menus/common/lz_ConfirmScreenGfx1.bin 060f73 15b gfx
-engine/menus/common/lz_ConfirmScreenGfx2.bin 0610ce 8a gfx
-engine/menus/common/ThreeOptionLabelsData0.asm 061158 10 bytes:16
-engine/menus/common/ThreeOptionLabelsData1.asm 061168 10 bytes:16
-engine/menus/common/ThreeOptionLabelsData2.asm 061178 10 bytes:16
-engine/menus/common/ThreeOptionLabelsData3.asm 061188 10 bytes:16
-engine/menus/common/ThreeOptionLabelsData4.asm 061198 10 bytes:16
-engine/menus/common/ThreeOptionLabelsData5.asm 0611a8 10 bytes:16
-engine/menus/common/lz_ConfirmScreenGfx3.bin 0611f8 ce gfx
-engine/menus/common/ConfirmScreenPalette1.asm 0612c6 18 palettes
+engine/menus/common/lz_ConfirmScreenBgTiles.bin 06067a 8b9 gfx
+engine/menus/common/ConfirmScreenBgPalettes.asm 060f33 40 palettes
+engine/menus/common/lz_ConfirmScreenTilemap.bin 060f73 15b tilemap:32
+engine/menus/common/lz_ConfirmScreenAttrmap.bin 0610ce 8a tilemap:32
+engine/menus/common/ThreeOptionLabelTilesTop.asm 061158 10 bytes:16
+engine/menus/common/ThreeOptionLabelTilesMiddle.asm 061168 10 bytes:16
+engine/menus/common/ThreeOptionLabelTilesBottom.asm 061178 10 bytes:16
+engine/menus/common/ThreeOptionLabelAttrsTop.asm 061188 10 bytes:16
+engine/menus/common/ThreeOptionLabelAttrsMiddle.asm 061198 10 bytes:16
+engine/menus/common/ThreeOptionLabelAttrsBottom.asm 0611a8 10 bytes:16
+engine/menus/common/lz_ConfirmScreenObjTiles.bin 0611f8 ce gfx
+engine/menus/common/ConfirmScreenObjPalettes.asm 0612c6 18 palettes
 engine/menus/common/Unused_18_BobRamp.asm 061507 20 bytes:16
 engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin 061633 1c1 gfx
 engine/menus/scenes/ConfirmScreenSpritePalette0.asm 06182d 18 palettes
-engine/menus/scenes/ConfirmScreenSpriteGfx1.bin 061845 4d
+engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.bin 061845 68 gfx
 engine/menus/scenes/ConfirmScreenSpritePalette1.asm 0618ad 30 palettes
-engine/menus/scenes/CharSelectCursorGfx.bin 0618e0 d9
+engine/menus/scenes/CharSelectCursorGfx.bin 0618e0 c0 gfx
 engine/menus/scenes/CharSelectCursorPalette.asm 0619b9 8 palettes
 engine/menus/scenes/CharSelectCursorAnimTable.asm 0619fe 20 bytes:16
 engine/menus/scenes/OnCourtCharTilesAGfx.bin 061af0 800 gfx
@@ -614,20 +629,20 @@ engine/menus/debug/lz_ExpScreenGfx7.bin 06a6c8 49 gfx
 engine/menus/debug/ExpScreenGfxPalettes2.asm 06a711 10 palettes
 engine/menus/debug/ExpScreenGfxPalettes3.asm 06a721 8 palettes
 engine/menus/debug/lz_ExpScreenGfx8.bin 06a729 ab gfx
-engine/menus/debug/DrawCharViewerCursorSpriteTable1.asm 06ac95 a bytes:2
+engine/menus/debug/CharViewerLowerRowCursorCoords.asm 06ac95 a bytes:2
 engine/menus/char_data/Palette_1a_0.asm 06b0d9 40 palettes
 engine/menus/char_data/lz_CharViewerScreenGfx0.bin 06b119 664 gfx
 engine/menus/char_data/lz_CharViewerScreenGfx1.bin 06b77d b4 gfx
 engine/menus/char_data/lz_CharViewerScreenGfx2.bin 06b831 81 gfx
 engine/menus/char_data/lz_CharViewerGridTilemap0.bin 06b8b2 3a tilemap:32
 engine/menus/char_data/lz_CharViewerGridTilemap1.bin 06b8ec 43 tilemap:32
-engine/menus/char_data/lz_CharDataConfirmScreenGfx1.bin 06be53 22
-engine/menus/char_data/lz_CharDataConfirmScreenGfx2.bin 06be75 9
+engine/menus/char_data/lz_CharDataConfirmScreenTopTilemap.bin 06be53 22 tilemap:14
+engine/menus/char_data/lz_CharDataConfirmScreenTopAttrmap.bin 06be75 9 tilemap:14
 engine/menus/char_data/CharDataScreen_LoadPalette.asm 06be7e 10 palettes
-engine/menus/char_data/lz_CharDataScreenGfx0.bin 06be8e b
-engine/menus/char_data/lz_CharDataScreenGfx1.bin 06be99 b
-engine/menus/char_data/lz_CharDataScreenGfx2.bin 06bea4 b
-engine/menus/char_data/lz_CharDataScreenGfx3.bin 06beaf b
+engine/menus/char_data/lz_CharDataScreenGfx0.bin 06be8e b gfx
+engine/menus/char_data/lz_CharDataScreenGfx1.bin 06be99 b gfx
+engine/menus/char_data/lz_CharDataScreenGfx2.bin 06bea4 b gfx
+engine/menus/char_data/lz_CharDataScreenGfx3.bin 06beaf b gfx
 engine/menus/ranking/lz_MugshotGfxAlex_1b.bin 06c4b1 9e gfx
 engine/menus/ranking/lz_MugshotGfxNina_1b.bin 06c54f a3 gfx
 engine/menus/ranking/lz_MugshotGfxHarry_1b.bin 06c5f2 92 gfx
@@ -665,7 +680,7 @@ engine/menus/char_data/RadialOffsetRamp1_1c.asm 071007 16 bytes:2
 engine/menus/char_data/RadialOffsetRamp2_1c.asm 07101d 16 bytes:2
 engine/menus/char_data/RadialOffsetRamp3_1c.asm 071033 16 bytes:2
 engine/menus/char_data/CharDataScreen_LoadScreenPalette.asm 07198c 40 palettes
-engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin 0719cc a3a
+engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin 0719cc a3a gfx
 engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin 072406 63 tilemap:32
 engine/menus/char_data/lz_CharDataScreenAttrmap_1c.bin 072469 3b tilemap:32
 engine/menus/char_data/CharDataScreenStatBar00.asm 0724a4 5 bytes:5
@@ -724,41 +739,41 @@ engine/menus/char_data/lz_CharDataScreenUIPatch2Tilemap.bin 07282e 1a
 engine/menus/char_data/lz_CharDataScreenUIPatch2Attrmap.bin 072848 7
 engine/menus/char_data/lz_CharDataScreenUIPatch3Tilemap.bin 07284f 1c
 engine/menus/char_data/lz_CharDataScreenUIPatch3Attrmap.bin 07286b 7
-engine/menus/char_data/Unused_1c_ShiftGfx00.bin 072880 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx01.bin 0728c0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx02.bin 072900 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx03.bin 072940 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx04.bin 072980 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx05.bin 0729c0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx06.bin 072a00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx07.bin 072a40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx08.bin 072a80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx09.bin 072ac0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx10.bin 072b00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx11.bin 072b40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx12.bin 072b80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx13.bin 072bc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx14.bin 072c00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx15.bin 072c40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx16.bin 072c80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx17.bin 072cc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx18.bin 072d00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx19.bin 072d40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx20.bin 072d80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx21.bin 072dc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx22.bin 072e00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx23.bin 072e40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx24.bin 072e80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx25.bin 072ec0 2f
-engine/menus/char_data/CharDataScreenTiles_1c.bin 072f2a 16
-engine/menus/char_data/Unused_1c_ShiftGfx27.bin 072f40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx28.bin 072f80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx29.bin 072fc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx30.bin 073000 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx31.bin 073040 40 gfx
-engine/menus/char_data/lz_CharDataScreenGfx13.bin 073080 96
+engine/menus/char_data/CharDataShiftGfx00.bin 072880 40 gfx
+engine/menus/char_data/CharDataShiftGfx01.bin 0728c0 40 gfx
+engine/menus/char_data/CharDataShiftGfx02.bin 072900 40 gfx
+engine/menus/char_data/CharDataShiftGfx03.bin 072940 40 gfx
+engine/menus/char_data/CharDataShiftGfx04.bin 072980 40 gfx
+engine/menus/char_data/CharDataShiftGfx05.bin 0729c0 40 gfx
+engine/menus/char_data/CharDataShiftGfx06.bin 072a00 40 gfx
+engine/menus/char_data/CharDataShiftGfx07.bin 072a40 40 gfx
+engine/menus/char_data/CharDataShiftGfx08.bin 072a80 40 gfx
+engine/menus/char_data/CharDataShiftGfx09.bin 072ac0 40 gfx
+engine/menus/char_data/CharDataShiftGfx10.bin 072b00 40 gfx
+engine/menus/char_data/CharDataShiftGfx11.bin 072b40 40 gfx
+engine/menus/char_data/CharDataShiftGfx12.bin 072b80 40 gfx
+engine/menus/char_data/CharDataShiftGfx13.bin 072bc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx14.bin 072c00 40 gfx
+engine/menus/char_data/CharDataShiftGfx15.bin 072c40 40 gfx
+engine/menus/char_data/CharDataShiftGfx16.bin 072c80 40 gfx
+engine/menus/char_data/CharDataShiftGfx17.bin 072cc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx18.bin 072d00 40 gfx
+engine/menus/char_data/CharDataShiftGfx19.bin 072d40 40 gfx
+engine/menus/char_data/CharDataShiftGfx20.bin 072d80 40 gfx
+engine/menus/char_data/CharDataShiftGfx21.bin 072dc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx22.bin 072e00 40 gfx
+engine/menus/char_data/CharDataShiftGfx23.bin 072e40 40 gfx
+engine/menus/char_data/CharDataShiftGfx24.bin 072e80 40 gfx
+engine/menus/char_data/CharDataShiftGfx25.bin 072ec0 40 gfx
+engine/menus/char_data/CharDataShiftGfx26.bin 072f00 40 gfx
+engine/menus/char_data/CharDataShiftGfx27.bin 072f40 40 gfx
+engine/menus/char_data/CharDataShiftGfx28.bin 072f80 40 gfx
+engine/menus/char_data/CharDataShiftGfx29.bin 072fc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx30.bin 073000 40 gfx
+engine/menus/char_data/CharDataShiftGfx31.bin 073040 40 gfx
+engine/menus/char_data/lz_CharDataScreenGfx13.bin 073080 96 gfx
 engine/menus/char_data/CharDataScreenBgAndPalettes.asm 073541 40 palettes
-engine/menus/char_data/lz_CharDataScreenBgAndPalettes0.bin 073581 75e
+engine/menus/char_data/lz_CharDataScreenBgGfx.bin 073581 75e gfx
 engine/menus/char_data/lz_CharDataScreenBgTilemap.bin 073cdf 140 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin 073e1f d8 tilemap:32
 engine/menus/char_data/DrillDisplayData_1d.asm 075c25 9 blit_runs
@@ -844,7 +859,7 @@ engine/menus/char_data/CharDataConfirmPromptTilemapPatch.asm 076310 11 blit_runs
 engine/menus/char_data/lz_CharDataScreenPagePatch0Tilemap.bin 076321 a
 engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.bin 07632b 9
 engine/menus/char_data/CharDataScreenPalettes.asm 076334 8 palettes
-engine/menus/char_data/lz_CharDataScreenGfx14.bin 07633c b8
+engine/menus/char_data/lz_CharDataScreenGfx14.bin 07633c b8 gfx
 engine/menus/char_data/lz_CharDataScreenPagePatch1Tilemap.bin 0763f4 55
 engine/menus/char_data/lz_CharDataScreenPagePatch1Attrmap.bin 076449 12
 engine/menus/char_data/lz_CharDataScreenPagePatch2Tilemap.bin 07645b 23 tilemap:32
@@ -853,22 +868,22 @@ engine/menus/char_data/lz_CharDataScreenPagePatch3Tilemap.bin 076485 e tilemap:3
 engine/menus/char_data/lz_CharDataScreenPagePatch3Attrmap.bin 076493 7 tilemap:32
 engine/menus/char_data/lz_CharDataScreenPagePatch4Tilemap.bin 07649a 18 tilemap:32
 engine/menus/char_data/lz_CharDataScreenPagePatch4Attrmap.bin 0764b2 9 tilemap:32
-engine/menus/char_data/lz_CharDataScreenPageGfx10.bin 0764bb 95
+engine/menus/char_data/lz_CharDataScreenPageGfx10.bin 0764bb 95 gfx
 engine/menus/char_data/lz_CharDataScreenPagePatch5Tilemap.bin 076550 18
 engine/menus/char_data/lz_CharDataScreenPagePatch5Attrmap.bin 076568 7
-engine/menus/char_data/lz_CharDataScreenPageGfx13.bin 07656f 75
-engine/menus/char_data/lz_CharDataScreenPageGfx14.bin 0765e4 86
-engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx0.bin 07667f 8d
-engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx1.bin 076721 79
-engine/menus/char_data/CharDataScreenPageGraphicsGfx2.bin 0767ab 65
+engine/menus/char_data/lz_CharDataScreenPageGfx13.bin 07656f 75 gfx
+engine/menus/char_data/lz_CharDataScreenPageGfx14.bin 0765e4 86 gfx
+engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx0.bin 07667f 8d gfx
+engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx1.bin 076721 79 gfx
+engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.bin 0767ab 70 gfx
 engine/menus/exp/ExpPromptWindowFrame_1d.asm 0777c8 19 blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch0.asm 0777e1 15 blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch1.asm 0777f6 11 blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch2.asm 077807 d blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch3.asm 077814 9 blit_runs
 engine/menus/exp/ExpLevelDownTilemapPatch4.asm 07781d 5 blit_runs
-engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin 077822 2f gfx
-engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.bin 077851 25 gfx
+engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin 077822 2f tilemap:32
+engine/menus/exp/lz_ExpDistributionScreenPatchAttrmap.bin 077851 25 tilemap:32
 engine/menus/exp/lz_ExpDistributionScreenGfx7.bin 077876 19 gfx
 engine/menus/exp/ExpDistributionScreenPalettes.asm 07788f 18 palettes
 engine/menus/exp/lz_ExpDistributionScreenGfx8.bin 0778a7 89 gfx
@@ -886,12 +901,13 @@ engine/menus/exp/lz_ResultsSinglesLabelTilemap_1e.bin 0793df 13 tilemap:14
 engine/menus/exp/lz_ResultsDoublesLabelTilemap_1e.bin 0793f2 13 tilemap:14
 engine/menus/exp/lz_ResultsPlayerPanelTilemap_1e.bin 079405 1c tilemap:20
 engine/menus/exp/lz_ResultsPlayerPanelAttrmap_1e.bin 079421 17 tilemap:20
-engine/menus/exp/ExpAwardScreenPalettes0.asm 079be1 18 palettes
+engine/menus/exp/ExpAwardScreenBgPalettes.asm 079be1 18 palettes
 engine/menus/exp/lz_ExpAwardScreenGfx_1e.bin 079bf9 6d1 gfx
 engine/menus/exp/lz_ExpAwardScreenTilemap_1e.bin 07a2ca 185 tilemap:32
 engine/menus/exp/lz_ExpAwardScreenAttrmap_1e.bin 07a44f 46 tilemap:32
-engine/menus/exp/ExpAwardScreenPalettes1.asm 07a495 8 palettes
+engine/menus/exp/ExpAwardScreenObjPalette.asm 07a495 8 palettes
 engine/menus/exp/lz_ExpDigitSpriteGfx_1e.bin 07a49d 96 gfx
+engine/menus/exp/TrophyExpValueTable.asm 07a7a7 30 words:4
 engine/menus/exp/lz_GameProgressHeaderGfx_1e.bin 07b5a6 ec gfx
 engine/menus/exp/lz_GameProgressHeaderTilemap_1e.bin 07b692 50 tilemap:32
 engine/menus/exp/lz_GameProgressHeaderAttrmap_1e.bin 07b6e2 18 tilemap:32
@@ -966,15 +982,15 @@ text/TextStrings_34.asm 0d0242 3901 text_pool
 text/TextStrings_35.asm 0d4220 3909 text_pool
 text/TextStrings_36.asm 0d8592 392c text_pool
 text/TextStrings_37.asm 0dc204 391a text_pool
-engine/menus/char_select/MatchTypeLabelSpriteLayouts.bin 0e0695 8d
+engine/menus/char_select/Unused_38_MatchTypeLabelSpriteLayouts.bin 0e0695 8d
 engine/menus/char_select/CharGridScreenPalettes.asm 0e107f 28 palettes
 engine/menus/char_select/lz_CharGridScreenGfx1.bin 0e10a7 4a gfx
-engine/menus/char_select/CharGridScreenGfx2.asm 0e10f1 8 palettes
+engine/menus/char_select/CharGridScreenObjPalette.asm 0e10f1 8 palettes
 engine/menus/char_select/lz_CharGridScreenGfx3.bin 0e10f9 9c gfx
 engine/menus/char_select/NameEntryCursorTable.asm 0e30a5 b4 bytes:30
 engine/menus/char_select/EnterNameText_38.asm 0e3171 b
 engine/menus/char_select/NameEntryCharset_38.asm 0e31b6 6a
-engine/menus/common/lz_FixedTileBlockAndPalette.bin 0e44f6 20
+engine/menus/common/lz_FixedTileBlockGfx.bin 0e44f6 20 gfx
 engine/menus/common/FixedTileBlockPalette.asm 0e4516 8 palettes
 engine/menus/common/FixedBgPalette0Palette.asm 0e4528 8 palettes
 engine/menus/common/IndexedPalettes.asm 0e4599 c8 palettes
@@ -1080,15 +1096,15 @@ gfx/lz_SharedMenuGfx38.bin 0f21a8 a4 gfx
 gfx/lz_SharedMenuGfx39.bin 0f224c 8d gfx
 gfx/lz_SharedMenuGfx40.bin 0f22d9 b6 gfx
 gfx/lz_SharedMenuGfx41.bin 0f238f b1 gfx
-gfx/lz_SavedDataSourceGfx0.bin 0f2440 8f
-gfx/lz_SavedDataSourceGfx1.bin 0f24cf 9c
-gfx/lz_SavedDataSourceGfx2.bin 0f256b 9d
-gfx/lz_SavedDataSourceGfx3.bin 0f2608 b0
-gfx/lz_EraseSavedDataGfx0.bin 0f26b8 ae
-gfx/lz_EraseSavedDataGfx1.bin 0f2766 b2
-gfx/lz_EraseSavedDataGfx2.bin 0f2818 b0
-gfx/lz_EraseSavedDataGfx3.bin 0f28c8 bd
-gfx/lz_EraseSavedDataGfx4.bin 0f2985 b5
+gfx/lz_SavedDataSourceGfx0.bin 0f2440 8f gfx
+gfx/lz_SavedDataSourceGfx1.bin 0f24cf 9c gfx
+gfx/lz_SavedDataSourceGfx2.bin 0f256b 9d gfx
+gfx/lz_SavedDataSourceGfx3.bin 0f2608 b0 gfx
+gfx/lz_EraseSavedDataGfx0.bin 0f26b8 ae gfx
+gfx/lz_EraseSavedDataGfx1.bin 0f2766 b2 gfx
+gfx/lz_EraseSavedDataGfx2.bin 0f2818 b0 gfx
+gfx/lz_EraseSavedDataGfx3.bin 0f28c8 bd gfx
+gfx/lz_EraseSavedDataGfx4.bin 0f2985 b5 gfx
 gfx/lz_MinigameSelectGfx0.bin 0f2a3a 7c gfx
 gfx/lz_MinigameSelectGfx1.bin 0f2ab6 8a gfx
 gfx/lz_MinigameSelectGfx2.bin 0f2b40 84 gfx
@@ -1124,11 +1140,11 @@ gfx/lz_MainMenuGfx5.bin 0f4830 b3 gfx
 gfx/lz_SharedMenuGfx63.bin 0f48e3 bb gfx
 gfx/lz_CourtSelectGfx0.bin 0f499e b7 gfx
 gfx/lz_SharedMenuGfx65.bin 0f4a55 a7 gfx
-gfx/lz_SavedDataSourceGfx4.bin 0f4afc 91
+gfx/lz_SavedDataSourceGfx4.bin 0f4afc 91 gfx
 gfx/lz_N64RecordTypeGfx2.bin 0f4b8d b0 gfx
 gfx/lz_N64TransferItemGfx3.bin 0f4c3d 90 gfx
-gfx/lz_EraseDataConfirmGfx0.bin 0f4ccd ca
-gfx/lz_EraseDataConfirmGfx1.bin 0f4d97 a3
+gfx/lz_EraseDataConfirmGfx0.bin 0f4ccd ca gfx
+gfx/lz_EraseDataConfirmGfx1.bin 0f4d97 a3 gfx
 gfx/lz_MinigameSelectGfx6.bin 0f4e3a ba gfx
 gfx/lz_SharedMenuGfx72.bin 0f4ef4 e2 gfx
 gfx/lz_RacketShoesChoiceGfx2.bin 0f4fd6 9d gfx
@@ -1171,7 +1187,9 @@ engine/menus/link/LinkStatusPalette1.asm 0f8a8f 8 palettes
 engine/menus/link/LinkStatusPalette2.asm 0f8a97 8 palettes
 engine/menus/link/LinkStatusPalette3.asm 0f8a9f 8 palettes
 engine/menus/link/LinkErrorPalette_3e.asm 0f8b83 8 palettes
+engine/menus/link/LinkErrorFlashColors_3e.asm 0f8b8b 18 palettes
 engine/menus/equipment/EraseConfirmPalette_3e.asm 0f8e80 8 palettes
+engine/menus/equipment/EraseConfirmFlashColors_3e.asm 0f8e88 18 palettes
 engine/menus/equipment/RacketShoesChoicePalette0.asm 0f905d 8 palettes
 engine/menus/equipment/RacketShoesChoicePalette1.asm 0f9065 8 palettes
 engine/menus/equipment/PlayAlonePartnerPalette.asm 0f9345 10 palettes
@@ -1200,11 +1218,11 @@ engine/menus/court_select/lz_AwardCeremonyTilemap5.bin 0fb466 117 tilemap:32
 engine/menus/court_select/lz_AwardCeremonyAttrmap5.bin 0fb57d 6b tilemap:32
 engine/menus/court_select/lz_N64TransferItemGfx4.bin 0fb5e8 b3 gfx
 engine/menus/court_select/lz_N64TransferItemGfx5.bin 0fb69b b7 gfx
-engine/menus/court_select/lz_SavedDataSourceGfx5.bin 0fb752 b3
-engine/menus/dictionary/lz_TennisDictionaryListDataChar6.bin 0fc4bf 82
-engine/menus/dictionary/lz_TennisDictionaryListDataDefault.bin 0fc541 5b
-engine/menus/dictionary/lz_TennisDictionaryListData.bin 0fc59c 16f
-engine/menus/dictionary/lz_TennisDictionaryListDataAlt.bin 0fc70b a3
+engine/menus/court_select/lz_SavedDataSourceGfx5.bin 0fb752 b3 gfx
+engine/menus/dictionary/lz_TennisDictionaryAttrmapChar6.bin 0fc4bf 82 tilemap:32
+engine/menus/dictionary/lz_TennisDictionaryAttrmapDefault.bin 0fc541 5b tilemap:32
+engine/menus/dictionary/lz_TennisDictionaryTilemap.bin 0fc59c 16f tilemap:32
+engine/menus/dictionary/lz_Unused_3f_TennisDictionaryTilemapAlt.bin 0fc70b a3 tilemap:32
 engine/menus/dictionary/TennisDictionaryPalettesChar6.asm 0fc7ae 48 palettes
 engine/menus/dictionary/TennisDictionaryPalettesDefault.asm 0fc7f6 48 palettes
 engine/menus/dictionary/lz_TennisDictionaryTiles8000.bin 0fc83e 11f gfx
@@ -1214,9 +1232,9 @@ engine/menus/dictionary/lz_TennisDictionaryTilesA000.bin 0fcbd5 b4 gfx
 engine/menus/dictionary/lz_TennisDictionaryTilesA200.bin 0fcc89 102 gfx
 engine/menus/dictionary/lz_TennisDictionaryTilesA400.bin 0fcd8b ae gfx
 engine/menus/dictionary/TennisDictionaryPalettes.asm 0fce39 30 palettes
-engine/menus/dictionary/TennisDictionarySprites1.bin 0fd028 50 gfx
-engine/menus/dictionary/TennisDictionarySprites2.bin 0fd078 58
-engine/menus/dictionary/SelectionMaskGrid_3f.bin 0fd39e 79
+engine/menus/dictionary/TennisDictDemoAnimFrames.asm 0fd028 50 bytes:16
+engine/menus/dictionary/TennisDictDemoFrameOam.asm 0fd078 58 bytes:8
+engine/menus/dictionary/TennisDictEntryCategories.asm 0fd39e 79 bytes:16
 engine/menus/dictionary/lz_HardCourtLabelTiles.bin 0fd7eb c1 gfx
 engine/menus/dictionary/lz_ClayCourtLabelTiles.bin 0fd8ac c8 gfx
 engine/menus/dictionary/lz_GrassCourtLabelTiles.bin 0fd974 c3 gfx
@@ -1260,7 +1278,7 @@ engine/menus/dictionary/lz_BracketExtraIcon0.bin 0ffa1d 46 gfx
 engine/menus/dictionary/lz_BracketExtraIcon1.bin 0ffa63 4a gfx
 engine/menus/dictionary/lz_BracketExtraIcon2.bin 0ffaad 4a gfx
 engine/menus/dictionary/lz_MinigameLevelSelectGfx2.bin 0ffaf7 99 gfx
-engine/menus/dictionary/lz_SavedDataTypeSelectGfx.bin 0ffb90 b9
+engine/menus/dictionary/lz_SavedDataTypeSelectGfx.bin 0ffb90 b9 gfx
 sprites/AlexSpriteFrame00.bin 100130 f0 gfx:3x4+3
 sprites/AlexSpriteFrame01.bin 100220 f0 gfx:3x4+3
 sprites/AlexSpriteFrame02.bin 100310 f0 gfx:3x4+3
@@ -3251,17 +3269,17 @@ sprites/WalkSprite_6a_04_Gfx02.bin 1a9c70 100 gfx:2x2
 sprites/WalkSprite_6a_04_Gfx03.bin 1a9d70 100 gfx:2x2
 sprites/WalkSprite_6a_04_Gfx04.bin 1a9e70 100 gfx:2x2
 sprites/WalkSprite_6a_04_Gfx05.bin 1a9f70 100 gfx:2x2
-engine/cutscenes/Palettes_6b_00.asm 1ac2b2 40 palettes
+engine/cutscenes/Unused_6b_IntroCutsceneState01Palettes.asm 1ac2b2 40 palettes
 engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm 1ac36f 40 palettes
 engine/cutscenes/IntroCutsceneState04InitPalettes.asm 1ac4d0 40 palettes
 engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm 1ac75a 40 palettes
 engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm 1aca58 40 palettes
 engine/cutscenes/Palettes_6b_03.asm 1acc00 38 palettes
-engine/cutscenes/CutsceneScrollXTable.asm 1accc1 a0 bytes:16
+engine/cutscenes/IntroScrollYDeltaTable.asm 1accc1 a0 bytes:16
 engine/cutscenes/CutsceneScrollYTable.asm 1acd84 a9 bytes:16
-engine/cutscenes/CutsceneAnimatedSprites0.bin 1acea5 f0 gfx
-engine/cutscenes/CutsceneAnimatedSprites1.bin 1acf95 d8
-engine/cutscenes/CutsceneAnimatedSprites2.bin 1ad06d 120 gfx
+engine/cutscenes/CutsceneSpritePath0.asm 1acea5 f0 words:8
+engine/cutscenes/CutsceneSpritePath1.asm 1acf95 d8 words:8
+engine/cutscenes/CutsceneSpritePath2.asm 1ad06d 120 words:8
 engine/cutscenes/CutsceneTilesetPalettes.asm 1ad25a 10 palettes
 engine/cutscenes/lz_CutsceneSceneAGfx0.bin 1ad51d 4ba gfx
 engine/cutscenes/lz_CutsceneSceneBGfx0.bin 1ad9d7 200 gfx
@@ -3278,8 +3296,8 @@ engine/cutscenes/BgPalette1TaskPalettes.asm 1af0af 80 palettes
 engine/cutscenes/BgPalettes2And3TaskPalettes0.asm 1af12f 80 palettes
 engine/cutscenes/BgPalettes2And3TaskPalettes1.asm 1af1af 80 palettes
 engine/cutscenes/BgPalettes4To7TaskPalettes.asm 1af22f 80 palettes
-engine/cutscenes/lz_DecompressIntroTitleTiles1.bin 1af438 dd gfx
-engine/cutscenes/lz_DecompressIntroTitleTiles2.bin 1af515 4c gfx
+engine/cutscenes/lz_IntroTitleTilemap.bin 1af438 dd tilemap:32
+engine/cutscenes/lz_IntroTitleAttrmap.bin 1af515 4c tilemap:32
 engine/cutscenes/IntroCutsceneState18InitPalettes_6b.asm 1af56f 40 palettes
 engine/cutscenes/lz_TitleScreenTilemap.bin 1af74e 124 tilemap:32
 engine/cutscenes/lz_TitleScreenAttrmap.bin 1af872 9d tilemap:32
@@ -3941,318 +3959,318 @@ sprites/WalkSprite_77_07_Gfx02.bin 1df490 40 gfx:2x2
 sprites/WalkSprite_77_07_Gfx03.bin 1df4d0 40 gfx:2x2
 sprites/WalkSprite_77_07_Gfx04.bin 1df510 40 gfx:2x2
 sprites/WalkSprite_77_07_Gfx05.bin 1df550 40 gfx:2x2
-audio/Sfx01_Trk0.asm 1e0088 f0 snd_script:pulse
-audio/Sfx01_Trk1.asm 1e0178 f2 snd_script:pulse
-audio/Sfx01_Trk2.asm 1e026a 164 snd_script:wave
-audio/Sfx01_Trk3.asm 1e03ce 538 snd_script:noise
-audio/Sfx02_Trk0.asm 1e0906 3e snd_script:pulse
-audio/Sfx02_Trk1.asm 1e0944 4e snd_script:pulse
-audio/Sfx02_Trk2.asm 1e0992 ae snd_script:wave
-audio/Sfx02_Trk3.asm 1e0a40 246 snd_script:noise
-audio/Sfx03_Trk0.asm 1e0c86 1e6 snd_script:pulse
-audio/Sfx03_Trk1.asm 1e0e6c 1c0 snd_script:pulse
-audio/Sfx03_Trk2.asm 1e102c 46e snd_script:wave
-audio/Sfx03_Trk3.asm 1e149a 340 snd_script:noise
-audio/Sfx04_Trk0.asm 1e17da 212 snd_script:pulse
-audio/Sfx04_Trk1.asm 1e19ec 212 snd_script:pulse
-audio/Sfx04_Trk2.asm 1e1bfe 10a snd_script:wave
-audio/Sfx04_Trk3.asm 1e1d08 338 snd_script:noise
-audio/Sfx05_Trk0.asm 1e2040 1b4 snd_script:pulse
-audio/Sfx05_Trk1.asm 1e21f4 12c snd_script:pulse
-audio/Sfx05_Trk2.asm 1e2320 162 snd_script:wave
-audio/Sfx05_Trk3.asm 1e2482 362 snd_script:noise
-audio/Sfx06_Trk0.asm 1e27e4 270 snd_script:pulse
-audio/Sfx06_Trk1.asm 1e2a54 242 snd_script:pulse
-audio/Sfx06_Trk2.asm 1e2c96 4fc snd_script:wave
-audio/Sfx06_Trk3.asm 1e3192 504 snd_script:noise
-audio/Sfx07_Trk0.asm 1e3696 182 snd_script:pulse
-audio/Sfx07_Trk1.asm 1e3818 2c8 snd_script:pulse
-audio/Sfx07_Trk2.asm 1e3ae0 2c4 snd_script:wave
-audio/Sfx07_Trk3.asm 1e3da4 188 snd_script:noise
-audio/Sfx0a_Trk0.asm 1e3f2c 3a snd_script:pulse
-audio/Sfx0a_Trk1.asm 1e3f66 38 snd_script:pulse
-audio/Sfx0a_Trk2.asm 1e3f9e 18 snd_script:wave
-audio/Music51_Trk0.asm 1e3fb6 16 snd_script:noise
-audio/Music52_Trk0.asm 1e3fcc 1a snd_script:noise
-audio/Music9a_Trk0.asm 1e3fe6 a snd_script:pulse
-audio/Sfx08_Trk0.asm 1e4084 31a snd_script:pulse
-audio/Sfx08_Trk1.asm 1e439e 322 snd_script:pulse
-audio/Sfx08_Trk2.asm 1e46c0 19e snd_script:wave
-audio/Sfx08_Trk3.asm 1e485e 636 snd_script:noise
-audio/Sfx09_Trk0.asm 1e4e94 9a snd_script:pulse
-audio/Sfx09_Trk1.asm 1e4f2e 9a snd_script:pulse
-audio/Sfx09_Trk2.asm 1e4fc8 8e snd_script:wave
-audio/Sfx09_Trk3.asm 1e5056 324 snd_script:noise
-audio/Sfx0b_Trk0.asm 1e537a d2 snd_script:pulse
-audio/Sfx0b_Trk1.asm 1e544c d2 snd_script:pulse
-audio/Sfx0b_Trk2.asm 1e551e e0 snd_script:wave
-audio/Sfx0b_Trk3.asm 1e55fe 342 snd_script:noise
-audio/Sfx0c_Trk0.asm 1e5940 78 snd_script:pulse
-audio/Sfx0c_Trk1.asm 1e59b8 7a snd_script:pulse
-audio/Sfx0c_Trk2.asm 1e5a32 12c snd_script:wave
-audio/Sfx0c_Trk3.asm 1e5b5e 36e snd_script:noise
-audio/Sfx0d_Trk0.asm 1e5ecc a8 snd_script:pulse
-audio/Sfx0d_Trk1.asm 1e5f74 196 snd_script:pulse
-audio/Sfx0d_Trk2.asm 1e610a cc snd_script:wave
-audio/Sfx0d_Trk3.asm 1e61d6 3b6 snd_script:noise
-audio/Sfx0e_Trk0.asm 1e658c 20a snd_script:pulse
-audio/Sfx0e_Trk1.asm 1e6796 20e snd_script:pulse
-audio/Sfx0e_Trk2.asm 1e69a4 694 snd_script:wave
-audio/Sfx0e_Trk3.asm 1e7038 198 snd_script:noise
-audio/Sfx0f_Trk0.asm 1e71d0 20c snd_script:pulse
-audio/Sfx0f_Trk1.asm 1e73dc d6 snd_script:pulse
-audio/Sfx0f_Trk2.asm 1e74b2 364 snd_script:wave
-audio/Sfx0f_Trk3.asm 1e7816 676 snd_script:noise
-audio/Sfx2d_Trk0.asm 1e7e8c 6c snd_script:pulse
-audio/Sfx2d_Trk1.asm 1e7ef8 62 snd_script:pulse
-audio/Sfx2d_Trk2.asm 1e7f5a 22 snd_script:wave
-audio/Sfx2d_Trk3.asm 1e7f7c 4a snd_script:noise
-audio/Music53_Trk0.asm 1e7fc6 2c snd_script:noise
-audio/Sfx10_Trk0.asm 1e806c 352 snd_script:pulse
-audio/Sfx10_Trk1.asm 1e83be 274 snd_script:pulse
-audio/Sfx10_Trk2.asm 1e8632 656 snd_script:wave
-audio/Sfx10_Trk3.asm 1e8c88 30c snd_script:noise
-audio/Sfx11_Trk0.asm 1e8f94 2d0 snd_script:pulse
-audio/Sfx11_Trk1.asm 1e9264 2f4 snd_script:pulse
-audio/Sfx11_Trk2.asm 1e9558 262 snd_script:wave
-audio/Sfx11_Trk3.asm 1e97ba 2f0 snd_script:noise
-audio/Sfx12_Trk0.asm 1e9aaa 5ae snd_script:pulse
-audio/Sfx12_Trk1.asm 1ea058 4de snd_script:pulse
-audio/Sfx12_Trk2.asm 1ea536 140 snd_script:wave
-audio/Sfx12_Trk3.asm 1ea676 2a0 snd_script:noise
-audio/Sfx13_Trk0.asm 1ea916 208 snd_script:pulse
-audio/Sfx13_Trk1.asm 1eab1e 262 snd_script:pulse
-audio/Sfx13_Trk2.asm 1ead80 2a8 snd_script:wave
-audio/Sfx13_Trk3.asm 1eb028 270 snd_script:noise
-audio/Sfx14_Trk0.asm 1eb298 16c snd_script:pulse
-audio/Sfx14_Trk1.asm 1eb404 13e snd_script:pulse
-audio/Sfx14_Trk2.asm 1eb542 172 snd_script:wave
-audio/Sfx14_Trk3.asm 1eb6b4 2a6 snd_script:noise
-audio/Sfx15_Trk0.asm 1eb95a 196 snd_script:pulse
-audio/Sfx15_Trk1.asm 1ebaf0 17e snd_script:pulse
-audio/Sfx15_Trk2.asm 1ebc6e 126 snd_script:wave
-audio/Sfx15_Trk3.asm 1ebd94 16c snd_script:noise
-audio/Sfx2e_Trk0.asm 1ebf00 5e snd_script:pulse
-audio/Sfx2e_Trk1.asm 1ebf5e 4c snd_script:pulse
-audio/Sfx2e_Trk2.asm 1ebfaa 46 snd_script:wave
-audio/Sfx16_Trk0.asm 1ec0c0 1b6 snd_script:pulse
-audio/Sfx16_Trk1.asm 1ec276 1c8 snd_script:pulse
-audio/Sfx16_Trk2.asm 1ec43e 158 snd_script:wave
-audio/Sfx16_Trk3.asm 1ec596 256 snd_script:noise
-audio/Sfx17_Trk0.asm 1ec7ec 108 snd_script:pulse
-audio/Sfx17_Trk1.asm 1ec8f4 c4 snd_script:pulse
-audio/Sfx17_Trk2.asm 1ec9b8 9e snd_script:wave
-audio/Sfx17_Trk3.asm 1eca56 52 snd_script:noise
-audio/Sfx18_Trk0.asm 1ecaa8 12e snd_script:pulse
-audio/Sfx18_Trk1.asm 1ecbd6 12e snd_script:pulse
-audio/Sfx18_Trk2.asm 1ecd04 94 snd_script:wave
-audio/Sfx18_Trk3.asm 1ecd98 3da snd_script:noise
-audio/Sfx19_Trk0.asm 1ed172 1f4 snd_script:pulse
-audio/Sfx19_Trk1.asm 1ed366 1be snd_script:pulse
-audio/Sfx19_Trk2.asm 1ed524 2cc snd_script:wave
-audio/Sfx19_Trk3.asm 1ed7f0 9a snd_script:noise
-audio/Sfx1a_Trk0.asm 1ed88a da snd_script:pulse
-audio/Sfx1a_Trk1.asm 1ed964 de snd_script:pulse
-audio/Sfx1a_Trk2.asm 1eda42 7c snd_script:wave
-audio/Sfx1b_Trk0.asm 1edabe b8 snd_script:pulse
-audio/Sfx1b_Trk1.asm 1edb76 ba snd_script:pulse
-audio/Sfx1b_Trk2.asm 1edc30 d0 snd_script:wave
-audio/Sfx1b_Trk3.asm 1edd00 152 snd_script:noise
-audio/Sfx1c_Trk0.asm 1ede52 84 snd_script:pulse
-audio/Sfx1c_Trk1.asm 1eded6 ea snd_script:pulse
-audio/Sfx1c_Trk2.asm 1edfc0 18c snd_script:wave
-audio/Sfx1c_Trk3.asm 1ee14c 19c snd_script:noise
-audio/Sfx1d_Trk0.asm 1ee2e8 12e snd_script:pulse
-audio/Sfx1d_Trk1.asm 1ee416 1c0 snd_script:pulse
-audio/Sfx1d_Trk2.asm 1ee5d6 f0 snd_script:wave
-audio/Sfx1d_Trk3.asm 1ee6c6 60 snd_script:noise
-audio/Sfx1e_Trk0.asm 1ee726 2d4 snd_script:pulse
-audio/Sfx1e_Trk1.asm 1ee9fa 436 snd_script:pulse
-audio/Sfx1e_Trk2.asm 1eee30 4ac snd_script:wave
-audio/Sfx1e_Trk3.asm 1ef2dc 6be snd_script:noise
-audio/Sfx1f_Trk0.asm 1ef99a d4 snd_script:pulse
-audio/Sfx1f_Trk1.asm 1efa6e d8 snd_script:pulse
-audio/Sfx1f_Trk2.asm 1efb46 1c2 snd_script:wave
-audio/Sfx1f_Trk3.asm 1efd08 154 snd_script:noise
-audio/Sfx2f_Trk0.asm 1efe5c 1c snd_script:pulse
-audio/Sfx2f_Trk1.asm 1efe78 1c snd_script:pulse
-audio/Sfx2f_Trk2.asm 1efe94 16 snd_script:wave
-audio/Sfx2f_Trk3.asm 1efeaa 4c snd_script:noise
-audio/Sfx31_Trk0.asm 1efef6 26 snd_script:pulse
-audio/Sfx31_Trk1.asm 1eff1c 26 snd_script:pulse
-audio/Sfx31_Trk2.asm 1eff42 22 snd_script:wave
-audio/Sfx31_Trk3.asm 1eff64 82 snd_script:noise
-audio/Music9b_Trk0.asm 1effe6 a snd_script:pulse
-audio/Sfx20_Trk0.asm 1f006c 1c6 snd_script:pulse
-audio/Sfx20_Trk1.asm 1f0232 4bc snd_script:pulse
-audio/Sfx20_Trk2.asm 1f06ee 418 snd_script:wave
-audio/Sfx20_Trk3.asm 1f0b06 2e2 snd_script:noise
-audio/Sfx21_Trk0.asm 1f0de8 1a8 snd_script:pulse
-audio/Sfx21_Trk1.asm 1f0f90 2b4 snd_script:pulse
-audio/Sfx21_Trk2.asm 1f1244 1ea snd_script:wave
-audio/Sfx21_Trk3.asm 1f142e 4f8 snd_script:noise
-audio/Sfx22_Trk0.asm 1f1926 28e snd_script:pulse
-audio/Sfx22_Trk1.asm 1f1bb4 28c snd_script:pulse
-audio/Sfx22_Trk2.asm 1f1e40 268 snd_script:wave
-audio/Sfx22_Trk3.asm 1f20a8 1a6 snd_script:noise
-audio/Sfx23_Trk0.asm 1f224e 1f2 snd_script:pulse
-audio/Sfx23_Trk1.asm 1f2440 1f6 snd_script:pulse
-audio/Sfx23_Trk2.asm 1f2636 216 snd_script:wave
-audio/Sfx23_Trk3.asm 1f284c 4fa snd_script:noise
-audio/Sfx24_Trk0.asm 1f2d46 236 snd_script:pulse
-audio/Sfx24_Trk1.asm 1f2f7c 23a snd_script:pulse
-audio/Sfx24_Trk2.asm 1f31b6 692 snd_script:wave
-audio/Sfx24_Trk3.asm 1f3848 670 snd_script:noise
-audio/Music54_Trk0.asm 1f3eb8 2a snd_script:noise
-audio/Music55_Trk0.asm 1f3ee2 36 snd_script:noise
-audio/Music56_Trk0.asm 1f3f18 28 snd_script:noise
-audio/Music57_Trk0.asm 1f3f40 38 snd_script:noise
-audio/Music58_Trk0.asm 1f3f78 28 snd_script:noise
-audio/Music59_Trk0.asm 1f3fa0 30 snd_script:noise
-audio/Music5b_Trk0.asm 1f3fd0 16 snd_script:noise
-audio/Sfx25_Trk0.asm 1f407c 28a snd_script:pulse
-audio/Sfx25_Trk1.asm 1f4306 44e snd_script:pulse
-audio/Sfx25_Trk2.asm 1f4754 12e snd_script:wave
-audio/Sfx25_Trk3.asm 1f4882 680 snd_script:noise
-audio/Sfx26_Trk0.asm 1f4f02 59a snd_script:pulse
-audio/Sfx26_Trk1.asm 1f549c 564 snd_script:pulse
-audio/Sfx26_Trk2.asm 1f5a00 6b2 snd_script:wave
-audio/Sfx26_Trk3.asm 1f60b2 606 snd_script:noise
-audio/Sfx27_Trk0.asm 1f66b8 23a snd_script:pulse
-audio/Sfx27_Trk1.asm 1f68f2 64a snd_script:pulse
-audio/Sfx27_Trk2.asm 1f6f3c 672 snd_script:wave
-audio/Sfx27_Trk3.asm 1f75ae a2 snd_script:noise
-audio/Sfx2a_Trk0.asm 1f7650 110 snd_script:pulse
-audio/Sfx2a_Trk1.asm 1f7760 10a snd_script:pulse
-audio/Sfx2a_Trk2.asm 1f786a 14 snd_script:wave
-audio/Sfx2a_Trk3.asm 1f787e 66 snd_script:noise
-audio/Sfx2b_Trk0.asm 1f78e4 a4 snd_script:pulse
-audio/Sfx2b_Trk1.asm 1f7988 a4 snd_script:pulse
-audio/Sfx2b_Trk2.asm 1f7a2c e0 snd_script:wave
-audio/Sfx2b_Trk3.asm 1f7b0c 18e snd_script:noise
-audio/Sfx30_Trk0.asm 1f7c9a 40 snd_script:pulse
-audio/Sfx30_Trk1.asm 1f7cda 40 snd_script:pulse
-audio/Sfx30_Trk2.asm 1f7d1a 1a snd_script:wave
-audio/Sfx30_Trk3.asm 1f7d34 bc snd_script:noise
-audio/Sfx32_Trk0.asm 1f7df0 2a snd_script:pulse
-audio/Sfx32_Trk1.asm 1f7e1a 2a snd_script:pulse
-audio/Sfx32_Trk2.asm 1f7e44 2a snd_script:wave
-audio/Sfx32_Trk3.asm 1f7e6e e2 snd_script:noise
-audio/Music5a_Trk0.asm 1f7f50 4c snd_script:pulse
-audio/Music5c_Trk0.asm 1f7f9c 4c snd_script:pulse
-audio/Music9c_Trk0.asm 1f7fe8 a snd_script:pulse
-audio/Sfx28_Trk0.asm 1f8124 336 snd_script:pulse
-audio/Sfx28_Trk1.asm 1f845a 214 snd_script:pulse
-audio/Sfx28_Trk2.asm 1f866e 690 snd_script:wave
-audio/Sfx28_Trk3.asm 1f8cfe 61e snd_script:noise
-audio/Sfx29_Trk0.asm 1f931c 328 snd_script:pulse
-audio/Sfx29_Trk1.asm 1f9644 2ea snd_script:pulse
-audio/Sfx29_Trk2.asm 1f992e 344 snd_script:wave
-audio/Sfx29_Trk3.asm 1f9c72 506 snd_script:noise
-audio/Sfx2c_Trk0.asm 1fa178 2b0 snd_script:pulse
-audio/Sfx2c_Trk1.asm 1fa428 2cc snd_script:pulse
-audio/Sfx2c_Trk2.asm 1fa6f4 25e snd_script:wave
-audio/Sfx2c_Trk3.asm 1fa952 62e snd_script:noise
-audio/Music5d_Trk0.asm 1faf80 14 snd_script:pulse
-audio/Music5e_Trk0.asm 1faf94 14 snd_script:pulse
-audio/Music5f_Trk0.asm 1fafa8 12 snd_script:pulse
-audio/Music60_Trk0.asm 1fafba 18 snd_script:pulse
-audio/Music61_Trk0.asm 1fafd2 30 snd_script:pulse
-audio/Music62_Trk0.asm 1fb002 12 snd_script:pulse
-audio/Music63_Trk0.asm 1fb014 12 snd_script:pulse
-audio/Music64_Trk0.asm 1fb026 14 snd_script:pulse
-audio/Music65_Trk0.asm 1fb03a 22 snd_script:pulse
-audio/Music66_Trk0.asm 1fb05c 2e snd_script:pulse
-audio/Music67_Trk0.asm 1fb08a 4a snd_script:pulse
-audio/Music68_Trk0.asm 1fb0d4 4e snd_script:pulse
-audio/Music69_Trk0.asm 1fb122 40 snd_script:pulse
-audio/Music6a_Trk0.asm 1fb162 3c snd_script:pulse
-audio/Music6b_Trk0.asm 1fb19e 3e snd_script:pulse
-audio/Music6c_Trk0.asm 1fb1dc 22 snd_script:pulse
-audio/Music6d_Trk0.asm 1fb1fe 42 snd_script:pulse
-audio/Music6e_Trk0.asm 1fb240 22 snd_script:noise
-audio/Music6f_Trk1.asm 1fb262 22 snd_script:noise
-audio/Music6f_Trk0.asm 1fb284 114 snd_script:pulse
-audio/Music70_Trk0.asm 1fb398 4c snd_script:pulse
-audio/Music71_Trk0.asm 1fb3e4 22 snd_script:noise
-audio/Music72_Trk0.asm 1fb406 1a snd_script:noise
-audio/Music73_Trk0.asm 1fb420 2c snd_script:pulse
-audio/Music74_Trk0.asm 1fb44c 26 snd_script:pulse
-audio/Music75_Trk0.asm 1fb472 6e snd_script:pulse
-audio/Music76_Trk0.asm 1fb4e0 36 snd_script:noise
-audio/Music77_Trk0.asm 1fb516 38 snd_script:pulse
-audio/Music78_Trk0.asm 1fb54e 40 snd_script:noise
-audio/Music79_Trk0.asm 1fb58e 2a snd_script:noise
-audio/Music7a_Trk0.asm 1fb5b8 36 snd_script:noise
-audio/Music7b_Trk0.asm 1fb5ee 22 snd_script:noise
-audio/Music7c_Trk0.asm 1fb610 3e snd_script:noise
-audio/Music7d_Trk0.asm 1fb64e 22 snd_script:noise
-audio/Music7e_Trk0.asm 1fb670 46 snd_script:noise
-audio/Music7f_Trk0.asm 1fb6b6 32 snd_script:noise
-audio/Music80_Trk0.asm 1fb6e8 2a snd_script:pulse
-audio/Music81_Trk0.asm 1fb712 48 snd_script:noise
-audio/Music82_Trk1.asm 1fb75a 22 snd_script:noise
-audio/Music82_Trk0.asm 1fb77c 114 snd_script:pulse
-audio/Music83_Trk0.asm 1fb890 1c snd_script:noise
-audio/Music84_Trk0.asm 1fb8ac 2a snd_script:pulse
-audio/Music84_Trk1.asm 1fb8d6 32 snd_script:pulse
-audio/Music85_Trk0.asm 1fb908 2a snd_script:noise
-audio/Music86_Trk0.asm 1fb932 7a snd_script:pulse
-audio/Music87_Trk0.asm 1fb9ac 1e snd_script:pulse
-audio/Music87_Trk1.asm 1fb9ca e snd_script:noise
-audio/Music88_Trk0.asm 1fb9d8 32 snd_script:noise
-audio/Music89_Trk0.asm 1fba0a c4 snd_script:pulse
-audio/Music8a_Trk0.asm 1fbace f0 snd_script:pulse
-audio/Music8b_Trk0.asm 1fbbbe 34 snd_script:noise
-audio/Music8c_Trk0.asm 1fbbf2 16 snd_script:pulse
-audio/Music8d_Trk0.asm 1fbc08 90 snd_script:pulse
-audio/Music8e_Trk0.asm 1fbc98 40 snd_script:pulse
-audio/Music8f_Trk0.asm 1fbcd8 108 snd_script:pulse
-audio/Music90_Trk0.asm 1fbde0 f0 snd_script:pulse
-audio/Music91_Trk0.asm 1fbed0 2e snd_script:noise
-audio/Music92_Trk0.asm 1fbefe 16 snd_script:noise
-audio/Music93_Trk0.asm 1fbf14 36 snd_script:pulse
-audio/Music94_Trk0.asm 1fbf4a 4c snd_script:pulse
-audio/Music95_Trk0.asm 1fbf96 1c snd_script:pulse
-audio/Music96_Trk0.asm 1fc0a8 24 snd_script:pulse
-audio/Music96_Trk1.asm 1fc0cc 2c snd_script:wave
-audio/Music97_Trk0.asm 1fc0f8 48 snd_script:pulse
-audio/Music98_Trk0.asm 1fc140 48 snd_script:pulse
-audio/Music99_Trk0.asm 1fc188 1a snd_script:noise
-audio/Music9d_Trk0.asm 1fc1a2 c snd_script:pulse
-audio/Music9e_Trk0.asm 1fc1ae c snd_script:pulse
-audio/Music9f_Trk0.asm 1fc1ba c snd_script:pulse
-audio/Musica0_Trk0.asm 1fc1c6 c snd_script:pulse
-audio/Musica1_Trk0.asm 1fc1d2 c snd_script:pulse
-audio/Musica2_Trk0.asm 1fc1de c snd_script:pulse
-audio/Musica3_Trk0.asm 1fc1ea c snd_script:pulse
-audio/Musica4_Trk0.asm 1fc1f6 c snd_script:pulse
-audio/Musica5_Trk0.asm 1fc202 c snd_script:pulse
-audio/Musica6_Trk0.asm 1fc20e c snd_script:pulse
-audio/Musica7_Trk0.asm 1fc21a c snd_script:pulse
-audio/Musica8_Trk0.asm 1fc226 c snd_script:pulse
-audio/Musica9_Trk0.asm 1fc232 c snd_script:pulse
-audio/Musicaa_Trk0.asm 1fc23e c snd_script:pulse
-audio/Musicab_Trk0.asm 1fc24a c snd_script:pulse
-audio/Musicac_Trk0.asm 1fc256 c snd_script:pulse
-audio/Musicad_Trk0.asm 1fc262 c snd_script:pulse
-audio/Musicae_Trk0.asm 1fc26e c snd_script:pulse
-audio/Musicaf_Trk0.asm 1fc27a c snd_script:pulse
-audio/Musicb0_Trk0.asm 1fc286 c snd_script:pulse
-audio/Musicb1_Trk0.asm 1fc292 c snd_script:pulse
-audio/Musicb2_Trk0.asm 1fc29e c snd_script:pulse
-audio/Musicb3_Trk0.asm 1fc2aa c snd_script:pulse
-audio/Musicb4_Trk0.asm 1fc2b6 c snd_script:pulse
-audio/Musicb5_Trk0.asm 1fc2c2 c snd_script:pulse
-audio/Musicb6_Trk0.asm 1fc2ce c snd_script:pulse
-audio/Musicb7_Trk0.asm 1fc2da c snd_script:pulse
-audio/Musicb8_Trk0.asm 1fc2e6 c snd_script:pulse
-audio/Musicb9_Trk0.asm 1fc2f2 c snd_script:pulse
-audio/Musicba_Trk0.asm 1fc2fe 48 snd_script:pulse
-audio/Musicbb_Trk0.asm 1fc346 48 snd_script:pulse
-audio/Musicbc_Trk0.asm 1fc38e 48 snd_script:pulse
-audio/Musicbd_Trk0.asm 1fc3d6 48 snd_script:pulse
-audio/Musicbe_Trk0.asm 1fc41e 48 snd_script:pulse
-audio/Musicbf_Trk0.asm 1fc466 48 snd_script:pulse
-audio/Musicc0_Trk0.asm 1fc4ae 48 snd_script:pulse
-audio/Musicc1_Trk0.asm 1fc4f6 c snd_script:pulse
+audio/MusicIntro_Trk0.asm 1e0088 f0 snd_script:pulse
+audio/MusicIntro_Trk1.asm 1e0178 f2 snd_script:pulse
+audio/MusicIntro_Trk2.asm 1e026a 164 snd_script:wave
+audio/MusicIntro_Trk3.asm 1e03ce 538 snd_script:noise
+audio/MusicTitleScreen_Trk0.asm 1e0906 3e snd_script:pulse
+audio/MusicTitleScreen_Trk1.asm 1e0944 4e snd_script:pulse
+audio/MusicTitleScreen_Trk2.asm 1e0992 ae snd_script:wave
+audio/MusicTitleScreen_Trk3.asm 1e0a40 246 snd_script:noise
+audio/MusicMenu_Trk0.asm 1e0c86 1e6 snd_script:pulse
+audio/MusicMenu_Trk1.asm 1e0e6c 1c0 snd_script:pulse
+audio/MusicMenu_Trk2.asm 1e102c 46e snd_script:wave
+audio/MusicMenu_Trk3.asm 1e149a 340 snd_script:noise
+audio/MusicStatusScreen_Trk0.asm 1e17da 212 snd_script:pulse
+audio/MusicStatusScreen_Trk1.asm 1e19ec 212 snd_script:pulse
+audio/MusicStatusScreen_Trk2.asm 1e1bfe 10a snd_script:wave
+audio/MusicStatusScreen_Trk3.asm 1e1d08 338 snd_script:noise
+audio/MusicDictionary_Trk0.asm 1e2040 1b4 snd_script:pulse
+audio/MusicDictionary_Trk1.asm 1e21f4 12c snd_script:pulse
+audio/MusicDictionary_Trk2.asm 1e2320 162 snd_script:wave
+audio/MusicDictionary_Trk3.asm 1e2482 362 snd_script:noise
+audio/MusicExhibitionMatch_Trk0.asm 1e27e4 270 snd_script:pulse
+audio/MusicExhibitionMatch_Trk1.asm 1e2a54 242 snd_script:pulse
+audio/MusicExhibitionMatch_Trk2.asm 1e2c96 4fc snd_script:wave
+audio/MusicExhibitionMatch_Trk3.asm 1e3192 504 snd_script:noise
+audio/MusicExhibitionMatchLink_Trk0.asm 1e3696 182 snd_script:pulse
+audio/MusicExhibitionMatchLink_Trk1.asm 1e3818 2c8 snd_script:pulse
+audio/MusicExhibitionMatchLink_Trk2.asm 1e3ae0 2c4 snd_script:wave
+audio/MusicExhibitionMatchLink_Trk3.asm 1e3da4 188 snd_script:noise
+audio/MusicLose_Trk0.asm 1e3f2c 3a snd_script:pulse
+audio/MusicLose_Trk1.asm 1e3f66 38 snd_script:pulse
+audio/MusicLose_Trk2.asm 1e3f9e 18 snd_script:wave
+audio/SfxHitTopspin_Trk0.asm 1e3fb6 16 snd_script:noise
+audio/SfxHitDrop_Trk0.asm 1e3fcc 1a snd_script:noise
+audio/Sfx9a_Trk0.asm 1e3fe6 a snd_script:pulse
+audio/MusicMarioMinigame_Trk0.asm 1e4084 31a snd_script:pulse
+audio/MusicMarioMinigame_Trk1.asm 1e439e 322 snd_script:pulse
+audio/MusicMarioMinigame_Trk2.asm 1e46c0 19e snd_script:wave
+audio/MusicMarioMinigame_Trk3.asm 1e485e 636 snd_script:noise
+audio/MusicWin_Trk0.asm 1e4e94 9a snd_script:pulse
+audio/MusicWin_Trk1.asm 1e4f2e 9a snd_script:pulse
+audio/MusicWin_Trk2.asm 1e4fc8 8e snd_script:wave
+audio/MusicWin_Trk3.asm 1e5056 324 snd_script:noise
+audio/MusicExpAward_Trk0.asm 1e537a d2 snd_script:pulse
+audio/MusicExpAward_Trk1.asm 1e544c d2 snd_script:pulse
+audio/MusicExpAward_Trk2.asm 1e551e e0 snd_script:wave
+audio/MusicExpAward_Trk3.asm 1e55fe 342 snd_script:noise
+audio/MusicExpDistribution_Trk0.asm 1e5940 78 snd_script:pulse
+audio/MusicExpDistribution_Trk1.asm 1e59b8 7a snd_script:pulse
+audio/MusicExpDistribution_Trk2.asm 1e5a32 12c snd_script:wave
+audio/MusicExpDistribution_Trk3.asm 1e5b5e 36e snd_script:noise
+audio/MusicStatDistribution_Trk0.asm 1e5ecc a8 snd_script:pulse
+audio/MusicStatDistribution_Trk1.asm 1e5f74 196 snd_script:pulse
+audio/MusicStatDistribution_Trk2.asm 1e610a cc snd_script:wave
+audio/MusicStatDistribution_Trk3.asm 1e61d6 3b6 snd_script:noise
+audio/MusicTiebreak_Trk0.asm 1e658c 20a snd_script:pulse
+audio/MusicTiebreak_Trk1.asm 1e6796 20e snd_script:pulse
+audio/MusicTiebreak_Trk2.asm 1e69a4 694 snd_script:wave
+audio/MusicTiebreak_Trk3.asm 1e7038 198 snd_script:noise
+audio/MusicSetPoint_Trk0.asm 1e71d0 20c snd_script:pulse
+audio/MusicSetPoint_Trk1.asm 1e73dc d6 snd_script:pulse
+audio/MusicSetPoint_Trk2.asm 1e74b2 364 snd_script:wave
+audio/MusicSetPoint_Trk3.asm 1e7816 676 snd_script:noise
+audio/MusicTheEnd_Trk0.asm 1e7e8c 6c snd_script:pulse
+audio/MusicTheEnd_Trk1.asm 1e7ef8 62 snd_script:pulse
+audio/MusicTheEnd_Trk2.asm 1e7f5a 22 snd_script:wave
+audio/MusicTheEnd_Trk3.asm 1e7f7c 4a snd_script:noise
+audio/SfxHitLob_Trk0.asm 1e7fc6 2c snd_script:noise
+audio/MusicGamePoint_Trk0.asm 1e806c 352 snd_script:pulse
+audio/MusicGamePoint_Trk1.asm 1e83be 274 snd_script:pulse
+audio/MusicGamePoint_Trk2.asm 1e8632 656 snd_script:wave
+audio/MusicGamePoint_Trk3.asm 1e8c88 30c snd_script:noise
+audio/MusicCourtStar_Trk0.asm 1e8f94 2d0 snd_script:pulse
+audio/MusicCourtStar_Trk1.asm 1e9264 2f4 snd_script:pulse
+audio/MusicCourtStar_Trk2.asm 1e9558 262 snd_script:wave
+audio/MusicCourtStar_Trk3.asm 1e97ba 2f0 snd_script:noise
+audio/MusicCourtCastle_Trk0.asm 1e9aaa 5ae snd_script:pulse
+audio/MusicCourtCastle_Trk1.asm 1ea058 4de snd_script:pulse
+audio/MusicCourtCastle_Trk2.asm 1ea536 140 snd_script:wave
+audio/MusicCourtCastle_Trk3.asm 1ea676 2a0 snd_script:noise
+audio/MusicCourtTropic_Trk0.asm 1ea916 208 snd_script:pulse
+audio/MusicCourtTropic_Trk1.asm 1eab1e 262 snd_script:pulse
+audio/MusicCourtTropic_Trk2.asm 1ead80 2a8 snd_script:wave
+audio/MusicCourtTropic_Trk3.asm 1eb028 270 snd_script:noise
+audio/MusicCourtWarehouse_Trk0.asm 1eb298 16c snd_script:pulse
+audio/MusicCourtWarehouse_Trk1.asm 1eb404 13e snd_script:pulse
+audio/MusicCourtWarehouse_Trk2.asm 1eb542 172 snd_script:wave
+audio/MusicCourtWarehouse_Trk3.asm 1eb6b4 2a6 snd_script:noise
+audio/MusicTwoOnOne_Trk0.asm 1eb95a 196 snd_script:pulse
+audio/MusicTwoOnOne_Trk1.asm 1ebaf0 17e snd_script:pulse
+audio/MusicTwoOnOne_Trk2.asm 1ebc6e 126 snd_script:wave
+audio/MusicTwoOnOne_Trk3.asm 1ebd94 16c snd_script:noise
+audio/MusicDoneForTheDay_Trk0.asm 1ebf00 5e snd_script:pulse
+audio/MusicDoneForTheDay_Trk1.asm 1ebf5e 4c snd_script:pulse
+audio/MusicDoneForTheDay_Trk2.asm 1ebfaa 46 snd_script:wave
+audio/MusicCourtJungle_Trk0.asm 1ec0c0 1b6 snd_script:pulse
+audio/MusicCourtJungle_Trk1.asm 1ec276 1c8 snd_script:pulse
+audio/MusicCourtJungle_Trk2.asm 1ec43e 158 snd_script:wave
+audio/MusicCourtJungle_Trk3.asm 1ec596 256 snd_script:noise
+audio/Music17_Trk0.asm 1ec7ec 108 snd_script:pulse
+audio/Music17_Trk1.asm 1ec8f4 c4 snd_script:pulse
+audio/Music17_Trk2.asm 1ec9b8 9e snd_script:wave
+audio/Music17_Trk3.asm 1eca56 52 snd_script:noise
+audio/Music18_Trk0.asm 1ecaa8 12e snd_script:pulse
+audio/Music18_Trk1.asm 1ecbd6 12e snd_script:pulse
+audio/Music18_Trk2.asm 1ecd04 94 snd_script:wave
+audio/Music18_Trk3.asm 1ecd98 3da snd_script:noise
+audio/MusicTargetMinigames_Trk0.asm 1ed172 1f4 snd_script:pulse
+audio/MusicTargetMinigames_Trk1.asm 1ed366 1be snd_script:pulse
+audio/MusicTargetMinigames_Trk2.asm 1ed524 2cc snd_script:wave
+audio/MusicTargetMinigames_Trk3.asm 1ed7f0 9a snd_script:noise
+audio/MusicAcademyBuilding_Trk0.asm 1ed88a da snd_script:pulse
+audio/MusicAcademyBuilding_Trk1.asm 1ed964 de snd_script:pulse
+audio/MusicAcademyBuilding_Trk2.asm 1eda42 7c snd_script:wave
+audio/MusicAcademyOutdoors_Trk0.asm 1edabe b8 snd_script:pulse
+audio/MusicAcademyOutdoors_Trk1.asm 1edb76 ba snd_script:pulse
+audio/MusicAcademyOutdoors_Trk2.asm 1edc30 d0 snd_script:wave
+audio/MusicAcademyOutdoors_Trk3.asm 1edd00 152 snd_script:noise
+audio/MusicDormRoom_Trk0.asm 1ede52 84 snd_script:pulse
+audio/MusicDormRoom_Trk1.asm 1eded6 ea snd_script:pulse
+audio/MusicDormRoom_Trk2.asm 1edfc0 18c snd_script:wave
+audio/MusicDormRoom_Trk3.asm 1ee14c 19c snd_script:noise
+audio/MusicAcademyRooms_Trk0.asm 1ee2e8 12e snd_script:pulse
+audio/MusicAcademyRooms_Trk1.asm 1ee416 1c0 snd_script:pulse
+audio/MusicAcademyRooms_Trk2.asm 1ee5d6 f0 snd_script:wave
+audio/MusicAcademyRooms_Trk3.asm 1ee6c6 60 snd_script:noise
+audio/MusicTennisMachine_Trk0.asm 1ee726 2d4 snd_script:pulse
+audio/MusicTennisMachine_Trk1.asm 1ee9fa 436 snd_script:pulse
+audio/MusicTennisMachine_Trk2.asm 1eee30 4ac snd_script:wave
+audio/MusicTennisMachine_Trk3.asm 1ef2dc 6be snd_script:noise
+audio/MusicWallPractice_Trk0.asm 1ef99a d4 snd_script:pulse
+audio/MusicWallPractice_Trk1.asm 1efa6e d8 snd_script:pulse
+audio/MusicWallPractice_Trk2.asm 1efb46 1c2 snd_script:wave
+audio/MusicWallPractice_Trk3.asm 1efd08 154 snd_script:noise
+audio/MusicLevelUp_Trk0.asm 1efe5c 1c snd_script:pulse
+audio/MusicLevelUp_Trk1.asm 1efe78 1c snd_script:pulse
+audio/MusicLevelUp_Trk2.asm 1efe94 16 snd_script:wave
+audio/MusicLevelUp_Trk3.asm 1efeaa 4c snd_script:noise
+audio/Music31_Trk0.asm 1efef6 26 snd_script:pulse
+audio/Music31_Trk1.asm 1eff1c 26 snd_script:pulse
+audio/Music31_Trk2.asm 1eff42 22 snd_script:wave
+audio/Music31_Trk3.asm 1eff64 82 snd_script:noise
+audio/SfxOptionToggle_Trk0.asm 1effe6 a snd_script:pulse
+audio/MusicPracticeMatch_Trk0.asm 1f006c 1c6 snd_script:pulse
+audio/MusicPracticeMatch_Trk1.asm 1f0232 4bc snd_script:pulse
+audio/MusicPracticeMatch_Trk2.asm 1f06ee 418 snd_script:wave
+audio/MusicPracticeMatch_Trk3.asm 1f0b06 2e2 snd_script:noise
+audio/MusicJuniorRanking_Trk0.asm 1f0de8 1a8 snd_script:pulse
+audio/MusicJuniorRanking_Trk1.asm 1f0f90 2b4 snd_script:pulse
+audio/MusicJuniorRanking_Trk2.asm 1f1244 1ea snd_script:wave
+audio/MusicJuniorRanking_Trk3.asm 1f142e 4f8 snd_script:noise
+audio/MusicSeniorRanking_Trk0.asm 1f1926 28e snd_script:pulse
+audio/MusicSeniorRanking_Trk1.asm 1f1bb4 28c snd_script:pulse
+audio/MusicSeniorRanking_Trk2.asm 1f1e40 268 snd_script:wave
+audio/MusicSeniorRanking_Trk3.asm 1f20a8 1a6 snd_script:noise
+audio/MusicVarsityRanking_Trk0.asm 1f224e 1f2 snd_script:pulse
+audio/MusicVarsityRanking_Trk1.asm 1f2440 1f6 snd_script:pulse
+audio/MusicVarsityRanking_Trk2.asm 1f2636 216 snd_script:wave
+audio/MusicVarsityRanking_Trk3.asm 1f284c 4fa snd_script:noise
+audio/MusicDrillMatch_Trk0.asm 1f2d46 236 snd_script:pulse
+audio/MusicDrillMatch_Trk1.asm 1f2f7c 23a snd_script:pulse
+audio/MusicDrillMatch_Trk2.asm 1f31b6 692 snd_script:wave
+audio/MusicDrillMatch_Trk3.asm 1f3848 670 snd_script:noise
+audio/SfxHitServe_Trk0.asm 1f3eb8 2a snd_script:noise
+audio/SfxSpecialHit_Trk0.asm 1f3ee2 36 snd_script:noise
+audio/Sfx56_Trk0.asm 1f3f18 28 snd_script:noise
+audio/SfxHitSlice_Trk0.asm 1f3f40 38 snd_script:noise
+audio/Sfx58_Trk0.asm 1f3f78 28 snd_script:noise
+audio/SfxSwingCharge_Trk0.asm 1f3fa0 30 snd_script:noise
+audio/SfxBallBounce_Trk0.asm 1f3fd0 16 snd_script:noise
+audio/MusicDrillPractice_Trk0.asm 1f407c 28a snd_script:pulse
+audio/MusicDrillPractice_Trk1.asm 1f4306 44e snd_script:pulse
+audio/MusicDrillPractice_Trk2.asm 1f4754 12e snd_script:wave
+audio/MusicDrillPractice_Trk3.asm 1f4882 680 snd_script:noise
+audio/MusicIslandOpen_Trk0.asm 1f4f02 59a snd_script:pulse
+audio/MusicIslandOpen_Trk1.asm 1f549c 564 snd_script:pulse
+audio/MusicIslandOpen_Trk2.asm 1f5a00 6b2 snd_script:wave
+audio/MusicIslandOpen_Trk3.asm 1f60b2 606 snd_script:noise
+audio/MusicIslandOpenSemifinal_Trk0.asm 1f66b8 23a snd_script:pulse
+audio/MusicIslandOpenSemifinal_Trk1.asm 1f68f2 64a snd_script:pulse
+audio/MusicIslandOpenSemifinal_Trk2.asm 1f6f3c 672 snd_script:wave
+audio/MusicIslandOpenSemifinal_Trk3.asm 1f75ae a2 snd_script:noise
+audio/MusicIslandOpenLose_Trk0.asm 1f7650 110 snd_script:pulse
+audio/MusicIslandOpenLose_Trk1.asm 1f7760 10a snd_script:pulse
+audio/MusicIslandOpenLose_Trk2.asm 1f786a 14 snd_script:wave
+audio/MusicIslandOpenLose_Trk3.asm 1f787e 66 snd_script:noise
+audio/MusicIslandOpenWin_Trk0.asm 1f78e4 a4 snd_script:pulse
+audio/MusicIslandOpenWin_Trk1.asm 1f7988 a4 snd_script:pulse
+audio/MusicIslandOpenWin_Trk2.asm 1f7a2c e0 snd_script:wave
+audio/MusicIslandOpenWin_Trk3.asm 1f7b0c 18e snd_script:noise
+audio/MusicHighScore_Trk0.asm 1f7c9a 40 snd_script:pulse
+audio/MusicHighScore_Trk1.asm 1f7cda 40 snd_script:pulse
+audio/MusicHighScore_Trk2.asm 1f7d1a 1a snd_script:wave
+audio/MusicHighScore_Trk3.asm 1f7d34 bc snd_script:noise
+audio/Music32_Trk0.asm 1f7df0 2a snd_script:pulse
+audio/Music32_Trk1.asm 1f7e1a 2a snd_script:pulse
+audio/Music32_Trk2.asm 1f7e44 2a snd_script:wave
+audio/Music32_Trk3.asm 1f7e6e e2 snd_script:noise
+audio/SfxNetCord_Trk0.asm 1f7f50 4c snd_script:pulse
+audio/SfxSwing_Trk0.asm 1f7f9c 4c snd_script:pulse
+audio/Sfx9c_Trk0.asm 1f7fe8 a snd_script:pulse
+audio/MusicIslandOpenFinal_Trk0.asm 1f8124 336 snd_script:pulse
+audio/MusicIslandOpenFinal_Trk1.asm 1f845a 214 snd_script:pulse
+audio/MusicIslandOpenFinal_Trk2.asm 1f866e 690 snd_script:wave
+audio/MusicIslandOpenFinal_Trk3.asm 1f8cfe 61e snd_script:noise
+audio/MusicDreamMatch_Trk0.asm 1f931c 328 snd_script:pulse
+audio/MusicDreamMatch_Trk1.asm 1f9644 2ea snd_script:pulse
+audio/MusicDreamMatch_Trk2.asm 1f992e 344 snd_script:wave
+audio/MusicDreamMatch_Trk3.asm 1f9c72 506 snd_script:noise
+audio/MusicCredits_Trk0.asm 1fa178 2b0 snd_script:pulse
+audio/MusicCredits_Trk1.asm 1fa428 2cc snd_script:pulse
+audio/MusicCredits_Trk2.asm 1fa6f4 25e snd_script:wave
+audio/MusicCredits_Trk3.asm 1fa952 62e snd_script:noise
+audio/Sfx5d_Trk0.asm 1faf80 14 snd_script:pulse
+audio/SfxMenuMove_Trk0.asm 1faf94 14 snd_script:pulse
+audio/SfxMenuSelect_Trk0.asm 1fafa8 12 snd_script:pulse
+audio/SfxMenuDecide_Trk0.asm 1fafba 18 snd_script:pulse
+audio/SfxMenuLocked_Trk0.asm 1fafd2 30 snd_script:pulse
+audio/SfxMenuCancel_Trk0.asm 1fb002 12 snd_script:pulse
+audio/SfxPauseMenu_Trk0.asm 1fb014 12 snd_script:pulse
+audio/Sfx64_Trk0.asm 1fb026 14 snd_script:pulse
+audio/SfxLogoJingle_Trk0.asm 1fb03a 22 snd_script:pulse
+audio/SfxScoreDisplay_Trk0.asm 1fb05c 2e snd_script:pulse
+audio/SfxBannerWinner_Trk0.asm 1fb08a 4a snd_script:pulse
+audio/SfxBannerPointSituation_Trk0.asm 1fb0d4 4e snd_script:pulse
+audio/SfxDeuce_Trk0.asm 1fb122 40 snd_script:pulse
+audio/SfxBannerFault_Trk0.asm 1fb162 3c snd_script:pulse
+audio/SfxBannerGameWon_Trk0.asm 1fb19e 3e snd_script:pulse
+audio/SfxBannerCall_Trk0.asm 1fb1dc 22 snd_script:pulse
+audio/SfxLandingMarker_Trk0.asm 1fb1fe 42 snd_script:pulse
+audio/Sfx6e_Trk0.asm 1fb240 22 snd_script:noise
+audio/SfxDebugAlarm_Trk1.asm 1fb262 22 snd_script:noise
+audio/SfxDebugAlarm_Trk0.asm 1fb284 114 snd_script:pulse
+audio/SfxImpact_Trk0.asm 1fb398 4c snd_script:pulse
+audio/SfxDoor_Trk0.asm 1fb3e4 22 snd_script:noise
+audio/SfxBeep_Trk0.asm 1fb406 1a snd_script:noise
+audio/SfxCaption_Trk0.asm 1fb420 2c snd_script:pulse
+audio/SfxCountdown_Trk0.asm 1fb44c 26 snd_script:pulse
+audio/SfxCountdownGo_Trk0.asm 1fb472 6e snd_script:pulse
+audio/SfxBallLaunch_Trk0.asm 1fb4e0 36 snd_script:noise
+audio/SfxBallContact_Trk0.asm 1fb516 38 snd_script:pulse
+audio/SfxMarker_Trk0.asm 1fb54e 40 snd_script:noise
+audio/SfxDoorAlt_Trk0.asm 1fb58e 2a snd_script:noise
+audio/SfxFireworkLaunch_Trk0.asm 1fb5b8 36 snd_script:noise
+audio/SfxPlane_Trk0.asm 1fb5ee 22 snd_script:noise
+audio/Sfx7c_Trk0.asm 1fb610 3e snd_script:noise
+audio/SfxFireworkSparkle_Trk0.asm 1fb64e 22 snd_script:noise
+audio/SfxSplash_Trk0.asm 1fb670 46 snd_script:noise
+audio/SfxRankingBoard_Trk0.asm 1fb6b6 32 snd_script:noise
+audio/SfxRankingHighlight_Trk0.asm 1fb6e8 2a snd_script:pulse
+audio/SfxFirework_Trk0.asm 1fb712 48 snd_script:noise
+audio/Sfx82_Trk1.asm 1fb75a 22 snd_script:noise
+audio/Sfx82_Trk0.asm 1fb77c 114 snd_script:pulse
+audio/SfxStomp_Trk0.asm 1fb890 1c snd_script:noise
+audio/SfxTwinkle_Trk0.asm 1fb8ac 2a snd_script:pulse
+audio/SfxTwinkle_Trk1.asm 1fb8d6 32 snd_script:pulse
+audio/Sfx85_Trk0.asm 1fb908 2a snd_script:noise
+audio/SfxThud_Trk0.asm 1fb932 7a snd_script:pulse
+audio/SfxVoiceYoshi_Trk0.asm 1fb9ac 1e snd_script:pulse
+audio/SfxVoiceYoshi_Trk1.asm 1fb9ca e snd_script:noise
+audio/SfxPeachFanfare_Trk0.asm 1fb9d8 32 snd_script:noise
+audio/SfxVoiceBabyMario_Trk0.asm 1fba0a c4 snd_script:pulse
+audio/SfxWaterSpriteMagic_Trk0.asm 1fbace f0 snd_script:pulse
+audio/Sfx8b_Trk0.asm 1fbbbe 34 snd_script:noise
+audio/SfxContestWin_Trk0.asm 1fbbf2 16 snd_script:pulse
+audio/SfxContestFinish_Trk0.asm 1fbc08 90 snd_script:pulse
+audio/SfxWaterSpriteAppear_Trk0.asm 1fbc98 40 snd_script:pulse
+audio/SfxWaterSpriteFly_Trk0.asm 1fbcd8 108 snd_script:pulse
+audio/SfxRacketGet_Trk0.asm 1fbde0 f0 snd_script:pulse
+audio/Sfx91_Trk0.asm 1fbed0 2e snd_script:noise
+audio/Sfx92_Trk0.asm 1fbefe 16 snd_script:noise
+audio/Sfx93_Trk0.asm 1fbf14 36 snd_script:pulse
+audio/SfxGridClear_Trk0.asm 1fbf4a 4c snd_script:pulse
+audio/Sfx95_Trk0.asm 1fbf96 1c snd_script:pulse
+audio/SfxAppear2_Trk0.asm 1fc0a8 24 snd_script:pulse
+audio/SfxAppear2_Trk1.asm 1fc0cc 2c snd_script:wave
+audio/SfxChime_Trk0.asm 1fc0f8 48 snd_script:pulse
+audio/SfxEmote_Trk0.asm 1fc140 48 snd_script:pulse
+audio/SfxAppear1_Trk0.asm 1fc188 1a snd_script:noise
+audio/Sfx9d_Trk0.asm 1fc1a2 c snd_script:pulse
+audio/Sfx9e_Trk0.asm 1fc1ae c snd_script:pulse
+audio/Sfx9f_Trk0.asm 1fc1ba c snd_script:pulse
+audio/Sfxa0_Trk0.asm 1fc1c6 c snd_script:pulse
+audio/Sfxa1_Trk0.asm 1fc1d2 c snd_script:pulse
+audio/SfxStoryCue_Trk0.asm 1fc1de c snd_script:pulse
+audio/Sfxa3_Trk0.asm 1fc1ea c snd_script:pulse
+audio/Sfxa4_Trk0.asm 1fc1f6 c snd_script:pulse
+audio/Sfxa5_Trk0.asm 1fc202 c snd_script:pulse
+audio/Sfxa6_Trk0.asm 1fc20e c snd_script:pulse
+audio/Sfxa7_Trk0.asm 1fc21a c snd_script:pulse
+audio/Sfxa8_Trk0.asm 1fc226 c snd_script:pulse
+audio/Sfxa9_Trk0.asm 1fc232 c snd_script:pulse
+audio/Sfxaa_Trk0.asm 1fc23e c snd_script:pulse
+audio/Sfxab_Trk0.asm 1fc24a c snd_script:pulse
+audio/Sfxac_Trk0.asm 1fc256 c snd_script:pulse
+audio/Sfxad_Trk0.asm 1fc262 c snd_script:pulse
+audio/Sfxae_Trk0.asm 1fc26e c snd_script:pulse
+audio/SfxTimerTick_Trk0.asm 1fc27a c snd_script:pulse
+audio/SfxTimerUp_Trk0.asm 1fc286 c snd_script:pulse
+audio/Sfxb1_Trk0.asm 1fc292 c snd_script:pulse
+audio/Sfxb2_Trk0.asm 1fc29e c snd_script:pulse
+audio/Sfxb3_Trk0.asm 1fc2aa c snd_script:pulse
+audio/Sfxb4_Trk0.asm 1fc2b6 c snd_script:pulse
+audio/Sfxb5_Trk0.asm 1fc2c2 c snd_script:pulse
+audio/Sfxb6_Trk0.asm 1fc2ce c snd_script:pulse
+audio/Sfxb7_Trk0.asm 1fc2da c snd_script:pulse
+audio/Sfxb8_Trk0.asm 1fc2e6 c snd_script:pulse
+audio/Sfxb9_Trk0.asm 1fc2f2 c snd_script:pulse
+audio/SfxScoreStep7_Trk0.asm 1fc2fe 48 snd_script:pulse
+audio/SfxScoreStep6_Trk0.asm 1fc346 48 snd_script:pulse
+audio/SfxScoreStep5_Trk0.asm 1fc38e 48 snd_script:pulse
+audio/SfxScoreStep4_Trk0.asm 1fc3d6 48 snd_script:pulse
+audio/SfxScoreStep3_Trk0.asm 1fc41e 48 snd_script:pulse
+audio/SfxScoreStep2_Trk0.asm 1fc466 48 snd_script:pulse
+audio/SfxScoreStep1_Trk0.asm 1fc4ae 48 snd_script:pulse
+audio/Sfxc1_Trk0.asm 1fc4f6 c snd_script:pulse

@@ -105,7 +105,7 @@ ClearBothSpriteBuffers:
 	ld a, [wSpriteBufferPage] ; $1e40
 	push af ; $1e43
 	and $cf ; $1e44
-	xor $05 ; $1e46
+	xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2) ; $1e46
 	ld [wSpriteBufferPage], a ; $1e48
 	call ClearSpriteQueue ; $1e4b
 	pop af ; $1e4e
@@ -121,7 +121,7 @@ QueueSprite16:
 	ld l, a ; $1e5a
 	ld a, [wSpriteBufferPage] ; $1e5b
 	ld h, a ; $1e5e
-	bit 5, b ; $1e5f
+	bit B_OAM_XFLIP, b ; $1e5f
 	jr nz, .mirrored ; $1e61
 	ld [hl], e ; $1e63
 	inc l ; $1e64
@@ -134,7 +134,7 @@ QueueSprite16:
 	inc c ; $1e6b
 	inc c ; $1e6c
 	ld a, l ; $1e6d
-	cp $a0 ; $1e6e
+	cp OAM_SIZE ; $1e6e
 	jr z, .store ; $1e70
 	ld [hl], e ; $1e72
 	inc l ; $1e73
@@ -162,7 +162,7 @@ QueueSprite16:
 	inc c ; $1e8a
 	inc c ; $1e8b
 	ld a, l ; $1e8c
-	cp $a0 ; $1e8d
+	cp OAM_SIZE ; $1e8d
 	jr z, .store ; $1e8f
 	ld [hl], e ; $1e91
 	inc l ; $1e92
@@ -187,7 +187,7 @@ QueueSpriteTemplate:
 	ld [hl+], a ; $1ea7
 	ld [hl], b ; $1ea8
 	pop de ; $1ea9
-	bit 5, b ; $1eaa
+	bit B_OAM_XFLIP, b ; $1eaa
 	jr nz, .mirrored ; $1eac
 	ld a, [wSpriteBufferPage] ; $1eae
 	ld b, a ; $1eb1
@@ -195,7 +195,7 @@ QueueSpriteTemplate:
 	ld c, a ; $1eb4
 .copyLoop:
 	ld a, c ; $1eb5
-	cp $a0 ; $1eb6
+	cp OAM_SIZE ; $1eb6
 	jr z, .done ; $1eb8
 	ld a, [de] ; $1eba
 	cp $80 ; $1ebb
@@ -231,7 +231,7 @@ QueueSpriteTemplate:
 	ld c, a ; $1edf
 .mirrorLoop:
 	ld a, c ; $1ee0
-	cp $a0 ; $1ee1
+	cp OAM_SIZE ; $1ee1
 	jr z, .done ; $1ee3
 	ld a, [de] ; $1ee5
 	cp $80 ; $1ee6

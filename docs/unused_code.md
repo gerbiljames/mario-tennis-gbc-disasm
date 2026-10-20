@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-900 labels carry an `Unused` prefix: 788 routines and 112 data blobs.
+965 labels carry an `Unused` prefix: 799 routines and 166 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -8,12 +8,25 @@ call, jump, branch, pointer table, macro body, fall-through or farcall. A
 routine only its slot names, with no `farcall` of that slot anywhere, is
 unreachable. `tools/reach.py` computes this, and `make check` (`reach`)
 fails if a routine's name and its reachability disagree in either
-direction. Where an unused routine has a live twin, the comment above it in
+direction, or if a local label under an `Unused` routine is reachable (a
+live tail gets a global name of its own). Where an unused routine has a live twin, the comment above it in
 `src/` gives the exact difference.
 
 A dead copy inside a shared `src/twins` file is named per bank
 (`twin_in <file>, <Label>, <bank>`), so it is `Unused_<bank>_…` like any
 other; the check exempts nothing.
+
+Data is held to its name alone: a data label that no other label names --
+by name, `Label + n`, a split-base `LOW`/`HIGH` pair or a slot row, from
+live or dead code -- is `Unused_<bank>_<Name>`, and `make check`
+(`unnamed`) fails on one that is not. Before naming one, search the ROM for
+its address as a raw word too. The exceptions are listed with how each is
+found (`UNNAMED_OK` in `tools/reach.py`): `DataPtr_` slot rows, read by
+slot number; `Padding_` fill; the `SoundTable_` at `$4000` of each sound
+bank; the header's `NintendoLogo`. Routines are left to `reach`, which
+already exempts the vectors and a twin template's fall-through entries. A
+data label only dead code names (`FontTiles`, read by a routine after a
+`ret`) keeps its name.
 
 ## Dead roots
 
@@ -24,7 +37,7 @@ map-script helpers no bank calls, menu-cursor variants, 19 `ret`-only stubs,
 and dead copies in `src/twins` groups (the trajectory helpers in banks
 `$20`-`$2c`, the menu-cursor and decimal-number copies).
 
-330 more are referenced, but only from dead code. They hang from 86 dead
+The rest are referenced, but only from dead code. They hang from dead
 roots: routines only a slot row
 names (the minigame pause menu, the link match-type menu, the
 dialogue-at-position and auto-size paged-menu helpers, the scene viewer, the
@@ -114,7 +127,7 @@ bank's own scripts call survived as live code. `Unused_16_DrawAsciiDigitChar`
 and its copies in banks `$17`, `$1b`, `$3b` and `$3e` are the same include
 with no live copy at all.
 
-**3. A ROM0 library with spare parts.** Bank `$00` carries 59 unused routines,
+**3. A ROM0 library with spare parts.** Bank `$00` carries 60 unused routines,
 mostly small, all siblings of live ones: `Unused_00_ForceFadeOut` is
 `ForceFadeIn` with the other direction constant, `Unused_00_EnableSerialInterrupt`
 / `_EnableVBlankInterrupt` / two `SetInterrupts…` variants are the interrupt
@@ -143,10 +156,11 @@ the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `Unused_05_WriteDialogueToTilemapStreamed`) and the
 whole-plane queue helpers. Same shape as pattern 3, one bank up.
 
-**6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven identical
-NPC handlers on the "Test 2" debug map (its live NPCs `0B`-`0D` are the same
-template); three lone `ret`s in bank `$11` sit after list terminators
-(`Unused_11_NullScriptA`-`C`); `Unused_17_StubRet`, `Unused_18_StubRet3`
+**6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven
+drill-launcher handlers for the "Test 2" debug map, the template of its live
+NPCs `0B`-`0D` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
+(`Unused_11_NullScriptA`-`C`) and three more after the last row of a table
+(`Unused_16_StubRet`, `Unused_1b_StubRet3`, `Unused_38_StubRet`); `Unused_17_StubRet`, `Unused_18_StubRet3`
 and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
 `Unused_38_WramBank3Nop`, routines that do nothing but preserve registers — script slots that were filled and never wired.
 
@@ -157,14 +171,22 @@ Transfer Pak branch the game never takes. `Unused_06_RunMessagesMusicMenu` and
 `Unused_10_RunWaterSpriteMinigame` (94% of the live target-zone test mode)
 and `Unused_07_ApplyCharStatPreset` (168 instructions of stat presets
 nothing loads) are the largest bodies with no live twin at all.
+`Unused_10_SwingContestPrototype` is an early cut of bank `$15`'s swing
+contest (count task, then the GO sound), its counters two bytes lower.
 `Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** The 112 unused blobs are mostly two things:
+**8. Data that came along.** By bytes the 166 unused blobs are mostly
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
-tables never index (`docs/sound_engine.md`), and the Japanese font and
+tables never index (`docs/sound_engine.md`), the Japanese font and
 window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and
-`Unused_01_JpWindowTiles`), left over from the original release.
+`Unused_01_JpWindowTiles`), left over from the original release, and the
+seven spare frames at the end of each of the 30 character sprite banks
+(`Unused_50_MarioSpriteFramesCopy`, copies of frames 00-06). The racket
+students' practice scripts, live in banks `$11`, `$12` and `$27`, sit dead
+in the other story banks that carry them
+(`Unused_0f_ActorScriptStudentSwings` and its copies in `$0e`, `$10`,
+`$13`-`$15`).
 
 ## Where it sits
 
@@ -172,7 +194,7 @@ window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and
 |---|---|---|
 | `$1b` | 80 | the debug save-data flow and its screens |
 | `$1a` | 73 | minigame pause menu, EXP screen and editor, character viewer |
-| `$00` | 59 | ROM0 library spares |
+| `$00` | 60 | ROM0 library spares |
 | `$05` | 52 | text engine spares |
 | `$18` | 44 | confirm and two-option screens, box and number drawers |
 | `$10` | 36 | Test 2 NPC templates, story helpers |
@@ -211,3 +233,7 @@ cursor's court name into the title row, sharing three helpers and four small
 tables after the first one. `Unused_08_AdvanceCharStatePhase`, a copy of
 `AdvanceCharStatePhase` after `CharPointEndState`'s jump table, had been read
 as two more table entries.
+Three were carved as raw `db`: `Unused_02_GetCharArchetypeField`,
+`Unused_0a_FarcallUpdateSceneAnimation`, and
+`Unused_12_PushPartnerGenderShortTextArg`, a `ld a, [wStoryPartnerGender]`
+falling into `PushShortTextArg_12`.

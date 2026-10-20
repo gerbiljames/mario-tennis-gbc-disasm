@@ -320,7 +320,7 @@ WarioSpriteFrame54:
 WarioSpriteFrame55:
 	INCBIN "data/sprites/WarioSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-WarioSpriteFramesUnused:
+Unused_55_WarioSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/WarioSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/WarioSpriteFrame01.bin" ; $7740, 240 bytes

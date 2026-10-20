@@ -320,7 +320,7 @@ BobSpriteFrame54:
 BobSpriteFrame55:
 	INCBIN "data/sprites/BobSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-BobSpriteFramesUnused:
+Unused_4f_BobSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/BobSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/BobSpriteFrame01.bin" ; $7740, 240 bytes

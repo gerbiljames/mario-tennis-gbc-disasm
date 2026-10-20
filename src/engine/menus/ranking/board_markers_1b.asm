@@ -290,12 +290,12 @@ UpdateScriptedOffsetChannel0:
 	ld a, [hl] ; $5af4
 	add c ; $5af5
 	ld [hl], a ; $5af6
-	jr .checkTextPageBreakRequest ; $5af7
+	jr .nextStep ; $5af7
 .scriptEnd:
 	ld hl, UpdateScriptedOffsetChannel0 ; $5af9
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
-.checkTextPageBreakRequest:
+.nextStep:
 	ld a, [wRankingAnimStepIndex] ; $5b00
 	inc a ; $5b03
 	ld [wRankingAnimStepIndex], a ; $5b04
@@ -395,60 +395,60 @@ UpdateScriptedOffsetChannel3:
 	inc a ; $5b8f
 	ld [wRankingAnimStepIndex + 3], a ; $5b90
 	ret ; $5b93
-RankingAnimSinglesClimbRow01Table0:
+RankingAnimSinglesClimbRow01Right8:
 	; $5b94, 1 bytes (bytes:1)
 	db $01 ; 0x00
-RankingAnimSinglesClimbRow01Table1:
+RankingAnimSinglesClimbRow01Right7:
 	; $5b95, 3 bytes (bytes:3)
 	db $01, $01, $01 ; 0x00
 RankingAnimDoublesClimbRow3Table:
 	; $5b98, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesClimbRow01Table2:
+RankingAnimSinglesClimbRow01Left7:
 	; $5b9d, 8 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesClimbRow01Table3:
+RankingAnimSinglesClimbRow01Right12:
 	; $5ba5, 13 bytes (bytes:13)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesClimbRow01Table4:
+RankingAnimSinglesClimbRow01Left8:
 	; $5bb2, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesClimbRow2Table0:
+RankingAnimSinglesClimbRow2Right16:
 	; $5bbb, 1 bytes (bytes:1)
 	db $01 ; 0x00
-RankingAnimSinglesClimbRow2Table1:
+RankingAnimSinglesClimbRow2Right15:
 	; $5bbc, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingAnimSinglesClimbRow2Table2:
+RankingAnimSinglesClimbRow2Right8:
 	; $5bc3, 2 bytes (bytes:2)
 	db $01, $01 ; 0x00
-RankingAnimDoublesClimbRow01Table0:
+RankingAnimDoublesClimbRow01Right6:
 	; $5bc5, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesClimbRow2Table3:
+RankingAnimSinglesClimbRow2Left16:
 	ds 1, $ff ; $5bcc, fill
-RankingAnimSinglesClimbRow2Table4:
+RankingAnimSinglesClimbRow2Left15:
 	ds 7, $ff ; $5bcd, fill
-RankingAnimSinglesClimbRow2Table5:
+RankingAnimSinglesClimbRow2Left8:
 	; $5bd4, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesMarkRow4Table0:
+RankingAnimSinglesMarkRow4Right4:
 	; $5bdd, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesMarkRow4Table1:
+RankingAnimSinglesMarkRow4Left4:
 	; $5be2, 5 bytes (bytes:5)
 	db $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesClimbRow3Table0:
+RankingAnimSinglesClimbRow3Right36:
 	; $5be7, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 RankingAnimDoublesClimbRow2Table:
 	; $5bef, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingAnimDoublesClimbRow01Table1:
+RankingAnimDoublesClimbRow01Right20:
 	; $5bf7, 21 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 	db $01, $01, $01, $01, $40 ; 0x10
-RankingAnimSinglesClimbRow3Table1:
+RankingAnimSinglesClimbRow3Left36:
 	; $5c0c, 37 bytes (bytes:16)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
@@ -466,7 +466,7 @@ LoadRankingMarkerCoords:
 	ld a, [wRankingBoardMode] ; $5c44
 	or a ; $5c47
 	jr z, .gotTable ; $5c48
-	ld hl, RankingMarkerCoordsTable0 ; $5c4a
+	ld hl, RankingMarkerFanfareCoordsTable ; $5c4a
 .gotTable:
 	ld a, [wRankingBoardPlayerRow] ; $5c4d
 	add a ; $5c50
@@ -483,11 +483,11 @@ LoadRankingMarkerCoords:
 	call CopyMemoryBC ; $5c63
 	ret ; $5c66
 .doubles:
-	ld hl, RankingMarkerCoordsTable2 ; $5c67
+	ld hl, DoublesRankingMarkerCoordsTable ; $5c67
 	ld a, [wRankingBoardMode] ; $5c6a
 	or a ; $5c6d
 	jr z, .gotDoublesTable ; $5c6e
-	ld hl, RankingMarkerCoordsTable1 ; $5c70
+	ld hl, DoublesRankingMarkerFanfareCoordsTable ; $5c70
 .gotDoublesTable:
 	ld a, [wRankingBoardPlayerRow] ; $5c73
 	add a ; $5c76
@@ -566,14 +566,14 @@ RankingMarkerCoordSet3:
 	db $02, $54, $4c, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordsTable0:
+RankingMarkerFanfareCoordsTable:
 	; $5d57, 10 bytes (records:2)
-	dw RankingMarkerCoordsTable0Set0 ; record 0
-	dw RankingMarkerCoordsTable0Set0 ; record 1
-	dw RankingMarkerCoordsTable0Set1 ; record 2
-	dw RankingMarkerCoordsTable0Set2 ; record 3
-	dw RankingMarkerCoordsTable0Set3 ; record 4
-RankingMarkerCoordsTable0Set0:
+	dw RankingMarkerFanfareCoordSet0 ; record 0
+	dw RankingMarkerFanfareCoordSet0 ; record 1
+	dw RankingMarkerFanfareCoordSet1 ; record 2
+	dw RankingMarkerFanfareCoordSet2 ; record 3
+	dw RankingMarkerFanfareCoordSet3 ; record 4
+RankingMarkerFanfareCoordSet0:
 	; $5d61, 48 bytes (bytes:4)
 	db $00, $3c, $0c, $00 ; 0x00
 	db $01, $3c, $24, $00 ; 0x04
@@ -587,7 +587,7 @@ RankingMarkerCoordsTable0Set0:
 	db $02, $6b, $54, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordsTable0Set1:
+RankingMarkerFanfareCoordSet1:
 	; $5d91, 48 bytes (bytes:4)
 	db $00, $44, $18, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -601,7 +601,7 @@ RankingMarkerCoordsTable0Set1:
 	db $02, $64, $60, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordsTable0Set2:
+RankingMarkerFanfareCoordSet2:
 	; $5dc1, 48 bytes (bytes:4)
 	db $00, $4c, $28, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -615,7 +615,7 @@ RankingMarkerCoordsTable0Set2:
 	db $02, $5c, $70, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordsTable0Set3:
+RankingMarkerFanfareCoordSet3:
 	; $5df1, 48 bytes (bytes:4)
 	db $00, $50, $4c, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -629,13 +629,13 @@ RankingMarkerCoordsTable0Set3:
 	db $02, $50, $4c, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordsTable2:
+DoublesRankingMarkerCoordsTable:
 	; $5e21, 8 bytes (records:2)
-	dw RankingMarkerCoordsTable2Set0 ; record 0
-	dw RankingMarkerCoordsTable2Set0 ; record 1
-	dw RankingMarkerCoordsTable2Set1 ; record 2
-	dw RankingMarkerCoordsTable2Set2 ; record 3
-RankingMarkerCoordsTable2Set0:
+	dw DoublesRankingMarkerCoordSet0 ; record 0
+	dw DoublesRankingMarkerCoordSet0 ; record 1
+	dw DoublesRankingMarkerCoordSet1 ; record 2
+	dw DoublesRankingMarkerCoordSet2 ; record 3
+DoublesRankingMarkerCoordSet0:
 	; $5e29, 48 bytes (bytes:4)
 	db $00, $34, $1c, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -649,7 +649,7 @@ RankingMarkerCoordsTable2Set0:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-RankingMarkerCoordsTable2Set1:
+DoublesRankingMarkerCoordSet1:
 	; $5e59, 48 bytes (bytes:4)
 	db $00, $3c, $30, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -663,7 +663,7 @@ RankingMarkerCoordsTable2Set1:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-RankingMarkerCoordsTable2Set2:
+DoublesRankingMarkerCoordSet2:
 	; $5e89, 48 bytes (bytes:4)
 	db $00, $44, $4c, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -677,13 +677,13 @@ RankingMarkerCoordsTable2Set2:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-RankingMarkerCoordsTable1:
+DoublesRankingMarkerFanfareCoordsTable:
 	; $5eb9, 8 bytes (records:2)
-	dw RankingMarkerCoordsTable1Set0 ; record 0
-	dw RankingMarkerCoordsTable1Set0 ; record 1
-	dw RankingMarkerCoordsTable1Set1 ; record 2
-	dw RankingMarkerCoordsTable1Set2 ; record 3
-RankingMarkerCoordsTable1Set0:
+	dw DoublesRankingMarkerFanfareCoordSet0 ; record 0
+	dw DoublesRankingMarkerFanfareCoordSet0 ; record 1
+	dw DoublesRankingMarkerFanfareCoordSet1 ; record 2
+	dw DoublesRankingMarkerFanfareCoordSet2 ; record 3
+DoublesRankingMarkerFanfareCoordSet0:
 	; $5ec1, 48 bytes (bytes:4)
 	db $00, $3c, $1c, $00 ; 0x00
 	db $01, $3c, $44, $00 ; 0x04
@@ -697,7 +697,7 @@ RankingMarkerCoordsTable1Set0:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-RankingMarkerCoordsTable1Set1:
+DoublesRankingMarkerFanfareCoordSet1:
 	; $5ef1, 48 bytes (bytes:4)
 	db $00, $44, $30, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -711,7 +711,7 @@ RankingMarkerCoordsTable1Set1:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-RankingMarkerCoordsTable1Set2:
+DoublesRankingMarkerFanfareCoordSet2:
 	; $5f21, 48 bytes (bytes:4)
 	db $00, $4c, $4c, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04

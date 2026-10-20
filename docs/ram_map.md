@@ -23,7 +23,7 @@ own symbols and a note naming the code that owns it. A variant's names appear
 only at sites whose scope matches: the referencing code's ROM bank and range,
 and/or the WRAM bank proven selected there (by dataflow or a traced run). So
 the same `$dxxx` offset reads as different symbols in different routines,
-and a site whose bank could not be proven keeps the number (97, all inside
+and a site whose bank could not be proven keeps the number (32, all inside
 `Unused_*` routines nothing reaches). The assembler accepts any variant's
 symbol anywhere, so when an edit moves an access to another owner, change the
 operand by hand; the variant notes say which one a routine may touch.
@@ -67,7 +67,9 @@ one: one address, several banks, one routine.
 A genuinely replicated structure -- the match engine's per-character struct
 in each of WRAM banks 4-7 -- gets both forms: each bank declares its copy
 under a bank-tagged name (`w4CharPosX`, `w5CharPosX`, ...) in its own
-`BANK[n]` section, and the untagged EQU `wCharPosX` is what the code uses,
+`BANK[n]` section, all four from one macro (`match_char_struct`,
+`include/macros/ram.inc`, where the fields are documented), and the
+untagged EQU `wCharPosX` is what the code uses,
 since the bank selected at run time decides which copy a site means. The
 tagged labels put the structure in `build/mariotennis.sym` (EQUs do not
 reach it), so an emulator debugger resolves the right name in whichever bank
@@ -80,7 +82,7 @@ already runs past those addresses is skipped.
 |---|---|---|
 | `$c780-$c784` | character select (bank `$1b`) | `wCharSelectChar`/`PrevChar`/`Col`/`Row` — cursor state over the roster grid at `$c7a0` |
 | `$ffd0-$ffef` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkRemoteInputBuf` |
-| | sound driver (bank 0 `$3373-$3de0`) | full per-channel HRAM working set: `hSndScriptPtr`, `hSndVolume`, `hSndInstrument`, `hSndEnvRate/Length/Pos`, `hSndVolSlide*`, `hSndEcho*`, `hSndLoop*`, `hSndRestFlag`, … (29 fields) |
+| | sound driver (bank 0 `$3373-$3de0`) | full per-channel HRAM working set: `hSndScriptPtr`, `hSndVolume`, `hSndInstrument`, `hSndEnvShape/Length/Pos`, `hSndVolSlide*`, `hSndEcho*`, `hSndLoop*`, `hSndGateTimer`, … (29 fields) |
 | | sprite queue (bank 0 `$2ced-$2d9f`) | `hSpriteBlitX`, `hSpriteBlitY` |
 | | story actor engine (banks `$04/$05/$0a`) | `hActorPtr` |
 | `$d100-$d219` | sound engine (`wram_bank $07`, + bank-0 `$2f00-$3de0`) | channel state blocks `wSndChannels`, loop stack `wSndLoopSlots`, per-pass globals `wSndActiveMask`/`wSndChannelType`/`wSndRegBase`/`wSndPanShadow`/… |
@@ -98,7 +100,7 @@ same scope as the base (`$dd1e` is `wBallHistory + 30`, `$ffd1`
 
 Each banked `SECTION` in `ram/*.asm` opens with a one-line-per-region
 summary, since a bank is 4 KiB of overlapping claims (bank `$03` alone has
-117 symbols across 28 variants):
+122 symbols across 33 variants):
 
 ```
 ; WRAMX bank 2 at a glance (ram/wram/):
@@ -129,7 +131,7 @@ ladders at `$6063`/`$4ff5` indexed by `wOnCourtCharCountMinus1`:
 
 The fields are the untagged `wChar*` EQUs in `include/ram_mirrored.inc`
 (used where the WRAM bank is 4-7 or inside match banks `$07`/`$08`), with
-`w4Char*`...`w7Char*` in `ram/wram/` for the symbol file;
+`w4Char*`...`w7Char*` from `match_char_struct` for the symbol file;
 `docs/match_engine.md` describes them. Other WRAM banks reuse `$dfxx` for
 unrelated data (bank `$38`'s non-char accesses stay numeric; the menu banks'
 text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
@@ -215,8 +217,10 @@ minigames, link sessions, the N64 Transfer Pak record screens, both unlock
 codes and every `NpcScripts` handler (237 flows; runs that crash, such as
 impossible warps, are left out).
 
-**Totals: 4,360 free bytes -- 2,704 untouched, 1,598 cleared only, 58
-holding data, all explained.** No flow reads a free byte; the only poison
+**Totals: 4,406 free bytes in 105 ranges, 27 of them HRAM bytes in 9
+ranges (`ram_free.py`).** The last audit split the bytes listed then into
+untouched, cleared only and holding data, all explained; ranges freed since
+are not yet in the tables below. No flow reads a free byte; the only poison
 read ever seen, besides the since-declared speed bonus below, was in the
 Test 2 map's debug scratch at `$c71a-$c75f`.
 
@@ -258,8 +262,7 @@ bytes or more:
 | WRAM7 | `$dde2-$ddff` | 30 |
 | WRAM7 | `$de02-$deff` | 254 |
 
-plus 29 shorter gaps (63 bytes) and 23 bytes of HRAM in twelve
-one-to-four-byte holes. The bank `$06`/`$07` ranges at `$dc90-$deff` mirror
+plus shorter gaps and the HRAM holes. The bank `$06`/`$07` ranges at `$dc90-$deff` mirror
 bank `$04`'s ball and minigame slots and stay untouched even in a doubles
 match; `$d690-$d7ff` in bank `$04` is untouched everywhere.
 
@@ -282,7 +285,6 @@ screen or match init. Eight bytes or longer:
 | bank | range | bytes | cleared by |
 |---|---|---|---|
 | WRAM0 | `$c495-$c49f` | 11 | boot / screen init |
-| WRAM0 | `$c778-$c77f` | 8 | boot / screen init |
 | WRAM0 | `$c7d8-$c7ff` | 40 | boot / screen init; `$c7d8-$c7f7` holds data (save staging) |
 | WRAM0 | `$c892-$c8a2` | 17 | boot / screen init |
 | WRAM0 | `$c97d-$c9af` | 51 | boot / screen init |
@@ -307,7 +309,7 @@ screen or match init. Eight bytes or longer:
 
 Free bytes that are written with real values, each explained:
 
-* `$c6e0-$c6ff`, `$c705`, `$c730-$c75f` and `$c7d8-$c7f7`: leftovers of the
+* `$c6e0-$c6ff` and `$c7d8-$c7f7`: leftovers of the
   save engine's staging copy. `MirrorSaveHeaderToBank1` runs each 512-byte
   SRAM header region through `$c600-$c7ff` on its way to SRAM bank 1, so the
   tail of the block directory stays behind under the debug-menu variables
@@ -325,5 +327,7 @@ bonus, which `LoadCharacterAttributes` adds to the Speed stat), `+$0d`
 (gender, in the match records too) and `+$2f` (write-only build tag) in all
 eight `$40`-byte records; the game progress screen's five lists in bank
 `$05`'s `$df00` page (`wProgressEntryUnlocked`, `wProgressVisibleEntries`,
-...); and `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
-single-character screens park the frame descriptor after the sprite slot.
+...); `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
+single-character screens park the frame descriptor after the sprite slot;
+and the rest of `$c700-$c77f`, `wDebugStatsBackup`, where the debug stats
+editor saves character 0's `$df00-$df7f`.

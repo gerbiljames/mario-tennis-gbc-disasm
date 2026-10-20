@@ -107,7 +107,7 @@ BuildExpAwardScreenTilemap:
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
 LoadExpAwardScreenGraphics:
-	ld hl, ExpAwardScreenPalettes0 ; $551e
+	ld hl, ExpAwardScreenBgPalettes ; $551e
 	ld_bg_pals de, 0, 3 ; $5521
 	call LoadPaletteShadow ; $5524
 	wram_bank WRAM_STAGING ; $5527
@@ -127,14 +127,14 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $5555
 	call DecompressData ; $5558
 	ld hl, wDecompBuffer ; $555b
-	ld bc, $0240 ; $555e
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $555e
 	call ExpScreenCopyToTilemap ; $5561
 	wram_bank WRAM_STAGING ; $5564
 	ld hl, ExpAwardScreenAttrmap_1e ; $556a
 	ld de, wDecompBuffer ; $556d
 	call DecompressData ; $5570
 	ld hl, wDecompBuffer ; $5573
-	ld bc, $0240 ; $5576
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $5576
 	call ExpScreenCopyToAttrmap ; $5579
 	wram_bank WRAM_STAGING ; $557c
 	ld hl, PanelFrameGfx_1e ; $5582
@@ -144,7 +144,7 @@ LoadExpAwardScreenGraphics:
 	ld de, vTiles2 ; $558e
 	ld c, PanelFrameGfx_1e_SIZE / 16 ; $5591
 	call QueueVRAMCopy ; $5593
-	ld hl, ExpAwardScreenPalettes1 ; $5596
+	ld hl, ExpAwardScreenObjPalette ; $5596
 	ld_obj_pals de, 0, 1 ; $5599
 	call LoadPaletteShadow ; $559c
 	wram_bank WRAM_STAGING ; $559f
@@ -182,7 +182,7 @@ DrawExpAwardScreenPanels:
 	call DrawExpMessageWindow ; $55e4
 	call DrawNextExpAwardMessage ; $55e7
 	call DrawExpTotalPanel ; $55ea
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $55ed
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $55ed
 	jr nz, .drawExpDoublesPlayerPanel ; $55f0
 	call DrawExpSinglesPlayerPanel ; $55f2
 	ret ; $55f5
@@ -514,7 +514,7 @@ DrawExpScreenCharSprites:
 	farcall DrawCharSprite ; $592d
 	wram_bank WRAM_ACTORS ; $5930
 	pop bc ; $5936
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5937
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $5937
 	ret z ; $593a
 	inc b ; $593b
 	inc b ; $593c
@@ -561,12 +561,12 @@ UpdateExpScreenCharSprite:
 	pop af ; $598f
 	or a ; $5990
 	jr nz, .secondSprite ; $5991
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5993
-	jr z, .notTempResultsScreenOpen ; $5996
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $5993
+	jr z, .singlesLayout ; $5996
 	ld d, $44 ; $5998
 	ld e, $66 ; $599a
 	jr .writeSlot ; $599c
-.notTempResultsScreenOpen:
+.singlesLayout:
 	ld d, $50 ; $599e
 	ld e, $66 ; $59a0
 	jr .writeSlot ; $59a2
@@ -589,14 +589,10 @@ UpdateExpScreenCharSpriteTable:
 DrawNextExpAwardMessage:
 	wram_bank WRAM_SCENE ; $59bb
 	ld a, [wExpAwardIndex] ; $59c1
-	cp $05 ; $59c4
+	cp NUM_EXPAWARDS ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
-	add $52 ; $59c9
-	ld l, a ; $59cb
-	adc $d1 ; $59cc
-	sub l ; $59ce
-	ld h, a ; $59cf
+	ld_hl_indexed wPendingExpAwardAmounts ; $59c9
 	ld a, [hl+] ; $59d0
 	ld b, [hl] ; $59d1
 	or b ; $59d2
@@ -605,11 +601,7 @@ DrawNextExpAwardMessage:
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
 	ld a, [wExpAwardIndex] ; $59d8
-	add $5c ; $59db
-	ld l, a ; $59dd
-	adc $d1 ; $59de
-	sub l ; $59e0
-	ld h, a ; $59e1
+	ld_hl_indexed wPendingExpAwardVariants ; $59db
 	ld a, [hl] ; $59e2
 	ld d, a ; $59e3
 	ld a, [wExpAwardIndex] ; $59e4

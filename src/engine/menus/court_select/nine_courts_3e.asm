@@ -198,9 +198,9 @@ OpenCourtSelect9Panel:
 	ld c, $00 ; $66af
 .slideForwardLoop:
 	call AdvanceFrame ; $66b1
-	ld b, $14 ; $66b4
+	ld b, PANELANIM_COURT_SELECT9_IN ; $66b4
 	farcall RestoreMenuBgAndDrawPanel ; $66b6
-	ld b, $00 ; $66b9
+	ld b, MAPROWS_BANDS_3_7_11 ; $66b9
 	farcall FlushWram3MapRows ; $66bb
 	ld a, c ; $66be
 	inc a ; $66bf
@@ -213,9 +213,9 @@ OpenCourtSelect9Panel:
 	ld c, $09 ; $66c9
 .slideBackLoop:
 	call AdvanceFrame ; $66cb
-	ld b, $15 ; $66ce
+	ld b, PANELANIM_COURT_SELECT9_OUT ; $66ce
 	farcall RestoreMenuBgAndDrawPanel ; $66d0
-	ld b, $00 ; $66d3
+	ld b, MAPROWS_BANDS_3_7_11 ; $66d3
 	farcall FlushWram3MapRows ; $66d5
 	ld a, c ; $66d8
 	dec a ; $66d9
@@ -231,9 +231,9 @@ CloseCourtSelect9Panel:
 	ld c, $00 ; $66e7
 .slideForwardLoop:
 	call AdvanceFrame ; $66e9
-	ld b, $15 ; $66ec
+	ld b, PANELANIM_COURT_SELECT9_OUT ; $66ec
 	farcall RestoreMenuBgAndDrawPanel ; $66ee
-	ld b, $00 ; $66f1
+	ld b, MAPROWS_BANDS_3_7_11 ; $66f1
 	farcall FlushWram3MapRows ; $66f3
 	ld a, c ; $66f6
 	inc a ; $66f7
@@ -245,9 +245,9 @@ CloseCourtSelect9Panel:
 	ld c, $0e ; $66fe
 .slideBackLoop:
 	call AdvanceFrame ; $6700
-	ld b, $14 ; $6703
+	ld b, PANELANIM_COURT_SELECT9_IN ; $6703
 	farcall RestoreMenuBgAndDrawPanel ; $6705
-	ld b, $00 ; $6708
+	ld b, MAPROWS_BANDS_3_7_11 ; $6708
 	farcall FlushWram3MapRows ; $670a
 	ld a, c ; $670d
 	dec a ; $670e
@@ -423,9 +423,16 @@ SetCourtSelect9TabAttrRect:
 	pop af ; $68b2
 	ret ; $68b3
 CourtSelect9TabAttrAddrs_3e:
-	; $68b4, 18 bytes (bytes:16)
-	db $61, $d4, $67, $d4, $6d, $d4, $e1, $d4, $e7, $d4, $ed, $d4, $61, $d5, $67, $d5 ; 0x00
-	db $6d, $d5 ; 0x10
+	; $68b4, 18 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 7 ; record 1
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 13 ; record 2
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 7 ; record 4
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 13 ; record 5
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 6
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 7
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 8
 SetCourtSelect9Palette:
 	ld hl, CourtSelect9PalettePtrs ; $68c6
 	add a ; $68c9

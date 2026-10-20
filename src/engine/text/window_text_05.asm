@@ -123,42 +123,42 @@ FitWindowToText:
 	ld d, a ; $5684
 	jr .charLoop ; $5685
 .checkArgShortText:
-	cp $08 ; $5687
+	cp TX_SHORT_TEXT_ARG ; $5687
 	jr nz, .checkArgNumber ; $5689
 	call GetNextArgShortTextLength ; $568b
 	add b ; $568e
 	ld b, a ; $568f
 	jr .charLoop ; $5690
 .checkArgNumber:
-	cp $09 ; $5692
+	cp TX_ARG_NUMBER ; $5692
 	jr nz, .checkMainCharName ; $5694
 	call MeasureNextArgNumberWidth ; $5696
 	add b ; $5699
 	ld b, a ; $569a
 	jr .charLoop ; $569b
 .checkMainCharName:
-	cp $07 ; $569d
+	cp TX_PLAYER_NAME ; $569d
 	jr nz, .checkArgString ; $569f
 	call MeasureMainCharacterNameWidth ; $56a1
 	add b ; $56a4
 	ld b, a ; $56a5
 	jr .charLoop ; $56a6
 .checkArgString:
-	cp $04 ; $56a8
+	cp TX_ARG_STRING ; $56a8
 	jr nz, .checkPartnerName ; $56aa
 	call MeasureNextArgStringWidth ; $56ac
 	add b ; $56af
 	ld b, a ; $56b0
 	jr .charLoop ; $56b1
 .checkPartnerName:
-	cp $0b ; $56b3
+	cp TX_PARTNER_NAME ; $56b3
 	jr nz, .checkIndexedShortText ; $56b5
 	call MeasurePartnerCharacterNameWidth ; $56b7
 	add b ; $56ba
 	ld b, a ; $56bb
 	jr .charLoop ; $56bc
 .checkIndexedShortText:
-	cp $0e ; $56be
+	cp TX_SHORT_TEXT ; $56be
 	jr nz, .glyph ; $56c0
 	ld a, [hl+] ; $56c2
 	ld [wTextCharNameArg], a ; $56c3
@@ -266,14 +266,14 @@ MeasureTextDimensions:
 	ld d, a ; $5760
 	jr .loop ; $5761
 .notLineBreak:
-	cp $08 ; $5763
+	cp TX_SHORT_TEXT_ARG ; $5763
 	jr nz, .notShortTextArg ; $5765
 	call GetNextArgShortTextLength ; $5767
 	add b ; $576a
 	ld b, a ; $576b
 	jr .loop ; $576c
 .notShortTextArg:
-	cp $09 ; $576e
+	cp TX_ARG_NUMBER ; $576e
 	jr nz, .notNumberArg ; $5770
 	call MeasureNextArgNumberWidth ; $5772
 	add b ; $5775
@@ -356,27 +356,27 @@ ApplyMessageSpeed:
 	push af ; $57e7
 	push_wram_bank WRAM_TEXT ; $57e8
 	ld a, [wMessageSpeed] ; $57f1
-	bit 7, a ; $57f4
+	bit MSGSPEEDB_INSTANT, a ; $57f4
 	jr z, .checkFast ; $57f6
 	xor a ; $57f8
 	ld [wTextRedrawGuard], a ; $57f9
-	jr .store ; $57fc
+	jr .restoreBank ; $57fc
 .checkFast:
 	or a ; $57fe
 	jr nz, .checkMedium ; $57ff
 	ld a, $00 ; $5801
 	ld [wTextRedrawGuard], a ; $5803
-	jr .store ; $5806
+	jr .restoreBank ; $5806
 .checkMedium:
-	cp $01 ; $5808
+	cp MSGSPEED_NORMAL ; $5808
 	jr nz, .slow ; $580a
 	ld a, $02 ; $580c
 	ld [wTextRedrawGuard], a ; $580e
-	jr .store ; $5811
+	jr .restoreBank ; $5811
 .slow:
 	ld a, $04 ; $5813
 	ld [wTextRedrawGuard], a ; $5815
-.store:
+.restoreBank:
 	pop_wram_bank ; $5818
 	pop af ; $581d
 	ret ; $581e

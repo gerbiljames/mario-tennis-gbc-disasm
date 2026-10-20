@@ -80,8 +80,9 @@ ApplyCpuDifficultyToCharRecords:
 ; the records' Difficulty fields, and an EXP tier read only for
 ; characters that are not created ones.
 ;
-; Records 1-4 are EASY/NORMAL/HARD/INTENSE: reaction delays 28/18/10/2,
-; tracking 60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7. Slot 0
+; Records 1-4 are EASY/NORMAL/HARD/INTENSE: reaction delays 28/18/10/2 near
+; and 24/15/9/2 far, tracking 12/9/5/0, aim-away 60/120/190/230,
+; difficulty 0/1/2/3, tier 1/3/5/7. Slot 0
 ; duplicates INTENSE and is what an unset difficulty selects.
 CpuDifficultyParamPtrs_38:
 	; $5feb, 10 bytes (records:2)
@@ -201,15 +202,17 @@ LoadCachedStorySlotName:
 	pop af ; $60e4
 	ret ; $60e5
 CachedStorySlotNameTable:
-	; $60e6, 6 bytes (bytes:6)
-	db $00, $d0, $00, $d1, $00, $d2 ; 0x00
+	; $60e6, 6 bytes (ram_ptrs:1)
+	dw wDecompBuffer ; record 0
+	dw wDecompBuffer tile 16 ; record 1
+	dw wDecompBuffer tile 32 ; record 2
 CompactRosterGridEntries:
 	ld hl, wCharGridEntries + 36 ; $60ec
 	ld c, $00 ; $60ef
 .scanLoop:
 	ld a, [hl] ; $60f1
 	cp $ff ; $60f2
-	jr nz, .next ; $60f4
+	jr nz, .skipEntry ; $60f4
 	push hl ; $60f6
 	ld a, $16 ; $60f7
 	sub c ; $60f9
@@ -258,13 +261,13 @@ CompactRosterGridEntries:
 	inc hl ; $6127
 	ld h, d ; $6128
 	ld l, e ; $6129
-	jr .done ; $612a
-.next:
+	jr .nextEntry ; $612a
+.skipEntry:
 	inc hl ; $612c
 	inc hl ; $612d
 	inc hl ; $612e
 	inc hl ; $612f
-.done:
+.nextEntry:
 	ld a, c ; $6130
 	inc a ; $6131
 	ld c, a ; $6132
@@ -290,7 +293,7 @@ CompactMarioCastGridEntries:
 .scanLoop:
 	ld a, [hl] ; $614b
 	cp $ff ; $614c
-	jr nz, .next ; $614e
+	jr nz, .skipEntry ; $614e
 	push hl ; $6150
 	ld a, $08 ; $6151
 	sub c ; $6153
@@ -339,13 +342,13 @@ CompactMarioCastGridEntries:
 	inc hl ; $6181
 	ld h, d ; $6182
 	ld l, e ; $6183
-	jr .done ; $6184
-.next:
+	jr .nextEntry ; $6184
+.skipEntry:
 	inc hl ; $6186
 	inc hl ; $6187
 	inc hl ; $6188
 	inc hl ; $6189
-.done:
+.nextEntry:
 	ld a, c ; $618a
 	inc a ; $618b
 	ld c, a ; $618c

@@ -3,7 +3,7 @@ Unused_08_LatchSwingHoldButton:
 	ld [wCharSwingHoldButton], a ; $7279
 	xor a ; $727c
 	ld [wCharSwingHoldFrames], a ; $727d
-.tickTimer:
+TickSwingHoldFrames:
 	ld hl, wCharSwingHoldFrames ; $7280
 	inc [hl] ; $7283
 	xor a ; $7284
@@ -192,11 +192,11 @@ UpdateCharVelocityFromInput:
 	jr .stepX ; $73dc
 .clearAxisFlags:
 	ld hl, wCharBallReachFlags ; $73de
-	res 6, [hl] ; $73e1
-	res 7, [hl] ; $73e3
+	res BALLREACHB_STEER_X, [hl] ; $73e1
+	res BALLREACHB_STEER_DEPTH, [hl] ; $73e3
 .stepX:
 	ld hl, wCharBallReachFlags ; $73e5
-	bit 6, [hl] ; $73e8
+	bit BALLREACHB_STEER_X, [hl] ; $73e8
 	jr z, .decelX ; $73ea
 	call AccelerateCharX ; $73ec
 	jr .stepDepth ; $73ef
@@ -204,7 +204,7 @@ UpdateCharVelocityFromInput:
 	call DecelerateCharX ; $73f1
 .stepDepth:
 	ld hl, wCharBallReachFlags ; $73f4
-	bit 7, [hl] ; $73f7
+	bit BALLREACHB_STEER_DEPTH, [hl] ; $73f7
 	jr z, .decelDepth ; $73f9
 	call AccelerateCharDepth ; $73fb
 	jr .clampX ; $73fe
@@ -212,18 +212,18 @@ UpdateCharVelocityFromInput:
 	call DecelerateCharDepth ; $7400
 .clampX:
 	ld hl, wCharBallReachFlags ; $7403
-	bit 6, [hl] ; $7406
+	bit BALLREACHB_STEER_X, [hl] ; $7406
 	jr z, .clampDepth ; $7408
 	call ClampCharXSpeed ; $740a
 .clampDepth:
 	ld hl, wCharBallReachFlags ; $740d
-	bit 7, [hl] ; $7410
+	bit BALLREACHB_STEER_DEPTH, [hl] ; $7410
 	jr z, .markMoving ; $7412
 	call ClampCharDepthSpeed ; $7414
 .markMoving:
 	ld hl, wCharBallReachFlags ; $7417
-	res 6, [hl] ; $741a
-	res 7, [hl] ; $741c
+	res BALLREACHB_STEER_X, [hl] ; $741a
+	res BALLREACHB_STEER_DEPTH, [hl] ; $741c
 	ld hl, wCharFlags ; $741e
 	set CHARB_MOVING, [hl] ; $7421
 	ld hl, wCharVelX ; $7423
@@ -541,17 +541,17 @@ UpdateCharFacingOctant:
 	ld hl, wCharFacingOctant ; $7613
 	ld a, [hl] ; $7616
 	cp d ; $7617
-	jr z, .store ; $7618
+	jr z, .unchanged ; $7618
 	ld [hl], d ; $761a
 	ld hl, wCharSpriteDirty ; $761b
-	set 6, [hl] ; $761e
-.store:
+	set CHARSPRITEB_RELOAD_TILES, [hl] ; $761e
+.unchanged:
 	ret ; $7620
 ReloadCharFacingTiles:
 	ld hl, wCharSpriteDirty ; $7621
-	bit 6, [hl] ; $7624
+	bit CHARSPRITEB_RELOAD_TILES, [hl] ; $7624
 	ret z ; $7626
-	res 6, [hl] ; $7627
+	res CHARSPRITEB_RELOAD_TILES, [hl] ; $7627
 	ld a, d ; $7629
 	ld_hl_indexed ReloadCharFacingTilesTable ; $762a
 	ld d, [hl] ; $7631

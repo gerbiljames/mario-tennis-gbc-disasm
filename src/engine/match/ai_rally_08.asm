@@ -73,7 +73,7 @@ AiRallyStateSingles:
 	dw AiPhaseNoop ; $7d08 jumptable
 AiSetReactionDelay:
 	ld a, [wCharBallReachFlags] ; $7d0a
-	bit 4, a ; $7d0d
+	bit BALLREACHB_NEAR_NET, a ; $7d0d
 	ld hl, wAiReactionDelayFar ; $7d0f
 	jr z, .randomize ; $7d12
 	ld hl, wAiReactionDelayNear ; $7d14
@@ -113,7 +113,7 @@ AiChoosePositionByStrategy:
 	jp AiInterceptNearNet ; $7d55
 .adaptive:
 	ld hl, wCharBallReachFlags ; $7d58
-	bit 4, [hl] ; $7d5b
+	bit BALLREACHB_NEAR_NET, [hl] ; $7d5b
 	jr z, .adaptiveLob ; $7d5d
 	call AiIsIncomingDropOrLobShot ; $7d5f
 	and a ; $7d62
@@ -138,7 +138,7 @@ AiTrackBallPhase:
 	and a ; $7d88
 	jr nz, .advance ; $7d89
 	ld hl, wCharBallReachFlags ; $7d8b
-	bit 0, [hl] ; $7d8e
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7d8e
 	jr nz, .advance ; $7d90
 	ret ; $7d92
 .trackBall:
@@ -155,7 +155,7 @@ AiTrackBallPhase:
 	inc [hl] ; $7dac
 AiWaitThenPickShot:
 	ld hl, wCharBallReachFlags ; $7dad
-	bit 0, [hl] ; $7db0
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7db0
 	jr nz, .pickShot ; $7db2
 	ld hl, wAiTrackingCountdown ; $7db4
 	ld a, [hl] ; $7db7
@@ -179,11 +179,11 @@ AiSwingControlSingles:
 	call AiPressSecondShotButton ; $7dd7
 .checkSwing:
 	ld hl, wCharBallReachFlags ; $7dda
-	bit 1, [hl] ; $7ddd
-	jr nz, .partnerCheck ; $7ddf
+	bit BALLREACHB_CONTACT, [hl] ; $7ddd
+	jr nz, .aimAwayFromOpponent ; $7ddf
 	call AiSteerTowardBall ; $7de1
 	ret ; $7de4
-.partnerCheck:
+.aimAwayFromOpponent:
 	ld a, [wCharIndex] ; $7de5
 	add $01 ; $7de8
 	and $01 ; $7dea
@@ -246,8 +246,8 @@ AiRallyStateNetPlayer:
 	dw AiNetPlayerPoachCheck ; $7e66 jumptable
 AiRallyStateBaseliner:
 	jumptable [wAiPhase] ; $7e68
-	dw AiBaselinerSetTarget ; $7e6c jumptable
-	dw AiBaselinerDone ; $7e6e jumptable
+	dw AiBaselinerSetReactionDelay ; $7e6c jumptable
+	dw AiBaselinerPredictLanding ; $7e6e jumptable
 	dw AiDoublesTrackBallPhase ; $7e70 jumptable
 	dw AiWaitThenPickShot ; $7e72 jumptable
 	dw AiSwingControlDoubles ; $7e74 jumptable
@@ -276,14 +276,14 @@ AiNetPlayerPredictLanding:
 	ld a, [wAiTrackingParam] ; $7ea8
 	ld [wAiTrackingCountdown], a ; $7eab
 	jp AiAdvancePhase ; $7eae
-AiBaselinerSetTarget:
+AiBaselinerSetReactionDelay:
 	call AdvanceMatchRng ; $7eb1
 	and $03 ; $7eb4
 	ld hl, wAiReactionDelayFar ; $7eb6
 	add [hl] ; $7eb9
 	ld [wAiActionTimer], a ; $7eba
 	jp AiAdvancePhase ; $7ebd
-AiBaselinerDone:
+AiBaselinerPredictLanding:
 	ld de, $0460 ; $7ec0
 	call MirrorDepthForFarSide ; $7ec3
 	call PredictBallXAtDepth ; $7ec6
@@ -299,7 +299,7 @@ AiDoublesTrackBallPhase:
 	and a ; $7edd
 	jr nz, .advance ; $7ede
 	ld hl, wCharBallReachFlags ; $7ee0
-	bit 0, [hl] ; $7ee3
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7ee3
 	jr nz, .advance ; $7ee5
 	ldh a, [hWramBank] ; $7ee7
 	push af ; $7ee9
@@ -323,7 +323,7 @@ AiDoublesTrackBallPhase:
 	jr AiNetPlayerPoachCheck ; $7f0f
 AiNetPlayerPoachCheck:
 	ld a, [wCharServeRole] ; $7f11
-	and $02 ; $7f14
+	and SERVEROLEF_PARTNER ; $7f14
 	jr z, .checkSide ; $7f16
 	ld a, [wCharIndex] ; $7f18
 	and $01 ; $7f1b
@@ -331,7 +331,7 @@ AiNetPlayerPoachCheck:
 	ld a, [wCharIndex] ; $7f1f
 .checkSide:
 	ld hl, wCharBallReachFlags ; $7f22
-	bit 0, [hl] ; $7f25
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7f25
 	jr z, .checkDistance ; $7f27
 	ld a, $03 ; $7f29
 	ld [wAiPhase], a ; $7f2b
@@ -375,14 +375,14 @@ AiNetPlayerPoachCheck:
 AiSwingControlDoubles:
 	ld a, [wAiSecondButtonDelay] ; $7f8a
 	and a ; $7f8d
-	jr nz, .checkPartner ; $7f8e
+	jr nz, .checkContact ; $7f8e
 	ld a, [wCharShotButton2] ; $7f90
 	and a ; $7f93
-	jr nz, .checkPartner ; $7f94
+	jr nz, .checkContact ; $7f94
 	call AiPressSecondShotButton ; $7f96
-.checkPartner:
+.checkContact:
 	ld hl, wCharBallReachFlags ; $7f99
-	bit 1, [hl] ; $7f9c
+	bit BALLREACHB_CONTACT, [hl] ; $7f9c
 	jr nz, .swing ; $7f9e
 	call AiSteerTowardBall ; $7fa0
 	ret ; $7fa3

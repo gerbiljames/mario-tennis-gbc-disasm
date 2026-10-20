@@ -119,18 +119,18 @@ Unused_1a_DebugAddExp:
 	farcall AddPlayerExp ; $447e
 	pop bc ; $4481
 	ret ; $4482
-ExtendModifierByteTable0:
+ContinuePreviousGameString:
 	; $4483, 24 bytes (bytes:16)
 	db $01, $01, $01, $7e, $de, $9d, $76, $72, $89, $82, $82, $de, $77, $66, $20, $20 ; 0x00
 	db $20, $20, $20, $20, $20, $20, $20, $00 ; 0x10
-ExtendModifierByteGfx1:
+ContinuePreviousGamePromptString:
 	; $449b, 13 bytes (bytes:13)
 	db $01, $03, $01, $cc, $df, $da, $b2, $7c, $8f, $7d, $76, $3f, $00 ; 0x00
-ExtendModifierByteTable2:
+SuspendDataEraseWarningString:
 	; $44a8, 25 bytes (bytes:16)
 	db $01, $01, $01, $81, $6d, $73, $80, $de, $9d, $c3, $de, $b0, $c0, $76, $de, $20 ; 0x00
 	db $77, $74, $83, $7c, $8f, $72, $8f, $7d, $00 ; 0x10
-ExtendModifierByteGfx3:
+SuspendDataEraseConfirmString:
 	; $44c1, 23 bytes (bytes:13)
 	db $01, $03, $01, $96, $9b, $7c, $72, $83, $de, $7d, $76, $3f, $00 ; 0x00
 	db $08, $10, $01, $bd, $ba, $b1, $20, $60, $30, $00 ; 0x0d
@@ -186,7 +186,7 @@ Unused_1a_ShowExpGainScreen:
 	ld_story_char_field CHARREC_LEVEL ; $453f
 	pop af ; $4552
 	ld a, [hl] ; $4553
-	cp $63 ; $4554
+	cp MAX_LEVEL ; $4554
 	jr z, .captionMaxLevel ; $4556
 	ld a, $02 ; $4558
 	call Unused_1a_DrawExpScreenCaption ; $455a
@@ -331,7 +331,7 @@ Unused_1a_ShowExpGainScreen:
 	jr .fillLoop ; $4679
 .levelUp:
 	sound SFX_MENU_SELECT ; $467b
-	ld a, [wExpBonusPending] ; $467d
+	ld a, [wExpBonusMessageId] ; $467d
 	and a ; $4680
 	jr z, .finish ; $4681
 	push af ; $4683
@@ -382,7 +382,7 @@ Unused_1a_ShowExpGainScreen:
 	ld [hl+], a ; $46d2
 	ld [hl], d ; $46d3
 	xor a ; $46d4
-	ld [wExpBonusPending], a ; $46d5
+	ld [wExpBonusMessageId], a ; $46d5
 	ld [wExpCountDone], a ; $46d8
 	jp .fillLoop ; $46db
 .finish:

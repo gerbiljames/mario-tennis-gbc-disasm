@@ -43,21 +43,21 @@ Unused_07_RunDebugTestMatch:
 	ld a, CHAR_MARIO ; $5e68
 	ld [wMatchPlayerChar], a ; $5e6a
 	ld b, a ; $5e6d
-	ld c, $00 ; $5e6e
-	farcall InitCa00RecordFromCharId ; $5e70
+	ld c, MATCHREC_P1_MAIN ; $5e6e
+	farcall InitMatchRecordFromCharId ; $5e70
 	ld a, CHAR_BOWSER ; $5e73
 	ld [wMatchOpponentChar], a ; $5e75
 	ld b, a ; $5e78
-	ld c, $02 ; $5e79
-	farcall InitCa00RecordFromCharId ; $5e7b
+	ld c, MATCHREC_P2_MAIN ; $5e79
+	farcall InitMatchRecordFromCharId ; $5e7b
 	ld a, CHAR_PEACH ; $5e7e
 	ld b, a ; $5e80
-	ld c, $01 ; $5e81
-	farcall InitCa00RecordFromCharId ; $5e83
+	ld c, MATCHREC_P1_PARTNER ; $5e81
+	farcall InitMatchRecordFromCharId ; $5e83
 	ld a, CHAR_YOSHI ; $5e86
 	ld b, a ; $5e88
-	ld c, $03 ; $5e89
-	farcall InitCa00RecordFromCharId ; $5e8b
+	ld c, MATCHREC_P2_PARTNER ; $5e89
+	farcall InitMatchRecordFromCharId ; $5e8b
 	ld a, $00 ; $5e8e
 	farcall SetStorySlotFlagB ; $5e90
 	ld a, $01 ; $5e93
@@ -106,14 +106,16 @@ Unused_07_ResolveTargetModePoint:
 	ret ; $5efb
 ModeHookTable_07:
 	; $5efc, 16 bytes (mode_hooks)
-	dw Unused_07_ModeHookNop ; record 0
-	dw Unused_07_TargetZonePointStartHook ; record 1
-	dw Unused_07_TargetZonePointEndHook ; record 2
-	dw RetStub ; record 3
-	dw Unused_07_TargetZoneBallHitHook ; record 4
-	dw Unused_07_TargetZoneBounceHook ; record 5
-	dw Unused_07_StubNop1 ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw Unused_07_ModeHookNop ; MODEHOOK_PER_FRAME
+	dw Unused_07_TargetZonePointStartHook ; MODEHOOK_POINT_START
+	dw Unused_07_TargetZonePointEndHook ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw Unused_07_TargetZoneBallHitHook ; MODEHOOK_BALL_HIT
+	dw Unused_07_TargetZoneBounceHook ; MODEHOOK_BOUNCE
+	dw Unused_07_StubNop1 ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 Unused_07_ModeHookNop:
 	ret ; $5f0c
 Unused_07_TargetZoneHitStopHook:
@@ -182,37 +184,37 @@ Unused_07_TargetZonePointEndHook:
 	ld a, MATCHABORT_ALL ; $5f8e
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
-MinigamePointTable_07_0:
+Unused_07_MinigamePointTable1P:
 	; $5f94, 32 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $09, $09, $09, $00, $09, $09, $09 ; point 0
-	court_positions $01, $09, $09, $09, $00, $09, $09, $09 ; point 1
-	court_positions $03, $09, $09, $09, $00, $09, $09, $09 ; point 2
-	court_positions $02, $09, $09, $09, $00, $09, $09, $09 ; point 3
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
 	; $5fb4, 1 bytes (fill)
 	ds 1, $ff
-MinigamePointTable_07_1:
+Unused_07_MinigamePointTable2P:
 	; $5fb5, 64 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
-	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 1
-	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 2
-	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 3
-	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 4
-	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 5
-	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 6
-	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 7
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 4
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 5
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 6
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 7
 	; $5ff5, 1 bytes (fill)
 	ds 1, $ff
 TargetZoneTestModeMinigamePointTable_07:
 	; $5ff6, 64 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
-	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 1
-	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 2
-	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 3
-	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 4
-	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 5
-	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 6
-	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 7
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 4
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 5
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 6
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 7
 	; $6036, 8138 bytes fill to bank end (linker-padded)

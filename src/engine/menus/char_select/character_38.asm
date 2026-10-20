@@ -45,9 +45,9 @@ RunCharacterSelectScreen:
 	ld c, $01 ; $485e
 	call MoveMenuCursorGrid_38 ; $4860
 	or a ; $4863
-	jr z, .inputLoop ; $4864
+	jr z, .pollButtons ; $4864
 	call RefreshCharacterSelectHighlight ; $4866
-.inputLoop:
+.pollButtons:
 	call AdvanceFrame ; $4869
 	ldh a, [hInputPressed] ; $486c
 	bit PADB_A, a ; $486e
@@ -163,7 +163,7 @@ LoadHighlightedCharPalette:
 ; Four bytes, $03 $01 $02 $00 -- a permutation of the four character-
 ; select slots. Sits between LoadHighlightedCharPalette and
 ; SetupCharacterSelectScreen; the palette routine computes its own
-; index arithmetically (cursor index + partner flag, then + 4) and
+; index arithmetically (cursor index + partner flag * 2, then + 4) and
 ; never consults a table. Nothing references it.
 Unused_38_SlotIndexOrder:
 	; $4971, 4 bytes (bytes:4)
@@ -441,16 +441,16 @@ DrawCharacterSelectChars:
 	jr z, .drawSprites ; $4c7a
 	wram_bank WRAM_CHAR0 ; $4c7c
 	ld hl, wCharSpriteSlot + 1 ; $4c82
-	set 5, [hl] ; $4c85
+	set B_OAM_XFLIP, [hl] ; $4c85
 	wram_bank WRAM_CHAR1 ; $4c87
 	ld hl, wCharSpriteSlot + 1 ; $4c8d
-	set 5, [hl] ; $4c90
+	set B_OAM_XFLIP, [hl] ; $4c90
 	wram_bank WRAM_CHAR2 ; $4c92
 	ld hl, wCharSpriteSlot + 1 ; $4c98
-	set 5, [hl] ; $4c9b
+	set B_OAM_XFLIP, [hl] ; $4c9b
 	wram_bank WRAM_CHAR3 ; $4c9d
 	ld hl, wCharSpriteSlot + 1 ; $4ca3
-	set 5, [hl] ; $4ca6
+	set B_OAM_XFLIP, [hl] ; $4ca6
 .drawSprites:
 	wram_bank WRAM_CHAR0 ; $4ca8
 	ld hl, wCharSpriteSlot ; $4cae

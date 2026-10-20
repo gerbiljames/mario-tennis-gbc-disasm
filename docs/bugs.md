@@ -227,7 +227,7 @@ then does this as its fourth:
 
 `MenuFontPalettes_01` is a palette (`LoadMenuFontPalette` hands it to
 `LoadPaletteShadow`). The copy puts its 64 bytes plus 448 bytes of what follows
-at `$5050`-`$520f` (the bank's loaders, `DebugMenuPalettes_01` at `$50f6`, the
+at `$5050`-`$520f` (the bank's loaders, `CharObjPalettes_01` at `$50f6`, the
 start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuTilesBStaged`
 itself) into VRAM `$8e00`-`$8fff`, tiles `$e0`-`$ff` of the `$8800` block.
 
@@ -323,7 +323,7 @@ is shown:
 .showConsole:
         ld a, $01
 .store:
-        ldh [hShowDebugConsole], a
+        ldh [hBGViewMode], a
 ```
 
 The `jr nz, .showConsole` after the `bit` is missing, so in step
@@ -484,7 +484,7 @@ All four arms target `$6fed`, the fall-through. `CharRallyEndState`
 (`$08:$6a90`) tests the same membership (`$05`, `$06`, `$07`, `$09`, `$0a`,
 `$0b`, `$12`) with a real body; the ids are swing animations (`$05`/`$06` are
 the forehand and backhand `$08:$6e58`/`$6e5e` select into `wCharSwingAnim`).
-So the contact window is `wCharReachX` (1.25x when `wCharFlags` bit 1 is set)
+So the contact window is `wCharReachX` (1.25x when `CHARB_DIVING` is set in `wCharFlags`)
 in every state. What the swing states were meant to change is not in the ROM.
 Same shape as `Unused_6b_RewriteCutsceneCameraY` below, but live on the rally
 path.
@@ -589,6 +589,86 @@ of `VarsityCourtTourCutscene`: the low byte of `ld hl, VarsityCourtTourActors_13
 becomes its angle, so the direction depends on where that label sits. Nothing
 in retail enters the Courtyard at `$0a` (its row is `; debug warp only`).
 
+### The stroke drill's verdict tables never follow the point parity
+
+`SelectRallyVerdictsByPointParity` (`$0b:$668f`) and its inverted copy
+(`$0b:$66a2`) pick the verdict table for the first stroke match's rallies:
+
+```
+        ld a, [wTotalPointsScoredInCurrentGame]
+        and $01
+        ld a, $00                ; <- discards the parity
+        or a
+        jr nz, .oddVerdicts      ; never taken
+        ld hl, EvenRallyVerdicts
+```
+
+The `ld a, $00` sits where the parity was meant to be tested, so the first
+always returns `EvenRallyVerdicts` and the copy always `OddRallyVerdicts`.
+`SetDrillMessageByRallyParity`, called just before, does flip on the same
+point parity, so the message wording changes from point to point while the
+verdict does not. The sibling drills hard-code one table per rally, so whether
+the parity test was dropped on purpose is not known; left as is.
+
+### Restarting a busy sound channel would mute the wrong output
+
+`StartSoundChannel` (`$3314`), when the channel it is about to restart is
+still playing, means to clear that channel's hardware bits from `wSndPanShadow`:
+
+```
+        ld hl, wSndChannels  ; + channel * $20
+        ...
+        inc hl
+        ld a, [hl-]          ; <- block +1: the script index's high byte
+        and $03              ; the type (hSndChannelType) is at +2
+        ...                  ; $ee/$dd/$bb/$77 by that value
+```
+
+The byte read is the high byte of the old track's command index, 0-2 in the
+shipped tracks, so it is square 1's output bits (or square 2's, or the wave
+channel's, past index `$ff`) that are cleared, not the restarted channel's.
+`rAUDTERM` is rewritten from `wSndPanShadow` at the end of every pass and a
+channel's bits come back only at its next note, so a note held there would go
+silent until then. The shipped game never takes the path: `PlaySound` idles
+channels 0-1 (an effect) or 2-5 (`StopMusic`, a song) before starting an id's
+tracks, and every id's tracks stay on that half. Left as is.
+
+### Actor-script `as_add_field` adds the wrong operand
+
+`ActorScriptOp_AddField` (`$04:$47ba`, opcode `$0e`) is `ActorScriptOp_SetField`
+with an add, but drops the `ld l, e / ld h, d` before its `FarReadWord`:
+
+```
+        call FarReadByte         ; a = selector, hl -> selector
+        inc de
+        ...
+        call FarReadWord         ; <- reads from hl, not de
+```
+
+`hl` still points at the selector byte, so the value added is
+`selector | value_lo << 8` rather than the operand word. No script uses the
+opcode; left as is.
+
+### `FitWindowToText` leaves the window row in the number-measure cursor
+
+`FitWindowToText` (`$05:$5654`) ends with
+
+```
+        call SetWindowRect                     ; a = window row & $1f
+        ld [wTextArgNumberMeasureIndex], a     ; $573d
+```
+
+so the cursor `MeasureNextArgNumberWidth` reads the number queue at becomes the
+window's top row. `OpenSpeechBubble` zeroes the string and short-text measure
+cursors after its fit but not this one, and on a page break
+`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueRestoreBG` (`$598f`)
+fit the next page without resetting it, so a `TX_ARG_NUMBER` on page 2 or later
+is measured from queue entry `row` (past the 16-entry queue for rows 16-31), not
+the next unread one, and the window is sized for the wrong digit count. Drawing
+uses the write cursor, so the printed number is right. One shipped message puts
+a number after a page break (`TextStrings_35.s412`, the game-over "Your
+score is N consecutive hits."). Left as is.
+
 ## Dead stores
 
 Values written and never read, and one table written past its end (the menu
@@ -613,12 +693,12 @@ at worst unwinds one level early.
 ### Story character record `+$2f`
 
 Three writes put a constant into byte `+$2f` of the `$40`-byte character
-record: `InitCa00RecordFromCharId` writes `$03` on its main-character path
+record: `InitMatchRecordFromCharId` writes `$03` on its main-character path
 (`$02:$40b2`) and `$02` on its roster path when bit 6 of the id is set
 (`$4117`), and the unreachable `Unused_02_LoadMainCharacterFromRoster` writes
 `$00` (`$4465`). No code reads `+$2f` (nor `+$3d`-`+$3f`), and poisoning it
 changed nothing; it is a record-type tag nothing consults
-(`CHARREC_BUILD_KIND`). `+$2b` is live: `InitCa00RecordFromCharId` copies it
+(`CHARREC_BUILD_KIND`). `+$2b` is live: `InitMatchRecordFromCharId` copies it
 from the roster row and `LoadCharacterAttributes` adds it to Speed to pick the
 shot-placement row (`CHARREC_SPEED_BONUS`).
 
@@ -627,6 +707,7 @@ shot-placement row (`CHARREC_SPEED_BONUS`).
 | `wShotAimRow` | every shot bank | the aim row is computed, stored, and used from `a`; the store is a leftover |
 | `wUnusedDrillPointStartByte` | bank `$0b` | cleared by `ServiceMatch2Hook_PointStart` |
 | `wUnusedExitTriggerIdMirror` | story engine | write-only mirror of `wStoryModeExitTriggerRequest` |
+| `wUnusedScrollTextDelayReload` | bank `$03` | seeded with 2 beside `wScrollTextDelay`; the reload uses the literal `$02` |
 | `wCharObjectDefId` | bank `$04` | the object-def id `SetupCharSpriteFromObjectDef` was handed |
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
 | `hLinkLastRxMirror` | serial init, bank `$07` | written beside `hLinkLastRxByte`, never compared |
@@ -669,9 +750,9 @@ The two surviving expansions land at `$d000` in WRAM banks `$02` and `$03` at a
 nothing reads them either: the four 64-wide scroll planes the name describes
 have no consumer.
 
-### `ProjectBallSprite` reads the hit-streak table and throws the value away
+### `ProjectBooSprite` reads the hit-streak table and throws the value away
 
-`ProjectBallSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
+`ProjectBooSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
 `wMinigameHitStreak` (deliberately, via the split-base `ld_hl_indexed`), loads
 the entry into `b`, and overwrites it:
 
@@ -773,7 +854,7 @@ are named for the body, with the leading `ret` recorded in the note:
 The 58 routines named `StubNop` (most of them `Unused_<bank>_StubNop*`) have a
 bare `ret` for a body, which the name describes.
 
-`Unused_02_AddExpToCa00RecordChecked` calls `Unused_02_CheckExpAwardAllowed`
+`Unused_02_AddExpToMatchRecordChecked` calls `Unused_02_CheckExpAwardAllowed`
 and returns on z, but it cannot return z: `xor a` / `dec a` sets the flags from
 `$ff` and the following `ld a, c` restores the caller's `a` without touching
 them. The gate always passes, but its caller is itself unreachable. The

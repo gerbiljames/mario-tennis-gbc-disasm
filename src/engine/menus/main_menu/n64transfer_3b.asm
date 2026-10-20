@@ -13,14 +13,14 @@ DrawEraseSavedDataCaption:
 	add a ; $7115
 	add a ; $7116
 	add a ; $7117
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $7118
+	ld bc, wSaveSlotSummaries ; $7118
 	add_bc_a ; $711b
-	ld hl, $0000 ; $7120
+	ld hl, SLOTSUM_CHAR ; $7120
 	add hl, bc ; $7123
 	ld a, [hl] ; $7124
-	cp $3f ; $7125
+	cp CHAR_EMPTY_SLOT ; $7125
 	jr z, .emptySlot ; $7127
-	ld hl, $0003 ; $7129
+	ld hl, SLOTSUM_NAME ; $7129
 	add hl, bc ; $712c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $712d
 	call DrawNameWithDiacritics_3b ; $7130
@@ -32,7 +32,7 @@ DrawEraseSavedDataCaption:
 	push bc ; $713e
 	push de ; $713f
 	push hl ; $7140
-	ld hl, $0002 ; $7141
+	ld hl, SLOTSUM_LEVEL ; $7141
 	add hl, bc ; $7144
 	ld a, [hl] ; $7145
 	ld h, $00 ; $7146
@@ -48,7 +48,7 @@ DrawEraseSavedDataCaption:
 	push bc ; $7157
 	push de ; $7158
 	push hl ; $7159
-	ld hl, $000f ; $715a
+	ld hl, SLOTSUM_HOURS ; $715a
 	add hl, bc ; $715d
 	ld a, [hl] ; $715e
 	ld h, $00 ; $715f
@@ -60,7 +60,7 @@ DrawEraseSavedDataCaption:
 	pop de ; $716c
 	pop bc ; $716d
 	pop af ; $716e
-	ld hl, $000e ; $716f
+	ld hl, SLOTSUM_MINUTES ; $716f
 	add hl, bc ; $7172
 	ld a, [hl] ; $7173
 	ld h, $00 ; $7174
@@ -156,7 +156,7 @@ LoadN64RecordTypeGfx:
 .loop:
 	ld a, c ; $724e
 	add a ; $724f
-	ld hl, N64RecordTypeTable0 ; $7250
+	ld hl, N64RecordTypeLabelTilePtrs ; $7250
 	add_hl_a ; $7253
 	ld a, [hl+] ; $7258
 	ld h, [hl] ; $7259
@@ -171,7 +171,7 @@ LoadN64RecordTypeGfx:
 	pop de ; $7266
 	pop bc ; $7267
 	pop af ; $7268
-	ld hl, N64RecordTypeTable1 ; $7269
+	ld hl, N64RecordTypeLabelTileVramDests ; $7269
 	ld a, c ; $726c
 	add a ; $726d
 	add_hl_a ; $726e
@@ -226,16 +226,16 @@ LoadN64RecordTypeGfx:
 	farcall LoadIndexedPalette ; $72d7
 	pop_wram_bank ; $72da
 	ret ; $72df
-N64RecordTypeTable0:
+N64RecordTypeLabelTilePtrs:
 	; $72e0, 3 slot words
 	dslot DataPtr_CharacterSelectLabelTiles0 ; record 0
 	dslot DataPtr_CharacterSelectLabelTiles1 ; record 1
 	dslot DataPtr_CharacterSelectLabelTiles2 ; record 2
-N64RecordTypeTable1:
-	; $72e6, 6 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
+N64RecordTypeLabelTileVramDests:
+	; $72e6, 6 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
 N64RecordTypeSlideIn:
 	ld a, b ; $72ec
 	or a ; $72ed
@@ -243,9 +243,9 @@ N64RecordTypeSlideIn:
 	ld c, $00 ; $72f0
 .slideForwardLoop:
 	call AdvanceFrame ; $72f2
-	ld b, $0a ; $72f5
+	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $72f5
 	farcall RestoreMenuBgAndDrawPanel ; $72f7
-	ld b, $03 ; $72fa
+	ld b, MAPROWS_BAND_7 ; $72fa
 	farcall FlushWram3MapRows ; $72fc
 	ld a, c ; $72ff
 	inc a ; $7300
@@ -257,9 +257,9 @@ N64RecordTypeSlideIn:
 	ld c, $0a ; $7307
 .slideBackLoop:
 	call AdvanceFrame ; $7309
-	ld b, $0b ; $730c
+	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $730c
 	farcall RestoreMenuBgAndDrawPanel ; $730e
-	ld b, $03 ; $7311
+	ld b, MAPROWS_BAND_7 ; $7311
 	farcall FlushWram3MapRows ; $7313
 	ld a, c ; $7316
 	dec a ; $7317
@@ -270,44 +270,44 @@ N64RecordTypeSlideIn:
 N64RecordTypeSlideOut:
 	ld a, b ; $731e
 	or a ; $731f
-	jr z, .slideIn ; $7320
+	jr z, .slideBack ; $7320
 	ld c, $00 ; $7322
-.outLoop:
+.slideForwardLoop:
 	call AdvanceFrame ; $7324
-	ld b, $0b ; $7327
+	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $7327
 	farcall RestoreMenuBgAndDrawPanel ; $7329
-	ld b, $03 ; $732c
+	ld b, MAPROWS_BAND_7 ; $732c
 	farcall FlushWram3MapRows ; $732e
 	ld a, c ; $7331
 	inc a ; $7332
 	ld c, a ; $7333
 	cp $0b ; $7334
-	jr nz, .outLoop ; $7336
+	jr nz, .slideForwardLoop ; $7336
 	ret ; $7338
-.slideIn:
+.slideBack:
 	ld c, $0c ; $7339
-.inLoop:
+.slideBackLoop:
 	call AdvanceFrame ; $733b
-	ld b, $0a ; $733e
+	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $733e
 	farcall RestoreMenuBgAndDrawPanel ; $7340
-	ld b, $03 ; $7343
+	ld b, MAPROWS_BAND_7 ; $7343
 	farcall FlushWram3MapRows ; $7345
 	ld a, c ; $7348
 	dec a ; $7349
 	ld c, a ; $734a
 	or a ; $734b
-	jr nz, .inLoop ; $734c
+	jr nz, .slideBackLoop ; $734c
 	ret ; $734e
 N64RecordTypeCursorSpriteTask:
 	farcall TickMenuBgScroll ; $734f
 	ld c, $03 ; $7352
 	call GetMenuCursorIndex_3b ; $7354
 	push af ; $7357
-	ld hl, N64RecordTypeCursorSpriteTaskTable1 ; $7358
+	ld hl, N64RecordTypeCursorTileBases ; $7358
 	add_hl_a ; $735b
 	ld c, [hl] ; $7360
 	pop af ; $7361
-	ld hl, N64RecordTypeCursorSpriteTaskTable0 ; $7362
+	ld hl, N64RecordTypeCursorPositions ; $7362
 	add a ; $7365
 	add_hl_a ; $7366
 	ld a, [hl+] ; $736b
@@ -343,10 +343,10 @@ N64RecordTypeCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-N64RecordTypeCursorSpriteTaskTable0:
+N64RecordTypeCursorPositions:
 	; $73b6, 6 bytes (bytes:6)
 	db $50, $fc, $50, $2c, $50, $5c ; 0x00
-N64RecordTypeCursorSpriteTaskTable1:
+N64RecordTypeCursorTileBases:
 	; $73bc, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
 DrawN64RecordTypeGrid:
@@ -535,7 +535,7 @@ LoadN64TransferItemGfx:
 .loop:
 	ld a, c ; $755d
 	add a ; $755e
-	ld hl, N64TransferItemTable0 ; $755f
+	ld hl, N64TransferItemLabelTilePtrs ; $755f
 	add_hl_a ; $7562
 	ld a, [hl+] ; $7567
 	ld h, [hl] ; $7568
@@ -550,7 +550,7 @@ LoadN64TransferItemGfx:
 	pop de ; $7575
 	pop bc ; $7576
 	pop af ; $7577
-	ld hl, N64TransferItemTable1 ; $7578
+	ld hl, N64TransferItemLabelTileVramDests ; $7578
 	ld a, c ; $757b
 	add a ; $757c
 	add_hl_a ; $757d
@@ -610,18 +610,18 @@ LoadN64TransferItemGfx:
 	farcall LoadIndexedPalette ; $75f3
 	pop_wram_bank ; $75f6
 	ret ; $75fb
-N64TransferItemTable0:
+N64TransferItemLabelTilePtrs:
 	; $75fc, 4 slot words
 	dslot DataPtr_N64ItemLabelTiles1 ; record 0
 	dslot DataPtr_N64ItemLabelTiles3 ; record 1
 	dslot DataPtr_N64ItemLabelTiles0 ; record 2
 	dslot DataPtr_N64ItemLabelTiles2 ; record 3
-N64TransferItemTable1:
-	; $7604, 8 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
-	db $00, $ab ; 0x06
+N64TransferItemLabelTileVramDests:
+	; $7604, 8 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
 DrawN64TransferItemGrid:
 	wram_bank WRAM_SCREEN ; $760c
 	ld b, $00 ; $7612
@@ -714,11 +714,11 @@ N64TransferItemCursorSpriteTask:
 	ld c, $02 ; $76ed
 	call GetMenuCursorIndex_3b ; $76ef
 	push af ; $76f2
-	ld hl, N64TransferItemCursorSpriteTaskTable1 ; $76f3
+	ld hl, N64TransferItemCursorTileBases ; $76f3
 	add_hl_a ; $76f6
 	ld c, [hl] ; $76fb
 	pop af ; $76fc
-	ld hl, N64TransferItemCursorSpriteTaskTable0 ; $76fd
+	ld hl, N64TransferItemCursorPositions ; $76fd
 	add a ; $7700
 	add_hl_a ; $7701
 	ld a, [hl+] ; $7706
@@ -754,9 +754,9 @@ N64TransferItemCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-N64TransferItemCursorSpriteTaskTable0:
+N64TransferItemCursorPositions:
 	; $7751, 8 bytes (bytes:8)
 	db $38, $14, $38, $4c, $60, $14, $60, $4a ; 0x00
-N64TransferItemCursorSpriteTaskTable1:
+N64TransferItemCursorTileBases:
 	; $7759, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00

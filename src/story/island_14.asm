@@ -45,7 +45,7 @@ AnimateIslandSkyEffectSprites_14:
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
 	ld hl, IslandSkySpriteData_14 ; $73e8
-	ld a, [wCutsceneObjActive] ; $73eb
+	ld a, [wCutsceneObjHalt] ; $73eb
 	and a ; $73ee
 	jr nz, .noTick ; $73ef
 	ld a, [wCutsceneObjLimit] ; $73f1
@@ -115,12 +115,12 @@ QueueDistantPlaneSprite_14:
 GetSceneObjectScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
-	ld a, [wMapSceneStage] ; $7570
+	ld a, [wCutscenePlaneX] ; $7570
 	sub b ; $7573
 	ld d, a ; $7574
 	ldh a, [hScrollY] ; $7575
 	ld b, a ; $7577
-	ld a, [wMapSceneStage2] ; $7578
+	ld a, [wCutscenePlaneY] ; $7578
 	sub b ; $757b
 	ld e, a ; $757c
 	ret ; $757d
@@ -185,117 +185,117 @@ IslandSkyEntry0eScene:
 	ld a, $08 ; $7723
 	ld [wCutsceneObjPhase], a ; $7725
 	ld a, $54 ; $7728
-	ld [wMapSceneStage], a ; $772a
+	ld [wCutscenePlaneX], a ; $772a
 	ld a, $58 ; $772d
-	ld [wMapSceneStage2], a ; $772f
+	ld [wCutscenePlaneY], a ; $772f
 	frame_task QueueDistantPlaneSprite_14 ; $7732
 	ld h, $4b ; $773a
-.fadeIn:
+.distantPlaneLoop:
 	script_wait_frames 2 ; $773c
 	call PlayPlaneMoveSfx_14 ; $7743
-	ld a, [wMapSceneStage2] ; $7746
+	ld a, [wCutscenePlaneY] ; $7746
 	inc a ; $7749
-	ld [wMapSceneStage2], a ; $774a
-	ld a, [wMapSceneStage] ; $774d
+	ld [wCutscenePlaneY], a ; $774a
+	ld a, [wCutscenePlaneX] ; $774d
 	inc a ; $7750
-	ld [wMapSceneStage], a ; $7751
+	ld [wCutscenePlaneX], a ; $7751
 	ld a, h ; $7754
 	cp $2d ; $7755
-	jr nz, .fireworkLoop ; $7757
+	jr nz, .distantPlaneStep ; $7757
 	ld a, $0c ; $7759
 	ld [wCutsceneObjPhase], a ; $775b
-.fireworkLoop:
+.distantPlaneStep:
 	dec h ; $775e
-	jr nz, .fadeIn ; $775f
+	jr nz, .distantPlaneLoop ; $775f
 	ld hl, QueueDistantPlaneSprite_14 ; $7761
 	call UnregisterFrameTask ; $7764
 	script_player_speed 0.5625 ; $7767
 	script_move_player 11.0, 24.0 ; $776d
 	ld h, $3c ; $7777
-.burst:
+.planeOffscreenLoop:
 	script_wait_frames 2 ; $7779
 	call PlayPlaneMoveSfx_14 ; $7780
 	dec h ; $7783
-	jr nz, .burst ; $7784
+	jr nz, .planeOffscreenLoop ; $7784
 	call LoadPlaneObjGfx2_14 ; $7786
 	ld a, $a4 ; $7789
-	ld [wMapSceneStage], a ; $778b
+	ld [wCutscenePlaneX], a ; $778b
 	ld a, $c6 ; $778e
-	ld [wMapSceneStage2], a ; $7790
+	ld [wCutscenePlaneY], a ; $7790
 	ld a, $3c ; $7793
 	ld [wCutsceneObjX], a ; $7795
 	frame_task QueuePlaneSpriteByFrameCounter_14 ; $7798
 	ld h, $20 ; $77a0
-.nextBurst:
+.planeEnterLoop:
 	script_wait_frames 2 ; $77a2
 	call PlayPlaneMoveSfx_14 ; $77a9
-	ld a, [wMapSceneStage] ; $77ac
+	ld a, [wCutscenePlaneX] ; $77ac
 	dec a ; $77af
-	ld [wMapSceneStage], a ; $77b0
+	ld [wCutscenePlaneX], a ; $77b0
 	and $03 ; $77b3
 	cp $03 ; $77b5
-	jr nz, .finale ; $77b7
-	ld a, [wMapSceneStage2] ; $77b9
+	jr nz, .planeEnterStep ; $77b7
+	ld a, [wCutscenePlaneY] ; $77b9
 	dec a ; $77bc
-	ld [wMapSceneStage2], a ; $77bd
-.finale:
+	ld [wCutscenePlaneY], a ; $77bd
+.planeEnterStep:
 	call AdvancePlaneFrameCounter2_14 ; $77c0
 	dec h ; $77c3
-	jr nz, .nextBurst ; $77c4
+	jr nz, .planeEnterLoop ; $77c4
 	ld h, $18 ; $77c6
-.finaleLoop:
+.planeClimbLoop:
 	script_wait_frames 2 ; $77c8
 	call PlayPlaneMoveSfx_14 ; $77cf
-	ld a, [wMapSceneStage] ; $77d2
+	ld a, [wCutscenePlaneX] ; $77d2
 	dec a ; $77d5
-	ld [wMapSceneStage], a ; $77d6
+	ld [wCutscenePlaneX], a ; $77d6
 	and $01 ; $77d9
 	ld b, a ; $77db
-	ld a, [wMapSceneStage2] ; $77dc
+	ld a, [wCutscenePlaneY] ; $77dc
 	sub b ; $77df
-	ld [wMapSceneStage2], a ; $77e0
+	ld [wCutscenePlaneY], a ; $77e0
 	call AdvancePlaneFrameCounter2_14 ; $77e3
 	dec h ; $77e6
-	jr nz, .finaleLoop ; $77e7
+	jr nz, .planeClimbLoop ; $77e7
 	script_move_player 11.0, 18.0 ; $77e9
 	ld h, $18 ; $77f3
-.speak:
+.planeRiseLoop:
 	script_wait_frames 3 ; $77f5
 	call PlayPlaneMoveSfx_14 ; $77fc
-	ld a, [wMapSceneStage2] ; $77ff
+	ld a, [wCutscenePlaneY] ; $77ff
 	dec a ; $7802
-	ld [wMapSceneStage2], a ; $7803
-	ld a, [wMapSceneStage] ; $7806
+	ld [wCutscenePlaneY], a ; $7803
+	ld a, [wCutscenePlaneX] ; $7806
 	dec a ; $7809
-	ld [wMapSceneStage], a ; $780a
+	ld [wCutscenePlaneX], a ; $780a
 	call AdvancePlaneFrameCounter2_14 ; $780d
 	dec h ; $7810
-	jr nz, .speak ; $7811
+	jr nz, .planeRiseLoop ; $7811
 	ld h, $08 ; $7813
-.fadeOut:
+.planeSlowLoop:
 	script_wait_frames 4 ; $7815
 	call PlayPlaneMoveSfx_14 ; $781c
-	ld a, [wMapSceneStage2] ; $781f
+	ld a, [wCutscenePlaneY] ; $781f
 	dec a ; $7822
-	ld [wMapSceneStage2], a ; $7823
+	ld [wCutscenePlaneY], a ; $7823
 	and $01 ; $7826
 	ld b, a ; $7828
-	ld a, [wMapSceneStage] ; $7829
+	ld a, [wCutscenePlaneX] ; $7829
 	sub b ; $782c
-	ld [wMapSceneStage], a ; $782d
+	ld [wCutscenePlaneX], a ; $782d
 	call AdvancePlaneFrameCounter2_14 ; $7830
 	dec h ; $7833
-	jr nz, .fadeOut ; $7834
+	jr nz, .planeSlowLoop ; $7834
 	ld h, $0c ; $7836
-.done:
+.planeDriftLoop:
 	script_wait_frames 6 ; $7838
 	call PlayPlaneMoveSfx_14 ; $783f
-	ld a, [wMapSceneStage2] ; $7842
+	ld a, [wCutscenePlaneY] ; $7842
 	dec a ; $7845
-	ld [wMapSceneStage2], a ; $7846
+	ld [wCutscenePlaneY], a ; $7846
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
-	jr nz, .done ; $784d
+	jr nz, .planeDriftLoop ; $784d
 	sound SFX_FIREWORK_SPARKLE ; $784f
 	script_wait_frames 70 ; $7851
 	script_fade_out 4 ; $7858
@@ -345,19 +345,19 @@ ActorScript_14_2:
 	as_jump .stepLoop
 ActorScript_14_3:
 	; $78bb, 30 bytes (actor_script)
-	as_begin_path
+	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
 	as_jump .wander
-	as_begin_path
+	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
 	as_jump .wanderNarrow
-	as_begin_path
+	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
@@ -376,80 +376,80 @@ Unused_14_MapScriptHideLocationName:
 	xor a ; $78e2
 	ld [wStoryModeShowLocationName], a ; $78e3
 	ret ; $78e6
-ActorScript_14_4:
+Unused_14_ActorScriptStudentSwings:
 	; $78e7, 438 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 2.0
+	as_move_by 4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, -2.0
+	as_move_by 4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_14_4
+	as_jump Unused_14_ActorScriptStudentSwings
 	as_anim ANIM_STILL
 	as_wait 60
 .swingUpSideLoop:
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, -2.0
+	as_move_by -4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 2.0
+	as_move_by -4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
@@ -459,37 +459,37 @@ ActorScript_14_4:
 	as_wait 30
 .swingDownLoop:
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 2.0
+	as_move_by 4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, -2.0
+	as_move_by 4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
@@ -500,37 +500,37 @@ ActorScript_14_4:
 	as_wait 60
 .swingUpDiagonalLoop:
 	as_anim ANIM_WALK
-	as_target_rel -4.0, -2.0
+	as_move_by -4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 2.0
+	as_move_by -4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING

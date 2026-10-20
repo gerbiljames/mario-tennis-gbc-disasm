@@ -5,7 +5,7 @@
 	farcall UpdateScorePanelDisplay
 	ld a, [wDrillPointJudgement]
 	ld [wPointWinLoseFlag], a
-	cp $01
+	cp WINLOSE_WIN
 	jr nz, .recordDrillPointResultBits
 	ld hl, wDrillCounters + DRILLCTR_PASSES
 	inc [hl]

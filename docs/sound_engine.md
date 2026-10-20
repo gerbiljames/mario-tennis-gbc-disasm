@@ -2,10 +2,14 @@
 
 The music/SFX driver lives entirely in bank 0: code at `$3078`–`$3dd3`, then
 its wave and envelope tables to `$3fc7`. It is a per-channel command
-interpreter: every song and sound effect is a script of two-byte commands — opcode, operand — that is stepped once per engine tick to
+interpreter: every song and sound effect is a script of two-byte commands —
+opcode, operand — after a four-byte header, stepped once per engine tick to
 drive the four Game Boy APU channels. The 315 channel scripts are extracted
 as editable source (`data/audio/<Track>.asm`, one `snd_*` macro row per
-command; see "Script command set" and `tools/snd.py`).
+command; see "Script command set" and `tools/snd.py`). A track is named for
+its id: `Music<Name>_Trk<n>` for the songs (`BGM_<NAME>`, ids `$01`-`$32`),
+`Sfx<Name>_Trk<n>` for the effects (`SFX_<NAME>`, `$51`-`$c1`), the hex id
+where the id has no constant.
 
 ## Channels and state blocks
 
@@ -21,7 +25,7 @@ Six logical channels share the four hardware channels. Each channel owns a
   `GetChannelLoopSlot`.
 
 While a channel is serviced, its 32-byte block is copied into the HRAM
-working set at **`$ffd0`-`$ffef`** (`hSndScriptPtr` … `hSndRestFlag`) so the
+working set at **`$ffd0`-`$ffef`** (`hSndScriptPtr` … `hSndGateTimer`) so the
 inner loop can use `ldh`, and written back afterwards. That layout is the
 sound-driver variant of the shared `$ffd0` union in `ram/hram.asm` (its names
 apply in `$3373`-`$3dd3`); `RunSoundEngine` (`$3373`) saves and restores the
@@ -39,13 +43,29 @@ mirrors state to HRAM, selects the hardware channel (`wSndChannelType` etc.),
 then runs the per-tick effect chain before decrementing the note timer and, when
 it expires, stepping the script via `RunSoundChannelScript`:
 
-- `TickVibrato` (`$39a7`) — pitch LFO; offsets `hSndPeriodLo` by `SoundPitchTable`.
-- `TickInstrumentEnvelope` (`$3a40`) — advances the `hSndInstrument`-selected
-  envelope sequence (`SoundEnvelopeTable`, `$3ed6`, phased by `hSndEnvPos`/`hSndEnvLength`)
-  and writes the shaped volume via `ApplyChannelEnvelope`.
+- `TickVibrato` (`$39a7`) — once `hSndVibratoTimer` has run out, offsets
+  `hSndPeriodLo` by the `SoundPitchTable` row `hSndChannelType`'s high nibble
+  names (less one), stepped by `wSndFrameCounter`.
+- `TickInstrumentEnvelope` (`$3a40`) — reads row `hSndEnvShape` of
+  `SoundEnvelopes` (through `SoundEnvelopeTable`, `$3ed6`) at column
+  `hSndEnvPos * 16 / hSndEnvLength`, scales the level through
+  `SoundVolumeScaleTable` and writes it via `ApplyChannelEnvelope`.
 - `TickVolumeSlide` (`$3968`) — periodic volume ramp driven by `hSndVolSlide`.
 
+The header's tempo nibble (`hSndToneCtrl` low nibble) is added to
+`hSndLengthAccum` every tick; a tick that carries past `$10` skips the
+channel's timers and script, so tempo `n` drops `n` of every 16 ticks.
+
 ## Script command set
+
+A track's first four bytes are a header, `snd_header tempo, duty, volume,
+wave`, that `UpdateSoundChannels.loadHeader` (`$34dd`) reads on the first
+tick before setting the command index to 2: tempo nibble and duty into
+`hSndToneCtrl` (on the wave channel the second byte is `hSndEnvLength`
+instead), the volume byte swapped into `hSndVolume`, and the last byte into
+`hSndWaveId` (pulse 1's sweep; the wave channel loads it as its pattern only
+when no pattern id is set, as on every fresh start). It also resets the gate
+time, switch, envelope shape, volume slide and pan.
 
 `RunSoundChannelScript` (`$3558`) keeps the channel's position as a **command
 index** (`hSndScriptPtr`) and reads the command at `hSndDataPtr + index * 2`:
@@ -60,25 +80,25 @@ are written with (`include/macros/`):
 
 | Opcode | Operand | Macro | Meaning |
 |---|---|---|---|
-| `$00`–`$9f` | length in ticks | `snd_note NOTE, octave, len` | note-on (`SndTriggerNote` `$3864`): low nibble = semitone into `NotePeriodTable` (`C_`..`B_`, the table's upper octave when `snd_tone_flag` bit 4 is set), high nibble = how many times the period is halved. Low nibble `$f` is `snd_hold octave, len`: no new pitch, the sounding note continues (or silence if none). On the noise channel the byte is `snd_noise value, len`: `< $10` indexes `NoiseNoteTable`, else the raw polynomial value |
+| `$00`–`$9f` | length in ticks | `snd_note NOTE, octave, len` | note-on (`SndTriggerNote` `$3864`): low nibble = semitone into `NotePeriodTable` (`C_`..`B_`, the table's quarter-tone-higher half after `snd_quarter_tone 1`), high nibble = how many times the period is halved. Low nibble `$f` is `snd_hold octave, len`: no new pitch, the sounding note continues (or silence if none). On the noise channel the byte is `snd_noise value, len`: `< $10` indexes `NoiseNoteTable`, else the raw polynomial value |
 | `$a0` | volume | `snd_volume` | set `hSndVolume`, apply the envelope |
 | `$a1` | id | `snd_wave` | `hSndWaveId`: loads wave RAM on the wave channel, the sweep register on pulse 1 |
 | `$a2` | value | `snd_duty` | duty into `hSndToneCtrl` (pulse) / envelope length (wave) |
-| `$a3` | length | `snd_note_length` | `hSndNoteLenReload`/`hSndNoteLenTimer`; `$fe` clears |
-| `$a4` | offset | `snd_detune` | `hSndNoteOffset` |
+| `$a3` | depth, delay | `snd_vibrato depth, ticks` | high nibble + 1 into `hSndChannelType`'s high nibble (depth `$f` is off), low nibble × 2 into `hSndVibratoDelay`/`hSndVibratoTimer`; `$fe` is `snd_vibrato_off` |
+| `$a4` | ticks | `snd_gate n` | `hSndGateTime`: each note loads `hSndGateTimer` with n (n ≥ 0) or its length + n (n < 0, at least 1); when the countdown runs out the note drops to level / 4 + 1 |
 | `$a5` | mask | `snd_pan` | `hSndPanMask`; `$01` swaps the current mask's nibbles |
 | `$a6` | value | `snd_master_volume` | written to `rAUDVOL` |
-| `$a7` | ticks | `snd_glide` | the note timer (`hSndNoteTimer`) without a key-on |
+| `$a7` | ticks | `snd_wait` | the note timer (`hSndNoteTimer`) without a key-on or slide |
 | `$a8` | index | `snd_instrument` | `hSndInstrument` |
-| `$a9` | value | `snd_transpose` | `hSndTranspose`/`wSndTranspose`; `$f0`-`$f3` step them, `$fe`/`$ff` read a jump table of indices that follows. Unused by the shipped scripts |
-| `$aa` | value | `snd_echo` | echo count and note offset; 0 clears |
+| `$a9` | value | `snd_switch` | `hSndSwitch` (< `$80`) / `wSndSwitch` (`$80` +); `$f0`-`$f3` step them, `$fe`/`$ff` jump through the table of indices that follows, indexed by them. Never added to a note. Unused by the shipped scripts |
+| `$aa` | ticks, scale | `snd_echo ticks, scale` | the last `ticks` ticks of each note play at (scale + 1) / 16 volume (`ScaleEchoVolume`); 0 ticks clears |
 | `$ac` | count, target | `snd_call count, .label` | run the block at `.label` `count` times; each `snd_return` comes back to this command |
 | `$ad` | — | `snd_return` | jump to the pending `snd_call` |
-| `$ae` | flag | `snd_tone_flag` | `hSndToneCtrl` bit 4, the note table's octave |
-| `$af` | nibble | `snd_length_nibble` | note-length increment |
+| `$ae` | bit 4 | `snd_quarter_tone 0/1` | `hSndToneCtrl` bit 4: notes from `NotePeriodTable`'s second half, a quarter tone up |
+| `$af` | nibble | `snd_tempo` | the header's tempo nibble |
 | `$b0` | `$f0` \| slot | `snd_jump slot` | go back to the slot's loop point; without the `$f` marker the command is skipped |
 | `$b1`–`$bf` | `$f0` \| slot | `snd_loop count, slot` | count = low nibble: go back until the block has run count + 1 times |
-| `$c0`–`$cf` | length | `snd_envelope rate, len` | instrument-envelope sweep (`hSndEnvRate`/`hSndEnvLength`) |
+| `$c0`–`$cf` | length | `snd_envelope shape, len` | `hSndEnvShape` = the `SoundEnvelopes` row (0 = off), `hSndEnvLength` the ticks it spans; ignored while `hSndVolume`'s low nibble is set |
 | `$d0`–`$df` | period | `snd_volume_up step, period` | volume slide up |
 | `$e0`–`$ef` | period | `snd_volume_down step, period` | volume slide down |
 | `$fd` | `$f0` \| slot | `snd_loop_point slot` | remember the next command's index in the slot (the handlers mask the slot to the low nibble; every shipped operand carries the `$f` marker, so the macros write it) |
@@ -104,12 +124,12 @@ renders any blob by hand.
 
 | Label | Addr | Contents |
 |-------|------|----------|
-| `NotePeriodTable` | `$3b1d` | 24 × 2-byte APU periods (two octaves) |
+| `NotePeriodTable` | `$3b1d` | 24 × 2-byte periods as `$800` − register: twelve semitones, then the same twelve a quarter tone higher |
 | `NoiseNoteTable` | `$3836` | 16 noise-channel `rAUD4POLY` values |
-| `SoundChannelMaskTable` | `$3b4d` | 16×16 volume-scaling matrix used to shape envelopes |
-| `SoundPitchTable` | `$3c4d` | vibrato pitch offsets |
+| `SoundVolumeScaleTable` | `$3b4d` | 16 × 16 volume-scaling matrix: row × column / 15 in the high nibble |
+| `SoundPitchTable` | `$3c4d` | 15 rows of 16 vibrato pitch offsets, one row per depth |
 | `WavePatternTable` | `$3dd4` | pointer to `WavePatterns` (`$3dd6`, 256 bytes of wave-channel patterns) |
-| `SoundEnvelopeTable` | `$3ed6` | pointer to `SoundEnvelopes` (`$3ed8`, 240 bytes of instrument-envelope sequences) |
+| `SoundEnvelopeTable` | `$3ed6` | pointer to `SoundEnvelopes` (`$3ed8`, 15 rows of 16, one per envelope shape) |
 
 ## Entry points
 

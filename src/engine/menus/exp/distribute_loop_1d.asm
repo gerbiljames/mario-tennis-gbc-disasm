@@ -59,8 +59,8 @@ RunExpDistributionLoop:
 	ld [wExpRepeatDelay], a ; $6fae
 	xor a ; $6fb1
 	ld [wExpInputRepeating], a ; $6fb2
-	ld hl, wExpCursorChar ; $6fb5
-	res 1, [hl] ; $6fb8
+	ld hl, wExpScreenBusyFlags ; $6fb5
+	res EXPBUSYB_POINT_MOVED, [hl] ; $6fb8
 	ldh a, [hInputRisingEdge] ; $6fba
 	bit PADB_UP, a ; $6fbc
 	jr nz, .selectMainChar ; $6fbe
@@ -79,8 +79,8 @@ RunExpDistributionLoop:
 	ld hl, SlideExpCursorToPartnerTask ; $6fdd
 	call UnregisterFrameTask ; $6fe0
 	frame_task SlideExpCursorToMainCharTask ; $6fe3
-	ld hl, wExpCursorChar ; $6feb
-	set 0, [hl] ; $6fee
+	ld hl, wExpScreenBusyFlags ; $6feb
+	set EXPBUSYB_CURSOR_SLIDING, [hl] ; $6fee
 	jp RunExpDistributionLoop ; $6ff0
 .selectPartner:
 	wram_bank WRAM_SCENE ; $6ff3
@@ -94,13 +94,13 @@ RunExpDistributionLoop:
 	ld hl, SlideExpCursorToMainCharTask ; $700a
 	call UnregisterFrameTask ; $700d
 	frame_task SlideExpCursorToPartnerTask ; $7010
-	ld hl, wExpCursorChar ; $7018
-	set 0, [hl] ; $701b
+	ld hl, wExpScreenBusyFlags ; $7018
+	set EXPBUSYB_CURSOR_SLIDING, [hl] ; $701b
 	jp RunExpDistributionLoop ; $701d
 .decrease:
 	wram_bank WRAM_SCENE ; $7020
-	ld a, [wExpCursorChar] ; $7026
-	bit 0, a ; $7029
+	ld a, [wExpScreenBusyFlags] ; $7026
+	bit EXPBUSYB_CURSOR_SLIDING, a ; $7029
 	jp nz, RunExpDistributionLoop ; $702b
 	ld hl, wExpInputRepeating ; $702e
 	inc [hl] ; $7031
@@ -117,16 +117,16 @@ RunExpDistributionLoop:
 	jr nz, .applyDecrease ; $704a
 	call UnassignExpPointFromChar ; $704c
 .applyDecrease:
-	ld hl, wExpCursorChar ; $704f
-	set 1, [hl] ; $7052
+	ld hl, wExpScreenBusyFlags ; $704f
+	set EXPBUSYB_POINT_MOVED, [hl] ; $7052
 	ld a, [wExpRepeatDelay] ; $7054
 	ld [wExpRedrawPending], a ; $7057
 	call RefreshExpScreenReadouts ; $705a
 	call SweepExpBarMarkerLeft ; $705d
 	jp RunExpDistributionLoop ; $7060
 .decreaseFailed:
-	ld hl, wExpCursorChar ; $7063
-	res 1, [hl] ; $7066
+	ld hl, wExpScreenBusyFlags ; $7063
+	res EXPBUSYB_POINT_MOVED, [hl] ; $7066
 	ld a, $a8 ; $7068
 	ld [wExpBarMarkerX], a ; $706a
 	jp RunExpDistributionLoop ; $706d
@@ -135,8 +135,8 @@ RunExpDistributionLoop:
 	jp RunExpDistributionLoop ; $7073
 .increase:
 	wram_bank WRAM_SCENE ; $7076
-	ld a, [wExpCursorChar] ; $707c
-	bit 0, a ; $707f
+	ld a, [wExpScreenBusyFlags] ; $707c
+	bit EXPBUSYB_CURSOR_SLIDING, a ; $707f
 	jp nz, RunExpDistributionLoop ; $7081
 	ld hl, wExpInputRepeating ; $7084
 	inc [hl] ; $7087
@@ -156,16 +156,16 @@ RunExpDistributionLoop:
 	jr nz, .applyIncrease ; $70a0
 	call ApAssignExpBurst
 .applyIncrease:
-	ld hl, wExpCursorChar ; $70a5
-	set 1, [hl] ; $70a8
+	ld hl, wExpScreenBusyFlags ; $70a5
+	set EXPBUSYB_POINT_MOVED, [hl] ; $70a8
 	ld a, [wExpRepeatDelay] ; $70aa
 	ld [wExpRedrawPending], a ; $70ad
 	call RefreshExpScreenReadouts ; $70b0
 	call SweepExpBarMarkerRight ; $70b3
 	jp RunExpDistributionLoop ; $70b6
 .increaseFailed:
-	ld hl, wExpCursorChar ; $70b9
-	res 1, [hl] ; $70bc
+	ld hl, wExpScreenBusyFlags ; $70b9
+	res EXPBUSYB_POINT_MOVED, [hl] ; $70bc
 	ld a, $a8 ; $70be
 	ld [wExpBarMarkerX], a ; $70c0
 	jp CheckExpLevelDown.openConfirmPrompt ; $70c3
@@ -178,8 +178,8 @@ SlideExpCursorToMainCharTask:
 	dec a ; $70d5
 	ld [wExpCursorSlide], a ; $70d6
 	ret nz ; $70d9
-	ld hl, wExpCursorChar ; $70da
-	res 0, [hl] ; $70dd
+	ld hl, wExpScreenBusyFlags ; $70da
+	res EXPBUSYB_CURSOR_SLIDING, [hl] ; $70dd
 	ld hl, SlideExpCursorToMainCharTask ; $70df
 	call UnregisterFrameTask ; $70e2
 	ret ; $70e5
@@ -190,8 +190,8 @@ SlideExpCursorToPartnerTask:
 	ld [wExpCursorSlide], a ; $70f0
 	cp $18 ; $70f3
 	ret nz ; $70f5
-	ld hl, wExpCursorChar ; $70f6
-	res 0, [hl] ; $70f9
+	ld hl, wExpScreenBusyFlags ; $70f6
+	res EXPBUSYB_CURSOR_SLIDING, [hl] ; $70f9
 	ld hl, SlideExpCursorToPartnerTask ; $70fb
 	call UnregisterFrameTask ; $70fe
 	ret ; $7101

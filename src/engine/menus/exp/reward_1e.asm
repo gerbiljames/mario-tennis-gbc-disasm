@@ -50,7 +50,7 @@ SetRewardGameFlag:
 	push bc ; $6cab
 	push de ; $6cac
 	push hl ; $6cad
-	ld a, [wCurrentMinigameStoryMatch] ; $6cae
+	ld a, [wCurrentMatchList] ; $6cae
 	add a ; $6cb1
 	ld hl, RewardFlagListPtrs_1e ; $6cb2
 	add_hl_a ; $6cb5
@@ -80,7 +80,7 @@ TestRewardGameFlag:
 	push bc ; $6cd1
 	push de ; $6cd2
 	push hl ; $6cd3
-	ld a, [wCurrentMinigameStoryMatch] ; $6cd4
+	ld a, [wCurrentMatchList] ; $6cd4
 	add a ; $6cd7
 	ld hl, RewardFlagListPtrs_1e ; $6cd8
 	add_hl_a ; $6cdb
@@ -99,9 +99,9 @@ TestRewardGameFlag:
 	pop bc ; $6cf4
 	ret ; $6cf5
 GetRewardTableIndex:
-	ld a, [wCurrentMinigameStoryMatch] ; $6cf6
+	ld a, [wCurrentMatchList] ; $6cf6
 	cp MATCHLIST_TRAINING ; $6cf9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6cfb
+	ld a, [wCurrentMatchIndex] ; $6cfb
 	ret nz ; $6cfe
 	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $6cff
 	ret c ; $6d01
@@ -119,11 +119,11 @@ GetRewardTableIndex:
 	ret ; $6d13
 RewardFlagListPtrs_1e:
 	; $6d14, 8 bytes (records:2)
-	dw RewardFlagListMode0_1e ; record 0
-	dw RewardFlagListMode1_1e ; record 1
-	dw RewardFlagListMode2_1e ; record 2
+	dw RewardFlagListSingles_1e ; record 0
+	dw RewardFlagListDoubles_1e ; record 1
+	dw RewardFlagListTraining_1e ; record 2
 	dw $0000 ; record 3
-RewardFlagListMode0_1e:
+RewardFlagListSingles_1e:
 	; $6d1c, 50 bytes (flag_ids)
 	dw $0000 ; 0: none
 	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_4 ; 1
@@ -150,7 +150,7 @@ RewardFlagListMode0_1e:
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 22
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 23
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 24
-RewardFlagListMode1_1e:
+RewardFlagListDoubles_1e:
 	; $6d4e, 50 bytes (flag_ids)
 	dw $0000 ; 0: none
 	dw $0000 ; 1: none
@@ -179,8 +179,8 @@ RewardFlagListMode1_1e:
 	flag_id FLAG_WON_DREAM_MATCH_DOUBLES ; 24
 ProgressEntryFlagList_1e:
 	; $6d80, 2 bytes (flag_ids)
-	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
-; Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListMode2_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR.
+	flag_id FLAG_TEMP_COURT_STAR_EARNED ; 0
+; Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListTraining_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR.
 AllProgressFlagList_1e:
 	; $6d82, 20 bytes (flag_ids)
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 0
@@ -193,7 +193,7 @@ AllProgressFlagList_1e:
 	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2 ; 7
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 8
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 9
-RewardFlagListMode2_1e:
+RewardFlagListTraining_1e:
 	; $6d96, 60 bytes (flag_ids)
 	flag_id FLAG_CLEARED_SERVICE_MATCH_1 ; 0
 	flag_id FLAG_CLEARED_SERVICE_MATCH_2 ; 1
@@ -227,7 +227,7 @@ RewardFlagListMode2_1e:
 	flag_id FLAG_CLEARED_WALL_EXPERT ; 29
 RewardCategoryFlagTable_1e:
 	; $6dd2, 74 bytes (flag_ids)
-	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
+	flag_id FLAG_TEMP_COURT_STAR_EARNED ; 0
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 1
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 2
 	dw $0000 ; 3: none
@@ -358,7 +358,7 @@ RewardUnlockFlagsTable:
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL
 SetMinigameRecordSaveFlag:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
+	ld a, [wCurrentMatchIndex] ; $6eb1
 	cp MINIGAME_SHOOTING_STAR ; $6eb4
 	jr nz, .notShootingStar ; $6eb6
 	push de ; $6eb8
@@ -386,7 +386,7 @@ SetMinigameRecordSaveFlag:
 	ret ; $6edb
 SetMinigameClearFlag:
 	apcall ApCheckMinigameClear
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
+	ld a, [wCurrentMatchIndex] ; $6edc
 	sub MINIGAME_BOO_BLAST ; $6edf
 	bit 7, a ; $6ee1
 	ret nz ; $6ee3
@@ -440,7 +440,7 @@ UpdateMinigameBestScore:
 	ld a, [wMinigameLevel] ; $6f3b
 	cp MINIGAMELEVEL_HIGH_SCORE ; $6f3e
 	jr nz, .restore ; $6f40
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
+	ld a, [wCurrentMatchIndex] ; $6f42
 	sub MINIGAME_BOO_BLAST ; $6f45
 	bit 7, a ; $6f47
 	jr nz, .restore ; $6f49
@@ -469,7 +469,7 @@ UpdateMinigameBestScore:
 	ld a, e ; $6f77
 	ld [hl+], a ; $6f78
 	ld [hl], d ; $6f79
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f7a
+	ld a, [wCurrentMatchIndex] ; $6f7a
 	sub MINIGAME_BOO_BLAST ; $6f7d
 	inc a ; $6f7f
 	inc a ; $6f80

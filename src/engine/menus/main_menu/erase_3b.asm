@@ -69,12 +69,12 @@ RunEraseSavedDataSelect:
 	add a ; $6ce6
 	add a ; $6ce7
 	add a ; $6ce8
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6ce9
+	ld bc, wSaveSlotSummaries ; $6ce9
 	add_bc_a ; $6cec
-	ld hl, $0000 ; $6cf1
+	ld hl, SLOTSUM_CHAR ; $6cf1
 	add hl, bc ; $6cf4
 	ld a, [hl] ; $6cf5
-	cp $3f ; $6cf6
+	cp CHAR_EMPTY_SLOT ; $6cf6
 	jr z, .rejectEmptySlot ; $6cf8
 	jr .playSelectSfx ; $6cfa
 .rejectEmptySlot:
@@ -108,7 +108,7 @@ LoadEraseSavedDataGfx:
 	wram_bank WRAM_SCREEN ; $6d3a
 	ld a, $00 ; $6d40
 	ld [wCurrentStorySlot], a ; $6d42
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $6d45
+	ld a, [wSaveSlotSummaries + SLOTSUM_CHAR] ; $6d45
 	farcall LoadCharMugshotToBuffer ; $6d48
 	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
@@ -116,7 +116,7 @@ LoadEraseSavedDataGfx:
 	wram_bank WRAM_SCREEN ; $6d54
 	ld a, $01 ; $6d5a
 	ld [wCurrentStorySlot], a ; $6d5c
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $6d5f
+	ld a, [wSaveSlotSummaries + SLOTSUM_SIZE + SLOTSUM_CHAR] ; $6d5f
 	farcall LoadCharMugshotToBuffer ; $6d62
 	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
@@ -124,7 +124,7 @@ LoadEraseSavedDataGfx:
 	wram_bank WRAM_SCREEN ; $6d6e
 	ld a, $02 ; $6d74
 	ld [wCurrentStorySlot], a ; $6d76
-	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $6d79
+	ld a, [wSaveSlotSummaries + 2 * SLOTSUM_SIZE + SLOTSUM_CHAR] ; $6d79
 	farcall LoadCharMugshotToBuffer ; $6d7c
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
@@ -193,9 +193,9 @@ SavedDataPickerSlideIn:
 	ld c, $00 ; $6e28
 .slideForwardLoop:
 	call AdvanceFrame ; $6e2a
-	ld b, $08 ; $6e2d
+	ld b, PANELANIM_SAVED_DATA_PICKER_IN ; $6e2d
 	farcall RestoreMenuBgAndDrawPanel ; $6e2f
-	ld b, $02 ; $6e32
+	ld b, MAPROWS_BANDS_4_9 ; $6e32
 	farcall FlushWram3MapRows ; $6e34
 	ld a, c ; $6e37
 	inc a ; $6e38
@@ -207,9 +207,9 @@ SavedDataPickerSlideIn:
 	ld c, $0b ; $6e3f
 .slideBackLoop:
 	call AdvanceFrame ; $6e41
-	ld b, $09 ; $6e44
+	ld b, PANELANIM_SAVED_DATA_PICKER_OUT ; $6e44
 	farcall RestoreMenuBgAndDrawPanel ; $6e46
-	ld b, $02 ; $6e49
+	ld b, MAPROWS_BANDS_4_9 ; $6e49
 	farcall FlushWram3MapRows ; $6e4b
 	ld a, c ; $6e4e
 	dec a ; $6e4f
@@ -220,33 +220,33 @@ SavedDataPickerSlideIn:
 SavedDataPickerSlideOut:
 	ld a, b ; $6e56
 	or a ; $6e57
-	jr z, .slideIn ; $6e58
+	jr z, .slideBack ; $6e58
 	ld c, $00 ; $6e5a
-.outLoop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6e5c
-	ld b, $09 ; $6e5f
+	ld b, PANELANIM_SAVED_DATA_PICKER_OUT ; $6e5f
 	farcall RestoreMenuBgAndDrawPanel ; $6e61
-	ld b, $02 ; $6e64
+	ld b, MAPROWS_BANDS_4_9 ; $6e64
 	farcall FlushWram3MapRows ; $6e66
 	ld a, c ; $6e69
 	inc a ; $6e6a
 	ld c, a ; $6e6b
 	cp $0a ; $6e6c
-	jr nz, .outLoop ; $6e6e
+	jr nz, .slideForwardLoop ; $6e6e
 	ret ; $6e70
-.slideIn:
+.slideBack:
 	ld c, $0e ; $6e71
-.inLoop:
+.slideBackLoop:
 	call AdvanceFrame ; $6e73
-	ld b, $08 ; $6e76
+	ld b, PANELANIM_SAVED_DATA_PICKER_IN ; $6e76
 	farcall RestoreMenuBgAndDrawPanel ; $6e78
-	ld b, $02 ; $6e7b
+	ld b, MAPROWS_BANDS_4_9 ; $6e7b
 	farcall FlushWram3MapRows ; $6e7d
 	ld a, c ; $6e80
 	dec a ; $6e81
 	ld c, a ; $6e82
 	or a ; $6e83
-	jr nz, .inLoop ; $6e84
+	jr nz, .slideBackLoop ; $6e84
 	ret ; $6e86
 MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorY] ; $6e87
@@ -299,7 +299,7 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6ed5
 .topVertical:
 	ld a, [wMenuCursorX] ; $6ed7
-	ld hl, SavedDataPickerCursorTable0 ; $6eda
+	ld hl, SavedDataPickerTopToBottomColumnMap ; $6eda
 	add_hl_a ; $6edd
 	ld a, [hl] ; $6ee2
 	ld [wMenuCursorX], a ; $6ee3
@@ -356,7 +356,7 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6f38
 .bottomVertical:
 	ld a, [wMenuCursorX] ; $6f3a
-	ld hl, SavedDataPickerCursorTable1 ; $6f3d
+	ld hl, SavedDataPickerBottomToTopColumnMap ; $6f3d
 	add_hl_a ; $6f40
 	ld a, [hl] ; $6f45
 	ld [wMenuCursorX], a ; $6f46
@@ -367,10 +367,10 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6f53
 .done:
 	ret ; $6f55
-SavedDataPickerCursorTable0:
+SavedDataPickerTopToBottomColumnMap:
 	; $6f56, 3 bytes (bytes:8)
 	db $00, $01, $01 ; 0x00
-SavedDataPickerCursorTable1:
+SavedDataPickerBottomToTopColumnMap:
 	db $00 ; $6f59
 	db $02 ; $6f5a
 EraseSavedDataCursorSpriteTask:
@@ -378,11 +378,11 @@ EraseSavedDataCursorSpriteTask:
 	ld c, $03 ; $6f5e
 	call GetMenuCursorIndex_3b ; $6f60
 	push af ; $6f63
-	ld hl, EraseSavedDataCursorSpriteTaskTable1 ; $6f64
+	ld hl, EraseSavedDataCursorTileBases ; $6f64
 	add_hl_a ; $6f67
 	ld c, [hl] ; $6f6c
 	pop af ; $6f6d
-	ld hl, EraseSavedDataCursorSpriteTaskTable0 ; $6f6e
+	ld hl, EraseSavedDataCursorPositions ; $6f6e
 	add a ; $6f71
 	add_hl_a ; $6f72
 	ld a, [hl+] ; $6f77
@@ -418,14 +418,25 @@ EraseSavedDataCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-EraseSavedDataCursorSpriteTaskTable0:
+EraseSavedDataCursorPositions:
 	; $6fc2, 10 bytes (bytes:10)
 	db $3a, $fe, $3a, $2c, $3a, $5c, $60, $0c, $60, $4c ; 0x00
-EraseSavedDataCursorSpriteTaskTable1:
-	; $6fcc, 47 bytes (bytes:16)
-	db $00, $10, $20, $30, $40, $30, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
-	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
-	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
+EraseSavedDataCursorTileBases:
+	; $6fcc, 6 bytes (bytes:6)
+	db $00, $10, $20, $30, $40, $30 ; 0x00
+Unused_3b_EraseSavedDataCursorWideTemplate:
+	; $6fd2, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 DrawEraseSavedDataGrid:
 	wram_bank WRAM_SCREEN ; $6ffb
 	ld b, $00 ; $7001
@@ -450,9 +461,9 @@ DrawEraseSavedDataGrid:
 	add a ; $7024
 	add a ; $7025
 	add a ; $7026
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $7027
+	ld bc, wSaveSlotSummaries ; $7027
 	add_bc_a ; $702a
-	ld hl, $0001 ; $702f
+	ld hl, SLOTSUM_PALETTE ; $702f
 	add hl, bc ; $7032
 	ld a, [hl] ; $7033
 	ld d, $04 ; $7034

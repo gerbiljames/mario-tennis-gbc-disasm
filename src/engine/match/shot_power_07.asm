@@ -37,9 +37,9 @@ ExecuteShot:
 	ld b, $00 ; $53ef
 	ld a, [wCharSwingAnim] ; $53f1
 	cp CHARANIM_BACKHAND ; $53f4
-	jr nz, .checkShot0a ; $53f6
+	jr nz, .checkBackhandQuick ; $53f6
 	inc b ; $53f8
-.checkShot0a:
+.checkBackhandQuick:
 	cp CHARANIM_BACKHAND_QUICK ; $53f9
 	jr nz, .checkLeftHanded ; $53fb
 	inc b ; $53fd
@@ -211,7 +211,7 @@ NudgeShotByPlayerMomentum:
 	sra h ; $5510
 	rr l ; $5512
 	ld a, [wCharCourtPos] ; $5514
-	and $02 ; $5517
+	and COURTPOSF_FAR ; $5517
 	jr nz, .addMomentum ; $5519
 	neg_hl ; $551b
 .addMomentum:
@@ -304,16 +304,16 @@ ShotTypePresets_07:
 	shot_preset SFX_HIT_SERVE, 4, 3, $02a0 ; SHOTTYPE_SERVE_FLAT
 	assert_table_length NUM_SHOTTYPES
 GetShotAimOffsetForSide:
-	ld hl, ShotAimOffsetForSideCourtSideOffsets ; $55e9
+	ld hl, WallShotAimOffsets ; $55e9
 	ld a, [wMinigameUsesWall] ; $55ec
 	and a ; $55ef
 	jr nz, .readAim ; $55f0
 	ld a, [wCharCourtPos] ; $55f2
-	and $01 ; $55f5
+	and COURTPOSF_LEFT ; $55f5
 	add a ; $55f7
 	add a ; $55f8
 	add a ; $55f9
-	ld_hl_indexed CourtSideOffsets_07_0 ; $55fa
+	ld_hl_indexed ShotAimOffsetsBySide ; $55fa
 .readAim:
 	ld a, [wCharAimOffset] ; $5601
 	inc a ; $5604
@@ -339,24 +339,14 @@ GetShotAimOffsetForSide:
 	ld e, l ; $562b
 	ld d, h ; $562c
 	ret ; $562d
-CourtSideOffsets_07_0:
-	; $562e, 8 bytes (records:2)
-	dw $fe60 ; record 0
-	dw $ff20 ; record 1
-	dw $ffdc ; record 2
-	dw $0000 ; record 3
-CourtSideOffsets_07_1:
-	; $5636, 8 bytes (records:2)
-	dw $0024 ; record 0
-	dw $00e0 ; record 1
-	dw $01a0 ; record 2
-	dw $0000 ; record 3
-ShotAimOffsetForSideCourtSideOffsets:
+ShotAimOffsetsBySide:
+	; $562e, 16 bytes (records:2)
+; a row per court side (wCharCourtPos bit 0), indexed by wCharAimOffset + 1
+	dw $fe60, $ff20, $ffdc, $0000 ; side 0
+	dw $0024, $00e0, $01a0, $0000 ; side 1
+WallShotAimOffsets:
 	; $563e, 8 bytes (records:2)
-	dw $ff20 ; record 0
-	dw $0000 ; record 1
-	dw $00e0 ; record 2
-	dw $0000 ; record 3
+	dw $ff20, $0000, $00e0, $0000
 ComputeShotTargetX:
 	ld a, [wRallyLength] ; $5646
 	and a ; $5649

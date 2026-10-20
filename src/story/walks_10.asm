@@ -76,19 +76,19 @@ ActorScript_10_2:
 	as_jump .stepLoop
 ActorScript_10_3:
 	; $7bdb, 30 bytes (actor_script)
-	as_begin_path
+	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
 	as_wait_move2
 	as_wait 40
 	as_jump .wander
-	as_begin_path
+	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
 	as_wait_move2
 	as_wait 40
 	as_jump .wanderNarrow
-	as_begin_path
+	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
 	as_wait_move2
@@ -107,80 +107,80 @@ Unused_10_MapScriptHideLocationName:
 	xor a ; $7c02
 	ld [wStoryModeShowLocationName], a ; $7c03
 	ret ; $7c06
-ActorScript_10_4:
+Unused_10_ActorScriptStudentSwings:
 	; $7c07, 438 bytes (actor_script)
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 2.0
+	as_move_by 4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, -2.0
+	as_move_by 4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_10_4
+	as_jump Unused_10_ActorScriptStudentSwings
 	as_anim ANIM_STILL
 	as_wait 60
 .swingUpSideLoop:
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, -2.0
+	as_move_by -4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 2.0
+	as_move_by -4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
@@ -190,37 +190,37 @@ ActorScript_10_4:
 	as_wait 30
 .swingDownLoop:
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 2.0
+	as_move_by 4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, -2.0
+	as_move_by 4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
@@ -231,37 +231,37 @@ ActorScript_10_4:
 	as_wait 60
 .swingUpDiagonalLoop:
 	as_anim ANIM_WALK
-	as_target_rel -4.0, -2.0
+	as_move_by -4.0, -2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 2.0
+	as_move_by -4.0, 2.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel -4.0, 0.0
+	as_move_by -4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
 	as_anim ANIM_WALK
-	as_target_rel 4.0, 0.0
+	as_move_by 4.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING

@@ -9,14 +9,14 @@
 	ld a, $00
 	ret nz
 	ld a, DRILLMSG_NICE_RETURN_YOU_DID_IT
-	ld b, $00
+	ld b, DRILLWORDING_SAME
 	call QueueDrillResultMessage
-	call RecordDrillTargetZoneHit
-	call CheckDrillTargetZoneMissed
+	call RecordDrillTargetZoneMiss
+	call CheckDrillTargetZoneHit
 	or a
 	jp nz, .hitTarget
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3
-	ld b, $00
+	ld b, DRILLWORDING_SAME
 	call QueueDrillResultMessage
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET
 	inc [hl]
@@ -27,10 +27,10 @@
 .hitTarget:
 	ld a, MATCHABORT_POINT
 	ld [wMatchAbortFlag], a
-	ld a, $01
+	ld a, WINLOSE_WIN
 	ret
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT
 	ld [wMatchAbortFlag], a
-	ld a, $ff
+	ld a, WINLOSE_LOSE
 	ret

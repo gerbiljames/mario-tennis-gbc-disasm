@@ -12,18 +12,18 @@ DecompressIntroTitleTiles:
 	ld c, wTextTileBuffer_SIZE / 16 ; $7415
 	call QueueVRAMCopy ; $7417
 	wram_bank WRAM_TEXT ; $741a
-	ld hl, DecompressIntroTitleTiles1 ; $7420
+	ld hl, IntroTitleTilemap ; $7420
 	ld de, wWindowShadowTilemap ; $7423
 	call DecompressData ; $7426
-	ld hl, DecompressIntroTitleTiles2 ; $7429
+	ld hl, IntroTitleAttrmap ; $7429
 	ld de, wWindowShadowAttrmap ; $742c
 	call DecompressData ; $742f
 	pop_wram_bank ; $7432
 	ret ; $7437
-DecompressIntroTitleTiles1:
-	INCBIN "data/engine/cutscenes/lz_DecompressIntroTitleTiles1.bin" ; $7438, 221 bytes
-DecompressIntroTitleTiles2:
-	INCBIN "data/engine/cutscenes/lz_DecompressIntroTitleTiles2.bin" ; $7515, 76 bytes
+IntroTitleTilemap:
+	INCBIN "data/engine/cutscenes/lz_IntroTitleTilemap.bin" ; $7438, 221 bytes
+IntroTitleAttrmap:
+	INCBIN "data/engine/cutscenes/lz_IntroTitleAttrmap.bin" ; $7515, 76 bytes
 Unused_6b_IncrementCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $7561
 	inc a ; $7564
@@ -139,11 +139,11 @@ RunTitleScreen:
 QueueTitleSprite:
 	push_wram_bank WRAM_SCREEN ; $76b6
 	ld a, [wTitleSpriteFrame] ; $76bf
-	ld hl, TitleSpriteTable0 ; $76c2
+	ld hl, TitleSpriteFrameTileBases ; $76c2
 	add_hl_a ; $76c5
 	ld c, [hl] ; $76ca
 	ld a, [wTitleSpriteFrame] ; $76cb
-	ld hl, TitleSpriteTable1 ; $76ce
+	ld hl, TitleSpriteFrameAttrs ; $76ce
 	add_hl_a ; $76d1
 	ld b, [hl] ; $76d6
 	ld_xy de, $28, $58 ; $76d7
@@ -151,10 +151,10 @@ QueueTitleSprite:
 	call QueueSpriteTemplate ; $76dd
 	pop_wram_bank ; $76e0
 	ret ; $76e5
-TitleSpriteTable0:
+TitleSpriteFrameTileBases:
 	; $76e6, 8 bytes (bytes:8)
 	db $00, $20, $40, $60, $00, $20, $40, $60 ; 0x00
-TitleSpriteTable1:
+TitleSpriteFrameAttrs:
 	; $76ee, 8 bytes (bytes:8)
 	db $08, $08, $08, $08, $00, $00, $00, $00 ; 0x00
 QueueTitleSprite_SpriteTemplate:

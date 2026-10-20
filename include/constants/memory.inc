@@ -15,6 +15,7 @@ def STACK_TOP equ $d000
 def SRAM_BASE           equ $a000
 def SRAM_BANK_SIZE      equ $2000
 def SAVE_HEADER_CHUNK   equ $200
+def SAVE_HEADER_SIZE    equ 4 * SAVE_HEADER_CHUNK
 def SAVEDIR_ENTRY_SIZE  equ 16
 	const_def
 	const SAVEDIR_VALID  ; $00 1 = in use
@@ -45,6 +46,38 @@ def SAVEBLOCK_BACKUP            equ $1b
 	const SAVEBLOCK_MINIGAME_RECORDS  ; $38 + story slot; backups at + 3
 def SAVEBLOCK_STAR_GRID         equ $3e ; star-character exhibition victory grid
 
+; --- N64 records block (SAVEBLOCK_N64_RECORDS) ---
+; One unlock byte per Mario-cast character, in CHAR_* order; the minigame
+; record each one needs is the minigame that character hosts. The tables
+; after them hold one entry per N64 roster character.
+def NUM_N64_CHARS            equ 16
+def N64_RING_CLEARS_SIZE     equ 4 ; one bit run per ring-shot course
+def N64_RING_SCORES_SIZE     equ 8 ; four big-endian words
+def N64_EXHIB_ROW_SIZE       equ 8
+	rsreset
+def N64REC_PRESENT        rb 2 ; $00 nonzero when Transfer Pak data was written
+def N64REC_UNLOCK_MARIO   rb   ; $02 MGRECORD_BOO_BLAST
+def N64REC_UNLOCK_WALUIGI rb   ; $03 MGRECORD_MEDALLION_MATCH
+def N64REC_UNLOCK_YOSHI   rb   ; $04 MGRECORD_FRUIT_FANTASY
+def N64REC_UNLOCK_BOWSER  rb   ; $05 MGRECORD_TWO_ON_ONE
+def N64REC_UNLOCK_WARIO   rb   ; $06 MGRECORD_TREASURE_BOX
+def N64REC_UNLOCK_PEACH   rb   ; $07 MGRECORD_PERFECT_SHOT
+def N64REC_TROPHIES       rb NUM_N64_CHARS                        ; $08
+def N64REC_RING_CLEARS    rb NUM_N64_CHARS * N64_RING_CLEARS_SIZE ; $18
+def N64REC_RING_SCORES    rb NUM_N64_CHARS * N64_RING_SCORES_SIZE ; $58
+def N64REC_EXHIB_ROWS     rb NUM_N64_CHARS * N64_EXHIB_ROW_SIZE   ; $d8
+def N64REC_STAR_UNLOCKS   rb   ; $158 bits 0/1: roster entries 14/15 present
+; Blocks InitSaveHeader defines but no code writes, as runs filling the rest
+; of each SRAM bank. Banks 3-14 are not on the 32 KiB cart.
+def SAVEBLOCK_UNUSED_BANK0      equ $0c ; $0c-$1a
+def SAVEBLOCK_UNUSED_BANK1      equ $26 ; $26-$35
+def SAVEBLOCK_UNUSED_BANK2      equ $3f ; $3f-$49
+def SAVEBLOCK_UNUSED_BANK3      equ $4a ; $4a-$57
+def SAVEBLOCK_UNUSED_BANK4      equ $58 ; $58-$61
+def SAVEBLOCK_UNUSED_BANK5      equ $62 ; $62-$67
+def SAVEBLOCK_UNUSED_BANK6      equ $68 ; $68-$70, one whole-bank block each for banks 6-14
+def NUM_SAVEBLOCKS              equ $71
+
 ; One VRAM bank: the three tile blocks and both maps.
 def VRAM_SIZE equ $2000
 
@@ -74,6 +107,12 @@ def vTiles1 equ $8800
 def vTiles2 equ $9000
 def vBGMap0 equ $9800
 def vBGMap1 equ $9c00
+
+; --- BG view mode (hBGViewMode, read by the VBlank handler) ---
+	const_def
+	const BGVIEW_NORMAL        ; $00 BG map vBGMap0, SCX/SCY from hScrollX/hScrollY
+	const BGVIEW_DEBUG_CONSOLE ; $01 BG map vBGMap1 at SCX 0, SCY $40: the debug console
+	const BGVIEW_KEEP_MAP      ; $02 any other value: rLCDC's map bit is left alone, scroll copied
 
 ; --- Absent cell in a table of tilemap addresses ---
 ; The character-select PlayerSlotBoxAddrs* tables hold one shadow-tilemap cell

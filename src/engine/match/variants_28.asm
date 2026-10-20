@@ -93,7 +93,7 @@ LoadMatchGraphics:
 	call z, LoadMatchVariantGraphics ; $5ef7
 	ret ; $5efa
 LoadMatchVariantGraphics:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
+	ld a, [wCurrentMatchIndex] ; $5efb
 	sub MINIGAME_TENNIS_MACHINE_1 ; $5efe
 	jr c, .loadMapsA ; $5f00
 	jumptable a ; $5f02

@@ -1,13 +1,13 @@
 AnimateCharDataStatsReveal:
 	sound BGM_STAT_DISTRIBUTION ; $4682
-	call BackupCharDataScreenRow ; $4684
+	call BackupCharDataScreen ; $4684
 	wram_bank WRAM_SCENE ; $4687
 .loop:
 	call AdvanceFrame ; $468d
 	ld a, [wCharDataFlushChunk] ; $4690
 	or a ; $4693
 	jr nz, .loop ; $4694
-	call RestoreCharDataScreenRow ; $4696
+	call RestoreCharDataScreen ; $4696
 	ld hl, CharDataBand0RunsStep1_1c ; $4699
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $469c
 	call BlitTilemapRunsFromTable ; $469f
@@ -16,9 +16,9 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $46a8
 	wram_bank WRAM_SCENE ; $46ab
 	ld a, $09 ; $46b1
-	ld [wCharDataRevealTimer], a ; $46b3
+	ld [wCharDataDigitFlyInStep], a ; $46b3
 	call FlushCharDataTilemaps ; $46b6
-	call RestoreCharDataScreenRow ; $46b9
+	call RestoreCharDataScreen ; $46b9
 	ld hl, CharDataBand0RunsStep2_1c ; $46bc
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $46bf
 	call BlitTilemapRunsFromTable ; $46c2
@@ -33,9 +33,9 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $46dd
 	wram_bank WRAM_SCENE ; $46e0
 	ld a, $07 ; $46e6
-	ld [wCharDataRevealTimer], a ; $46e8
+	ld [wCharDataDigitFlyInStep], a ; $46e8
 	call FlushCharDataTilemaps ; $46eb
-	call RestoreCharDataScreenRow ; $46ee
+	call RestoreCharDataScreen ; $46ee
 	ld hl, CharDataBand0RunsStep3_1c ; $46f1
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $46f4
 	call BlitTilemapRunsFromTable ; $46f7
@@ -50,9 +50,9 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4712
 	wram_bank WRAM_SCENE ; $4715
 	ld a, $05 ; $471b
-	ld [wCharDataRevealTimer], a ; $471d
+	ld [wCharDataDigitFlyInStep], a ; $471d
 	call FlushCharDataTilemaps ; $4720
-	call RestoreCharDataScreenRow ; $4723
+	call RestoreCharDataScreen ; $4723
 	ld hl, CharDataBand0RunsStep4_1c ; $4726
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4729
 	call BlitTilemapRunsFromTable ; $472c
@@ -67,9 +67,9 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4747
 	wram_bank WRAM_SCENE ; $474a
 	ld a, $03 ; $4750
-	ld [wCharDataRevealTimer], a ; $4752
+	ld [wCharDataDigitFlyInStep], a ; $4752
 	call FlushCharDataTilemaps ; $4755
-	call RestoreCharDataScreenRow ; $4758
+	call RestoreCharDataScreen ; $4758
 	ld hl, CharDataBand0RunsStep5_1c ; $475b
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $475e
 	call BlitTilemapRunsFromTable ; $4761
@@ -84,9 +84,9 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $477c
 	wram_bank WRAM_SCENE ; $477f
 	ld a, $02 ; $4785
-	ld [wCharDataRevealTimer], a ; $4787
+	ld [wCharDataDigitFlyInStep], a ; $4787
 	call FlushCharDataTilemaps ; $478a
-	call RestoreCharDataScreenRow ; $478d
+	call RestoreCharDataScreen ; $478d
 	ld hl, CharDataBand0RunsStep6_1c ; $4790
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4793
 	call BlitTilemapRunsFromTable ; $4796
@@ -101,9 +101,9 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $47b1
 	wram_bank WRAM_SCENE ; $47b4
 	ld a, $01 ; $47ba
-	ld [wCharDataRevealTimer], a ; $47bc
+	ld [wCharDataDigitFlyInStep], a ; $47bc
 	call FlushCharDataTilemaps ; $47bf
-	call RestoreCharDataScreenRow ; $47c2
+	call RestoreCharDataScreen ; $47c2
 	ld hl, CharDataBand0RunsStep7_1c ; $47c5
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $47c8
 	call BlitTilemapRunsFromTable ; $47cb
@@ -120,7 +120,7 @@ AnimateCharDataStatsReveal:
 	ld hl, wCharDataPageArrowMode ; $47ef
 	dec [hl] ; $47f2
 	xor a ; $47f3
-	ld [wCharDataRevealTimer], a ; $47f4
+	ld [wCharDataDigitFlyInStep], a ; $47f4
 	call FlushCharDataTilemaps ; $47f7
 	wait_frames 6 ; $47fa
 	ld hl, CharDataBand4RunsStep1_1c ; $47fe
@@ -193,7 +193,7 @@ DrawCharStatRows:
 	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $48c2
 	call BlitTilemapRunsFromTable ; $48c5
 	ret ; $48c8
-BackupCharDataScreenRow:
+BackupCharDataScreen:
 	wram_bank WRAM_SCREEN ; $48c9
 	ld hl, wShadowTilemap ; $48cf
 	ld de, wCharDataScreenBackup ; $48d2
@@ -205,7 +205,7 @@ BackupCharDataScreenRow:
 	ld c, (SCREEN_HEIGHT * TILEMAP_WIDTH) / 16 ; $48e6
 	call CopyMemoryFast ; $48e8
 	ret ; $48eb
-RestoreCharDataScreenRow:
+RestoreCharDataScreen:
 	wram_bank WRAM_SCREEN ; $48ec
 	ld hl, wCharDataScreenBackup ; $48f2
 	ld de, wShadowTilemap ; $48f5
@@ -330,29 +330,29 @@ WriteCharStatsToDisplayBuffer:
 	ld a, [wCharDataLevel] ; $4a0c
 	ld [hl], a ; $4a0f
 	push af ; $4a10
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4a11
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4a11
 	pop af ; $4a24
 	ld a, [wCharDataNewLevels] ; $4a25
 	ld [hl], a ; $4a28
-	ld [wCharDataLevels], a ; $4a29
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4a29
 	push af ; $4a2c
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $4a2d
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4a2d
 	pop af ; $4a40
 	ld a, [wCharDataNewLevels + 1] ; $4a41
 	ld [hl], a ; $4a44
-	ld [wCharDataLevels + 1], a ; $4a45
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4a45
 	push af ; $4a48
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4a49
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4a49
 	pop af ; $4a5c
 	ld a, [wCharDataNewLevels + 2] ; $4a5d
 	ld [hl], a ; $4a60
-	ld [wCharDataLevels + 2], a ; $4a61
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4a61
 	push af ; $4a64
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4a65
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4a65
 	pop af ; $4a78
 	ld a, [wCharDataNewLevels + 3] ; $4a79
 	ld [hl], a ; $4a7c
-	ld [wCharDataLevels + 3], a ; $4a7d
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4a7d
 	xor a ; $4a80
 	ld b, $64 ; $4a81
 	ld hl, wCharDataChoiceLog ; $4a83
@@ -370,10 +370,10 @@ LoadCharStatsWithLevelUpDeltas:
 	or a ; $4a9d
 	ret nz ; $4a9e
 	push af ; $4a9f
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4aa0
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4aa0
 	pop af ; $4ab3
 	ld a, [hl] ; $4ab4
-	ld [wCharDataLevels], a ; $4ab5
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4ab5
 	push af ; $4ab8
 	ld_story_char_field CHARREC_STAT_TOP ; $4ab9
 	pop af ; $4acc
@@ -387,10 +387,10 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4ae8
 	ld [wCharDataStats + 1], a ; $4ae9
 	push af ; $4aec
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $4aed
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4aed
 	pop af ; $4b00
 	ld a, [hl] ; $4b01
-	ld [wCharDataLevels + 1], a ; $4b02
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4b02
 	push af ; $4b05
 	ld_story_char_field CHARREC_STAT_SERVE ; $4b06
 	pop af ; $4b19
@@ -410,10 +410,10 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b4f
 	ld [wCharDataStats + 4], a ; $4b50
 	push af ; $4b53
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4b54
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4b54
 	pop af ; $4b67
 	ld a, [hl] ; $4b68
-	ld [wCharDataLevels + 2], a ; $4b69
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4b69
 	push af ; $4b6c
 	ld_story_char_field CHARREC_STAT_ANGLE ; $4b6d
 	pop af ; $4b80
@@ -427,10 +427,10 @@ LoadCharStatsWithLevelUpDeltas:
 	inc a ; $4b9c
 	ld [wCharDataStats + 6], a ; $4b9d
 	push af ; $4ba0
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4ba1
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4ba1
 	pop af ; $4bb4
 	ld a, [hl] ; $4bb5
-	ld [wCharDataLevels + 3], a ; $4bb6
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4bb6
 	push af ; $4bb9
 	ld_story_char_field CHARREC_STAT_SPEED ; $4bba
 	pop af ; $4bcd
@@ -481,10 +481,10 @@ LoadCharStatsWithLevelUpDeltas:
 LoadCharStats:
 	wram_bank WRAM_SCENE ; $4c43
 	push af ; $4c49
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4c4a
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4c4a
 	pop af ; $4c5d
 	ld a, [hl] ; $4c5e
-	ld [wCharDataLevels], a ; $4c5f
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4c5f
 	push af ; $4c62
 	ld_story_char_field CHARREC_STAT_TOP ; $4c63
 	pop af ; $4c76
@@ -498,10 +498,10 @@ LoadCharStats:
 	inc a ; $4c92
 	ld [wCharDataStats + 1], a ; $4c93
 	push af ; $4c96
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $4c97
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4c97
 	pop af ; $4caa
 	ld a, [hl] ; $4cab
-	ld [wCharDataLevels + 1], a ; $4cac
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4cac
 	push af ; $4caf
 	ld_story_char_field CHARREC_STAT_SERVE ; $4cb0
 	pop af ; $4cc3
@@ -521,10 +521,10 @@ LoadCharStats:
 	inc a ; $4cf9
 	ld [wCharDataStats + 4], a ; $4cfa
 	push af ; $4cfd
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4cfe
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4cfe
 	pop af ; $4d11
 	ld a, [hl] ; $4d12
-	ld [wCharDataLevels + 2], a ; $4d13
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4d13
 	push af ; $4d16
 	ld_story_char_field CHARREC_STAT_ANGLE ; $4d17
 	pop af ; $4d2a
@@ -538,10 +538,10 @@ LoadCharStats:
 	inc a ; $4d46
 	ld [wCharDataStats + 6], a ; $4d47
 	push af ; $4d4a
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4d4b
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4d4b
 	pop af ; $4d5e
 	ld a, [hl] ; $4d5f
-	ld [wCharDataLevels + 3], a ; $4d60
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4d60
 	push af ; $4d63
 	ld_story_char_field CHARREC_STAT_SPEED ; $4d64
 	pop af ; $4d77
@@ -580,7 +580,7 @@ CharDataScreen_DrawPageColumns:
 	rlca ; $4ddf
 	push af ; $4de0
 	rlca ; $4de1
-	ld_hl_indexed CharDataScreen_DrawPageColumnsTable0 ; $4de2
+	ld_hl_indexed CharDataScreen_PageColumnsRects ; $4de2
 	ld a, [hl+] ; $4de9
 	ld d, [hl] ; $4dea
 	ld e, a ; $4deb
@@ -589,7 +589,7 @@ CharDataScreen_DrawPageColumns:
 	ld b, [hl] ; $4dee
 	ld c, a ; $4def
 	pop af ; $4df0
-	ld_hl_indexed CharDataScreen_DrawPageColumnsTable1 ; $4df1
+	ld_hl_indexed CharDataScreen_PageColumnsPtrs ; $4df1
 	ld a, [hl+] ; $4df8
 	ld h, [hl] ; $4df9
 	ld l, a ; $4dfa

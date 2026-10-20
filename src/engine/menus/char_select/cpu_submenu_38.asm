@@ -2,12 +2,12 @@ RunCpuDifficultySubmenu:
 	push_wram_bank WRAM_SCREEN ; $6216
 	ld a, [wCpuDifficultyPanelOpen] ; $621f
 	or a ; $6222
-	jr nz, .inputLoop ; $6223
+	jr nz, .handleInput ; $6223
 	call OpenCpuDifficultyPanel ; $6225
 	call QueueCpuDifficultyPanelToVram ; $6228
 	ld a, $01 ; $622b
 	ld [wCpuDifficultyPanelOpen], a ; $622d
-.inputLoop:
+.handleInput:
 	call HandleCpuDifficultyInput ; $6230
 	call DrawCpuDifficultyCursorBox ; $6233
 	ld a, [wMenuInputPressed] ; $6236
@@ -131,24 +131,24 @@ HandleCpuDifficultyInput:
 DrawCpuDifficultyCursorBox:
 	ld a, [wCpuDifficultyCursor] ; $633b
 	add a ; $633e
-	ld hl, CpuDifficultyCursorBoxTable0 ; $633f
+	ld hl, CpuDifficultyCursorBoxPositions ; $633f
 	add_hl_a ; $6342
 	ld a, [hl+] ; $6347
 	ld d, [hl] ; $6348
 	ld e, a ; $6349
 	ld a, [wCpuDifficultyCursor] ; $634a
 	add a ; $634d
-	ld hl, CpuDifficultyCursorBoxTable1 ; $634e
+	ld hl, CpuDifficultyCursorBoxSizes ; $634e
 	add_hl_a ; $6351
 	ld a, [hl+] ; $6356
 	ld b, [hl] ; $6357
 	ld c, a ; $6358
 	call DrawSelectedOptionBox ; $6359
 	ret ; $635c
-CpuDifficultyCursorBoxTable0:
+CpuDifficultyCursorBoxPositions:
 	; $635d, 8 bytes (bytes:8)
 	db $80, $04, $80, $28, $80, $56, $80, $76 ; 0x00
-CpuDifficultyCursorBoxTable1:
+CpuDifficultyCursorBoxSizes:
 	; $6365, 8 bytes (bytes:8)
 	db $04, $20, $04, $2a, $04, $1c, $04, $27 ; 0x00
 OpenCpuDifficultyPanel:
@@ -264,7 +264,7 @@ RunLinkCharSelectScreen:
 	ldh a, [hLinkRemoteInputBuf] ; $6473
 	ld [wMenuInputPressed], a ; $6475
 	ld a, [wMenuInputPressed] ; $6478
-	xor $0f ; $647b
+	xor PADF_BUTTONS ; $647b
 	jr nz, .afterStartup ; $647d
 	call JumpSoftReset ; $647f
 .afterStartup:

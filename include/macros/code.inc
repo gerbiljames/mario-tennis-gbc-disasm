@@ -116,6 +116,37 @@ MACRO sram_bank
 	ld [rRAMB], a
 ENDM
 
+; One InitSaveHeader directory entry: block \1 lives in SRAM bank \2 at
+; offset \3 from SRAM_BASE, \4 bytes long. Entries come in block order, and
+; the blocks in each bank run upward without overlapping (bank 0's start
+; after the header).
+MACRO savedir_entry
+	ASSERT SAVEDIR_OFFSET == SAVEDIR_BANK + 1 && SAVEDIR_LENGTH == SAVEDIR_OFFSET + 2
+	IF (\1) == 0
+		DEF savedir_next = 0
+		DEF savedir_bank = 0
+		DEF savedir_end = SAVE_HEADER_SIZE
+	ELIF (\2) != savedir_bank
+		DEF savedir_bank = \2
+		DEF savedir_end = 0
+	ENDC
+	ASSERT (\1) == savedir_next, "savedir_entry: block \1 is out of order"
+	ASSERT (\3) >= savedir_end, "savedir_entry: block \1 overlaps the one before"
+	ASSERT (\3) + (\4) <= SRAM_BANK_SIZE, "savedir_entry: block \1 runs past its SRAM bank"
+	DEF savedir_next += 1
+	DEF savedir_end = (\3) + (\4)
+	ld hl, sSaveBlockDirectory + (\1) * SAVEDIR_ENTRY_SIZE + SAVEDIR_BANK
+	ld [hl], \2
+	inc hl
+	ld [hl], LOW(\3)
+	inc hl
+	ld [hl], HIGH(\3)
+	inc hl
+	ld [hl], LOW(\4)
+	inc hl
+	ld [hl], HIGH(\4)
+ENDM
+
 ; rst $00 (JumpTableDispatch, $06c4): jump to entry a of the dw table that
 ; follows, loading the argument, if given, into a first. A site whose index
 ; is already in a has a no-op `ld a, a` there, as if the original's macro
@@ -281,7 +312,8 @@ ENDM
 
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
 ; immediate. Sites whose callee reads the halves separately use the named
-; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_*_pals).
+; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_*_pals,
+; ld_char_rec).
 MACRO lb
 	ld \1, ((\2) << 8) | (\3)
 ENDM
@@ -306,6 +338,12 @@ ENDM
 ; text-rect routines take it (CreateWindow, CopyTextRect, ...): the width in
 ; the high register, the height in the low.
 MACRO ld_size
+	lb \1, \2, \3
+ENDM
+
+; ld_bg_cell pair, attr, tile -- WriteWindowCellTileAttr's arguments: the BG
+; attribute byte (TILEATTR_*) in the high register, the tile id in the low.
+MACRO ld_bg_cell
 	lb \1, \2, \3
 ENDM
 
@@ -375,6 +413,12 @@ MACRO ld_cell
 	lb \1, \2, \3
 ENDM
 
+; ld_char_rec pair, char, slot -- InitMatchRecordFromCharId's arguments: the
+; character id (CHAR_*) in the high register, the MATCHREC_* slot in the low.
+MACRO ld_char_rec
+	lb \1, \2, \3
+ENDM
+
 ; ld_flag_id pair, FLAG_NAME -- the (byte << 8) | (bit << 5) form of a game
 ; flag that Set/Clear/TestGameFlag take in de, from the flag number the
 ; *ByNumber helpers and set_flag/test_flag use.
@@ -385,20 +429,20 @@ ENDM
 
 ; Story match launcher: store the 16-bit big-endian match id into
 ; wCurrentMinigameStoryMatch, then farcall LoadMatchSettingsFromTable. The
-; high byte is the category (0 singles, 1 doubles, 2 minigame/practice), the
-; low byte the match.
+; high byte (wCurrentMatchList) is the category (0 singles, 1 doubles,
+; 2 minigame/practice), the low byte (wCurrentMatchIndex) the match.
 ; Usage: load_match_settings MATCHLIST_*, STORYMATCH_* (or one 16-bit id)
 MACRO load_match_settings
 IF _NARG == 2
 	ld a, \1
-	ld [wCurrentMinigameStoryMatch], a
+	ld [wCurrentMatchList], a
 	ld a, \2
 ELSE
 	ld a, HIGH(\1)
-	ld [wCurrentMinigameStoryMatch], a
+	ld [wCurrentMatchList], a
 	ld a, LOW(\1)
 ENDC
-	ld [wCurrentMinigameStoryMatch + 1], a
+	ld [wCurrentMatchIndex], a
 	farcall LoadMatchSettingsFromTable
 ENDM
 

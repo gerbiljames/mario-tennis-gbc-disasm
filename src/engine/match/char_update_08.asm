@@ -343,25 +343,25 @@ SetCharTarget:
 	ld hl, wCharWalkTargetFlag ; $69bc
 	ld [hl], $00 ; $69bf
 	ret ; $69c1
-ReloadCharFrameGfx:
+ReloadCharPalette:
 	ld a, [wCharSpriteAttr] ; $69c2
 	and $07 ; $69c5
 	add $08 ; $69c7
 	ld d, a ; $69c9
-	ld a, [wCharGfxBank] ; $69ca
+	ld a, [wCharPaletteId] ; $69ca
 	ld b, a ; $69cd
-	ld_slot hl, FarPtr_LoadDebugMenuPalette ; $69ce
+	ld_slot hl, FarPtr_LoadCharObjPalette ; $69ce
 	call FarCallVector ; $69d1
 	ret ; $69d4
-LoadCharChargeFlashGfx:
+LoadCharChargeFlashPalette:
 	ld a, [wCharSpriteAttr] ; $69d5
 	and $07 ; $69d8
 	add $08 ; $69da
 	ld d, a ; $69dc
-	ld a, [wCharGfxBank] ; $69dd
+	ld a, [wCharPaletteId] ; $69dd
 	add $08 ; $69e0
 	ld b, a ; $69e2
-	ld_slot hl, FarPtr_LoadDebugMenuPalette ; $69e3
+	ld_slot hl, FarPtr_LoadCharObjPalette ; $69e3
 	call FarCallVector ; $69e6
 	ret ; $69e9
 SetCharAnimation:
@@ -668,7 +668,7 @@ CharSwingWindupPhase:
 	and a ; $6c3c
 	jr nz, .abort ; $6c3d
 	ld hl, wCharBallReachFlags ; $6c3f
-	bit 0, [hl] ; $6c42
+	bit BALLREACHB_SWING_RANGE, [hl] ; $6c42
 	jr nz, .startSwing ; $6c44
 	ret ; $6c46
 .startSwing:
@@ -703,7 +703,7 @@ CharSwingContactPhase:
 	call CaptureShotAim ; $6c81
 	call ResetSwingAnimation ; $6c84
 	ld hl, wCharBallReachFlags ; $6c87
-	bit 1, [hl] ; $6c8a
+	bit BALLREACHB_CONTACT, [hl] ; $6c8a
 	jr z, .done ; $6c8c
 	call SelectRallyShotType ; $6c8e
 	farcall ExecuteShot ; $6c91

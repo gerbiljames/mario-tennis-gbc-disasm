@@ -398,6 +398,7 @@ INCLUDE "src/data/text/text_1f.asm"
 SECTION "ROM Bank $20", ROMX[$4000], BANK[$20]
 
 DEF ApplyBallTrajectory4_20_NAME EQUS "Unused_20_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_20_NAME EQUS "ApplyFallbackBallTrajectoryFar_20"
 DEF BallTrajEntryPtr4_20_NAME EQUS "Unused_20_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_20_NAME EQUS "BallTrajEntryPtr6_20"
 DEF SeekBallTrajEntry4_20_NAME EQUS "Unused_20_SeekBallTrajEntry4"
@@ -411,6 +412,7 @@ INCLUDE "src/data/shots/slice.asm"
 SECTION "ROM Bank $21", ROMX[$4000], BANK[$21]
 
 DEF ApplyBallTrajectory4_21_NAME EQUS "Unused_21_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_21_NAME EQUS "ApplyFallbackBallTrajectoryFar_21"
 DEF BallTrajEntryPtr4_21_NAME EQUS "Unused_21_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_21_NAME EQUS "BallTrajEntryPtr6_21"
 DEF SeekBallTrajEntry4_21_NAME EQUS "Unused_21_SeekBallTrajEntry4"
@@ -424,6 +426,7 @@ INCLUDE "src/data/shots/power_slice.asm"
 SECTION "ROM Bank $22", ROMX[$4000], BANK[$22]
 
 DEF ApplyBallTrajectory4_22_NAME EQUS "Unused_22_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_22_NAME EQUS "ApplyFallbackBallTrajectoryFar_22"
 DEF BallTrajEntryPtr4_22_NAME EQUS "Unused_22_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_22_NAME EQUS "BallTrajEntryPtr6_22"
 DEF SeekBallTrajEntry4_22_NAME EQUS "Unused_22_SeekBallTrajEntry4"
@@ -437,6 +440,7 @@ INCLUDE "src/data/shots/topspin.asm"
 SECTION "ROM Bank $23", ROMX[$4000], BANK[$23]
 
 DEF ApplyBallTrajectory4_23_NAME EQUS "Unused_23_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_23_NAME EQUS "ApplyFallbackBallTrajectoryFar_23"
 DEF BallTrajEntryPtr4_23_NAME EQUS "Unused_23_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_23_NAME EQUS "BallTrajEntryPtr6_23"
 DEF SeekBallTrajEntry4_23_NAME EQUS "Unused_23_SeekBallTrajEntry4"
@@ -450,6 +454,7 @@ INCLUDE "src/data/shots/power_topspin.asm"
 SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 
 DEF ApplyBallTrajectory4_24_NAME EQUS "Unused_24_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_24_NAME EQUS "ApplyFallbackBallTrajectoryFar_24"
 DEF BallTrajEntryPtr4_24_NAME EQUS "BallTrajEntryPtr4_24"
 DEF BallTrajEntryPtr6_24_NAME EQUS "BallTrajEntryPtr6_24"
 DEF SeekBallTrajEntry4_24_NAME EQUS "SeekBallTrajEntry4_24"
@@ -487,6 +492,7 @@ INCLUDE "src/engine/match/variants_28.asm"
 SECTION "ROM Bank $29", ROMX[$4000], BANK[$29]
 
 DEF ApplyBallTrajectory4_29_NAME EQUS "Unused_29_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_29_NAME EQUS "Unused_29_ApplyFallbackBallTrajectoryFar"
 DEF BallTrajEntryPtr4_29_NAME EQUS "Unused_29_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_29_NAME EQUS "Unused_29_BallTrajEntryPtr6"
 DEF SeekBallTrajEntry4_29_NAME EQUS "Unused_29_SeekBallTrajEntry4"
@@ -500,6 +506,7 @@ INCLUDE "src/data/shots/serve_topspin.asm"
 SECTION "ROM Bank $2a", ROMX[$4000], BANK[$2a]
 
 DEF ApplyBallTrajectory4_2a_NAME EQUS "Unused_2a_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_2a_NAME EQUS "Unused_2a_ApplyFallbackBallTrajectoryFar"
 DEF BallTrajEntryPtr4_2a_NAME EQUS "Unused_2a_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_2a_NAME EQUS "Unused_2a_BallTrajEntryPtr6"
 DEF SeekBallTrajEntry4_2a_NAME EQUS "Unused_2a_SeekBallTrajEntry4"
@@ -513,6 +520,7 @@ INCLUDE "src/data/shots/serve_slice.asm"
 SECTION "ROM Bank $2b", ROMX[$4000], BANK[$2b]
 
 DEF ApplyBallTrajectory4_2b_NAME EQUS "Unused_2b_ApplyBallTrajectory4"
+DEF ApplyFallbackBallTrajectoryFar_2b_NAME EQUS "Unused_2b_ApplyFallbackBallTrajectoryFar"
 DEF BallTrajEntryPtr4_2b_NAME EQUS "Unused_2b_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_2b_NAME EQUS "Unused_2b_BallTrajEntryPtr6"
 DEF SeekBallTrajEntry4_2b_NAME EQUS "Unused_2b_SeekBallTrajEntry4"
@@ -526,6 +534,7 @@ INCLUDE "src/data/shots/serve_flat.asm"
 SECTION "ROM Bank $2c", ROMX[$4000], BANK[$2c]
 
 DEF ApplyBallTrajectory4_2c_NAME EQUS "ApplyBallTrajectory4_2c"
+DEF ApplyFallbackBallTrajectoryFar_2c_NAME EQUS "Unused_2c_ApplyFallbackBallTrajectoryFar"
 DEF BallTrajEntryPtr4_2c_NAME EQUS "BallTrajEntryPtr4_2c"
 DEF BallTrajEntryPtr6_2c_NAME EQUS "BallTrajEntryPtr6_2c"
 DEF SeekBallTrajEntry4_2c_NAME EQUS "SeekBallTrajEntry4_2c"

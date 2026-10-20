@@ -5,7 +5,7 @@
 	rsreset
 def CHARREC_NAME             rb 7 ; $00 then padding
 	rb_skip 3                        ; $07
-def CHARREC_LINK_COURT_MASK  rb   ; $0a name padding; ExchangeLinkUnlockFlags borrows the main records' byte
+def CHARREC_LINK_COURT_MASK  rb   ; $0a name padding; ExchangeLinkCharSelection borrows the main records' byte
 def CHARREC_CHAR             rb   ; $0b CHAR_* id
 def CHARREC_PALETTE          rb   ; $0c
 def CHARREC_GENDER           rb   ; $0d 0 male, 1 female
@@ -29,13 +29,78 @@ def CHARREC_STAT_REACTION    rb   ; $29
 def CHARREC_STAT_STOP        rb   ; $2a
 def CHARREC_SPEED_BONUS      rb   ; $2b added to the Speed stat for the shot-placement row
 def CHARREC_EXP              rb 3 ; $2c accumulator, capped at 99999
-def CHARREC_BUILD_KIND       rb   ; $2f written by InitCa00RecordFromCharId ($03 main, $02 roster), read by nothing
+def CHARREC_BUILD_KIND       rb   ; $2f written by InitMatchRecordFromCharId ($03 main, $02 roster), read by nothing
 def CHARREC_PHYSICS_TEMPLATE rw 4 ; $30
-def CHARREC_TRAIN_LEVELS     rb 4 ; $38 spin first
+def CHARREC_TRAIN_LEVELS     rb 4 ; $38 in TRAINSTAT_* order
 def CHARREC_EQUIPMENT        rb   ; $3c racket (low nibble) and shoes (high)
 	rb_skip 3                        ; $3d
 def CHAR_RECORD_SIZE equ _RS
 	ASSERT CHAR_RECORD_SIZE == $40
+def MAX_LEVEL equ 99 ; CHARREC_LEVEL stops here
+def NUM_CHAR_STATS equ CHARREC_SPEED_BONUS - CHARREC_STAT_TOP ; the eleven 0-9 stat bars
+
+; --- Stat archetype layout (StatArchetype*_02, picked by CHARREC_CHAR & 3) ---
+	rsreset
+def STATARCH_LEVEL          rb      ; $00 -> CHARREC_LEVEL
+def STATARCH_TEMPLATE       rb CHARREC_EQUIPMENT - CHARREC_PHYSICS_TEMPLATE ; $01 -> CHARREC_PHYSICS_TEMPLATE onwards
+def STATARCH_THRESHOLDS     equ _RS ; $0d one stat_thresholds row per stat, CHARREC_STAT_* order
+def STATARCH_TOP            rb 9
+def STATARCH_SLICE          rb 9
+def STATARCH_SERVE          rb 9
+def STATARCH_STROKE         rb 9
+def STATARCH_VOLLEY         rb 9
+def STATARCH_ANGLE          rb 9
+def STATARCH_PLACEMENT      rb 9
+def STATARCH_SPEED          rb 9
+def STATARCH_DASH           rb 9
+def STATARCH_REACTION       rb 9
+def STATARCH_STOP           rb 9
+def STATARCH_MODIFIERS      equ _RS ; $70 (level, icon) pairs for CHARREC_SWING, to $ff
+	ASSERT STATARCH_MODIFIERS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
+
+; --- Match record slots (GetMatchRecordPtr's a, InitMatchRecordFromCharId's c) ---
+	const_def
+	const MATCHREC_P1_MAIN    ; $00 wPlayer1Main
+	const MATCHREC_P1_PARTNER ; $01 wPlayer1Partner
+	const MATCHREC_P2_MAIN    ; $02 wPlayer2Main
+	const MATCHREC_P2_PARTNER ; $03 wPlayer2Partner
+def NUM_MATCHRECS equ const_value
+
+; --- Training stat (LevelUpPlayer's d; CHARREC_TRAIN_LEVELS + n) ---
+	const_def
+	const TRAINSTAT_SPIN    ; $00
+	const TRAINSTAT_POWER   ; $01
+	const TRAINSTAT_CONTROL ; $02
+	const TRAINSTAT_SPEED   ; $03
+def NUM_TRAINSTATS equ const_value
+def TRAINSTAT_NONE equ $ff ; the level alone goes up
+
+; --- Created-character record (wCreatedCharRecords: main then partner of each
+; save slot, filled by BuildCreatedCharRecords from the story records) ---
+	rsreset
+def CREATEDCHAR_CHAR    rb   ; $00 CHAR_* id, $ff for an empty slot
+def CREATEDCHAR_PALETTE rb   ; $01
+def CREATEDCHAR_LEVEL   rb   ; $02
+def CREATEDCHAR_SPIN    rb   ; $03 the training levels, TRAINSTAT_* order
+def CREATEDCHAR_POWER   rb   ; $04
+def CREATEDCHAR_CONTROL rb   ; $05
+def CREATEDCHAR_SPEED   rb   ; $06
+def CREATEDCHAR_NAME    rb CHARREC_CHAR - CHARREC_NAME ; $07
+	rb_skip $20 - _RS                ; $12
+def CREATED_CHAR_RECORD_SIZE equ _RS
+	ASSERT CREATED_CHAR_RECORD_SIZE == $20
+
+; --- Save-slot summary (wSaveSlotSummaries: one per story file, filled by
+; BuildSaveSlotSummaries for the main-menu, saved-data and erase captions) ---
+	rsreset
+def SLOTSUM_CHAR    rb   ; $00 CHAR_* id, CHAR_EMPTY_SLOT for an empty file
+def SLOTSUM_PALETTE rb   ; $01
+def SLOTSUM_LEVEL   rb   ; $02
+def SLOTSUM_NAME    rb CHARREC_CHAR - CHARREC_NAME ; $03
+def SLOTSUM_MINUTES rb   ; $0e the saved play time
+def SLOTSUM_HOURS   rb   ; $0f
+def SLOTSUM_SIZE equ _RS
+	ASSERT SLOTSUM_SIZE == $10
 
 ; --- Character ids (character record byte +$0b, wMatchPlayerChar/OpponentChar) ---
 ; The 32-entry roster, in the order every character-indexed table takes:
@@ -158,7 +223,7 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 	const CHAR_DRILL_STROKE_PRACTICE_3   ; $48
 
 ; --- Character-id sentinels (values outside the roster) ---
-; InitCa00RecordFromCharId branches on the id before using it as a roster
+; InitMatchRecordFromCharId branches on the id before using it as a roster
 ; index: $ff clears the slot and stamps $ff at record +$0b, and any id with
 ; bit 7 set names a story character record instead -- bit 0 selects $c900
 ; (main) or $c940 (partner). Ids $20 and up are remapped into 4-31 by
@@ -169,3 +234,4 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 def CHAR_NONE          equ $ff ; empty court slot
 def CHAR_STORY_MAIN    equ $80 ; the story slot's own character ($c900 record)
 def CHAR_STORY_PARTNER equ $81 ; its doubles partner ($c940 record)
+def CHAR_EMPTY_SLOT    equ $3f ; an empty story file's character, shown with palette $03; DecompressCharMugshot adds wCurrentStorySlot to it

@@ -146,7 +146,7 @@ WriteBracketEntrantName:
 	push hl ; $78a6
 	or a ; $78a7
 	jr z, .player ; $78a8
-	ld hl, $004b ; $78aa
+	ld hl, Text_NameKevin ; $78aa
 	dec a ; $78ad
 	add_hl_a ; $78ae
 	push hl ; $78b3
@@ -236,7 +236,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
 	ld a, [wDataScreenPage] ; $7963
-	ld hl, BracketPlayerRowTable0 ; $7966
+	ld hl, BracketSinglesMarkerAttrPtrs ; $7966
 	add a ; $7969
 	add_hl_a ; $796a
 	ld a, [hl+] ; $796f
@@ -254,7 +254,7 @@ HighlightBracketPlayerRow:
 	ret ; $7984
 .doubles:
 	ld a, [wDataScreenPage] ; $7985
-	ld hl, BracketPlayerRowTable1 ; $7988
+	ld hl, BracketDoublesRowAttrPtrs ; $7988
 	add a ; $798b
 	add_hl_a ; $798c
 	ld a, [hl+] ; $7991
@@ -264,7 +264,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
 	ld a, [wDataScreenPage] ; $799d
-	ld hl, BracketPlayerRowTable2 ; $79a0
+	ld hl, BracketDoublesMarkerAttrPtrs ; $79a0
 	add a ; $79a3
 	add_hl_a ; $79a4
 	ld a, [hl+] ; $79a9
@@ -281,19 +281,19 @@ HighlightBracketPlayerRowTable:
 	dw wShadowAttrmap + 10 * TILEMAP_WIDTH + 9 ; record 2
 	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 3
 	dw wShadowAttrmap + 14 * TILEMAP_WIDTH + 9 ; record 4
-BracketPlayerRowTable0:
+BracketSinglesMarkerAttrPtrs:
 	; $79c0, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 5 ; record 2
 	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 3
 	dw wShadowAttrmap + 15 * TILEMAP_WIDTH + 5 ; record 4
-BracketPlayerRowTable1:
+BracketDoublesRowAttrPtrs:
 	; $79ca, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; record 1
 	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 2
-BracketPlayerRowTable2:
+BracketDoublesMarkerAttrPtrs:
 	; $79d0, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
@@ -457,7 +457,7 @@ BuildMarioCastExhibScreen:
 ScrollMarioCastChartCursorFull:
 	ld a, [wMenuInputPressed] ; $7b4f
 	bit PADB_LEFT, a ; $7b52
-	jr z, .checkMenuCursorX ; $7b54
+	jr z, .checkRight ; $7b54
 	ld a, [wMenuCursorX] ; $7b56
 	or a ; $7b59
 	jr z, .done ; $7b5a
@@ -467,8 +467,8 @@ ScrollMarioCastChartCursorFull:
 	call RedrawMarioCastChartWindow ; $7b62
 	call FlushMarioCastChartWindowToVram ; $7b65
 	jr .done ; $7b68
-.checkMenuCursorX:
-	bit 4, a ; $7b6a
+.checkRight:
+	bit PADB_RIGHT, a ; $7b6a
 	jr z, .checkUp ; $7b6c
 	ld a, [wMenuCursorX] ; $7b6e
 	cp $02 ; $7b71
@@ -480,7 +480,7 @@ ScrollMarioCastChartCursorFull:
 	call FlushMarioCastChartWindowToVram ; $7b7e
 	jr .done ; $7b81
 .checkUp:
-	bit 6, a ; $7b83
+	bit PADB_UP, a ; $7b83
 	jr z, .checkDown ; $7b85
 	ld a, [wMenuCursorY] ; $7b87
 	or a ; $7b8a
@@ -492,7 +492,7 @@ ScrollMarioCastChartCursorFull:
 	call FlushMarioCastChartWindowToVram ; $7b96
 	jr .done ; $7b99
 .checkDown:
-	bit 7, a ; $7b9b
+	bit PADB_DOWN, a ; $7b9b
 	jr z, .done ; $7b9d
 	ld a, [wMenuCursorY] ; $7b9f
 	cp $05 ; $7ba2
@@ -508,7 +508,7 @@ ScrollMarioCastChartCursorFull:
 ScrollMarioCastChartCursorSmall:
 	ld a, [wMenuInputPressed] ; $7bb5
 	bit PADB_UP, a ; $7bb8
-	jr z, .checkMenuCursorY ; $7bba
+	jr z, .checkDown ; $7bba
 	ld a, [wMenuCursorY] ; $7bbc
 	or a ; $7bbf
 	jr z, .done ; $7bc0
@@ -518,8 +518,8 @@ ScrollMarioCastChartCursorSmall:
 	call RedrawMarioCastChartWindow ; $7bc8
 	call FlushMarioCastChartWindowToVram ; $7bcb
 	jr .done ; $7bce
-.checkMenuCursorY:
-	bit 7, a ; $7bd0
+.checkDown:
+	bit PADB_DOWN, a ; $7bd0
 	jr z, .done ; $7bd2
 	ld a, [wMenuCursorY] ; $7bd4
 	cp $01 ; $7bd7
@@ -655,16 +655,16 @@ BuildMarioCastChartColumnList:
 	jr nz, .loop ; $7d00
 	ret ; $7d02
 MarioCastChartColumnListTable:
-	; $7d03, 18 bytes (records:2)
-	dw $01c0 ; record 0
+	; $7d03, 18 bytes (save_flag_ids)
+	dw SAVEFLAG_UNLOCKED_SAMMI ; record 0
 	dw $ffff ; record 1
-	dw $01e0 ; record 2
+	dw SAVEFLAG_UNLOCKED_ELDEN ; record 2
 	dw $ffff ; record 3
-	dw $0160 ; record 4
+	dw SAVEFLAG_UNLOCKED_CURT ; record 4
 	dw $ffff ; record 5
-	dw $01a0 ; record 6
-	dw $0140 ; record 7
-	dw $0180 ; record 8
+	dw SAVEFLAG_UNLOCKED_SEAN ; record 6
+	dw SAVEFLAG_UNLOCKED_FAY ; record 7
+	dw SAVEFLAG_UNLOCKED_MARK ; record 8
 MarioCastChartColumnTable:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00

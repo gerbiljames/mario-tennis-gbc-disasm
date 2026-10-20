@@ -320,7 +320,7 @@ PamSpriteFrame54:
 PamSpriteFrame55:
 	INCBIN "data/sprites/PamSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-PamSpriteFramesUnused:
+Unused_57_PamSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/PamSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/PamSpriteFrame01.bin" ; $7740, 240 bytes

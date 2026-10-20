@@ -320,7 +320,7 @@ BethSpriteFrame54:
 BethSpriteFrame55:
 	INCBIN "data/sprites/BethSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-BethSpriteFramesUnused:
+Unused_58_BethSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/BethSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/BethSpriteFrame01.bin" ; $7740, 240 bytes

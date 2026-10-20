@@ -56,7 +56,7 @@ GetVictoryScore:
 	ld a, [wVictoryScoreTableAlt] ; $7dc8
 	or a ; $7dcb
 	jr z, .gotTable ; $7dcc
-	ld hl, VictoryScoreTable1 ; $7dce
+	ld hl, VictoryScoreTableSaveQuit ; $7dce
 .gotTable:
 	ld a, b ; $7dd1
 	add_hl_a ; $7dd2
@@ -65,7 +65,7 @@ GetVictoryScore:
 VictoryScoreTable:
 	; $7dd9, 4 bytes (bytes:4)
 	db $03, $05, $07, $09 ; 0x00
-VictoryScoreTable1:
+VictoryScoreTableSaveQuit:
 	; $7ddd, 4 bytes (bytes:4)
 	db $02, $04, $06, $08 ; 0x00
 GetMarioCastIndex:

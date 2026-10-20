@@ -67,7 +67,7 @@ Unused_08_AdvanceCharStatePhase:
 	inc [hl] ; $6d25
 	ret ; $6d26
 CharPointReactionPhase:
-	call ReloadCharFrameGfx ; $6d27
+	call ReloadCharPalette ; $6d27
 	ld a, [wCharPointResult] ; $6d2a
 	add a ; $6d2d
 	jr z, .advance ; $6d2e
@@ -117,7 +117,7 @@ StartCharSwing:
 	ld a, [wCharReachX + 1] ; $6d7a
 	ld d, a ; $6d7d
 	ld a, [wCharBallReachFlags] ; $6d7e
-	bit 4, a ; $6d81
+	bit BALLREACHB_NEAR_NET, a ; $6d81
 	ld bc, $fff0 ; $6d83
 	jr nz, .absOffset ; $6d86
 	ld bc, $0000 ; $6d88
@@ -292,16 +292,16 @@ UpdateCharBallGeometry:
 	ld de, $fd60 ; $6ea7
 	add hl, de ; $6eaa
 	jr c, .storeFlags ; $6eab
-	set 4, a ; $6ead
+	set BALLREACHB_NEAR_NET, a ; $6ead
 .storeFlags:
 	ld [wCharBallReachFlags], a ; $6eaf
 	call CheckBallInSwingRange ; $6eb2
 	ld hl, wCharBallReachFlags ; $6eb5
-	bit 0, [hl] ; $6eb8
+	bit BALLREACHB_SWING_RANGE, [hl] ; $6eb8
 	ret z ; $6eba
 	call CheckBallContactWindow ; $6ebb
 	ld hl, wCharBallReachFlags ; $6ebe
-	bit 1, [hl] ; $6ec1
+	bit BALLREACHB_CONTACT, [hl] ; $6ec1
 	ret z ; $6ec3
 	ret ; $6ec4
 CheckCharBallContact:
@@ -350,7 +350,7 @@ CheckCharBallContact:
 	sub_hl_de ; $6f22
 	ret nc ; $6f28
 	ld hl, wCharBallReachFlags ; $6f29
-	set 2, [hl] ; $6f2c
+	set BALLREACHB_BODY_HIT, [hl] ; $6f2c
 	ld a, $01 ; $6f2e
 	ld [wBallTouchCharFlag], a ; $6f30
 	ld a, [wCharIndex] ; $6f33

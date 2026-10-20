@@ -65,7 +65,7 @@ SetupCharacterSprite:
 	farcall SetupCharSpriteFromObjectDef ; $5a71
 	pop de ; $5a74
 	ld a, e ; $5a75
-	ld [wCharGfxBank], a ; $5a76
+	ld [wCharPaletteId], a ; $5a76
 	ld a, [wCharIndex] ; $5a79
 	add $04 ; $5a7c
 	ld [wCharSpriteAttr], a ; $5a7e
@@ -83,21 +83,21 @@ SetupCharacterSprite:
 	ld a, e ; $5aa0
 	ld [hl+], a ; $5aa1
 	ld [hl], d ; $5aa2
-	farcall ReloadCharFrameGfx ; $5aa3
+	farcall ReloadCharPalette ; $5aa3
 	ret ; $5aa6
 CharFrameGfxDest_07:
 	; $5aa7, 8 bytes (records:2)
-	dw $a000 ; record 0
-	dw $a100 ; record 1
-	dw $a200 ; record 2
-	dw $a300 ; record 3
+	dw vTiles0 + VRAM_BANK1 ; record 0
+	dw vTiles0 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles0 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles0 tile $30 + VRAM_BANK1 ; record 3
 SetupCharacterSprite_CharTileBaseTable:
 	INCLUDE "data/engine/match/SetupCharacterSprite_CharTileBaseTable.asm" ; $5aaf, 4 bytes (bytes:4)
 ; Copies one character's attribute record into the per-character struct: the
 ; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position
 ; strategy, the two reaction delays, ball tracking, aim-away chance and serve
-; style. OverrideCharStatsForDebug rewrites the same six.
+; style. OverrideCharStatsForDebug rewrites those six and wCharAimJitterScale.
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a ; $5ab6
@@ -191,16 +191,16 @@ LoadCharacterAttributes:
 	add hl, de ; $5b44
 	add [hl] ; $5b45
 	add a ; $5b46
-	jr nc, .clampSpin ; $5b47
+	jr nc, .clampDepthSpeed ; $5b47
 	xor a ; $5b49
-	jr .readPlacementTable ; $5b4a
-.clampSpin:
+	jr .readDepthSpeed ; $5b4a
+.clampDepthSpeed:
 	rra ; $5b4c
 	cp $0a ; $5b4d
-	jr c, .readPlacementTable ; $5b4f
+	jr c, .readDepthSpeed ; $5b4f
 	ld a, $0a ; $5b51
 	dec a ; $5b53
-.readPlacementTable:
+.readDepthSpeed:
 	add a ; $5b54
 	ld_hl_indexed CharStatTable_07_0 ; $5b55
 	ld a, [hl+] ; $5b5c

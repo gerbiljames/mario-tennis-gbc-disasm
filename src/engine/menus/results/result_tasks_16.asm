@@ -34,10 +34,10 @@ Unused_16_DrawCourtDiagramMarkers:
 	ld [de], a ; $4401
 	inc hl ; $4402
 	ld a, [hl] ; $4403
-	cp $de ; $4404
+	cp TX_DAKUTEN ; $4404
 Unused_16_CourtDiagramBaseTask:
 	jr z, .diacritic ; $4406
-	cp $df ; $4408
+	cp TX_HANDAKUTEN ; $4408
 	jr nz, .nextCell ; $440a
 .diacritic:
 	push hl ; $440c
@@ -123,11 +123,11 @@ RunMatchWinLoseScreen:
 	jr z, .versusMatch ; $448e
 	cp GAMEMODE_LINK_MATCH ; $4490
 	jr z, .versusMatch ; $4492
-	jr .checkMatchWinLoseFlag ; $4494
+	jr .storyMatch ; $4494
 .versusMatch:
 	ld a, $01 ; $4496
 	jr .store ; $4498
-.checkMatchWinLoseFlag:
+.storyMatch:
 	xor a ; $449a
 .store:
 	ld [wResultScreenWon], a ; $449b
@@ -164,7 +164,7 @@ RunMatchWinLoseScreen:
 	frame_task AdvanceResultScreenTimer ; $44f1
 .loop:
 	call AdvanceFrame ; $44f9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $44fc
+	ld a, [wCurrentMatchIndex] ; $44fc
 	push de ; $44ff
 	push af ; $4500
 	ld a, a ; $4501

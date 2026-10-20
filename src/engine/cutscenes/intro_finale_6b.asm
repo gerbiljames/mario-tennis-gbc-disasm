@@ -129,8 +129,8 @@ IntroCutsceneState18Exit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank WRAM_SCREEN ; $4bf3
-	ld a, $00 ; $4bf9
-	ldh [hShowDebugConsole], a ; $4bfb
+	ld a, BGVIEW_NORMAL ; $4bf9
+	ldh [hBGViewMode], a ; $4bfb
 	jp DispatchCutsceneStateInit.nextState ; $4bfd
 Palettes_6b_03:
 	INCLUDE "data/engine/cutscenes/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
@@ -164,9 +164,9 @@ IntroCutsceneState19Exit_6b:
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.nextState ; $4c76
 	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
-UpdateCutsceneScrollX:
+UpdateIntroScrollY:
 	ld a, [wCutsceneStepTimer] ; $4c9e
-	ld hl, CutsceneScrollXTable ; $4ca1
+	ld hl, IntroScrollYDeltaTable ; $4ca1
 	add_hl_a ; $4ca4
 	ld e, [hl] ; $4ca9
 	ld hl, wIntroCutsceneScrollY ; $4caa
@@ -180,8 +180,8 @@ UpdateCutsceneScrollX:
 	ld a, l ; $4cbc
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
-CutsceneScrollXTable:
-	INCLUDE "data/engine/cutscenes/CutsceneScrollXTable.asm" ; $4cc1, 160 bytes (bytes:16)
+IntroScrollYDeltaTable:
+	INCLUDE "data/engine/cutscenes/IntroScrollYDeltaTable.asm" ; $4cc1, 160 bytes (bytes:16)
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
@@ -207,36 +207,36 @@ QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e33
 	sub $20 ; $4e36
 	add a ; $4e38
-	ld hl, CutsceneAnimatedSprites2 ; $4e39
+	ld hl, CutsceneSpritePath2 ; $4e39
 	add_hl_a ; $4e3c
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
-	call ApplyCutsceneScrollToSpriteX ; $4e44
+	call ApplyIntroScrollToSpriteY ; $4e44
 	sprite_tile_attr $40, OAM_BANK1 | 1 ; $4e47
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate0 ; $4e4b
 	call QueueSpriteTemplate ; $4e4e
 	ld a, [wCutsceneStepTimer] ; $4e51
 	sub $20 ; $4e54
 	add a ; $4e56
-	ld hl, CutsceneAnimatedSprites1 ; $4e57
+	ld hl, CutsceneSpritePath1 ; $4e57
 	add_hl_a ; $4e5a
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
-	call ApplyCutsceneScrollToSpriteX ; $4e62
+	call ApplyIntroScrollToSpriteY ; $4e62
 	sprite_tile_attr $44, OAM_BANK1 | 1 ; $4e65
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate1 ; $4e69
 	call QueueSpriteTemplate ; $4e6c
 	ld a, [wCutsceneStepTimer] ; $4e6f
 	sub $20 ; $4e72
 	add a ; $4e74
-	ld hl, CutsceneAnimatedSprites0 ; $4e75
+	ld hl, CutsceneSpritePath0 ; $4e75
 	add_hl_a ; $4e78
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f
-	call ApplyCutsceneScrollToSpriteX ; $4e80
+	call ApplyIntroScrollToSpriteY ; $4e80
 	sprite_tile_attr $48, OAM_BANK1 | 1 ; $4e83
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate2 ; $4e87
 	call QueueSpriteTemplate ; $4e8a
@@ -255,13 +255,13 @@ QueueCutsceneAnimatedSprites_SpriteTemplate2:
 	; $4ea0, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-CutsceneAnimatedSprites0:
-	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites0.bin" ; $4ea5, 240 bytes
-CutsceneAnimatedSprites1:
-	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites1.bin" ; $4f95, 216 bytes
-CutsceneAnimatedSprites2:
-	INCBIN "data/engine/cutscenes/CutsceneAnimatedSprites2.bin" ; $506d, 288 bytes
-ApplyCutsceneScrollToSpriteX:
+CutsceneSpritePath0:
+	INCLUDE "data/engine/cutscenes/CutsceneSpritePath0.asm" ; $4ea5, 240 bytes (words:8)
+CutsceneSpritePath1:
+	INCLUDE "data/engine/cutscenes/CutsceneSpritePath1.asm" ; $4f95, 216 bytes (words:8)
+CutsceneSpritePath2:
+	INCLUDE "data/engine/cutscenes/CutsceneSpritePath2.asm" ; $506d, 288 bytes (words:8)
+ApplyIntroScrollToSpriteY:
 	push bc ; $518d
 	push hl ; $518e
 	ld c, d ; $518f
@@ -522,8 +522,8 @@ UpdateCutsceneScroll:
 	add $03 ; $53de
 	ld [wCutsceneScrollX], a ; $53e0
 	ldh [hScrollX], a ; $53e3
-	ld a, [wIntroCutsceneSubState] ; $53e5
+	ld a, [wCutsceneReverseScrollX] ; $53e5
 	sub $03 ; $53e8
-	ld [wIntroCutsceneSubState], a ; $53ea
+	ld [wCutsceneReverseScrollX], a ; $53ea
 	ld [wRasterScrollX], a ; $53ed
 	ret ; $53f0

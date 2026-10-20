@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from banksrc import bank_text, holders  # noqa: E402
+from banksrc import bank_text, holders, read_sym  # noqa: E402
 from reach import MNEMONICS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -28,11 +28,7 @@ ROM_SIZE = 0x200000
 def labels():
     rom = {"global": 0, "local": 0}
     ram = {"global": 0, "local": 0}
-    for line in (ROOT / "build" / "mariotennis.sym").read_text().splitlines():
-        m = re.match(r"([0-9a-f]{2}):([0-9a-f]{4}) (\S+)", line)
-        if not m:
-            continue
-        addr, name = int(m.group(2), 16), m.group(3)
+    for _bank, addr, name in read_sym():
         kind = "local" if "." in name else "global"
         (rom if addr < 0x8000 else ram)[kind] += 1
     return rom, ram

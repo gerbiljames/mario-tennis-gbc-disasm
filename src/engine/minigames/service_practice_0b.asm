@@ -1,26 +1,28 @@
-Unused_0b_StoreMatchAbortFlag_2:
+Unused_0b_DrillPointWon_2:
 	ld a, MATCHABORT_POINT ; $4c03
 	ld [wMatchAbortFlag], a ; $4c05
-	ld a, $01 ; $4c08
+	ld a, WINLOSE_WIN ; $4c08
 	ret ; $4c0a
-.storeMatchAbortFlag:
+DrillPointLost_2:
 	ld a, MATCHABORT_POINT ; $4c0b
 	ld [wMatchAbortFlag], a ; $4c0d
-	ld a, $ff ; $4c10
+	ld a, WINLOSE_LOSE ; $4c10
 	ret ; $4c12
 ServiceMatch3Drill:
 	; $4c13, 16 bytes
 	drill_def CHAR_DRILL_SERVICE_MATCH_3, COURT_TRAINING_MATCH, 2, GAMEMODE_TRAINING_DRILL, MINIGAME_SERVICE_MATCH_3, BGM_DRILL_MATCH, CHAR_STORY_MAIN, ServiceMatch3Hooks, MatchDrillPointTable, $0000
 ServiceMatch3Hooks:
 	; $4c23, 16 bytes (mode_hooks)
-	dw ServiceMatch3Hook_PerFrame ; record 0
-	dw ServiceMatch3Hook_PointStart ; record 1
-	dw ServiceMatch3Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw ServiceMatch3Hook_BallHit ; record 4
-	dw ServiceMatch3Hook_Bounce ; record 5
-	dw ServiceMatch3Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw ServiceMatch3Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw ServiceMatch3Hook_PointStart ; MODEHOOK_POINT_START
+	dw ServiceMatch3Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw ServiceMatch3Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw ServiceMatch3Hook_Bounce ; MODEHOOK_BOUNCE
+	dw ServiceMatch3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 ServiceMatch3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4c33
 	ret ; $4c36
@@ -156,7 +158,7 @@ ServiceMatch3JudgePoint:
 	add_hl_a ; $4d5e
 	ld a, [hl] ; $4d63
 	ld a, a ; $4d64
-	ld b, $06 ; $4d65
+	ld b, DRILLWORDING_SERVICE ; $4d65
 	call QueueDrillResultMessage ; $4d67
 	ld a, [wPointOutcome] ; $4d6a
 	ld hl, OddRallyVerdicts ; $4d6d
@@ -188,7 +190,7 @@ ServiceMatch3Cases1:
 	add_hl_a ; $4d98
 	ld a, [hl] ; $4d9d
 	ld a, a ; $4d9e
-	ld b, $06 ; $4d9f
+	ld b, DRILLWORDING_SERVICE ; $4d9f
 	call QueueDrillResultMessage ; $4da1
 	ld a, [wPointOutcome] ; $4da4
 	ld hl, EvenRallyVerdicts ; $4da7
@@ -204,9 +206,9 @@ ServiceMatch3Cases2:
 	ld a, $00 ; $4dc0
 	ret z ; $4dc2
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4dc3
-	ld b, $06 ; $4dc5
+	ld b, DRILLWORDING_SERVICE ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
-	jr Unused_0b_StoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
+	jr DrillPointLost_3 ; $4dca
 .unreachable:
 	xor a ; $4dcc
 	ret ; $4dcd
@@ -216,15 +218,15 @@ ServiceMatch3Cases2:
 .ignoreRallyTick:
 	xor a ; $4dd0
 	ret ; $4dd1
-Unused_0b_StoreMatchAbortFlag_3:
+Unused_0b_DrillPointWon_3:
 	ld a, MATCHABORT_POINT ; $4dd2
 	ld [wMatchAbortFlag], a ; $4dd4
-	ld a, $01 ; $4dd7
+	ld a, WINLOSE_WIN ; $4dd7
 	ret ; $4dd9
-.storeMatchAbortFlag:
+DrillPointLost_3:
 	ld a, MATCHABORT_POINT ; $4dda
 	ld [wMatchAbortFlag], a ; $4ddc
-	ld a, $ff ; $4ddf
+	ld a, WINLOSE_LOSE ; $4ddf
 	ret ; $4de1
 ServicePractice1Drill:
 	; $4de2, 16 bytes
@@ -235,14 +237,16 @@ ServicePractice1DrillInit:
 	ret ; $4df7
 ServicePractice1Hooks:
 	; $4df8, 16 bytes (mode_hooks)
-	dw ServicePractice1Hook_PerFrame ; record 0
-	dw ServicePractice1Hook_PointStart ; record 1
-	dw ServicePractice1Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw ServicePractice1Hook_BallHit ; record 4
-	dw ServicePractice1Hook_Bounce ; record 5
-	dw ServicePractice1Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw ServicePractice1Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw ServicePractice1Hook_PointStart ; MODEHOOK_POINT_START
+	dw ServicePractice1Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw ServicePractice1Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw ServicePractice1Hook_Bounce ; MODEHOOK_BOUNCE
+	dw ServicePractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 ServicePractice1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $4e08
 	ret ; $4e0b
@@ -283,29 +287,29 @@ ServicePractice1EvaluateResult:
 	jr nz, .checkCharacter1DoubleFaults ; $4e49
 	ld a, LESSON_SERVE_NO_POINTS ; $4e4b
 	ld [wDrillLessonResult], a ; $4e4d
-	jr .notFound ; $4e50
+	jr .lessonFailed ; $4e50
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4e52
 	or a ; $4e55
 	jr z, .noDoubleFaults ; $4e56
 	ld a, LESSON_SERVE_DOUBLE_FAULT ; $4e58
 	ld [wDrillLessonResult], a ; $4e5a
-	jr .notFound ; $4e5d
+	jr .lessonFailed ; $4e5d
 .noDoubleFaults:
 	ld a, b ; $4e5f
 	or a ; $4e60
 	jr z, .allPassed ; $4e61
 	ld a, LESSON_SERVE_MISSED_TARGET ; $4e63
 	ld [wDrillLessonResult], a ; $4e65
-	jr .notFound ; $4e68
-.notFound:
-	ld a, $ff ; $4e6a
+	jr .lessonFailed ; $4e68
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $4e6a
 	ret ; $4e6c
 .allPassed:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $4e6d
 	ld [wDrillLessonResult], a ; $4e6e
-	ld a, $01 ; $4e71
+	ld a, WINLOSE_WIN ; $4e71
 	ret ; $4e73
 ServicePractice1Hook_RallyTick:
 	ret ; $4e74
@@ -369,7 +373,7 @@ ServicePractice1HandlePointEnd:
 	call PlayDrillPointEndSequence ; $4f15
 	ret ; $4f18
 Unused_0b_StoreDrillServeTargetResult:
-	call CheckDrillTargetZoneMissed ; $4f19
+	call CheckDrillTargetZoneHit ; $4f19
 	add a ; $4f1c
 	dec a ; $4f1d
 	ld [wDrillServeTargetResult], a ; $4f1e
@@ -384,30 +388,30 @@ ServicePractice1QueueOutcomeMessage:
 	cp POINTOUTCOME_DOUBLE_FAULT ; $4f32
 	jr z, .doubleFault ; $4f34
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4f36
-	ld b, $00 ; $4f38
+	ld b, DRILLWORDING_SAME ; $4f38
 	call QueueDrillResultMessage ; $4f3a
-	call CheckDrillTargetZoneMissed ; $4f3d
+	call CheckDrillTargetZoneHit ; $4f3d
 	or a ; $4f40
 	jr z, .missed ; $4f41
 	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4f43
-	ld b, $00 ; $4f45
+	ld b, DRILLWORDING_SAME ; $4f45
 	call QueueDrillResultMessage ; $4f47
 	jr .targetHit ; $4f4a
 .doubleFault:
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4f4c
-	ld b, $00 ; $4f4e
+	ld b, DRILLWORDING_SAME ; $4f4e
 	call QueueDrillResultMessage ; $4f50
-	ld a, $ff ; $4f53
+	ld a, WINLOSE_LOSE ; $4f53
 	ret ; $4f55
 .unreachable:
 	jr .missed ; $4f56
 .targetHit:
 	ld hl, wDrillCounters + DRILLCTR_SERVES_SCORED ; $4f58
 	inc [hl] ; $4f5b
-	ld a, $01 ; $4f5c
+	ld a, WINLOSE_WIN ; $4f5c
 	ret ; $4f5e
 .missed:
-	ld a, $ff ; $4f5f
+	ld a, WINLOSE_LOSE ; $4f5f
 	ret ; $4f61
 .hide:
 	ld a, DRILLMSG_HIDE ; $4f62
@@ -423,14 +427,16 @@ ServicePractice2DrillInit:
 	ret ; $4f7e
 ServicePractice2Hooks:
 	; $4f7f, 16 bytes (mode_hooks)
-	dw ServicePractice2Hook_PerFrame ; record 0
-	dw ServicePractice2Hook_PointStart ; record 1
-	dw ServicePractice2Hook_PointEnd ; record 2
-	dw ServicePractice2Hook_MinigameStart ; record 3
-	dw ServicePractice2Hook_BallHit ; record 4
-	dw ServicePractice2Hook_Bounce ; record 5
-	dw ServicePractice2Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw ServicePractice2Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw ServicePractice2Hook_PointStart ; MODEHOOK_POINT_START
+	dw ServicePractice2Hook_PointEnd ; MODEHOOK_POINT_END
+	dw ServicePractice2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw ServicePractice2Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw ServicePractice2Hook_Bounce ; MODEHOOK_BOUNCE
+	dw ServicePractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 ServicePractice2Hook_MinigameStart:
 	ld a, $02 ; $4f8f
 	ld [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT], a ; $4f91
@@ -472,21 +478,21 @@ ServicePractice2EvaluateResult:
 	jr nz, .checkCharacter1DoubleFaults ; $4fd3
 	ld a, LESSON_SERVE_NO_POINTS ; $4fd5
 	ld [wDrillLessonResult], a ; $4fd7
-	jr .notFound ; $4fda
+	jr .lessonFailed ; $4fda
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4fdc
 	or a ; $4fdf
-	jr z, .countDrillResultBitsSet ; $4fe0
+	jr z, .countTargetZoneMisses ; $4fe0
 	ld a, LESSON_SERVE_DOUBLE_FAULT ; $4fe2
 	ld [wDrillLessonResult], a ; $4fe4
-	jr .notFound ; $4fe7
-.countDrillResultBitsSet:
-	call CountDrillResultBitsSet ; $4fe9
+	jr .lessonFailed ; $4fe7
+.countTargetZoneMisses:
+	call CountDrillTargetZoneMisses ; $4fe9
 	or a ; $4fec
 	jr z, .checkCounter2 ; $4fed
 	ld a, LESSON_SERVE_MISSED_TARGET ; $4fef
 	ld [wDrillLessonResult], a ; $4ff1
-	jr .notFound ; $4ff4
+	jr .lessonFailed ; $4ff4
 .checkCounter2:
 	ld a, [wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT] ; $4ff6
 	or a ; $4ff9
@@ -496,7 +502,7 @@ ServicePractice2EvaluateResult:
 	jr z, .byHandedness ; $5000
 	ld a, LESSON_SPIN_NO_SPIN ; $5002
 	ld [wDrillLessonResult], a ; $5004
-	jr .notFound ; $5007
+	jr .lessonFailed ; $5007
 .byHandedness:
 	ld b, LESSON_SPIN_RIGHT_ONLY ; $5009
 	ld a, [wStoryMainLeftHanded] ; $500b
@@ -504,7 +510,7 @@ ServicePractice2EvaluateResult:
 	inc a ; $500f
 	add b ; $5010
 	ld [wDrillLessonResult], a ; $5011
-	jr .notFound ; $5014
+	jr .lessonFailed ; $5014
 .checkCounter1:
 	ld a, [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT] ; $5016
 	or a ; $5019
@@ -513,15 +519,15 @@ ServicePractice2EvaluateResult:
 	ld a, [wStoryMainLeftHanded] ; $501e
 	add b ; $5021
 	ld [wDrillLessonResult], a ; $5022
-	jr .notFound ; $5025
-.notFound:
-	ld a, $ff ; $5027
+	jr .lessonFailed ; $5025
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $5027
 	ret ; $5029
 .allPassed:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $502a
 	ld [wDrillLessonResult], a ; $502b
-	ld a, $01 ; $502e
+	ld a, WINLOSE_WIN ; $502e
 	ret ; $5030
 ServicePractice2Hook_RallyTick:
 	ret ; $5031
@@ -532,5 +538,5 @@ ServicePractice2Hook_Bounce:
 	ld a, [wRallyLength] ; $5037
 	cp $01 ; $503a
 	ret nz ; $503c
-	call RecordDrillTargetZoneHitIfInPlay ; $503d
+	call RecordDrillTargetZoneMissIfInPlay ; $503d
 	ret ; $5040

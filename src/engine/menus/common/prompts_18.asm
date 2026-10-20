@@ -17,11 +17,7 @@ Unused_18_InitPlayerRecordForCharacter:
 .storeRecord:
 	pop af ; $4652
 	add a ; $4653
-	add $c0 ; $4654
-	ld l, a ; $4656
-	adc $c7 ; $4657
-	sub l ; $4659
-	ld h, a ; $465a
+	ld_hl_indexed wNewGameRosterFields ; $4654
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
@@ -44,43 +40,43 @@ Unused_18_InitPlayerRecordForCharacter:
 	add hl, bc ; $4677
 	ld [hl], a ; $4678
 	ret ; $4679
-ConfirmScreenGfx0:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx0.bin" ; $467a, 2233 bytes
-ConfirmScreenPalette0:
-	INCLUDE "data/engine/menus/common/ConfirmScreenPalette0.asm" ; $4f33, 64 bytes (palettes)
-ConfirmScreenGfx1:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx1.bin" ; $4f73, 347 bytes
-ConfirmScreenGfx2:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx2.bin" ; $50ce, 138 bytes
-ThreeOptionLabelsData0:
-	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData0.asm" ; $5158, 16 bytes (bytes:16)
-ThreeOptionLabelsData1:
-	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData1.asm" ; $5168, 16 bytes (bytes:16)
-ThreeOptionLabelsData2:
-	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData2.asm" ; $5178, 16 bytes (bytes:16)
-ThreeOptionLabelsData3:
-	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData3.asm" ; $5188, 16 bytes (bytes:16)
-ThreeOptionLabelsData4:
-	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData4.asm" ; $5198, 16 bytes (bytes:16)
-ThreeOptionLabelsData5:
-	INCLUDE "data/engine/menus/common/ThreeOptionLabelsData5.asm" ; $51a8, 16 bytes (bytes:16)
-YesNoLabels0:
+ConfirmScreenBgTiles:
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenBgTiles.bin" ; $467a, 2233 bytes
+ConfirmScreenBgPalettes:
+	INCLUDE "data/engine/menus/common/ConfirmScreenBgPalettes.asm" ; $4f33, 64 bytes (palettes)
+ConfirmScreenTilemap:
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenTilemap.bin" ; $4f73, 347 bytes
+ConfirmScreenAttrmap:
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenAttrmap.bin" ; $50ce, 138 bytes
+ThreeOptionLabelTilesTop:
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelTilesTop.asm" ; $5158, 16 bytes (bytes:16)
+ThreeOptionLabelTilesMiddle:
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelTilesMiddle.asm" ; $5168, 16 bytes (bytes:16)
+ThreeOptionLabelTilesBottom:
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelTilesBottom.asm" ; $5178, 16 bytes (bytes:16)
+ThreeOptionLabelAttrsTop:
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelAttrsTop.asm" ; $5188, 16 bytes (bytes:16)
+ThreeOptionLabelAttrsMiddle:
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelAttrsMiddle.asm" ; $5198, 16 bytes (bytes:16)
+ThreeOptionLabelAttrsBottom:
+	INCLUDE "data/engine/menus/common/ThreeOptionLabelAttrsBottom.asm" ; $51a8, 16 bytes (bytes:16)
+YesNoLabelTilesTop:
 	; $51b8, 16 bytes (bytes:16)
 	db $8b, $8b, $dd, $de, $df, $8b, $8b, $bd, $be, $bf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
-YesNoLabels1:
+YesNoLabelTilesBottom:
 	; $51c8, 16 bytes (bytes:16)
 	db $8b, $8b, $ed, $ee, $ef, $8b, $8b, $cd, $ce, $cf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
-YesNoLabels2:
+YesNoLabelAttrsTop:
 	; $51d8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
-YesNoLabels3:
+YesNoLabelAttrsBottom:
 	; $51e8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
-ConfirmScreenGfx3:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenGfx3.bin" ; $51f8, 206 bytes
-	INCLUDE "data/engine/menus/common/lz_ConfirmScreenGfx3.inc" ; DEF ConfirmScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
-ConfirmScreenPalette1:
-	INCLUDE "data/engine/menus/common/ConfirmScreenPalette1.asm" ; $52c6, 24 bytes (palettes)
+ConfirmScreenObjTiles:
+	INCBIN "data/engine/menus/common/lz_ConfirmScreenObjTiles.bin" ; $51f8, 206 bytes
+	INCLUDE "data/engine/menus/common/lz_ConfirmScreenObjTiles.inc" ; DEF ConfirmScreenObjTiles_SIZE EQU its decoded length, generated from the .bin by make
+ConfirmScreenObjPalettes:
+	INCLUDE "data/engine/menus/common/ConfirmScreenObjPalettes.asm" ; $52c6, 24 bytes (palettes)
 Unused_18_InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
@@ -89,36 +85,36 @@ Unused_18_InitConfirmScreen:
 	xor a ; $52ea
 	ld [wScorePanelBobActive], a ; $52eb
 	ld [wScorePanelBobStep], a ; $52ee
-	ld hl, ConfirmScreenGfx0 ; $52f1
+	ld hl, ConfirmScreenBgTiles ; $52f1
 	ld de, wDecompBuffer ; $52f4
 	call DecompressData ; $52f7
 	ld hl, wDecompBuffer ; $52fa
 	ld de, vTiles2 + VRAM_BANK1 ; $52fd
-	ld c, 128 ; $5300 -- 128 of ConfirmScreenGfx0's 256 tiles
+	ld c, 128 ; $5300 -- 128 of ConfirmScreenBgTiles's 256 tiles
 	call QueueVRAMCopy ; $5302
 	ld hl, wTextTileBuffer ; $5305
 	ld de, vTiles1 + VRAM_BANK1 ; $5308
 	ld c, wTextTileBuffer_SIZE / 16 ; $530b
 	call QueueVRAMCopy ; $530d
-	ld hl, ConfirmScreenPalette0 ; $5310
+	ld hl, ConfirmScreenBgPalettes ; $5310
 	ld_bg_pals de, 0, 8 ; $5313
 	call LoadPaletteShadow ; $5316
-	ld hl, ConfirmScreenGfx2 ; $5319
+	ld hl, ConfirmScreenAttrmap ; $5319
 	ld de, wStagedAttrmap ; $531c
 	call DecompressData ; $531f
-	ld hl, ConfirmScreenGfx1 ; $5322
+	ld hl, ConfirmScreenTilemap ; $5322
 	ld de, wStagedTilemap ; $5325
 	call DecompressData ; $5328
 	call Unused_18_LoadFontTiles ; $532b
 	call Unused_18_DrawConfirmScreenBox ; $532e
-	ld hl, ConfirmScreenGfx3 ; $5331
+	ld hl, ConfirmScreenObjTiles ; $5331
 	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
 	ld hl, wDecompBuffer ; $533a
 	ld de, vTiles0 tile $30 ; $533d
-	ld c, ConfirmScreenGfx3_SIZE / 16 ; $5340
+	ld c, ConfirmScreenObjTiles_SIZE / 16 ; $5340
 	call QueueVRAMCopy ; $5342
-	ld hl, ConfirmScreenPalette1 ; $5345
+	ld hl, ConfirmScreenObjPalettes ; $5345
 	ld_obj_pals de, 1, 3 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, vTiles0 tile $50 ; $534e
@@ -223,25 +219,25 @@ Unused_18_ForceFlushBgMapToVram:
 Unused_18_RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
 	and PADF_LEFT ; $5423
-	jr z, .inputLoop ; $5425
+	jr z, .checkRight ; $5425
 	ld b, $00 ; $5427
 	sound SFX_MENU_MOVE ; $5429
-.inputLoop:
+.checkRight:
 	ldh a, [hInputRisingEdge] ; $542b
 	and PADF_RIGHT ; $542d
-	jr z, .checkUp ; $542f
+	jr z, .checkConfirm ; $542f
 	ld b, $01 ; $5431
 	sound SFX_MENU_MOVE ; $5433
-.checkUp:
+.checkConfirm:
 	ldh a, [hInputRisingEdge] ; $5435
 	and PADF_A ; $5437
 	jr nz, .confirm ; $5439
 	ldh a, [hInputRisingEdge] ; $543b
 	and PADF_B ; $543d
-	jr z, .checkDown ; $543f
+	jr z, .setCursorPos ; $543f
 	ld b, $ff ; $5441
 	jr .confirm ; $5443
-.checkDown:
+.setCursorPos:
 	ld de, $128e ; $5445
 	ld a, b ; $5448
 	and a ; $5449
@@ -267,30 +263,30 @@ Unused_18_RunTwoOptionSelect:
 Unused_18_RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
 	and PADF_LEFT ; $546b
-	jr z, .inputLoop ; $546d
+	jr z, .checkRight ; $546d
 	ld b, $00 ; $546f
 	sound SFX_MENU_MOVE ; $5471
-.inputLoop:
+.checkRight:
 	ldh a, [hInputRisingEdge] ; $5473
 	and PADF_RIGHT ; $5475
-	jr z, .checkUp ; $5477
+	jr z, .checkConfirm ; $5477
 	ld b, $01 ; $5479
 	sound SFX_MENU_MOVE ; $547b
-.checkUp:
+.checkConfirm:
 	ldh a, [hInputRisingEdge] ; $547d
 	and PADF_A ; $547f
 	jr nz, .confirm ; $5481
 	ldh a, [hInputRisingEdge] ; $5483
 	and PADF_B ; $5485
-	jr z, .checkDown ; $5487
+	jr z, .setCursorPos ; $5487
 	ld b, $ff ; $5489
 	jr .confirm ; $548b
-.checkDown:
+.setCursorPos:
 	ld de, $2892 ; $548d
 	ld a, b ; $5490
 	and a ; $5491
 	jr z, .redraw ; $5492
-	ld de, TwoOptionSelectBTable ; $5494
+	ld de, $5892 ; $5494
 .redraw:
 	call Unused_18_AddBobbingOffsetXY ; $5497
 	push bc ; $549a
@@ -375,36 +371,36 @@ Unused_18_BobRamp:
 	INCLUDE "data/engine/menus/common/Unused_18_BobRamp.asm" ; $5507, 32 bytes (bytes:16)
 Unused_18_DrawThreeOptionLabels:
 	call Unused_18_DrawConfirmScreenBox ; $5527
-	ld hl, ThreeOptionLabelsData3 ; $552a
+	ld hl, ThreeOptionLabelAttrsTop ; $552a
 	ld de, wStagedAttrmap + 14 * TILEMAP_WIDTH + 1 ; $552d
 	call Unused_18_CopyBytes11 ; $5530
-	ld hl, ThreeOptionLabelsData4 ; $5533
+	ld hl, ThreeOptionLabelAttrsMiddle ; $5533
 	ld de, wStagedAttrmap + 15 * TILEMAP_WIDTH + 1 ; $5536
 	call Unused_18_CopyBytes11 ; $5539
-	ld hl, ThreeOptionLabelsData5 ; $553c
+	ld hl, ThreeOptionLabelAttrsBottom ; $553c
 	ld de, wStagedAttrmap + 16 * TILEMAP_WIDTH + 1 ; $553f
 	call Unused_18_CopyBytes11 ; $5542
-	ld hl, ThreeOptionLabelsData0 ; $5545
+	ld hl, ThreeOptionLabelTilesTop ; $5545
 	ld de, wStagedTilemap + 14 * TILEMAP_WIDTH + 1 ; $5548
 	call Unused_18_CopyBytes11 ; $554b
-	ld hl, ThreeOptionLabelsData1 ; $554e
+	ld hl, ThreeOptionLabelTilesMiddle ; $554e
 	ld de, wStagedTilemap + 15 * TILEMAP_WIDTH + 1 ; $5551
 	call Unused_18_CopyBytes11 ; $5554
-	ld hl, ThreeOptionLabelsData2 ; $5557
+	ld hl, ThreeOptionLabelTilesBottom ; $5557
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $555a
 	call Unused_18_CopyBytes11 ; $555d
 	ret ; $5560
 Unused_18_DrawYesNoLabels:
-	ld hl, YesNoLabels2 ; $5561
+	ld hl, YesNoLabelAttrsTop ; $5561
 	ld de, wStagedAttrmap + 15 * TILEMAP_WIDTH + 1 ; $5564
 	call Unused_18_CopyBytes11 ; $5567
-	ld hl, YesNoLabels3 ; $556a
+	ld hl, YesNoLabelAttrsBottom ; $556a
 	ld de, wStagedAttrmap + 16 * TILEMAP_WIDTH + 1 ; $556d
 	call Unused_18_CopyBytes11 ; $5570
-	ld hl, YesNoLabels0 ; $5573
+	ld hl, YesNoLabelTilesTop ; $5573
 	ld de, wStagedTilemap + 15 * TILEMAP_WIDTH + 1 ; $5576
 	call Unused_18_CopyBytes11 ; $5579
-	ld hl, YesNoLabels1 ; $557c
+	ld hl, YesNoLabelTilesBottom ; $557c
 	ld de, wStagedTilemap + 16 * TILEMAP_WIDTH + 1 ; $557f
 	call Unused_18_CopyBytes11 ; $5582
 	ret ; $5585

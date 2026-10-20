@@ -9,6 +9,7 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ;   $d430-$d66f  wCharDataScreenBackup  [mirrored with bank 2]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
+;   $d800-$dfff  wIntroSwingTilemap / wIntroSwingAttrmap (intro)
 ;   $d800-$d80f  10 overlays: link error flash palette / equipment select / name entry / +7 more
 ;   $d810-$d83e  8 overlays: N64 tournament data screen / erase-confirm flash palette / drill briefings / +5 more
 ;   $d840-$d867  character unlock flags / ranking board
@@ -33,12 +34,24 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ; jump table; rows 9-11 and markers 5/6 are not selected by any
 ; ShowRankingBoard argument.
 ; screen tilemap
+UNION
 ; [1024 bytes] BG tile map the screen is assembled into, 32 x 32 cells
 ; with rows TILEMAP_WIDTH apart; CopyTilemapRect steps rows by $0020
 wShadowTilemap:: ds 1024
+NEXTU
+	ds 24 * 32
+; [48 bytes] Off-screen rows of the bank $3b menus: three SLOTSUM_SIZE
+; summaries of the story files (SLOTSUM_* fields), built by
+; BuildSaveSlotSummaries and read by the slot captions and mugshot loaders
+wSaveSlotSummaries:: ds 3 * SLOTSUM_SIZE
+	export_size wSaveSlotSummaries
+ENDU
 ; [1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400
 ; higher (the attribute of cell $d08b is $d48b)
 wShadowAttrmap:: ds 1024
+
+; $d800 on: the screen-local blocks below, or the intro's swing planes.
+UNION
 
 ; Screen-local scratch, low half. Each full-screen UI reuses these bytes,
 ; so variants belong to the owning ROM bank (or screen code range). The
@@ -171,7 +184,7 @@ wBriefingBallY:: db
 wBriefingPole2X:: db
 ; [8-bit] Drill-briefing diagram: second pole sprite Y
 wBriefingPole2Y:: db
-; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingAnimTable0 for the base tile, and < 6 selects the 5-sprite racket template
+; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingFrameTileTable for the base tile, and < 6 selects the 5-sprite racket template
 wBriefingSwingFrame:: db
 ; [8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip
 wBriefingVMarkerX:: db
@@ -290,7 +303,7 @@ ENDU
 ; animation share these 40 bytes.
 UNION
 ; character unlock flags (bank $38)
-; [40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears it and walks CharUnlockFlagsTable0, marking a character whose entry is $ffff (always available) or whose save flag TestSaveFlag finds set. PackUnlockFlagsForLink packs it eight to a byte for the link exchange
+; [40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears it and walks CharUnlockSaveFlags, marking a character whose entry is $ffff (always available) or whose save flag TestSaveFlag finds set. PackUnlockFlagsForLink packs it eight to a byte for the link exchange
 wCharUnlockFlags:: ds 40
 	export_size wCharUnlockFlags
 NEXTU
@@ -325,10 +338,10 @@ ENDU
 UNION
 ; created characters and the character grid (bank $38)
 ; [$c0 bytes] Six $20-byte records for the player-created characters, built from the save by BuildCreatedCharRecords and walked by DrawCreatedCharStats. A first byte of $ff ends the list
-wCreatedCharRecords:: ds 192
+wCreatedCharRecords:: ds 6 * CREATED_CHAR_RECORD_SIZE
 	export_size wCreatedCharRecords
 	ds 64
-; [$80 bytes] The character-select grid as 32 four-byte entries, cleared on screen open and filled by BuildCharUnlockFlags; AddCreatedCharsToCharGrid appends the created characters from $da24
+; [$80 bytes] The character-select grid as 32 four-byte entries, cleared on screen open and filled by BuildCharGridFromUnlockFlags; AddCreatedCharsToCharGrid appends the created characters from $da24
 wCharGridEntries:: ds 128
 	export_size wCharGridEntries
 	ds 128
@@ -337,6 +350,12 @@ NEXTU
 ; [512 bytes] Image of save block $0b (the N64 Transfer Pak records), read by ReadN64RecordsSaveBlock for the trophies screen and the ring-shot and star-victory grids. The screen's own copy of the block the bank $03 engine stages at wSaveBlockBuffer (WRAM bank $07)
 wN64RecordsBlock:: ds 512
 	export_size wN64RecordsBlock
+NEXTU
+; trophies screen button code (bank $3b)
+; [8-bit] Right presses on the trophies screen; CheckTrophiesCheatCode wants $0c
+wTrophiesCheatRightPresses:: db
+; [8-bit] Left presses on the trophies screen; CheckTrophiesCheatCode wants $22
+wTrophiesCheatLeftPresses:: db
 NEXTU
 ; screen sequences (bank $18)
 	ds 256
@@ -385,7 +404,7 @@ wN64ExhibPage:: db
 wN64ExhibCursorRow:: db
 NEXTU
 ; rules screen (bank $17)
-; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharactersTable0-2 with it
+; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharFrameTileTable-2 with it
 wRulesScreenAnimFrame:: db
 ENDU
 
@@ -419,3 +438,10 @@ wCharGridScrollCount:: db
 ; character select (bank $38)
 ; [8-bit] Handedness the exhibition and link character grids offer for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it (`xor $01`, 2 becomes 1) only when IsMarioCastCharacter passes. DrawCharSelectSlotLabel picks label 30:150/151/152 ("START: Right-Handed" / "START: Left-Handed" / "START: Change Hands") from it. The story screen uses wCharSelectHandedness instead
 wCharGridHandedness:: db
+NEXTU
+; intro swing scene (bank $6b)
+; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroSwingTilemap. IntroCutsceneState02Init and State04Init queue rows 4-13 of it to $9880 in VRAM bank 0
+wIntroSwingTilemap:: ds 1024
+; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroSwingAttrmap; copied to the same VRAM addresses in bank 1
+wIntroSwingAttrmap:: ds 1024
+ENDU

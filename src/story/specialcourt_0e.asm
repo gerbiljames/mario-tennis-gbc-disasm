@@ -171,11 +171,7 @@ UpdateStarWarpTrailSparkles:
 	ld [hl], $10 ; $7277
 	ld a, c ; $7279
 	rlca ; $727a
-	add $14 ; $727b
-	ld l, a ; $727d
-	adc $d0 ; $727e
-	sub l ; $7280
-	ld h, a ; $7281
+	ld_hl_indexed wStarWarpSparklePos ; $727b
 	ld a, [wStarWarpPathY] ; $7282
 	ld [hl+], a ; $7285
 	ld a, [wStarWarpPathX] ; $7286
@@ -211,11 +207,7 @@ UpdateStarWarpTrailSparkles:
 	jr z, .nextSparkle ; $72ac
 	ld a, b ; $72ae
 	rlca ; $72af
-	add $14 ; $72b0
-	ld l, a ; $72b2
-	adc $d0 ; $72b3
-	sub l ; $72b5
-	ld h, a ; $72b6
+	ld_hl_indexed wStarWarpSparklePos ; $72b0
 	ld a, [hl+] ; $72b7
 	ld d, [hl] ; $72b8
 	ld e, a ; $72b9
@@ -226,9 +218,9 @@ UpdateStarWarpTrailSparkles:
 	pop bc ; $72c2
 	ld a, [hl] ; $72c3
 	or a ; $72c4
-	jr z, .done ; $72c5
+	jr z, .advance ; $72c5
 	dec [hl] ; $72c7
-.done:
+.advance:
 	inc hl ; $72c8
 	inc b ; $72c9
 	dec c ; $72ca
@@ -463,12 +455,12 @@ ExhibitionMatchIntroCutscene:
 	script_wait_idle ACTOR_SPECIAL_COURT_PEACH ; $7a4c
 	script_wait_frames 20 ; $7a51
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $7a58
-	jr z, .done ; $7a5b
+	jr z, .announceMatch ; $7a5b
 	ld a, EXIT_SPECIAL_COURT_DONE ; $7a5d
 	ld [wUnusedExitTriggerIdMirror], a ; $7a5f
 	ld [wStoryModeExitTriggerRequest], a ; $7a62
 	ret ; $7a65
-.done:
+.announceMatch:
 	script_set_text Text_PeachDoublesExhibitionBegin ; $7a66
 	script_speak ACTOR_SPECIAL_COURT_PEACH ; $7a6c
 	script_wait_frames 20 ; $7a71

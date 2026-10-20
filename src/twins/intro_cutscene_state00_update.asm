@@ -12,7 +12,7 @@
 	call AdvanceSpriteAnimTimer
 .updateCutsceneScrollY:
 	call UpdateCutsceneScrollY
-	call UpdateCutsceneScrollX
+	call UpdateIntroScrollY
 	call SetCameraYFromScrollPos
 	call QueueScrollingSprite
 	call QueueCutsceneAnimatedSprites

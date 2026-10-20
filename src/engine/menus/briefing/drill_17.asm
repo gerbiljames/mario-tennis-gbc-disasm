@@ -157,7 +157,7 @@ DrillBriefing_ServeAndSmash:
 	sla a ; $643a
 	sla a ; $643c
 	ld c, a ; $643e
-	ld_hl_indexed DrillBriefing_ServeAndSmashTable ; $643f
+	ld_hl_indexed DrillBriefing_ServeAndSmash_PlayerPosTable ; $643f
 	ld a, [hl] ; $6446
 	inc hl ; $6447
 	inc hl ; $6448
@@ -217,24 +217,24 @@ DrillBriefing_ServeAndSmash:
 	jp z, .loop ; $64b6
 	call ClearFrameTasks ; $64b9
 	ret ; $64bc
-DrillBriefing_ServeAndSmashTable:
-	; $64bd, 16 bytes (records:2)
-	dw $0055 ; record 0
-	dw $0044 ; record 1
-	dw $003a ; record 2
-	dw $0044 ; record 3
-	dw $003a ; record 4
-	dw $0003 ; record 5
-	dw $0055 ; record 6
-	dw $0003 ; record 7
+DrillBriefing_ServeAndSmash_PlayerPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_PlayerPosTable.asm" ; $64bd, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_OpponentPosTable.asm" ; $64cd, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.asm" ; $64dd, 36 bytes (words:2)
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.asm" ; $64dd, 16 bytes (words:2)
+Unused_17_ServeAndSmash_RotMarkerDirTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerDirTable0.asm" ; $64ed, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash_RotMarkerPosTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerPosTable0.asm" ; $64f1, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_RotMarkerDirTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerDirTable.asm" ; $6501, 4 bytes (bytes:4)
 DrillBriefing_ServeAndSmash_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.asm" ; $6505, 36 bytes (words:2)
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.asm" ; $6505, 16 bytes (words:2)
+Unused_17_ServeAndSmash_RotMarkerDirTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerDirTable1.asm" ; $6515, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash_RotMarkerPosTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerPosTable1.asm" ; $6519, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm" ; $6529, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2:
@@ -396,7 +396,7 @@ DrillBriefing_ServeAndSmash2:
 	sla a ; $6743
 	sla a ; $6745
 	ld c, a ; $6747
-	ld_hl_indexed DrillBriefing_ServeAndSmash2Table ; $6748
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_PlayerPosTable ; $6748
 	ld a, [hl] ; $674f
 	inc hl ; $6750
 	inc hl ; $6751
@@ -456,24 +456,24 @@ DrillBriefing_ServeAndSmash2:
 	jp z, .loop ; $67bf
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
-DrillBriefing_ServeAndSmash2Table:
-	; $67c6, 16 bytes (records:2)
-	dw $0055 ; record 0
-	dw $0044 ; record 1
-	dw $003a ; record 2
-	dw $0044 ; record 3
-	dw $003a ; record 4
-	dw $0003 ; record 5
-	dw $0055 ; record 6
-	dw $0003 ; record 7
+DrillBriefing_ServeAndSmash2_PlayerPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_PlayerPosTable.asm" ; $67c6, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.asm" ; $67d6, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm" ; $67e6, 36 bytes (words:2)
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm" ; $67e6, 16 bytes (words:2)
+Unused_17_ServeAndSmash2_RotMarkerDirTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerDirTable0.asm" ; $67f6, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash2_RotMarkerPosTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerPosTable0.asm" ; $67fa, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2_RotMarkerDirTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.asm" ; $680a, 4 bytes (bytes:4)
 DrillBriefing_ServeAndSmash2_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.asm" ; $680e, 36 bytes (words:2)
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.asm" ; $680e, 16 bytes (words:2)
+Unused_17_ServeAndSmash2_RotMarkerDirTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerDirTable1.asm" ; $681e, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash2_RotMarkerPosTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerPosTable1.asm" ; $6822, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm" ; $6832, 16 bytes (words:2)
 DrillBriefing_ReturnToTarget:

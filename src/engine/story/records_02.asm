@@ -36,7 +36,7 @@ StorySlotFlagBIds_02:
 	dw SAVEFLAG_STORY_SLOT0_B ; 0
 	dw SAVEFLAG_STORY_SLOT1_B ; 1
 	dw SAVEFLAG_STORY_SLOT2_B ; 2
-	dw $04e0 ; 3: flag $04, 7
+	dw SAVEFLAG_STORY_SLOT3_B ; 3
 TestStorySlotFlagB:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a ; $4cd7
@@ -72,7 +72,7 @@ StorySlotFlagAIds_02:
 	dw SAVEFLAG_STORY_SLOT0_A ; 0
 	dw SAVEFLAG_STORY_SLOT1_A ; 1
 	dw SAVEFLAG_STORY_SLOT2_A ; 2
-	dw $0460 ; 3: flag $04, 3
+	dw SAVEFLAG_STORY_SLOT3_A ; 3
 TestStorySlotFlagA:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a ; $4d13
@@ -87,7 +87,7 @@ TestStorySlotFlagA:
 .notSet:
 	ld a, $00 ; $4d26
 	ret ; $4d28
-; The gate on awarding EXP: Unused_02_AddExpToCa00RecordChecked calls it and returns on
+; The gate on awarding EXP: Unused_02_AddExpToMatchRecordChecked calls it and returns on
 ; z. It cannot return z -- `xor a` / `dec a` sets the flags from $ff and the
 ; following `ld a, c` restores the caller's a without touching them -- so the
 ; gate always passes and the award always happens.
@@ -143,8 +143,8 @@ Compare24Bit:
 	sbc [hl] ; $4d5d
 	bit 7, a ; $4d5e
 	ret ; $4d60
-Unused_02_ClearCa00RecordExp:
-	call GetCa00RecordPtr ; $4d61
+Unused_02_ClearMatchRecordExp:
+	call GetMatchRecordPtr ; $4d61
 	ld hl, CHARREC_EXP ; $4d64
 	add hl, bc ; $4d67
 	xor a ; $4d68
@@ -152,13 +152,13 @@ Unused_02_ClearCa00RecordExp:
 	ld [hl+], a ; $4d6a
 	ld [hl+], a ; $4d6b
 	ret ; $4d6c
-Unused_02_AddExpToCa00RecordChecked:
+Unused_02_AddExpToMatchRecordChecked:
 	call Unused_02_CheckExpAwardAllowed ; $4d6d
 	ret z ; $4d70
-Unused_02_AddExpToCa00RecordHooked:
+Unused_02_AddExpToMatchRecordHooked:
 	call Unused_02_StubNop ; $4d71
-Unused_02_AddExpToCa00Record:
-	call GetCa00RecordPtr ; $4d74
+Unused_02_AddExpToMatchRecord:
+	call GetMatchRecordPtr ; $4d74
 	ld hl, CHARREC_EXP ; $4d77
 	add hl, bc ; $4d7a
 	jp AddExpCapped ; $4d7b
@@ -177,7 +177,7 @@ HasReachedNextLevelExp:
 	ld hl, CHARREC_LEVEL ; $4d9c
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
-	cp $63 ; $4da1
+	cp MAX_LEVEL ; $4da1
 	jp nc, .maxLevel ; $4da3
 	ld h, $00 ; $4da6
 	ld l, a ; $4da8
@@ -194,7 +194,7 @@ HasReachedNextLevelExp:
 	ld l, a ; $4db9
 	pop de ; $4dba
 	add hl, de ; $4dbb
-	ld a, $2c ; $4dbc
+	ld a, CHARREC_EXP ; $4dbc
 	add c ; $4dbe
 	ld e, a ; $4dbf
 	ld d, b ; $4dc0
@@ -208,7 +208,7 @@ GetExpRemainingToNextLevel:
 	ld hl, CHARREC_LEVEL ; $4dcb
 	add hl, bc ; $4dce
 	ld a, [hl] ; $4dcf
-	cp $63 ; $4dd0
+	cp MAX_LEVEL ; $4dd0
 	jp nc, .maxLevel ; $4dd2
 	ld h, $00 ; $4dd5
 	ld l, a ; $4dd7
@@ -245,7 +245,7 @@ GetExpProgressInCurrentLevel:
 	ld hl, CHARREC_LEVEL ; $4e05
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
-	cp $63 ; $4e0a
+	cp MAX_LEVEL ; $4e0a
 	jr nc, .maxLevel ; $4e0c
 	dec a ; $4e0e
 	ld h, $00 ; $4e0f

@@ -103,13 +103,13 @@ ExchangeNibbleBlockMaster:
 	call LinkErrorReset ; $40f5
 .synced:
 	xor a ; $40f8
-	ldh [hLinkNibbleAccum], a ; $40f9
-	ldh [hLinkBlockOffset], a ; $40fb
+	ldh [hLinkRxNibbleIndex], a ; $40f9
+	ldh [hLinkTxNibbleIndex], a ; $40fb
 	ld de, $0000 ; $40fd
 	ld b, c ; $4100
 .nibbleLoop:
-	ld hl, wLinkNibbleBuffer ; $4101
-	ldh a, [hLinkBlockOffset] ; $4104
+	ld hl, wLinkTxNibbles ; $4101
+	ldh a, [hLinkTxNibbleIndex] ; $4104
 	add_hl_a ; $4106
 	ld a, [hl] ; $410b
 	ldh [hLinkTxByte], a ; $410c
@@ -136,8 +136,8 @@ ExchangeNibbleBlockMaster:
 .storeRxNibble:
 	ld a, h ; $4136
 	push af ; $4137
-	ld hl, wLinkByteBuffer ; $4138
-	ldh a, [hLinkNibbleAccum] ; $413b
+	ld hl, wLinkRxNibbles ; $4138
+	ldh a, [hLinkRxNibbleIndex] ; $413b
 	add_hl_a ; $413d
 	pop af ; $4142
 	and LINKTAG_PAYLOAD ; $4143
@@ -145,9 +145,9 @@ ExchangeNibbleBlockMaster:
 	add_de_a ; $4146
 	xor a ; $414b
 	ldh [hLinkCounter], a ; $414c
-	ld hl, hLinkBlockOffset ; $414e
+	ld hl, hLinkTxNibbleIndex ; $414e
 	inc [hl] ; $4151
-	ld hl, hLinkNibbleAccum ; $4152
+	ld hl, hLinkRxNibbleIndex ; $4152
 	inc [hl] ; $4155
 	dec b ; $4156
 	jr nz, .nibbleLoop ; $4157
@@ -267,7 +267,7 @@ ExchangeNibbleBlockSlave:
 	nop ; $420f
 	nop ; $4210
 	di ; $4211
-	ld a, [wLinkNibbleBuffer] ; $4212
+	ld a, [wLinkTxNibbles] ; $4212
 	or LINKTAG_SLAVE ; $4215
 	ldh [hLinkTxByte], a ; $4217
 	ei ; $4219
@@ -286,9 +286,9 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $422c
 .synced:
 	ld a, $01 ; $422f
-	ldh [hLinkBlockOffset], a ; $4231
+	ldh [hLinkTxNibbleIndex], a ; $4231
 	xor a ; $4233
-	ldh [hLinkNibbleAccum], a ; $4234
+	ldh [hLinkRxNibbleIndex], a ; $4234
 	ld de, $0000 ; $4236
 	ld b, c ; $4239
 	dec b ; $423a
@@ -299,8 +299,8 @@ ExchangeNibbleBlockSlave:
 	ldh [rIF], a ; $4240
 	xor a ; $4242
 	ldh [hLinkTransferDone], a ; $4243
-	ld hl, wLinkNibbleBuffer ; $4245
-	ldh a, [hLinkBlockOffset] ; $4248
+	ld hl, wLinkTxNibbles ; $4245
+	ldh a, [hLinkTxNibbleIndex] ; $4248
 	add_hl_a ; $424a
 	ld a, [hl] ; $424f
 	or LINKTAG_SLAVE ; $4250
@@ -320,8 +320,8 @@ ExchangeNibbleBlockSlave:
 	jr z, .storeRxNibble ; $426a
 	call LinkErrorReset ; $426c
 .storeRxNibble:
-	ld hl, wLinkByteBuffer ; $426f
-	ldh a, [hLinkNibbleAccum] ; $4272
+	ld hl, wLinkRxNibbles ; $426f
+	ldh a, [hLinkRxNibbleIndex] ; $4272
 	add_hl_a ; $4274
 	ld a, c ; $4279
 	and LINKTAG_PAYLOAD ; $427a
@@ -329,9 +329,9 @@ ExchangeNibbleBlockSlave:
 	add_de_a ; $427d
 	xor a ; $4282
 	ldh [hLinkCounter], a ; $4283
-	ld hl, hLinkBlockOffset ; $4285
+	ld hl, hLinkTxNibbleIndex ; $4285
 	inc [hl] ; $4288
-	ld hl, hLinkNibbleAccum ; $4289
+	ld hl, hLinkRxNibbleIndex ; $4289
 	inc [hl] ; $428c
 	dec b ; $428d
 	jr nz, .nibbleLoop ; $428e
@@ -354,8 +354,8 @@ ExchangeNibbleBlockSlave:
 	jr z, .storeLastNibble ; $42ab
 	call LinkErrorReset ; $42ad
 .storeLastNibble:
-	ld hl, wLinkByteBuffer ; $42b0
-	ldh a, [hLinkNibbleAccum] ; $42b3
+	ld hl, wLinkRxNibbles ; $42b0
+	ldh a, [hLinkRxNibbleIndex] ; $42b3
 	add_hl_a ; $42b5
 	ld a, b ; $42ba
 	and LINKTAG_PAYLOAD ; $42bb

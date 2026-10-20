@@ -7,17 +7,17 @@
 	farptr ComputeLevelUpStatDeltas ; $400c
 	farptr RefreshPlayerStatsAndGetPtr ; $400e
 	farptr RefreshMainCharacterStats ; $4010
-	farptr RecomputeStatsWithoutRacket ; $4012
+	farptr RecomputeStatsWithoutEquipment ; $4012
 	farptr RollStoryRandomByte ; $4014
 	farptr GenerateUniqueStorySaveSignature ; $4016
-	farptr InitCa00RecordFromCharId ; $4018
-	farptr LoadCharacterRecordToCa80 ; $401a
+	farptr InitMatchRecordFromCharId ; $4018
+	farptr LoadPlayer2MainRecord ; $401a
 	farptr AddExpCapped ; $401c
 	farptr Compare24Bit ; $401e
-	farptr Unused_02_ClearCa00RecordExp ; $4020
-	farptr Unused_02_AddExpToCa00RecordChecked ; $4022
-	farptr Unused_02_AddExpToCa00RecordHooked ; $4024
-	farptr Unused_02_AddExpToCa00Record ; $4026
+	farptr Unused_02_ClearMatchRecordExp ; $4020
+	farptr Unused_02_AddExpToMatchRecordChecked ; $4022
+	farptr Unused_02_AddExpToMatchRecordHooked ; $4024
+	farptr Unused_02_AddExpToMatchRecord ; $4026
 	farptr AddPlayerExp ; $4028
 	farptr HasReachedNextLevelExp ; $402a
 	farptr GetExpRemainingToNextLevel ; $402c

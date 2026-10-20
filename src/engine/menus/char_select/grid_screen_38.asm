@@ -67,17 +67,17 @@ ReloadSelectedCharGfx:
 	farcall LoadIndexedPalette ; $4d86
 	call GetSelectedCharWramBank ; $4d89
 	wram_bank b ; $4d8c
-	farcall ReloadCharFrameGfx ; $4d91
+	farcall ReloadCharPalette ; $4d91
 	wram_bank WRAM_CHAR0 ; $4d94
 	ret ; $4d9a
 TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4d9b
 	wram_bank b ; $4d9e
 	ld bc, wCharPosX ; $4da3
-	ld hl, $002e ; $4da6
+	ld hl, wCharAnimId - wCharPosX ; $4da6
 	add hl, bc ; $4da9
 	ld a, [hl] ; $4daa
-	cp $01 ; $4dab
+	cp CHARANIM_IDLE ; $4dab
 	jr nz, .done ; $4dad
 	push_wram_bank WRAM_COURT_PLANES ; $4daf
 	ld a, [wCharSelectIdleAnimState] ; $4db8
@@ -280,7 +280,7 @@ SetupCharGridScreen:
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f9c
 	ld c, CharGridScreenGfx1_SIZE / 16 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
-	ld hl, CharGridScreenGfx2 ; $4fa4
+	ld hl, CharGridScreenObjPalette ; $4fa4
 	ld_obj_pals de, 1, 1 ; $4fa7
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank WRAM_STAGING ; $4fad
@@ -362,8 +362,8 @@ CharGridScreenPalettes:
 CharGridScreenGfx1:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
-CharGridScreenGfx2:
-	INCLUDE "data/engine/menus/char_select/CharGridScreenGfx2.asm" ; $50f1, 8 bytes (palettes)
+CharGridScreenObjPalette:
+	INCLUDE "data/engine/menus/char_select/CharGridScreenObjPalette.asm" ; $50f1, 8 bytes (palettes)
 CharGridScreenGfx3:
 	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
 	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
@@ -454,7 +454,7 @@ MoveCharGridCursorDown:
 	jr c, .refresh ; $523a
 	ld a, $01 ; $523c
 	ld [wCharGridPage], a ; $523e
-	jr .storePage ; $5241
+	jr .playMoveSound ; $5241
 .checkLastPage:
 	inc a ; $5243
 	ld e, a ; $5244
@@ -463,13 +463,13 @@ MoveCharGridCursorDown:
 	ld b, a ; $5249
 	ld a, e ; $524a
 	cp b ; $524b
-	jr nz, .storePage ; $524c
+	jr nz, .playMoveSound ; $524c
 	ld a, b ; $524e
 	dec a ; $524f
-	jr .beep ; $5250
-.storePage:
+	jr .storePage ; $5250
+.playMoveSound:
 	sound SFX_MENU_MOVE ; $5252
-.beep:
+.storePage:
 	ld [wCharGridPage], a ; $5254
 	call BuildVisiblePageSpriteList ; $5257
 .refresh:
@@ -711,13 +711,13 @@ DrawCharGridSlotPrompt:
 	farcall RenderTextToBuffer64 ; $545c
 	ret ; $545f
 .promptFromTable:
-	ld hl, CharGridSlotPromptTable1 ; $5460
+	ld hl, CharGridSlotPromptsLinkP2 ; $5460
 	ld a, [wCharSelectMode] ; $5463
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $5466
 	jr z, .readEntry ; $5468
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $546a
 	jr z, .readEntry ; $546c
-	ld hl, CharGridSlotPromptTable0 ; $546e
+	ld hl, CharGridSlotPromptsDefault ; $546e
 .readEntry:
 	ld a, [wCharSelectSlot] ; $5471
 	add a ; $5474
@@ -729,10 +729,10 @@ DrawCharGridSlotPrompt:
 	ld c, $20 ; $5480
 	farcall RenderTextToBuffer64 ; $5482
 	ret ; $5485
-CharGridSlotPromptTable0:
+CharGridSlotPromptsDefault:
 	; $5486, 10 bytes (bytes:10)
 	db $8e, $00, $8f, $00, $90, $00, $91, $00, $92, $00 ; 0x00
-CharGridSlotPromptTable1:
+CharGridSlotPromptsLinkP2:
 	; $5490, 10 bytes (bytes:10)
 	db $8e, $00, $8e, $00, $8e, $00, $8f, $00, $92, $00 ; 0x00
 DrawCharGridWaitBanner:

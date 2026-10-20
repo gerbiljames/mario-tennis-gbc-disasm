@@ -41,7 +41,7 @@ VarsityCourtANpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6d2a
 	script_wait_frames 5 ; $6d2d
 	and a ; $6d34
-	jp nz, .speak ; $6d35
+	jp nz, .confirmBackOut ; $6d35
 	script_set_anim ACTOR_VARSITY_COURT_A_KEVIN, ANIM_NOD ; $6d38
 	script_wait_idle ACTOR_VARSITY_COURT_A_KEVIN ; $6d3f
 .startMatch:
@@ -77,17 +77,17 @@ VarsityCourtANpc03_13:
 .declined:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6df5
 	ret ; $6dfa
-.speak:
+.confirmBackOut:
 	farcall AdvanceDialogueTextCursor ; $6dfb
 	script_speak_restore ACTOR_VARSITY_COURT_A_KEVIN ; $6dfe
 	farcall RunDialogueYesNoPrompt ; $6e03
 	farcall ScriptCloseDialogueWindow ; $6e06
 	script_wait_frames 5 ; $6e09
 	and a ; $6e10
-	jr z, .done ; $6e11
+	jr z, .backedOut ; $6e11
 	jp .startMatch ; $6e13
 	ret ; $6e16
-.done:
+.backedOut:
 	script_speak ACTOR_VARSITY_COURT_A_KEVIN ; $6e17
 	call ReturnVarsityCourtANpc04ToSpawn_13 ; $6e1c
 	ret ; $6e1f
@@ -147,7 +147,7 @@ VarsityCourtBNpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6f9c
 	script_wait_frames 5 ; $6f9f
 	and a ; $6fa6
-	jp nz, .speak ; $6fa7
+	jp nz, .confirmBackOut ; $6fa7
 	script_set_anim ACTOR_VARSITY_COURT_B_KEVIN, ANIM_NOD ; $6faa
 	script_wait_idle ACTOR_VARSITY_COURT_B_KEVIN ; $6fb1
 .startMatch:
@@ -186,17 +186,17 @@ VarsityCourtBNpc03_13:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $707d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $7082
 	ret ; $708f
-.speak:
+.confirmBackOut:
 	farcall AdvanceDialogueTextCursor ; $7090
 	script_speak_restore ACTOR_VARSITY_COURT_B_KEVIN ; $7093
 	farcall RunDialogueYesNoPrompt ; $7098
 	farcall ScriptCloseDialogueWindow ; $709b
 	script_wait_frames 5 ; $709e
 	and a ; $70a5
-	jr z, .done ; $70a6
+	jr z, .backedOut ; $70a6
 	jp .startMatch ; $70a8
 	ret ; $70ab
-.done:
+.backedOut:
 	script_speak ACTOR_VARSITY_COURT_B_KEVIN ; $70ac
 	call ReturnVarsityCourtBNpcsToSpawn_13 ; $70b1
 	script_wait_frames 60 ; $70b4
@@ -307,9 +307,9 @@ SinglesTravelingTeamVictoryCutscene:
 	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $732b
 	script_face_toward ACTOR_PLAYER, ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7330
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7338
-	jr z, .done ; $733b
+	jr z, .speakVictory ; $733b
 	farcall AdvanceDialogueTextCursor ; $733d
-.done:
+.speakVictory:
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7340
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_KATE, ACTOR_PLAYER ; $7345
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $734d
@@ -516,9 +516,9 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $784d
 	script_wait_idle ACTOR_PARTNER ; $7854
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7859
-	jr z, .done ; $785c
+	jr z, .speakVictory ; $785c
 	farcall AdvanceDialogueTextCursor ; $785e
-.done:
+.speakVictory:
 	script_speak ACTOR_PARTNER ; $7861
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7866
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $786e

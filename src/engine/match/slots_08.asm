@@ -13,7 +13,7 @@
 	farptr UpdateCharFacingOctant ; $4018
 	farptr EaseCharFacing ; $401a
 	farptr SetCharState ; $401c
-	farptr ReloadCharFrameGfx ; $401e
+	farptr ReloadCharPalette ; $401e
 	farptr SetCharAnimation ; $4020
 	farptr SetCharPosAndTarget ; $4022
 	farptr SetBallTrailColor ; $4024

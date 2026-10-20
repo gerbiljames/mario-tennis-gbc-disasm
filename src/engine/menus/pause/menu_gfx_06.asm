@@ -41,8 +41,8 @@ MatchMenuItemGfxPointers:
 	dw MatchMenuItemGfx_QuitMinigame ; record 22
 	dw MatchMenuItemGfx_QuitMinigame ; record 23
 	assert_table_length NUM_MATCHMENUITEMS
-	; $5274, 12 bytes (bytes:12)
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	; $5274, 12 bytes (fill)
+	ds 12, $00
 	ds ALIGN[4]
 ScoreboardModeGfxTail:
 	INCBIN "data/engine/menus/pause/ScoreboardModeGfxTail.bin" ; $5280, 64 bytes
@@ -86,12 +86,12 @@ LoadScoreboardModeGfx:
 	jr z, .trainingDrill ; $5c8f
 	add a ; $5c91
 	ld_hl_indexed ScoreboardModeGfxPointers ; $5c92
-	jr .checkWramBank ; $5c99
+	jr .loadGfx ; $5c99
 .trainingDrill:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
+	ld a, [wCurrentMatchIndex] ; $5c9b
 	add a ; $5c9e
 	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f
-.checkWramBank:
+.loadGfx:
 	push_wram_bank WRAM_STAGING ; $5ca6
 	ld a, [hl+] ; $5caf
 	ld h, [hl] ; $5cb0
@@ -163,8 +163,8 @@ ScoreboardMinigameGfxPointers:
 	dw ScoreboardModeGfx_MarioMiniGames ; record 39
 	dw ScoreboardModeGfx_MarioMiniGames ; record 40
 	dw ScoreboardModeGfx_MarioMiniGames ; record 41
-	; $5d33, 13 bytes (bytes:13)
-	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	; $5d33, 13 bytes (fill)
+	ds 13, $00
 ScoreboardModeGfx_RankingMatch:
 	INCBIN "data/engine/menus/pause/lz_ScoreboardModeGfx_RankingMatch.bin" ; $5d40, 181 bytes
 ScoreboardModeGfx_IslandOpen:

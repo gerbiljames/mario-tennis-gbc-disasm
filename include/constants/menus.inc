@@ -127,9 +127,55 @@ def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
 ; (FitWindowToText substitutes window 0) and store it after CloseWindow.
 def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 
+; --- Message speed (wMessageSpeed) ---
+; Bits 0-6 hold the speed; bit 7 draws text instantly whatever the speed
+; (ApplyMessageSpeed, FlushGlyphRow) and is cleared before saving.
+	const_def
+	const MSGSPEED_FAST   ; $00
+	const MSGSPEED_NORMAL ; $01 the new-game default
+	const MSGSPEED_SLOW   ; $02
+def NUM_MSGSPEEDS equ const_value
+def MSGSPEEDB_INSTANT equ 7
+def MSGSPEEDF_INSTANT equ 1 << MSGSPEEDB_INSTANT
+def MSGSPEED_MASK     equ $7f
+
 ; --- Menu transition direction (wMenuSlideDirection) ---
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
+
+; --- Menu panel slide animations (RestoreMenuBgAndDrawPanel's b) ---
+; Rows of TilemapAssemblyDispatch_39; c picks the frame within the row.
+	const_def
+	const PANELANIM_MAIN_MENU_IN          ; $00
+	const PANELANIM_MAIN_MENU_OUT         ; $01
+	const PANELANIM_MATCH_FORMAT_IN       ; $02
+	const PANELANIM_MATCH_FORMAT_OUT      ; $03
+	const PANELANIM_MINIGAME_GRID9_IN     ; $04
+	const PANELANIM_MINIGAME_GRID9_OUT    ; $05
+	const PANELANIM_UNUSED_PANEL_IN       ; $06 only Unused_3b_SlideMenuPanel_1
+	const PANELANIM_UNUSED_PANEL_OUT      ; $07
+	const PANELANIM_SAVED_DATA_PICKER_IN  ; $08
+	const PANELANIM_SAVED_DATA_PICKER_OUT ; $09
+	const PANELANIM_N64_RECORD_TYPE_IN    ; $0a
+	const PANELANIM_N64_RECORD_TYPE_OUT   ; $0b
+	const_skip 4                          ; $0c-$0f never passed: copies of CHOICE_TAB_IN
+	const PANELANIM_CHOICE_TAB_IN         ; $10
+	const PANELANIM_CHOICE_TAB_OUT        ; $11
+	const PANELANIM_COURT_SELECT4_IN      ; $12
+	const PANELANIM_COURT_SELECT4_OUT     ; $13
+	const PANELANIM_COURT_SELECT9_IN      ; $14
+	const PANELANIM_COURT_SELECT9_OUT     ; $15
+	const PANELANIM_MINIGAME_GRID6_IN     ; $16
+	const PANELANIM_MINIGAME_GRID6_OUT    ; $17
+def NUM_PANELANIMS equ const_value
+
+; --- Panel row flush layouts (FlushWram3MapRows' b) ---
+; Rows 0-1 plus 3-row bands starting at the rows named, tilemap and attrmap.
+	const_def
+	const MAPROWS_BANDS_3_7_11 ; $00
+	const MAPROWS_BANDS_4_10   ; $01 never passed
+	const MAPROWS_BANDS_4_9    ; $02
+	const MAPROWS_BAND_7       ; $03
 
 ; --- Character select slot (wCharSelectSlot) ---
 def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
@@ -138,21 +184,54 @@ def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingT
 ; --- Character-data screen cursor (wCharDataPage) ---
 ; The four level-up choices (the training levels, CHARREC_TRAIN_LEVELS order),
 ; then the confirm cell.
-	const_def
-	const CHARDATAPAGE_SPIN    ; $00
-	const CHARDATAPAGE_POWER   ; $01
-	const CHARDATAPAGE_CONTROL ; $02
-	const CHARDATAPAGE_SPEED   ; $03
-	const CHARDATAPAGE_CONFIRM ; $04
+def CHARDATAPAGE_SPIN    equ TRAINSTAT_SPIN
+def CHARDATAPAGE_POWER   equ TRAINSTAT_POWER
+def CHARDATAPAGE_CONTROL equ TRAINSTAT_CONTROL
+def CHARDATAPAGE_SPEED   equ TRAINSTAT_SPEED
+def CHARDATAPAGE_CONFIRM equ NUM_TRAINSTATS
 
 ; --- Tennis Dictionary mode (wTennisDictMode) ---
-def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open one category's term list
+; Modes 0-4 open the term list filtered to category bit 1 << mode. Only
+; TENNISDICT_INDEX is ever passed.
+	const_def
+	const TENNISDICT_TERMS        ; $00
+	const TENNISDICT_CATEGORY1    ; $01 no entries carry its bit
+	const TENNISDICT_CATEGORY2    ; $02 no entries carry its bit
+	const TENNISDICT_TECHNIQUE    ; $03
+	const TENNISDICT_COURT        ; $04
+	const TENNISDICT_SINGLE_ENTRY ; $05 all categories, one fixed entry
+	const TENNISDICT_INDEX        ; $06 the 9-cell category index page
+
+; --- Tennis Dictionary category bits (wTennisDictCategoryMask, TennisDictEntryCategories) ---
+def TDICTCAT_TERMS     equ 1 << TENNISDICT_TERMS     ; rules, scoring, shots, formations
+def TDICTCAT_1         equ 1 << TENNISDICT_CATEGORY1
+def TDICTCAT_2         equ 1 << TENNISDICT_CATEGORY2
+def TDICTCAT_TECHNIQUE equ 1 << TENNISDICT_TECHNIQUE ; strokes, spin, grip, footwork
+def TDICTCAT_COURT     equ 1 << TENNISDICT_COURT     ; lines, areas, surfaces
+def TDICTCAT_ALL       equ $1f
+
+; --- Tennis Dictionary display flags (wTennisDictFlags) ---
+	const_def
+	const TDICTFLAGB_WINDOW_OPEN ; $00 a description window is open
+	const TDICTFLAGB_LIST_SHOWN  ; $01 the term list is on screen
+	const TDICTFLAGB_LEFT_ARROW  ; $02 flash the left page arrow this frame
+	const TDICTFLAGB_RIGHT_ARROW ; $03 flash the right page arrow this frame
 
 ; --- Ranking board presentation (wRankingBoardMode) ---
 	const_def
 	const RANKINGBOARD_PLAIN     ; $00
 	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
 	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation
+	const RANKINGBOARD_SILENT    ; $03 ShowRankingBoard argument only: stored as PLAIN with wRankingBoardSilent set
+
+; --- EXP award lines (SetPendingExpAward's b; wPendingExpAwardAmounts words) ---
+	const_def
+	const EXPAWARD_N64        ; $00 "Mario Tennis for N64."
+	const EXPAWARD_EXHIBITION ; $01 "Exhibition Mode."
+	const EXPAWARD_LINKED     ; $02 "Linked Play."
+	const EXPAWARD_MATCH      ; $03 a story match or minigame; c picks the wording
+	const EXPAWARD_TROPHY     ; $04 "winning the trophy."
+def NUM_EXPAWARDS equ const_value
 
 ; --- EXP award screen record (wExpScreenCharStats) ---
 ; One per story character, slot 1 at + EXPSTAT_SIZE; filled by
@@ -168,6 +247,12 @@ def EXPSTAT_SAVED_COLOR  rw   ; $0a BG colour the screen greys out and restores
 def EXPSTAT_EXP          rb 3 ; $0c CHARREC_EXP, copied back to wStory*Exp
 def EXPSTAT_SIZE equ _RS
 	ASSERT EXPSTAT_SIZE == 15
+
+; --- EXP screen busy flags (wExpScreenBusyFlags), cleared when the screen opens ---
+	const_def
+	const EXPBUSYB_CURSOR_SLIDING ; $00 the cursor slide task is running: blocks point changes and DrawExpToNextLevelTask
+	const EXPBUSYB_POINT_MOVED    ; $01 the last press moved a point. Never read
+	const EXPBUSYB_CONFIRM_OPEN   ; $02 the confirm prompt is open: blocks DrawExpToNextLevelTask
 
 ; --- Scoreboard layout (wScoreboardLayout) ---
 ; Chosen by SelectScoreboardLayout: wOnCourtCharCount - 2 outside minigame

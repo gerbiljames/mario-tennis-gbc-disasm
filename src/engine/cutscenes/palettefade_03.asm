@@ -28,7 +28,7 @@ Unused_03_InitBlackPaletteFade:
 CopyMasterPalettesToFadeBuffers:
 	ld hl, wMasterPalettes ; $75e9
 	ld de, wPaletteFadeLive ; $75ec
-	ld b, $80 ; $75ef
+	ld b, wMasterPalettes_SIZE ; $75ef
 .copyLiveLoop:
 	ld a, [hl+] ; $75f1
 	ld [de], a ; $75f2
@@ -37,7 +37,7 @@ CopyMasterPalettesToFadeBuffers:
 	jr nz, .copyLiveLoop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
 	ld de, wPaletteFadeTarget ; $75fa
-	ld b, $80 ; $75fd
+	ld b, wMasterPalettes_SIZE ; $75fd
 .copyTargetLoop:
 	ld a, [hl+] ; $75ff
 	ld [de], a ; $7600
@@ -47,7 +47,7 @@ CopyMasterPalettesToFadeBuffers:
 	ret ; $7605
 Unused_03_ClearFadeTargetPalettes:
 	ld hl, wPaletteFadeTarget ; $7606
-	ld b, $40 ; $7609
+	ld b, wMasterPalettes_SIZE / COLOR_SIZE ; $7609
 	ld de, $0000 ; $760b
 .loop:
 	ld a, e ; $760e
@@ -60,7 +60,7 @@ Unused_03_ClearFadeTargetPalettes:
 DesaturateFadeTargetPalettes:
 	ld hl, wPaletteFadeTarget ; $7616
 	ld de, wPaletteColorSplit ; $7619
-	ld b, $40 ; $761c
+	ld b, wMasterPalettes_SIZE / COLOR_SIZE ; $761c
 .loop:
 	push bc ; $761e
 	push hl ; $761f
@@ -418,7 +418,7 @@ AdvanceToPaletteEntry:
 	ld a, b ; $7829
 	and a ; $782a
 	ret z ; $782b
-	ld a, $08 ; $782c
+	ld a, PAL_SIZE ; $782c
 	add_hl_a ; $782e
 	dec b ; $7833
 	jr AdvanceToPaletteEntry ; $7834

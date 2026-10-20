@@ -346,7 +346,7 @@ SlideFromPartnerStatPage:
 DrawCharStatDigitsTask:
 	wram_bank WRAM_SCENE ; $57d2
 	ld b, $0f ; $57d8
-	ld a, [wCharDataLevels] ; $57da
+	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $57da
 	ld l, a ; $57dd
 	cp $0a ; $57de
 	jr c, .spinSingleDigit ; $57e0
@@ -388,7 +388,7 @@ DrawCharStatDigitsTask:
 	call QueueSprite ; $5827
 .powerLevel:
 	ld b, $0f ; $582a
-	ld a, [wCharDataLevels + 1] ; $582c
+	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $582c
 	ld l, a ; $582f
 	cp $0a ; $5830
 	jr c, .powerSingleDigit ; $5832
@@ -430,7 +430,7 @@ DrawCharStatDigitsTask:
 	call QueueSprite ; $587c
 .controlLevel:
 	ld b, $0f ; $587f
-	ld a, [wCharDataLevels + 2] ; $5881
+	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $5881
 	ld l, a ; $5884
 	cp $0a ; $5885
 	jr c, .controlSingleDigit ; $5887
@@ -472,7 +472,7 @@ DrawCharStatDigitsTask:
 	call QueueSprite ; $58d1
 .speedLevel:
 	ld b, $0f ; $58d4
-	ld a, [wCharDataLevels + 3] ; $58d6
+	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $58d6
 	ld l, a ; $58d9
 	cp $0a ; $58da
 	jr c, .speedSingleDigit ; $58dc

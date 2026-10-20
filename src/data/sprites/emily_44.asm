@@ -320,7 +320,7 @@ EmilySpriteFrame54:
 EmilySpriteFrame55:
 	INCBIN "data/sprites/EmilySpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-EmilySpriteFramesUnused:
+Unused_44_EmilySpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/EmilySpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/EmilySpriteFrame01.bin" ; $7740, 240 bytes

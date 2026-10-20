@@ -171,7 +171,7 @@ Unused_13_DecompressVarsityCourtTourRecords:
 .loop:
 	push bc ; $6686
 	push af ; $6687
-	ld hl, VarsityCourtTourLzPtrs_13 ; $6688
+	ld hl, VarsityCourtTourGfxPtrs_13 ; $6688
 	sla a ; $668b
 	add_hl_a ; $668d
 	ld a, [hl+] ; $6692
@@ -285,20 +285,20 @@ VarsityCourtTourSprite3_13:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-VarsityCourtTourLzPtrs_13:
+VarsityCourtTourGfxPtrs_13:
 	; $678b, 8 bytes (records:2)
-	dw VarsityCourtTourLz0_13 ; record 0
-	dw VarsityCourtTourLz1_13 ; record 1
-	dw VarsityCourtTourLz2_13 ; record 2
-	dw VarsityCourtTourLz3_13 ; record 3
-VarsityCourtTourLz0_13:
-	INCBIN "data/story/lz_VarsityCourtTourLz0_13.bin" ; $6793, 158 bytes
-VarsityCourtTourLz1_13:
-	INCBIN "data/story/lz_VarsityCourtTourLz1_13.bin" ; $6831, 157 bytes
-VarsityCourtTourLz2_13:
-	INCBIN "data/story/lz_VarsityCourtTourLz2_13.bin" ; $68ce, 161 bytes
-VarsityCourtTourLz3_13:
-	INCBIN "data/story/lz_VarsityCourtTourLz3_13.bin" ; $696f, 153 bytes
+	dw VarsityCourtTourGfx0_13 ; record 0
+	dw VarsityCourtTourGfx1_13 ; record 1
+	dw VarsityCourtTourGfx2_13 ; record 2
+	dw VarsityCourtTourGfx3_13 ; record 3
+VarsityCourtTourGfx0_13:
+	INCBIN "data/story/lz_VarsityCourtTourGfx0_13.bin" ; $6793, 158 bytes
+VarsityCourtTourGfx1_13:
+	INCBIN "data/story/lz_VarsityCourtTourGfx1_13.bin" ; $6831, 157 bytes
+VarsityCourtTourGfx2_13:
+	INCBIN "data/story/lz_VarsityCourtTourGfx2_13.bin" ; $68ce, 161 bytes
+VarsityCourtTourGfx3_13:
+	INCBIN "data/story/lz_VarsityCourtTourGfx3_13.bin" ; $696f, 153 bytes
 VarsityCourtTourPalette_13:
 	INCLUDE "data/story/VarsityCourtTourPalette_13.asm" ; $6a08, 8 bytes (palettes)
 SetupStoryMinigameMatch0:

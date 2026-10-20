@@ -10,7 +10,7 @@ MoveCharDataScreenSelection:
 	sound SFX_MENU_MOVE ; $53d8
 	cp $04 ; $53da
 	jr z, .redraw ; $53dc
-	call RestoreCharDataScreenRow ; $53de
+	call RestoreCharDataScreen ; $53de
 	call LoadCharStatsWithLevelUpDeltas ; $53e1
 	call CharDataScreen_DrawStats ; $53e4
 	call DrawCharStatsAndFlush ; $53e7
@@ -18,7 +18,7 @@ MoveCharDataScreenSelection:
 	call FlushCharDataTilemaps ; $53ed
 	ret ; $53f0
 .redraw:
-	call RestoreCharDataScreenRow ; $53f1
+	call RestoreCharDataScreen ; $53f1
 	call LoadCharStats ; $53f4
 	call CharDataScreen_DrawStats ; $53f7
 	call DrawCharStatsAndFlush ; $53fa
@@ -39,29 +39,29 @@ ApplyCharStatLevelUp:
 	ld a, [wCharDataLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $542f
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $542f
 	pop af ; $5442
 	ld a, [wCharDataNewLevels] ; $5443
 	ld [hl], a ; $5446
-	ld [wCharDataLevels], a ; $5447
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $5447
 	push af ; $544a
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $544b
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $544b
 	pop af ; $545e
 	ld a, [wCharDataNewLevels + 1] ; $545f
 	ld [hl], a ; $5462
-	ld [wCharDataLevels + 1], a ; $5463
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $5463
 	push af ; $5466
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $5467
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $5467
 	pop af ; $547a
 	ld a, [wCharDataNewLevels + 2] ; $547b
 	ld [hl], a ; $547e
-	ld [wCharDataLevels + 2], a ; $547f
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $547f
 	push af ; $5482
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $5483
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $5483
 	pop af ; $5496
 	ld a, [wCharDataNewLevels + 3] ; $5497
 	ld [hl], a ; $549a
-	ld [wCharDataLevels + 3], a ; $549b
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $549b
 	ld a, [wStoryCharacterSlot] ; $549e
 	farcall RefreshPlayerStatsAndGetPtr ; $54a1
 	ld a, [wCharDataChoiceCount] ; $54a4
@@ -72,11 +72,7 @@ ApplyCharStatLevelUp:
 	jr z, .countDone ; $54ab
 	push bc ; $54ad
 	ld a, b ; $54ae
-	add $2a ; $54af
-	ld l, a ; $54b1
-	adc $d0 ; $54b2
-	sub l ; $54b4
-	ld h, a ; $54b5
+	ld_hl_indexed wCharDataChoiceLog ; $54af
 	ld a, [hl] ; $54b6
 	ld d, a ; $54b7
 	ld a, [wStoryCharacterSlot] ; $54b8
@@ -90,7 +86,7 @@ ApplyCharStatLevelUp:
 	ld [wCharDataChoiceCount], a ; $54c6
 	ld a, CHARDATAPAGE_CONFIRM ; $54c9
 	ld [wCharDataPage], a ; $54cb
-	call RestoreCharDataScreenRow ; $54ce
+	call RestoreCharDataScreen ; $54ce
 	call LoadCharStats ; $54d1
 	call CharDataScreen_DrawStats ; $54d4
 	call DrawCharStatsAndFlush ; $54d7
@@ -154,7 +150,7 @@ QueueStatChangeArrow:
 	ret ; $5571
 SetupCharDataScreen:
 	sound BGM_STAT_DISTRIBUTION ; $5572
-	call BackupCharDataScreenRow ; $5574
+	call BackupCharDataScreen ; $5574
 	ld hl, CharDataBand0RunsStep7_1c ; $5577
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $557a
 	call BlitTilemapRunsFromTable ; $557d
@@ -172,7 +168,7 @@ SetupCharDataScreen:
 	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank WRAM_SCENE ; $55a4
 	xor a ; $55aa
-	ld [wCharDataRevealTimer], a ; $55ab
+	ld [wCharDataDigitFlyInStep], a ; $55ab
 	wram_bank WRAM_SCREEN ; $55ae
 	ld hl, wCharDataScreenCell ; $55b4
 	ld de, vBGMap0 ; $55b7
@@ -195,13 +191,13 @@ SetupCharDataScreen:
 	script_fade_in 16 ; $55f1
 	call WaitFadeEnd ; $55f6
 	frame_task CharDataScreenAnimTask ; $55f9
-	call RestoreCharDataScreenRow ; $5601
+	call RestoreCharDataScreen ; $5601
 	call DrawCharStatRows ; $5604
 	ld hl, CharDataBand8RunsStep1_1c ; $5607
 	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $560a
 	call BlitTilemapRunsFromTable ; $560d
 	call FlushCharDataTilemaps ; $5610
-	call RestoreCharDataScreenRow ; $5613
+	call RestoreCharDataScreen ; $5613
 	call DrawCharStatRows ; $5616
 	ld hl, CharDataBand7RunsStep1_1c ; $5619
 	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $561c
@@ -210,7 +206,7 @@ SetupCharDataScreen:
 	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $5625
 	call BlitTilemapRunsFromTable ; $5628
 	call FlushCharDataTilemaps ; $562b
-	call RestoreCharDataScreenRow ; $562e
+	call RestoreCharDataScreen ; $562e
 	call DrawCharStatRows ; $5631
 	ld hl, CharDataBand7RunsStep2_1c ; $5634
 	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5637
@@ -219,7 +215,7 @@ SetupCharDataScreen:
 	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $5640
 	call BlitTilemapRunsFromTable ; $5643
 	call FlushCharDataTilemaps ; $5646
-	call RestoreCharDataScreenRow ; $5649
+	call RestoreCharDataScreen ; $5649
 	call DrawCharStatRows ; $564c
 	ld hl, CharDataBand7RunsStep3_1c ; $564f
 	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5652
@@ -241,42 +237,42 @@ CharDataPageLeftTargets_1c:
 CharDataPageRightTargets_1c:
 	; $5674, 5 bytes (bytes:5)
 	db $02, $03, $ff, $ff, $03 ; 0x00
-Unused_1c_0:
+CharDataShiftGfxFramesA:
 	; $5679, 32 bytes (records:2)
-	dw Unused_1c_ShiftGfx00 ; record 0
-	dw Unused_1c_ShiftGfx01 ; record 1
-	dw Unused_1c_ShiftGfx02 ; record 2
-	dw Unused_1c_ShiftGfx03 ; record 3
-	dw Unused_1c_ShiftGfx04 ; record 4
-	dw Unused_1c_ShiftGfx05 ; record 5
-	dw Unused_1c_ShiftGfx06 ; record 6
-	dw Unused_1c_ShiftGfx07 ; record 7
-	dw Unused_1c_ShiftGfx08 ; record 8
-	dw Unused_1c_ShiftGfx09 ; record 9
-	dw Unused_1c_ShiftGfx10 ; record 10
-	dw Unused_1c_ShiftGfx11 ; record 11
-	dw Unused_1c_ShiftGfx12 ; record 12
-	dw Unused_1c_ShiftGfx13 ; record 13
-	dw Unused_1c_ShiftGfx14 ; record 14
-	dw Unused_1c_ShiftGfx15 ; record 15
-CharDataScreenAnimTask_CharDataFlushChunkTable:
+	dw CharDataShiftGfx00 ; record 0
+	dw CharDataShiftGfx01 ; record 1
+	dw CharDataShiftGfx02 ; record 2
+	dw CharDataShiftGfx03 ; record 3
+	dw CharDataShiftGfx04 ; record 4
+	dw CharDataShiftGfx05 ; record 5
+	dw CharDataShiftGfx06 ; record 6
+	dw CharDataShiftGfx07 ; record 7
+	dw CharDataShiftGfx08 ; record 8
+	dw CharDataShiftGfx09 ; record 9
+	dw CharDataShiftGfx10 ; record 10
+	dw CharDataShiftGfx11 ; record 11
+	dw CharDataShiftGfx12 ; record 12
+	dw CharDataShiftGfx13 ; record 13
+	dw CharDataShiftGfx14 ; record 14
+	dw CharDataShiftGfx15 ; record 15
+CharDataShiftGfxFramesB:
 	; $5699, 32 bytes (records:2)
-	dw Unused_1c_ShiftGfx16 ; record 0
-	dw Unused_1c_ShiftGfx17 ; record 1
-	dw Unused_1c_ShiftGfx18 ; record 2
-	dw Unused_1c_ShiftGfx19 ; record 3
-	dw Unused_1c_ShiftGfx20 ; record 4
-	dw Unused_1c_ShiftGfx21 ; record 5
-	dw Unused_1c_ShiftGfx22 ; record 6
-	dw Unused_1c_ShiftGfx23 ; record 7
-	dw Unused_1c_ShiftGfx24 ; record 8
-	dw Unused_1c_ShiftGfx25 ; record 9
-	dw Unused_1c_ShiftGfx26 ; record 10
-	dw Unused_1c_ShiftGfx27 ; record 11
-	dw Unused_1c_ShiftGfx28 ; record 12
-	dw Unused_1c_ShiftGfx29 ; record 13
-	dw Unused_1c_ShiftGfx30 ; record 14
-	dw Unused_1c_ShiftGfx31 ; record 15
+	dw CharDataShiftGfx16 ; record 0
+	dw CharDataShiftGfx17 ; record 1
+	dw CharDataShiftGfx18 ; record 2
+	dw CharDataShiftGfx19 ; record 3
+	dw CharDataShiftGfx20 ; record 4
+	dw CharDataShiftGfx21 ; record 5
+	dw CharDataShiftGfx22 ; record 6
+	dw CharDataShiftGfx23 ; record 7
+	dw CharDataShiftGfx24 ; record 8
+	dw CharDataShiftGfx25 ; record 9
+	dw CharDataShiftGfx26 ; record 10
+	dw CharDataShiftGfx27 ; record 11
+	dw CharDataShiftGfx28 ; record 12
+	dw CharDataShiftGfx29 ; record 13
+	dw CharDataShiftGfx30 ; record 14
+	dw CharDataShiftGfx31 ; record 15
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (blit_runs)
 	blit_run 0, 3, 0, 10

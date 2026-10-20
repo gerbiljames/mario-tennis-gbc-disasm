@@ -147,15 +147,24 @@ wStoryModeInteractRequest:: db
 wStoryModeMenuRequest:: db
 	ds 10
 
+UNION
 ; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
 wMapSceneStage:: db
-
-UNION
 ; [8-bit] Second per-location scene stage, set by map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, ComputeSeniorCourtStage) and read by that location's NPC scripts to pick a text id
 wMapSceneStage2:: db
 NEXTU
+	ds 1
 ; [8-bit] Training Court (bank $15): the actor slot of the challenger a result scene walks on, from TrainingCourtReentryDispatch or the scene itself: $06 Bob (serve), $0c Allie (stroke), $11 Brian (net)
 wChallengerActor:: db
+NEXTU
+; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyEntry02Scene, IslandSkyEntry0eScene, IslandSkyEntry0fAnd0dScene and the plane sprite drawers)
+; [8-bit] World X of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollX
+wCutscenePlaneX:: db
+; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
+wCutscenePlaneY:: db
+NEXTU
+; [16-bit] Frames left in Unused_10_SwingContestPrototype; Unused_10_SwingContestCountTask counts it down (the bank $15 contest keeps it 2 bytes higher)
+wUnusedSwingProtoTimer:: dw
 ENDU
 
 ; Per-location scratch, rest of $c2b0-$c2bf. Bank $14's island cutscenes
@@ -176,8 +185,8 @@ wCutsceneObjTimer:: dw
 wCutsceneObjLimit:: dw
 ; [2 bytes] Frames left in the rise, counted down by AdvanceWaterSplash0Rise_14 / AdvanceWaterSplash1Rise_14, which also lift wCutsceneObjY by 2 per frame
 wCutsceneObjRiseTimer:: dw
-; [2 bytes] Per-slot active flag; 0 = still rising, hit test skipped
-wCutsceneObjActive:: dw
+; [2 bytes] Per-slot halt flag: 0 while the effect runs (cleared when it starts), 1 set just before the scene exits. Nonzero skips the rise step and the island anim tick, and lets a splash finish instead of respawning
+wCutsceneObjHalt:: dw
 NEXTU
 ; water-sprite swing contest (bank $15)
 	ds 2
@@ -194,15 +203,23 @@ wSwingContestHudMode:: db
 ; [8-bit] HUD page shown; seeded by InitWaterSpriteMinigameHud, panels queued by QueueWaterSpriteMinigameHudPanels
 wSwingContestHudPage:: db
 NEXTU
+; bank $10's swing contest prototype (Unused_10_SwingContestPrototype)
+; [16-bit] Swings counted and printed by PrintHexWord
+wUnusedSwingProtoSwings:: dw
+; [8-bit] Previous frame's A/B state
+wUnusedSwingProtoPrevInput:: db
+; [8-bit] 1 while the count task runs; the prototype waits for 0
+wUnusedSwingProtoRunning:: db
+NEXTU
 ; Training Court challenger dialogue ids (bank $15, $5d00-$6400)
-; [16-bit] Each challenger result scene writes its court's lose-dialogue text id here ($201d serve, $204a net, $2078 stroke) on a lost point, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerLoseTextId
-wUnusedChallengerLoseTextId:: dw
-; [16-bit] Lose-dialogue text id seeded per court by the challenger setup scenes; the result handler's .lose arm passes it to InitDialogueTextCursor
-wChallengerLoseTextId:: dw
-; [16-bit] Win-dialogue text id, read by the result handler's finish arm
-wChallengerWinTextId:: dw
-; [16-bit] Draw-dialogue text id, read by the result handler's draw arm
-wChallengerDrawTextId:: dw
+; [16-bit] Each challenger result scene writes its court's tied-point text id here ($201d serve, $204a net, $2078 stroke) when wPointWinLoseFlag is WINLOSE_NONE, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerTiedTextId
+wUnusedChallengerTiedTextId:: dw
+; [16-bit] Tied-point text id (Text_*TiedKeepGoing) seeded per court by the challenger setup scenes; ChallengerResultTied (WINLOSE_NONE) speaks it
+wChallengerTiedTextId:: dw
+; [16-bit] Rival-won text id, spoken by ChallengerResultRivalWon (WINLOSE_LOSE, the player lost)
+wChallengerRivalWonTextId:: dw
+; [16-bit] Rival-lost text id, spoken by ChallengerResultRivalLost (WINLOSE_WIN, the player won)
+wChallengerRivalLostTextId:: dw
 ; [16-bit] Follow-up dialogue text id spoken after the verdict line; overlaps the swing contest's two HUD bytes
 wChallengerFollowupTextId:: dw
 NEXTU
@@ -211,7 +228,7 @@ NEXTU
 wMapScratch:: ds 14
 ENDU
 
-; [8 bytes] Staging copy of one map-table record, far-copied from wStoryLocationBank after FindStoryScriptEntry finds it. A map_entry gives facing at +1, X and Y at +2 and +4, arrival_script at +6; a map_script gives the flag condition at +2, the handler at +4 and two argument bytes at +6/+7 (RunLocationExit reads them as destination location and entry point)
+; [8 bytes] Staging copy of one map-table record, far-copied from wStoryLocationBank after FindStoryScriptEntry finds it. Read through the MAPENTRY_* or MAPSCRIPT_* fields (RunLocationExit reads the two map_script args as destination location and entry point)
 wStoryMapRecord:: ds 8
 	export_size wStoryMapRecord
 	ds 8
@@ -256,10 +273,10 @@ wUnusedDrillPointStartByte:: db
 ; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
-; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back
-wDrillTargetZoneHitBits:: db
+; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneMiss when the ball's first bounce landed outside the target zone (IsBallInTargetZone returned z); CountDrillTargetZoneMisses and CheckDrillTargetZoneHit read it back
+wDrillTargetZoneMissBits:: db
 
-; [8-bit] One bit per point of the drill, set by RecordGateCrossOnServe when the serve passed through the gate; counted by CountDrillResultBitsSetAlt
+; [8-bit] One bit per point of the drill, set by RecordGateCrossOnServe when the serve passed through the gate; counted by CountDrillGateCrosses, this point's bit tested by TestDrillGateCrossThisPoint
 wDrillGateCrossBits:: db
 
 ; [8-bit] Queued drill message: index into DrillMessageTextIds_0b, $ff = none. Set by the Queue*/Set*Message helpers from the point outcome and server; ShowQueuedDrillMessage defaults it to $6c and shows it
@@ -269,7 +286,7 @@ wDrillMessageId:: db
 wDrillCounters:: ds 9
 	ds 8
 
-; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1/-1 from CheckDrillTargetZoneMissed
+; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1 (target hit) / -1 (missed) from CheckDrillTargetZoneHit
 wDrillServeTargetResult:: dw
 	ds 2
 
@@ -277,7 +294,7 @@ wDrillServeTargetResult:: dw
 wDrillShotResultBits:: dw
 	ds 1
 
-; [8-bit] Judgement of the current drill point, 0 until judged. *JudgeOn* hooks store their JudgePoint result; JudgePoint returns early while it is nonzero, so the first judgement wins
+; [8-bit] Judgement of the current drill point in WINLOSE_* terms for the drilling player: WINLOSE_NONE until judged, then WINLOSE_WIN or WINLOSE_LOSE. *JudgeOn* hooks store their JudgePoint result; JudgePoint returns early while it is nonzero, so the first judgement wins. The HandlePointEnd routines copy it into wPointWinLoseFlag, negated on odd points
 wDrillPointJudgement:: db
 
 ; [32 bytes] One tilemap row of CGB attributes, sent to VRAM bank 1 at wBGRowBlitDest by ProcessBGBlitQueue (VRAM DMA) when hBGRowBlitPending is set
@@ -341,7 +358,7 @@ wUnusedPrevSceneIndex:: db
 ; 0x04 - Status Screen
 ; 0x05 - Dictionary
 ; 0x06 - Exhibition Match
-; 0x07 - Unused
+; 0x07 - Exhibition Match (link)
 ; 0x08 - Mario Minigame Screen
 ; 0x09 - You Win
 ; 0x0a - You Lose
@@ -376,7 +393,7 @@ wUnusedPrevSceneIndex:: db
 ; 0x27 - Island Open Semifinals
 ; 0x28 - Island Open Finals
 ; 0x29 - Dream Match
-; 0x2a - Unused
+; 0x2a - Island Open Lost
 ; 0x2b - Island Open Congratulations
 ; 0x2c - Credits
 ; 0x2d - The End
@@ -399,8 +416,8 @@ wTextNumberRightAlign:: db
 ; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth print as text id $1b + id
 wTextCharNameArg:: db
 
-; [8-bit] Glyph-row indent, stored negated. The dialogue setup writes -c; StartGlyphStreamRow's caller negates and doubles it and adds it to wGlyphVramDest. Zeroed when a text window closes
-wTextRowIndent:: db
+; [8-bit] Destination row pitch, negated: the text setup writes -c (-$20 for a tilemap); TextCmdNextGlyphStreamRow negates and doubles it to step wTextRowStartPtr two rows. Zeroed when a text window closes
+wTextRowPitchNeg:: db
 
 ; [8-bit] Screen shake strength: $ff = off, else 1-3 (SetScreenShake clamps to 3 and registers/unregisters the UpdateScreenShake frame task). UpdateScreenShake masks a random word to that many bits for the two offsets
 wScreenShakeMagnitude:: db
@@ -417,8 +434,8 @@ wScreenShakeOffsetY:: db
 wCurrentStorySlot:: db
 	ds 2
 
-; [8-bit] Nonzero when the EXP screen has a bonus to add after the gauge fills; the level-up path folds wExpBonusAmount into wExpAwardTotal and clears it
-wExpBonusPending:: db
+; [8-bit] Message id Unused_1a_DrawExpBonusMessage shows ($01-$03, $14-$1e) when the EXP screen has a bonus to add after the gauge fills, else 0; the level-up path folds wExpBonusAmount into wExpAwardTotal and clears it
+wExpBonusMessageId:: db
 
 ; [16-bit] The bonus EXP added to wExpAwardTotal after the first fill
 wExpBonusAmount:: dw

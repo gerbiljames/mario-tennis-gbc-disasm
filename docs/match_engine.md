@@ -115,6 +115,7 @@ Minigames and drills plug in through eight banked callbacks. `SetModeHookTable`
 (`$08:$671a`) stores pointer and bank in `wModeHookTable`/`wModeHookBank`;
 `CallModeHook` (`$08:$66f1`) takes the id in `d` and calls the word at
 `table + id*2` in that bank. `wModeHookBank == 0` (a normal match) disables it.
+The ids are `MODEHOOK_*`, in table order below.
 
 | id | Fired from | When |
 |---|---|---|
@@ -405,9 +406,12 @@ Charge then bends it: `WeakenShotByCharge` subtracts `charge*4`,
      `(wAimSpreadBase + |charDepth|/8) * wCharAimOffsetScale/256`, with
      `wAimSpreadBase` `$0220` singles / `$0320` doubles — deeper hitters swing
      the ball further sideways.
-   - `ClampShotTargetX` (`$07:$56e3`) clamps to `-(wCourtLimitX + $20)`, and
-     every path adds or subtracts one `GetRandomAimJitter` (`$07:$570d`) —
-     `rng * wCharAimJitterScale`, high byte only, effectively `rng*scale/16`.
+   - Jitter is `GetRandomAimJitter` (`$07:$570d`): `rng *
+     wCharAimJitterScale`, high byte only, effectively `rng*scale/16`. The
+     four side paths go through `ClampShotTargetX` (`$07:$56e3`), which
+     clamps to `-(wCourtLimitX + $20)` and applies one draw; the centre
+     path (`.straight`) skips the clamp and draws twice, subtracting one
+     (`$56a4`) and adding the other (`$56ad`); the serve gets none.
      **The human is jittered too.**
 3. **Aim angle** = `AngleFromVector16(depth leg, X leg)` → `wShotAimAngle`.
 4. **The distance window** (`$07:$5783`, `$07:$57b8`):
@@ -561,10 +565,11 @@ come from `SelectRallyShotType`/`SelectServeShotType` (see
   about `$150` (≈ 3.2 m) is a power serve.
 
 `ShotRecoilFrameTask` (`$07:$5463`), pushed as `ExecuteShot`'s return address,
-calls `ApplyShotRecoil` (`$07:$546b`): set `CHARB_RECOIL`, quarter the hitter's
+calls `ApplyShotRecoil` (`$07:$546b`), then clears `wCharSwingFrames`
+(`$5466`). `ApplyShotRecoil`: set `CHARB_RECOIL`, clear `CHARB_CHARGING`, quarter the hitter's
 depth velocity (and X unless diving), add a push of the pre-hit ball depth
 velocity scaled by `ShotRecoilTable_07` (indexed by the speed-index byte the
-preset's recoil variant selects), clear `wCharSwingFrames`.
+preset's recoil variant selects).
 
 ## On-court characters
 
@@ -579,8 +584,8 @@ match-relevant fields:
 | Address | Symbol | Notes |
 |---|---|---|
 | `$df00`/`$df03`/`$df06` | `wCharPosX` / `wCharPosDepth` / `wCharPosHeight` | 24-bit |
-| `$df09` | `wCharServeRole` | 0 server, 1 receiver, 2/3 partners, `$09` slot unused |
-| `$df0a` | `wCharCourtPos` | bit 1 = end, bit 0 = lateral half |
+| `$df09` | `wCharServeRole` | `SERVEROLE_*`: 0 server, 1 receiver, 2/3 their partners, `$09` slot unused |
+| `$df0a` | `wCharCourtPos` | `COURTPOS_*`: bit 1 = far end, bit 0 = left half |
 | `$df0b` | `wCharIndex` | 0-3 |
 | `$df0c`-`$df0e` | `wCharBaseFacing` / `wCharFacingDesired` / `wCharFacingShown` | angle bytes |
 | `$df0f` | `wCharFlags` | below |
@@ -617,8 +622,7 @@ match-relevant fields:
 inside the contact window, bit 2 = body contact, bit 4 = **own depth within
 `$2a0` of the net** (`$08:$6ea6-$6ead`), bits 6/7 = lateral / depth steering
 requested. Bit 4 ("at the net") selects the volley/reach shot table and the AI's
-near/far reaction delay. (`include/ram_mirrored.inc` describes bit 4 as "within
-normal reach", which the code does not support.)
+near/far reaction delay. The bits are `BALLREACHB_*`.
 
 ### The frame order for one character
 
@@ -709,8 +713,8 @@ So the 5-frame window is a **simultaneity filter**: a genuine A→B needs the
 second press after it expires.
 
 `SelectRallyShotType` (`$08:$707e`) indexes `button1 + 4*button2` into
-`RallyShotTypeTable0` (reach flags bit 4 set, at the net) or
-`RallyShotTypeTable1`:
+`RallyReachShotTypeTable` (reach flags bit 4 set, at the net) or
+`RallyStandardShotTypeTable`:
 
 | button 1 ↓ / button 2 → | none | A | B |
 |---|---|---|---|
@@ -1285,7 +1289,7 @@ Partner, Partner — not monotonic):
 | 2 | `$06` | `$ca40` — player 1 partner |
 | 3 | `$07` | `$cac0` — player 2 partner |
 
-`InitCa00RecordFromCharId` (`$02:$4066`) fills a slot:
+`InitMatchRecordFromCharId` (`$02:$4066`) fills a slot:
 
 - **Roster character** (id bit 7 clear): 29 bytes from
   `StoryCharacterRecords_02` (`$02:$52cf`, 100 `char_stats_row` rows) into offset

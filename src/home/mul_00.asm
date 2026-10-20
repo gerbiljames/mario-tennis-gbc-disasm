@@ -16,12 +16,12 @@ SignExtendCToBC:
 	ret z ; $091f
 	dec b ; $0920
 	ret ; $0921
-.loop:
+.returnZero:
 	ld hl, $0000 ; $0922
 	ret ; $0925
 MulHLByA:
 	or a ; $0926
-	jr z, SignExtendCToBC.loop ; $0927
+	jr z, SignExtendCToBC.returnZero ; $0927
 	push af ; $0929
 	push de ; $092a
 	ld d, h ; $092b

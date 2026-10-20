@@ -63,7 +63,7 @@ Unused_18_LoadConfirmScreenSpriteGfx:
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5621
-	ld c, 12 ; $5624
+	ld c, ConfirmScreenSpriteGfx1_SIZE / 16 ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
 	ld_obj_pals de, 0, 1 ; $562c
@@ -73,7 +73,7 @@ ConfirmScreenSpriteGfx0:
 	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
 	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
 ; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. Nothing references it.
-ConfirmScreenSpriteTemplate:
+Unused_18_ConfirmScreenSpriteTemplate:
 	; $57f4, 57 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -93,25 +93,31 @@ ConfirmScreenSpriteTemplate:
 ConfirmScreenSpritePalette0:
 	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette0.asm" ; $582d, 24 bytes (palettes)
 ConfirmScreenSpriteGfx1:
-	INCBIN "data/engine/menus/scenes/ConfirmScreenSpriteGfx1.bin" ; $5845, 77 bytes
-TwoOptionSelectBTable:
-	; $5892, 27 bytes (bytes:16)
-	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
-	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
+	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.bin" ; $5845, 104 bytes
+	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.inc" ; DEF ConfirmScreenSpriteGfx1_SIZE EQU its decoded length, generated from the .bin by make
 ConfirmScreenSpritePalette1:
 	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette1.asm" ; $58ad, 48 bytes (palettes)
-ConfirmScreenSpritePalette1Pad:
+Padding_18_1:
 	; $58dd, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
 CharSelectCursorGfx:
-	INCBIN "data/engine/menus/scenes/CharSelectCursorGfx.bin" ; $58e0, 217 bytes
+	INCBIN "data/engine/menus/scenes/CharSelectCursorGfx.bin" ; $58e0, 192 bytes
+Unused_18_CharSelectCursorTemplate:
+	; $59a0, 25 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite_end
 CharSelectCursorPalette:
 	INCLUDE "data/engine/menus/scenes/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
 Unused_18_LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, vTiles0 tile $40 ; $59c4
-	ld c, 12 ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
+	ld c, (Unused_18_CharSelectCursorTemplate - CharSelectCursorGfx) / 16 ; $59c7
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc
 	ld_obj_pals de, 2, 1 ; $59cf
@@ -407,11 +413,11 @@ PlayScreenSequence0:
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
 	frame_task QueueScreen0Sprites ; $770e
-.done:
+.waitDismiss:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
 	and PADF_A | PADF_B ; $771b
-	jr z, .done ; $771d
+	jr z, .waitDismiss ; $771d
 	ret ; $771f
 SetupScreen0Assets:
 	call ResetScrollAndCamera ; $7720

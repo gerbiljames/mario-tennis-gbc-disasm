@@ -171,7 +171,7 @@ UpdateMatchFrame:
 	call UpdateBallVisuals ; $4212
 	call TickRallyTimers ; $4215
 	call HandleBallBounceEvent ; $4218
-	ld d, $00 ; $421b
+	ld d, MODEHOOK_PER_FRAME ; $421b
 	call CallModeHook ; $421d
 	ld_slot hl, FarPtr_UpdateAllObjSprites ; $4220
 	call FarCallVector ; $4223
@@ -217,7 +217,7 @@ TickRallyTimers:
 	ld hl, SetCharStateForRallyTick ; $4268
 	call ForEachCharBank ; $426b
 .modeHook:
-	ld d, $06 ; $426e
+	ld d, MODEHOOK_RALLY_TICK ; $426e
 	call CallModeHook ; $4270
 	ret ; $4273
 SetCharStateForRallyTick:
@@ -249,7 +249,7 @@ HandleBallHitEvent:
 	wram_bank WRAM_ACTORS ; $42b3
 	call SetCharStateOnBallHit ; $42b9
 	call DetectServeAceOutcome ; $42bc
-	ld d, $04 ; $42bf
+	ld d, MODEHOOK_BALL_HIT ; $42bf
 	call CallModeHook ; $42c1
 	xor a ; $42c4
 	ld [wBallBounceCount], a ; $42c5
@@ -266,7 +266,7 @@ HandleBallHitEvent:
 	ld a, BANNER_POWER_SERVE ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [wServingCharCourtPos] ; $42df
-	and $02 ; $42e2
+	and COURTPOSF_FAR ; $42e2
 	ld de, $f0d8 ; $42e4
 	jr z, .placeEffect ; $42e7
 	ld de, $f000 ; $42e9
@@ -313,7 +313,7 @@ DetectServeAceOutcome:
 	ld b, POINTOUTCOME_WRONG_RECEIVER ; $4333
 	ld c, $ff ; $4335
 	ld a, [wLastShotServeRole] ; $4337
-	cp $01 ; $433a
+	cp SERVEROLE_RECEIVER ; $433a
 	jr nz, .setOutcome ; $433c
 	ld b, POINTOUTCOME_SERVE_VOLLEYED ; $433e
 	ld c, $ff ; $4340
@@ -347,7 +347,7 @@ HandleBallBounceEvent:
 	ld [wLandingMarkerActive], a ; $436a
 	call StartBounceEffect ; $436d
 	call EvaluateBounceOutcome ; $4370
-	ld d, $05 ; $4373
+	ld d, MODEHOOK_BOUNCE ; $4373
 	call CallModeHook ; $4375
 	ret ; $4378
 EvaluateBounceOutcome:

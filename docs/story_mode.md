@@ -179,11 +179,11 @@ Each location bank `$0e`-`$15` opens with a directory sized to its locations
 
 | off | field |
 | --- | --- |
-| +$00 | entry-point id (matched against `wStoryModeEntryPoint`) |
-| +$01 | facing (`FACE_*`) |
-| +$02 | X (16-bit) |
-| +$04 | Y (16-bit) |
-| +$06 | `arrival_script` — same-bank code address, `$0000` = none |
+| +$00 | `MAPENTRY_ID`: entry-point id (matched against `wStoryModeEntryPoint`) |
+| +$01 | `MAPENTRY_FACING`: facing (`FACE_*`) |
+| +$02 | `MAPENTRY_X`: X (16-bit) |
+| +$04 | `MAPENTRY_Y`: Y (16-bit) |
+| +$06 | `MAPENTRY_SCRIPT`: `arrival_script` — same-bank code address, `$0000` = none |
 
 The matched record goes to `wStoryMapRecord`, then is split into
 `wStoryModeSpawnPosition` (X, Y, facing) and `wStoryArrivalScript`. X and Y
@@ -321,12 +321,12 @@ Slots 1, 3, 4, 5 share this shape and one lookup, `FindStoryScriptEntry`
 
 | off | field |
 | --- | --- |
-| +$00 | `id` — matched against the lookup key (`$ff` terminates) |
-| +$01 | `facing_mask` — `FACEMASK_*`; `$ff` matches any |
-| +$02 | `flag_cond` — flag-id word, `$0000` = unconditional |
-| +$04 | `handler` — text id if `< $4000`, else a code address in `wStoryLocationBank` |
-| +$06 | `arg0` |
-| +$07 | `arg1` |
+| +$00 | `MAPSCRIPT_ID`: `id` — matched against the lookup key (`$ff` terminates) |
+| +$01 | `MAPSCRIPT_FACING_MASK`: `facing_mask` — `FACEMASK_*`; `$ff` matches any |
+| +$02 | `MAPSCRIPT_FLAG_COND`: `flag_cond` — flag-id word, `$0000` = unconditional |
+| +$04 | `MAPSCRIPT_HANDLER`: `handler` — text id if `< $4000`, else a code address in `wStoryLocationBank` |
+| +$06 | `MAPSCRIPT_ARG0`: `arg0` |
+| +$07 | `MAPSCRIPT_ARG1`: `arg1` |
 
 `CheckTriggerFacingMask` (`$0a:$53bd`) maps `wPlayerMoveAngle`'s top two
 bits through `FacingMaskTable_0a` to a PADF-layout bit and ANDs the mask, so
@@ -533,7 +533,7 @@ player in place.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), in the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global |
 | accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 137 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants/` |
+| names | 166 `FLAG_*` in `include/flag_constants.inc` | 49 `SAVEFLAG_*` in `include/constants/` |
 
 Both use one encoding: flag number = `byte * 8 + bit`; the inline operand is
 `bit << 5` then the byte index; the mask is `$80 >> bit`. `test_flag` leaves
@@ -557,7 +557,9 @@ screen-mode bits that cannot outlive a map transition.
 `SAVEFLAG_*` covers what survives a slot erase: character unlocks
 (`SAVEFLAG_UNLOCKED_FAY` … `_ELDEN`, plus flags 20-31 whose number equals the
 character id they unlock), arcade-minigame clears, court unlocks, the
-per-slot "save exists" A/B bits, `SAVEFLAG_OPENING_SEEN`, and
+per-slot option bits (A = music on/off, `SetStorySlotFlagA` from
+`StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotFlagB` from
+`MatchPauseMenu_CameraSelect`), `SAVEFLAG_OPENING_SEEN`, and
 `SAVEFLAG_DEBUG_TEST_MENU`.
 
 ### The ranking ladder and the tournament arc
@@ -592,16 +594,16 @@ match-end routine: it checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
 sets the flag. E.g. on a win `JuniorClassCourtDoublesMatchReturn`
 (`$11:$5d38`) reloads the court at entry `$0d`, and
 `JuniorClassCourtDoublesEntry0dScene` dispatches on
-`wCurrentMinigameStoryMatch + 1` (`$11:$5daa`) to `set_flag
-FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm` lines 41,
-84, 126). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
+`wCurrentMatchIndex` (`$11:$5daa`) to `set_flag
+FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`.wonRank3`/`2`/`1`, `$11:$5db7`/
+`$5ec0`/`$5fbd`). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
 (`$1e:$6edc`) indexes `MinigameClearFlagTable_1e` and calls `SetSaveFlag`.
 
 `CheckAllProgressComplete` (`$1e:$6f8d`, from `ProcessMatchRewards` after
 every rewarded match) walks 36 game flags — `AllProgressFlagList_1e` (both
 Dream Matches, every class's rank-1 win in both arcs, both Island Open
 finals) and, running past its end, the 26 drill/machine/wall clears of
-`RewardFlagListMode2_1e` — and when all are set grants
+`RewardFlagListTraining_1e` — and when all are set grants
 `SAVEFLAG_COURT_STAR`. The Star Court is the exhibition unlock for finishing
 everything in both arcs, granted on the completing match;
 `FLAG_STORY_COMPLETE_*` itself grants nothing permanent.
@@ -610,8 +612,8 @@ everything in both arcs, granted on the completing match;
 
 A story match writes a big-endian id to `wCurrentMinigameStoryMatch`
 (`$c8f6`) and calls `LoadMatchSettingsFromTable` (the `load_match_settings`
-macro). High byte = category (0 singles, 1 doubles, 2 minigame/training), low
-byte = match; the `wCurrentMinigameStoryMatch` note in `ram/wram/` lists them all.
+macro). High byte `wCurrentMatchList` = category (0 singles, 1 doubles,
+2 minigame/training), low byte `wCurrentMatchIndex` = match; the `wCurrentMinigameStoryMatch` note in `ram/wram/` lists them all.
 
 `LoadMatchSettingsFromTable` (`$0a:$4a5c`) indexes
 `SinglesMatchSettingsTable_0a` (`$0a:$4ab2`) or `DoublesMatchSettingsTable_0a`
@@ -624,7 +626,7 @@ with one set of two games.
 (`$0a:$49aa`) and `RunMatch`; on return a save-and-quit saves and goes to the
 main menu, otherwise the caller's cutscene continues.
 `AssignStoryMatchCharacters` fills the four on-court records via
-`InitCa00RecordFromCharId`: selectors `$80`/`$81` copy the story main/partner
+`InitMatchRecordFromCharId`: selectors `$80`/`$81` copy the story main/partner
 record, the opponent uses its character id, and its doubles partner comes
 from `DoublesPartnerTable_0a` (`$0a:$49d9`) by opponent id.
 `RestoreOverworldAfterMatch` (`$0a:$4991`) restores palettes and menu font.
@@ -642,7 +644,7 @@ pairs: the twelve `$27` "End*" rooms plus Island Sky, Center Court, Peach's
 Castle and Special Court. After each `RunStoryLocation`, unless
 `FLAG_ENDING_CREDITS_PENDING` was raised, it freezes the actors, fades to
 grayscale and plays `PlayScrollingStoryCutscene` (bank `$03`).
-`ShowStoryResultScreen` closes the sequence. The index is read with `ld a,
+`ShowFinalCreditsCard` closes the sequence. The index is read with `ld a,
 [wStoryCharacterSlot]`; the `byte0 == 0` branch at `$0a:$6ea4`-`$6eab`
 computes `sprite * 2` and discards it, and no record has a zero first byte.
 
@@ -664,7 +666,7 @@ montage (`PlayScrollingStoryCutscene`).
 | --- | --- |
 | `$c900` / `$c940` | live story main character / partner — `GetPlayerRecordPtr` (`$02:$4206`): `$c900` for selector 0, else `$c940` |
 | `$c800` / `$c840` | a mirror of that pair, kept in step by a 128-byte copy and its own `RecomputeCharacterStats` (`$02:$4795`-`$47c2`) after an Iron racket or Iron shoes are dropped from the mirror's `+$3c`; front of the saved slot image |
-| `$ca00` + slot*`$40` | the four on-court match characters — `GetCa00RecordPtr` (`$02:$420e`) |
+| `$ca00` + slot*`$40` | the four on-court match characters — `GetMatchRecordPtr` (`$02:$420e`) |
 | `StoryCharacterRecords_02` | ROM attribute database, 29 bytes per character id, copied to `+$0f`-`+$2b` |
 
 Fields (code in `src/engine/story/*_02.asm`):
@@ -688,12 +690,12 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$3c | equipment: low nibble racket, high nibble shoes |
 | +$3d-$3f | never written or read |
 
-`ram/wram/` names `+$18` `wSavedMainLevel` at `$c818` but
-`wStoryMainLevel` at `$c918`; for player characters the byte is a
+`+$18` is `wStoryMainLevel` (`$c918`; the save copy is
+`wSavedMainLevel`, `$c818`); for player characters the byte is a
 level, and `LookupExpTierForChar` (`$1e:$693e`,
 `src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
 
-`InitCa00RecordFromCharId` (`$02:$4066`) zeroes the 64 bytes, then by
+`InitMatchRecordFromCharId` (`$02:$4066`) zeroes the 64 bytes, then by
 selector: `$ff` empty (`+$0b = $ff`); `$90` the "main character" placeholder;
 bit 7 set copies the story record at `$c900 + (b & 1) * $40`; bit 7 clear
 loads character id *b* from `StoryCharacterRecords_02`, fetching the name
@@ -710,9 +712,10 @@ bar  = count of thresholds raw clears (0-9)     ; LookupStatBarLevel, 9-entry si
 ```
 
 `record[+$0b] & 3` picks one of four 113-byte archetype tables via
-`StatArchetypePtrs_02` (`StatArchetype0_02`-`3_02`): a tier byte, the
-12-byte template copied to `+$30`-`+$3b` at build time, eleven
-`stat_thresholds` rows, a `$ff` end byte.
+`StatArchetypePtrs_02` (`StatArchetype0_02`-`3_02`, laid out as `STATARCH_*`):
+a tier byte, the 12-byte template copied to `+$30`-`+$3b` at build time,
+eleven `stat_thresholds` rows, then (level, icon) modifier pairs to a `$ff`
+(every archetype has none).
 
 | trainable level | feeds |
 | --- | --- |
@@ -754,7 +757,7 @@ level-99 requirement is under 65536. Awards are staged per source
 (`wPendingExpStory`, `wPendingExpTrophy`, `wPendingExpExhibition`,
 `wPendingExpLinked`) and applied by `ApplyPendingExpAwards` (`$1e:$6afd`) on
 the next slot load; `ScaleExpByPlayerLevel` averages the two story records'
-`+$18` and scales as the average crosses 10/20/30/40/50.
+`+$18` and scales by x1, x1.5, x2 … x3.5 in steps of 10 levels, x4 from 60.
 
 ### Save signature
 
@@ -813,12 +816,11 @@ settings); `$dc08` `wStorySceneRecord` (bank `$06`).
   Menu state is in WRAM bank `$05` over the idle far-P1 character struct
   (`wClearStatusMode` / `Doubles` / `Format` / `Class` / `Rank` / `WindowId`
   / `ResultCode`, `$df00`-`$df06`, range-scoped).
-  `TrainingCourtClearFlagListPtrs_0a` (`$0a:$4dec`) parallels the branches
+  `Unused_0a_TrainingCourtClearFlagListPtrs` (`$0a:$4dec`) parallels the branches
   but has no reader.
 * **`$ff, $c9` list endings.** The `$c9` after the `$ff` of
   `JuniorClassCourtSinglesEntryPoints_11`,
   `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is an
   unreferenced one-byte `ret` script, carved as `Unused_11_NullScriptA`-`C`.
-  `FireworkMapActors_14` (`$14:$6675`) and a same-shaped bank `$1a` table
-  carry one `$00` past `map_actor_end` (padding before a 2 KiB tile blob),
-  rendered as `db $00`.
+  `FireworkMapActors_14` (`$14:$6675`) carries one `$00` past
+  `map_actor_end` (padding before a 2 KiB tile blob), rendered as `db $00`.

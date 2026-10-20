@@ -235,9 +235,9 @@ IslandSkyInitScript_14:
 	call LoadWaterSplashObjGfx_14 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312
-	ld [wMapSceneStage], a ; $5314
+	ld [wCutscenePlaneX], a ; $5314
 	ld a, $88 ; $5317
-	ld [wMapSceneStage2], a ; $5319
+	ld [wCutscenePlaneY], a ; $5319
 	frame_task QueuePlaneSpriteByHeight_14 ; $531c
 	test_flag FLAG_DOUBLES ; $5324
 	jp z, .setPlayerObjDef ; $5327
@@ -272,9 +272,9 @@ IslandSkyInitScript_14:
 	script_fade_in 4 ; $5387
 	call WaitFadeEnd ; $538c
 	ld a, $3b ; $538f
-	ld [wMapSceneStage], a ; $5391
+	ld [wCutscenePlaneX], a ; $5391
 	ld a, $a8 ; $5394
-	ld [wMapSceneStage2], a ; $5396
+	ld [wCutscenePlaneY], a ; $5396
 	jp .afterFlight ; $5399
 .fadeIn:
 	xor a ; $539c
@@ -288,9 +288,9 @@ IslandSkyInitScript_14:
 .levelFlightLoop:
 	script_wait_frames 6 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
-	ld a, [wMapSceneStage2] ; $53c8
+	ld a, [wCutscenePlaneY] ; $53c8
 	inc a ; $53cb
-	ld [wMapSceneStage2], a ; $53cc
+	ld [wCutscenePlaneY], a ; $53cc
 	dec h ; $53cf
 	jr nz, .levelFlightLoop ; $53d0
 	ld h, $08 ; $53d2
@@ -299,102 +299,102 @@ IslandSkyInitScript_14:
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
 	and $01 ; $53df
-	jr z, .advanceStage ; $53e1
-	ld a, [wMapSceneStage] ; $53e3
+	jr z, .shallowFlightStep ; $53e1
+	ld a, [wCutscenePlaneX] ; $53e3
 	dec a ; $53e6
-	ld [wMapSceneStage], a ; $53e7
-.advanceStage:
-	ld a, [wMapSceneStage2] ; $53ea
+	ld [wCutscenePlaneX], a ; $53e7
+.shallowFlightStep:
+	ld a, [wCutscenePlaneY] ; $53ea
 	inc a ; $53ed
-	ld [wMapSceneStage2], a ; $53ee
+	ld [wCutscenePlaneY], a ; $53ee
 	dec h ; $53f1
 	jr nz, .shallowFlightLoop ; $53f2
 	ld h, $08 ; $53f4
-.checkStage:
+.steepFlightLoop:
 	script_wait_frames 4 ; $53f6
 	call PlayPlaneMoveSfx_14 ; $53fd
-	ld a, [wMapSceneStage] ; $5400
+	ld a, [wCutscenePlaneX] ; $5400
 	dec a ; $5403
-	ld [wMapSceneStage], a ; $5404
-	ld a, [wMapSceneStage2] ; $5407
+	ld [wCutscenePlaneX], a ; $5404
+	ld a, [wCutscenePlaneY] ; $5407
 	inc a ; $540a
-	ld [wMapSceneStage2], a ; $540b
+	ld [wCutscenePlaneY], a ; $540b
 	dec h ; $540e
-	jr nz, .checkStage ; $540f
+	jr nz, .steepFlightLoop ; $540f
 	script_player_speed 0.5625 ; $5411
 	script_move_player_to_actor ACTOR_PLAYER ; $5417
 	ld h, $1c ; $541e
-.descend:
+.boardFlightLoop:
 	script_wait_frames 3 ; $5420
 	call PlayPlaneMoveSfx_14 ; $5427
 	ld a, h ; $542a
 	and $01 ; $542b
-	jr z, .landed ; $542d
-	ld a, [wMapSceneStage] ; $542f
+	jr z, .boardFlightStep ; $542d
+	ld a, [wCutscenePlaneX] ; $542f
 	dec a ; $5432
-	ld [wMapSceneStage], a ; $5433
-.landed:
-	ld a, [wMapSceneStage2] ; $5436
+	ld [wCutscenePlaneX], a ; $5433
+.boardFlightStep:
+	ld a, [wCutscenePlaneY] ; $5436
 	inc a ; $5439
-	ld [wMapSceneStage2], a ; $543a
+	ld [wCutscenePlaneY], a ; $543a
 	dec h ; $543d
-	jr nz, .descend ; $543e
+	jr nz, .boardFlightLoop ; $543e
 .afterFlight:
 	ld h, $00 ; $5440
-.placeActors:
+.approachLoop:
 	script_wait_frames 3 ; $5442
 	inc h ; $5449
 	call PlayPlaneMoveSfx_14 ; $544a
-	ld a, [wMapSceneStage2] ; $544d
+	ld a, [wCutscenePlaneY] ; $544d
 	inc a ; $5450
-	ld [wMapSceneStage2], a ; $5451
+	ld [wCutscenePlaneY], a ; $5451
 	and $03 ; $5454
 	cp $03 ; $5456
-	jr nz, .placeDoubles ; $5458
-	ld a, [wMapSceneStage] ; $545a
+	jr nz, .approachStep ; $5458
+	ld a, [wCutscenePlaneX] ; $545a
 	dec a ; $545d
-	ld [wMapSceneStage], a ; $545e
-.placeDoubles:
-	ld a, [wMapSceneStage] ; $5461
+	ld [wCutscenePlaneX], a ; $545e
+.approachStep:
+	ld a, [wCutscenePlaneX] ; $5461
 	cp $20 ; $5464
-	jr nz, .placeActors ; $5466
+	jr nz, .approachLoop ; $5466
 	ld h, $08 ; $5468
-.walkOff:
+.landLoop:
 	script_wait_frames 4 ; $546a
 	call PlayPlaneMoveSfx_14 ; $5471
-	ld a, [wMapSceneStage2] ; $5474
+	ld a, [wCutscenePlaneY] ; $5474
 	inc a ; $5477
-	ld [wMapSceneStage2], a ; $5478
+	ld [wCutscenePlaneY], a ; $5478
 	dec h ; $547b
-	jr nz, .walkOff ; $547c
+	jr nz, .landLoop ; $547c
 	sound SFX_PLANE ; $547e
 	ld h, $08 ; $5480
-.speak:
+.touchdownLoop:
 	script_wait_frames 6 ; $5482
-	ld a, [wMapSceneStage2] ; $5489
+	ld a, [wCutscenePlaneY] ; $5489
 	inc a ; $548c
-	ld [wMapSceneStage2], a ; $548d
+	ld [wCutscenePlaneY], a ; $548d
 	dec h ; $5490
-	jr nz, .speak ; $5491
+	jr nz, .touchdownLoop ; $5491
 	sound SFX_FIREWORK_SPARKLE ; $5493
 	ld h, $04 ; $5495
-.speakDoubles:
+.rollLoop:
 	script_wait_frames 8 ; $5497
-	ld a, [wMapSceneStage2] ; $549e
+	ld a, [wCutscenePlaneY] ; $549e
 	inc a ; $54a1
-	ld [wMapSceneStage2], a ; $54a2
+	ld [wCutscenePlaneY], a ; $54a2
 	dec h ; $54a5
-	jr nz, .speakDoubles ; $54a6
+	jr nz, .rollLoop ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $54ab
-	jr z, .setLocation ; $54ad
+	jr z, .landingScene ; $54ad
 	test_flag FLAG_DOUBLES ; $54af
-	jr z, .fadeOut ; $54b2
+	jr z, .singlesArrival ; $54b2
 	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES
-	jr .transition ; $54ba
-.fadeOut:
+	jr .toCourtyard ; $54ba
+.singlesArrival:
 	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES
-.transition:
+.toCourtyard:
 	script_fade_out 4 ; $54c1
 	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
@@ -406,7 +406,7 @@ IslandSkyInitScript_14:
 	ld [wUnusedExitTriggerIdMirror], a ; $54d8
 	ld [wStoryModeExitTriggerRequest], a ; $54db
 	ret ; $54de
-.setLocation:
+.landingScene:
 	ld a, $40 ; $54df
 	ld [wCutsceneObjX], a ; $54e1
 	ld a, $00 ; $54e4
@@ -416,7 +416,7 @@ IslandSkyInitScript_14:
 	ld a, $10 ; $54ed
 	ld [wCutsceneObjRiseTimer], a ; $54ef
 	ld a, $00 ; $54f2
-	ld [wCutsceneObjActive], a ; $54f4
+	ld [wCutsceneObjHalt], a ; $54f4
 	frame_task UpdateWaterSplash0_14 ; $54f7
 	script_wait_frames 10 ; $54ff
 	ld a, $50 ; $5506
@@ -428,7 +428,7 @@ IslandSkyInitScript_14:
 	ld a, $10 ; $5514
 	ld [wCutsceneObjRiseTimer + 1], a ; $5516
 	ld a, $00 ; $5519
-	ld [wCutsceneObjActive + 1], a ; $551b
+	ld [wCutsceneObjHalt + 1], a ; $551b
 	frame_task UpdateWaterSplash1_14 ; $551e
 	script_wait_frames 80 ; $5526
 	script_set_position ACTOR_ISLAND_SKY_HEADMASTER, 6.0, 41.0 ; $552d
@@ -455,15 +455,15 @@ IslandSkyInitScript_14:
 	script_wait_idle ACTOR_PLAYER ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $55ee
-	jr nz, .done ; $55f0
+	jr nz, .toDormRoom ; $55f0
 	ld a, $01 ; $55f2
-	ld [wCutsceneObjActive], a ; $55f4
-	ld [wCutsceneObjActive + 1], a ; $55f7
+	ld [wCutsceneObjHalt], a ; $55f4
+	ld [wCutsceneObjHalt + 1], a ; $55f7
 	ld a, EXIT_ISLAND_SKY_DONE ; $55fa
 	ld [wUnusedExitTriggerIdMirror], a ; $55fc
 	ld [wStoryModeExitTriggerRequest], a ; $55ff
 	ret ; $5602
-.done:
+.toDormRoom:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613

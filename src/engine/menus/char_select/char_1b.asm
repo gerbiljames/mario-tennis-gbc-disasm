@@ -91,7 +91,7 @@ Unused_1b_DrawCharSelectMugshots:
 	farcall LoadCharacterRecordToBuffer ; $6076
 	farcall CheckCharacterUnlocked ; $6079
 	jr z, .step ; $607c
-	ld a, [wCharRecordScratch + 11] ; $607e
+	ld a, [wCharRecordScratchChar] ; $607e
 	farcall LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
@@ -100,13 +100,9 @@ Unused_1b_DrawCharSelectMugshots:
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
 	call Unused_1b_GetCharSelectRosterField ; $6092
-	ld a, [wCharRecordScratch + 11] ; $6095
+	ld a, [wCharRecordScratchChar] ; $6095
 	add a ; $6098
-	add $c1 ; $6099
-	ld c, a ; $609b
-	adc $c7 ; $609c
-	sub c ; $609e
-	ld b, a ; $609f
+	ld_bc_indexed wNewGameRosterFields + 1 ; $6099
 	ld a, [bc] ; $60a0
 	farcall Unused_1b_SetMugshotAttrs ; $60a1
 .step:
@@ -117,7 +113,7 @@ Unused_1b_DrawCharSelectMugshots:
 	jr nz, .loop ; $60ae
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
-	ld a, [wCharRecordScratch + 11] ; $60b6
+	ld a, [wCharRecordScratchChar] ; $60b6
 	farcall Unused_1b_StubNop0 ; $60b9
 	ret ; $60bc
 Unused_1b_RunCharSelectLoop:
@@ -206,11 +202,7 @@ Unused_1b_UpdateCharSelectSelection:
 	add a ; $617d
 	ld hl, wCharSelectCol ; $617e
 	add [hl] ; $6181
-	add $a0 ; $6182
-	ld l, a ; $6184
-	adc $c7 ; $6185
-	sub l ; $6187
-	ld h, a ; $6188
+	ld_hl_indexed wNavGridBuffer ; $6182
 	ld a, [hl] ; $6189
 	cp $ff ; $618a
 .storeCharSelectChar:
@@ -530,11 +522,11 @@ Unused_1b_RunDebugSaveDataFlow:
 	push de ; $641a
 	push hl ; $641b
 	farcall ClearPendingExpAwards ; $641c
-	ld b, $00 ; $641f
+	ld b, EXPAWARD_N64 ; $641f
 	ld c, $00 ; $6421
 	ld de, $0040 ; $6423
 	farcall SetPendingExpAward ; $6426
-	ld b, $04 ; $6429
+	ld b, EXPAWARD_TROPHY ; $6429
 	ld c, $01 ; $642b
 	ld de, $0077 ; $642d
 	farcall SetPendingExpAward ; $6430

@@ -7,7 +7,7 @@ PackNibblesToBytes:
 .pack:
 	ld c, a ; $49b9
 	ld b, $00 ; $49ba
-	ld de, wLinkByteBuffer ; $49bc
+	ld de, wLinkRxNibbles ; $49bc
 .nibbleLoop:
 	ld a, b ; $49bf
 	and $01 ; $49c0
@@ -434,9 +434,9 @@ SerialDecodeCommand:
 	ldh a, [hLinkRxByte] ; $4c6b
 	ld b, a ; $4c6d
 	and LINKTAG_MASK ; $4c6e
-	cp $80 ; $4c70
+	cp LINKTAG_SLAVE ; $4c70
 	jr z, .decode ; $4c72
-	cp $40 ; $4c74
+	cp LINKTAG_MASTER ; $4c74
 	jr z, .decode ; $4c76
 	sound SFX_BEEP ; $4c78
 	xor a ; $4c7a

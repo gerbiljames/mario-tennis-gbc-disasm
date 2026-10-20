@@ -6,7 +6,7 @@
 	farptr LoadMenuFontGfx ; $400a
 	farptr Unused_01_LoadMenuBgPalettes3To7 ; $400c
 	farptr LoadMenuObjPalettes3To7 ; $400e
-	farptr LoadDebugMenuPalette ; $4010
+	farptr LoadCharObjPalette ; $4010
 	farptr Unused_01_LoadMenuTilesBChunk2 ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
 	farptr Unused_01_RunSoundTest ; $4016
@@ -86,7 +86,7 @@ ENDC
 	pop de ; $40cc
 	jr .setDebugStepMode ; $40cd
 .advanceFrame:
-	bit 3, a ; $40cf
+	bit PADB_START, a ; $40cf
 	jr nz, .setDebugStepMode ; $40d1
 	call AdvanceFrame ; $40d3
 	jr .waitStartLoop ; $40d6
@@ -118,11 +118,11 @@ Unused_01_DebugBootMenu:
 	farcall RunStoryModeOverworld ; $410d
 	jp InitAndRunGame.runMainMenu ; $4110
 .checkSelect:
-	bit 2, a ; $4113
+	bit PADB_SELECT, a ; $4113
 	jr z, .checkA ; $4115
 	farcall Unused_01_RunSoundTest ; $4117
 .checkA:
-	bit 0, a ; $411a
+	bit PADB_A, a ; $411a
 	jr z, .checkB ; $411c
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $411e
 	ldh [hDebugStepMode], a ; $4120
@@ -130,7 +130,7 @@ Unused_01_DebugBootMenu:
 	farcall Unused_07_RunDebugTestMatch ; $4122
 	jr .debugMatchLoop ; $4125
 .checkB:
-	bit 1, a ; $4127
+	bit PADB_B, a ; $4127
 	jr z, .checkUp ; $4129
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $412b
 	ldh [hDebugStepMode], a ; $412d
@@ -139,7 +139,7 @@ Unused_01_DebugBootMenu:
 	farcall RunMatch ; $4132
 	jp .matchLoop ; $4135
 .checkUp:
-	bit 6, a ; $4138
+	bit PADB_UP, a ; $4138
 	jp z, Unused_01_DebugBootMenu.checkDown ; $413a
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $413d
 	ldh [hDebugStepMode], a ; $413f
@@ -152,10 +152,10 @@ Unused_01_DebugBootMenu:
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
 	farcall ShowTournamentBracket ; $4154
-	ld a, MINIGAME_SERVICE_MATCH_2 ; $4157
-	ld [wCurrentMinigameStoryMatch], a ; $4159
-	ld a, $11 ; $415c
-	ld [wCurrentMinigameStoryMatch + 1], a ; $415e
+	ld a, MATCHLIST_DOUBLES ; $4157
+	ld [wCurrentMatchList], a ; $4159
+	ld a, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $415c
+	ld [wCurrentMatchIndex], a ; $415e
 	ld a, WINLOSE_WIN ; $4161
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
@@ -173,13 +173,13 @@ Unused_01_DebugBootMenu:
 	ld [wAnimatedTilePeriod], a ; $4184
 	ld de, FLAG_DOUBLES ; $4187
 	call SetGameFlagByNumber ; $418a
-	ld a, $00 ; $418d
-	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
+	ld a, STORYMATCH_JUNIOR_PRACTICE ; $418d
+	ld [wCurrentMatchIndex], a ; $418f
 .winLoseLoop:
 	farcall RunMatchWinLoseScreen ; $4192
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
+	ld a, [wCurrentMatchIndex] ; $4195
 	inc a ; $4198
-	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
+	ld [wCurrentMatchIndex], a ; $4199
 	jr .winLoseLoop ; $419c
 Unused_01_ScreenTestSequence:
 	farcall ShowEquipmentStatusScreen ; $419e
@@ -196,7 +196,7 @@ Unused_01_ScreenTestSequence:
 	ldh [hDebugStepMode], a ; $41bd
 	farcall Unused_1a_RunDebugCharViewer ; $41bf
 Unused_01_DebugBootMenu.checkDown:
-	bit 7, a ; $41c2
+	bit PADB_DOWN, a ; $41c2
 	jr z, Unused_01_DebugBootMenu.checkRight ; $41c4
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
@@ -211,7 +211,7 @@ Unused_01_JumpToMainMenu:
 	db $18 ; $41d9
 	db $ef ; $41da
 Unused_01_DebugBootMenu.checkRight:
-	bit 4, a ; $41db
+	bit PADB_RIGHT, a ; $41db
 	jr z, Unused_01_DebugBootMenu.checkLeft ; $41dd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41df
 	ldh [hDebugStepMode], a ; $41e1
@@ -223,7 +223,7 @@ Unused_01_DebugBootMenu.checkRight:
 	ld [wStoryMainChar], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
 Unused_01_DebugBootMenu.checkLeft:
-	bit 5, a ; $41f5
+	bit PADB_LEFT, a ; $41f5
 	jr z, Unused_01_DebugBootMenu.advanceFrame ; $41f7
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
@@ -348,8 +348,8 @@ LoadMenuFontGfxStaged:
 	call LoadMenuTilesA ; $50ef
 	call LoadMenuTilesBStaged ; $50f2
 	ret ; $50f5
-DebugMenuPalettes_01:
-	INCLUDE "data/engine/menus/main_menu/DebugMenuPalettes_01.asm" ; $50f6, 128 bytes (palettes)
+CharObjPalettes_01:
+	INCLUDE "data/engine/menus/main_menu/CharObjPalettes_01.asm" ; $50f6, 128 bytes (palettes)
 Unused_01_LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
@@ -376,12 +376,12 @@ LoadMenuObjPalettes3To7:
 	pop bc ; $5197
 	pop af ; $5198
 	ret ; $5199
-LoadDebugMenuPalette:
+LoadCharObjPalette:
 	ld a, b ; $519a
 	add a ; $519b
 	add a ; $519c
 	add a ; $519d
-	ld_hl_indexed DebugMenuPalettes_01 ; $519e
+	ld_hl_indexed CharObjPalettes_01 ; $519e
 	ld e, $01 ; $51a5
 	call LoadPaletteShadow ; $51a7
 	ret ; $51aa
@@ -449,14 +449,14 @@ Unused_01_RunSoundTest:
 	ldh [hDebugStepMode], a ; $6a6e
 	push hl ; $6a70
 	push de ; $6a71
-	ld hl, SoundTestStrings_01 ; $6a72
+	ld hl, SoundTestMusicString ; $6a72
 	ld_cell de, $0d, $09 ; $6a75
 	call PrintString ; $6a78
 	pop de ; $6a7b
 	pop hl ; $6a7c
 	push hl ; $6a7d
 	push de ; $6a7e
-	ld hl, SoundTestString0 ; $6a7f
+	ld hl, SoundTestEffectString ; $6a7f
 	ld_cell de, $0d, $0b ; $6a82
 	call PrintString ; $6a85
 	pop de ; $6a88
@@ -479,7 +479,7 @@ Unused_01_RunSoundTest:
 	inc d ; $6aa1
 	jr .clampBank ; $6aa2
 .checkTrackLeft:
-	bit 5, a ; $6aa4
+	bit PADB_LEFT, a ; $6aa4
 	jr z, .clampTrackDown ; $6aa6
 	dec d ; $6aa8
 .clampBank:
@@ -502,7 +502,7 @@ Unused_01_RunSoundTest:
 	inc e ; $6ac3
 	jr .clampSfx ; $6ac4
 .checkLeft:
-	bit 5, a ; $6ac6
+	bit PADB_LEFT, a ; $6ac6
 	jr z, .clampTrackDown ; $6ac8
 	dec e ; $6aca
 .clampSfx:
@@ -523,14 +523,14 @@ Unused_01_RunSoundTest:
 	jr nz, .sfxRowSelected ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
-	ld hl, SoundTestString1 ; $6ae3
+	ld hl, SoundTestCursorString ; $6ae3
 	ld_cell de, $0c, $09 ; $6ae6
 	call PrintString ; $6ae9
 	pop de ; $6aec
 	pop hl ; $6aed
 	push hl ; $6aee
 	push de ; $6aef
-	ld hl, SoundTestString2 ; $6af0
+	ld hl, SoundTestCursorBlankString ; $6af0
 	ld_cell de, $0c, $0b ; $6af3
 	call PrintString ; $6af6
 	pop de ; $6af9
@@ -539,14 +539,14 @@ Unused_01_RunSoundTest:
 .sfxRowSelected:
 	push hl ; $6afd
 	push de ; $6afe
-	ld hl, SoundTestString1 ; $6aff
+	ld hl, SoundTestCursorString ; $6aff
 	ld_cell de, $0c, $0b ; $6b02
 	call PrintString ; $6b05
 	pop de ; $6b08
 	pop hl ; $6b09
 	push hl ; $6b0a
 	push de ; $6b0b
-	ld hl, SoundTestString2 ; $6b0c
+	ld hl, SoundTestCursorBlankString ; $6b0c
 	ld_cell de, $0c, $09 ; $6b0f
 	call PrintString ; $6b12
 	pop de ; $6b15
@@ -568,7 +568,7 @@ Unused_01_RunSoundTest:
 	pop de ; $6b2c
 	ldh a, [hInputPressed] ; $6b2d
 	bit PADB_A, a ; $6b2f
-	jr z, .continueLoop ; $6b31
+	jr z, .continue ; $6b31
 	bit 0, b ; $6b33
 	jr nz, .playSfx ; $6b35
 	push af ; $6b37
@@ -583,7 +583,7 @@ Unused_01_RunSoundTest:
 	pop de ; $6b48
 	pop bc ; $6b49
 	pop af ; $6b4a
-	jr .continueLoop ; $6b4b
+	jr .continue ; $6b4b
 .playSfx:
 	push af ; $6b4d
 	push bc ; $6b4e
@@ -597,18 +597,16 @@ Unused_01_RunSoundTest:
 	pop de ; $6b5e
 	pop bc ; $6b5f
 	pop af ; $6b60
-.continueLoop:
+.continue:
 	jp .loop ; $6b61
-SoundTestStrings_01:
-	INCLUDE "data/engine/menus/main_menu/SoundTestStrings_01.asm" ; $6b64, 6 bytes (sound_data)
-SoundTestString0:
-	INCLUDE "data/engine/menus/main_menu/SoundTestString0.asm" ; $6b6a, 7 bytes
-SoundTestString1:
-	db $3e ; $6b71
-	db $00 ; $6b72
-SoundTestString2:
-	db $20 ; $6b73
-	db $00 ; $6b74
+SoundTestMusicString:
+	INCLUDE "data/engine/menus/main_menu/SoundTestMusicString.asm" ; $6b64, 6 bytes (text)
+SoundTestEffectString:
+	INCLUDE "data/engine/menus/main_menu/SoundTestEffectString.asm" ; $6b6a, 7 bytes (text)
+SoundTestCursorString:
+	INCLUDE "data/engine/menus/main_menu/SoundTestCursorString.asm" ; $6b71, 2 bytes (text)
+SoundTestCursorBlankString:
+	INCLUDE "data/engine/menus/main_menu/SoundTestCursorBlankString.asm" ; $6b73, 2 bytes (text)
 SoundTestSoundsA_01:
 	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsA_01.asm" ; $6b75, 63 bytes (sound_data)
 SoundTestSoundsB_01:

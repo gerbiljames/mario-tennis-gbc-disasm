@@ -18,7 +18,7 @@ dropped blue channel and the dead link-error check in `AdvanceFrame`).
 ### 1.1 `AdvanceFrame` — the barrier
 
 `AdvanceFrame` (`$00:$2631`, `src/home/flags_00.asm`) is the game's only frame
-barrier (417 call sites). Per call it:
+barrier (420 call sites). Per call it:
 
 1. Saves `af/bc/de/hl` and `rVBK`, clears `hVBlankOccurred` (`$2645`).
 2. Calls `RunFrameTasks` with `a = 0` (`$2647`, §1.3).
@@ -56,10 +56,13 @@ barrier (417 call sites). Per call it:
 | 10 | `UpdateFadeOut`, `UpdateFadeIn` | `$27c6` | palettes for the *next* frame (§6.3) |
 | 11 | `UpdateSoundEngine` | `$27cc` | |
 
-Step 2 normally copies `hScrollX`/`hScrollY` to `rSCX`/`rSCY` and clears `rLCDC`
-bit 3 (BG map `$9800`); when `hShowDebugConsole == 1` it forces `SCX = 0`,
-`SCY = $40` and sets bit 3, showing the debug console from `$9c00`
-(`$2773`-`$2784`; `wDebugTextBuffer` at `$cc00` goes to the `$9d00` rows).
+Step 2 reads `hBGViewMode`. At `BGVIEW_NORMAL` (0) it copies
+`hScrollX`/`hScrollY` to `rSCX`/`rSCY` and clears `rLCDC` bit 3 (BG map
+`$9800`); at `BGVIEW_DEBUG_CONSOLE` (1) it forces `SCX = 0`, `SCY = $40` and
+sets bit 3, showing the debug console from `$9c00` (`$2773`-`$2784`;
+`wDebugTextBuffer` at `$cc00` goes to the `$9d00` rows); any other value
+(`BGVIEW_KEEP_MAP`, which the intro uses after setting bit 3 itself) copies the
+scroll and leaves the map bit alone.
 
 Step 5's suppression is the only VBlank budget mechanism: the column blit uses
 CPU stores, so when it runs it sets `hBGColumnBlitDone` (`$21d1`) and the VRAM
@@ -143,7 +146,7 @@ The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.buildS
 
 ### 2.1 `QueueVRAMCopy` is the only door
 
-`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`, 610 call sites); there
+`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`, 613 call sites); there
 is no direct `ld [$8xxx], a` in the ROM.
 
 ```
@@ -416,10 +419,10 @@ tileset.
 
 ### 5.1 Double-buffered shadow OAM
 
-Two 160-byte shadow OAM pages: `$c000` (`wShadowOAM`) and `$c500` (unnamed).
-`wSpriteBufferPage` (`$c3a7`) is the high byte of the page being built;
-`AdvanceFrame` flips it (`$00:$264b`) and VBlank DMAs the other page
-(`ld a,[wSpriteBufferPage] / xor $05 / ldh [hOAMDMARoutine + 1], a`,
+Two 160-byte shadow OAM pages: `$c000` (`wShadowOAM`) and `$c500`
+(`wShadowOAM2`). `wSpriteBufferPage` (`$c3a7`) is the high byte of the page
+being built; `AdvanceFrame` flips it (`$00:$264b`) and VBlank DMAs the other
+page (`xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2)` into `hOAMDMARoutine + 1`,
 `$00:$278e`). `hOAMDMARoutine` is the 10-byte stub copied to HRAM `$ff80` by
 `CopyOAMDMARoutineToHRAM` (`$00:$06ac`); `+1` is the source page.
 
@@ -559,7 +562,7 @@ text banks** using per-bank string counts (`AddTextIdOffsetWordLookupTable`,
 
 `include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` and an alias
 named for the text, which operands use;
-`tools/strings.py --index --bank XX` dumps `bank:index → text` from
+`tools/strings.py baserom.gbc --index --bank XX` dumps `bank:index → text` from
 `data/text/TextStrings_XX.asm`.
 
 ### 7.2 The interpreter
@@ -603,10 +606,10 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$0a` | `TextCmdNop` | `ret` |
 | `$0b` | `TextCmdPrintPartnerName` | `wStoryPartnerName` |
 | `$0c` | `TextCmdDelay150Skippable` | 150 frames, skippable |
-| `$0d` | `TextCmdNextGlyphStreamRow` | glyph write pointer += `$40` (two tilemap rows) |
+| `$0d` | `TextCmdNextGlyphStreamRow` | `wGlyphStampCellPtr` += `$40` and `wTextRowStartPtr` += two row pitches |
 | `$0e` | `TextCmdPrintShortText` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |
 | `$0f`, `$14`-`$1d` | `TextCmdNewline` | eleven aliases |
-| `$10`-`$13` | `ControlCodeHandler16`-`19` | four separate bare `ret`s |
+| `$10`-`$13` | `TextCmdNop10`-`13` | four separate bare `ret`s |
 | `$1e` (`$de`) | `TextCmdApplyDakuten` | adds a voiced-sound mark to the *previous* cell |
 | `$1f` (`$df`) | `TextCmdApplyHandakuten` | same, semi-voiced mark |
 
@@ -657,8 +660,10 @@ Message speed:
    1 → 2, else 4.
 3. `DelayTextCharacter` (`$05:$579b`, per-character delay and blip) waits that
    many frames, aborting on input.
-4. `UploadLastGlyphTiles` and `FlushGlyphRow` also skip the 2-tile upload on
-   fast/instant (`$05:$7621`, `$77af`), making FAST truly instant.
+4. In the dialogue window `UploadLastGlyphTiles` (`$05:$7621`) uploads each
+   character's 2 tiles only on NORMAL and SLOW; `FlushGlyphRow` (`$77af`)
+   does the opposite, uploading the finished row buffer only on FAST/instant,
+   so FAST shows a row at a time.
 
 `wTextRedrawGuard` doubles as a re-entrancy guard for the wait and delay
 commands ("if 0, set to 1, redraw, clear"), so on FAST those commands do an
@@ -931,7 +936,7 @@ Framework-wide addresses not given above; `ram/*.asm` is authoritative.
 | `$ff8f` | `hFrameTasksReady` | §1.3 |
 | `$ff92`/`$ff93`/`$ffa6` | `hInputRepeatButtons` / `hInputRepeatTimer` / `hInputRepeatDelay` | §1.4 |
 | `$ff95`/`$ff96`/`$ff97` | `hRomBank` / `hWramBank` / `hSramBank` | bank shadows; helpers save and restore them |
-| `$ff98` | `hShowDebugConsole` | §1.2 |
+| `$ff98` | `hBGViewMode` | §1.2 |
 | `$ff99` | `hVRAMQueueDirty` | copies pending; also set on overflow |
 | `$ff9e`/`$ff9a` | `hDebugStepMode` / `hDebugStepPaused` | §1.5 |
 | `$ffa0`/`$ffa1` | `hPeakLY` / `hPeakLYFrames` | CPU load meter |
@@ -988,7 +993,7 @@ overworld. So it is the boot manager, and its debug-harness half is unreachable.
 - `wShadowTilemapReadOffset` (`$dc76`) is read only by the dead
   `Unused_05_RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) and written
   nowhere, so it stays 0.
-- `ControlCodeHandler16`-`19` (codes `$10`-`$13`): four *separate* one-byte
+- `TextCmdNop10`-`13` (codes `$10`-`$13`): four *separate* one-byte
   `ret`s suggest deleted handlers, unproven.
 - Whether `wMessageSpeed` bit 7 can stay set after a cutscene. The `or $80`
   writes at `$1a:$427c`/`$4295` are in the dead

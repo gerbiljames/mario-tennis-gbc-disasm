@@ -353,11 +353,7 @@ Unused_1b_UpdateUnlockDebugSelection:
 	add a ; $67e3
 	ld hl, wCharSelectCol ; $67e4
 	add [hl] ; $67e7
-	add $a0 ; $67e8
-	ld l, a ; $67ea
-	adc $c7 ; $67eb
-	sub l ; $67ed
-	ld h, a ; $67ee
+	ld_hl_indexed wNavGridBuffer ; $67e8
 	ld a, [hl] ; $67ef
 	ld [wCharSelectChar], a ; $67f0
 	ret ; $67f3
@@ -392,22 +388,22 @@ Unused_1b_MoveUnlockDebugCursor:
 .done:
 	ret ; $6826
 Unused_1b_StepUnlockDebugCursor:
-	bit 5, b ; $6827
+	bit PADB_LEFT, b ; $6827
 	jr z, .checkRight ; $6829
 	dec d ; $682b
 	jr .wrapX ; $682c
 .checkRight:
-	bit 4, b ; $682e
+	bit PADB_RIGHT, b ; $682e
 	jr z, .checkUp ; $6830
 	inc d ; $6832
 	jr .wrapX ; $6833
 .checkUp:
-	bit 6, b ; $6835
+	bit PADB_UP, b ; $6835
 	jr z, .checkDown ; $6837
 	dec e ; $6839
 	jr .wrapX ; $683a
 .checkDown:
-	bit 7, b ; $683c
+	bit PADB_DOWN, b ; $683c
 	jr z, .wrapX ; $683e
 	inc e ; $6840
 .wrapX:
@@ -416,26 +412,26 @@ Unused_1b_StepUnlockDebugCursor:
 	jr nc, .checkMaxX ; $6843
 	ld a, $05 ; $6845
 	dec a ; $6847
-	jr .storeX ; $6848
+	jr .gotX ; $6848
 .checkMaxX:
 	rra ; $684a
 	cp $05 ; $684b
-	jr c, .storeX ; $684d
+	jr c, .gotX ; $684d
 	xor a ; $684f
-.storeX:
+.gotX:
 	ld d, a ; $6850
 	ld a, e ; $6851
 	add a ; $6852
 	jr nc, .checkMaxY ; $6853
 	ld a, $02 ; $6855
 	dec a ; $6857
-	jr .storeY ; $6858
+	jr .gotY ; $6858
 .checkMaxY:
 	rra ; $685a
 	cp $02 ; $685b
-	jr c, .storeY ; $685d
+	jr c, .gotY ; $685d
 	xor a ; $685f
-.storeY:
+.gotY:
 	ld e, a ; $6860
 	ld a, e ; $6861
 	add a ; $6862

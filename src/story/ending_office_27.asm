@@ -23,11 +23,11 @@ ActorScript_27_03:
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 	as_set_field ACTORF_SPEED, $0010
 .pace:
-	as_target_rel -2.0, 0.0
+	as_move_by -2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75
-	as_target_rel 2.0, 0.0
+	as_move_by 2.0, 0.0
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 75

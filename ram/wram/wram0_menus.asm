@@ -128,16 +128,16 @@ wTennisDictScrollTop:: db
 ; [8-bit] Tennis Dictionary: cursor row within the visible page, 0-5 on the term list (scrolling wTennisDictScrollTop past the ends) and 0-8 on the category index page. Drives the highlight row (DrawTennisDictionaryIndexCursor, 4 tilemap rows per step) and the hand-cursor sprite Y ($10 px per step); reset by the page-jump helpers
 wTennisDictCursorRow:: db
 
-; [8-bit] Tennis Dictionary: entries passing the category filter, counted by CountTennisDictionaryEntries over SelectionMaskGrid_3f (AND wTennisDictCategoryMask, up to the $40 terminator); the wrap modulus for the scroll
+; [8-bit] Tennis Dictionary: entries passing the category filter, counted by CountTennisDictionaryEntries over TennisDictEntryCategories (AND wTennisDictCategoryMask, up to the $40 terminator); the wrap modulus for the scroll
 wTennisDictEntryCount:: db
 
 ; [16-bit] Address of the $40 terminator FindTennisDictionaryListEnd found in the selection grid, stored high byte first (+$00 = h, +$01 = l). WrapTennisDictionaryScanToEnd reads it to wrap a scan to the last entry
 wTennisDictListEnd:: dw
 
-; [8-bit] Tennis Dictionary: category filter mask, from the screen mode: $01/$02/$04/$08/$10 for modes 0-4, $1f (all) otherwise. Every list walk ANDs it with the entry's category byte in SelectionMaskGrid_3f
+; [8-bit] Tennis Dictionary: category filter mask (TDICTCAT_*), from the screen mode: 1 << mode for modes 0-4, TDICTCAT_ALL otherwise. Every list walk ANDs it with the entry's category byte in TennisDictEntryCategories
 wTennisDictCategoryMask:: db
 
-; [8-bit] Set to 1 in the two Tennis Dictionary modes ($05, $06) that show one fixed entry instead of the list; the description path then skips GetTennisDictionarySelectedIndex
+; [8-bit] Set to 1 in TENNISDICT_SINGLE_ENTRY, which shows one fixed entry instead of the list; the description path then skips GetTennisDictionarySelectedIndex
 wTennisDictSingleEntry:: db
 
 ; [8-bit] Tennis Dictionary: the mode passed in a to TennisDictionaryScreen. Modes 0-5 set the category mask and open the term list; mode 6 (the only one the game uses) opens the 9-cell category index page, and B returns $10 instead of $01
@@ -175,8 +175,8 @@ wIntroCutsceneCheck:: db
 ; [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame
 wCutsceneScrollX:: db
 
-; [8-bit] Sub-state within the intro cutscene state; seeded by the State*Init routines, stepped by State*Update
-wIntroCutsceneSubState:: db
+; [8-bit] Second pan position, stepped 3 px the opposite way to wCutsceneScrollX: hScrollX in IntroCutsceneState03Update_6b, wRasterScrollX in UpdateCutsceneScroll
+wCutsceneReverseScrollX:: db
 
 ; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueCutsceneSpriteGroupA
 wCutsceneSpriteAX:: db
@@ -193,7 +193,7 @@ wCutsceneSpriteBY:: db
 ; [16-bit] Intro cutscene scroll position: UpdateCutsceneScrollY subtracts the frame's CutsceneScrollYTable entry from it; QueueScrollingSprite places sprites against it
 wCutsceneScrollAccum:: dw
 
-; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 at the start of scenes 00/12/19 and decremented each frame from the delta table at $6b:$4cc1 indexed by wCutsceneStepTimer. ApplyCutsceneScrollToSpriteX subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot, despite the routine's name); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpriteBlock's object
+; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 at the start of scenes 00/12/19 and decremented each frame by UpdateIntroScrollY from IntroScrollYDeltaTable indexed by wCutsceneStepTimer. ApplyIntroScrollToSpriteY subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpriteBlock's object
 wIntroCutsceneScrollY:: dw
 
 ; [8-bit] Frame the intro cutscene's scrolling sprites draw with: bits 4-5 of wCutsceneSpriteAnimTick, so it steps every 16 ticks
@@ -284,10 +284,10 @@ wMatchSelectSubState:: db
 ; [8-bit] Next window tile id the text engine stamps into the shadow tilemap. A row starts at wGlyphRowStartCol + $80 and the cell loop increments it per cell, so a wrapped row continues where the previous one stopped
 wTextRowNextTile:: db
 
-; [16-bit] VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine)
-wGlyphTileWritePtr:: dw
+; [16-bit] Shadow-tilemap cell where StampGlyphTileAtPen writes the proportional-glyph tile ids ($80 + pen column); TextCmdNextGlyphStreamRow moves it two rows down
+wGlyphStampCellPtr:: dw
 
-; [8-bit] Nonzero when the text belongs to a window other than wMenuWindowId; StampGlyphTileAtPen writes glyph tiles through wGlyphTileWritePtr only then. Menu text goes through the tilemap alone
+; [8-bit] Nonzero when the text belongs to a window other than wMenuWindowId; StampGlyphTileAtPen writes glyph tiles through wGlyphStampCellPtr only then. Menu text goes through the tilemap alone
 wGlyphStampEnabled:: db
 	ds 119
 
@@ -306,11 +306,10 @@ wDebugTextBuffer:: ds 576
 ; character-select roster, which never run together.
 UNION
 ; serial link nibble staging (bank $07)
-; [96 bytes] The block being exchanged, one nibble per byte (at most $5f nibbles). UnpackBytesToNibbles fills it from wLinkByteBuffer and PackNibblesToBytes folds it back
-wLinkNibbleBuffer:: ds 96
-; [48 bytes] The packed form of the same block, two nibbles per byte, which the caller reads and writes
-wLinkByteBuffer:: ds 48
-	ds 48
+; [96 bytes] The outgoing block, one nibble per byte (at most $5f nibbles): UnpackBytesToNibbles fills it from the caller's bytes and the Exchange/Send routines transmit it, tagged, by hLinkTxNibbleIndex
+wLinkTxNibbles:: ds 96
+; [96 bytes] The incoming block, one received nibble per byte, stored at hLinkRxNibbleIndex as each tagged byte arrives; PackNibblesToBytes folds it back into the caller's bytes
+wLinkRxNibbles:: ds 96
 NEXTU
 ; character select roster (bank $1b)
 ; [128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through; searched by Unused_1b_FindCharSelectRosterEntry, walked by Unused_1b_DrawCharSelectMugshots

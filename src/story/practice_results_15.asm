@@ -364,14 +364,14 @@ PlaceSwingPracticeKidActor:
 .done:
 	ret ; $7a66
 StartPendingLessonScene:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $7a67
+	ld a, [wCurrentMatchIndex] ; $7a67
 	cp MINIGAME_NET_GAME_MATCH_1 ; $7a6a
 	jr nc, .netLesson ; $7a6c
 	call InitServeCoachScene ; $7a6e
 	call ServeCoachWalkToCourtAndStartLesson ; $7a71
 	ret ; $7a74
 .netLesson:
-	cp $0c ; $7a75
+	cp MINIGAME_STROKE_MATCH_1 ; $7a75
 	jr nc, .returnLesson ; $7a77
 	call InitNetCoachScene ; $7a79
 	script_set_text Text_CoachLetsDoItThen ; $7a7c
@@ -379,7 +379,7 @@ StartPendingLessonScene:
 	call NetCoachWalkToCourtAndStartLesson ; $7a87
 	ret ; $7a8a
 .returnLesson:
-	cp $12 ; $7a8b
+	cp MINIGAME_TENNIS_MACHINE_1 ; $7a8b
 	jr nc, .done ; $7a8d
 	call InitReturnCoachScene ; $7a8f
 	call ReturnCoachWalkToCourtAndStartLesson ; $7a92
@@ -405,7 +405,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld a, EXITTRIGGER_DIRECT ; $7af4
 	ld [wUnusedExitTriggerIdMirror], a ; $7af6
 	ld [wStoryModeExitTriggerRequest], a ; $7af9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $7afc
+	ld a, [wCurrentMatchIndex] ; $7afc
 	farcall RunTrainingDrillByID ; $7aff
 	ret ; $7b02
 ActorScript_15_13:
@@ -449,6 +449,6 @@ NetCoachWalkToCourtAndStartLesson:
 	ld a, EXITTRIGGER_DIRECT ; $7b87
 	ld [wUnusedExitTriggerIdMirror], a ; $7b89
 	ld [wStoryModeExitTriggerRequest], a ; $7b8c
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $7b8f
+	ld a, [wCurrentMatchIndex] ; $7b8f
 	farcall RunTrainingDrillByID ; $7b92
 	ret ; $7b95

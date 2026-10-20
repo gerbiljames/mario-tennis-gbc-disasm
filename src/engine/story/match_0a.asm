@@ -7,7 +7,7 @@ InitStoryMatchSettings:
 	add $02 ; $493e
 	ld [wOnCourtCharCount], a ; $4940
 	ld a, MATCHLIST_SINGLES ; $4943
-	ld [wCurrentMinigameStoryMatch], a ; $4945
+	ld [wCurrentMatchList], a ; $4945
 	ld a, CHAR_MARK ; $4948
 	ld [wMatchOpponentChar], a ; $494a
 	ld a, COURT_GRASS ; $494d
@@ -53,24 +53,24 @@ RestoreOverworldAfterMatch:
 	ret ; $49a9
 AssignStoryMatchCharacters:
 	ld b, CHAR_STORY_MAIN ; $49aa
-	ld c, $00 ; $49ac
-	farcall InitCa00RecordFromCharId ; $49ae
+	ld c, MATCHREC_P1_MAIN ; $49ac
+	farcall InitMatchRecordFromCharId ; $49ae
 	ld a, [wMatchOpponentChar] ; $49b1
 	ld b, a ; $49b4
-	ld c, $02 ; $49b5
-	farcall InitCa00RecordFromCharId ; $49b7
+	ld c, MATCHREC_P2_MAIN ; $49b5
+	farcall InitMatchRecordFromCharId ; $49b7
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a ; $49bd
 	jr z, .done ; $49be
 	ld b, CHAR_STORY_PARTNER ; $49c0
-	ld c, $01 ; $49c2
-	farcall InitCa00RecordFromCharId ; $49c4
+	ld c, MATCHREC_P1_PARTNER ; $49c2
+	farcall InitMatchRecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
 	ld hl, DoublesPartnerTable_0a ; $49ca
 	add_hl_a ; $49cd
 	ld b, [hl] ; $49d2
-	ld c, $03 ; $49d3
-	farcall InitCa00RecordFromCharId ; $49d5
+	ld c, MATCHREC_P2_PARTNER ; $49d3
+	farcall InitMatchRecordFromCharId ; $49d5
 .done:
 	ret ; $49d8
 DoublesPartnerTable_0a:
@@ -199,7 +199,7 @@ Unused_0a_SetMatchNumberOfGames:
 	ret ; $4a5b
 LoadMatchSettingsFromTable:
 	ld de, SinglesMatchSettingsTable_0a ; $4a5c
-	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
+	ld a, [wCurrentMatchList] ; $4a5f
 	cp MATCHLIST_DOUBLES ; $4a62
 	ld a, $00 ; $4a64
 	jr nz, .haveTable ; $4a66
@@ -207,7 +207,7 @@ LoadMatchSettingsFromTable:
 	ld de, DoublesMatchSettingsTable_0a ; $4a69
 .haveTable:
 	call SetMatchDoublesMode ; $4a6c
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a6f
+	ld a, [wCurrentMatchIndex] ; $4a6f
 	ld l, a ; $4a72
 	ld h, $00 ; $4a73
 	add hl, hl ; $4a75
@@ -503,14 +503,14 @@ ApplyClearStatusFlags:
 	call SetTrainingCourtClearFlags ; $4d91
 	ld a, [wClearStatusDoubles] ; $4d94
 	or a ; $4d97
-	jr nz, .setFlags ; $4d98
-.doubles:
+	jr nz, .doubles ; $4d98
+.singles:
 	call SetSinglesRankingClearFlags ; $4d9a
 	jr .done ; $4d9d
-.setFlags:
+.doubles:
 	ld a, [wClearStatusFormat] ; $4d9f
 	or a ; $4da2
-	jr z, .doubles ; $4da3
+	jr z, .singles ; $4da3
 	call SetDoublesRankingClearFlags ; $4da5
 .done:
 	ret ; $4da8
@@ -560,7 +560,7 @@ SetTrainingCourtClearFlags:
 	jr .setListB ; $4de9
 .done:
 	ret ; $4deb
-TrainingCourtClearFlagListPtrs_0a:
+Unused_0a_TrainingCourtClearFlagListPtrs:
 	; $4dec, 6 bytes (records:2)
 	dw $0000 ; record 0
 	dw TrainingCourtLevel1ClearFlags_0a ; record 1

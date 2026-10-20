@@ -30,9 +30,9 @@ Unused_1a_CopyNameToTileBuffer:
 	ld a, [hl+] ; $4b73
 	or a ; $4b74
 	ret z ; $4b75
-	cp $de ; $4b76
+	cp TX_DAKUTEN ; $4b76
 	jr z, .moveTileBufferDestUpRow ; $4b78
-	cp $df ; $4b7a
+	cp TX_HANDAKUTEN ; $4b7a
 	jr z, .moveTileBufferDestUpRow ; $4b7c
 	ld [de], a ; $4b7e
 	inc de ; $4b7f
@@ -115,9 +115,9 @@ Unused_1a_DrawStringToTileBuffer:
 	jr z, .specialChar ; $4bdb
 	cp $9f ; $4bdd
 	jr z, .specialChar ; $4bdf
-	cp $de ; $4be1
+	cp TX_DAKUTEN ; $4be1
 	jr z, .specialChar ; $4be3
-	cp $df ; $4be5
+	cp TX_HANDAKUTEN ; $4be5
 	jr z, .specialChar ; $4be7
 	ld d, a ; $4be9
 	call Unused_1a_WriteTileBufferCell ; $4bea
@@ -143,7 +143,7 @@ Unused_1a_DrawStringToTileBuffer:
 	push de ; $4c04
 	cp $9e ; $4c05
 	jr z, .altTile ; $4c07
-	cp $de ; $4c09
+	cp TX_DAKUTEN ; $4c09
 	jr z, .altTile ; $4c0b
 	ld de, $040b ; $4c0d
 	jr .writeTile ; $4c10

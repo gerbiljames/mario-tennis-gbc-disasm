@@ -21,14 +21,16 @@ InitMinigame_WallPractice2:
 	ret ; $4c1a
 MinigameHooks_WallPractice2:
 	; $4c1b, 16 bytes (mode_hooks)
-	dw WallPractice2Hook_PerFrame ; record 0
-	dw WallPractice2Hook_PointStart ; record 1
-	dw WallPractice2Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw WallPractice2Hook_BallHit ; record 4
-	dw WallPractice2Hook_Bounce ; record 5
-	dw WallPractice2Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw WallPractice2Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw WallPractice2Hook_PointStart ; MODEHOOK_POINT_START
+	dw WallPractice2Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw WallPractice2Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw WallPractice2Hook_Bounce ; MODEHOOK_BOUNCE
+	dw WallPractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 WallPractice2Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4c2b
 	ret ; $4c2e
@@ -61,14 +63,16 @@ InitMinigame_WallPractice3:
 	ret ; $4c65
 MinigameHooks_WallPractice3:
 	; $4c66, 16 bytes (mode_hooks)
-	dw WallPractice3Hook_PerFrame ; record 0
-	dw WallPractice3Hook_PointStart ; record 1
-	dw WallPractice3Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw WallPractice3Hook_BallHit ; record 4
-	dw WallPractice3Hook_Bounce ; record 5
-	dw WallPractice3Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw WallPractice3Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw WallPractice3Hook_PointStart ; MODEHOOK_POINT_START
+	dw WallPractice3Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw WallPractice3Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw WallPractice3Hook_Bounce ; MODEHOOK_BOUNCE
+	dw WallPractice3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 WallPractice3Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4c76
 	ret ; $4c79
@@ -101,14 +105,16 @@ InitMinigame_WallPractice4:
 	ret ; $4cb0
 MinigameHooks_WallPractice4:
 	; $4cb1, 16 bytes (mode_hooks)
-	dw WallPractice4Hook_PerFrame ; record 0
-	dw WallPractice4Hook_PointStart ; record 1
-	dw WallPractice4Hook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw WallPractice4Hook_BallHit ; record 4
-	dw WallPractice4Hook_Bounce ; record 5
-	dw WallPractice4Hook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw WallPractice4Hook_PerFrame ; MODEHOOK_PER_FRAME
+	dw WallPractice4Hook_PointStart ; MODEHOOK_POINT_START
+	dw WallPractice4Hook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw WallPractice4Hook_BallHit ; MODEHOOK_BALL_HIT
+	dw WallPractice4Hook_Bounce ; MODEHOOK_BOUNCE
+	dw WallPractice4Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 WallPractice4Hook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4cc1
 	ret ; $4cc4
@@ -140,14 +146,16 @@ InitMinigame_TennisMachineHighScore:
 	ret ; $4cf8
 MinigameHooks_TennisMachineHighScore:
 	; $4cf9, 16 bytes (mode_hooks)
-	dw TennisMachineHighScoreHook_PerFrame ; record 0
-	dw TennisMachineHighScoreHook_PointStart ; record 1
-	dw TennisMachineHighScoreHook_PointEnd ; record 2
-	dw TennisMachineHighScoreHook_MinigameStart ; record 3
-	dw TennisMachineHighScoreHook_BallHit ; record 4
-	dw TennisMachineHighScoreHook_Bounce ; record 5
-	dw TennisMachineHighScoreHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TennisMachineHighScoreHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TennisMachineHighScoreHook_PointStart ; MODEHOOK_POINT_START
+	dw TennisMachineHighScoreHook_PointEnd ; MODEHOOK_POINT_END
+	dw TennisMachineHighScoreHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TennisMachineHighScoreHook_BallHit ; MODEHOOK_BALL_HIT
+	dw TennisMachineHighScoreHook_Bounce ; MODEHOOK_BOUNCE
+	dw TennisMachineHighScoreHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachineHighScoreHook_MinigameStart ; $4d09
 TennisMachineHighScoreHook_PerFrame:
 	call DrawMinigameScoreHud ; $4d12
@@ -181,14 +189,16 @@ InitMinigame_WallPracticeHighScore:
 	ret ; $4d62
 MinigameHooks_WallPracticeHighScore:
 	; $4d63, 16 bytes (mode_hooks)
-	dw WallPracticeHighScoreHook_PerFrame ; record 0
-	dw WallPracticeHighScoreHook_PointStart ; record 1
-	dw WallPracticeHighScoreHook_PointEnd ; record 2
-	dw RetStub ; record 3
-	dw WallPracticeHighScoreHook_BallHit ; record 4
-	dw WallPracticeHighScoreHook_Bounce ; record 5
-	dw WallPracticeHighScoreHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw WallPracticeHighScoreHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw WallPracticeHighScoreHook_PointStart ; MODEHOOK_POINT_START
+	dw WallPracticeHighScoreHook_PointEnd ; MODEHOOK_POINT_END
+	dw RetStub ; MODEHOOK_MINIGAME_START
+	dw WallPracticeHighScoreHook_BallHit ; MODEHOOK_BALL_HIT
+	dw WallPracticeHighScoreHook_Bounce ; MODEHOOK_BOUNCE
+	dw WallPracticeHighScoreHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 WallPracticeHighScoreHook_PerFrame:
 	call UpdateMinigameHudAndBallTrail ; $4d73
 	ret ; $4d76
@@ -213,14 +223,16 @@ MinigameConfig_TargetShot:
 	twin_named init_minigame_medallion_match, InitMinigame_TargetShot ; $4d9b
 MinigameHooks_TargetShot:
 	; $4dad, 16 bytes (mode_hooks)
-	dw TargetShotHook_PerFrame ; record 0
-	dw TargetShotHook_PointStart ; record 1
-	dw TargetShotHook_PointEnd ; record 2
-	dw TargetShotHook_MinigameStart ; record 3
-	dw TargetShotHook_BallHit ; record 4
-	dw TargetShotHook_Bounce ; record 5
-	dw TargetShotHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw TargetShotHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw TargetShotHook_PointStart ; MODEHOOK_POINT_START
+	dw TargetShotHook_PointEnd ; MODEHOOK_POINT_END
+	dw TargetShotHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw TargetShotHook_BallHit ; MODEHOOK_BALL_HIT
+	dw TargetShotHook_Bounce ; MODEHOOK_BOUNCE
+	dw TargetShotHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 TargetShotHook_MinigameStart:
 	ld a, $01 ; $4dbd
 	ld [wMinigameServeSlot], a ; $4dbf

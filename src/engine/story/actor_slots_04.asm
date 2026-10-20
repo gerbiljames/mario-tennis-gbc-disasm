@@ -354,7 +354,7 @@ StepActorScript:
 	ld d, a ; $4242
 	ld a, [hl+] ; $4243
 	ld [wActorScriptBank], a ; $4244
-.applyGravity:
+.dispatchLoop:
 	push bc ; $4247
 	ld a, [wActorScriptBank] ; $4248
 	ld l, e ; $424b
@@ -377,7 +377,7 @@ ActorScriptOpcodeReturn:
 	ld [hl], d ; $4267
 	inc hl ; $4268
 	or a ; $4269
-	jr nz, StepActorScript.applyGravity ; $426a
+	jr nz, StepActorScript.dispatchLoop ; $426a
 	pop bc ; $426c
 	ret ; $426d
 UpdateActorJumpPhysics:
@@ -435,7 +435,7 @@ AdvanceActorTowardTarget:
 	res ACTORFLAGB_BLOCKED, [hl] ; $42b2
 	bit 1, [hl] ; $42b4
 	ret nz ; $42b6
-	bit 7, [hl] ; $42b7
+	bit ACTORFLAGB_MOVING, [hl] ; $42b7
 	ret z ; $42b9
 	push bc ; $42ba
 	ld hl, ACTORF_TARGET_X ; $42bb

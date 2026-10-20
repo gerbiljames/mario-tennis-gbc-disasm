@@ -1,4 +1,4 @@
-Padding_18:
+Padding_18_0:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
 	ds ALIGN[4]
@@ -289,7 +289,7 @@ LoadCharacterRecordToBuffer:
 	push bc ; $450c
 	push de ; $450d
 	push hl ; $450e
-	farcall LoadCharacterRecordToCa80 ; $450f
+	farcall LoadPlayer2MainRecord ; $450f
 	ld hl, wPlayer2MainName ; $4512
 	ld de, wCharRecordScratch ; $4515
 	ld c, wCharRecordScratch_SIZE / 16 ; $4518
@@ -302,13 +302,13 @@ LoadCharacterRecordToBuffer:
 .fixedRecord:
 	push af ; $4522
 	ld a, $3e ; $4523
-	ld [wCharRecordScratch + 11], a ; $4525
+	ld [wCharRecordScratchChar], a ; $4525
 	pop af ; $4528
 	ret ; $4529
 CheckCharacterUnlocked:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
-	ld a, [wCharRecordScratch + 11] ; $452e
+	ld a, [wCharRecordScratchChar] ; $452e
 	cp $ff ; $4531
 	ret ; $4533
 .checkRange:
@@ -383,22 +383,22 @@ UnlockFlagIds_18:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
 Unused_18_MoveGridCursor:
-	bit 5, b ; $45ca
+	bit PADB_LEFT, b ; $45ca
 	jr z, .checkRight ; $45cc
 	dec d ; $45ce
 	jr .wrapX ; $45cf
 .checkRight:
-	bit 4, b ; $45d1
+	bit PADB_RIGHT, b ; $45d1
 	jr z, .checkUp ; $45d3
 	inc d ; $45d5
 	jr .wrapX ; $45d6
 .checkUp:
-	bit 6, b ; $45d8
+	bit PADB_UP, b ; $45d8
 	jr z, .checkDown ; $45da
 	dec e ; $45dc
 	jr .wrapX ; $45dd
 .checkDown:
-	bit 7, b ; $45df
+	bit PADB_DOWN, b ; $45df
 	jr z, .wrapX ; $45e1
 	inc e ; $45e3
 .wrapX:
@@ -440,22 +440,22 @@ Unused_18_MoveGridCursor:
 	cp $ff ; $4611
 	jr z, Unused_18_MoveGridCursor ; $4613
 	cp $fe ; $4615
-	jr nz, .occupied ; $4617
+	jr nz, .notCellFe ; $4617
 	inc d ; $4619
 	inc e ; $461a
 	jr Unused_18_MoveGridCursor ; $461b
-.occupied:
+.notCellFe:
 	cp $fd ; $461d
-	jr nz, .store ; $461f
+	jr nz, .notCellFd ; $461f
 	dec d ; $4621
 	dec e ; $4622
 	jr Unused_18_MoveGridCursor ; $4623
-.store:
+.notCellFd:
 	cp $fc ; $4625
-	jr nz, .retry ; $4627
+	jr nz, .notCellFc ; $4627
 	dec d ; $4629
 	jr Unused_18_MoveGridCursor ; $462a
-.retry:
+.notCellFc:
 	cp $fb ; $462c
 	jr nz, .done ; $462e
 	ld a, b ; $4630

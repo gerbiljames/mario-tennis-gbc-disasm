@@ -6,7 +6,7 @@ Unused_1b_ToggleSelectedUnlockFlag:
 	jr c, .playSfx ; $68b5
 	cp CHAR_PEACH + 1 ; $68b7
 	jr nc, .playSfx ; $68b9
-	sub $18 ; $68bb
+	sub CHAR_MARIO - N64REC_UNLOCK_MARIO ; $68bb
 	add_hl_a ; $68bd
 	ld a, [hl] ; $68c2
 	xor $01 ; $68c3
@@ -214,9 +214,9 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 	ld a, [hl+] ; $6ab3
 	and a ; $6ab4
 	jr z, .done ; $6ab5
-	cp $de ; $6ab7
+	cp TX_DAKUTEN ; $6ab7
 	jr z, .dakuten ; $6ab9
-	cp $df ; $6abb
+	cp TX_HANDAKUTEN ; $6abb
 	jr z, .handakuten ; $6abd
 	ld b, a ; $6abf
 	ld a, b ; $6ac0
@@ -553,10 +553,10 @@ MinigameLevelSelectGfxTable:
 	dslot DataPtr_MinigameLabelTiles3 ; record 3
 MinigameLevelSelectTable:
 	; $6d35, 8 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $a900 ; record 3
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 3
 DrawMinigameLevelDescription:
 	push_wram_bank WRAM_COURT_PLANES ; $6d3d
 	ld a, [wScreenAttrmap + 1] ; $6d46
@@ -593,8 +593,10 @@ DrawMinigameLevelDescription:
 	pop_wram_bank ; $6d89
 	ret ; $6d8e
 MinigameLevelDescriptionTable:
-	; $6d8f, 6 bytes (bytes:6)
-	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
+	; $6d8f, 6 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
 LoadMinigameLevelSelectPalette:
 	ld hl, MinigameLevelSelectPalettePtrs ; $6d95
 	add a ; $6d98

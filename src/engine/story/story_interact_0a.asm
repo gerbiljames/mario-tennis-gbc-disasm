@@ -177,7 +177,7 @@ ShowLocationNamePopup:
 	call WaitPlayerMoveDone ; $52fc
 	wram_bank WRAM_TEXT ; $52ff
 	ld a, [wMessageSpeed] ; $5305
-	set 7, a ; $5308
+	set MSGSPEEDB_INSTANT, a ; $5308
 	ld [wMessageSpeed], a ; $530a
 	ld a, $83 ; $530d
 	farcall ShowSpeakerDialogueRestoreBG ; $530f
@@ -193,7 +193,7 @@ ShowLocationNamePopup:
 	farcall CloseActiveDialogueWindow ; $531f
 	wram_bank WRAM_TEXT ; $5322
 	ld hl, wMessageSpeed ; $5328
-	res 7, [hl] ; $532b
+	res MSGSPEEDB_INSTANT, [hl] ; $532b
 	pop_wram_bank ; $532d
 	pop hl ; $5332
 	pop de ; $5333
@@ -353,7 +353,7 @@ RunStoryScriptOrDialogue:
 	push hl ; $543f
 	wram_bank WRAM_ACTORS ; $5440
 	ld hl, wActors + ACTORF_STATUS ; $5446
-	res 0, [hl] ; $5449
+	res ACTORSTATUSB_FACING_LOCKED, [hl] ; $5449
 	ld hl, wActors + ACTORF_HEADING ; $544b
 	ld a, [wPlayerMoveAngle] ; $544e
 	ld [hl], a ; $5451
@@ -434,15 +434,15 @@ RunNpcInteraction:
 	call FindStoryScriptEntry ; $54c8
 	ld a, h ; $54cb
 	or l ; $54cc
-	jp z, .checkRespawn ; $54cd
+	jp z, .popRegs ; $54cd
 	ld a, [wStoryLocationBank] ; $54d0
 	ld de, wStoryMapRecord ; $54d3
 	ld bc, wStoryMapRecord_SIZE ; $54d6
 	call FarCopyBytes ; $54d9
-	ld hl, wStoryMapRecord + 6 ; $54dc
+	ld hl, wStoryMapRecord + MAPSCRIPT_ARG0 ; $54dc
 	ld b, [hl] ; $54df
 	wram_bank WRAM_ACTORS ; $54e0
-	ld hl, wStoryMapRecord ; $54e6
+	ld hl, wStoryMapRecord + MAPSCRIPT_ID ; $54e6
 	ld a, [hl] ; $54e9
 	call GetActorStateAddr ; $54ea
 	ld e, l ; $54ed
@@ -475,7 +475,7 @@ RunNpcInteraction:
 	jr z, .faceThePlayer ; $5517
 	ld hl, ACTORF_FLAGS ; $5519
 	add hl, de ; $551c
-	set 0, [hl] ; $551d
+	set ACTORFLAGB_PAUSED, [hl] ; $551d
 	set 1, [hl] ; $551f
 .faceThePlayer:
 	bit NPCB_FACE_PLAYER, b ; $5521
@@ -488,11 +488,11 @@ RunNpcInteraction:
 	ld [hl], a ; $552f
 .runScript:
 	push de ; $5530
-	ld hl, wStoryMapRecord + 4 ; $5531
+	ld hl, wStoryMapRecord + MAPSCRIPT_HANDLER ; $5531
 	ld a, [hl+] ; $5534
 	ld h, [hl] ; $5535
 	ld l, a ; $5536
-	ld a, [wStoryMapRecord] ; $5537
+	ld a, [wStoryMapRecord + MAPSCRIPT_ID] ; $5537
 	call RunStoryScriptOrDialogue ; $553a
 	pop de ; $553d
 	bit NPCB_RESTORE_FACING, b ; $553e
@@ -506,7 +506,7 @@ RunNpcInteraction:
 	jr z, .restoreAnim ; $554a
 	ld hl, ACTORF_FLAGS ; $554c
 	add hl, de ; $554f
-	res 0, [hl] ; $5550
+	res ACTORFLAGB_PAUSED, [hl] ; $5550
 	res 1, [hl] ; $5552
 .restoreAnim:
 	ld a, b ; $5554
@@ -526,7 +526,7 @@ RunNpcInteraction:
 	add hl, de ; $5569
 	ld a, [wStoryScriptSavedActorAnimRate] ; $556a
 	ld [hl], a ; $556d
-.checkRespawn:
+.popRegs:
 	pop hl ; $556e
 	pop de ; $556f
 	pop bc ; $5570

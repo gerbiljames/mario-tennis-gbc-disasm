@@ -4,8 +4,8 @@ RunIntroCutscene:
 	ld [wCutsceneStepTimer], a ; $402e
 	ld [wIntroCutsceneCheck], a ; $4031
 	ld [wCutsceneScrollX], a ; $4034
-	ld [wIntroCutsceneSubState], a ; $4037
-	ldh [hShowDebugConsole], a ; $403a
+	ld [wCutsceneReverseScrollX], a ; $4037
+	ldh [hBGViewMode], a ; $403a
 	ld hl, rLCDC ; $403c
 	res B_LCDC_BG_MAP, [hl] ; $403f
 	sound BGM_INTRO ; $4041
@@ -17,7 +17,7 @@ RunIntroCutscene:
 	ld hl, rIE ; $4059
 	res B_IE_STAT, [hl] ; $405c
 	xor a ; $405e
-	ldh [hShowDebugConsole], a ; $405f
+	ldh [hBGViewMode], a ; $405f
 	ld hl, rLCDC ; $4061
 	res B_LCDC_BG_MAP, [hl] ; $4064
 	call ClearDebugTextBuffer ; $4066
@@ -158,12 +158,12 @@ IntroCutsceneState10_6b:
 	dw IntroCutsceneState10Init_6b ; record 0
 	dw IntroCutsceneState10Update_6b ; record 1
 	dw IntroCutsceneState10Exit_6b ; record 2
-IntroCutsceneState11_6b:
+Unused_6b_IntroCutsceneState11:
 	; $4123, 6 bytes (records:2)
 	dw Unused_6b_IntroCutsceneState11Init ; record 0
 	dw Unused_6b_IntroCutsceneState11Update ; record 1
 	dw Unused_6b_IntroCutsceneState11Exit ; record 2
-IntroCutsceneState12_6b:
+Unused_6b_IntroCutsceneState12:
 	; $4129, 6 bytes (records:2)
 	dw Unused_6b_IntroCutsceneState12Init ; record 0
 	dw Unused_6b_IntroCutsceneState12Update ; record 1
@@ -313,17 +313,17 @@ IntroCutsceneState01Init_6b:
 	call QueueVRAMCopy ; $4284
 	wram_bank WRAM_SCREEN ; $4287
 	ld_slot hl, DataPtr_IntroSwingTilemap ; $428d
-	ld de, wScreenScratch ; $4290
+	ld de, wIntroSwingTilemap ; $4290
 	call DecompressDataFromBank ; $4293
 	ld_slot hl, DataPtr_IntroSwingAttrmap ; $4296
-	ld de, wRulesScreenAnimFrame ; $4299
+	ld de, wIntroSwingAttrmap ; $4299
 	call DecompressDataFromBank ; $429c
 	frame_task QueueCutsceneSpriteGroupA ; $429f
 	call EnableLCD ; $42a7
 	script_fade_in 64 ; $42aa
 	jp DispatchCutsceneStateInit.runUpdate ; $42af
-Palettes_6b_00:
-	INCLUDE "data/engine/cutscenes/Palettes_6b_00.asm" ; $42b2, 64 bytes (palettes)
+Unused_6b_IntroCutsceneState01Palettes:
+	INCLUDE "data/engine/cutscenes/Unused_6b_IntroCutsceneState01Palettes.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5
@@ -350,20 +350,20 @@ IntroCutsceneState01Update_6b:
 	jp DispatchCutsceneStateInit.runExit ; $4323
 IntroCutsceneState02Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4326
-	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $432f
+	ld hl, wIntroSwingTilemap + 4 * TILEMAP_WIDTH ; $432f
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4332
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $4335
 	call QueueVRAMCopy ; $4337
-	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $433a
+	ld hl, wIntroSwingAttrmap + 4 * TILEMAP_WIDTH ; $433a
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $433d
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $4340
 	call QueueVRAMCopy ; $4342
 	call AdvanceFrame ; $4345
-	ld hl, wIntroCharactersTilemap + 9 * TILEMAP_WIDTH ; $4348
+	ld hl, wIntroSwingTilemap + 9 * TILEMAP_WIDTH ; $4348
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $434b
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $434e
 	call QueueVRAMCopy ; $4350
-	ld hl, wIntroCharactersAttrmap + 9 * TILEMAP_WIDTH ; $4353
+	ld hl, wIntroSwingAttrmap + 9 * TILEMAP_WIDTH ; $4353
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $4356
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $4359
 	call QueueVRAMCopy ; $435b
@@ -409,10 +409,10 @@ IntroCutsceneState03Init_6b:
 	call QueueVRAMCopy ; $4416
 	wram_bank WRAM_SCREEN ; $4419
 	ld_slot hl, DataPtr_IntroCloseupTilemap ; $441f
-	ld de, wScreenScratch ; $4422
+	ld de, wIntroSwingTilemap ; $4422
 	call DecompressDataFromBank ; $4425
 	ld_slot hl, DataPtr_IntroCloseupAttrmap ; $4428
-	ld de, wRulesScreenAnimFrame ; $442b
+	ld de, wIntroSwingAttrmap ; $442b
 	call DecompressDataFromBank ; $442e
 	frame_task QueueCutsceneSpriteGroupB ; $4431
 	ld a, $a0 ; $4439
@@ -420,7 +420,7 @@ IntroCutsceneState03Init_6b:
 	ld a, $28 ; $443e
 	ld [wCutsceneSpriteBY], a ; $4440
 	xor a ; $4443
-	ld [wIntroCutsceneSubState], a ; $4444
+	ld [wCutsceneReverseScrollX], a ; $4444
 	call EnableLCD ; $4447
 	script_fade_in 127 ; $444a
 	call WaitFadeEnd ; $444f
@@ -430,7 +430,7 @@ IntroCutsceneState03Exit_6b:
 	call UnregisterFrameTask ; $4458
 	xor a ; $445b
 	ld [wCutsceneStepTimer], a ; $445c
-	ld [wIntroCutsceneSubState], a ; $445f
+	ld [wCutsceneReverseScrollX], a ; $445f
 	ldh [hScrollX], a ; $4462
 	jp DispatchCutsceneStateInit.nextState ; $4464
 IntroCutsceneState03Update_6b:
@@ -439,9 +439,9 @@ IntroCutsceneState03Update_6b:
 	ld [wCutsceneStepTimer], a ; $446b
 	cp $7d ; $446e
 	jp z, DispatchCutsceneStateInit.runExit ; $4470
-	ld a, [wIntroCutsceneSubState] ; $4473
+	ld a, [wCutsceneReverseScrollX] ; $4473
 	sub $03 ; $4476
-	ld [wIntroCutsceneSubState], a ; $4478
+	ld [wCutsceneReverseScrollX], a ; $4478
 	ldh [hScrollX], a ; $447b
 	ld a, [wCutsceneSpriteBX] ; $447d
 	dec a ; $4480
@@ -449,20 +449,20 @@ IntroCutsceneState03Update_6b:
 	jp DispatchCutsceneStateInit.runUpdate ; $4484
 IntroCutsceneState04Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4487
-	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4490
+	ld hl, wIntroSwingTilemap + 4 * TILEMAP_WIDTH ; $4490
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4493
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $4496
 	call QueueVRAMCopy ; $4498
-	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $449b
+	ld hl, wIntroSwingAttrmap + 4 * TILEMAP_WIDTH ; $449b
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $449e
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $44a1
 	call QueueVRAMCopy ; $44a3
 	call AdvanceFrame ; $44a6
-	ld hl, wIntroCharactersTilemap + 9 * TILEMAP_WIDTH ; $44a9
+	ld hl, wIntroSwingTilemap + 9 * TILEMAP_WIDTH ; $44a9
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $44ac
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $44af
 	call QueueVRAMCopy ; $44b1
-	ld hl, wIntroCharactersAttrmap + 9 * TILEMAP_WIDTH ; $44b4
+	ld hl, wIntroSwingAttrmap + 9 * TILEMAP_WIDTH ; $44b4
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $44b7
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $44ba
 	call QueueVRAMCopy ; $44bc
@@ -753,8 +753,8 @@ Unused_6b_IntroCutsceneState11Init:
 	call DisableLCDSafely ; $4885
 	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888
 	farcall LoadScreenAssetRecord ; $488a
-	ld a, $01 ; $488d
-	ldh [hShowDebugConsole], a ; $488f
+	ld a, BGVIEW_DEBUG_CONSOLE ; $488d
+	ldh [hBGViewMode], a ; $488f
 	ld hl, rLCDC ; $4891
 	set B_LCDC_BG_MAP, [hl] ; $4894
 	wram_bank WRAM_SCREEN ; $4896
@@ -775,8 +775,8 @@ Unused_6b_IntroCutsceneState11Init:
 	ld [wCutsceneStepTimer], a ; $48c4
 	jp DispatchCutsceneStateInit.runUpdate ; $48c7
 Unused_6b_IntroCutsceneState11Exit:
-	ld a, $00 ; $48ca
-	ldh [hShowDebugConsole], a ; $48cc
+	ld a, BGVIEW_NORMAL ; $48ca
+	ldh [hBGViewMode], a ; $48cc
 	ld hl, rLCDC ; $48ce
 	res B_LCDC_BG_MAP, [hl] ; $48d1
 	ld hl, Palette_6b_1 ; $48d3
@@ -837,7 +837,7 @@ Unused_6b_IntroCutsceneState12Update:
 	call AdvanceSpriteAnimTimer ; $494b
 .updateCutsceneScrollY:
 	call UpdateCutsceneScrollY ; $494e
-	call UpdateCutsceneScrollX ; $4951
+	call UpdateIntroScrollY ; $4951
 	call SetCameraYFromScrollPos ; $4954
 	call QueueScrollingSprite ; $4957
 	call QueueCutsceneAnimatedSprites ; $495a
@@ -846,8 +846,8 @@ IntroCutsceneState16Init_6b:
 	call DisableLCDSafely ; $4960
 	call InitCutsceneSceneA ; $4963
 	call LoadIntroTilesAndPalette ; $4966
-	ld a, $02 ; $4969
-	ldh [hShowDebugConsole], a ; $496b
+	ld a, BGVIEW_KEEP_MAP ; $4969
+	ldh [hBGViewMode], a ; $496b
 	ld hl, rLCDC ; $496d
 	set B_LCDC_BG_MAP, [hl] ; $4970
 	wram_bank WRAM_STAGING ; $4972

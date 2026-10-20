@@ -274,18 +274,18 @@ GetIslandOpenRoundParams:
 	ld a, [wMapSceneStage] ; $741d
 	inc a ; $7420
 	ld c, a ; $7421
-	ld d, $00 ; $7422
+	ld d, RANKINGBOARD_PLAIN ; $7422
 	ret ; $7424
 .doubles:
 	ld b, $01 ; $7425
 	ld a, [wMapSceneStage] ; $7427
 	inc a ; $742a
 	cp $03 ; $742b
-	jr c, .store ; $742d
+	jr c, .gotRound ; $742d
 	dec a ; $742f
-.store:
+.gotRound:
 	ld c, a ; $7430
-	ld d, $00 ; $7431
+	ld d, RANKINGBOARD_PLAIN ; $7431
 	ret ; $7433
 ShowTournamentRankingBoard_0f:
 	xor a ; $7434

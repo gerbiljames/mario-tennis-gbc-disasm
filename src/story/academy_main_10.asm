@@ -184,7 +184,7 @@ AcademyMainBldgNpc05_10:
 	ld h, [hl] ; $767e
 	ld l, a ; $767f
 	farcall InitDialogueTextCursor ; $7680
-.loop:
+.speakRecord:
 	script_wait_frames 20 ; $7683
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $768a
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $7692
@@ -209,7 +209,7 @@ AcademyMainBldgNpc05_10.setText:
 	ld h, [hl] ; $76c0
 	ld l, a ; $76c1
 	farcall InitDialogueTextCursor ; $76c2
-	jr AcademyMainBldgNpc05_10.loop ; $76c5
+	jr AcademyMainBldgNpc05_10.speakRecord ; $76c5
 AcademyMainBldgNpc05TextIds2:
 	; $76c7, 10 bytes (text_ids)
 	dw Text_RecordsClerkDoublesJuniorClass ; record 0
@@ -256,7 +256,7 @@ AcademyMainBldgInitScript_10:
 	jr nz, .notSeniorChamp ; $7721
 	script_set_actor_script ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_1, ActorScript_10_1 ; $7723
 .notSeniorChamp:
-	frame_task UpdatePlayerPairTileAnimState_10 ; $772e
+	frame_task UpdatePlayerPairDrawModes_10 ; $772e
 	ld a, [wStoryModeEntryPoint] ; $7736
 	cp ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT ; $7739
 	jr nz, .done ; $773b
@@ -366,15 +366,15 @@ AcademyMainBldgNewStudentActors_10:
 	map_actor $0000, ActorScript_10_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_QUESTION
 	map_actor $0000, ActorScript_10_2, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, ACADEMY_MAIN_BLDG_NEW_STUDENT_BALLOON_ELLIPSIS
 	map_actor_end
-UpdatePlayerPairTileAnimState_10:
+UpdatePlayerPairDrawModes_10:
 	ld a, $00 ; $79d0
-	call UpdateActorTileAnimState_10 ; $79d2
+	call SetActorDrawModeFromSceneTile_10 ; $79d2
 	test_flag FLAG_DOUBLES ; $79d5
 	ret z ; $79d8
 	ld a, $02 ; $79d9
-	call UpdateActorTileAnimState_10 ; $79db
+	call SetActorDrawModeFromSceneTile_10 ; $79db
 	ret ; $79de
-UpdateActorTileAnimState_10:
+SetActorDrawModeFromSceneTile_10:
 	ld h, a ; $79df
 	ld l, $00 ; $79e0
 	push af ; $79e2
@@ -427,7 +427,7 @@ UpdateActorTileAnimState_10:
 	call ReadSceneTilemapTile_10 ; $7a30
 	and $07 ; $7a33
 	cp $06 ; $7a35
-	jr nz, .actorLoop ; $7a37
+	jr nz, .notOnTile ; $7a37
 	wram_bank WRAM_ACTORS ; $7a39
 	ld hl, ACTORF_MODE ; $7a3f
 	add hl, bc ; $7a42
@@ -435,15 +435,15 @@ UpdateActorTileAnimState_10:
 	xor $01 ; $7a44
 	ld [hl], a ; $7a46
 	ret ; $7a47
-.actorLoop:
+.notOnTile:
 	wram_bank WRAM_ACTORS ; $7a48
 	ld hl, ACTORF_MODE ; $7a4e
 	add hl, bc ; $7a51
 	ld a, $02 ; $7a52
 	ld [hl], a ; $7a54
 	ret ; $7a55
-; UpdateActorTileAnimState_10 without the push af / pop af / or a / jr z zero-argument guard. Nothing calls it.
-Unused_10_UpdateActorTileAnimStateByIndex:
+; SetActorDrawModeFromSceneTile_10 without the push af / pop af / or a / jr z zero-argument guard. Nothing calls it.
+Unused_10_SetActorDrawModeFromSceneTileSingle:
 	ld h, a ; $7a56
 	ld l, $00 ; $7a57
 	wram_bank WRAM_ACTORS ; $7a59

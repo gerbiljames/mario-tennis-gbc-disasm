@@ -112,17 +112,8 @@ DrawCharDataPageArrowsTask_SpriteTemplate2:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx2:
-	INCBIN "data/engine/menus/char_data/CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 101 bytes
-CharDataPageArrowsTaskSpriteTemplate:
-	; $6810, 11 bytes (sprite_template)
-	oam_sprite $7f, $90, $c0, $20
-	oam_sprite_end
-	db $40
-	db $00
-	db $80
-	db $00
-	db $00
-	db $00
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 112 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.inc" ; DEF CharDataScreenPageGraphicsGfx2_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate3:
 	; $681b, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -266,7 +257,7 @@ InitLevelUpScreenState:
 	ld [wExpRepeatDelay], a ; $6964
 .resetCursor:
 	xor a ; $6967
-	ld [wExpCursorChar], a ; $6968
+	ld [wExpScreenBusyFlags], a ; $6968
 	ld [wExpCursorSlide], a ; $696b
 	ld [wExpRedrawPending], a ; $696e
 	ld a, $a8 ; $6971
@@ -648,9 +639,9 @@ WriteExpScreenStringTiles:
 	ld a, [hl+] ; $6d70
 	or a ; $6d71
 	ret z ; $6d72
-	cp $de ; $6d73
+	cp TX_DAKUTEN ; $6d73
 	jr z, .rowAbove ; $6d75
-	cp $df ; $6d77
+	cp TX_HANDAKUTEN ; $6d77
 	jr z, .rowAbove ; $6d79
 	ld b, a ; $6d7b
 	wram_bank WRAM_SCREEN ; $6d7c

@@ -134,7 +134,7 @@ Unused_15_WaterSpriteRacketRewardScene:
 	script_wait_frames 50 ; $4f94
 	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
-.done:
+.flickerLoop:
 	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4f9f
 	script_wait_frames 4 ; $4fa6
 	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $02 ; $4fad
@@ -145,7 +145,7 @@ Unused_15_WaterSpriteRacketRewardScene:
 	ld a, d ; $4fba
 	sub $02 ; $4fbb
 	ld d, a ; $4fbd
-	jp nz, .done ; $4fbe
+	jp nz, .flickerLoop ; $4fbe
 	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4fc1
 	script_wait_frames 30 ; $4fc8
 	script_set_position ACTOR_TRAINING_COURT_WATER_SPRITE, 51.0, 11.0 ; $4fcf
@@ -437,12 +437,12 @@ TrainingCourtResultDispatch:
 	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
 .notQuit:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
+	ld a, [wCurrentMatchIndex] ; $5378
 	cp MINIGAME_TENNIS_MACHINE_1 ; $537b
 	jr c, .dispatchResult ; $537d
 	ret ; $537f
 .dispatchResult:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
+	ld a, [wCurrentMatchIndex] ; $5380
 	jumptable a ; $5383
 	dw ServiceMatch1ResultScene ; $5385 jumptable
 	dw ServiceMatch2ResultScene ; $5387 jumptable
@@ -463,7 +463,7 @@ TrainingCourtResultDispatch:
 	dw StrokePractice2ResultScene ; $53a5 jumptable
 	dw StrokePractice3ResultScene ; $53a7 jumptable
 TrainingCourtReentryDispatch:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
+	ld a, [wCurrentMatchIndex] ; $53a9
 	jumptable a ; $53ac
 	dw TrainingCourtReentryDispatch.serveCourt ; $53ae jumptable
 	dw TrainingCourtReentryDispatch.serveCourt ; $53b0 jumptable

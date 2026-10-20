@@ -87,11 +87,7 @@ ScoreMinigameTargetHitOrDeflectBall.deflectBall:
 	ld a, [wMinigameLastHitCell] ; $55fd
 	cp $ff ; $5600
 	ret z ; $5602
-	add $c0 ; $5603
-	ld l, a ; $5605
-	adc $c7 ; $5606
-	sub l ; $5608
-	ld h, a ; $5609
+	ld_hl_indexed wMinigameTargetGrid ; $5603
 	ld a, [hl] ; $560a
 	and a ; $560b
 	ret z ; $560c
@@ -130,14 +126,16 @@ BooBlastInitParams:
 	db $00, $00, $00, $dc, $03, $01 ; 0x00
 MinigameHooks_BooBlast:
 	; $5658, 16 bytes (mode_hooks)
-	dw BooBlastHook_PerFrame ; record 0
-	dw BooBlastHook_PointStart ; record 1
-	dw BooBlastHook_PointEnd ; record 2
-	dw BooBlastHook_MinigameStart ; record 3
-	dw BooBlastHook_BallHit ; record 4
-	dw BooBlastHook_Bounce ; record 5
-	dw BooBlastHook_RallyTick ; record 6
-	dw BooBlastHook_Draw ; record 7
+	table_width 2
+	dw BooBlastHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw BooBlastHook_PointStart ; MODEHOOK_POINT_START
+	dw BooBlastHook_PointEnd ; MODEHOOK_POINT_END
+	dw BooBlastHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw BooBlastHook_BallHit ; MODEHOOK_BALL_HIT
+	dw BooBlastHook_Bounce ; MODEHOOK_BOUNCE
+	dw BooBlastHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw BooBlastHook_Draw ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 BooBlastHook_MinigameStart:
 	call InitMinigameControllerActor ; $5668
 	call InitBooBlastScore ; $566b
@@ -320,7 +318,7 @@ ScoreBallHit:
 	ld [wMinigameHitScored], a ; $57c5
 	sound SFX_THUD ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
-	ld_de_indexed Unused_0d_BitMaskTable ; $57cd
+	ld_de_indexed BooBlastStreakPoints ; $57cd
 	ld a, [de] ; $57d4
 	ld hl, $0001 ; $57d5
 	call MulHLByA ; $57d8
@@ -339,11 +337,11 @@ ScoreBallHit:
 	ld [wPointOutcome], a ; $57f1
 .done:
 	ret ; $57f4
-Unused_0d_BitMaskTable:
+BooBlastStreakPoints:
 	; $57f5, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawBooBlastTargetSprite:
-	call ProjectBallSprite ; $57fd
+	call ProjectBooSprite ; $57fd
 	ld c, $30 ; $5800
 	ld h, $fc ; $5802
 	ld l, $f1 ; $5804
@@ -363,12 +361,12 @@ BooBlastTargetAnimFrames:
 	db $02, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
 	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x18
 DrawBooBlastHitBurst:
-	call ProjectBallSprite ; $583c
+	call ProjectBooSprite ; $583c
 	ld c, $3c ; $583f
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5841
 	call QueueMinigameHitBurst ; $5844
 	ret ; $5847
-ProjectBallSprite:
+ProjectBooSprite:
 	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $5848
 	ld a, [hl+] ; $584b
 	ld e, a ; $584c

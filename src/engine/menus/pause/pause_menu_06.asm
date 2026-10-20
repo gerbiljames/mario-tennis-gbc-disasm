@@ -154,7 +154,7 @@ MatchRulesPageLists:
 	rules_pages $04, $06 ; list 4
 	rules_pages $05, $07 ; list 5
 ShowTrainingRulesPages:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $417d
+	ld a, [wCurrentMatchIndex] ; $417d
 	ld [wRulesPageListIndex], a ; $4180
 	ld_de_indexed Text_RulesHeadingServiceMatch ; $4183
 	ld hl, wRulesTitleTextId ; $418a
@@ -205,7 +205,7 @@ TrainingRulesPageLists:
 	rules_pages $1b ; list 27
 	rules_pages $1c ; list 28
 ShowMinigameRulesPages:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $421d
+	ld a, [wCurrentMatchIndex] ; $421d
 	sub MINIGAME_BOO_BLAST ; $4220
 	ld b, a ; $4222
 	add a ; $4223
@@ -219,7 +219,7 @@ ShowMinigameRulesPages:
 	ld a, e ; $4237
 	ld [hl+], a ; $4238
 	ld [hl], d ; $4239
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $423a
+	ld a, [wCurrentMatchIndex] ; $423a
 	sub MINIGAME_BOO_BLAST ; $423d
 	add a ; $423f
 	ld_hl_indexed MinigameRulesTextIdBases ; $4240
@@ -241,15 +241,15 @@ ShowMinigameRulesPages:
 MinigameRulesTextIdBases:
 	; $4262, 18 bytes (records:2)
 	table_width 2
-	dw $2c87 ; record 0
-	dw $2c8d ; record 1
-	dw $2c92 ; record 2
-	dw $2c96 ; record 3
-	dw $2c9f ; record 4
-	dw $2ca2 ; record 5
-	dw $2ca5 ; record 6
-	dw $2cb1 ; record 7
-	dw $2cbd ; record 8
+	dw Text_RulesBooBlast ; record 0
+	dw Text_RulesShootingStar ; record 1
+	dw Text_RulesPerfectShot ; record 2
+	dw Text_RulesTargetShot ; record 3
+	dw Text_RulesFruitFantasy ; record 4
+	dw Text_RulesBananaBunch ; record 5
+	dw Text_RulesTreasureBox ; record 6
+	dw Text_RulesMedallionMatch ; record 7
+	dw Text_RulesTwoOnOne ; record 8
 	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists:
 	; $4274, 162 bytes (rules_pages:6)
@@ -416,8 +416,8 @@ MatchPauseMenu_CameraSelect:
 .done:
 	ret ; $4439
 MatchPauseMenu_MusicToggle:
-	ldh a, [hMusic] ; $443a
-	and $01 ; $443c
+	ldh a, [hMusicFlags] ; $443a
+	and MUSICF_MUTED ; $443c
 	ld [wMatchMenuSelection], a ; $443e
 	ld a, MATCHMENU_MUSIC ; $4441
 	ld [wPauseMenuId], a ; $4443
@@ -429,8 +429,8 @@ MatchPauseMenu_MusicToggle:
 	ld a, [wGameMode] ; $4453
 	cp GAMEMODE_LINK_MATCH ; $4456
 	jr z, .done ; $4458
-	ldh a, [hMusic] ; $445a
-	and $01 ; $445c
+	ldh a, [hMusicFlags] ; $445a
+	and MUSICF_MUTED ; $445c
 	farcall SetStorySlotFlagA ; $445e
 .done:
 	ret ; $4461

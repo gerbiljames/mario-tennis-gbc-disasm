@@ -164,12 +164,13 @@ LoadResultPortraitSlot:
 	call DecompressResultPortrait ; $60b3
 	ret ; $60b6
 ResultPortraitSlotTable:
-	; $60b7, 9 bytes (records:2)
+	; $60b7, 8 bytes (records:2)
 	dw vTiles1 tile $40 ; record 0
 	dw vTiles1 tile $50 ; record 1
 	dw vTiles1 tile $60 ; record 2
 	dw vTiles1 tile $70 ; record 3
-	db $c9
+Unused_16_StubRet:
+	ret ; $60bf
 DecompressResultPortrait:
 	ld a, c ; $60c0
 	or a ; $60c1

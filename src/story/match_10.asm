@@ -368,11 +368,11 @@ RunLessonSelectMenu:
 	call ClearFrameTasks ; $44cc
 	ld b, $00 ; $44cf
 	ld c, $02 ; $44d1
-	ld d, $03 ; $44d3
+	ld d, RANKINGBOARD_SILENT ; $44d3
 	farcall ShowRankingBoard ; $44d5
 	ld b, $01 ; $44d8
 	ld c, $02 ; $44da
-	ld d, $03 ; $44dc
+	ld d, RANKINGBOARD_SILENT ; $44dc
 	farcall ShowRankingBoard ; $44de
 	push_wram_bank WRAM_SOUND ; $44e1
 	ld de, $0000 ; $44ea
@@ -380,9 +380,9 @@ RunLessonSelectMenu:
 	ld a, [hl+] ; $44f0
 	ld d, [hl] ; $44f1
 	ld e, a ; $44f2
-	ld a, $01 ; $44f3
+	ld a, MGRECORD_MACHINE ; $44f3
 	farcall UpdateMinigameRecord ; $44f5
-	ld a, $00 ; $44f8
+	ld a, MGRECORD_WALL ; $44f8
 	farcall UpdateMinigameRecord ; $44fa
 	pop_wram_bank ; $44fd
 	ld l, c ; $4502
@@ -407,7 +407,7 @@ RunServiceLessonMenu:
 	cp $ff ; $452f
 	jp z, RunDoublesMatchListMenu.done ; $4531
 	add MINIGAME_SERVICE_PRACTICE_1 ; $4534
-	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
+	ld [wCurrentMatchIndex], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
 	ld de, wStoryModeSpawnPosition ; $453c
 	ld bc, wStoryModeSpawnPosition_SIZE ; $453f
@@ -428,7 +428,7 @@ RunNetLessonMenu:
 	cp $ff ; $4567
 	jp z, RunDoublesMatchListMenu.done ; $4569
 	add MINIGAME_NET_GAME_PRACTICE_1 ; $456c
-	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
+	ld [wCurrentMatchIndex], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
 	ld de, wStoryModeSpawnPosition ; $4574
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4577

@@ -320,7 +320,7 @@ DKSpriteFrame54:
 DKSpriteFrame55:
 	INCBIN "data/sprites/DKSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-DKSpriteFramesUnused:
+Unused_5c_DKSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/DKSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/DKSpriteFrame01.bin" ; $7740, 240 bytes

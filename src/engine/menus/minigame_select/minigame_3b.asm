@@ -1,5 +1,6 @@
 Unused_3b_StubNop5:
 	ret ; $61e9
+Unused_3b_ShadowTilemapRow16Ptrs:
 	; $61ea, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
@@ -39,10 +40,10 @@ RunMinigameSelect:
 	or a ; $623e
 	jr nz, .drawMinigameSelectGrid9 ; $623f
 	call DrawMinigameSelectGrid6 ; $6241
-	jr .storeMenuInputPressed ; $6244
+	jr .startInput ; $6244
 .drawMinigameSelectGrid9:
 	call DrawMinigameSelectGrid9 ; $6246
-.storeMenuInputPressed:
+.startInput:
 	wram_bank WRAM_SCREEN ; $6249
 .loop:
 	ldh a, [hInputPressed] ; $624f
@@ -235,17 +236,17 @@ Unused_3b_TableAfterLoadMinigameSelectGfx:
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
 MinigameSelectTable:
-	; $63f6, 20 bytes (bytes:2)
-	db $80, $b6 ; 0x00
-	db $10, $b7 ; 0x02
-	db $00, $af ; 0x04
-	db $00, $a8 ; 0x06
-	db $00, $a9 ; 0x08
-	db $00, $aa ; 0x0a
-	db $00, $ab ; 0x0c
-	db $00, $ac ; 0x0e
-	db $00, $ad ; 0x10
-	db $00, $ae ; 0x12
+	; $63f6, 20 bytes (records:2)
+	dw vTiles2 tile $68 + VRAM_BANK1 ; record 0
+	dw vTiles2 tile $71 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $70 + VRAM_BANK1 ; record 2
+	dw vTiles1 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 6
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 7
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 8
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 9
 MinigameSelectSlideIn9:
 	ld a, b ; $640a
 	or a ; $640b
@@ -253,9 +254,9 @@ MinigameSelectSlideIn9:
 	ld c, $00 ; $640e
 .slideForwardLoop:
 	call AdvanceFrame ; $6410
-	ld b, $04 ; $6413
+	ld b, PANELANIM_MINIGAME_GRID9_IN ; $6413
 	farcall RestoreMenuBgAndDrawPanel ; $6415
-	ld b, $00 ; $6418
+	ld b, MAPROWS_BANDS_3_7_11 ; $6418
 	farcall FlushWram3MapRows ; $641a
 	ld a, c ; $641d
 	inc a ; $641e
@@ -267,9 +268,9 @@ MinigameSelectSlideIn9:
 	ld c, $0c ; $6425
 .slideBackLoop:
 	call AdvanceFrame ; $6427
-	ld b, $05 ; $642a
+	ld b, PANELANIM_MINIGAME_GRID9_OUT ; $642a
 	farcall RestoreMenuBgAndDrawPanel ; $642c
-	ld b, $00 ; $642f
+	ld b, MAPROWS_BANDS_3_7_11 ; $642f
 	farcall FlushWram3MapRows ; $6431
 	ld a, c ; $6434
 	dec a ; $6435
@@ -284,9 +285,9 @@ MinigameSelectSlideOut9:
 	ld c, $00 ; $6440
 .slideForwardLoop:
 	call AdvanceFrame ; $6442
-	ld b, $05 ; $6445
+	ld b, PANELANIM_MINIGAME_GRID9_OUT ; $6445
 	farcall RestoreMenuBgAndDrawPanel ; $6447
-	ld b, $00 ; $644a
+	ld b, MAPROWS_BANDS_3_7_11 ; $644a
 	farcall FlushWram3MapRows ; $644c
 	ld a, c ; $644f
 	inc a ; $6450
@@ -298,9 +299,9 @@ MinigameSelectSlideOut9:
 	ld c, $0d ; $6457
 .slideBackLoop:
 	call AdvanceFrame ; $6459
-	ld b, $04 ; $645c
+	ld b, PANELANIM_MINIGAME_GRID9_IN ; $645c
 	farcall RestoreMenuBgAndDrawPanel ; $645e
-	ld b, $00 ; $6461
+	ld b, MAPROWS_BANDS_3_7_11 ; $6461
 	farcall FlushWram3MapRows ; $6463
 	ld a, c ; $6466
 	dec a ; $6467
@@ -313,7 +314,7 @@ MinigameSelectCursorSpriteTask:
 	ld c, $03 ; $6470
 	call GetMenuCursorIndex_3b ; $6472
 	push af ; $6475
-	ld hl, MinigameSelectCursorSpriteTaskTable1 ; $6476
+	ld hl, MinigameSelectCursorTileBases ; $6476
 	add_hl_a ; $6479
 	ld c, [hl] ; $647e
 	pop af ; $647f
@@ -326,7 +327,7 @@ MinigameSelectCursorSpriteTask:
 	ld e, a ; $648c
 	farcall ApplySpriteBobOffset ; $648d
 	pop af ; $6490
-	ld hl, MinigameSelectCursorSpriteTaskTable0 ; $6491
+	ld hl, MinigameSelectCursorOamAttrs ; $6491
 	add_hl_a ; $6494
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
@@ -348,10 +349,10 @@ GetMinigameCursorPosTable:
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
 	jr nz, .altTable ; $64bc
-	ld hl, MinigameCursorPosTable1 ; $64be
+	ld hl, MinigameCursorPositionsCompact ; $64be
 	jr .done ; $64c1
 .altTable:
-	ld hl, MinigameCursorPosTable0 ; $64c3
+	ld hl, MinigameCursorPositionsExpanded ; $64c3
 .done:
 	pop af ; $64c6
 	pop bc ; $64c7
@@ -373,22 +374,32 @@ MinigameSelectCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MinigameSelectCursorSpriteTaskTable0:
+MinigameSelectCursorOamAttrs:
 	; $64f4, 9 bytes (bytes:9)
 	db $08, $00, $08, $00, $08, $00, $08, $08, $08 ; 0x00
-MinigameCursorPosTable0:
+MinigameCursorPositionsExpanded:
 	; $64fd, 18 bytes (bytes:16)
 	db $30, $fc, $30, $2c, $30, $5c, $50, $fc, $50, $2c, $50, $5e, $6c, $fc, $6c, $2c ; 0x00
 	db $6c, $5e ; 0x10
-MinigameCursorPosTable1:
+MinigameCursorPositionsCompact:
 	; $650f, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $14, $60, $44, $60, $44 ; 0x00
-MinigameSelectCursorSpriteTaskTable1:
-	; $651b, 50 bytes (bytes:16)
-	db $00, $30, $50, $40, $20, $20, $40, $10, $30, $10, $08, $00, $00, $10, $10, $02 ; 0x00
-	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
-	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
-	db $00, $80 ; 0x30
+MinigameSelectCursorTileBases:
+	; $651b, 9 bytes (bytes:9)
+	db $00, $30, $50, $40, $20, $20, $40, $10, $30 ; 0x00
+Unused_3b_MinigameSelectCursorWideTemplate:
+	; $6524, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 OverrideMinigameCursorIfLocked:
 	push bc ; $654d
 	push hl ; $654e

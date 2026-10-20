@@ -83,8 +83,8 @@ ActorScriptOp_WaitMove2:
 	ld h, [hl] ; $494d
 	add ACTORF_FLAGS ; $494e
 	ld l, a ; $4950
-	bit 7, [hl] ; $4951
-	jr nz, .setWait ; $4953
+	bit ACTORFLAGB_MOVING, [hl] ; $4951
+	jr nz, .moving ; $4953
 	ld hl, hActorPtr ; $4955
 	ld a, [hl+] ; $4958
 	ld h, [hl] ; $4959
@@ -93,13 +93,13 @@ ActorScriptOp_WaitMove2:
 	ld [hl], $28 ; $495d
 	inc de ; $495f
 	jr .done ; $4960
-.setWait:
+.moving:
 	ld hl, hActorPtr ; $4962
 	ld a, [hl+] ; $4965
 	ld h, [hl] ; $4966
 	add ACTORF_FLAGS ; $4967
 	ld l, a ; $4969
-	bit 6, [hl] ; $496a
+	bit ACTORFLAGB_BLOCKED, [hl] ; $496a
 	jr z, .done ; $496c
 	ld hl, hActorPtr ; $496e
 	ld a, [hl+] ; $4971
@@ -435,7 +435,7 @@ SetupCharSpriteFromObjectDef:
 	call CopyDataFromBank ; $4b81
 	ld a, [wActorObjDef] ; $4b84
 	ld [wCharSpriteAttr], a ; $4b87
-	ld [wCharGfxBank], a ; $4b8a
+	ld [wCharPaletteId], a ; $4b8a
 	ld hl, wCharFrameTablePtr ; $4b8d
 	ld a, [wActorObjDef + 4] ; $4b90
 	ld [hl+], a ; $4b93

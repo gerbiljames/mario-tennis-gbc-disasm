@@ -19,7 +19,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, e ; $49f7
 	ld [hl+], a ; $49f8
 	ld [hl], d ; $49f9
-	ld a, $00 ; $49fa
+	ld a, MGRECORD_WALL ; $49fa
 	farcall UpdateMinigameRecord ; $49fc
 	pop_wram_bank ; $49ff
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4a04
@@ -133,7 +133,7 @@ WallPracticeLevelResultScript.variant2:
 	ld a, e ; $4bc1
 	ld [hl+], a ; $4bc2
 	ld [hl], d ; $4bc3
-	ld a, $00 ; $4bc4
+	ld a, MGRECORD_WALL ; $4bc4
 	farcall UpdateMinigameRecord ; $4bc6
 	pop_wram_bank ; $4bc9
 	script_set_text Text_WallClearedThirdLevel ; $4bce
@@ -431,7 +431,7 @@ WallPracticeRoomInitScript_12:
 	ld a, EXITTRIGGER_DIRECT ; $5050
 	ld [wUnusedExitTriggerIdMirror], a ; $5052
 	ld [wStoryModeExitTriggerRequest], a ; $5055
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
+	ld a, [wCurrentMatchIndex] ; $5058
 	farcall RunTrainingDrillByID ; $505b
 .done:
 	ret ; $505e
@@ -480,7 +480,7 @@ WallPracticeRoomNpc07_12:
 	cp WALLPRACTICESTAGE_EXPERT ; $50f1
 	jr nz, .prompt ; $50f3
 	push_wram_bank WRAM_SOUND ; $50f5
-	ld a, $00 ; $50fe
+	ld a, MGRECORD_WALL ; $50fe
 	farcall ReadMinigameRecord ; $5100
 	ld hl, wMinigameRecordValue ; $5103
 	ld a, [hl+] ; $5106
@@ -494,7 +494,7 @@ WallPracticeRoomNpc07_12:
 	farcall ScriptCloseDialogueWindow ; $5119
 	script_wait_frames 5 ; $511c
 	and a ; $5123
-	jp z, .doublesDeclined ; $5124
+	jp z, .accepted ; $5124
 	ld a, [wMapSceneStage] ; $5127
 	add a ; $512a
 	ld_hl_indexed WallPracticeRoomNpc07TextIds2 ; $512b
@@ -533,7 +533,7 @@ WallPracticeRoomNpc07_12:
 .speakDeclined:
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51b4
 	ret ; $51b9
-.doublesDeclined:
+.accepted:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_NOD ; $51ba
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51c1
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51c6
@@ -541,7 +541,7 @@ WallPracticeRoomNpc07_12:
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51d6
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $51db
 	test_flag FLAG_DOUBLES ; $51e2
-	jr z, .done ; $51e5
+	jr z, .walkToWall ; $51e5
 	script_wait_frames 20 ; $51e7
 	script_null_script ACTOR_PARTNER ; $51ee
 	script_move_target ACTOR_PARTNER, 7.0, 57.0 ; $51f3
@@ -552,7 +552,7 @@ WallPracticeRoomNpc07_12:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5219
 	script_wait_idle ACTOR_PARTNER ; $5220
 	script_wait_frames 20 ; $5225
-.done:
+.walkToWall:
 	script_set_speed ACTOR_PLAYER, 1.0 ; $522c
 	script_move_target ACTOR_PLAYER, 5.0, 55.0 ; $5234
 	script_wait_move ACTOR_PLAYER ; $523f

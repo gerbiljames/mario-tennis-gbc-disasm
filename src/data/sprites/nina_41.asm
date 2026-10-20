@@ -320,7 +320,7 @@ NinaSpriteFrame54:
 NinaSpriteFrame55:
 	INCBIN "data/sprites/NinaSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-NinaSpriteFramesUnused:
+Unused_41_NinaSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/NinaSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/NinaSpriteFrame01.bin" ; $7740, 240 bytes

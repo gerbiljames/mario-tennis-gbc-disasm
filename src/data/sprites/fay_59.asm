@@ -320,7 +320,7 @@ FaySpriteFrame54:
 FaySpriteFrame55:
 	INCBIN "data/sprites/FaySpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-FaySpriteFramesUnused:
+Unused_59_FaySpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/FaySpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/FaySpriteFrame01.bin" ; $7740, 240 bytes

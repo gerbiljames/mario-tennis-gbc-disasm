@@ -11,11 +11,11 @@ Unused_07_AdvanceLinkPlayerCount:
 	jr .checkJoin ; $4cc1
 .maskHigh:
 	ld c, a ; $4cc3
-	and $f0 ; $4cc4
+	and PADF_DPAD ; $4cc4
 	jr nz, .done ; $4cc6
 	ld a, c ; $4cc8
 .checkJoin:
-	bit 0, a ; $4cc9
+	bit PADB_A, a ; $4cc9
 	jr z, .checkLeave ; $4ccb
 	ldh a, [hLinkPlayerCount] ; $4ccd
 	cp b ; $4ccf
@@ -24,7 +24,7 @@ Unused_07_AdvanceLinkPlayerCount:
 	ldh [hLinkPlayerCount], a ; $4cd3
 	jr .done ; $4cd5
 .checkLeave:
-	bit 1, a ; $4cd7
+	bit PADB_B, a ; $4cd7
 	jr z, .done ; $4cd9
 	ldh a, [hLinkPlayerCount] ; $4cdb
 	or a ; $4cdd
@@ -37,20 +37,20 @@ DecodeLinkCommandCode:
 	cp $14 ; $4ce4
 	jr nz, .code15 ; $4ce6
 	ld a, $0f ; $4ce8
-	jr .store ; $4cea
+	jr .return ; $4cea
 .code15:
 	cp $15 ; $4cec
 	jr nz, .code19 ; $4cee
 	ld a, $01 ; $4cf0
-	jr .store ; $4cf2
+	jr .return ; $4cf2
 .code19:
 	cp $19 ; $4cf4
 	jr nz, .passthrough ; $4cf6
 	ld a, $02 ; $4cf8
-	jr .store ; $4cfa
+	jr .return ; $4cfa
 .passthrough:
 	xor a ; $4cfc
-.store:
+.return:
 	ret ; $4cfd
 ComposeLinkStateByte:
 	push bc ; $4cfe
@@ -412,7 +412,7 @@ AddPlayerMomentumToShot:
 	sra h ; $5385
 	rr l ; $5387
 	ld a, [wCharCourtPos] ; $5389
-	and $02 ; $538c
+	and COURTPOSF_FAR ; $538c
 	jr nz, .store ; $538e
 	neg_hl ; $5390
 .store:

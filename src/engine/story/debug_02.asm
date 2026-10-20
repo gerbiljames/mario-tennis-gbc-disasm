@@ -16,13 +16,13 @@ Unused_02_DebugStoryStatsScreen:
 	or a ; $4fce
 	jr z, .slotOk ; $4fcf
 	push de ; $4fd1
-	ld hl, MenuTilemaps_02 ; $4fd2
+	ld hl, SaveResultFailedString_02 ; $4fd2
 	ld_cell de, $08, $02 ; $4fd5
 	call PrintString ; $4fd8
 	pop de ; $4fdb
 	jp .printString ; $4fdc
 .slotOk:
-	ld hl, DebugStoryStatsScreenString0 ; $4fdf
+	ld hl, SaveResultLoadedString_02 ; $4fdf
 	ld_cell de, $08, $02 ; $4fe2
 	call PrintString ; $4fe5
 	call Unused_02_ValidateN64TransferRecord ; $4fe8
@@ -58,10 +58,10 @@ Unused_02_DebugStoryStatsScreen:
 	jr .redraw ; $5014
 .printString:
 	push de ; $5016
-	ld hl, DebugStoryStatsScreenString2 ; $5017
+	ld hl, SaveResultBlankString_02 ; $5017
 	ld_cell de, $02, $10 ; $501a
 	call PrintString ; $501d
-	ld hl, DebugStoryStatsScreenString2 ; $5020
+	ld hl, SaveResultBlankString_02 ; $5020
 	ld_cell de, $08, $10 ; $5023
 	call PrintString ; $5026
 	pop de ; $5029
@@ -121,22 +121,22 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, [hl] ; $5092
 	ld_cell de, $02, $0e ; $5093
 	call PrintDecimalByte ; $5096
-	ld hl, CHARREC_TRAIN_LEVELS ; $5099
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $5099
 	add hl, bc ; $509c
 	ld a, [hl] ; $509d
 	ld_cell de, $07, $04 ; $509e
 	call PrintDecimalByte ; $50a1
-	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $50a4
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $50a4
 	add hl, bc ; $50a7
 	ld a, [hl] ; $50a8
 	ld_cell de, $07, $06 ; $50a9
 	call PrintDecimalByte ; $50ac
-	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $50af
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $50af
 	add hl, bc ; $50b2
 	ld a, [hl] ; $50b3
 	ld_cell de, $07, $09 ; $50b4
 	call PrintDecimalByte ; $50b7
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $50ba
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $50ba
 	add hl, bc ; $50bd
 	ld a, [hl] ; $50be
 	ld_cell de, $07, $0b ; $50bf
@@ -205,43 +205,43 @@ Unused_02_DebugStoryStatsScreen:
 	jr z, .levelUpPlayer ; $5149
 	push de ; $514b
 	ld a, $00 ; $514c
-	ld d, $00 ; $514e
+	ld d, TRAINSTAT_SPIN ; $514e
 	call LevelUpPlayer ; $5150
 	pop de ; $5153
 	sound SFX_MENU_MOVE ; $5154
 	jp .redraw ; $5156
 .levelUpPlayer:
-	bit 5, a ; $5159
+	bit PADB_LEFT, a ; $5159
 	jr z, .checkRight ; $515b
 	push de ; $515d
 	ld a, $00 ; $515e
-	ld d, $01 ; $5160
+	ld d, TRAINSTAT_POWER ; $5160
 	call LevelUpPlayer ; $5162
 	pop de ; $5165
 	sound SFX_MENU_MOVE ; $5166
 	jp .redraw ; $5168
 .checkRight:
-	bit 4, a ; $516b
+	bit PADB_RIGHT, a ; $516b
 	jr z, .checkDown ; $516d
 	push de ; $516f
 	ld a, $00 ; $5170
-	ld d, $02 ; $5172
+	ld d, TRAINSTAT_CONTROL ; $5172
 	call LevelUpPlayer ; $5174
 	pop de ; $5177
 	sound SFX_MENU_MOVE ; $5178
 	jp .redraw ; $517a
 .checkDown:
-	bit 7, a ; $517d
+	bit PADB_DOWN, a ; $517d
 	jr z, .positive ; $517f
 	push de ; $5181
 	ld a, $00 ; $5182
-	ld d, $03 ; $5184
+	ld d, TRAINSTAT_SPEED ; $5184
 	call LevelUpPlayer ; $5186
 	pop de ; $5189
 	sound SFX_MENU_MOVE ; $518a
 	jp .redraw ; $518c
 .positive:
-	bit 1, a ; $518f
+	bit PADB_B, a ; $518f
 	jr z, .checkA ; $5191
 	push de ; $5193
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $5194
@@ -252,7 +252,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $519e
 	jp .redraw ; $519f
 .checkA:
-	bit 0, a ; $51a2
+	bit PADB_A, a ; $51a2
 	jr z, .checkSelect ; $51a4
 	push af ; $51a6
 	push bc ; $51a7
@@ -278,7 +278,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld [wStoryMainLeftHanded], a ; $51c5
 	jp .redraw ; $51c8
 .checkSelect:
-	bit 2, a ; $51cb
+	bit PADB_SELECT, a ; $51cb
 	jr z, .checkStart ; $51cd
 	sound SFX_MENU_SELECT ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
@@ -290,11 +290,11 @@ Unused_02_DebugStoryStatsScreen:
 	ld [wCurrentStorySlot], a ; $51da
 	jp .reloadSlot ; $51dd
 .checkStart:
-	bit 3, a ; $51e0
+	bit PADB_START, a ; $51e0
 	jr z, .skipSave ; $51e2
 	sound SFX_MENU_SELECT ; $51e4
 	push de ; $51e6
-	ld hl, DebugStoryStatsScreenString1 ; $51e7
+	ld hl, SaveResultSavedString_02 ; $51e7
 	ld_cell de, $08, $02 ; $51ea
 	call PrintString ; $51ed
 	farcall SaveStorySlotWithTimer ; $51f0
@@ -302,18 +302,23 @@ Unused_02_DebugStoryStatsScreen:
 	jp .redraw ; $51f4
 .skipSave:
 	jp .inputLoop ; $51f7
-MenuTilemaps_02:
-	; $51fa, 8 bytes (bytes:16)
-	db $46, $41, $49, $4c, $45, $44, $20, $00 ; 0x00
-DebugStoryStatsScreenString0:
-	INCLUDE "data/engine/story/DebugStoryStatsScreenString0.asm" ; $5202, 8 bytes
-DebugStoryStatsScreenString1:
-	INCLUDE "data/engine/story/DebugStoryStatsScreenString1.asm" ; $520a, 16 bytes
-DebugStoryStatsScreenString2:
-	; $521a, 45 bytes (bytes:16)
-	db $20, $20, $20, $20, $20, $20, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
-	db $09, $0a, $0b, $0c, $0d, $00, $00, $00, $00, $00, $00, $00, $00, $4d, $41, $52 ; 0x10
-	db $49, $4f, $20, $47, $4f, $4c, $46, $20, $47, $42, $20, $43, $48 ; 0x20
+SaveResultFailedString_02:
+	INCLUDE "data/engine/story/SaveResultFailedString_02.asm" ; $51fa, 8 bytes (text)
+SaveResultLoadedString_02:
+	INCLUDE "data/engine/story/SaveResultLoadedString_02.asm" ; $5202, 8 bytes (text)
+SaveResultSavedString_02:
+	INCLUDE "data/engine/story/SaveResultSavedString_02.asm" ; $520a, 8 bytes (text)
+Unused_02_SaveResultDeletedString:
+	INCLUDE "data/engine/story/Unused_02_SaveResultDeletedString.asm" ; $5212, 8 bytes (text)
+SaveResultBlankString_02:
+	INCLUDE "data/engine/story/SaveResultBlankString_02.asm" ; $521a, 8 bytes (text)
+Unused_02_ByteRamp:
+	; $5222, 13 bytes (bytes:13)
+	db $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d ; 0x00
+	; $522f, 8 bytes (fill)
+	ds 8, $00
+Unused_02_MarioGolfSignature:
+	INCLUDE "data/engine/story/Unused_02_MarioGolfSignature.asm" ; $5237, 16 bytes (text)
 LoadStorySlot:
 	push de ; $5247
 	ld hl, wStorySlotData ; $5248
@@ -330,7 +335,7 @@ LoadStorySlot:
 	or a ; $525c
 	ld a, h ; $525d
 	jr nz, .storePlayer1CurrentMainCharacter ; $525e
-	ld a, $3f ; $5260
+	ld a, CHAR_EMPTY_SLOT ; $5260
 	ld [wPlayer1MainChar], a ; $5262
 	ld a, $03 ; $5265
 	ld [wPlayer1MainPalette], a ; $5267
@@ -346,8 +351,8 @@ LoadStorySlot:
 	push de ; $5276
 	xor a ; $5277
 	ld [wCurrentStorySlot], a ; $5278
-	ld bc, $8000 ; $527b
-	call InitCa00RecordFromCharId ; $527e
+	ld_char_rec bc, CHAR_STORY_MAIN, MATCHREC_P1_MAIN ; $527b
+	call InitMatchRecordFromCharId ; $527e
 	pop de ; $5281
 	pop bc ; $5282
 	ret ; $5283
@@ -370,13 +375,13 @@ Unused_02_StorySlotVariant:
 .slotOk:
 	push bc ; $529e
 	push de ; $529f
-	ld bc, $8000 ; $52a0
-	call InitCa00RecordFromCharId ; $52a3
+	ld_char_rec bc, CHAR_STORY_MAIN, MATCHREC_P1_MAIN ; $52a0
+	call InitMatchRecordFromCharId ; $52a3
 	pop de ; $52a6
 	pop bc ; $52a7
 	xor a ; $52a8
 	ret ; $52a9
-LoadCharacterRecordToCa80:
+LoadPlayer2MainRecord:
 	push af ; $52aa
 	push bc ; $52ab
 	push de ; $52ac
@@ -392,8 +397,8 @@ LoadCharacterRecordToCa80:
 	jr .restore ; $52c2
 .positive:
 	ld b, a ; $52c4
-	ld c, $02 ; $52c5
-	call InitCa00RecordFromCharId ; $52c7
+	ld c, MATCHREC_P2_MAIN ; $52c5
+	call InitMatchRecordFromCharId ; $52c7
 .restore:
 	pop hl ; $52ca
 	pop de ; $52cb

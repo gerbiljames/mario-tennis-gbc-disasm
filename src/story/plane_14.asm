@@ -42,7 +42,7 @@ LoadPlaneObjGfx_14:
 QueuePlaneSpriteByHeight_14:
 	call GetSceneObjectScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
-	ld a, [wMapSceneStage2] ; $5ea1
+	ld a, [wCutscenePlaneY] ; $5ea1
 	sub $88 ; $5ea4
 	cp $0a ; $5ea6
 	jr c, .queueSpriteTemplate ; $5ea8
@@ -94,46 +94,46 @@ UpdateWaterSplash0_14:
 	ld a, [wCutsceneObjX] ; $60c7
 	sub b ; $60ca
 	ld d, a ; $60cb
-	ld a, [wCutsceneObjActive] ; $60cc
+	ld a, [wCutsceneObjHalt] ; $60cc
 	and a ; $60cf
-	jr nz, .checkHit ; $60d0
+	jr nz, .computeScreenY ; $60d0
 	call AdvanceWaterSplash0Rise_14 ; $60d2
-.checkHit:
+.computeScreenY:
 	ldh a, [hScrollY] ; $60d5
 	ld b, a ; $60d7
 	ld a, [wCutsceneObjY] ; $60d8
 	add $20 ; $60db
 	sub b ; $60dd
 	ld e, a ; $60de
-	ld a, [wCutsceneObjActive] ; $60df
+	ld a, [wCutsceneObjHalt] ; $60df
 	and a ; $60e2
-	jp z, .hit ; $60e3
+	jp z, .checkRising ; $60e3
 	ld a, [wCutsceneObjLimit] ; $60e6
 	ld b, a ; $60e9
 	ld a, [wCutsceneObjPhase] ; $60ea
 	cp $14 ; $60ed
-	jr c, .respawn ; $60ef
+	jr c, .draw ; $60ef
 	cp b ; $60f1
 	jr c, .done ; $60f2
-.hit:
+.checkRising:
 	ld a, [wCutsceneObjRiseTimer] ; $60f4
 	and a ; $60f7
-	jr z, .scorePoint ; $60f8
+	jr z, .tickFrame ; $60f8
 	ld a, $08 ; $60fa
 	ld [wCutsceneObjTimer], a ; $60fc
 	ld a, $00 ; $60ff
 	ld [wCutsceneObjPhase], a ; $6101
-	jp .respawn ; $6104
-.scorePoint:
+	jp .draw ; $6104
+.tickFrame:
 	ld a, [wCutsceneObjTimer] ; $6107
 	inc a ; $610a
 	ld [wCutsceneObjTimer], a ; $610b
 	cp $08 ; $610e
-	jr c, .advance ; $6110
+	jr c, .checkFinished ; $6110
 	cp $08 ; $6112
-	jr z, .playSfx ; $6114
+	jr z, .nextFrame ; $6114
 	sound SFX_SPLASH ; $6116
-.playSfx:
+.nextFrame:
 	ld a, [wCutsceneObjX] ; $6118
 	inc a ; $611b
 	ld [wCutsceneObjX], a ; $611c
@@ -142,12 +142,12 @@ UpdateWaterSplash0_14:
 	ld a, [wCutsceneObjPhase] ; $6123
 	add $04 ; $6126
 	ld [wCutsceneObjPhase], a ; $6128
-.advance:
+.checkFinished:
 	ld a, [wCutsceneObjLimit] ; $612b
 	ld b, a ; $612e
 	ld a, [wCutsceneObjPhase] ; $612f
 	cp $14 ; $6132
-	jr c, .respawn ; $6134
+	jr c, .draw ; $6134
 	cp b ; $6136
 	jr c, .done ; $6137
 	xor a ; $6139
@@ -167,7 +167,7 @@ UpdateWaterSplash0_14:
 	ld a, $10 ; $6155
 	ld [wCutsceneObjRiseTimer], a ; $6157
 	jr .done ; $615a
-.respawn:
+.draw:
 	ld a, [wCutsceneObjPhase] ; $615c
 	add $20 ; $615f
 	ld c, a ; $6161
@@ -193,46 +193,46 @@ UpdateWaterSplash1_14:
 	ld a, [wCutsceneObjX + 1] ; $6181
 	sub b ; $6184
 	ld d, a ; $6185
-	ld a, [wCutsceneObjActive + 1] ; $6186
+	ld a, [wCutsceneObjHalt + 1] ; $6186
 	and a ; $6189
-	jr nz, .checkHit ; $618a
+	jr nz, .computeScreenY ; $618a
 	call AdvanceWaterSplash1Rise_14 ; $618c
-.checkHit:
+.computeScreenY:
 	ldh a, [hScrollY] ; $618f
 	ld b, a ; $6191
 	ld a, [wCutsceneObjY + 1] ; $6192
 	add $20 ; $6195
 	sub b ; $6197
 	ld e, a ; $6198
-	ld a, [wCutsceneObjActive + 1] ; $6199
+	ld a, [wCutsceneObjHalt + 1] ; $6199
 	and a ; $619c
-	jp z, .hit ; $619d
+	jp z, .checkRising ; $619d
 	ld a, [wCutsceneObjLimit + 1] ; $61a0
 	ld b, a ; $61a3
 	ld a, [wCutsceneObjPhase + 1] ; $61a4
 	cp $14 ; $61a7
-	jr c, .respawn ; $61a9
+	jr c, .draw ; $61a9
 	cp b ; $61ab
 	jr c, .done ; $61ac
-.hit:
+.checkRising:
 	ld a, [wCutsceneObjRiseTimer + 1] ; $61ae
 	and a ; $61b1
-	jr z, .scorePoint ; $61b2
+	jr z, .tickFrame ; $61b2
 	ld a, $08 ; $61b4
 	ld [wCutsceneObjTimer + 1], a ; $61b6
 	ld a, $00 ; $61b9
 	ld [wCutsceneObjPhase + 1], a ; $61bb
-	jp .respawn ; $61be
-.scorePoint:
+	jp .draw ; $61be
+.tickFrame:
 	ld a, [wCutsceneObjTimer + 1] ; $61c1
 	inc a ; $61c4
 	ld [wCutsceneObjTimer + 1], a ; $61c5
 	cp $08 ; $61c8
-	jr c, .advance ; $61ca
+	jr c, .checkFinished ; $61ca
 	cp $08 ; $61cc
-	jr z, .playSfx ; $61ce
+	jr z, .nextFrame ; $61ce
 	sound SFX_SPLASH ; $61d0
-.playSfx:
+.nextFrame:
 	ld a, [wCutsceneObjX + 1] ; $61d2
 	inc a ; $61d5
 	ld [wCutsceneObjX + 1], a ; $61d6
@@ -241,12 +241,12 @@ UpdateWaterSplash1_14:
 	ld a, [wCutsceneObjPhase + 1] ; $61dd
 	add $04 ; $61e0
 	ld [wCutsceneObjPhase + 1], a ; $61e2
-.advance:
+.checkFinished:
 	ld a, [wCutsceneObjLimit + 1] ; $61e5
 	ld b, a ; $61e8
 	ld a, [wCutsceneObjPhase + 1] ; $61e9
 	cp $14 ; $61ec
-	jr c, .respawn ; $61ee
+	jr c, .draw ; $61ee
 	cp b ; $61f0
 	jr c, .done ; $61f1
 	xor a ; $61f3
@@ -266,7 +266,7 @@ UpdateWaterSplash1_14:
 	ld a, $10 ; $620f
 	ld [wCutsceneObjRiseTimer + 1], a ; $6211
 	jr .done ; $6214
-.respawn:
+.draw:
 	ld a, [wCutsceneObjPhase + 1] ; $6216
 	add $20 ; $6219
 	ld c, a ; $621b
@@ -328,9 +328,9 @@ IslandSkyEntry02Scene:
 	call LoadPlaneObjGfx2_14 ; $6291
 	call EnableLCD ; $6294
 	ld a, $20 ; $6297
-	ld [wMapSceneStage], a ; $6299
+	ld [wCutscenePlaneX], a ; $6299
 	ld a, $28 ; $629c
-	ld [wMapSceneStage2], a ; $629e
+	ld [wCutscenePlaneY], a ; $629e
 	ld a, $00 ; $62a1
 	ld [wCutsceneObjX], a ; $62a3
 	frame_task QueuePlaneSpriteByFrameCounter_14 ; $62a6
@@ -352,9 +352,9 @@ IslandSkyEntry02Scene:
 .levelFlightLoop:
 	script_wait_frames 6 ; $62f4
 	call PlayPlaneMoveSfx_14 ; $62fb
-	ld a, [wMapSceneStage2] ; $62fe
+	ld a, [wCutscenePlaneY] ; $62fe
 	dec a ; $6301
-	ld [wMapSceneStage2], a ; $6302
+	ld [wCutscenePlaneY], a ; $6302
 	call AdvancePlaneFrameCounter_14 ; $6305
 	dec h ; $6308
 	jr nz, .levelFlightLoop ; $6309
@@ -364,98 +364,98 @@ IslandSkyEntry02Scene:
 	call PlayPlaneMoveSfx_14 ; $6314
 	ld a, h ; $6317
 	and $01 ; $6318
-	jr z, .planeArrived ; $631a
-	ld a, [wMapSceneStage] ; $631c
+	jr z, .shallowFlightStep ; $631a
+	ld a, [wCutscenePlaneX] ; $631c
 	inc a ; $631f
-	ld [wMapSceneStage], a ; $6320
-.planeArrived:
-	ld a, [wMapSceneStage2] ; $6323
+	ld [wCutscenePlaneX], a ; $6320
+.shallowFlightStep:
+	ld a, [wCutscenePlaneY] ; $6323
 	dec a ; $6326
-	ld [wMapSceneStage2], a ; $6327
+	ld [wCutscenePlaneY], a ; $6327
 	call AdvancePlaneFrameCounter_14 ; $632a
 	dec h ; $632d
 	jr nz, .shallowFlightLoop ; $632e
 	ld h, $08 ; $6330
-.descend:
+.steepFlightLoop:
 	script_wait_frames 4 ; $6332
 	call PlayPlaneMoveSfx_14 ; $6339
-	ld a, [wMapSceneStage] ; $633c
+	ld a, [wCutscenePlaneX] ; $633c
 	inc a ; $633f
-	ld [wMapSceneStage], a ; $6340
-	ld a, [wMapSceneStage2] ; $6343
+	ld [wCutscenePlaneX], a ; $6340
+	ld a, [wCutscenePlaneY] ; $6343
 	dec a ; $6346
-	ld [wMapSceneStage2], a ; $6347
+	ld [wCutscenePlaneY], a ; $6347
 	call AdvancePlaneFrameCounter_14 ; $634a
 	dec h ; $634d
-	jr nz, .descend ; $634e
+	jr nz, .steepFlightLoop ; $634e
 	script_player_speed 0.5625 ; $6350
 	script_move_player_to_actor ACTOR_PLAYER ; $6356
 	ld h, $1c ; $635d
-.land:
+.boardFlightLoop:
 	script_wait_frames 3 ; $635f
 	call PlayPlaneMoveSfx_14 ; $6366
 	ld a, h ; $6369
 	and $01 ; $636a
-	jr z, .disembark ; $636c
-	ld a, [wMapSceneStage] ; $636e
+	jr z, .boardFlightStep ; $636c
+	ld a, [wCutscenePlaneX] ; $636e
 	inc a ; $6371
-	ld [wMapSceneStage], a ; $6372
-.disembark:
-	ld a, [wMapSceneStage2] ; $6375
+	ld [wCutscenePlaneX], a ; $6372
+.boardFlightStep:
+	ld a, [wCutscenePlaneY] ; $6375
 	dec a ; $6378
-	ld [wMapSceneStage2], a ; $6379
+	ld [wCutscenePlaneY], a ; $6379
 	call AdvancePlaneFrameCounter_14 ; $637c
 	dec h ; $637f
-	jr nz, .land ; $6380
+	jr nz, .boardFlightLoop ; $6380
 	ld h, $00 ; $6382
-.walkOff:
+.climbOutLoop:
 	script_wait_frames 3 ; $6384
 	inc h ; $638b
 	call PlayPlaneMoveSfx_14 ; $638c
-	ld a, [wMapSceneStage2] ; $638f
+	ld a, [wCutscenePlaneY] ; $638f
 	dec a ; $6392
-	ld [wMapSceneStage2], a ; $6393
+	ld [wCutscenePlaneY], a ; $6393
 	and $03 ; $6396
 	cp $03 ; $6398
-	jr nz, .speak ; $639a
-	ld a, [wMapSceneStage] ; $639c
+	jr nz, .climbOutStep ; $639a
+	ld a, [wCutscenePlaneX] ; $639c
 	inc a ; $639f
-	ld [wMapSceneStage], a ; $63a0
-.speak:
+	ld [wCutscenePlaneX], a ; $63a0
+.climbOutStep:
 	call AdvancePlaneFrameCounter_14 ; $63a3
-	ld a, [wMapSceneStage] ; $63a6
+	ld a, [wCutscenePlaneX] ; $63a6
 	cp $50 ; $63a9
-	jr nz, .walkOff ; $63ab
+	jr nz, .climbOutLoop ; $63ab
 	ld h, $08 ; $63ad
-.speakDoubles:
+.riseLoop:
 	script_wait_frames 4 ; $63af
 	call PlayPlaneMoveSfx_14 ; $63b6
-	ld a, [wMapSceneStage2] ; $63b9
+	ld a, [wCutscenePlaneY] ; $63b9
 	dec a ; $63bc
-	ld [wMapSceneStage2], a ; $63bd
+	ld [wCutscenePlaneY], a ; $63bd
 	call AdvancePlaneFrameCounter_14 ; $63c0
 	dec h ; $63c3
-	jr nz, .speakDoubles ; $63c4
+	jr nz, .riseLoop ; $63c4
 	ld h, $08 ; $63c6
-.fadeOut:
+.slowRiseLoop:
 	script_wait_frames 6 ; $63c8
 	call PlayPlaneMoveSfx_14 ; $63cf
-	ld a, [wMapSceneStage2] ; $63d2
+	ld a, [wCutscenePlaneY] ; $63d2
 	dec a ; $63d5
-	ld [wMapSceneStage2], a ; $63d6
+	ld [wCutscenePlaneY], a ; $63d6
 	call AdvancePlaneFrameCounter_14 ; $63d9
 	dec h ; $63dc
-	jr nz, .fadeOut ; $63dd
+	jr nz, .slowRiseLoop ; $63dd
 	ld h, $08 ; $63df
-.done:
+.slowestRiseLoop:
 	script_wait_frames 8 ; $63e1
 	call PlayPlaneMoveSfx_14 ; $63e8
-	ld a, [wMapSceneStage2] ; $63eb
+	ld a, [wCutscenePlaneY] ; $63eb
 	dec a ; $63ee
-	ld [wMapSceneStage2], a ; $63ef
+	ld [wCutscenePlaneY], a ; $63ef
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
-	jr nz, .done ; $63f6
+	jr nz, .slowestRiseLoop ; $63f6
 	sound SFX_FIREWORK_SPARKLE ; $63f8
 	script_wait_frames 50 ; $63fa
 	script_fade_out 4 ; $6401

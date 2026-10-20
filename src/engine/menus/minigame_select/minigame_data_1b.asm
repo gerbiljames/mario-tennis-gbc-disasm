@@ -116,8 +116,9 @@ DrawSavedDataTypeDescription:
 	pop_wram_bank ; $73ac
 	ret ; $73b1
 SavedDataTypeDescriptionTable:
-	; $73b2, 4 bytes (bytes:4)
-	db $01, $d2, $01, $d2 ; 0x00
+	; $73b2, 4 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
 LoadSavedDataTypePalette:
 	ld hl, SavedDataTypePalettePtrs ; $73b6
 	add a ; $73b9
@@ -274,16 +275,16 @@ LoadMinigameClearFlags:
 	jr nz, .loop ; $750a
 	ret ; $750c
 MinigameClearFlagsTable:
-	; $750d, 18 bytes (records:2)
-	dw $0280 ; record 0
-	dw $02e0 ; record 1
-	dw $0340 ; record 2
-	dw $03a0 ; record 3
-	dw $0500 ; record 4
-	dw $0560 ; record 5
-	dw $05c0 ; record 6
-	dw $0620 ; record 7
-	dw $0680 ; record 8
+	; $750d, 18 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; record 0
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; record 1
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_1 ; record 2
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_1 ; record 3
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_1 ; record 4
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_1 ; record 5
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; record 6
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; record 7
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; record 8
 LoadMinigameStarFlags:
 	ld hl, wMinigameDataStarFlags ; $751f
 	ld bc, wMinigameDataStarFlags_SIZE ; $7522
@@ -313,17 +314,18 @@ LoadMinigameStarFlags:
 	jr nz, .loop ; $754a
 	ret ; $754c
 MinigameStarFlagsTable:
-	; $754d, 19 bytes (records:2)
-	dw $02a0 ; record 0
-	dw $0300 ; record 1
-	dw $0360 ; record 2
-	dw $03c0 ; record 3
-	dw $0520 ; record 4
-	dw $0580 ; record 5
-	dw $05e0 ; record 6
-	dw $0640 ; record 7
-	dw $06a0 ; record 8
-	db $c9
+	; $754d, 18 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; record 0
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; record 1
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; record 2
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_2 ; record 3
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_2 ; record 4
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_2 ; record 5
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_2 ; record 6
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; record 7
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; record 8
+Unused_1b_StubRet3:
+	ret ; $755f
 LoadMinigameHighScores:
 	ldh a, [hWramBank] ; $7560
 	push af ; $7562

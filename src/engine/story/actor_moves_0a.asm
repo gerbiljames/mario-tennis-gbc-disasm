@@ -19,7 +19,7 @@ SetActorPositionRaw:
 	ld h, [hl] ; $43f2
 	add ACTORF_FLAGS ; $43f3
 	ld l, a ; $43f5
-	res 7, [hl] ; $43f6
+	res ACTORFLAGB_MOVING, [hl] ; $43f6
 	ret ; $43f8
 ScriptSetActorMoveTarget:
 	add sp, -4 ; $43f9
@@ -66,7 +66,7 @@ SetActorMoveTargetRaw:
 	ld h, [hl] ; $4439
 	add ACTORF_FLAGS ; $443a
 	ld l, a ; $443c
-	set 7, [hl] ; $443d
+	set ACTORFLAGB_MOVING, [hl] ; $443d
 	ret ; $443f
 Unused_0a_MoveActorTowardPoint:
 	add sp, -5 ; $4440
@@ -167,7 +167,7 @@ Unused_0a_MoveActorTowardPointRaw:
 	ld h, [hl] ; $44c4
 	add ACTORF_FLAGS ; $44c5
 	ld l, a ; $44c7
-	set 7, [hl] ; $44c8
+	set ACTORFLAGB_MOVING, [hl] ; $44c8
 	ret ; $44ca
 MoveActorByDelta:
 	add sp, -4 ; $44cb
@@ -260,7 +260,7 @@ MoveActorByDeltaRaw:
 	ld h, [hl] ; $453e
 	add ACTORF_FLAGS ; $453f
 	ld l, a ; $4541
-	set 7, [hl] ; $4542
+	set ACTORFLAGB_MOVING, [hl] ; $4542
 	ret ; $4544
 MoveActorByAngle:
 	add sp, -3 ; $4545
@@ -352,7 +352,7 @@ MoveActorByAngleRaw:
 	ld h, [hl] ; $45b9
 	add ACTORF_FLAGS ; $45ba
 	ld l, a ; $45bc
-	set 7, [hl] ; $45bd
+	set ACTORFLAGB_MOVING, [hl] ; $45bd
 	ret ; $45bf
 ScriptSetActorFacingLock:
 	call GetActorStateAddr ; $45c0

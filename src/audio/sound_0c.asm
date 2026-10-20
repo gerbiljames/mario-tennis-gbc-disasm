@@ -1,76 +1,76 @@
 SoundTable_0c:
 	ASSERT SoundTable_0c == $4000
-	snd_channel 2, $01 ; $4000
+	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $4000
 	dw Unused_0c_Snd00 ; $4002
-	snd_channel 3, $00 ; $4004
+	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4004
 	dw Unused_0c_Snd01 ; $4006
-	snd_channel 4, $02 ; $4008
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4008
 	dw Unused_0c_Snd02 ; $400a
-	snd_channel 5, $03 ; $400c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $400c
 	dw Unused_0c_Snd03 ; $400e
-	snd_channel 2, $01 ; $4010
+	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $4010
 	dw Unused_0c_Snd04 ; $4012
-	snd_channel 3, $00 ; $4014
+	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4014
 	dw Unused_0c_Snd05 ; $4016
-	snd_channel 4, $02 ; $4018
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4018
 	dw Unused_0c_Snd06 ; $401a
-	snd_channel 5, $03 ; $401c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $401c
 	dw Unused_0c_Snd07 ; $401e
-	snd_channel 2, $00 ; $4020
+	snd_channel 2, SNDCHANTYPE_SQUARE1 ; $4020
 	dw Unused_0c_Snd08 ; $4022
-	snd_channel 3, $01 ; $4024
+	snd_channel 3, SNDCHANTYPE_SQUARE2 ; $4024
 	dw Unused_0c_Snd09 ; $4026
-	snd_channel 4, $02 ; $4028
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4028
 	dw Unused_0c_Snd10 ; $402a
-	snd_channel 5, $03 ; $402c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $402c
 	dw Unused_0c_Snd11 ; $402e
-	snd_channel 2, $01 ; $4030
+	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $4030
 	dw Unused_0c_Snd12 ; $4032
-	snd_channel 3, $00 ; $4034
+	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4034
 	dw Unused_0c_Snd13 ; $4036
-	snd_channel 4, $02 ; $4038
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4038
 	dw Unused_0c_Snd14 ; $403a
-	snd_channel 5, $03 ; $403c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $403c
 	dw Unused_0c_Snd15 ; $403e
-	snd_channel 2, $00 ; $4040
+	snd_channel 2, SNDCHANTYPE_SQUARE1 ; $4040
 	dw Unused_0c_Snd16 ; $4042
-	snd_channel 3, $01 ; $4044
+	snd_channel 3, SNDCHANTYPE_SQUARE2 ; $4044
 	dw Unused_0c_Snd17 ; $4046
-	snd_channel 4, $02 ; $4048
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4048
 	dw Unused_0c_Snd18 ; $404a
-	snd_channel 5, $03 ; $404c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $404c
 	dw Unused_0c_Snd19 ; $404e
-	snd_channel 2, $00 ; $4050
+	snd_channel 2, SNDCHANTYPE_SQUARE1 ; $4050
 	dw Unused_0c_Snd20 ; $4052
-	snd_channel 3, $01 ; $4054
+	snd_channel 3, SNDCHANTYPE_SQUARE2 ; $4054
 	dw Unused_0c_Snd21 ; $4056
-	snd_channel 4, $02 ; $4058
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4058
 	dw Unused_0c_Snd22 ; $405a
-	snd_channel 5, $03 ; $405c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $405c
 	dw Unused_0c_Snd23 ; $405e
-	snd_channel 2, $01 ; $4060
+	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $4060
 	dw Unused_0c_Snd24 ; $4062
-	snd_channel 3, $00 ; $4064
+	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4064
 	dw Unused_0c_Snd25 ; $4066
-	snd_channel 4, $02 ; $4068
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4068
 	dw Unused_0c_Snd26 ; $406a
-	snd_channel 5, $03 ; $406c
+	snd_channel 5, SNDCHANTYPE_NOISE ; $406c
 	dw Unused_0c_Snd27 ; $406e
-	snd_channel 2, $01 ; $4070
+	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $4070
 	dw Unused_0c_Snd28 ; $4072
-	snd_channel 3, $00 ; $4074
+	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4074
 	dw Unused_0c_Snd29 ; $4076
-	snd_channel 4, $02 ; $4078
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4078
 	dw Unused_0c_Snd30 ; $407a
-	snd_channel 2, $01 ; $407c
+	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $407c
 	dw Unused_0c_Snd31 ; $407e
-	snd_channel 3, $00 ; $4080
+	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4080
 	dw Unused_0c_Snd32 ; $4082
-	snd_channel 4, $02 ; $4084
+	snd_channel 4, SNDCHANTYPE_WAVE ; $4084
 	dw Unused_0c_Snd33 ; $4086
-	snd_channel 0, $03 ; $4088
+	snd_channel 0, SNDCHANTYPE_NOISE ; $4088
 	dw Unused_0c_Snd34 ; $408a
-	snd_channel 0, $03 ; $408c
+	snd_channel 0, SNDCHANTYPE_NOISE ; $408c
 	dw Unused_0c_Snd35 ; $408e
 Unused_0c_Snd00:
 	INCBIN "data/audio/Unused_0c_Snd00.bin" ; $4090, 228 bytes

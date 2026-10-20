@@ -132,11 +132,13 @@ SetPendingExpAward:
 	jp hl ; $7cd8
 PendingExpAwardSetters_1d:
 	; $7cd9, 10 bytes (records:2)
-	dw SetPendingExpAward_N64 ; record 0
-	dw SetPendingExpAward_Exhibition ; record 1
-	dw SetPendingExpAward_Linked ; record 2
-	dw SetPendingExpAward_Match ; record 3
-	dw SetPendingExpAward_Trophy ; record 4
+	table_width 2
+	dw SetPendingExpAward_N64 ; EXPAWARD_N64
+	dw SetPendingExpAward_Exhibition ; EXPAWARD_EXHIBITION
+	dw SetPendingExpAward_Linked ; EXPAWARD_LINKED
+	dw SetPendingExpAward_Match ; EXPAWARD_MATCH
+	dw SetPendingExpAward_Trophy ; EXPAWARD_TROPHY
+	assert_table_length NUM_EXPAWARDS
 SetPendingExpAward_N64:
 	ld a, c ; $7ce3
 	ld [wPendingExpAwardVariants], a ; $7ce4

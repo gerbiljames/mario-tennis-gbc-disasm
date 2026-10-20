@@ -229,7 +229,7 @@ UpdateDrillAbortCountdown:
 	ld a, MATCHABORT_POINT ; $41d4
 	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
-RecordDrillTargetZoneHitIfInPlay:
+RecordDrillTargetZoneMissIfInPlay:
 	ld a, [wPointOutcome] ; $41da
 	cp POINTOUTCOME_NET ; $41dd
 	ret z ; $41df
@@ -237,7 +237,7 @@ RecordDrillTargetZoneHitIfInPlay:
 	ret z ; $41e2
 	cp POINTOUTCOME_LET ; $41e3
 	ret z ; $41e5
-RecordDrillTargetZoneHit:
+RecordDrillTargetZoneMiss:
 	ld a, [wBallBounceCount] ; $41e6
 	cp $02 ; $41e9
 	ret nc ; $41eb
@@ -256,16 +256,16 @@ RecordDrillTargetZoneHit:
 	rla ; $41fd
 	dec b ; $41fe
 	jr nz, .shiftLoop ; $41ff
-	ld hl, wDrillTargetZoneHitBits ; $4201
+	ld hl, wDrillTargetZoneMissBits ; $4201
 	or [hl] ; $4204
 	ld [hl], a ; $4205
 	ret ; $4206
 Unused_0b_Table:
 	; $4207, 4 bytes (bytes:4)
 	db $03, $02, $00, $01 ; 0x00
-CountDrillResultBitsSet:
+CountDrillTargetZoneMisses:
 	push bc ; $420b
-	ld a, [wDrillTargetZoneHitBits] ; $420c
+	ld a, [wDrillTargetZoneMissBits] ; $420c
 	ld b, a ; $420f
 	xor a ; $4210
 	ld c, $08 ; $4211
@@ -276,12 +276,12 @@ CountDrillResultBitsSet:
 	jr nz, .shiftLoop ; $4218
 	pop bc ; $421a
 	ret ; $421b
-CheckDrillTargetZoneMissed:
+CheckDrillTargetZoneHit:
 	push bc ; $421c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $421d
 	ld c, a ; $4220
 	inc c ; $4221
-	ld a, [wDrillTargetZoneHitBits] ; $4222
+	ld a, [wDrillTargetZoneMissBits] ; $4222
 	ld b, a ; $4225
 .shiftLoop:
 	ld a, $00 ; $4226
@@ -316,7 +316,7 @@ RecordGateCrossOnServe:
 	or [hl] ; $4254
 	ld [hl], a ; $4255
 	ret ; $4256
-CountDrillResultBitsSetAlt:
+CountDrillGateCrosses:
 	push bc ; $4257
 	ld a, [wDrillGateCrossBits] ; $4258
 	ld b, a ; $425b
@@ -329,7 +329,7 @@ CountDrillResultBitsSetAlt:
 	jr nz, .loop ; $4264
 	pop bc ; $4266
 	ret ; $4267
-CountDrillResultBitsThisGame:
+TestDrillGateCrossThisPoint:
 	push bc ; $4268
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4269
 	ld c, a ; $426c
@@ -348,26 +348,26 @@ CountDrillResultBitsThisGame:
 MatchDrillPointTable:
 	; $427e, 64 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
-	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 1
-	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 2
-	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 3
-	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 4
-	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 5
-	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 6
-	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 7
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 4
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 5
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 6
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 7
 	; $42be, 1 bytes (fill)
 	ds 1, $ff
 StrokeMatchPointTable:
 	; $42bf, 64 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
-	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 0
-	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 1
-	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 2
-	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 3
-	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 4
-	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 5
-	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 6
-	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 7
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 0
+	court_positions COURTPOS_NEAR_RIGHT, COURTPOS_FAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 1
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 2
+	court_positions COURTPOS_NEAR_LEFT, COURTPOS_FAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 3
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 4
+	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 5
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_RECEIVER, SERVEROLE_SERVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 6
+	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NONE, SERVEROLE_SERVER, SERVEROLE_RECEIVER, SERVEROLE_NONE, SERVEROLE_NONE ; point 7
 	; $42ff, 1 bytes (fill)
 	ds 1, $ff

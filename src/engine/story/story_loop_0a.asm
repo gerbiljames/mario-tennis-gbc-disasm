@@ -208,7 +208,7 @@ RunStoryLocation:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4f5d
 	jr nz, .loadLocation ; $4f60
 	ld a, [wStoryLocationBGM] ; $4f62
-	cp $ff ; $4f65
+	cp BGM_UNCHANGED ; $4f65
 	jr z, .loadLocation ; $4f67
 	ld a, [wStoryLocationBGM] ; $4f69
 	call PlaySoundManaged ; $4f6c
@@ -528,15 +528,15 @@ LoadStoryEntryPointRecord:
 	ld de, wStoryMapRecord ; $51a3
 	ld bc, wStoryMapRecord_SIZE ; $51a6
 	call FarCopyBytes ; $51a9
-	ld a, [wStoryMapRecord + 1] ; $51ac
+	ld a, [wStoryMapRecord + MAPENTRY_FACING] ; $51ac
 	ld [wStoryModeSpawnPosition + 4], a ; $51af
-	ld hl, wStoryMapRecord + 2 ; $51b2
+	ld hl, wStoryMapRecord + MAPENTRY_X ; $51b2
 	ld de, wStoryModeSpawnPosition ; $51b5
 	ld bc, $0004 ; $51b8
 	call CopyMemoryBC ; $51bb
-	ld a, [wStoryMapRecord + 6] ; $51be
+	ld a, [wStoryMapRecord + MAPENTRY_SCRIPT] ; $51be
 	ld [wStoryArrivalScript], a ; $51c1
-	ld a, [wStoryMapRecord + 7] ; $51c4
+	ld a, [wStoryMapRecord + MAPENTRY_SCRIPT + 1] ; $51c4
 	ld [wStoryArrivalScript + 1], a ; $51c7
 .done:
 	pop hl ; $51ca

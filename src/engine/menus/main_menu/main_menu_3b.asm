@@ -111,7 +111,7 @@ LoadMainMenuGfx:
 .loop:
 	ld a, c ; $56cf
 	add a ; $56d0
-	ld hl, MainMenuTable0 ; $56d1
+	ld hl, MainMenuLabelTilePtrs ; $56d1
 	add_hl_a ; $56d4
 	ld a, [hl+] ; $56d9
 	ld h, [hl] ; $56da
@@ -126,7 +126,7 @@ LoadMainMenuGfx:
 	pop de ; $56e7
 	pop bc ; $56e8
 	pop af ; $56e9
-	ld hl, MainMenuTable1 ; $56ea
+	ld hl, MainMenuLabelTileVramDests ; $56ea
 	ld a, c ; $56ed
 	add a ; $56ee
 	add_hl_a ; $56ef
@@ -154,7 +154,7 @@ LoadMainMenuGfx:
 	wram_bank WRAM_SCREEN ; $5713
 	ld a, $00 ; $5719
 	ld [wCurrentStorySlot], a ; $571b
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $571e
+	ld a, [wSaveSlotSummaries + SLOTSUM_CHAR] ; $571e
 	farcall LoadCharMugshotToBuffer ; $5721
 	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
@@ -162,7 +162,7 @@ LoadMainMenuGfx:
 	wram_bank WRAM_SCREEN ; $572d
 	ld a, $01 ; $5733
 	ld [wCurrentStorySlot], a ; $5735
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $5738
+	ld a, [wSaveSlotSummaries + SLOTSUM_SIZE + SLOTSUM_CHAR] ; $5738
 	farcall LoadCharMugshotToBuffer ; $573b
 	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
@@ -170,7 +170,7 @@ LoadMainMenuGfx:
 	wram_bank WRAM_SCREEN ; $5747
 	ld a, $02 ; $574d
 	ld [wCurrentStorySlot], a ; $574f
-	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $5752
+	ld a, [wSaveSlotSummaries + 2 * SLOTSUM_SIZE + SLOTSUM_CHAR] ; $5752
 	farcall LoadCharMugshotToBuffer ; $5755
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
@@ -224,7 +224,7 @@ LoadMainMenuGfx:
 	farcall LoadCompressedTileBlock ; $57d7
 	pop_wram_bank ; $57da
 	ret ; $57df
-MainMenuTable0:
+MainMenuLabelTilePtrs:
 	; $57e0, 6 slot words
 	dslot DataPtr_ModeSelectLabelTiles0 ; record 0
 	dslot DataPtr_ModeSelectLabelTiles1 ; record 1
@@ -232,14 +232,14 @@ MainMenuTable0:
 	dslot DataPtr_ModeSelectLabelTiles3 ; record 3
 	dslot DataPtr_ModeSelectLabelTiles4 ; record 4
 	dslot DataPtr_ModeSelectLabelTiles5 ; record 5
-MainMenuTable1:
+MainMenuLabelTileVramDests:
 	; $57ec, 20 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
-	db $00, $ab ; 0x06
-	db $00, $ac ; 0x08
-	db $00, $ad ; 0x0a
+	dw vTiles1 + VRAM_BANK1 ; 0x00
+	dw vTiles1 tile $10 + VRAM_BANK1 ; 0x02
+	dw vTiles1 tile $20 + VRAM_BANK1 ; 0x04
+	dw vTiles1 tile $30 + VRAM_BANK1 ; 0x06
+	dw vTiles1 tile $40 + VRAM_BANK1 ; 0x08
+	dw vTiles1 tile $50 + VRAM_BANK1 ; 0x0a
 	db $00, $00 ; 0x0c
 	db $8f, $01 ; 0x0e
 	db $1f, $03 ; 0x10
@@ -251,9 +251,9 @@ MainMenuSlideIn:
 	ld c, $00 ; $5804
 .slideForwardLoop:
 	call AdvanceFrame ; $5806
-	ld b, $00 ; $5809
+	ld b, PANELANIM_MAIN_MENU_IN ; $5809
 	farcall RestoreMenuBgAndDrawPanel ; $580b
-	ld b, $00 ; $580e
+	ld b, MAPROWS_BANDS_3_7_11 ; $580e
 	farcall FlushWram3MapRows ; $5810
 	ld a, c ; $5813
 	inc a ; $5814
@@ -265,9 +265,9 @@ MainMenuSlideIn:
 	ld c, $09 ; $581b
 .slideBackLoop:
 	call AdvanceFrame ; $581d
-	ld b, $01 ; $5820
+	ld b, PANELANIM_MAIN_MENU_OUT ; $5820
 	farcall RestoreMenuBgAndDrawPanel ; $5822
-	ld b, $00 ; $5825
+	ld b, MAPROWS_BANDS_3_7_11 ; $5825
 	farcall FlushWram3MapRows ; $5827
 	ld a, c ; $582a
 	dec a ; $582b
@@ -282,9 +282,9 @@ MainMenuSlideOut:
 	ld c, $00 ; $5836
 .slideForwardLoop:
 	call AdvanceFrame ; $5838
-	ld b, $01 ; $583b
+	ld b, PANELANIM_MAIN_MENU_OUT ; $583b
 	farcall RestoreMenuBgAndDrawPanel ; $583d
-	ld b, $00 ; $5840
+	ld b, MAPROWS_BANDS_3_7_11 ; $5840
 	farcall FlushWram3MapRows ; $5842
 	ld a, c ; $5845
 	inc a ; $5846
@@ -296,9 +296,9 @@ MainMenuSlideOut:
 	ld c, $0f ; $584d
 .slideBackLoop:
 	call AdvanceFrame ; $584f
-	ld b, $00 ; $5852
+	ld b, PANELANIM_MAIN_MENU_IN ; $5852
 	farcall RestoreMenuBgAndDrawPanel ; $5854
-	ld b, $00 ; $5857
+	ld b, MAPROWS_BANDS_3_7_11 ; $5857
 	farcall FlushWram3MapRows ; $5859
 	ld a, c ; $585c
 	dec a ; $585d
@@ -311,10 +311,10 @@ MainMenuCursorSpriteTask:
 	ld c, $03 ; $5866
 	call GetMenuCursorIndex_3b ; $5868
 	push af ; $586b
-	ld hl, MainMenuCursorSpriteTaskTable1 ; $586c
+	ld hl, MainMenuCursorTileBases ; $586c
 	add_hl_a ; $586f
 	ld c, [hl] ; $5874
-	ld hl, MainMenuCursorSpriteTaskTable0 ; $5875
+	ld hl, MainMenuCursorPositions ; $5875
 	pop af ; $5878
 	add a ; $5879
 	push af ; $587a
@@ -324,7 +324,7 @@ MainMenuCursorSpriteTask:
 	ld e, a ; $5882
 	farcall ApplySpriteBobOffset ; $5883
 	pop af ; $5886
-	ld hl, MainMenuCursorSpriteTaskPtrs ; $5887
+	ld hl, MainMenuCursorTemplatePtrs ; $5887
 	add_hl_a ; $588a
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
@@ -334,7 +334,7 @@ MainMenuCursorSpriteTask:
 	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
 	call GetMenuCursorIndex_3b ; $589a
-	ld hl, MainMenuCursorSpriteTaskTable2 ; $589d
+	ld hl, MainMenuCursorIconXOffsets ; $589d
 	add_hl_a ; $58a0
 	ld a, [hl] ; $58a5
 	pop de ; $58a6
@@ -348,58 +348,68 @@ MainMenuCursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $58b2
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
-MainMenuCursorSpriteTaskPtrs:
+MainMenuCursorTemplatePtrs:
 	; $58ba, 18 bytes (records:2)
-	dw MainMenuCursorSpriteTask0 ; record 0
-	dw MainMenuCursorSpriteTask1 ; record 1
-	dw MainMenuCursorSpriteTask0 ; record 2
-	dw MainMenuCursorSpriteTask0 ; record 3
-	dw MainMenuCursorSpriteTask0 ; record 4
-	dw MainMenuCursorSpriteTask0 ; record 5
-	dw MainMenuCursorSpriteTask0 ; record 6
-	dw MainMenuCursorSpriteTask0 ; record 7
-	dw MainMenuCursorSpriteTask0 ; record 8
-MainMenuCursorSpriteTask0:
-	; $58cc, 33 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80 ; 0x20
-MainMenuCursorSpriteTask1:
-	; $58ed, 37 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $10, $48, $10, $00 ; 0x20
-	db $80 ; 0x24
+	dw MainMenuCursorTemplate0 ; record 0
+	dw MainMenuCursorTemplate1 ; record 1
+	dw MainMenuCursorTemplate0 ; record 2
+	dw MainMenuCursorTemplate0 ; record 3
+	dw MainMenuCursorTemplate0 ; record 4
+	dw MainMenuCursorTemplate0 ; record 5
+	dw MainMenuCursorTemplate0 ; record 6
+	dw MainMenuCursorTemplate0 ; record 7
+	dw MainMenuCursorTemplate0 ; record 8
+MainMenuCursorTemplate0:
+	; $58cc, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+MainMenuCursorTemplate1:
+	; $58ed, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite_end
 MainMenuCursorSpriteTask_SpriteTemplate:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MainMenuCursorSpriteTaskTable0:
+MainMenuCursorPositions:
 	; $591b, 18 bytes (bytes:16)
 	db $2e, $fc, $2e, $26, $2e, $5c, $52, $fe, $52, $2c, $52, $5e, $68, $fc, $68, $2c ; 0x00
 	db $68, $5e ; 0x10
-MainMenuCursorSpriteTaskTable1:
+MainMenuCursorTileBases:
 	; $592d, 9 bytes (bytes:9)
 	db $10, $20, $32, $00, $00, $00, $42, $52, $62 ; 0x00
-MainMenuCursorSpriteTaskTable2:
-	; $5936, 50 bytes (bytes:16)
-	db $00, $04, $00, $00, $00, $00, $00, $00, $00, $10, $08, $00, $00, $10, $10, $02 ; 0x00
-	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
-	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
-	db $00, $80 ; 0x30
+MainMenuCursorIconXOffsets:
+	; $5936, 9 bytes (bytes:9)
+	db $00, $04, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+Unused_3b_MainMenuCursorWideTemplate:
+	; $593f, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 DrawMainMenuSelection:
 	wram_bank WRAM_SCREEN ; $5968
 	ld b, $00 ; $596e
@@ -427,9 +437,9 @@ DrawMainMenuSelection:
 	add a ; $5997
 	add a ; $5998
 	add a ; $5999
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $599a
+	ld bc, wSaveSlotSummaries ; $599a
 	add_bc_a ; $599d
-	ld hl, $0001 ; $59a2
+	ld hl, SLOTSUM_PALETTE ; $59a2
 	add hl, bc ; $59a5
 	ld a, [hl] ; $59a6
 	ld d, $04 ; $59a7

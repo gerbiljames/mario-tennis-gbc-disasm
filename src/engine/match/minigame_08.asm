@@ -92,7 +92,7 @@ DrawBallAndEffects:
 	call DrawSlotSprite ; $641a
 	ld hl, wBallSlot ; $641d
 	call DrawSlotSprite ; $6420
-	ld d, $07 ; $6423
+	ld d, MODEHOOK_DRAW ; $6423
 	call CallModeHook ; $6425
 	ret ; $6428
 DrawActorsByDepth:
@@ -105,28 +105,28 @@ DrawActorsByDepth:
 	wram_bank WRAM_ACTORS ; $6439
 	ld a, [hl] ; $643f
 	cp b ; $6440
-	jr nc, .drawLoop ; $6441
+	jr nc, .nearFirst ; $6441
 	ld a, [wPointOutcome] ; $6443
 	and a ; $6446
-	jr z, .sortLoop ; $6447
+	jr z, .farBallNear ; $6447
 	call DrawFarTeamChars ; $6449
 	call DrawNearTeamChars ; $644c
 	call DrawBallAndEffects ; $644f
 	ret ; $6452
-.sortLoop:
+.farBallNear:
 	call DrawFarTeamChars ; $6453
 	call DrawBallAndEffects ; $6456
 	call DrawNearTeamChars ; $6459
 	ret ; $645c
-.drawLoop:
+.nearFirst:
 	ld a, [wPointOutcome] ; $645d
 	and a ; $6460
-	jr z, .next ; $6461
+	jr z, .nearBallFar ; $6461
 	call DrawNearTeamChars ; $6463
 	call DrawFarTeamChars ; $6466
 	call DrawBallAndEffects ; $6469
 	ret ; $646c
-.next:
+.nearBallFar:
 	call DrawNearTeamChars ; $646d
 	call DrawBallAndEffects ; $6470
 	call DrawFarTeamChars ; $6473
@@ -286,7 +286,7 @@ RunMinigamePointLoop:
 	ld [wAiReactionDelayFar], a ; $65cd
 	ld a, $00 ; $65d0
 	ld [wAiAimAwayChance], a ; $65d2
-	ld d, $03 ; $65d5
+	ld d, MODEHOOK_MINIGAME_START ; $65d5
 	call CallModeHook ; $65d7
 	ld a, [wMatchAbortFlag] ; $65da
 	and MATCHABORT_MATCH ; $65dd
@@ -294,7 +294,7 @@ RunMinigamePointLoop:
 .pointLoop:
 	call LoadMinigamePointLayout ; $65e1
 	call ResetPointState ; $65e4
-	ld d, $01 ; $65e7
+	ld d, MODEHOOK_POINT_START ; $65e7
 	call CallModeHook ; $65e9
 	ld a, [wMatchAbortFlag] ; $65ec
 	and MATCHABORT_MATCH ; $65ef
@@ -309,7 +309,7 @@ RunMinigamePointLoop:
 	ld a, [wMatchAbortFlag] ; $6602
 	and MATCHABORT_MATCH ; $6605
 	jr nz, .done ; $6607
-	ld d, $02 ; $6609
+	ld d, MODEHOOK_POINT_END ; $6609
 	call CallModeHook ; $660b
 	ld a, [wMatchAbortFlag] ; $660e
 	and MATCHABORT_MATCH ; $6611

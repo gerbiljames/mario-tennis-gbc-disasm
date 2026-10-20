@@ -3,7 +3,7 @@
 ; description), which the bank $09 object engine reaches with the slot in bc.
 	rsreset
 def OBJSLOT_ID              rb ; $00 $ff = free
-def OBJSLOT_FLAGS           rb ; $01 bit 0 draw this frame; LoadObjTemplate_09 sets bit 7
+def OBJSLOT_FLAGS           rb ; $01 OBJSLOTB_*
 def OBJSLOT_SPRITE_TEMPLATE rw ; $02
 def OBJSLOT_OAM_ATTR        rb ; $04
 def OBJSLOT_TILE            rb ; $05
@@ -18,14 +18,19 @@ def OBJSLOT_CURVE           rb ; $0e MoveCurveTable_09 index
 def OBJSLOT_ANCHOR          rb ; $0f 1 = relative to the serving character
 def OBJSLOT_SIZE equ _RS
 	ASSERT OBJSLOT_SIZE == $10
+; OBJSLOT_FLAGS bits
+def OBJSLOTB_VISIBLE equ 0 ; FinishObjSlotUpdate draws the slot
+def OBJSLOTB_LOADED  equ 7 ; set by LoadObjTemplate_09; StartObjExitAnim clears it and plays the template's exit animation only if it was set
 
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
 ; SelectServeShotType, which index wCharShotButton1 x wCharShotButton2 tables.
 ; Base strokes: A = topspin, B = slice, A->B = lob, B->A = drop, A+B = smash;
-; doubling a button gives its "power" variant. When the ball is in smash range
-; (wCharBallReachFlags bit 4) the ground strokes are swapped for their "reach"
-; variants ($06/$07/$08, dispatched to bank $2c's ProjectShotPlacement0-2).
+; doubling a button gives its "power" variant. When the character is near the
+; net (wCharBallReachFlags BALLREACHB_NEAR_NET) the ground strokes are swapped
+; for their "reach" variants ($06/$07/$08, dispatched to bank $2c's
+; ProjectShotPlacement0-2), which fall back to SHOTTYPE_REACH when
+; CheckBallInSmashRange fails at the hit.
 ; Serves by first button: A -> topspin, B -> slice, A+B -> flat.
 	const_def
 	const SHOTTYPE_TOPSPIN             ; $00 A
@@ -33,10 +38,10 @@ def OBJSLOT_SIZE equ _RS
 	const SHOTTYPE_SLICE               ; $02 B
 	const SHOTTYPE_POWER_SLICE         ; $03 B -> B
 	const SHOTTYPE_NEUTRAL             ; $04 no valid button combo (table fallback)
-	const SHOTTYPE_REACH               ; $05 reach attempted, ball not in smash range
-	const SHOTTYPE_REACH_POWER_TOPSPIN ; $06 A -> A, ball smashable
-	const SHOTTYPE_REACH_POWER_SLICE   ; $07 B -> B, ball smashable
-	const SHOTTYPE_REACH_BASIC         ; $08 A / B, ball smashable
+	const SHOTTYPE_REACH               ; $05 a reach variant hit outside CheckBallInSmashRange
+	const SHOTTYPE_REACH_POWER_TOPSPIN ; $06 A -> A, near the net
+	const SHOTTYPE_REACH_POWER_SLICE   ; $07 B -> B, near the net
+	const SHOTTYPE_REACH_BASIC         ; $08 A / B, near the net
 	const SHOTTYPE_SMASH               ; $09 A + B
 	const SHOTTYPE_LOB                 ; $0a A -> B
 	const SHOTTYPE_DROP                ; $0b B -> A
@@ -220,6 +225,49 @@ def NUM_CHARSTATES equ const_value
 	const CHARB_CHARGING     ; $05 a swing is winding up: StepCharMovement divides both velocities by 8
 	const CHARB_MOVE_BLOCKED ; $06 StepCharMovement refused an axis at the court bound instead of clamping it. Never read
 
+; --- On-court character sprite flags (wCharSpriteDirty) ---
+def CHARSPRITEB_RELOAD_TILES equ 6 ; the facing octant or animation frame changed: ReloadCharFacingTiles uploads new tiles
+
+; --- Ball-geometry and steering flags (wCharBallReachFlags) ---
+; UpdateCharBallGeometry rewrites the byte each frame with only bit 4, then
+; the tests below set the rest. Bits 3 and 5 are never touched.
+	const_def
+	const BALLREACHB_SWING_RANGE ; $00 CheckBallInSwingRange: the ball is within swing range
+	const BALLREACHB_CONTACT     ; $01 CheckBallContactWindow: the ball is inside the contact window
+	const BALLREACHB_BODY_HIT    ; $02 CheckCharBallContact: the ball hit the character's body
+	const_def $04
+	const BALLREACHB_NEAR_NET    ; $04 the character's own |depth| < $2a0: picks RallyReachShotTypeTable and wAiReactionDelayNear
+	const_def $06
+	const BALLREACHB_STEER_X     ; $06 ApplyCharMovementInput: left/right held; UpdateCharVelocityFromInput accelerates X
+	const BALLREACHB_STEER_DEPTH ; $07 the same for up/down and depth
+
+; --- Court position (wCharCourtPos, wServingCharCourtPos, wPrevCourtPos) ---
+; Bit 1 is the end, bit 0 the screen half with the near end at the bottom:
+; a near server on the right is in the deuce court. GetCharBaseCourtPosition
+; negates the depth for the far end and the X for the left half.
+def COURTPOSB_LEFT       equ 0
+def COURTPOSB_FAR        equ 1
+def COURTPOSF_LEFT       equ 1 << COURTPOSB_LEFT
+def COURTPOSF_FAR        equ 1 << COURTPOSB_FAR
+def COURTPOS_NEAR_RIGHT  equ 0
+def COURTPOS_NEAR_LEFT   equ COURTPOSF_LEFT
+def COURTPOS_FAR_RIGHT   equ COURTPOSF_FAR
+def COURTPOS_FAR_LEFT    equ COURTPOSF_FAR | COURTPOSF_LEFT
+def COURTPOS_NONE        equ $09 ; no character in this slot
+
+; --- Serve role (wCharServeRole, wLastShotServeRole) ---
+; Bit 0 is the receiving side, bit 1 the doubles partner (the AI's net-player
+; tables); ToggleCharCourtRow swaps a player with its partner.
+def SERVEROLEB_RECEIVING equ 0
+def SERVEROLEB_PARTNER   equ 1
+def SERVEROLEF_RECEIVING equ 1 << SERVEROLEB_RECEIVING
+def SERVEROLEF_PARTNER   equ 1 << SERVEROLEB_PARTNER
+def SERVEROLE_SERVER           equ 0
+def SERVEROLE_RECEIVER         equ SERVEROLEF_RECEIVING
+def SERVEROLE_SERVER_PARTNER   equ SERVEROLEF_PARTNER
+def SERVEROLE_RECEIVER_PARTNER equ SERVEROLEF_PARTNER | SERVEROLEF_RECEIVING
+def SERVEROLE_NONE             equ $09 ; no character in this slot
+
 ; --- Match abort flag (wMatchAbortFlag) ---
 ; Two independent bits rather than a code: every reader is an `and` (or one
 ; `bit 7`), and the two bits break different loops. The quit paths write $ff,
@@ -254,3 +302,15 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MATCHCONTEXT_EXHIBITION ; $00 cleared by RestoreOverworldAfterMatch
 	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
 	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
+
+; --- Mode hook slots (CallModeHook's d; rows of a mode_hooks table) ---
+	const_def
+	const MODEHOOK_PER_FRAME      ; $00 UpdateMatchFrame, every simulation frame
+	const MODEHOOK_POINT_START    ; $01 RunMinigamePointLoop
+	const MODEHOOK_POINT_END      ; $02 RunMinigamePointLoop
+	const MODEHOOK_MINIGAME_START ; $03 RunMinigamePointLoop, before the first point
+	const MODEHOOK_BALL_HIT       ; $04 HandleBallHitEvent
+	const MODEHOOK_BOUNCE         ; $05 HandleBallBounceEvent
+	const MODEHOOK_RALLY_TICK     ; $06 TickRallyTimers, ball crossed the net
+	const MODEHOOK_DRAW           ; $07 DrawBallAndEffects, extra draw pass
+def NUM_MODEHOOKS equ const_value

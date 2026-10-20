@@ -6,7 +6,6 @@ Lines starting with # are comments. Entries ending in .asm are rendered as
 readable `db` source (game text) instead of raw bytes; like every other file
 under data/, they are generated from the user's ROM and never committed.
 """
-import math
 import sys
 import re
 from pathlib import Path
@@ -261,128 +260,12 @@ def render_palettes(data: bytes) -> str:
     return "\n".join(out) + "\n"
 
 
-def render_records(data: bytes, stride: int) -> str:
-    """Render a fixed-stride record table, one record per line. Even strides
-    render as `dw` (the loader walks word fields), odd as `db`."""
-    out = [f"; {len(data) // stride} records x {stride} bytes"]
-    for i in range(0, len(data) - stride + 1, stride):
-        rec = data[i:i + stride]
-        if stride % 2 == 0:
-            vals = ", ".join(f"${rec[k] | (rec[k + 1] << 8):04x}"
-                             for k in range(0, stride, 2))
-            out.append(f"\tdw {vals} ; record {i // stride}")
-        else:
-            vals = ", ".join(f"${b:02x}" for b in rec)
-            out.append(f"\tdb {vals} ; record {i // stride}")
-    rem = len(data) % stride
-    if rem:
-        out.append("\tdb " + ", ".join(f"${b:02x}" for b in data[-rem:]))
-    return "\n".join(out) + "\n"
-
-
 def render_byte_table(data: bytes, cols: int) -> str:
     """Render a byte table as `db` rows of `cols`, index-commented."""
     out = []
     for i in range(0, len(data), cols):
         row = ", ".join(f"${b:02x}" for b in data[i:i + cols])
         out.append(f"\tdb {row} ; {i:#04x}")
-    return "\n".join(out) + "\n"
-
-
-def render_pattern(data: bytes) -> str:
-    """Render a block that is one short byte pattern repeated as a single `ds`
-    -- rgbasm repeats the value list to fill the count. Used for uniform tile
-    runs (e.g. a solid-color tile stamped across a VRAM block)."""
-    for n in range(1, 17):
-        if len(data) % n == 0 and data == data[:n] * (len(data) // n):
-            vals = ", ".join(f"${b:02x}" for b in data[:n])
-            return f"\tds {len(data)}, {vals}\n"
-    return render_byte_table(data, 16)
-
-
-def render_ascii(data: bytes) -> str:
-    """Render a raw ASCII run as one `db`, quoting printable stretches."""
-    parts, run = [], []
-    for b in data:
-        if b in SAFE:
-            run.append(chr(b))
-            continue
-        if run:
-            parts.append('"' + "".join(run) + '"')
-            run = []
-        parts.append(f"${b:02x}")
-    if run:
-        parts.append('"' + "".join(run) + '"')
-    return "\tdb " + ", ".join(parts) + "\n"
-
-
-CART_TYPES = {
-    0x00: "ROM only", 0x01: "MBC1", 0x02: "MBC1+RAM",
-    0x03: "MBC1+RAM+BATTERY", 0x05: "MBC2", 0x06: "MBC2+BATTERY",
-    0x0F: "MBC3+TIMER+BATTERY", 0x10: "MBC3+TIMER+RAM+BATTERY",
-    0x11: "MBC3", 0x12: "MBC3+RAM", 0x13: "MBC3+RAM+BATTERY",
-    0x19: "MBC5", 0x1A: "MBC5+RAM", 0x1B: "MBC5+RAM+BATTERY",
-    0x1C: "MBC5+RUMBLE", 0x1D: "MBC5+RUMBLE+RAM",
-    0x1E: "MBC5+RUMBLE+RAM+BATTERY",
-}
-CART_RAM = {0x00: "none", 0x01: "2 KiB", 0x02: "8 KiB",
-            0x03: "32 KiB, 4 banks", 0x04: "128 KiB, 16 banks",
-            0x05: "64 KiB, 8 banks"}
-CGB_FLAGS = {0x80: "CGB enhanced", 0xC0: "CGB only"}
-
-
-def render_cart_header(data: bytes) -> str:
-    """Render the 28 header bytes that follow the Nintendo logo ($0134-$014f):
-    title, codes, and the size/checksum fields the mastering tools filled in."""
-    if len(data) != 28:
-        return render_byte_table(data, 8)
-    title = data[:11].rstrip(b"\0")
-    pad = 11 - len(title)
-    fields = [
-        (f'"{title.decode("ascii")}"' + ", $00" * pad, "$0134 title"),
-        (f'"{data[11:15].decode("ascii")}"', "$013f manufacturer code"),
-        (f"${data[15]:02x}", f"$0143 CGB flag: "
-         f"{CGB_FLAGS.get(data[15], 'DMG')}"),
-        (f'"{data[16:18].decode("ascii")}"', "$0144 new licensee"),
-        (f"${data[18]:02x}", "$0146 SGB flag"),
-        (f"${data[19]:02x}", f"$0147 cart type: "
-         f"{CART_TYPES.get(data[19], 'unknown')}"),
-        (f"${data[20]:02x}", f"$0148 ROM size: {32 << data[20]} KiB, "
-         f"{2 << data[20]} banks"),
-        (f"${data[21]:02x}", f"$0149 RAM size: "
-         f"{CART_RAM.get(data[21], 'unknown')}"),
-        (f"${data[22]:02x}", "$014a destination: "
-         + ("Japanese" if data[22] == 0 else "non-Japanese")),
-        (f"${data[23]:02x}", "$014b old licensee"),
-        (f"${data[24]:02x}", "$014c mask ROM version"),
-        (f"${data[25]:02x}", "$014d header checksum"),
-        (f"${data[26]:02x}, ${data[27]:02x}", "$014e global checksum"),
-    ]
-    width = max(len(v) for v, _ in fields)
-    return "".join(f"\tdb {v:<{width}} ; {c}\n" for v, c in fields)
-
-
-def render_font_glyph(data: bytes) -> str:
-    """Render a `db width, height` + 2bpp bitmap glyph record. The bitmap is
-    packed continuously (width*2 bits per row, no byte alignment), so rows are
-    grouped into the smallest byte-aligned run and drawn alongside as pixel
-    art: `.` transparent, `o`/`+` the mid colors, `#` color 3."""
-    if len(data) < 2:
-        return render_byte_table(data, 8)
-    w, h, body = data[0], data[1], data[2:]
-    if not w or not h or w * h * 2 != len(body) * 8:
-        return render_byte_table(data, 8)
-    bits = "".join(f"{b:08b}" for b in body)
-    rows = ["".join(".o+#"[int(bits[(r * w + x) * 2])
-                    | (int(bits[(r * w + x) * 2 + 1]) << 1)]
-                    for x in range(w)) for r in range(h)]
-    per = 4 // math.gcd(w, 4)  # rows per byte-aligned group
-    step = per * w * 2 // 8
-    out = [f"\tdb ${w:02x}, ${h:02x} ; {w} x {h}, 2bpp"]
-    for g in range(0, h, per):
-        chunk = body[(g // per) * step:(g // per) * step + step]
-        art = " ".join(rows[g:g + per])
-        out.append("\tdb " + ", ".join(f"${b:02x}" for b in chunk) + f" ; {art}")
     return "\n".join(out) + "\n"
 
 
@@ -402,48 +285,6 @@ def render_tilemap(data: bytes, width: int) -> str:
     return "\n".join(out) + "\n"
 
 
-def render_rect_ptrs(data: bytes) -> str:
-    """Render {tiles, attrs} pointer records for a fixed-geometry rectangle."""
-    out = []
-    for i in range(0, len(data) - 3, 4):
-        r = data[i:i + 4]
-        out.append(f"\trect_ptrs ${r[0] | (r[1] << 8):04x}, "
-                   f"${r[2] | (r[3] << 8):04x}")
-    for b in data[len(data) // 4 * 4:]:
-        out.append(f"\tdb ${b:02x}")
-    return "\n".join(out) + "\n"
-
-
-def render_rect_pair(data: bytes) -> str:
-    """Render CopyTextRectPair descriptors: {height, width, tiles, attrs}."""
-    out = []
-    for i in range(0, len(data) - 5, 6):
-        r = data[i:i + 6]
-        out.append(f"\trect_pair {r[0]}, {r[1]}, "
-                   f"${r[2] | (r[3] << 8):04x}, ${r[4] | (r[5] << 8):04x}")
-    for b in data[len(data) // 6 * 6:]:
-        out.append(f"\tdb ${b:02x}")
-    return "\n".join(out) + "\n"
-
-
-def render_squares(data: bytes) -> str:
-    """Render an n-squared lookup table (i^2 as 16-bit LE) as a compile-time
-    FOR loop instead of 256 literal dw rows. The longest i^2 prefix becomes
-    the loop; any trailing words (e.g. a sentinel) stay literal. Falls back
-    to literal dw if the bytes aren't a squares table (keeps byte-perfect)."""
-    words = [data[i] | (data[i + 1] << 8) for i in range(0, len(data) - 1, 2)]
-    k = 0
-    while k < len(words) and words[k] == (k * k) & 0xFFFF:
-        k += 1
-    if k < 8:
-        return render_records(data, 2)
-    out = [f"FOR i, {k}", "\tdw (i * i) & $ffff", "ENDR"]
-    out += [f"\tdw ${w:04x}" for w in words[k:]]
-    if len(data) % 2:
-        out.append(f"\tdb ${data[-1]:02x}")
-    return "\n".join(out) + "\n"
-
-
 def render_sound_index(data: bytes) -> str:
     """Render a PlaySound index table as `sound_entry bank, voices, record`
     macro calls (see include/macros/). First byte packs voice count (high
@@ -456,19 +297,6 @@ def render_sound_index(data: bytes) -> str:
                    f"{b0 >> 4}, {b1} ; sound {i // 2}")
     if len(data) % 2:
         out.append(f"\tdb ${data[-1]:02x}")
-    return "\n".join(out) + "\n"
-
-
-def render_fill(data: bytes) -> str:
-    """Render padding as `ds` runs, one per constant-byte stretch."""
-    out = []
-    i = 0
-    while i < len(data):
-        j = i
-        while j < len(data) and data[j] == data[i]:
-            j += 1
-        out.append(f"\tds {j - i}, ${data[i]:02x}")
-        i = j
     return "\n".join(out) + "\n"
 
 
@@ -752,24 +580,10 @@ def render_spec(data: bytes, spec: str, name: str | None = None,
         return snd.render(data, name, param or "pulse")
     if kind == "sprite_template":
         return render_sprite_template(data)
-    if kind == "records":
-        return render_records(data, int(param or 16))
     if kind == "bytes":
         return render_byte_table(data, int(param or 8))
-    if kind == "ascii":
-        return render_ascii(data)
-    if kind == "pattern":
-        return render_pattern(data)
-    if kind == "cart_header":
-        return render_cart_header(data)
-    if kind == "font_glyph":
-        return render_font_glyph(data)
     if kind == "tilemap":
         return render_tilemap(data, int(param or 20))
-    if kind == "rect_pair":
-        return render_rect_pair(data)
-    if kind == "rect_ptrs":
-        return render_rect_ptrs(data)
     if kind == "sound_index":
         return render_sound_index(data)
     if kind == "text_pool":
@@ -781,11 +595,9 @@ def render_spec(data: bytes, spec: str, name: str | None = None,
     if kind == "words":
         # a maths table: numeric words, never resolved against labels
         return render_words(data, int(param or 1))
-    if kind == "squares":
-        return render_squares(data)
-    if kind == "fill":
-        return render_fill(data)
-    return render_text(data)
+    if kind == "text":
+        return render_text(data)
+    raise ValueError(f"{name}: unknown render spec {spec!r}")
 
 
 def _edited(dest, data):
@@ -867,6 +679,7 @@ def main() -> int:
             png = dest.with_suffix(".png")
             grid = dest.with_suffix(".tilemap")
             if (_gfx_edited(dest, png, data, gfx) if is_gfx and gfx_ok
+                    else _edited(dest, data) if is_gfx
                     else _grid_edited(dest, grid, data) if is_grid
                     else _edited(dest, (data if not spec and not path.endswith(".asm")
                                         else (render_spec(data, spec, dest.stem, off) if spec
@@ -958,7 +771,11 @@ def main() -> int:
     # the mods/ overlay goes back on top of a fresh extraction of the real tree
     if Path(outdir).resolve() == (Path(__file__).resolve().parent.parent / "data"):
         import mods
-        n = mods.apply()
+        try:
+            n = mods.apply()
+        except mods.EditedSinceApply as e:
+            print(e, file=sys.stderr)
+            return 1
         if n:
             print(f"mods: {n} file(s) overlaid onto data/")
     return 0

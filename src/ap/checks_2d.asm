@@ -24,9 +24,9 @@ ApCheckReward:
 	ld e, a
 	jr ApCheckLocation
 
-; a Mario mini-game won, at wMinigameLevel of game wCurrentMinigameStoryMatch + 1
+; a Mario mini-game won, at wMinigameLevel of game wCurrentMatchIndex
 ApCheckMinigameClear:
-	ld a, [wCurrentMinigameStoryMatch + 1]
+	ld a, [wCurrentMatchIndex]
 	sub MINIGAME_BOO_BLAST
 	ret c
 	cp NUM_MARIO_MINIGAMES

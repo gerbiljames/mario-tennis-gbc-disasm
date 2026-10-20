@@ -73,7 +73,7 @@ Unused_0a_StepCourtSceneGfxStream:
 	ld a, [wCourtSceneGfxStepsLeft] ; $629b
 	or a ; $629e
 	jr nz, .done ; $629f
-.checkScrollX:
+.readEntry:
 	ld hl, CameraFromPlayerSpriteList ; $62a1
 	ld a, [wCourtSceneGfxCursor] ; $62a4
 	add l ; $62a7
@@ -83,11 +83,11 @@ Unused_0a_StepCourtSceneGfxStream:
 	ld h, a ; $62ac
 	ld a, [hl] ; $62ad
 	cp $ff ; $62ae
-	jr nz, .checkScrollY ; $62b0
+	jr nz, .parseEntry ; $62b0
 	xor a ; $62b2
 	ld [wCourtSceneGfxCursor], a ; $62b3
-	jr .checkScrollX ; $62b6
-.checkScrollY:
+	jr .readEntry ; $62b6
+.parseEntry:
 	ld b, a ; $62b8
 	inc hl ; $62b9
 	ld c, [hl] ; $62ba

@@ -207,7 +207,7 @@ UpdateAnimatedTiles:
 	ld a, [wAnimatedTileSet] ; $43bb
 	and $03 ; $43be
 	add a ; $43c0
-	ld hl, AnimatedTilesTable0 ; $43c1
+	ld hl, AnimatedTilesSecondStripFrameLists ; $43c1
 	add_hl_a ; $43c4
 	ld a, [hl+] ; $43c9
 	ld h, [hl] ; $43ca
@@ -242,17 +242,17 @@ UpdateAnimatedTiles:
 	ret ; $4402
 UpdateAnimatedTilesTable:
 	; $4403, 8 bytes (records:2)
-	dw AnimatedTilesTable1 ; record 0
-	dw AnimatedTilesTable2 ; record 1
-	dw AnimatedTilesTable3 ; record 2
-	dw AnimatedTilesTable4 ; record 3
-AnimatedTilesTable0:
+	dw AnimatedTilesSet0Frames ; record 0
+	dw AnimatedTilesSet1Frames ; record 1
+	dw AnimatedTilesSet2Frames ; record 2
+	dw AnimatedTilesSet3Frames ; record 3
+AnimatedTilesSecondStripFrameLists:
 	; $440b, 8 bytes (records:2)
 	dw $ffff ; record 0
 	dw $ffff ; record 1
-	dw AnimatedTilesTable4 ; record 2
-	dw AnimatedTilesTable3 ; record 3
-AnimatedTilesTable1:
+	dw AnimatedTilesSet3Frames ; record 2
+	dw AnimatedTilesSet2Frames ; record 3
+AnimatedTilesSet0Frames:
 	; $4413, 64 bytes (32 records x 1 slot words)
 	dslot DataPtr_IntroCharacterIcon00Alias4 ; record 0
 	dslot DataPtr_IntroCharacterIcon01 ; record 1
@@ -286,7 +286,7 @@ AnimatedTilesTable1:
 	dslot DataPtr_CourtSelectGfx5Alias13 ; record 29
 	dslot DataPtr_CourtSelectGfx5Alias14 ; record 30
 	dslot DataPtr_CourtSelectGfx5Alias15 ; record 31
-AnimatedTilesTable2:
+AnimatedTilesSet1Frames:
 	; $4453, 64 bytes (32 records x 1 slot words)
 	dslot DataPtr_BracketCharIcon03 ; record 0
 	dslot DataPtr_BracketCharIcon04 ; record 1
@@ -320,7 +320,7 @@ AnimatedTilesTable2:
 	dslot DataPtr_MinigameLevelSelectGfx2Alias13 ; record 29
 	dslot DataPtr_MinigameLevelSelectGfx2Alias14 ; record 30
 	dslot DataPtr_MinigameLevelSelectGfx2Alias15 ; record 31
-AnimatedTilesTable3:
+AnimatedTilesSet2Frames:
 	; $4493, 32 bytes (16 records x 1 slot words)
 	dslot DataPtr_CharRosterIcon00 ; record 0
 	dslot DataPtr_CharRosterIcon01 ; record 1
@@ -338,7 +338,7 @@ AnimatedTilesTable3:
 	dslot DataPtr_CharRosterIcon13 ; record 13
 	dslot DataPtr_CharRosterIcon14 ; record 14
 	dslot DataPtr_CharRosterIcon15 ; record 15
-AnimatedTilesTable4:
+AnimatedTilesSet3Frames:
 	; $44b3, 32 bytes (16 records x 1 slot words)
 	dslot DataPtr_CharRosterIcon16 ; record 0
 	dslot DataPtr_CharRosterIcon17 ; record 1
@@ -359,20 +359,20 @@ AnimatedTilesTable4:
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank WRAM_STAGING ; $44d4
-	ld hl, FixedTileBlockAndPalette ; $44da
+	ld hl, FixedTileBlockGfx ; $44da
 	ld de, wDecompBuffer ; $44dd
 	call DecompressData ; $44e0
 	ld hl, wDecompBuffer ; $44e3
 	pop de ; $44e6
-	ld c, FixedTileBlockAndPalette_SIZE / 16 ; $44e7
+	ld c, FixedTileBlockGfx_SIZE / 16 ; $44e7
 	call QueueVRAMCopy ; $44e9
 	ld hl, FixedTileBlockPalette ; $44ec
 	ld_obj_pals de, 0, 1 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
-FixedTileBlockAndPalette:
-	INCBIN "data/engine/menus/common/lz_FixedTileBlockAndPalette.bin" ; $44f6, 32 bytes
-	INCLUDE "data/engine/menus/common/lz_FixedTileBlockAndPalette.inc" ; DEF FixedTileBlockAndPalette_SIZE EQU its decoded length, generated from the .bin by make
+FixedTileBlockGfx:
+	INCBIN "data/engine/menus/common/lz_FixedTileBlockGfx.bin" ; $44f6, 32 bytes
+	INCLUDE "data/engine/menus/common/lz_FixedTileBlockGfx.inc" ; DEF FixedTileBlockGfx_SIZE EQU its decoded length, generated from the .bin by make
 FixedTileBlockPalette:
 	INCLUDE "data/engine/menus/common/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
 Unused_39_LoadFixedBgPalette0:

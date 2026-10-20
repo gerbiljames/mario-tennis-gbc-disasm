@@ -53,13 +53,13 @@ InitMinigameScore:
 	ld [hl+], a ; $40d9
 	ld a, [wMinigameLevel] ; $40da
 	ld b, a ; $40dd
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $40de
+	ld a, [wCurrentMatchIndex] ; $40de
 	call GetMinigameTargetScore ; $40e1
 	ld hl, wMinigamesTargetScore ; $40e4
 	ld a, e ; $40e7
 	ld [hl+], a ; $40e8
 	ld [hl], d ; $40e9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $40ea
+	ld a, [wCurrentMatchIndex] ; $40ea
 	sub MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $40ed
 	ret c ; $40ef
 	ld_hl_indexed MinigameRecordSlotIds ; $40f0
@@ -78,7 +78,10 @@ InitMinigameScore:
 	ret ; $4115
 MinigameRecordSlotIds:
 	; $4116, 11 bytes (bytes:11)
-	db $01, $00, $02, $03, $04, $05, $06, $07, $08, $09, $0a ; 0x00
+	db MGRECORD_MACHINE, MGRECORD_WALL
+	db MGRECORD_BOO_BLAST, MGRECORD_SHOOTING_STAR, MGRECORD_PERFECT_SHOT
+	db MGRECORD_TARGET_SHOT, MGRECORD_FRUIT_FANTASY, MGRECORD_BANANA_BUNCH
+	db MGRECORD_TREASURE_BOX, MGRECORD_MEDALLION_MATCH, MGRECORD_TWO_ON_ONE
 GetMinigameTargetScore:
 	ld de, $0000 ; $4121
 	cp MINIGAME_TENNIS_MACHINE_1 ; $4124
@@ -410,7 +413,7 @@ DrawMinigameGridCell:
 	pop hl ; $433e
 	push de ; $433f
 	ld a, d ; $4340
-	add $d8 ; $4341
+	add HIGH(wCourtTilemapSaved) ; $4341
 	ld d, a ; $4343
 	ld_size bc, $02, $02 ; $4344
 	call CopyTextRect ; $4347
@@ -418,7 +421,7 @@ DrawMinigameGridCell:
 	pop hl ; $434b
 	push de ; $434c
 	ld a, d ; $434d
-	add $d0 ; $434e
+	add HIGH(wCourtTilemap) ; $434e
 	ld d, a ; $4350
 	ld_size bc, $02, $02 ; $4351
 	call CopyTextRect ; $4354
@@ -426,7 +429,7 @@ DrawMinigameGridCell:
 	pop hl ; $4358
 	push de ; $4359
 	ld a, d ; $435a
-	add $dc ; $435b
+	add HIGH(wCourtAttrmapSaved) ; $435b
 	ld d, a ; $435d
 	ld_size bc, $02, $02 ; $435e
 	call CopyTextRect ; $4361
@@ -434,7 +437,7 @@ DrawMinigameGridCell:
 	pop hl ; $4365
 	push de ; $4366
 	ld a, d ; $4367
-	add $d4 ; $4368
+	add HIGH(wCourtAttrmap) ; $4368
 	ld d, a ; $436a
 	ld_size bc, $02, $02 ; $436b
 	call CopyTextRect ; $436e

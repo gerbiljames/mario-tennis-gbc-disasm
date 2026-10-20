@@ -35,20 +35,20 @@ ShowIslandOpenRankingBoard:
 	farcall ShowRankingBoard ; $6fbb
 	ret ; $6fbe
 SetupRankingBoardArgs:
-	ld a, [wCurrentMinigameStoryMatch] ; $6fbf
+	ld a, [wCurrentMatchList] ; $6fbf
 	and $01 ; $6fc2
 	ld b, a ; $6fc4
 	or a ; $6fc5
 	jr nz, .oddMatch ; $6fc6
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fc8
-	sub $13 ; $6fcb
+	ld a, [wCurrentMatchIndex] ; $6fc8
+	sub STORYMATCH_ISLAND_OPEN_FINAL ; $6fcb
 	add $04 ; $6fcd
 	and $07 ; $6fcf
 	ld c, a ; $6fd1
 	jr .checkMatchWinLoseFlag ; $6fd2
 .oddMatch:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fd4
-	sub $13 ; $6fd7
+	ld a, [wCurrentMatchIndex] ; $6fd4
+	sub STORYMATCH_ISLAND_OPEN_FINAL ; $6fd7
 	add $03 ; $6fd9
 	and $03 ; $6fdb
 	ld c, a ; $6fdd
@@ -56,10 +56,10 @@ SetupRankingBoardArgs:
 	ld a, [wMatchWinLoseFlag] ; $6fde
 	cp WINLOSE_WIN ; $6fe1
 	jr nz, .lost ; $6fe3
-	ld d, $01 ; $6fe5
+	ld d, RANKINGBOARD_FANFARE ; $6fe5
 	ret ; $6fe7
 .lost:
-	ld d, $02 ; $6fe8
+	ld d, RANKINGBOARD_CURSOR ; $6fe8
 	ret ; $6fea
 GetTrophyExpValue:
 	add a ; $6feb
@@ -148,7 +148,7 @@ Unused_1e_SetPendingTrophyExpAwards:
 	ld a, d ; $7074
 	or e ; $7075
 	jr z, .sumGroup1 ; $7076
-	ld b, $04 ; $7078
+	ld b, EXPAWARD_TROPHY ; $7078
 	ld c, $00 ; $707a
 	farcall SetPendingExpAward ; $707c
 .sumGroup1:
@@ -159,7 +159,7 @@ Unused_1e_SetPendingTrophyExpAwards:
 	ld a, d ; $7085
 	or e ; $7086
 	jr z, .sumGroup2 ; $7087
-	ld b, $04 ; $7089
+	ld b, EXPAWARD_TROPHY ; $7089
 	ld c, $01 ; $708b
 	farcall SetPendingExpAward ; $708d
 .sumGroup2:
@@ -170,7 +170,7 @@ Unused_1e_SetPendingTrophyExpAwards:
 	ld a, d ; $7096
 	or e ; $7097
 	jr z, .sumGroup3 ; $7098
-	ld b, $04 ; $709a
+	ld b, EXPAWARD_TROPHY ; $709a
 	ld c, $02 ; $709c
 	farcall SetPendingExpAward ; $709e
 .sumGroup3:
@@ -181,7 +181,7 @@ Unused_1e_SetPendingTrophyExpAwards:
 	ld a, d ; $70a7
 	or e ; $70a8
 	jr z, .sumGroup4 ; $70a9
-	ld b, $04 ; $70ab
+	ld b, EXPAWARD_TROPHY ; $70ab
 	ld c, $03 ; $70ad
 	farcall SetPendingExpAward ; $70af
 .sumGroup4:
@@ -192,7 +192,7 @@ Unused_1e_SetPendingTrophyExpAwards:
 	ld a, d ; $70b8
 	or e ; $70b9
 	jr z, .sumGroup5 ; $70ba
-	ld b, $04 ; $70bc
+	ld b, EXPAWARD_TROPHY ; $70bc
 	ld c, $04 ; $70be
 	farcall SetPendingExpAward ; $70c0
 .sumGroup5:
@@ -203,7 +203,7 @@ Unused_1e_SetPendingTrophyExpAwards:
 	ld a, d ; $70c9
 	or e ; $70ca
 	jr z, .restore ; $70cb
-	ld b, $04 ; $70cd
+	ld b, EXPAWARD_TROPHY ; $70cd
 	ld c, $05 ; $70cf
 	farcall SetPendingExpAward ; $70d1
 .restore:

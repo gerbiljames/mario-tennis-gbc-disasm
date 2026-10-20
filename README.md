@@ -18,8 +18,8 @@ the layout, the names and the structure.
    MBC5+RAM+BATTERY. The two differ only in the header's region code
    (`BM8E`/`BM8P`) and header checksum, so either one builds both.
 2. Install [RGBDS](https://rgbds.gbdev.io/install) v1.0.0 or newer, or put
-   its binaries in `tools/rgbds/` (the Makefile's default; override with
-   `make RGBDS=`). `.rgbds-version` records the version the byte-perfect
+   its binaries in `tools/rgbds/` (used when present, else the ones on
+   `PATH`; override with `make RGBDS=<dir>/`). `.rgbds-version` records the version the byte-perfect
    build is verified against, and `rgbdscheck.asm` fails early on older
    assemblers.
 3. Extract the data and build:
@@ -53,11 +53,11 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 125,813 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 914,975 bytes, 43.6% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,557: 14,405 routines and tables and 13,418 locals in ROM, 1,734 RAM names |
-| compressed graphics | 861 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 788 routines and 112 blobs nothing live reaches (`docs/unused_code.md`) |
+| instructions | 124,810 source lines of instructions and code macros (`tools/stats.py`) |
+| source-spelled bytes | 915,910 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 29,670: 14,446 routines and tables and 13,402 locals in ROM, 1,822 RAM names |
+| compressed graphics | 863 LZ streams, each named, sized by decoding it |
+| `Unused_` routines | 799 routines and 166 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
@@ -121,7 +121,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   and the `rom_bank` and `sram_bank` counterparts, `frame_task`,
   `ld_hl_indexed` (`hl = Table + a`), `add_hl_a` (`hl += a`), `neg_hl`,
   `abs_hl`, `sub_hl_de`, `ld_story_char_field`, `wait_frames`, the register-pair
-  macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`,
+  macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`, `ld_bg_cell`, `ld_char_rec`,
   `ld_bg_pals` / `ld_obj_pals`), map positions in tiles with a point
   (`map_entry $03, FACE_DOWN, 18.0, 13.0`: the game's 1/256-tile words,
   checked by `map_pos`), `set_flag` / `test_flag` / `clear_flag` /
@@ -144,7 +144,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
 - **Twins**: 139 live routines are instruction-identical copies (one per
   bank, mostly: `FetchText_25` / `FetchText_26`, the shot solver's helpers in
   every court bank, the menu-cursor library). All but three are assembled
-  from one of 62 shared files under `src/twins/` (275 copies, dead ones
+  from one of 90 shared files under `src/twins/` (338 copies, dead ones
   included) by a line such as `twin fetch_text, 25`, so a fix has one home
   (`docs/duplicated_code.md`).
 
@@ -174,14 +174,15 @@ because the layout is recomputed rather than restated:
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
   stream).
-- **Graphics are PNGs.** Each of the 2,721 tile-graphics blobs is also
+- **Graphics are PNGs.** Each of the 2,903 tile-graphics blobs is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
   with its standing shadow, walk sprites as four facings side by side
   (`docs/graphics_formats.md` §0), everything else as tiles in blob order,
   sixteen per row. Edit the PNG and `make` re-encodes (and recompresses an
-  `lz_*`) blob; an untouched PNG rebuilds nothing, and enlarging a plain
-  image's canvas grows its blob.
-- **Screen layouts are text.** The 231 tile and attribute planes (all LZ
+  `lz_*`) blob with the game's own encoder, so a touched but unchanged PNG
+  or grid rebuilds byte-identical; enlarging a plain image's canvas grows
+  its blob.
+- **Screen layouts are text.** The 243 tile and attribute planes (all LZ
   streams) are also `.tilemap` grids, one `tilemap_row` of hex cells per
   row at the width the loader uses; `make` re-encodes an edited grid. The 37 scenes get a view-only
   `<Tilemap>.preview.png` (`make previews` redraws them).
@@ -194,8 +195,8 @@ because the layout is recomputed rather than restated:
   (`src/engine/menus/char_select/cpu_params_38.asm`), `shot_preset`
   (`src/engine/match/shot_power_07.asm`), `court_scene`
   (`src/engine/match/court_08.asm`), `match_settings` (every story and
-  minigame match, `src/engine/story/match_0a.asm`), `drill_outcomes`,
-  `court_positions` and `score_rule`.
+  minigame match, `src/engine/story/match_0a.asm`), `drill_messages`,
+  `drill_verdicts`, `court_positions` and `score_rule`.
 - **Ids are constants** (characters, courts, scenes, game modes, story
   locations and stages, minigames, shot types, sounds, menu items, link
   roles and tokens), in families in `include/constants/` whose headers
@@ -249,7 +250,7 @@ nothing.
 
 ## Tools
 
-- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`, no raw value where the variable's constant family has a name for it.
+- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no RAM or VRAM address table spelled as `db` bytes, no stray byte past a table's last record, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no data region without a label of its own, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG and no table or tilemap is tagged as graphics, actor-slot names hold, `Unused` names match `reach.py` and every data label nothing names is `Unused`, `; debug warp only` entries match `routes.py`, no raw value where the variable's or the routine argument's constant family has a name for it.
 - `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.

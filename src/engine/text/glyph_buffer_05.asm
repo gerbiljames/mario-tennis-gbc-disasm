@@ -425,9 +425,9 @@ UploadLastGlyphTiles:
 	ret ; $7620
 .checkMessageSpeed:
 	ld a, [wMessageSpeed] ; $7621
-	bit 7, a ; $7624
+	bit MSGSPEEDB_INSTANT, a ; $7624
 	jr nz, .noUpload ; $7626
-	and $7f ; $7628
+	and MSGSPEED_MASK ; $7628
 	jr nz, .maskSet ; $762a
 .noUpload:
 	pop hl ; $762c

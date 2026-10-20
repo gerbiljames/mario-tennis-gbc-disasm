@@ -37,7 +37,7 @@ WalkCharsOffCourt:
 	ld a, 20 ; $6034
 	call StepMatchFrames ; $6036
 	call GetServeCameraTarget ; $6039
-	call SnapCameraTo ; $603c
+	call SnapCameraTo_08 ; $603c
 	ld hl, ParkCharOffCourt ; $603f
 	call ForEachCharBank ; $6042
 	ret ; $6045
@@ -98,12 +98,12 @@ GetCharBaseCourtPosition:
 	ld l, c ; $60ab
 	ld h, b ; $60ac
 	ld a, [wCharCourtPos] ; $60ad
-	and $02 ; $60b0
+	and COURTPOSF_FAR ; $60b0
 	jr z, .checkSide ; $60b2
 	neg_de ; $60b4
 .checkSide:
 	ld a, [wCharCourtPos] ; $60ba
-	and $01 ; $60bd
+	and COURTPOSF_LEFT ; $60bd
 	jr z, .done ; $60bf
 	neg_hl ; $60c1
 .done:
@@ -130,7 +130,7 @@ GetCharChangeoverPosition:
 	ld l, c ; $60eb
 	ld h, b ; $60ec
 	ld a, [wCharCourtPos] ; $60ed
-	and $02 ; $60f0
+	and COURTPOSF_FAR ; $60f0
 	jr z, .checkFlip ; $60f2
 	neg_de ; $60f4
 .checkFlip:
@@ -217,18 +217,18 @@ PanCamera:
 	ret ; $6191
 ResetCameraForServe:
 	call GetServeCameraTarget ; $6192
-	call SnapCameraTo ; $6195
+	call SnapCameraTo_08 ; $6195
 	ret ; $6198
 GetServeCameraTarget:
 	ld a, [wServingCharCourtPos] ; $6199
-	and $02 ; $619c
+	and COURTPOSF_FAR ; $619c
 	ld de, $fe80 ; $619e
 	jr z, .done ; $61a1
 	ld de, $f880 ; $61a3
 .done:
 	ld hl, $0000 ; $61a6
 	ret ; $61a9
-	twin_named snap_camera_to, SnapCameraTo ; $61aa
+	twin snap_camera_to, 08 ; $61aa SnapCameraTo_08
 SetCameraTarget:
 	ld c, l ; $61c9
 	ld b, h ; $61ca
@@ -364,10 +364,10 @@ UpdateMatchCamera:
 .clampY:
 	sub $0c ; $629b
 	bit 7, a ; $629d
-	jr nz, .done ; $629f
+	jr nz, .applyScroll ; $629f
 	ld h, $0c ; $62a1
 	ld l, $00 ; $62a3
-.done:
+.applyScroll:
 	ld a, l ; $62a5
 	and $e0 ; $62a6
 	ld e, a ; $62a8

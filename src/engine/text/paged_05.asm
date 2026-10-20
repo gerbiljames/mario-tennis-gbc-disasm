@@ -336,7 +336,7 @@ Unused_05_LoadOverworldSpriteDef:
 	ld d, $01 ; $4b92
 	ld a, [wMenuWindowId] ; $4b94
 	ld c, $0d ; $4b97
-	ld b, $80 ; $4b99
+	ld b, TILEATTR_PRIORITY ; $4b99
 	call WriteWindowCellTileAttr ; $4b9b
 	pop hl ; $4b9e
 	pop de ; $4b9f
@@ -446,7 +446,7 @@ Unused_05_LoadOverworldSpriteDef:
 	ld a, [hl] ; $4c5d
 	and $0f ; $4c5e
 	ld c, $20 ; $4c60
-	ld b, $80 ; $4c62
+	ld b, TILEATTR_PRIORITY ; $4c62
 	call WriteWindowCellTileAttr ; $4c64
 .noParentMenu:
 	pop hl ; $4c67

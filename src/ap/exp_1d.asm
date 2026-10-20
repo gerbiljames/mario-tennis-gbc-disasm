@@ -6,8 +6,8 @@
 ; the finish the pool running dry would take
 ApAssignAllExp:
 	wram_bank WRAM_SCENE
-	ld a, [wExpCursorChar]
-	bit 0, a
+	ld a, [wExpScreenBusyFlags]
+	bit EXPBUSYB_CURSOR_SLIDING, a
 	jp nz, RunExpDistributionLoop
 	call AssignExpPointToChar
 	and a
@@ -19,8 +19,8 @@ ApAssignAllExp:
 	sound SFX_MENU_SELECT
 	call RefreshExpScreenReadouts
 	wram_bank WRAM_SCENE
-	ld hl, wExpCursorChar
-	res 1, [hl]
+	ld hl, wExpScreenBusyFlags
+	res EXPBUSYB_POINT_MOVED, [hl]
 	ld a, $a8
 	ld [wExpBarMarkerX], a
 	jp CheckExpLevelDown.openConfirmPrompt

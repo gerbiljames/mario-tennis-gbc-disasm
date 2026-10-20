@@ -160,19 +160,19 @@ JuniorClassCourtDoublesNpc07_11:
 JuniorClassCourtDoublesNpc08_11:
 	script_set_text Text_BrianJuniorDoublesDroppedOutRankings ; $5638
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $563e
-	jr nz, .loop ; $5641
+	jr nz, .speakBrian ; $5641
 	farcall AdvanceDialogueTextCursor ; $5643
-.loop:
+.speakBrian:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN ; $5646
 	ret ; $564b
 JuniorClassCourtDoublesNpc09_11:
 	script_set_text Text_FayJuniorDoublesOutOfRankingsSad ; $564c
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5652
-	jr nz, JuniorClassCourtDoublesNpc08_11.loop ; $5655
+	jr nz, JuniorClassCourtDoublesNpc08_11.speakBrian ; $5655
 	farcall AdvanceDialogueTextCursor ; $5657
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY ; $565a
 	ret ; $565f
-.loop:
+.speakAllie:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5660
 	script_face_pair ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5665
 	ret ; $566d
@@ -181,7 +181,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5674
 	jr z, .offer
 	ap_open LOC_JUNIOR_DOUBLES_PRACTICE
-	jp z, JuniorClassCourtDoublesNpc09_11.loop ; $5677
+	jp z, JuniorClassCourtDoublesNpc09_11.speakAllie ; $5677
 .offer:
 	script_set_text Text_AllieJuniorDoublesPracticeMatchOffer ; $567a
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5680
@@ -189,7 +189,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	farcall ScriptCloseDialogueWindow ; $5688
 	script_wait_frames 5 ; $568b
 	and a ; $5692
-	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $5693
+	jr nz, JuniorClassCourtDoublesNpc09_11.speakAllie ; $5693
 	farcall AdvanceDialogueTextCursor ; $5695
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5698
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $56a0
@@ -197,7 +197,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	farcall ScriptCloseDialogueWindow ; $56a8
 	script_wait_frames 5 ; $56ab
 	and a ; $56b2
-	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $56b3
+	jr nz, JuniorClassCourtDoublesNpc09_11.speakAllie ; $56b3
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $56b5
 	script_null_script ACTOR_PARTNER ; $56bc
 	script_set_speed ACTOR_PARTNER, 1.0 ; $56c1
@@ -233,14 +233,14 @@ JuniorClassCourtDoublesNpc0A_11:
 JuniorClassCourtDoublesNpc0B_11:
 	script_set_text Text_JoyJuniorDoublesRealTeamwork ; $5771
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5777
-	jr nz, Unused_11_JuniorClassCourtDoublesNpcSpeech.speak ; $577a
+	jr nz, SpeakJuniorDoublesJoyLine_11 ; $577a
 	script_set_text Text_JoyJuniorDoublesPartnerBlistered ; $577c
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5782
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5787
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, ANIM_BOUNCE ; $578f
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5796
 	jp JuniorClassCourtDoublesNpc0A_11 ; $579b
-Unused_11_JuniorClassCourtDoublesNpcSpeech:
+Unused_11_AllieBlistersNoPracticeScene:
 	script_set_text Text_AllieJuniorSinglesBlistersNoPractice ; $579e
 	script_face_toward ACTOR_PLAYER, $0a ; $57a4
 	script_set_anim $0a, ANIM_SHAKE ; $57ac
@@ -248,7 +248,7 @@ Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	script_speak $0a ; $57b8
 	script_face_toward $0b, $0a ; $57bd
 	ret ; $57c5
-.speak:
+SpeakJuniorDoublesJoyLine_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $57c6
 	ret ; $57cb
 JuniorClassCourtDoublesANpc0A_11:
@@ -411,7 +411,7 @@ JuniorClassCourtDoublesInitScript_11:
 	jr nz, .islandOpen
 	ap_pass AP_ARC_DOUBLES, 2
 	jr nz, .placeActors
-	jr .done
+	jr .juniorChampion
 .storyComplete:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5a90
@@ -433,7 +433,7 @@ JuniorClassCourtDoublesInitScript_11:
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5ad6
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ae1
 	ret ; $5aec
-.done:
+.juniorChampion:
 	ld hl, JuniorClassCourtDoublesNpcScriptsA_11 ; $5aed
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5af0
 	farcall WriteStoryStateWord ; $5af3

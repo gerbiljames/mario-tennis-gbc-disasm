@@ -19,7 +19,7 @@ ActivateMinigameTarget:
 	ld [hl], $00 ; $65ba
 	ld hl, MGTARGET_FLAGS ; $65bc
 	add hl, bc ; $65bf
-	set 0, [hl] ; $65c0
+	set MGTARGETB_LIVE, [hl] ; $65c0
 	ret ; $65c2
 UpdateMinigameTargets:
 	ld a, [wMinigameTargetsActive] ; $65c3
@@ -35,7 +35,7 @@ UpdateMinigameTargets:
 	jr nz, .targetLoop ; $65d5
 	ret ; $65d7
 UpdateMinigameTarget:
-	bit 0, [hl] ; $65d8
+	bit MGTARGETB_LIVE, [hl] ; $65d8
 	ret z ; $65da
 	push af ; $65db
 	push bc ; $65dc
@@ -76,7 +76,7 @@ UpdateMinigameTarget:
 	ret ; $661d
 MoveMinigameTargetTowardGoal:
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $661e
-	bit 1, [hl] ; $6621
+	bit MGTARGETB_MOVING, [hl] ; $6621
 	ret z ; $6623
 	ld hl, wMinigameTargetWork + MGTARGET_X ; $6624
 	ld a, [hl+] ; $6627
@@ -153,7 +153,7 @@ MoveMinigameTargetTowardGoal:
 	or l ; $66a5
 	jr nz, .done ; $66a6
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $66a8
-	res 1, [hl] ; $66ab
+	res MGTARGETB_MOVING, [hl] ; $66ab
 .done:
 	ret ; $66ad
 DrawMinigameTarget:
@@ -208,9 +208,9 @@ DrawMinigameTarget_SpriteTemplate:
 	oam_sprite_end
 HandleMinigameTargetHit:
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6717
-	bit 2, [hl] ; $671a
+	bit MGTARGETB_HIT, [hl] ; $671a
 	ret z ; $671c
-	res 2, [hl] ; $671d
+	res MGTARGETB_HIT, [hl] ; $671d
 	sound SFX_BALL_CONTACT ; $671f
 	ld a, $20 ; $6721
 	ld [wMinigameTargetWork + MGTARGET_HIT_TIMER], a ; $6723
@@ -252,7 +252,7 @@ CheckBallHitsMinigameTarget:
 	bit 7, h ; $676a
 	jr nz, .done ; $676c
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $676e
-	set 2, [hl] ; $6771
+	set MGTARGETB_HIT, [hl] ; $6771
 .done:
 	ret ; $6773
 DeflectBallOffMinigameTarget:
@@ -416,7 +416,7 @@ MinigameTargetOp_03:
 	ret ; $683f
 MinigameTargetOp_04:
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6840
-	bit 1, [hl] ; $6843
+	bit MGTARGETB_MOVING, [hl] ; $6843
 	jr nz, .apply ; $6845
 	inc de ; $6847
 	ld a, $01 ; $6848
@@ -444,7 +444,7 @@ MinigameTargetOp_05:
 	ld e, l ; $685f
 	ld d, h ; $6860
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6861
-	res 1, [hl] ; $6864
+	res MGTARGETB_MOVING, [hl] ; $6864
 	ld a, $01 ; $6866
 	ret ; $6868
 MinigameTargetOp_06:
@@ -487,7 +487,7 @@ MinigameTargetOp_06:
 	ld [hl], d ; $6897
 	pop de ; $6898
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6899
-	set 1, [hl] ; $689c
+	set MGTARGETB_MOVING, [hl] ; $689c
 	ld a, $01 ; $689e
 	ret ; $68a0
 MinigameTargetOp_07:
@@ -849,9 +849,9 @@ DrawMinigameTargetAlt_SpriteTemplate:
 	oam_sprite_end
 HandleMinigameTargetHitAlt:
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6dde
-	bit 2, [hl] ; $6de1
+	bit MGTARGETB_HIT, [hl] ; $6de1
 	ret z ; $6de3
-	res 2, [hl] ; $6de4
+	res MGTARGETB_HIT, [hl] ; $6de4
 	sound SFX_CHIME ; $6de6
 	ld a, $20 ; $6de8
 	ld [wMinigameTargetWork + MGTARGET_HIT_TIMER], a ; $6dea

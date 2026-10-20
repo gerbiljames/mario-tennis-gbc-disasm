@@ -35,9 +35,9 @@ UpdateDebugOverlay:
 	xor a ; $18be
 	jr .store ; $18bf
 .showConsole:
-	ld a, $01 ; $18c1
+	ld a, BGVIEW_DEBUG_CONSOLE ; $18c1
 .store:
-	ldh [hShowDebugConsole], a ; $18c3
+	ldh [hBGViewMode], a ; $18c3
 	ldh a, [hDebugTextDirty] ; $18c5
 	or a ; $18c7
 	ret z ; $18c8
@@ -118,7 +118,7 @@ PrintString:
 	ldh [hDebugTextDirty], a ; $1921
 	pop af ; $1923
 	ret ; $1924
-HexDigits:
+Unused_00_HexDigits:
 	; $1925, 16 bytes (bytes:16)
 	db $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $41, $42, $43, $44, $45, $46 ; 0x00
 FormatHexWord:
@@ -400,7 +400,7 @@ PrintHexByte:
 	call FormatHexWord ; $1ac7
 	inc hl ; $1aca
 	inc hl ; $1acb
-	jr Unused_00_PrintDecimalWord.printString ; $1acc
+	jr PrintNumberBuffer ; $1acc
 PrintHexWord:
 	push af ; $1ace
 	push bc ; $1acf
@@ -418,7 +418,7 @@ PrintHexWord:
 	ld b, d ; $1add
 	ld c, e ; $1ade
 	call FormatHexWord ; $1adf
-	jr Unused_00_PrintDecimalWord.printString ; $1ae2
+	jr PrintNumberBuffer ; $1ae2
 PrintDecimalByte:
 	push af ; $1ae4
 	push bc ; $1ae5
@@ -435,7 +435,7 @@ PrintDecimalByte:
 	ld l, a ; $1af3
 	ld a, $04 ; $1af4
 	call FormatDecimalNumber ; $1af6
-	jr Unused_00_PrintDecimalWord.printString ; $1af9
+	jr PrintNumberBuffer ; $1af9
 ; PrintDecimalByte with one extra call before the digit loop (the sign handling). Nothing calls it.
 Unused_00_PrintDecimalByteSigned:
 	push af ; $1afb
@@ -454,7 +454,7 @@ Unused_00_PrintDecimalByteSigned:
 	call SignExtendLToHL ; $1b0b
 	ld a, $04 ; $1b0e
 	call FormatDecimalNumber ; $1b10
-	jr Unused_00_PrintDecimalWord.printString ; $1b13
+	jr PrintNumberBuffer ; $1b13
 Unused_00_PrintDecimalWord:
 	push af ; $1b15
 	push bc ; $1b16
@@ -473,7 +473,7 @@ Unused_00_PrintDecimalWord:
 	ld c, e ; $1b25
 	ld a, $06 ; $1b26
 	call FormatDecimalNumber ; $1b28
-.printString:
+PrintNumberBuffer:
 	ld h, b ; $1b2b
 	ld l, c ; $1b2c
 	pop de ; $1b2d

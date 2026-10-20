@@ -73,11 +73,11 @@ Unused_14_SetMachineLevelClearedFlag:
 	call SetGameFlagByNumber ; $46b9
 	ret ; $46bc
 TestMachineLevelClearedFlagTable:
-	; $46bd, 8 bytes (records:2)
-	dw $00d2 ; record 0
-	dw $00d3 ; record 1
-	dw $00d4 ; record 2
-	dw $00d5 ; record 3
+	; $46bd, 8 bytes (flag numbers, for *GameFlagByNumber)
+	dw FLAG_CLEARED_MACHINE_LEVEL_1 ; record 0
+	dw FLAG_CLEARED_MACHINE_LEVEL_2 ; record 1
+	dw FLAG_CLEARED_MACHINE_LEVEL_3 ; record 2
+	dw FLAG_CLEARED_MACHINE_LEVEL_4 ; record 3
 MachinePracticeResultScene:
 	xor a ; $46c5
 	ld [wStoryModeShowLocationName], a ; $46c6
@@ -139,7 +139,7 @@ MachineCourtHandleRetryChoice:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $47bf
 	ret ; $47cc
 MachineCourtRestartLevel:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
+	ld a, [wCurrentMatchIndex] ; $47cd
 	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $47d0
 	jr z, .storeStoryModeCurrentLocation ; $47d2
 	sub MINIGAME_TENNIS_MACHINE_1 ; $47d4
@@ -162,7 +162,7 @@ MachineCourtRestartLevel:
 	ld [wUnusedExitTriggerIdMirror], a ; $47fb
 	ld [wStoryModeExitTriggerRequest], a ; $47fe
 .runTrainingDrillByID:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
+	ld a, [wCurrentMatchIndex] ; $4801
 	farcall RunTrainingDrillByID ; $4804
 	ret ; $4807
 ActorScript_14_0:
@@ -171,10 +171,10 @@ ActorScript_14_0:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-; Reads tennis-machine record $01 and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it. It never calls UpdateMinigameRecord, so the 80 would not persist.
+; Reads the machine record (MGRECORD_MACHINE) and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it. It never calls UpdateMinigameRecord, so the 80 would not persist.
 Unused_14_MachineRecordOverrideAndReturn:
 	push_wram_bank WRAM_SOUND ; $4813
-	ld a, $01 ; $481c
+	ld a, MGRECORD_MACHINE ; $481c
 	farcall ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
 	ld hl, wMinigameRecordValue ; $4824
@@ -210,7 +210,7 @@ MachineExpertResultScene:
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
 	push_wram_bank WRAM_SOUND ; $4874
-	ld a, $01 ; $487d
+	ld a, MGRECORD_MACHINE ; $487d
 	farcall ReadMinigameRecord ; $487f
 	ld hl, wMinigameRecordValue ; $4882
 	ld a, [hl+] ; $4885
@@ -259,7 +259,7 @@ MachineExpertNewRecordScene:
 	ret ; $48f8
 MachineExpertCounterMaxScene:
 	push_wram_bank WRAM_SOUND ; $48f9
-	ld a, $01 ; $4902
+	ld a, MGRECORD_MACHINE ; $4902
 	farcall ReadMinigameRecord ; $4904
 	ld hl, wMinigameRecordValue ; $4907
 	ld a, [hl+] ; $490a
@@ -307,7 +307,7 @@ SaveMachineExpertRecord:
 	ld a, e ; $4986
 	ld [hl+], a ; $4987
 	ld [hl], d ; $4988
-	ld a, $01 ; $4989
+	ld a, MGRECORD_MACHINE ; $4989
 	farcall UpdateMinigameRecord ; $498b
 	pop_wram_bank ; $498e
 	call ComputeMachineCourtProgress ; $4993
@@ -622,10 +622,10 @@ InitCourt2SceneVariant:
 	jr .storeStage ; $4ea4
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4ea6
-	jr z, .done ; $4ea9
+	jr z, .doublesRound1 ; $4ea9
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4eab
 	jr .storeStage ; $4ead
-.done:
+.doublesRound1:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $4eaf
 	jr .storeStage ; $4eb1
 	ret ; $4eb3

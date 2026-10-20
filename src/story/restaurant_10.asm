@@ -5,7 +5,7 @@ GetMinigameDrillId:
 	ret ; $56f2
 MinigameDrillIdTable:
 	; $56f3, 9 bytes (bytes:16)
-	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
+	db MINIGAME_BOO_BLAST, MINIGAME_SHOOTING_STAR, MINIGAME_PERFECT_SHOT, MINIGAME_TARGET_SHOT, MINIGAME_FRUIT_FANTASY, MINIGAME_BANANA_BUNCH, MINIGAME_TREASURE_BOX, MINIGAME_MEDALLION_MATCH, MINIGAME_TWO_ON_ONE ; 0x00
 CopyExhibitionCharSlotIds:
 	push af ; $56fc
 	push_wram_bank WRAM_SCREEN ; $56fd
@@ -238,12 +238,12 @@ CafeteriaNpc04_10:
 	farcall ScriptCloseDialogueWindow ; $58fc
 	script_wait_frames 5 ; $58ff
 	and a ; $5906
-	jr z, .declined ; $5907
-	script_set_text Text_CafeteriaZoneAnswerYesPlaceholder ; $5909
+	jr z, .accepted ; $5907
+	script_set_text Text_CafeteriaZoneAnswerNoPlaceholder ; $5909
 	script_speak ACTOR_CAFETERIA_STUDENT_LONG_HAIR_2 ; $590f
 	ret ; $5914
-.declined:
-	script_set_text Text_CafeteriaZoneAnswerNoPlaceholder ; $5915
+.accepted:
+	script_set_text Text_CafeteriaZoneAnswerYesPlaceholder ; $5915
 	script_speak ACTOR_CAFETERIA_STUDENT_LONG_HAIR_2 ; $591b
 	ret ; $5920
 CafeteriaNpc04TextIds:
@@ -701,7 +701,7 @@ RestaurantNpc09_10:
 	farcall ScriptCloseDialogueWindow ; $5eb1
 	script_wait_frames 5 ; $5eb4
 	and a ; $5ebb
-	jr nz, .done ; $5ebc
+	jr nz, .declined ; $5ebc
 	script_set_text Text_RestaurantSoLuckyJealous ; $5ebe
 	test_flag FLAG_DOUBLES ; $5ec4
 	jr z, .speak ; $5ec7
@@ -709,7 +709,7 @@ RestaurantNpc09_10:
 .speak:
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ecc
 	ret ; $5ed1
-.done:
+.declined:
 	script_set_text Text_RestaurantDontBeModest ; $5ed2
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ed8
 	ret ; $5edd

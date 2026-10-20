@@ -1,9 +1,9 @@
 BuildSaveSlotSummaries:
 	push_wram_bank WRAM_SCREEN ; $5aac
-	ld hl, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5ab5
-	ld bc, $0003 ; $5ab8
+	ld hl, wSaveSlotSummaries ; $5ab5
+	ld bc, wSaveSlotSummaries_SIZE / 16 ; $5ab8
 	call ClearMemory16 ; $5abb
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5abe
+	ld bc, wSaveSlotSummaries ; $5abe
 	ld a, $80 ; $5ac1
 .loop:
 	push af ; $5ac3
@@ -12,53 +12,53 @@ BuildSaveSlotSummaries:
 	pop af ; $5acb
 	farcall LoadCharacterRecordToBuffer ; $5acc
 	farcall CheckCharacterUnlocked ; $5acf
-	ld hl, $0000 ; $5ad2
+	ld hl, SLOTSUM_CHAR ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank WRAM_COURT_PLANES ; $5ad6
-	ld a, [wCharRecordScratch + 11] ; $5adc
+	ld a, [wCharRecordScratchChar] ; $5adc
 	push af ; $5adf
 	wram_bank WRAM_SCREEN ; $5ae0
 	pop af ; $5ae6
 	cp $04 ; $5ae7
-	jr c, .checkStoryModeMainCharacterOverworldSprite ; $5ae9
+	jr c, .occupied ; $5ae9
 	ld [hl], a ; $5aeb
 	inc hl ; $5aec
 	ld a, $03 ; $5aed
 	ld [hl-], a ; $5aef
-	ld hl, $0010 ; $5af0
+	ld hl, SLOTSUM_SIZE ; $5af0
 	add hl, bc ; $5af3
 	ld b, h ; $5af4
 	ld c, l ; $5af5
 	jr .restore ; $5af6
-.checkStoryModeMainCharacterOverworldSprite:
+.occupied:
 	ld a, [wStoryMainChar] ; $5af8
 	ld [hl], a ; $5afb
-	ld hl, $0001 ; $5afc
+	ld hl, SLOTSUM_PALETTE ; $5afc
 	add hl, bc ; $5aff
 	ld a, [wStoryMainPalette] ; $5b00
 	ld [hl], a ; $5b03
-	ld hl, $0002 ; $5b04
+	ld hl, SLOTSUM_LEVEL ; $5b04
 	add hl, bc ; $5b07
 	ld a, [wStoryMainLevel] ; $5b08
 	ld [hl], a ; $5b0b
 	push bc ; $5b0c
-	ld a, $03 ; $5b0d
+	ld a, SLOTSUM_NAME ; $5b0d
 	add c ; $5b0f
 	ld e, a ; $5b10
 	ld d, b ; $5b11
 	ld hl, wStoryMainName ; $5b12
-	ld bc, $000b ; $5b15
+	ld bc, SLOTSUM_MINUTES - SLOTSUM_NAME ; $5b15
 	call CopyMemoryBC ; $5b18
 	pop bc ; $5b1b
-	ld hl, $000f ; $5b1c
+	ld hl, SLOTSUM_HOURS ; $5b1c
 	add hl, bc ; $5b1f
 	ld a, [wSavedGameTimer + 3] ; $5b20
 	ld [hl], a ; $5b23
-	ld hl, $000e ; $5b24
+	ld hl, SLOTSUM_MINUTES ; $5b24
 	add hl, bc ; $5b27
-	ld a, [wCharDataSyncValues] ; $5b28
+	ld a, [wSavedGameTimer + 2] ; $5b28
 	ld [hl], a ; $5b2b
-	ld hl, $0010 ; $5b2c
+	ld hl, SLOTSUM_SIZE ; $5b2c
 	add hl, bc ; $5b2f
 	ld b, h ; $5b30
 	ld c, l ; $5b31
@@ -83,14 +83,14 @@ DrawMainMenuCaption:
 	add a ; $5b5a
 	add a ; $5b5b
 	add a ; $5b5c
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5b5d
+	ld bc, wSaveSlotSummaries ; $5b5d
 	add_bc_a ; $5b60
-	ld hl, $0000 ; $5b65
+	ld hl, SLOTSUM_CHAR ; $5b65
 	add hl, bc ; $5b68
 	ld a, [hl] ; $5b69
-	cp $3f ; $5b6a
+	cp CHAR_EMPTY_SLOT ; $5b6a
 	jr z, .emptySlot ; $5b6c
-	ld hl, $0003 ; $5b6e
+	ld hl, SLOTSUM_NAME ; $5b6e
 	add hl, bc ; $5b71
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5b72
 	call DrawNameWithDiacritics_3b ; $5b75
@@ -102,7 +102,7 @@ DrawMainMenuCaption:
 	push bc ; $5b83
 	push de ; $5b84
 	push hl ; $5b85
-	ld hl, $0002 ; $5b86
+	ld hl, SLOTSUM_LEVEL ; $5b86
 	add hl, bc ; $5b89
 	ld a, [hl] ; $5b8a
 	ld h, $00 ; $5b8b
@@ -118,7 +118,7 @@ DrawMainMenuCaption:
 	push bc ; $5b9c
 	push de ; $5b9d
 	push hl ; $5b9e
-	ld hl, $000f ; $5b9f
+	ld hl, SLOTSUM_HOURS ; $5b9f
 	add hl, bc ; $5ba2
 	ld a, [hl] ; $5ba3
 	ld h, $00 ; $5ba4
@@ -130,7 +130,7 @@ DrawMainMenuCaption:
 	pop de ; $5bb1
 	pop bc ; $5bb2
 	pop af ; $5bb3
-	ld hl, $000e ; $5bb4
+	ld hl, SLOTSUM_MINUTES ; $5bb4
 	add hl, bc ; $5bb7
 	ld a, [hl] ; $5bb8
 	ld h, $00 ; $5bb9
@@ -158,7 +158,7 @@ DrawMainMenuCaption:
 	ld d, [hl] ; $5be9
 	ld e, a ; $5bea
 	ld a, b ; $5beb
-	ld hl, MainMenuCaptionTable1 ; $5bec
+	ld hl, MainMenuCaptionTextIds ; $5bec
 	add a ; $5bef
 	add_hl_a ; $5bf0
 	ld a, [hl+] ; $5bf5
@@ -180,17 +180,17 @@ MainMenuCaptionTable:
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 6
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 7
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 8
-MainMenuCaptionTable1:
+MainMenuCaptionTextIds:
 	; $5c15, 18 bytes (records:2)
-	dw $007d ; record 0
-	dw $007e ; record 1
-	dw $007f ; record 2
-	dw $007c ; record 3
-	dw $007c ; record 4
-	dw $007c ; record 5
-	dw $0080 ; record 6
-	dw $0081 ; record 7
-	dw $0082 ; record 8
+	dw Text_MainMenuPlayForPractice ; record 0
+	dw Text_MainMenuPlayMiniGames ; record 1
+	dw Text_MainMenuLinkFor2Player ; record 2
+	dw Text_MainMenuCreateCharacter ; record 3
+	dw Text_MainMenuCreateCharacter ; record 4
+	dw Text_MainMenuCreateCharacter ; record 5
+	dw Text_MainMenuReviewCharData ; record 6
+	dw Text_MainMenuStudyVocabulary ; record 7
+	dw Text_MainMenuEraseSavedData ; record 8
 Print2DigitNumberRightAligned:
 	ld a, $02 ; $5c27
 	jr PrintNumberRightAligned.format ; $5c29
@@ -253,9 +253,9 @@ TryMainMenuLinkHandshake:
 	di ; $5c70
 	ldh a, [hLinkRxByte] ; $5c71
 	ei ; $5c73
-	cp $c1 ; $5c74
+	cp LINKMSG_PROBE ; $5c74
 	jr z, .waitFramesCmd ; $5c76
-.linkAttemptLoop:
+.attemptLink:
 	farcall ShowLinkMessageScreen ; $5c78
 	farcall TryEstablishLink ; $5c7b
 	push af ; $5c7e
@@ -302,7 +302,7 @@ TryMainMenuLinkHandshake:
 .waitFramesCmd:
 	wait_frames 6 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
-	jr c, .linkAttemptLoop ; $5cde
+	jr c, .attemptLink ; $5cde
 .done:
 	ret ; $5ce0
 Unused_3b_RestoreScreenAfterLinkAttempt:
@@ -420,7 +420,7 @@ LoadMatchFormatGfx:
 .loop:
 	ld a, c ; $5df7
 	add a ; $5df8
-	ld hl, MatchFormatTable0 ; $5df9
+	ld hl, MatchFormatLabelTilePtrs ; $5df9
 	add_hl_a ; $5dfc
 	ld a, [hl+] ; $5e01
 	ld h, [hl] ; $5e02
@@ -435,7 +435,7 @@ LoadMatchFormatGfx:
 	pop de ; $5e0f
 	pop bc ; $5e10
 	pop af ; $5e11
-	ld hl, MatchFormatTable1 ; $5e12
+	ld hl, MatchFormatLabelTileVramDests ; $5e12
 	ld a, c ; $5e15
 	add a ; $5e16
 	add_hl_a ; $5e17
@@ -510,7 +510,7 @@ LoadMatchFormatGfx:
 	farcall LoadIndexedPalette ; $5eb4
 	pop_wram_bank ; $5eb7
 	ret ; $5ebc
-MatchFormatTable0:
+MatchFormatLabelTilePtrs:
 	; $5ebd, 7 slot words
 	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
 	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
@@ -519,15 +519,15 @@ MatchFormatTable0:
 	dslot DataPtr_OneSetLabelTiles ; record 4
 	dslot DataPtr_ThreeSetsLabelTiles ; record 5
 	dslot DataPtr_FiveSetsLabelTiles ; record 6
-MatchFormatTable1:
-	; $5ecb, 14 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
-	db $00, $ab ; 0x06
-	db $00, $ac ; 0x08
-	db $00, $ad ; 0x0a
-	db $00, $ae ; 0x0c
+MatchFormatLabelTileVramDests:
+	; $5ecb, 14 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
 MatchFormatSlideIn:
 	ld a, b ; $5ed9
 	or a ; $5eda
@@ -535,9 +535,9 @@ MatchFormatSlideIn:
 	ld c, $00 ; $5edd
 .slideForwardLoop:
 	call AdvanceFrame ; $5edf
-	ld b, $02 ; $5ee2
+	ld b, PANELANIM_MATCH_FORMAT_IN ; $5ee2
 	farcall RestoreMenuBgAndDrawPanel ; $5ee4
-	ld b, $00 ; $5ee7
+	ld b, MAPROWS_BANDS_3_7_11 ; $5ee7
 	farcall FlushWram3MapRows ; $5ee9
 	ld a, c ; $5eec
 	inc a ; $5eed
@@ -549,9 +549,9 @@ MatchFormatSlideIn:
 	ld c, $0a ; $5ef4
 .slideBackLoop:
 	call AdvanceFrame ; $5ef6
-	ld b, $03 ; $5ef9
+	ld b, PANELANIM_MATCH_FORMAT_OUT ; $5ef9
 	farcall RestoreMenuBgAndDrawPanel ; $5efb
-	ld b, $00 ; $5efe
+	ld b, MAPROWS_BANDS_3_7_11 ; $5efe
 	farcall FlushWram3MapRows ; $5f00
 	ld a, c ; $5f03
 	dec a ; $5f04
@@ -761,11 +761,11 @@ MatchFormatCursorSpriteTask:
 	add $04 ; $60ee
 .gotRuleValue:
 	push af ; $60f0
-	ld hl, MatchFormatCursorSpriteTaskTable1 ; $60f1
+	ld hl, MatchFormatCursorTileBases ; $60f1
 	add_hl_a ; $60f4
 	ld c, [hl] ; $60f9
 	pop af ; $60fa
-	ld hl, MatchFormatCursorSpriteTaskTable0 ; $60fb
+	ld hl, MatchFormatCursorPositions ; $60fb
 	add a ; $60fe
 	add_hl_a ; $60ff
 	ld a, [hl+] ; $6104
@@ -801,10 +801,10 @@ MatchFormatCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MatchFormatCursorSpriteTaskTable0:
+MatchFormatCursorPositions:
 	; $614f, 14 bytes (bytes:14)
 	db $2d, $0a, $2d, $54, $4f, $0c, $4f, $54, $6a, $00, $6a, $2c, $6a, $5d ; 0x00
-MatchFormatCursorSpriteTaskTable1:
+MatchFormatCursorTileBases:
 	; $615d, 7 bytes (bytes:7)
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchFormatCaption:

@@ -4,7 +4,7 @@ DrawTennisDictionaryLetterLabels:
 	inc b ; $5338
 	ld a, [wTennisDictCategoryMask] ; $5339
 	ld e, a ; $533c
-	ld hl, SelectionMaskGrid_3f ; $533d
+	ld hl, TennisDictEntryCategories ; $533d
 	ld d, $00 ; $5340
 .findSelectedLoop:
 	ld a, [hl+] ; $5342
@@ -24,7 +24,7 @@ DrawTennisDictionaryLetterLabels:
 	jr nz, .renderPrevLetter ; $535a
 	ld a, $16 ; $535c
 .renderPrevLetter:
-	ld hl, $148f ; $535e
+	ld hl, Text_TennisDictionaryLetterA ; $535e
 	add_hl_a ; $5361
 	push de ; $5366
 	ld c, $40 ; $5367
@@ -54,12 +54,13 @@ DrawTennisDictionaryLetterLabels:
 	jr .waitQueueLoop ; $539b
 .done:
 	ret ; $539d
-SelectionMaskGrid_3f:
-	INCBIN "data/engine/menus/dictionary/SelectionMaskGrid_3f.bin" ; $539e, 121 bytes
+; One TDICTCAT_* mask per Text_Define* entry, $00 between initial letters, $40 at the end.
+TennisDictEntryCategories:
+	INCLUDE "data/engine/menus/dictionary/TennisDictEntryCategories.asm" ; $539e, 121 bytes (bytes:16)
 SetTennisDictionaryListFromIndexRow:
 	wram_bank WRAM_SCENE ; $5417
 	ld c, $00 ; $541d
-	ld hl, SelectionMaskGrid_3f ; $541f
+	ld hl, TennisDictEntryCategories ; $541f
 	ld a, [wTennisDictCategoryMask] ; $5422
 	ld e, a ; $5425
 	ld a, [wTennisDictCursorRow] ; $5426
@@ -109,7 +110,7 @@ SetTennisDictionaryIndexRowFromList:
 	ld b, a ; $5475
 	inc b ; $5476
 	ld c, $00 ; $5477
-	ld hl, SelectionMaskGrid_3f ; $5479
+	ld hl, TennisDictEntryCategories ; $5479
 	ld a, [wTennisDictCategoryMask] ; $547c
 	ld e, a ; $547f
 .loop:
@@ -149,10 +150,10 @@ TennisDictionaryLetterRowTable:
 DrawTennisDictionaryIndexCursor:
 	or a ; $54c8
 	jr z, .compactTiles ; $54c9
-	ld hl, TennisDictionaryIndexCursorTable0 ; $54cb
+	ld hl, TennisDictionaryIndexCursorHighlightTiles ; $54cb
 	jr .gotTiles ; $54ce
 .compactTiles:
-	ld hl, TennisDictionaryIndexCursorTable1 ; $54d0
+	ld hl, TennisDictionaryIndexCursorNormalTiles ; $54d0
 .gotTiles:
 	wram_bank WRAM_SCREEN ; $54d3
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 19 - $80 ; $54d9 one step back: .rowLoop adds $80 first
@@ -207,12 +208,12 @@ DrawTennisDictionaryIndexCursor:
 	call QueueVRAMCopy ; $5536
 	wram_bank WRAM_SCENE ; $5539
 	ret ; $553f
-TennisDictionaryIndexCursorTable0:
+TennisDictionaryIndexCursorHighlightTiles:
 	; $5540, 36 bytes (bytes:16)
 	db $76, $77, $86, $87, $78, $79, $88, $89, $7a, $7b, $8a, $8b, $7c, $7d, $8c, $8d ; 0x00
 	db $7e, $7f, $8e, $8f, $a8, $a9, $b8, $b9, $aa, $ab, $ba, $bb, $ac, $ad, $bc, $bd ; 0x10
 	db $ae, $af, $be, $bf ; 0x20
-TennisDictionaryIndexCursorTable1:
+TennisDictionaryIndexCursorNormalTiles:
 	; $5564, 36 bytes (bytes:16)
 	db $96, $84, $97, $84, $98, $84, $99, $84, $9a, $84, $9b, $84, $9c, $84, $9d, $84 ; 0x00
 	db $9e, $84, $9f, $84, $c8, $84, $c9, $84, $ca, $84, $cb, $84, $cc, $84, $cd, $84 ; 0x10
@@ -230,7 +231,7 @@ HandleTennisDictionaryIndexInput:
 	push af ; $559b
 	jr .restore ; $559c
 .checkB:
-	bit 1, a ; $559e
+	bit PADB_B, a ; $559e
 	jr z, .checkUp ; $55a0
 	pop af ; $55a2
 	sound SFX_MENU_CANCEL ; $55a3
@@ -240,7 +241,7 @@ HandleTennisDictionaryIndexInput:
 .checkUp:
 	ldh a, [hInputPressed] ; $55aa
 	bit PADB_UP, a ; $55ac
-	jr z, .checkTennisDictCursorRow ; $55ae
+	jr z, .checkDown ; $55ae
 	ld a, [wTennisDictCursorRow] ; $55b0
 	ld b, a ; $55b3
 	dec a ; $55b4
@@ -258,8 +259,8 @@ HandleTennisDictionaryIndexInput:
 	call DrawTennisDictionaryIndexCursor ; $55ca
 	ld a, $01 ; $55cd
 	jr .restore ; $55cf
-.checkTennisDictCursorRow:
-	bit 7, a ; $55d1
+.checkDown:
+	bit PADB_DOWN, a ; $55d1
 	jr z, .checkLeft ; $55d3
 	ld a, [wTennisDictCursorRow] ; $55d5
 	ld b, a ; $55d8
@@ -279,7 +280,7 @@ HandleTennisDictionaryIndexInput:
 	ld a, $01 ; $55f2
 	jr .restore ; $55f4
 .checkLeft:
-	bit 5, a ; $55f6
+	bit PADB_LEFT, a ; $55f6
 	jr z, .restore ; $55f8
 	jr .restore ; $55fa
 .restore:
@@ -291,16 +292,16 @@ HandleTennisDictionaryListInput:
 	push af ; $5600
 	wram_bank WRAM_SCENE ; $5601
 	ld a, [wTennisDictFlags] ; $5607
-	res 2, a ; $560a
-	res 3, a ; $560c
+	res TDICTFLAGB_LEFT_ARROW, a ; $560a
+	res TDICTFLAGB_RIGHT_ARROW, a ; $560c
 	ld [wTennisDictFlags], a ; $560e
 	ldh a, [hInputRisingEdge] ; $5611
 	bit PADB_A, a ; $5613
-	jp z, .checkTennisDictMode ; $5615
+	jp z, .checkB ; $5615
 	sound SFX_MENU_SELECT ; $5618
 	call StartTennisDictionaryAnim ; $561a
 	ld a, [wTennisDictFlags] ; $561d
-	set 0, a ; $5620
+	set TDICTFLAGB_WINDOW_OPEN, a ; $5620
 	ld [wTennisDictFlags], a ; $5622
 	ld a, [wTennisDictCategoryMask] ; $5625
 	ld b, a ; $5628
@@ -309,13 +310,13 @@ HandleTennisDictionaryListInput:
 	jr z, .singleEntryCategory ; $562e
 	call GetTennisDictionarySelectedIndex ; $5630
 	call GetTennisDictionaryEntryIndex ; $5633
-	ld hl, $1430 ; $5636
+	ld hl, Text_DefineAce ; $5636
 	add_hl_a ; $5639
 	jr .resetTextWindowsAndRestoreMap ; $563e
 .singleEntryCategory:
 	call GetTennisDictionarySelectedIndex ; $5640
 	call GetTennisDictionaryEntryCategory ; $5643
-	ld hl, $14a9 ; $5646
+	ld hl, Text_GymLifterTooMuchMuscleSlows ; $5646
 	add l ; $5649
 	ld l, a ; $564a
 	jr nc, .resetTextWindowsAndRestoreMap ; $564b
@@ -340,7 +341,7 @@ HandleTennisDictionaryListInput:
 	ld a, [wMessageSpeed] ; $566e
 	push af ; $5671
 	xor a ; $5672
-	ld a, $80 ; $5673
+	ld a, MSGSPEEDF_INSTANT | MSGSPEED_FAST ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a ; $5678
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5679
@@ -354,12 +355,12 @@ HandleTennisDictionaryListInput:
 	farcall CloseWindowAlt ; $568d
 	wram_bank WRAM_SCENE ; $5690
 	ld a, [wTennisDictFlags] ; $5696
-	res 0, a ; $5699
+	res TDICTFLAGB_WINDOW_OPEN, a ; $5699
 	ld [wTennisDictFlags], a ; $569b
 	call EndTennisDictionaryAnim ; $569e
 	jp .restore ; $56a1
-.checkTennisDictMode:
-	bit 1, a ; $56a4
+.checkB:
+	bit PADB_B, a ; $56a4
 	jr z, .checkUp ; $56a6
 	pop af ; $56a8
 	sound SFX_MENU_CANCEL ; $56a9
@@ -376,7 +377,7 @@ HandleTennisDictionaryListInput:
 .checkUp:
 	ldh a, [hInputPressed] ; $56be
 	bit PADB_UP, a ; $56c0
-	jr z, .checkTennisDictCursorRow ; $56c2
+	jr z, .checkDown ; $56c2
 	sound SFX_MENU_MOVE ; $56c4
 	ld a, [wTennisDictCursorRow] ; $56c6
 	dec a ; $56c9
@@ -396,8 +397,8 @@ HandleTennisDictionaryListInput:
 	ld [wTennisDictScrollTop], a ; $56e2
 	call DrawTennisDictionaryList ; $56e5
 	jr .restore ; $56e8
-.checkTennisDictCursorRow:
-	bit 7, a ; $56ea
+.checkDown:
+	bit PADB_DOWN, a ; $56ea
 	jr z, .checkLeft ; $56ec
 	sound SFX_MENU_MOVE ; $56ee
 	ld a, [wTennisDictCursorRow] ; $56f0
@@ -420,10 +421,10 @@ HandleTennisDictionaryListInput:
 	call DrawTennisDictionaryList ; $570f
 	jr .restore ; $5712
 .checkLeft:
-	bit 5, a ; $5714
+	bit PADB_LEFT, a ; $5714
 	jr z, .checkRight ; $5716
 	ld a, [wTennisDictFlags] ; $5718
-	set 2, a ; $571b
+	set TDICTFLAGB_LEFT_ARROW, a ; $571b
 	ld [wTennisDictFlags], a ; $571d
 	sound SFX_MENU_MOVE ; $5720
 	call AdvanceFrame ; $5722
@@ -431,10 +432,10 @@ HandleTennisDictionaryListInput:
 	call DrawTennisDictionaryList ; $5728
 	jr .restore ; $572b
 .checkRight:
-	bit 4, a ; $572d
+	bit PADB_RIGHT, a ; $572d
 	jr z, .restore ; $572f
 	ld a, [wTennisDictFlags] ; $5731
-	set 3, a ; $5734
+	set TDICTFLAGB_RIGHT_ARROW, a ; $5734
 	ld [wTennisDictFlags], a ; $5736
 	sound SFX_MENU_MOVE ; $5739
 	call AdvanceFrame ; $573b

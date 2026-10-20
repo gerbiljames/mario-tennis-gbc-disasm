@@ -285,15 +285,15 @@ CourtSelectGraphicsTable:
 	dslot DataPtr_CourtNameLabelTiles5 ; record 9
 CourtSelectTable:
 	; $5e05, 18 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $ab00 ; record 3
-	dw $ac00 ; record 4
-	dw $ad00 ; record 5
-	dw $ae00 ; record 6
-	dw $af00 ; record 7
-	dw $b700 ; record 8
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
+	dw vTiles1 tile $70 + VRAM_BANK1 ; record 7
+	dw vTiles2 tile $70 + VRAM_BANK1 ; record 8
 GetCourtThumbnailPtr:
 	push af ; $5e17
 	push bc ; $5e18
@@ -317,9 +317,9 @@ OpenCourtSelect4Panel:
 	ld c, $00 ; $5e2e
 .slideForwardLoop:
 	call AdvanceFrame ; $5e30
-	ld b, $12 ; $5e33
+	ld b, PANELANIM_COURT_SELECT4_IN ; $5e33
 	farcall RestoreMenuBgAndDrawPanel ; $5e35
-	ld b, $02 ; $5e38
+	ld b, MAPROWS_BANDS_4_9 ; $5e38
 	farcall FlushWram3MapRows ; $5e3a
 	ld a, c ; $5e3d
 	inc a ; $5e3e
@@ -332,9 +332,9 @@ OpenCourtSelect4Panel:
 	ld c, $0a ; $5e48
 .slideBackLoop:
 	call AdvanceFrame ; $5e4a
-	ld b, $13 ; $5e4d
+	ld b, PANELANIM_COURT_SELECT4_OUT ; $5e4d
 	farcall RestoreMenuBgAndDrawPanel ; $5e4f
-	ld b, $02 ; $5e52
+	ld b, MAPROWS_BANDS_4_9 ; $5e52
 	farcall FlushWram3MapRows ; $5e54
 	ld a, c ; $5e57
 	dec a ; $5e58
@@ -346,33 +346,33 @@ OpenCourtSelect4Panel:
 CloseCourtSelect4Panel:
 	ld a, b ; $5e62
 	or a ; $5e63
-	jr z, .close ; $5e64
+	jr z, .rewindIn ; $5e64
 	ld c, $00 ; $5e66
-.openLoop:
+.slideOutLoop:
 	call AdvanceFrame ; $5e68
-	ld b, $13 ; $5e6b
+	ld b, PANELANIM_COURT_SELECT4_OUT ; $5e6b
 	farcall RestoreMenuBgAndDrawPanel ; $5e6d
-	ld b, $02 ; $5e70
+	ld b, MAPROWS_BANDS_4_9 ; $5e70
 	farcall FlushWram3MapRows ; $5e72
 	ld a, c ; $5e75
 	inc a ; $5e76
 	ld c, a ; $5e77
 	cp $0b ; $5e78
-	jr nz, .openLoop ; $5e7a
+	jr nz, .slideOutLoop ; $5e7a
 	ret ; $5e7c
-.close:
+.rewindIn:
 	ld c, $0c ; $5e7d
-.closeLoop:
+.rewindInLoop:
 	call AdvanceFrame ; $5e7f
-	ld b, $12 ; $5e82
+	ld b, PANELANIM_COURT_SELECT4_IN ; $5e82
 	farcall RestoreMenuBgAndDrawPanel ; $5e84
-	ld b, $02 ; $5e87
+	ld b, MAPROWS_BANDS_4_9 ; $5e87
 	farcall FlushWram3MapRows ; $5e89
 	ld a, c ; $5e8c
 	dec a ; $5e8d
 	ld c, a ; $5e8e
 	or a ; $5e8f
-	jr nz, .closeLoop ; $5e90
+	jr nz, .rewindInLoop ; $5e90
 	ret ; $5e92
 CourtSelect4CursorSpriteTask:
 	farcall TickMenuBgScroll ; $5e93
@@ -394,7 +394,7 @@ CourtSelect4CursorSpriteTask:
 	ld b, [hl] ; $5eb6
 	pop af ; $5eb7
 	add a ; $5eb8
-	ld hl, CourtSelect4CursorSpriteTaskPtrs ; $5eb9
+	ld hl, CourtSelect4CursorTemplatePtrs ; $5eb9
 	add_hl_a ; $5ebc
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
@@ -417,26 +417,35 @@ CourtSelect4CursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $5ee2
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
-CourtSelect4CursorSpriteTaskPtrs:
+CourtSelect4CursorTemplatePtrs:
 	; $5eea, 8 bytes (records:2)
-	dw CourtSelect4CursorSpriteTask0 ; record 0
-	dw CourtSelect4CursorSpriteTask0 ; record 1
-	dw CourtSelect4CursorSpriteTask0 ; record 2
-	dw CourtSelect4CursorSpriteTask1 ; record 3
-CourtSelect4CursorSpriteTask0:
-	; $5ef2, 33 bytes (bytes:8)
-	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
-	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
-	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
-	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
-	db $80 ; 0x20
-CourtSelect4CursorSpriteTask1:
-	; $5f13, 37 bytes (bytes:8)
-	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
-	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
-	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
-	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
-	db $10, $48, $10, $00, $80 ; 0x20
+	dw CourtSelect4CursorTemplate0 ; record 0
+	dw CourtSelect4CursorTemplate0 ; record 1
+	dw CourtSelect4CursorTemplate0 ; record 2
+	dw CourtSelect4CursorTemplate1 ; record 3
+CourtSelect4CursorTemplate0:
+	; $5ef2, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+CourtSelect4CursorTemplate1:
+	; $5f13, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite_end
 CourtSelect4CursorSpriteTask_SpriteTemplate:
 	; $5f38, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -524,8 +533,11 @@ SetCourtSelect4TabAttrRect:
 	pop af ; $5fd4
 	ret ; $5fd5
 CourtSelect4TabAttrAddrs_3e:
-	; $5fd6, 8 bytes (bytes:8)
-	db $84, $d4, $8b, $d4, $24, $d5, $2b, $d5 ; 0x00
+	; $5fd6, 8 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 4 ; record 0
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; record 1
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 4 ; record 2
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 3
 SetCourtSelect4Palette:
 	ld hl, CourtSelect4PalettePtrs ; $5fde
 	add a ; $5fe1
@@ -591,7 +603,7 @@ Unused_3e_RenderCourtSelectTitleText:
 	ld hl, Unused_3e_CourtSelectTitleTextIndices ; $6070
 	add_hl_a ; $6073
 	ld a, [hl] ; $6078
-	ld hl, $00a9 ; $6079
+	ld hl, Text_CourtSpeedSlow ; $6079
 	add_hl_a ; $607c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 6 ; $6081
 	ld c, $20 ; $6084
@@ -614,7 +626,7 @@ Unused_3e_RenderCourtSelectTitleText2:
 	ld a, c ; $60ac
 	add_hl_a ; $60ad
 	ld a, [hl] ; $60b2
-	ld hl, $00a9 ; $60b3
+	ld hl, Text_CourtSpeedSlow ; $60b3
 	add_hl_a ; $60b6
 	ld c, $20 ; $60bb
 	farcall RenderTextToBuffer64 ; $60bd

@@ -24,9 +24,9 @@ GetNextArgShortTextLength:
 	ld a, [hl+] ; $52ba
 	cp $00 ; $52bb
 	jr z, .done ; $52bd
-	cp $de ; $52bf
+	cp TX_DAKUTEN ; $52bf
 	jr z, .loop ; $52c1
-	cp $df ; $52c3
+	cp TX_HANDAKUTEN ; $52c3
 	jr z, .loop ; $52c5
 	inc b ; $52c7
 	jr .loop ; $52c8
@@ -196,7 +196,7 @@ TextCmdPrintShortText:
 	push bc ; $53cb
 	ld a, [wTextCharNameArg] ; $53cc
 	push de ; $53cf
-	ld hl, $001b ; $53d0
+	ld hl, Text_NameAlex ; $53d0
 	add_hl_a ; $53d3
 	ld de, wInlineTextBuffer ; $53d8
 	call FetchShortTextToBuffer ; $53db
@@ -211,7 +211,7 @@ MeasureIndexedShortTextWidth:
 	push de ; $53e9
 	push hl ; $53ea
 	ld a, [wTextCharNameArg] ; $53eb
-	ld hl, $001b ; $53ee
+	ld hl, Text_NameAlex ; $53ee
 	add_hl_a ; $53f1
 	ld de, wInlineTextBuffer ; $53f6
 	farcall FetchShortTextToBuffer ; $53f9
@@ -321,13 +321,13 @@ DispatchControlCode:
 ControlCodeDispatchReturn:
 	pop hl ; $5488
 	ret ; $5489
-ControlCodeHandler16:
+TextCmdNop10:
 	ret ; $548a
-ControlCodeHandler17:
+TextCmdNop11:
 	ret ; $548b
-ControlCodeHandler18:
+TextCmdNop12:
 	ret ; $548c
-ControlCodeHandler19:
+TextCmdNop13:
 	ret ; $548d
 TextCmdNop0:
 	ret ; $548e
@@ -349,10 +349,10 @@ ControlCodeHandlers_05:
 	dw TextCmdNextGlyphStreamRow ; record 13
 	dw TextCmdPrintShortText ; record 14
 	dw TextCmdNewline ; record 15
-	dw ControlCodeHandler16 ; record 16
-	dw ControlCodeHandler17 ; record 17
-	dw ControlCodeHandler18 ; record 18
-	dw ControlCodeHandler19 ; record 19
+	dw TextCmdNop10 ; record 16
+	dw TextCmdNop11 ; record 17
+	dw TextCmdNop12 ; record 18
+	dw TextCmdNop13 ; record 19
 	dw TextCmdNewline ; record 20
 	dw TextCmdNewline ; record 21
 	dw TextCmdNewline ; record 22
@@ -407,9 +407,9 @@ RenderInlineString:
 .checkMark:
 	inc hl ; $5511
 	ld a, [hl] ; $5512
-	cp $de ; $5513
+	cp TX_DAKUTEN ; $5513
 	jr z, .markChar ; $5515
-	cp $df ; $5517
+	cp TX_HANDAKUTEN ; $5517
 	jr nz, .nextCell ; $5519
 .markChar:
 	push hl ; $551b

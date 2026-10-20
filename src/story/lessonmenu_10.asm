@@ -6,7 +6,7 @@ RunStrokeLessonMenu:
 	cp $ff ; $459f
 	jp z, RunDoublesMatchListMenu.done ; $45a1
 	add MINIGAME_STROKE_PRACTICE_1 ; $45a4
-	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
+	ld [wCurrentMatchIndex], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
 	ld de, wStoryModeSpawnPosition ; $45ac
 	ld bc, wStoryModeSpawnPosition_SIZE ; $45af
@@ -41,7 +41,7 @@ ShowRankingBoardSamples:
 	call ClearFrameTasks ; $45fd
 	ld b, $00 ; $4600
 	ld c, $01 ; $4602
-	ld d, $00 ; $4604
+	ld d, RANKINGBOARD_PLAIN ; $4604
 	farcall ShowRankingBoard ; $4606
 	xor a ; $4609
 	ldh [hBGColumnBlitPending], a ; $460a
@@ -53,7 +53,7 @@ ShowRankingBoardSamples:
 	call ClearFrameTasks ; $4618
 	ld b, $00 ; $461b
 	ld c, $02 ; $461d
-	ld d, $00 ; $461f
+	ld d, RANKINGBOARD_PLAIN ; $461f
 	farcall ShowRankingBoard ; $4621
 	xor a ; $4624
 	ldh [hBGColumnBlitPending], a ; $4625
@@ -65,7 +65,7 @@ ShowRankingBoardSamples:
 	call ClearFrameTasks ; $4633
 	ld b, $00 ; $4636
 	ld c, $03 ; $4638
-	ld d, $00 ; $463a
+	ld d, RANKINGBOARD_PLAIN ; $463a
 	farcall ShowRankingBoard ; $463c
 	ret ; $463f
 RunMinigameSelectMenu:
@@ -96,7 +96,7 @@ RunMinigameSelectMenu:
 	ret ; $4683
 MinigameSelectMenuTable:
 	; $4684, 9 bytes (bytes:16)
-	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
+	db MINIGAME_BOO_BLAST, MINIGAME_SHOOTING_STAR, MINIGAME_PERFECT_SHOT, MINIGAME_TARGET_SHOT, MINIGAME_FRUIT_FANTASY, MINIGAME_BANANA_BUNCH, MINIGAME_TREASURE_BOX, MINIGAME_MEDALLION_MATCH, MINIGAME_TWO_ON_ONE ; 0x00
 Test2MapScripts_10:
 	; $468d, 14 bytes (map_tree)
 	dw Test2EntryPoints_10 ; slot 0 EntryPoints
@@ -158,7 +158,7 @@ Unused_10_Test2Npc03:
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $47fa
 	farcall RunTrainingDrillByID ; $47fc
 	ret ; $47ff
-; Test2Npc0B_10 with actor $04 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc04:
 	ld hl, wStoryModePlayersXPosition ; $4800
 	ld de, wStoryModeSpawnPosition ; $4803
@@ -176,7 +176,7 @@ Unused_10_Test2Npc04:
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $482b
 	farcall RunTrainingDrillByID ; $482d
 	ret ; $4830
-; Test2Npc0B_10 with actor $05 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc05:
 	ld hl, wStoryModePlayersXPosition ; $4831
 	ld de, wStoryModeSpawnPosition ; $4834
@@ -194,7 +194,7 @@ Unused_10_Test2Npc05:
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $485c
 	farcall RunTrainingDrillByID ; $485e
 	ret ; $4861
-; Test2Npc0B_10 with actor $06 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc06:
 	ld hl, wStoryModePlayersXPosition ; $4862
 	ld de, wStoryModeSpawnPosition ; $4865
@@ -212,7 +212,7 @@ Unused_10_Test2Npc06:
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $488d
 	farcall RunTrainingDrillByID ; $488f
 	ret ; $4892
-; Test2Npc0B_10 with actor $07 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc07:
 	ld hl, wStoryModePlayersXPosition ; $4893
 	ld de, wStoryModeSpawnPosition ; $4896
@@ -230,7 +230,7 @@ Unused_10_Test2Npc07:
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $48be
 	farcall RunTrainingDrillByID ; $48c0
 	ret ; $48c3
-; Test2Npc0B_10 with actor $08 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc08:
 	ld hl, wStoryModePlayersXPosition ; $48c4
 	ld de, wStoryModeSpawnPosition ; $48c7
@@ -248,7 +248,7 @@ Unused_10_Test2Npc08:
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $48ef
 	farcall RunTrainingDrillByID ; $48f1
 	ret ; $48f4
-; Test2Npc0B_10 with actor $09 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc09:
 	ld hl, wStoryModePlayersXPosition ; $48f5
 	ld de, wStoryModeSpawnPosition ; $48f8
@@ -266,7 +266,7 @@ Unused_10_Test2Npc09:
 	ld a, MINIGAME_NET_GAME_MATCH_2 ; $4920
 	farcall RunTrainingDrillByID ; $4922
 	ret ; $4925
-; Test2Npc0B_10 with actor $0a in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
 Unused_10_Test2Npc0A:
 	ld hl, wStoryModePlayersXPosition ; $4926
 	ld de, wStoryModeSpawnPosition ; $4929
@@ -467,7 +467,7 @@ Unused_10_RunWaterSpriteMinigame:
 	ldh a, [hRomBank] ; $4bb9
 	ld de, WaterSpriteModeHooks_10 ; $4bbb
 	farcall SetModeHookTable ; $4bbe
-	ld de, Test2InitScriptMinigamePointTable_10 ; $4bc1
+	ld de, Unused_10_WaterSpriteMinigamePointTable ; $4bc1
 	farcall SetMinigamePointTable ; $4bc4
 	ld a, CHAR_MARIO ; $4bc7
 	ld [wMatchPlayerChar], a ; $4bc9

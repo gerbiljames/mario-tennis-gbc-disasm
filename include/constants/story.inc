@@ -104,8 +104,8 @@ def NUM_STORYTIERS equ const_value
 ; --- Senior Class Court stage (wMapSceneStage2 in bank $12) ---
 ; Written by ComputeSeniorCourtStage. StartSeniorRankingMatch does `sub $02`
 ; into a seven-entry jumptable, one slot per senior ranking match (four
-; singles, three doubles); SeniorCourtExit01_12 does `sub $09` before indexing
-; its text-id table. The names say which opponent is next.
+; singles, three doubles); SpeakEmilyPostChampionLine does `sub $09` before
+; indexing its text-id table. The names say which opponent is next.
 	const_def
 	const SENIORCOURTSTAGE_SINGLES_PRE_JUNIOR   ; $00 not junior champion yet
 	const SENIORCOURTSTAGE_DOUBLES_PRE_JUNIOR   ; $01
@@ -116,7 +116,7 @@ def NUM_STORYTIERS equ const_value
 	const SENIORCOURTSTAGE_DOUBLES_RANK3        ; $06 doubles has three ranking matches
 	const SENIORCOURTSTAGE_DOUBLES_RANK2        ; $07
 	const SENIORCOURTSTAGE_DOUBLES_RANK1        ; $08 last jumptable slot
-	const SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $09 base of SeniorCourtExit01TextIds
+	const SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $09 base of EmilyPostChampionTextIds
 	const SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $0a
 	const SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN  ; $0b
 	const SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN  ; $0c

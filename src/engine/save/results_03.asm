@@ -96,7 +96,7 @@ Unused_03_GetCurrentSlotBlockId:
 	ret ; $52ae
 StorySlotBlockIds_03:
 	; $52af, 4 bytes (bytes:4)
-	db $00, $02, $04, $0b ; 0x00
+	db SAVEBLOCK_SLOT0, SAVEBLOCK_SLOT1, SAVEBLOCK_SLOT2, SAVEBLOCK_N64_RECORDS ; 0x00
 Unused_03_ReadCurrentSlotBlock:
 	wram_bank WRAM_SOUND ; $52b3
 	call Unused_03_GetCurrentSlotBlockId ; $52b9
@@ -263,28 +263,28 @@ Unused_03_SaveSlotDebugEditor:
 	jr z, .printStatus ; $5407
 	jp .redraw ; $5409
 .moveSaveEditorCursor:
-	bit 5, a ; $540c
+	bit PADB_LEFT, a ; $540c
 	jr z, .checkRight ; $540e
 	ld bc, $ffff ; $5410
 	call Unused_03_MoveSaveEditorCursor ; $5413
 	jr z, .printStatus ; $5416
 	jp .redraw ; $5418
 .checkRight:
-	bit 4, a ; $541b
+	bit PADB_RIGHT, a ; $541b
 	jr z, .checkDown ; $541d
 	ld bc, $0101 ; $541f
 	call Unused_03_MoveSaveEditorCursor ; $5422
 	jr z, .printStatus ; $5425
 	jp .redraw ; $5427
 .checkDown:
-	bit 7, a ; $542a
+	bit PADB_DOWN, a ; $542a
 	jr z, .positive ; $542c
 	ld bc, $1008 ; $542e
 	call Unused_03_MoveSaveEditorCursor ; $5431
 	jp z, .printStatus ; $5434
 	jp .redraw ; $5437
 .positive:
-	bit 1, a ; $543a
+	bit PADB_B, a ; $543a
 	jr z, .checkSelect ; $543c
 	ld a, [wCurrentStorySlot] ; $543e
 	push af ; $5441
@@ -314,7 +314,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld [wCurrentStorySlot], a ; $5467
 	jp .reloadSlot ; $546a
 .checkSelect:
-	bit 2, a ; $546d
+	bit PADB_SELECT, a ; $546d
 	jr z, .checkStart ; $546f
 	sound SFX_MENU_SELECT ; $5471
 	ld a, [wCurrentStorySlot] ; $5473
@@ -323,7 +323,7 @@ Unused_03_SaveSlotDebugEditor:
 	ld [wCurrentStorySlot], a ; $5479
 	jp .reloadSlot ; $547c
 .checkStart:
-	bit 3, a ; $547f
+	bit PADB_START, a ; $547f
 	jr z, .skipSave ; $5481
 	sound SFX_MENU_SELECT ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
@@ -358,7 +358,7 @@ SaveResultSavedString_03:
 SaveResultDeletedString_03:
 	; $54d4, 12 bytes (ascii)
 	db "DELETED    ", $00
-SaveResultBlankString_03:
+Unused_03_SaveResultBlankString:
 	; $54e0, 8 bytes (ascii)
 	db "      ", $00, $00
 Unused_03_ByteRamp:
@@ -366,7 +366,7 @@ Unused_03_ByteRamp:
 	db $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d ; 0x00
 	; $54f5, 8 bytes (fill)
 	ds 8, $00
-MarioGolfSignature_03:
+Unused_03_MarioGolfSignature:
 	; $54fd, 16 bytes (ascii)
 	db "MARIO GOLF GB CH"
 RestoreStoryBlockFromBackup:
@@ -375,7 +375,7 @@ RestoreStoryBlockFromBackup:
 	cp $ff ; $5513
 	ret nz ; $5515
 	push bc ; $5516
-	ld a, $1b ; $5517
+	ld a, SAVEBLOCK_BACKUP ; $5517
 	add b ; $5519
 	ld b, a ; $551a
 	call ReadSaveBlock ; $551b
@@ -395,42 +395,42 @@ RestoreStoryBlockFromBackup:
 	call InvalidateSaveBlock ; $5537
 	ret ; $553a
 Unused_03_InvalidateBlockIfUnwritten:
-	ld hl, $d000 ; $553b
+	ld hl, WRAMX_BASE ; $553b
 	call ReadSaveBlock ; $553e
 	cp $ff ; $5541
 	ret nz ; $5543
 	call InvalidateSaveBlock ; $5544
 	ret ; $5547
 Unused_03_RestoreBlockOrClear:
-	ld hl, $d000 ; $5548
+	ld hl, WRAMX_BASE ; $5548
 	call ReadSaveBlock ; $554b
 	cp $ff ; $554e
 	ret nz ; $5550
 	push bc ; $5551
-	ld a, $1b ; $5552
+	ld a, SAVEBLOCK_BACKUP ; $5552
 	add b ; $5554
 	ld b, a ; $5555
 	call ReadSaveBlock ; $5556
 	or a ; $5559
 	jr nz, .clearBlock ; $555a
 	pop bc ; $555c
-	ld hl, $d000 ; $555d
+	ld hl, WRAMX_BASE ; $555d
 	ld de, $0000 ; $5560
 	call WriteSaveBlock ; $5563
 	ret ; $5566
 .clearBlock:
 	push bc ; $5567
-	ld hl, $d000 ; $5568
+	ld hl, WRAMX_BASE ; $5568
 	ld c, $20 ; $556b
 	call ClearMemory16 ; $556d
 	pop bc ; $5570
-	ld hl, $d000 ; $5571
+	ld hl, WRAMX_BASE ; $5571
 	ld de, $0000 ; $5574
 	call WriteSaveBlock ; $5577
 	ret ; $557a
 Unused_03_RestoreBlock06FromBackup:
 	ld b, SAVEBLOCK_PRESERVED ; $557b
-	ld hl, $d000 ; $557d
+	ld hl, WRAMX_BASE ; $557d
 	call ReadSaveBlock ; $5580
 	cp $ff ; $5583
 	ret nz ; $5585
@@ -439,7 +439,7 @@ Unused_03_RestoreBlock06FromBackup:
 	or a ; $558b
 	jr nz, .invalidateBoth ; $558c
 	ld b, SAVEBLOCK_PRESERVED ; $558e
-	ld hl, $d000 ; $5590
+	ld hl, WRAMX_BASE ; $5590
 	ld de, $0000 ; $5593
 	call WriteSaveBlock ; $5596
 	ret ; $5599
@@ -451,7 +451,7 @@ Unused_03_RestoreBlock06FromBackup:
 	ret ; $55a4
 Unused_03_RestoreBlock07FromBackup:
 	ld b, SAVEBLOCK_SPARE7 ; $55a5
-	ld hl, $d000 ; $55a7
+	ld hl, WRAMX_BASE ; $55a7
 	call ReadSaveBlock ; $55aa
 	cp $ff ; $55ad
 	ret nz ; $55af
@@ -460,7 +460,7 @@ Unused_03_RestoreBlock07FromBackup:
 	or a ; $55b5
 	jr nz, .invalidateBoth ; $55b6
 	ld b, SAVEBLOCK_SPARE7 ; $55b8
-	ld hl, $d000 ; $55ba
+	ld hl, WRAMX_BASE ; $55ba
 	ld de, $0000 ; $55bd
 	call WriteSaveBlock ; $55c0
 	ret ; $55c3
@@ -472,7 +472,7 @@ Unused_03_RestoreBlock07FromBackup:
 	ret ; $55ce
 Unused_03_RestoreBlock08FromBackup:
 	ld b, SAVEBLOCK_SPARE8 ; $55cf
-	ld hl, $d000 ; $55d1
+	ld hl, WRAMX_BASE ; $55d1
 	call ReadSaveBlock ; $55d4
 	cp $ff ; $55d7
 	ret nz ; $55d9
@@ -481,7 +481,7 @@ Unused_03_RestoreBlock08FromBackup:
 	or a ; $55df
 	jr nz, .invalidateBoth ; $55e0
 	ld b, SAVEBLOCK_SPARE8 ; $55e2
-	ld hl, $d000 ; $55e4
+	ld hl, WRAMX_BASE ; $55e4
 	ld de, $0000 ; $55e7
 	call WriteSaveBlock ; $55ea
 	ret ; $55ed
@@ -493,7 +493,7 @@ Unused_03_RestoreBlock08FromBackup:
 	ret ; $55f8
 Unused_03_RestoreBlock09FromBackup:
 	ld b, SAVEBLOCK_SPARE9 ; $55f9
-	ld hl, $d000 ; $55fb
+	ld hl, WRAMX_BASE ; $55fb
 	call ReadSaveBlock ; $55fe
 	cp $ff ; $5601
 	ret nz ; $5603
@@ -502,7 +502,7 @@ Unused_03_RestoreBlock09FromBackup:
 	or a ; $5609
 	jr nz, .invalidateBoth ; $560a
 	ld b, SAVEBLOCK_SPARE9 ; $560c
-	ld hl, $d000 ; $560e
+	ld hl, WRAMX_BASE ; $560e
 	ld de, $0000 ; $5611
 	call WriteSaveBlock ; $5614
 	ret ; $5617
@@ -514,7 +514,7 @@ Unused_03_RestoreBlock09FromBackup:
 	ret ; $5622
 Unused_03_RestoreBlock0aFromBackup:
 	ld b, SAVEBLOCK_SPARE10 ; $5623
-	ld hl, $d000 ; $5625
+	ld hl, WRAMX_BASE ; $5625
 	call ReadSaveBlock ; $5628
 	cp $ff ; $562b
 	ret nz ; $562d
@@ -523,7 +523,7 @@ Unused_03_RestoreBlock0aFromBackup:
 	or a ; $5633
 	jr nz, .invalidateBoth ; $5634
 	ld b, SAVEBLOCK_SPARE10 ; $5636
-	ld hl, $d000 ; $5638
+	ld hl, WRAMX_BASE ; $5638
 	ld de, $0000 ; $563b
 	call WriteSaveBlock ; $563e
 	ret ; $5641
@@ -534,16 +534,16 @@ Unused_03_RestoreBlock0aFromBackup:
 	call InvalidateSaveBlock ; $5649
 	ret ; $564c
 Unused_03_ClearBlockIfSet:
-	ld hl, $d000 ; $564d
+	ld hl, WRAMX_BASE ; $564d
 	call ReadSaveBlock ; $5650
 	or a ; $5653
 	ret z ; $5654
 	push bc ; $5655
-	ld hl, $d000 ; $5656
+	ld hl, WRAMX_BASE ; $5656
 	ld c, $28 ; $5659
 	call ClearMemory16 ; $565b
 	pop bc ; $565e
-	ld hl, $d000 ; $565f
+	ld hl, WRAMX_BASE ; $565f
 	ld de, $0000 ; $5662
 	call WriteSaveBlock ; $5665
 	ret ; $5668

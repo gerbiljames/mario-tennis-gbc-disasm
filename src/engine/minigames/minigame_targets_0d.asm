@@ -62,14 +62,16 @@ MinigameConfig_ShootingStar:
 	twin_named init_minigame_medallion_match, InitMinigame_ShootingStar ; $51a4
 MinigameHooks_ShootingStar:
 	; $51b6, 16 bytes (mode_hooks)
-	dw ShootingStarHook_PerFrame ; record 0
-	dw ShootingStarHook_PointStart ; record 1
-	dw ShootingStarHook_PointEnd ; record 2
-	dw ShootingStarHook_MinigameStart ; record 3
-	dw ShootingStarHook_BallHit ; record 4
-	dw ShootingStarHook_Bounce ; record 5
-	dw ShootingStarHook_RallyTick ; record 6
-	dw ShootingStarHook_Draw ; record 7
+	table_width 2
+	dw ShootingStarHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw ShootingStarHook_PointStart ; MODEHOOK_POINT_START
+	dw ShootingStarHook_PointEnd ; MODEHOOK_POINT_END
+	dw ShootingStarHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw ShootingStarHook_BallHit ; MODEHOOK_BALL_HIT
+	dw ShootingStarHook_Bounce ; MODEHOOK_BOUNCE
+	dw ShootingStarHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ShootingStarHook_Draw ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS
 ShootingStarHook_MinigameStart:
 	call InitBallTargetActor ; $51c6
 	ld a, $01 ; $51c9
@@ -400,11 +402,13 @@ InitMinigame_BananaBunch:
 	ret ; $551a
 MinigameHooks_BananaBunch:
 	; $551b, 16 bytes (mode_hooks)
-	dw BananaBunchHook_PerFrame ; record 0
-	dw BananaBunchHook_PointStart ; record 1
-	dw BananaBunchHook_PointEnd ; record 2
-	dw BananaBunchHook_MinigameStart ; record 3
-	dw BananaBunchHook_BallHit ; record 4
-	dw BananaBunchHook_Bounce ; record 5
-	dw BananaBunchHook_RallyTick ; record 6
-	dw RetStub ; record 7
+	table_width 2
+	dw BananaBunchHook_PerFrame ; MODEHOOK_PER_FRAME
+	dw BananaBunchHook_PointStart ; MODEHOOK_POINT_START
+	dw BananaBunchHook_PointEnd ; MODEHOOK_POINT_END
+	dw BananaBunchHook_MinigameStart ; MODEHOOK_MINIGAME_START
+	dw BananaBunchHook_BallHit ; MODEHOOK_BALL_HIT
+	dw BananaBunchHook_Bounce ; MODEHOOK_BOUNCE
+	dw BananaBunchHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw RetStub ; MODEHOOK_DRAW
+	assert_table_length NUM_MODEHOOKS

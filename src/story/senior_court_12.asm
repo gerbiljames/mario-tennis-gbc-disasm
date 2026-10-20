@@ -78,22 +78,22 @@ SeniorCourtExit01_12:
 	script_fade_out 16 ; $55a8
 	script_wait_frames 30 ; $55ad
 	ret ; $55b4
-.loop:
+SpeakEmilyPostChampionLine:
 	ld a, [wMapSceneStage2] ; $55b5
 	sub SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55b8
 	add a ; $55ba
-	ld_hl_indexed SeniorCourtExit01TextIds ; $55bb
+	ld_hl_indexed EmilyPostChampionTextIds ; $55bb
 	ld a, [hl+] ; $55c2
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
 	farcall InitDialogueTextCursor ; $55c5
 	ld a, [wStoryMainGender] ; $55c8
-	ld hl, $001d ; $55cb
+	ld hl, Text_NameHarry ; $55cb
 	add_hl_a ; $55ce
 	call PushShortTextArg_12 ; $55d3
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $55d6
 	ret ; $55db
-SeniorCourtExit01TextIds:
+EmilyPostChampionTextIds:
 	; $55dc, 12 bytes (text_ids)
 	table_width 2
 	dw Text_EmilyMakeTravelingTeamFirst ; record 0
@@ -108,7 +108,7 @@ SeniorCourtNpc03_12:
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
 	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
-	jr nc, SeniorCourtExit01_12.loop ; $55f1
+	jr nc, SpeakEmilyPostChampionLine ; $55f1
 	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
 SeniorCourtNpc03FaceUpFlag0000_12:
@@ -116,7 +116,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55fe
-	jr nc, SeniorCourtExit01_12.loop ; $5600
+	jr nc, SpeakEmilyPostChampionLine ; $5600
 	call SeniorRankOfferScenePrepFacingUp ; $5602
 	ret ; $5605
 .checkDoubles:
@@ -377,23 +377,23 @@ SeniorCourtNpc08_12:
 	farcall InitDialogueTextCursor ; $5959
 	apcall ApSeniorBethStage
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $595f
-	jr z, .speak ; $5961
-	jr nc, .altText ; $5963
+	jr z, .offerPractice ; $5961
+	jr nc, .speak ; $5963
 	script_face ACTOR_SENIOR_COURT_BETH, FACE_UP ; $5965
 	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_SWING_LOOP ; $596c
-.altText:
+.speak:
 	script_speak ACTOR_SENIOR_COURT_BETH ; $5973
 	ret ; $5978
-.speak:
+.offerPractice:
 	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $5979
 	farcall RunDialogueYesNoPrompt ; $597e
 	farcall ScriptCloseDialogueWindow ; $5981
 	script_wait_frames 5 ; $5984
 	and a ; $598b
-	jr z, .doublesLine ; $598c
+	jr z, .confirmPractice ; $598c
 	script_speak ACTOR_SENIOR_COURT_BETH ; $598e
 	ret ; $5993
-.doublesLine:
+.confirmPractice:
 	farcall AdvanceDialogueTextCursor ; $5994
 	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_BOUNCE ; $5997
 	script_wait_idle ACTOR_SENIOR_COURT_BETH ; $599e
@@ -402,10 +402,10 @@ SeniorCourtNpc08_12:
 	farcall ScriptCloseDialogueWindow ; $59ab
 	script_wait_frames 5 ; $59ae
 	and a ; $59b5
-	jr z, .done ; $59b6
+	jr z, .playPracticeMatch ; $59b6
 	script_speak ACTOR_SENIOR_COURT_BETH ; $59b8
 	ret ; $59bd
-.done:
+.playPracticeMatch:
 	script_wait_frames 10 ; $59be
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_50 ; $59c5
 	script_move_target ACTOR_SENIOR_COURT_BETH, 12.0, 21.0 ; $59d0
@@ -490,35 +490,35 @@ SeniorCourtNpc0A_12:
 	farcall InitDialogueTextCursor ; $5a9a
 	apcall ApSeniorBobStage
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5aa0
-	jr z, .altText ; $5aa2
+	jr z, .offerPractice ; $5aa2
 	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5aa4
 	ret ; $5aa9
-.altText:
+.offerPractice:
 	script_speak_restore ACTOR_ROLE_SENIOR_COURT_BOB ; $5aaa
 	farcall RunDialogueYesNoPrompt ; $5aaf
 	farcall ScriptCloseDialogueWindow ; $5ab2
 	script_wait_frames 5 ; $5ab5
 	and a ; $5abc
-	jr z, .speak ; $5abd
+	jr z, .confirmOffer ; $5abd
 	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5abf
 	ret ; $5ac4
-.speak:
+.confirmOffer:
 	farcall AdvanceDialogueTextCursor ; $5ac5
 	script_speak_restore ACTOR_ROLE_SENIOR_COURT_BOB ; $5ac8
 	farcall RunDialogueYesNoPrompt ; $5acd
 	farcall ScriptCloseDialogueWindow ; $5ad0
 	script_wait_frames 5 ; $5ad3
 	and a ; $5ada
-	jr z, .done ; $5adb
+	jr z, .playPracticeMatch ; $5adb
 	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5add
 	ret ; $5ae2
-.done:
+.playPracticeMatch:
 	script_get_actor_state ACTOR_ROLE_SENIOR_COURT_BOB ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9
 	ld hl, ACTORF_FLAGS ; $5aea
 	add hl, de ; $5aed
-	res 0, [hl] ; $5aee
+	res ACTORFLAGB_PAUSED, [hl] ; $5aee
 	res 1, [hl] ; $5af0
 	script_set_speed ACTOR_PLAYER, 1.0 ; $5af2
 	script_set_speed ACTOR_PARTNER, 1.0 ; $5afa
@@ -724,7 +724,7 @@ SeniorCourtInitScript_12:
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_PAM ; $5d73
 .fromMatch:
 	test_flag FLAG_DOUBLES ; $5d7b
-	jr nz, .done ; $5d7e
+	jr nz, .doubles ; $5d7e
 	ap_pass AP_ARC_SINGLES, 1
 	jr z, .placeActors ; $5d83
 	script_respawn_actors SeniorCourtActorsA_12 ; $5d85
@@ -742,7 +742,7 @@ SeniorCourtInitScript_12:
 	farcall EndCutsceneScriptMode ; $5da8
 	call SeniorCourtWalkPlayersOntoCourt ; $5dab
 	ret ; $5dae
-.done:
+.doubles:
 	ap_pass AP_ARC_DOUBLES, 1
 	jr z, .placeActors ; $5db2
 	script_respawn_actors SeniorCourtActorsB_12 ; $5db4

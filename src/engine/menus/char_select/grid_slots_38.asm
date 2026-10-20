@@ -37,7 +37,7 @@ RetreatToPreviousPlayerSlot:
 	jr z, .done ; $5c82
 	ld c, a ; $5c84
 	ld a, b ; $5c85
-	cp $04 ; $5c86
+	cp CHARSELECTSLOT_DONE ; $5c86
 	jr z, .noPrevious ; $5c88
 	ld a, c ; $5c8a
 	ret ; $5c8b
@@ -215,22 +215,22 @@ BuildCreatedCharRecords:
 	push af ; $5d9e
 	farcall LoadCharacterRecordToBuffer ; $5d9f
 	farcall CheckCharacterUnlocked ; $5da2
-	ld hl, $0000 ; $5da5
+	ld hl, CREATEDCHAR_CHAR ; $5da5
 	add hl, bc ; $5da8
 	ld a, [wShadowAttrmap + 12 * TILEMAP_WIDTH + 11] ; $5da9
 	cp $04 ; $5dac
 	jr c, .createdChar ; $5dae
 	ld a, $ff ; $5db0
 	ld [hl], a ; $5db2
-	ld hl, $0020 ; $5db3
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5db3
 	add hl, bc ; $5db6
 	ld b, h ; $5db7
 	ld c, l ; $5db8
-	ld hl, $0000 ; $5db9
+	ld hl, CREATEDCHAR_CHAR ; $5db9
 	add hl, bc ; $5dbc
 	ld a, $ff ; $5dbd
 	ld [hl], a ; $5dbf
-	ld hl, $0020 ; $5dc0
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5dc0
 	add hl, bc ; $5dc3
 	ld b, h ; $5dc4
 	ld c, l ; $5dc5
@@ -238,79 +238,79 @@ BuildCreatedCharRecords:
 .createdChar:
 	ld a, [wStoryMainChar] ; $5dc9
 	ld [hl], a ; $5dcc
-	ld hl, $0001 ; $5dcd
+	ld hl, CREATEDCHAR_PALETTE ; $5dcd
 	add hl, bc ; $5dd0
 	ld a, [wStoryMainPalette] ; $5dd1
 	ld [hl], a ; $5dd4
-	ld hl, $0002 ; $5dd5
+	ld hl, CREATEDCHAR_LEVEL ; $5dd5
 	add hl, bc ; $5dd8
 	ld a, [wStoryMainLevel] ; $5dd9
 	ld [hl], a ; $5ddc
-	ld hl, $0003 ; $5ddd
+	ld hl, CREATEDCHAR_SPIN ; $5ddd
 	add hl, bc ; $5de0
 	ld a, [wStoryMainSpinLevel] ; $5de1
 	ld [hl], a ; $5de4
-	ld hl, $0004 ; $5de5
+	ld hl, CREATEDCHAR_POWER ; $5de5
 	add hl, bc ; $5de8
 	ld a, [wStoryMainPowerLevel] ; $5de9
 	ld [hl], a ; $5dec
-	ld hl, $0005 ; $5ded
+	ld hl, CREATEDCHAR_CONTROL ; $5ded
 	add hl, bc ; $5df0
 	ld a, [wStoryMainControlLevel] ; $5df1
 	ld [hl], a ; $5df4
-	ld hl, $0006 ; $5df5
+	ld hl, CREATEDCHAR_SPEED ; $5df5
 	add hl, bc ; $5df8
 	ld a, [wStoryMainSpeedLevel] ; $5df9
 	ld [hl], a ; $5dfc
 	push bc ; $5dfd
-	ld a, $07 ; $5dfe
+	ld a, CREATEDCHAR_NAME ; $5dfe
 	add c ; $5e00
 	ld e, a ; $5e01
 	ld d, b ; $5e02
 	ld hl, wStoryMainName ; $5e03
-	ld bc, $000b ; $5e06
+	ld bc, CHARREC_CHAR - CHARREC_NAME ; $5e06
 	call CopyMemoryBC ; $5e09
 	pop bc ; $5e0c
-	ld hl, $0020 ; $5e0d
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5e0d
 	add hl, bc ; $5e10
 	ld b, h ; $5e11
 	ld c, l ; $5e12
 	ld a, [wStoryPartnerChar] ; $5e13
 	ld [hl], a ; $5e16
-	ld hl, $0001 ; $5e17
+	ld hl, CREATEDCHAR_PALETTE ; $5e17
 	add hl, bc ; $5e1a
 	ld a, [wStoryPartnerPalette] ; $5e1b
 	ld [hl], a ; $5e1e
-	ld hl, $0002 ; $5e1f
+	ld hl, CREATEDCHAR_LEVEL ; $5e1f
 	add hl, bc ; $5e22
 	ld a, [wStoryPartnerLevel] ; $5e23
 	ld [hl], a ; $5e26
-	ld hl, $0003 ; $5e27
+	ld hl, CREATEDCHAR_SPIN ; $5e27
 	add hl, bc ; $5e2a
 	ld a, [wStoryPartnerSpinLevel] ; $5e2b
 	ld [hl], a ; $5e2e
-	ld hl, $0004 ; $5e2f
+	ld hl, CREATEDCHAR_POWER ; $5e2f
 	add hl, bc ; $5e32
 	ld a, [wStoryPartnerPowerLevel] ; $5e33
 	ld [hl], a ; $5e36
-	ld hl, $0005 ; $5e37
+	ld hl, CREATEDCHAR_CONTROL ; $5e37
 	add hl, bc ; $5e3a
 	ld a, [wStoryPartnerControlLevel] ; $5e3b
 	ld [hl], a ; $5e3e
-	ld hl, $0006 ; $5e3f
+	ld hl, CREATEDCHAR_SPEED ; $5e3f
 	add hl, bc ; $5e42
 	ld a, [wStoryPartnerSpeedLevel] ; $5e43
 	ld [hl], a ; $5e46
 	push bc ; $5e47
-	ld a, $07 ; $5e48
+	ld a, CREATEDCHAR_NAME ; $5e48
 	add c ; $5e4a
 	ld e, a ; $5e4b
 	ld d, b ; $5e4c
 	ld hl, wStoryPartnerName ; $5e4d
-	ld bc, $000b ; $5e50
+	ld bc, CHARREC_CHAR - CHARREC_NAME ; $5e50
 	call CopyMemoryBC ; $5e53
 	pop bc ; $5e56
-	ld hl, $0020 ; $5e57
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5e57
 	add hl, bc ; $5e5a
 	ld b, h ; $5e5b
 	ld c, l ; $5e5c
@@ -332,7 +332,7 @@ ResolveSelectedCharIds:
 .slotLoop:
 	ld a, [hl] ; $5e7c
 	cp $ff ; $5e7d
-	jr z, .done ; $5e7f
+	jr z, .storeId ; $5e7f
 	push hl ; $5e81
 	ld hl, wCharGridEntries ; $5e82
 	add a ; $5e85
@@ -340,15 +340,15 @@ ResolveSelectedCharIds:
 	add_hl_a ; $5e87
 	ld a, [hl] ; $5e8c
 	cp $04 ; $5e8d
-	jr nc, .nextSlot ; $5e8f
+	jr nc, .gotId ; $5e8f
 	inc hl ; $5e91
 	inc hl ; $5e92
 	inc hl ; $5e93
 	ld a, [hl] ; $5e94
 	or $80 ; $5e95
-.nextSlot:
+.gotId:
 	pop hl ; $5e97
-.done:
+.storeId:
 	ld [hl+], a ; $5e98
 	ld a, c ; $5e99
 	inc a ; $5e9a
@@ -373,18 +373,18 @@ InitMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $5ec4
 	and $81 ; $5ec7
 	ld b, a ; $5ec9
-	ld c, $00 ; $5eca
-	farcall InitCa00RecordFromCharId ; $5ecc
+	ld c, MATCHREC_P1_MAIN ; $5eca
+	farcall InitMatchRecordFromCharId ; $5ecc
 	jr .slot2 ; $5ecf
 .slot1Created:
 	ld b, a ; $5ed1
-	ld c, $00 ; $5ed2
-	farcall InitCa00RecordFromCharId ; $5ed4
+	ld c, MATCHREC_P1_MAIN ; $5ed2
+	farcall InitMatchRecordFromCharId ; $5ed4
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $5ed7
-	cp $ff ; $5eda
+	cp CHAR_NONE ; $5eda
 	jr z, .slot3 ; $5edc
-	cp $80 ; $5ede
+	cp CHAR_STORY_MAIN ; $5ede
 	jr c, .slot2Created ; $5ee0
 	ld c, a ; $5ee2
 	and $07 ; $5ee3
@@ -394,18 +394,18 @@ InitMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $5ee9
 	and $81 ; $5eec
 	ld b, a ; $5eee
-	ld c, $01 ; $5eef
-	farcall InitCa00RecordFromCharId ; $5ef1
+	ld c, MATCHREC_P1_PARTNER ; $5eef
+	farcall InitMatchRecordFromCharId ; $5ef1
 	jr .slot3 ; $5ef4
 .slot2Created:
 	ld b, a ; $5ef6
-	ld c, $01 ; $5ef7
-	farcall InitCa00RecordFromCharId ; $5ef9
+	ld c, MATCHREC_P1_PARTNER ; $5ef7
+	farcall InitMatchRecordFromCharId ; $5ef9
 .slot3:
 	ld a, [wCharSelectSlotChars + 2] ; $5efc
-	cp $ff ; $5eff
+	cp CHAR_NONE ; $5eff
 	jr z, .slot4 ; $5f01
-	cp $80 ; $5f03
+	cp CHAR_STORY_MAIN ; $5f03
 	jr c, .slot3Created ; $5f05
 	ld c, a ; $5f07
 	and $07 ; $5f08
@@ -415,18 +415,18 @@ InitMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $5f0e
 	and $81 ; $5f11
 	ld b, a ; $5f13
-	ld c, $02 ; $5f14
-	farcall InitCa00RecordFromCharId ; $5f16
+	ld c, MATCHREC_P2_MAIN ; $5f14
+	farcall InitMatchRecordFromCharId ; $5f16
 	jr .slot4 ; $5f19
 .slot3Created:
 	ld b, a ; $5f1b
-	ld c, $02 ; $5f1c
-	farcall InitCa00RecordFromCharId ; $5f1e
+	ld c, MATCHREC_P2_MAIN ; $5f1c
+	farcall InitMatchRecordFromCharId ; $5f1e
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $5f21
-	cp $ff ; $5f24
+	cp CHAR_NONE ; $5f24
 	jr z, .done ; $5f26
-	cp $80 ; $5f28
+	cp CHAR_STORY_MAIN ; $5f28
 	jr c, .slot4Created ; $5f2a
 	ld c, a ; $5f2c
 	and $07 ; $5f2d
@@ -436,13 +436,13 @@ InitMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $5f33
 	and $81 ; $5f36
 	ld b, a ; $5f38
-	ld c, $03 ; $5f39
-	farcall InitCa00RecordFromCharId ; $5f3b
+	ld c, MATCHREC_P2_PARTNER ; $5f39
+	farcall InitMatchRecordFromCharId ; $5f3b
 	jr .done ; $5f3e
 .slot4Created:
 	ld b, a ; $5f40
-	ld c, $03 ; $5f41
-	farcall InitCa00RecordFromCharId ; $5f43
+	ld c, MATCHREC_P2_PARTNER ; $5f41
+	farcall InitMatchRecordFromCharId ; $5f43
 .done:
 	pop_wram_bank ; $5f46
 	ret ; $5f4b

@@ -412,7 +412,7 @@ End4JrCourtSceneSingles_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $69e7
 	ld [wStoryModeExitTriggerRequest], a ; $69ea
 	ret ; $69ed
-.loop:
+.doubles:
 	farcall BeginCutsceneScriptMode ; $69ee
 	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_PLAYER ; $69f1
 	script_wait_frames 30 ; $69f9
@@ -438,7 +438,7 @@ End4JrCourtSceneSingles_27:
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $6a63
 	script_wait_move ACTOR_PLAYER ; $6a6e
 	test_flag FLAG_DOUBLES ; $6a73
-	jp nz, .loop ; $6a76
+	jp nz, .doubles ; $6a76
 	call End4JrCourtSceneSingles_27 ; $6a79
 	ret ; $6a7c
 End4JrCourtApproachDoubles_27:

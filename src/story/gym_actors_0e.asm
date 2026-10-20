@@ -6,7 +6,7 @@ SetupGymActorsForProgress:
 	cp STORYTIER_ISLAND_OPEN ; $468a
 	jr z, .islandOpen ; $468c
 	cp STORYTIER_COMPLETE ; $468e
-	jr z, .done ; $4690
+	jr z, .storyComplete ; $4690
 	ret ; $4692
 .juniorChamp:
 	script_set_objdef OBJ_STUDENT_WAVY_HAIR_GIRL, ACTOR_TRAINING_GYM_WEIGHTLIFTER_B ; $4693
@@ -26,7 +26,7 @@ SetupGymActorsForProgress:
 	add hl, de ; $46e6
 	ld [hl], a ; $46e7
 	ret ; $46e8
-.done:
+.storyComplete:
 	script_set_position ACTOR_TRAINING_GYM_JUMPING_JACKS_B_1, 41.0, 7.0 ; $46e9
 	script_set_position ACTOR_TRAINING_GYM_JUMPING_JACKS_A, 39.0, 5.0 ; $46f4
 	script_set_position ACTOR_TRAINING_GYM_JUMPING_JACKS_B_2, 37.0, 7.0 ; $46ff
