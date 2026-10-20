@@ -63,38 +63,9 @@ SpriteWobbleXTable_16:
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 	twin_in apply_sprite_wobble_y, Unused_16_ApplySpriteWobbleY, 16 ; $4093 Unused_16_ApplySpriteWobbleY
 SpriteWobbleYTable_16:
-	; $40ad, 32 bytes (bytes:16)
+	; $40ad, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-	db $d5, $c5, $0e, $00, $06, $09, $cd, $51, $1f, $c1, $d1, $d5, $c5, $78, $82, $57 ; 0x10
-Unused_16_DrawCornerBrackets:
-	push de ; $40cd
-	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | 1 ; $40ce
-	call QueueSprite ; $40d2
-	pop de ; $40d5
-	pop bc ; $40d6
-	pop de ; $40d7
-	push de ; $40d8
-	push bc ; $40d9
-	ld a, c ; $40da
-	add e ; $40db
-	ld e, a ; $40dc
-	ld a, b ; $40dd
-	add d ; $40de
-	ld d, a ; $40df
-	push de ; $40e0
-	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP | 1 ; $40e1
-	call QueueSprite ; $40e5
-	pop de ; $40e8
-	pop bc ; $40e9
-	pop de ; $40ea
-	ld a, e ; $40eb
-	add c ; $40ec
-	ld e, a ; $40ed
-	push de ; $40ee
-	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP | 1 ; $40ef
-	call QueueSprite ; $40f3
-	pop de ; $40f6
-	ret ; $40f7
+	twin_in draw_corner_brackets, Unused_16_DrawCornerBrackets, 16 ; $40bd Unused_16_DrawCornerBrackets
 Unused_16_MoveMenuCursorGrid:
 	ld a, [wMenuCursorX] ; $40f8
 	ld d, a ; $40fb

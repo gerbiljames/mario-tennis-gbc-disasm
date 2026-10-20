@@ -1,4 +1,4 @@
-ApplyStatGapProgressFlag:
+GrantDriveRacketForSpinLead:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c62
 	jr nz, .isWonSeniorSinglesRank1 ; $6c65
 	ret ; $6c67
@@ -15,14 +15,14 @@ ApplyStatGapProgressFlag:
 .setFlag:
 	set_flag FLAG_HAVE_DRIVE_RACKET ; $6c78
 	ret ; $6c7b
-ApplyClassProgressRule1:
+GrantLargeRacket:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6c7c
 	jr nz, .setFlag ; $6c7f
 	ret ; $6c81
 .setFlag:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $6c82
 	ret ; $6c85
-ApplyClassProgressRule2:
+GrantSmallRacketAndLightShoes:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c86
 	jr nz, .setFlag ; $6c89
 	ret ; $6c8b
@@ -30,7 +30,7 @@ ApplyClassProgressRule2:
 	set_flag FLAG_HAVE_SMALL_RACKET ; $6c8c
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $6c8f
 	ret ; $6c92
-ApplyClassProgressRule3:
+GrantIronRacketAndShoes:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $6c93
 	jr nz, .setFlag ; $6c96
 	ret ; $6c98
@@ -38,10 +38,10 @@ ApplyClassProgressRule3:
 	set_flag FLAG_HAVE_IRON_RACKET ; $6c99
 	set_flag FLAG_HAVE_IRON_SHOES ; $6c9c
 	ret ; $6c9f
-ApplyClassProgressFlags:
-	call ApplyClassProgressRule1 ; $6ca0
-	call ApplyClassProgressRule2 ; $6ca3
-	call ApplyClassProgressRule3 ; $6ca6
+GrantRankEquipment:
+	call GrantLargeRacket ; $6ca0
+	call GrantSmallRacketAndLightShoes ; $6ca3
+	call GrantIronRacketAndShoes ; $6ca6
 	ret ; $6ca9
 SetRewardGameFlag:
 	push af ; $6caa
@@ -96,13 +96,13 @@ GetRewardTableIndex:
 	ret nz ; $6cfe
 	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $6cff
 	ret c ; $6d01
-	jr nz, .checkFlag ; $6d02
+	jr nz, .wallMaster ; $6d02
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $6d04
 	jr z, .doneMachineMaster ; $6d07
 	add $02 ; $6d09
 .doneMachineMaster:
 	ret ; $6d0b
-.checkFlag:
+.wallMaster:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $6d0c
 	jr z, .doneWallMaster ; $6d0f
 	add $02 ; $6d11
@@ -216,7 +216,7 @@ RewardFlagListTraining_1e:
 	flag_id FLAG_CLEARED_WALL_MASTER ; 27
 	flag_id FLAG_CLEARED_MACHINE_EXPERT ; 28
 	flag_id FLAG_CLEARED_WALL_EXPERT ; 29
-RewardCategoryFlagTable_1e:
+ProgressEntryRevealFlags_1e:
 	; $6dd2, 74 bytes (flag_ids)
 	flag_id FLAG_TEMP_COURT_STAR_EARNED ; 0
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 1
@@ -261,7 +261,7 @@ ApplyRewardUnlockFlags:
 	ld a, c ; $6e20
 	add a ; $6e21
 	add a ; $6e22
-	ld hl, RewardUnlockFlagsTable ; $6e23
+	ld hl, RewardUnlockConditionFlags ; $6e23
 	add l ; $6e26
 	ld l, a ; $6e27
 	jr nc, .loop ; $6e28
@@ -297,7 +297,7 @@ SetRewardUnlockFlag:
 	push hl ; $6e50
 	ld a, c ; $6e51
 	add a ; $6e52
-	ld hl, RewardUnlockFlagTable ; $6e53
+	ld hl, RewardUnlockCharFlags ; $6e53
 	add_hl_a ; $6e56
 	ld a, [hl+] ; $6e5b
 	ld d, [hl] ; $6e5c
@@ -305,7 +305,7 @@ SetRewardUnlockFlag:
 	call SetGameFlag ; $6e5e
 	pop hl ; $6e61
 	ret ; $6e62
-RewardUnlockFlagTable:
+RewardUnlockCharFlags:
 	; $6e63, 26 bytes (flag_ids)
 	flag_id FLAG_UNLOCKED_PAM
 	flag_id FLAG_UNLOCKED_BOB
@@ -320,7 +320,7 @@ RewardUnlockFlagTable:
 	flag_id FLAG_UNLOCKED_EMILY
 	flag_id FLAG_UNLOCKED_B_COZ
 	flag_id FLAG_UNLOCKED_A_COZ
-RewardUnlockFlagsTable:
+RewardUnlockConditionFlags:
 	; $6e7d, 52 bytes (flag_ids)
 	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1
 	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1
@@ -348,7 +348,7 @@ RewardUnlockFlagsTable:
 	dw $0000
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL
-SetMinigameRecordSaveFlag:
+UnlockCourtForMinigameRecord:
 	ld a, [wCurrentMatchIndex] ; $6eb1
 	cp MINIGAME_SHOOTING_STAR ; $6eb4
 	jr nz, .notShootingStar ; $6eb6
@@ -464,7 +464,7 @@ UpdateMinigameBestScore:
 	inc a ; $6f7f
 	inc a ; $6f80
 	farcall UpdateMinigameRecord ; $6f81
-	call SetMinigameRecordSaveFlag ; $6f84
+	call UnlockCourtForMinigameRecord ; $6f84
 .restore:
 	pop_wram_bank ; $6f87
 	ret ; $6f8c

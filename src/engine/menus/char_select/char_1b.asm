@@ -89,7 +89,7 @@ Unused_1b_DrawCharSelectMugshots:
 .loop:
 	ld a, [hl] ; $6075
 	farcall LoadCharacterRecordToBuffer ; $6076
-	farcall CheckCharacterUnlocked ; $6079
+	farcall CheckCharRecordPresent ; $6079
 	jr z, .step ; $607c
 	ld a, [wCharRecordScratchChar] ; $607e
 	farcall LoadCharMugshotToBuffer ; $6081
@@ -223,7 +223,7 @@ Unused_1b_MoveCharSelectCursor:
 	ld hl, wNavGridBuffer ; $61a3
 	farcall Unused_18_MoveGridCursor ; $61a6
 	farcall LoadCharacterRecordToBuffer ; $61a9
-	farcall CheckCharacterUnlocked ; $61ac
+	farcall CheckCharRecordPresent ; $61ac
 	jr z, .loop ; $61af
 	ld a, d ; $61b1
 	ld [wCharSelectCol], a ; $61b2
@@ -531,7 +531,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld de, $0077 ; $642d
 	farcall SetPendingExpAward ; $6430
 	ld c, $01 ; $6433
-	farcall ShowMatchResultsScreen ; $6435
+	farcall ShowExpAwardOrContinueGameScreen ; $6435
 	farcall RunExpDistributionFlow ; $6438
 	pop hl ; $643b
 	pop de ; $643c

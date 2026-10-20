@@ -55,33 +55,33 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69c2
 	ld [wBriefingBallY], a ; $69c3
 	ld a, [wBriefingAnimStep] ; $69c6
-	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable ; $69c9
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_HandUnflippedTable ; $69c9
 	ld a, [hl] ; $69d0
-	ld [wBriefingHMarkerUnflipped], a ; $69d1
+	ld [wBriefingHandUnflipped], a ; $69d1
 	ld a, c ; $69d4
-	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable ; $69d5
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_HandPosTable ; $69d5
 	ld a, [hl] ; $69dc
 	inc hl ; $69dd
 	inc hl ; $69de
 	ld b, [hl] ; $69df
 	ld a, a ; $69e0
-	ld [wBriefingHMarkerX], a ; $69e1
+	ld [wBriefingHandX], a ; $69e1
 	ld a, b ; $69e4
-	ld [wBriefingHMarkerY], a ; $69e5
+	ld [wBriefingHandY], a ; $69e5
 	ld a, [wBriefingAnimStep] ; $69e8
-	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable ; $69eb
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_DiagArrowDirTable ; $69eb
 	ld a, [hl] ; $69f2
-	ld [wBriefingRotMarkerDir], a ; $69f3
+	ld [wBriefingDiagArrowDir], a ; $69f3
 	ld a, c ; $69f6
-	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable ; $69f7
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_DiagArrowPosTable ; $69f7
 	ld a, [hl] ; $69fe
 	inc hl ; $69ff
 	inc hl ; $6a00
 	ld b, [hl] ; $6a01
 	ld a, a ; $6a02
-	ld [wBriefingRotMarkerX], a ; $6a03
+	ld [wBriefingDiagArrowX], a ; $6a03
 	ld a, b ; $6a06
-	ld [wBriefingRotMarkerY], a ; $6a07
+	ld [wBriefingDiagArrowY], a ; $6a07
 	ret ; $6a0a
 ReturnToTargetBriefing_AdvanceAnimTable:
 	; $6a0b, 16 bytes (records:2)
@@ -97,14 +97,14 @@ ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6a1b, 16 bytes (words:2)
 ReturnToTargetBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm" ; $6a2b, 16 bytes (words:2)
-ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $6a3b, 4 bytes (bytes:4)
-ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $6a3f, 16 bytes (words:2)
-ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $6a4f, 4 bytes (bytes:4)
-ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $6a53, 16 bytes (words:2)
+ReturnToTargetBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $6a3b, 4 bytes (bytes:4)
+ReturnToTargetBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_HandPosTable.asm" ; $6a3f, 16 bytes (words:2)
+ReturnToTargetBriefing_AdvanceAnim_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_DiagArrowDirTable.asm" ; $6a4f, 4 bytes (bytes:4)
+ReturnToTargetBriefing_AdvanceAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $6a53, 16 bytes (words:2)
 ReturnToTargetBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnToTargetBriefing_AdvanceAnim_BracketPosTable.asm" ; $6a63, 16 bytes (words:2)
 DrillBriefing_ReturnLob:
@@ -124,12 +124,12 @@ DrillBriefing_ReturnLob:
 	ld [wBriefingBallY], a ; $6a9e
 	frame_task DrawBriefingBallSprite ; $6aa1
 	ld a, $01 ; $6aa9
-	ld [wBriefingRotMarkerDir], a ; $6aab
+	ld [wBriefingDiagArrowDir], a ; $6aab
 	ld a, $4c ; $6aae
-	ld [wBriefingRotMarkerX], a ; $6ab0
+	ld [wBriefingDiagArrowX], a ; $6ab0
 	ld a, $16 ; $6ab3
-	ld [wBriefingRotMarkerY], a ; $6ab5
-	frame_task DrawBriefingMarkerRotated ; $6ab8
+	ld [wBriefingDiagArrowY], a ; $6ab5
+	frame_task DrawBriefingDiagonalArrow ; $6ab8
 	ld hl, Text_BriefReturnLobReturnServe ; $6ac0
 	call DrawBriefingCaption ; $6ac3
 	call WaitForInputBlinking ; $6ac6
@@ -141,8 +141,8 @@ DrillBriefing_ReturnLob:
 	frame_task DrawBriefingPlayerSprite ; $6adc
 	frame_task DrawBriefingOpponentSprite ; $6ae4
 	frame_task DrawBriefingBallSprite ; $6aec
-	frame_task DrawBriefingMarkerHFlip ; $6af4
-	frame_task DrawBriefingMarkerRotated ; $6afc
+	frame_task DrawBriefingPointingHand ; $6af4
+	frame_task DrawBriefingDiagonalArrow ; $6afc
 	frame_task DrawBriefingCmdPrompt ; $6b04
 	ld a, $0d ; $6b0c
 	ld [wBriefingBracketWidth], a ; $6b0e
@@ -160,8 +160,8 @@ DrillBriefing_ReturnLob:
 	frame_task DrawBriefingPlayerSprite ; $6b3a
 	frame_task DrawBriefingOpponentSprite ; $6b42
 	frame_task DrawBriefingBallSprite ; $6b4a
-	frame_task DrawBriefingMarkerHFlip ; $6b52
-	frame_task DrawBriefingMarkerRotated ; $6b5a
+	frame_task DrawBriefingPointingHand ; $6b52
+	frame_task DrawBriefingDiagonalArrow ; $6b5a
 	frame_task DrawBriefingCmdPrompt ; $6b62
 	ld a, $0d ; $6b6a
 	ld [wBriefingBracketWidth], a ; $6b6c
@@ -238,33 +238,33 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c03
 	ld [wBriefingBallY], a ; $6c04
 	ld a, [wBriefingAnimStep] ; $6c07
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6c0a
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_HandUnflippedTable ; $6c0a
 	ld a, [hl] ; $6c11
-	ld [wBriefingHMarkerUnflipped], a ; $6c12
+	ld [wBriefingHandUnflipped], a ; $6c12
 	ld a, c ; $6c15
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_HMarkerPosTable ; $6c16
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_HandPosTable ; $6c16
 	ld a, [hl] ; $6c1d
 	inc hl ; $6c1e
 	inc hl ; $6c1f
 	ld b, [hl] ; $6c20
 	ld a, a ; $6c21
-	ld [wBriefingHMarkerX], a ; $6c22
+	ld [wBriefingHandX], a ; $6c22
 	ld a, b ; $6c25
-	ld [wBriefingHMarkerY], a ; $6c26
+	ld [wBriefingHandY], a ; $6c26
 	ld a, [wBriefingAnimStep] ; $6c29
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable ; $6c2c
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_DiagArrowDirTable ; $6c2c
 	ld a, [hl] ; $6c33
-	ld [wBriefingRotMarkerDir], a ; $6c34
+	ld [wBriefingDiagArrowDir], a ; $6c34
 	ld a, c ; $6c37
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable ; $6c38
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_DiagArrowPosTable ; $6c38
 	ld a, [hl] ; $6c3f
 	inc hl ; $6c40
 	inc hl ; $6c41
 	ld b, [hl] ; $6c42
 	ld a, a ; $6c43
-	ld [wBriefingRotMarkerX], a ; $6c44
+	ld [wBriefingDiagArrowX], a ; $6c44
 	ld a, b ; $6c47
-	ld [wBriefingRotMarkerY], a ; $6c48
+	ld [wBriefingDiagArrowY], a ; $6c48
 	ld a, [wBriefingAnimStep] ; $6c4b
 	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_CmdPromptTable ; $6c4e
 	ld a, [hl] ; $6c55
@@ -294,14 +294,14 @@ ReturnLobBriefing_AdvanceAnim_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6c7e, 16 bytes (words:2)
 ReturnLobBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BallPosTable.asm" ; $6c8e, 16 bytes (words:2)
-ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $6c9e, 4 bytes (bytes:4)
-ReturnLobBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $6ca2, 16 bytes (words:2)
-ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $6cb2, 4 bytes (bytes:4)
-ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $6cb6, 16 bytes (words:2)
+ReturnLobBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $6c9e, 4 bytes (bytes:4)
+ReturnLobBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_HandPosTable.asm" ; $6ca2, 16 bytes (words:2)
+ReturnLobBriefing_AdvanceAnim_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_DiagArrowDirTable.asm" ; $6cb2, 4 bytes (bytes:4)
+ReturnLobBriefing_AdvanceAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $6cb6, 16 bytes (words:2)
 ReturnLobBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BracketPosTable.asm" ; $6cc6, 16 bytes (words:2)
 ReturnLobBriefing_AdvanceAnim_CmdPromptTable:
@@ -325,12 +325,12 @@ DrillBriefing_ReturnDownLine:
 	ld [wBriefingBallY], a ; $6d15
 	frame_task DrawBriefingBallSprite ; $6d18
 	ld a, $01 ; $6d20
-	ld [wBriefingRotMarkerDir], a ; $6d22
+	ld [wBriefingDiagArrowDir], a ; $6d22
 	ld a, $4c ; $6d25
-	ld [wBriefingRotMarkerX], a ; $6d27
+	ld [wBriefingDiagArrowX], a ; $6d27
 	ld a, $16 ; $6d2a
-	ld [wBriefingRotMarkerY], a ; $6d2c
-	frame_task DrawBriefingMarkerRotated ; $6d2f
+	ld [wBriefingDiagArrowY], a ; $6d2c
+	frame_task DrawBriefingDiagonalArrow ; $6d2f
 	ld hl, Text_BriefPassingShotReturnServe ; $6d37
 	call DrawBriefingCaption ; $6d3a
 	call WaitForInputBlinking ; $6d3d
@@ -342,8 +342,8 @@ DrillBriefing_ReturnDownLine:
 	frame_task DrawBriefingPlayerSprite ; $6d53
 	frame_task DrawBriefingOpponentSprite ; $6d5b
 	frame_task DrawBriefingBallSprite ; $6d63
-	frame_task DrawBriefingMarkerHFlip ; $6d6b
-	frame_task DrawBriefingMarkerVFlip ; $6d73
+	frame_task DrawBriefingPointingHand ; $6d6b
+	frame_task DrawBriefingDownArrow ; $6d73
 	ld a, $00 ; $6d7b
 	ld [wBriefingBracketWidth], a ; $6d7d
 	ld a, $09 ; $6d80
@@ -360,8 +360,8 @@ DrillBriefing_ReturnDownLine:
 	frame_task DrawBriefingPlayerSprite ; $6da9
 	frame_task DrawBriefingOpponentSprite ; $6db1
 	frame_task DrawBriefingBallSprite ; $6db9
-	frame_task DrawBriefingMarkerHFlip ; $6dc1
-	frame_task DrawBriefingMarkerVFlip ; $6dc9
+	frame_task DrawBriefingPointingHand ; $6dc1
+	frame_task DrawBriefingDownArrow ; $6dc9
 	ld a, $00 ; $6dd1
 	ld [wBriefingBracketWidth], a ; $6dd3
 	ld a, $09 ; $6dd6

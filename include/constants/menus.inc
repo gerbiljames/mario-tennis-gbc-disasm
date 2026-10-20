@@ -344,7 +344,7 @@ def EXPSTAT_SIZE equ _RS
 	const SCOREBOARD_SCORE       ; $06 wall, Tennis Machine and Boo Blast: score to a target
 	const SCOREBOARD_HIGH_SCORE  ; $07 wMinigameHighScoreMode
 
-; --- Results player panel (DrawPlayerNameAndLevel) ---
+; --- Continue-game player panel (DrawPlayerNameAndLevel) ---
 ; CopyTilesAndAttrsRun reads each cell's attribute this far past its tile id,
 ; so the panel's 8x5 attribute plane is decompressed there.
 def RESULTS_PANEL_ATTRS equ 200

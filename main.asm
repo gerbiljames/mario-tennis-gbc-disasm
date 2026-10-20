@@ -278,6 +278,7 @@ SECTION "ROM Bank $16", ROMX[$4000], BANK[$16]
 DEF ApplySpriteWobbleX_16_NAME EQUS "Unused_16_ApplySpriteWobbleX"
 DEF ApplySpriteWobbleY_16_NAME EQUS "Unused_16_ApplySpriteWobbleY"
 DEF DrawAsciiDigitChar_16_NAME EQUS "Unused_16_DrawAsciiDigitChar"
+DEF DrawCornerBrackets_16_NAME EQUS "Unused_16_DrawCornerBrackets"
 
 INCLUDE "src/engine/menus/common/cursor_16.asm"
 INCLUDE "src/engine/menus/results/result_tasks_16.asm"

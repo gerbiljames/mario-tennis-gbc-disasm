@@ -1,6 +1,6 @@
 ; --- Story locations (wStoryModeCurrentLocation, wStoryReturnLocation) ---
 ; A location id indexes StoryLocationTable_0a, 42 six-byte records ($00-$29).
-; Its name popup (LoadStoryLocationHeader, DrawStoryResultsHeader) is text id
+; Its name popup (LoadStoryLocationHeader, DrawStorySuspendedMatchHeader) is text id
 ; $0179 + id (string bank $30 index 377 + id); the names below are those
 ; strings. Ids $0b/$0c share "Junior Class Court" (singles and doubles maps).
 ; Ids $1e-$29 are the ending cutscene's re-dressed locations and keep the

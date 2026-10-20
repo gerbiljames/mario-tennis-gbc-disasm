@@ -1,6 +1,6 @@
 Unused_1a_StubNop3:
 	ret ; $4da8
-Unused_1a_DrawExpScreenMessage_1:
+Unused_1a_DrawContinuePreviousGamePrompt:
 	push af ; $4da9
 	push bc ; $4daa
 	push de ; $4dab
@@ -35,7 +35,7 @@ Unused_1a_DrawExpScreenMessage_1:
 	pop bc ; $4e04
 	pop af ; $4e05
 	ret ; $4e06
-Unused_1a_DrawExpScreenMessage_2:
+Unused_1a_DrawEraseSuspendDataPrompt:
 	push af ; $4e07
 	push bc ; $4e08
 	push de ; $4e09
@@ -260,19 +260,19 @@ Unused_1a_QueueNumberSprites:
 	ret ; $4faa
 Unused_1a_DrawExpScreenCaption:
 	and a ; $4fab
-	jr z, .caption0 ; $4fac
+	jr z, .transferringPts ; $4fac
 	dec a ; $4fae
-	jr z, .caption1 ; $4faf
+	jr z, .fromN64 ; $4faf
 	dec a ; $4fb1
-	jr z, .caption2 ; $4fb2
+	jr z, .levelGained ; $4fb2
 	dec a ; $4fb4
-	jr z, .caption3 ; $4fb5
+	jr z, .movedUpLevel ; $4fb5
 	dec a ; $4fb7
-	jr z, .caption4 ; $4fb8
+	jr z, .topLevel ; $4fb8
 	dec a ; $4fba
-	jp z, .caption5 ; $4fbb
+	jp z, .areYouReady ; $4fbb
 	ret ; $4fbe
-.caption0:
+.transferringPts:
 	ld hl, Text_ExpTransferringPts ; $4fbf
 	call Unused_1a_LoadDialogueTextToBuffer ; $4fc2
 	wram_bank WRAM_STAGING ; $4fc5
@@ -281,7 +281,7 @@ Unused_1a_DrawExpScreenCaption:
 	ld e, $01 ; $4fd1
 	call Unused_1a_DrawStringToTileBuffer ; $4fd3
 	ret ; $4fd6
-.caption1:
+.fromN64:
 	ld hl, Text_ExpFromMarioTennisN64 ; $4fd7
 	call Unused_1a_LoadDialogueTextToBuffer ; $4fda
 	wram_bank WRAM_STAGING ; $4fdd
@@ -296,7 +296,7 @@ Unused_1a_DrawExpScreenCaption:
 	ld e, $01 ; $4ffa
 	call Unused_1a_DrawStringToTileBuffer ; $4ffc
 	ret ; $4fff
-.caption2:
+.levelGained:
 	ld hl, Text_ExpLevelGained ; $5000
 	call Unused_1a_LoadDialogueTextToBuffer ; $5003
 	wram_bank WRAM_STAGING ; $5006
@@ -305,7 +305,7 @@ Unused_1a_DrawExpScreenCaption:
 	ld e, $01 ; $5012
 	call Unused_1a_DrawStringToTileBuffer ; $5014
 	ret ; $5017
-.caption3:
+.movedUpLevel:
 	wram_bank WRAM_SCREEN ; $5018
 	ld hl, Text_ExpMovedUpLevel ; $501e
 	ld de, wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 11 ; $5021
@@ -313,7 +313,7 @@ Unused_1a_DrawExpScreenCaption:
 	farcall RenderProportionalTextAt ; $5026
 	sound SFX_CAPTION ; $5029
 	ret ; $502b
-.caption4:
+.topLevel:
 	ld hl, Text_ExpTopLevel ; $502c
 	call Unused_1a_LoadDialogueTextToBuffer ; $502f
 	wram_bank WRAM_STAGING ; $5032
@@ -322,7 +322,7 @@ Unused_1a_DrawExpScreenCaption:
 	ld e, $01 ; $503e
 	call Unused_1a_DrawStringToTileBuffer ; $5040
 	ret ; $5043
-.caption5:
+.areYouReady:
 	sound BGM_NONE ; $5044
 	ld hl, Text_RoommateAreYouReady ; $5046
 	call Unused_1a_LoadDialogueTextToBuffer ; $5049
@@ -348,7 +348,7 @@ Unused_1a_LoadDialogueTextToBuffer:
 	and a ; $507e
 	jr nz, .copyLoop ; $507f
 	ret ; $5081
-Unused_1a_ResetCharDataScreenAnim:
+Unused_1a_RunExpGainScreenForRecord:
 	push af ; $5082
 	push bc ; $5083
 	push de ; $5084
@@ -419,7 +419,7 @@ Unused_1a_DrawExpBonusMessage:
 	jp z, .nameSean ; $5116
 	cp $1e ; $5119
 	jp z, .nameSammi ; $511b
-	jp .otherBonus ; $511e
+	jp .nameElden ; $511e
 .academyIntroYes:
 	ld hl, Text_RoommateExplainAcademy ; $5121
 	call Unused_1a_LoadDialogueTextToBuffer ; $5124
@@ -700,7 +700,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld e, $01 ; $547f
 	call Unused_1a_DrawStringToTileBuffer ; $5481
 	jr .drawFooterLine ; $5484
-.otherBonus:
+.nameElden:
 	ld hl, Text_RoommateChooseOwnLessons ; $5486
 	call Unused_1a_LoadDialogueTextToBuffer ; $5489
 	wram_bank WRAM_STAGING ; $548c

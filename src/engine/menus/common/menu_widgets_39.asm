@@ -1,4 +1,4 @@
-FillMenuGridCellTile:
+SetMinigameGrid6CellPalette:
 	push af ; $6dc2
 	push bc ; $6dc3
 	push de ; $6dc4
@@ -16,7 +16,7 @@ FillMenuGridCellTile:
 	ld h, $0d ; $6dd4
 .fillRect:
 	push hl ; $6dd6
-	ld hl, FillMenuGridCellTileTable ; $6dd7
+	ld hl, MinigameGrid6CellAttrmapPtrs ; $6dd7
 	ld a, e ; $6dda
 	add a ; $6ddb
 	add_hl_a ; $6ddc
@@ -30,7 +30,7 @@ FillMenuGridCellTile:
 	pop bc ; $6dea
 	pop af ; $6deb
 	ret ; $6dec
-FillMenuGridCellTileTable:
+MinigameGrid6CellAttrmapPtrs:
 	; $6ded, 12 bytes (ram_ptrs:3)
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; record 0
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 8 ; record 1
@@ -38,7 +38,7 @@ FillMenuGridCellTileTable:
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 3
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 4
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 5
-MoveMinigameGridCursor:
+MoveMinigameGrid6Cursor:
 	ld a, [wMenuCursorY] ; $6df9
 	or a ; $6dfc
 	jr nz, .bottomRow ; $6dfd

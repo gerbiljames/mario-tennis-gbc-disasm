@@ -51,7 +51,7 @@ RunMinigameSelect:
 	call CheckMinigameGridExpanded ; $6254
 	or a ; $6257
 	jr nz, .moveGrid9Cursor ; $6258
-	farcall MoveMinigameGridCursor ; $625a
+	farcall MoveMinigameGrid6Cursor ; $625a
 	or a ; $625d
 	jr z, .advanceFrame ; $625e
 	sound SFX_MENU_MOVE ; $6260

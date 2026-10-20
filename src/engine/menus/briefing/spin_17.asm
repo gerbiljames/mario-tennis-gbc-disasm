@@ -45,33 +45,33 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5764
 	ld [wBriefingBallY], a ; $5765
 	ld a, [wBriefingAnimStep] ; $5768
-	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable ; $576b
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_HandUnflippedTable ; $576b
 	ld a, [hl] ; $5772
-	ld [wBriefingHMarkerUnflipped], a ; $5773
+	ld [wBriefingHandUnflipped], a ; $5773
 	ld a, c ; $5776
-	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable ; $5777
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_HandPosTable ; $5777
 	ld a, [hl] ; $577e
 	inc hl ; $577f
 	inc hl ; $5780
 	ld b, [hl] ; $5781
 	ld a, a ; $5782
-	ld [wBriefingHMarkerX], a ; $5783
+	ld [wBriefingHandX], a ; $5783
 	ld a, b ; $5786
-	ld [wBriefingHMarkerY], a ; $5787
+	ld [wBriefingHandY], a ; $5787
 	ld a, [wBriefingAnimStep] ; $578a
-	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable ; $578d
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_DiagArrowDirTable ; $578d
 	ld a, [hl] ; $5794
-	ld [wBriefingRotMarkerDir], a ; $5795
+	ld [wBriefingDiagArrowDir], a ; $5795
 	ld a, c ; $5798
-	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable ; $5799
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_DiagArrowPosTable ; $5799
 	ld a, [hl] ; $57a0
 	inc hl ; $57a1
 	inc hl ; $57a2
 	ld b, [hl] ; $57a3
 	ld a, a ; $57a4
-	ld [wBriefingRotMarkerX], a ; $57a5
+	ld [wBriefingDiagArrowX], a ; $57a5
 	ld a, b ; $57a8
-	ld [wBriefingRotMarkerY], a ; $57a9
+	ld [wBriefingDiagArrowY], a ; $57a9
 	ld a, [wBriefingAnimStep] ; $57ac
 	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable ; $57af
 	ld b, [hl] ; $57b6
@@ -89,14 +89,14 @@ ServeToTargetsBriefing_AdvanceAnimTable:
 	dw $0003 ; record 7
 ServeToTargetsBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm" ; $57cb, 16 bytes (words:2)
-ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $57db, 4 bytes (bytes:4)
-ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $57df, 16 bytes (words:2)
-ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $57ef, 4 bytes (bytes:4)
-ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $57f3, 16 bytes (words:2)
+ServeToTargetsBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $57db, 4 bytes (bytes:4)
+ServeToTargetsBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_HandPosTable.asm" ; $57df, 16 bytes (words:2)
+ServeToTargetsBriefing_AdvanceAnim_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_DiagArrowDirTable.asm" ; $57ef, 4 bytes (bytes:4)
+ServeToTargetsBriefing_AdvanceAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $57f3, 16 bytes (words:2)
 ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable:
 	INCLUDE "data/engine/menus/briefing/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.asm" ; $5803, 4 bytes (bytes:4)
 ServeToTargetsBriefing_AdvanceAnim_BracketPosTable:
@@ -107,8 +107,8 @@ DrillBriefing_SpinServe:
 	call SpinServeBriefing_AdvanceAnim ; $581c
 	frame_task DrawBriefingPlayerSprite ; $581f
 	frame_task DrawBriefingBallSprite ; $5827
-	frame_task DrawBriefingMarkerHFlip ; $582f
-	frame_task DrawBriefingMarkerRotated ; $5837
+	frame_task DrawBriefingPointingHand ; $582f
+	frame_task DrawBriefingDiagonalArrow ; $5837
 	frame_task CycleDiagramTargetPalette ; $583f
 	ld hl, Text_BriefSpinServeFourCourts ; $5847
 	call DrawBriefingCaption ; $584a
@@ -127,7 +127,7 @@ DrillBriefing_SpinServe:
 	ld [wBriefingAnimStep], a ; $586d
 	call SpinServeBriefing_AdvanceAnim ; $5870
 	frame_task DrawBriefingPlayerSprite ; $5873
-	frame_task DrawBriefingMarkerHFlip ; $587b
+	frame_task DrawBriefingPointingHand ; $587b
 	frame_task CycleDiagramTargetPalette ; $5883
 	ld a, $00 ; $588b
 	ld [wBriefingBracketWidth], a ; $588d
@@ -158,19 +158,19 @@ DrillBriefing_SpinServe:
 	ld [wBriefingBallY], a ; $58da
 	frame_task DrawBriefingBallSprite ; $58dd
 	ld a, $00 ; $58e5
-	ld [wBriefingHMarkerUnflipped], a ; $58e7
+	ld [wBriefingHandUnflipped], a ; $58e7
 	ld a, $3a ; $58ea
-	ld [wBriefingHMarkerX], a ; $58ec
+	ld [wBriefingHandX], a ; $58ec
 	ld a, $24 ; $58ef
-	ld [wBriefingHMarkerY], a ; $58f1
-	frame_task DrawBriefingMarkerHFlip ; $58f4
+	ld [wBriefingHandY], a ; $58f1
+	frame_task DrawBriefingPointingHand ; $58f4
 	ld a, $03 ; $58fc
-	ld [wBriefingRotMarkerDir], a ; $58fe
+	ld [wBriefingDiagArrowDir], a ; $58fe
 	ld a, $52 ; $5901
-	ld [wBriefingRotMarkerX], a ; $5903
+	ld [wBriefingDiagArrowX], a ; $5903
 	ld a, $40 ; $5906
-	ld [wBriefingRotMarkerY], a ; $5908
-	frame_task DrawBriefingMarkerRotated ; $590b
+	ld [wBriefingDiagArrowY], a ; $5908
+	frame_task DrawBriefingDiagonalArrow ; $590b
 	ld b, $04 ; $5913
 	call DrawDiagramTargetOverlay ; $5915
 	frame_task CycleDiagramTargetPalette ; $5918
@@ -199,19 +199,19 @@ DrillBriefing_SpinServe:
 	ld [wBriefingBallY], a ; $5969
 	frame_task DrawBriefingBallSprite ; $596c
 	ld a, $03 ; $5974
-	ld [wBriefingRotMarkerDir], a ; $5976
+	ld [wBriefingDiagArrowDir], a ; $5976
 	ld a, $49 ; $5979
-	ld [wBriefingRotMarkerX], a ; $597b
+	ld [wBriefingDiagArrowX], a ; $597b
 	ld a, $2f ; $597e
-	ld [wBriefingRotMarkerY], a ; $5980
-	frame_task DrawBriefingMarkerRotated ; $5983
+	ld [wBriefingDiagArrowY], a ; $5980
+	frame_task DrawBriefingDiagonalArrow ; $5983
 	ld a, $01 ; $598b
-	ld [wBriefingSpinMarkerUnflipped], a ; $598d
+	ld [wBriefingLeftArrowUnflipped], a ; $598d
 	ld a, $30 ; $5990
-	ld [wBriefingSpinMarkerX], a ; $5992
+	ld [wBriefingLeftArrowX], a ; $5992
 	ld a, $22 ; $5995
-	ld [wBriefingSpinMarkerY], a ; $5997
-	frame_task DrawSpinServeBriefingMarker ; $599a
+	ld [wBriefingLeftArrowY], a ; $5997
+	frame_task DrawBriefingLeftArrow ; $599a
 	ld b, $04 ; $59a2
 	call DrawDiagramTargetOverlay ; $59a4
 	frame_task CycleDiagramTargetPalette ; $59a7
@@ -225,8 +225,8 @@ DrillBriefing_SpinServe:
 	call SpinServeBriefing_AdvanceAnim2 ; $59c8
 	frame_task DrawBriefingPlayerSprite ; $59cb
 	frame_task DrawBriefingBallSprite ; $59d3
-	frame_task DrawBriefingMarkerRotated ; $59db
-	frame_task DrawSpinServeBriefingMarker ; $59e3
+	frame_task DrawBriefingDiagonalArrow ; $59db
+	frame_task DrawBriefingLeftArrow ; $59e3
 	frame_task DrawBriefingCmdPrompt ; $59eb
 	frame_task CycleDiagramTargetPalette ; $59f3
 	ld hl, Text_BriefSpinServeTopspinRight ; $59fb
@@ -252,7 +252,7 @@ DrillBriefing_SpinServe:
 	call SpinServeBriefing_AdvanceAnim ; $5a2d
 	frame_task DrawBriefingPlayerSprite ; $5a30
 	frame_task DrawBriefingBallSprite ; $5a38
-	frame_task DrawBriefingMarkerRotated ; $5a40
+	frame_task DrawBriefingDiagonalArrow ; $5a40
 	frame_task CycleDiagramTargetPalette ; $5a48
 	frame_task DrawBriefingTargetBrackets ; $5a50
 	ld hl, Text_BriefSpinServeHitAllTargets ; $5a58
@@ -315,33 +315,33 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aca
 	ld [wBriefingBallY], a ; $5acb
 	ld a, [wBriefingAnimStep] ; $5ace
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable ; $5ad1
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_HandUnflippedTable ; $5ad1
 	ld a, [hl] ; $5ad8
-	ld [wBriefingHMarkerUnflipped], a ; $5ad9
+	ld [wBriefingHandUnflipped], a ; $5ad9
 	ld a, c ; $5adc
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim_HMarkerPosTable ; $5add
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_HandPosTable ; $5add
 	ld a, [hl] ; $5ae4
 	inc hl ; $5ae5
 	inc hl ; $5ae6
 	ld b, [hl] ; $5ae7
 	ld a, a ; $5ae8
-	ld [wBriefingHMarkerX], a ; $5ae9
+	ld [wBriefingHandX], a ; $5ae9
 	ld a, b ; $5aec
-	ld [wBriefingHMarkerY], a ; $5aed
+	ld [wBriefingHandY], a ; $5aed
 	ld a, [wBriefingAnimStep] ; $5af0
-	ld_hl_indexed SpinServeBriefing_RotMarkerDirTable ; $5af3
+	ld_hl_indexed SpinServeBriefing_DiagArrowDirTable ; $5af3
 	ld a, [hl] ; $5afa
-	ld [wBriefingRotMarkerDir], a ; $5afb
+	ld [wBriefingDiagArrowDir], a ; $5afb
 	ld a, c ; $5afe
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim_RotMarkerPosTable ; $5aff
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_DiagArrowPosTable ; $5aff
 	ld a, [hl] ; $5b06
 	inc hl ; $5b07
 	inc hl ; $5b08
 	ld b, [hl] ; $5b09
 	ld a, a ; $5b0a
-	ld [wBriefingRotMarkerX], a ; $5b0b
+	ld [wBriefingDiagArrowX], a ; $5b0b
 	ld a, b ; $5b0e
-	ld [wBriefingRotMarkerY], a ; $5b0f
+	ld [wBriefingDiagArrowY], a ; $5b0f
 	ld a, [wBriefingAnimStep] ; $5b12
 	ld_hl_indexed SpinServeBriefing_TargetOverlayTable ; $5b15
 	ld b, [hl] ; $5b1c
@@ -383,33 +383,33 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b61
 	ld [wBriefingBallY], a ; $5b62
 	ld a, [wBriefingAnimStep] ; $5b65
-	ld_hl_indexed SpinServeBriefing_RotMarkerDirTable ; $5b68
+	ld_hl_indexed SpinServeBriefing_DiagArrowDirTable ; $5b68
 	ld a, [hl] ; $5b6f
-	ld [wBriefingRotMarkerDir], a ; $5b70
+	ld [wBriefingDiagArrowDir], a ; $5b70
 	ld a, c ; $5b73
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable ; $5b74
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_DiagArrowPosTable ; $5b74
 	ld a, [hl] ; $5b7b
 	inc hl ; $5b7c
 	inc hl ; $5b7d
 	ld b, [hl] ; $5b7e
 	ld a, a ; $5b7f
-	ld [wBriefingRotMarkerX], a ; $5b80
+	ld [wBriefingDiagArrowX], a ; $5b80
 	ld a, b ; $5b83
-	ld [wBriefingRotMarkerY], a ; $5b84
+	ld [wBriefingDiagArrowY], a ; $5b84
 	ld a, [wBriefingAnimStep] ; $5b87
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable ; $5b8a
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_LeftArrowUnflippedTable ; $5b8a
 	ld a, [hl] ; $5b91
-	ld [wBriefingSpinMarkerUnflipped], a ; $5b92
+	ld [wBriefingLeftArrowUnflipped], a ; $5b92
 	ld a, c ; $5b95
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable ; $5b96
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_LeftArrowPosTable ; $5b96
 	ld a, [hl] ; $5b9d
 	inc hl ; $5b9e
 	inc hl ; $5b9f
 	ld b, [hl] ; $5ba0
 	ld a, a ; $5ba1
-	ld [wBriefingSpinMarkerX], a ; $5ba2
+	ld [wBriefingLeftArrowX], a ; $5ba2
 	ld a, b ; $5ba5
-	ld [wBriefingSpinMarkerY], a ; $5ba6
+	ld [wBriefingLeftArrowY], a ; $5ba6
 	ld b, $00 ; $5ba9
 	ld a, [wStoryMainLeftHanded] ; $5bab
 	and a ; $5bae
@@ -448,27 +448,27 @@ SpinServeBriefing_AdvanceAnimTable:
 	dw $0000 ; record 7
 SpinServeBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5bf5, 16 bytes (words:2)
-SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $5c05, 4 bytes (bytes:4)
-SpinServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5c09, 16 bytes (words:2)
-SpinServeBriefing_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_RotMarkerDirTable.asm" ; $5c19, 4 bytes (bytes:4)
-SpinServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $5c1d, 16 bytes (words:2)
+SpinServeBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $5c05, 4 bytes (bytes:4)
+SpinServeBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_HandPosTable.asm" ; $5c09, 16 bytes (words:2)
+SpinServeBriefing_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_DiagArrowDirTable.asm" ; $5c19, 4 bytes (bytes:4)
+SpinServeBriefing_AdvanceAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $5c1d, 16 bytes (words:2)
 SpinServeBriefing_TargetOverlayTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.asm" ; $5c2d, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.asm" ; $5c31, 16 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.asm" ; $5c41, 8 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm" ; $5c49, 8 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable:
+SpinServeBriefing_AdvanceAnim2_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_DiagArrowPosTable.asm" ; $5c49, 8 bytes (words:2)
+SpinServeBriefing_AdvanceAnim2_LeftArrowUnflippedTable:
 	db $01 ; $5c51
 	db $00 ; $5c52
-SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.asm" ; $5c53, 8 bytes (words:2)
+SpinServeBriefing_AdvanceAnim2_LeftArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_LeftArrowPosTable.asm" ; $5c53, 8 bytes (words:2)
 SpinServeBriefing_AdvanceAnim2_CmdPromptTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_CmdPromptTable.asm" ; $5c5b, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable:

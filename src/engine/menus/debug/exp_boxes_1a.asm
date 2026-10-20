@@ -18,7 +18,7 @@ Unused_1a_ExpScreenDrawTask:
 	ld d, [hl] ; $479c
 	ld e, a ; $479d
 	ld bc, $0e00 ; $479e
-	ld hl, ExpScreenDrawTask_SpriteTemplate ; $47a1
+	ld hl, ExpScreenGolfBagSpriteTemplate ; $47a1
 	ld_oam bc, OAM_BANK1 | 1, $c0 ; $47a4
 	ld_xy de, $70, $58 ; $47a7
 	call QueueSpriteTemplate ; $47aa
@@ -68,7 +68,7 @@ ExpScreenDrawTaskTable:
 	db $2c, $7b, $30, $7b, $2f, $7b, $2a, $7b, $30, $7a, $2c, $7c, $2a, $7c, $2a, $7b ; 0x10
 	db $2c, $7b, $2c, $7b, $2c, $7b, $2c, $7b, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
 	db $00, $00, $00, $00, $00, $00, $00 ; 0x30
-ExpScreenDrawTask_SpriteTemplate:
+ExpScreenGolfBagSpriteTemplate:
 	; $4840, 17 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
@@ -79,12 +79,12 @@ ExpScreenDrawTask_SpriteTemplate:
 Unused_1a_LoadExpScreenGfx:
 	wram_bank WRAM_STAGING ; $4852
 	push hl ; $4858
-	ld hl, ExpScreenGfx0 ; $4859
+	ld hl, ExpScreenGfx ; $4859
 	ld de, wDecompBuffer ; $485c
 	call DecompressData ; $485f
 	ld hl, wDecompBuffer ; $4862
 	ld de, vTiles2 + VRAM_BANK1 ; $4865
-	ld c, 128 ; $4868 -- 128 of ExpScreenGfx0's 192 tiles
+	ld c, 128 ; $4868 -- 128 of ExpScreenGfx's 192 tiles
 	call QueueVRAMCopy ; $486a
 	ld hl, wDecompBufferHigh ; $486d
 	ld de, vTiles1 + VRAM_BANK1 ; $4870
@@ -120,7 +120,7 @@ Unused_1a_LoadExpScreenGfx:
 	pop hl ; $48cb
 	ld a, h ; $48cc
 	cp $01 ; $48cd
-	jr z, .layout1 ; $48cf
+	jr z, .gainLayout ; $48cf
 	ld hl, ExpScreenCursorGfx ; $48d1
 	ld de, wDecompBuffer ; $48d4
 	call DecompressData ; $48d7
@@ -131,8 +131,8 @@ Unused_1a_LoadExpScreenGfx:
 	ld hl, ExpScreenCursorPalette ; $48e5
 	ld_obj_pals de, 2, 1 ; $48e8
 	call LoadPalettesMasterOnly ; $48eb
-	jr .layout2 ; $48ee
-.layout1:
+	jr .yesNoLayout ; $48ee
+.gainLayout:
 	call ProcessVRAMCopyQueues ; $48f0
 	ld hl, ExpScreenDigitPalette ; $48f3
 	ld_obj_pals de, 7, 1 ; $48f6
@@ -146,24 +146,24 @@ Unused_1a_LoadExpScreenGfx:
 	ld c, 20 ; $4911
 	call QueueVRAMCopy ; $4913
 	wram_bank WRAM_STAGING ; $4916
-	ld hl, ExpScreenAttrmap1 ; $491c
+	ld hl, ExpScreenGainAttrmap ; $491c
 	ld de, wDecompBuffer ; $491f
-	ld c, (ExpScreenTilemap2 - ExpScreenAttrmap1) / 16 ; $4922
+	ld c, (ExpScreenYesNoTilemap - ExpScreenGainAttrmap) / 16 ; $4922
 	call CopyMemoryFast ; $4924
-	ld hl, ExpScreenTilemap1 ; $4927
+	ld hl, ExpScreenGainTilemap ; $4927
 	ld de, wDecompBuffer + TILEMAP_AREA ; $492a
-	ld c, (ExpScreenAttrmap1 - ExpScreenTilemap1) / 16 ; $492d
+	ld c, (ExpScreenGainAttrmap - ExpScreenGainTilemap) / 16 ; $492d
 	call CopyMemoryFast ; $492f
 	ret ; $4932
-.layout2:
+.yesNoLayout:
 	wram_bank WRAM_STAGING ; $4933
-	ld hl, ExpScreenAttrmap2 ; $4939
+	ld hl, ExpScreenYesNoAttrmap ; $4939
 	ld de, wDecompBuffer ; $493c
-	ld c, (ExpScreenBgPalettes - ExpScreenAttrmap2) / 16 ; $493f
+	ld c, (ExpScreenBgPalettes - ExpScreenYesNoAttrmap) / 16 ; $493f
 	call CopyMemoryFast ; $4941
-	ld hl, ExpScreenTilemap2 ; $4944
+	ld hl, ExpScreenYesNoTilemap ; $4944
 	ld de, wDecompBuffer + TILEMAP_AREA ; $4947
-	ld c, (ExpScreenAttrmap2 - ExpScreenTilemap2) / 16 ; $494a
+	ld c, (ExpScreenYesNoAttrmap - ExpScreenYesNoTilemap) / 16 ; $494a
 	call CopyMemoryFast ; $494c
 	ret ; $494f
 ExpScreenMessageBoxTilemap:

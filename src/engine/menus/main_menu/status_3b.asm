@@ -146,7 +146,7 @@ DrawMinigameSelectGrid6:
 	ld b, $00 ; $6769
 	ld c, $00 ; $676b
 .loop:
-	farcall FillMenuGridCellTile ; $676d
+	farcall SetMinigameGrid6CellPalette ; $676d
 	ld a, b ; $6770
 	inc a ; $6771
 	ld b, a ; $6772
@@ -156,7 +156,7 @@ DrawMinigameSelectGrid6:
 	call GetMenuCursorIndex_3b ; $6779
 	ld b, a ; $677c
 	ld c, $01 ; $677d
-	farcall FillMenuGridCellTile ; $677f
+	farcall SetMinigameGrid6CellPalette ; $677f
 	ld c, $03 ; $6782
 	call GetMenuCursorIndex_3b ; $6784
 	call LoadMinigameCharPalette ; $6787

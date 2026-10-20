@@ -15,13 +15,13 @@ ClearRoundLabelRow:
 	ld [hl], a ; $487f
 	ret ; $4880
 DrawPracticeMatchLabel:
-	ld hl, Text_ResultsPracticeMatch ; $4881
+	ld hl, Text_ContinueScreenPracticeMatch ; $4881
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 11 ; $4884
 	ld bc, $0020 ; $4887
 	call DrawProportionalTextLine ; $488a
 	ret ; $488d
 DrawMarioExhibitionLabel:
-	ld hl, Text_ResultsMarioExhibition ; $488e
+	ld hl, Text_ContinueScreenMarioExhibition ; $488e
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4891
 	ld bc, $0020 ; $4894
 	call DrawProportionalTextLine ; $4897
@@ -31,10 +31,10 @@ DrawPlayerNameAndLevel:
 	cp GAMEMODE_EXHIBITION ; $489e
 	ret z ; $48a0
 	wram_bank WRAM_STAGING ; $48a1
-	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
+	ld hl, SuspendedMatchPlayerPanelTilemap_1e ; $48a7
 	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
-	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
+	ld hl, SuspendedMatchPlayerPanelAttrmap_1e ; $48b0
 	ld de, wDecompBuffer + RESULTS_PANEL_ATTRS ; $48b3
 	call DecompressData ; $48b6
 	ld hl, wDecompBuffer ; $48b9
@@ -233,10 +233,10 @@ InitResultsScreenCharacters:
 	farcall LoadIndexedPaletteThunk ; $4a6c
 	wram_bank WRAM_CHAR0 ; $4a6f
 	ret ; $4a75
-DrawResultsCharSprites:
+DrawContinueGameCharSprites:
 	wram_bank WRAM_CHAR0 ; $4a76
 	xor a ; $4a7c
-	call UpdateResultsCharSprite ; $4a7d
+	call UpdateContinueGameCharSprite ; $4a7d
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
 	wram_bank WRAM_CHAR0 ; $4a86
@@ -244,12 +244,12 @@ DrawResultsCharSprites:
 	ret z ; $4a8f
 	wram_bank WRAM_CHAR2 ; $4a90
 	ld a, $01 ; $4a96
-	call UpdateResultsCharSprite ; $4a98
+	call UpdateContinueGameCharSprite ; $4a98
 	ld hl, wCharSpriteSlot ; $4a9b
 	farcall DrawCharSprite ; $4a9e
 	wram_bank WRAM_CHAR0 ; $4aa1
 	ret ; $4aa7
-UpdateResultsCharSprite:
+UpdateContinueGameCharSprite:
 	push af ; $4aa8
 	ld hl, wCharStruct ; $4aa9
 	ld b, h ; $4aac
@@ -260,15 +260,15 @@ UpdateResultsCharSprite:
 	farcall ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
-	ld_hl_indexed UpdateResultsCharSpriteTable ; $4ab9
+	ld_hl_indexed ContinueGameFacingFlipAttrs ; $4ab9
 	ld b, [hl] ; $4ac0
 	pop af ; $4ac1
 	push af ; $4ac2
 	or a ; $4ac3
-	jr nz, .player2 ; $4ac4
+	jr nz, .partnerHand ; $4ac4
 	ld a, [wPlayer1MainLeftHanded] ; $4ac6
 	jr .compare ; $4ac9
-.player2:
+.partnerHand:
 	ld a, [wPlayer2MainLeftHanded] ; $4acb
 .compare:
 	or a ; $4ace
@@ -288,7 +288,7 @@ UpdateResultsCharSprite:
 	push bc ; $4adf
 	push de ; $4ae0
 	or a ; $4ae1
-	jr nz, .player2Pos ; $4ae2
+	jr nz, .partnerPos ; $4ae2
 	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4ae4
 	jr z, .singlesLayout ; $4ae7
 	ld d, $48 ; $4ae9
@@ -298,7 +298,7 @@ UpdateResultsCharSprite:
 	ld d, $54 ; $4aef
 	ld e, $56 ; $4af1
 	jr .setPos ; $4af3
-.player2Pos:
+.partnerPos:
 	ld d, $60 ; $4af5
 	ld e, $56 ; $4af7
 .setPos:
@@ -332,7 +332,7 @@ UpdateResultsCharSprite:
 	add $80 ; $4b20
 	ld [hl+], a ; $4b22
 	ret ; $4b23
-UpdateResultsCharSpriteTable:
+ContinueGameFacingFlipAttrs:
 	; $4b24, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 RunContinuePrompt:

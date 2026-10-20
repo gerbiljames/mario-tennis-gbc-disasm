@@ -227,7 +227,7 @@ def LESSON_PASSED equ $00
 ; SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers (whose word art spells
 ; each mode out) unguarded; it is field 0 of Singles/DoublesMatchSettingsTable
 ; and field 3 of the drill and minigame configs. wGameMode lives inside
-; wStorySlotData, so it is saved with the story slot and a results screen
+; wStorySlotData, so it is saved with the story slot and the continue-game screen
 ; reopened from the main menu renders the saved mode.
 	const_def
 	const GAMEMODE_NONE           ; $00 no match; the story overworld (RunStoryLocation clears it)

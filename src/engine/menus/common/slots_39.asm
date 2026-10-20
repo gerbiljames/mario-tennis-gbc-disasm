@@ -68,8 +68,8 @@ DataPtr_LargeDigitArrowSpriteGfx:
 	dw LargeDigitArrowSpriteGfx ; $405c
 DataPtr_StatLabelTiles:
 	dw StatLabelTiles ; $405e
-	farptr FillMenuGridCellTile ; $4060
-	farptr MoveMinigameGridCursor ; $4062
+	farptr SetMinigameGrid6CellPalette ; $4060
+	farptr MoveMinigameGrid6Cursor ; $4062
 	farptr InitNumberSpriteGfx ; $4064
 	farptr DrawDecimalNumberSprites_39 ; $4066
 	farptr ResetCheatCodeBuffer ; $4068

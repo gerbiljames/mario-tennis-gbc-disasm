@@ -74,7 +74,7 @@ ExpDigitSpriteGfx:
 ExpToNextLevelBubbleGfx:
 	INCBIN "data/engine/menus/exp/lz_ExpToNextLevelBubbleGfx.bin" ; $7a63, 246 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpToNextLevelBubbleGfx.inc" ; DEF ExpToNextLevelBubbleGfx_SIZE EQU its decoded length, generated from the .bin by make
-DrawExpToNextLevelTask_SpriteTemplate0:
+ExpToNextLevelBubbleSpriteTemplate:
 	; $7b59, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -92,7 +92,7 @@ DrawExpToNextLevelTask_SpriteTemplate0:
 ExpToNextLevelBubblePartnerGfx:
 	INCBIN "data/engine/menus/exp/lz_ExpToNextLevelBubblePartnerGfx.bin" ; $7b8a, 243 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpToNextLevelBubblePartnerGfx.inc" ; DEF ExpToNextLevelBubblePartnerGfx_SIZE EQU its decoded length, generated from the .bin by make
-DrawExpToNextLevelTask_SpriteTemplate1:
+ExpToNextLevelBubblePartnerSpriteTemplate:
 	; $7c7d, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00

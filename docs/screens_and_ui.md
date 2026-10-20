@@ -405,7 +405,7 @@ tileset.
 
 - `UpdateAnimatedTiles` (`$39:$4342`): `wAnimatedTileTimer` counts to
   `wAnimatedTilePeriod` (usually 3); on wrap it advances `wAnimatedTileFrame`,
-  looks up `wAnimatedTileSet` in `UpdateAnimatedTilesTable` and decompresses the
+  looks up `wAnimatedTileSet` in `AnimatedTileFrameLists` and decompresses the
   frame's tiles.
 - `InitMenuBgScroll` / `TickMenuBgScroll` (`$39:$4b13` / `$4b6d`): the two-lane
   scrolling sprite band behind menus, alternating lanes each frame, a 10-sprite
@@ -898,16 +898,16 @@ cursor moved; they differ only in input source and cursor pair:
 | `$16` | `Unused_16_MoveMenuCursorGrid` `$40f8` | `Unused_16_MoveMenuCursorGridFromLinkInput` `$4176` | `Unused_16_MoveMenuCursorGridRemote` `$41f3` | `Unused_16_MoveMenuCursor2GridRemote` `$42be` |
 | `$1b` | `MoveMenuCursorGrid_1b` `$4132` | `Unused_1b_MoveMenuCursorGridFromLinkInput` `$41b0` | `Unused_1b_MoveMenuCursorGridRemote` `$422d` | `Unused_1b_MoveMenuCursor2GridRemote` `$42f8` |
 | `$38` | `MoveMenuCursorGrid_38` `$410a` | `Unused_38_MoveMenuCursorGridFromLinkInput` `$4188` | `Unused_38_MoveMenuCursorGridRemote` `$4205` | `Unused_38_MoveMenuCursor2GridRemote` `$42d0` |
-| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorRepeat` `$41a8` | `Unused_3b_MoveMenuCursorLinkLocal` `$4225` | `Unused_3b_MoveMenuCursorLinkRemote` `$42f0` |
+| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorGridFromLinkInput` `$41a8` | `Unused_3b_MoveMenuCursorGridRemote` `$4225` | `Unused_3b_MoveMenuCursor2GridRemote` `$42f0` |
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4235` | `Unused_3e_MoveMenuCursor2GridRemote` `$4300` |
 
 "Remote" variants pick `hLinkRemoteInputBuf` or `hLinkRemoteInput` at run time
 on `hLinkState == $02` (e.g. `$38:$420d`, `$3b:$422d`); cursor-2 variants use
 `wMenuCursor2X`/`Y`.
 
-Bank `$39` also has `MoveMinigameGridCursor` (`$39:$6df9`), a 3×2 walker whose
-second row is a two-position toggle, and `FillMenuGridCellTile` (`$39:$6dc2`),
-which fills that grid's 3×3 attribute cell from `FillMenuGridCellTileTable`.
+Bank `$39` also has `MoveMinigameGrid6Cursor` (`$39:$6df9`), a 3×2 walker whose
+second row is a two-position toggle, and `SetMinigameGrid6CellPalette` (`$39:$6dc2`),
+which fills that grid's 3×3 attribute cell from `MinigameGrid6CellAttrmapPtrs`.
 
 `wMenuCursorLockFlags` (`$cb08`) (`CURSORLOCKB_*`) bits 0/1 freeze the
 primary/secondary cursor while a confirmed selection runs; B with neither

@@ -11,7 +11,7 @@ BuildSaveSlotSummaries:
 	wram_bank WRAM_COURT_PLANES ; $5ac5
 	pop af ; $5acb
 	farcall LoadCharacterRecordToBuffer ; $5acc
-	farcall CheckCharacterUnlocked ; $5acf
+	farcall CheckCharRecordPresent ; $5acf
 	ld hl, SLOTSUM_CHAR ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank WRAM_COURT_PLANES ; $5ad6

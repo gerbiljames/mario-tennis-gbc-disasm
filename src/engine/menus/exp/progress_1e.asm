@@ -174,49 +174,49 @@ DrawProgressScreenSprites:
 	jr z, .next ; $7af4
 	ld a, d ; $7af6
 	cp $00 ; $7af7
-	jr z, .drawProgressEntryTrophyIcon ; $7af9
+	jr z, .dreamMatchIcon ; $7af9
 	cp $0b ; $7afb
-	jr nc, .drawProgressEntryDefaultIcon ; $7afd
+	jr nc, .defaultIcon ; $7afd
 	dec a ; $7aff
 	srl a ; $7b00
 	or a ; $7b02
-	jr z, .drawProgressEntryTrophyIcon ; $7b03
+	jr z, .dreamMatchIcon ; $7b03
 	cp $01 ; $7b05
-	jr z, .drawIcon1 ; $7b07
+	jr z, .juniorIcon ; $7b07
 	cp $02 ; $7b09
-	jr z, .drawIcon2 ; $7b0b
+	jr z, .seniorIcon ; $7b0b
 	cp $03 ; $7b0d
-	jr z, .drawIcon3 ; $7b0f
+	jr z, .varsityIcon ; $7b0f
 	cp $04 ; $7b11
-	jr z, .drawIcon4 ; $7b13
-.drawProgressEntryDefaultIcon:
+	jr z, .islandOpenIcon ; $7b13
+.defaultIcon:
 	call DrawProgressEntryDefaultIcon ; $7b15
 	jr .next ; $7b18
-.drawProgressEntryTrophyIcon:
+.dreamMatchIcon:
 	push bc ; $7b1a
 	ld c, $00 ; $7b1b
 	call DrawProgressEntryTrophyIcon ; $7b1d
 	pop bc ; $7b20
 	jr .next ; $7b21
-.drawIcon1:
+.juniorIcon:
 	push bc ; $7b23
 	ld c, $01 ; $7b24
 	call DrawProgressEntryTrophyIcon ; $7b26
 	pop bc ; $7b29
 	jr .next ; $7b2a
-.drawIcon2:
+.seniorIcon:
 	push bc ; $7b2c
 	ld c, $02 ; $7b2d
 	call DrawProgressEntryTrophyIcon ; $7b2f
 	pop bc ; $7b32
 	jr .next ; $7b33
-.drawIcon3:
+.varsityIcon:
 	push bc ; $7b35
 	ld c, $03 ; $7b36
 	call DrawProgressEntryTrophyIcon ; $7b38
 	pop bc ; $7b3b
 	jr .next ; $7b3c
-.drawIcon4:
+.islandOpenIcon:
 	push bc ; $7b3e
 	ld c, $04 ; $7b3f
 	call DrawProgressEntryTrophyIcon ; $7b41

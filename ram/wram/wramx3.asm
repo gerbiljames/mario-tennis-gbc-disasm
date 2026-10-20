@@ -162,22 +162,22 @@ wBriefingOpponentY:: db
 wBriefingCmdPromptX:: db
 ; [8-bit] Drill-briefing diagram: button-command prompt sprite Y
 wBriefingCmdPromptY:: db
-; [8-bit] Drill-briefing diagram: spin-serve marker X, queued by DrawSpinServeBriefingMarker
-wBriefingSpinMarkerX:: db
-; [8-bit] Drill-briefing diagram: spin-serve marker Y
-wBriefingSpinMarkerY:: db
-; [8-bit] Drill-briefing diagram: rotatable marker X, queued by DrawBriefingMarkerRotated
-wBriefingRotMarkerX:: db
-; [8-bit] Drill-briefing diagram: rotatable marker Y
-wBriefingRotMarkerY:: db
+; [8-bit] Drill-briefing diagram: left arrow X, queued by DrawBriefingLeftArrow
+wBriefingLeftArrowX:: db
+; [8-bit] Drill-briefing diagram: left arrow Y
+wBriefingLeftArrowY:: db
+; [8-bit] Drill-briefing diagram: diagonal arrow X, queued by DrawBriefingDiagonalArrow
+wBriefingDiagArrowX:: db
+; [8-bit] Drill-briefing diagram: diagonal arrow Y
+wBriefingDiagArrowY:: db
 ; [8-bit] Drill-briefing diagram: first pole sprite X, queued by DrawBriefingPoleSprites
 wBriefingPole1X:: db
 ; [8-bit] Drill-briefing diagram: first pole sprite Y
 wBriefingPole1Y:: db
-; [8-bit] Drill-briefing diagram: horizontal marker X, queued by DrawBriefingMarkerHFlip (jiggles by 1px on hVBlankCounter bit 4)
-wBriefingHMarkerX:: db
-; [8-bit] Drill-briefing diagram: horizontal marker Y
-wBriefingHMarkerY:: db
+; [8-bit] Drill-briefing diagram: pointing hand X, queued by DrawBriefingPointingHand (jiggles by 1px on hVBlankCounter bit 4)
+wBriefingHandX:: db
+; [8-bit] Drill-briefing diagram: pointing hand Y
+wBriefingHandY:: db
 ; [8-bit] Drill-briefing diagram: ball sprite X, queued by DrawBriefingBallSprite
 wBriefingBallX:: db
 ; [8-bit] Drill-briefing diagram: ball sprite Y
@@ -188,16 +188,16 @@ wBriefingPole2X:: db
 wBriefingPole2Y:: db
 ; [8-bit] Drill-briefing diagram: button-command prompt shown (0-9); indexes BriefingCmdPromptTileTable for the base tile, and < 6 (the two-button combos) selects the 5-sprite template
 wBriefingCmdPrompt:: db
-; [8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip
-wBriefingVMarkerX:: db
-; [8-bit] Drill-briefing diagram: vertical marker Y
-wBriefingVMarkerY:: db
-; [8-bit] Drill-briefing diagram: 1 draws the vertical marker upright (OAM attr $09), anything else Y-flipped ($49)
-wBriefingVMarkerUpright:: db
-; [8-bit] Drill-briefing diagram: 1 draws the spin-serve marker unflipped (OAM attr $09), anything else X-flipped ($29)
-wBriefingSpinMarkerUnflipped:: db
-; [8-bit] Drill-briefing diagram: rotatable marker orientation (0-3); indexes BriefingMarkerRotatedTable, the four flip combinations of OAM attr $x9
-wBriefingRotMarkerDir:: db
+; [8-bit] Drill-briefing diagram: down arrow X, queued by DrawBriefingDownArrow
+wBriefingDownArrowX:: db
+; [8-bit] Drill-briefing diagram: down arrow Y
+wBriefingDownArrowY:: db
+; [8-bit] Drill-briefing diagram: 1 draws the down arrow unflipped (OAM attr $09), anything else Y-flipped ($49)
+wBriefingDownArrowUnflipped:: db
+; [8-bit] Drill-briefing diagram: 1 draws the left arrow unflipped (OAM attr $09), anything else X-flipped ($29)
+wBriefingLeftArrowUnflipped:: db
+; [8-bit] Drill-briefing diagram: diagonal arrow orientation (0-3); indexes BriefingDiagonalArrowAttrs, the four flip combinations of OAM attr $x9
+wBriefingDiagArrowDir:: db
 ; [8-bit] Drill-briefing diagram: target-bracket top-left X; DrawBriefingTargetBrackets draws the four corners at X, X+width+3
 wBriefingBracketX:: db
 ; [8-bit] Drill-briefing diagram: target-bracket top-left Y; corners sit at Y and Y+height-5
@@ -208,8 +208,8 @@ wBriefingBracketWidth:: db
 wBriefingBracketHeight:: db
 ; [8-bit] Drill-briefing animation frame timer; each briefing's *_TickAnim increments it and calls *_AdvanceAnim at $78 (120 frames)
 wBriefingAnimTimer:: db
-; [8-bit] Drill-briefing diagram: 1 draws the horizontal marker unflipped (OAM attr $09), anything else X-flipped ($29)
-wBriefingHMarkerUnflipped:: db
+; [8-bit] Drill-briefing diagram: 1 draws the pointing hand unflipped (OAM attr $09), anything else X-flipped ($29)
+wBriefingHandUnflipped:: db
 ; [8-bit] Drill-briefing animation step; each briefing's *_AdvanceAnim wraps it (& $03) and indexes its 4-byte-per-step position table with it
 wBriefingAnimStep:: db
 	ds 1
@@ -361,7 +361,7 @@ wTrophiesCheatLeftPresses:: db
 NEXTU
 ; screen sequences (bank $18)
 	ds 256
-; [8-bit] Step of TaskFadeInPalette_18 fading in the "The End" sprite palette, 0 to $10; cleared before PlayDreamMatchEpilogueScene loads that screen
+; [8-bit] Step of TaskFadeInTheEndPalette fading in the "The End" sprite palette, 0 to $10; cleared before PlayDreamMatchEpilogueScene loads that screen
 wTheEndPaletteFadeStep:: db
 ; [8-bit] Frame counter for the timed waits of the RunStorySceneByMode scenes: to $fa (traveling team), $af every fourth frame (awards ceremony), $b4 before "The End"
 wScreenSequenceTimer:: db
@@ -384,9 +384,9 @@ UNION
 wRulesPageListId:: db
 ; [8-bit] Value ShowRulesScreen returns once the page loop finishes
 wRulesExitCode:: db
-; [8-bit] Nonzero lets AdvanceRulesScreenAnimFrame run; cleared while a page transition is in progress
-wRulesAnimEnabled:: db
-; [8-bit] Frame counter AdvanceRulesScreenAnimFrame increments, wrapping at $ff
+; [8-bit] Nonzero while the Rules-screen Toad talks: AnimateRulesToad plays RulesToadTalkFrames instead of RulesToadIdleFrames, for 255 ticks after a page turn
+wRulesToadTalking:: db
+; [8-bit] Frame counter AnimateRulesToad increments, wrapping at $ff
 wRulesAnimCounter:: db
 ; [8-bit] 0 on the rules screen's first page, 1 once a page has been turned: the first page tints its header row by wRulesMinigameLevel and sits one row lower
 wRulesPastFirstPage:: db
@@ -406,7 +406,7 @@ wN64ExhibPage:: db
 wN64ExhibCursorRow:: db
 NEXTU
 ; rules screen (bank $17)
-; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenToad indexes RulesToadFrameTileTable-2 with it
+; [8-bit] Frame AnimateRulesToad steps; DrawRulesScreenToad indexes RulesToadFrameTileTable-2 with it
 wRulesScreenAnimFrame:: db
 ENDU
 

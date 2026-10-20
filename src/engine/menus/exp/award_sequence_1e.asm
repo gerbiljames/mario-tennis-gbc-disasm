@@ -17,7 +17,7 @@ RunExpAwardSequence:
 BeginNextExpAward:
 	call DrawNextExpAwardMessage ; $5b19
 	or a ; $5b1c
-	jp z, .waitFramesCmd ; $5b1d
+	jp z, .noMoreAwards ; $5b1d
 	sound BGM_NONE ; $5b20
 	sound BGM_EXP_AWARD ; $5b22
 	wram_bank WRAM_SCENE ; $5b24
@@ -42,7 +42,7 @@ BeginNextExpAward:
 	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
 	ret ; $5b5f
-.waitFramesCmd:
+.noMoreAwards:
 	wait_frames 10 ; $5b60
 	xor a ; $5b64
 	ret ; $5b65
@@ -210,7 +210,7 @@ ProcessMatchRewards:
 	add hl, de ; $65aa
 	ld a, [wPlayer1MainEquipment] ; $65ab
 	ld d, a ; $65ae
-	call ApplyMatchSettingsExpBonus ; $65af
+	call ApplyIronEquipmentExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
 	cp WINLOSE_WIN ; $65b5
 	jp nz, .getScoreBonus ; $65b7
@@ -253,7 +253,7 @@ ProcessMatchRewards:
 	call ComputeMatchStatsReward ; $65ff
 	ld a, [wPlayer1MainEquipment] ; $6602
 	ld d, a ; $6605
-	call ApplyMatchSettingsExpBonus ; $6606
+	call ApplyIronEquipmentExpBonus ; $6606
 	ld de, $0000 ; $6609
 	ld a, [wMatchWinLoseFlag] ; $660c
 	cp WINLOSE_WIN ; $660f
@@ -271,14 +271,14 @@ ProcessMatchRewards:
 	push hl ; $6626
 	call ApplyRewardUnlockFlags ; $6627
 	pop hl ; $662a
-	call ApplyClassProgressFlags ; $662b
+	call GrantRankEquipment ; $662b
 	jr .runExpDistributionFlow ; $662e
 .exhibition:
 	wram_bank WRAM_ACTORS ; $6630
 	call ComputeMatchStatsReward ; $6636
 	ld a, [wPlayer1MainEquipment] ; $6639
 	ld d, a ; $663c
-	call ApplyMatchSettingsExpBonus ; $663d
+	call ApplyIronEquipmentExpBonus ; $663d
 	call AwardExhibitionMatchExp ; $6640
 	ret ; $6643
 .linkMatch:
@@ -289,7 +289,7 @@ ProcessMatchRewards:
 	call ComputeMatchStatsReward ; $6651
 	ld a, [wPlayer1MainEquipment] ; $6654
 	ld d, a ; $6657
-	call ApplyMatchSettingsExpBonus ; $6658
+	call ApplyIronEquipmentExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
 	cp WINLOSE_WIN ; $665e
 	jr z, .winBonus ; $6660
@@ -299,7 +299,7 @@ ProcessMatchRewards:
 	call ComputeMatchStatsReward ; $666a
 	ld a, [wPlayer2MainEquipment] ; $666d
 	ld d, a ; $6670
-	call ApplyMatchSettingsExpBonus ; $6671
+	call ApplyIronEquipmentExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
 	cp WINLOSE_LOSE ; $6677
 	jr z, .winBonus ; $6679
@@ -329,7 +329,7 @@ ProcessMatchRewards:
 	farcall CharDataScreen_Show ; $669e
 	ld c, STORYREC_PARTNER ; $66a1
 	farcall CharDataScreen_Show ; $66a3
-	call ApplyStatGapProgressFlag ; $66a6
+	call GrantDriveRacketForSpinLead ; $66a6
 .showIslandOpenRankingBoard:
 	call ShowIslandOpenRankingBoard ; $66a9
 	ld a, GAMEMODE_NONE ; $66ac

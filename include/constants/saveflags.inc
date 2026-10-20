@@ -3,7 +3,7 @@
 ; index, low byte = bit << 5, and the mask is $80 >> bit -- the wGameFlags
 ; encoding, but a separate global array (docs/save_format.md). Flag number =
 ; byte * 8 + bit is quoted per line. The character grid reads #10-#15
-; through CharUnlockSaveFlags by Mario-cast grid slot. CheckCharacterUnlocked's
+; through CharUnlockSaveFlags by Mario-cast grid slot. CheckCharRecordPresent's
 ; flag number = character id lookup is reached only from unused code.
 
 def SAVEFLAG_OPENING_SEEN                equ $0120 ; #9; set when the title/opening sequence finishes

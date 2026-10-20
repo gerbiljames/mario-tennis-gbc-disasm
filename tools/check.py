@@ -1565,7 +1565,7 @@ RAW_ID_FAMILIES = {
     "AddPlayerExp(a)": "STORYREC",
     "InitPlayerRecordFromTemplate(a)": "STORYREC",
     "Unused_1a_ShowExpGainScreen(l)": "STORYREC",
-    "Unused_1a_ResetCharDataScreenAnim(l)": "STORYREC",
+    "Unused_1a_RunExpGainScreenForRecord(l)": "STORYREC",
     "SetLinkMatchFormatOptionAttrRect(c)": "ATTRRECT",
     "FillMatchFormatOptionCell(c)": "ATTRRECT",
     "SetSelectPanelAttrRect(c)": "ATTRRECT",

@@ -1,6 +1,6 @@
 PlayAwardsCeremonyScene:
 	call SetupAwardsCeremonyScreen ; $77bb
-	call InitObjectSceneA ; $77be
+	call InitAwardsCeremonyConfetti ; $77be
 	frame_task TaskDrawObjectSprites_18 ; $77c1
 	frame_task TaskUpdateObjects_18 ; $77c9
 	sound BGM_CREDITS ; $77d1
@@ -27,7 +27,7 @@ PlayAwardsCeremonyScene:
 	farcall RunScrollingTextScreen ; $780a
 	call DisableLCDSafely ; $780d
 	call LoadToBeContinuedOutlineGfx ; $7810
-	call FillAllBgPalettes ; $7813
+	call LoadAwardsCeremonyScreenBlackedOut ; $7813
 	frame_task QueueToBeContinuedOutlineSprites ; $7816
 	call EnableLCD ; $781e
 	script_fade_in 64 ; $7821
@@ -54,38 +54,38 @@ LookupAwardsCeremonyAssetId:
 AwardsCeremonyAssetIds:
 	; $784f, 6 bytes (bytes:6)
 	db SCREENASSET_AwardsCeremonyCutscene, SCREENASSET_AwardsCeremonyCutscene2, SCREENASSET_AwardsCeremonyCutscene4, SCREENASSET_AwardsCeremonyCutscene3, SCREENASSET_AwardsCeremonyCutscene5, SCREENASSET_AwardsCeremonyCutscene6 ; 0x00
-FillAllBgPalettes:
+LoadAwardsCeremonyScreenBlackedOut:
 	call ResetScrollAndCamera ; $7855
 	ld c, SCREENASSET_AwardsCeremonyCutscene ; $7858
 	farcall LoadScreenAssetRecord ; $785a
-	ld hl, AllBgPalettes ; $785d
+	ld hl, BlackPalette_18 ; $785d
 	ld_bg_pals de, 0, 1 ; $7860
 	call LoadPaletteShadow ; $7863
-	ld hl, AllBgPalettes ; $7866
+	ld hl, BlackPalette_18 ; $7866
 	ld_bg_pals de, 1, 1 ; $7869
 	call LoadPaletteShadow ; $786c
-	ld hl, AllBgPalettes ; $786f
+	ld hl, BlackPalette_18 ; $786f
 	ld_bg_pals de, 2, 1 ; $7872
 	call LoadPaletteShadow ; $7875
-	ld hl, AllBgPalettes ; $7878
+	ld hl, BlackPalette_18 ; $7878
 	ld_bg_pals de, 3, 1 ; $787b
 	call LoadPaletteShadow ; $787e
-	ld hl, AllBgPalettes ; $7881
+	ld hl, BlackPalette_18 ; $7881
 	ld_bg_pals de, 4, 1 ; $7884
 	call LoadPaletteShadow ; $7887
-	ld hl, AllBgPalettes ; $788a
+	ld hl, BlackPalette_18 ; $788a
 	ld_bg_pals de, 5, 1 ; $788d
 	call LoadPaletteShadow ; $7890
-	ld hl, AllBgPalettes ; $7893
+	ld hl, BlackPalette_18 ; $7893
 	ld_bg_pals de, 6, 1 ; $7896
 	call LoadPaletteShadow ; $7899
-	ld hl, AllBgPalettes ; $789c
+	ld hl, BlackPalette_18 ; $789c
 	ld_bg_pals de, 7, 1 ; $789f
 	call LoadPaletteShadow ; $78a2
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
-AllBgPalettes:
-	INCLUDE "data/engine/menus/scenes/AllBgPalettes.asm" ; $78a9, 8 bytes (palettes)
+BlackPalette_18:
+	INCLUDE "data/engine/menus/scenes/BlackPalette_18.asm" ; $78a9, 8 bytes (palettes)
 LoadToBeContinuedOutlineGfx:
 	ld b, TILEBLOCK_ToBeContinuedOutlineGfx ; $78b1
 	ld c, ToBeContinuedOutlineGfx_SIZE / 16 ; $78b3
@@ -132,7 +132,7 @@ PlayDreamMatchEpilogueScene:
 	call LookupDreamMatchEpilogueAssetId ; $7931
 	farcall LoadScreenAssetRecord ; $7934
 	farcall QueueWram3MapToVRAM ; $7937
-	call InitObjectSceneB ; $793a
+	call InitDreamMatchEpilogueConfetti ; $793a
 	frame_task TaskDrawObjectSprites_18 ; $793d
 	frame_task TaskUpdateObjects_18 ; $7945
 	call EnableLCD ; $794d
@@ -184,7 +184,7 @@ PlayDreamMatchEpilogueScene:
 	ld [wScreenSequenceTimer], a ; $79c5
 	cp $b4 ; $79c8
 	jr nz, .theEndDelay ; $79ca
-	frame_task TaskFadeInPalette_18 ; $79cc
+	frame_task TaskFadeInTheEndPalette ; $79cc
 	frame_task QueueTheEndSprites ; $79d4
 	sound BGM_THE_END ; $79dc
 .waitTheEndInput:
@@ -256,7 +256,7 @@ QueueTheEndSprites_SpriteTemplate:
 	oam_sprite_end
 Unused_18_StubNop2:
 	ret ; $7a80
-TaskFadeInPalette_18:
+TaskFadeInTheEndPalette:
 	push_wram_bank WRAM_SCREEN ; $7a81
 	ld a, [wTheEndPaletteFadeStep] ; $7a8a
 	cp $10 ; $7a8d
@@ -264,7 +264,7 @@ TaskFadeInPalette_18:
 	add a ; $7a91
 	add a ; $7a92
 	add a ; $7a93
-	ld hl, PaletteFadeTable_18 ; $7a94
+	ld hl, TheEndFadeInPalettes ; $7a94
 	add_hl_a ; $7a97
 	ld_obj_pals de, 0, 1 ; $7a9c
 	call LoadPalettesImmediate ; $7a9f
@@ -277,8 +277,8 @@ TaskFadeInPalette_18:
 .done:
 	pop_wram_bank ; $7aaf
 	ret ; $7ab4
-PaletteFadeTable_18:
-	INCLUDE "data/engine/menus/scenes/PaletteFadeTable_18.asm" ; $7ab5, 128 bytes (palettes)
+TheEndFadeInPalettes:
+	INCLUDE "data/engine/menus/scenes/TheEndFadeInPalettes.asm" ; $7ab5, 128 bytes (palettes)
 Unused_18_StubRet3:
 	ret ; $7b35
 TaskDrawObjectSprites_18:
@@ -395,15 +395,15 @@ ObjectUpdateLoopTail_18:
 	cp NUM_SCENEOBJS ; $7bc9
 	jr nz, TaskUpdateObjects_18.objectLoop ; $7bcb
 	ret ; $7bcd
-InitObjectSceneA:
+InitAwardsCeremonyConfetti:
 	push_wram_bank WRAM_SCREEN ; $7bce
 	ld hl, wScreenScratch ; $7bd7
 	ld bc, NUM_SCENEOBJS * SCENEOBJ_SIZE ; $7bda
 	call ClearBytes ; $7bdd
-	call PopulateObjectArrayA ; $7be0
-	call LoadObjectSceneATiles ; $7be3
+	call SpawnAwardsCeremonyConfetti ; $7be0
+	call LoadAwardsCeremonyConfettiGfx ; $7be3
 	ret ; $7be6
-LoadObjectSceneATiles:
+LoadAwardsCeremonyConfettiGfx:
 	ld b, TILEBLOCK_AwardsCeremonyConfettiGfx0 ; $7be7
 	ld c, AwardsCeremonyConfettiGfx0_SIZE / 16 ; $7be9
 	ld de, vTiles0 ; $7beb

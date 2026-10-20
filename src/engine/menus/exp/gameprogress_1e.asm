@@ -3,9 +3,9 @@ ShowGameProgressScreen:
 	ld de, SAVEFLAG_COURT_STAR ; $7264
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
-	jr z, .setFlag ; $726b
+	jr z, .buildScreen ; $726b
 	set_flag FLAG_TEMP_COURT_STAR_EARNED ; $726d
-.setFlag:
+.buildScreen:
 	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
 	call BuildGameProgressScreen ; $7273
 	clear_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7276
@@ -209,7 +209,7 @@ RunRewardCategoryList:
 	jr z, .done ; $7417
 	push de ; $7419
 	push af ; $741a
-	ld hl, RewardCategoryFlagTable_1e ; $741b
+	ld hl, ProgressEntryRevealFlags_1e ; $741b
 	add a ; $741e
 	add_hl_a ; $741f
 	ld a, [hl+] ; $7424

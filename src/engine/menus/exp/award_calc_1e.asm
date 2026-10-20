@@ -114,14 +114,14 @@ AccumulateStatExp:
 	ld e, l ; $68d9
 	ld d, h ; $68da
 	ret ; $68db
-ApplyMatchSettingsExpBonus:
+ApplyIronEquipmentExpBonus:
 	ld b, $00 ; $68dc
 	ld a, d ; $68de
 	and $0f ; $68df
 	cp $03 ; $68e1
-	jr nz, .checkSets ; $68e3
+	jr nz, .checkShoes ; $68e3
 	inc b ; $68e5
-.checkSets:
+.checkShoes:
 	ld a, d ; $68e6
 	swap a ; $68e7
 	and $0f ; $68e9
@@ -177,7 +177,7 @@ GetPlayerExpTier:
 	ld c, a ; $693c
 	ret ; $693d
 LookupExpTierForChar:
-	ld a, [wCharExpTier] ; $693e
+	ld a, [wCharLevel] ; $693e
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
 	cp NUM_STORY_HEROES ; $6945
@@ -188,10 +188,10 @@ LookupExpTierForChar:
 	ld e, $0a ; $694c
 	call DivAHLByE ; $694e
 	ld a, l ; $6951
-	ld_hl_indexed LookupExpTierForCharTable ; $6952
+	ld_hl_indexed ExpTierByLevelDecade ; $6952
 	ld c, [hl] ; $6959
 	ret ; $695a
-LookupExpTierForCharTable:
+ExpTierByLevelDecade:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
 LookupExpTierForChar.storedTier:
@@ -307,7 +307,7 @@ ShowExpAwardForMinigame:
 	ld c, $01 ; $6a22
 	farcall SetPendingExpAward ; $6a24
 	ld c, $01 ; $6a27
-	call ShowMatchResultsScreen ; $6a29
+	call ShowExpAwardOrContinueGameScreen ; $6a29
 	pop_wram_bank ; $6a2c
 	pop hl ; $6a31
 	pop de ; $6a32
@@ -325,7 +325,7 @@ ShowExpAwardForMatch:
 	ldh a, [hWramBank] ; $6a3d
 	push af ; $6a3f
 	farcall ClearPendingExpAwards ; $6a40
-	ld b, $03 ; $6a43
+	ld b, EXPAWARD_MATCH ; $6a43
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
 	cp GAMEMODE_ISLAND_OPEN ; $6a4a
@@ -342,7 +342,7 @@ ShowExpAwardForMatch:
 .setPendingExpAward:
 	farcall SetPendingExpAward ; $6a5c
 	ld c, $01 ; $6a5f
-	call ShowMatchResultsScreen ; $6a61
+	call ShowExpAwardOrContinueGameScreen ; $6a61
 	pop_wram_bank ; $6a64
 	pop hl ; $6a69
 	pop de ; $6a6a
@@ -371,7 +371,7 @@ ShowExpAwardForExhibition:
 	push af ; $6a8a
 	clear_flag FLAG_DOUBLES ; $6a8b
 	ld c, $01 ; $6a8e
-	call ShowMatchResultsScreen ; $6a90
+	call ShowExpAwardOrContinueGameScreen ; $6a90
 	pop af ; $6a93
 	or a ; $6a94
 	jr z, .restore ; $6a95
@@ -405,7 +405,7 @@ ShowExpAwardForLinkedPlay:
 	push af ; $6ac0
 	clear_flag FLAG_DOUBLES ; $6ac1
 	ld c, $01 ; $6ac4
-	call ShowMatchResultsScreen ; $6ac6
+	call ShowExpAwardOrContinueGameScreen ; $6ac6
 	pop af ; $6ac9
 	or a ; $6aca
 	jr z, .restore ; $6acb
@@ -433,7 +433,7 @@ Unused_1e_ShowExpAwardForN64:
 	ld c, $00 ; $6ae9
 	farcall SetPendingExpAward ; $6aeb
 	ld c, $01 ; $6aee
-	call ShowMatchResultsScreen ; $6af0
+	call ShowExpAwardOrContinueGameScreen ; $6af0
 	pop_wram_bank ; $6af3
 	pop hl ; $6af8
 	pop de ; $6af9
@@ -533,11 +533,11 @@ ApplyPendingExpAwards:
 	ld e, a ; $6b86
 	ld a, d ; $6b87
 	or e ; $6b88
-	jr z, .applyToRecord ; $6b89
+	jr z, .trophyAward ; $6b89
 	ld b, EXPAWARD_LINKED ; $6b8b
 	ld c, $00 ; $6b8d
 	farcall SetPendingExpAward ; $6b8f
-.applyToRecord:
+.trophyAward:
 	wram_bank WRAM_SCENE ; $6b92
 	ld hl, wTrophyExpTotal ; $6b98
 	ld a, [hl+] ; $6b9b
@@ -558,7 +558,7 @@ ApplyPendingExpAwards:
 	push af ; $6bb1
 	set_flag FLAG_DOUBLES ; $6bb2
 	ld c, $01 ; $6bb5
-	call ShowMatchResultsScreen ; $6bb7
+	call ShowExpAwardOrContinueGameScreen ; $6bb7
 	pop af ; $6bba
 	or a ; $6bbb
 	jr z, .runDistribution ; $6bbc
@@ -570,7 +570,7 @@ ApplyPendingExpAwards:
 	farcall CharDataScreen_Show ; $6bc7
 	ld c, STORYREC_PARTNER ; $6bca
 	farcall CharDataScreen_Show ; $6bcc
-	call ApplyStatGapProgressFlag ; $6bcf
+	call GrantDriveRacketForSpinLead ; $6bcf
 	xor a ; $6bd2
 	ld hl, wN64TransferMainExp ; $6bd3
 	ld [hl+], a ; $6bd6

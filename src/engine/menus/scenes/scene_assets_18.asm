@@ -147,32 +147,32 @@ CharSelectCursorAnimTable:
 	INCLUDE "data/engine/menus/scenes/CharSelectCursorAnimTable.asm" ; $59fe, 32 bytes (bytes:16)
 CharSelectCursorTemplatePtrs:
 	; $5a1e, 8 bytes (records:2)
-	dw CharSelectCursorTemplate0 ; record 0
-	dw CharSelectCursorTemplate1 ; record 1
-	dw CharSelectCursorTemplate2 ; record 2
-	dw CharSelectCursorTemplate3 ; record 3
-CharSelectCursorTemplate0:
+	dw CharSelectCursorNarrowTemplate ; record 0
+	dw CharSelectCursorNarrowPulseTemplate ; record 1
+	dw CharSelectCursorWideTemplate ; record 2
+	dw CharSelectCursorWidePulseTemplate ; record 3
+CharSelectCursorNarrowTemplate:
 	; $5a26, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $18, $08, $00, $40
 	oam_sprite $10, $18, $00, $20
 	oam_sprite $18, $18, $00, $60
 	oam_sprite_end
-CharSelectCursorTemplate1:
+CharSelectCursorNarrowPulseTemplate:
 	; $5a37, 17 bytes (sprite_template)
 	oam_sprite $0f, $07, $00, $00
 	oam_sprite $19, $07, $00, $40
 	oam_sprite $0f, $19, $00, $20
 	oam_sprite $19, $19, $00, $60
 	oam_sprite_end
-CharSelectCursorTemplate2:
+CharSelectCursorWideTemplate:
 	; $5a48, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $18, $08, $00, $40
 	oam_sprite $10, $48, $00, $20
 	oam_sprite $18, $48, $00, $60
 	oam_sprite_end
-CharSelectCursorTemplate3:
+CharSelectCursorWidePulseTemplate:
 	; $5a59, 17 bytes (sprite_template)
 	oam_sprite $0f, $07, $00, $00
 	oam_sprite $19, $07, $00, $40
@@ -408,7 +408,7 @@ PlayTravelingTeamVictoryScene:
 	script_fade_out 16 ; $76f5
 	call WaitFadeEnd ; $76fa
 	call DisableLCDSafely ; $76fd
-	call FillAllBgPalettes ; $7700
+	call LoadAwardsCeremonyScreenBlackedOut ; $7700
 	call EnableLCD ; $7703
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b

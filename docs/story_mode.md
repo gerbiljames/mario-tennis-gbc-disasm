@@ -573,7 +573,7 @@ screen-mode bits that cannot outlive a map transition.
 | `$0c`-`$0d` | equipment owned; ending-credits control bits |
 | `$0e`-`$10` | NPC talked/moved/turned and scene-seen bits (`FLAG_RESTAURANT_NPC12_MOVED_STAGE_*`, `FLAG_REPAIR_COUNTER_*`, …) |
 | `$11`-`$13` | `FLAG_TROPHY_EXP_GROUP_*_TIER_*`: one-time N64 trophy-EXP tiers (`TrophyExpTierFlags`) |
-| `$14`-`$17` | `FLAG_UNLOCKED_<char>` (`$14`-`$15`: the 13 story-cast grid unlocks, set by story wins through `RewardUnlockFlagTable` and in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
+| `$14`-`$17` | `FLAG_UNLOCKED_<char>` (`$14`-`$15`: the 13 story-cast grid unlocks, set by story wins through `RewardUnlockCharFlags` and in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
 | `$18`-`$1b` | training-drill clears (Service / Net Game / Stroke match+practice, Tennis Machine, Wall) |
 
 `SAVEFLAG_*` covers what survives a slot erase: character unlocks

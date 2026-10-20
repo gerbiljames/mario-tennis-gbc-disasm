@@ -428,7 +428,7 @@ RunStoryFileFlow:
 	or a ; $5009
 	jp z, .clearMatchState ; $500a
 	ld c, $00 ; $500d
-	farcall ShowMatchResultsScreen ; $500f
+	farcall ShowExpAwardOrContinueGameScreen ; $500f
 	push af ; $5012
 	call RestoreGameTimer ; $5013
 	pop af ; $5016
@@ -539,7 +539,7 @@ RunExhibitionModeFlow:
 	or a ; $510d
 	jr z, .freshExhibition ; $510e
 	ld c, $00 ; $5110
-	farcall ShowMatchResultsScreen ; $5112
+	farcall ShowExpAwardOrContinueGameScreen ; $5112
 	or a ; $5115
 	jr z, .redrawAfterResults ; $5116
 	cp $ff ; $5118

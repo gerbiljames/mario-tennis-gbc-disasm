@@ -78,7 +78,7 @@ ENDU
 NEXTU
 ; character record scratch (banks $18/$1b/$3b)
 	ds 1408
-; [128 bytes] The character record a menu is about to draw: LoadCharacterRecordToBuffer has LoadPlayer2MainRecord build it and copies the main and partner records here from wPlayer2MainName. wCharRecordScratchChar is the character id, tested against $ff by CheckCharacterUnlocked and used as the index by the mugshot and portrait loaders; the `.fixedRecord` shortcut writes $3e into it directly.
+; [128 bytes] The character record a menu is about to draw: LoadCharacterRecordToBuffer has LoadPlayer2MainRecord build it and copies the main and partner records here from wPlayer2MainName. wCharRecordScratchChar is the character id, tested against $ff by CheckCharRecordPresent and used as the index by the mugshot and portrait loaders; the `.fixedRecord` shortcut writes $3e into it directly.
 ; The bank is never selected at the reference; bank $3b's BuildSaveSlotSummaries selects WRAM bank $02 around the call, and reads must use the bank the write went to.
 	char_record wCharRecordScratch
 	char_record wCharRecordScratchPartner
