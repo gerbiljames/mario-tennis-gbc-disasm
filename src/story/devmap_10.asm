@@ -496,7 +496,7 @@ MatchSelectHandlersBHandler0:
 	call RestoreGameTimer ; $50ab
 	farcall SaveStorySlotWithTimer ; $50ae
 	call GetStoryContinueDestination ; $50b1
-	ld [wMatchSelectSubState], a ; $50b4
+	ld [wStoryContinueExitId], a ; $50b4
 	cp EXIT_MAIN_MENU_CONTINUE_ISLAND_OPEN_WON ; $50b7
 	jr z, .continueStory ; $50b9
 	farcall RunPlayAlonePartnerMenu ; $50bb
@@ -507,7 +507,7 @@ MatchSelectHandlersBHandler0:
 	jp RunTitleAndMainMenuLoop.menuLoop ; $50c7
 .continueStory:
 	call GetStoryContinueDestination ; $50ca
-	ld [wMatchSelectSubState], a ; $50cd
+	ld [wStoryContinueExitId], a ; $50cd
 	call RestoreGameTimer ; $50d0
 	ld a, GAMEMODE_NONE ; $50d3
 	ld [wGameMode], a ; $50d5
@@ -518,7 +518,7 @@ MatchSelectHandlersBHandler0:
 	farcall SaveStorySlotWithTimer ; $50e2
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
 	jr nz, .loadSlot ; $50e8
-	ld a, [wMatchSelectSubState] ; $50ea
+	ld a, [wStoryContinueExitId] ; $50ea
 	ld a, a ; $50ed
 	ld [wUnusedExitTriggerIdMirror], a ; $50ee
 	ld [wStoryModeExitTriggerRequest], a ; $50f1

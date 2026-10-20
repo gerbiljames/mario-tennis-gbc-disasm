@@ -53,7 +53,7 @@ ShowCharDataScreen:
 	farcall StartCharDataScreenAnimTask ; $4098
 	script_fade_in 16 ; $409b
 	call WaitFadeEnd ; $40a0
-	call RunDrillResultInputLoop ; $40a3
+	call RunCharDataPageInputLoop ; $40a3
 	ld hl, rIE ; $40a6
 	set B_IE_TIMER, [hl] ; $40a9
 	script_fade_out 16 ; $40ab
@@ -70,7 +70,7 @@ ShowCharDataScreen:
 CharDataScreenBgScrollTask:
 	farcall TickMenuBgScroll ; $40cc
 	ret ; $40cf
-InitDrillWorkRam:
+InitCharDataWorkRam:
 	wram_bank WRAM_SCENE ; $40d0
 	xor a ; $40d6
 	ld [wCharDataAnimCounter], a ; $40d7
@@ -119,7 +119,7 @@ BuildCharDataScreenPages:
 	call BuildCharDataSummaryPage ; $4141
 	ld a, $01 ; $4144
 	call SaveWorkTilemapToPage ; $4146
-	ld hl, DrillDisplayData_1d ; $4149
+	ld hl, CharDataAttrClearPatch_1d ; $4149
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $414c
 	call ApplyTilemapPatchList ; $414f
 	wram_bank WRAM_SCREEN ; $4152

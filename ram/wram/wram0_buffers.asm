@@ -173,7 +173,7 @@ wMinigameHitPending:: db
 	ds 1
 NEXTU
 ; scoreboard (bank $18)
-; [3 bytes] Three values Unused_18_SetupScoreboardDisplay draws as 6x2 tile blocks, each via Unused_18_GetTextSlotPointer
+; [3 bytes] Values Unused_18_SetupScoreboardDisplay draws as 6x2 tile blocks, each via Unused_18_GetTextSlotPointer; its fourth comes from the next byte, wTargetZoneX1
 wScorePanelValues:: ds 3
 ENDU
 

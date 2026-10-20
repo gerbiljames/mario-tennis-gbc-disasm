@@ -151,6 +151,7 @@ Unused_18_SetupScoreboardDisplay:
 	call Unused_18_GetTextSlotPointer ; $5395
 	ld de, wTextTileBuffer tile 12 + 11 ; $5398
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $539b
+	ASSERT wTargetZoneX1 == wScorePanelValues + 3
 	ld a, [wTargetZoneX1] ; $539e
 	call Unused_18_GetTextSlotPointer ; $53a1
 	ld de, wTextTileBuffer tile 16 + 11 ; $53a4

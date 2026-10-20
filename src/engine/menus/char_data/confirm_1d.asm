@@ -133,7 +133,7 @@ PromptCharDataConfirm:
 	ld a, SCREEN_HEIGHT_PX ; $5a7b
 	ldh [rWY], a ; $5a7d
 	call ClearSpriteQueue ; $5a7f
-	call InitDrillWorkRam ; $5a82
+	call InitCharDataWorkRam ; $5a82
 	pop af ; $5a85
 	call BuildCharDataConfirmScreen ; $5a86
 	call EnableLCD ; $5a89
@@ -256,7 +256,7 @@ InitCharDataScreenVideo:
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
 	farcall LoadMenuFontGfx ; $5c01
-	call InitDrillWorkRam ; $5c04
+	call InitCharDataWorkRam ; $5c04
 	call BuildCharDataScreenPages ; $5c07
 	ret ; $5c0a
 DrawCharDataConfirmPrompt:
@@ -271,8 +271,8 @@ StopCharDataValuesSyncTask:
 	ld hl, CharDataValuesSyncTask ; $5c1e
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
-DrillDisplayData_1d:
-	INCLUDE "data/engine/menus/char_data/DrillDisplayData_1d.asm" ; $5c25, 9 bytes (blit_runs)
+CharDataAttrClearPatch_1d:
+	INCLUDE "data/engine/menus/char_data/CharDataAttrClearPatch_1d.asm" ; $5c25, 9 bytes (blit_runs)
 StatPageTilemapPatch0:
 	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch0.asm" ; $5c2e, 5 bytes (blit_runs)
 CharDataSummaryPageTilemapPatch0:

@@ -776,7 +776,7 @@ engine/menus/char_data/CharDataScreenBgAndPalettes.asm 073541 40 palettes
 engine/menus/char_data/lz_CharDataScreenBgGfx.bin 073581 75e gfx
 engine/menus/char_data/lz_CharDataScreenBgTilemap.bin 073cdf 140 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin 073e1f d8 tilemap:32
-engine/menus/char_data/DrillDisplayData_1d.asm 075c25 9 blit_runs
+engine/menus/char_data/CharDataAttrClearPatch_1d.asm 075c25 9 blit_runs
 engine/menus/char_data/StatPageTilemapPatch0.asm 075c2e 5 blit_runs
 engine/menus/char_data/CharDataSummaryPageTilemapPatch0.asm 075c33 35 blit_runs
 engine/menus/char_data/CharDataSummaryPageTilemapPatch1.asm 075c68 35 blit_runs

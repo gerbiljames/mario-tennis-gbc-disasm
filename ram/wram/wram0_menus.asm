@@ -278,8 +278,8 @@ wLinkSelectStartupFrames:: db
 ; [8-bit] Stage of RunMatchWinLoseScreen, set as the screen opens and branched on twice
 wMatchWinLoseState:: db
 
-; [8-bit] Sub-state of the first match-select handler, set on two paths and read back once
-wMatchSelectSubState:: db
+; [8-bit] GetStoryContinueDestination's EXIT_MAIN_MENU_* id, held across the save and passed on as wStoryModeExitTriggerRequest
+wStoryContinueExitId:: db
 
 ; [8-bit] Next window tile id the text engine stamps into the shadow tilemap. A row starts at wGlyphRowStartCol + $80 and the cell loop increments it per cell, so a wrapped row continues where the previous one stopped
 wTextRowNextTile:: db

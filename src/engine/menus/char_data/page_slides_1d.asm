@@ -154,7 +154,7 @@ BobArrowSpriteRight:
 CharDataArrowBobOffsetTable_1d:
 	; $4c9c, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
-RunDrillResultInputLoop:
+RunCharDataPageInputLoop:
 	wram_bank WRAM_SCENE ; $4cac
 	ld a, [wCharDataPageArrowMode] ; $4cb2
 	or a ; $4cb5
@@ -478,7 +478,7 @@ SlideToMainCharStatPage:
 	ld hl, MainCharStatPageTilemapPatch04 ; $50ba
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $50bd
 	call ApplyTilemapPatchList ; $50c0
-	ld hl, DrillDisplayData_1d ; $50c3
+	ld hl, CharDataAttrClearPatch_1d ; $50c3
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $50c6
 	call ApplyTilemapPatchList ; $50c9
 	farcall FlushCharDataTilemapsFar ; $50cc
@@ -788,7 +788,7 @@ SlideFromMainCharStatPage:
 	ld hl, MainCharStatPageTilemapPatch04 ; $53f1
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $53f4
 	call ApplyTilemapPatchList ; $53f7
-	ld hl, DrillDisplayData_1d ; $53fa
+	ld hl, CharDataAttrClearPatch_1d ; $53fa
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $53fd
 	call ApplyTilemapPatchList ; $5400
 	farcall FlushCharDataTilemapsFar ; $5403
@@ -807,7 +807,7 @@ SlideFromMainCharStatPage:
 	ld hl, StatPageTilemapPatch8 ; $5427
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $542a
 	call ApplyTilemapPatchList ; $542d
-	ld hl, DrillDisplayData_1d ; $5430
+	ld hl, CharDataAttrClearPatch_1d ; $5430
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $5433
 	call ApplyTilemapPatchList ; $5436
 	farcall FlushCharDataTilemapsFar ; $5439

@@ -247,7 +247,7 @@ wLastShotAimOffset:: db
 ; [8-bit] Nonzero when the shot just struck is a special/power hit. Cleared at the top of ExecuteShot; set to 1 when the ball is struck above height $0140, and from the 32-entry toss-height table on serves. Forces the special-shot flash (wSpecialHitTimer) over the normal spark, and on the rally's first shot shows court banner $0e
 wSpecialShotFlag:: db
 
-; [8-bit] Set to 1 by each ExecuteShotPower* variant, cleared by ExecuteShot at every swing: marks the power version of topspin/slice/flat. Write-only
+; [8-bit] Cleared by ExecuteShot at every swing; set to 1 by ExecuteShotPowerTopspin/PowerSlice/Smash, and given wSpecialShotFlag's value by SetSpecialShotFlagFromBallHeight. Write-only
 wLastShotWasPowerShot:: db
 
 ; [8-bit] When 1, the shot's lateral aim offsets are negated. ExecuteShot sets it to the parity of four conditions (hitter wCharSwingAnim == 6, == $0a, wCharMirrorAttrMask nonzero, wRallyLength == 0). LoadShotPlacementEntry negates the placement angle offset with it, and every court bank's SetBallVelocityFromEntry6 negates the entry's angle delta before adding it to wShotAimAngle

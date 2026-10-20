@@ -19,7 +19,7 @@ SlideToPartnerStatPage:
 	ld hl, PartnerStatPageTilemapPatch04 ; $546a
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $546d
 	call ApplyTilemapPatchList ; $5470
-	ld hl, DrillDisplayData_1d ; $5473
+	ld hl, CharDataAttrClearPatch_1d ; $5473
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5476
 	call ApplyTilemapPatchList ; $5479
 	farcall FlushCharDataTilemapsFar ; $547c
@@ -308,7 +308,7 @@ SlideFromPartnerStatPage:
 	ld hl, PartnerStatPageTilemapPatch04 ; $576e
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $5771
 	call ApplyTilemapPatchList ; $5774
-	ld hl, DrillDisplayData_1d ; $5777
+	ld hl, CharDataAttrClearPatch_1d ; $5777
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $577a
 	call ApplyTilemapPatchList ; $577d
 	farcall FlushCharDataTilemapsFar ; $5780
@@ -333,7 +333,7 @@ SlideFromPartnerStatPage:
 	ld hl, StatPageTilemapPatch8 ; $57b0
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $57b3
 	call ApplyTilemapPatchList ; $57b6
-	ld hl, DrillDisplayData_1d ; $57b9
+	ld hl, CharDataAttrClearPatch_1d ; $57b9
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $57bc
 	call ApplyTilemapPatchList ; $57bf
 	farcall FlushCharDataTilemapsFar ; $57c2

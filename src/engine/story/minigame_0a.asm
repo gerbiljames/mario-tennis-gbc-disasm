@@ -55,12 +55,12 @@ UpdateMinigameTarget:
 	call MoveMinigameTargetTowardGoal ; $65f3
 	ld a, [wMinigameTargetsAltMode] ; $65f6
 	and a ; $65f9
-	jr nz, .expire ; $65fa
+	jr nz, .altMode ; $65fa
 	call DrawMinigameTarget ; $65fc
 	call CheckBallHitsMinigameTarget ; $65ff
 	call HandleMinigameTargetHit ; $6602
 	jr .done ; $6605
-.expire:
+.altMode:
 	call DrawMinigameTargetAlt ; $6607
 	call CheckBallHitsMinigameTargetAlt ; $660a
 	call HandleMinigameTargetHitAlt ; $660d
