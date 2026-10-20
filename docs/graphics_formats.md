@@ -825,7 +825,7 @@ the source claims is true, not just that the bytes come back:
 | `macros` | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | no global label covers both actor-script bytecode and CPU code |
 | `labels` | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
-| `headers` | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
+| `headers` | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted), and no label something references heads a fill region: bytes the game reads are written as data |
 | `branches` | no *new* conditional branch targets the instruction after it |
 | `literals` | no ROM address is written as a number where the source moves, no named WRAM address is split into `add`/`adc` halves, an `ld bc/de/hl` immediate is never a WRAM label's start, nor its negation ahead of an `add hl, rr` (`$10000 - wX`; exceptions allow-listed); no RAM/VRAM address half is a raw byte where it is checkable: a page added to an offset (`ld a, $d0 / add h / ld h, a`), a `cp` on a pointer's high byte, an `ld l/e` re-aiming a pointer loaded from a WRAM label, an `ld h/d` page the next instructions dereference |
 | `dma` | every label handed to a VRAM DMA routine is 16-byte aligned, including each entry of a `dw` table the source is read from (`Label tile n` / `Label + n` with `n` a multiple of 16 count) |

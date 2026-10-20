@@ -41,7 +41,7 @@ MatchSelectEntryPoints_10:
 	entry_id TEST_FROM_DEBUG_BOOT, $0a
 	db $ff
 MatchSelectExitTriggers_10:
-	ds 1, $ff ; $40af, fill
+	db $ff ; $40af
 MatchSelectRunCharacterSelect:
 	farcall BeginCutsceneScriptMode ; $40b0
 	script_fade_out 16 ; $40b3
@@ -106,9 +106,9 @@ MatchSelectHandlerTable_10:
 	map_script ACTOR_MATCH_SELECT_SITUPS_A_3, FACEMASK_ANY, $0000, MatchSelectRunEndingCredits, $00, $00
 	db $ff
 MatchSelectFacingScripts_10:
-	ds 1, $ff ; $418e, fill
+	db $ff ; $418e
 MatchSelectTileTriggers_10:
-	ds 1, $ff ; $418f, fill
+	db $ff ; $418f
 MatchSelectInitScript_10:
 	xor a ; $4190
 	ld [wStoryModeShowLocationName], a ; $4191

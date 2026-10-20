@@ -26,11 +26,11 @@ End7TrainingCtrExitTriggers_27:
 	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM
 	db $ff
 End7TrainingCtrNpcScripts_27:
-	ds 1, $ff ; $61ff, fill
+	db $ff ; $61ff
 End7TrainingCtrFacingScripts_27:
-	ds 1, $ff ; $6200, fill
+	db $ff ; $6200
 End7TrainingCtrTileTriggers_27:
-	ds 1, $ff ; $6201, fill
+	db $ff ; $6201
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
 	cp ENTRY_END7_TRAINING_CTR_SCENE_A ; $6205
@@ -217,11 +217,11 @@ End5ServiceAceCutscene_27:
 	farcall EndCutsceneScriptMode ; $6617
 	ret ; $661a
 End5ServiceAceNpcScripts_27:
-	ds 1, $ff ; $661b, fill
+	db $ff ; $661b
 End5ServiceAceFacingScripts_27:
-	ds 1, $ff ; $661c, fill
+	db $ff ; $661c
 End5ServiceAceTileTriggers_27:
-	ds 1, $ff ; $661d, fill
+	db $ff ; $661d
 End5ServiceAceInitScript_27:
 	call End5ServiceAceCutscene_27 ; $661e
 	ret ; $6621
@@ -279,11 +279,11 @@ End4JrCourtExitTriggers_27:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN, END4_JR_COURT_DONE_DOUBLES
 	db $ff
 End4JrCourtNpcScripts_27:
-	ds 1, $ff ; $67f5, fill
+	db $ff ; $67f5
 End4JrCourtFacingScripts_27:
-	ds 1, $ff ; $67f6, fill
+	db $ff ; $67f6
 End4JrCourtTileTriggers_27:
-	ds 1, $ff ; $67f7, fill
+	db $ff ; $67f7
 End4JrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $67f8
 	jr z, .checkStoryModeEntryPoint ; $67fb

@@ -171,7 +171,7 @@ MachineLevel4ClearedScene:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $41d8
 	ret ; $41e5
 TennisMachineRoomFacingScripts_14:
-	ds 1, $ff ; $41e6, fill
+	db $ff ; $41e6
 TennisMachineRoomTileTriggers_14:
 	; $41e7, 41 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, ~FLAG_TEMP_SCENE_VARIANT_B, TennisMachineRoomTile01_14, $00, $00

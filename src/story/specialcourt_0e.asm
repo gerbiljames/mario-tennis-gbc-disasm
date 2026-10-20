@@ -313,11 +313,11 @@ SpecialCourtExitTriggers_0e:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, SPECIAL_COURT_DONE
 	db $ff
 SpecialCourtNpcScripts_0e:
-	ds 1, $ff ; $76e4, fill
+	db $ff ; $76e4
 SpecialCourtFacingScripts_0e:
-	ds 1, $ff ; $76e5, fill
+	db $ff ; $76e5
 SpecialCourtTileTriggers_0e:
-	ds 1, $ff ; $76e6, fill
+	db $ff ; $76e6
 SpecialCourtInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $76e7
 	cp ENTRY_SPECIAL_COURT_DOUBLES_MAX + 1 ; $76ea

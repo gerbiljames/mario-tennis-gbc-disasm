@@ -85,13 +85,13 @@ End3DormEntEntryPoints_27:
 	map_entry $0f, FACE_UP, 22.0, 27.0, $0000 ; debug warp only
 	db $ff
 End3DormEntExitTriggers_27:
-	ds 1, $ff ; $6c81, fill
+	db $ff ; $6c81
 End3DormEntNpcScripts_27:
-	ds 1, $ff ; $6c82, fill
+	db $ff ; $6c82
 End3DormEntFacingScripts_27:
-	ds 1, $ff ; $6c83, fill
+	db $ff ; $6c83
 End3DormEntTileTriggers_27:
-	ds 1, $ff ; $6c84, fill
+	db $ff ; $6c84
 End3DormEntInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6c85
 	ld a, [wStoryModeEntryPoint] ; $6c88
@@ -215,11 +215,11 @@ EndRestaurantEntExitTriggers_27:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, ENTRY_TRAINING_COURT_TOUR
 	db $ff
 EndRestaurantEntNpcScripts_27:
-	ds 1, $ff ; $6f49, fill
+	db $ff ; $6f49
 EndRestaurantEntFacingScripts_27:
-	ds 1, $ff ; $6f4a, fill
+	db $ff ; $6f4a
 EndRestaurantEntTileTriggers_27:
-	ds 1, $ff ; $6f4b, fill
+	db $ff ; $6f4b
 EndRestaurantEntInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6f4c
 	cp ENTRY_END_RESTAURANT_ENT_SCENE ; $6f4f
@@ -338,11 +338,11 @@ End1MainBldgExitTriggers_27:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT
 	db $ff
 End1MainBldgNpcScripts_27:
-	ds 1, $ff ; $72f9, fill
+	db $ff ; $72f9
 End1MainBldgFacingScripts_27:
-	ds 1, $ff ; $72fa, fill
+	db $ff ; $72fa
 End1MainBldgTileTriggers_27:
-	ds 1, $ff ; $72fb, fill
+	db $ff ; $72fb
 End1MainBldgInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $72fc
 	cp ENTRY_END1_MAIN_BLDG_SCENE ; $72ff

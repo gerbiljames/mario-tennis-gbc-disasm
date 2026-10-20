@@ -65,7 +65,9 @@ after a real defect broke it:
             (it would split a routine in two)
   headers   every non-fill region header (`; $xxxx, N bytes (...)`) sits
             right under a label: a region after a ret or a table's end is
-            data under another label's name (seven such once hid there)
+            data under another label's name (seven such once hid there),
+            and no referenced global label heads a fill region (empty map
+            script lists and a tile the game uploads were written as fill)
   gfx       every gfx blob with a PNG beside it encodes back to the bytes
             the PNG was decoded from
   gfx-specs graphics carry a gfx spec, so they get a PNG: no spec-less
@@ -1048,6 +1050,29 @@ def check_region_headers(fail):
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
             fail("headers", f"{where}: {m.group(1)} has no label of its own -- "
                             f"name it (Unused_<bank>_*), or mark it (fill)")
+    return n + check_fill_labels(fail)
+
+
+_FILL_LINE_RE = re.compile(r"[^;]*;.*(, fill\b|\(fill\))")
+
+
+def check_fill_labels(fail):
+    """A global label directly over a fill region is referenced by nothing:
+    bytes the game reads are data, written as what they are."""
+    banks = [bank_lines(h) for h in holders()]
+    refs = {w for lines, _origin in banks for line in lines if not _GLOBAL_RE.match(line)
+            for w in re.findall(r"[A-Za-z_]\w*", line.split(";", 1)[0])}
+    n = 0
+    for lines, origin in banks:
+        for i, line in enumerate(lines[:-1]):
+            if not (g := _GLOBAL_RE.match(line)) or not _FILL_LINE_RE.match(lines[i + 1]):
+                continue
+            n += 1
+            name = g.group(1)
+            if name in refs:
+                where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                fail("headers", f"{where}: {name} is referenced but marked fill -- "
+                                f"write the bytes it holds")
     return n
 
 

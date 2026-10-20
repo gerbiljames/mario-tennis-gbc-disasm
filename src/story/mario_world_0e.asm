@@ -299,7 +299,7 @@ MarioWorldNpcScripts_0e:
 	map_script ACTOR_MARIO_WORLD_MARIO, FACEMASK_ANY, $0000, MarioWorldNpc12Mario_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 MarioWorldFacingScripts_0e:
-	ds 1, $ff ; $54cf, fill
+	db $ff ; $54cf
 MarioWorldTileTriggers_0e:
 	db $ff ; $54d0
 Unused_0e_StubNop:

@@ -46,11 +46,11 @@ End17AwardCeremonyExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, END17_AWARD_CEREMONY_DONE
 	db $ff
 End17AwardCeremonyNpcScripts_27:
-	ds 1, $ff ; $419c, fill
+	db $ff ; $419c
 End17AwardCeremonyFacingScripts_27:
-	ds 1, $ff ; $419d, fill
+	db $ff ; $419d
 End17AwardCeremonyTileTriggers_27:
-	ds 1, $ff ; $419e, fill
+	db $ff ; $419e
 End17AwardCeremonyInitScript_27:
 	test_flag FLAG_DOUBLES ; $419f
 	jr z, .animate ; $41a2
@@ -271,11 +271,11 @@ End16BeforeFinalsExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CENTER_COURT, ENTRY_CENTER_COURT_FROM_TOURNAMENT_WEST, END16_BEFORE_FINALS_DONE
 	db $ff
 End16BeforeFinalsNpcScripts_27:
-	ds 1, $ff ; $46fa, fill
+	db $ff ; $46fa
 End16BeforeFinalsFacingScripts_27:
-	ds 1, $ff ; $46fb, fill
+	db $ff ; $46fb
 End16BeforeFinalsTileTriggers_27:
-	ds 1, $ff ; $46fc, fill
+	db $ff ; $46fc
 End16BeforeFinalsInitScript_27:
 	test_flag FLAG_DOUBLES ; $46fd
 	jr nz, .isDoubles ; $4700

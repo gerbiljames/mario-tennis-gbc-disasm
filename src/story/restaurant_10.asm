@@ -386,9 +386,9 @@ CafeteriaNpcScripts_10:
 	map_script ACTOR_CAFETERIA_STUDENT_BLACK_HAIR_BOY_2, FACEMASK_ANY, $0000, CafeteriaNpc09_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 CafeteriaFacingScripts_10:
-	ds 1, $ff ; $5a50, fill
+	db $ff ; $5a50
 CafeteriaTileTriggers_10:
-	ds 1, $ff ; $5a51, fill
+	db $ff ; $5a51
 CafeteriaInitScript_10:
 	call SetStoryDialogueStage_10 ; $5a52
 	ld a, [wMapSceneStage] ; $5a55
@@ -934,9 +934,9 @@ RestaurantNpcScripts_10:
 	map_script ACTOR_RESTAURANT_STUDENT_BLACK_HAIR_BOY_2, FACEMASK_ANY, $0000, RestaurantNpc10_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 RestaurantFacingScripts_10:
-	ds 1, $ff ; $60ef, fill
+	db $ff ; $60ef
 RestaurantTileTriggers_10:
-	ds 1, $ff ; $60f0, fill
+	db $ff ; $60f0
 RestaurantInitScript_10:
 	call SetStoryDialogueStage_10 ; $60f1
 	ld a, [wMapSceneStage] ; $60f4

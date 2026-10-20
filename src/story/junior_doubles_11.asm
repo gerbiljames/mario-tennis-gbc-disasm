@@ -368,11 +368,11 @@ JuniorClassCourtDoublesDNpc0A_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5a18
 	ret ; $5a1d
 JuniorClassCourtDoublesFacingScripts_11:
-	ds 1, $ff ; $5a1e, fill
+	db $ff ; $5a1e
 Unused_11_NullScriptA:
 	ret ; $5a1f
 JuniorClassCourtDoublesTileTriggers_11:
-	ds 1, $ff ; $5a20, fill
+	db $ff ; $5a20
 Unused_11_NullScriptB:
 	ret ; $5a21
 JuniorClassCourtDoublesInitScript_11:

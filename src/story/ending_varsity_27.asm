@@ -47,11 +47,11 @@ End10VarsityCourtExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_END10_VARSITY_COURT, ENTRY_END10_VARSITY_COURT_SCENE, END10_VARSITY_COURT_DONE
 	db $ff
 End10VarsityCourtNpcScripts_27:
-	ds 1, $ff ; $561a, fill
+	db $ff ; $561a
 End10VarsityCourtFacingScripts_27:
-	ds 1, $ff ; $561b, fill
+	db $ff ; $561b
 End10VarsityCourtTileTriggers_27:
-	ds 1, $ff ; $561c, fill
+	db $ff ; $561c
 End10VarsityCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $561d
 	cp ENTRY_END10_VARSITY_COURT_SCENE ; $5620
@@ -436,11 +436,11 @@ End8SrCourtExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END8_SR_COURT, ENTRY_END8_SR_COURT_SCENE, END8_SR_COURT_DONE
 	db $ff
 End8SrCourtNpcScripts_27:
-	ds 1, $ff ; $5ed5, fill
+	db $ff ; $5ed5
 End8SrCourtFacingScripts_27:
-	ds 1, $ff ; $5ed6, fill
+	db $ff ; $5ed6
 End8SrCourtTileTriggers_27:
-	ds 1, $ff ; $5ed7, fill
+	db $ff ; $5ed7
 End8SrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $5ed8
 	jp z, .notDoubles ; $5edb

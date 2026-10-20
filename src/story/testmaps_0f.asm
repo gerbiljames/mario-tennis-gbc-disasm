@@ -33,7 +33,7 @@ SmallCharTestEntryPoints_0f:
 	map_entry $01, FACE_DOWN, 11.0, 11.0, $0000 ; debug warp only
 	db $ff
 SmallCharTestExitTriggers_0f:
-	ds 1, $ff ; $40cf, fill
+	db $ff ; $40cf
 Unused_0f_SmallCharTestStageStepDown:
 	ld hl, wMapSceneStage ; $40d0
 	ld a, [hl] ; $40d3
@@ -118,7 +118,7 @@ SmallCharTestNpcScripts_0f:
 	map_script ACTOR_SMALL_CHAR_TEST_WALUIGI_2, FACEMASK_ANY, $0000, MapScriptNop_0f, NPC_FACE_PLAYER, $00
 	db $ff
 SmallCharTestFacingScripts_0f:
-	ds 1, $ff ; $4199, fill
+	db $ff ; $4199
 SmallCharTestTile01_0f:
 	ret ; $419a
 SmallCharTestTileTriggers_0f:
@@ -210,7 +210,7 @@ AwardsCeremonyEntryPoints_0f:
 	map_entry $0b, FACE_UP, 11.0, 41.0, $0000, AWARDS_CEREMONY_DOUBLES
 	db $ff
 AwardsCeremonyExitTriggers_0f:
-	ds 1, $ff ; $4446, fill
+	db $ff ; $4446
 AwardsCeremonyNpcScripts_0f:
 	; $4447, 81 bytes (map_scripts)
 	map_script ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, FACEMASK_ANY, $0000, $0000, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00

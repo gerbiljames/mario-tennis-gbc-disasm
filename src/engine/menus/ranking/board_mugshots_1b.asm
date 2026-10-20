@@ -759,7 +759,7 @@ RankingAnimDoublesClimbRow2:
 	sound SFX_MARKER ; $5406
 	ld c, $00 ; $5408
 	call GetRankingMarkerSlot ; $540a
-	ld de, RankingAnimDoublesClimbRow2Table ; $540d
+	ld de, RankingAnimDoublesClimbRow2Right28 ; $540d
 	call StartRankingMarkerAnim2 ; $5410
 	ld c, $02 ; $5413
 	call GetRankingMarkerSlot ; $5415
@@ -782,7 +782,7 @@ RankingAnimDoublesClimbRow2:
 	sound SFX_MARKER ; $5446
 	ld c, $03 ; $5448
 	call GetRankingMarkerSlot ; $544a
-	ld de, RankingAnimDoublesClimbRow2Table ; $544d
+	ld de, RankingAnimDoublesClimbRow2Right28 ; $544d
 	call StartRankingMarkerAnim2 ; $5450
 	ld c, $05 ; $5453
 	call GetRankingMarkerSlot ; $5455
@@ -799,7 +799,7 @@ RankingAnimDoublesClimbRow3:
 	sound SFX_MARKER ; $5479
 	ld c, $00 ; $547b
 	call GetRankingMarkerSlot ; $547d
-	ld de, RankingAnimDoublesClimbRow3Table ; $5480
+	ld de, RankingAnimDoublesClimbRow3Right4 ; $5480
 	call StartRankingMarkerAnim0 ; $5483
 	ld c, $03 ; $5486
 	call GetRankingMarkerSlot ; $5488
