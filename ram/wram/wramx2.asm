@@ -54,7 +54,7 @@ wMapScrollPlane0:: ds 1024
 wMapScrollPlane1:: ds 1024
 NEXTU
 ; screen attribute plane
-; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03; FlushCharDataTilemapChunk sends the pair to $99e0 in VRAM banks 0 and 1. Written by seventeen ROM banks. The character-data page images above it keep numeric addresses. Plane writers such as FillTilemapRun, WriteTextToTilemap and RenderProportionalTextAt select both banks themselves (tile under $03, attribute under $02)
+; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03; FlushCharDataTilemapChunk sends the pair to $99e0 in VRAM banks 0 and 1. The character-data page images above it are the ram_mirrored.inc EQUs wCharDataPagePlane and wCharDataPageSlot1-3. Plane writers such as FillTilemapRun, WriteTextToTilemap and RenderProportionalTextAt select both banks themselves (tile under $03, attribute under $02)
 UNION
 wScreenAttrmap:: ds 1024
 	export_size wScreenAttrmap

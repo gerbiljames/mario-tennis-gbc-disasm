@@ -980,10 +980,10 @@ the sound engine and the serial link, sets `wSpriteBufferPage = $c0`, and ends
 with `farcall InitAndRunGame` (`$00:$262c`); the following `stop` is unreachable
 because that call never returns.
 
-`InitAndRunGame` (`$01:$4018`) clears every WRAM bank, loads the shared menu
+`InitAndRunGame` (`$01:$4018`) clears WRAM banks `$01`-`$06`, loads the shared menu
 font and OBJ palettes, validates and repairs SRAM, initialises story and match
 state, enables the LCD, fades in, and does `farcall RunStoryModeOverworld` with
-`wStoryModeCurrentLocation = 0` and `wStoryModeEntryPoint = $0a`
+`STORYLOC_MAIN_MENU` and `ENTRY_MAIN_MENU_TITLE`
 (`$01:$40a5`-`$40af`). Only if that returns does the build-stamp screen at
 `.buildStampLoop` (`$01:$40b2`) appear, waiting for A or START and re-entering the
 overworld. So it is the boot manager, and its debug-harness half is unreachable.
