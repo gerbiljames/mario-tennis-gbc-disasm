@@ -399,7 +399,9 @@ turns it into `$d000 + slot*$40`.
 `court_scene` rows); the overworld uses `$10`-`$24`. `SCENE_*` constants name
 each record; its blob family (`SceneConfig`, `Palettes`, `Tiles`, `Tilemap`,
 `Attrmap`, `CollisionMap`, `BehaviorMap`, and the `data/` files) uses the same
-name in CamelCase (`SCENE_RESTAURANT` → `lz_RestaurantTilemap.tilemap`).
+name in CamelCase (`SCENE_RESTAURANT` → `lz_RestaurantTilemap.tilemap`). The
+courts have `ScoreboardColumnTiles`/`ScoreboardColumnAttrs` in place of
+`SceneConfig`, `CollisionMap` and `BehaviorMap`.
 
 `LoadStorySceneGraphics` (`$0a:$585d`) consumes the slots in this order:
 
@@ -416,8 +418,8 @@ name in CamelCase (`SCENE_RESTAURANT` → `lz_RestaurantTilemap.tilemap`).
 
 Slots 2-5 and 7 are decompressed. Most records' slot 6 holds an
 `*SceneUnusedSlot` filler or a stray pointer to the next scene's config. For
-the 16 court records, read by the court loader, slot 4 aliases slot 0 and
-slot 5 is `*ScoreboardColumnAttrs` (`graphics_formats.md` §3.4).
+the 16 court records, read by the court loader, slots 0 and 4 are
+`*ScoreboardColumnTiles` and slot 5 is `*ScoreboardColumnAttrs` (`graphics_formats.md` §3.4).
 
 Only scene-config bytes `+2..+5` are read: `wMapScrollMinX`,
 `wMapScrollMinY`, `wMapWidthTiles`, `wMapHeightTiles` (`$0a:$5912`). The

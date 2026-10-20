@@ -3,7 +3,8 @@
 ; selected by CourtSceneDataTable; 16-36 the overworld, selected by the
 ; story_location records. Each scene's blob family (SceneConfig, Palettes,
 ; Tiles, Tilemap, ...) carries the same name in CamelCase: SCENE_RESTAURANT's
-; tilemap is RestaurantTilemap.
+; tilemap is RestaurantTilemap. The courts have ScoreboardColumnTiles/Attrs in
+; place of SceneConfig.
 	const_def
 	const SCENE_MINIGAME_COURT       ; $00 Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
 	const SCENE_TARGET_SHOT_COURT    ; $01
