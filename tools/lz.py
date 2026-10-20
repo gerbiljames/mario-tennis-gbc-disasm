@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Codec for the LZ scheme used by DecompressData ($1797).
 
-Both directions: decompress() reads the game's streams, compress() writes
-new ones the game reads back, which is what makes the compressed graphics
-editable. Verified by round-tripping all 863 streams in the ROM.
+Both directions: decompress() reads the game's streams, compress() is the
+original encoder, which is what makes the compressed graphics editable.
+Verified by round-tripping all 863 streams in the ROM: each re-encodes from
+its decoded data to the same bytes.
 
 A stream is a sequence of groups: one control byte holding 8 flags consumed
 LSB-first, each flag introducing either a literal byte (flag = 1) or a
@@ -62,20 +63,88 @@ def decompress(rom, off, end=None):
                     out.append(out[i])
 
 
-# A reference encodes `d = 0x800 - distance`, so d = 0 (distance 2048) with the
-# minimum length is exactly the $0000 terminator. Capping the distance at 2047
-# keeps every emitted reference distinguishable from it.
-MIN_MATCH, MAX_MATCH, MAX_DIST = 3, 34, 0x7FF
+# The original encoder is Haruhiko Okumura's lzss.c (1989): a binary search
+# tree over a 2 KiB ring, the lookahead starting at N - F. Its ring positions
+# before the data are never inserted, so no reference reaches before the
+# stream start, and a distance is at most N - 1, never the 2048 that would
+# spell the $0000 terminator.
+N, F, THRESHOLD = 0x800, 34, 2
+NIL = N
 
 
 def compress(data):
-    """Encode `data` into a stream decompress() reads back exactly. Greedy
-    longest-match LZ77 over the format's 2 KiB window; matches may overlap the
-    write position, which is how the original encoder writes runs."""
+    """Encode `data` exactly as the original encoder did: every stream in the
+    ROM re-encodes from its decoded data to the same bytes."""
+    text = bytearray(N + F - 1)
+    lson = [NIL] * (N + 1)
+    rson = [NIL] * (N + 257)    # rson[N + 1 + c]: the tree root for first byte c
+    dad = [NIL] * (N + 1)
+    match_pos = match_len = 0
+
+    def insert(r):
+        """Add the string at r to the tree, leaving the longest match it
+        shares with an earlier string in match_pos/match_len; a full-length
+        match replaces the older node."""
+        nonlocal match_pos, match_len
+        cmp, p = 1, N + 1 + text[r]
+        lson[r] = rson[r] = NIL
+        match_len = 0
+        while True:
+            child = rson if cmp >= 0 else lson
+            if child[p] == NIL:
+                child[p], dad[r] = r, p
+                return
+            p = child[p]
+            for i in range(1, F):
+                cmp = text[r + i] - text[p + i]
+                if cmp:
+                    break
+            else:
+                i = F
+            if i > match_len:
+                match_pos, match_len = p, i
+                if i >= F:
+                    break
+        dad[r], lson[r], rson[r] = dad[p], lson[p], rson[p]
+        dad[lson[p]] = dad[rson[p]] = r
+        if rson[dad[p]] == p:
+            rson[dad[p]] = r
+        else:
+            lson[dad[p]] = r
+        dad[p] = NIL
+
+    def delete(p):
+        if dad[p] == NIL:
+            return
+        if rson[p] == NIL:
+            q = lson[p]
+        elif lson[p] == NIL:
+            q = rson[p]
+        else:
+            q = lson[p]
+            if rson[q] != NIL:
+                while rson[q] != NIL:
+                    q = rson[q]
+                rson[dad[q]] = lson[q]
+                dad[lson[q]] = dad[q]
+                lson[q] = lson[p]
+                dad[lson[p]] = q
+            rson[q] = rson[p]
+            dad[rson[p]] = q
+        dad[q] = dad[p]
+        if rson[dad[p]] == p:
+            rson[dad[p]] = q
+        else:
+            lson[dad[p]] = q
+        dad[p] = NIL
+
     out = bytearray()
     tokens = []          # (flag bit, bytes) -- flag 1 = literal
-    index = {}           # 3-byte key -> positions, most recent last
-    i = 0
+
+    def emit(flag, b):
+        tokens.append((flag, b))
+        if len(tokens) == 8:
+            flush()
 
     def flush(final=False):
         """Emit one group: the control byte, then its items."""
@@ -90,38 +159,33 @@ def compress(data):
             out.append(0)
         tokens.clear()
 
-    while i < len(data):
-        best_len, best_dist = 0, 0
-        key = bytes(data[i:i + MIN_MATCH])
-        if len(key) == MIN_MATCH:
-            for start in reversed(index.get(key, ())):
-                dist = i - start
-                if dist > MAX_DIST:
-                    break
-                n = 0
-                while (n < MAX_MATCH and i + n < len(data)
-                       and data[start + n] == data[i + n]):
-                    n += 1
-                if n > best_len:
-                    best_len, best_dist = n, dist
-                    if n == MAX_MATCH:
-                        break
-        if best_len >= MIN_MATCH:
-            d = 0x800 - best_dist
-            tokens.append((0, bytes((d & 0xFF,
-                                     (d >> 8) << 5 | (best_len - MIN_MATCH)))))
-            step = best_len
+    s, r = 0, N - F
+    pos = length = min(F, len(data))
+    text[r:r + length] = data[:length]
+    if length:
+        insert(r)
+    while length > 0:
+        n = min(match_len, length)
+        if n <= THRESHOLD:
+            n = 1
+            emit(1, bytes((text[r],)))
         else:
-            tokens.append((1, bytes((data[i],))))
-            step = 1
-        for k in range(i, i + step):
-            if k + MIN_MATCH <= len(data):
-                index.setdefault(bytes(data[k:k + MIN_MATCH]), []).append(k)
-        i += step
-        if len(tokens) == 8:
-            flush()
-
-    tokens.append((0, b"\x00\x00"))
+            d = 0x800 - ((r - match_pos) & (N - 1))
+            emit(0, bytes((d & 0xFF, (d >> 8) << 5 | (n - 3))))
+        for _ in range(n):
+            delete(s)
+            if pos < len(data):
+                c = data[pos]
+                pos += 1
+                text[s] = c
+                if s < F - 1:
+                    text[s + N] = c
+            else:
+                length -= 1
+            s, r = (s + 1) & (N - 1), (r + 1) & (N - 1)
+            if length:
+                insert(r)
+    emit(0, b"\x00\x00")
     flush(final=True)
     return bytes(out)
 
@@ -132,10 +196,9 @@ USAGE = """usage:
   lz.py --size-inc lz_<Label>.bin   print `DEF <Label>_SIZE EQU <decoded bytes>`
 
 Encoding is what makes compressed graphics editable: decode a stream, edit the
-bytes, encode them back over its lz_<Label>.bin in data/ and rebuild. The result
-does not have to match the original stream byte for byte -- only to decode back
-to the same data -- so an edit that compresses differently is fine as long as
-the bank still has room for it."""
+bytes, encode them back over its lz_<Label>.bin in data/ and rebuild. Unchanged
+data encodes to the original stream byte for byte; an edit only needs the bank
+to still have room for the stream it encodes to."""
 
 
 def main():

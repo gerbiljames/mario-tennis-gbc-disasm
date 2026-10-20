@@ -18,8 +18,8 @@ the layout, the names and the structure.
    MBC5+RAM+BATTERY. The two differ only in the header's region code
    (`BM8E`/`BM8P`) and header checksum, so either one builds both.
 2. Install [RGBDS](https://rgbds.gbdev.io/install) v1.0.0 or newer, or put
-   its binaries in `tools/rgbds/` (the Makefile's default; override with
-   `make RGBDS=`). `.rgbds-version` records the version the byte-perfect
+   its binaries in `tools/rgbds/` (used when present, else the ones on
+   `PATH`; override with `make RGBDS=<dir>/`). `.rgbds-version` records the version the byte-perfect
    build is verified against, and `rgbdscheck.asm` fails early on older
    assemblers.
 3. Extract the data and build:
@@ -179,8 +179,9 @@ because the layout is recomputed rather than restated:
   with its standing shadow, walk sprites as four facings side by side
   (`docs/graphics_formats.md` §0), everything else as tiles in blob order,
   sixteen per row. Edit the PNG and `make` re-encodes (and recompresses an
-  `lz_*`) blob; an untouched PNG rebuilds nothing, and enlarging a plain
-  image's canvas grows its blob.
+  `lz_*`) blob with the game's own encoder, so a touched but unchanged PNG
+  or grid rebuilds byte-identical; enlarging a plain image's canvas grows
+  its blob.
 - **Screen layouts are text.** The 241 tile and attribute planes (all LZ
   streams) are also `.tilemap` grids, one `tilemap_row` of hex cells per
   row at the width the loader uses; `make` re-encodes an edited grid. The 37 scenes get a view-only

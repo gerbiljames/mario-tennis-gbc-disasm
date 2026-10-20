@@ -5,7 +5,9 @@
 PNG beside its `.bin` under gitignored `data/`; the Makefile encodes a PNG
 back into its `.bin` when the PNG is the newer of the two, compressing it
 again if the blob is an LZ stream (an `lz_*` stem). Untouched PNGs never
-rebuild anything, so `make compare` still holds until an image is edited.
+rebuild anything, and a touched but unchanged one rebuilds the same bytes
+(the LZ encoder is the original), so `make compare` holds until an image is
+edited.
 
 The image is the tiles in blob order, 16 per row (fewer if the blob is
 shorter), as a 4-entry indexed PNG: index 0 is colour 0 (white in the

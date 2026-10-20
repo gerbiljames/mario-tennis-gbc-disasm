@@ -20,7 +20,7 @@ scenes/lz_AcademyMainBldgTilemap.bin scenes/lz_AcademyMainBldgAttrmap.bin scenes
 scenes/lz_DormRoomTilemap.bin scenes/lz_DormRoomAttrmap.bin scenes/lz_DormRoomTiles.bin scenes/DormRoomPalettes.asm
 scenes/lz_RestaurantPlazaTilemap.bin scenes/lz_RestaurantPlazaAttrmap.bin scenes/lz_RestaurantPlazaTiles.bin scenes/RestaurantPlazaPalettes.asm
 scenes/lz_CourtyardTilemap.bin scenes/lz_CourtyardAttrmap.bin scenes/lz_CourtyardTiles.bin scenes/CourtyardPalettes.asm
-scenes/lz_IslandSkyTilemap.bin scenes/lz_IslandSkyAttrmap.bin scenes/lz_IslandSkyTiles.bin scenes/IslandSkyPalettes.bin
+scenes/lz_IslandSkyTilemap.bin scenes/lz_IslandSkyAttrmap.bin scenes/lz_IslandSkyTiles.bin scenes/IslandSkyPalettes.asm
 scenes/lz_SpecialCourtTilemap.bin scenes/lz_SpecialCourtAttrmap.bin scenes/lz_SpecialCourtTiles.bin scenes/SpecialCourtPalettes.asm
 scenes/lz_SeniorClassCourtTilemap.bin scenes/lz_SeniorClassCourtAttrmap.bin scenes/lz_SeniorClassCourtTiles.bin scenes/SeniorClassCourtPalettes.asm
 scenes/lz_JuniorClassCourtTilemap.bin scenes/lz_JuniorClassCourtAttrmap.bin scenes/lz_JuniorClassCourtTiles.bin scenes/JuniorClassCourtPalettes.asm

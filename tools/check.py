@@ -7,7 +7,7 @@ that matter when the disassembly is used as a modding base, each one written
 after a real defect broke it:
 
   lz        every declared LZ stream decodes exactly within its extent, and
-            re-encodes to a stream that decodes back to the same bytes
+            its decoded data re-encodes to the same stream
   lz-labels no assembled symbol (build/mariotennis.sym) lands inside a
             compressed stream (a name once truncated two streams by 29 and
             160 bytes)
@@ -118,7 +118,7 @@ def load_manifest():
 
 def check_lz(manifest, fail):
     """Every LZ stream the build includes (data/, after the mods/ overlay)
-    decodes using exactly its bytes, and survives a re-encode."""
+    decodes using exactly its bytes, and re-encodes to exactly those bytes."""
     streams = [p for p, _o, _n, _s in manifest if "/lz_" in p]
     for path in streams:
         blob = (ROOT / "data" / path).read_bytes()
@@ -129,9 +129,8 @@ def check_lz(manifest, fail):
             continue
         if used != len(blob):
             fail("lz", f"{path}: decodes {used} bytes, the file has {len(blob)}")
-        back, _ = decompress(compress(data), 0)
-        if back != data:
-            fail("lz", f"{path}: re-encoded stream does not decode back")
+        if compress(data) != blob:
+            fail("lz", f"{path}: re-encoding its decoded data gives a different stream")
     return len(streams)
 
 

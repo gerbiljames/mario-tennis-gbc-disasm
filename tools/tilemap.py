@@ -109,15 +109,26 @@ def encode(txt_path, bin_path):
 
 
 def _palettes(path):
-    """The BGR555 words of a generated palettes .asm (or a raw 64-byte block)
-    as [(r, g, b)] per colour, 4 per palette."""
+    """The colours of a palettes .asm (`palette r,g,b, ...` rows of 5-bit
+    components, or `dw` BGR555 words) or a raw 64-byte block, as
+    [(r, g, b)] per colour, 4 per palette."""
     p = Path(path)
     if p.suffix == ".asm":
-        words = [int(w, 16) for w in re.findall(r"\$([0-9a-f]{4})", p.read_text())]
+        rgb = []
+        for line in p.read_text().splitlines():
+            code = line.split(";")[0].split()
+            if code[:1] == ["palette"]:
+                vals = [int(v) for v in " ".join(code[1:]).split(",")]
+                rgb += [tuple(vals[i:i + 3]) for i in range(0, len(vals), 3)]
+            elif code[:1] == ["dw"]:
+                for w in re.findall(r"\$([0-9a-fA-F]{4})", line.split(";")[0]):
+                    w = int(w, 16)
+                    rgb.append(tuple((w >> sh) & 0x1F for sh in (0, 5, 10)))
     else:
         raw = p.read_bytes()
-        words = [raw[i] | (raw[i + 1] << 8) for i in range(0, len(raw) - 1, 2)]
-    return [tuple(((w >> sh) & 0x1F) * 255 // 31 for sh in (0, 5, 10)) for w in words]
+        rgb = [tuple((raw[i] | raw[i + 1] << 8) >> sh & 0x1F for sh in (0, 5, 10))
+               for i in range(0, len(raw) - 1, 2)]
+    return [tuple(c * 255 // 31 for c in col) for col in rgb]
 
 
 def preview(tilemap_path, attr_path, tiles_path, pal_path, out_png, width):
@@ -170,8 +181,9 @@ def previews(list_path, data_dir):
         if not line.strip() or line.startswith("#"):
             continue
         tmp, atp, tip, plp = (Path(data_dir) / p for p in line.split())
-        if not all(p.exists() for p in (tmp, atp, tip, plp)):
-            continue
+        missing = [str(p) for p in (tmp, atp, tip, plp) if not p.exists()]
+        if missing:
+            raise FileNotFoundError(f"{list_path}: {', '.join(missing)} missing")
         width = 64 if (len(lz.decompress(tmp.read_bytes(), 0)[0]) if is_lz(tmp) else tmp.stat().st_size) >= 4096 else 32
         preview(tmp, atp, tip, plp, tmp.with_suffix(".preview.png"), width)
         n += 1

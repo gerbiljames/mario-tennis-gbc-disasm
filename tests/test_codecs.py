@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.helpers import TOOLS, assemble, needs_rgbasm
+from tests.helpers import BASEROM, ROOT, TOOLS, assemble, needs_rgbasm, needs_rom
 
 import lz
 
@@ -39,6 +39,28 @@ class LzRoundTrip(unittest.TestCase):
         stream = lz.compress(bytes(range(200)) * 3)
         with self.assertRaises(ValueError):
             lz.decompress(stream[:-3], 0, len(stream) - 3)
+
+    @needs_rom
+    def test_reencodes_rom_streams_exactly(self):
+        """compress() is the original encoder: a real stream's decoded data
+        encodes back to the stream itself, pad byte included."""
+        rom = BASEROM.read_bytes()
+        streams = []
+        for line in (ROOT / "data.manifest").read_text().splitlines():
+            f = line.split()
+            if f and "/lz_" in f[0]:
+                streams.append((f[0], int(f[1], 16), int(f[2], 16)))
+        longest = max(streams, key=lambda t: t[2])
+        for path, off, n in streams[:4] + [longest]:
+            stream = rom[off:off + n]
+            try:
+                data, used = lz.decompress(stream, 0, n)
+            except ValueError:
+                used = None
+            if used != n:
+                self.skipTest("baserom.gbc is not the USA ROM data.manifest describes")
+            with self.subTest(path):
+                self.assertEqual(lz.compress(data), stream)
 
 
 class TileImages(unittest.TestCase):
@@ -116,7 +138,8 @@ class TileImages(unittest.TestCase):
             tiles = bytes([0xFF, 0x00] * 8) + bytes([0x00, 0xFF] * 8)   # tile 0 colour 1, tile 1 colour 2
             tm = bytes([0, 1, 0x90, 0] * 8)                                # 4 wide x 8 rows
             am = bytes([0x0A, 0x2B, 0x08, 0x00] * 8)                       # bank 1 pal 2 / flipped pal 3 / glyph id / bank 0
-            pal = "".join(f"\tdw $0000, $001f, $03e0, $7c00 ; pal {i}\n" for i in range(8))
+            pal = "".join(f"\tpalette  0, 0, 0,  31, 0, 0,   0,31, 0,   0, 0,31 ; pal {i}\n"
+                          for i in range(8))
             paths = [os.path.join(d, n) for n in ("Map.bin", "Attr.bin", "Tiles.bin", "Pal.asm")]
             for pth, data in zip(paths, (tm, am, tiles, pal)):
                 with open(pth, "wb" if isinstance(data, bytes) else "w") as f:
@@ -130,6 +153,7 @@ class TileImages(unittest.TestCase):
             self.assertEqual(img.getpixel((8, 0)), (0, 255, 0))       # tile 1, pal 3 colour 2 = green
             self.assertEqual(img.getpixel((16, 0)), (224, 224, 224))  # a glyph-buffer id: grey
             self.assertEqual(img.getpixel((24, 0)), (224, 224, 224))  # VRAM bank 0: grey
+            self.assertTrue(any(len(set(c)) > 1 for _n, c in img.convert("RGB").getcolors()))
 
     def test_plain_image_grows_when_drawn_past_its_end(self):
         rng = random.Random(5)

@@ -1,4 +1,4 @@
-RGBDS   ?= tools/rgbds/
+RGBDS   ?= $(if $(wildcard tools/rgbds/rgbasm),tools/rgbds/,)
 RGBASM  := $(RGBDS)rgbasm
 RGBLINK := $(RGBDS)rgblink
 RGBFIX  := $(RGBDS)rgbfix

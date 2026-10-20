@@ -111,7 +111,7 @@ it reads only the `$0000` and the third byte is never read. `tools/lz.py`'s
 with `$00`; the 148 fresh-group streams have no pad.
 
 A distance of 2048 at minimum length would encode as `$0000`, the terminator;
-`lz.py`'s `MAX_DIST = 0x7FF` prevents it.
+the encoder's distances stop at 2047.
 
 ### 1.4 Entry points
 
@@ -129,7 +129,8 @@ uncompressed payloads. 282 `call` sites in `src/` reach one of the two.
 ### 1.5 The corpus
 
 `data.manifest` declares **863** LZ streams; `check.py`'s `lz` check (§7.5)
-requires each to decode using exactly its declared extent and to round-trip.
+requires each to decode using exactly its declared extent and to re-encode to
+the same bytes.
 
 * **318,679 compressed bytes → 808,508 decompressed** (39.4%).
 * **827 decompress to a multiple of 16 bytes** (whole tiles or map planes). The
@@ -144,10 +145,11 @@ requires each to decode using exactly its declared extent and to round-trip.
 
 ### 1.6 Editing a stream
 
-`lz.py -c infile outfile` encodes: greedy longest-match LZ77 over the 2 KiB
-window, verified to decode back before writing. A re-encoded stream need not
-match the original bytes, only decode to the same data, provided the bank has
-room. Streams live at `data/<folder>/lz_<Label>.bin`, beside the `src/` fragment
+`lz.py -c infile outfile` encodes with the original encoder, Haruhiko
+Okumura's `lzss.c` (binary-tree match search, N = 2048, F = 34, THRESHOLD = 2,
+the ring starting at N − F with no pre-inserted positions), so unchanged data
+re-encodes to the original stream byte for byte. An edited stream only needs
+the bank to have room. Streams live at `data/<folder>/lz_<Label>.bin`, beside the `src/` fragment
 that uses them (gitignored, extracted by `setup.sh`).
 
 **Never name an offset inside an `lz_*` extent**: a label there silently
@@ -803,7 +805,7 @@ pass:
 
 | check | count | what it asserts |
 |---|---|---|
-| `lz` | 863 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
+| `lz` | 863 | every stream decodes inside its extent and its decoded data re-encodes to the same stream |
 | `lz-labels` | 863 | no symbol lands inside a compressed stream |
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
 | `regions` | 4275 | manifest regions stay inside their bank and do not overlap |
