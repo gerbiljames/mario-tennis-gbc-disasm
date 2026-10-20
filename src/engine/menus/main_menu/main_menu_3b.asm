@@ -60,7 +60,7 @@ RunMainMenu:
 	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
 	set B_IE_TIMER, [hl] ; $5662
-	ld b, $01 ; $5664
+	ld b, MENUSLIDE_FORWARD ; $5664
 	call MainMenuSlideOut ; $5666
 	ld a, [wMenuCursorX] ; $5669
 	cp $02 ; $566c
@@ -87,7 +87,7 @@ RunMainMenu:
 	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
 	set B_IE_TIMER, [hl] ; $56a1
-	ld b, $00 ; $56a3
+	ld b, MENUSLIDE_BACK ; $56a3
 	call MainMenuSlideOut ; $56a5
 	ld a, MENUSLIDE_BACK ; $56a8
 	ld [wMenuSlideDirection], a ; $56aa

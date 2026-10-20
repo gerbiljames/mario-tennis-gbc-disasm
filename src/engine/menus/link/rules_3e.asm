@@ -109,7 +109,7 @@ RunLinkMatchRulesMenu:
 	call ResetSerialState ; $455b
 	call EnableTimerInterrupt ; $455e
 	call ClearFrameTasks ; $4561
-	ld b, $01 ; $4564
+	ld b, MENUSLIDE_FORWARD ; $4564
 	call CloseMatchRulesPanel ; $4566
 	ld a, MENUSLIDE_FORWARD ; $4569
 	ld [wMenuSlideDirection], a ; $456b
@@ -127,7 +127,7 @@ RunLinkMatchRulesMenu:
 	ldh [hLinkExchangeActive], a ; $4581
 	call ResetSerialState ; $4583
 	call ClearFrameTasks ; $4586
-	ld b, $00 ; $4589
+	ld b, MENUSLIDE_BACK ; $4589
 	call CloseMatchRulesPanel ; $458b
 	ld a, MENUSLIDE_BACK ; $458e
 	ld [wMenuSlideDirection], a ; $4590

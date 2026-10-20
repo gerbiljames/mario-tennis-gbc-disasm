@@ -353,7 +353,7 @@ RunMatchFormatSelect:
 	ld hl, rIE ; $5d51
 	set B_IE_TIMER, [hl] ; $5d54
 	call ClearFrameTasks ; $5d56
-	ld b, $01 ; $5d59
+	ld b, MENUSLIDE_FORWARD ; $5d59
 	call MatchFormatSlideOut ; $5d5b
 	ld a, MENUSLIDE_FORWARD ; $5d5e
 	ld [wMenuSlideDirection], a ; $5d60
@@ -365,7 +365,7 @@ RunMatchFormatSelect:
 	ld hl, rIE ; $5d6b
 	set B_IE_TIMER, [hl] ; $5d6e
 	call ClearFrameTasks ; $5d70
-	ld b, $00 ; $5d73
+	ld b, MENUSLIDE_BACK ; $5d73
 	call MatchFormatSlideOut ; $5d75
 	ld a, MENUSLIDE_BACK ; $5d78
 	ld [wMenuSlideDirection], a ; $5d7a

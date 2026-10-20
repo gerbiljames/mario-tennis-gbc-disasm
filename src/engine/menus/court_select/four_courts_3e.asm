@@ -42,7 +42,7 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5bfd
 	ld hl, rIE ; $5c00
 	set B_IE_TIMER, [hl] ; $5c03
-	ld b, $01 ; $5c05
+	ld b, MENUSLIDE_FORWARD ; $5c05
 	call CloseCourtSelect4Panel ; $5c07
 	ld a, MENUSLIDE_FORWARD ; $5c0a
 	ld [wMenuSlideDirection], a ; $5c0c
@@ -59,7 +59,7 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5c20
 	ld hl, rIE ; $5c23
 	set B_IE_TIMER, [hl] ; $5c26
-	ld b, $00 ; $5c28
+	ld b, MENUSLIDE_BACK ; $5c28
 	call CloseCourtSelect4Panel ; $5c2a
 	ld a, MENUSLIDE_BACK ; $5c2d
 	ld [wMenuSlideDirection], a ; $5c2f
@@ -148,7 +148,7 @@ RunLinkCourtSelect4Menu:
 	ldh [hLinkExchangeActive], a ; $5ce1
 	call ResetSerialState ; $5ce3
 	call ClearFrameTasks ; $5ce6
-	ld b, $00 ; $5ce9
+	ld b, MENUSLIDE_BACK ; $5ce9
 	call CloseCourtSelect4Panel ; $5ceb
 	ld a, MENUSLIDE_BACK ; $5cee
 	ld [wMenuSlideDirection], a ; $5cf0

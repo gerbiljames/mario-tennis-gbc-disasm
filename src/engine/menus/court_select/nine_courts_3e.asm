@@ -63,7 +63,7 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $6591
 	ld hl, rIE ; $6594
 	set B_IE_TIMER, [hl] ; $6597
-	ld b, $01 ; $6599
+	ld b, MENUSLIDE_FORWARD ; $6599
 	call CloseCourtSelect9Panel ; $659b
 	ld a, MENUSLIDE_FORWARD ; $659e
 	ld [wMenuSlideDirection], a ; $65a0
@@ -80,7 +80,7 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $65b4
 	ld hl, rIE ; $65b7
 	set B_IE_TIMER, [hl] ; $65ba
-	ld b, $00 ; $65bc
+	ld b, MENUSLIDE_BACK ; $65bc
 	call CloseCourtSelect9Panel ; $65be
 	ld a, MENUSLIDE_BACK ; $65c1
 	ld [wMenuSlideDirection], a ; $65c3
@@ -183,7 +183,7 @@ RunLinkCourtSelect9Menu:
 	ldh [hLinkExchangeActive], a ; $668e
 	call ResetSerialState ; $6690
 	call ClearFrameTasks ; $6693
-	ld b, $00 ; $6696
+	ld b, MENUSLIDE_BACK ; $6696
 	call CloseCourtSelect9Panel ; $6698
 	ld a, MENUSLIDE_BACK ; $669b
 	ld [wMenuSlideDirection], a ; $669d

@@ -92,11 +92,11 @@ RunMinigameSelect:
 	call CheckMinigameGridExpanded ; $62a7
 	or a ; $62aa
 	jr nz, .slideOutGrid9 ; $62ab
-	ld b, $01 ; $62ad
+	ld b, MENUSLIDE_FORWARD ; $62ad
 	call MinigameSelectSlideOut6 ; $62af
 	jr .storeForwardSlide ; $62b2
 .slideOutGrid9:
-	ld b, $01 ; $62b4
+	ld b, MENUSLIDE_FORWARD ; $62b4
 	call MinigameSelectSlideOut9 ; $62b6
 .storeForwardSlide:
 	ld a, MENUSLIDE_FORWARD ; $62b9
@@ -115,11 +115,11 @@ RunMinigameSelect:
 	call CheckMinigameGridExpanded ; $62d5
 	or a ; $62d8
 	jr nz, .slideBackGrid9 ; $62d9
-	ld b, $00 ; $62db
+	ld b, MENUSLIDE_BACK ; $62db
 	call MinigameSelectSlideOut6 ; $62dd
 	jr .storeBackSlide ; $62e0
 .slideBackGrid9:
-	ld b, $00 ; $62e2
+	ld b, MENUSLIDE_BACK ; $62e2
 	call MinigameSelectSlideOut9 ; $62e4
 .storeBackSlide:
 	ld a, MENUSLIDE_BACK ; $62e7

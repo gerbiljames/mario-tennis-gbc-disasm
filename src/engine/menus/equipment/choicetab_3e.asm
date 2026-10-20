@@ -187,7 +187,7 @@ RunPlayAlonePartnerMenu:
 	call ClearFrameTasks ; $51f1
 	ld hl, rIE ; $51f4
 	set B_IE_TIMER, [hl] ; $51f7
-	ld b, $01 ; $51f9
+	ld b, MENUSLIDE_FORWARD ; $51f9
 	call CloseChoiceTabPanel ; $51fb
 	ld a, MENUSLIDE_FORWARD ; $51fe
 	ld [wMenuSlideDirection], a ; $5200
@@ -204,7 +204,7 @@ RunPlayAlonePartnerMenu:
 	call ClearFrameTasks ; $5214
 	ld hl, rIE ; $5217
 	set B_IE_TIMER, [hl] ; $521a
-	ld b, $00 ; $521c
+	ld b, MENUSLIDE_BACK ; $521c
 	call CloseChoiceTabPanel ; $521e
 	ld a, MENUSLIDE_BACK ; $5221
 	ld [wMenuSlideDirection], a ; $5223

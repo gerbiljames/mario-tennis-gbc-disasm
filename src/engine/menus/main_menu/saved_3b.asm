@@ -242,7 +242,7 @@ RunSavedDataSourceSelect:
 	call ClearFrameTasks ; $683c
 	ld hl, rIE ; $683f
 	set B_IE_TIMER, [hl] ; $6842
-	ld b, $01 ; $6844
+	ld b, MENUSLIDE_FORWARD ; $6844
 	farcall SavedDataPickerSlideOut ; $6846
 	ld a, MENUSLIDE_FORWARD ; $6849
 	ld [wMenuSlideDirection], a ; $684b
@@ -255,7 +255,7 @@ RunSavedDataSourceSelect:
 	call ClearFrameTasks ; $6859
 	ld hl, rIE ; $685c
 	set B_IE_TIMER, [hl] ; $685f
-	ld b, $00 ; $6861
+	ld b, MENUSLIDE_BACK ; $6861
 	farcall SavedDataPickerSlideOut ; $6863
 	ld a, MENUSLIDE_BACK ; $6866
 	ld [wMenuSlideDirection], a ; $6868

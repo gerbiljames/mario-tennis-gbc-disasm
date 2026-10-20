@@ -291,7 +291,7 @@ RunRacketShoesChoiceMenu:
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
 	set B_IE_TIMER, [hl] ; $4f07
-	ld b, $01 ; $4f09
+	ld b, MENUSLIDE_FORWARD ; $4f09
 	call CloseChoiceTabPanel ; $4f0b
 	ld a, MENUSLIDE_FORWARD ; $4f0e
 	ld [wMenuSlideDirection], a ; $4f10
@@ -304,7 +304,7 @@ RunRacketShoesChoiceMenu:
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21
 	set B_IE_TIMER, [hl] ; $4f24
-	ld b, $00 ; $4f26
+	ld b, MENUSLIDE_BACK ; $4f26
 	call CloseChoiceTabPanel ; $4f28
 	ld a, MENUSLIDE_BACK ; $4f2b
 	ld [wMenuSlideDirection], a ; $4f2d

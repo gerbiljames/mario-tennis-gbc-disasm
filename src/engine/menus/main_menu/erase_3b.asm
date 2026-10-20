@@ -83,7 +83,7 @@ RunEraseSavedDataSelect:
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
 	set B_IE_TIMER, [hl] ; $6d08
-	ld b, $01 ; $6d0a
+	ld b, MENUSLIDE_FORWARD ; $6d0a
 	call SavedDataPickerSlideOut ; $6d0c
 	ld a, MENUSLIDE_FORWARD ; $6d0f
 	ld [wMenuSlideDirection], a ; $6d11
@@ -95,7 +95,7 @@ RunEraseSavedDataSelect:
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
 	set B_IE_TIMER, [hl] ; $6d22
-	ld b, $00 ; $6d24
+	ld b, MENUSLIDE_BACK ; $6d24
 	call SavedDataPickerSlideOut ; $6d26
 	ld a, MENUSLIDE_BACK ; $6d29
 	ld [wMenuSlideDirection], a ; $6d2b
