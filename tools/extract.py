@@ -771,7 +771,11 @@ def main() -> int:
     # the mods/ overlay goes back on top of a fresh extraction of the real tree
     if Path(outdir).resolve() == (Path(__file__).resolve().parent.parent / "data"):
         import mods
-        n = mods.apply()
+        try:
+            n = mods.apply()
+        except mods.EditedSinceApply as e:
+            print(e, file=sys.stderr)
+            return 1
         if n:
             print(f"mods: {n} file(s) overlaid onto data/")
     return 0

@@ -224,6 +224,29 @@ class TileImages(unittest.TestCase):
             self.gfx.encode(lzp[:-4] + ".png", lzp)
             self.assertEqual(lz.decompress(Path(lzp).read_bytes(), 0)[0], data)
 
+    def test_png_without_text_chunks_uses_the_manifest(self):
+        from PIL import Image
+        rng = random.Random(7)
+        frame = bytes(rng.getrandbits(8) for _ in range(15 * 16))
+        font = bytes(rng.getrandbits(8) | 1 for _ in range(102 * 16))
+        with tempfile.TemporaryDirectory() as d:
+            man = Path(d) / "data.manifest"
+            man.write_text("sprites/Frame.bin 000000 f0 gfx:3x4+3\n"
+                           "text/lz_Font.bin 0000f0 10 gfx\n")
+            for rel, data in (("sprites/Frame.bin", frame), ("text/lz_Font.bin", font)):
+                binp = Path(d) / "data" / rel
+                binp.parent.mkdir(parents=True)
+                before = lz.compress(data) if self.gfx.is_lz(binp) else data
+                binp.write_bytes(before)
+                png = binp.with_suffix(".png")
+                self.gfx.decode(binp, png, "3x4+3" if "Frame" in rel else None)
+                img = Image.open(png)
+                img.load()
+                img.save(png)
+                self.assertNotIn("tiles", Image.open(png).text)
+                self.gfx.encode(png, binp, man)
+                self.assertEqual(binp.read_bytes(), before)
+
     def test_rejects_partial_tiles(self):
         with tempfile.TemporaryDirectory() as d:
             p = os.path.join(d, "d_4000.bin")

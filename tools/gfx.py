@@ -13,7 +13,9 @@ palette the file carries) and index 3 colour 3 (black). The tile count is
 stored in the file (`tiles=N`) so a blob whose last row is partial encodes
 back to exactly its original length. An editor that saves the image as
 grayscale or RGB is fine: pixels are mapped back by brightness, nearest of
-the four levels.
+the four levels. Many editors drop the `tiles=`/`layout=` text chunks; a
+PNG without them takes the layout from the blob's manifest spec and the
+tile count from the .bin it replaces (or the manifest length).
 
 A blob that is a run of sprite frames can carry a layout (`gfx:2x2`,
 `gfx:3x4+3` in the manifest, `layout=` in the PNG) so each frame is drawn
@@ -40,6 +42,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import lz  # noqa: E402
 
+MANIFEST = Path(__file__).resolve().parent.parent / "data.manifest"
 TILES_PER_ROW = 16
 LEVELS = (255, 170, 85, 0)      # colour index -> gray, index 3 darkest
 PALETTE = [v for g in LEVELS for v in (g, g, g)]
@@ -206,16 +209,46 @@ def decode(bin_path, png_path, layout=None):
     return ntiles
 
 
-def image_file_to_tiles(png_path):
+def manifest_fallback(bin_path, manifest=MANIFEST):
+    """(tile count, layout) for a blob from outside its PNG: the layout from
+    its manifest spec, the count from the .bin as it stands (decompressed if
+    lz_*) or else the manifest length. Either is None when unknown."""
+    bin_path = Path(bin_path).resolve()
+    ntiles = layout = None
+    try:
+        rel = bin_path.relative_to(Path(manifest).resolve().parent / "data").as_posix()
+        lines = Path(manifest).read_text().splitlines()
+    except (ValueError, OSError):
+        lines = []
+    for line in lines:
+        parts = line.split()
+        if parts and parts[0] == rel:
+            spec = parts[3] if len(parts) > 3 else ""
+            layout = spec.partition(":")[2] or None if spec.startswith("gfx") else None
+            if not is_lz(bin_path):
+                ntiles = int(parts[2], 16) // 16 or None
+            break
+    if bin_path.exists():
+        raw = bin_path.read_bytes()
+        try:
+            data = lz.decompress(raw, 0)[0] if is_lz(bin_path) else raw
+            ntiles = len(data) // 16 or ntiles
+        except Exception:
+            pass
+    return ntiles, layout
+
+
+def image_file_to_tiles(png_path, ntiles=None, layout=None):
     """The tile bytes an extracted PNG encodes to, using the tile count and
-    layout stored in the file. A plain image (no layout) whose canvas holds
-    more tiles than the count -- an editor enlarged it -- encodes up to the
-    last tile that is not blank, so a blob grows by drawing past its end;
-    blank padding in a partial last row stays padding."""
+    layout stored in the file, or `ntiles`/`layout` where the file has none.
+    A plain image (no layout) whose canvas holds more tiles than the count --
+    an editor enlarged it -- encodes up to the last tile that is not blank,
+    so a blob grows by drawing past its end; blank padding in a partial last
+    row stays padding."""
     from PIL import Image
     img = Image.open(png_path)
-    ntiles = int(img.text.get("tiles", 0)) or None
-    layout = img.text.get("layout") or None
+    ntiles = int(img.text.get("tiles", 0)) or ntiles
+    layout = img.text.get("layout") or layout
     if layout == "logo":
         return image_to_logo(img)
     if ntiles and not layout:
@@ -228,9 +261,9 @@ def image_file_to_tiles(png_path):
     return image_to_tiles(img, ntiles, layout)
 
 
-def encode(png_path, bin_path):
+def encode(png_path, bin_path, manifest=MANIFEST):
     """Write the blob file for a PNG, compressing it if the stem is lz_*."""
-    data = image_file_to_tiles(png_path)
+    data = image_file_to_tiles(png_path, *manifest_fallback(bin_path, manifest))
     if is_lz(bin_path):
         data = lz.compress(data)
     Path(bin_path).write_bytes(data)

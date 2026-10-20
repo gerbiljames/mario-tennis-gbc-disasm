@@ -132,7 +132,7 @@ USAGE = """usage:
   lz.py --size-inc lz_<Label>.bin   print `DEF <Label>_SIZE EQU <decoded bytes>`
 
 Encoding is what makes compressed graphics editable: decode a stream, edit the
-bytes, encode them back over data/<bank>/lz_<Label>.bin and rebuild. The result
+bytes, encode them back over its lz_<Label>.bin in data/ and rebuild. The result
 does not have to match the original stream byte for byte -- only to decode back
 to the same data -- so an edit that compresses differently is fine as long as
 the bank still has room for it."""
@@ -140,7 +140,7 @@ the bank still has room for it."""
 
 def main():
     if len(sys.argv) == 3 and sys.argv[1] == "--size-inc":
-        # data/<bank>/lz_<Label>.bin -> `DEF <Label>_SIZE EQU <decoded bytes>`,
+        # lz_<Label>.bin -> `DEF <Label>_SIZE EQU <decoded bytes>`,
         # the constant the bank source divides by 16 for a whole-stream copy
         path = Path(sys.argv[2])
         if not path.name.startswith("lz_"):

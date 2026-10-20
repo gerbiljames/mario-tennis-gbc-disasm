@@ -15,3 +15,4 @@ extraction, so a fork commits only the files it changed. Edit a file in
 `data/` and run `python3 tools/mods.py collect baserom.gbc` to bring every
 edited file here, or put files here directly. Sidecars `make` derives (a
 `.bin` from a PNG or grid, a `.inc`, a scene preview) do not belong here.
+Collect again after each further edit in `data/`: `make` refuses to overwrite one.

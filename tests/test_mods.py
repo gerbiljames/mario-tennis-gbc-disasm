@@ -12,15 +12,16 @@ class Overlay(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         root = Path(self.tmp.name)
-        self.saved = (mods.MODS, mods.DATA, mods.PRISTINE, mods.MANIFEST)
+        self.saved = (mods.MODS, mods.DATA, mods.PRISTINE, mods.MANIFEST, mods.APPLIED)
         mods.MODS, mods.DATA = root / "mods", root / "data"
         mods.PRISTINE = mods.DATA / ".mods-pristine"
+        mods.APPLIED = mods.DATA / ".mods-applied.json"
         self.rel = Path("bank_030") / "TextStrings_30.asm"
         (mods.DATA / self.rel).parent.mkdir(parents=True)
         (mods.DATA / self.rel).write_text("extracted\n")
 
     def tearDown(self):
-        mods.MODS, mods.DATA, mods.PRISTINE, mods.MANIFEST = self.saved
+        mods.MODS, mods.DATA, mods.PRISTINE, mods.MANIFEST, mods.APPLIED = self.saved
         self.tmp.cleanup()
 
     def mod(self, text):
@@ -104,6 +105,18 @@ class Overlay(unittest.TestCase):
         self.assertEqual(n, 1)
         self.assertEqual((mods.MODS / blob).read_bytes(), b"edited")
         self.assertEqual((mods.PRISTINE / blob).read_bytes(), b"rom bytes")
+
+    def test_apply_refuses_an_uncollected_edit(self):
+        self.mod("edit one\n")
+        mods.apply()
+        (mods.DATA / self.rel).write_text("edit two\n")
+        with self.assertRaises(mods.EditedSinceApply):
+            mods.apply()
+        self.assertEqual((mods.DATA / self.rel).read_text(), "edit two\n")
+        (mods.MODS / self.rel).unlink()
+        with self.assertRaises(mods.EditedSinceApply):
+            mods.restore()
+        self.assertEqual((mods.DATA / self.rel).read_text(), "edit two\n")
 
     def test_apply_is_idempotent(self):
         self.mod("edited\n")

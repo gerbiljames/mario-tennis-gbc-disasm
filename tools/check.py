@@ -84,6 +84,7 @@ The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
 """
 import bisect
+import hashlib
 import re
 import sys
 from pathlib import Path
@@ -97,6 +98,11 @@ import routes
 
 ROOT = BANK = None
 BANK_SIZE = 0x4000
+USA_SHA1 = "414ba58340a27fc27b127bc01455b32764151ff0"
+
+
+class Skipped(str):
+    """A check's return value when it does not apply to this build: the reason."""
 
 
 def load_manifest():
@@ -419,15 +425,16 @@ KNOWN_DB_WORDS = {
 }
 
 
-def check_db_pointers(rom, manifest, fail):
+def check_db_pointers(manifest, fail):
     """A label whose body is only `db` rows (inline, or a `bytes` region it
     INCLUDEs) holds no little-endian word equal to a label of its own bank:
     that is a pointer the assembler cannot move. Words are read at even
     offsets up to the next symbol. The allow-list holds the original layout's
-    coincidences, so an edited build, whose labels sit elsewhere, is skipped."""
+    coincidences, so a build other than the byte-perfect USA one is skipped."""
     built = ROOT / "mariotennis.gbc"
-    if not built.exists() or built.read_bytes() != rom:
-        return 0
+    rom = built.read_bytes() if built.exists() else b""
+    if hashlib.sha1(rom).hexdigest() != USA_SHA1:
+        return Skipped("mariotennis.gbc is not the byte-perfect USA build")
     specs = {p: s for p, _o, _n, s in manifest}
     at, by_addr = {}, {}
     for bank, addr, name in read_sym(rom_only=True):
@@ -652,10 +659,11 @@ def check_gfx(manifest, fail):
         raw = binp.read_bytes()
         want = gfx.lz.decompress(raw, 0)[0] if gfx.is_lz(binp) else raw
         layout = spec.partition(":")[2] or None
-        if (Image.open(png).text.get("layout") or None) != layout:
+        stored = Image.open(png).text.get("layout")
+        if stored is not None and (stored or None) != layout:
             fail("gfx", f"{path}: PNG layout is not the manifest's {layout!r}")
             continue
-        got = gfx.image_file_to_tiles(png)
+        got = gfx.image_file_to_tiles(png, len(want) // 16, layout)
         if got != want:
             fail("gfx", f"{path}: PNG does not encode back to the blob "
                         f"({len(got)} vs {len(want)} bytes)")
@@ -1422,7 +1430,7 @@ def main():
         "lz-names": check_unmarked_lz(rom, manifest, fail),
         "regions": check_regions(manifest, fail),
         "text": check_text_regions(rom, manifest, fail),
-        "db-words": check_db_pointers(rom, manifest, fail),
+        "db-words": check_db_pointers(manifest, fail),
         "addr-words": check_addr_shaped(rom, manifest, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
@@ -1447,6 +1455,9 @@ def main():
         by_check.setdefault(check, []).append(msg)
     for name, n in counts.items():
         bad = by_check.get(name, [])
+        if isinstance(n, Skipped):
+            print(f"{name:10s} skipped: {n}")
+            continue
         print(f"{name:10s} {n:5d} checked, {len(bad)} failed")
         for msg in bad[:10]:
             print(f"    {msg}")

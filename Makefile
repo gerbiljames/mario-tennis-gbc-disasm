@@ -123,8 +123,9 @@ compare: $(ROM)
 check: $(ROM)
 	$(PYTHON) tools/check.py
 
-# Redraw the view-only scene pictures (data/<bank>/<Tilemap>.preview.png)
-# from the current grids, tiles and palettes, e.g. after editing a grid.
+# Redraw the view-only scene pictures (the <Tilemap>.preview.png beside each
+# grid in data/) from the current grids, tiles and palettes, e.g. after
+# editing a grid.
 previews:
 	$(PYTHON) tools/tilemap.py previews data.previews data/
 
