@@ -332,42 +332,42 @@ Unused_50_MarioSpriteFramesCopy:
 MarioFramePlace:
 	INCLUDE "data/sprites/MarioFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 MarioSpriteAnims:
-	dw MarioSpriteAnim00 ; $7f24
-	dw MarioSpriteAnim01 ; $7f26
-	dw MarioSpriteAnim02 ; $7f28
-	dw MarioSpriteAnim03 ; $7f2a
-	dw MarioSpriteAnim04 ; $7f2c
-	dw MarioSpriteAnim05 ; $7f2e
-	dw MarioSpriteAnim06 ; $7f30
-	dw MarioSpriteAnim07 ; $7f32
-	dw MarioSpriteAnim08 ; $7f34
-	dw MarioSpriteAnim09 ; $7f36
-	dw MarioSpriteAnim10 ; $7f38
-	dw MarioSpriteAnim11 ; $7f3a
-	dw MarioSpriteAnim12 ; $7f3c
-	dw MarioSpriteAnim13 ; $7f3e
-	dw MarioSpriteAnim14 ; $7f40
-	dw MarioSpriteAnim15 ; $7f42
-	dw MarioSpriteAnim16 ; $7f44
-	dw MarioSpriteAnim17 ; $7f46
-	dw MarioSpriteAnim18 ; $7f48
-MarioSpriteAnim00:
+	dw MarioStandAnim ; $7f24
+	dw MarioIdleAnim ; $7f26
+	dw MarioRunAnim ; $7f28
+	dw MarioCelebrateAnim ; $7f2a
+	dw MarioDejectedAnim ; $7f2c
+	dw MarioForehandAnim ; $7f2e
+	dw MarioBackhandAnim ; $7f30
+	dw MarioOverheadAnim ; $7f32
+	dw MarioSmashAnim ; $7f34
+	dw MarioForehandQuickAnim ; $7f36
+	dw MarioBackhandQuickAnim ; $7f38
+	dw MarioOverheadQuickAnim ; $7f3a
+	dw MarioSmashQuickAnim ; $7f3c
+	dw MarioForehandReadyAnim ; $7f3e
+	dw MarioBackhandReadyAnim ; $7f40
+	dw MarioOverheadReadyAnim ; $7f42
+	dw MarioServeReadyAnim ; $7f44
+	dw MarioServePrepAnim ; $7f46
+	dw MarioDiveAnim ; $7f48
+MarioStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-MarioSpriteAnim01:
+MarioIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-MarioSpriteAnim02:
+MarioRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-MarioSpriteAnim03:
+MarioCelebrateAnim:
 	; $7f5d, 30 bytes (sprite_anim)
 	anim_flip $20
 	anim_frame $17, 10
@@ -384,65 +384,65 @@ MarioSpriteAnim03:
 	anim_frame $18, 10
 	anim_frame $19, 10
 	anim_loop $00
-MarioSpriteAnim04:
+MarioDejectedAnim:
 	; $7f7b, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 8
 	anim_frame $1c, 60
 	anim_loop $00
-MarioSpriteAnim05:
+MarioForehandAnim:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-MarioSpriteAnim06:
+MarioBackhandAnim:
 	; $7f89, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-MarioSpriteAnim07:
+MarioOverheadAnim:
 	; $7f8f, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-MarioSpriteAnim08:
+MarioSmashAnim:
 	; $7f95, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-MarioSpriteAnim09:
+MarioForehandQuickAnim:
 	; $7f9a, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-MarioSpriteAnim10:
+MarioBackhandQuickAnim:
 	; $7f9e, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-MarioSpriteAnim11:
+MarioOverheadQuickAnim:
 	; $7fa2, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-MarioSpriteAnim12:
+MarioSmashQuickAnim:
 	; $7fa6, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-MarioSpriteAnim13:
+MarioForehandReadyAnim:
 	; $7fa9, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-MarioSpriteAnim14:
+MarioBackhandReadyAnim:
 	; $7fac, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-MarioSpriteAnim15:
+MarioOverheadReadyAnim:
 	; $7faf, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-MarioSpriteAnim16:
+MarioServeReadyAnim:
 	; $7fb2, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-MarioSpriteAnim17:
+MarioServePrepAnim:
 	; $7fb5, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -450,7 +450,7 @@ MarioSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-MarioSpriteAnim18:
+MarioDiveAnim:
 	; $7fc1, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

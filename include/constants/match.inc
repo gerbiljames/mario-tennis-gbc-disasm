@@ -189,12 +189,12 @@ def NUM_COURTS equ const_value
 ; Two rules generate most of the table (every character bank is laid out alike):
 ;   swing + $08 = the held "ready" pose -- CharRallyReadyPhase plays
 ;                 `wCharSwingAnim + $08` while the button is down;
-;                 SpriteAnim0d/0e/0f are each the single held frame just
-;                 before SpriteAnim05/06/07.
+;                 the *ReadyAnim scripts are each the single held frame just
+;                 before the matching full swing.
 ;   swing + $04 = the quick (uncharged) variant -- StartCharSwing.startSwing
 ;                 adds 4 when fewer than 5 windup frames elapsed;
-;                 SpriteAnim09/0a/0b/0c are the first frame of
-;                 SpriteAnim05/06/07/08 alone before chaining back to idle.
+;                 the *QuickAnim scripts are the first frame of the full
+;                 swing alone before chaining back to idle.
 ; CharRallyEndState tests the set $05 $06 $07 $09 $0a $0b $12: a ground
 ; swing (charged or quick) or a dive still playing. The smash is covered by
 ; the airborne bit (wCharFlags bit 2) tested on the next line.

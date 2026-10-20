@@ -694,7 +694,7 @@ SECTION "ROM Bank $45", ROMX[$4000], BANK[$45]
 DataPtr_MarkSpriteDesc:
 	dw MarkSpriteDesc ; $4000
 
-INCLUDE "src/data/sprites/sprite_45.asm"
+INCLUDE "src/data/sprites/mark_45.asm"
 
 SECTION "ROM Bank $46", ROMX[$4000], BANK[$46]
 
@@ -855,7 +855,7 @@ SECTION "ROM Bank $5c", ROMX[$4000], BANK[$5c]
 DataPtr_DKSpriteDesc:
 	dw DKSpriteDesc ; $4000
 
-INCLUDE "src/data/sprites/sprite_5c.asm"
+INCLUDE "src/data/sprites/dk_5c.asm"
 
 SECTION "ROM Bank $5d", ROMX[$4000], BANK[$5d]
 

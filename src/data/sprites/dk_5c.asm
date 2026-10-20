@@ -332,42 +332,42 @@ Unused_5c_DKSpriteFramesCopy:
 DKFramePlace:
 	INCLUDE "data/sprites/DKFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 DKSpriteAnims:
-	dw DKSpriteAnim00 ; $7f24
-	dw DKSpriteAnim01 ; $7f26
-	dw DKSpriteAnim02 ; $7f28
-	dw DKSpriteAnim03 ; $7f2a
-	dw DKSpriteAnim04 ; $7f2c
-	dw DKSpriteAnim05 ; $7f2e
-	dw DKSpriteAnim06 ; $7f30
-	dw DKSpriteAnim07 ; $7f32
-	dw DKSpriteAnim08 ; $7f34
-	dw DKSpriteAnim09 ; $7f36
-	dw DKSpriteAnim10 ; $7f38
-	dw DKSpriteAnim11 ; $7f3a
-	dw DKSpriteAnim12 ; $7f3c
-	dw DKSpriteAnim13 ; $7f3e
-	dw DKSpriteAnim14 ; $7f40
-	dw DKSpriteAnim15 ; $7f42
-	dw DKSpriteAnim16 ; $7f44
-	dw DKSpriteAnim17 ; $7f46
-	dw DKSpriteAnim18 ; $7f48
-DKSpriteAnim00:
+	dw DKStandAnim ; $7f24
+	dw DKIdleAnim ; $7f26
+	dw DKRunAnim ; $7f28
+	dw DKCelebrateAnim ; $7f2a
+	dw DKDejectedAnim ; $7f2c
+	dw DKForehandAnim ; $7f2e
+	dw DKBackhandAnim ; $7f30
+	dw DKOverheadAnim ; $7f32
+	dw DKSmashAnim ; $7f34
+	dw DKForehandQuickAnim ; $7f36
+	dw DKBackhandQuickAnim ; $7f38
+	dw DKOverheadQuickAnim ; $7f3a
+	dw DKSmashQuickAnim ; $7f3c
+	dw DKForehandReadyAnim ; $7f3e
+	dw DKBackhandReadyAnim ; $7f40
+	dw DKOverheadReadyAnim ; $7f42
+	dw DKServeReadyAnim ; $7f44
+	dw DKServePrepAnim ; $7f46
+	dw DKDiveAnim ; $7f48
+DKStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-DKSpriteAnim01:
+DKIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-DKSpriteAnim02:
+DKRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-DKSpriteAnim03:
+DKCelebrateAnim:
 	; $7f5d, 38 bytes (sprite_anim)
 	anim_flip $20
 	anim_frame $17, 40
@@ -388,7 +388,7 @@ DKSpriteAnim03:
 	anim_frame $19, 10
 	anim_frame $18, 10
 	anim_loop $00
-DKSpriteAnim04:
+DKDejectedAnim:
 	; $7f83, 22 bytes (sprite_anim)
 	anim_frame $1a, 40
 	anim_frame $1b, 10
@@ -401,59 +401,59 @@ DKSpriteAnim04:
 	anim_frame $1c, 10
 	anim_frame $1b, 10
 	anim_loop $00
-DKSpriteAnim05:
+DKForehandAnim:
 	; $7f99, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-DKSpriteAnim06:
+DKBackhandAnim:
 	; $7f9f, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-DKSpriteAnim07:
+DKOverheadAnim:
 	; $7fa5, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-DKSpriteAnim08:
+DKSmashAnim:
 	; $7fab, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-DKSpriteAnim09:
+DKForehandQuickAnim:
 	; $7fb0, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-DKSpriteAnim10:
+DKBackhandQuickAnim:
 	; $7fb4, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-DKSpriteAnim11:
+DKOverheadQuickAnim:
 	; $7fb8, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-DKSpriteAnim12:
+DKSmashQuickAnim:
 	; $7fbc, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-DKSpriteAnim13:
+DKForehandReadyAnim:
 	; $7fbf, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-DKSpriteAnim14:
+DKBackhandReadyAnim:
 	; $7fc2, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-DKSpriteAnim15:
+DKOverheadReadyAnim:
 	; $7fc5, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-DKSpriteAnim16:
+DKServeReadyAnim:
 	; $7fc8, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-DKSpriteAnim17:
+DKServePrepAnim:
 	; $7fcb, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -461,7 +461,7 @@ DKSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-DKSpriteAnim18:
+DKDiveAnim:
 	; $7fd7, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

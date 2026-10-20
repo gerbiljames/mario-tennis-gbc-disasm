@@ -332,107 +332,107 @@ Unused_41_NinaSpriteFramesCopy:
 NinaFramePlace:
 	INCLUDE "data/sprites/NinaFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 NinaSpriteAnims:
-	dw NinaSpriteAnim00 ; $7f24
-	dw NinaSpriteAnim01 ; $7f26
-	dw NinaSpriteAnim02 ; $7f28
-	dw NinaSpriteAnim03 ; $7f2a
-	dw NinaSpriteAnim04 ; $7f2c
-	dw NinaSpriteAnim05 ; $7f2e
-	dw NinaSpriteAnim06 ; $7f30
-	dw NinaSpriteAnim07 ; $7f32
-	dw NinaSpriteAnim08 ; $7f34
-	dw NinaSpriteAnim09 ; $7f36
-	dw NinaSpriteAnim10 ; $7f38
-	dw NinaSpriteAnim11 ; $7f3a
-	dw NinaSpriteAnim12 ; $7f3c
-	dw NinaSpriteAnim13 ; $7f3e
-	dw NinaSpriteAnim14 ; $7f40
-	dw NinaSpriteAnim15 ; $7f42
-	dw NinaSpriteAnim16 ; $7f44
-	dw NinaSpriteAnim17 ; $7f46
-	dw NinaSpriteAnim18 ; $7f48
-NinaSpriteAnim00:
+	dw NinaStandAnim ; $7f24
+	dw NinaIdleAnim ; $7f26
+	dw NinaRunAnim ; $7f28
+	dw NinaCelebrateAnim ; $7f2a
+	dw NinaDejectedAnim ; $7f2c
+	dw NinaForehandAnim ; $7f2e
+	dw NinaBackhandAnim ; $7f30
+	dw NinaOverheadAnim ; $7f32
+	dw NinaSmashAnim ; $7f34
+	dw NinaForehandQuickAnim ; $7f36
+	dw NinaBackhandQuickAnim ; $7f38
+	dw NinaOverheadQuickAnim ; $7f3a
+	dw NinaSmashQuickAnim ; $7f3c
+	dw NinaForehandReadyAnim ; $7f3e
+	dw NinaBackhandReadyAnim ; $7f40
+	dw NinaOverheadReadyAnim ; $7f42
+	dw NinaServeReadyAnim ; $7f44
+	dw NinaServePrepAnim ; $7f46
+	dw NinaDiveAnim ; $7f48
+NinaStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-NinaSpriteAnim01:
+NinaIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-NinaSpriteAnim02:
+NinaRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-NinaSpriteAnim03:
+NinaCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_loop $02
-NinaSpriteAnim04:
+NinaDejectedAnim:
 	; $7f65, 10 bytes (sprite_anim)
 	anim_frame $1a, 12
 	anim_frame $1b, 12
 	anim_frame $1c, 12
 	anim_frame $1b, 12
 	anim_loop $00
-NinaSpriteAnim05:
+NinaForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-NinaSpriteAnim06:
+NinaBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-NinaSpriteAnim07:
+NinaOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-NinaSpriteAnim08:
+NinaSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-NinaSpriteAnim09:
+NinaForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-NinaSpriteAnim10:
+NinaBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-NinaSpriteAnim11:
+NinaOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-NinaSpriteAnim12:
+NinaSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-NinaSpriteAnim13:
+NinaForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-NinaSpriteAnim14:
+NinaBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-NinaSpriteAnim15:
+NinaOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-NinaSpriteAnim16:
+NinaServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-NinaSpriteAnim17:
+NinaServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ NinaSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-NinaSpriteAnim18:
+NinaDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

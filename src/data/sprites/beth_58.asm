@@ -332,42 +332,42 @@ Unused_58_BethSpriteFramesCopy:
 BethFramePlace:
 	INCLUDE "data/sprites/BethFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BethSpriteAnims:
-	dw BethSpriteAnim00 ; $7f24
-	dw BethSpriteAnim01 ; $7f26
-	dw BethSpriteAnim02 ; $7f28
-	dw BethSpriteAnim03 ; $7f2a
-	dw BethSpriteAnim04 ; $7f2c
-	dw BethSpriteAnim05 ; $7f2e
-	dw BethSpriteAnim06 ; $7f30
-	dw BethSpriteAnim07 ; $7f32
-	dw BethSpriteAnim08 ; $7f34
-	dw BethSpriteAnim09 ; $7f36
-	dw BethSpriteAnim10 ; $7f38
-	dw BethSpriteAnim11 ; $7f3a
-	dw BethSpriteAnim12 ; $7f3c
-	dw BethSpriteAnim13 ; $7f3e
-	dw BethSpriteAnim14 ; $7f40
-	dw BethSpriteAnim15 ; $7f42
-	dw BethSpriteAnim16 ; $7f44
-	dw BethSpriteAnim17 ; $7f46
-	dw BethSpriteAnim18 ; $7f48
-BethSpriteAnim00:
+	dw BethStandAnim ; $7f24
+	dw BethIdleAnim ; $7f26
+	dw BethRunAnim ; $7f28
+	dw BethCelebrateAnim ; $7f2a
+	dw BethDejectedAnim ; $7f2c
+	dw BethForehandAnim ; $7f2e
+	dw BethBackhandAnim ; $7f30
+	dw BethOverheadAnim ; $7f32
+	dw BethSmashAnim ; $7f34
+	dw BethForehandQuickAnim ; $7f36
+	dw BethBackhandQuickAnim ; $7f38
+	dw BethOverheadQuickAnim ; $7f3a
+	dw BethSmashQuickAnim ; $7f3c
+	dw BethForehandReadyAnim ; $7f3e
+	dw BethBackhandReadyAnim ; $7f40
+	dw BethOverheadReadyAnim ; $7f42
+	dw BethServeReadyAnim ; $7f44
+	dw BethServePrepAnim ; $7f46
+	dw BethDiveAnim ; $7f48
+BethStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-BethSpriteAnim01:
+BethIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-BethSpriteAnim02:
+BethRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-BethSpriteAnim03:
+BethCelebrateAnim:
 	; $7f5d, 18 bytes (sprite_anim)
 	anim_frame $17, 20
 	anim_frame $18, 20
@@ -378,65 +378,65 @@ BethSpriteAnim03:
 	anim_frame $19, 6
 	anim_frame $18, 40
 	anim_loop $00
-BethSpriteAnim04:
+BethDejectedAnim:
 	; $7f6f, 8 bytes (sprite_anim)
 	anim_frame $1a, 40
 	anim_frame $1b, 20
 	anim_frame $1c, 20
 	anim_loop $02
-BethSpriteAnim05:
+BethForehandAnim:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-BethSpriteAnim06:
+BethBackhandAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-BethSpriteAnim07:
+BethOverheadAnim:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-BethSpriteAnim08:
+BethSmashAnim:
 	; $7f89, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-BethSpriteAnim09:
+BethForehandQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-BethSpriteAnim10:
+BethBackhandQuickAnim:
 	; $7f92, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-BethSpriteAnim11:
+BethOverheadQuickAnim:
 	; $7f96, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-BethSpriteAnim12:
+BethSmashQuickAnim:
 	; $7f9a, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-BethSpriteAnim13:
+BethForehandReadyAnim:
 	; $7f9d, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-BethSpriteAnim14:
+BethBackhandReadyAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-BethSpriteAnim15:
+BethOverheadReadyAnim:
 	; $7fa3, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-BethSpriteAnim16:
+BethServeReadyAnim:
 	; $7fa6, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-BethSpriteAnim17:
+BethServePrepAnim:
 	; $7fa9, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -444,7 +444,7 @@ BethSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-BethSpriteAnim18:
+BethDiveAnim:
 	; $7fb5, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

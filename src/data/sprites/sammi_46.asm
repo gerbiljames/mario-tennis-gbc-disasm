@@ -332,107 +332,107 @@ Unused_46_SammiSpriteFramesCopy:
 SammiFramePlace:
 	INCLUDE "data/sprites/SammiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 SammiSpriteAnims:
-	dw SammiSpriteAnim00 ; $7f24
-	dw SammiSpriteAnim01 ; $7f26
-	dw SammiSpriteAnim02 ; $7f28
-	dw SammiSpriteAnim03 ; $7f2a
-	dw SammiSpriteAnim04 ; $7f2c
-	dw SammiSpriteAnim05 ; $7f2e
-	dw SammiSpriteAnim06 ; $7f30
-	dw SammiSpriteAnim07 ; $7f32
-	dw SammiSpriteAnim08 ; $7f34
-	dw SammiSpriteAnim09 ; $7f36
-	dw SammiSpriteAnim10 ; $7f38
-	dw SammiSpriteAnim11 ; $7f3a
-	dw SammiSpriteAnim12 ; $7f3c
-	dw SammiSpriteAnim13 ; $7f3e
-	dw SammiSpriteAnim14 ; $7f40
-	dw SammiSpriteAnim15 ; $7f42
-	dw SammiSpriteAnim16 ; $7f44
-	dw SammiSpriteAnim17 ; $7f46
-	dw SammiSpriteAnim18 ; $7f48
-SammiSpriteAnim00:
+	dw SammiStandAnim ; $7f24
+	dw SammiIdleAnim ; $7f26
+	dw SammiRunAnim ; $7f28
+	dw SammiCelebrateAnim ; $7f2a
+	dw SammiDejectedAnim ; $7f2c
+	dw SammiForehandAnim ; $7f2e
+	dw SammiBackhandAnim ; $7f30
+	dw SammiOverheadAnim ; $7f32
+	dw SammiSmashAnim ; $7f34
+	dw SammiForehandQuickAnim ; $7f36
+	dw SammiBackhandQuickAnim ; $7f38
+	dw SammiOverheadQuickAnim ; $7f3a
+	dw SammiSmashQuickAnim ; $7f3c
+	dw SammiForehandReadyAnim ; $7f3e
+	dw SammiBackhandReadyAnim ; $7f40
+	dw SammiOverheadReadyAnim ; $7f42
+	dw SammiServeReadyAnim ; $7f44
+	dw SammiServePrepAnim ; $7f46
+	dw SammiDiveAnim ; $7f48
+SammiStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-SammiSpriteAnim01:
+SammiIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-SammiSpriteAnim02:
+SammiRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-SammiSpriteAnim03:
+SammiCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_frame $18, 15
 	anim_loop $00
-SammiSpriteAnim04:
+SammiDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 15
 	anim_frame $1c, 15
 	anim_loop $02
-SammiSpriteAnim05:
+SammiForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-SammiSpriteAnim06:
+SammiBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-SammiSpriteAnim07:
+SammiOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-SammiSpriteAnim08:
+SammiSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-SammiSpriteAnim09:
+SammiForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-SammiSpriteAnim10:
+SammiBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-SammiSpriteAnim11:
+SammiOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-SammiSpriteAnim12:
+SammiSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-SammiSpriteAnim13:
+SammiForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-SammiSpriteAnim14:
+SammiBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-SammiSpriteAnim15:
+SammiOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-SammiSpriteAnim16:
+SammiServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-SammiSpriteAnim17:
+SammiServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ SammiSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-SammiSpriteAnim18:
+SammiDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

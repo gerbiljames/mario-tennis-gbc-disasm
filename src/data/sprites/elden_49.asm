@@ -332,107 +332,107 @@ Unused_49_EldenSpriteFramesCopy:
 EldenFramePlace:
 	INCLUDE "data/sprites/EldenFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 EldenSpriteAnims:
-	dw EldenSpriteAnim00 ; $7f24
-	dw EldenSpriteAnim01 ; $7f26
-	dw EldenSpriteAnim02 ; $7f28
-	dw EldenSpriteAnim03 ; $7f2a
-	dw EldenSpriteAnim04 ; $7f2c
-	dw EldenSpriteAnim05 ; $7f2e
-	dw EldenSpriteAnim06 ; $7f30
-	dw EldenSpriteAnim07 ; $7f32
-	dw EldenSpriteAnim08 ; $7f34
-	dw EldenSpriteAnim09 ; $7f36
-	dw EldenSpriteAnim10 ; $7f38
-	dw EldenSpriteAnim11 ; $7f3a
-	dw EldenSpriteAnim12 ; $7f3c
-	dw EldenSpriteAnim13 ; $7f3e
-	dw EldenSpriteAnim14 ; $7f40
-	dw EldenSpriteAnim15 ; $7f42
-	dw EldenSpriteAnim16 ; $7f44
-	dw EldenSpriteAnim17 ; $7f46
-	dw EldenSpriteAnim18 ; $7f48
-EldenSpriteAnim00:
+	dw EldenStandAnim ; $7f24
+	dw EldenIdleAnim ; $7f26
+	dw EldenRunAnim ; $7f28
+	dw EldenCelebrateAnim ; $7f2a
+	dw EldenDejectedAnim ; $7f2c
+	dw EldenForehandAnim ; $7f2e
+	dw EldenBackhandAnim ; $7f30
+	dw EldenOverheadAnim ; $7f32
+	dw EldenSmashAnim ; $7f34
+	dw EldenForehandQuickAnim ; $7f36
+	dw EldenBackhandQuickAnim ; $7f38
+	dw EldenOverheadQuickAnim ; $7f3a
+	dw EldenSmashQuickAnim ; $7f3c
+	dw EldenForehandReadyAnim ; $7f3e
+	dw EldenBackhandReadyAnim ; $7f40
+	dw EldenOverheadReadyAnim ; $7f42
+	dw EldenServeReadyAnim ; $7f44
+	dw EldenServePrepAnim ; $7f46
+	dw EldenDiveAnim ; $7f48
+EldenStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-EldenSpriteAnim01:
+EldenIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-EldenSpriteAnim02:
+EldenRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-EldenSpriteAnim03:
+EldenCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $19, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_loop $00
-EldenSpriteAnim04:
+EldenDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 30
 	anim_frame $1b, 15
 	anim_frame $1c, 15
 	anim_loop $02
-EldenSpriteAnim05:
+EldenForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-EldenSpriteAnim06:
+EldenBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-EldenSpriteAnim07:
+EldenOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-EldenSpriteAnim08:
+EldenSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-EldenSpriteAnim09:
+EldenForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-EldenSpriteAnim10:
+EldenBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-EldenSpriteAnim11:
+EldenOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-EldenSpriteAnim12:
+EldenSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-EldenSpriteAnim13:
+EldenForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-EldenSpriteAnim14:
+EldenBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-EldenSpriteAnim15:
+EldenOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-EldenSpriteAnim16:
+EldenServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-EldenSpriteAnim17:
+EldenServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ EldenSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-EldenSpriteAnim18:
+EldenDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

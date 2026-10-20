@@ -479,8 +479,10 @@ objects.
 
 `SetActorAnimation` (`$04:$4bbe`, body `$4bde`) and `SetCharAnimation`
 (`$08:$69ea`, body `$69fc`) index the +6 table by `animation id * 2`. In the
-walk-sprite banks it is `WalkSprite_<bank>_<slot>_AnimPtrs` and its scripts
-`..._AnimNN` (§4.4). The header's first row is commented
+walk-sprite banks it is `<Object>WalkSprite_AnimPtrs` (named for the
+`OBJ_*` id that loads it) and its scripts `..._AnimStill`/`_AnimWalk`/
+`_AnimBounce`/`_AnimNod`/`_AnimShake` for the `ANIM_*` ids 0-4, `..._AnimNN`
+past them or where a table breaks that pattern (§4.4). The header's first row is commented
 `OAM attr, facing count, unread, unread`.
 
 ### 4.4 Animation scripts
@@ -505,7 +507,7 @@ All scripts use these macros (character banks and the walk-sprite banks
 `$6a`, `$6f`, `$70`-`$77`). A few end on a byte the macros cannot spell, written as
 a commented `db`:
 
-- **Unread hold operand**: `SeanSpriteAnim04` (`$47:$7f67`) and six walk-sprite
+- **Unread hold operand**: `SeanDejectedAnim` (`$47:$7f67`) and six walk-sprite
   scripts end `$fd, $00`; the `$00` is `db $00 ; never read: the hold above
   ends the script`.
 - **Loop operand in the next script**: the five-byte `03 14 04 1e ff` script

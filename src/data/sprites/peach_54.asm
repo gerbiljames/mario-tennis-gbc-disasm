@@ -332,42 +332,42 @@ Unused_54_PeachSpriteFramesCopy:
 PeachFramePlace:
 	INCLUDE "data/sprites/PeachFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 PeachSpriteAnims:
-	dw PeachSpriteAnim00 ; $7f24
-	dw PeachSpriteAnim01 ; $7f26
-	dw PeachSpriteAnim02 ; $7f28
-	dw PeachSpriteAnim03 ; $7f2a
-	dw PeachSpriteAnim04 ; $7f2c
-	dw PeachSpriteAnim05 ; $7f2e
-	dw PeachSpriteAnim06 ; $7f30
-	dw PeachSpriteAnim07 ; $7f32
-	dw PeachSpriteAnim08 ; $7f34
-	dw PeachSpriteAnim09 ; $7f36
-	dw PeachSpriteAnim10 ; $7f38
-	dw PeachSpriteAnim11 ; $7f3a
-	dw PeachSpriteAnim12 ; $7f3c
-	dw PeachSpriteAnim13 ; $7f3e
-	dw PeachSpriteAnim14 ; $7f40
-	dw PeachSpriteAnim15 ; $7f42
-	dw PeachSpriteAnim16 ; $7f44
-	dw PeachSpriteAnim17 ; $7f46
-	dw PeachSpriteAnim18 ; $7f48
-PeachSpriteAnim00:
+	dw PeachStandAnim ; $7f24
+	dw PeachIdleAnim ; $7f26
+	dw PeachRunAnim ; $7f28
+	dw PeachCelebrateAnim ; $7f2a
+	dw PeachDejectedAnim ; $7f2c
+	dw PeachForehandAnim ; $7f2e
+	dw PeachBackhandAnim ; $7f30
+	dw PeachOverheadAnim ; $7f32
+	dw PeachSmashAnim ; $7f34
+	dw PeachForehandQuickAnim ; $7f36
+	dw PeachBackhandQuickAnim ; $7f38
+	dw PeachOverheadQuickAnim ; $7f3a
+	dw PeachSmashQuickAnim ; $7f3c
+	dw PeachForehandReadyAnim ; $7f3e
+	dw PeachBackhandReadyAnim ; $7f40
+	dw PeachOverheadReadyAnim ; $7f42
+	dw PeachServeReadyAnim ; $7f44
+	dw PeachServePrepAnim ; $7f46
+	dw PeachDiveAnim ; $7f48
+PeachStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-PeachSpriteAnim01:
+PeachIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-PeachSpriteAnim02:
+PeachRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-PeachSpriteAnim03:
+PeachCelebrateAnim:
 	; $7f5d, 38 bytes (sprite_anim)
 	anim_flip $20
 	anim_frame $18, 10
@@ -388,7 +388,7 @@ PeachSpriteAnim03:
 	anim_frame $18, 10
 	anim_frame $19, 10
 	anim_loop $00
-PeachSpriteAnim04:
+PeachDejectedAnim:
 	; $7f83, 18 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 20
@@ -399,59 +399,59 @@ PeachSpriteAnim04:
 	anim_frame $1c, 10
 	anim_frame $1b, 10
 	anim_loop $04
-PeachSpriteAnim05:
+PeachForehandAnim:
 	; $7f95, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-PeachSpriteAnim06:
+PeachBackhandAnim:
 	; $7f9b, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-PeachSpriteAnim07:
+PeachOverheadAnim:
 	; $7fa1, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-PeachSpriteAnim08:
+PeachSmashAnim:
 	; $7fa7, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-PeachSpriteAnim09:
+PeachForehandQuickAnim:
 	; $7fac, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-PeachSpriteAnim10:
+PeachBackhandQuickAnim:
 	; $7fb0, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-PeachSpriteAnim11:
+PeachOverheadQuickAnim:
 	; $7fb4, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-PeachSpriteAnim12:
+PeachSmashQuickAnim:
 	; $7fb8, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-PeachSpriteAnim13:
+PeachForehandReadyAnim:
 	; $7fbb, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-PeachSpriteAnim14:
+PeachBackhandReadyAnim:
 	; $7fbe, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-PeachSpriteAnim15:
+PeachOverheadReadyAnim:
 	; $7fc1, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-PeachSpriteAnim16:
+PeachServeReadyAnim:
 	; $7fc4, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-PeachSpriteAnim17:
+PeachServePrepAnim:
 	; $7fc7, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -459,7 +459,7 @@ PeachSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-PeachSpriteAnim18:
+PeachDiveAnim:
 	; $7fd3, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

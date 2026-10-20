@@ -446,7 +446,7 @@ uncalled `Unused_00_SetSpriteQueueBase` (`$00:$1e50`) write it.
 `oam_sprite` lists (tagged `sprite_template` in their block comments) appear in
 21 banks. Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
 `dw .frames, <name>_AnimPtrs, .frames` triple points at frame and
-animation-script pointer arrays (e.g. `WalkSprite_72_00`,
+animation-script pointer arrays (e.g. `JuniorCoachWalkSprite`,
 `src/data/sprites/walk_72.asm:19`-`23`); see
 [graphics_formats.md](graphics_formats.md) §4.4.
 

@@ -332,42 +332,42 @@ Unused_57_PamSpriteFramesCopy:
 PamFramePlace:
 	INCLUDE "data/sprites/PamFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 PamSpriteAnims:
-	dw PamSpriteAnim00 ; $7f24
-	dw PamSpriteAnim01 ; $7f26
-	dw PamSpriteAnim02 ; $7f28
-	dw PamSpriteAnim03 ; $7f2a
-	dw PamSpriteAnim04 ; $7f2c
-	dw PamSpriteAnim05 ; $7f2e
-	dw PamSpriteAnim06 ; $7f30
-	dw PamSpriteAnim07 ; $7f32
-	dw PamSpriteAnim08 ; $7f34
-	dw PamSpriteAnim09 ; $7f36
-	dw PamSpriteAnim10 ; $7f38
-	dw PamSpriteAnim11 ; $7f3a
-	dw PamSpriteAnim12 ; $7f3c
-	dw PamSpriteAnim13 ; $7f3e
-	dw PamSpriteAnim14 ; $7f40
-	dw PamSpriteAnim15 ; $7f42
-	dw PamSpriteAnim16 ; $7f44
-	dw PamSpriteAnim17 ; $7f46
-	dw PamSpriteAnim18 ; $7f48
-PamSpriteAnim00:
+	dw PamStandAnim ; $7f24
+	dw PamIdleAnim ; $7f26
+	dw PamRunAnim ; $7f28
+	dw PamCelebrateAnim ; $7f2a
+	dw PamDejectedAnim ; $7f2c
+	dw PamForehandAnim ; $7f2e
+	dw PamBackhandAnim ; $7f30
+	dw PamOverheadAnim ; $7f32
+	dw PamSmashAnim ; $7f34
+	dw PamForehandQuickAnim ; $7f36
+	dw PamBackhandQuickAnim ; $7f38
+	dw PamOverheadQuickAnim ; $7f3a
+	dw PamSmashQuickAnim ; $7f3c
+	dw PamForehandReadyAnim ; $7f3e
+	dw PamBackhandReadyAnim ; $7f40
+	dw PamOverheadReadyAnim ; $7f42
+	dw PamServeReadyAnim ; $7f44
+	dw PamServePrepAnim ; $7f46
+	dw PamDiveAnim ; $7f48
+PamStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-PamSpriteAnim01:
+PamIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-PamSpriteAnim02:
+PamRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-PamSpriteAnim03:
+PamCelebrateAnim:
 	; $7f5d, 22 bytes (sprite_anim)
 	anim_flip $20
 	anim_frame $17, 10
@@ -380,66 +380,66 @@ PamSpriteAnim03:
 	anim_frame $19, 10
 	anim_frame $18, 10
 	anim_loop $00
-PamSpriteAnim04:
+PamDejectedAnim:
 	; $7f73, 10 bytes (sprite_anim)
 	anim_frame $1a, 10
 	anim_frame $1b, 10
 	anim_frame $1a, 10
 	anim_frame $1c, 10
 	anim_loop $00
-PamSpriteAnim05:
+PamForehandAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-PamSpriteAnim06:
+PamBackhandAnim:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-PamSpriteAnim07:
+PamOverheadAnim:
 	; $7f89, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-PamSpriteAnim08:
+PamSmashAnim:
 	; $7f8f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-PamSpriteAnim09:
+PamForehandQuickAnim:
 	; $7f94, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-PamSpriteAnim10:
+PamBackhandQuickAnim:
 	; $7f98, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-PamSpriteAnim11:
+PamOverheadQuickAnim:
 	; $7f9c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-PamSpriteAnim12:
+PamSmashQuickAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-PamSpriteAnim13:
+PamForehandReadyAnim:
 	; $7fa3, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-PamSpriteAnim14:
+PamBackhandReadyAnim:
 	; $7fa6, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-PamSpriteAnim15:
+PamOverheadReadyAnim:
 	; $7fa9, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-PamSpriteAnim16:
+PamServeReadyAnim:
 	; $7fac, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-PamSpriteAnim17:
+PamServePrepAnim:
 	; $7faf, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -447,7 +447,7 @@ PamSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-PamSpriteAnim18:
+PamDiveAnim:
 	; $7fbb, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

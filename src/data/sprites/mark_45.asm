@@ -332,107 +332,107 @@ Unused_45_MarkSpriteFramesCopy:
 MarkFramePlace:
 	INCLUDE "data/sprites/MarkFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 MarkSpriteAnims:
-	dw MarkSpriteAnim00 ; $7f24
-	dw MarkSpriteAnim01 ; $7f26
-	dw MarkSpriteAnim02 ; $7f28
-	dw MarkSpriteAnim03 ; $7f2a
-	dw MarkSpriteAnim04 ; $7f2c
-	dw MarkSpriteAnim05 ; $7f2e
-	dw MarkSpriteAnim06 ; $7f30
-	dw MarkSpriteAnim07 ; $7f32
-	dw MarkSpriteAnim08 ; $7f34
-	dw MarkSpriteAnim09 ; $7f36
-	dw MarkSpriteAnim10 ; $7f38
-	dw MarkSpriteAnim11 ; $7f3a
-	dw MarkSpriteAnim12 ; $7f3c
-	dw MarkSpriteAnim13 ; $7f3e
-	dw MarkSpriteAnim14 ; $7f40
-	dw MarkSpriteAnim15 ; $7f42
-	dw MarkSpriteAnim16 ; $7f44
-	dw MarkSpriteAnim17 ; $7f46
-	dw MarkSpriteAnim18 ; $7f48
-MarkSpriteAnim00:
+	dw MarkStandAnim ; $7f24
+	dw MarkIdleAnim ; $7f26
+	dw MarkRunAnim ; $7f28
+	dw MarkCelebrateAnim ; $7f2a
+	dw MarkDejectedAnim ; $7f2c
+	dw MarkForehandAnim ; $7f2e
+	dw MarkBackhandAnim ; $7f30
+	dw MarkOverheadAnim ; $7f32
+	dw MarkSmashAnim ; $7f34
+	dw MarkForehandQuickAnim ; $7f36
+	dw MarkBackhandQuickAnim ; $7f38
+	dw MarkOverheadQuickAnim ; $7f3a
+	dw MarkSmashQuickAnim ; $7f3c
+	dw MarkForehandReadyAnim ; $7f3e
+	dw MarkBackhandReadyAnim ; $7f40
+	dw MarkOverheadReadyAnim ; $7f42
+	dw MarkServeReadyAnim ; $7f44
+	dw MarkServePrepAnim ; $7f46
+	dw MarkDiveAnim ; $7f48
+MarkStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-MarkSpriteAnim01:
+MarkIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-MarkSpriteAnim02:
+MarkRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-MarkSpriteAnim03:
+MarkCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $18, 15
 	anim_frame $17, 15
 	anim_frame $19, 15
 	anim_loop $00
-MarkSpriteAnim04:
+MarkDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 20
 	anim_frame $1c, 20
 	anim_loop $02
-MarkSpriteAnim05:
+MarkForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-MarkSpriteAnim06:
+MarkBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-MarkSpriteAnim07:
+MarkOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-MarkSpriteAnim08:
+MarkSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-MarkSpriteAnim09:
+MarkForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-MarkSpriteAnim10:
+MarkBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-MarkSpriteAnim11:
+MarkOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-MarkSpriteAnim12:
+MarkSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-MarkSpriteAnim13:
+MarkForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-MarkSpriteAnim14:
+MarkBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-MarkSpriteAnim15:
+MarkOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-MarkSpriteAnim16:
+MarkServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-MarkSpriteAnim17:
+MarkServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ MarkSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-MarkSpriteAnim18:
+MarkDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20
