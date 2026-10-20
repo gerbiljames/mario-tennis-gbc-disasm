@@ -125,29 +125,29 @@ CharDataScreen_InitState:
 	ld a, [hl] ; $414e
 	ld [wCharDataLevel], a ; $414f
 	push af ; $4152
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4153
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4153
 	pop af ; $4166
 	ld a, [hl] ; $4167
 	ld [wCharDataNewLevels], a ; $4168
-	ld [wCharDataLevels], a ; $416b
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $416b
 	push af ; $416e
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $416f
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $416f
 	pop af ; $4182
 	ld a, [hl] ; $4183
 	ld [wCharDataNewLevels + 1], a ; $4184
-	ld [wCharDataLevels + 1], a ; $4187
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4187
 	push af ; $418a
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $418b
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $418b
 	pop af ; $419e
 	ld a, [hl] ; $419f
 	ld [wCharDataNewLevels + 2], a ; $41a0
-	ld [wCharDataLevels + 2], a ; $41a3
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $41a3
 	push af ; $41a6
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $41a7
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $41a7
 	pop af ; $41ba
 	ld a, [hl] ; $41bb
 	ld [wCharDataNewLevels + 3], a ; $41bc
-	ld [wCharDataLevels + 3], a ; $41bf
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $41bf
 .loop:
 	ld a, [wStoryCharacterSlot] ; $41c2
 	farcall HasReachedNextLevelExp ; $41c5

@@ -40,7 +40,7 @@ AdjustResultTilemapForLoss:
 Unused_16_StubNop:
 	ret ; $4a70
 Unused_16_BuildMatchResultTilemap:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a71
+	ld a, [wCurrentMatchIndex] ; $4a71
 	add a ; $4a74
 	ld hl, MatchResultTilemapScripts_16 ; $4a75
 	add_hl_a ; $4a78
@@ -53,7 +53,7 @@ Unused_16_BuildMatchResultTilemap:
 	ld e, a ; $4a82
 	ld a, d ; $4a83
 	or e ; $4a84
-	jr z, .checkCurrentMinigameStoryMatch ; $4a85
+	jr z, .checkCurrentMatchList ; $4a85
 	inc hl ; $4a87
 	ld a, [hl+] ; $4a88
 	ld b, [hl] ; $4a89
@@ -68,8 +68,8 @@ Unused_16_BuildMatchResultTilemap:
 	farcall CopyTilemapRect ; $4a93
 	pop hl ; $4a96
 	jr .loop ; $4a97
-.checkCurrentMinigameStoryMatch:
-	ld a, [wCurrentMinigameStoryMatch] ; $4a99
+.checkCurrentMatchList:
+	ld a, [wCurrentMatchList] ; $4a99
 	cp MATCHLIST_DOUBLES ; $4a9c
 	jr nz, .singles ; $4a9e
 	ld hl, wShadowTilemap + 30 * TILEMAP_WIDTH + 7 ; $4aa0
@@ -401,7 +401,7 @@ LoadResultScreenTileGraphics:
 	call DecompressData ; $4e50
 	ret ; $4e53
 LoadMatchResultGfxSet:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4e54
+	ld a, [wCurrentMatchIndex] ; $4e54
 	call RemapDoublesMatchGfxIndex ; $4e57
 	add a ; $4e5a
 	ld hl, GfxSetPointerTable_16 ; $4e5b

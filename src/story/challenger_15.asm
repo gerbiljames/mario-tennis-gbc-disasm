@@ -167,7 +167,7 @@ ChallengerResultLose:
 	ld a, EXITTRIGGER_DIRECT ; $5f36
 	ld [wUnusedExitTriggerIdMirror], a ; $5f38
 	ld [wStoryModeExitTriggerRequest], a ; $5f3b
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5f3e
+	ld a, [wCurrentMatchIndex] ; $5f3e
 	farcall RunTrainingDrillByID ; $5f41
 	farcall EndCutsceneScriptMode ; $5f44
 	ret ; $5f47
@@ -202,7 +202,7 @@ ChallengerResultFinish:
 	ld a, EXITTRIGGER_DIRECT ; $5f90
 	ld [wUnusedExitTriggerIdMirror], a ; $5f92
 	ld [wStoryModeExitTriggerRequest], a ; $5f95
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5f98
+	ld a, [wCurrentMatchIndex] ; $5f98
 	farcall RunTrainingDrillByID ; $5f9b
 	farcall EndCutsceneScriptMode ; $5f9e
 	ret ; $5fa1
@@ -245,10 +245,10 @@ ChallengerResultDraw:
 	farcall EndCutsceneScriptMode ; $603e
 	ret ; $6041
 WalkChallengerAwayDefeated:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6042
+	ld a, [wCurrentMatchIndex] ; $6042
 	sub $0a ; $6045
 	jp nc, .done ; $6047
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $604a
+	ld a, [wCurrentMatchIndex] ; $604a
 	sub $04 ; $604d
 	jp c, .serveChallenger ; $604f
 	jp .netChallenger ; $6052
@@ -312,10 +312,10 @@ WalkChallengerAwayDefeated:
 	set_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $6175
 	ret ; $6178
 WalkChallengerOntoCourt:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6179
+	ld a, [wCurrentMatchIndex] ; $6179
 	sub $0a ; $617c
 	jr nc, .northCourt ; $617e
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6180
+	ld a, [wCurrentMatchIndex] ; $6180
 	sub $04 ; $6183
 	jr c, .southCourt ; $6185
 	jp .eastCourt ; $6187

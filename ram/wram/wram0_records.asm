@@ -199,7 +199,8 @@ wCurrentlyUsedCourt:: db
 ; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). At 2, SelectScoreboardLayout forces the doubles scoreboard and InitViewFlipPreference the fixed court view
 wMatchContext:: db
 
-; [16-bit BE] Current Minigame/Story Match
+UNION
+; [16-bit BE] Current Minigame/Story Match: wCurrentMatchList, then wCurrentMatchIndex
 ;
 ; 0x0000 - Singles Junior Practice Match
 ; 0x0001 - Singles Junior #4
@@ -274,6 +275,12 @@ wMatchContext:: db
 ; 0x0223 - Medallion Match
 ; 0x0224 - Two-On-One
 wCurrentMinigameStoryMatch:: dw
+NEXTU
+; [8-bit] Match list (MATCHLIST_*), the word's high byte
+wCurrentMatchList:: db
+; [8-bit] Match within the list, the low byte: STORYMATCH_* under the singles and doubles lists, MINIGAME_* under MATCHLIST_TRAINING
+wCurrentMatchIndex:: db
+ENDU
 
 ; [8-bit] BGM id (wCurrentBGM values) for the current match/court; a tiebreak overrides it with $0e
 wMatchBGM:: db

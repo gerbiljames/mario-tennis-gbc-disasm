@@ -159,7 +159,7 @@ Unused_0b_QueueDrillOutcomeMessage:
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $448f
 	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $4491
 	jr z, .checkCurrentServingPlayer ; $4493
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
+	ld a, [wCurrentMatchIndex] ; $4495
 	cp MINIGAME_SERVICE_MATCH_2 ; $4498
 	jr nz, .checkRallyLength ; $449a
 	ld hl, wDrillServeTargetResult ; $449c

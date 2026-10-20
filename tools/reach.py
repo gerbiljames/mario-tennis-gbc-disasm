@@ -70,7 +70,7 @@ DATA_FLAGS = {
     "wStoryMainGender": ("live", "a story record field, copied in with the record"),
     "wStoryPartnerGender": ("live", "a story record field, copied in with the record"),
     "wStoryLocationBGM": ("live", "copied from the location header by LoadStoryLocationHeader"),
-    "wCurrentMinigameStoryMatch": ("live", "the match launchers store the (list, index) word through "
+    "wCurrentMatchList": ("live", "the match launchers store the (list, index) word through "
                                            "a pointer; the doubles lists are odd"),
 }
 GLOBAL = re.compile(r"^([A-Za-z_]\w*):")

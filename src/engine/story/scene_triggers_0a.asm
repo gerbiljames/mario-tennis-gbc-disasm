@@ -17,7 +17,7 @@ RunFacingTileScript:
 	ld de, wStoryMapRecord ; $558c
 	ld bc, wStoryMapRecord_SIZE ; $558f
 	call FarCopyBytes ; $5592
-	ld hl, wStoryMapRecord + 4 ; $5595
+	ld hl, wStoryMapRecord + MAPSCRIPT_HANDLER ; $5595
 	ld a, [hl+] ; $5598
 	ld h, [hl] ; $5599
 	ld l, a ; $559a
@@ -48,10 +48,10 @@ RunQueuedTriggerScript:
 	ld de, wStoryMapRecord ; $55bd
 	ld bc, wStoryMapRecord_SIZE ; $55c0
 	call FarCopyBytes ; $55c3
-	ld a, [wStoryMapRecord + 6] ; $55c6
+	ld a, [wStoryMapRecord + MAPSCRIPT_ARG0] ; $55c6
 	cp $01 ; $55c9
 	jr z, .done ; $55cb
-	ld hl, wStoryMapRecord + 4 ; $55cd
+	ld hl, wStoryMapRecord + MAPSCRIPT_HANDLER ; $55cd
 	ld a, [hl+] ; $55d0
 	ld h, [hl] ; $55d1
 	ld l, a ; $55d2
@@ -81,7 +81,7 @@ RunTileTriggerScript:
 	ld de, wStoryMapRecord ; $55f2
 	ld bc, wStoryMapRecord_SIZE ; $55f5
 	call FarCopyBytes ; $55f8
-	ld hl, wStoryMapRecord + 4 ; $55fb
+	ld hl, wStoryMapRecord + MAPSCRIPT_HANDLER ; $55fb
 	ld a, [hl+] ; $55fe
 	ld h, [hl] ; $55ff
 	ld l, a ; $5600
@@ -112,15 +112,15 @@ RunLocationExit:
 	ld de, wStoryMapRecord ; $5623
 	ld bc, wStoryMapRecord_SIZE ; $5626
 	call FarCopyBytes ; $5629
-	ld hl, wStoryMapRecord + 4 ; $562c
+	ld hl, wStoryMapRecord + MAPSCRIPT_HANDLER ; $562c
 	ld a, [hl+] ; $562f
 	ld h, [hl] ; $5630
 	ld l, a ; $5631
 	ld a, $00 ; $5632
 	call RunStoryScriptOrDialogue ; $5634
-	ld a, [wStoryMapRecord + 6] ; $5637
+	ld a, [wStoryMapRecord + MAPSCRIPT_ARG0] ; $5637
 	ld [wStoryModeCurrentLocation], a ; $563a
-	ld a, [wStoryMapRecord + 7] ; $563d
+	ld a, [wStoryMapRecord + MAPSCRIPT_ARG1] ; $563d
 	ld [wStoryModeEntryPoint], a ; $5640
 .saveSlot:
 	xor a ; $5643

@@ -41,7 +41,7 @@ ReturnCoachWalkToCourtAndStartLesson:
 	ld a, EXITTRIGGER_DIRECT ; $7c20
 	ld [wUnusedExitTriggerIdMirror], a ; $7c22
 	ld [wStoryModeExitTriggerRequest], a ; $7c25
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $7c28
+	ld a, [wCurrentMatchIndex] ; $7c28
 	farcall RunTrainingDrillByID ; $7c2b
 	ret ; $7c2e
 ActorScript_15_19:

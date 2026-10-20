@@ -341,7 +341,7 @@ ReturnCoachReturnLessonScene:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6e1c
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6e23
 	ld a, MINIGAME_STROKE_PRACTICE_1 ; $6e28
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6e2a
+	ld [wCurrentMatchIndex], a ; $6e2a
 	ld a, STORYLOC_TRAINING_COURT ; $6e2d
 	ld [wStoryModeCurrentLocation], a ; $6e2f
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6e32
@@ -377,7 +377,7 @@ ReturnCoachLobLessonScene:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6e9f
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6ea6
 	ld a, MINIGAME_STROKE_PRACTICE_2 ; $6eab
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6ead
+	ld [wCurrentMatchIndex], a ; $6ead
 	ld a, STORYLOC_TRAINING_COURT ; $6eb0
 	ld [wStoryModeCurrentLocation], a ; $6eb2
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6eb5
@@ -413,7 +413,7 @@ ReturnCoachPassingShotLessonScene:
 	script_set_anim ACTOR_TRAINING_COURT_BOB_2, ANIM_BOUNCE ; $6f22
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $6f29
 	ld a, MINIGAME_STROKE_PRACTICE_3 ; $6f2e
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6f30
+	ld [wCurrentMatchIndex], a ; $6f30
 	ld a, STORYLOC_TRAINING_COURT ; $6f33
 	ld [wStoryModeCurrentLocation], a ; $6f35
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6f38

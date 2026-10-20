@@ -88,7 +88,7 @@ LoadScoreboardModeGfx:
 	ld_hl_indexed ScoreboardModeGfxPointers ; $5c92
 	jr .loadGfx ; $5c99
 .trainingDrill:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
+	ld a, [wCurrentMatchIndex] ; $5c9b
 	add a ; $5c9e
 	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f
 .loadGfx:

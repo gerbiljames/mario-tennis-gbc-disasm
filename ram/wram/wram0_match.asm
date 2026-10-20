@@ -433,7 +433,7 @@ wTilemapDirtyFlag:: db
 ; [16-bit] Base position of the match scoreboard layout (low byte x, high byte y), added to each element's fixed offset. Set by PrepareScoreboardGfx ($0002 or $0202 by wScoreboardLayout) and ShowMatchScoreboardScreen (low byte 5). Read by the ScoreboardCaption_* handlers, DrawScoreboard, the pip drawers, and (shifted left 3) DrawScoreboardSprites and DrawScoreboardModeTitle
 wScoreboardOrigin:: dw
 
-; [8-bit] Rules/description page list to display, set by ShowMatchRulesPages (from wRulesSetsIndex/wRulesGamesIndex), ShowTrainingRulesPages (wCurrentMinigameStoryMatch + 1) and the minigame variant (drill id * 3 + wMinigameLevel). Indexes a 4-byte-per-record page list (MatchRulesPageLists and siblings)
+; [8-bit] Rules/description page list to display, set by ShowMatchRulesPages (from wRulesSetsIndex/wRulesGamesIndex), ShowTrainingRulesPages (wCurrentMatchIndex) and the minigame variant (drill id * 3 + wMinigameLevel). Indexes a 4-byte-per-record page list (MatchRulesPageLists and siblings)
 wRulesPageListIndex:: db
 
 ; [8-bit] menu_def record the pause menu system should run, set before every RunMatchMenu / RunMatchQuitMenu / RunStoryMenu call in bank $06. GetMatchMenuItemCount and GetStoryMenuItemCount index their 8-byte menu_def tables with it

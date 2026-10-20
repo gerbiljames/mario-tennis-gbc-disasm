@@ -69,7 +69,7 @@ ShowDrillBriefingScreen:
 	ld [wAnimatedTilePeriod], a ; $44b3
 	script_fade_in 16 ; $44b6
 	call WaitFadeEnd ; $44bb
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $44be
+	ld a, [wCurrentMatchIndex] ; $44be
 	cp MINIGAME_TENNIS_MACHINE_1 ; $44c1
 	jr nc, .done ; $44c3
 	sub MINIGAME_SERVICE_PRACTICE_1 ; $44c5

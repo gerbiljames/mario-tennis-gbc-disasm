@@ -1220,11 +1220,9 @@ TEXT_POINTER_LABELS = {
     "MeasureTextDimensions.notLineBreak": "a",
     "MeasureTextDimensions.notShortTextArg": "a",
 }
-# Variables whose bytes are separate fields, so wVar + n is not wVar.
-_FIELD_VARS = {"wCurrentMinigameStoryMatch"}
 _NUMBER_RE = re.compile(r"(\$[0-9a-fA-F]+|%[01]+|\d+)")
 _TEXT_INDEX_RE = re.compile(r"Text_[0-9a-f]{2}_\d+$")
-_VAR_RE = r"([wh][A-Z]\w*(?: \+ (?:\$[0-9a-fA-F]+|\d+))?)"
+_VAR_RE = r"([wh][A-Z]\w*(?: \+ (?:\$[0-9a-fA-F]+|\d+|[A-Z][A-Z0-9_]*))?)"
 _REGS8 = frozenset("abcdehl")
 _PAIRS = {"bc": "bc", "de": "de", "hl": "hl", "af": "a"}
 # Instructions that leave every register as it was.
@@ -1254,8 +1252,9 @@ def _is_imm(v):
 
 
 def _var(operand):
-    name = operand.split(" + ")[0]
-    return operand if name in _FIELD_VARS else name
+    """wVar + n is wVar; wVar + FIELD is a variable of its own."""
+    name, _, off = operand.partition(" + ")
+    return operand if off[:1].isalpha() else name
 
 
 def _twin_base(name):
@@ -1400,10 +1399,6 @@ def _raw_id_uses():
             if m := re.match(rf"ld hl, {_VAR_RE}$", t):
                 _clobber(regs, spent, "hl")
                 regs["hl"] = ("@" if m.group(1) in TEXT_BUFFERS else "=") + _var(m.group(1))
-                continue
-            if m := re.match(r"ld hl, ([wh][A-Z]\w* \+ [A-Z][A-Z0-9_]*)$", t):
-                _clobber(regs, spent, "hl")
-                regs["hl"] = "=" + m.group(1)     # a named field: its own variable
                 continue
             if m := re.match(r"ld ([a-ehl]|bc|de|hl), ([^\[]+)$", t):
                 r, v = m.groups()
@@ -1651,6 +1646,12 @@ KNOWN_RAW_FIELD_OFFSETS = {
 }
 _FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
 _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
+# Arrays whose entries are a constant family: `Array + n` names the entry.
+INDEXED_ARRAYS = {
+    "CHARREC_TRAIN_LEVELS": "TRAINSTAT_",
+    "wCharDataLevels": "TRAINSTAT_",
+}
+_INDEXED_ARRAY_RE = re.compile(rf"\b({'|'.join(INDEXED_ARRAYS)}) \+ ([^\],;]+)")
 _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
 
 
@@ -1659,12 +1660,19 @@ def check_field_offsets(fail):
     ACTORF_* / OBJSLOT_* field, an offset added to a record pointer (`ld hl, off /
     add hl, bc|de`, or `ld a, off / add c|e / ld e|c, a`) is not a raw number
     under $100: the same record reached through another register is still
-    that record."""
+    that record. An offset into an INDEXED_ARRAYS array is a member of its
+    family."""
     n, seen = 0, set()
     for holder in holders():
         lines, origin = bank_lines(holder)
         routines, cur = [], None
         for i, line in enumerate(lines):
+            for m in _INDEXED_ARRAY_RE.finditer(line.split(";")[0]):
+                n += 1
+                if not m.group(2).strip().startswith(INDEXED_ARRAYS[m.group(1)]):
+                    where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                    fail("fields", f"{where}: {m.group(1)} + {m.group(2).strip()} -- "
+                                   f"a {INDEXED_ARRAYS[m.group(1)]}* entry?")
             if m := re.match(r"^([A-Za-z_]\w*)::?$", line):
                 cur = (m.group(1), [])
                 routines.append(cur)

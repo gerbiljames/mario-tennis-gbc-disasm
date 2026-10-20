@@ -48,7 +48,7 @@ SetRewardGameFlag:
 	push bc ; $6cab
 	push de ; $6cac
 	push hl ; $6cad
-	ld a, [wCurrentMinigameStoryMatch] ; $6cae
+	ld a, [wCurrentMatchList] ; $6cae
 	add a ; $6cb1
 	ld hl, RewardFlagListPtrs_1e ; $6cb2
 	add_hl_a ; $6cb5
@@ -71,7 +71,7 @@ TestRewardGameFlag:
 	push bc ; $6cd1
 	push de ; $6cd2
 	push hl ; $6cd3
-	ld a, [wCurrentMinigameStoryMatch] ; $6cd4
+	ld a, [wCurrentMatchList] ; $6cd4
 	add a ; $6cd7
 	ld hl, RewardFlagListPtrs_1e ; $6cd8
 	add_hl_a ; $6cdb
@@ -90,9 +90,9 @@ TestRewardGameFlag:
 	pop bc ; $6cf4
 	ret ; $6cf5
 GetRewardTableIndex:
-	ld a, [wCurrentMinigameStoryMatch] ; $6cf6
+	ld a, [wCurrentMatchList] ; $6cf6
 	cp MATCHLIST_TRAINING ; $6cf9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6cfb
+	ld a, [wCurrentMatchIndex] ; $6cfb
 	ret nz ; $6cfe
 	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $6cff
 	ret c ; $6d01
@@ -349,7 +349,7 @@ RewardUnlockFlagsTable:
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL
 SetMinigameRecordSaveFlag:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
+	ld a, [wCurrentMatchIndex] ; $6eb1
 	cp MINIGAME_SHOOTING_STAR ; $6eb4
 	jr nz, .notShootingStar ; $6eb6
 	push de ; $6eb8
@@ -376,7 +376,7 @@ SetMinigameRecordSaveFlag:
 .done:
 	ret ; $6edb
 SetMinigameClearFlag:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
+	ld a, [wCurrentMatchIndex] ; $6edc
 	sub MINIGAME_BOO_BLAST ; $6edf
 	bit 7, a ; $6ee1
 	ret nz ; $6ee3
@@ -430,7 +430,7 @@ UpdateMinigameBestScore:
 	ld a, [wMinigameLevel] ; $6f3b
 	cp MINIGAMELEVEL_HIGH_SCORE ; $6f3e
 	jr nz, .restore ; $6f40
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
+	ld a, [wCurrentMatchIndex] ; $6f42
 	sub MINIGAME_BOO_BLAST ; $6f45
 	bit 7, a ; $6f47
 	jr nz, .restore ; $6f49
@@ -459,7 +459,7 @@ UpdateMinigameBestScore:
 	ld a, e ; $6f77
 	ld [hl+], a ; $6f78
 	ld [hl], d ; $6f79
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f7a
+	ld a, [wCurrentMatchIndex] ; $6f7a
 	sub MINIGAME_BOO_BLAST ; $6f7d
 	inc a ; $6f7f
 	inc a ; $6f80

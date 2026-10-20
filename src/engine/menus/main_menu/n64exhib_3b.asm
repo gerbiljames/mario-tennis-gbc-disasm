@@ -4,7 +4,7 @@ BuildN64ExhibColumnList:
 	ld de, wChartColumnList ; $474c
 	ld bc, wChartColumnList_SIZE / 16 ; $474f
 	call CopyMemoryFast ; $4752
-	ld hl, wN64RecordsBlock + 344 ; $4755
+	ld hl, wN64RecordsBlock + N64REC_STAR_UNLOCKS ; $4755
 	ld a, [hl] ; $4758
 	ld b, a ; $4759
 	and $01 ; $475a
@@ -71,7 +71,7 @@ DecodeN64ExhibResultsRow:
 	push de ; $47ce
 	push hl ; $47cf
 	push de ; $47d0
-	ld hl, wN64RecordsBlock + 216 ; $47d1
+	ld hl, wN64RecordsBlock + N64REC_EXHIB_ROWS ; $47d1
 	ld a, b ; $47d4
 	add a ; $47d5
 	add a ; $47d6
@@ -203,7 +203,7 @@ ExpandByteToBitArray:
 	ret ; $48b7
 Unused_3b_FillN64RecordsPalettes:
 	wram_bank WRAM_SCREEN ; $48b8
-	ld hl, wN64RecordsBlock + 216 ; $48be
+	ld hl, wN64RecordsBlock + N64REC_EXHIB_ROWS ; $48be
 	ld c, $00 ; $48c1
 .loop:
 	ld a, $2c ; $48c3
@@ -307,8 +307,8 @@ RunTrophiesScreen:
 	ld [wAnimatedTileSet], a ; $496d
 	frame_task UpdateAnimatedTilesTask_3b ; $4970
 	xor a ; $4978
-	ld [wN64RecordsBlock + 1], a ; $4979
-	ld [wN64RecordsBlock], a ; $497c
+	ld [wTrophiesCheatLeftPresses], a ; $4979
+	ld [wTrophiesCheatRightPresses], a ; $497c
 	call EnableLCD ; $497f
 	script_fade_in 16 ; $4982
 	call WaitFadeEnd ; $4987
@@ -328,14 +328,14 @@ RunTrophiesScreen:
 	jr nz, .pressedRight ; $49a9
 	jr .loop ; $49ab
 .pressedLeft:
-	ld a, [wN64RecordsBlock + 1] ; $49ad
+	ld a, [wTrophiesCheatLeftPresses] ; $49ad
 	inc a ; $49b0
-	ld [wN64RecordsBlock + 1], a ; $49b1
+	ld [wTrophiesCheatLeftPresses], a ; $49b1
 	jr .loop ; $49b4
 .pressedRight:
-	ld a, [wN64RecordsBlock] ; $49b6
+	ld a, [wTrophiesCheatRightPresses] ; $49b6
 	inc a ; $49b9
-	ld [wN64RecordsBlock], a ; $49ba
+	ld [wTrophiesCheatRightPresses], a ; $49ba
 	jr .loop ; $49bd
 .checkTrophiesCheatCode:
 	bit PADB_SELECT, a ; $49bf

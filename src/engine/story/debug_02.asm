@@ -121,22 +121,22 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, [hl] ; $5092
 	ld_cell de, $02, $0e ; $5093
 	call PrintDecimalByte ; $5096
-	ld hl, CHARREC_TRAIN_LEVELS ; $5099
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $5099
 	add hl, bc ; $509c
 	ld a, [hl] ; $509d
 	ld_cell de, $07, $04 ; $509e
 	call PrintDecimalByte ; $50a1
-	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $50a4
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $50a4
 	add hl, bc ; $50a7
 	ld a, [hl] ; $50a8
 	ld_cell de, $07, $06 ; $50a9
 	call PrintDecimalByte ; $50ac
-	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $50af
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $50af
 	add hl, bc ; $50b2
 	ld a, [hl] ; $50b3
 	ld_cell de, $07, $09 ; $50b4
 	call PrintDecimalByte ; $50b7
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $50ba
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $50ba
 	add hl, bc ; $50bd
 	ld a, [hl] ; $50be
 	ld_cell de, $07, $0b ; $50bf

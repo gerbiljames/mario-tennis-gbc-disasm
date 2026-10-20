@@ -154,7 +154,7 @@ MatchRulesPageLists:
 	rules_pages $04, $06 ; list 4
 	rules_pages $05, $07 ; list 5
 ShowTrainingRulesPages:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $417d
+	ld a, [wCurrentMatchIndex] ; $417d
 	ld [wRulesPageListIndex], a ; $4180
 	ld_de_indexed Text_RulesHeadingServiceMatch ; $4183
 	ld hl, wRulesTitleTextId ; $418a
@@ -205,7 +205,7 @@ TrainingRulesPageLists:
 	rules_pages $1b ; list 27
 	rules_pages $1c ; list 28
 ShowMinigameRulesPages:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $421d
+	ld a, [wCurrentMatchIndex] ; $421d
 	sub MINIGAME_BOO_BLAST ; $4220
 	ld b, a ; $4222
 	add a ; $4223
@@ -219,7 +219,7 @@ ShowMinigameRulesPages:
 	ld a, e ; $4237
 	ld [hl+], a ; $4238
 	ld [hl], d ; $4239
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $423a
+	ld a, [wCurrentMatchIndex] ; $423a
 	sub MINIGAME_BOO_BLAST ; $423d
 	add a ; $423f
 	ld_hl_indexed MinigameRulesTextIdBases ; $4240

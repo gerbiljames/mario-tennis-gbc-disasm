@@ -429,7 +429,7 @@ JuniorClassCourtSinglesEntry0eScene:
 JuniorClassCourtSinglesEntry0dScene:
 	xor a ; $6e9e
 	ld [wStoryModeShowLocationName], a ; $6e9f
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
+	ld a, [wCurrentMatchIndex] ; $6ea2
 	sub STORYMATCH_JUNIOR_4 ; $6ea5
 	jumptable a ; $6ea7
 	dw JuniorClassCourtSinglesEntry0dScene.wonRank4 ; $6ea9 jumptable

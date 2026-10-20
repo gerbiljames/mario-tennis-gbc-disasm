@@ -445,12 +445,12 @@ TrainingCourtResultDispatch:
 	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
 .notQuit:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
+	ld a, [wCurrentMatchIndex] ; $5378
 	cp MINIGAME_TENNIS_MACHINE_1 ; $537b
 	jr c, .dispatchResult ; $537d
 	ret ; $537f
 .dispatchResult:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
+	ld a, [wCurrentMatchIndex] ; $5380
 	jumptable a ; $5383
 	dw ServiceMatch1ResultScene ; $5385 jumptable
 	dw ServiceMatch2ResultScene ; $5387 jumptable
@@ -471,7 +471,7 @@ TrainingCourtResultDispatch:
 	dw StrokePractice2ResultScene ; $53a5 jumptable
 	dw StrokePractice3ResultScene ; $53a7 jumptable
 TrainingCourtReentryDispatch:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
+	ld a, [wCurrentMatchIndex] ; $53a9
 	jumptable a ; $53ac
 	dw TrainingCourtReentryDispatch.serveCourt ; $53ae jumptable
 	dw TrainingCourtReentryDispatch.serveCourt ; $53b0 jumptable

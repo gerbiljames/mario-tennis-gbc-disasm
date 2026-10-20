@@ -351,6 +351,12 @@ NEXTU
 wN64RecordsBlock:: ds 512
 	export_size wN64RecordsBlock
 NEXTU
+; trophies screen button code (bank $3b)
+; [8-bit] Right presses on the trophies screen; CheckTrophiesCheatCode wants $0c
+wTrophiesCheatRightPresses:: db
+; [8-bit] Left presses on the trophies screen; CheckTrophiesCheatCode wants $22
+wTrophiesCheatLeftPresses:: db
+NEXTU
 ; screen sequences (bank $18)
 	ds 256
 ; [8-bit] Cleared as the ending sequence enters its third scene and stepped through the scenes that follow

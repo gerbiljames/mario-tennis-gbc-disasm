@@ -407,7 +407,7 @@ RunServiceLessonMenu:
 	cp $ff ; $452f
 	jp z, RunDoublesMatchListMenu.done ; $4531
 	add MINIGAME_SERVICE_PRACTICE_1 ; $4534
-	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
+	ld [wCurrentMatchIndex], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
 	ld de, wStoryModeSpawnPosition ; $453c
 	ld bc, wStoryModeSpawnPosition_SIZE ; $453f
@@ -428,7 +428,7 @@ RunNetLessonMenu:
 	cp $ff ; $4567
 	jp z, RunDoublesMatchListMenu.done ; $4569
 	add MINIGAME_NET_GAME_PRACTICE_1 ; $456c
-	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
+	ld [wCurrentMatchIndex], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
 	ld de, wStoryModeSpawnPosition ; $4574
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4577

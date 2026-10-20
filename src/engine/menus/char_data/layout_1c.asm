@@ -39,29 +39,29 @@ ApplyCharStatLevelUp:
 	ld a, [wCharDataLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $542f
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $542f
 	pop af ; $5442
 	ld a, [wCharDataNewLevels] ; $5443
 	ld [hl], a ; $5446
-	ld [wCharDataLevels], a ; $5447
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $5447
 	push af ; $544a
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $544b
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $544b
 	pop af ; $545e
 	ld a, [wCharDataNewLevels + 1] ; $545f
 	ld [hl], a ; $5462
-	ld [wCharDataLevels + 1], a ; $5463
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $5463
 	push af ; $5466
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $5467
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $5467
 	pop af ; $547a
 	ld a, [wCharDataNewLevels + 2] ; $547b
 	ld [hl], a ; $547e
-	ld [wCharDataLevels + 2], a ; $547f
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $547f
 	push af ; $5482
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $5483
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $5483
 	pop af ; $5496
 	ld a, [wCharDataNewLevels + 3] ; $5497
 	ld [hl], a ; $549a
-	ld [wCharDataLevels + 3], a ; $549b
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $549b
 	ld a, [wStoryCharacterSlot] ; $549e
 	farcall RefreshPlayerStatsAndGetPtr ; $54a1
 	ld a, [wCharDataChoiceCount] ; $54a4

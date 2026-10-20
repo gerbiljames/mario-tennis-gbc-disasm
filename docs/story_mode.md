@@ -179,11 +179,11 @@ Each location bank `$0e`-`$15` opens with a directory sized to its locations
 
 | off | field |
 | --- | --- |
-| +$00 | entry-point id (matched against `wStoryModeEntryPoint`) |
-| +$01 | facing (`FACE_*`) |
-| +$02 | X (16-bit) |
-| +$04 | Y (16-bit) |
-| +$06 | `arrival_script` — same-bank code address, `$0000` = none |
+| +$00 | `MAPENTRY_ID`: entry-point id (matched against `wStoryModeEntryPoint`) |
+| +$01 | `MAPENTRY_FACING`: facing (`FACE_*`) |
+| +$02 | `MAPENTRY_X`: X (16-bit) |
+| +$04 | `MAPENTRY_Y`: Y (16-bit) |
+| +$06 | `MAPENTRY_SCRIPT`: `arrival_script` — same-bank code address, `$0000` = none |
 
 The matched record goes to `wStoryMapRecord`, then is split into
 `wStoryModeSpawnPosition` (X, Y, facing) and `wStoryArrivalScript`. X and Y
@@ -321,12 +321,12 @@ Slots 1, 3, 4, 5 share this shape and one lookup, `FindStoryScriptEntry`
 
 | off | field |
 | --- | --- |
-| +$00 | `id` — matched against the lookup key (`$ff` terminates) |
-| +$01 | `facing_mask` — `FACEMASK_*`; `$ff` matches any |
-| +$02 | `flag_cond` — flag-id word, `$0000` = unconditional |
-| +$04 | `handler` — text id if `< $4000`, else a code address in `wStoryLocationBank` |
-| +$06 | `arg0` |
-| +$07 | `arg1` |
+| +$00 | `MAPSCRIPT_ID`: `id` — matched against the lookup key (`$ff` terminates) |
+| +$01 | `MAPSCRIPT_FACING_MASK`: `facing_mask` — `FACEMASK_*`; `$ff` matches any |
+| +$02 | `MAPSCRIPT_FLAG_COND`: `flag_cond` — flag-id word, `$0000` = unconditional |
+| +$04 | `MAPSCRIPT_HANDLER`: `handler` — text id if `< $4000`, else a code address in `wStoryLocationBank` |
+| +$06 | `MAPSCRIPT_ARG0`: `arg0` |
+| +$07 | `MAPSCRIPT_ARG1`: `arg1` |
 
 `CheckTriggerFacingMask` (`$0a:$53bd`) maps `wPlayerMoveAngle`'s top two
 bits through `FacingMaskTable_0a` to a PADF-layout bit and ANDs the mask, so
@@ -594,7 +594,7 @@ match-end routine: it checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
 sets the flag. E.g. on a win `JuniorClassCourtDoublesMatchReturn`
 (`$11:$5d38`) reloads the court at entry `$0d`, and
 `JuniorClassCourtDoublesEntry0dScene` dispatches on
-`wCurrentMinigameStoryMatch + 1` (`$11:$5daa`) to `set_flag
+`wCurrentMatchIndex` (`$11:$5daa`) to `set_flag
 FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`.wonRank3`/`2`/`1`, `$11:$5db7`/
 `$5ec0`/`$5fbd`). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
 (`$1e:$6edc`) indexes `MinigameClearFlagTable_1e` and calls `SetSaveFlag`.
@@ -612,8 +612,8 @@ everything in both arcs, granted on the completing match;
 
 A story match writes a big-endian id to `wCurrentMinigameStoryMatch`
 (`$c8f6`) and calls `LoadMatchSettingsFromTable` (the `load_match_settings`
-macro). High byte = category (0 singles, 1 doubles, 2 minigame/training), low
-byte = match; the `wCurrentMinigameStoryMatch` note in `ram/wram/` lists them all.
+macro). High byte `wCurrentMatchList` = category (0 singles, 1 doubles,
+2 minigame/training), low byte `wCurrentMatchIndex` = match; the `wCurrentMinigameStoryMatch` note in `ram/wram/` lists them all.
 
 `LoadMatchSettingsFromTable` (`$0a:$4a5c`) indexes
 `SinglesMatchSettingsTable_0a` (`$0a:$4ab2`) or `DoublesMatchSettingsTable_0a`

@@ -46,9 +46,14 @@ def SAVEBLOCK_BACKUP            equ $1b
 	const SAVEBLOCK_MINIGAME_RECORDS  ; $38 + story slot; backups at + 3
 def SAVEBLOCK_STAR_GRID         equ $3e ; star-character exhibition victory grid
 
-; --- N64 records block (SAVEBLOCK_N64_RECORDS), its first bytes ---
+; --- N64 records block (SAVEBLOCK_N64_RECORDS) ---
 ; One unlock byte per Mario-cast character, in CHAR_* order; the minigame
-; record each one needs is the minigame that character hosts.
+; record each one needs is the minigame that character hosts. The tables
+; after them hold one entry per N64 roster character.
+def NUM_N64_CHARS            equ 16
+def N64_RING_CLEARS_SIZE     equ 4 ; one bit run per ring-shot course
+def N64_RING_SCORES_SIZE     equ 8 ; four big-endian words
+def N64_EXHIB_ROW_SIZE       equ 8
 	rsreset
 def N64REC_PRESENT        rb 2 ; $00 nonzero when Transfer Pak data was written
 def N64REC_UNLOCK_MARIO   rb   ; $02 MGRECORD_BOO_BLAST
@@ -57,6 +62,11 @@ def N64REC_UNLOCK_YOSHI   rb   ; $04 MGRECORD_FRUIT_FANTASY
 def N64REC_UNLOCK_BOWSER  rb   ; $05 MGRECORD_TWO_ON_ONE
 def N64REC_UNLOCK_WARIO   rb   ; $06 MGRECORD_TREASURE_BOX
 def N64REC_UNLOCK_PEACH   rb   ; $07 MGRECORD_PERFECT_SHOT
+def N64REC_TROPHIES       rb NUM_N64_CHARS                        ; $08
+def N64REC_RING_CLEARS    rb NUM_N64_CHARS * N64_RING_CLEARS_SIZE ; $18
+def N64REC_RING_SCORES    rb NUM_N64_CHARS * N64_RING_SCORES_SIZE ; $58
+def N64REC_EXHIB_ROWS     rb NUM_N64_CHARS * N64_EXHIB_ROW_SIZE   ; $d8
+def N64REC_STAR_UNLOCKS   rb   ; $158 bits 0/1: roster entries 14/15 present
 ; Blocks InitSaveHeader defines but no code writes, as runs filling the rest
 ; of each SRAM bank. Banks 3-14 are not on the 32 KiB cart.
 def SAVEBLOCK_UNUSED_BANK0      equ $0c ; $0c-$1a

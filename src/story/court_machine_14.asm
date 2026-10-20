@@ -134,7 +134,7 @@ MachineCourtHandleRetryChoice:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $47bf
 	ret ; $47cc
 MachineCourtRestartLevel:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
+	ld a, [wCurrentMatchIndex] ; $47cd
 	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $47d0
 	jr z, .storeStoryModeCurrentLocation ; $47d2
 	sub MINIGAME_TENNIS_MACHINE_1 ; $47d4
@@ -157,7 +157,7 @@ MachineCourtRestartLevel:
 	ld [wUnusedExitTriggerIdMirror], a ; $47fb
 	ld [wStoryModeExitTriggerRequest], a ; $47fe
 .runTrainingDrillByID:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
+	ld a, [wCurrentMatchIndex] ; $4801
 	farcall RunTrainingDrillByID ; $4804
 	ret ; $4807
 ActorScript_14_0:

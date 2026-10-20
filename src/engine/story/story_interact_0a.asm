@@ -439,10 +439,10 @@ RunNpcInteraction:
 	ld de, wStoryMapRecord ; $54d3
 	ld bc, wStoryMapRecord_SIZE ; $54d6
 	call FarCopyBytes ; $54d9
-	ld hl, wStoryMapRecord + 6 ; $54dc
+	ld hl, wStoryMapRecord + MAPSCRIPT_ARG0 ; $54dc
 	ld b, [hl] ; $54df
 	wram_bank WRAM_ACTORS ; $54e0
-	ld hl, wStoryMapRecord ; $54e6
+	ld hl, wStoryMapRecord + MAPSCRIPT_ID ; $54e6
 	ld a, [hl] ; $54e9
 	call GetActorStateAddr ; $54ea
 	ld e, l ; $54ed
@@ -488,11 +488,11 @@ RunNpcInteraction:
 	ld [hl], a ; $552f
 .runScript:
 	push de ; $5530
-	ld hl, wStoryMapRecord + 4 ; $5531
+	ld hl, wStoryMapRecord + MAPSCRIPT_HANDLER ; $5531
 	ld a, [hl+] ; $5534
 	ld h, [hl] ; $5535
 	ld l, a ; $5536
-	ld a, [wStoryMapRecord] ; $5537
+	ld a, [wStoryMapRecord + MAPSCRIPT_ID] ; $5537
 	call RunStoryScriptOrDialogue ; $553a
 	pop de ; $553d
 	bit NPCB_RESTORE_FACING, b ; $553e

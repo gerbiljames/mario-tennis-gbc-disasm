@@ -53,13 +53,13 @@ InitMinigameScore:
 	ld [hl+], a ; $40d9
 	ld a, [wMinigameLevel] ; $40da
 	ld b, a ; $40dd
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $40de
+	ld a, [wCurrentMatchIndex] ; $40de
 	call GetMinigameTargetScore ; $40e1
 	ld hl, wMinigamesTargetScore ; $40e4
 	ld a, e ; $40e7
 	ld [hl+], a ; $40e8
 	ld [hl], d ; $40e9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $40ea
+	ld a, [wCurrentMatchIndex] ; $40ea
 	sub MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $40ed
 	ret c ; $40ef
 	ld_hl_indexed MinigameRecordSlotIds ; $40f0

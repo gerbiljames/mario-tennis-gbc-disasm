@@ -6,7 +6,7 @@ RunStrokeLessonMenu:
 	cp $ff ; $459f
 	jp z, RunDoublesMatchListMenu.done ; $45a1
 	add MINIGAME_STROKE_PRACTICE_1 ; $45a4
-	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
+	ld [wCurrentMatchIndex], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
 	ld de, wStoryModeSpawnPosition ; $45ac
 	ld bc, wStoryModeSpawnPosition_SIZE ; $45af
