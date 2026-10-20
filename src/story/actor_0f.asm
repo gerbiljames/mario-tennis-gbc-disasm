@@ -172,13 +172,13 @@ ActorScript_0f_10:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 ActorScript_0f_11:
@@ -186,7 +186,7 @@ ActorScript_0f_11:
 	as_set_wander_home
 .wander:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 Unused_0f_MapScriptNopAlt:

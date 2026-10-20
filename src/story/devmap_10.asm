@@ -473,7 +473,7 @@ RunStoryFileFlow:
 	call ResetGameTimer ; $5073
 	farcall GenerateUniqueStorySaveSignature ; $5076
 	farcall SaveStorySlotWithTimer ; $5079
-	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $507c
+	test_flag FLAG_DEBUG_EXIT_TO_TEST_2 ; $507c
 	jr nz, .newGameTestExit ; $507f
 	ld a, EXIT_MAIN_MENU_NEW_GAME ; $5081
 	ld [wUnusedExitTriggerIdMirror], a ; $5083
@@ -517,7 +517,7 @@ RunStoryFileFlow:
 	ld c, ENTRY_DORM_ROOM_CONTINUE ; $50dd
 	farcall SaveStoryReturnPoint ; $50df
 	farcall SaveStorySlotWithTimer ; $50e2
-	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
+	test_flag FLAG_DEBUG_EXIT_TO_TEST_2 ; $50e5
 	jr nz, .continueTestExit ; $50e8
 	ld a, [wStoryContinueExitId] ; $50ea
 	ld a, a ; $50ed

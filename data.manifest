@@ -192,7 +192,7 @@ engine/match/ServeGfx1_09.bin 026d80 100 gfx
 engine/match/ServeGfx2_09.bin 026e80 100 gfx
 engine/match/ServeGfx3_09.bin 026f80 100 gfx
 engine/story/StoryObjPalettes.asm 029341 28 palettes
-engine/story/DrawMinigameTargetTable.asm 02a6fe 10 bytes:16
+engine/story/MinigameTargetHitShakeLengths.asm 02a6fe 10 bytes:16
 engine/story/MinigameTargetFormation0Script0.asm 02a8e1 a target_script
 engine/story/MinigameTargetFormation0Script1.asm 02a8eb a target_script
 engine/story/MinigameTargetFormation0Script2.asm 02a8f5 a target_script
@@ -250,7 +250,7 @@ engine/story/MinigameTargetFormation8Script0.asm 02ac53 a target_script
 engine/story/MinigameTargetFormation8Script1.asm 02ac5d a target_script
 engine/story/MinigameTargetFormation8Script2.asm 02ac67 a target_script
 engine/story/MinigameTargetFormation8Script3.asm 02ac71 a target_script
-engine/story/DrawMinigameTargetAltTable.asm 02adad 10 bytes:16
+engine/story/MinigameTargetAltHitSwayOffsets.asm 02adad 10 bytes:16
 engine/story/EndingCreditsSequencePalette.asm 02ae6c 8 palettes
 audio/Unused_0c_Snd00.bin 030090 e4
 audio/Unused_0c_Snd01.bin 030174 e2

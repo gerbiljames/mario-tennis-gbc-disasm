@@ -136,7 +136,7 @@ SeniorCourtNpc03FaceUp_12:
 SeniorCourtNpc03FaceRight_12:
 	test_flag FLAG_DOUBLES ; $5630
 	jr z, SeniorCourtNpc03_12 ; $5633
-	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5635
+	test_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $5635
 	jp nz, SeniorCourtNpc03FaceUpBeforeDoublesRank1_12.introDone ; $5638
 	script_set_speed ACTOR_PLAYER, 0.5 ; $563b
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5643
@@ -154,7 +154,7 @@ SeniorCourtNpc03FaceRight_12:
 SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	test_flag FLAG_DOUBLES ; $569b
 	jp z, SeniorCourtNpc03FaceUp_12 ; $569e
-	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $56a1
+	test_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $56a1
 	jp nz, .introDone ; $56a4
 	script_set_speed ACTOR_PARTNER, 0.5 ; $56a7
 	script_set_speed ACTOR_PLAYER, 0.25 ; $56af
@@ -170,7 +170,7 @@ SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	script_wait_move ACTOR_PLAYER ; $56fd
 	jr .face ; $5702
 .doublesIntro:
-	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5704
+	test_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $5704
 	jp nz, .introDone ; $5707
 	script_set_speed ACTOR_PLAYER, 0.5 ; $570a
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5712
@@ -192,7 +192,7 @@ SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	script_unlock_facing ACTOR_PLAYER ; $577e
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_EmilyPartnerIsMyStudent ; $578c
-	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792
+	set_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $5792
 	ld a, [wStoryPartnerGender] ; $5795
 	or a ; $5798
 	jr nz, .speak ; $5799

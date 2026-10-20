@@ -382,7 +382,7 @@ ResumeSuspendedStoryMatch:
 	ld c, ENTRY_MAIN_MENU_FROM_STORY ; $55e5
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
-	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
+	test_flag FLAG_DEBUG_EXIT_TO_TEST_2 ; $55ed
 	jr nz, .testExit ; $55f0
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $55f2
 	ld [wUnusedExitTriggerIdMirror], a ; $55f4

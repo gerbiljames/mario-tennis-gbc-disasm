@@ -63,7 +63,7 @@ ACTOR_ARGS = {
     ("script_set_actor_script", 0), ("script_face_toward", 0), ("script_face_toward", 1),
     ("script_set_speed", 0), ("script_get_actor_state", 0), ("script_wait_actor_script", 0),
     ("script_null_script", 0), ("script_jump_velocity", 0), ("script_face_pair", 0),
-    ("script_face_pair", 1), ("script_move_player_to_actor", 0), ("script_set_active", 0),
+    ("script_face_pair", 1), ("script_move_player_to_actor", 0), ("script_set_actor_mode", 0),
     ("script_move_angle", 0), ("script_set_objdef", 1), ("script_lock_facing", 0),
     ("script_unlock_facing", 0), ("script_wait_jump", 0), ("script_follow", 0), ("script_follow", 1),
     ("script_walk_to_actor", 0), ("script_walk_to_actor", 1),

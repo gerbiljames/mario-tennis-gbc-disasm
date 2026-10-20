@@ -120,7 +120,7 @@ WaterSpriteSwingContestScene:
 	ld h, $00 ; $56be
 	ld_xy de, $50, $2c ; $56c0
 .countdownLoop:
-	sound SFX_CONTEST_WIN ; $56c3
+	sound SFX_CONTEST_COUNTDOWN ; $56c3
 	ld b, $3c ; $56c5
 .countdownTick:
 	farcall DrawDecimalNumberSprites_39 ; $56c7

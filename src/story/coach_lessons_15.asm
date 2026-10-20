@@ -338,7 +338,7 @@ ServicePractice1Result0:
 .speakGreeting:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $7326
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $732b
-	set_flag FLAG_SERVE_COACH_GREETED ; $7332
+	set_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $7332
 	ret ; $7335
 ServicePractice2Result0:
 	call InitServeCoachScene ; $7336
@@ -360,7 +360,7 @@ ServicePractice2Result0:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $7385
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $738a
 	script_wait_frames 5 ; $7391
-	set_flag FLAG_SERVE_COACH_GREETED ; $7398
+	set_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $7398
 	ret ; $739b
 ServicePractice3Result0:
 	call InitServeCoachScene ; $739c
@@ -377,7 +377,7 @@ ServicePractice3Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $73db
 	script_speak ACTOR_TRAINING_COURT_CURT ; $73e0
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $73e5
-	set_flag FLAG_SERVE_COACH_GREETED ; $73ec
+	set_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $73ec
 	ret ; $73ef
 ServicePractice1Result1:
 	call InitServeCoachScene ; $73f0

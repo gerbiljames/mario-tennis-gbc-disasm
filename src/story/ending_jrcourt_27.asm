@@ -316,18 +316,18 @@ ActorScript_27_16:
 	as_set_field ACTORF_SPEED, $0008
 .pace:
 	as_set_target 45.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 200
 	as_wait 240
 	as_set_target 51.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 60
 	as_set_target 45.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 60
 	as_set_target 51.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 240
 	as_wait 240

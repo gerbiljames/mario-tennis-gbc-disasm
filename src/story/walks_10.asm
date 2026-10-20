@@ -37,16 +37,16 @@ ActorScript_10_1:
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 .pace:
 	as_set_target 27.0, 23.125
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 5
 	as_set_target 29.0, 23.125
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 10
 	as_set_target 29.0, 22.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 10
 	as_set_target 29.0, 23.125
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 5
 	as_jump .pace
 GetDoublesProgressStage_10:
@@ -79,19 +79,19 @@ ActorScript_10_3:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderSmall
 MapScriptNop_10:

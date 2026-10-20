@@ -320,15 +320,15 @@ UpdatePlayerControl:
 	ld hl, ACTORF_ANIM_RATE ; $51b0
 	add hl, bc ; $51b3
 	ld [hl], d ; $51b4
-	ld a, [wPlayerMoveAngleApplied] ; $51b5
-	ld [wPlayerMoveAnglePrev], a ; $51b8
+	ld a, [wPlayerBlockedBy] ; $51b5
+	ld [wPlayerBlockedByPrev], a ; $51b8
 	xor a ; $51bb
-	ld [wPlayerMoveAngleApplied], a ; $51bc
+	ld [wPlayerBlockedBy], a ; $51bc
 	ldh a, [hPlayerInputFlags] ; $51bf
 	and PADF_DPAD ; $51c1
 	jr nz, .dpadToAngle ; $51c3
 	xor a ; $51c5
-	ld [wPlayerMoving], a ; $51c6
+	ld [wPlayerWallPushFrames], a ; $51c6
 	jp .stopAndSnap ; $51c9
 .dpadToAngle:
 	ld hl, DpadMaskToAngleTable_04 ; $51cc
@@ -443,7 +443,7 @@ ENDC
 	jr z, .startMove ; $529f
 	jr .setFacing ; $52a1
 .blocked:
-	ld [wPlayerMoveAngleApplied], a ; $52a3
+	ld [wPlayerBlockedBy], a ; $52a3
 	ld hl, wStoryAutoInteractArmed ; $52a6
 	ld [hl], $01 ; $52a9
 .setFacing:
@@ -470,9 +470,9 @@ ENDC
 	add hl, bc ; $52d2
 	ld [hl], $02 ; $52d3
 .countMoving:
-	ld hl, wPlayerMoving ; $52d5
+	ld hl, wPlayerWallPushFrames ; $52d5
 	inc [hl] ; $52d8
-	ld a, [wPlayerMoveAngleApplied] ; $52d9
+	ld a, [wPlayerBlockedBy] ; $52d9
 	and a ; $52dc
 	jr nz, .clearRunning ; $52dd
 	ld [hl], $00 ; $52df

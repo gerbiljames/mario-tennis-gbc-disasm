@@ -185,10 +185,10 @@ RunDialogueYesNoPrompt:
 	push hl ; $41f8
 	push_wram_bank WRAM_TEXT ; $41f9
 	call FindDialogueChoiceMarker ; $4202
-	ld a, [wTextRedrawGuard] ; $4205
+	ld a, [wTextCharDelayFrames] ; $4205
 	push af ; $4208
 	xor a ; $4209
-	ld [wTextRedrawGuard], a ; $420a
+	ld [wTextCharDelayFrames], a ; $420a
 	call ShowYesNoPromptWindow ; $420d
 	farcall RenderMenuWindowText ; $4210
 	farcall RunMenuSelection ; $4213
@@ -201,7 +201,7 @@ RunDialogueYesNoPrompt:
 	ld a, $ff ; $4224
 	ld [wMenuWindowId], a ; $4226
 	pop af ; $4229
-	ld [wTextRedrawGuard], a ; $422a
+	ld [wTextCharDelayFrames], a ; $422a
 	pop_wram_bank ; $422d
 	ld a, b ; $4232
 	pop hl ; $4233
@@ -396,7 +396,7 @@ SetActorNullScript:
 	call GetActorStateAddr ; $4364
 	ld c, l ; $4367
 	ld b, h ; $4368
-	ld hl, ActorScript_0a ; $4369
+	ld hl, ActorScript_Null ; $4369
 	ldh a, [hRomBank] ; $436c
 	farcall SetActorScript ; $436e
 	ret ; $4371

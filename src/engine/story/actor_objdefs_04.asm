@@ -77,7 +77,7 @@ TryPickRandomReachableTarget:
 .done:
 	pop bc ; $4947
 	ret ; $4948
-ActorScriptOp_WaitMove2:
+ActorScriptOp_WaitMoveOrBlocked:
 	ld hl, hActorPtr ; $4949
 	ld a, [hl+] ; $494c
 	ld h, [hl] ; $494d
@@ -257,7 +257,7 @@ ComputeSpriteScrollOffset:
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4a53
-	jr z, .clamp ; $4a56
+	jr z, .addShakeY ; $4a56
 	ld hl, wRasterScrollStartLY ; $4a58
 	ld a, [hl+] ; $4a5b
 	ld h, [hl] ; $4a5c
@@ -265,14 +265,14 @@ ComputeSpriteScrollOffset:
 	add hl, de ; $4a5e
 	ld d, h ; $4a5f
 	ld e, l ; $4a60
-.clamp:
+.addShakeY:
 	ld a, [wScreenShakeOffsetY] ; $4a61
 	ld l, a ; $4a64
 	ld h, $00 ; $4a65
 	bit 7, l ; $4a67
-	jr z, .done ; $4a69
+	jr z, .scaleShakeY ; $4a69
 	ld h, $ff ; $4a6b
-.done:
+.scaleShakeY:
 	add hl, hl ; $4a6d
 	add hl, hl ; $4a6e
 	add hl, hl ; $4a6f

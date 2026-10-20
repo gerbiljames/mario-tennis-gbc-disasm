@@ -341,7 +341,7 @@ IslandOpenSinglesMatchReturn:
 	call SetPlayerAndPartnerObjectDefs ; $749f
 	ret ; $74a2
 .wonRound:
-	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $74a3
+	clear_flag FLAG_TALKED_TO_UNION_FAN_SINGLES ; $74a3
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $74a6
 	call CheckIslandOpenVictoryTransition ; $74a9
 	and a ; $74ac
@@ -478,7 +478,7 @@ IslandOpenDoublesMatchReturn:
 	farcall WaitPlayerMoveDone ; $76e5
 	ret ; $76e8
 .wonRound:
-	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $76e9
+	clear_flag FLAG_TALKED_TO_UNION_FAN_DOUBLES ; $76e9
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
 	and a ; $76f2

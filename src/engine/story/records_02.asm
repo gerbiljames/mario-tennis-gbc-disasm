@@ -111,7 +111,7 @@ AddExpCapped:
 	ld [hl], a ; $4d39
 	dec hl ; $4d3a
 	dec hl ; $4d3b
-	ld de, Value100000_02 ; $4d3c
+	ld de, MaxExp_02 ; $4d3c
 	call Compare24Bit ; $4d3f
 	ret z ; $4d42
 	dec hl ; $4d43
@@ -127,7 +127,7 @@ AddExpCapped:
 	ld a, [de] ; $4d4d
 	ld [hl], a ; $4d4e
 	ret ; $4d4f
-Value100000_02:
+MaxExp_02:
 	; $4d50, 4 bytes (bytes:4)
 	db $9f, $86, $01, $c9 ; 0x00
 Compare24Bit:
@@ -188,7 +188,7 @@ HasReachedNextLevelExp:
 	add hl, de ; $4dac
 	push hl ; $4dad
 	xor a ; $4dae
-	ld hl, CharDataPtr_02 ; $4daf
+	ld hl, ExpThresholdTablePtr_02 ; $4daf
 	add_hl_a ; $4db2
 	ld a, [hl+] ; $4db7
 	ld h, [hl] ; $4db8
@@ -219,7 +219,7 @@ GetExpRemainingToNextLevel:
 	add hl, de ; $4ddb
 	push hl ; $4ddc
 	xor a ; $4ddd
-	ld hl, CharDataPtr_02 ; $4dde
+	ld hl, ExpThresholdTablePtr_02 ; $4dde
 	add_hl_a ; $4de1
 	ld a, [hl+] ; $4de6
 	ld h, [hl] ; $4de7
@@ -257,7 +257,7 @@ GetExpProgressInCurrentLevel:
 	add hl, de ; $4e15
 	push hl ; $4e16
 	xor a ; $4e17
-	ld hl, CharDataPtr_02 ; $4e18
+	ld hl, ExpThresholdTablePtr_02 ; $4e18
 	add_hl_a ; $4e1b
 	ld a, [hl+] ; $4e20
 	ld h, [hl] ; $4e21
@@ -288,7 +288,7 @@ GetExpRequiredForLevel:
 	add hl, de ; $4e42
 	push hl ; $4e43
 	xor a ; $4e44
-	ld hl, CharDataPtr_02 ; $4e45
+	ld hl, ExpThresholdTablePtr_02 ; $4e45
 	add_hl_a ; $4e48
 	ld a, [hl+] ; $4e4d
 	ld h, [hl] ; $4e4e
@@ -308,7 +308,7 @@ GetExpRequiredForLevel:
 	add hl, de ; $4e5d
 	push hl ; $4e5e
 	xor a ; $4e5f
-	ld hl, CharDataPtr_02 ; $4e60
+	ld hl, ExpThresholdTablePtr_02 ; $4e60
 	add_hl_a ; $4e63
 	ld a, [hl+] ; $4e68
 	ld h, [hl] ; $4e69
@@ -321,7 +321,7 @@ GetExpRequiredForLevel:
 	pop de ; $4e70
 	sub_hl_de ; $4e71
 	ret ; $4e77
-CharDataPtr_02:
+ExpThresholdTablePtr_02:
 	; $4e78, 2 bytes (records:2)
 	dw ExpLevelThresholds_02 ; record 0
 ExpLevelThresholds_02:

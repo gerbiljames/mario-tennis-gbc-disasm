@@ -45,7 +45,7 @@ WaterSpriteRacketRewardScene:
 	sound SFX_EMOTE ; $4ddf
 	script_wait_frames 60 ; $4de1
 	script_set_position ACTOR_TRAINING_COURT_WATER_SPRITE, 51.0, 7.0 ; $4de8
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4df3
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4df3
 	script_player_speed 0.5 ; $4dfa
 	script_move_player_to_actor ACTOR_TRAINING_COURT_WATER_SPRITE ; $4e00
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
@@ -59,9 +59,9 @@ WaterSpriteRacketRewardScene:
 	ld a, $10 ; $4e22
 .handOver:
 	ld d, a ; $4e24
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e25
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e25
 	script_wait_frames 4 ; $4e2c
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4e33
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4e33
 	push af ; $4e3a
 	ld a, d ; $4e3b
 	farcall WaitScriptFrames ; $4e3c
@@ -69,7 +69,7 @@ WaterSpriteRacketRewardScene:
 	ld a, d ; $4e40
 	sub $02 ; $4e41
 	jp nz, .handOver ; $4e43
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e46
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e46
 	script_wait_frames 60 ; $4e4d
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4e54
 	script_face ACTOR_PLAYER, FACE_UP ; $4e5f
@@ -143,9 +143,9 @@ WaterSpriteRacketRewardScene:
 	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
 .flickerLoop:
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4f9f
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4f9f
 	script_wait_frames 4 ; $4fa6
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4fad
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4fad
 	push af ; $4fb4
 	ld a, d ; $4fb5
 	farcall WaitScriptFrames ; $4fb6
@@ -154,7 +154,7 @@ WaterSpriteRacketRewardScene:
 	sub $02 ; $4fbb
 	ld d, a ; $4fbd
 	jp nz, .flickerLoop ; $4fbe
-	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4fc1
+	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $4fc1
 	script_wait_frames 30 ; $4fc8
 	script_set_position ACTOR_TRAINING_COURT_WATER_SPRITE, 51.0, 11.0 ; $4fcf
 	script_speak ACTOR_TRAINING_COURT_WATER_SPRITE ; $4fda
@@ -231,7 +231,7 @@ TrainingCourtNpc07_15:
 .lesson2:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_2 ; $5148
 	jr nz, .lesson3 ; $514b
-	test_flag FLAG_SERVE_COACH_GREETED ; $514d
+	test_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $514d
 	jr nz, .lesson2Line ; $5150
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5152
 	jr z, .lesson2Line ; $5155
@@ -248,7 +248,7 @@ TrainingCourtNpc07_15:
 .lesson3:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_3 ; $5172
 	jr nz, .done ; $5175
-	test_flag FLAG_SERVE_COACH_GREETED ; $5177
+	test_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $5177
 	jr nz, .lesson3Line ; $517a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $517c
 	jr z, .lesson3Line ; $517f
@@ -294,7 +294,7 @@ TrainingCourtNpc12_15:
 .lesson2:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_2 ; $51f4
 	jr nz, .lesson3 ; $51f7
-	test_flag FLAG_NET_COACH_GREETED ; $51f9
+	test_flag FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT ; $51f9
 	jr nz, .lesson2Line ; $51fc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $51fe
 	jr z, .lesson2Line ; $5201
@@ -311,7 +311,7 @@ TrainingCourtNpc12_15:
 .lesson3:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_3 ; $521e
 	jr nz, .done ; $5221
-	test_flag FLAG_NET_COACH_GREETED ; $5223
+	test_flag FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT ; $5223
 	jr nz, .lesson3Line ; $5226
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5228
 	jr z, .lesson3Line ; $522b
@@ -357,7 +357,7 @@ TrainingCourtNpc0D_15:
 .lesson2:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_2 ; $52a0
 	jr nz, .lesson3 ; $52a3
-	test_flag FLAG_RETURN_COACH_GREETED ; $52a5
+	test_flag FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT ; $52a5
 	jr nz, .lesson2Line ; $52a8
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52aa
 	jr z, .lesson2Line ; $52ad
@@ -377,7 +377,7 @@ TrainingCourtNpc0D_15:
 .lesson3:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_3 ; $52d5
 	jr nz, .done ; $52d8
-	test_flag FLAG_RETURN_COACH_GREETED ; $52da
+	test_flag FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT ; $52da
 	jr nz, .lesson3Line ; $52dd
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52df
 	jr z, .lesson3Line ; $52e2
@@ -399,7 +399,7 @@ TrainingCourtFacing01_15:
 	ret ; $5309
 TrainingCourtTileTriggers_15:
 	; $530a, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_UP, ~FLAG_SWING_PRACTICE_KID_PLACED, TrainingCourtTile01_15, $00, $00
+	map_script $01, FACEMASK_UP, ~FLAG_SWING_PRACTICE_KID_LEFT, TrainingCourtTile01_15, $00, $00
 	db $ff
 TrainingCourtTile01_15:
 	script_move_target ACTOR_PLAYER, 51.0, 13.0 ; $5313

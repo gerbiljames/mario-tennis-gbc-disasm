@@ -17,7 +17,7 @@ NetGamePractice1Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $75c4
 	script_speak ACTOR_TRAINING_COURT_BETH ; $75c9
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $75ce
-	set_flag FLAG_NET_COACH_GREETED ; $75d5
+	set_flag FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT ; $75d5
 	ret ; $75d8
 NetGamePractice2Result0:
 	call InitNetCoachScene ; $75d9
@@ -38,7 +38,7 @@ NetGamePractice2Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7623
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7628
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $762d
-	set_flag FLAG_NET_COACH_GREETED ; $7634
+	set_flag FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT ; $7634
 	ret ; $7637
 NetGamePractice3Result0:
 	call InitNetCoachScene ; $7638
@@ -55,7 +55,7 @@ NetGamePractice3Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7677
 	script_speak ACTOR_TRAINING_COURT_BETH ; $767c
 	script_face ACTOR_TRAINING_COURT_BETH, FACE_RIGHT ; $7681
-	set_flag FLAG_NET_COACH_GREETED ; $7688
+	set_flag FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT ; $7688
 	ret ; $768b
 NetGamePractice1Result1:
 	call InitNetCoachScene ; $768c
@@ -204,7 +204,7 @@ StrokePractice1Result0:
 .speakFollowUp:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $783d
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7842
-	set_flag FLAG_RETURN_COACH_GREETED ; $7849
+	set_flag FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT ; $7849
 	ret ; $784c
 StrokePractice2Result0:
 	call InitReturnCoachScene ; $784d
@@ -221,7 +221,7 @@ StrokePractice2Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $788c
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $7891
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $7896
-	set_flag FLAG_RETURN_COACH_GREETED ; $789d
+	set_flag FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT ; $789d
 	ret ; $78a0
 StrokePractice3Result0:
 	call InitReturnCoachScene ; $78a1
@@ -238,7 +238,7 @@ StrokePractice3Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_BOB_2 ; $78e0
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $78e5
 	script_face ACTOR_TRAINING_COURT_BOB_2, FACE_UP ; $78ea
-	set_flag FLAG_RETURN_COACH_GREETED ; $78f1
+	set_flag FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT ; $78f1
 	ret ; $78f4
 StrokePractice1Result1:
 	call InitReturnCoachScene ; $78f5
@@ -360,7 +360,7 @@ PlaceSwingPracticeKidActor:
 	and $0f ; $7a4e
 	cp $03 ; $7a50
 	jp nz, .done ; $7a52
-	test_flag FLAG_SWING_PRACTICE_KID_PLACED ; $7a55
+	test_flag FLAG_SWING_PRACTICE_KID_LEFT ; $7a55
 	jp nz, .done ; $7a58
 	script_set_position ACTOR_TRAINING_COURT_STUDENT_CAP_BOY_3, 53.0, 15.0 ; $7a5b
 .done:

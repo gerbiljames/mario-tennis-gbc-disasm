@@ -316,7 +316,7 @@ ScoreBallHit:
 	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $57c0
 	ld a, $01 ; $57c3
 	ld [wMinigameHitScored], a ; $57c5
-	sound SFX_THUD ; $57c8
+	sound SFX_VOICE_BOO ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
 	ld_de_indexed BooBlastStreakPoints ; $57cd
 	ld a, [de] ; $57d4

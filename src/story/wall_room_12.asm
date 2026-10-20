@@ -43,7 +43,7 @@ DormEntranceTileTriggers_12:
 	map_script $01, FACEMASK_ANY, $0000, DormEntranceTile01_12, $00, $00
 	db $ff
 DormEntranceTile01_12:
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $411f
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $411f
 	script_move_target ACTOR_PLAYER, 22.0, 9.0 ; $4126
 	script_wait_move ACTOR_PLAYER ; $4131
 	script_player_speed 0.5 ; $4136
@@ -136,14 +136,14 @@ DormEntranceTourScene:
 	script_set_anim ACTOR_PLAYER, ANIM_SHAKE ; $4341
 	script_wait_idle ACTOR_PLAYER ; $4348
 	script_wait_frames 20 ; $434d
-	script_set_active ACTOR_DORM_ENTRANCE_EMILY, ACTORMODE_HIDDEN ; $4354
+	script_set_actor_mode ACTOR_DORM_ENTRANCE_EMILY, ACTORMODE_HIDDEN ; $4354
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 23.0, 25.0 ; $435b
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $4366
 	script_move_target ACTOR_PLAYER, 22.5, 18.0 ; $436b
 	script_jump_velocity ACTOR_PLAYER, -2.0 ; $4376
 	script_wait_jump ACTOR_PLAYER ; $437e
 	script_face ACTOR_PLAYER, FACE_UP ; $4383
-	script_set_active ACTOR_DORM_ENTRANCE_EMILY, ACTORMODE_VISIBLE ; $438a
+	script_set_actor_mode ACTOR_DORM_ENTRANCE_EMILY, ACTORMODE_VISIBLE ; $438a
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 21.0, 11.0 ; $4391
 	ld a, [wStoryPartnerGender] ; $439c
 	or a ; $439f

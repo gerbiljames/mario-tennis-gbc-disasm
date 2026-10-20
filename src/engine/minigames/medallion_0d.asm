@@ -300,7 +300,7 @@ InitMinigame_FruitFantasy:
 	ld a, $06 ; $5f45
 	farcall SpawnMinigameTargetFormation ; $5f47
 	ld a, $01 ; $5f4a
-	ld [wMinigameTargetsAltMode], a ; $5f4c
+	ld [wMinigameTargetsScoreMode], a ; $5f4c
 	ld a, $01 ; $5f4f
 	ld [wMinigameUsesWall], a ; $5f51
 	ld a, [wMinigameLevel] ; $5f54

@@ -203,7 +203,7 @@ StoryActorsWalkOffAndFadeOut_13:
 	script_set_anim ACTOR_PLAYER, ANIM_DISTANT ; $444a
 	script_fade_out 8 ; $4451
 	script_wait_move ACTOR_PLAYER ; $4456
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $445b
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $445b
 	script_wait_frames 10 ; $4462
 	ret ; $4469
 StoryActorsWalkOffAndFadeOutDoubles_13:
@@ -220,7 +220,7 @@ StoryActorsWalkOffAndFadeOutDoubles_13:
 	script_set_anim ACTOR_PARTNER, ANIM_DISTANT ; $44b5
 	script_move_angle ACTOR_PARTNER, $ca, 2.0 ; $44bc
 	script_wait_move ACTOR_PLAYER ; $44c6
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $44cb
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $44cb
 	script_fade_out 16 ; $44d2
 	script_wait_frames 10 ; $44d7
 	ret ; $44de

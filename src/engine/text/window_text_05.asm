@@ -314,7 +314,7 @@ DelayTextCharacter:
 	push hl ; $579e
 	ld c, a ; $579f
 	push_wram_bank WRAM_TEXT ; $57a0
-	ld a, [wTextRedrawGuard] ; $57a9
+	ld a, [wTextCharDelayFrames] ; $57a9
 	or a ; $57ac
 	ld b, a ; $57ad
 	jr z, .restore ; $57ae
@@ -359,23 +359,23 @@ ApplyMessageSpeed:
 	bit MSGSPEEDB_INSTANT, a ; $57f4
 	jr z, .checkFast ; $57f6
 	xor a ; $57f8
-	ld [wTextRedrawGuard], a ; $57f9
+	ld [wTextCharDelayFrames], a ; $57f9
 	jr .restoreBank ; $57fc
 .checkFast:
 	or a ; $57fe
 	jr nz, .checkMedium ; $57ff
 	ld a, $00 ; $5801
-	ld [wTextRedrawGuard], a ; $5803
+	ld [wTextCharDelayFrames], a ; $5803
 	jr .restoreBank ; $5806
 .checkMedium:
 	cp MSGSPEED_NORMAL ; $5808
 	jr nz, .slow ; $580a
 	ld a, $02 ; $580c
-	ld [wTextRedrawGuard], a ; $580e
+	ld [wTextCharDelayFrames], a ; $580e
 	jr .restoreBank ; $5811
 .slow:
 	ld a, $04 ; $5813
-	ld [wTextRedrawGuard], a ; $5815
+	ld [wTextCharDelayFrames], a ; $5815
 .restoreBank:
 	pop_wram_bank ; $5818
 	pop af ; $581d

@@ -279,7 +279,7 @@ SpawnActorsFromList:
 	ret ; $4d2b
 Unused_04_SpawnScriptedActorScene:
 	ldh a, [hRomBank] ; $4d2c
-	ld hl, ActorList_04_1 ; $4d2e
+	ld hl, MainCharAlexActorList_04 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31
 	call AttachActorControllerScript ; $4d34
 	ldh a, [hRomBank] ; $4d37
@@ -305,7 +305,7 @@ Unused_04_MatchNinaAlexActorList:
 	map_actor $0000, ActorScript_Idle, 14.0, 25.0, FACE_RIGHT, OBJ_MATCH_ALEX, ANIM_WALK, $00
 	map_actor $0000, ActorScript_Idle, 34.0, 25.0, FACE_LEFT, OBJ_MATCH_ALEX, ANIM_WALK, $00
 	map_actor_end
-ActorList_04_1:
+MainCharAlexActorList_04:
 	; $4da5, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00
 	map_actor_end
@@ -332,9 +332,9 @@ ScriptedSceneMarioColumnActorList:
 	map_actor $0000, ActorScript_Idle, 23.0, 29.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor $0000, ActorScript_Idle, 23.0, 33.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorListPtrs_04:
+MainCharActorListPtrs_04:
 	; $4e5f, 8 bytes (records:2)
-	dw ActorList_04_1 ; record 0
+	dw MainCharAlexActorList_04 ; record 0
 	dw MainCharNinaActorList_04 ; record 1
 	dw MainCharHarryActorList_04 ; record 2
 	dw MainCharKateActorList_04 ; record 3
@@ -352,7 +352,7 @@ SpawnMainCharacterActor:
 	ld a, [wStoryMainChar] ; $4e77
 	and $03 ; $4e7a
 	add a ; $4e7c
-	ld_hl_indexed ScriptedActorListPtrs_04 ; $4e7d
+	ld_hl_indexed MainCharActorListPtrs_04 ; $4e7d
 	ld a, [hl+] ; $4e84
 	ld h, [hl] ; $4e85
 	ld l, a ; $4e86
@@ -425,10 +425,10 @@ SpawnCompanionActor:
 	ld hl, CompanionSinglesDummyActorList ; $4f36
 	ld a, $ff ; $4f39
 .spawn:
-	ld [wCompanionActorSlot], a ; $4f3b
+	ld [wCompanionCharId], a ; $4f3b
 	ldh a, [hRomBank] ; $4f3e
 	call SpawnActorFromTemplate ; $4f40
-	ld a, [wCompanionActorSlot] ; $4f43
+	ld a, [wCompanionCharId] ; $4f43
 	cp $ff ; $4f46
 	jr z, .done ; $4f48
 	ld de, wActors ; $4f4a

@@ -163,13 +163,13 @@ def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingB
 def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
 	const_def $86
-	const SFX_THUD               ; $86 a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
+	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0D_0e, the welcome cutscene) and a Boo Blast hit (ScoreBallHit $0d)
 	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
-	const SFX_PEACH_FANFARE      ; $88 before "Princess Peach!" in Mario World (MarioWorldNpc0CDonkeyKong_0e)
+	const SFX_VOICE_DK           ; $88 Donkey Kong speaking in Mario World (MarioWorldNpc0CDonkeyKong_0e)
 	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
 	const SFX_WATER_SPRITE_MAGIC ; $8a the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
 	const_def $8c
-	const SFX_CONTEST_WIN         ; $8c winning the water-sprite swing contest (WaterSpriteSwingContestScene $15)
+	const SFX_CONTEST_COUNTDOWN   ; $8c each beep of the swing contest's 3-2-1 countdown (WaterSpriteSwingContestScene $15)
 	const SFX_CONTEST_FINISH      ; $8d the swing contest ending (WaterSpriteSwingContestScene $15)
 	const SFX_WATER_SPRITE_APPEAR ; $8e the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
 	const SFX_WATER_SPRITE_FLY    ; $8f the water sprite flying off (WaterSpriteRacketRewardScene $15)

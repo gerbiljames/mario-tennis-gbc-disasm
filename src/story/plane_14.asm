@@ -334,8 +334,8 @@ IslandSkyHomeFromIslandOpenScene:
 	ld a, $00 ; $62a1
 	ld [wCutsceneObjX], a ; $62a3
 	frame_task QueuePlaneSpriteByFrameCounter_14 ; $62a6
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $62ae
-	script_set_active ACTOR_ISLAND_SKY_HEADMASTER, ACTORMODE_HIDDEN ; $62b5
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $62ae
+	script_set_actor_mode ACTOR_ISLAND_SKY_HEADMASTER, ACTORMODE_HIDDEN ; $62b5
 	test_flag FLAG_DOUBLES ; $62bc
 	jp z, .fadeIn ; $62bf
 	script_null_script ACTOR_PARTNER ; $62c2

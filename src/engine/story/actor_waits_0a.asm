@@ -123,7 +123,7 @@ ScriptSetActorJumpVelocity:
 	ld [hl+], a ; $472b
 	ld [hl], d ; $472c
 	ret ; $472d
-SetActorActive:
+ScriptSetActorMode:
 	call GetActorStateAddr ; $472e
 	ret z ; $4731
 	wram_bank WRAM_ACTORS ; $4732
@@ -145,7 +145,7 @@ Unused_0a_SubDEFromHL:
 	ld d, a ; $474d
 	add hl, de ; $474e
 	ret ; $474f
-Unused_0a_SetActorMoveTarget:
+Unused_0a_SetActorAnchor:
 	inc h ; $4750
 	dec h ; $4751
 	ret z ; $4752
@@ -167,7 +167,7 @@ Unused_0a_ActorScriptFollowWaypoints2:
 	; $4762, 4 bytes (actor_script)
 	as_follow_wp
 	as_jump Unused_0a_ActorScriptFollowWaypoints2
-ActorScript_0a:
+ActorScript_Null:
 	; $4766, 6 bytes (actor_script)
 	as_halt
 	as_set_field ACTORF_MODE, ACTORMODE_HIDDEN
@@ -450,25 +450,25 @@ UpdateScreenShake:
 	and c ; $491b
 IF DEF(FIXES)
 	bit 7, h
-	jr z, .negate
+	jr z, .storeX
 ELSE
-	jr nc, .negate ; $491c
+	jr nc, .storeX ; $491c
 ENDC
 	cpl ; $491e
 	inc a ; $491f
-.negate:
+.storeX:
 	ld [wScreenShakeOffsetX], a ; $4920
 	ld a, l ; $4923
 	and c ; $4924
 IF DEF(FIXES)
 	bit 7, l
-	jr z, .store
+	jr z, .storeY
 ELSE
-	jr nc, .store ; $4925
+	jr nc, .storeY ; $4925
 ENDC
 	cpl ; $4927
 	inc a ; $4928
-.store:
+.storeY:
 	ld [wScreenShakeOffsetY], a ; $4929
 	pop hl ; $492c
 	pop de ; $492d

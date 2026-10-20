@@ -1,6 +1,6 @@
 ; WRAM0 $cb00-$cfff: menu, cutscene, dictionary and link-screen state; the stack below $d000.
 
-; [8-bit] Which story character record the character-select / name-entry / char-data screens act on: a STORYREC_*. A $40-stride index into the wStoryMain* / wStoryPartner* records (e.g. GetActiveStoryNameBuffer)
+; [8-bit] Which story character record the character-select / name-entry / char-data screens act on: a STORYREC_*. A $40-stride index into the wStoryMain* / wStoryPartner* records (e.g. GetActiveStoryNameBuffer). RunEndingCreditsSequence reuses it as its EndingCutsceneLocationList scene index
 wStoryCharacterSlot:: db
 
 ; [8-bit] rSCX the LCD STAT handler applies inside a scanline band, giving the results and cutscene screens a horizontally offset strip. The credits and window-slide code reuse the next two bytes as a 16-bit camera offset while the STAT handler is off
@@ -232,8 +232,8 @@ wLinkUnlockFlagsSend:: ds 4
 ; [8-bit] One bit per Mario-cast grid slot, built by BuildMarioCastUnlockMask; GetUnlockedMarioCastCharAtGridSlot skips locked slots with it
 wMarioCastUnlockMask:: db
 
-; [8-bit] Actor slot SpawnCompanionActor fills: 3 in doubles, $ff in singles (skip attaching the step-mover)
-wCompanionActorSlot:: db
+; [8-bit] Doubles partner SpawnCompanionActor walks behind the player: CHAR_HARRY or CHAR_KATE by wStoryPartnerGender, $ff in singles (no companion attached)
+wCompanionCharId:: db
 
 ; [8-bit] Written as RunStoryModeOverworld starts; nothing reads it
 wOverworldEnterFlag:: db
@@ -294,7 +294,7 @@ wGlyphStampEnabled:: db
 ; [8-bit] Court-scene graphics still to queue; the loader decrements it each pass and stops once it hits zero
 wCourtSceneGfxStepsLeft:: db
 
-; [8-bit] Byte offset into CameraFromPlayerSpriteList, advanced 4 (one record) at a time and wrapped to 0 at a $ff record
+; [8-bit] Byte offset into Unused_0a_CourtSceneGfxStreamList, advanced 4 (one record) at a time and wrapped to 0 at a $ff record
 wCourtSceneGfxCursor:: db
 	ds 14
 

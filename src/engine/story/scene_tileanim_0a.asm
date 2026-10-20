@@ -74,7 +74,7 @@ Unused_0a_StepCourtSceneGfxStream:
 	or a ; $629e
 	jr nz, .done ; $629f
 .readEntry:
-	ld hl, CameraFromPlayerSpriteList ; $62a1
+	ld hl, Unused_0a_CourtSceneGfxStreamList ; $62a1
 	ld a, [wCourtSceneGfxCursor] ; $62a4
 	add l ; $62a7
 	ld l, a ; $62a8
@@ -125,7 +125,7 @@ Unused_0a_StepCourtSceneGfxStream:
 	dec a ; $62e6
 	ld [wCourtSceneGfxStepsLeft], a ; $62e7
 	ret ; $62ea
-CameraFromPlayerSpriteList:
+Unused_0a_CourtSceneGfxStreamList:
 	; $62eb, 13 bytes (records:4)
 ; 3 records x 4 bytes
 	dw $1000, $0a50 ; record 0

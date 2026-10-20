@@ -341,10 +341,10 @@ StepActorScript:
 	add hl, bc ; $4233
 	ld a, [hl] ; $4234
 	or a ; $4235
-	jr z, .stepJump ; $4236
+	jr z, .runScript ; $4236
 	dec [hl] ; $4238
 	ret ; $4239
-.stepJump:
+.runScript:
 	push bc ; $423a
 	ld hl, ACTORF_SCRIPT ; $423b
 	add hl, bc ; $423e
@@ -473,12 +473,12 @@ AdvanceActorTowardTarget:
 	sub e ; $42f2
 	ld d, a ; $42f3
 	bit 7, a ; $42f4
-	jr z, .absDeltaX ; $42f6
+	jr z, .absTurnDelta ; $42f6
 	cpl ; $42f8
 	inc a ; $42f9
-.absDeltaX:
+.absTurnDelta:
 	cp $60 ; $42fa
-	jr c, .compareDeltas ; $42fc
+	jr c, .clampTurnToRate ; $42fc
 	ld a, e ; $42fe
 	add $80 ; $42ff
 	ld e, a ; $4301
@@ -486,20 +486,20 @@ AdvanceActorTowardTarget:
 	add $80 ; $4303
 	ld d, a ; $4305
 	bit 7, a ; $4306
-	jr z, .compareDeltas ; $4308
+	jr z, .clampTurnToRate ; $4308
 	cpl ; $430a
 	inc a ; $430b
-.compareDeltas:
+.clampTurnToRate:
 	inc hl ; $430c
 	cp [hl] ; $430d
 	ld a, d ; $430e
-	jr c, .stepAxis ; $430f
+	jr c, .applyTurn ; $430f
 	ld a, [hl] ; $4311
 	bit 7, d ; $4312
-	jr z, .stepAxis ; $4314
+	jr z, .applyTurn ; $4314
 	cpl ; $4316
 	inc a ; $4317
-.stepAxis:
+.applyTurn:
 	add e ; $4318
 	dec hl ; $4319
 	ld [hl], a ; $431a
@@ -520,7 +520,7 @@ AdvanceActorTowardTarget:
 	add hl, bc ; $4331
 	bit ACTORFLAGB_YIELD, [hl] ; $4332
 	pop hl ; $4334
-	jr z, .arrived ; $4335
+	jr z, .takeStep ; $4335
 	push de ; $4337
 	push hl ; $4338
 	push de ; $4339
@@ -547,7 +547,7 @@ AdvanceActorTowardTarget:
 	pop hl ; $4354
 	pop de ; $4355
 	and a ; $4356
-	jr z, .arrived ; $4357
+	jr z, .takeStep ; $4357
 	ld hl, ACTORF_FLAGS ; $4359
 	add hl, bc ; $435c
 	set ACTORFLAGB_BLOCKED, [hl] ; $435d
@@ -555,7 +555,7 @@ AdvanceActorTowardTarget:
 	pop hl ; $4360
 	pop de ; $4361
 	jp .done ; $4362
-.arrived:
+.takeStep:
 	ld bc, $0001 ; $4365
 	pop af ; $4368
 	add $20 ; $4369

@@ -459,12 +459,12 @@ pointer's high byte (`$d0`-`$d5`, or `$d0` for the out-of-range case, which
 uses `hl = wActors`), so the routine always returns NZ. The idiom is a guard on
 a caller-supplied `hl` elsewhere in the bank — `CheckActorScriptEnd`
 (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`, after an `xor a`) and
-`Unused_0a_SetActorMoveTarget` (`$0a:$4750`) open with it, and
+`Unused_0a_SetActorAnchor` (`$0a:$4750`) open with it, and
 `CheckActorScriptEnd` returns its own `cp $00` intact. Here it sits after the
 answer.
 
 Eleven call sites — `ScriptSetActorMoveSpeed` (`$433b`),
-`ScriptSetActorMoveTarget` (`$4408`), `SetActorActive` (`$472e`) and eight more
+`ScriptSetActorMoveTarget` (`$4408`), `ScriptSetActorMode` (`$472e`) and eight more
 — do `ret z` or `jr z, .done` right after the call. All those guards are dead,
 so the script engine writes into inactive actors' state. Nothing visible
 follows: the draw loop (`$04:$4aae`) calls `DrawAndAnimateActor` only when the

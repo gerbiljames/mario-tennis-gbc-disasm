@@ -252,7 +252,7 @@ JuniorClassCourtSinglesNpcScriptsD_11:
 	map_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_JOY, FACEMASK_ANY, $0000, Text_JoyJuniorSinglesWonUnseeded, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 JuniorClassCourtSinglesDNpc0A_11:
-	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $6ca9
+	test_flag FLAG_TALKED_TO_ALLIE_ISLAND_OPEN ; $6ca9
 	jr nz, .altText ; $6cac
 	script_set_text Text_AllieJuniorCourtCostellosWeird ; $6cae
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cb4
@@ -385,18 +385,18 @@ ActorScript_11_29:
 	as_set_field ACTORF_SPEED, $0008
 .pace:
 	as_set_target 45.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 200
 	as_wait 240
 	as_set_target 51.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 60
 	as_set_target 45.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 60
 	as_set_target 51.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 240
 	as_wait 240

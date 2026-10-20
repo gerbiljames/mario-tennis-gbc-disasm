@@ -50,14 +50,14 @@ TournamentCourtyardNpc05_15:
 	farcall InitDialogueTextCursor ; $410e
 	test_flag FLAG_DOUBLES ; $4111
 	jr z, .singles ; $4114
-	test_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $4116
+	test_flag FLAG_TALKED_TO_UNION_FAN_DOUBLES ; $4116
 	jr nz, .alreadyTalked ; $4119
-	set_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $411b
+	set_flag FLAG_TALKED_TO_UNION_FAN_DOUBLES ; $411b
 	jr .speak ; $411e
 .singles:
-	test_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4120
+	test_flag FLAG_TALKED_TO_UNION_FAN_SINGLES ; $4120
 	jr nz, .alreadyTalked ; $4123
-	set_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4125
+	set_flag FLAG_TALKED_TO_UNION_FAN_SINGLES ; $4125
 .speak:
 	script_speak ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY ; $4128
 	script_set_anim ACTOR_TOURNAMENT_COURTYARD_STUDENT_CAP_BOY, ANIM_BOUNCE ; $412d
@@ -470,11 +470,11 @@ TrainingCourtExitTriggers_15:
 	db $ff
 ClearTrainingCourtNpcFlags:
 	clear_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $4967
-	clear_flag FLAG_SERVE_COACH_GREETED ; $496a
+	clear_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $496a
 	clear_flag FLAG_NET_CHALLENGER_DEFEATED ; $496d
-	clear_flag FLAG_NET_COACH_GREETED ; $4970
+	clear_flag FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT ; $4970
 	clear_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $4973
-	clear_flag FLAG_RETURN_COACH_GREETED ; $4976
+	clear_flag FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT ; $4976
 	ret ; $4979
 TrainingCourtNpc03_15:
 	ld a, [wMapSceneStage] ; $497a
@@ -722,7 +722,7 @@ TrainingCourtNpc13_15:
 	script_wait_frames 10 ; $4b66
 	ret ; $4b6d
 .declined:
-	set_flag FLAG_SWING_PRACTICE_KID_PLACED ; $4b6e
+	set_flag FLAG_SWING_PRACTICE_KID_LEFT ; $4b6e
 	script_set_anim ACTOR_PLAYER, ANIM_SHAKE ; $4b71
 	script_wait_idle ACTOR_PLAYER ; $4b78
 	script_set_anim ACTOR_TRAINING_COURT_STUDENT_CAP_BOY_3, ANIM_WALK ; $4b7d

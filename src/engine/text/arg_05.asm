@@ -67,14 +67,14 @@ TextContinueArrowBlinkTask:
 WaitTextAdvanceInput:
 	push af ; $501d
 	push bc ; $501e
-	ld a, [wTextRedrawGuard] ; $501f
+	ld a, [wTextCharDelayFrames] ; $501f
 	or a ; $5022
 	jr nz, .redrawActiveTextWindow ; $5023
 	ld a, $01 ; $5025
-	ld [wTextRedrawGuard], a ; $5027
+	ld [wTextCharDelayFrames], a ; $5027
 	call RedrawActiveTextWindow ; $502a
 	xor a ; $502d
-	ld [wTextRedrawGuard], a ; $502e
+	ld [wTextCharDelayFrames], a ; $502e
 .redrawActiveTextWindow:
 	call RedrawActiveTextWindow ; $5031
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5034
@@ -106,14 +106,14 @@ WaitTextAdvanceInput:
 TextCmdDelay150Skippable:
 	push af ; $5064
 	push bc ; $5065
-	ld a, [wTextRedrawGuard] ; $5066
+	ld a, [wTextCharDelayFrames] ; $5066
 	or a ; $5069
 	jr nz, .startDelay ; $506a
 	ld a, $01 ; $506c
-	ld [wTextRedrawGuard], a ; $506e
+	ld [wTextCharDelayFrames], a ; $506e
 	call RedrawActiveTextWindow ; $5071
 	xor a ; $5074
-	ld [wTextRedrawGuard], a ; $5075
+	ld [wTextCharDelayFrames], a ; $5075
 .startDelay:
 	ld b, $96 ; $5078
 .loop:
