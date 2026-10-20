@@ -54,7 +54,7 @@ hRomBank:: db
 ; [8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data
 hWramBank:: db
 
-; [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000)
+; [8-bit] Write-only shadow of the SRAM bank: the sram_bank macro stores it beside the MBC RAM-bank register, but nothing reads it back
 hSramBank:: db
 
 ; [8-bit] BGVIEW_*: how VBlank sets the BG map and scroll
@@ -202,7 +202,7 @@ hLinkTxInput:: db
 hLinkTransferDone:: db
 ; [8-bit] Nonzero while a serial block exchange runs (set by UpdateLinkSession, ResyncLinkSession, Unused_07_ExchangeLinkBlockToWram5; cleared by the link menus). AdvanceFrame skips the debug single-step while set
 hLinkExchangeActive:: db
-; [8-bit] Cleared by InitSerialLink and ResetSerialState; otherwise unused on the serial path (the sound driver's hSndNoteTimer)
+; [8-bit] Cleared by InitSerialLink and ResetSerialState; nothing reads it on the serial path (the byte is the sound driver's hSndNoteTimer)
 hUnusedLinkSlot:: db
 ; [8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing
 hLinkLastRxMirror:: db

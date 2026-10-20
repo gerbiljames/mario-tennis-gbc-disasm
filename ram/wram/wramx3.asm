@@ -233,9 +233,9 @@ wCharSelectExitCode:: db
 wCharSelectSlotChars:: ds 4
 ; [8-bit] Character-select grid: roster entries present from $da24 on (CountCharGridEntries)
 wCharGridEntryCount:: db
-; [8-bit] Character-select grid: page saved when a left/right wrap jumps to the roster pages
+; [8-bit] Character-select grid: wCharGridPage as MoveCharGridCursorLeft/Right wrap to the roster pages. Write-only
 wCharGridPrevPage:: db
-; [8-bit] Set to 1 by BuildCharGridFromUnlockFlags once the grid has been populated
+; [8-bit] Set to 1 by BuildCharGridFromUnlockFlags as it builds the grid; nothing reads it
 wCharGridBuilt:: db
 ; [8-bit] Link character-select: slot the remote player is choosing; Advance/RetreatRemotePlayerSlot step it
 wCharSelectRemoteSlot:: db
@@ -244,7 +244,7 @@ wCharSelectRemoteSlot:: db
 wCharSelectRemoteChars:: dw
 ; [8-bit] Link character-select: character id carried by the last received select command
 wLinkSelectCmdChar:: db
-; [8-bit] Link character-select slot bookkeeping, reset when a selection is retreated
+; [8-bit] Link character-select: $ff from RunLinkCharSelectScreen, 1 from Unused_38_ConfirmRemoteGridSelection, 2 from Unused_38_RetreatLinkGridSelection; nothing reads it
 wLinkSelectSlotState:: db
 ; [8-bit] Character-select grid: entries present in the nine created-character rows at $da00
 wCharGridCreatedCount:: db
@@ -259,7 +259,7 @@ wCpuDifficultyCursor:: db
 wCharSelectSlotDifficulty:: ds 4
 ; [4 bytes] Left-handed flag per player slot, toggled with START on the grid (Mario-cast characters only). ApplyHandednessToCharRecords copies it to the match records' +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask: OAM X-flip plus the forehand/backhand swap in SelectForehandBackhand
 wCharSelectSlotLeftHanded:: ds 4
-; [8-bit] Link character-select: result byte ProcessLinkSelectCommand leaves for commands $24-$27
+; [8-bit] Link character-select: cleared by RunLinkCharSelectScreen, set by ProcessLinkSelectCommand for commands $24-$27. Write-only
 wLinkSelectCmdResult:: db
 ; [8-bit] Link character-select: CPU difficulty for the link match, stepped by Unused_38_HandleLinkCpuDifficultyInput
 wLinkCpuDifficulty:: db
@@ -322,7 +322,7 @@ wRankingBannerAnimFrame:: db
 ; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
 wRankingBannerX:: db
 	ds 1
-; [8-bit] Set to 1 at the end of each ranking-board animation state; the state machine advances on it
+; [8-bit] Write-only: cleared by BuildRankingBoardScreen and set to 1 as each RankingAnimSinglesClimbRow* step ends; nothing reads it
 wRankingAnimStateDone:: db
 	ds 1
 ; [8-bit] Set when ShowRankingBoard gets mode $03 (rewritten to $00): no entrance animation (DispatchRankingBoardAnim returns at once) and no closing jingle, for when the board is part of a longer sequence
