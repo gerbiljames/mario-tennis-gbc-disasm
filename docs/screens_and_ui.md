@@ -699,7 +699,7 @@ scans **bits 0-6 only**, claims the first clear bit and returns its index or
 record and clears the bit. `Unused_05_AllocWindowSlotBit` (`$05:$4627`) is an
 uncalled byte-identical duplicate of `AllocWindowId`.
 
-`wWindowStructs` (`$dc00`): eight 8-byte records, via `GetWindowStructPtr`
+`wWindowStructs` (`$dc00`): eight 8-byte records (`WINDOW_*` fields), via `GetWindowStructPtr`
 (`$05:$6eea`, `id & $07`, `<< 3`):
 
 | off | field | evidence |
@@ -708,9 +708,9 @@ uncalled byte-identical duplicate of `AllocWindowId`.
 | `+$01` | row (`and $1f`) | same |
 | `+$02` | **width** in cells | 20×3 bottom box built with `b = $14, c = $03` (`$39:$4c27`); `DrawTextWindowFrame` runs it horizontally (`$05:$6f80`-`$6fae`); `InitGlyphStreamForWindow` stores it − 2 in `wTextRowWidth` (`$05:$7559`-`$756e`) |
 | `+$03` | **height** in cells | `DrawTextWindowFrame`'s row counter |
-| `+$04` | state | `SetWindowState` / `GetWindowState` (`$05:$4767` / `$4773`); `$02` plain menu, `$03` paged menu, `$ff` do not draw. Bit 1 also indents text one column (`$05:$620a`). |
+| `+$04` | state | `SetWindowState` / `GetWindowState` (`$05:$4767` / `$4773`); `WINDOWSTATE_*`: `$02` plain menu, `$03` paged menu, `$ff` hidden (`DrawTextWindowFrame` skips it). Bit 1 also indents text one column (`$05:$620a`). |
 | `+$05` | unused | no live code addresses it; `FreeWindow` and the `wSavedWindowStruct` save/restore copy it with the record. Only the dead `Unused_05_WriteStringToTilemapStreamed` names `$dc05`, keeping a tilemap pointer at `$dc05`/`$dc06` and a flag at `$dc09` — scratch from before the window structs lived here |
-| `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); high byte `$03` = "no text" |
+| `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); `RenderWindowText` draws nothing when the high byte `& $3f` is `$03`, the redraw paths (`$05:$6216`, `$62ad`) when it is `$ff` |
 
 Creation entry points, all into `AllocWindowStruct` (`$05:$6e6d`):
 

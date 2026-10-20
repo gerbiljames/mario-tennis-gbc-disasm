@@ -3,7 +3,7 @@ SetWindowTextId:
 	ld e, l ; $55d6
 	ld a, b ; $55d7
 	call GetWindowStructPtr ; $55d8
-	ld a, $06 ; $55db
+	ld a, WINDOW_TEXT_ID ; $55db
 	add_hl_a ; $55dd
 	ld a, e ; $55e2
 	ld [hl+], a ; $55e3
@@ -30,7 +30,7 @@ RenderWindowText:
 	ld a, b ; $55fc
 	call GetWindowStructPtr ; $55fd
 	push hl ; $5600
-	ld a, $06 ; $5601
+	ld a, WINDOW_TEXT_ID ; $5601
 	add_hl_a ; $5603
 	ld a, [hl+] ; $5608
 	ld b, [hl] ; $5609

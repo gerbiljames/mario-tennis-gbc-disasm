@@ -394,7 +394,7 @@ Unused_05_LoadOverworldSpriteDef:
 	pop bc ; $4c02
 	pop af ; $4c03
 	call GetWindowState ; $4c04
-	cp $03 ; $4c07
+	cp WINDOWSTATE_PAGED_MENU ; $4c07
 	jp nz, Unused_05_RunMenuSelectionShared.loop ; $4c09
 	ld a, [wScrollListLength] ; $4c0c
 	dec a ; $4c0f

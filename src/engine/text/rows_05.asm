@@ -333,7 +333,7 @@ RenderMenuWindowText:
 	ld d, [hl] ; $7250
 	inc hl ; $7251
 	ld e, [hl] ; $7252
-	ld hl, $0006 ; $7253
+	ld hl, WINDOW_TEXT_ID ; $7253
 	add hl, bc ; $7256
 	ld a, [hl+] ; $7257
 	ld h, [hl] ; $7258
@@ -376,7 +376,7 @@ RenderMenuWindowText:
 	push hl ; $7296
 	ld a, c ; $7297
 	call GetWindowStructPtr ; $7298
-	ld a, $02 ; $729b
+	ld a, WINDOW_WIDTH ; $729b
 	add_hl_a ; $729d
 	ld c, [hl] ; $72a2
 	dec c ; $72a3

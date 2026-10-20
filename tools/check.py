@@ -98,9 +98,9 @@ after a real defect broke it:
             caption cells were), and no map_script / map_actor flag
             condition is a nonzero number (flag_cond FLAG_X / ~FLAG_X)
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
-            ACTORF_* / OBJSLOT_* / SCENEOBJ_* field adds no raw offset under
-            $100 to a record pointer (`ld hl, n / add hl, rr`, `ld a, n /
-            add c|e / ld e|c, a`): 25 once reached a record by number beside the
+            ACTORF_* / OBJSLOT_* / SCENEOBJ_* / WINDOW_* field adds no raw
+            offset under $100 to a record pointer (`ld hl, n / add hl, rr`,
+            `ld a, n / add_hl_a`, `ld a, n / add c|e / ld e|c, a`): 25 once reached a record by number beside the
             names (the record in de, bc named), as the created-character
             routines all did
   templates every label handed to QueueSpriteTemplate in hl, directly or as
@@ -1862,7 +1862,7 @@ def _text_cell_offsets(fail):
 KNOWN_RAW_FIELD_OFFSETS = {
     ("UpdateActorJumpPhysics", "$0010"): "gravity added to the vertical velocity",
 }
-_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT|SCENEOBJ)_(?!SIZE\b)\w+")
+_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT|SCENEOBJ|WINDOW)_(?!SIZE\b)\w+")
 _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 # Arrays whose entries are a constant family: `Array + n` names the entry.
 INDEXED_ARRAYS = {
@@ -1875,9 +1875,9 @@ _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
 
 def check_field_offsets(fail):
     """In a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
-    ACTORF_* / OBJSLOT_* / SCENEOBJ_* field, an offset added to a record
-    pointer (`ld hl, off / add hl, bc|de`, or `ld a, off / add c|e /
-    ld e|c, a`) is not a raw number under $100: the same record reached through another register is still
+    ACTORF_* / OBJSLOT_* / SCENEOBJ_* / WINDOW_* field, an offset added to a
+    record pointer (`ld hl, off / add hl, bc|de`, `ld a, off / add_hl_a`, or
+    `ld a, off / add c|e / ld e|c, a`) is not a raw number under $100: the same record reached through another register is still
     that record. An offset into an INDEXED_ARRAYS array is a member of its
     family."""
     n, seen = 0, set()
@@ -1904,7 +1904,8 @@ def check_field_offsets(fail):
                 m = _FIELD_HL_RE.fullmatch(t)
                 if not (m and re.fullmatch(r"add hl, (bc|de)", nxt[0])):
                     m = _FIELD_A_RE.fullmatch(t)
-                    if not (m and re.fullmatch(r"add [ce]", nxt[0]) and re.fullmatch(r"ld [ce], a", nxt[1])):
+                    if not (m and (nxt[0] == "add_hl_a" or re.fullmatch(r"add [ce]", nxt[0])
+                                   and re.fullmatch(r"ld [ce], a", nxt[1]))):
                         continue
                 op = m.group(1).strip()
                 n += 1

@@ -175,7 +175,7 @@ RedrawWindowText:
 	ld a, [wDialogueWindowId] ; $61d4
 	push af ; $61d7
 	call GetWindowStructPtr ; $61d8
-	ld bc, $0006 ; $61db
+	ld bc, WINDOW_TEXT_ID ; $61db
 	add hl, bc ; $61de
 	ld a, [hl+] ; $61df
 	ld h, [hl] ; $61e0
@@ -200,14 +200,14 @@ RedrawWindowText:
 	inc hl ; $6202
 	ld e, [hl] ; $6203
 	inc e ; $6204
-	ld hl, $0004 ; $6205
+	ld hl, WINDOW_STATE ; $6205
 	add hl, bc ; $6208
 	ld a, [hl] ; $6209
-	and $02 ; $620a
+	and WINDOWSTATE_MENU ; $620a
 	jr z, .maskClear ; $620c
 	inc d ; $620e
 .maskClear:
-	ld hl, $0006 ; $620f
+	ld hl, WINDOW_TEXT_ID ; $620f
 	add hl, bc ; $6212
 	ld a, [hl+] ; $6213
 	ld h, [hl] ; $6214
@@ -280,14 +280,14 @@ Unused_05_RenderWindowTextToCompletion:
 	inc hl ; $6299
 	ld e, [hl] ; $629a
 	inc e ; $629b
-	ld hl, $0004 ; $629c
+	ld hl, WINDOW_STATE ; $629c
 	add hl, bc ; $629f
 	ld a, [hl] ; $62a0
-	and $02 ; $62a1
+	and WINDOWSTATE_MENU ; $62a1
 	jr z, .maskClear ; $62a3
 	inc d ; $62a5
 .maskClear:
-	ld hl, $0006 ; $62a6
+	ld hl, WINDOW_TEXT_ID ; $62a6
 	add hl, bc ; $62a9
 	ld a, [hl+] ; $62aa
 	ld h, [hl] ; $62ab

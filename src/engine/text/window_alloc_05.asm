@@ -180,6 +180,7 @@ AllocWindowStruct:
 	cp $ff ; $6e79
 	jr z, .restore ; $6e7b
 	ld [wWindowId], a ; $6e7d
+	ASSERT WINDOW_SIZE == 1 << 3, "three add a scale the id to a record"
 	add a ; $6e80
 	add a ; $6e81
 	add a ; $6e82
@@ -229,7 +230,7 @@ FreeWindow:
 	ld d, a ; $6ebc
 	call GetWindowStructPtr ; $6ebd
 	xor a ; $6ec0
-	ld c, $08 ; $6ec1
+	ld c, WINDOW_SIZE ; $6ec1
 .clearLoop:
 	ld [hl+], a ; $6ec3
 	dec c ; $6ec4
@@ -261,7 +262,8 @@ FreeWindow:
 	ret ; $6ee9
 GetWindowStructPtr:
 	push af ; $6eea
-	and $07 ; $6eeb
+	and NUM_WINDOWS - 1 ; $6eeb
+	ASSERT WINDOW_SIZE == 1 << 3, "three add a scale the id to a record"
 	add a ; $6eed
 	add a ; $6eee
 	add a ; $6eef
@@ -276,7 +278,7 @@ SaveWindowStruct:
 	push hl ; $6efd
 	call GetWindowStructPtr ; $6efe
 	ld de, wSavedWindowStruct ; $6f01
-	ld c, $08 ; $6f04
+	ld c, WINDOW_SIZE ; $6f04
 .loop:
 	ld a, [hl+] ; $6f06
 	ld [de], a ; $6f07
@@ -297,7 +299,7 @@ RestoreWindowStruct:
 	ld d, h ; $6f18
 	ld e, l ; $6f19
 	ld hl, wSavedWindowStruct ; $6f1a
-	ld c, $08 ; $6f1d
+	ld c, WINDOW_SIZE ; $6f1d
 .loop:
 	ld a, [hl+] ; $6f1f
 	ld [de], a ; $6f20
@@ -366,7 +368,7 @@ DrawTextWindowFrame:
 	ld c, [hl] ; $6f82
 	inc hl ; $6f83
 	ld a, [hl] ; $6f84
-	cp $ff ; $6f85
+	cp WINDOWSTATE_HIDDEN ; $6f85
 	jp z, .done ; $6f87
 	ld l, e ; $6f8a
 	ld h, $00 ; $6f8b
