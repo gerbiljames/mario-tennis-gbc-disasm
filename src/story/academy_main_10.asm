@@ -1,10 +1,10 @@
 SpeakNpc03SinglesOrDoublesLine_10:
 	test_flag FLAG_DOUBLES ; $73ee
-	jr z, .doubles ; $73f1
+	jr z, .singles ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
 	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73f6
 	ret ; $73fb
-.doubles:
+.singles:
 	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73fc
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404

@@ -346,11 +346,11 @@ End1MainBldgTileTriggers_27:
 End1MainBldgInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $72fc
 	cp ENTRY_END1_MAIN_BLDG_SCENE ; $72ff
-	jp z, .walkOff ; $7301
+	jp z, .walkIn ; $7301
 	cp ENTRY_END1_MAIN_BLDG_GROUP_DEPARTURE ; $7304
 	jp z, End1MainBldgGroupDepartureCutscene_27 ; $7306
 	ret ; $7309
-.walkOff:
+.walkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $730a
 	xor a ; $7312
 	ld [wStoryModeShowLocationName], a ; $7313

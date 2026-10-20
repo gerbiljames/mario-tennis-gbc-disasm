@@ -130,7 +130,10 @@ after a real defect broke it:
             were swapped; one confirms a decline), and a local whose
             straight-line path returns a = 0 has no positive name (busy,
             found, ...), nor one returning 1 a negative name (none, idle,
-            no*, ...) (two were swapped; two return a status or a score)
+            no*, ...) (two were swapped; two return a status or a score),
+            and a local named for doubles is not reached only with
+            FLAG_DOUBLES clear, nor one named for singles only with it set
+            (not* and check...Won names exempt; three were inverted)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
@@ -2377,10 +2380,12 @@ def check_local_names(fail):
     as a yes, and a local's constant 0 / 1 return agrees with its name."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
-    n, seen, yes_no_used, return_used = 0, set(), set(), set()
+    n, seen, yes_no_used, return_used, mode_used = 0, set(), set(), set(), set()
+    external = _qualified_refs()
     for h in holders():
         bank = bank_of(h)
         lines = bank_lines(h)[0]
+        n += _mode_names(fail, bank, lines, mode_used, external)
         n += _yes_no_branch_names(fail, bank, lines, yes_no_used)
         n += _return_value_names(fail, bank, lines, return_used)
         labels, scope = {}, None
@@ -2453,9 +2458,106 @@ def check_local_names(fail):
                 fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
     for key in KNOWN_RETURN_NAMES.keys() - return_used:
         fail("localnames", f"{key[0]}{key[1]} no longer contradicts its return value -- drop it from KNOWN_RETURN_NAMES")
+    for key in KNOWN_MODE_NAMES.keys() - mode_used:
+        fail("localnames", f"{key[0]}{key[1]} now matches its FLAG_DOUBLES state -- drop it from KNOWN_MODE_NAMES")
     for key in KNOWN_YES_NO_NAMES.keys() - yes_no_used:
         fail("localnames", f"{key[0]}{key[1]} is no longer a misnamed yes/no branch -- drop it from KNOWN_YES_NO_NAMES")
     return n
+
+
+# Mode-named locals that hold despite their FLAG_DOUBLES state: (routine, local) -> why.
+KNOWN_MODE_NAMES = {
+    ("RunPlayDoublesTodayPrompt", ".promptSwitchToSingles"): "offers doubles players the switch to singles",
+}
+_MODE_EXEMPT_RE = re.compile(r"\.(?:not|check\w*Won)")
+_MODE_BRANCH_RE = re.compile(r"(jr|jp) (?:(nz|z|nc|c), )?([\w.]+)$")
+_MODE_STOP_RE = re.compile(r"(?:reti?|jp hl|rst \w+|jumptable\b.*|(?:db|dw|dn|ds|INCBIN|as_\w+|map_\w+)\b.*)$")
+
+
+def _qualified_refs():
+    """Every Routine.local named outside its definition, in any bank."""
+    refs = set()
+    for h in holders():
+        for line in bank_lines(h)[0]:
+            code = line.split(";")[0]
+            refs |= set(re.findall(r"\b([A-Za-z_]\w*\.\w+)\b(?!:)", code))
+    return refs
+
+
+def _mode_names(fail, bank, lines, used, external):
+    """A local named for doubles is not reached only with FLAG_DOUBLES clear,
+    nor one named for singles only with it set. The flag's state follows the
+    routine's flow from `test_flag FLAG_DOUBLES` and a z/nz branch or return
+    right after it, and from set_flag/clear_flag; a routine's entry, and a
+    local named from anywhere but a jr/jp, is reached in either mode."""
+    labels, owner_of, scope = {}, [], None
+    for k, line in enumerate(lines):
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+            labels[scope] = k
+        elif lm := re.match(r"^(\w+)?(\.\w+):", line):
+            labels[(lm.group(1) or scope) + lm.group(2)] = k
+        owner_of.append(scope)
+    state = [set() for _ in lines]
+    for full, k in labels.items():
+        if "." not in full or full in external:
+            state[k].add("U")
+    work = [k for k, s in enumerate(state) if s]
+    for k, line in enumerate(lines):
+        code = line.split(";")[0].strip()
+        if _MODE_BRANCH_RE.fullmatch(code) or re.match(r"^[\w.]+:", code):
+            continue
+        for ref in re.findall(r"(?<![\w.])(\.\w+)\b", code):
+            t = labels.get((owner_of[k] or "") + ref)
+            if t is not None and "U" not in state[t]:
+                state[t].add("U")
+                work.append(t)
+    while work:
+        k = work.pop()
+        st = frozenset(state[k])
+        code = lines[k].split(";")[0].strip()
+        prev = next((lines[j].split(";")[0].strip() for j in range(k - 1, -1, -1)
+                     if lines[j].split(";")[0].strip()), "")
+        tested = prev == "test_flag FLAG_DOUBLES"
+        succ = []
+        if m := re.fullmatch(r"(set|clear)_flag FLAG_DOUBLES", code):
+            succ = [(k + 1, {"S" if m.group(1) == "set" else "C"})]
+        elif b := _MODE_BRANCH_RE.fullmatch(code):
+            cond, name = b.group(2), b.group(3)
+            taken = ft = st
+            if tested and cond in ("z", "nz"):
+                taken, ft = ({"S"}, {"C"}) if cond == "nz" else ({"C"}, {"S"})
+            full = (owner_of[k] or "") + name if name.startswith(".") else name
+            if "." in full and full in labels:
+                succ.append((labels[full], taken))
+            if cond:
+                succ.append((k + 1, ft))
+        elif r := re.fullmatch(r"ret (n?z|n?c)", code):
+            succ = [(k + 1, {"S"} if tested and r.group(1) == "z" else {"C"} if tested and r.group(1) == "nz" else st)]
+        elif not _MODE_STOP_RE.fullmatch(code):
+            succ = [(k + 1, st)]
+        for n, s in succ:
+            if n < len(lines) and not set(s) <= state[n]:
+                state[n] |= set(s)
+                work.append(n)
+    count = 0
+    for full, k in labels.items():
+        if "." not in full or "U" in state[k] or not state[k]:
+            continue
+        owner, local = full.split(".", 1)
+        local = "." + local
+        lower = local.lower()
+        if _MODE_EXEMPT_RE.match(local) or ("doubles" in lower) == ("singles" in lower):
+            continue
+        count += 1
+        key = (owner, local)
+        wrong = state[k] == {"C"} if "doubles" in lower else state[k] == {"S"}
+        if wrong:
+            used.add(key)
+            if key not in KNOWN_MODE_NAMES:
+                fail("localnames", f"${bank:02x}: {full} is reached only with FLAG_DOUBLES "
+                                   f"{'clear' if 'doubles' in lower else 'set'}")
+    return count
 
 
 def _straight_return(lines, start, labels, owner):

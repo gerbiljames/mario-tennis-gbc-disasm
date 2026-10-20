@@ -314,25 +314,25 @@ MarioWorldInitScript_0e:
 	cp ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
-	jr nz, .placeActors ; $54ea
+	jr nz, .doubles ; $54ea
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $54ec
 	ret z ; $54ef
 	ld a, [wStoryModeEntryPoint] ; $54f0
 	inc a ; $54f3
-	jr z, .doubles ; $54f4
+	jr z, .singlesPlaceActors ; $54f4
 	script_set_speed ACTOR_PLAYER, 0.625 ; $54f6
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $54fe
-.doubles:
+.singlesPlaceActors:
 	jp MarioWorldEntry0eScene.placeActors ; $5509
-.placeActors:
+.doubles:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $550c
 	ret z ; $550f
 	ld a, [wStoryModeEntryPoint] ; $5510
 	inc a ; $5513
-	jr z, .done ; $5514
+	jr z, .doublesPlaceActors ; $5514
 	script_set_speed ACTOR_PLAYER, 0.625 ; $5516
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $551e
-.done:
+.doublesPlaceActors:
 	jp MarioWorldEntry0eScene.placeActors ; $5529
 	ret ; $552c
 ActorScript_0e_06:

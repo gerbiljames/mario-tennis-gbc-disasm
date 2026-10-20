@@ -15,13 +15,13 @@ SeniorCourtWalkPlayersOntoCourt:
 	cp ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA ; $5eae
 	jp nz, .done ; $5eb0
 	test_flag FLAG_DOUBLES ; $5eb3
-	jr z, .walkOff ; $5eb6
+	jr z, .playerWalkIn ; $5eb6
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $5eb8
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $5ec0
 	script_wait_move ACTOR_PARTNER ; $5eca
 	script_face ACTOR_PARTNER, FACE_UP ; $5ecf
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5ed6
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $5ede
 	script_move_angle ACTOR_PLAYER, FACE_UP, 2.0 ; $5ee6
 .done:
