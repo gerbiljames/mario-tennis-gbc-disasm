@@ -229,7 +229,7 @@ VarsityCourtANpc05_13:
 	ld [wStoryModeEntryPoint], a ; $5f63
 	ld [wUnusedExitTriggerIdMirror], a ; $5f66
 	ld [wStoryModeExitTriggerRequest], a ; $5f69
-	call SetupStoryMinigameMatch0 ; $5f6c
+	call SetupVarsityCourtSinglesMatch_13 ; $5f6c
 	ret ; $5f6f
 VarsityCourtNpcScriptsA_13:
 	; $5f70, 49 bytes (map_scripts)
