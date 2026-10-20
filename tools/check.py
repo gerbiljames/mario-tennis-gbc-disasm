@@ -56,6 +56,9 @@ after a real defect broke it:
             dispatch to another routine's local that starts after a ret/jp
             (a case is a routine of its own), and no unreferenced label sits
             where code falls into it (it would split a routine in two)
+  headers   every non-fill region header (`; $xxxx, N bytes (...)`) sits
+            right under a label: a region after a ret or a table's end is
+            data under another label's name (seven such once hid there)
   gfx       every gfx blob with a PNG beside it encodes back to the bytes
             the PNG was decoded from
   gfx-specs graphics carry a gfx spec, so they get a PNG: no spec-less
@@ -845,6 +848,33 @@ def check_tilemaps(manifest, fail):
     return n
 
 
+# Region headers that need no label of their own.
+UNLABELLED_REGIONS = {
+    "$0134": "the cart header: the hardware reads it at its fixed address",
+}
+_REGION_HDR_RE = re.compile(r"\s*; (\$[0-9a-f]{4}), \d+ bytes? \((?!fill\))")
+_LABEL_LINE_RE = re.compile(r"[A-Za-z_.][\w.]*::?\s*(;.*)?$")
+
+
+def check_region_headers(fail):
+    """Every non-fill region header directly follows a label line."""
+    n = 0
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        for i, line in enumerate(lines):
+            if not (m := _REGION_HDR_RE.match(line)):
+                continue
+            n += 1
+            if i and _LABEL_LINE_RE.match(lines[i - 1]):
+                continue
+            if m.group(1) in UNLABELLED_REGIONS:
+                continue
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            fail("headers", f"{where}: {m.group(1)} has no label of its own -- "
+                            f"name it (Unused_<bank>_*), or mark it (fill)")
+    return n
+
+
 def check_collapsed_branches(fail):
     """Find `jr cc, X` / `jp cc, X` where X is the very next instruction:
     the branch is followed, past blank and comment lines and other labels,
@@ -1171,7 +1201,8 @@ _VAR_RE = r"([wh][A-Z]\w*(?: \+ (?:\$[0-9a-fA-F]+|\d+))?)"
 _REGS8 = frozenset("abcdehl")
 _PAIRS = {"bc": "bc", "de": "de", "hl": "hl", "af": "a"}
 # Instructions that leave every register as it was.
-_KEEPS_ALL_RE = re.compile(r"(cp |bit |push |nop$|ei$|di$|scf$|ccf$|halt$|and a$|or a$|"
+_KEEPS_ALL_RE = re.compile(r"(cp |test_flag |set_flag |clear_flag |bit |push |nop$|ei$|di$|"
+                           r"scf$|ccf$|halt$|and a$|or a$|"
                            r"(jr|jp) (n?z|n?c),|ret (n?z|n?c)$|ldh? \[[^\]]+\], [a-l]$|ld \[(bc|de)\], a$)")
 
 
@@ -1195,6 +1226,22 @@ def _twin_base(name):
     return re.sub(r"_[0-9a-f]{2}$", "", name)
 
 
+def _local_label_refs(lines):
+    """{Owner.local: number of instruction lines naming it}."""
+    refs, owner = {}, ""
+    for line in lines:
+        if _GLOBAL_RE.match(line) or re.match(r"[A-Za-z_]", line):
+            owner = re.match(r"\w+", line).group(0)
+            continue
+        t = line.split(";")[0].strip()
+        if t.startswith("."):
+            continue
+        for m in re.finditer(r"(?<![\w.])(\w*)(\.\w+)", t):
+            label = (m.group(1) or owner) + m.group(2)
+            refs[label] = refs.get(label, 0) + 1
+    return refs
+
+
 def _raw_id_uses():
     """{variable or Routine(reg): [(operand, where)]} over every bank's code:
     a `cp` on a loaded variable, a store into one, and the immediates loaded
@@ -1205,25 +1252,38 @@ def _raw_id_uses():
         regs = {}      # register -> immediate, "=wVar" when it holds that variable, "@src" a text pointer
         spent = set()  # registers whose immediate was stored, so not an argument
         owner = ""
+        refs = _local_label_refs(lines)
+        jumps = {}     # local label -> a's "=wVar" state (or None) at each jump to it seen so far
+        after_jump = False
         for i, line in enumerate(lines):
             if _GLOBAL_RE.match(line) or re.match(r"[A-Za-z_]", line):
                 regs, spent = {}, set()
                 owner = re.match(r"\w+", line).group(0)
+                after_jump = False
                 if r := TEXT_POINTER_LABELS.get(owner):
                     regs[r] = ("=text@" if r == "a" else "@") + owner
                 continue
             t = line.split(";")[0].strip()
             if t.startswith("."):
-                # a local label is a jump target: keep what a was loaded from and
-                # text pointers, drop immediates
-                regs = {r: v for r, v in regs.items() if v[0] in "=@"}
                 label = owner + t.rstrip(":")
+                js = jumps.get(label, [])
+                if after_jump and js and js[0] and js.count(js[0]) == len(js) == refs.get(label):
+                    # reached only by jumps that all agree on a
+                    regs, spent = {"a": js[0]}, set()
+                else:
+                    # keep what a was loaded from and text pointers, drop immediates
+                    regs = {r: v for r, v in regs.items() if v[0] in "=@"}
+                after_jump = False
                 if r := TEXT_POINTER_LABELS.get(label):
                     regs[r] = ("=text@" if r == "a" else "@") + label
                 continue
             if not t:
                 continue
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            after_jump = bool(_NO_FALLTHROUGH_RE.match(t))
+            if m := re.match(r"(?:jr|jp) (?:(?:n?z|n?c), )?(\.\w+)$", t):
+                a = regs.get("a", "")
+                jumps.setdefault(owner + m.group(1), []).append(a if a.startswith("=") else None)
             if m := re.match(r"ld a, \[(hl[+-]?|de)\]$", t):
                 ptr = regs.get(m.group(1)[:2], "")
                 _clobber(regs, spent, "a")
@@ -1497,6 +1557,7 @@ def main():
         "macros": check_macro_kinds(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "labels": check_label_scopes(fail),
+        "headers": check_region_headers(fail),
         "branches": check_collapsed_branches(fail),
         "literals": check_literal_pointers(fail) + check_blob_pointers(rom, manifest, fail),
         "dma": check_dma_alignment(fail),

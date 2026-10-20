@@ -1,5 +1,6 @@
 Unused_3b_StubNop5:
 	ret ; $61e9
+Unused_3b_ShadowTilemapRow16Ptrs:
 	; $61ea, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1

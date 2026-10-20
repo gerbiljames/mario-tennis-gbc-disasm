@@ -396,7 +396,7 @@ MatchSelectRunMatch:
 .chooseReturn:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
 	cp STORYMATCH_ISLAND_OPEN_FINAL + 1 ; $5607
-	jr c, .below14 ; $5609
+	jr c, .tournament ; $5609
 	ld a, STORYLOC_SPECIAL_COURT ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
 	ld a, ENTRY_SPECIAL_COURT_MATCH_RESULT ; $5610
@@ -405,11 +405,11 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $5617
 	ld [wStoryModeExitTriggerRequest], a ; $561a
 	ret ; $561d
-.below14:
+.tournament:
 	cp STORYMATCH_VARSITY_1 + 1 ; $561e
-	jr c, .below0f ; $5620
+	jr c, .varsity ; $5620
 	test_flag FLAG_DOUBLES ; $5622
-	jr nz, .below14Doubles ; $5625
+	jr nz, .tournamentDoubles ; $5625
 	ld a, STORYLOC_TOURNAMENT ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
 	ld a, ENTRY_TOURNAMENT_AFTER_ROUND_SINGLES ; $562c
@@ -418,7 +418,7 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $5633
 	ld [wStoryModeExitTriggerRequest], a ; $5636
 	ret ; $5639
-.below14Doubles:
+.tournamentDoubles:
 	ld a, STORYLOC_TOURNAMENT ; $563a
 	ld [wStoryModeCurrentLocation], a ; $563c
 	ld a, ENTRY_TOURNAMENT_AFTER_ROUND_DOUBLES ; $563f
@@ -427,9 +427,9 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $5646
 	ld [wStoryModeExitTriggerRequest], a ; $5649
 	ret ; $564c
-.below0f:
-	cp $0a ; $564d
-	jr c, .below0a ; $564f
+.varsity:
+	cp STORYMATCH_VARSITY_PRACTICE ; $564d
+	jr c, .senior ; $564f
 	ld a, STORYLOC_COURTYARD ; $5651
 	ld [wStoryModeCurrentLocation], a ; $5653
 	ld a, ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $5656
@@ -438,10 +438,10 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $565d
 	ld [wStoryModeExitTriggerRequest], a ; $5660
 	ret ; $5663
-.below0a:
-	cp $05 ; $5664
-	jr c, .below05 ; $5666
-	jr z, .id05 ; $5668
+.senior:
+	cp STORYMATCH_SENIOR_PRACTICE ; $5664
+	jr c, .junior ; $5666
+	jr z, .seniorPractice ; $5668
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $566a
 	ld [wStoryModeCurrentLocation], a ; $566c
 	ld a, ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN ; $566f
@@ -450,7 +450,7 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $5676
 	ld [wStoryModeExitTriggerRequest], a ; $5679
 	ret ; $567c
-.id05:
+.seniorPractice:
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $567d
 	ld [wStoryModeCurrentLocation], a ; $567f
 	ld a, ENTRY_SENIOR_CLASS_COURT_PRACTICE_MATCH_RETURN ; $5682
@@ -459,10 +459,10 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $5689
 	ld [wStoryModeExitTriggerRequest], a ; $568c
 	ret ; $568f
-.below05:
+.junior:
 	test_flag FLAG_DOUBLES ; $5690
 	jr nz, .otherRoom ; $5693
-	cp $00 ; $5695
+	cp STORYMATCH_JUNIOR_PRACTICE ; $5695
 	jr z, .practiceRoomAlt ; $5697
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
@@ -482,7 +482,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeExitTriggerRequest], a ; $56bb
 	ret ; $56be
 .otherRoom:
-	cp $00 ; $56bf
+	cp STORYMATCH_JUNIOR_PRACTICE ; $56bf
 	jr z, .otherRoomAlt ; $56c1
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5

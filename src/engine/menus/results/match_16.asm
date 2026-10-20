@@ -131,7 +131,7 @@ ApplyLinkRoleToWinLoseFlag:
 	jr nz, .compare ; $5c1c
 	ret ; $5c1e
 .compare:
-	cp $02 ; $5c1f
+	cp LINKSTATE_SLAVE ; $5c1f
 	jr nz, .done ; $5c21
 	ld a, [wMatchWinLoseFlag] ; $5c23
 	cp WINLOSE_LOSE ; $5c26

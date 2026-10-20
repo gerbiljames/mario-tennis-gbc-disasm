@@ -337,6 +337,7 @@ ScriptedActorListPtrs_04:
 	dw MainCharNinaActorList_04 ; record 1
 	dw MainCharHarryActorList_04 ; record 2
 	dw MainCharKateActorList_04 ; record 3
+Unused_04_ScriptedActorIdList:
 	; $4e67, 4 bytes (bytes:4)
 	db $0b, $0c, $fe, $ff ; 0x00
 SpawnMainCharacterActor:

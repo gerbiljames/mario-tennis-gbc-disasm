@@ -307,6 +307,7 @@ LoadMenuSpritePalettePair:
 	ld hl, MenuSpritePalettePairPalettes ; $4b4e
 	call LoadPaletteShadow ; $4b51
 	ret ; $4b54
+Unused_39_MenuSpritePalettes:
 	; $4b55, 16 bytes (records:2)
 	dw $0004 ; record 0
 	dw $00af ; record 1

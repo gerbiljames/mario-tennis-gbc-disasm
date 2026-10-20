@@ -276,8 +276,8 @@ QueueStoryMenuCursorSprite_SpriteTemplate:
 	oam_sprite $10, $38, $7c, $02
 	oam_sprite $10, $40, $7e, $02
 	oam_sprite_end
-	; $7308, 8 bytes (bytes:8)
-	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+	; $7308, 8 bytes (fill)
+	ds 8, $00
 StoryMenuItemGfx_Status:
 	INCBIN "data/engine/menus/pause/lz_StoryMenuItemGfx_Status.bin" ; $7310, 160 bytes
 StoryMenuItemGfx_ClearStatus:

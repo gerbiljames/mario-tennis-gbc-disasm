@@ -373,7 +373,7 @@ StartPendingLessonScene:
 	call ServeCoachWalkToCourtAndStartLesson ; $7a71
 	ret ; $7a74
 .netLesson:
-	cp $0c ; $7a75
+	cp MINIGAME_STROKE_MATCH_1 ; $7a75
 	jr nc, .returnLesson ; $7a77
 	call InitNetCoachScene ; $7a79
 	script_set_text Text_CoachLetsDoItThen ; $7a7c
@@ -381,7 +381,7 @@ StartPendingLessonScene:
 	call NetCoachWalkToCourtAndStartLesson ; $7a87
 	ret ; $7a8a
 .returnLesson:
-	cp $12 ; $7a8b
+	cp MINIGAME_TENNIS_MACHINE_1 ; $7a8b
 	jr nc, .done ; $7a8d
 	call InitReturnCoachScene ; $7a8f
 	call ReturnCoachWalkToCourtAndStartLesson ; $7a92

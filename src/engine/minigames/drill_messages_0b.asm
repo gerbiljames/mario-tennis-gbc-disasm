@@ -189,10 +189,10 @@ Unused_0b_QueueDrillOutcomeMessage:
 	ld a, $04 ; $44ca
 	jr .checkCurrentServingPlayer ; $44cc
 .compare:
-	cp $07 ; $44ce
+	cp POINTOUTCOME_SERVE_VOLLEYED ; $44ce
 	ld a, $06 ; $44d0
 	jr z, .checkCurrentServingPlayer ; $44d2
-	cp $09 ; $44d4
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $44d4
 	ld a, $01 ; $44d6
 	jr z, .checkCurrentServingPlayer ; $44d8
 	ld a, $05 ; $44da

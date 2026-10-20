@@ -801,7 +801,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty-five
+the source claims is true, not just that the bytes come back. All twenty-six
 pass:
 
 | check | count | what it asserts |
@@ -811,15 +811,16 @@ pass:
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
 | `regions` | 4275 | manifest regions stay inside their bank and do not overlap |
 | `text` | 28 | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
-| `db-words` | 528 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
-| `addr-words` | 318 | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
+| `db-words` | 530 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `addr-words` | 320 | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
 | `records` | 514 | a `records:N` or word-table region is whole records or ends in a `$ff` terminator (exceptions allow-listed) |
 | `layout` | 4275 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13772 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `labels` | 13776 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `headers` | 3099 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33805 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
@@ -828,9 +829,9 @@ pass:
 | `tilemap` | 241 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4903 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
-| `unnamed` | 8869 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
+| `unnamed` | 8873 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 4590 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
+| `raw-ids` | 4601 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
 
 ---
 
