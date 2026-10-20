@@ -19,9 +19,9 @@ LoadScreenAssetRecord:
 	ld de, vTiles2 + VRAM_BANK1 ; $40a3
 	ld c, 128 ; $40a6
 	call QueueVRAMCopy ; $40a8
-	ld hl, wTextTileBuffer ; $40ab
+	ld hl, wDecompBufferHigh ; $40ab
 	ld de, vTiles1 + VRAM_BANK1 ; $40ae
-	ld c, wTextTileBuffer_SIZE / 16 ; $40b1
+	ld c, wDecompBufferHigh_SIZE / 16 ; $40b1
 	call QueueVRAMCopy ; $40b3
 	pop hl ; $40b6
 	inc hl ; $40b7

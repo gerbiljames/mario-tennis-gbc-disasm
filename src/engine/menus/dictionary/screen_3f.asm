@@ -215,9 +215,9 @@ LoadTennisDictionaryAssetsDefault:
 	ld de, vTiles2 + VRAM_BANK1 ; $4271
 	ld c, 128 ; $4274
 	call QueueVRAMCopy ; $4276
-	ld hl, wTextTileBuffer ; $4279
+	ld hl, wDecompBufferHigh ; $4279
 	ld de, vTiles1 + VRAM_BANK1 ; $427c
-	ld c, wTextTileBuffer_SIZE / 16 ; $427f
+	ld c, wDecompBufferHigh_SIZE / 16 ; $427f
 	call QueueVRAMCopy ; $4281
 	ld hl, TennisDictionaryPalettesDefault ; $4284
 	ld_bg_pals de, 0, 8 ; $4287
@@ -237,9 +237,9 @@ LoadTennisDictionaryAssetsChar6:
 	ld de, vTiles2 + VRAM_BANK1 ; $42b2
 	ld c, 128 ; $42b5
 	call QueueVRAMCopy ; $42b7
-	ld hl, wTextTileBuffer ; $42ba
+	ld hl, wDecompBufferHigh ; $42ba
 	ld de, vTiles1 + VRAM_BANK1 ; $42bd
-	ld c, wTextTileBuffer_SIZE / 16 ; $42c0
+	ld c, wDecompBufferHigh_SIZE / 16 ; $42c0
 	call QueueVRAMCopy ; $42c2
 	ld hl, TennisDictionaryPalettesChar6 ; $42c5
 	ld_bg_pals de, 0, 8 ; $42c8

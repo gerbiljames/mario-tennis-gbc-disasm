@@ -420,9 +420,9 @@ LoadStadiumBgGraphics:
 	ld de, vTiles2 + VRAM_BANK1 ; $4c4d
 	ld c, 128 ; $4c50
 	call QueueVRAMCopy ; $4c52
-	ld hl, wTextTileBuffer ; $4c55
+	ld hl, wDecompBufferHigh ; $4c55
 	ld de, vTiles1 + VRAM_BANK1 ; $4c58
-	ld c, wTextTileBuffer_SIZE / 16 ; $4c5b
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4c5b
 	call QueueVRAMCopy ; $4c5d
 	wram_bank WRAM_SCREEN ; $4c60
 	ld_slot hl, DataPtr_StadiumTilemap ; $4c66

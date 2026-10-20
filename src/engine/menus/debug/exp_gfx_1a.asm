@@ -108,9 +108,9 @@ Unused_1a_RunCharViewerSelectGrid:
 	ld de, vTiles2 + VRAM_BANK1 ; $6897
 	ld c, 128 ; $689a -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $689c
-	ld hl, wTextTileBuffer ; $689f
+	ld hl, wDecompBufferHigh ; $689f
 	ld de, vTiles1 + VRAM_BANK1 ; $68a2
-	ld c, wTextTileBuffer_SIZE / 16 ; $68a5
+	ld c, wDecompBufferHigh_SIZE / 16 ; $68a5
 	call QueueVRAMCopy ; $68a7
 	call Unused_1a_LoadCharViewerGridTilemap ; $68aa
 	ld a, [wDebugCharViewerPage] ; $68ad
@@ -420,9 +420,9 @@ Unused_1a_LoadCharViewerScreenGfx:
 	ld de, vTiles2 + VRAM_BANK1 ; $6b70
 	ld c, 128 ; $6b73 -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $6b75
-	ld hl, wTextTileBuffer ; $6b78
+	ld hl, wDecompBufferHigh ; $6b78
 	ld de, vTiles1 + VRAM_BANK1 ; $6b7b
-	ld c, wTextTileBuffer_SIZE / 16 ; $6b7e
+	ld c, wDecompBufferHigh_SIZE / 16 ; $6b7e
 	call QueueVRAMCopy ; $6b80
 	wram_bank WRAM_STAGING ; $6b83
 	ld hl, CharViewerScreenTilemap ; $6b89

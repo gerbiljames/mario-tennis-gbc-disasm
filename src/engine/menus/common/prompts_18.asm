@@ -93,9 +93,9 @@ Unused_18_InitConfirmScreen:
 	ld de, vTiles2 + VRAM_BANK1 ; $52fd
 	ld c, 128 ; $5300 -- 128 of ConfirmScreenBgTiles's 256 tiles
 	call QueueVRAMCopy ; $5302
-	ld hl, wTextTileBuffer ; $5305
+	ld hl, wDecompBufferHigh ; $5305
 	ld de, vTiles1 + VRAM_BANK1 ; $5308
-	ld c, wTextTileBuffer_SIZE / 16 ; $530b
+	ld c, wDecompBufferHigh_SIZE / 16 ; $530b
 	call QueueVRAMCopy ; $530d
 	ld hl, ConfirmScreenBgPalettes ; $5310
 	ld_bg_pals de, 0, 8 ; $5313
@@ -142,20 +142,20 @@ Unused_18_StubNop1:
 Unused_18_SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a
 	call Unused_18_GetTextSlotPointer ; $537d
-	ld de, wTextTileBuffer tile 4 + 11 ; $5380
+	ld de, wDecompBufferHigh tile 4 + 11 ; $5380
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $5383
 	ld a, [wScorePanelValues + 1] ; $5386
 	call Unused_18_GetTextSlotPointer ; $5389
-	ld de, wTextTileBuffer tile 8 + 11 ; $538c
+	ld de, wDecompBufferHigh tile 8 + 11 ; $538c
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [wScorePanelValues + 2] ; $5392
 	call Unused_18_GetTextSlotPointer ; $5395
-	ld de, wTextTileBuffer tile 12 + 11 ; $5398
+	ld de, wDecompBufferHigh tile 12 + 11 ; $5398
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $539b
 	ASSERT wTargetZoneX1 == wScorePanelValues + 3
 	ld a, [wTargetZoneX1] ; $539e
 	call Unused_18_GetTextSlotPointer ; $53a1
-	ld de, wTextTileBuffer tile 16 + 11 ; $53a4
+	ld de, wDecompBufferHigh tile 16 + 11 ; $53a4
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $53a7
 	frame_task Unused_18_DrawScoreNumbersTask, $0a ; $53aa
 	ret ; $53b2
@@ -192,7 +192,7 @@ Unused_18_GetTextSlotPointer:
 	ld a, [hl+] ; $53f0
 	ld h, [hl] ; $53f1
 	ld l, a ; $53f2
-	ld de, wTextTileBuffer ; $53f3
+	ld de, wDecompBufferHigh ; $53f3
 	add hl, de ; $53f6
 	ret ; $53f7
 TextSlotPointerTable:

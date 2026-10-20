@@ -382,7 +382,7 @@ Three dispatchers cover nearly every screen asset:
 
 `LoadScreenAssetRecord` consumes a `(Tiles, Tilemap, Attrmap, Palettes)` record
 in order: Tiles LZ into `wDecompBuffer` (WRAM `$01`), then `QueueVRAMCopy` `$80`
-blocks to `$9000 + VRAM_BANK1` plus `wTextTileBuffer` → `$8800 + VRAM_BANK1`
+blocks to `$9000 + VRAM_BANK1` plus `wDecompBufferHigh` → `$8800 + VRAM_BANK1`
 (`$40a0`-`$40b3`); Tilemap LZ into `wShadowTilemap` (WRAM `$03`, `$40c3`);
 Attrmap LZ into `wShadowAttrmap` (`$40d0`); Palettes as raw 64 bytes via
 `CopyDataFromBank`, then `LoadPaletteShadow` with `de = $0008`, the 8 BG

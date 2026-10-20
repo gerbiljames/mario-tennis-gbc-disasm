@@ -307,9 +307,9 @@ IntroCutsceneState01Init_6b:
 	ld de, vTiles2 ; $4274
 	ld c, 128 ; $4277
 	call QueueVRAMCopy ; $4279
-	ld hl, wTextTileBuffer ; $427c
+	ld hl, wDecompBufferHigh ; $427c
 	ld de, vTiles1 ; $427f
-	ld c, wTextTileBuffer_SIZE / 16 ; $4282
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4282
 	call QueueVRAMCopy ; $4284
 	wram_bank WRAM_SCREEN ; $4287
 	ld_slot hl, DataPtr_IntroSwingTilemap ; $428d
@@ -403,9 +403,9 @@ IntroCutsceneState03Init_6b:
 	ld de, vTiles2 ; $4406
 	ld c, 128 ; $4409
 	call QueueVRAMCopy ; $440b
-	ld hl, wTextTileBuffer ; $440e
+	ld hl, wDecompBufferHigh ; $440e
 	ld de, vTiles1 ; $4411
-	ld c, wTextTileBuffer_SIZE / 16 ; $4414
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4414
 	call QueueVRAMCopy ; $4416
 	wram_bank WRAM_SCREEN ; $4419
 	ld_slot hl, DataPtr_IntroCloseupTilemap ; $441f
@@ -858,9 +858,9 @@ IntroCutsceneState16Init_6b:
 	ld de, vTiles2 ; $4984
 	ld c, 128 ; $4987
 	call QueueVRAMCopy ; $4989
-	ld hl, wTextTileBuffer ; $498c
+	ld hl, wDecompBufferHigh ; $498c
 	ld de, vTiles1 ; $498f
-	ld c, wTextTileBuffer_SIZE / 16 ; $4992
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4992
 	call QueueVRAMCopy ; $4994
 	ld_slot hl, DataPtr_IntroGreatestPlayerTilemap ; $4997
 	ld de, wDecompBuffer ; $499a
@@ -887,9 +887,9 @@ IntroCutsceneState16Init_6b:
 	ld de, vTiles2 + VRAM_BANK1 ; $49da
 	ld c, 128 ; $49dd
 	call QueueVRAMCopy ; $49df
-	ld hl, wTextTileBuffer ; $49e2
+	ld hl, wDecompBufferHigh ; $49e2
 	ld de, vTiles1 + VRAM_BANK1 ; $49e5
-	ld c, wTextTileBuffer_SIZE / 16 ; $49e8
+	ld c, wDecompBufferHigh_SIZE / 16 ; $49e8
 	call QueueVRAMCopy ; $49ea
 	wram_bank WRAM_ACTORS ; $49ed
 	ld_slot hl, DataPtr_IntroCharactersTilemap ; $49f3

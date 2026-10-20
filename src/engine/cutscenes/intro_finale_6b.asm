@@ -103,7 +103,7 @@ IntroCutsceneState18Init_6b:
 	ld c, 32 ; $4bb3
 	call QueueVRAMCopy ; $4bb5
 	call AdvanceFrame ; $4bb8
-	ld hl, wTextTileBuffer ; $4bbb
+	ld hl, wDecompBufferHigh ; $4bbb
 	ld de, vTiles1 ; $4bbe
 	ld c, 32 ; $4bc1
 	call QueueVRAMCopy ; $4bc3

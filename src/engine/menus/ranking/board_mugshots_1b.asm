@@ -150,7 +150,7 @@ Unused_1b_SetMugshotAttrs:
 	and $07 ; $4e1b
 	add $03 ; $4e1d
 	or $08 ; $4e1f
-	ld hl, wTextTileBuffer tile 64 ; $4e21
+	ld hl, wDecompBufferHigh tile 64 ; $4e21
 	add hl, de ; $4e24
 	ld de, $001d ; $4e25
 	ld [hl+], a ; $4e28

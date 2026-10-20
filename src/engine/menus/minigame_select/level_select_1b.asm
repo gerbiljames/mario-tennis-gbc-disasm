@@ -249,32 +249,32 @@ Unused_1b_ShowNoN64DataFoundScreen:
 	call WaitFadeEnd ; $6ae9
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
-	ld hl, wTextTileBuffer tile 6 + 2 ; $6af1
+	ld hl, wDecompBufferHigh tile 6 + 2 ; $6af1
 	call Unused_1b_FillTilemapRow17 ; $6af4
-	ld hl, wTextTileBuffer tile 8 + 2 ; $6af7
+	ld hl, wDecompBufferHigh tile 8 + 2 ; $6af7
 	call Unused_1b_FillTilemapRow17 ; $6afa
-	ld hl, wTextTileBuffer tile 10 + 2 ; $6afd
+	ld hl, wDecompBufferHigh tile 10 + 2 ; $6afd
 	call Unused_1b_FillTilemapRow17 ; $6b00
-	ld hl, wTextTileBuffer tile 12 + 2 ; $6b03
+	ld hl, wDecompBufferHigh tile 12 + 2 ; $6b03
 	call Unused_1b_FillTilemapRow17 ; $6b06
-	ld hl, wTextTileBuffer tile 14 + 2 ; $6b09
+	ld hl, wDecompBufferHigh tile 14 + 2 ; $6b09
 	call Unused_1b_FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
-	ld hl, wTextTileBuffer tile 70 + 2 ; $6b11
+	ld hl, wDecompBufferHigh tile 70 + 2 ; $6b11
 	call Unused_1b_FillTilemapRow17 ; $6b14
-	ld hl, wTextTileBuffer tile 72 + 2 ; $6b17
+	ld hl, wDecompBufferHigh tile 72 + 2 ; $6b17
 	call Unused_1b_FillTilemapRow17 ; $6b1a
-	ld hl, wTextTileBuffer tile 74 + 2 ; $6b1d
+	ld hl, wDecompBufferHigh tile 74 + 2 ; $6b1d
 	call Unused_1b_FillTilemapRow17 ; $6b20
-	ld hl, wTextTileBuffer tile 76 + 2 ; $6b23
+	ld hl, wDecompBufferHigh tile 76 + 2 ; $6b23
 	call Unused_1b_FillTilemapRow17 ; $6b26
-	ld hl, wTextTileBuffer tile 78 + 2 ; $6b29
+	ld hl, wDecompBufferHigh tile 78 + 2 ; $6b29
 	call Unused_1b_FillTilemapRow17 ; $6b2c
 	ld hl, Text_NoN64DataFound ; $6b2f
-	ld de, wTextTileBuffer tile 8 + 3 ; $6b32
+	ld de, wDecompBufferHigh tile 8 + 3 ; $6b32
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
 	ld hl, Text_MenuLevelUpStatusTrophies ; $6b38
-	ld de, wTextTileBuffer tile 12 + 3 ; $6b3b
+	ld de, wDecompBufferHigh tile 12 + 3 ; $6b3b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b3e
 	farcall Unused_18_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44

@@ -158,15 +158,15 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 	ld de, vTiles2 + VRAM_BANK1 ; $661b
 	ld c, 128 ; $661e
 	call QueueVRAMCopy ; $6620
-	ld hl, wTextTileBuffer ; $6623
+	ld hl, wDecompBufferHigh ; $6623
 	ld de, vTiles1 + VRAM_BANK1 ; $6626
-	ld c, wTextTileBuffer_SIZE / 16 ; $6629
+	ld c, wDecompBufferHigh_SIZE / 16 ; $6629
 	call QueueVRAMCopy ; $662b
 	ld hl, UnlockDebugNavGridTable ; $662e
-	ld de, wTextTileBuffer tile 64 ; $6631
+	ld de, wDecompBufferHigh tile 64 ; $6631
 	call DecompressData ; $6634
 	ld hl, UnlockDebugNavGridTable ; $6637
-	ld de, wTextTileBuffer ; $663a
+	ld de, wDecompBufferHigh ; $663a
 	call DecompressData ; $663d
 	ld hl, UnlockDebugNavGridTable ; $6640
 	ld_bg_pals de, 0, 8 ; $6643
@@ -284,11 +284,11 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call Unused_1b_LoadUnlockDebugScreenGfx ; $674b
 	call Unused_1b_DrawUnlockDebugMugshots ; $674e
 	call Unused_1b_UpdateUnlockDebugSelectedMugshot ; $6751
-	ld hl, wTextTileBuffer tile 64 ; $6754
+	ld hl, wDecompBufferHigh tile 64 ; $6754
 	ld de, vBGMap0 + VRAM_BANK1 ; $6757
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $675a
 	call QueueVRAMCopy ; $675c
-	ld hl, wTextTileBuffer ; $675f
+	ld hl, wDecompBufferHigh ; $675f
 	ld de, vBGMap0 ; $6762
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6765
 	call QueueVRAMCopy ; $6767

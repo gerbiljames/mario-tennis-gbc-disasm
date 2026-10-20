@@ -86,7 +86,7 @@ Unused_1a_LoadExpScreenGfx:
 	ld de, vTiles2 + VRAM_BANK1 ; $4865
 	ld c, 128 ; $4868 -- 128 of ExpScreenGfx0's 192 tiles
 	call QueueVRAMCopy ; $486a
-	ld hl, wTextTileBuffer ; $486d
+	ld hl, wDecompBufferHigh ; $486d
 	ld de, vTiles1 + VRAM_BANK1 ; $4870
 	ld c, 80 ; $4873
 	call QueueVRAMCopy ; $4875
@@ -139,9 +139,9 @@ Unused_1a_LoadExpScreenGfx:
 	call LoadPalettesMasterOnly ; $48f9
 	wram_bank WRAM_STAGING ; $48fc
 	ld hl, ExpScreenGfx8 ; $4902
-	ld de, wTextTileBuffer tile 96 ; $4905
+	ld de, wDecompBufferHigh tile 96 ; $4905
 	call DecompressData ; $4908
-	ld hl, wTextTileBuffer tile 96 ; $490b
+	ld hl, wDecompBufferHigh tile 96 ; $490b
 	ld de, vTiles1 tile $4a + VRAM_BANK1 ; $490e
 	ld c, 20 ; $4911
 	call QueueVRAMCopy ; $4913

@@ -143,7 +143,7 @@ class Source(unittest.TestCase):
 
     # destinations a decompression may run past, the bytes it may fill, why
     DECOMP_OVERRUNS = {
-        "wDecompBuffer": (4096, "the staging half before wTextTileBuffer: a 4096-byte "
+        "wDecompBuffer": (4096, "the staging half before wDecompBufferHigh: a 4096-byte "
                                 "tile set fills both and is queued to VRAM as two halves"),
     }
 

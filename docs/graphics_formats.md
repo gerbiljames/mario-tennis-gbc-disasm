@@ -300,8 +300,8 @@ the tile animator: `AdvanceSceneTileAnimation` (`$0a:$6522`) copies raw 2bpp
 tiles from it per step of the config's `scene_tile_anim` list, into
 `vTiles2 + VRAM_BANK1` (`story_mode.md`).
 
-Slot 7's tiles go to `vTiles2 + VRAM_BANK1`, `c = 128`, and `wTextTileBuffer`
-to `vTiles1 + VRAM_BANK1`, `c = wTextTileBuffer_SIZE / 16` (128)
+Slot 7's tiles go to `vTiles2 + VRAM_BANK1`, `c = 128`, and `wDecompBufferHigh`
+to `vTiles1 + VRAM_BANK1`, `c = wDecompBufferHigh_SIZE / 16` (128)
 (`$58a4`-`$58b4`): together `$8800`-`$97ff` of VRAM bank 1.
 
 Slot 1's 64 bytes become **BG palettes 2-7**: from byte 16
