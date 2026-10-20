@@ -85,13 +85,13 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40a4
 	dw SfxDoorAlt_Trk0 ; $40a6
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40a8
-	dw SfxFireworkLaunch_Trk0 ; $40aa
+	dw SfxPlaneStart_Trk0 ; $40aa
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40ac
 	dw SfxPlane_Trk0 ; $40ae
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40b0
 	dw Sfx7c_Trk0 ; $40b2
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40b4
-	dw SfxFireworkSparkle_Trk0 ; $40b6
+	dw SfxPlaneStop_Trk0 ; $40b6
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40b8
 	dw SfxSplash_Trk0 ; $40ba
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40bc
@@ -137,9 +137,9 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $410c
 	dw SfxRacketGet_Trk0 ; $410e
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4110
-	dw Sfx91_Trk0 ; $4112
+	dw SfxSwingThrough_Trk0 ; $4112
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4114
-	dw Sfx92_Trk0 ; $4116
+	dw SfxSidestep_Trk0 ; $4116
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4118
 	dw Sfx93_Trk0 ; $411a
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $411c
@@ -230,14 +230,14 @@ SfxMarker_Trk0:
 	INCLUDE "data/audio/SfxMarker_Trk0.asm" ; $754e, 64 bytes (snd_script:noise)
 SfxDoorAlt_Trk0:
 	INCLUDE "data/audio/SfxDoorAlt_Trk0.asm" ; $758e, 42 bytes (snd_script:noise)
-SfxFireworkLaunch_Trk0:
-	INCLUDE "data/audio/SfxFireworkLaunch_Trk0.asm" ; $75b8, 54 bytes (snd_script:noise)
+SfxPlaneStart_Trk0:
+	INCLUDE "data/audio/SfxPlaneStart_Trk0.asm" ; $75b8, 54 bytes (snd_script:noise)
 SfxPlane_Trk0:
 	INCLUDE "data/audio/SfxPlane_Trk0.asm" ; $75ee, 34 bytes (snd_script:noise)
 Sfx7c_Trk0:
 	INCLUDE "data/audio/Sfx7c_Trk0.asm" ; $7610, 62 bytes (snd_script:noise)
-SfxFireworkSparkle_Trk0:
-	INCLUDE "data/audio/SfxFireworkSparkle_Trk0.asm" ; $764e, 34 bytes (snd_script:noise)
+SfxPlaneStop_Trk0:
+	INCLUDE "data/audio/SfxPlaneStop_Trk0.asm" ; $764e, 34 bytes (snd_script:noise)
 SfxSplash_Trk0:
 	INCLUDE "data/audio/SfxSplash_Trk0.asm" ; $7670, 70 bytes (snd_script:noise)
 SfxRankingBoard_Trk0:
@@ -282,10 +282,10 @@ SfxWaterSpriteFly_Trk0:
 	INCLUDE "data/audio/SfxWaterSpriteFly_Trk0.asm" ; $7cd8, 264 bytes (snd_script:pulse)
 SfxRacketGet_Trk0:
 	INCLUDE "data/audio/SfxRacketGet_Trk0.asm" ; $7de0, 240 bytes (snd_script:pulse)
-Sfx91_Trk0:
-	INCLUDE "data/audio/Sfx91_Trk0.asm" ; $7ed0, 46 bytes (snd_script:noise)
-Sfx92_Trk0:
-	INCLUDE "data/audio/Sfx92_Trk0.asm" ; $7efe, 22 bytes (snd_script:noise)
+SfxSwingThrough_Trk0:
+	INCLUDE "data/audio/SfxSwingThrough_Trk0.asm" ; $7ed0, 46 bytes (snd_script:noise)
+SfxSidestep_Trk0:
+	INCLUDE "data/audio/SfxSidestep_Trk0.asm" ; $7efe, 22 bytes (snd_script:noise)
 Sfx93_Trk0:
 	INCLUDE "data/audio/Sfx93_Trk0.asm" ; $7f14, 54 bytes (snd_script:pulse)
 SfxGridClear_Trk0:

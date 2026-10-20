@@ -332,42 +332,42 @@ Unused_52_YoshiSpriteFramesCopy:
 YoshiFramePlace:
 	INCLUDE "data/sprites/YoshiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 YoshiSpriteAnims:
-	dw YoshiSpriteAnim00 ; $7f24
-	dw YoshiSpriteAnim01 ; $7f26
-	dw YoshiSpriteAnim02 ; $7f28
-	dw YoshiSpriteAnim03 ; $7f2a
-	dw YoshiSpriteAnim04 ; $7f2c
-	dw YoshiSpriteAnim05 ; $7f2e
-	dw YoshiSpriteAnim06 ; $7f30
-	dw YoshiSpriteAnim07 ; $7f32
-	dw YoshiSpriteAnim08 ; $7f34
-	dw YoshiSpriteAnim09 ; $7f36
-	dw YoshiSpriteAnim10 ; $7f38
-	dw YoshiSpriteAnim11 ; $7f3a
-	dw YoshiSpriteAnim12 ; $7f3c
-	dw YoshiSpriteAnim13 ; $7f3e
-	dw YoshiSpriteAnim14 ; $7f40
-	dw YoshiSpriteAnim15 ; $7f42
-	dw YoshiSpriteAnim16 ; $7f44
-	dw YoshiSpriteAnim17 ; $7f46
-	dw YoshiSpriteAnim18 ; $7f48
-YoshiSpriteAnim00:
+	dw YoshiStandAnim ; $7f24
+	dw YoshiIdleAnim ; $7f26
+	dw YoshiRunAnim ; $7f28
+	dw YoshiCelebrateAnim ; $7f2a
+	dw YoshiDejectedAnim ; $7f2c
+	dw YoshiForehandAnim ; $7f2e
+	dw YoshiBackhandAnim ; $7f30
+	dw YoshiOverheadAnim ; $7f32
+	dw YoshiSmashAnim ; $7f34
+	dw YoshiForehandQuickAnim ; $7f36
+	dw YoshiBackhandQuickAnim ; $7f38
+	dw YoshiOverheadQuickAnim ; $7f3a
+	dw YoshiSmashQuickAnim ; $7f3c
+	dw YoshiForehandReadyAnim ; $7f3e
+	dw YoshiBackhandReadyAnim ; $7f40
+	dw YoshiOverheadReadyAnim ; $7f42
+	dw YoshiServeReadyAnim ; $7f44
+	dw YoshiServePrepAnim ; $7f46
+	dw YoshiDiveAnim ; $7f48
+YoshiStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-YoshiSpriteAnim01:
+YoshiIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-YoshiSpriteAnim02:
+YoshiRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-YoshiSpriteAnim03:
+YoshiCelebrateAnim:
 	; $7f5d, 16 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
@@ -377,66 +377,66 @@ YoshiSpriteAnim03:
 	anim_frame $19, 8
 	anim_frame $18, 8
 	anim_loop $00
-YoshiSpriteAnim04:
+YoshiDejectedAnim:
 	; $7f6d, 10 bytes (sprite_anim)
 	anim_frame $1a, 40
 	anim_frame $1b, 8
 	anim_frame $1c, 20
 	anim_frame $1b, 4
 	anim_loop $00
-YoshiSpriteAnim05:
+YoshiForehandAnim:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-YoshiSpriteAnim06:
+YoshiBackhandAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-YoshiSpriteAnim07:
+YoshiOverheadAnim:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-YoshiSpriteAnim08:
+YoshiSmashAnim:
 	; $7f89, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-YoshiSpriteAnim09:
+YoshiForehandQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-YoshiSpriteAnim10:
+YoshiBackhandQuickAnim:
 	; $7f92, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-YoshiSpriteAnim11:
+YoshiOverheadQuickAnim:
 	; $7f96, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-YoshiSpriteAnim12:
+YoshiSmashQuickAnim:
 	; $7f9a, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-YoshiSpriteAnim13:
+YoshiForehandReadyAnim:
 	; $7f9d, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-YoshiSpriteAnim14:
+YoshiBackhandReadyAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-YoshiSpriteAnim15:
+YoshiOverheadReadyAnim:
 	; $7fa3, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-YoshiSpriteAnim16:
+YoshiServeReadyAnim:
 	; $7fa6, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-YoshiSpriteAnim17:
+YoshiServePrepAnim:
 	; $7fa9, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -444,7 +444,7 @@ YoshiSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-YoshiSpriteAnim18:
+YoshiDiveAnim:
 	; $7fb5, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

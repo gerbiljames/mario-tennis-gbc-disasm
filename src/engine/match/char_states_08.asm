@@ -178,7 +178,7 @@ StartCharSwing:
 	ld [hl], d ; $6deb
 	ld hl, wCharSwingAnim ; $6dec
 	ld [hl], CHARANIM_SMASH ; $6def
-	sound SFX_SWING ; $6df1
+	sound SFX_LEAP ; $6df1
 	ret ; $6df3
 .dive:
 	ld hl, wCharSwingAnim ; $6df4
@@ -210,7 +210,7 @@ StartCharSwing:
 	ld hl, wCharVelDepth ; $6e24
 	ld [hl+], a ; $6e27
 	ld [hl], e ; $6e28
-	sound SFX_SWING ; $6e29
+	sound SFX_LEAP ; $6e29
 	ret ; $6e2b
 .startSwing:
 	xor a ; $6e2c

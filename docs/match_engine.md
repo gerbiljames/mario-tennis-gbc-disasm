@@ -734,7 +734,7 @@ setting `wCharQuickSwing`.
 
 - predicted lateral offset beyond `wCharReachX` and that direction held →
   **dive** (`CHARANIM_DIVE`, `CHARB_DIVING`, lunge from `wCharDiveSpeed`,
-  `SFX_SWING`);
+  `SFX_LEAP`);
 - else ball high enough relative to `wCharReachHeight` → **jump smash**
   (airborne, `wCharVelHeight = -wCharSmashJumpSpeed`, `CHARANIM_SMASH`);
 - else a slightly lower band → `CHARANIM_OVERHEAD`;

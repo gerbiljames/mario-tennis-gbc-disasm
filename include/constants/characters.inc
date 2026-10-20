@@ -132,9 +132,7 @@ def SLOTSUM_SIZE equ _RS
 ; The 32-entry roster, in the order every character-indexed table takes:
 ; CharSpriteSetTable, CharPaletteIndexTable, CharacterPortraitTable_16 and the
 ; bank $1b menu mugshots. The name is text id $001b + id (bank $30 strings
-; from index $1b). Ids 0-3 are always unlocked; for 4-31
-; CheckCharacterUnlocked tests save flag number = character id, so the
-; SAVEFLAG_UNLOCKED_*/_CLEARED_* block above names the same characters.
+; from index $1b).
 	const_def
 	const CHAR_ALEX       ; $00
 	const CHAR_NINA       ; $01

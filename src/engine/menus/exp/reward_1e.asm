@@ -307,19 +307,19 @@ SetRewardUnlockFlag:
 	ret ; $6e62
 RewardUnlockFlagTable:
 	; $6e63, 26 bytes (flag_ids)
-	flag_id FLAG_CHEAT_UNLOCK_0
-	flag_id FLAG_CHEAT_UNLOCK_1
-	flag_id FLAG_CHEAT_UNLOCK_2
-	flag_id FLAG_CHEAT_UNLOCK_3
-	flag_id FLAG_CHEAT_UNLOCK_4
-	flag_id FLAG_CHEAT_UNLOCK_5
-	flag_id FLAG_CHEAT_UNLOCK_6
-	flag_id FLAG_CHEAT_UNLOCK_7
-	flag_id FLAG_CHEAT_UNLOCK_8
-	flag_id FLAG_CHEAT_UNLOCK_11
-	flag_id FLAG_CHEAT_UNLOCK_12
-	flag_id FLAG_CHEAT_UNLOCK_9
-	flag_id FLAG_CHEAT_UNLOCK_10
+	flag_id FLAG_UNLOCKED_PAM
+	flag_id FLAG_UNLOCKED_BOB
+	flag_id FLAG_UNLOCKED_BETH
+	flag_id FLAG_UNLOCKED_FAY
+	flag_id FLAG_UNLOCKED_CURT
+	flag_id FLAG_UNLOCKED_MARK
+	flag_id FLAG_UNLOCKED_SEAN
+	flag_id FLAG_UNLOCKED_SAMMI
+	flag_id FLAG_UNLOCKED_ELDEN
+	flag_id FLAG_UNLOCKED_SPIKE
+	flag_id FLAG_UNLOCKED_EMILY
+	flag_id FLAG_UNLOCKED_B_COZ
+	flag_id FLAG_UNLOCKED_A_COZ
 RewardUnlockFlagsTable:
 	; $6e7d, 52 bytes (flag_ids)
 	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1

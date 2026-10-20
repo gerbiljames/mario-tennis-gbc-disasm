@@ -332,107 +332,107 @@ Unused_44_EmilySpriteFramesCopy:
 EmilyFramePlace:
 	INCLUDE "data/sprites/EmilyFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 EmilySpriteAnims:
-	dw EmilySpriteAnim00 ; $7f24
-	dw EmilySpriteAnim01 ; $7f26
-	dw EmilySpriteAnim02 ; $7f28
-	dw EmilySpriteAnim03 ; $7f2a
-	dw EmilySpriteAnim04 ; $7f2c
-	dw EmilySpriteAnim05 ; $7f2e
-	dw EmilySpriteAnim06 ; $7f30
-	dw EmilySpriteAnim07 ; $7f32
-	dw EmilySpriteAnim08 ; $7f34
-	dw EmilySpriteAnim09 ; $7f36
-	dw EmilySpriteAnim10 ; $7f38
-	dw EmilySpriteAnim11 ; $7f3a
-	dw EmilySpriteAnim12 ; $7f3c
-	dw EmilySpriteAnim13 ; $7f3e
-	dw EmilySpriteAnim14 ; $7f40
-	dw EmilySpriteAnim15 ; $7f42
-	dw EmilySpriteAnim16 ; $7f44
-	dw EmilySpriteAnim17 ; $7f46
-	dw EmilySpriteAnim18 ; $7f48
-EmilySpriteAnim00:
+	dw EmilyStandAnim ; $7f24
+	dw EmilyIdleAnim ; $7f26
+	dw EmilyRunAnim ; $7f28
+	dw EmilyCelebrateAnim ; $7f2a
+	dw EmilyDejectedAnim ; $7f2c
+	dw EmilyForehandAnim ; $7f2e
+	dw EmilyBackhandAnim ; $7f30
+	dw EmilyOverheadAnim ; $7f32
+	dw EmilySmashAnim ; $7f34
+	dw EmilyForehandQuickAnim ; $7f36
+	dw EmilyBackhandQuickAnim ; $7f38
+	dw EmilyOverheadQuickAnim ; $7f3a
+	dw EmilySmashQuickAnim ; $7f3c
+	dw EmilyForehandReadyAnim ; $7f3e
+	dw EmilyBackhandReadyAnim ; $7f40
+	dw EmilyOverheadReadyAnim ; $7f42
+	dw EmilyServeReadyAnim ; $7f44
+	dw EmilyServePrepAnim ; $7f46
+	dw EmilyDiveAnim ; $7f48
+EmilyStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-EmilySpriteAnim01:
+EmilyIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-EmilySpriteAnim02:
+EmilyRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-EmilySpriteAnim03:
+EmilyCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_loop $00
-EmilySpriteAnim04:
+EmilyDejectedAnim:
 	; $7f65, 10 bytes (sprite_anim)
 	anim_frame $1a, 15
 	anim_frame $1c, 15
 	anim_frame $1b, 15
 	anim_frame $1c, 15
 	anim_loop $00
-EmilySpriteAnim05:
+EmilyForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-EmilySpriteAnim06:
+EmilyBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-EmilySpriteAnim07:
+EmilyOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-EmilySpriteAnim08:
+EmilySmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-EmilySpriteAnim09:
+EmilyForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-EmilySpriteAnim10:
+EmilyBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-EmilySpriteAnim11:
+EmilyOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-EmilySpriteAnim12:
+EmilySmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-EmilySpriteAnim13:
+EmilyForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-EmilySpriteAnim14:
+EmilyBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-EmilySpriteAnim15:
+EmilyOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-EmilySpriteAnim16:
+EmilyServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-EmilySpriteAnim17:
+EmilyServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ EmilySpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-EmilySpriteAnim18:
+EmilyDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

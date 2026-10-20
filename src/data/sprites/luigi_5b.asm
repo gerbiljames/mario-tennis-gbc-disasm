@@ -332,42 +332,42 @@ Unused_5b_LuigiSpriteFramesCopy:
 LuigiFramePlace:
 	INCLUDE "data/sprites/LuigiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 LuigiSpriteAnims:
-	dw LuigiSpriteAnim00 ; $7f24
-	dw LuigiSpriteAnim01 ; $7f26
-	dw LuigiSpriteAnim02 ; $7f28
-	dw LuigiSpriteAnim03 ; $7f2a
-	dw LuigiSpriteAnim04 ; $7f2c
-	dw LuigiSpriteAnim05 ; $7f2e
-	dw LuigiSpriteAnim06 ; $7f30
-	dw LuigiSpriteAnim07 ; $7f32
-	dw LuigiSpriteAnim08 ; $7f34
-	dw LuigiSpriteAnim09 ; $7f36
-	dw LuigiSpriteAnim10 ; $7f38
-	dw LuigiSpriteAnim11 ; $7f3a
-	dw LuigiSpriteAnim12 ; $7f3c
-	dw LuigiSpriteAnim13 ; $7f3e
-	dw LuigiSpriteAnim14 ; $7f40
-	dw LuigiSpriteAnim15 ; $7f42
-	dw LuigiSpriteAnim16 ; $7f44
-	dw LuigiSpriteAnim17 ; $7f46
-	dw LuigiSpriteAnim18 ; $7f48
-LuigiSpriteAnim00:
+	dw LuigiStandAnim ; $7f24
+	dw LuigiIdleAnim ; $7f26
+	dw LuigiRunAnim ; $7f28
+	dw LuigiCelebrateAnim ; $7f2a
+	dw LuigiDejectedAnim ; $7f2c
+	dw LuigiForehandAnim ; $7f2e
+	dw LuigiBackhandAnim ; $7f30
+	dw LuigiOverheadAnim ; $7f32
+	dw LuigiSmashAnim ; $7f34
+	dw LuigiForehandQuickAnim ; $7f36
+	dw LuigiBackhandQuickAnim ; $7f38
+	dw LuigiOverheadQuickAnim ; $7f3a
+	dw LuigiSmashQuickAnim ; $7f3c
+	dw LuigiForehandReadyAnim ; $7f3e
+	dw LuigiBackhandReadyAnim ; $7f40
+	dw LuigiOverheadReadyAnim ; $7f42
+	dw LuigiServeReadyAnim ; $7f44
+	dw LuigiServePrepAnim ; $7f46
+	dw LuigiDiveAnim ; $7f48
+LuigiStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-LuigiSpriteAnim01:
+LuigiIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-LuigiSpriteAnim02:
+LuigiRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-LuigiSpriteAnim03:
+LuigiCelebrateAnim:
 	; $7f5d, 12 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
@@ -375,65 +375,65 @@ LuigiSpriteAnim03:
 	anim_frame $18, 10
 	anim_frame $19, 25
 	anim_loop $02
-LuigiSpriteAnim04:
+LuigiDejectedAnim:
 	; $7f69, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 15
 	anim_frame $1c, 60
 	anim_loop $00
-LuigiSpriteAnim05:
+LuigiForehandAnim:
 	; $7f71, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-LuigiSpriteAnim06:
+LuigiBackhandAnim:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-LuigiSpriteAnim07:
+LuigiOverheadAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-LuigiSpriteAnim08:
+LuigiSmashAnim:
 	; $7f83, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-LuigiSpriteAnim09:
+LuigiForehandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-LuigiSpriteAnim10:
+LuigiBackhandQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-LuigiSpriteAnim11:
+LuigiOverheadQuickAnim:
 	; $7f90, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-LuigiSpriteAnim12:
+LuigiSmashQuickAnim:
 	; $7f94, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-LuigiSpriteAnim13:
+LuigiForehandReadyAnim:
 	; $7f97, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-LuigiSpriteAnim14:
+LuigiBackhandReadyAnim:
 	; $7f9a, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-LuigiSpriteAnim15:
+LuigiOverheadReadyAnim:
 	; $7f9d, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-LuigiSpriteAnim16:
+LuigiServeReadyAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-LuigiSpriteAnim17:
+LuigiServePrepAnim:
 	; $7fa3, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -441,7 +441,7 @@ LuigiSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-LuigiSpriteAnim18:
+LuigiDiveAnim:
 	; $7faf, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

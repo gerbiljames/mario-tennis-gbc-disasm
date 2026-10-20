@@ -332,106 +332,106 @@ Unused_48_SpikeSpriteFramesCopy:
 SpikeFramePlace:
 	INCLUDE "data/sprites/SpikeFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 SpikeSpriteAnims:
-	dw SpikeSpriteAnim00 ; $7f24
-	dw SpikeSpriteAnim01 ; $7f26
-	dw SpikeSpriteAnim02 ; $7f28
-	dw SpikeSpriteAnim03 ; $7f2a
-	dw SpikeSpriteAnim04 ; $7f2c
-	dw SpikeSpriteAnim05 ; $7f2e
-	dw SpikeSpriteAnim06 ; $7f30
-	dw SpikeSpriteAnim07 ; $7f32
-	dw SpikeSpriteAnim08 ; $7f34
-	dw SpikeSpriteAnim09 ; $7f36
-	dw SpikeSpriteAnim10 ; $7f38
-	dw SpikeSpriteAnim11 ; $7f3a
-	dw SpikeSpriteAnim12 ; $7f3c
-	dw SpikeSpriteAnim13 ; $7f3e
-	dw SpikeSpriteAnim14 ; $7f40
-	dw SpikeSpriteAnim15 ; $7f42
-	dw SpikeSpriteAnim16 ; $7f44
-	dw SpikeSpriteAnim17 ; $7f46
-	dw SpikeSpriteAnim18 ; $7f48
-SpikeSpriteAnim00:
+	dw SpikeStandAnim ; $7f24
+	dw SpikeIdleAnim ; $7f26
+	dw SpikeRunAnim ; $7f28
+	dw SpikeCelebrateAnim ; $7f2a
+	dw SpikeDejectedAnim ; $7f2c
+	dw SpikeForehandAnim ; $7f2e
+	dw SpikeBackhandAnim ; $7f30
+	dw SpikeOverheadAnim ; $7f32
+	dw SpikeSmashAnim ; $7f34
+	dw SpikeForehandQuickAnim ; $7f36
+	dw SpikeBackhandQuickAnim ; $7f38
+	dw SpikeOverheadQuickAnim ; $7f3a
+	dw SpikeSmashQuickAnim ; $7f3c
+	dw SpikeForehandReadyAnim ; $7f3e
+	dw SpikeBackhandReadyAnim ; $7f40
+	dw SpikeOverheadReadyAnim ; $7f42
+	dw SpikeServeReadyAnim ; $7f44
+	dw SpikeServePrepAnim ; $7f46
+	dw SpikeDiveAnim ; $7f48
+SpikeStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-SpikeSpriteAnim01:
+SpikeIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-SpikeSpriteAnim02:
+SpikeRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-SpikeSpriteAnim03:
+SpikeCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
 	anim_frame $19, 25
 	anim_loop $00
-SpikeSpriteAnim04:
+SpikeDejectedAnim:
 	; $7f65, 8 bytes (sprite_anim)
 	anim_frame $1a, 25
 	anim_frame $1b, 20
 	anim_frame $1c, 50
 	anim_loop $00
-SpikeSpriteAnim05:
+SpikeForehandAnim:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-SpikeSpriteAnim06:
+SpikeBackhandAnim:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-SpikeSpriteAnim07:
+SpikeOverheadAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-SpikeSpriteAnim08:
+SpikeSmashAnim:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-SpikeSpriteAnim09:
+SpikeForehandQuickAnim:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-SpikeSpriteAnim10:
+SpikeBackhandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-SpikeSpriteAnim11:
+SpikeOverheadQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-SpikeSpriteAnim12:
+SpikeSmashQuickAnim:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-SpikeSpriteAnim13:
+SpikeForehandReadyAnim:
 	; $7f93, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-SpikeSpriteAnim14:
+SpikeBackhandReadyAnim:
 	; $7f96, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-SpikeSpriteAnim15:
+SpikeOverheadReadyAnim:
 	; $7f99, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-SpikeSpriteAnim16:
+SpikeServeReadyAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-SpikeSpriteAnim17:
+SpikeServePrepAnim:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -439,7 +439,7 @@ SpikeSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-SpikeSpriteAnim18:
+SpikeDiveAnim:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

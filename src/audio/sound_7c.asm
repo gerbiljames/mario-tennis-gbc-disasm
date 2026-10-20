@@ -51,7 +51,7 @@ SoundTable_7c:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4060
 	dw Sfx58_Trk0 ; $4062
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4064
-	dw SfxSwingCharge_Trk0 ; $4066
+	dw SfxSwing_Trk0 ; $4066
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4068
 	dw SfxBallBounce_Trk0 ; $406a
 MusicPracticeMatch_Trk0:
@@ -104,8 +104,8 @@ SfxHitSlice_Trk0:
 	INCLUDE "data/audio/SfxHitSlice_Trk0.asm" ; $7f40, 56 bytes (snd_script:noise)
 Sfx58_Trk0:
 	INCLUDE "data/audio/Sfx58_Trk0.asm" ; $7f78, 40 bytes (snd_script:noise)
-SfxSwingCharge_Trk0:
-	INCLUDE "data/audio/SfxSwingCharge_Trk0.asm" ; $7fa0, 48 bytes (snd_script:noise)
+SfxSwing_Trk0:
+	INCLUDE "data/audio/SfxSwing_Trk0.asm" ; $7fa0, 48 bytes (snd_script:noise)
 SfxBallBounce_Trk0:
 	INCLUDE "data/audio/SfxBallBounce_Trk0.asm" ; $7fd0, 22 bytes (snd_script:noise)
 	; $7fe6, 26 bytes fill to bank end (linker-padded)

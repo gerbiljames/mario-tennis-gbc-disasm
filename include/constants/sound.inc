@@ -105,7 +105,7 @@ def SFX_STOP                 equ $50 ; silences the two effect channels
 	const SFX_HIT_SERVE   ; $54 all three serves
 def SFX_HIT_SLICE            equ $57 ; slice, power slice and the smash
 def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent
-def SFX_SWING                equ $5c ; racket swing (StartCharSwing)
+def SFX_LEAP                 equ $5c ; a jump smash or dive starting (StartCharSwing)
 def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent, HandleMinigameTargetHit, MinigameTargetTypeScores
 	const_def $5e
 	const SFX_MENU_MOVE   ; $5e every menu's "the cursor moved" branch
@@ -137,7 +137,7 @@ def SFX_SCORE_STEP7          equ $ba
 
 ; Effects named for where they play, not what they sound like.
 def SFX_SPECIAL_HIT            equ $55 ; the special-shot hit spark (StartHitEffect $08)
-def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (CharSwingWindupPhase $08)
+def SFX_SWING                  equ $59 ; every swing, as CharSwingWindupPhase calls StartCharSwing ($08)
 def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
 ; The on-court object cues, from the *ObjTemplate* tables of bank $09 (the
 ; sound field LoadObjTemplate_09 plays as the object appears).
@@ -157,8 +157,8 @@ def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/
 def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (Unused_1a_DrawExpScreenCaption $1a)
 def SFX_BALL_LAUNCH            equ $76 ; the minigame ball launcher (LaunchBall $0d)
 def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board marker (RankingAnim*), the on-court score digits and banner row 15 (CourtBannerObjTemplates_09)
-def SFX_FIREWORK_LAUNCH        equ $7a ; the island sky scene: firework ascent, the plane pass (bank $14)
-def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane cues (bank $14)
+def SFX_PLANE_START            equ $7a ; the island-sky plane flight starting, after the fade-in (bank $14)
+def SFX_PLANE_STOP             equ $7d ; the island-sky plane's last move ending, before the fade-out or touchdown roll (bank $14)
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)
 def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
@@ -174,6 +174,8 @@ def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (C
 	const SFX_WATER_SPRITE_APPEAR ; $8e the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
 	const SFX_WATER_SPRITE_FLY    ; $8f the water sprite flying off (WaterSpriteRacketRewardScene $15)
 	const SFX_RACKET_GET          ; $90 receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
+	const SFX_SWING_THROUGH       ; $91 the player trying out a newly equipped racket at the repair counter (ActorScript_0e_03)
+	const SFX_SIDESTEP            ; $92 each sidestep of the player trying out newly equipped shoes there (ActorScript_0e_04)
 def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTargetGridClear $0d)
 	const_def $96
 	const SFX_APPEAR2 ; $96 the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)

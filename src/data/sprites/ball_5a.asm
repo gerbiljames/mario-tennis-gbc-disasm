@@ -332,101 +332,101 @@ Unused_5a_BallMachineSpriteFramesCopy:
 BallMachineFramePlace:
 	INCLUDE "data/sprites/BallMachineFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BallMachineSpriteAnims:
-	dw BallMachineSpriteAnim00 ; $7f24
-	dw BallMachineSpriteAnim01 ; $7f26
-	dw BallMachineSpriteAnim02 ; $7f28
-	dw BallMachineSpriteAnim03 ; $7f2a
-	dw BallMachineSpriteAnim04 ; $7f2c
-	dw BallMachineSpriteAnim05 ; $7f2e
-	dw BallMachineSpriteAnim06 ; $7f30
-	dw BallMachineSpriteAnim07 ; $7f32
-	dw BallMachineSpriteAnim08 ; $7f34
-	dw BallMachineSpriteAnim09 ; $7f36
-	dw BallMachineSpriteAnim10 ; $7f38
-	dw BallMachineSpriteAnim11 ; $7f3a
-	dw BallMachineSpriteAnim12 ; $7f3c
-	dw BallMachineSpriteAnim13 ; $7f3e
-	dw BallMachineSpriteAnim14 ; $7f40
-	dw BallMachineSpriteAnim15 ; $7f42
-	dw BallMachineSpriteAnim16 ; $7f44
-	dw BallMachineSpriteAnim17 ; $7f46
-	dw BallMachineSpriteAnim18 ; $7f48
-BallMachineSpriteAnim00:
+	dw BallMachineStandAnim ; $7f24
+	dw BallMachineIdleAnim ; $7f26
+	dw BallMachineRunAnim ; $7f28
+	dw BallMachineCelebrateAnim ; $7f2a
+	dw BallMachineDejectedAnim ; $7f2c
+	dw BallMachineForehandAnim ; $7f2e
+	dw BallMachineBackhandAnim ; $7f30
+	dw BallMachineOverheadAnim ; $7f32
+	dw BallMachineSmashAnim ; $7f34
+	dw BallMachineForehandQuickAnim ; $7f36
+	dw BallMachineBackhandQuickAnim ; $7f38
+	dw BallMachineOverheadQuickAnim ; $7f3a
+	dw BallMachineSmashQuickAnim ; $7f3c
+	dw BallMachineForehandReadyAnim ; $7f3e
+	dw BallMachineBackhandReadyAnim ; $7f40
+	dw BallMachineOverheadReadyAnim ; $7f42
+	dw BallMachineServeReadyAnim ; $7f44
+	dw BallMachineServePrepAnim ; $7f46
+	dw BallMachineDiveAnim ; $7f48
+BallMachineStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-BallMachineSpriteAnim01:
+BallMachineIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 5
 	anim_frame $03, 5
 	anim_frame $04, 5
 	anim_frame $03, 5
 	anim_loop $00
-BallMachineSpriteAnim02:
+BallMachineRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-BallMachineSpriteAnim03:
+BallMachineCelebrateAnim:
 	; $7f5d, 2 bytes (sprite_anim)
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim04:
+BallMachineDejectedAnim:
 	; $7f5f, 2 bytes (sprite_anim)
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim05:
+BallMachineForehandAnim:
 	; $7f61, 8 bytes (sprite_anim)
 	anim_frame $05, 10
 	anim_frame $06, 5
 	anim_frame $07, 15
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim06:
+BallMachineBackhandAnim:
 	; $7f69, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim07:
+BallMachineOverheadAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim08:
+BallMachineSmashAnim:
 	; $7f75, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-BallMachineSpriteAnim09:
+BallMachineForehandQuickAnim:
 	; $7f7a, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim10:
+BallMachineBackhandQuickAnim:
 	; $7f7e, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim11:
+BallMachineOverheadQuickAnim:
 	; $7f82, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-BallMachineSpriteAnim12:
+BallMachineSmashQuickAnim:
 	; $7f86, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-BallMachineSpriteAnim13:
+BallMachineForehandReadyAnim:
 	; $7f89, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-BallMachineSpriteAnim14:
+BallMachineBackhandReadyAnim:
 	; $7f8c, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-BallMachineSpriteAnim15:
+BallMachineOverheadReadyAnim:
 	; $7f8f, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-BallMachineSpriteAnim16:
+BallMachineServeReadyAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-BallMachineSpriteAnim17:
+BallMachineServePrepAnim:
 	; $7f95, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -434,7 +434,7 @@ BallMachineSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-BallMachineSpriteAnim18:
+BallMachineDiveAnim:
 	; $7fa1, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

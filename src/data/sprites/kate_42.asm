@@ -332,107 +332,107 @@ Unused_42_KateSpriteFramesCopy:
 KateFramePlace:
 	INCLUDE "data/sprites/KateFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 KateSpriteAnims:
-	dw KateSpriteAnim00 ; $7f24
-	dw KateSpriteAnim01 ; $7f26
-	dw KateSpriteAnim02 ; $7f28
-	dw KateSpriteAnim03 ; $7f2a
-	dw KateSpriteAnim04 ; $7f2c
-	dw KateSpriteAnim05 ; $7f2e
-	dw KateSpriteAnim06 ; $7f30
-	dw KateSpriteAnim07 ; $7f32
-	dw KateSpriteAnim08 ; $7f34
-	dw KateSpriteAnim09 ; $7f36
-	dw KateSpriteAnim10 ; $7f38
-	dw KateSpriteAnim11 ; $7f3a
-	dw KateSpriteAnim12 ; $7f3c
-	dw KateSpriteAnim13 ; $7f3e
-	dw KateSpriteAnim14 ; $7f40
-	dw KateSpriteAnim15 ; $7f42
-	dw KateSpriteAnim16 ; $7f44
-	dw KateSpriteAnim17 ; $7f46
-	dw KateSpriteAnim18 ; $7f48
-KateSpriteAnim00:
+	dw KateStandAnim ; $7f24
+	dw KateIdleAnim ; $7f26
+	dw KateRunAnim ; $7f28
+	dw KateCelebrateAnim ; $7f2a
+	dw KateDejectedAnim ; $7f2c
+	dw KateForehandAnim ; $7f2e
+	dw KateBackhandAnim ; $7f30
+	dw KateOverheadAnim ; $7f32
+	dw KateSmashAnim ; $7f34
+	dw KateForehandQuickAnim ; $7f36
+	dw KateBackhandQuickAnim ; $7f38
+	dw KateOverheadQuickAnim ; $7f3a
+	dw KateSmashQuickAnim ; $7f3c
+	dw KateForehandReadyAnim ; $7f3e
+	dw KateBackhandReadyAnim ; $7f40
+	dw KateOverheadReadyAnim ; $7f42
+	dw KateServeReadyAnim ; $7f44
+	dw KateServePrepAnim ; $7f46
+	dw KateDiveAnim ; $7f48
+KateStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-KateSpriteAnim01:
+KateIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-KateSpriteAnim02:
+KateRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-KateSpriteAnim03:
+KateCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $19, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_loop $00
-KateSpriteAnim04:
+KateDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 30
 	anim_frame $1b, 20
 	anim_frame $1c, 20
 	anim_loop $02
-KateSpriteAnim05:
+KateForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-KateSpriteAnim06:
+KateBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-KateSpriteAnim07:
+KateOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-KateSpriteAnim08:
+KateSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-KateSpriteAnim09:
+KateForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-KateSpriteAnim10:
+KateBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-KateSpriteAnim11:
+KateOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-KateSpriteAnim12:
+KateSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-KateSpriteAnim13:
+KateForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-KateSpriteAnim14:
+KateBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-KateSpriteAnim15:
+KateOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-KateSpriteAnim16:
+KateServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-KateSpriteAnim17:
+KateServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ KateSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-KateSpriteAnim18:
+KateDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

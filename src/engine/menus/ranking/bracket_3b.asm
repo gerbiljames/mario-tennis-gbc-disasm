@@ -656,15 +656,15 @@ BuildMarioCastChartColumnList:
 	ret ; $7d02
 MarioCastChartColumnListTable:
 	; $7d03, 18 bytes (save_flag_ids)
-	dw SAVEFLAG_UNLOCKED_SAMMI ; record 0
+	dw SAVEFLAG_UNLOCKED_MARIO ; record 0
 	dw $ffff ; record 1
-	dw SAVEFLAG_UNLOCKED_ELDEN ; record 2
+	dw SAVEFLAG_UNLOCKED_PEACH ; record 2
 	dw $ffff ; record 3
-	dw SAVEFLAG_UNLOCKED_CURT ; record 4
+	dw SAVEFLAG_UNLOCKED_YOSHI ; record 4
 	dw $ffff ; record 5
-	dw SAVEFLAG_UNLOCKED_SEAN ; record 6
-	dw SAVEFLAG_UNLOCKED_FAY ; record 7
-	dw SAVEFLAG_UNLOCKED_MARK ; record 8
+	dw SAVEFLAG_UNLOCKED_WARIO ; record 6
+	dw SAVEFLAG_UNLOCKED_WALUIGI ; record 7
+	dw SAVEFLAG_UNLOCKED_BOWSER ; record 8
 MarioCastChartColumnTable:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00

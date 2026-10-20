@@ -337,14 +337,14 @@ ProcessMatchRewards:
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
 	jr z, .checkDreamDoubles ; $66b4
 	push de ; $66b6
-	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $66b7
+	ld de, SAVEFLAG_UNLOCKED_MARIO ; $66b7
 	farcall SetSaveFlag ; $66ba
 	pop de ; $66bd
 .checkDreamDoubles:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $66be
 	jr z, .checkAllProgressComplete ; $66c1
 	push de ; $66c3
-	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $66c4
+	ld de, SAVEFLAG_UNLOCKED_PEACH ; $66c4
 	farcall SetSaveFlag ; $66c7
 	pop de ; $66ca
 .checkAllProgressComplete:

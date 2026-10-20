@@ -332,107 +332,107 @@ Unused_51_WaluigiSpriteFramesCopy:
 WaluigiFramePlace:
 	INCLUDE "data/sprites/WaluigiFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 WaluigiSpriteAnims:
-	dw WaluigiSpriteAnim00 ; $7f24
-	dw WaluigiSpriteAnim01 ; $7f26
-	dw WaluigiSpriteAnim02 ; $7f28
-	dw WaluigiSpriteAnim03 ; $7f2a
-	dw WaluigiSpriteAnim04 ; $7f2c
-	dw WaluigiSpriteAnim05 ; $7f2e
-	dw WaluigiSpriteAnim06 ; $7f30
-	dw WaluigiSpriteAnim07 ; $7f32
-	dw WaluigiSpriteAnim08 ; $7f34
-	dw WaluigiSpriteAnim09 ; $7f36
-	dw WaluigiSpriteAnim10 ; $7f38
-	dw WaluigiSpriteAnim11 ; $7f3a
-	dw WaluigiSpriteAnim12 ; $7f3c
-	dw WaluigiSpriteAnim13 ; $7f3e
-	dw WaluigiSpriteAnim14 ; $7f40
-	dw WaluigiSpriteAnim15 ; $7f42
-	dw WaluigiSpriteAnim16 ; $7f44
-	dw WaluigiSpriteAnim17 ; $7f46
-	dw WaluigiSpriteAnim18 ; $7f48
-WaluigiSpriteAnim00:
+	dw WaluigiStandAnim ; $7f24
+	dw WaluigiIdleAnim ; $7f26
+	dw WaluigiRunAnim ; $7f28
+	dw WaluigiCelebrateAnim ; $7f2a
+	dw WaluigiDejectedAnim ; $7f2c
+	dw WaluigiForehandAnim ; $7f2e
+	dw WaluigiBackhandAnim ; $7f30
+	dw WaluigiOverheadAnim ; $7f32
+	dw WaluigiSmashAnim ; $7f34
+	dw WaluigiForehandQuickAnim ; $7f36
+	dw WaluigiBackhandQuickAnim ; $7f38
+	dw WaluigiOverheadQuickAnim ; $7f3a
+	dw WaluigiSmashQuickAnim ; $7f3c
+	dw WaluigiForehandReadyAnim ; $7f3e
+	dw WaluigiBackhandReadyAnim ; $7f40
+	dw WaluigiOverheadReadyAnim ; $7f42
+	dw WaluigiServeReadyAnim ; $7f44
+	dw WaluigiServePrepAnim ; $7f46
+	dw WaluigiDiveAnim ; $7f48
+WaluigiStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WaluigiSpriteAnim01:
+WaluigiIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-WaluigiSpriteAnim02:
+WaluigiRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-WaluigiSpriteAnim03:
+WaluigiCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $19, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_loop $00
-WaluigiSpriteAnim04:
+WaluigiDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 15
 	anim_frame $1c, 15
 	anim_loop $02
-WaluigiSpriteAnim05:
+WaluigiForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-WaluigiSpriteAnim06:
+WaluigiBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-WaluigiSpriteAnim07:
+WaluigiOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-WaluigiSpriteAnim08:
+WaluigiSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-WaluigiSpriteAnim09:
+WaluigiForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-WaluigiSpriteAnim10:
+WaluigiBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-WaluigiSpriteAnim11:
+WaluigiOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-WaluigiSpriteAnim12:
+WaluigiSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-WaluigiSpriteAnim13:
+WaluigiForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-WaluigiSpriteAnim14:
+WaluigiBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-WaluigiSpriteAnim15:
+WaluigiOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-WaluigiSpriteAnim16:
+WaluigiServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-WaluigiSpriteAnim17:
+WaluigiServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ WaluigiSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-WaluigiSpriteAnim18:
+WaluigiDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

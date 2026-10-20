@@ -332,106 +332,106 @@ Unused_55_WarioSpriteFramesCopy:
 WarioFramePlace:
 	INCLUDE "data/sprites/WarioFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 WarioSpriteAnims:
-	dw WarioSpriteAnim00 ; $7f24
-	dw WarioSpriteAnim01 ; $7f26
-	dw WarioSpriteAnim02 ; $7f28
-	dw WarioSpriteAnim03 ; $7f2a
-	dw WarioSpriteAnim04 ; $7f2c
-	dw WarioSpriteAnim05 ; $7f2e
-	dw WarioSpriteAnim06 ; $7f30
-	dw WarioSpriteAnim07 ; $7f32
-	dw WarioSpriteAnim08 ; $7f34
-	dw WarioSpriteAnim09 ; $7f36
-	dw WarioSpriteAnim10 ; $7f38
-	dw WarioSpriteAnim11 ; $7f3a
-	dw WarioSpriteAnim12 ; $7f3c
-	dw WarioSpriteAnim13 ; $7f3e
-	dw WarioSpriteAnim14 ; $7f40
-	dw WarioSpriteAnim15 ; $7f42
-	dw WarioSpriteAnim16 ; $7f44
-	dw WarioSpriteAnim17 ; $7f46
-	dw WarioSpriteAnim18 ; $7f48
-WarioSpriteAnim00:
+	dw WarioStandAnim ; $7f24
+	dw WarioIdleAnim ; $7f26
+	dw WarioRunAnim ; $7f28
+	dw WarioCelebrateAnim ; $7f2a
+	dw WarioDejectedAnim ; $7f2c
+	dw WarioForehandAnim ; $7f2e
+	dw WarioBackhandAnim ; $7f30
+	dw WarioOverheadAnim ; $7f32
+	dw WarioSmashAnim ; $7f34
+	dw WarioForehandQuickAnim ; $7f36
+	dw WarioBackhandQuickAnim ; $7f38
+	dw WarioOverheadQuickAnim ; $7f3a
+	dw WarioSmashQuickAnim ; $7f3c
+	dw WarioForehandReadyAnim ; $7f3e
+	dw WarioBackhandReadyAnim ; $7f40
+	dw WarioOverheadReadyAnim ; $7f42
+	dw WarioServeReadyAnim ; $7f44
+	dw WarioServePrepAnim ; $7f46
+	dw WarioDiveAnim ; $7f48
+WarioStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WarioSpriteAnim01:
+WarioIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-WarioSpriteAnim02:
+WarioRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-WarioSpriteAnim03:
+WarioCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
 	anim_frame $19, 20
 	anim_loop $00
-WarioSpriteAnim04:
+WarioDejectedAnim:
 	; $7f65, 8 bytes (sprite_anim)
 	anim_frame $1a, 10
 	anim_frame $1b, 10
 	anim_frame $1c, 20
 	anim_loop $00
-WarioSpriteAnim05:
+WarioForehandAnim:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-WarioSpriteAnim06:
+WarioBackhandAnim:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-WarioSpriteAnim07:
+WarioOverheadAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-WarioSpriteAnim08:
+WarioSmashAnim:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-WarioSpriteAnim09:
+WarioForehandQuickAnim:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-WarioSpriteAnim10:
+WarioBackhandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-WarioSpriteAnim11:
+WarioOverheadQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-WarioSpriteAnim12:
+WarioSmashQuickAnim:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-WarioSpriteAnim13:
+WarioForehandReadyAnim:
 	; $7f93, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-WarioSpriteAnim14:
+WarioBackhandReadyAnim:
 	; $7f96, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-WarioSpriteAnim15:
+WarioOverheadReadyAnim:
 	; $7f99, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-WarioSpriteAnim16:
+WarioServeReadyAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-WarioSpriteAnim17:
+WarioServePrepAnim:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -439,7 +439,7 @@ WarioSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-WarioSpriteAnim18:
+WarioDiveAnim:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

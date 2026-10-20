@@ -1,95 +1,95 @@
-DataPtr_WalkSprite_73_00:
-	dw WalkSprite_73_00 ; $4000
-DataPtr_WalkSprite_73_01:
-	dw WalkSprite_73_01 ; $4002
-DataPtr_WalkSprite_73_02:
-	dw WalkSprite_73_02 ; $4004
-DataPtr_WalkSprite_73_03:
-	dw WalkSprite_73_03 ; $4006
-DataPtr_WalkSprite_73_04:
-	dw WalkSprite_73_04 ; $4008
-DataPtr_WalkSprite_73_05:
-	dw WalkSprite_73_05 ; $400a
-DataPtr_WalkSprite_73_06:
-	dw WalkSprite_73_06 ; $400c
-DataPtr_WalkSprite_73_07:
-	dw WalkSprite_73_07 ; $400e
-DataPtr_WalkSprite_73_08:
-	dw WalkSprite_73_08 ; $4010
-DataPtr_WalkSprite_73_09:
-	dw WalkSprite_73_09 ; $4012
-DataPtr_WalkSprite_73_10:
-	dw WalkSprite_73_10 ; $4014
-DataPtr_WalkSprite_73_11:
-	dw WalkSprite_73_11 ; $4016
-DataPtr_WalkSprite_73_12:
-	dw WalkSprite_73_12 ; $4018
-DataPtr_WalkSprite_73_13:
-	dw WalkSprite_73_13 ; $401a
-DataPtr_WalkSprite_73_14:
-	dw WalkSprite_73_14 ; $401c
-DataPtr_WalkSprite_73_15:
-	dw WalkSprite_73_15 ; $401e
-DataPtr_WalkSprite_73_16:
-	dw WalkSprite_73_16 ; $4020
-DataPtr_WalkSprite_73_17:
-	dw WalkSprite_73_17 ; $4022
-DataPtr_WalkSprite_73_18:
-	dw WalkSprite_73_18 ; $4024
-DataPtr_WalkSprite_73_19:
-	dw WalkSprite_73_19 ; $4026
-WalkSprite_73_00:
+DataPtr_AcademyTeacherWalkSprite:
+	dw AcademyTeacherWalkSprite ; $4000
+DataPtr_OldManWalkSprite:
+	dw OldManWalkSprite ; $4002
+DataPtr_WeightlifterAWalkSprite:
+	dw WeightlifterAWalkSprite ; $4004
+DataPtr_SitupsAWalkSprite:
+	dw SitupsAWalkSprite ; $4006
+DataPtr_SitupsBWalkSprite:
+	dw SitupsBWalkSprite ; $4008
+DataPtr_WeightlifterBWalkSprite:
+	dw WeightlifterBWalkSprite ; $400a
+DataPtr_JumpingJacksAWalkSprite:
+	dw JumpingJacksAWalkSprite ; $400c
+DataPtr_JumpingJacksBWalkSprite:
+	dw JumpingJacksBWalkSprite ; $400e
+DataPtr_WarioWalkSprite:
+	dw WarioWalkSprite ; $4010
+DataPtr_EmilyWalkSprite:
+	dw EmilyWalkSprite ; $4012
+DataPtr_MarkWalkSprite:
+	dw MarkWalkSprite ; $4014
+DataPtr_KevinWalkSprite:
+	dw KevinWalkSprite ; $4016
+DataPtr_BalloonExclaimWalkSprite:
+	dw BalloonExclaimWalkSprite ; $4018
+DataPtr_BalloonQuestionWalkSprite:
+	dw BalloonQuestionWalkSprite ; $401a
+DataPtr_BalloonAngryWalkSprite:
+	dw BalloonAngryWalkSprite ; $401c
+DataPtr_BalloonEllipsisWalkSprite:
+	dw BalloonEllipsisWalkSprite ; $401e
+DataPtr_BalloonScribbleWalkSprite:
+	dw BalloonScribbleWalkSprite ; $4020
+DataPtr_BalloonMusicWalkSprite:
+	dw BalloonMusicWalkSprite ; $4022
+DataPtr_BalloonShockWalkSprite:
+	dw BalloonShockWalkSprite ; $4024
+DataPtr_BalloonSweatWalkSprite:
+	dw BalloonSweatWalkSprite ; $4026
+AcademyTeacherWalkSprite:
 	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_00_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, AcademyTeacherWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_00_Gfx00, WalkSprite_73_00_Gfx01, WalkSprite_73_00_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_00_Gfx02 ; $4038
-	dw WalkSprite_73_00_Gfx02 ; $403a
-	dw WalkSprite_73_00_Gfx02 ; $403c
-	dw WalkSprite_73_00_Gfx02 ; $403e
-	dw WalkSprite_73_00_Gfx03 ; $4040
-	dw WalkSprite_73_00_Gfx04 ; $4042
-	dw WalkSprite_73_00_Gfx05 ; $4044
+	dw AcademyTeacherWalkSprite_Gfx00, AcademyTeacherWalkSprite_Gfx01, AcademyTeacherWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw AcademyTeacherWalkSprite_Gfx02 ; $4038
+	dw AcademyTeacherWalkSprite_Gfx02 ; $403a
+	dw AcademyTeacherWalkSprite_Gfx02 ; $403c
+	dw AcademyTeacherWalkSprite_Gfx02 ; $403e
+	dw AcademyTeacherWalkSprite_Gfx03 ; $4040
+	dw AcademyTeacherWalkSprite_Gfx04 ; $4042
+	dw AcademyTeacherWalkSprite_Gfx05 ; $4044
 Padding_73_00:
 	; $4046, 10 bytes (fill)
 	ds 10, $00
 	ds ALIGN[4]
-WalkSprite_73_00_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_00_Gfx00.bin" ; $4050, 256 bytes
+AcademyTeacherWalkSprite_Gfx00:
+	INCBIN "data/sprites/AcademyTeacherWalkSprite_Gfx00.bin" ; $4050, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_00_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_00_Gfx01.bin" ; $4150, 256 bytes
+AcademyTeacherWalkSprite_Gfx01:
+	INCBIN "data/sprites/AcademyTeacherWalkSprite_Gfx01.bin" ; $4150, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_00_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_00_Gfx02.bin" ; $4250, 256 bytes
+AcademyTeacherWalkSprite_Gfx02:
+	INCBIN "data/sprites/AcademyTeacherWalkSprite_Gfx02.bin" ; $4250, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_00_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_00_Gfx03.bin" ; $4350, 256 bytes
+AcademyTeacherWalkSprite_Gfx03:
+	INCBIN "data/sprites/AcademyTeacherWalkSprite_Gfx03.bin" ; $4350, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_00_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_00_Gfx04.bin" ; $4450, 256 bytes
+AcademyTeacherWalkSprite_Gfx04:
+	INCBIN "data/sprites/AcademyTeacherWalkSprite_Gfx04.bin" ; $4450, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_00_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_00_Gfx05.bin" ; $4550, 256 bytes
-WalkSprite_73_00_AnimPtrs:
-	dw WalkSprite_73_00_Anim00 ; $4650
-	dw WalkSprite_73_00_Anim01 ; $4652
-	dw WalkSprite_73_00_Anim02 ; $4654
-	dw WalkSprite_73_00_Anim03 ; $4656
-	dw WalkSprite_73_00_Anim04 ; $4658
-	dw WalkSprite_73_00_Anim05 ; $465a
-	dw WalkSprite_73_00_Anim05 ; $465c
-	dw WalkSprite_73_00_Anim05 ; $465e
-WalkSprite_73_00_Anim00:
+AcademyTeacherWalkSprite_Gfx05:
+	INCBIN "data/sprites/AcademyTeacherWalkSprite_Gfx05.bin" ; $4550, 256 bytes
+AcademyTeacherWalkSprite_AnimPtrs:
+	dw AcademyTeacherWalkSprite_AnimStill ; $4650
+	dw AcademyTeacherWalkSprite_AnimWalk ; $4652
+	dw AcademyTeacherWalkSprite_AnimBounce ; $4654
+	dw AcademyTeacherWalkSprite_AnimNod ; $4656
+	dw AcademyTeacherWalkSprite_AnimShake ; $4658
+	dw AcademyTeacherWalkSprite_Anim05 ; $465a
+	dw AcademyTeacherWalkSprite_Anim05 ; $465c
+	dw AcademyTeacherWalkSprite_Anim05 ; $465e
+AcademyTeacherWalkSprite_AnimStill:
 	; $4660, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_00_Anim01:
+AcademyTeacherWalkSprite_AnimWalk:
 	; $4663, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_00_Anim02:
+AcademyTeacherWalkSprite_AnimBounce:
 	; $4669, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -97,13 +97,13 @@ WalkSprite_73_00_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_00_Anim03:
+AcademyTeacherWalkSprite_AnimNod:
 	; $4675, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_00_Anim04:
+AcademyTeacherWalkSprite_AnimShake:
 	; $467d, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -115,7 +115,7 @@ WalkSprite_73_00_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_00_Anim05:
+AcademyTeacherWalkSprite_Anim05:
 	; $4691, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -123,58 +123,58 @@ WalkSprite_73_00_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_01:
+OldManWalkSprite:
 	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_01_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, OldManWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_01_Gfx00, WalkSprite_73_01_Gfx01, WalkSprite_73_01_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_01_Gfx02 ; $46ad
-	dw WalkSprite_73_01_Gfx02 ; $46af
-	dw WalkSprite_73_01_Gfx02 ; $46b1
-	dw WalkSprite_73_01_Gfx02 ; $46b3
-	dw WalkSprite_73_01_Gfx03 ; $46b5
-	dw WalkSprite_73_01_Gfx04 ; $46b7
-	dw WalkSprite_73_01_Gfx05 ; $46b9
+	dw OldManWalkSprite_Gfx00, OldManWalkSprite_Gfx01, OldManWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw OldManWalkSprite_Gfx02 ; $46ad
+	dw OldManWalkSprite_Gfx02 ; $46af
+	dw OldManWalkSprite_Gfx02 ; $46b1
+	dw OldManWalkSprite_Gfx02 ; $46b3
+	dw OldManWalkSprite_Gfx03 ; $46b5
+	dw OldManWalkSprite_Gfx04 ; $46b7
+	dw OldManWalkSprite_Gfx05 ; $46b9
 Padding_73_01:
 	; $46bb, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_01_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_01_Gfx00.bin" ; $46c0, 256 bytes
+OldManWalkSprite_Gfx00:
+	INCBIN "data/sprites/OldManWalkSprite_Gfx00.bin" ; $46c0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_01_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_01_Gfx01.bin" ; $47c0, 256 bytes
+OldManWalkSprite_Gfx01:
+	INCBIN "data/sprites/OldManWalkSprite_Gfx01.bin" ; $47c0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_01_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_01_Gfx02.bin" ; $48c0, 256 bytes
+OldManWalkSprite_Gfx02:
+	INCBIN "data/sprites/OldManWalkSprite_Gfx02.bin" ; $48c0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_01_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_01_Gfx03.bin" ; $49c0, 256 bytes
+OldManWalkSprite_Gfx03:
+	INCBIN "data/sprites/OldManWalkSprite_Gfx03.bin" ; $49c0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_01_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_01_Gfx04.bin" ; $4ac0, 256 bytes
+OldManWalkSprite_Gfx04:
+	INCBIN "data/sprites/OldManWalkSprite_Gfx04.bin" ; $4ac0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_01_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_01_Gfx05.bin" ; $4bc0, 256 bytes
-WalkSprite_73_01_AnimPtrs:
-	dw WalkSprite_73_01_Anim00 ; $4cc0
-	dw WalkSprite_73_01_Anim01 ; $4cc2
-	dw WalkSprite_73_01_Anim02 ; $4cc4
-	dw WalkSprite_73_01_Anim03 ; $4cc6
-	dw WalkSprite_73_01_Anim04 ; $4cc8
-	dw WalkSprite_73_01_Anim05 ; $4cca
-	dw WalkSprite_73_01_Anim05 ; $4ccc
-	dw WalkSprite_73_01_Anim05 ; $4cce
-WalkSprite_73_01_Anim00:
+OldManWalkSprite_Gfx05:
+	INCBIN "data/sprites/OldManWalkSprite_Gfx05.bin" ; $4bc0, 256 bytes
+OldManWalkSprite_AnimPtrs:
+	dw OldManWalkSprite_AnimStill ; $4cc0
+	dw OldManWalkSprite_AnimWalk ; $4cc2
+	dw OldManWalkSprite_AnimBounce ; $4cc4
+	dw OldManWalkSprite_AnimNod ; $4cc6
+	dw OldManWalkSprite_AnimShake ; $4cc8
+	dw OldManWalkSprite_Anim05 ; $4cca
+	dw OldManWalkSprite_Anim05 ; $4ccc
+	dw OldManWalkSprite_Anim05 ; $4cce
+OldManWalkSprite_AnimStill:
 	; $4cd0, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_01_Anim01:
+OldManWalkSprite_AnimWalk:
 	; $4cd3, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_01_Anim02:
+OldManWalkSprite_AnimBounce:
 	; $4cd9, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -182,13 +182,13 @@ WalkSprite_73_01_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_01_Anim03:
+OldManWalkSprite_AnimNod:
 	; $4ce5, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_01_Anim04:
+OldManWalkSprite_AnimShake:
 	; $4ced, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -200,7 +200,7 @@ WalkSprite_73_01_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_01_Anim05:
+OldManWalkSprite_Anim05:
 	; $4d01, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -208,58 +208,58 @@ WalkSprite_73_01_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_02:
+WeightlifterAWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_02_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, WeightlifterAWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_02_Gfx00, WalkSprite_73_02_Gfx01, WalkSprite_73_02_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_02_Gfx02 ; $4d1d
-	dw WalkSprite_73_02_Gfx02 ; $4d1f
-	dw WalkSprite_73_02_Gfx02 ; $4d21
-	dw WalkSprite_73_02_Gfx02 ; $4d23
-	dw WalkSprite_73_02_Gfx03 ; $4d25
-	dw WalkSprite_73_02_Gfx04 ; $4d27
-	dw WalkSprite_73_02_Gfx05 ; $4d29
+	dw WeightlifterAWalkSprite_Gfx00, WeightlifterAWalkSprite_Gfx01, WeightlifterAWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw WeightlifterAWalkSprite_Gfx02 ; $4d1d
+	dw WeightlifterAWalkSprite_Gfx02 ; $4d1f
+	dw WeightlifterAWalkSprite_Gfx02 ; $4d21
+	dw WeightlifterAWalkSprite_Gfx02 ; $4d23
+	dw WeightlifterAWalkSprite_Gfx03 ; $4d25
+	dw WeightlifterAWalkSprite_Gfx04 ; $4d27
+	dw WeightlifterAWalkSprite_Gfx05 ; $4d29
 Padding_73_02:
 	; $4d2b, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_02_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_02_Gfx00.bin" ; $4d30, 64 bytes
+WeightlifterAWalkSprite_Gfx00:
+	INCBIN "data/sprites/WeightlifterAWalkSprite_Gfx00.bin" ; $4d30, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_02_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_02_Gfx01.bin" ; $4d70, 64 bytes
+WeightlifterAWalkSprite_Gfx01:
+	INCBIN "data/sprites/WeightlifterAWalkSprite_Gfx01.bin" ; $4d70, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_02_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_02_Gfx02.bin" ; $4db0, 64 bytes
+WeightlifterAWalkSprite_Gfx02:
+	INCBIN "data/sprites/WeightlifterAWalkSprite_Gfx02.bin" ; $4db0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_02_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_02_Gfx03.bin" ; $4df0, 64 bytes
+WeightlifterAWalkSprite_Gfx03:
+	INCBIN "data/sprites/WeightlifterAWalkSprite_Gfx03.bin" ; $4df0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_02_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_02_Gfx04.bin" ; $4e30, 64 bytes
+WeightlifterAWalkSprite_Gfx04:
+	INCBIN "data/sprites/WeightlifterAWalkSprite_Gfx04.bin" ; $4e30, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_02_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_02_Gfx05.bin" ; $4e70, 64 bytes
-WalkSprite_73_02_AnimPtrs:
-	dw WalkSprite_73_02_Anim00 ; $4eb0
-	dw WalkSprite_73_02_Anim01 ; $4eb2
-	dw WalkSprite_73_02_Anim02 ; $4eb4
-	dw WalkSprite_73_02_Anim03 ; $4eb6
-	dw WalkSprite_73_02_Anim04 ; $4eb8
-	dw WalkSprite_73_02_Anim05 ; $4eba
-	dw WalkSprite_73_02_Anim05 ; $4ebc
-	dw WalkSprite_73_02_Anim05 ; $4ebe
-WalkSprite_73_02_Anim00:
+WeightlifterAWalkSprite_Gfx05:
+	INCBIN "data/sprites/WeightlifterAWalkSprite_Gfx05.bin" ; $4e70, 64 bytes
+WeightlifterAWalkSprite_AnimPtrs:
+	dw WeightlifterAWalkSprite_AnimStill ; $4eb0
+	dw WeightlifterAWalkSprite_AnimWalk ; $4eb2
+	dw WeightlifterAWalkSprite_AnimBounce ; $4eb4
+	dw WeightlifterAWalkSprite_AnimNod ; $4eb6
+	dw WeightlifterAWalkSprite_AnimShake ; $4eb8
+	dw WeightlifterAWalkSprite_Anim05 ; $4eba
+	dw WeightlifterAWalkSprite_Anim05 ; $4ebc
+	dw WeightlifterAWalkSprite_Anim05 ; $4ebe
+WeightlifterAWalkSprite_AnimStill:
 	; $4ec0, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_02_Anim01:
+WeightlifterAWalkSprite_AnimWalk:
 	; $4ec3, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_02_Anim02:
+WeightlifterAWalkSprite_AnimBounce:
 	; $4ec9, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -267,13 +267,13 @@ WalkSprite_73_02_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_02_Anim03:
+WeightlifterAWalkSprite_AnimNod:
 	; $4ed5, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_02_Anim04:
+WeightlifterAWalkSprite_AnimShake:
 	; $4edd, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -285,7 +285,7 @@ WalkSprite_73_02_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_02_Anim05:
+WeightlifterAWalkSprite_Anim05:
 	; $4ef1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -293,58 +293,58 @@ WalkSprite_73_02_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_03:
+SitupsAWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_03_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, SitupsAWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_03_Gfx00, WalkSprite_73_03_Gfx01, WalkSprite_73_03_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_03_Gfx02 ; $4f0d
-	dw WalkSprite_73_03_Gfx02 ; $4f0f
-	dw WalkSprite_73_03_Gfx02 ; $4f11
-	dw WalkSprite_73_03_Gfx02 ; $4f13
-	dw WalkSprite_73_03_Gfx03 ; $4f15
-	dw WalkSprite_73_03_Gfx04 ; $4f17
-	dw WalkSprite_73_03_Gfx05 ; $4f19
+	dw SitupsAWalkSprite_Gfx00, SitupsAWalkSprite_Gfx01, SitupsAWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw SitupsAWalkSprite_Gfx02 ; $4f0d
+	dw SitupsAWalkSprite_Gfx02 ; $4f0f
+	dw SitupsAWalkSprite_Gfx02 ; $4f11
+	dw SitupsAWalkSprite_Gfx02 ; $4f13
+	dw SitupsAWalkSprite_Gfx03 ; $4f15
+	dw SitupsAWalkSprite_Gfx04 ; $4f17
+	dw SitupsAWalkSprite_Gfx05 ; $4f19
 Padding_73_03:
 	; $4f1b, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_03_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_03_Gfx00.bin" ; $4f20, 64 bytes
+SitupsAWalkSprite_Gfx00:
+	INCBIN "data/sprites/SitupsAWalkSprite_Gfx00.bin" ; $4f20, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_03_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_03_Gfx01.bin" ; $4f60, 64 bytes
+SitupsAWalkSprite_Gfx01:
+	INCBIN "data/sprites/SitupsAWalkSprite_Gfx01.bin" ; $4f60, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_03_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_03_Gfx02.bin" ; $4fa0, 64 bytes
+SitupsAWalkSprite_Gfx02:
+	INCBIN "data/sprites/SitupsAWalkSprite_Gfx02.bin" ; $4fa0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_03_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_03_Gfx03.bin" ; $4fe0, 64 bytes
+SitupsAWalkSprite_Gfx03:
+	INCBIN "data/sprites/SitupsAWalkSprite_Gfx03.bin" ; $4fe0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_03_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_03_Gfx04.bin" ; $5020, 64 bytes
+SitupsAWalkSprite_Gfx04:
+	INCBIN "data/sprites/SitupsAWalkSprite_Gfx04.bin" ; $5020, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_03_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_03_Gfx05.bin" ; $5060, 64 bytes
-WalkSprite_73_03_AnimPtrs:
-	dw WalkSprite_73_03_Anim00 ; $50a0
-	dw WalkSprite_73_03_Anim01 ; $50a2
-	dw WalkSprite_73_03_Anim02 ; $50a4
-	dw WalkSprite_73_03_Anim03 ; $50a6
-	dw WalkSprite_73_03_Anim04 ; $50a8
-	dw WalkSprite_73_03_Anim05 ; $50aa
-	dw WalkSprite_73_03_Anim05 ; $50ac
-	dw WalkSprite_73_03_Anim05 ; $50ae
-WalkSprite_73_03_Anim00:
+SitupsAWalkSprite_Gfx05:
+	INCBIN "data/sprites/SitupsAWalkSprite_Gfx05.bin" ; $5060, 64 bytes
+SitupsAWalkSprite_AnimPtrs:
+	dw SitupsAWalkSprite_AnimStill ; $50a0
+	dw SitupsAWalkSprite_AnimWalk ; $50a2
+	dw SitupsAWalkSprite_AnimBounce ; $50a4
+	dw SitupsAWalkSprite_AnimNod ; $50a6
+	dw SitupsAWalkSprite_AnimShake ; $50a8
+	dw SitupsAWalkSprite_Anim05 ; $50aa
+	dw SitupsAWalkSprite_Anim05 ; $50ac
+	dw SitupsAWalkSprite_Anim05 ; $50ae
+SitupsAWalkSprite_AnimStill:
 	; $50b0, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_03_Anim01:
+SitupsAWalkSprite_AnimWalk:
 	; $50b3, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_03_Anim02:
+SitupsAWalkSprite_AnimBounce:
 	; $50b9, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -352,13 +352,13 @@ WalkSprite_73_03_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_03_Anim03:
+SitupsAWalkSprite_AnimNod:
 	; $50c5, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_03_Anim04:
+SitupsAWalkSprite_AnimShake:
 	; $50cd, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -370,7 +370,7 @@ WalkSprite_73_03_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_03_Anim05:
+SitupsAWalkSprite_Anim05:
 	; $50e1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -378,58 +378,58 @@ WalkSprite_73_03_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_04:
+SitupsBWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_04_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, SitupsBWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_04_Gfx00, WalkSprite_73_04_Gfx01, WalkSprite_73_04_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_04_Gfx02 ; $50fd
-	dw WalkSprite_73_04_Gfx02 ; $50ff
-	dw WalkSprite_73_04_Gfx02 ; $5101
-	dw WalkSprite_73_04_Gfx02 ; $5103
-	dw WalkSprite_73_04_Gfx03 ; $5105
-	dw WalkSprite_73_04_Gfx04 ; $5107
-	dw WalkSprite_73_04_Gfx05 ; $5109
+	dw SitupsBWalkSprite_Gfx00, SitupsBWalkSprite_Gfx01, SitupsBWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw SitupsBWalkSprite_Gfx02 ; $50fd
+	dw SitupsBWalkSprite_Gfx02 ; $50ff
+	dw SitupsBWalkSprite_Gfx02 ; $5101
+	dw SitupsBWalkSprite_Gfx02 ; $5103
+	dw SitupsBWalkSprite_Gfx03 ; $5105
+	dw SitupsBWalkSprite_Gfx04 ; $5107
+	dw SitupsBWalkSprite_Gfx05 ; $5109
 Padding_73_04:
 	; $510b, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_04_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_04_Gfx00.bin" ; $5110, 64 bytes
+SitupsBWalkSprite_Gfx00:
+	INCBIN "data/sprites/SitupsBWalkSprite_Gfx00.bin" ; $5110, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_04_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_04_Gfx01.bin" ; $5150, 64 bytes
+SitupsBWalkSprite_Gfx01:
+	INCBIN "data/sprites/SitupsBWalkSprite_Gfx01.bin" ; $5150, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_04_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_04_Gfx02.bin" ; $5190, 64 bytes
+SitupsBWalkSprite_Gfx02:
+	INCBIN "data/sprites/SitupsBWalkSprite_Gfx02.bin" ; $5190, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_04_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_04_Gfx03.bin" ; $51d0, 64 bytes
+SitupsBWalkSprite_Gfx03:
+	INCBIN "data/sprites/SitupsBWalkSprite_Gfx03.bin" ; $51d0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_04_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_04_Gfx04.bin" ; $5210, 64 bytes
+SitupsBWalkSprite_Gfx04:
+	INCBIN "data/sprites/SitupsBWalkSprite_Gfx04.bin" ; $5210, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_04_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_04_Gfx05.bin" ; $5250, 64 bytes
-WalkSprite_73_04_AnimPtrs:
-	dw WalkSprite_73_04_Anim00 ; $5290
-	dw WalkSprite_73_04_Anim01 ; $5292
-	dw WalkSprite_73_04_Anim02 ; $5294
-	dw WalkSprite_73_04_Anim03 ; $5296
-	dw WalkSprite_73_04_Anim04 ; $5298
-	dw WalkSprite_73_04_Anim05 ; $529a
-	dw WalkSprite_73_04_Anim05 ; $529c
-	dw WalkSprite_73_04_Anim05 ; $529e
-WalkSprite_73_04_Anim00:
+SitupsBWalkSprite_Gfx05:
+	INCBIN "data/sprites/SitupsBWalkSprite_Gfx05.bin" ; $5250, 64 bytes
+SitupsBWalkSprite_AnimPtrs:
+	dw SitupsBWalkSprite_AnimStill ; $5290
+	dw SitupsBWalkSprite_AnimWalk ; $5292
+	dw SitupsBWalkSprite_AnimBounce ; $5294
+	dw SitupsBWalkSprite_AnimNod ; $5296
+	dw SitupsBWalkSprite_AnimShake ; $5298
+	dw SitupsBWalkSprite_Anim05 ; $529a
+	dw SitupsBWalkSprite_Anim05 ; $529c
+	dw SitupsBWalkSprite_Anim05 ; $529e
+SitupsBWalkSprite_AnimStill:
 	; $52a0, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_04_Anim01:
+SitupsBWalkSprite_AnimWalk:
 	; $52a3, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_04_Anim02:
+SitupsBWalkSprite_AnimBounce:
 	; $52a9, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -437,13 +437,13 @@ WalkSprite_73_04_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_04_Anim03:
+SitupsBWalkSprite_AnimNod:
 	; $52b5, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_04_Anim04:
+SitupsBWalkSprite_AnimShake:
 	; $52bd, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -455,7 +455,7 @@ WalkSprite_73_04_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_04_Anim05:
+SitupsBWalkSprite_Anim05:
 	; $52d1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -463,58 +463,58 @@ WalkSprite_73_04_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_05:
+WeightlifterBWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_05_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, WeightlifterBWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_05_Gfx00, WalkSprite_73_05_Gfx01, WalkSprite_73_05_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_05_Gfx02 ; $52ed
-	dw WalkSprite_73_05_Gfx02 ; $52ef
-	dw WalkSprite_73_05_Gfx02 ; $52f1
-	dw WalkSprite_73_05_Gfx02 ; $52f3
-	dw WalkSprite_73_05_Gfx03 ; $52f5
-	dw WalkSprite_73_05_Gfx04 ; $52f7
-	dw WalkSprite_73_05_Gfx05 ; $52f9
+	dw WeightlifterBWalkSprite_Gfx00, WeightlifterBWalkSprite_Gfx01, WeightlifterBWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw WeightlifterBWalkSprite_Gfx02 ; $52ed
+	dw WeightlifterBWalkSprite_Gfx02 ; $52ef
+	dw WeightlifterBWalkSprite_Gfx02 ; $52f1
+	dw WeightlifterBWalkSprite_Gfx02 ; $52f3
+	dw WeightlifterBWalkSprite_Gfx03 ; $52f5
+	dw WeightlifterBWalkSprite_Gfx04 ; $52f7
+	dw WeightlifterBWalkSprite_Gfx05 ; $52f9
 Padding_73_05:
 	; $52fb, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_05_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_05_Gfx00.bin" ; $5300, 64 bytes
+WeightlifterBWalkSprite_Gfx00:
+	INCBIN "data/sprites/WeightlifterBWalkSprite_Gfx00.bin" ; $5300, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_05_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_05_Gfx01.bin" ; $5340, 64 bytes
+WeightlifterBWalkSprite_Gfx01:
+	INCBIN "data/sprites/WeightlifterBWalkSprite_Gfx01.bin" ; $5340, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_05_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_05_Gfx02.bin" ; $5380, 64 bytes
+WeightlifterBWalkSprite_Gfx02:
+	INCBIN "data/sprites/WeightlifterBWalkSprite_Gfx02.bin" ; $5380, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_05_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_05_Gfx03.bin" ; $53c0, 64 bytes
+WeightlifterBWalkSprite_Gfx03:
+	INCBIN "data/sprites/WeightlifterBWalkSprite_Gfx03.bin" ; $53c0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_05_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_05_Gfx04.bin" ; $5400, 64 bytes
+WeightlifterBWalkSprite_Gfx04:
+	INCBIN "data/sprites/WeightlifterBWalkSprite_Gfx04.bin" ; $5400, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_05_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_05_Gfx05.bin" ; $5440, 64 bytes
-WalkSprite_73_05_AnimPtrs:
-	dw WalkSprite_73_05_Anim00 ; $5480
-	dw WalkSprite_73_05_Anim01 ; $5482
-	dw WalkSprite_73_05_Anim02 ; $5484
-	dw WalkSprite_73_05_Anim03 ; $5486
-	dw WalkSprite_73_05_Anim04 ; $5488
-	dw WalkSprite_73_05_Anim05 ; $548a
-	dw WalkSprite_73_05_Anim05 ; $548c
-	dw WalkSprite_73_05_Anim05 ; $548e
-WalkSprite_73_05_Anim00:
+WeightlifterBWalkSprite_Gfx05:
+	INCBIN "data/sprites/WeightlifterBWalkSprite_Gfx05.bin" ; $5440, 64 bytes
+WeightlifterBWalkSprite_AnimPtrs:
+	dw WeightlifterBWalkSprite_AnimStill ; $5480
+	dw WeightlifterBWalkSprite_AnimWalk ; $5482
+	dw WeightlifterBWalkSprite_AnimBounce ; $5484
+	dw WeightlifterBWalkSprite_AnimNod ; $5486
+	dw WeightlifterBWalkSprite_AnimShake ; $5488
+	dw WeightlifterBWalkSprite_Anim05 ; $548a
+	dw WeightlifterBWalkSprite_Anim05 ; $548c
+	dw WeightlifterBWalkSprite_Anim05 ; $548e
+WeightlifterBWalkSprite_AnimStill:
 	; $5490, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_05_Anim01:
+WeightlifterBWalkSprite_AnimWalk:
 	; $5493, 6 bytes (sprite_anim)
 	anim_frame $00, 70
 	anim_frame $01, 40
 	anim_loop $00
-WalkSprite_73_05_Anim02:
+WeightlifterBWalkSprite_AnimBounce:
 	; $5499, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -522,13 +522,13 @@ WalkSprite_73_05_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_05_Anim03:
+WeightlifterBWalkSprite_AnimNod:
 	; $54a5, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_05_Anim04:
+WeightlifterBWalkSprite_AnimShake:
 	; $54ad, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -540,7 +540,7 @@ WalkSprite_73_05_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_05_Anim05:
+WeightlifterBWalkSprite_Anim05:
 	; $54c1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -548,57 +548,57 @@ WalkSprite_73_05_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_06:
+JumpingJacksAWalkSprite:
 	db $04, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_06_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, JumpingJacksAWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_06_Gfx00, WalkSprite_73_06_Gfx01, WalkSprite_73_06_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_06_Gfx02 ; $54dd
-	dw WalkSprite_73_06_Gfx02 ; $54df
-	dw WalkSprite_73_06_Gfx02 ; $54e1
-	dw WalkSprite_73_06_Gfx02 ; $54e3
-	dw WalkSprite_73_06_Gfx03 ; $54e5
-	dw WalkSprite_73_06_Gfx04 ; $54e7
-	dw WalkSprite_73_06_Gfx05 ; $54e9
-	dw WalkSprite_73_06_Gfx06 ; $54eb
+	dw JumpingJacksAWalkSprite_Gfx00, JumpingJacksAWalkSprite_Gfx01, JumpingJacksAWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw JumpingJacksAWalkSprite_Gfx02 ; $54dd
+	dw JumpingJacksAWalkSprite_Gfx02 ; $54df
+	dw JumpingJacksAWalkSprite_Gfx02 ; $54e1
+	dw JumpingJacksAWalkSprite_Gfx02 ; $54e3
+	dw JumpingJacksAWalkSprite_Gfx03 ; $54e5
+	dw JumpingJacksAWalkSprite_Gfx04 ; $54e7
+	dw JumpingJacksAWalkSprite_Gfx05 ; $54e9
+	dw JumpingJacksAWalkSprite_Gfx06 ; $54eb
 Padding_73_06:
 	; $54ed, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx00.bin" ; $54f0, 64 bytes
+JumpingJacksAWalkSprite_Gfx00:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx00.bin" ; $54f0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx01.bin" ; $5530, 64 bytes
+JumpingJacksAWalkSprite_Gfx01:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx01.bin" ; $5530, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx02.bin" ; $5570, 64 bytes
+JumpingJacksAWalkSprite_Gfx02:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx02.bin" ; $5570, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx03.bin" ; $55b0, 64 bytes
+JumpingJacksAWalkSprite_Gfx03:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx03.bin" ; $55b0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx04.bin" ; $55f0, 64 bytes
+JumpingJacksAWalkSprite_Gfx04:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx04.bin" ; $55f0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx05.bin" ; $5630, 64 bytes
+JumpingJacksAWalkSprite_Gfx05:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx05.bin" ; $5630, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_06_Gfx06:
-	INCBIN "data/sprites/WalkSprite_73_06_Gfx06.bin" ; $5670, 64 bytes
-WalkSprite_73_06_AnimPtrs:
-	dw WalkSprite_73_06_Anim00 ; $56b0
-	dw WalkSprite_73_06_Anim00 ; $56b2
-	dw WalkSprite_73_06_Anim01 ; $56b4
-	dw WalkSprite_73_06_Anim02 ; $56b6
-	dw WalkSprite_73_06_Anim03 ; $56b8
-	dw WalkSprite_73_06_Anim04 ; $56ba
-	dw WalkSprite_73_06_Anim05 ; $56bc
-	dw WalkSprite_73_06_Anim05 ; $56be
-WalkSprite_73_06_Anim00:
+JumpingJacksAWalkSprite_Gfx06:
+	INCBIN "data/sprites/JumpingJacksAWalkSprite_Gfx06.bin" ; $5670, 64 bytes
+JumpingJacksAWalkSprite_AnimPtrs:
+	dw JumpingJacksAWalkSprite_Anim00 ; $56b0
+	dw JumpingJacksAWalkSprite_Anim00 ; $56b2
+	dw JumpingJacksAWalkSprite_Anim01 ; $56b4
+	dw JumpingJacksAWalkSprite_Anim02 ; $56b6
+	dw JumpingJacksAWalkSprite_Anim03 ; $56b8
+	dw JumpingJacksAWalkSprite_Anim04 ; $56ba
+	dw JumpingJacksAWalkSprite_Anim05 ; $56bc
+	dw JumpingJacksAWalkSprite_Anim05 ; $56be
+JumpingJacksAWalkSprite_Anim00:
 	; $56c0, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_06_Anim01:
+JumpingJacksAWalkSprite_Anim01:
 	; $56c3, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -606,13 +606,13 @@ WalkSprite_73_06_Anim01:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_06_Anim02:
+JumpingJacksAWalkSprite_Anim02:
 	; $56cf, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_06_Anim03:
+JumpingJacksAWalkSprite_Anim03:
 	; $56d7, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -624,14 +624,14 @@ WalkSprite_73_06_Anim03:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_06_Anim04:
+JumpingJacksAWalkSprite_Anim04:
 	; $56eb, 10 bytes (sprite_anim)
 	anim_frame $00, 48
 	anim_frame $01, 48
 	anim_frame $00, 48
 	anim_frame $0a, 48
 	anim_loop $00
-WalkSprite_73_06_Anim05:
+JumpingJacksAWalkSprite_Anim05:
 	; $56f5, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -639,57 +639,57 @@ WalkSprite_73_06_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_07:
+JumpingJacksBWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_07_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, JumpingJacksBWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_07_Gfx00, WalkSprite_73_07_Gfx01, WalkSprite_73_07_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_07_Gfx02 ; $5711
-	dw WalkSprite_73_07_Gfx02 ; $5713
-	dw WalkSprite_73_07_Gfx02 ; $5715
-	dw WalkSprite_73_07_Gfx02 ; $5717
-	dw WalkSprite_73_07_Gfx03 ; $5719
-	dw WalkSprite_73_07_Gfx04 ; $571b
-	dw WalkSprite_73_07_Gfx05 ; $571d
-	dw WalkSprite_73_07_Gfx06 ; $571f
+	dw JumpingJacksBWalkSprite_Gfx00, JumpingJacksBWalkSprite_Gfx01, JumpingJacksBWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw JumpingJacksBWalkSprite_Gfx02 ; $5711
+	dw JumpingJacksBWalkSprite_Gfx02 ; $5713
+	dw JumpingJacksBWalkSprite_Gfx02 ; $5715
+	dw JumpingJacksBWalkSprite_Gfx02 ; $5717
+	dw JumpingJacksBWalkSprite_Gfx03 ; $5719
+	dw JumpingJacksBWalkSprite_Gfx04 ; $571b
+	dw JumpingJacksBWalkSprite_Gfx05 ; $571d
+	dw JumpingJacksBWalkSprite_Gfx06 ; $571f
 Padding_73_07:
 	; $5721, 15 bytes (fill)
 	ds 15, $00
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx00.bin" ; $5730, 64 bytes
+JumpingJacksBWalkSprite_Gfx00:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx00.bin" ; $5730, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx01.bin" ; $5770, 64 bytes
+JumpingJacksBWalkSprite_Gfx01:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx01.bin" ; $5770, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx02.bin" ; $57b0, 64 bytes
+JumpingJacksBWalkSprite_Gfx02:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx02.bin" ; $57b0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx03.bin" ; $57f0, 64 bytes
+JumpingJacksBWalkSprite_Gfx03:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx03.bin" ; $57f0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx04.bin" ; $5830, 64 bytes
+JumpingJacksBWalkSprite_Gfx04:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx04.bin" ; $5830, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx05.bin" ; $5870, 64 bytes
+JumpingJacksBWalkSprite_Gfx05:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx05.bin" ; $5870, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_07_Gfx06:
-	INCBIN "data/sprites/WalkSprite_73_07_Gfx06.bin" ; $58b0, 64 bytes
-WalkSprite_73_07_AnimPtrs:
-	dw WalkSprite_73_07_Anim00 ; $58f0
-	dw WalkSprite_73_07_Anim00 ; $58f2
-	dw WalkSprite_73_07_Anim01 ; $58f4
-	dw WalkSprite_73_07_Anim02 ; $58f6
-	dw WalkSprite_73_07_Anim02 ; $58f8
-	dw WalkSprite_73_07_Anim03 ; $58fa
-	dw WalkSprite_73_07_Anim04 ; $58fc
-	dw WalkSprite_73_07_Anim04 ; $58fe
-WalkSprite_73_07_Anim00:
+JumpingJacksBWalkSprite_Gfx06:
+	INCBIN "data/sprites/JumpingJacksBWalkSprite_Gfx06.bin" ; $58b0, 64 bytes
+JumpingJacksBWalkSprite_AnimPtrs:
+	dw JumpingJacksBWalkSprite_Anim00 ; $58f0
+	dw JumpingJacksBWalkSprite_Anim00 ; $58f2
+	dw JumpingJacksBWalkSprite_Anim01 ; $58f4
+	dw JumpingJacksBWalkSprite_Anim02 ; $58f6
+	dw JumpingJacksBWalkSprite_Anim02 ; $58f8
+	dw JumpingJacksBWalkSprite_Anim03 ; $58fa
+	dw JumpingJacksBWalkSprite_Anim04 ; $58fc
+	dw JumpingJacksBWalkSprite_Anim04 ; $58fe
+JumpingJacksBWalkSprite_Anim00:
 	; $5900, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_07_Anim01:
+JumpingJacksBWalkSprite_Anim01:
 	; $5903, 18 bytes (sprite_anim)
 	anim_frame $00, 68
 	anim_frame $01, 28
@@ -700,7 +700,7 @@ WalkSprite_73_07_Anim01:
 	anim_frame $00, 48
 	anim_frame $0a, 28
 	anim_loop $00
-WalkSprite_73_07_Anim02:
+JumpingJacksBWalkSprite_Anim02:
 	; $5915, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -712,14 +712,14 @@ WalkSprite_73_07_Anim02:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_07_Anim03:
+JumpingJacksBWalkSprite_Anim03:
 	; $5929, 10 bytes (sprite_anim)
 	anim_frame $00, 48
 	anim_frame $01, 48
 	anim_frame $00, 48
 	anim_frame $0a, 48
 	anim_loop $00
-WalkSprite_73_07_Anim04:
+JumpingJacksBWalkSprite_Anim04:
 	; $5933, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -727,58 +727,58 @@ WalkSprite_73_07_Anim04:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_08:
+WarioWalkSprite:
 	db $05, $04, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_08_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, WarioWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_08_Gfx00, WalkSprite_73_08_Gfx01, WalkSprite_73_08_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_08_Gfx02 ; $594f
-	dw WalkSprite_73_08_Gfx02 ; $5951
-	dw WalkSprite_73_08_Gfx02 ; $5953
-	dw WalkSprite_73_08_Gfx02 ; $5955
-	dw WalkSprite_73_08_Gfx03 ; $5957
-	dw WalkSprite_73_08_Gfx04 ; $5959
-	dw WalkSprite_73_08_Gfx05 ; $595b
+	dw WarioWalkSprite_Gfx00, WarioWalkSprite_Gfx01, WarioWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw WarioWalkSprite_Gfx02 ; $594f
+	dw WarioWalkSprite_Gfx02 ; $5951
+	dw WarioWalkSprite_Gfx02 ; $5953
+	dw WarioWalkSprite_Gfx02 ; $5955
+	dw WarioWalkSprite_Gfx03 ; $5957
+	dw WarioWalkSprite_Gfx04 ; $5959
+	dw WarioWalkSprite_Gfx05 ; $595b
 Padding_73_08:
 	; $595d, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_08_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_08_Gfx00.bin" ; $5960, 256 bytes
+WarioWalkSprite_Gfx00:
+	INCBIN "data/sprites/WarioWalkSprite_Gfx00.bin" ; $5960, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_08_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_08_Gfx01.bin" ; $5a60, 256 bytes
+WarioWalkSprite_Gfx01:
+	INCBIN "data/sprites/WarioWalkSprite_Gfx01.bin" ; $5a60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_08_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_08_Gfx02.bin" ; $5b60, 256 bytes
+WarioWalkSprite_Gfx02:
+	INCBIN "data/sprites/WarioWalkSprite_Gfx02.bin" ; $5b60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_08_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_08_Gfx03.bin" ; $5c60, 256 bytes
+WarioWalkSprite_Gfx03:
+	INCBIN "data/sprites/WarioWalkSprite_Gfx03.bin" ; $5c60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_08_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_08_Gfx04.bin" ; $5d60, 256 bytes
+WarioWalkSprite_Gfx04:
+	INCBIN "data/sprites/WarioWalkSprite_Gfx04.bin" ; $5d60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_08_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_08_Gfx05.bin" ; $5e60, 256 bytes
-WalkSprite_73_08_AnimPtrs:
-	dw WalkSprite_73_08_Anim00 ; $5f60
-	dw WalkSprite_73_08_Anim01 ; $5f62
-	dw WalkSprite_73_08_Anim02 ; $5f64
-	dw WalkSprite_73_08_Anim03 ; $5f66
-	dw WalkSprite_73_08_Anim04 ; $5f68
-	dw WalkSprite_73_08_Anim05 ; $5f6a
-	dw WalkSprite_73_08_Anim05 ; $5f6c
-	dw WalkSprite_73_08_Anim05 ; $5f6e
-WalkSprite_73_08_Anim00:
+WarioWalkSprite_Gfx05:
+	INCBIN "data/sprites/WarioWalkSprite_Gfx05.bin" ; $5e60, 256 bytes
+WarioWalkSprite_AnimPtrs:
+	dw WarioWalkSprite_AnimStill ; $5f60
+	dw WarioWalkSprite_AnimWalk ; $5f62
+	dw WarioWalkSprite_AnimBounce ; $5f64
+	dw WarioWalkSprite_AnimNod ; $5f66
+	dw WarioWalkSprite_AnimShake ; $5f68
+	dw WarioWalkSprite_Anim05 ; $5f6a
+	dw WarioWalkSprite_Anim05 ; $5f6c
+	dw WarioWalkSprite_Anim05 ; $5f6e
+WarioWalkSprite_AnimStill:
 	; $5f70, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_08_Anim01:
+WarioWalkSprite_AnimWalk:
 	; $5f73, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_08_Anim02:
+WarioWalkSprite_AnimBounce:
 	; $5f79, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -786,13 +786,13 @@ WalkSprite_73_08_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_08_Anim03:
+WarioWalkSprite_AnimNod:
 	; $5f85, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_08_Anim04:
+WarioWalkSprite_AnimShake:
 	; $5f8d, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -804,7 +804,7 @@ WalkSprite_73_08_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_08_Anim05:
+WarioWalkSprite_Anim05:
 	; $5fa1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -812,68 +812,68 @@ WalkSprite_73_08_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_09:
+EmilyWalkSprite:
 	db $05, $04, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_09_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, EmilyWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_09_Gfx00, WalkSprite_73_09_Gfx01, WalkSprite_73_09_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_09_Gfx02 ; $5fbd
-	dw WalkSprite_73_09_Gfx02 ; $5fbf
-	dw WalkSprite_73_09_Gfx02 ; $5fc1
-	dw WalkSprite_73_09_Gfx02 ; $5fc3
-	dw WalkSprite_73_09_Gfx03 ; $5fc5
-	dw WalkSprite_73_09_Gfx04 ; $5fc7
-	dw WalkSprite_73_09_Gfx05 ; $5fc9
-	dw WalkSprite_73_09_Gfx06 ; $5fcb
-	dw WalkSprite_73_09_Gfx06 ; $5fcd
-	dw WalkSprite_73_09_Gfx07 ; $5fcf
+	dw EmilyWalkSprite_Gfx00, EmilyWalkSprite_Gfx01, EmilyWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw EmilyWalkSprite_Gfx02 ; $5fbd
+	dw EmilyWalkSprite_Gfx02 ; $5fbf
+	dw EmilyWalkSprite_Gfx02 ; $5fc1
+	dw EmilyWalkSprite_Gfx02 ; $5fc3
+	dw EmilyWalkSprite_Gfx03 ; $5fc5
+	dw EmilyWalkSprite_Gfx04 ; $5fc7
+	dw EmilyWalkSprite_Gfx05 ; $5fc9
+	dw EmilyWalkSprite_Gfx06 ; $5fcb
+	dw EmilyWalkSprite_Gfx06 ; $5fcd
+	dw EmilyWalkSprite_Gfx07 ; $5fcf
 Padding_73_09:
 	; $5fd1, 15 bytes (fill)
 	ds 15, $00
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx00.bin" ; $5fe0, 256 bytes
+EmilyWalkSprite_Gfx00:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx00.bin" ; $5fe0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx01.bin" ; $60e0, 256 bytes
+EmilyWalkSprite_Gfx01:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx01.bin" ; $60e0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx02.bin" ; $61e0, 256 bytes
+EmilyWalkSprite_Gfx02:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx02.bin" ; $61e0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx03.bin" ; $62e0, 256 bytes
+EmilyWalkSprite_Gfx03:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx03.bin" ; $62e0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx04.bin" ; $63e0, 256 bytes
+EmilyWalkSprite_Gfx04:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx04.bin" ; $63e0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx05.bin" ; $64e0, 256 bytes
+EmilyWalkSprite_Gfx05:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx05.bin" ; $64e0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx06:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx06.bin" ; $65e0, 256 bytes
+EmilyWalkSprite_Gfx06:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx06.bin" ; $65e0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_09_Gfx07:
-	INCBIN "data/sprites/WalkSprite_73_09_Gfx07.bin" ; $66e0, 256 bytes
-WalkSprite_73_09_AnimPtrs:
-	dw WalkSprite_73_09_Anim00 ; $67e0
-	dw WalkSprite_73_09_Anim01 ; $67e2
-	dw WalkSprite_73_09_Anim02 ; $67e4
-	dw WalkSprite_73_09_Anim03 ; $67e6
-	dw WalkSprite_73_09_Anim04 ; $67e8
-	dw WalkSprite_73_09_Anim05 ; $67ea
-	dw WalkSprite_73_09_Anim05 ; $67ec
-	dw WalkSprite_73_09_Anim05 ; $67ee
-	dw WalkSprite_73_09_Anim06 ; $67f0
-WalkSprite_73_09_Anim00:
+EmilyWalkSprite_Gfx07:
+	INCBIN "data/sprites/EmilyWalkSprite_Gfx07.bin" ; $66e0, 256 bytes
+EmilyWalkSprite_AnimPtrs:
+	dw EmilyWalkSprite_AnimStill ; $67e0
+	dw EmilyWalkSprite_AnimWalk ; $67e2
+	dw EmilyWalkSprite_AnimBounce ; $67e4
+	dw EmilyWalkSprite_AnimNod ; $67e6
+	dw EmilyWalkSprite_AnimShake ; $67e8
+	dw EmilyWalkSprite_Anim05 ; $67ea
+	dw EmilyWalkSprite_Anim05 ; $67ec
+	dw EmilyWalkSprite_Anim05 ; $67ee
+	dw EmilyWalkSprite_Anim06 ; $67f0
+EmilyWalkSprite_AnimStill:
 	; $67f2, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_09_Anim01:
+EmilyWalkSprite_AnimWalk:
 	; $67f5, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_09_Anim02:
+EmilyWalkSprite_AnimBounce:
 	; $67fb, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -881,13 +881,13 @@ WalkSprite_73_09_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_09_Anim03:
+EmilyWalkSprite_AnimNod:
 	; $6807, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_09_Anim04:
+EmilyWalkSprite_AnimShake:
 	; $680f, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -899,7 +899,7 @@ WalkSprite_73_09_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_09_Anim05:
+EmilyWalkSprite_Anim05:
 	; $6823, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -907,63 +907,63 @@ WalkSprite_73_09_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_09_Anim06:
+EmilyWalkSprite_Anim06:
 	; $682f, 6 bytes (sprite_anim)
 	anim_frame $0b, 30
 	anim_frame $0c, 30
 	anim_loop $00
-WalkSprite_73_10:
+MarkWalkSprite:
 	db $04, $04, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_10_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, MarkWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_10_Gfx00, WalkSprite_73_10_Gfx01, WalkSprite_73_10_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_10_Gfx02 ; $6845
-	dw WalkSprite_73_10_Gfx02 ; $6847
-	dw WalkSprite_73_10_Gfx02 ; $6849
-	dw WalkSprite_73_10_Gfx02 ; $684b
-	dw WalkSprite_73_10_Gfx03 ; $684d
-	dw WalkSprite_73_10_Gfx04 ; $684f
-	dw WalkSprite_73_10_Gfx05 ; $6851
+	dw MarkWalkSprite_Gfx00, MarkWalkSprite_Gfx01, MarkWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw MarkWalkSprite_Gfx02 ; $6845
+	dw MarkWalkSprite_Gfx02 ; $6847
+	dw MarkWalkSprite_Gfx02 ; $6849
+	dw MarkWalkSprite_Gfx02 ; $684b
+	dw MarkWalkSprite_Gfx03 ; $684d
+	dw MarkWalkSprite_Gfx04 ; $684f
+	dw MarkWalkSprite_Gfx05 ; $6851
 Padding_73_10:
 	; $6853, 13 bytes (fill)
 	ds 13, $00
 	ds ALIGN[4]
-WalkSprite_73_10_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_10_Gfx00.bin" ; $6860, 256 bytes
+MarkWalkSprite_Gfx00:
+	INCBIN "data/sprites/MarkWalkSprite_Gfx00.bin" ; $6860, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_10_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_10_Gfx01.bin" ; $6960, 256 bytes
+MarkWalkSprite_Gfx01:
+	INCBIN "data/sprites/MarkWalkSprite_Gfx01.bin" ; $6960, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_10_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_10_Gfx02.bin" ; $6a60, 256 bytes
+MarkWalkSprite_Gfx02:
+	INCBIN "data/sprites/MarkWalkSprite_Gfx02.bin" ; $6a60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_10_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_10_Gfx03.bin" ; $6b60, 256 bytes
+MarkWalkSprite_Gfx03:
+	INCBIN "data/sprites/MarkWalkSprite_Gfx03.bin" ; $6b60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_10_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_10_Gfx04.bin" ; $6c60, 256 bytes
+MarkWalkSprite_Gfx04:
+	INCBIN "data/sprites/MarkWalkSprite_Gfx04.bin" ; $6c60, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_10_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_10_Gfx05.bin" ; $6d60, 256 bytes
-WalkSprite_73_10_AnimPtrs:
-	dw WalkSprite_73_10_Anim00 ; $6e60
-	dw WalkSprite_73_10_Anim01 ; $6e62
-	dw WalkSprite_73_10_Anim02 ; $6e64
-	dw WalkSprite_73_10_Anim03 ; $6e66
-	dw WalkSprite_73_10_Anim04 ; $6e68
-	dw WalkSprite_73_10_Anim05 ; $6e6a
-	dw WalkSprite_73_10_Anim05 ; $6e6c
-	dw WalkSprite_73_10_Anim05 ; $6e6e
-WalkSprite_73_10_Anim00:
+MarkWalkSprite_Gfx05:
+	INCBIN "data/sprites/MarkWalkSprite_Gfx05.bin" ; $6d60, 256 bytes
+MarkWalkSprite_AnimPtrs:
+	dw MarkWalkSprite_AnimStill ; $6e60
+	dw MarkWalkSprite_AnimWalk ; $6e62
+	dw MarkWalkSprite_AnimBounce ; $6e64
+	dw MarkWalkSprite_AnimNod ; $6e66
+	dw MarkWalkSprite_AnimShake ; $6e68
+	dw MarkWalkSprite_Anim05 ; $6e6a
+	dw MarkWalkSprite_Anim05 ; $6e6c
+	dw MarkWalkSprite_Anim05 ; $6e6e
+MarkWalkSprite_AnimStill:
 	; $6e70, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_10_Anim01:
+MarkWalkSprite_AnimWalk:
 	; $6e73, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_10_Anim02:
+MarkWalkSprite_AnimBounce:
 	; $6e79, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -971,13 +971,13 @@ WalkSprite_73_10_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_10_Anim03:
+MarkWalkSprite_AnimNod:
 	; $6e85, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_10_Anim04:
+MarkWalkSprite_AnimShake:
 	; $6e8d, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -989,7 +989,7 @@ WalkSprite_73_10_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_10_Anim05:
+MarkWalkSprite_Anim05:
 	; $6ea1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -997,58 +997,58 @@ WalkSprite_73_10_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_11:
+KevinWalkSprite:
 	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_11_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, KevinWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_11_Gfx00, WalkSprite_73_11_Gfx01, WalkSprite_73_11_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_11_Gfx02 ; $6ebd
-	dw WalkSprite_73_11_Gfx02 ; $6ebf
-	dw WalkSprite_73_11_Gfx02 ; $6ec1
-	dw WalkSprite_73_11_Gfx02 ; $6ec3
-	dw WalkSprite_73_11_Gfx03 ; $6ec5
-	dw WalkSprite_73_11_Gfx04 ; $6ec7
-	dw WalkSprite_73_11_Gfx05 ; $6ec9
+	dw KevinWalkSprite_Gfx00, KevinWalkSprite_Gfx01, KevinWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw KevinWalkSprite_Gfx02 ; $6ebd
+	dw KevinWalkSprite_Gfx02 ; $6ebf
+	dw KevinWalkSprite_Gfx02 ; $6ec1
+	dw KevinWalkSprite_Gfx02 ; $6ec3
+	dw KevinWalkSprite_Gfx03 ; $6ec5
+	dw KevinWalkSprite_Gfx04 ; $6ec7
+	dw KevinWalkSprite_Gfx05 ; $6ec9
 Padding_73_11:
 	; $6ecb, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_11_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_11_Gfx00.bin" ; $6ed0, 256 bytes
+KevinWalkSprite_Gfx00:
+	INCBIN "data/sprites/KevinWalkSprite_Gfx00.bin" ; $6ed0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_11_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_11_Gfx01.bin" ; $6fd0, 256 bytes
+KevinWalkSprite_Gfx01:
+	INCBIN "data/sprites/KevinWalkSprite_Gfx01.bin" ; $6fd0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_11_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_11_Gfx02.bin" ; $70d0, 256 bytes
+KevinWalkSprite_Gfx02:
+	INCBIN "data/sprites/KevinWalkSprite_Gfx02.bin" ; $70d0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_11_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_11_Gfx03.bin" ; $71d0, 256 bytes
+KevinWalkSprite_Gfx03:
+	INCBIN "data/sprites/KevinWalkSprite_Gfx03.bin" ; $71d0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_11_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_11_Gfx04.bin" ; $72d0, 256 bytes
+KevinWalkSprite_Gfx04:
+	INCBIN "data/sprites/KevinWalkSprite_Gfx04.bin" ; $72d0, 256 bytes
 	ds ALIGN[4]
-WalkSprite_73_11_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_11_Gfx05.bin" ; $73d0, 256 bytes
-WalkSprite_73_11_AnimPtrs:
-	dw WalkSprite_73_11_Anim00 ; $74d0
-	dw WalkSprite_73_11_Anim01 ; $74d2
-	dw WalkSprite_73_11_Anim02 ; $74d4
-	dw WalkSprite_73_11_Anim03 ; $74d6
-	dw WalkSprite_73_11_Anim04 ; $74d8
-	dw WalkSprite_73_11_Anim05 ; $74da
-	dw WalkSprite_73_11_Anim05 ; $74dc
-	dw WalkSprite_73_11_Anim05 ; $74de
-WalkSprite_73_11_Anim00:
+KevinWalkSprite_Gfx05:
+	INCBIN "data/sprites/KevinWalkSprite_Gfx05.bin" ; $73d0, 256 bytes
+KevinWalkSprite_AnimPtrs:
+	dw KevinWalkSprite_AnimStill ; $74d0
+	dw KevinWalkSprite_AnimWalk ; $74d2
+	dw KevinWalkSprite_AnimBounce ; $74d4
+	dw KevinWalkSprite_AnimNod ; $74d6
+	dw KevinWalkSprite_AnimShake ; $74d8
+	dw KevinWalkSprite_Anim05 ; $74da
+	dw KevinWalkSprite_Anim05 ; $74dc
+	dw KevinWalkSprite_Anim05 ; $74de
+KevinWalkSprite_AnimStill:
 	; $74e0, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_11_Anim01:
+KevinWalkSprite_AnimWalk:
 	; $74e3, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_11_Anim02:
+KevinWalkSprite_AnimBounce:
 	; $74e9, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -1056,13 +1056,13 @@ WalkSprite_73_11_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_11_Anim03:
+KevinWalkSprite_AnimNod:
 	; $74f5, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_11_Anim04:
+KevinWalkSprite_AnimShake:
 	; $74fd, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -1074,7 +1074,7 @@ WalkSprite_73_11_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_11_Anim05:
+KevinWalkSprite_Anim05:
 	; $7511, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -1082,110 +1082,110 @@ WalkSprite_73_11_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_12:
+BalloonExclaimWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_12_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonExclaimWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_12_Gfx00, WalkSprite_73_12_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonExclaimWalkSprite_Gfx00, BalloonExclaimWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_12:
 	; $752d, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_12_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_12_Gfx00.bin" ; $7530, 64 bytes
+BalloonExclaimWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonExclaimWalkSprite_Gfx00.bin" ; $7530, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_12_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_12_Gfx01.bin" ; $7570, 64 bytes
-WalkSprite_73_12_AnimPtrs:
-	dw WalkSprite_73_12_Anim00 ; $75b0
-	dw WalkSprite_73_12_Anim01 ; $75b2
-WalkSprite_73_12_Anim00:
+BalloonExclaimWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonExclaimWalkSprite_Gfx01.bin" ; $7570, 64 bytes
+BalloonExclaimWalkSprite_AnimPtrs:
+	dw BalloonExclaimWalkSprite_Anim00 ; $75b0
+	dw BalloonExclaimWalkSprite_Anim01 ; $75b2
+BalloonExclaimWalkSprite_Anim00:
 	; $75b4, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_12_Anim01:
+BalloonExclaimWalkSprite_Anim01:
 	; $75b7, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_13:
+BalloonQuestionWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_13_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonQuestionWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_13_Gfx00, WalkSprite_73_13_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonQuestionWalkSprite_Gfx00, BalloonQuestionWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_13:
 	; $75cd, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_13_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_13_Gfx00.bin" ; $75d0, 64 bytes
+BalloonQuestionWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonQuestionWalkSprite_Gfx00.bin" ; $75d0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_13_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_13_Gfx01.bin" ; $7610, 64 bytes
-WalkSprite_73_13_AnimPtrs:
-	dw WalkSprite_73_13_Anim00 ; $7650
-	dw WalkSprite_73_13_Anim01 ; $7652
-WalkSprite_73_13_Anim00:
+BalloonQuestionWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonQuestionWalkSprite_Gfx01.bin" ; $7610, 64 bytes
+BalloonQuestionWalkSprite_AnimPtrs:
+	dw BalloonQuestionWalkSprite_Anim00 ; $7650
+	dw BalloonQuestionWalkSprite_Anim01 ; $7652
+BalloonQuestionWalkSprite_Anim00:
 	; $7654, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_13_Anim01:
+BalloonQuestionWalkSprite_Anim01:
 	; $7657, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_14:
+BalloonAngryWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_14_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonAngryWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_14_Gfx00, WalkSprite_73_14_Gfx01, WalkSprite_73_14_Gfx02 ; frame pointers (continue in body)
-	dw WalkSprite_73_14_Gfx02 ; $766d
-	dw WalkSprite_73_14_Gfx02 ; $766f
-	dw WalkSprite_73_14_Gfx02 ; $7671
-	dw WalkSprite_73_14_Gfx02 ; $7673
-	dw WalkSprite_73_14_Gfx03 ; $7675
-	dw WalkSprite_73_14_Gfx04 ; $7677
-	dw WalkSprite_73_14_Gfx05 ; $7679
+	dw BalloonAngryWalkSprite_Gfx00, BalloonAngryWalkSprite_Gfx01, BalloonAngryWalkSprite_Gfx02 ; frame pointers (continue in body)
+	dw BalloonAngryWalkSprite_Gfx02 ; $766d
+	dw BalloonAngryWalkSprite_Gfx02 ; $766f
+	dw BalloonAngryWalkSprite_Gfx02 ; $7671
+	dw BalloonAngryWalkSprite_Gfx02 ; $7673
+	dw BalloonAngryWalkSprite_Gfx03 ; $7675
+	dw BalloonAngryWalkSprite_Gfx04 ; $7677
+	dw BalloonAngryWalkSprite_Gfx05 ; $7679
 Padding_73_14:
 	; $767b, 5 bytes (fill)
 	ds 5, $00
 	ds ALIGN[4]
-WalkSprite_73_14_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_14_Gfx00.bin" ; $7680, 64 bytes
+BalloonAngryWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonAngryWalkSprite_Gfx00.bin" ; $7680, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_14_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_14_Gfx01.bin" ; $76c0, 64 bytes
+BalloonAngryWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonAngryWalkSprite_Gfx01.bin" ; $76c0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_14_Gfx02:
-	INCBIN "data/sprites/WalkSprite_73_14_Gfx02.bin" ; $7700, 64 bytes
+BalloonAngryWalkSprite_Gfx02:
+	INCBIN "data/sprites/BalloonAngryWalkSprite_Gfx02.bin" ; $7700, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_14_Gfx03:
-	INCBIN "data/sprites/WalkSprite_73_14_Gfx03.bin" ; $7740, 64 bytes
+BalloonAngryWalkSprite_Gfx03:
+	INCBIN "data/sprites/BalloonAngryWalkSprite_Gfx03.bin" ; $7740, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_14_Gfx04:
-	INCBIN "data/sprites/WalkSprite_73_14_Gfx04.bin" ; $7780, 64 bytes
+BalloonAngryWalkSprite_Gfx04:
+	INCBIN "data/sprites/BalloonAngryWalkSprite_Gfx04.bin" ; $7780, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_14_Gfx05:
-	INCBIN "data/sprites/WalkSprite_73_14_Gfx05.bin" ; $77c0, 64 bytes
-WalkSprite_73_14_AnimPtrs:
-	dw WalkSprite_73_14_Anim00 ; $7800
-	dw WalkSprite_73_14_Anim01 ; $7802
-	dw WalkSprite_73_14_Anim02 ; $7804
-	dw WalkSprite_73_14_Anim03 ; $7806
-	dw WalkSprite_73_14_Anim04 ; $7808
-	dw WalkSprite_73_14_Anim05 ; $780a
-	dw WalkSprite_73_14_Anim05 ; $780c
-	dw WalkSprite_73_14_Anim05 ; $780e
-WalkSprite_73_14_Anim00:
+BalloonAngryWalkSprite_Gfx05:
+	INCBIN "data/sprites/BalloonAngryWalkSprite_Gfx05.bin" ; $77c0, 64 bytes
+BalloonAngryWalkSprite_AnimPtrs:
+	dw BalloonAngryWalkSprite_AnimStill ; $7800
+	dw BalloonAngryWalkSprite_AnimWalk ; $7802
+	dw BalloonAngryWalkSprite_AnimBounce ; $7804
+	dw BalloonAngryWalkSprite_AnimNod ; $7806
+	dw BalloonAngryWalkSprite_AnimShake ; $7808
+	dw BalloonAngryWalkSprite_Anim05 ; $780a
+	dw BalloonAngryWalkSprite_Anim05 ; $780c
+	dw BalloonAngryWalkSprite_Anim05 ; $780e
+BalloonAngryWalkSprite_AnimStill:
 	; $7810, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_14_Anim01:
+BalloonAngryWalkSprite_AnimWalk:
 	; $7813, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_14_Anim02:
+BalloonAngryWalkSprite_AnimBounce:
 	; $7819, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -1193,13 +1193,13 @@ WalkSprite_73_14_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_14_Anim03:
+BalloonAngryWalkSprite_AnimNod:
 	; $7825, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_14_Anim04:
+BalloonAngryWalkSprite_AnimShake:
 	; $782d, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -1211,7 +1211,7 @@ WalkSprite_73_14_Anim04:
 	anim_frame $08, 10
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_14_Anim05:
+BalloonAngryWalkSprite_Anim05:
 	; $7841, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -1219,132 +1219,132 @@ WalkSprite_73_14_Anim05:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_73_15:
+BalloonEllipsisWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_15_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonEllipsisWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_15_Gfx00, WalkSprite_73_15_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonEllipsisWalkSprite_Gfx00, BalloonEllipsisWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_15:
 	; $785d, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_15_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_15_Gfx00.bin" ; $7860, 64 bytes
+BalloonEllipsisWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonEllipsisWalkSprite_Gfx00.bin" ; $7860, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_15_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_15_Gfx01.bin" ; $78a0, 64 bytes
-WalkSprite_73_15_AnimPtrs:
-	dw WalkSprite_73_15_Anim00 ; $78e0
-	dw WalkSprite_73_15_Anim01 ; $78e2
-WalkSprite_73_15_Anim00:
+BalloonEllipsisWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonEllipsisWalkSprite_Gfx01.bin" ; $78a0, 64 bytes
+BalloonEllipsisWalkSprite_AnimPtrs:
+	dw BalloonEllipsisWalkSprite_Anim00 ; $78e0
+	dw BalloonEllipsisWalkSprite_Anim01 ; $78e2
+BalloonEllipsisWalkSprite_Anim00:
 	; $78e4, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_15_Anim01:
+BalloonEllipsisWalkSprite_Anim01:
 	; $78e7, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_16:
+BalloonScribbleWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_16_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonScribbleWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_16_Gfx00, WalkSprite_73_16_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonScribbleWalkSprite_Gfx00, BalloonScribbleWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_16:
 	; $78fd, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_16_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_16_Gfx00.bin" ; $7900, 64 bytes
+BalloonScribbleWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonScribbleWalkSprite_Gfx00.bin" ; $7900, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_16_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_16_Gfx01.bin" ; $7940, 64 bytes
-WalkSprite_73_16_AnimPtrs:
-	dw WalkSprite_73_16_Anim00 ; $7980
-	dw WalkSprite_73_16_Anim01 ; $7982
-WalkSprite_73_16_Anim00:
+BalloonScribbleWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonScribbleWalkSprite_Gfx01.bin" ; $7940, 64 bytes
+BalloonScribbleWalkSprite_AnimPtrs:
+	dw BalloonScribbleWalkSprite_Anim00 ; $7980
+	dw BalloonScribbleWalkSprite_Anim01 ; $7982
+BalloonScribbleWalkSprite_Anim00:
 	; $7984, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_16_Anim01:
+BalloonScribbleWalkSprite_Anim01:
 	; $7987, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_17:
+BalloonMusicWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_17_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonMusicWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_17_Gfx00, WalkSprite_73_17_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonMusicWalkSprite_Gfx00, BalloonMusicWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_17:
 	; $799d, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_17_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_17_Gfx00.bin" ; $79a0, 64 bytes
+BalloonMusicWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonMusicWalkSprite_Gfx00.bin" ; $79a0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_17_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_17_Gfx01.bin" ; $79e0, 64 bytes
-WalkSprite_73_17_AnimPtrs:
-	dw WalkSprite_73_17_Anim00 ; $7a20
-	dw WalkSprite_73_17_Anim01 ; $7a22
-WalkSprite_73_17_Anim00:
+BalloonMusicWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonMusicWalkSprite_Gfx01.bin" ; $79e0, 64 bytes
+BalloonMusicWalkSprite_AnimPtrs:
+	dw BalloonMusicWalkSprite_Anim00 ; $7a20
+	dw BalloonMusicWalkSprite_Anim01 ; $7a22
+BalloonMusicWalkSprite_Anim00:
 	; $7a24, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_17_Anim01:
+BalloonMusicWalkSprite_Anim01:
 	; $7a27, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_18:
+BalloonShockWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_18_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonShockWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_18_Gfx00, WalkSprite_73_18_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonShockWalkSprite_Gfx00, BalloonShockWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_18:
 	; $7a3d, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_18_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_18_Gfx00.bin" ; $7a40, 64 bytes
+BalloonShockWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonShockWalkSprite_Gfx00.bin" ; $7a40, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_18_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_18_Gfx01.bin" ; $7a80, 64 bytes
-WalkSprite_73_18_AnimPtrs:
-	dw WalkSprite_73_18_Anim00 ; $7ac0
-	dw WalkSprite_73_18_Anim01 ; $7ac2
-WalkSprite_73_18_Anim00:
+BalloonShockWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonShockWalkSprite_Gfx01.bin" ; $7a80, 64 bytes
+BalloonShockWalkSprite_AnimPtrs:
+	dw BalloonShockWalkSprite_Anim00 ; $7ac0
+	dw BalloonShockWalkSprite_Anim01 ; $7ac2
+BalloonShockWalkSprite_Anim00:
 	; $7ac4, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_18_Anim01:
+BalloonShockWalkSprite_Anim01:
 	; $7ac7, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_73_19:
+BalloonSweatWalkSprite:
 	db $03, $01, $02, $00 ; OAM attr, facing count, unread, unread
-	dw .frames, WalkSprite_73_19_AnimPtrs, .frames ; frame array, anim scripts, frame array
+	dw .frames, BalloonSweatWalkSprite_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
-	dw WalkSprite_73_19_Gfx00, WalkSprite_73_19_Gfx01, $0000 ; frame pointers (continue in body)
+	dw BalloonSweatWalkSprite_Gfx00, BalloonSweatWalkSprite_Gfx01, $0000 ; frame pointers (continue in body)
 Padding_73_19:
 	; $7add, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]
-WalkSprite_73_19_Gfx00:
-	INCBIN "data/sprites/WalkSprite_73_19_Gfx00.bin" ; $7ae0, 64 bytes
+BalloonSweatWalkSprite_Gfx00:
+	INCBIN "data/sprites/BalloonSweatWalkSprite_Gfx00.bin" ; $7ae0, 64 bytes
 	ds ALIGN[4]
-WalkSprite_73_19_Gfx01:
-	INCBIN "data/sprites/WalkSprite_73_19_Gfx01.bin" ; $7b20, 64 bytes
-WalkSprite_73_19_AnimPtrs:
-	dw WalkSprite_73_19_Anim00 ; $7b60
-	dw WalkSprite_73_19_Anim01 ; $7b62
-WalkSprite_73_19_Anim00:
+BalloonSweatWalkSprite_Gfx01:
+	INCBIN "data/sprites/BalloonSweatWalkSprite_Gfx01.bin" ; $7b20, 64 bytes
+BalloonSweatWalkSprite_AnimPtrs:
+	dw BalloonSweatWalkSprite_Anim00 ; $7b60
+	dw BalloonSweatWalkSprite_Anim01 ; $7b62
+BalloonSweatWalkSprite_Anim00:
 	; $7b64, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_73_19_Anim01:
+BalloonSweatWalkSprite_Anim01:
 	; $7b67, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30

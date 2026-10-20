@@ -332,107 +332,107 @@ Unused_5d_BabyMarioSpriteFramesCopy:
 BabyMarioFramePlace:
 	INCLUDE "data/sprites/BabyMarioFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BabyMarioSpriteAnims:
-	dw BabyMarioSpriteAnim00 ; $7f24
-	dw BabyMarioSpriteAnim01 ; $7f26
-	dw BabyMarioSpriteAnim02 ; $7f28
-	dw BabyMarioSpriteAnim03 ; $7f2a
-	dw BabyMarioSpriteAnim04 ; $7f2c
-	dw BabyMarioSpriteAnim05 ; $7f2e
-	dw BabyMarioSpriteAnim06 ; $7f30
-	dw BabyMarioSpriteAnim07 ; $7f32
-	dw BabyMarioSpriteAnim08 ; $7f34
-	dw BabyMarioSpriteAnim09 ; $7f36
-	dw BabyMarioSpriteAnim10 ; $7f38
-	dw BabyMarioSpriteAnim11 ; $7f3a
-	dw BabyMarioSpriteAnim12 ; $7f3c
-	dw BabyMarioSpriteAnim13 ; $7f3e
-	dw BabyMarioSpriteAnim14 ; $7f40
-	dw BabyMarioSpriteAnim15 ; $7f42
-	dw BabyMarioSpriteAnim16 ; $7f44
-	dw BabyMarioSpriteAnim17 ; $7f46
-	dw BabyMarioSpriteAnim18 ; $7f48
-BabyMarioSpriteAnim00:
+	dw BabyMarioStandAnim ; $7f24
+	dw BabyMarioIdleAnim ; $7f26
+	dw BabyMarioRunAnim ; $7f28
+	dw BabyMarioCelebrateAnim ; $7f2a
+	dw BabyMarioDejectedAnim ; $7f2c
+	dw BabyMarioForehandAnim ; $7f2e
+	dw BabyMarioBackhandAnim ; $7f30
+	dw BabyMarioOverheadAnim ; $7f32
+	dw BabyMarioSmashAnim ; $7f34
+	dw BabyMarioForehandQuickAnim ; $7f36
+	dw BabyMarioBackhandQuickAnim ; $7f38
+	dw BabyMarioOverheadQuickAnim ; $7f3a
+	dw BabyMarioSmashQuickAnim ; $7f3c
+	dw BabyMarioForehandReadyAnim ; $7f3e
+	dw BabyMarioBackhandReadyAnim ; $7f40
+	dw BabyMarioOverheadReadyAnim ; $7f42
+	dw BabyMarioServeReadyAnim ; $7f44
+	dw BabyMarioServePrepAnim ; $7f46
+	dw BabyMarioDiveAnim ; $7f48
+BabyMarioStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-BabyMarioSpriteAnim01:
+BabyMarioIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-BabyMarioSpriteAnim02:
+BabyMarioRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-BabyMarioSpriteAnim03:
+BabyMarioCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
 	anim_frame $19, 10
 	anim_frame $18, 10
 	anim_loop $00
-BabyMarioSpriteAnim04:
+BabyMarioDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 10
 	anim_frame $1b, 10
 	anim_frame $1c, 10
 	anim_loop $00
-BabyMarioSpriteAnim05:
+BabyMarioForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-BabyMarioSpriteAnim06:
+BabyMarioBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-BabyMarioSpriteAnim07:
+BabyMarioOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-BabyMarioSpriteAnim08:
+BabyMarioSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-BabyMarioSpriteAnim09:
+BabyMarioForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-BabyMarioSpriteAnim10:
+BabyMarioBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-BabyMarioSpriteAnim11:
+BabyMarioOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-BabyMarioSpriteAnim12:
+BabyMarioSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-BabyMarioSpriteAnim13:
+BabyMarioForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-BabyMarioSpriteAnim14:
+BabyMarioBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-BabyMarioSpriteAnim15:
+BabyMarioOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-BabyMarioSpriteAnim16:
+BabyMarioServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-BabyMarioSpriteAnim17:
+BabyMarioServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -440,7 +440,7 @@ BabyMarioSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-BabyMarioSpriteAnim18:
+BabyMarioDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

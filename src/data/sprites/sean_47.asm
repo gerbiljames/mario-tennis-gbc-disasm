@@ -332,108 +332,108 @@ Unused_47_SeanSpriteFramesCopy:
 SeanFramePlace:
 	INCLUDE "data/sprites/SeanFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 SeanSpriteAnims:
-	dw SeanSpriteAnim00 ; $7f24
-	dw SeanSpriteAnim01 ; $7f26
-	dw SeanSpriteAnim02 ; $7f28
-	dw SeanSpriteAnim03 ; $7f2a
-	dw SeanSpriteAnim04 ; $7f2c
-	dw SeanSpriteAnim05 ; $7f2e
-	dw SeanSpriteAnim06 ; $7f30
-	dw SeanSpriteAnim07 ; $7f32
-	dw SeanSpriteAnim08 ; $7f34
-	dw SeanSpriteAnim09 ; $7f36
-	dw SeanSpriteAnim10 ; $7f38
-	dw SeanSpriteAnim11 ; $7f3a
-	dw SeanSpriteAnim12 ; $7f3c
-	dw SeanSpriteAnim13 ; $7f3e
-	dw SeanSpriteAnim14 ; $7f40
-	dw SeanSpriteAnim15 ; $7f42
-	dw SeanSpriteAnim16 ; $7f44
-	dw SeanSpriteAnim17 ; $7f46
-	dw SeanSpriteAnim18 ; $7f48
-SeanSpriteAnim00:
+	dw SeanStandAnim ; $7f24
+	dw SeanIdleAnim ; $7f26
+	dw SeanRunAnim ; $7f28
+	dw SeanCelebrateAnim ; $7f2a
+	dw SeanDejectedAnim ; $7f2c
+	dw SeanForehandAnim ; $7f2e
+	dw SeanBackhandAnim ; $7f30
+	dw SeanOverheadAnim ; $7f32
+	dw SeanSmashAnim ; $7f34
+	dw SeanForehandQuickAnim ; $7f36
+	dw SeanBackhandQuickAnim ; $7f38
+	dw SeanOverheadQuickAnim ; $7f3a
+	dw SeanSmashQuickAnim ; $7f3c
+	dw SeanForehandReadyAnim ; $7f3e
+	dw SeanBackhandReadyAnim ; $7f40
+	dw SeanOverheadReadyAnim ; $7f42
+	dw SeanServeReadyAnim ; $7f44
+	dw SeanServePrepAnim ; $7f46
+	dw SeanDiveAnim ; $7f48
+SeanStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-SeanSpriteAnim01:
+SeanIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-SeanSpriteAnim02:
+SeanRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-SeanSpriteAnim03:
+SeanCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
 	anim_frame $17, 10
 	anim_frame $19, 10
 	anim_loop $00
-SeanSpriteAnim04:
+SeanDejectedAnim:
 	; $7f67, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 20
 	anim_frame $1c, 20
 	anim_hold $fd
 	db $00 ; never read: the hold above ends the script
-SeanSpriteAnim05:
+SeanForehandAnim:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-SeanSpriteAnim06:
+SeanBackhandAnim:
 	; $7f75, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-SeanSpriteAnim07:
+SeanOverheadAnim:
 	; $7f7b, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-SeanSpriteAnim08:
+SeanSmashAnim:
 	; $7f81, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-SeanSpriteAnim09:
+SeanForehandQuickAnim:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-SeanSpriteAnim10:
+SeanBackhandQuickAnim:
 	; $7f8a, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-SeanSpriteAnim11:
+SeanOverheadQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-SeanSpriteAnim12:
+SeanSmashQuickAnim:
 	; $7f92, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-SeanSpriteAnim13:
+SeanForehandReadyAnim:
 	; $7f95, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-SeanSpriteAnim14:
+SeanBackhandReadyAnim:
 	; $7f98, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-SeanSpriteAnim15:
+SeanOverheadReadyAnim:
 	; $7f9b, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-SeanSpriteAnim16:
+SeanServeReadyAnim:
 	; $7f9e, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-SeanSpriteAnim17:
+SeanServePrepAnim:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -441,7 +441,7 @@ SeanSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-SeanSpriteAnim18:
+SeanDiveAnim:
 	; $7fad, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20
