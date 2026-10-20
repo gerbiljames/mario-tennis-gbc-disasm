@@ -69,7 +69,7 @@ Unused_05_RunDebugWindowDemo:
 	wait_frames 30 ; $6d9a
 	call DisableLCDSafely ; $6d9e
 	call ResetTextWindowState ; $6da1
-	ld de, $d000 ; $6da4
+	ld de, wWindowShadowTilemap ; $6da4
 	ld hl, wShadowTilemapPtr ; $6da7
 	ld a, e ; $6daa
 	ld [hl+], a ; $6dab

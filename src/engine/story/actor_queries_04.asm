@@ -320,7 +320,7 @@ ActorSlotPtrToIndex:
 	inc h ; $5518
 	dec h ; $5519
 	jr z, .done ; $551a
-	ld de, $3000 ; $551c
+	ld de, $10000 - wActors ; $551c
 	add hl, de ; $551f
 	add hl, hl ; $5520
 	add hl, hl ; $5521

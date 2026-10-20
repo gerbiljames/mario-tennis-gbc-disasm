@@ -376,14 +376,14 @@ Unused_38_DrawRemoteDifficultyDigit:
 	ld a, [wCharSelectSlotDifficulty + 3] ; $692b
 	ld c, $33 ; $692e
 	add c ; $6930
-	ld hl, $d14f ; $6931
+	ld hl, wShadowTilemap + 10 * TILEMAP_WIDTH + 15 ; $6931
 	ld [hl], a ; $6934
 	jr .done ; $6935
 .queueVram:
 	ld a, [wCharSelectSlotDifficulty + 1] ; $6937
 	ld c, $33 ; $693a
 	add c ; $693c
-	ld hl, $d0ef ; $693d
+	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH + 15 ; $693d
 	ld [hl], a ; $6940
 .done:
 	ret ; $6941

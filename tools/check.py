@@ -1067,6 +1067,14 @@ _NUM_RE = re.compile(r"\$[0-9a-fA-F]+|%[01]+|\d+")
 _OPERAND_RE = re.compile(r"^\t([a-z_]\w*)\s+([^;]+)")
 _NOT_MACROS = frozenset(_MNEMONICS | {"db", "dw", "ds", "lb", "text", "line", "page"})
 _ROMX_WORD_RE = re.compile(r"\$[4-7][0-9a-fA-F]{3}")
+# `ld rr` immediates that read as a WRAM address, or as one negated before an
+# `add hl, rr`, and are not.
+_NOT_WRAM_ADDRESSES = {
+    "$00: ld de, $3573": "the random LCG's increment",
+    "$04: ld de, $4000": "a distance bound, tested by the carry",
+    "$08: ld bc, $c000": "a velocity for SetBallVelocityPolar",
+    "$0b: ld bc, $d000": "$80-byte records in a WRAM bank nothing pins (Unused_0b_GetObjectXAndDepth)",
+}
 # The ROM0 routines that take a (bank << 8) | slot pair in hl.
 _SLOT_CONSUMERS = frozenset(
     "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarCallIndexed1 "
@@ -1140,6 +1148,7 @@ def check_literal_pointers(fail):
             return labels[i][1]
         return None
     n = 0
+    not_wram_seen = set()
     for bank, lines in banks:
         pending_hl = stack_hl = None
         split_lo, split_hi = None, None
@@ -1173,6 +1182,18 @@ def check_literal_pointers(fail):
                     if name and (("[hl" in after) if args[0] == "hl" else f"add hl, {args[0]}" in after):
                         n += 1
                         fail("literals", f"{where} -- points into {name}")
+                if where in _NOT_WRAM_ADDRESSES:
+                    not_wram_seen.add(where)
+                elif value is not None and f"add hl, {args[0]}" in " ".join(x.group(0) for x in lines[k + 1:k + 3]):
+                    n += 1
+                    name = ram_by_addr.get(0x10000 - value)
+                    if name:
+                        fail("literals", f"{where} -- subtracts {name}: spell it $10000 - {name}")
+                if value is not None and 0xc000 <= value < 0xe000 and where not in _NOT_WRAM_ADDRESSES:
+                    n += 1
+                    name = ram_by_addr.get(value)
+                    if name:
+                        fail("literals", f"{where} -- is {name}")
             if re.fullmatch(r"ld_(hl|de|bc)_indexed", op):
                 n += 1
                 if re.match(r"\w+", args[0]).group(0) in routines:
@@ -1212,6 +1233,8 @@ def check_literal_pointers(fail):
                         name = by_addr.get((bank, int(arg[1:], 16)))
                         if name:
                             fail("literals", f"{where} -- {arg} is {name}")
+    for where in sorted(set(_NOT_WRAM_ADDRESSES) - not_wram_seen):
+        fail("literals", f"{where}: no such line -- drop it from _NOT_WRAM_ADDRESSES")
     return n
 
 

@@ -51,7 +51,7 @@ FillProgressListRowAttrs:
 	jr nz, .rowLoop ; $7a2d
 	ret ; $7a2f
 Unused_1e_CopyProgressListTilemap:
-	ld hl, $d060 ; $7a30
+	ld hl, wWindowShadowTilemap + 3 * TILEMAP_WIDTH ; $7a30
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7a33
 	ld c, 15 * TILEMAP_WIDTH / 16 ; $7a36
 	call QueueVRAMCopy ; $7a38

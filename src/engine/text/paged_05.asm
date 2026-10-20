@@ -282,7 +282,7 @@ Unused_05_RunMenuSelectionShared:
 	ld a, [hl+] ; $4b41
 	ld h, [hl] ; $4b42
 	ld l, a ; $4b43
-	ld de, $3000 ; $4b44
+	ld de, $10000 - wActiveTilemap ; $4b44
 	add hl, de ; $4b47
 	ld de, vBGMap0 ; $4b48
 	add hl, de ; $4b4b

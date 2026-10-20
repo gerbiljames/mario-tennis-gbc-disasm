@@ -82,7 +82,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld d, [hl] ; $4d0b
 	ld h, d ; $4d0c
 	ld l, e ; $4d0d
-	ld de, $3000 ; $4d0e
+	ld de, $10000 - wActiveTilemap ; $4d0e
 	add hl, de ; $4d11
 	ld de, vBGMap0 ; $4d12
 	add hl, de ; $4d15
@@ -219,7 +219,7 @@ RenderTextString:
 	ld a, [wTextResumePtr + 1] ; $4e24
 	or a ; $4e27
 	jr z, .noResume ; $4e28
-	ld bc, $3a00 ; $4e2a
+	ld bc, $10000 - wTextBuffer ; $4e2a
 	add hl, bc ; $4e2d
 	ld b, h ; $4e2e
 	ld c, l ; $4e2f

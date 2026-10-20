@@ -288,12 +288,12 @@ Unused_04_SpawnScriptedActorScene:
 	ld hl, $1700 ; $4d3f
 	ld de, $1d00 ; $4d42
 	call SetActorPosition ; $4d45
-	ld de, $d000 ; $4d48
+	ld de, wActors ; $4d48
 	call AttachActorWaypointFollower ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
 	ld hl, ScriptedSceneMarioActorList ; $4d50
 	call SpawnActorFromTemplate ; $4d53
-	ld de, $d000 ; $4d56
+	ld de, wActors ; $4d56
 	call AttachActorStepMover ; $4d59
 	ld hl, ScriptedSceneMarioColumnActorList ; $4d5c
 	call SpawnActorsFromList ; $4d5f

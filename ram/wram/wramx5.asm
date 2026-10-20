@@ -19,11 +19,11 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 ; attribute plane the full-screen UIs keep in WRAM bank $03, owned by the
 ; window engine. ResetTextWindowState clears both and points
 ; wShadowTilemapPtr / wShadowTilemapBank at $d000 / $05; the dirty-row
-; flusher copies changed rows to $9800. Bank $05 code also uses $d000/$d400
-; literals for whichever plane the current screen owns, and its glyph
-; buffers are at $d300-$d7ff in WRAM bank $07. RestoreShadowTilemapRow
-; reads wMapBuffer64 under WRAM banks $03/$02 and writes these planes under
-; bank $05.
+; flusher copies changed rows to $9800. Bank $05 code also addresses
+; wActiveTilemap / wActiveAttrmap for whichever plane the current screen
+; owns, and its glyph buffers are at $d300-$d7ff in WRAM bank $07.
+; RestoreShadowTilemapRow reads wMapBuffer64 under WRAM banks $03/$02 and
+; writes these planes under bank $05.
 ; window shadow tilemap (WRAM bank $05)
 ; Tile plane of the text-window shadow tilemap: 32 x 32 cells, rows TILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen
 wWindowShadowTilemap:: ds 1024
