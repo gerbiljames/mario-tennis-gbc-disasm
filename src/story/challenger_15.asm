@@ -247,7 +247,7 @@ ChallengerResultRivalLost:
 WalkChallengerAwayDefeated:
 	ld a, [wCurrentMatchIndex] ; $6042
 	sub $0a ; $6045
-	jp nc, .done ; $6047
+	jp nc, .strokeChallenger ; $6047
 	ld a, [wCurrentMatchIndex] ; $604a
 	sub $04 ; $604d
 	jp c, .serveChallenger ; $604f
@@ -287,7 +287,7 @@ WalkChallengerAwayDefeated:
 	script_wait_move [wChallengerActor] ; $60ec
 	set_flag FLAG_NET_CHALLENGER_DEFEATED ; $60f2
 	ret ; $60f5
-.done:
+.strokeChallenger:
 	script_face [wChallengerActor], FACE_UP ; $60f6
 	script_set_anim [wChallengerActor], ANIM_BOUNCE ; $60fe
 	script_wait_idle [wChallengerActor] ; $6106

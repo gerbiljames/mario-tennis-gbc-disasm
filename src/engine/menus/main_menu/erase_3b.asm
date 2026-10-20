@@ -218,9 +218,9 @@ SavedDataPickerSlideIn:
 SavedDataPickerSlideOut:
 	ld a, b ; $6e56
 	or a ; $6e57
-	jr z, .slideIn ; $6e58
+	jr z, .slideBack ; $6e58
 	ld c, $00 ; $6e5a
-.outLoop:
+.slideForwardLoop:
 	call AdvanceFrame ; $6e5c
 	ld b, PANELANIM_SAVED_DATA_PICKER_OUT ; $6e5f
 	farcall RestoreMenuBgAndDrawPanel ; $6e61
@@ -230,11 +230,11 @@ SavedDataPickerSlideOut:
 	inc a ; $6e6a
 	ld c, a ; $6e6b
 	cp $0a ; $6e6c
-	jr nz, .outLoop ; $6e6e
+	jr nz, .slideForwardLoop ; $6e6e
 	ret ; $6e70
-.slideIn:
+.slideBack:
 	ld c, $0e ; $6e71
-.inLoop:
+.slideBackLoop:
 	call AdvanceFrame ; $6e73
 	ld b, PANELANIM_SAVED_DATA_PICKER_IN ; $6e76
 	farcall RestoreMenuBgAndDrawPanel ; $6e78
@@ -244,7 +244,7 @@ SavedDataPickerSlideOut:
 	dec a ; $6e81
 	ld c, a ; $6e82
 	or a ; $6e83
-	jr nz, .inLoop ; $6e84
+	jr nz, .slideBackLoop ; $6e84
 	ret ; $6e86
 MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorY] ; $6e87

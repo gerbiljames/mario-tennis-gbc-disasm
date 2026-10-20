@@ -695,7 +695,7 @@ RestaurantNpc09_10:
 	farcall ScriptCloseDialogueWindow ; $5eb1
 	script_wait_frames 5 ; $5eb4
 	and a ; $5ebb
-	jr nz, .done ; $5ebc
+	jr nz, .declined ; $5ebc
 	script_set_text Text_RestaurantSoLuckyJealous ; $5ebe
 	test_flag FLAG_DOUBLES ; $5ec4
 	jr z, .speak ; $5ec7
@@ -703,7 +703,7 @@ RestaurantNpc09_10:
 .speak:
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ecc
 	ret ; $5ed1
-.done:
+.declined:
 	script_set_text Text_RestaurantDontBeModest ; $5ed2
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ed8
 	ret ; $5edd

@@ -1,6 +1,6 @@
 RunPlayDoublesTodayPrompt:
 	test_flag FLAG_DOUBLES ; $56bb
-	jp nz, .accepted ; $56be
+	jp nz, .alreadyDoubles ; $56be
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $56c1
 	jr nz, .altText ; $56c4
 	script_set_text Text_RoommatePlayDoublesToday ; $56c6
@@ -54,20 +54,20 @@ RunPlayDoublesTodayPrompt:
 	call SetDormRoomEventTriggerCells_13 ; $5777
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $577a
 	ret ; $5781
-.accepted:
+.alreadyDoubles:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5782
-	jr nz, .acceptedAlt ; $5785
+	jr nz, .alreadyDoublesAlt ; $5785
 	script_set_text Text_RoommateDecidedOnSingles ; $5787
-	jr .setUpDoubles ; $578d
-.acceptedAlt:
+	jr .promptSwitchToSingles ; $578d
+.alreadyDoublesAlt:
 	script_set_text Text_RoommateSinglesAllOfSudden ; $578f
-.setUpDoubles:
+.promptSwitchToSingles:
 	script_speak_restore ACTOR_DORM_ROOM_KATE ; $5795
 	farcall RunDialogueYesNoPrompt ; $579a
 	farcall ScriptCloseDialogueWindow ; $579d
 	script_wait_frames 5 ; $57a0
 	and a ; $57a7
-	jr nz, .done ; $57a8
+	jr nz, .keepDoubles ; $57a8
 	call SetRoommateSinglesYesReplyText_13 ; $57aa
 	script_speak ACTOR_DORM_ROOM_KATE ; $57ad
 	script_null_script ACTOR_DORM_ROOM_KATE ; $57b2
@@ -90,7 +90,7 @@ RunPlayDoublesTodayPrompt:
 	script_null_script ACTOR_DORM_ROOM_KATE ; $57fa
 	script_face ACTOR_DORM_ROOM_KATE, FACE_DOWN ; $57ff
 	ret ; $5806
-.done:
+.keepDoubles:
 	call SetRoommateSinglesNoReplyText_13 ; $5807
 	farcall AdvanceDialogueTextCursor ; $580a
 	script_speak ACTOR_DORM_ROOM_KATE ; $580d

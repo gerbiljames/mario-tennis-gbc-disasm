@@ -668,7 +668,7 @@ CharSwingWindupPhase:
 	and a ; $6c3c
 	jr nz, .abort ; $6c3d
 	ld hl, wCharBallReachFlags ; $6c3f
-	bit 0, [hl] ; $6c42
+	bit BALLREACHB_SWING_RANGE, [hl] ; $6c42
 	jr nz, .startSwing ; $6c44
 	ret ; $6c46
 .startSwing:
@@ -703,7 +703,7 @@ CharSwingContactPhase:
 	call CaptureShotAim ; $6c81
 	call ResetSwingAnimation ; $6c84
 	ld hl, wCharBallReachFlags ; $6c87
-	bit 1, [hl] ; $6c8a
+	bit BALLREACHB_CONTACT, [hl] ; $6c8a
 	jr z, .done ; $6c8c
 	call SelectRallyShotType ; $6c8e
 	farcall ExecuteShot ; $6c91

@@ -6,14 +6,14 @@ VolleyMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $68a5
 	script_wait_frames 5 ; $68a8
 	and a ; $68af
-	jp nz, .done ; $68b0
+	jp nz, .declined ; $68b0
 	farcall AdvanceDialogueTextCursor ; $68b3
 	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68b6
 	farcall RunDialogueYesNoPrompt ; $68bb
 	farcall ScriptCloseDialogueWindow ; $68be
 	script_wait_frames 5 ; $68c1
 	and a ; $68c8
-	jp nz, .done ; $68c9
+	jp nz, .declined ; $68c9
 	farcall AdvanceDialogueTextCursor ; $68cc
 	script_speak_restore ACTOR_TRAINING_COURT_BRIAN ; $68cf
 	farcall RunDialogueYesNoPrompt ; $68d4
@@ -48,7 +48,7 @@ VolleyMatchChallengeScene:
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $6957
 	farcall RunTrainingDrillByID ; $6959
 	ret ; $695c
-.done:
+.declined:
 	script_speak ACTOR_TRAINING_COURT_BRIAN ; $695d
 	ret ; $6962
 SmashMatchChallengeScene:

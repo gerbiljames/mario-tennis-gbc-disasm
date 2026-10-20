@@ -234,7 +234,7 @@ NetGameMatch1Cases3:
 	call QueueDrillResultMessage ; $55bb
 	ld a, [wTotalPointsScoredInCurrentGame] ; $55be
 	and $01 ; $55c1
-	call IsCharBallInNormalReach ; $55c3
+	call IsCharNearNet ; $55c3
 	or a ; $55c6
 	jp z, DrillPointLost_4 ; $55c7
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_THE_BALL_SO_YOU_FAIL ; $55ca

@@ -57,7 +57,7 @@ SeniorSinglesRankOfferScene:
 	farcall ScriptCloseDialogueWindow ; $5f66
 	script_wait_frames 5 ; $5f69
 	and a ; $5f70
-	jp nz, .done ; $5f71
+	jp nz, .declined ; $5f71
 	script_set_text Text_EmilyPlayFourthFirst ; $5f74
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f7a
 	jr z, .accepted ; $5f7d
@@ -77,7 +77,7 @@ SeniorSinglesRankOfferScene:
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5faf
 	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
-.done:
+.declined:
 	script_set_text Text_EmilySinglesPracticeFirst ; $5fb8
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $5fbe
 	farcall EndCutsceneScriptMode ; $5fc3

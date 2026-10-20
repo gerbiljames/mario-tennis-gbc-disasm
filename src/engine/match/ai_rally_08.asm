@@ -73,7 +73,7 @@ AiRallyStateSingles:
 	dw AiPhaseNoop ; $7d08 jumptable
 AiSetReactionDelay:
 	ld a, [wCharBallReachFlags] ; $7d0a
-	bit 4, a ; $7d0d
+	bit BALLREACHB_NEAR_NET, a ; $7d0d
 	ld hl, wAiReactionDelayFar ; $7d0f
 	jr z, .randomize ; $7d12
 	ld hl, wAiReactionDelayNear ; $7d14
@@ -113,7 +113,7 @@ AiChoosePositionByStrategy:
 	jp AiInterceptNearNet ; $7d55
 .adaptive:
 	ld hl, wCharBallReachFlags ; $7d58
-	bit 4, [hl] ; $7d5b
+	bit BALLREACHB_NEAR_NET, [hl] ; $7d5b
 	jr z, .adaptiveLob ; $7d5d
 	call AiIsIncomingDropOrLobShot ; $7d5f
 	and a ; $7d62
@@ -138,7 +138,7 @@ AiTrackBallPhase:
 	and a ; $7d88
 	jr nz, .advance ; $7d89
 	ld hl, wCharBallReachFlags ; $7d8b
-	bit 0, [hl] ; $7d8e
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7d8e
 	jr nz, .advance ; $7d90
 	ret ; $7d92
 .trackBall:
@@ -155,7 +155,7 @@ AiTrackBallPhase:
 	inc [hl] ; $7dac
 AiWaitThenPickShot:
 	ld hl, wCharBallReachFlags ; $7dad
-	bit 0, [hl] ; $7db0
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7db0
 	jr nz, .pickShot ; $7db2
 	ld hl, wAiTrackingCountdown ; $7db4
 	ld a, [hl] ; $7db7
@@ -179,7 +179,7 @@ AiSwingControlSingles:
 	call AiPressSecondShotButton ; $7dd7
 .checkSwing:
 	ld hl, wCharBallReachFlags ; $7dda
-	bit 1, [hl] ; $7ddd
+	bit BALLREACHB_CONTACT, [hl] ; $7ddd
 	jr nz, .aimAwayFromOpponent ; $7ddf
 	call AiSteerTowardBall ; $7de1
 	ret ; $7de4
@@ -299,7 +299,7 @@ AiDoublesTrackBallPhase:
 	and a ; $7edd
 	jr nz, .advance ; $7ede
 	ld hl, wCharBallReachFlags ; $7ee0
-	bit 0, [hl] ; $7ee3
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7ee3
 	jr nz, .advance ; $7ee5
 	ldh a, [hWramBank] ; $7ee7
 	push af ; $7ee9
@@ -331,7 +331,7 @@ AiNetPlayerPoachCheck:
 	ld a, [wCharIndex] ; $7f1f
 .checkSide:
 	ld hl, wCharBallReachFlags ; $7f22
-	bit 0, [hl] ; $7f25
+	bit BALLREACHB_SWING_RANGE, [hl] ; $7f25
 	jr z, .checkDistance ; $7f27
 	ld a, $03 ; $7f29
 	ld [wAiPhase], a ; $7f2b
@@ -382,7 +382,7 @@ AiSwingControlDoubles:
 	call AiPressSecondShotButton ; $7f96
 .checkContact:
 	ld hl, wCharBallReachFlags ; $7f99
-	bit 1, [hl] ; $7f9c
+	bit BALLREACHB_CONTACT, [hl] ; $7f9c
 	jr nz, .swing ; $7f9e
 	call AiSteerTowardBall ; $7fa0
 	ret ; $7fa3

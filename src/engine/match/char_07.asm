@@ -191,16 +191,16 @@ LoadCharacterAttributes:
 	add hl, de ; $5b44
 	add [hl] ; $5b45
 	add a ; $5b46
-	jr nc, .clampSpin ; $5b47
+	jr nc, .clampDepthSpeed ; $5b47
 	xor a ; $5b49
-	jr .readPlacementTable ; $5b4a
-.clampSpin:
+	jr .readDepthSpeed ; $5b4a
+.clampDepthSpeed:
 	rra ; $5b4c
 	cp $0a ; $5b4d
-	jr c, .readPlacementTable ; $5b4f
+	jr c, .readDepthSpeed ; $5b4f
 	ld a, $0a ; $5b51
 	dec a ; $5b53
-.readPlacementTable:
+.readDepthSpeed:
 	add a ; $5b54
 	ld_hl_indexed CharStatTable_07_0 ; $5b55
 	ld a, [hl+] ; $5b5c

@@ -401,7 +401,7 @@ JuniorClassCourtDoublesInitScript_11:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $5a82
 	jr nz, .placeActors ; $5a85
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a87
-	jr nz, .done ; $5a8a
+	jr nz, .juniorChampion ; $5a8a
 	ret ; $5a8c
 .storyComplete:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
@@ -424,7 +424,7 @@ JuniorClassCourtDoublesInitScript_11:
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5ad6
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ae1
 	ret ; $5aec
-.done:
+.juniorChampion:
 	ld hl, JuniorClassCourtDoublesNpcScriptsA_11 ; $5aed
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5af0
 	farcall WriteStoryStateWord ; $5af3

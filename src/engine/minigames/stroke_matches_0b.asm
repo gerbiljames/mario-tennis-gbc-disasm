@@ -272,7 +272,7 @@ StrokeMatch2Cases3:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $68e7
 	and $01 ; $68ea
 	xor $01 ; $68ec
-	call IsCharBallInNormalReach ; $68ee
+	call IsCharNearNet ; $68ee
 	or a ; $68f1
 	jp z, .pointWon ; $68f2
 	xor a ; $68f5
@@ -563,7 +563,7 @@ StrokeMatch3Cases3:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6b1e
 	and $01 ; $6b21
 	xor $01 ; $6b23
-	call IsCharBallInNormalReach ; $6b25
+	call IsCharNearNet ; $6b25
 	or a ; $6b28
 	jp z, .pointWon ; $6b29
 	xor a ; $6b2c

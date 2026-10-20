@@ -213,10 +213,10 @@ TournamentInitScript_0f:
 	ret ; $62fd
 .placeActorsDoubles:
 	cp ENTRY_TOURNAMENT_AFTER_ROUND_DOUBLES ; $62fe
-	jr nz, .done ; $6300
+	jr nz, .walkIn ; $6300
 	call IslandOpenDoublesMatchReturn ; $6302
 	ret ; $6305
-.done:
+.walkIn:
 	call LoadIslandOpenRoundNpcs ; $6306
 	call SetPlayerAndPartnerObjectDefs ; $6309
 	call WalkActorsInFromEntryPoint_0f ; $630c

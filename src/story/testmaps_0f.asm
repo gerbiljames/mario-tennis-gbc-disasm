@@ -324,7 +324,7 @@ AwardsCeremonyTile01_0f:
 	script_delay 1 ; $4689
 	script_set_position ACTOR_AWARDS_CEREMONY_ALEX, 63.0, 63.0 ; $468e
 	test_flag FLAG_DOUBLES ; $4699
-	jp z, .done ; $469c
+	jp z, .singles ; $469c
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_QUESTION, 63.0, 63.0 ; $469f
 	script_set_objdef OBJ_BALLOON_QUESTION, ACTOR_AWARDS_CEREMONY_BALLOON_QUESTION ; $46aa
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_QUESTION, ANIM_WALK ; $46b6
@@ -337,7 +337,7 @@ AwardsCeremonyTile01_0f:
 	script_delay 1 ; $46ed
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $46f2
 	ret ; $46ff
-.done:
+.singles:
 	script_set_position ACTOR_PLAYER, 11.5, 27.0 ; $4700
 	script_face ACTOR_PLAYER, FACE_DOWN ; $470b
 	script_delay 1 ; $4712

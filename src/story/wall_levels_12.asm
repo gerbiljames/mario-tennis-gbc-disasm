@@ -541,7 +541,7 @@ WallPracticeRoomNpc07_12:
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51d6
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $51db
 	test_flag FLAG_DOUBLES ; $51e2
-	jr z, .done ; $51e5
+	jr z, .walkToWall ; $51e5
 	script_wait_frames 20 ; $51e7
 	script_null_script ACTOR_PARTNER ; $51ee
 	script_move_target ACTOR_PARTNER, 7.0, 57.0 ; $51f3
@@ -552,7 +552,7 @@ WallPracticeRoomNpc07_12:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5219
 	script_wait_idle ACTOR_PARTNER ; $5220
 	script_wait_frames 20 ; $5225
-.done:
+.walkToWall:
 	script_set_speed ACTOR_PLAYER, 1.0 ; $522c
 	script_move_target ACTOR_PLAYER, 5.0, 55.0 ; $5234
 	script_wait_move ACTOR_PLAYER ; $523f

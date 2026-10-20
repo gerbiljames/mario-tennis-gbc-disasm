@@ -377,14 +377,14 @@ SeniorCourtNpc08_12:
 	farcall InitDialogueTextCursor ; $5959
 	ld a, [wMapSceneStage2] ; $595c
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $595f
-	jr z, .speak ; $5961
-	jr nc, .altText ; $5963
+	jr z, .offerPractice ; $5961
+	jr nc, .speak ; $5963
 	script_face ACTOR_SENIOR_COURT_BETH, FACE_UP ; $5965
 	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_SWING_LOOP ; $596c
-.altText:
+.speak:
 	script_speak ACTOR_SENIOR_COURT_BETH ; $5973
 	ret ; $5978
-.speak:
+.offerPractice:
 	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $5979
 	farcall RunDialogueYesNoPrompt ; $597e
 	farcall ScriptCloseDialogueWindow ; $5981
@@ -402,10 +402,10 @@ SeniorCourtNpc08_12:
 	farcall ScriptCloseDialogueWindow ; $59ab
 	script_wait_frames 5 ; $59ae
 	and a ; $59b5
-	jr z, .done ; $59b6
+	jr z, .playPracticeMatch ; $59b6
 	script_speak ACTOR_SENIOR_COURT_BETH ; $59b8
 	ret ; $59bd
-.done:
+.playPracticeMatch:
 	script_wait_frames 10 ; $59be
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_50 ; $59c5
 	script_move_target ACTOR_SENIOR_COURT_BETH, 12.0, 21.0 ; $59d0
@@ -490,29 +490,29 @@ SeniorCourtNpc0A_12:
 	farcall InitDialogueTextCursor ; $5a9a
 	ld a, [wMapSceneStage2] ; $5a9d
 	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5aa0
-	jr z, .altText ; $5aa2
+	jr z, .offerPractice ; $5aa2
 	script_speak ACTOR_ROLE_SENIOR_COURT_BOB ; $5aa4
 	ret ; $5aa9
-.altText:
+.offerPractice:
 	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5aaa
 	farcall RunDialogueYesNoPrompt ; $5aaf
 	farcall ScriptCloseDialogueWindow ; $5ab2
 	script_wait_frames 5 ; $5ab5
 	and a ; $5abc
-	jr z, .speak ; $5abd
+	jr z, .confirmOffer ; $5abd
 	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5abf
 	ret ; $5ac4
-.speak:
+.confirmOffer:
 	farcall AdvanceDialogueTextCursor ; $5ac5
 	script_speak_restore ACTOR_SENIOR_COURT_B_BOB ; $5ac8
 	farcall RunDialogueYesNoPrompt ; $5acd
 	farcall ScriptCloseDialogueWindow ; $5ad0
 	script_wait_frames 5 ; $5ad3
 	and a ; $5ada
-	jr z, .done ; $5adb
+	jr z, .playPracticeMatch ; $5adb
 	script_speak ACTOR_SENIOR_COURT_B_BOB ; $5add
 	ret ; $5ae2
-.done:
+.playPracticeMatch:
 	script_get_actor_state ACTOR_SENIOR_COURT_B_BOB ; $5ae3
 	ld e, l ; $5ae8
 	ld d, h ; $5ae9

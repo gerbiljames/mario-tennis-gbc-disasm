@@ -270,9 +270,9 @@ N64RecordTypeSlideIn:
 N64RecordTypeSlideOut:
 	ld a, b ; $731e
 	or a ; $731f
-	jr z, .slideIn ; $7320
+	jr z, .slideBack ; $7320
 	ld c, $00 ; $7322
-.outLoop:
+.slideForwardLoop:
 	call AdvanceFrame ; $7324
 	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $7327
 	farcall RestoreMenuBgAndDrawPanel ; $7329
@@ -282,11 +282,11 @@ N64RecordTypeSlideOut:
 	inc a ; $7332
 	ld c, a ; $7333
 	cp $0b ; $7334
-	jr nz, .outLoop ; $7336
+	jr nz, .slideForwardLoop ; $7336
 	ret ; $7338
-.slideIn:
+.slideBack:
 	ld c, $0c ; $7339
-.inLoop:
+.slideBackLoop:
 	call AdvanceFrame ; $733b
 	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $733e
 	farcall RestoreMenuBgAndDrawPanel ; $7340
@@ -296,7 +296,7 @@ N64RecordTypeSlideOut:
 	dec a ; $7349
 	ld c, a ; $734a
 	or a ; $734b
-	jr nz, .inLoop ; $734c
+	jr nz, .slideBackLoop ; $734c
 	ret ; $734e
 N64RecordTypeCursorSpriteTask:
 	farcall TickMenuBgScroll ; $734f

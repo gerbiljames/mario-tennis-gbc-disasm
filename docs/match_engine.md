@@ -622,8 +622,7 @@ match-relevant fields:
 inside the contact window, bit 2 = body contact, bit 4 = **own depth within
 `$2a0` of the net** (`$08:$6ea6-$6ead`), bits 6/7 = lateral / depth steering
 requested. Bit 4 ("at the net") selects the volley/reach shot table and the AI's
-near/far reaction delay. (`include/ram_mirrored.inc` describes bit 4 as "within
-normal reach", which the code does not support.)
+near/far reaction delay. The bits are `BALLREACHB_*`.
 
 ### The frame order for one character
 

@@ -282,7 +282,7 @@ NetGamePractice3Cases3:
 	ld b, DRILLWORDING_SAME ; $63ca
 	call QueueDrillResultMessage ; $63cc
 	xor a ; $63cf
-	call IsCharBallInNormalReach ; $63d0
+	call IsCharNearNet ; $63d0
 	or a ; $63d3
 	jp z, DrillPointLost_6 ; $63d4
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL ; $63d7
@@ -534,7 +534,7 @@ StrokeMatch1Cases2:
 	ld b, DRILLWORDING_STROKE ; $6595
 	call SetDrillMessageByRallyParity ; $6597
 	ld a, [wLastShotCharIndex] ; $659a
-	call IsCharBallInNormalReach ; $659d
+	call IsCharNearNet ; $659d
 	jp nz, StrokeMatch1Cases4.abortLose ; $65a0
 	xor a ; $65a3
 	ret ; $65a4
@@ -582,7 +582,7 @@ StrokeMatch1Cases3:
 	ld b, DRILLWORDING_STROKE ; $65f5
 	call SetDrillMessageByRallyParity ; $65f7
 	ld a, [wLastShotCharIndex] ; $65fa
-	call IsCharBallInNormalReach ; $65fd
+	call IsCharNearNet ; $65fd
 	jp nz, StrokeMatch1Cases4.abortWin ; $6600
 	xor a ; $6603
 	ret ; $6604
@@ -630,7 +630,7 @@ StrokeMatch1Cases4:
 	ld b, DRILLWORDING_STROKE ; $6655
 	call SetDrillMessageByRallyParity ; $6657
 	ld a, [wLastShotCharIndex] ; $665a
-	call IsCharBallInNormalReach ; $665d
+	call IsCharNearNet ; $665d
 	jp nz, .abortLose ; $6660
 	xor a ; $6663
 	ret ; $6664

@@ -123,7 +123,7 @@ Unused_0b_SetAiReactionDelayFar:
 	ld hl, $007a ; $4440
 	call Unused_0b_WriteCharStructByte ; $4443
 	ret ; $4446
-IsCharBallInNormalReach:
+IsCharNearNet:
 	ld b, a ; $4447
 	ldh a, [hWramBank] ; $4448
 	push af ; $444a
@@ -134,7 +134,7 @@ IsCharBallInNormalReach:
 	ld hl, wCharBallReachFlags - wCharPosX ; $4456
 	add hl, de ; $4459
 	ld a, [hl] ; $445a
-	bit 4, a ; $445b
+	bit BALLREACHB_NEAR_NET, a ; $445b
 	jr z, .clear ; $445d
 	pop_wram_bank ; $445f
 	ld a, $01 ; $4464

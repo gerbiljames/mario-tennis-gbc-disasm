@@ -59,7 +59,7 @@ CheckBallContactWindow:
 	sub_hl_de ; $701d
 	ret nc ; $7023
 	ld hl, wCharBallReachFlags ; $7024
-	set 1, [hl] ; $7027
+	set BALLREACHB_CONTACT, [hl] ; $7027
 	ret ; $7029
 CheckBallInSwingRange:
 	ld hl, wBallRelCharDepth ; $702a
@@ -89,7 +89,7 @@ CheckBallInSwingRange:
 	sub_hl_de ; $705e
 	ret nc ; $7064
 	ld hl, wCharBallReachFlags ; $7065
-	set 0, [hl] ; $7068
+	set BALLREACHB_SWING_RANGE, [hl] ; $7068
 	ret ; $706a
 SelectServeShotType:
 	ld a, [wCharShotButton1] ; $706b
@@ -110,7 +110,7 @@ SelectRallyShotType:
 	ld e, a ; $7088
 	ld d, $00 ; $7089
 	ld hl, wCharBallReachFlags ; $708b
-	bit 4, [hl] ; $708e
+	bit BALLREACHB_NEAR_NET, [hl] ; $708e
 	jr z, SelectRallyShotType.standardTable ; $7090
 	ld hl, RallyReachShotTypeTable ; $7092
 	add hl, de ; $7095
@@ -287,13 +287,13 @@ ApplyCharMovementInput:
 	and PADF_RIGHT | PADF_LEFT ; $71c7
 	jr z, .checkVertical ; $71c9
 	ld hl, wCharBallReachFlags ; $71cb
-	set 6, [hl] ; $71ce
+	set BALLREACHB_STEER_X, [hl] ; $71ce
 .checkVertical:
 	ld a, [wCharInputBits] ; $71d0
 	and PADF_UP | PADF_DOWN ; $71d3
 	jr z, .done ; $71d5
 	ld hl, wCharBallReachFlags ; $71d7
-	set 7, [hl] ; $71da
+	set BALLREACHB_STEER_DEPTH, [hl] ; $71da
 .done:
 	ret ; $71dc
 HandleServePositioning:

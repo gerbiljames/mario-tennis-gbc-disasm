@@ -323,15 +323,15 @@ AcademyArrivalGreetingScene:
 	farcall ScriptCloseDialogueWindow ; $4ed1
 	script_wait_frames 5 ; $4ed4
 	and a ; $4edb
-	jr z, .finish ; $4edc
+	jr z, .askTour ; $4edc
 	farcall AdvanceDialogueTextCursor ; $4ede
-.finish:
+.askTour:
 	script_speak_restore ACTOR_ACADEMY_ARRIVAL_EMILY ; $4ee1
 	farcall RunDialogueYesNoPrompt ; $4ee6
 	farcall ScriptCloseDialogueWindow ; $4ee9
 	script_wait_frames 5 ; $4eec
 	and a ; $4ef3
-	jr z, .done ; $4ef4
+	jr z, .acceptedTour ; $4ef4
 	xor a ; $4ef6
 	ld [wStoryModeShowLocationName], a ; $4ef7
 	script_set_text Text_EmilyWaitUntilYouFeelBetter ; $4efa
@@ -339,7 +339,7 @@ AcademyArrivalGreetingScene:
 	set_flag FLAG_STORY_MENU_LOCKED ; $4f05
 	call ArmAcademyEntranceTileTrigger ; $4f08
 	ret ; $4f0b
-.done:
+.acceptedTour:
 	script_set_text Text_EmilyShowYouAroundAcademy ; $4f0c
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4f12
 	call FollowGuideIntoAcademy ; $4f17

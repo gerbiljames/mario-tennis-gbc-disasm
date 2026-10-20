@@ -205,9 +205,9 @@ AcademyWingInitScript_10:
 	script_set_position ACTOR_ACADEMY_WING_INIT0_TROPHY_1, 1.0, 1.0 ; $64f7
 .checkDoublesTrophy:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6502
-	jr nz, .done ; $6505
+	jr nz, .walkPlayerIn ; $6505
 	script_set_position ACTOR_ACADEMY_WING_INIT0_TROPHY_2, 1.0, 1.0 ; $6507
-.done:
+.walkPlayerIn:
 	script_player_speed 7.5 ; $6512
 	script_move_player 31.0, 59.0 ; $6518
 	farcall WaitPlayerMoveDone ; $6522

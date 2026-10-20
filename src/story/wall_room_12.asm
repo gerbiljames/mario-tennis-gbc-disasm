@@ -191,14 +191,14 @@ DormEntranceEntry0fScene:
 	farcall ScriptCloseDialogueWindow ; $44a6
 	script_wait_frames 5 ; $44a9
 	and a ; $44b0
-	jr nz, .finish ; $44b1
+	jr nz, .declined ; $44b1
 	script_speak ACTOR_DORM_ENTRANCE_KATE ; $44b3
 	farcall AdvanceDialogueTextCursor ; $44b8
-	jr .done ; $44bb
-.finish:
+	jr .afterReply ; $44bb
+.declined:
 	farcall AdvanceDialogueTextCursor ; $44bd
 	script_speak ACTOR_DORM_ENTRANCE_KATE ; $44c0
-.done:
+.afterReply:
 	script_set_anim ACTOR_DORM_ENTRANCE_EMILY, ANIM_NOD ; $44c5
 	script_wait_idle ACTOR_DORM_ENTRANCE_EMILY ; $44cc
 	script_speak ACTOR_DORM_ENTRANCE_EMILY ; $44d1
@@ -322,8 +322,8 @@ WallPracticeRoomNpc03_12:
 	dw WallPracticeRoomNpc03_12.speak ; $4737 jumptable
 	dw WallPracticeRoomNpc03_12.altText ; $4739 jumptable
 	dw WallPracticeRoomNpc03_12.altText ; $473b jumptable
-	dw WallPracticeRoomNpc03_12.done ; $473d jumptable
-	dw WallPracticeRoomNpc03_12.done ; $473f jumptable
+	dw WallPracticeRoomNpc03_12.bounceAndSpeak ; $473d jumptable
+	dw WallPracticeRoomNpc03_12.bounceAndSpeak ; $473f jumptable
 	dw WallPracticeRoomNpc03_12.speak ; $4741 jumptable
 .altText:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $4743
@@ -336,7 +336,7 @@ WallPracticeRoomNpc03_12:
 .speak:
 	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $475b
 	ret ; $4760
-.done:
+.bounceAndSpeak:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY, ANIM_BOUNCE ; $4761
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $4768
 	script_speak ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $476d

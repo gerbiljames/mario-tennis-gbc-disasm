@@ -126,7 +126,7 @@ NetGameMatch3Cases3:
 	call QueueDrillResultMessage ; $5b60
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5b63
 	and $01 ; $5b66
-	call IsCharBallInNormalReach ; $5b68
+	call IsCharNearNet ; $5b68
 	or a ; $5b6b
 	jp z, DrillPointLost_5 ; $5b6c
 	xor a ; $5b6f
@@ -485,7 +485,7 @@ NetGamePractice1Cases3:
 	ld b, DRILLWORDING_SAME ; $5e33
 	call QueueDrillResultMessage ; $5e35
 	xor a ; $5e38
-	call IsCharBallInNormalReach ; $5e39
+	call IsCharNearNet ; $5e39
 	or a ; $5e3c
 	jp z, .storeMatchAbortFlag ; $5e3d
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL ; $5e40

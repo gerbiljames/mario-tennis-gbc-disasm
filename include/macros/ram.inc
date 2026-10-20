@@ -219,7 +219,7 @@ NEXTU
 \1CharSwingHoldFrames:: db
 ; [8-bit] Shot button already recorded, so BufferShotButtonPress ignores it while held
 \1CharLastShotButton:: db
-; [8-bit] This frame's ball-geometry tests, rebuilt by UpdateCharBallGeometry: bit 0 = ball within swing range, bit 1 = inside the contact window, bit 4 = within normal reach (clear selects the stretching shot table)
+; [8-bit] This frame's ball-geometry and steering flags (BALLREACHB_*), rebuilt by UpdateCharBallGeometry
 \1CharBallReachFlags:: db
 ; [8-bit] Set while the charge flash plays; cleared when the swing starts or aborts
 \1CharChargeFlashOn:: db
@@ -237,7 +237,7 @@ NEXTU
 \1CharPointResult:: db
 ; [8-bit] Shot buttons the AI chose for this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 \1AiShotButtons:: db
-; [8-bit] Countdown seeded from wAiTrackingParam whenever the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it per frame and picks no shot until 0 (or until wCharBallReachFlags bit 0 says the ball is in reach), so a larger parameter commits later
+; [8-bit] Countdown seeded from wAiTrackingParam whenever the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it per frame and picks no shot until 0 (or until BALLREACHB_SWING_RANGE says the ball is in reach), so a larger parameter commits later
 \1AiTrackingCountdown:: db
 ; [8-bit] Set to 1 by CharRallyReadyPhase, cleared with wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase does not steer while it is 0
 \1CharRallyReady:: db
@@ -276,9 +276,9 @@ NEXTU
 \1CharDiveSpeed:: dw
 ; [8-bit] Character id passed to InitChar, before RemapExtendedCharId
 \1CharId:: db
-; [8-bit] Base frames the AI waits before reacting to a ball within normal reach; AiSetReactionDelay adds 0-3 at random into wAiActionTimer. Attribute record +$1b
+; [8-bit] Base frames the AI waits before reacting while near the net (BALLREACHB_NEAR_NET set); AiSetReactionDelay adds 0-3 at random into wAiActionTimer. Attribute record +$1b
 \1AiReactionDelayNear:: db
-; [8-bit] The same for a ball outside normal reach (wCharBallReachFlags bit 4 clear). Attribute record +$1c
+; [8-bit] The same away from the net (BALLREACHB_NEAR_NET clear). Attribute record +$1c
 \1AiReactionDelayFar:: db
 ; [8-bit] How the AI chases the ball; read by AiTrackBallPhase and the baseliner rally state. Attribute record +$1d
 \1AiTrackingParam:: db

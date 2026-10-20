@@ -90,7 +90,8 @@ after a real defect broke it:
             lists name their ids, and a routine passed Text_* in hl/de at
             two or more sites is passed no raw number there, and no `bit n, r` on a joypad byte (loaded
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
-            leaves n raw
+            leaves n raw, nor does a bit/set/res on a FLAG_BYTES byte
+            (wCharFlags, wCharBallReachFlags) use anything but its family
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
             ACTORF_* / OBJSLOT_* field adds no raw offset under $100 to a
             record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c|e /
@@ -112,7 +113,9 @@ after a real defect broke it:
             branch (13 were pad tests or other paths), and a .store* local
             writes memory before it falls into another label or leaves by
             ret or jump (18 were register results, shared ret tails, or
-            prompt redraws)
+            prompt redraws), and a .done / .exit / .finish local entered
+            only by a jump runs no dialogue, movement or prompt macro before
+            it leaves (22 were alternate branches or placement cases)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
@@ -1586,6 +1589,100 @@ def _raw_pad_bits(fail):
     return n
 
 
+# Bit-flag bytes whose bits are a constant family: every bit/set/res on the
+# byte (in a register loaded from it, through hl pointing at it, or on a
+# register stored into it) names its bit.
+FLAG_BYTES = {
+    "wCharBallReachFlags": "BALLREACHB_",
+    "wCharFlags": "CHARB_",
+}
+_FLAG_NAMES = "|".join(FLAG_BYTES)
+_FLAG_LOAD_RE = re.compile(rf"ldh? ([abcdehl]), \[({_FLAG_NAMES})\]")
+_FLAG_HL_RE = re.compile(rf"ld hl, ({_FLAG_NAMES})\b.*")
+_FLAG_STORE_RE = re.compile(rf"ldh? \[({_FLAG_NAMES})\], ([abcdehl])")
+_FLAG_BIT_RE = re.compile(r"(bit|set|res) (\w+), (\[hl\]|[abcdehl])")
+_FLAG_HL_WRITE_RE = re.compile(r"(?:ld|pop|inc|dec) hl\b.*|ld [hl], .*|.*\[hl[+-]\].*")
+
+
+def _raw_flag_bits(fail):
+    """A bit/set/res on a FLAG_BYTES byte names its bit from the byte's
+    family. State follows branches to local labels and is dropped at calls."""
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        scope = owner = None
+        state, built, pending = {}, {}, {}
+        for i, line in enumerate(lines):
+            if m := _GLOBAL_RE.match(line):
+                scope = owner = m.group(1)
+                state, built = dict(pending.pop(scope, {})), {}
+                continue
+            if m := re.match(r"^(\w+)?(\.\w+):", line):
+                owner = m.group(1) or scope
+                state.update(pending.pop(owner + m.group(2), {}))
+                continue
+            ins = line.split(";")[0].strip()
+            if not ins:
+                continue
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+
+            def judge(op, prefix):
+                nonlocal n
+                n += 1
+                if not op.startswith(prefix):
+                    fail("raw-ids", f"{where}: {owner} bit {op} on a {prefix}* byte -- a {prefix} name?")
+
+            if m := _FLAG_LOAD_RE.fullmatch(ins):
+                state[m.group(1)] = FLAG_BYTES[m.group(2)]
+                built.pop(m.group(1), None)
+                continue
+            if m := _FLAG_HL_RE.fullmatch(ins):
+                state["[hl]"] = FLAG_BYTES[m.group(1)]
+                state.pop("h", None), state.pop("l", None)
+                continue
+            if m := _FLAG_STORE_RE.fullmatch(ins):
+                for op, w in built.pop(m.group(2), []):
+                    where = w
+                    judge(op, FLAG_BYTES[m.group(1)])
+                continue
+            if m := _FLAG_BIT_RE.fullmatch(ins):
+                if m.group(3) in state:
+                    judge(m.group(2), state[m.group(3)])
+                elif m.group(1) != "bit" and m.group(3) != "[hl]":
+                    built.setdefault(m.group(3), []).append((m.group(2), where))
+                continue
+            if m := _PAD_BRANCH_RE.fullmatch(ins):
+                target = scope + m.group(2) if m.group(2).startswith(".") else m.group(2)
+                pending.setdefault(target, {}).update(state)
+                if "," not in ins:
+                    state, built = {}, {}
+                continue
+            if ins in ("ret", "reti", "jp hl") or ins.startswith(("call", "farcall", "rst")):
+                state, built = {}, {}
+                continue
+            if (m := re.fullmatch(r"ld ([abcde]), \[hl\]", ins)) and "[hl]" in state:
+                state[m.group(1)] = state["[hl]"]
+                built.pop(m.group(1), None)
+                continue
+            if _FLAG_HL_WRITE_RE.fullmatch(ins):
+                state.pop("[hl]", None)
+            if m := re.fullmatch(r"ld ([abcdehl]), ([abcdehl])", ins):
+                if m.group(2) in state:
+                    state[m.group(1)] = state[m.group(2)]
+                else:
+                    state.pop(m.group(1), None)
+                built.pop(m.group(1), None)
+                continue
+            if m := _PAD_WRITE_RE.match(ins):
+                regs = m.group(1) or (m.group(3) or "").replace("f", "") or "a"
+                for r in regs:
+                    state.pop(r, None)
+                if m.group(1) or m.group(3) or m.group(4) is not None:
+                    for r in regs:
+                        built.pop(r, None)
+    return n
+
+
 def check_raw_ids(fail):
     """A raw cp/store operand on a variable (wVar + n counts as wVar) that
     names its other values from a constant family must not equal a member of
@@ -1639,7 +1736,7 @@ def check_raw_ids(fail):
             fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
-    return n + _raw_pad_bits(fail)
+    return n + _raw_pad_bits(fail) + _raw_flag_bits(fail)
 
 
 # Raw offsets a field-naming routine adds to a pointer that are not fields of
@@ -1909,6 +2006,16 @@ KNOWN_LOCAL_NAMES = {
     ("Unused_18_InitPlayerRecordForCharacter", ".storeRecord"): "the stores follow .partnerSlot",
 }
 _END_LOCAL_RE = re.compile(r"\.(?:done|exit|finish)\d*$")
+# End locals entered only by a jump that run a scene: (routine, local) -> why.
+KNOWN_END_SCENES = {
+    ("TrainingCourtNpc07_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc12_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc0D_15", ".done"): "the all-lessons-done line",
+    ("WaterSpriteSwingContestScene", ".finish"): "the contest's end, left from its swing loop",
+}
+_END_SCENE_RE = re.compile(r"(?:script_(?:set_text|speak\w*|move\w*|set_position|face\w*|follow|set_anim)"
+                           r"|farcall (?:RunDialogueYesNoPrompt|WaitPlayerMoveDone))\b")
+_UNCOND_EXIT_RE = re.compile(r"(?:ret|reti|as_end|as_halt|jumptable\b.*|(?:jr|jp) (?!(?:nz|z|nc|c),).*|d[bw] .*)")
 _STORE_LOCAL_RE = re.compile(r"\.store(?![a-z])")
 _STORE_RE = re.compile(r"^\s*(?:ldh?\s+\[|ld\s+\[|(?:inc|dec)\s+\[hl\]|(?:set|res)\s+\w+\s*,\s*\[hl\])")
 _CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
@@ -1919,7 +2026,9 @@ def check_local_names(fail):
     earlier local of its routine (it is a next-item step, not the end), and a
     `.check<Var>` local, where w<Var> or h<Var> is a RAM symbol, names that
     symbol within its first three instructions, before any branch, and a
-    `.store*` local writes memory before another label, ret or jump."""
+    `.store*` local writes memory before another label, ret or jump. A
+    `.done` / `.exit` / `.finish` local the line above does not fall into
+    runs no dialogue, movement or prompt macro before it leaves."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
     n, seen = 0, set()
@@ -1957,6 +2066,12 @@ def check_local_names(fail):
                     fail("localnames", f"${bank:02x}: {owner}{local} branches back to {back}")
                 elif not back and key in KNOWN_LOCAL_NAMES:
                     fail("localnames", f"{owner}{local} no longer branches back -- drop it from KNOWN_LOCAL_NAMES")
+                scene = _jump_only_scene(lines, i)
+                if scene and key not in KNOWN_END_SCENES:
+                    fail("localnames", f"${bank:02x}: {owner}{local} is entered only by a jump and runs {scene}"
+                                       " -- a branch or scene name?")
+                elif not scene and key in KNOWN_END_SCENES:
+                    fail("localnames", f"{owner}{local} no longer runs a scene -- drop it from KNOWN_END_SCENES")
                 continue
             if _STORE_LOCAL_RE.match(local):
                 seen.add((bank, key))
@@ -1989,6 +2104,27 @@ def check_local_names(fail):
             elif named and key in KNOWN_LOCAL_NAMES:
                 fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
     return n
+
+
+def _jump_only_scene(lines, start):
+    """The first dialogue, movement or prompt macro a local runs before it
+    leaves, when the line above it does not fall into it; else None."""
+    for prev in reversed(lines[:start]):
+        code = prev.split(";")[0].strip()
+        if not code:
+            continue
+        if code.endswith(":") or not _UNCOND_EXIT_RE.fullmatch(code):
+            return None
+        break
+    for later in lines[start + 1:]:
+        if _GLOBAL_RE.match(later):
+            return None
+        code = later.split(";")[0].strip()
+        if m := _END_SCENE_RE.match(code):
+            return m.group(0)
+        if _UNCOND_EXIT_RE.fullmatch(code):
+            return None
+    return None
 
 
 def _reaches_store(lines, start, owner, labels):

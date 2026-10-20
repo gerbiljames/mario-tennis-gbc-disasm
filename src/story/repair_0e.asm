@@ -234,24 +234,24 @@ RunRepairCounterDialogue:
 	set_flag FLAG_HAVE_SMALL_RACKET ; $4de8
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $4deb
 	script_set_text Text_RepairCounterWelcome ; $4dee
-	jr .done ; $4df4
+	jr .speakWelcome ; $4df4
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4df6
 	set_flag FLAG_HAVE_SMALL_RACKET ; $4df9
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $4dfc
 	set_flag FLAG_HAVE_IRON_RACKET ; $4dff
 	set_flag FLAG_HAVE_IRON_SHOES ; $4e02
 	script_set_text Text_RepairCounterWelcome ; $4e05
-	jr .done ; $4e0b
+	jr .speakWelcome ; $4e0b
 .noRepair:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4e0d
 	test_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e10
 	jr z, .repaired ; $4e13
 	script_set_text Text_RepairCounterWelcome ; $4e15
-	jr .done ; $4e1b
+	jr .speakWelcome ; $4e1b
 .repaired:
 	script_set_text Text_RepairCounterWelcomeSenior ; $4e1d
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
-.done:
+.speakWelcome:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e26
 	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e2e
 	farcall RunDialogueYesNoPrompt ; $4e33

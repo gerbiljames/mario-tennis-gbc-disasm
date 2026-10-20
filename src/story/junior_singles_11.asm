@@ -268,10 +268,10 @@ JuniorClassCourtSinglesDNpc0A_11:
 	farcall AdvanceDialogueTextCursor ; $6cd6
 .speak:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6cd9
-	jr nz, .done ; $6cdc
+	jr nz, .wonDoublesFinal ; $6cdc
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cde
 	ret ; $6ce3
-.done:
+.wonDoublesFinal:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, ANIM_NOD ; $6ce4
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6ceb
 	script_set_text Text_AllieJuniorCourtServiceAceTreat ; $6cf0
@@ -301,7 +301,7 @@ JuniorClassCourtSinglesInitScript_11:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6d31
 	jr nz, .placeActors ; $6d34
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6d36
-	jr nz, .done ; $6d39
+	jr nz, .juniorChampion ; $6d39
 	ret ; $6d3b
 .storyComplete:
 	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
@@ -323,7 +323,7 @@ JuniorClassCourtSinglesInitScript_11:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE, ActorScript_11_47 ; $6d7a
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, 63.0, 41.0 ; $6d85
 	ret ; $6d90
-.done:
+.juniorChampion:
 	ld hl, JuniorClassCourtSinglesNpcScriptsA_11 ; $6d91
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $6d94
 	farcall WriteStoryStateWord ; $6d97
