@@ -65,7 +65,7 @@ SetupCharacterSprite:
 	farcall SetupCharSpriteFromObjectDef ; $5a71
 	pop de ; $5a74
 	ld a, e ; $5a75
-	ld [wCharGfxBank], a ; $5a76
+	ld [wCharPaletteId], a ; $5a76
 	ld a, [wCharIndex] ; $5a79
 	add $04 ; $5a7c
 	ld [wCharSpriteAttr], a ; $5a7e
@@ -83,7 +83,7 @@ SetupCharacterSprite:
 	ld a, e ; $5aa0
 	ld [hl+], a ; $5aa1
 	ld [hl], d ; $5aa2
-	farcall ReloadCharFrameGfx ; $5aa3
+	farcall ReloadCharPalette ; $5aa3
 	ret ; $5aa6
 CharFrameGfxDest_07:
 	; $5aa7, 8 bytes (records:2)

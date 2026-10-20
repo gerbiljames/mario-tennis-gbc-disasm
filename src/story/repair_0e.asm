@@ -370,7 +370,7 @@ PushEquipmentNameTextArg:
 	jr .shoes ; $4f79
 .racket:
 	call GetEquippedRacketNibble ; $4f7b
-	ld hl, $00e5 ; $4f7e
+	ld hl, Text_RacketNormal ; $4f7e
 	add_hl_a ; $4f81
 	call PushShortTextArg_0e ; $4f86
 	ret ; $4f89

@@ -146,7 +146,7 @@ WriteBracketEntrantName:
 	push hl ; $78a6
 	or a ; $78a7
 	jr z, .player ; $78a8
-	ld hl, $004b ; $78aa
+	ld hl, Text_NameKevin ; $78aa
 	dec a ; $78ad
 	add_hl_a ; $78ae
 	push hl ; $78b3
@@ -655,16 +655,16 @@ BuildMarioCastChartColumnList:
 	jr nz, .loop ; $7d00
 	ret ; $7d02
 MarioCastChartColumnListTable:
-	; $7d03, 18 bytes (records:2)
-	dw $01c0 ; record 0
+	; $7d03, 18 bytes (save_flag_ids)
+	dw SAVEFLAG_UNLOCKED_SAMMI ; record 0
 	dw $ffff ; record 1
-	dw $01e0 ; record 2
+	dw SAVEFLAG_UNLOCKED_ELDEN ; record 2
 	dw $ffff ; record 3
-	dw $0160 ; record 4
+	dw SAVEFLAG_UNLOCKED_CURT ; record 4
 	dw $ffff ; record 5
-	dw $01a0 ; record 6
-	dw $0140 ; record 7
-	dw $0180 ; record 8
+	dw SAVEFLAG_UNLOCKED_SEAN ; record 6
+	dw SAVEFLAG_UNLOCKED_FAY ; record 7
+	dw SAVEFLAG_UNLOCKED_MARK ; record 8
 MarioCastChartColumnTable:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00

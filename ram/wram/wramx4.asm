@@ -310,12 +310,12 @@ w4CharAnimFrame:: db
 	ds 2
 ; [8-bit] First VRAM tile of the character's sprite, from a per-character-index table
 w4CharTileBase:: db
-; [8-bit] OAM attribute byte. The low three bits are the CGB OBJ palette (wCharIndex + 4) and also the tile block ReloadCharFrameGfx uploads into (& $07, + $08); the high bits are the flip bits the animation's $fb command toggles, cleared by SetCharAnimation (`and $0f`)
+; [8-bit] OAM attribute byte. The low three bits are the CGB OBJ palette (wCharIndex + 4), the slot ReloadCharPalette loads into; the high bits are the flip bits the animation's $fb command toggles, cleared by SetCharAnimation (`and $0f`)
 w4CharSpriteAttr:: db
 ; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
 w4CharFramePlaceTablePtr:: dw
-; [8-bit] ROM bank of the character's frame graphics; ReloadCharFrameGfx and LoadCharChargeFlashGfx pass it to the far-call vector at $0110
-w4CharGfxBank:: db
+; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from wActorObjDef+0); LoadCharChargeFlashPalette loads entry + 8, the flash variant
+w4CharPaletteId:: db
 	ds 5
 ; [16-bit] X velocity (zeroed on placement and at point end)
 w4CharVelX:: dw
@@ -343,8 +343,8 @@ w4CharLastShotButton:: db
 w4CharBallReachFlags:: db
 ; [8-bit] Set while the charge flash plays; cleared when the swing starts or aborts
 w4CharChargeFlashOn:: db
-; [8-bit] 1 while the flashed tiles are in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2; this latch makes each half load its graphics once (set + LoadCharChargeFlashGfx, or clear + ReloadCharFrameGfx)
-w4CharChargeFlashGfxLoaded:: db
+; [8-bit] 1 while the flash palette is loaded. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2; this latch makes each half load its palette once (set + LoadCharChargeFlashPalette, or clear + ReloadCharPalette)
+w4CharChargeFlashPalLoaded:: db
 ; [8-bit] Last projected screen X (BuildCharSpriteSlots)
 w4CharScreenX:: db
 ; [8-bit] Last projected screen Y

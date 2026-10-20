@@ -883,66 +883,211 @@ KNOWN_RAW_IDS = {
     ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
     ("wPlayer1MainChar", "$3f"),   # debug_02's placeholder record id, not a drill opponent
 }
+# Data rows whose values are ids: a macro's argument by position, and tables
+# by label or by the kind their header comment names.
+RAW_ID_MACRO_ARGS = {("story_location", 0): "STORYLOC_"}
+RAW_ID_TABLE_KINDS = {"save_flag_ids": "SAVEFLAG_", "flag numbers": "FLAG_"}
+RAW_ID_TABLES = {
+    "MinigameSelectMenuTable": "MINIGAME_",
+    "MinigameDrillIdTable": "MINIGAME_",
+    "StorySlotBlockIds_03": "SAVEBLOCK_",
+}
+# Families of variables and arguments with too few named sites to infer them.
+RAW_ID_FAMILIES = {
+    "wStoryLocationBGM": "BGM",
+    "TennisDictionaryScreen(a)": "TENNISDICT",
+    "ShowRankingBoard(d)": "RANKINGBOARD",
+}
+# Variables whose bytes are separate fields, so wVar + n is not wVar.
+_FIELD_VARS = {"wCurrentMinigameStoryMatch"}
 _NUMBER_RE = re.compile(r"(\$[0-9a-fA-F]+|%[01]+|\d+)")
+_TEXT_INDEX_RE = re.compile(r"Text_[0-9a-f]{2}_\d+$")
+_VAR_RE = r"([wh][A-Z]\w*(?: \+ (?:\$[0-9a-fA-F]+|\d+))?)"
+_REGS8 = frozenset("abcdehl")
+_PAIRS = {"bc": "bc", "de": "de", "hl": "hl", "af": "a"}
+# Instructions that leave every register as it was.
+_KEEPS_ALL_RE = re.compile(r"(cp |bit |push |nop$|ei$|di$|scf$|ccf$|halt$|and a$|or a$|"
+                           r"(jr|jp) (n?z|n?c),|ret (n?z|n?c)$|ldh? \[[^\]]+\], [a-l]$|ld \[(bc|de)\], a$)")
 
 
-def check_raw_ids(fail):
-    """A raw cp/store operand on a variable that names its other values from a
-    constant family must not equal a member of that family. A routine's
-    argument in a counts as a variable `Routine(a)`."""
-    import consts
-    values = consts.constants()
+def _number(op):
+    return int(op[1:], 16) if op.startswith("$") else int(op[1:], 2) if op.startswith("%") else int(op)
+
+
+def _clobber(regs, spent, r):
+    for k in [k for k in regs if r in k or k in _PAIRS.get(r, r)]:
+        del regs[k]
+        spent.discard(k)
+
+
+def _var(operand):
+    name = operand.split(" + ")[0]
+    return operand if name in _FIELD_VARS else name
+
+
+def _twin_base(name):
+    """A live twin's base name (tools/twins.py names them base + _<bank>)."""
+    return re.sub(r"_[0-9a-f]{2}$", "", name)
+
+
+def _raw_id_uses():
+    """{variable or Routine(reg): [(operand, where)]} over every bank's code:
+    a `cp` on a loaded variable, a store into one, and the immediates loaded
+    into a routine's argument registers before a call or farcall."""
     uses = {}
     for holder in holders():
         lines, origin = bank_lines(holder)
-        src = hl = arg = None
-        prev = ""
+        regs = {}      # register -> immediate, or "=wVar" when it holds that variable
+        spent = set()  # registers whose immediate was stored, so not an argument
         for i, line in enumerate(lines):
-            if re.match(r"[A-Za-z_.]", line):
-                src = hl = arg = None
-                prev = ""
+            if _GLOBAL_RE.match(line) or re.match(r"[A-Za-z_]", line):
+                regs, spent = {}, set()
+                continue
+            t = line.split(";")[0].strip()
+            if t.startswith("."):
+                # a local label is a jump target: keep what a was loaded from, drop immediates
+                regs = {r: v for r, v in regs.items() if v.startswith("=")}
+                continue
+            if not t:
+                continue
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if "[hl]" in t:
+                spent.add("hl")
+            if re.search(r"\[hl[+-]\]", t):
+                _clobber(regs, spent, "hl")
+                if t.startswith("ld a,"):
+                    _clobber(regs, spent, "a")
+                continue
+            if m := re.match(r"cp (.+)$", t):
+                if regs.get("a", "").startswith("="):
+                    uses.setdefault(regs["a"][1:], []).append((m.group(1), where))
+                continue
+            if m := re.match(rf"ldh? \[{_VAR_RE}\], a$", t):
+                if "a" in regs and not regs["a"].startswith("="):
+                    uses.setdefault(_var(m.group(1)), []).append((regs["a"], where))
+                    spent.add("a")
+                elif "a" not in regs:
+                    regs["a"] = "=" + _var(m.group(1))
+                continue
+            if m := re.match(r"ld \[hl\], (.+)$", t):
+                if regs.get("hl", "").startswith("="):
+                    v = regs.get("a") if m.group(1) == "a" else m.group(1)
+                    if v and not v.startswith("=") and v not in _REGS8:
+                        uses.setdefault(regs["hl"][1:], []).append((v, where))
+                        if m.group(1) == "a":
+                            spent.add("a")
+                continue
+            if _KEEPS_ALL_RE.match(t):
+                continue
+            if t == "add_hl_a" or re.match(r"add hl, (bc|de)$", t):
+                if t == "add_hl_a":
+                    _clobber(regs, spent, "a")
+                continue
+            if m := re.match(r"(call|farcall) (\w+)$", t):
+                for r, v in regs.items():
+                    if not v.startswith("=") and r not in spent:
+                        uses.setdefault(f"{_twin_base(m.group(2))}({r})", []).append((v, where))
+                regs, spent = {}, set()
+                continue
+            if m := re.match(rf"ldh? a, \[{_VAR_RE}\]$", t):
+                _clobber(regs, spent, "a")
+                regs["a"] = "=" + _var(m.group(1))
+                continue
+            if m := re.match(rf"ld hl, {_VAR_RE}$", t):
+                _clobber(regs, spent, "hl")
+                regs["hl"] = "=" + _var(m.group(1))
+                continue
+            if m := re.match(r"ld ([a-ehl]|bc|de|hl), ([^\[]+)$", t):
+                r, v = m.groups()
+                if v in regs and r in _REGS8 and v in _REGS8:
+                    val = regs[v]
+                else:
+                    val = None if v in _REGS8 or v in _PAIRS else v
+                _clobber(regs, spent, r)
+                if val:
+                    regs[r] = val
+                continue
+            if m := re.match(r"lb (bc|de|hl), ([^,]+), (.+)$", t):
+                _clobber(regs, spent, m.group(1))
+                regs[m.group(1)[0]], regs[m.group(1)[1]] = m.group(2), m.group(3)
+                continue
+            m = re.match(r"(?:ldh? ([a-l]|bc|de|hl|sp), |(?:inc|dec|pop|swap|rlc?|rrc?|sla|sra|srl) "
+                         r"([a-l]|bc|de|hl|af)$|(?:res|set) \w+, ([a-l])$|add (hl|sp), |"
+                         r"(add|adc|sub|sbc|and|or|xor|cpl|rla|rra|rlca|rrca|daa)\b)", t)
+            if m:
+                r = next(g for g in m.groups() if g)
+                _clobber(regs, spent, "a" if m.group(5) else r)
+                continue
+            regs, spent = {}, set()
+    return uses
+
+
+def _raw_data_ids():
+    """[(family prefix, operand, where)] over the data rows RAW_ID_MACRO_ARGS,
+    RAW_ID_TABLE_KINDS and RAW_ID_TABLES name."""
+    out = []
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        table = None
+        for i, line in enumerate(lines):
+            if m := _GLOBAL_RE.match(line):
+                table = RAW_ID_TABLES.get(m.group(1))
+                if not table and i + 1 < len(lines):
+                    kind = re.search(r"\(([^)]*)\)\s*$", lines[i + 1])
+                    table = kind and next((p for k, p in RAW_ID_TABLE_KINDS.items()
+                                           if kind.group(1).startswith(k)), None)
                 continue
             t = line.split(";")[0].strip()
             if not t:
                 continue
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
-            if (m := re.match(r"call (\w+)$", t)) and arg:
-                uses.setdefault(f"{m.group(1)}(a)", []).append((arg, where))
-            if m := re.match(r"ld a, ([^\[]+)$", t):
-                arg = m.group(1) if m.group(1) not in "bcdehl" else None
-            elif re.match(r"(ldh? \[.+\], a$|ldh? a,|add|adc|sub|sbc|and|or|xor|inc a|dec a|cpl|rl|rr|sl|sr|swap a|pop af|call|rst|jp|jr|ret|daa|ccf|scf)\b", t):
-                arg = None
-            if m := re.match(r"ldh? a, \[([wh][A-Z]\w+)\]$", t):
-                src = m.group(1)
-            elif m := re.match(r"ld hl, ([wh][A-Z]\w+)$", t):
-                hl = m.group(1)
-            elif (m := re.match(r"cp (.+)$", t)) and src:
-                uses.setdefault(src, []).append((m.group(1), where))
-            elif m := re.match(r"ldh? \[([wh][A-Z]\w+)\], a$", t):
-                if (mm := re.match(r"ld a, ([^\[]+)$", prev)) and mm.group(1) not in "bcdehl":
-                    uses.setdefault(m.group(1), []).append((mm.group(1), where))
-            else:
-                if (m := re.match(r"ld \[hl\], (.+)$", t)) and hl and m.group(1) not in "abcdehl":
-                    uses.setdefault(hl, []).append((m.group(1), where))
-                if not re.match(r"(jr|jp) (n?z|n?c),", t):
-                    src = None
-                if re.match(r"(ld (hl|h|l),|inc hl|dec hl|pop hl|add hl|call|jp|ret|ld a, \[hl[+-]\])", t):
-                    hl = None
-            prev = t
+            word, _, rest = t.partition(" ")
+            args = [a.strip() for a in rest.split(",")] if rest else []
+            if table and word in ("db", "dw"):
+                out += [(table, a, where) for a in args]
+            elif word not in ("db", "dw", "table_width", "assert_table_length"):
+                table = None
+            for (macro, k), prefix in RAW_ID_MACRO_ARGS.items():
+                if word == macro and k < len(args):
+                    out.append((prefix, args[k], where))
+    return out
+
+
+def check_raw_ids(fail):
+    """A raw cp/store operand on a variable (wVar + n counts as wVar) that
+    names its other values from a constant family must not equal a member of
+    that family. The immediates in a routine's argument registers at a call
+    count as variables `Routine(reg)`. Data rows of the macros and tables
+    RAW_ID_* list must name their ids."""
+    import consts
+    values = consts.constants()
+    uses = _raw_id_uses()
     n = 0
+
+    def names_of(v, families):
+        return sorted((k for k, x in values.items() if x == v and k.split("_")[0] in families
+                       and not k.startswith("NUM_")), key=lambda k: bool(_TEXT_INDEX_RE.match(k)))
+
     for var, ops in uses.items():
         if var in _PER_LOCATION_VARS:
             continue
         families = {op.split("_")[0] for op, _ in ops if op in values and "_" in op}
+        families |= {RAW_ID_FAMILIES.get(var)} - {None}
         for op, where in ops:
             if not _NUMBER_RE.fullmatch(op):
                 continue
             n += 1
-            v = int(op[1:], 16) if op.startswith("$") else int(op[1:], 2) if op.startswith("%") else int(op)
-            names = [k for k, x in values.items() if x == v and k.split("_")[0] in families
-                     and not k.startswith("NUM_")]
+            names = names_of(_number(op), families)
             if names and (var, op) not in KNOWN_RAW_IDS:
                 fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
+    for prefix, op, where in _raw_data_ids():
+        n += 1
+        if _NUMBER_RE.fullmatch(op):
+            names = [k for k, x in values.items() if x == _number(op) and k.startswith(prefix)]
+            if names:
+                fail("raw-ids", f"{where}: {op} -- {names[0]}?")
+        elif op not in values or not op.startswith(prefix):
+            fail("raw-ids", f"{where}: {op} is not a {prefix}* id")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
     return n

@@ -198,14 +198,14 @@ def wCharAnimFrame equ $df33
 ; [8-bit] First VRAM tile of this character's sprite, from a per-character-index table
 def wCharTileBase equ $df36
 
-; [8-bit] OAM attribute byte for the character. The low three bits are the CGB OBJ palette (wCharIndex + 4) and double as the tile-block index ReloadCharFrameGfx uploads into (& $07, + $08); the high bits are the flip bits the animation script's $fb command toggles, and SetCharAnimation clears them with `and $0f`
+; [8-bit] OAM attribute byte for the character. The low three bits are the CGB OBJ palette (wCharIndex + 4), the slot ReloadCharPalette loads into; the high bits are the flip bits the animation script's $fb command toggles, and SetCharAnimation clears them with `and $0f`
 def wCharSpriteAttr equ $df37
 
 ; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
 def wCharFramePlaceTablePtr equ $df38
 
-; [8-bit] ROM bank holding the character's frame graphics; ReloadCharFrameGfx and LoadCharChargeFlashGfx pass it to the far-call vector at $0110
-def wCharGfxBank equ $df3a
+; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from wActorObjDef+0); LoadCharChargeFlashPalette loads entry + 8, the flash variant
+def wCharPaletteId equ $df3a
 
 ; [16-bit] X velocity (zeroed on placement and at point end)
 def wCharVelX equ $df40
@@ -246,8 +246,8 @@ def wCharBallReachFlags equ $df50
 ; [8-bit] Set while the charge flash is playing; cleared when the swing starts or aborts
 def wCharChargeFlashOn equ $df51
 
-; [8-bit] 1 while the flashed tiles are in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2 and uses this latch to load each half's graphics once (LoadCharChargeFlashGfx / ReloadCharFrameGfx)
-def wCharChargeFlashGfxLoaded equ $df52
+; [8-bit] 1 while the flash palette is loaded. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2 and uses this latch to load each half's palette once (LoadCharChargeFlashPalette / ReloadCharPalette)
+def wCharChargeFlashPalLoaded equ $df52
 
 ; [8-bit] Last projected screen X (BuildCharSpriteSlots)
 def wCharScreenX equ $df53

@@ -31,7 +31,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	script_null_script ACTOR_PARTNER ; $5d9f
 	script_player_speed 2.0 ; $5da4
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5daa
-	sub $02 ; $5dad
+	sub STORYMATCH_JUNIOR_3 ; $5dad
 	jumptable a ; $5daf
 	dw JuniorClassCourtDoublesEntry0dScene.wonRank3 ; $5db1 jumptable
 	dw JuniorClassCourtDoublesEntry0dScene.wonRank2 ; $5db3 jumptable

@@ -37,7 +37,7 @@ RetreatToPreviousPlayerSlot:
 	jr z, .done ; $5c82
 	ld c, a ; $5c84
 	ld a, b ; $5c85
-	cp $04 ; $5c86
+	cp CHARSELECTSLOT_DONE ; $5c86
 	jr z, .noPrevious ; $5c88
 	ld a, c ; $5c8a
 	ret ; $5c8b
@@ -382,9 +382,9 @@ InitMatchCharsFromSelection:
 	farcall InitMatchRecordFromCharId ; $5ed4
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $5ed7
-	cp $ff ; $5eda
+	cp CHAR_NONE ; $5eda
 	jr z, .slot3 ; $5edc
-	cp $80 ; $5ede
+	cp CHAR_STORY_MAIN ; $5ede
 	jr c, .slot2Created ; $5ee0
 	ld c, a ; $5ee2
 	and $07 ; $5ee3
@@ -403,9 +403,9 @@ InitMatchCharsFromSelection:
 	farcall InitMatchRecordFromCharId ; $5ef9
 .slot3:
 	ld a, [wCharSelectSlotChars + 2] ; $5efc
-	cp $ff ; $5eff
+	cp CHAR_NONE ; $5eff
 	jr z, .slot4 ; $5f01
-	cp $80 ; $5f03
+	cp CHAR_STORY_MAIN ; $5f03
 	jr c, .slot3Created ; $5f05
 	ld c, a ; $5f07
 	and $07 ; $5f08
@@ -424,9 +424,9 @@ InitMatchCharsFromSelection:
 	farcall InitMatchRecordFromCharId ; $5f1e
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $5f21
-	cp $ff ; $5f24
+	cp CHAR_NONE ; $5f24
 	jr z, .done ; $5f26
-	cp $80 ; $5f28
+	cp CHAR_STORY_MAIN ; $5f28
 	jr c, .slot4Created ; $5f2a
 	ld c, a ; $5f2c
 	and $07 ; $5f2d

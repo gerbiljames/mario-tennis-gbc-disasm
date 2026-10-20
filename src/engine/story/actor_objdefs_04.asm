@@ -435,7 +435,7 @@ SetupCharSpriteFromObjectDef:
 	call CopyDataFromBank ; $4b81
 	ld a, [wActorObjDef] ; $4b84
 	ld [wCharSpriteAttr], a ; $4b87
-	ld [wCharGfxBank], a ; $4b8a
+	ld [wCharPaletteId], a ; $4b8a
 	ld hl, wCharFrameTablePtr ; $4b8d
 	ld a, [wActorObjDef + 4] ; $4b90
 	ld [hl+], a ; $4b93

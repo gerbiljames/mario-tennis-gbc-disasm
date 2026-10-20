@@ -453,7 +453,7 @@ is the on-court equivalent:
 
 | off | actor field | char symbol | meaning |
 |---|---|---|---|
-| +0 | +$37 | `wCharSpriteAttr` / `wCharGfxBank` | OAM attribute / CGB OBJ palette. `$63` is a sentinel (`cp $63` at `$04:$4b2b`): `LoadActorObjectDef` then stores attr `$02` and loads the 8-byte palette at +8 into OBJ palette 2 via `LoadPalettesMasterOnly` (`$00:$05e1`); no object uses it |
+| +0 | +$37 | `wCharSpriteAttr` / `wCharPaletteId` | OAM attribute / CGB OBJ palette. `$63` is a sentinel (`cp $63` at `$04:$4b2b`): `LoadActorObjectDef` then stores attr `$02` and loads the 8-byte palette at +8 into OBJ palette 2 via `LoadPalettesMasterOnly` (`$00:$05e1`); no object uses it |
 | +1 | +$35 | — | **facing count**. `UpdateActorFacingFromHeading` (`$04:$5673`, `$5687`) forces facing 0 when this is 1; a single-facing object uses only the first 16x16 of each frame blob |
 | +2,+3 | — | — | not read; `$02 $00` in all 92 walk-sprite headers, `$03 $00` in the character banks |
 | +4,+5 | +$24 | `wCharFrameTablePtr` | frame-pointer array |
@@ -822,7 +822,7 @@ pass:
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4876 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 1501 | a raw `cp` or store on a variable, or `ld a` straight into a `call`, whose other values are named never equals a member of that family (exceptions allow-listed) |
+| `raw-ids` | 4745 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
 
 ---
 

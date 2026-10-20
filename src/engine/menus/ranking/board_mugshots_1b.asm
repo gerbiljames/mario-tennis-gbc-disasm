@@ -240,7 +240,7 @@ ShowRankingBoard:
 	ld [wRankingBoardPlayerRow], a ; $4e90
 	ld a, d ; $4e93
 	ld [wRankingBoardMode], a ; $4e94
-	cp $03 ; $4e97
+	cp RANKINGBOARD_SILENT ; $4e97
 	jr nz, .checkFanfare ; $4e99
 	xor a ; $4e9b
 	ld [wRankingBoardMode], a ; $4e9c
@@ -253,7 +253,7 @@ ShowRankingBoard:
 	sound BGM_ISLAND_OPEN_WIN ; $4eab
 	jr .draw ; $4ead
 .checkSecondFanfare:
-	cp $02 ; $4eaf
+	cp RANKINGBOARD_CURSOR ; $4eaf
 	jr nz, .draw ; $4eb1
 	sound BGM_ISLAND_OPEN_LOSE ; $4eb3
 .draw:

@@ -41,7 +41,7 @@ ShowRankingBoardSamples:
 	call ClearFrameTasks ; $45fd
 	ld b, $00 ; $4600
 	ld c, $01 ; $4602
-	ld d, $00 ; $4604
+	ld d, RANKINGBOARD_PLAIN ; $4604
 	farcall ShowRankingBoard ; $4606
 	xor a ; $4609
 	ldh [hBGColumnBlitPending], a ; $460a
@@ -53,7 +53,7 @@ ShowRankingBoardSamples:
 	call ClearFrameTasks ; $4618
 	ld b, $00 ; $461b
 	ld c, $02 ; $461d
-	ld d, $00 ; $461f
+	ld d, RANKINGBOARD_PLAIN ; $461f
 	farcall ShowRankingBoard ; $4621
 	xor a ; $4624
 	ldh [hBGColumnBlitPending], a ; $4625
@@ -65,7 +65,7 @@ ShowRankingBoardSamples:
 	call ClearFrameTasks ; $4633
 	ld b, $00 ; $4636
 	ld c, $03 ; $4638
-	ld d, $00 ; $463a
+	ld d, RANKINGBOARD_PLAIN ; $463a
 	farcall ShowRankingBoard ; $463c
 	ret ; $463f
 RunMinigameSelectMenu:
@@ -96,7 +96,7 @@ RunMinigameSelectMenu:
 	ret ; $4683
 MinigameSelectMenuTable:
 	; $4684, 9 bytes (bytes:16)
-	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
+	db MINIGAME_BOO_BLAST, MINIGAME_SHOOTING_STAR, MINIGAME_PERFECT_SHOT, MINIGAME_TARGET_SHOT, MINIGAME_FRUIT_FANTASY, MINIGAME_BANANA_BUNCH, MINIGAME_TREASURE_BOX, MINIGAME_MEDALLION_MATCH, MINIGAME_TWO_ON_ONE ; 0x00
 Test2MapScripts_10:
 	; $468d, 14 bytes (map_tree)
 	dw Test2EntryPoints_10 ; slot 0 EntryPoints

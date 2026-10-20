@@ -12,7 +12,7 @@ engine/menus/main_menu/MenuFontTiles_01.bin 004410 200 gfx
 engine/menus/main_menu/MenuTilesBStagedTiles0.bin 004610 200 gfx
 engine/menus/main_menu/MenuTilesBStagedTiles1.bin 004810 200 gfx
 engine/menus/main_menu/MenuFontPalettes_01.asm 005010 40 palettes
-engine/menus/main_menu/DebugMenuPalettes_01.asm 0050f6 80 palettes
+engine/menus/main_menu/CharObjPalettes_01.asm 0050f6 80 palettes
 engine/menus/main_menu/Unused_01_JpWindowTiles.bin 0051b0 100 gfx
 engine/menus/main_menu/Unused_01_JpFontTiles.bin 0053b0 c40 gfx
 engine/menus/main_menu/Unused_01_JpFontPalettes.asm 005ff0 40 palettes

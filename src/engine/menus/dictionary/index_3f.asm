@@ -24,7 +24,7 @@ DrawTennisDictionaryLetterLabels:
 	jr nz, .renderPrevLetter ; $535a
 	ld a, $16 ; $535c
 .renderPrevLetter:
-	ld hl, $148f ; $535e
+	ld hl, Text_TennisDictionaryLetterA ; $535e
 	add_hl_a ; $5361
 	push de ; $5366
 	ld c, $40 ; $5367
@@ -309,7 +309,7 @@ HandleTennisDictionaryListInput:
 	jr z, .singleEntryCategory ; $562e
 	call GetTennisDictionarySelectedIndex ; $5630
 	call GetTennisDictionaryEntryIndex ; $5633
-	ld hl, $1430 ; $5636
+	ld hl, Text_DefineAce ; $5636
 	add_hl_a ; $5639
 	jr .resetTextWindowsAndRestoreMap ; $563e
 .singleEntryCategory:

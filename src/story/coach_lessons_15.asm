@@ -205,13 +205,13 @@ Unused_15_SetServeChallengerGameFlag:
 	call SetGameFlagByNumber ; $71f4
 	ret ; $71f7
 TestServeChallengerGameFlagTable:
-	; $71f8, 12 bytes (records:2)
-	dw $00c0 ; record 0
-	dw $00c1 ; record 1
-	dw $00c2 ; record 2
-	dw $00c2 ; record 3
-	dw $00c2 ; record 4
-	dw $00c2 ; record 5
+	; $71f8, 12 bytes (flag numbers, for *GameFlagByNumber)
+	dw FLAG_CLEARED_SERVICE_MATCH_1 ; record 0
+	dw FLAG_CLEARED_SERVICE_MATCH_2 ; record 1
+	dw FLAG_CLEARED_SERVICE_MATCH_3 ; record 2
+	dw FLAG_CLEARED_SERVICE_MATCH_3 ; record 3
+	dw FLAG_CLEARED_SERVICE_MATCH_3 ; record 4
+	dw FLAG_CLEARED_SERVICE_MATCH_3 ; record 5
 HideNetChallengerActor:
 	test_flag FLAG_NET_CHALLENGER_DEFEATED ; $7204
 	jr nz, .placeActors ; $7207
@@ -241,13 +241,13 @@ Unused_15_SetNetChallengerGameFlag:
 	call SetGameFlagByNumber ; $723a
 	ret ; $723d
 TestNetChallengerGameFlagTable:
-	; $723e, 12 bytes (records:2)
-	dw $00c6 ; record 0
-	dw $00c7 ; record 1
-	dw $00c8 ; record 2
-	dw $00c8 ; record 3
-	dw $00c8 ; record 4
-	dw $00c8 ; record 5
+	; $723e, 12 bytes (flag numbers, for *GameFlagByNumber)
+	dw FLAG_CLEARED_NET_GAME_MATCH_1 ; record 0
+	dw FLAG_CLEARED_NET_GAME_MATCH_2 ; record 1
+	dw FLAG_CLEARED_NET_GAME_MATCH_3 ; record 2
+	dw FLAG_CLEARED_NET_GAME_MATCH_3 ; record 3
+	dw FLAG_CLEARED_NET_GAME_MATCH_3 ; record 4
+	dw FLAG_CLEARED_NET_GAME_MATCH_3 ; record 5
 HideStrokeChallengerActor:
 	test_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $724a
 	jr nz, .placeActors ; $724d
@@ -277,13 +277,13 @@ Unused_15_SetStrokeChallengerGameFlag:
 	call SetGameFlagByNumber ; $7280
 	ret ; $7283
 TestStrokeChallengerGameFlagTable:
-	; $7284, 12 bytes (records:2)
-	dw $00cc ; record 0
-	dw $00cd ; record 1
-	dw $00ce ; record 2
-	dw $00ce ; record 3
-	dw $00ce ; record 4
-	dw $00ce ; record 5
+	; $7284, 12 bytes (flag numbers, for *GameFlagByNumber)
+	dw FLAG_CLEARED_STROKE_MATCH_1 ; record 0
+	dw FLAG_CLEARED_STROKE_MATCH_2 ; record 1
+	dw FLAG_CLEARED_STROKE_MATCH_3 ; record 2
+	dw FLAG_CLEARED_STROKE_MATCH_3 ; record 3
+	dw FLAG_CLEARED_STROKE_MATCH_3 ; record 4
+	dw FLAG_CLEARED_STROKE_MATCH_3 ; record 5
 ServicePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7290
 	jumptable a ; $7293

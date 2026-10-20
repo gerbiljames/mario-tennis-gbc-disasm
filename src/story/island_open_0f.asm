@@ -103,7 +103,7 @@ TournamentFacing01_0f:
 	ld [wCameraY + 1], a ; $6180
 	call ClearFrameTasks ; $6183
 	call GetIslandOpenRoundParams ; $6186
-	ld d, $03 ; $6189
+	ld d, RANKINGBOARD_SILENT ; $6189
 	farcall ShowRankingBoard ; $618b
 	ld hl, wStoryModePlayersXPosition ; $618e
 	ld de, wStoryModeSpawnPosition ; $6191
