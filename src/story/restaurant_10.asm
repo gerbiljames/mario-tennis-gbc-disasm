@@ -54,7 +54,7 @@ Unused_10_CheckAnyStorySlot:
 	ret ; $5751
 GetStoryContinueDestination:
 	test_flag FLAG_DOUBLES ; $5752
-	jr nz, .checkFlag ; $5755
+	jr nz, .doubles ; $5755
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5757
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $575a
 	jr z, .done ; $575c
@@ -66,7 +66,7 @@ GetStoryContinueDestination:
 	jr z, .done ; $576a
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $576c
 	jr .done ; $576e
-.checkFlag:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5770
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $5773
 	jr z, .done ; $5775
@@ -549,7 +549,7 @@ RestaurantNpc06_10:
 	ld a, [wMapSceneStage2] ; $5cdf
 	cp STORYTIER_ACADEMY ; $5ce2
 	jr nz, .animate ; $5ce4
-	call RestaurantShowActor11NearPlayer_10 ; $5ce6
+	call RestaurantShowEllipsisBalloonNearPlayer_10 ; $5ce6
 .animate:
 	script_set_anim ACTOR_RESTAURANT_CHEF, ANIM_NOD ; $5ce9
 	script_wait_idle ACTOR_RESTAURANT_CHEF ; $5cf0
@@ -640,12 +640,12 @@ RestaurantNpc08_10:
 	script_speak ACTOR_RESTAURANT_STUDENT_CAP_BOY_1 ; $5dff
 	script_set_speed ACTOR_RESTAURANT_STUDENT_CAP_BOY_1, 0.5 ; $5e04
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e0c
-	jr z, .altText ; $5e0f
+	jr z, .walkToSeat ; $5e0f
 	script_jump_velocity ACTOR_PLAYER, -2.0 ; $5e11
 	script_move_target ACTOR_PLAYER, 31.0, 15.0 ; $5e19
 	script_wait_move ACTOR_PLAYER ; $5e24
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5e29
-.altText:
+.walkToSeat:
 	script_move_target ACTOR_RESTAURANT_STUDENT_CAP_BOY_1, 33.25, 15.0 ; $5e30
 	script_wait_move ACTOR_RESTAURANT_STUDENT_CAP_BOY_1 ; $5e3b
 	script_wait_frames 10 ; $5e40
@@ -833,15 +833,15 @@ RestaurantNpc0D_10:
 	farcall InitDialogueTextCursor ; $5fd7
 	ld a, [wMapSceneStage2] ; $5fda
 	cp STORYTIER_ISLAND_OPEN ; $5fdd
-	jr nz, .advanceDialogueTextCursor ; $5fdf
+	jr nz, .checkDoublesJuniorChamp ; $5fdf
 	script_speak_restore ACTOR_RESTAURANT_STUDENT_HEADBAND_BOY_1 ; $5fe1
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
 	script_wait_frames 5 ; $5fec
 	and a ; $5ff3
-	jr z, .advanceDialogueTextCursor ; $5ff4
+	jr z, .checkDoublesJuniorChamp ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
-.advanceDialogueTextCursor:
+.checkDoublesJuniorChamp:
 	ld a, [wMapSceneStage] ; $5ff9
 	cp STORYRANK_DOUBLES_JUNIOR_CHAMP ; $5ffc
 	jr nz, .speak ; $5ffe
@@ -985,7 +985,7 @@ RestaurantNpc12StageFlagTable_10:
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_3 ; 3
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_4 ; 4
 	assert_table_length NUM_STORYTIERS
-RestaurantShowActor11NearPlayer_10:
+RestaurantShowEllipsisBalloonNearPlayer_10:
 	wram_bank WRAM_ACTORS ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160
 	ld c, l ; $6165

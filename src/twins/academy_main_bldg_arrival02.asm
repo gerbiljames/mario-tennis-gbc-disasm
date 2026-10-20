@@ -1,4 +1,4 @@
-; Shared by AcademyMainBldgArrival02_10, AcademyArrivalArrival01_11,
+; Shared by AcademyMainBldgArrival02_10, AcademyEntranceArrival01_11,
 ; DormEntranceArrival02_12 (banks $10, $11, $12).
 
 {TWIN_LABEL}:

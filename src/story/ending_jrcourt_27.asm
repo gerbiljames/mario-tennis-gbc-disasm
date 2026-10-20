@@ -34,7 +34,7 @@ End7TrainingCtrTileTriggers_27:
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
 	cp ENTRY_END7_TRAINING_CTR_SCENE_A ; $6205
-	jr z, End7TrainingCtrEntry01Scene ; $6207
+	jr z, End7TennisMachineRoomScene_27 ; $6207
 	cp ENTRY_END7_TRAINING_CTR_SCENE_B ; $6209
 	jp z, End7TrainingCtrEntry02Scene ; $620b
 	ret ; $620e
@@ -60,7 +60,7 @@ ComputeMachineCourtProgress_27:
 .store:
 	ld [wMapSceneStage], a ; $626c
 	ret ; $626f
-End7TrainingCtrEntry01Scene:
+End7TennisMachineRoomScene_27:
 	ld a, $26 ; $6270
 	ld [wMapScrollMinX], a ; $6272
 	ld a, $23 ; $6275
@@ -292,7 +292,7 @@ End4JrCourtInitScript_27:
 .checkStoryModeEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6808
 	cp ENTRY_END4_JR_COURT_SCENE ; $680b
-	jp z, End4JrCourtSceneSingles_27.walkPlayer ; $680d
+	jp z, End4JrCourtScene_27 ; $680d
 	ret ; $6810
 ActorScript_27_14:
 	; $6811, 15 bytes (actor_script)
@@ -412,7 +412,7 @@ End4JrCourtSceneSingles_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $69e7
 	ld [wStoryModeExitTriggerRequest], a ; $69ea
 	ret ; $69ed
-.doubles:
+End4JrCourtSceneDoubles_27:
 	farcall BeginCutsceneScriptMode ; $69ee
 	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_PLAYER ; $69f1
 	script_wait_frames 30 ; $69f9
@@ -432,13 +432,13 @@ End4JrCourtSceneSingles_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $6a4d
 	ld [wStoryModeExitTriggerRequest], a ; $6a50
 	ret ; $6a53
-.walkPlayer:
+End4JrCourtScene_27:
 	script_move_player 19.0, 21.0 ; $6a54
 	script_fade_in 4 ; $6a5e
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $6a63
 	script_wait_move ACTOR_PLAYER ; $6a6e
 	test_flag FLAG_DOUBLES ; $6a73
-	jp nz, .doubles ; $6a76
+	jp nz, End4JrCourtSceneDoubles_27 ; $6a76
 	call End4JrCourtSceneSingles_27 ; $6a79
 	ret ; $6a7c
 End4JrCourtApproachDoubles_27:

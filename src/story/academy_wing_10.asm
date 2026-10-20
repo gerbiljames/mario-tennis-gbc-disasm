@@ -168,7 +168,7 @@ AcademyWingInitScript_10:
 	ld l, $02 ; $6481
 	farcall CopyBehaviorMapRect ; $6483
 	call MapArrivalWalkPair_10 ; $6486
-	call AcademyWingHideActorByProgressFlag_10 ; $6489
+	call AcademyWingHideUnwonTrophy_10 ; $6489
 	script_set_position ACTOR_ACADEMY_WING_INIT1_HEADMASTER, 29.0, 48.0 ; $648c
 	script_face ACTOR_ACADEMY_WING_INIT1_HEADMASTER, FACE_UP ; $6497
 .checkSeniorChamp:
@@ -191,12 +191,12 @@ AcademyWingInitScript_10:
 	call EnableLCD ; $64cc
 	ld a, [wStoryModeEntryPoint] ; $64cf
 	cp ENTRY_ACADEMY_WING_ISLAND_OPEN_ENTRANTS ; $64d2
-	jp z, .entry0dScene ; $64d4
+	jp z, .islandOpenEntrantsScene ; $64d4
 	cp ENTRY_ACADEMY_WING_ISLAND_OPEN_WON ; $64d7
-	jp z, AcademyWingEntry0fScene ; $64d9
+	jp z, AcademyWingIslandOpenWonScene ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
-.entry0dScene:
+.islandOpenEntrantsScene:
 	script_respawn_actors AcademyWingInitActors0_10 ; $64e0
 	farcall BeginCutsceneScriptMode ; $64e8
 	script_set_anim ACTOR_ACADEMY_WING_INIT0_TROPHY_1, ANIM_TROPHY_SINGLES ; $64eb
@@ -443,7 +443,7 @@ AcademyWingInitScript_10:
 	script_move_target ACTOR_PLAYER, 31.0, 50.0 ; $6b55
 	script_move_target ACTOR_PARTNER, 33.0, 50.0 ; $6b60
 	script_wait_move ACTOR_PARTNER ; $6b6b
-	jp .lineUpBeforeCoach ; $6b70
+	jp .lineUpBeforeHeadmaster ; $6b70
 .singlesSweatBalloon:
 	script_set_position ACTOR_ACADEMY_WING_INIT0_BALLOON_SWEAT, 33.5, 51.0 ; $6b73
 	sound SFX_APPEAR2 ; $6b7e
@@ -465,7 +465,7 @@ AcademyWingInitScript_10:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6beb
 	script_move_target ACTOR_PLAYER, 32.0, 50.0 ; $6bf2
 	script_wait_move ACTOR_PLAYER ; $6bfd
-.lineUpBeforeCoach:
+.lineUpBeforeHeadmaster:
 	script_wait_frames 1 ; $6c02
 	script_move_target ACTOR_ACADEMY_WING_INIT0_EMILY, 30.0, 53.0 ; $6c09
 	script_move_target ACTOR_ACADEMY_WING_INIT0_MARK, 32.0, 53.0 ; $6c14
@@ -626,7 +626,7 @@ AcademyWingInitActors0_10:
 	map_actor $0000, ActorScript_10_2, 39.0, 50.25, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_1
 	map_actor $0000, ActorScript_10_2, 39.0, 48.75, FACE_DOWN, OBJ_TROPHY, ANIM_WALK, $00, ACADEMY_WING_INIT0_TROPHY_2
 	map_actor_end
-AcademyWingEntry0fScene:
+AcademyWingIslandOpenWonScene:
 	script_respawn_actors AcademyWingInitActors1_10 ; $6fcd
 	farcall BeginCutsceneScriptMode ; $6fd5
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $6fd8
@@ -652,14 +652,14 @@ AcademyWingEntry0fScene:
 	call WaitFadeEnd ; $7039
 	script_wait_frames 60 ; $703c
 	script_set_text Text_HeadmasterMustTalkToYou ; $7043
-	call SpeakNpc03SinglesOrDoublesLine_10 ; $7049
+	call SpeakHeadmasterSinglesOrDoublesLine_10 ; $7049
 	test_flag FLAG_DOUBLES ; $704c
 	jp z, .skipPartnerBounce ; $704f
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $7052
 .skipPartnerBounce:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $7059
 	script_wait_idle ACTOR_PLAYER ; $7060
-	call ShowNpc03SinglesOrDoublesPrompt_10 ; $7065
+	call ShowHeadmasterSinglesOrDoublesPrompt_10 ; $7065
 	farcall RunDialogueYesNoPrompt ; $7068
 	farcall ScriptCloseDialogueWindow ; $706b
 	script_wait_frames 5 ; $706e
@@ -668,11 +668,11 @@ AcademyWingEntry0fScene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7078
 	script_wait_idle ACTOR_PLAYER ; $707f
 	farcall AdvanceDialogueTextCursor ; $7084
-	jr .wait3 ; $7087
+	jr .headmasterReply ; $7087
 .answeredNo:
 	script_set_anim ACTOR_PLAYER, ANIM_SHAKE ; $7089
 	script_wait_idle ACTOR_PLAYER ; $7090
-.wait3:
+.headmasterReply:
 	script_wait_frames 10 ; $7095
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_NOD ; $709c
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $70a3
@@ -680,25 +680,25 @@ AcademyWingEntry0fScene:
 	script_face ACTOR_ACADEMY_WING_INIT1_HEADMASTER, FACE_UP ; $70ad
 	script_wait_frames 80 ; $70b4
 	script_set_text Text_HeadmasterMarioInvitation ; $70bb
-	call SpeakNpc03SinglesOrDoublesLine_10 ; $70c1
+	call SpeakHeadmasterSinglesOrDoublesLine_10 ; $70c1
 	test_flag FLAG_DOUBLES ; $70c4
-	jp z, .placeActors4 ; $70c7
+	jp z, .singlesExclaimBalloon ; $70c7
 	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, 32.5, 50.0 ; $70ca
 	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_2, 34.5, 50.0 ; $70d5
 	sound SFX_CHIME ; $70e0
 	script_wait_frames 80 ; $70e2
 	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, 63.0, 63.0 ; $70e9
 	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_2, 63.0, 63.0 ; $70f4
-	jr .coachFaceDown ; $70ff
-.placeActors4:
+	jr .headmasterFaceDown ; $70ff
+.singlesExclaimBalloon:
 	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, 33.5, 50.0 ; $7101
 	sound SFX_CHIME ; $710c
 	script_wait_frames 80 ; $710e
 	script_set_position ACTOR_ACADEMY_WING_INIT1_BALLOON_EXCLAIM_1, 63.0, 63.0 ; $7115
-.coachFaceDown:
+.headmasterFaceDown:
 	script_face ACTOR_ACADEMY_WING_INIT1_HEADMASTER, FACE_DOWN ; $7120
 	script_wait_frames 1 ; $7127
-	call SpeakNpc03SinglesOrDoublesLine_10 ; $712e
+	call SpeakHeadmasterSinglesOrDoublesLine_10 ; $712e
 	script_wait_frames 30 ; $7131
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_HEADMASTER, ANIM_NOD ; $7138
 	script_wait_idle ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $713f

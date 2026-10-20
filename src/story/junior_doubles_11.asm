@@ -7,7 +7,7 @@ ActorList_11_0:
 	map_actor $0000, ActorScript_11_45, 1.0, 25.0, FACE_UP, OBJ_MARK, ANIM_WALK, $00, LIST_11_0_MARK
 	map_actor $0000, ActorScript_11_45, 21.0, 47.0, FACE_RIGHT, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $03, LIST_11_0_STUDENT_LONG_HAIR
 	map_actor_end
-AcademyArrivalEntry0cScene:
+AcademyEntranceDepartForPeachsCastleScene:
 	script_respawn_actors ActorList_11_1 ; $53db
 	farcall BeginCutsceneScriptMode ; $53e3
 	script_player_speed 7.96875 ; $53e6
@@ -64,8 +64,8 @@ MoveCampusGateGuardAside:
 	ld a, [wMapSceneStage] ; $54a6
 	cp STORYRANK_SINGLES_ISLAND_OPEN ; $54a9
 	jr c, .done ; $54ab
-	script_set_position ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2, 21.0, 48.0 ; $54ad
-	script_face ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2, FACE_RIGHT ; $54b8
+	script_set_position ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2, 21.0, 48.0 ; $54ad
+	script_face ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2, FACE_RIGHT ; $54b8
 .done:
 	ret ; $54bf
 JuniorClassCourtDoublesMapScripts_11:
@@ -391,15 +391,15 @@ JuniorClassCourtDoublesInitScript_11:
 	cp ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN ; $5a69
 	jp z, JuniorClassCourtDoublesMatchReturn ; $5a6b
 	cp ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_WON ; $5a6e
-	jp z, JuniorClassCourtDoublesEntry0eScene ; $5a70
+	jp z, JuniorClassCourtDoublesMatchWonScene ; $5a70
 	cp ENTRY_JUNIOR_CLASS_COURT_DOUBLES_VICTORY_SCENE ; $5a73
-	jp z, JuniorClassCourtDoublesEntry0dScene ; $5a75
+	jp z, JuniorClassCourtDoublesVictoryScene ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
 	jr nz, .storyComplete ; $5a7b
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d
 	jr nz, .islandOpen ; $5a80
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $5a82
-	jr nz, .placeActors ; $5a85
+	jr nz, .seniorChampion ; $5a85
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a87
 	jr nz, .juniorChampion ; $5a8a
 	ret ; $5a8c
@@ -417,7 +417,7 @@ JuniorClassCourtDoublesInitScript_11:
 	script_set_position ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, 32.0, 25.0 ; $5ab6
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_CURT, ActorScript_11_46 ; $5ac1
 	ret ; $5acc
-.placeActors:
+.seniorChampion:
 	ld hl, JuniorClassCourtDoublesNpcScriptsB_11 ; $5acd
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $5ad0
 	farcall WriteStoryStateWord ; $5ad3

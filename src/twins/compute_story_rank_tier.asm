@@ -9,7 +9,7 @@ ComputeStoryRankTier_{TWIN}:
 	jr z, .store
 	inc a
 	test_flag FLAG_DOUBLES
-	jr nz, .checkFlag
+	jr nz, .doubles
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES
 	jr z, .store
 	inc a
@@ -19,7 +19,7 @@ ComputeStoryRankTier_{TWIN}:
 .store:
 	ld [wMapSceneStage], a
 	ret
-.checkFlag:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES
 	jr z, .store
 	inc a

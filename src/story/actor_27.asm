@@ -139,11 +139,11 @@ ActorScript_27_29:
 	as_jump .wander
 MapScriptNop_27:
 	ret ; $7885
-Unused_27_MapScriptClearActiveFlag:
+Unused_27_MapScriptClearScriptRan:
 	xor a ; $7886
 	ld [wStoryScriptRan], a ; $7887
 	ret ; $788a
-Unused_27_MapScriptPlaySoundA2:
+Unused_27_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $788b
 	ret ; $788d
 Unused_27_MapScriptHideLocationName:

@@ -153,6 +153,6 @@ and the two level jingles), with the comment on each constant saying where it
 plays; what those cues sound like is not established. A name has to hold at
 every site of its id: hence `SFX_APPEAR1`/`SFX_APPEAR2` for the two cutscene
 pop sounds, `$a2` `SFX_STORY_CUE` (its only sites are the
-`Unused_<bank>_MapScriptPlaySoundA2` handler each story bank carries, which
+`Unused_<bank>_MapScriptPlayStoryCue` handler each story bank carries, which
 nothing reachable calls), and `$78` `SFX_MARKER` rather than a ranking-board
 name, since the templates also play it as the score digits land.

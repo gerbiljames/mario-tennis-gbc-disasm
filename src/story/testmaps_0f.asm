@@ -285,7 +285,7 @@ AwardsCeremonyTile01_0f:
 	sound SFX_APPEAR2 ; $45a1
 	script_delay 120 ; $45a3
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 63.0, 63.0 ; $45a8
-	jp .ceremony ; $45b3
+	jp .spikeStormsOff ; $45b3
 .singlesIntro:
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $45b6
 	script_null_script ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $45b9
@@ -312,7 +312,7 @@ AwardsCeremonyTile01_0f:
 	sound SFX_APPEAR2 ; $464f
 	script_delay 120 ; $4651
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 63.0, 63.0 ; $4656
-.ceremony:
+.spikeStormsOff:
 	call CutsceneStompScreenShake ; $4661
 	call CutsceneStompScreenShake ; $4664
 	script_speak ACTOR_AWARDS_CEREMONY_SPIKE ; $4667
@@ -904,9 +904,9 @@ AwardsCeremonyInitScript_0f:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6
 	cp ENTRY_AWARDS_CEREMONY_SINGLES ; $55c9
-	jp z, AwardsCeremonyEntry0aScene ; $55cb
+	jp z, AwardsCeremonySinglesArrivalScene ; $55cb
 	cp ENTRY_AWARDS_CEREMONY_DOUBLES ; $55ce
-	jp z, AwardsCeremonyEntry0bScene ; $55d0
+	jp z, AwardsCeremonyDoublesArrivalScene ; $55d0
 	call CheckAwardsCeremonyRivalSceneDone ; $55d3
 	and $01 ; $55d6
 	jr z, .checkDoubles ; $55d8

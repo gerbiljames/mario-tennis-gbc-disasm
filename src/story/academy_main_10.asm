@@ -1,4 +1,4 @@
-SpeakNpc03SinglesOrDoublesLine_10:
+SpeakHeadmasterSinglesOrDoublesLine_10:
 	test_flag FLAG_DOUBLES ; $73ee
 	jr z, .singles ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
@@ -8,7 +8,7 @@ SpeakNpc03SinglesOrDoublesLine_10:
 	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73fc
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404
-ShowNpc03SinglesOrDoublesPrompt_10:
+ShowHeadmasterSinglesOrDoublesPrompt_10:
 	test_flag FLAG_DOUBLES ; $7405
 	jr z, .notDoubles ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
@@ -37,7 +37,7 @@ AcademyWingInstallDoorTriggers_10:
 	farcall WriteBehaviorMapCell ; $743f
 .done:
 	ret ; $7442
-AcademyWingHideActorByProgressFlag_10:
+AcademyWingHideUnwonTrophy_10:
 	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $7443
 	test_flag FLAG_DOUBLES ; $744a
 	jr z, .checkFlag ; $744d
@@ -174,7 +174,7 @@ AcademyMainBldgNpc05_10:
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $765a
 	script_face ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
-	jr nz, AcademyMainBldgNpc05_10.setText ; $7669
+	jr nz, AcademyMainBldgNpc05_10.doubles ; $7669
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $766b
 	ld a, [wMapSceneStage] ; $7670
 	sra a ; $7673
@@ -198,19 +198,19 @@ AcademyMainBldgNpc05TextIds:
 	dw Text_RecordsClerkTravelingTeam ; record 3
 	dw Text_RecordsClerkIslandOpenChampion ; record 4
 	assert_table_length NUM_STORYTIERS
-AcademyMainBldgNpc05_10.setText:
+AcademyMainBldgNpc05_10.doubles:
 	script_set_text Text_RecordsClerkLookingUpTeam ; $76a2
 	script_wait_frames 20 ; $76a8
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $76af
 	call GetDoublesProgressStage_10 ; $76b4
 	add a ; $76b7
-	ld_hl_indexed AcademyMainBldgNpc05TextIds2 ; $76b8
+	ld_hl_indexed AcademyMainBldgNpc05DoublesTextIds ; $76b8
 	ld a, [hl+] ; $76bf
 	ld h, [hl] ; $76c0
 	ld l, a ; $76c1
 	farcall InitDialogueTextCursor ; $76c2
 	jr AcademyMainBldgNpc05_10.speakRecord ; $76c5
-AcademyMainBldgNpc05TextIds2:
+AcademyMainBldgNpc05DoublesTextIds:
 	; $76c7, 10 bytes (text_ids)
 	dw Text_RecordsClerkDoublesJuniorClass ; record 0
 	dw Text_RecordsClerkDoublesSeniorClass ; record 1
@@ -478,7 +478,7 @@ Unused_10_SetActorDrawModeFromSceneTileSingle:
 	pop de ; $7a8b
 	and $87 ; $7a8c
 	cp $06 ; $7a8e
-	jr nz, .nextActor ; $7a90
+	jr nz, .checkRight ; $7a90
 	wram_bank WRAM_ACTORS ; $7a92
 	ld hl, ACTORF_MODE ; $7a98
 	add hl, bc ; $7a9b
@@ -486,7 +486,7 @@ Unused_10_SetActorDrawModeFromSceneTileSingle:
 	xor $01 ; $7a9d
 	ld [hl], a ; $7a9f
 	ret ; $7aa0
-.nextActor:
+.checkRight:
 	inc d ; $7aa1
 	call ReadSceneTilemapTile_10 ; $7aa2
 	and $07 ; $7aa5

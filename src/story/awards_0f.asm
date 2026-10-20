@@ -42,7 +42,7 @@ CutsceneStompScreenShake:
 	ld a, $00 ; $56a2
 	farcall SetScreenShake ; $56a4
 	ret ; $56a7
-AwardsCeremonyEntry0aScene:
+AwardsCeremonySinglesArrivalScene:
 	call AwardsCeremonyArrivalIntro ; $56a8
 	script_set_anim ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, ANIM_BOUNCE ; $56ab
 	script_wait_idle ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $56b2
@@ -122,7 +122,7 @@ AwardsCeremonyEntry0aScene:
 	script_wait_idle ACTOR_PLAYER ; $5876
 	script_follow ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, ACTOR_PLAYER ; $587b
 	ret ; $5888
-AwardsCeremonyEntry0bScene:
+AwardsCeremonyDoublesArrivalScene:
 	script_null_script ACTOR_PARTNER ; $5889
 	script_set_position ACTOR_PARTNER, 11.0, 39.0 ; $588e
 	script_face ACTOR_PARTNER, FACE_UP ; $5899

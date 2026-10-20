@@ -338,7 +338,7 @@ ExhibitionMatchIntroCutscene:
 	dec a ; $7702
 	ld [wExhibitionMatchEntry], a ; $7703
 	test_flag FLAG_DOUBLES ; $7706
-	jp nz, .startMatch ; $7709
+	jp nz, .doublesIntro ; $7709
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, 0.625 ; $770c
 	script_set_speed ACTOR_PLAYER, 0.625 ; $7714
 	script_set_position ACTOR_SPECIAL_COURT_TOAD, 5.0, 35.0 ; $771c
@@ -368,12 +368,12 @@ ExhibitionMatchIntroCutscene:
 	script_wait_idle ACTOR_PLAYER ; $77e4
 	script_wait_frames 20 ; $77e9
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
-	jr z, .peachExhibitionIntro ; $77f3
+	jr z, .singlesIntro ; $77f3
 	ld a, EXIT_SPECIAL_COURT_DONE ; $77f5
 	ld [wUnusedExitTriggerIdMirror], a ; $77f7
 	ld [wStoryModeExitTriggerRequest], a ; $77fa
 	ret ; $77fd
-.peachExhibitionIntro:
+.singlesIntro:
 	script_move_target ACTOR_PLAYER, 15.0, 26.0 ; $77fe
 	script_wait_move ACTOR_PLAYER ; $7809
 	script_move_target ACTOR_PLAYER, 15.0, 23.0 ; $780e
@@ -415,9 +415,9 @@ ExhibitionMatchIntroCutscene:
 	script_wait_move ACTOR_SPECIAL_COURT_MARIO ; $7910
 	script_face ACTOR_SPECIAL_COURT_MARIO, FACE_DOWN ; $7915
 	script_wait_frames 40 ; $791c
-	call PrepareStoryMatch ; $7923
+	call RunExhibitionMatch ; $7923
 	ret ; $7926
-.startMatch:
+.doublesIntro:
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, 0.625 ; $7927
 	script_set_speed ACTOR_PLAYER, 0.625 ; $792f
 	script_set_speed ACTOR_PARTNER, 0.625 ; $7937
@@ -483,5 +483,5 @@ ExhibitionMatchIntroCutscene:
 	script_wait_actor_script ACTOR_SPECIAL_COURT_MARIO ; $7afc
 	script_wait_actor_script ACTOR_SPECIAL_COURT_PEACH ; $7b01
 	script_wait_frames 60 ; $7b06
-	call PrepareStoryMatch ; $7b0d
+	call RunExhibitionMatch ; $7b0d
 	ret ; $7b10

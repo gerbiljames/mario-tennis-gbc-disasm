@@ -48,7 +48,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | file | routine | banks |
 |---|---|---|
 | `src/twins/academy_main_bldg_arrival01.asm` | `RestaurantArrival01_10`, `AcademyMainBldgArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaFromCourtyard_13` | $10, $10, $11, $12, $13 |
-| `src/twins/academy_main_bldg_arrival02.asm` | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` | $10, $11, $12 |
+| `src/twins/academy_main_bldg_arrival02.asm` | `AcademyMainBldgArrival02_10`, `AcademyEntranceArrival01_11`, `DormEntranceArrival02_12` | $10, $11, $12 |
 | `src/twins/academy_wing_close_door.asm` | `AcademyWingCloseDoor_<bank>` | $10, $27 |
 | `src/twins/academy_wing_open_door.asm` | `AcademyWingOpenDoor_<bank>` | $10, $27 |
 | `src/twins/advance_plane_frame_counter.asm` | `AdvancePlaneFrameCounter_14`, `AdvancePlaneFrameCounter2_14` | $14 |
@@ -178,7 +178,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 5 | 13 | $10, $11, $12, $13 | `AcademyMainBldgArrival01_10`, `RestaurantArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaFromCourtyard_13` |
 | 5 | 22 | $20, $21, $22, $23, $2c | `SeekBallTrajEntry6_*` |
 | 4 | 12 | $1b, $38, $3b, $3e | `GetMenuCursorIndex_*` |
-| 3 | 13 | $10, $11, $12 | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` |
+| 3 | 13 | $10, $11, $12 | `AcademyMainBldgArrival02_10`, `AcademyEntranceArrival01_11`, `DormEntranceArrival02_12` |
 | 3 | 31 | $0e, $11, $12 | `ComputeRankingProgressIndex_*` |
 | 3 | 12 | $1a, $1c, $1d | `DrawConfirmSelectionCursor_*` |
 | 3 | 74 | $38, $3b, $3e | `MoveMenuCursorGrid_*` |

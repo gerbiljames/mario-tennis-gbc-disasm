@@ -244,10 +244,10 @@ wRepairCounterEquipSnapshot:: db
 ; [8-bit] Text_MenuEquipChange choice: 0 rackets, 1 shoes, 2 / $ff leave. Also the offset added to the per-item text ids
 wRepairCounterChoice:: db
 NEXTU
-; Peach's exhibition match prompt (bank $0e: PromptExhibitionMatch, ExhibitionMatchIntroCutscene, PrepareStoryMatch)
+; Peach's exhibition match prompt (bank $0e: PromptExhibitionMatch, ExhibitionMatchIntroCutscene, RunExhibitionMatch)
 ; [16-bit] Text id of the singles/doubles prompt
 wExhibitionPromptTextId:: dw
-; [8-bit] ENTRY_SPECIAL_COURT_* the warp enters by; the Special Court intro rewrites it as entry - 1, PrepareStoryMatchTable's index
+; [8-bit] ENTRY_SPECIAL_COURT_* the warp enters by; the Special Court intro rewrites it as entry - 1, ExhibitionMatchSettingsPtrs's index
 wExhibitionMatchEntry:: db
 NEXTU
 ; roommate dialogue (bank $13: DormRoomReturnFromEntranceScene, RunAcademyQuestionsMenu)
@@ -259,7 +259,7 @@ NEXTU
 wMachinePracticeLevel:: db
 NEXTU
 	ds 6
-; actor placement near the player (ComputeEmoteActorPosition_13, PlaceRoommateAtPlayerTarget_13, RestaurantShowActor11NearPlayer_10), passed to ScriptSetActorPosition
+; actor placement near the player (ComputeEmoteActorPosition_13, PlaceRoommateAtPlayerTarget_13, RestaurantShowEllipsisBalloonNearPlayer_10), passed to ScriptSetActorPosition
 ; [16-bit] World X
 wPlaceActorX:: dw
 ; [16-bit] World Y

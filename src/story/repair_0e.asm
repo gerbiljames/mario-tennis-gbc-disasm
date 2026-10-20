@@ -200,13 +200,13 @@ TrainingGymRunnerCheckClearance:
 RunRepairCounterDialogue:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4d88
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4d90
-	jp z, .greeting ; $4d93
+	jp z, .juniorRefusal ; $4d93
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4d96
-	jp z, .noRepair ; $4d99
+	jp z, .seniorWelcome ; $4d99
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $4d9c
-	jp z, .repairMenu ; $4d9f
-	jp .repairMenu ; $4da2
-.greeting:
+	jp z, .varsityWelcome ; $4d9f
+	jp .varsityWelcome ; $4da2
+.juniorRefusal:
 	test_flag FLAG_DOUBLES ; $4da5
 	jr nz, .doublesGreeting ; $4da8
 	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4daa
@@ -229,7 +229,7 @@ RunRepairCounterDialogue:
 	script_set_text Text_RepairCounterJuniorSinglesRefused ; $4dda
 	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4de0
 	jr .speak ; $4de3
-.repairMenu:
+.varsityWelcome:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4de5
 	set_flag FLAG_HAVE_SMALL_RACKET ; $4de8
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $4deb
@@ -242,13 +242,13 @@ RunRepairCounterDialogue:
 	set_flag FLAG_HAVE_IRON_SHOES ; $4e02
 	script_set_text Text_RepairCounterWelcome ; $4e05
 	jr .speakWelcome ; $4e0b
-.noRepair:
+.seniorWelcome:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4e0d
 	test_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e10
-	jr z, .repaired ; $4e13
+	jr z, .firstSeniorWelcome ; $4e13
 	script_set_text Text_RepairCounterWelcome ; $4e15
 	jr .speakWelcome ; $4e1b
-.repaired:
+.firstSeniorWelcome:
 	script_set_text Text_RepairCounterWelcomeSenior ; $4e1d
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
 .speakWelcome:
