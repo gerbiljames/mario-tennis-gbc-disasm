@@ -212,7 +212,7 @@ wUnusedSwingProtoPrevInput:: db
 wUnusedSwingProtoRunning:: db
 NEXTU
 ; Training Court challenger dialogue ids (bank $15, $5d00-$6400)
-; [16-bit] Each challenger result scene writes its court's tied-point text id here ($201d serve, $204a net, $2078 stroke) when wPointWinLoseFlag is WINLOSE_NONE, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerTiedTextId
+; [16-bit] Each challenger result scene writes its court's tied-point text id here (Text_ServeRivalTiedKeepGoing serve, Text_BrianTiedKeepGoing net, Text_AllieEvenKeepGoing stroke) when wPointWinLoseFlag is WINLOSE_NONE, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerTiedTextId
 wUnusedChallengerTiedTextId:: dw
 ; [16-bit] Tied-point text id (Text_*TiedKeepGoing) seeded per court by the challenger setup scenes; ChallengerResultTied (WINLOSE_NONE) speaks it
 wChallengerTiedTextId:: dw

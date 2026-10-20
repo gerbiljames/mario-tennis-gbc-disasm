@@ -53,7 +53,7 @@ LoadN64RingShotRecords:
 	ld [wRingShotEntryList + 15], a ; $5268
 .entry15Unlocked:
 	ld hl, wChartRows ; $526b
-	ld bc, $0140 ; $526e
+	ld bc, $0140 ; $526e -- 64 bytes past wChartRows' 256
 	call ClearBytes ; $5271
 	call BuildRingShotResultsGrid ; $5274
 	ret ; $5277

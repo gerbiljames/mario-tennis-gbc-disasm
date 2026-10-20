@@ -442,10 +442,10 @@ wPauseMenuId:: db
 ; [8-bit] Item count of the running menu, from Get*MenuItemCount in RunMatchMenu / RunStoryMenu. Wrap modulus for MoveCursorHorizontal, loop count in DrawMatchMenuItems / DrawStoryMenuItems, and index into the per-count item-position tables
 wPauseMenuItemCount:: db
 
-; [16-bit] Text id of the first body page of the rules sequence ($2c62 match rules, $2c6a training rules, or a per-minigame table value); ShowRulesPageSequence adds the page number to it
+; [16-bit] Text id of the first body page of the rules sequence (Text_RulesFirstToTwoGamesWins match rules, Text_RulesServiceMatchServeAces training rules, or a per-minigame table value); ShowRulesPageSequence adds the page number to it
 wRulesFirstPageTextId:: dw
 
-; [16-bit] Text id of the caption above the rules pages: a fixed base plus wRulesPageListIndex ($2c25 + n match, $2c2b + n training, $2c47 + n minigame); passed to DrawMenuCaptionWindow
+; [16-bit] Text id of the caption above the rules pages: a fixed base plus wRulesPageListIndex (Text_RulesHeadingOneSetMatch + n match, Text_RulesHeadingServiceMatch + n training, Text_RulesHeadingBooBlast + n minigame); passed to DrawMenuCaptionWindow
 wRulesTitleTextId:: dw
 
 ; [16-bit] Saved best score for the current minigame, copied from the record ReadMinigameRecord returns (WRAM bank 7, $de00). Drawn instead of wMinigamesTargetScore when wMinigameHighScoreMode marks a high-score attempt; bank $0d compares the current score against it

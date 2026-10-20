@@ -271,7 +271,7 @@ UNION
 wScrollTextDelay:: db
 ; [8-bit] Write-only: seeded with 2 beside wScrollTextDelay, but RunScrollingTextScreen's reload uses the literal $02
 wUnusedScrollTextDelayReload:: db
-; [16-bit] Text id the crawl is rendering, seeded with $1863
+; [16-bit] Text id the crawl is rendering, seeded with Text_StaffCreditsLines
 wScrollTextId:: dw
 ; [8-bit] Set once the last line has scrolled off; stops the scroll without leaving the loop
 wScrollTextDone:: db
