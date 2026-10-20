@@ -111,7 +111,7 @@ LoadMainMenuGfx:
 .loop:
 	ld a, c ; $56cf
 	add a ; $56d0
-	ld hl, MainMenuLabelTilePtrs ; $56d1
+	ld hl, MainMenuIconTilePtrs ; $56d1
 	add_hl_a ; $56d4
 	ld a, [hl+] ; $56d9
 	ld h, [hl] ; $56da
@@ -126,7 +126,7 @@ LoadMainMenuGfx:
 	pop de ; $56e7
 	pop bc ; $56e8
 	pop af ; $56e9
-	ld hl, MainMenuLabelTileVramDests ; $56ea
+	ld hl, MainMenuIconTileVramDests ; $56ea
 	ld a, c ; $56ed
 	add a ; $56ee
 	add_hl_a ; $56ef
@@ -224,7 +224,7 @@ LoadMainMenuGfx:
 	farcall LoadCompressedTileBlock ; $57d7
 	pop_wram_bank ; $57da
 	ret ; $57df
-MainMenuLabelTilePtrs:
+MainMenuIconTilePtrs:
 	; $57e0, 6 slot words
 	dslot DataPtr_ExhibitionModeIconTiles ; record 0
 	dslot DataPtr_MarioFaceIconTiles ; record 1
@@ -232,7 +232,7 @@ MainMenuLabelTilePtrs:
 	dslot DataPtr_StatusIconTiles ; record 3
 	dslot DataPtr_DictionaryIconTiles ; record 4
 	dslot DataPtr_SavedDataIconTiles ; record 5
-MainMenuLabelTileVramDests:
+MainMenuIconTileVramDests:
 	; $57ec, 20 bytes (bytes:2)
 	dw vTiles1 + VRAM_BANK1 ; 0x00
 	dw vTiles1 tile $10 + VRAM_BANK1 ; 0x02
@@ -324,7 +324,7 @@ MainMenuCursorSpriteTask:
 	ld e, a ; $5882
 	farcall ApplySpriteBobOffset ; $5883
 	pop af ; $5886
-	ld hl, MainMenuCursorTemplatePtrs ; $5887
+	ld hl, MainMenuLabelTemplatePtrs ; $5887
 	add_hl_a ; $588a
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
@@ -344,22 +344,22 @@ MainMenuCursorSpriteTask:
 	ld e, l ; $58ac
 	add d ; $58ad
 	ld d, a ; $58ae
-	ld hl, MainMenuCursorSpriteTask_SpriteTemplate ; $58af
+	ld hl, MainMenuLabelTailTemplate ; $58af
 	sprite_attr_tile OAM_BANK1, $72 ; $58b2
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
-MainMenuCursorTemplatePtrs:
+MainMenuLabelTemplatePtrs:
 	; $58ba, 18 bytes (records:2)
-	dw MainMenuCursorTemplate0 ; record 0
-	dw MainMenuCursorTemplate1 ; record 1
-	dw MainMenuCursorTemplate0 ; record 2
-	dw MainMenuCursorTemplate0 ; record 3
-	dw MainMenuCursorTemplate0 ; record 4
-	dw MainMenuCursorTemplate0 ; record 5
-	dw MainMenuCursorTemplate0 ; record 6
-	dw MainMenuCursorTemplate0 ; record 7
-	dw MainMenuCursorTemplate0 ; record 8
-MainMenuCursorTemplate0:
+	dw MainMenuLabelTemplate ; record 0
+	dw MainMenuMiniGamesLabelTemplate ; record 1
+	dw MainMenuLabelTemplate ; record 2
+	dw MainMenuLabelTemplate ; record 3
+	dw MainMenuLabelTemplate ; record 4
+	dw MainMenuLabelTemplate ; record 5
+	dw MainMenuLabelTemplate ; record 6
+	dw MainMenuLabelTemplate ; record 7
+	dw MainMenuLabelTemplate ; record 8
+MainMenuLabelTemplate:
 	; $58cc, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -370,7 +370,7 @@ MainMenuCursorTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-MainMenuCursorTemplate1:
+MainMenuMiniGamesLabelTemplate:
 	; $58ed, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -382,7 +382,7 @@ MainMenuCursorTemplate1:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-MainMenuCursorSpriteTask_SpriteTemplate:
+MainMenuLabelTailTemplate:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -545,24 +545,24 @@ LoadMainMenuItemPalette:
 	ret ; $5a69
 MainMenuItemPalettePtrs:
 	; $5a6a, 18 bytes (records:2)
-	dw MainMenuItemPalette0 ; record 0
-	dw MainMenuItemPalette2 ; record 1
-	dw MainMenuItemPalette3 ; record 2
-	dw MainMenuItemPalette0 ; record 3
-	dw MainMenuItemPalette0 ; record 4
-	dw MainMenuItemPalette0 ; record 5
-	dw MainMenuItemPalette4 ; record 6
-	dw MainMenuItemPalette1 ; record 7
-	dw MainMenuItemPalette5 ; record 8
-MainMenuItemPalette0:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette0.asm" ; $5a7c, 8 bytes (palettes)
-MainMenuItemPalette1:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette1.asm" ; $5a84, 8 bytes (palettes)
-MainMenuItemPalette2:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette2.asm" ; $5a8c, 8 bytes (palettes)
-MainMenuItemPalette3:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette3.asm" ; $5a94, 8 bytes (palettes)
-MainMenuItemPalette4:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette4.asm" ; $5a9c, 8 bytes (palettes)
-MainMenuItemPalette5:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette5.asm" ; $5aa4, 8 bytes (palettes)
+	dw MainMenuExhibitionPalette ; record 0
+	dw MainMenuMiniGamesPalette ; record 1
+	dw MainMenuLinkedPlayPalette ; record 2
+	dw MainMenuExhibitionPalette ; record 3
+	dw MainMenuExhibitionPalette ; record 4
+	dw MainMenuExhibitionPalette ; record 5
+	dw MainMenuStatusPalette ; record 6
+	dw MainMenuDictionaryPalette ; record 7
+	dw MainMenuSavedDataPalette ; record 8
+MainMenuExhibitionPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuExhibitionPalette.asm" ; $5a7c, 8 bytes (palettes)
+MainMenuDictionaryPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuDictionaryPalette.asm" ; $5a84, 8 bytes (palettes)
+MainMenuMiniGamesPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuMiniGamesPalette.asm" ; $5a8c, 8 bytes (palettes)
+MainMenuLinkedPlayPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuLinkedPlayPalette.asm" ; $5a94, 8 bytes (palettes)
+MainMenuStatusPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuStatusPalette.asm" ; $5a9c, 8 bytes (palettes)
+MainMenuSavedDataPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuSavedDataPalette.asm" ; $5aa4, 8 bytes (palettes)

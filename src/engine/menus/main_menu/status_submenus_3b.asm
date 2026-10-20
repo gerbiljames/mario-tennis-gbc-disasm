@@ -1,7 +1,7 @@
-SavedDataCellPalette0:
-	INCLUDE "data/engine/menus/main_menu/SavedDataCellPalette0.asm" ; $70f0, 8 bytes (palettes)
-SavedDataCellPalette1:
-	INCLUDE "data/engine/menus/main_menu/SavedDataCellPalette1.asm" ; $70f8, 8 bytes (palettes)
+EraseAllDataPalette:
+	INCLUDE "data/engine/menus/main_menu/EraseAllDataPalette.asm" ; $70f0, 8 bytes (palettes)
+EraseN64DataPalette:
+	INCLUDE "data/engine/menus/main_menu/EraseN64DataPalette.asm" ; $70f8, 8 bytes (palettes)
 DrawEraseSavedDataCaption:
 	push_wram_bank WRAM_SCREEN ; $7100
 	ld c, $03 ; $7109
@@ -156,7 +156,7 @@ LoadN64RecordTypeGfx:
 .loop:
 	ld a, c ; $724e
 	add a ; $724f
-	ld hl, N64RecordTypeLabelTilePtrs ; $7250
+	ld hl, N64RecordTypeIconTilePtrs ; $7250
 	add_hl_a ; $7253
 	ld a, [hl+] ; $7258
 	ld h, [hl] ; $7259
@@ -171,7 +171,7 @@ LoadN64RecordTypeGfx:
 	pop de ; $7266
 	pop bc ; $7267
 	pop af ; $7268
-	ld hl, N64RecordTypeLabelTileVramDests ; $7269
+	ld hl, N64RecordTypeIconTileVramDests ; $7269
 	ld a, c ; $726c
 	add a ; $726d
 	add_hl_a ; $726e
@@ -226,12 +226,12 @@ LoadN64RecordTypeGfx:
 	farcall LoadIndexedPalette ; $72d7
 	pop_wram_bank ; $72da
 	ret ; $72df
-N64RecordTypeLabelTilePtrs:
+N64RecordTypeIconTilePtrs:
 	; $72e0, 3 slot words
 	dslot DataPtr_TournamentIconTiles ; record 0
 	dslot DataPtr_ExhibitionIconTiles ; record 1
 	dslot DataPtr_RingShotIconTiles ; record 2
-N64RecordTypeLabelTileVramDests:
+N64RecordTypeIconTileVramDests:
 	; $72e6, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -315,7 +315,7 @@ N64RecordTypeCursorSpriteTask:
 	ld e, a ; $736d
 	farcall ApplySpriteBobOffset ; $736e
 	ld b, OAM_BANK1 ; $7371
-	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate0 ; $7373
+	ld hl, N64RecordTypeLabelTemplate ; $7373
 	push de ; $7376
 	call QueueSpriteTemplate ; $7377
 	pop de ; $737a
@@ -323,11 +323,11 @@ N64RecordTypeCursorSpriteTask:
 	add hl, de ; $737e
 	ld d, h ; $737f
 	ld e, l ; $7380
-	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate1 ; $7381
+	ld hl, N64RecordTypeLabelTailTemplate ; $7381
 	sprite_attr_tile OAM_BANK1, $70 ; $7384
 	call QueueSpriteTemplate ; $7388
 	ret ; $738b
-N64RecordTypeCursorSpriteTask_SpriteTemplate0:
+N64RecordTypeLabelTemplate:
 	; $738c, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -338,7 +338,7 @@ N64RecordTypeCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-N64RecordTypeCursorSpriteTask_SpriteTemplate1:
+N64RecordTypeLabelTailTemplate:
 	; $73ad, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -440,21 +440,21 @@ LoadN64RecordTypeCellPalette:
 	ret ; $746f
 N64RecordTypeCellPalettePtrs:
 	; $7470, 18 bytes (records:2)
-	dw N64RecordTypeCellPalette0 ; record 0
-	dw N64RecordTypeCellPalette2 ; record 1
-	dw N64RecordTypeCellPalette1 ; record 2
-	dw N64RecordTypeCellPalette0 ; record 3
-	dw N64RecordTypeCellPalette0 ; record 4
-	dw N64RecordTypeCellPalette0 ; record 5
-	dw N64RecordTypeCellPalette0 ; record 6
-	dw N64RecordTypeCellPalette0 ; record 7
-	dw N64RecordTypeCellPalette0 ; record 8
-N64RecordTypeCellPalette0:
-	INCLUDE "data/engine/menus/main_menu/N64RecordTypeCellPalette0.asm" ; $7482, 8 bytes (palettes)
-N64RecordTypeCellPalette1:
-	INCLUDE "data/engine/menus/main_menu/N64RecordTypeCellPalette1.asm" ; $748a, 8 bytes (palettes)
-N64RecordTypeCellPalette2:
-	INCLUDE "data/engine/menus/main_menu/N64RecordTypeCellPalette2.asm" ; $7492, 8 bytes (palettes)
+	dw N64RecordTournamentPalette ; record 0
+	dw N64RecordExhibitionPalette ; record 1
+	dw N64RecordRingShotPalette ; record 2
+	dw N64RecordTournamentPalette ; record 3
+	dw N64RecordTournamentPalette ; record 4
+	dw N64RecordTournamentPalette ; record 5
+	dw N64RecordTournamentPalette ; record 6
+	dw N64RecordTournamentPalette ; record 7
+	dw N64RecordTournamentPalette ; record 8
+N64RecordTournamentPalette:
+	INCLUDE "data/engine/menus/main_menu/N64RecordTournamentPalette.asm" ; $7482, 8 bytes (palettes)
+N64RecordRingShotPalette:
+	INCLUDE "data/engine/menus/main_menu/N64RecordRingShotPalette.asm" ; $748a, 8 bytes (palettes)
+N64RecordExhibitionPalette:
+	INCLUDE "data/engine/menus/main_menu/N64RecordExhibitionPalette.asm" ; $7492, 8 bytes (palettes)
 DrawN64RecordTypeCaption:
 	push_wram_bank WRAM_SCREEN ; $749a
 	ld c, $03 ; $74a3
@@ -535,7 +535,7 @@ LoadGbDataItemGfx:
 .loop:
 	ld a, c ; $755d
 	add a ; $755e
-	ld hl, GbDataItemLabelTilePtrs ; $755f
+	ld hl, GbDataItemIconTilePtrs ; $755f
 	add_hl_a ; $7562
 	ld a, [hl+] ; $7567
 	ld h, [hl] ; $7568
@@ -550,7 +550,7 @@ LoadGbDataItemGfx:
 	pop de ; $7575
 	pop bc ; $7576
 	pop af ; $7577
-	ld hl, GbDataItemLabelTileVramDests ; $7578
+	ld hl, GbDataItemIconTileVramDests ; $7578
 	ld a, c ; $757b
 	add a ; $757c
 	add_hl_a ; $757d
@@ -610,13 +610,13 @@ LoadGbDataItemGfx:
 	farcall LoadIndexedPalette ; $75f3
 	pop_wram_bank ; $75f6
 	ret ; $75fb
-GbDataItemLabelTilePtrs:
+GbDataItemIconTilePtrs:
 	; $75fc, 4 slot words
 	dslot DataPtr_CharacterDataIconTiles ; record 0
 	dslot DataPtr_ClearStatusIconTiles ; record 1
 	dslot DataPtr_N64TournamentsIconTiles ; record 2
 	dslot DataPtr_SetItemsIconTiles ; record 3
-GbDataItemLabelTileVramDests:
+GbDataItemIconTileVramDests:
 	; $7604, 8 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -680,23 +680,23 @@ LoadGbDataItemCellPalette:
 	ret ; $7692
 GbDataItemCellPalettePtrs:
 	; $7693, 18 bytes (records:2)
-	dw GbDataItemCellPalette0 ; record 0
-	dw GbDataItemCellPalette3 ; record 1
-	dw GbDataItemCellPalette1 ; record 2
-	dw GbDataItemCellPalette2 ; record 3
-	dw GbDataItemCellPalette2 ; record 4
-	dw GbDataItemCellPalette0 ; record 5
-	dw GbDataItemCellPalette0 ; record 6
-	dw GbDataItemCellPalette0 ; record 7
-	dw GbDataItemCellPalette0 ; record 8
-GbDataItemCellPalette0:
-	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette0.asm" ; $76a5, 8 bytes (palettes)
-GbDataItemCellPalette1:
-	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette1.asm" ; $76ad, 8 bytes (palettes)
-GbDataItemCellPalette2:
-	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette2.asm" ; $76b5, 8 bytes (palettes)
-GbDataItemCellPalette3:
-	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette3.asm" ; $76bd, 8 bytes (palettes)
+	dw GbDataCharacterDataPalette ; record 0
+	dw GbDataClearStatusPalette ; record 1
+	dw GbDataN64TournamentsPalette ; record 2
+	dw GbDataSetItemsPalette ; record 3
+	dw GbDataSetItemsPalette ; record 4
+	dw GbDataCharacterDataPalette ; record 5
+	dw GbDataCharacterDataPalette ; record 6
+	dw GbDataCharacterDataPalette ; record 7
+	dw GbDataCharacterDataPalette ; record 8
+GbDataCharacterDataPalette:
+	INCLUDE "data/engine/menus/main_menu/GbDataCharacterDataPalette.asm" ; $76a5, 8 bytes (palettes)
+GbDataN64TournamentsPalette:
+	INCLUDE "data/engine/menus/main_menu/GbDataN64TournamentsPalette.asm" ; $76ad, 8 bytes (palettes)
+GbDataSetItemsPalette:
+	INCLUDE "data/engine/menus/main_menu/GbDataSetItemsPalette.asm" ; $76b5, 8 bytes (palettes)
+GbDataClearStatusPalette:
+	INCLUDE "data/engine/menus/main_menu/GbDataClearStatusPalette.asm" ; $76bd, 8 bytes (palettes)
 DrawGbDataItemCaption:
 	push_wram_bank WRAM_SCREEN ; $76c5
 	ld c, $02 ; $76ce
@@ -726,7 +726,7 @@ GbDataItemCursorSpriteTask:
 	ld e, a ; $7708
 	farcall ApplySpriteBobOffset ; $7709
 	ld b, OAM_BANK1 ; $770c
-	ld hl, GbDataItemCursorSpriteTask_SpriteTemplate0 ; $770e
+	ld hl, GbDataItemLabelTemplate ; $770e
 	push de ; $7711
 	call QueueSpriteTemplate ; $7712
 	pop de ; $7715
@@ -734,11 +734,11 @@ GbDataItemCursorSpriteTask:
 	add hl, de ; $7719
 	ld d, h ; $771a
 	ld e, l ; $771b
-	ld hl, GbDataItemCursorSpriteTask_SpriteTemplate1 ; $771c
+	ld hl, GbDataItemLabelTailTemplate ; $771c
 	sprite_attr_tile OAM_BANK1, $70 ; $771f
 	call QueueSpriteTemplate ; $7723
 	ret ; $7726
-GbDataItemCursorSpriteTask_SpriteTemplate0:
+GbDataItemLabelTemplate:
 	; $7727, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -749,7 +749,7 @@ GbDataItemCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-GbDataItemCursorSpriteTask_SpriteTemplate1:
+GbDataItemLabelTailTemplate:
 	; $7748, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

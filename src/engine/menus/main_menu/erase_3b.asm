@@ -1,9 +1,9 @@
 LoadN64RecordsToWram2:
 	push_wram_bank WRAM_COURT_PLANES ; $6c3d
-	ld hl, wScreenAttrmap ; $6c46
+	ld hl, wN64BlockProbe ; $6c46
 	ld bc, $0020 ; $6c49
 	call ClearMemory16 ; $6c4c
-	ld hl, wScreenAttrmap ; $6c4f
+	ld hl, wN64BlockProbe ; $6c4f
 	ld b, SAVEBLOCK_N64_RECORDS ; $6c52
 	farcall ReadSaveBlock ; $6c54
 	pop_wram_bank ; $6c57
@@ -388,7 +388,7 @@ EraseSavedDataCursorSpriteTask:
 	ld e, a ; $6f79
 	farcall ApplySpriteBobOffset ; $6f7a
 	ld b, OAM_BANK1 ; $6f7d
-	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate0 ; $6f7f
+	ld hl, EraseSavedDataLabelTemplate ; $6f7f
 	push de ; $6f82
 	call QueueSpriteTemplate ; $6f83
 	pop de ; $6f86
@@ -396,11 +396,11 @@ EraseSavedDataCursorSpriteTask:
 	add hl, de ; $6f8a
 	ld d, h ; $6f8b
 	ld e, l ; $6f8c
-	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate1 ; $6f8d
+	ld hl, EraseSavedDataLabelTailTemplate ; $6f8d
 	sprite_attr_tile OAM_BANK1, $70 ; $6f90
 	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97
-EraseSavedDataCursorSpriteTask_SpriteTemplate0:
+EraseSavedDataLabelTemplate:
 	; $6f98, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -411,7 +411,7 @@ EraseSavedDataCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-EraseSavedDataCursorSpriteTask_SpriteTemplate1:
+EraseSavedDataLabelTailTemplate:
 	; $6fb9, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -556,12 +556,12 @@ LoadEraseSavedDataCellPalette:
 	ret ; $70dd
 EraseSavedDataCellPalettePtrs:
 	; $70de, 18 bytes (records:2)
-	dw SavedDataCellPalette0 ; record 0
-	dw SavedDataCellPalette0 ; record 1
-	dw SavedDataCellPalette0 ; record 2
-	dw SavedDataCellPalette1 ; record 3
-	dw SavedDataCellPalette0 ; record 4
-	dw SavedDataCellPalette0 ; record 5
-	dw SavedDataCellPalette0 ; record 6
-	dw SavedDataCellPalette0 ; record 7
-	dw SavedDataCellPalette0 ; record 8
+	dw EraseAllDataPalette ; record 0
+	dw EraseAllDataPalette ; record 1
+	dw EraseAllDataPalette ; record 2
+	dw EraseN64DataPalette ; record 3
+	dw EraseAllDataPalette ; record 4
+	dw EraseAllDataPalette ; record 5
+	dw EraseAllDataPalette ; record 6
+	dw EraseAllDataPalette ; record 7
+	dw EraseAllDataPalette ; record 8

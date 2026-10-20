@@ -129,8 +129,8 @@ DrawN64TnmtRowIcons:
 	push de ; $4f47
 	push hl ; $4f48
 	push_wram_bank WRAM_SCREEN ; $4f49
-	ld hl, wN64TnmtLayout ; $4f52
-	ld a, [wDataScreenCursorRow] ; $4f55
+	ld hl, wN64TnmtRowChars ; $4f52
+	ld a, [wDataScreenScrollRow] ; $4f55
 	add_hl_a ; $4f58
 	ld d, h ; $4f5d
 	ld e, l ; $4f5e
@@ -200,7 +200,7 @@ DrawN64TnmtPageLabels:
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
 	wram_bank WRAM_SCREEN ; $5000
-	ld a, [wDataScreenCursorRow] ; $5006
+	ld a, [wDataScreenScrollRow] ; $5006
 	add a ; $5009
 	ld b, a ; $500a
 	add a ; $500b
@@ -323,7 +323,7 @@ FlushN64TnmtWindowToVram:
 	ret ; $50d5
 N64TnmtScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $50d6
-	ld a, [wScreenScratch] ; $50df
+	ld a, [wN64TnmtHasSecondPage] ; $50df
 	or a ; $50e2
 	jr z, .applyCursorBounceX ; $50e3
 	ld a, [wDataScreenPage] ; $50e5
@@ -348,7 +348,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
 .checkUpArrow:
-	ld a, [wDataScreenCursorRow] ; $5113
+	ld a, [wDataScreenScrollRow] ; $5113
 	or a ; $5116
 	jr z, .checkDownArrow ; $5117
 	ld_xy de, $0c, $32 ; $5119
@@ -359,7 +359,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
 .checkDownArrow:
-	ld a, [wDataScreenCursorRow] ; $512a
+	ld a, [wDataScreenScrollRow] ; $512a
 	cp $0b ; $512d
 	jr z, .restore ; $512f
 	ld_xy de, $0c, $88 ; $5131
@@ -419,7 +419,7 @@ BuildN64RingShotScreen:
 	call LoadN64RingShotRecords ; $51c5
 	wram_bank WRAM_SCREEN ; $51c8
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $51ce
-	call LoadChartWindowTiles ; $51d1
+	call LoadChartCharIconTiles ; $51d1
 	ld de, vTiles0 + VRAM_BANK1 ; $51d4
 	farcall LoadMenuArrowSpriteTiles ; $51d7
 	ld b, $08 ; $51da

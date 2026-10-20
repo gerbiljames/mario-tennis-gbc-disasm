@@ -232,7 +232,7 @@ Unused_06_RunDebugStatsEditor:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
 	farcall StepMatchFrame ; $6b87
-	farcall Unused_01_LoadMenuTilesBChunk2 ; $6b8a
+	farcall Unused_01_LoadMenuFontUppercaseTiles ; $6b8a
 	wram_bank WRAM_CHAR0 ; $6b8d
 	ld hl, wCharStruct ; $6b93
 	ld de, wDebugStatsBackup ; $6b96

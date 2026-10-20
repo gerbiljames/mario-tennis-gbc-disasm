@@ -96,11 +96,12 @@ wRankingBoardMode:: db
 wRankingMarkerSlots:: db
 NEXTU
 ; trophy / N64-tournament / bracket screens (bank $3b)
-	ds 1
+; [8-bit] N64 tournament screen: nonzero when CheckN64TnmtSecondPage finds data for the second page; gates the Left/Right scroll and its arrows
+wN64TnmtHasSecondPage:: db
 ; [8-bit] Page the bank $3b data screens show; DrawN64TnmtPageLabels and the bracket builders key off it, N64TnmtScrollArrowsTask picks the scroll arrows from it
 wDataScreenPage:: db
-; [8-bit] Cursor row within the page, stepped by ScrollN64TnmtDataCursor
-wDataScreenCursorRow:: db
+; [8-bit] First of the five visible rows of the 16-row N64 tournament grid (0-$0b), stepped by Up/Down in ScrollN64TnmtDataCursor
+wDataScreenScrollRow:: db
 NEXTU
 ; minigame data screen (bank $1b, $73dd-$78bd)
 	ds 9
@@ -136,11 +137,11 @@ ENDU
 ; WRAM bank $03 in a callee.
 UNION
 ; N64 tournament data screen (bank $3b)
-; [16 bytes] Copy of N64TnmtData made by LoadN64TnmtDataRecords. +$0e and +$0f are the singles and doubles column masks, forced to $10 when bit 0 / bit 1 of the records block's byte +344 is clear (that half has no data)
-wN64TnmtLayout:: ds 16
-	export_size wN64TnmtLayout
+; [16 bytes] Chart character per grid row, copied from N64TnmtRowChars by LoadN64TnmtDataRecords; DrawN64TnmtRowIcons draws one icon per row. +$0e and +$0f are forced to $10 (blank) when bit 0 / bit 1 of the records block's byte +344 is clear
+wN64TnmtRowChars:: ds 16
+	export_size wN64TnmtRowChars
 	ds 16
-; [12 bytes] First of 16 rows of 12 cells, one per character in N64CharTrophyRowPtrTable order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; rows run to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide on a second page
+; [12 bytes] First of 16 rows of 12 cells, one per character in N64TnmtRowRecordOrder order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; rows run to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide on a second page
 wN64TnmtTrophyCells:: ds 12
 	ds 3
 NEXTU
@@ -400,10 +401,10 @@ NEXTU
 wChartColumnList:: ds 16
 	export_size wChartColumnList
 	ds 1
-; [8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it
-wN64ExhibPage:: db
-; [8-bit] Cursor row within the page, stepped by ScrollN64ExhibDataCursor
-wN64ExhibCursorRow:: db
+; [8-bit] First visible chart column (0-9 of 16, seven shown), stepped by Left/Right in ScrollN64ExhibChart; N64ExhibScrollArrowsTask picks the arrows from it
+wChartScrollColumn:: db
+; [8-bit] First visible chart row (0-12 of 16, four shown), stepped by Up/Down in ScrollN64ExhibChart
+wChartScrollRow:: db
 NEXTU
 ; rules screen (bank $17)
 ; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenToad indexes RulesToadFrameTileTable-2 with it
@@ -421,7 +422,7 @@ wExhibCellBits:: ds 64
 NEXTU
 ; ring-shot results (bank $3b)
 	ds 32
-; [16 bytes] Ring-shot rows to show, copied from the N64RingShot table; an entry becomes $10 (blank row) when its bit in the N64 records block is clear, leaving out courses never transferred
+; [16 bytes] Chart character per ring-shot row, copied from N64RingShotRowChars; entries 14 and 15 become $10 (blank row) when their star-unlock bit in the N64 records block is clear
 wRingShotEntryList:: ds 16
 	export_size wRingShotEntryList
 ENDU

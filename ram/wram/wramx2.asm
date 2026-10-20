@@ -74,6 +74,10 @@ NEXTU
 wNameEntryCharsetPage:: db
 ; [8-bit] Character whose mugshot the screen shows, from c of RunNameEntryScreen
 wNameEntryMugshotChar:: db
+NEXTU
+; court select (bank $3e)
+; [5 bytes] One byte per court from COURT_STAR on, 1 when unlocked: StoreCourtUnlockBits spreads the low five bits of b over them, IsCourtUnlocked reads them
+wCourtUnlockedFlags:: ds 5
 ENDU
 NEXTU
 ; character record scratch (banks $18/$1b/$3b)

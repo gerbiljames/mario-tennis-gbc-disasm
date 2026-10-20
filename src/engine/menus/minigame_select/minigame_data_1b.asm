@@ -183,7 +183,7 @@ BuildMinigameDataScreen:
 	wram_bank WRAM_SCREEN ; $7455
 	call LoadMinigameDataState ; $745b
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $745e
-	farcall LoadChartWindowTiles ; $7461
+	farcall LoadChartCharIconTiles ; $7461
 	ld de, vTiles0 + VRAM_BANK1 ; $7464
 	farcall LoadMenuArrowSpriteTiles ; $7467
 	ld b, $08 ; $746a

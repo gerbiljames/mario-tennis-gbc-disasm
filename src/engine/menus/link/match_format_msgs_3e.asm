@@ -57,7 +57,7 @@ SetLinkMatchFormatOptionAttrRect:
 	or a ; $4887
 	jr z, .fill ; $4888
 	ld a, b ; $488a
-	ld hl, LinkMatchFormatOptionAttrWidths_3e ; $488b
+	ld hl, LinkMatchFormatOptionSelectedAttrs_3e ; $488b
 	add_hl_a ; $488e
 	ld a, [hl] ; $4893
 	ld h, a ; $4894
@@ -79,7 +79,7 @@ LinkMatchFormatOptionAttrAddrs_3e:
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 4
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 5
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 6
-LinkMatchFormatOptionAttrWidths_3e:
+LinkMatchFormatOptionSelectedAttrs_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
 	twin_named flush_match_format_row_to_vram, FlushLinkMatchFormatRowAttrs ; $48bb
@@ -113,7 +113,7 @@ LinkMatchFormatCursorSpriteTask:
 	ld e, a ; $4924
 	farcall ApplySpriteBobOffset ; $4925
 	ld b, OAM_BANK1 ; $4928
-	ld hl, LinkMatchFormatCursorSpriteTask_SpriteTemplate0 ; $492a
+	ld hl, LinkMatchFormatLabelTemplate ; $492a
 	push de ; $492d
 	call QueueSpriteTemplate ; $492e
 	pop de ; $4931
@@ -121,11 +121,11 @@ LinkMatchFormatCursorSpriteTask:
 	add hl, de ; $4935
 	ld d, h ; $4936
 	ld e, l ; $4937
-	ld hl, LinkMatchFormatCursorSpriteTask_SpriteTemplate1 ; $4938
+	ld hl, LinkMatchFormatLabelTailTemplate ; $4938
 	sprite_attr_tile OAM_BANK1, $70 ; $493b
 	call QueueSpriteTemplate ; $493f
 	ret ; $4942
-LinkMatchFormatCursorSpriteTask_SpriteTemplate0:
+LinkMatchFormatLabelTemplate:
 	; $4943, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -136,7 +136,7 @@ LinkMatchFormatCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-LinkMatchFormatCursorSpriteTask_SpriteTemplate1:
+LinkMatchFormatLabelTailTemplate:
 	; $4964, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -378,23 +378,23 @@ ShowLinkStatusMessage:
 	pop bc ; $4bb6
 	ld a, c ; $4bb7
 	or a ; $4bb8
-	jr z, .message0 ; $4bb9
+	jr z, .otherPlayerNotReady ; $4bb9
 	cp $01 ; $4bbb
-	jr z, .message1 ; $4bbd
-	jr .renderProportionalTextAt ; $4bbf
-.message0:
+	jr z, .improperlyLinked ; $4bbd
+	jr .waitingForOtherPlayer ; $4bbf
+.otherPlayerNotReady:
 	ld hl, Text_LinkOtherPlayerNotReady ; $4bc1
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
-.message1:
+.improperlyLinked:
 	ld hl, Text_LinkImproperlyLinked ; $4bce
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bd1
 	ld c, $12 ; $4bd4
 	farcall RenderProportionalTextAt ; $4bd6
 	jr .uploadGlyphBuffer ; $4bd9
-.renderProportionalTextAt:
+.waitingForOtherPlayer:
 	ld hl, Text_LinkWaitingForOtherPlayer ; $4bdb
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bde
 	ld c, $12 ; $4be1

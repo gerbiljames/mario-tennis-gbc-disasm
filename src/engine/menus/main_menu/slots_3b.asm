@@ -18,7 +18,7 @@
 	farptr SavedDataPickerSlideIn ; $4022
 	farptr SavedDataPickerSlideOut ; $4024
 	farptr MoveSavedDataPickerCursor ; $4026
-	farptr LoadChartWindowTiles ; $4028
+	farptr LoadChartCharIconTiles ; $4028
 	farptr DrawChartCharIcon ; $402a
 	farptr BuildMarioCastUnlockMask ; $402c
 	farptr GetUnlockedMarioCastCharAtGridSlot ; $402e

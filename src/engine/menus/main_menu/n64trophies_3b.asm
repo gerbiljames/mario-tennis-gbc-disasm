@@ -62,7 +62,7 @@ DrawWonTrophyIcon:
 	pop bc ; $4aee
 	pop af ; $4aef
 	ret ; $4af0
-DrawTrophiesCharSprite:
+DrawTrophiesCharIcon:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4af1
 	ld a, c ; $4af4
 	add a ; $4af5
@@ -331,7 +331,7 @@ ScrollN64TnmtDataCursor:
 .checkRight:
 	bit PADB_RIGHT, a ; $4d75
 	jr z, .checkUp ; $4d77
-	ld a, [wScreenScratch] ; $4d79
+	ld a, [wN64TnmtHasSecondPage] ; $4d79
 	or a ; $4d7c
 	jr z, .done ; $4d7d
 	ld a, [wDataScreenPage] ; $4d7f
@@ -345,22 +345,22 @@ ScrollN64TnmtDataCursor:
 .checkUp:
 	bit PADB_UP, a ; $4d91
 	jr z, .checkDown ; $4d93
-	ld a, [wDataScreenCursorRow] ; $4d95
+	ld a, [wDataScreenScrollRow] ; $4d95
 	or a ; $4d98
 	jr z, .done ; $4d99
 	dec a ; $4d9b
-	ld [wDataScreenCursorRow], a ; $4d9c
+	ld [wDataScreenScrollRow], a ; $4d9c
 	sound SFX_MENU_MOVE ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .checkDown:
 	bit PADB_DOWN, a ; $4da6
 	jr z, .done ; $4da8
-	ld a, [wDataScreenCursorRow] ; $4daa
+	ld a, [wDataScreenScrollRow] ; $4daa
 	cp $0b ; $4dad
 	jr z, .done ; $4daf
 	inc a ; $4db1
-	ld [wDataScreenCursorRow], a ; $4db2
+	ld [wDataScreenScrollRow], a ; $4db2
 	sound SFX_MENU_MOVE ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
 	jr .done ; $4dba
@@ -371,15 +371,15 @@ BuildN64TnmtDataScreen:
 	farcall LoadScreenAssetRecord ; $4dbf
 	wram_bank WRAM_SCREEN ; $4dc2
 	xor a ; $4dc8
-	ld [wScreenScratch], a ; $4dc9
+	ld [wN64TnmtHasSecondPage], a ; $4dc9
 	ld a, $00 ; $4dcc
 	ld [wDataScreenPage], a ; $4dce
 	ld a, $00 ; $4dd1
-	ld [wDataScreenCursorRow], a ; $4dd3
+	ld [wDataScreenScrollRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank WRAM_SCREEN ; $4dd9
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $4ddf
-	call LoadChartWindowTiles ; $4de2
+	call LoadChartCharIconTiles ; $4de2
 	ld de, vTiles0 + VRAM_BANK1 ; $4de5
 	farcall LoadMenuArrowSpriteTiles ; $4de8
 	ld b, $08 ; $4deb
@@ -395,9 +395,9 @@ LoadN64TnmtDataRecords:
 	ld hl, wScreenScratch ; $4e05
 	ld bc, (WRAMX_END - wScreenScratch) / 16 ; $4e08
 	call ClearMemory16 ; $4e0b
-	ld hl, N64TnmtData ; $4e0e
-	ld de, wN64TnmtLayout ; $4e11
-	ld bc, wN64TnmtLayout_SIZE ; $4e14
+	ld hl, N64TnmtRowChars ; $4e0e
+	ld de, wN64TnmtRowChars ; $4e11
+	ld bc, wN64TnmtRowChars_SIZE ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
 	ld hl, wN64RecordsBlock + N64REC_STAR_UNLOCKS ; $4e1d
@@ -406,23 +406,23 @@ LoadN64TnmtDataRecords:
 	and $01 ; $4e22
 	jr nz, .maskSet ; $4e24
 	ld a, $10 ; $4e26
-	ld [wN64TnmtLayout + 14], a ; $4e28
+	ld [wN64TnmtRowChars + 14], a ; $4e28
 .maskSet:
 	ld a, b ; $4e2b
 	and $02 ; $4e2c
 	jr nz, .buildN64TnmtTrophyGrid ; $4e2e
 	ld a, $10 ; $4e30
-	ld [wN64TnmtLayout + 15], a ; $4e32
+	ld [wN64TnmtRowChars + 15], a ; $4e32
 .buildN64TnmtTrophyGrid:
 	call BuildN64TnmtTrophyGrid ; $4e35
 	call CheckN64TnmtSecondPage ; $4e38
 	or a ; $4e3b
 	jr z, .done ; $4e3c
 	ld a, $01 ; $4e3e
-	ld [wScreenScratch], a ; $4e40
+	ld [wN64TnmtHasSecondPage], a ; $4e40
 .done:
 	ret ; $4e43
-N64TnmtData:
+N64TnmtRowChars:
 	; $4e44, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 BuildN64TnmtTrophyGrid:
@@ -448,12 +448,12 @@ BuildN64TnmtTrophyGrid:
 	ret ; $4e73
 GetN64CharTrophyRowPtr:
 	ld a, b ; $4e74
-	ld hl, N64CharTrophyRowPtrTable ; $4e75
+	ld hl, N64TnmtRowRecordOrder ; $4e75
 	add_hl_a ; $4e78
 	ld a, [hl] ; $4e7d
 	ld hl, wN64RecordsBlock + N64REC_TROPHIES ; $4e7e
 	add_hl_a ; $4e81
 	ret ; $4e86
-N64CharTrophyRowPtrTable:
+N64TnmtRowRecordOrder:
 	; $4e87, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00

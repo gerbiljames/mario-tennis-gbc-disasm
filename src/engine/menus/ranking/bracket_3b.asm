@@ -435,12 +435,12 @@ MarioCastChartScrollArrowsTask:
 BuildMarioCastExhibScreen:
 	wram_bank WRAM_SCREEN ; $7b11
 	xor a ; $7b17
-	ld [wN64ExhibCursorRow], a ; $7b18
-	ld [wN64ExhibPage], a ; $7b1b
+	ld [wChartScrollRow], a ; $7b18
+	ld [wChartScrollColumn], a ; $7b1b
 	ld c, SCREENASSET_ExhibitionRecords ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $7b23
-	call LoadChartWindowTiles ; $7b26
+	call LoadChartCharIconTiles ; $7b26
 	ld de, vTiles0 + VRAM_BANK1 ; $7b29
 	farcall LoadMenuArrowSpriteTiles ; $7b2c
 	ld b, $08 ; $7b2f
