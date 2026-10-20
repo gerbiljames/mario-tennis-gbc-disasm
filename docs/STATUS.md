@@ -50,7 +50,7 @@ with a fork's edits under `mods/`.
 
 ## What is still open
 
-* **Banked-WRAM operands:** 32 stay raw numbers, all inside `Unused_`
+* **Banked-WRAM operands:** 15 stay raw numbers, all inside `Unused_`
   routines no trace can reach.
 * **Actor slots:** 32 operands on reached code stay numbers, each a slot that
   holds different actors, or none, in the lists possible there

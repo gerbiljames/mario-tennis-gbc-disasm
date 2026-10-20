@@ -185,7 +185,7 @@ Unused_1a_GetTilemapBufferCellDest:
 	farcall GetTilemapCellAddress ; $4159
 	ld h, d ; $415c
 	ld l, e ; $415d
-	ld de, $3000 ; $415e
+	ld de, $10000 - wActiveTilemap ; $415e
 	add hl, de ; $4161
 	ld de, vBGMap0 ; $4162
 	add hl, de ; $4165

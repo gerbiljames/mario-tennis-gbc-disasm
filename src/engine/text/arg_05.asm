@@ -47,7 +47,7 @@ TextContinueArrowBlinkTask:
 	ld d, [hl] ; $4ffe
 	ld h, d ; $4fff
 	ld l, e ; $5000
-	ld de, $3000 ; $5001
+	ld de, $10000 - wActiveTilemap ; $5001
 	add hl, de ; $5004
 	ld de, vBGMap0 ; $5005
 	add hl, de ; $5008

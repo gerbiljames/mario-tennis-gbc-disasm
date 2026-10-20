@@ -23,7 +23,7 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; Several helpers (GetActorStateAddr, AttachActorWaypointFollower,
 ; AttachActorStepMover, script_get_actor_state) select WRAM bank $04
 ; themselves, so callers such as the bank $0e-$15 cutscene scripts load slot
-; addresses (`ld de, $d000` / `ld bc, $d040`) with another bank selected.
+; addresses (`ld de, wActors` / `ld bc, wActors + ACTOR_SIZE`) with another bank selected.
 ; Fields are ACTORF_* offsets (`ld hl, ACTORF_* / add hl, bc`); the
 ; field-size table the script opcodes use is ActorFieldTypeTable_04.
 ; overworld actors (WRAM bank $04)

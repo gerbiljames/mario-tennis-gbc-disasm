@@ -220,7 +220,7 @@ Unused_0a_CopySceneTilemapToVram:
 	ld a, [wCameraX + 1] ; $5785
 	add l ; $5788
 	ld l, a ; $5789
-	ld de, $d000 ; $578a
+	ld de, wMapBuffer64 ; $578a
 	add hl, de ; $578d
 	pop de ; $578e
 	wram_bank WRAM_COURT_PLANES ; $578f
