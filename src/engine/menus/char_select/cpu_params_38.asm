@@ -411,13 +411,13 @@ CharGridPageCountTable:
 NeedsCpuDifficultyPrompt:
 	call IsMarioCastCharacter ; $61f7
 	or a ; $61fa
-	jr z, .notMarioCast ; $61fb
+	jr z, .no ; $61fb
 	ld a, [wCharSelectSlot] ; $61fd
 	or a ; $6200
-	jr z, .notMarioCast ; $6201
+	jr z, .no ; $6201
 	ld a, $01 ; $6203
 	ret ; $6205
-.notMarioCast:
+.no:
 	xor a ; $6206
 	ret ; $6207
 ; Returns 1 for character ids $17-$1f, the nine Mario-series characters

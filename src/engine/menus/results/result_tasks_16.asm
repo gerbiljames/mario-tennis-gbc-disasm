@@ -24,7 +24,7 @@ Unused_16_ClearWram3Row64Alt:
 UpdateResultScreenAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $43f6
 	ret ; $43f9
-Unused_16_DrawCourtDiagramMarkers:
+Unused_16_PlaceTextWithDiacritics:
 	push af ; $43fa
 	push bc ; $43fb
 .loop:
@@ -60,7 +60,7 @@ Unused_16_DrawCourtDiagramMarkers:
 	inc de ; $4421
 	ld a, e ; $4422
 	and $1f ; $4423
-	jr nz, Unused_16_DrawCourtDiagramMarkers.loop ; $4425
+	jr nz, Unused_16_PlaceTextWithDiacritics.loop ; $4425
 	push hl ; $4427
 	ld h, d ; $4428
 	ld l, e ; $4429
@@ -68,7 +68,7 @@ Unused_16_DrawCourtDiagramMarkers:
 	ld d, h ; $442b
 	ld e, l ; $442c
 	pop hl ; $442d
-	jr Unused_16_DrawCourtDiagramMarkers.loop ; $442e
+	jr Unused_16_PlaceTextWithDiacritics.loop ; $442e
 .restore:
 	pop bc ; $4430
 	pop af ; $4431
@@ -132,7 +132,7 @@ RunMatchWinLoseScreen:
 	ld [wResultScreenIsVersus], a ; $449b
 	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
-	ld [wMatchWinLoseState], a ; $44a4
+	ld [wSavedMatchWinLoseFlag], a ; $44a4
 	call ApplyLinkRoleToWinLoseFlag ; $44a7
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
@@ -189,7 +189,7 @@ RunMatchWinLoseScreen:
 	res B_IE_STAT, [hl] ; $452d
 	ld a, $03 ; $452f
 	ld [wAnimatedTilePeriod], a ; $4531
-	ld a, [wMatchWinLoseState] ; $4534
+	ld a, [wSavedMatchWinLoseFlag] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
 .pressedRight:
@@ -200,7 +200,7 @@ RunMatchWinLoseScreen:
 	call ClearFrameTasks ; $4548
 	call RunMatchStatsScreen ; $454b
 	push af ; $454e
-	ld a, [wMatchWinLoseState] ; $454f
+	ld a, [wSavedMatchWinLoseFlag] ; $454f
 	ld [wMatchWinLoseFlag], a ; $4552
 	pop af ; $4555
 	cp $ff ; $4556
@@ -243,36 +243,36 @@ InitMatchWinLoseScreen:
 	ld c, $00 ; $45b6
 	call LoadResultScreenPortraits ; $45b8
 	push_wram_bank WRAM_STAGING ; $45bb
-	ld hl, MatchWinLoseScreenGfx ; $45c4
+	ld hl, WinTextSpriteGfx ; $45c4
 	ld de, wDecompBuffer ; $45c7
 	call DecompressData ; $45ca
 	ld hl, wDecompBuffer ; $45cd
 	ld de, vTiles0 + VRAM_BANK1 ; $45d0
-	ld c, MatchWinLoseScreenGfx_SIZE / 16 ; $45d3
+	ld c, WinTextSpriteGfx_SIZE / 16 ; $45d3
 	call QueueVRAMCopy ; $45d5
-	ld hl, MatchWinLoseScreenGfx1 ; $45d8
+	ld hl, LoseTextSpriteGfx ; $45d8
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $45e4
-	ld c, MatchWinLoseScreenGfx1_SIZE / 16 ; $45e7
+	ld c, LoseTextSpriteGfx_SIZE / 16 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
 	ld_obj_pals de, 0, 3 ; $45ef
 	call LoadPaletteShadow ; $45f2
-	ld b, TILEBLOCK_MatchWinLoseGfx ; $45f5
-	ld c, MatchWinLoseGfx_SIZE / 16 ; $45f7
+	ld b, TILEBLOCK_WinLoseArrowGfx ; $45f5
+	ld c, WinLoseArrowGfx_SIZE / 16 ; $45f7
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop_wram_bank ; $45ff
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
-MatchWinLoseScreenGfx:
-	INCBIN "data/engine/menus/results/lz_MatchWinLoseScreenGfx.bin" ; $4608, 380 bytes
-	INCLUDE "data/engine/menus/results/lz_MatchWinLoseScreenGfx.inc" ; DEF MatchWinLoseScreenGfx_SIZE EQU its decoded length, generated from the .bin by make
-MatchWinLoseScreenGfx1:
-	INCBIN "data/engine/menus/results/lz_MatchWinLoseScreenGfx1.bin" ; $4784, 368 bytes
-	INCLUDE "data/engine/menus/results/lz_MatchWinLoseScreenGfx1.inc" ; DEF MatchWinLoseScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
+WinTextSpriteGfx:
+	INCBIN "data/engine/menus/results/lz_WinTextSpriteGfx.bin" ; $4608, 380 bytes
+	INCLUDE "data/engine/menus/results/lz_WinTextSpriteGfx.inc" ; DEF WinTextSpriteGfx_SIZE EQU its decoded length, generated from the .bin by make
+LoseTextSpriteGfx:
+	INCBIN "data/engine/menus/results/lz_LoseTextSpriteGfx.bin" ; $4784, 368 bytes
+	INCLUDE "data/engine/menus/results/lz_LoseTextSpriteGfx.inc" ; DEF LoseTextSpriteGfx_SIZE EQU its decoded length, generated from the .bin by make
 MatchWinLoseScreenPalettes:
 	INCLUDE "data/engine/menus/results/MatchWinLoseScreenPalettes.asm" ; $48f4, 24 bytes (palettes)
 LoadWinLoseScreenAssets:
@@ -281,12 +281,12 @@ LoadWinLoseScreenAssets:
 	jr z, .nonVersus ; $4910
 	ld c, SCREENASSET_MatchStats2 ; $4912
 	farcall LoadScreenAssetRecord ; $4914
-	jr .testGameFlagByNumber ; $4917
+	jr .checkDoubles ; $4917
 .nonVersus:
 	ld c, SCREENASSET_MatchStats ; $4919
 	farcall LoadScreenAssetRecord ; $491b
-	jr .testGameFlagByNumber ; $491e
-.testGameFlagByNumber:
+	jr .checkDoubles ; $491e
+.checkDoubles:
 	ld de, FLAG_DOUBLES ; $4920
 	call TestGameFlagByNumber ; $4923
 	jr nz, .done ; $4926

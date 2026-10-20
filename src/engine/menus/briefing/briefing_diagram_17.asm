@@ -315,26 +315,26 @@ DecompressGraphicsList:
 	ret ; $4aba
 CourtDiagramGraphicsList:
 	; $4abb
-	dw CourtDiagramGfx0, vTiles0 tile $00
-	dw CourtDiagramGfx1, vTiles0 tile $04
-	dw CourtDiagramGfx2, vTiles0 tile $08
-	dw CourtDiagramGfx3, vTiles0 tile $12
-	dw CourtDiagramGfx4, vTiles0 tile $1c
-	dw CourtDiagramGfx5, vTiles0 tile $26
-	dw CourtDiagramGfx6, vTiles0 tile $2c
-	dw CourtDiagramGfx7, vTiles0 tile $36
-	dw CourtDiagramGfx8, vTiles0 tile $40
-	dw CourtDiagramGfx9, vTiles0 tile $4a
-	dw CourtDiagramGfx10, vTiles0 tile $54
-	dw CourtDiagramGfx11, vTiles0 tile $5a
-	dw CourtDiagramGfx12, vTiles0 tile $60
-	dw CourtDiagramGfx13, vTiles0 tile $64
-	dw CourtDiagramGfx14, vTiles0 tile $68
-	dw CourtDiagramGfx15, vTiles0 tile $6a
-	dw CourtDiagramGfx16, vTiles0 tile $6c
-	dw CourtDiagramGfx17, vTiles0 tile $6e
-	dw CourtDiagramGfx18, vTiles0 tile $70
-	dw CourtDiagramGfx19, vTiles0 tile $72
+	dw CourtDiagramPlayerGfx, vTiles0 tile $00
+	dw CourtDiagramOpponentGfx, vTiles0 tile $04
+	dw CourtDiagramCmdAToBLeftGfx, vTiles0 tile $08
+	dw CourtDiagramCmdAPlusBLeftGfx, vTiles0 tile $12
+	dw CourtDiagramCmdBToALeftGfx, vTiles0 tile $1c
+	dw CourtDiagramCmdARightGfx, vTiles0 tile $26
+	dw CourtDiagramCmdBRightGfx, vTiles0 tile $2c
+	dw CourtDiagramCmdAToBRightGfx, vTiles0 tile $36
+	dw CourtDiagramCmdAPlusBRightGfx, vTiles0 tile $40
+	dw CourtDiagramCmdBToARightGfx, vTiles0 tile $4a
+	dw CourtDiagramCmdALeftGfx, vTiles0 tile $54
+	dw CourtDiagramCmdBLeftGfx, vTiles0 tile $5a
+	dw CourtDiagramPointingHandGfx, vTiles0 tile $60
+	dw CourtDiagramLeftArrowGfx, vTiles0 tile $64
+	dw CourtDiagramDiagonalArrowGfx, vTiles0 tile $68
+	dw CourtDiagramPoleGfx, vTiles0 tile $6a
+	dw CourtDiagramTargetBracketGfx, vTiles0 tile $6c
+	dw CourtDiagramBallGfx, vTiles0 tile $6e
+	dw CourtDiagramDownArrowGfx, vTiles0 tile $70
+	dw CourtDiagramPromptArrowGfx, vTiles0 tile $72
 	dw 0
 LoadCourtDiagramObjPalettes:
 	ld hl, CourtDiagramObjPalettes ; $4b0d
@@ -351,46 +351,46 @@ CourtDiagramPalettes:
 	INCLUDE "data/engine/menus/briefing/CourtDiagramPalettes.asm" ; $4ec2, 16 bytes (palettes)
 CycleDiagramTargetPaletteData:
 	INCLUDE "data/engine/menus/briefing/CycleDiagramTargetPaletteData.asm" ; $4ed2, 48 bytes (palettes)
-CourtDiagramGfx0:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx0.bin" ; $4f02, 59 bytes
-CourtDiagramGfx1:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx1.bin" ; $4f3d, 63 bytes
-CourtDiagramGfx2:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx2.bin" ; $4f7c, 143 bytes
-CourtDiagramGfx3:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx3.bin" ; $500b, 143 bytes
-CourtDiagramGfx4:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx4.bin" ; $509a, 147 bytes
-CourtDiagramGfx5:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx5.bin" ; $512d, 98 bytes
-CourtDiagramGfx6:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx6.bin" ; $518f, 98 bytes
-CourtDiagramGfx7:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx7.bin" ; $51f1, 143 bytes
-CourtDiagramGfx8:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx8.bin" ; $5280, 143 bytes
-CourtDiagramGfx9:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx9.bin" ; $530f, 145 bytes
-CourtDiagramGfx10:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx10.bin" ; $53a0, 105 bytes
-CourtDiagramGfx11:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx11.bin" ; $5409, 100 bytes
-CourtDiagramGfx12:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx12.bin" ; $546d, 74 bytes
-CourtDiagramGfx13:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx13.bin" ; $54b7, 33 bytes
-CourtDiagramGfx14:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx14.bin" ; $54d8, 39 bytes
-CourtDiagramGfx15:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx15.bin" ; $54ff, 18 bytes
-CourtDiagramGfx16:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx16.bin" ; $5511, 18 bytes
-CourtDiagramGfx17:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx17.bin" ; $5523, 19 bytes
-CourtDiagramGfx18:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx18.bin" ; $5536, 24 bytes
-CourtDiagramGfx19:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx19.bin" ; $554e, 25 bytes
+CourtDiagramPlayerGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPlayerGfx.bin" ; $4f02, 59 bytes
+CourtDiagramOpponentGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramOpponentGfx.bin" ; $4f3d, 63 bytes
+CourtDiagramCmdAToBLeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAToBLeftGfx.bin" ; $4f7c, 143 bytes
+CourtDiagramCmdAPlusBLeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAPlusBLeftGfx.bin" ; $500b, 143 bytes
+CourtDiagramCmdBToALeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBToALeftGfx.bin" ; $509a, 147 bytes
+CourtDiagramCmdARightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdARightGfx.bin" ; $512d, 98 bytes
+CourtDiagramCmdBRightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBRightGfx.bin" ; $518f, 98 bytes
+CourtDiagramCmdAToBRightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAToBRightGfx.bin" ; $51f1, 143 bytes
+CourtDiagramCmdAPlusBRightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAPlusBRightGfx.bin" ; $5280, 143 bytes
+CourtDiagramCmdBToARightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBToARightGfx.bin" ; $530f, 145 bytes
+CourtDiagramCmdALeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdALeftGfx.bin" ; $53a0, 105 bytes
+CourtDiagramCmdBLeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBLeftGfx.bin" ; $5409, 100 bytes
+CourtDiagramPointingHandGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPointingHandGfx.bin" ; $546d, 74 bytes
+CourtDiagramLeftArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramLeftArrowGfx.bin" ; $54b7, 33 bytes
+CourtDiagramDiagonalArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramDiagonalArrowGfx.bin" ; $54d8, 39 bytes
+CourtDiagramPoleGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPoleGfx.bin" ; $54ff, 18 bytes
+CourtDiagramTargetBracketGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramTargetBracketGfx.bin" ; $5511, 18 bytes
+CourtDiagramBallGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramBallGfx.bin" ; $5523, 19 bytes
+CourtDiagramDownArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramDownArrowGfx.bin" ; $5536, 24 bytes
+CourtDiagramPromptArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPromptArrowGfx.bin" ; $554e, 25 bytes
 CourtDiagramObjPalettes:
 	INCLUDE "data/engine/menus/briefing/CourtDiagramObjPalettes.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:

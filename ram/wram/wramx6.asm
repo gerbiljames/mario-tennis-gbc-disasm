@@ -54,8 +54,8 @@ wCharViewerPalette:: db
 wCharViewerPose:: db
 NEXTU
 ; results continue prompt (bank $1e)
-; [8-bit] Which continue prompt is up, stored from c by InitResultsPromptState
-wContinuePromptKind:: db
+; [8-bit] Nonzero shows the partner on the results screen even without FLAG_TEMP_RESULTS_DOUBLES_LAYOUT; stored from c by InitResultsPromptState, set by the award screen
+wResultsAlwaysShowPartner:: db
 ; [8-bit] Cursor row, toggled 0/1 by up and down; picks which of the two cursor sprites DrawContinuePromptCursor queues
 wContinuePromptRow:: db
 ; [8-bit] Which page of the prompt text is showing (RefreshContinuePromptText)
@@ -202,8 +202,8 @@ wCutsceneWindowSliding:: db
 NEXTU
 ; character-data page arrows (banks $1a/$1c/$1d)
 	ds 280
-; [8-bit] Page arrows to bob: 1 left, 2 right, 0 neither; read every frame by DrawCharDataPageArrowsTask
-wCharDataPageArrowMode:: db
+; [8-bit] Stat page shown: 0 overview, 1 main character, 2 partner; picks the page arrows DrawCharDataPageArrowsTask draws, and DrawStatChangeArrows runs only on 1
+wCharDataStatPageView:: db
 ; [8-bit] Nonzero freezes the arrow bob; while it is clear the task steps wCharDataArrowPhase
 wCharDataArrowHold:: db
 ; [8-bit] Free-running counter the arrow bob reads for its offset

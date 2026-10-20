@@ -91,18 +91,18 @@ DrawCharDataPageArrowsTask:
 	ld hl, wCharDataArrowPhase ; $4c10
 	inc [hl] ; $4c13
 .drawArrows:
-	ld a, [wCharDataPageArrowMode] ; $4c14
+	ld a, [wCharDataStatPageView] ; $4c14
 	or a ; $4c17
 	jr z, .bothArrows ; $4c18
 	dec a ; $4c1a
-	jr z, .countDone ; $4c1b
+	jr z, .mainPageArrow ; $4c1b
 	ld de, $0103 ; $4c1d
 	call BobArrowSpriteLeft ; $4c20
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate2 ; $4c23
 	sprite_attr_tile OAM_BANK1 | 6, $28 ; $4c26
 	call QueueSpriteTemplate ; $4c2a
 	ret ; $4c2d
-.countDone:
+.mainPageArrow:
 	ld_xy de, $7f, $03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate3 ; $4c34
@@ -156,7 +156,7 @@ CharDataArrowBobOffsetTable_1d:
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 RunCharDataPageInputLoop:
 	wram_bank WRAM_SCENE ; $4cac
-	ld a, [wCharDataPageArrowMode] ; $4cb2
+	ld a, [wCharDataStatPageView] ; $4cb2
 	or a ; $4cb5
 	jr z, .overviewLoop ; $4cb6
 	dec a ; $4cb8
@@ -198,7 +198,7 @@ RunCharDataPageInputLoop:
 	call SlideToPartnerStatPage ; $4d21
 	wram_bank WRAM_SCENE ; $4d24
 	ld a, $02 ; $4d2a
-	ld [wCharDataPageArrowMode], a ; $4d2c
+	ld [wCharDataStatPageView], a ; $4d2c
 	frame_task SlideCharDataArrowsInTask ; $4d2f
 	jp .partnerPageLoop ; $4d37
 .toMainPage:
@@ -225,7 +225,7 @@ RunCharDataPageInputLoop:
 	call SlideToMainCharStatPage ; $4d82
 	wram_bank WRAM_SCENE ; $4d85
 	ld a, $01 ; $4d8b
-	ld [wCharDataPageArrowMode], a ; $4d8d
+	ld [wCharDataStatPageView], a ; $4d8d
 	frame_task SlideCharDataArrowsInTask ; $4d90
 	jr .mainPageLoop ; $4d98
 .cancel:
@@ -252,7 +252,7 @@ RunCharDataPageInputLoop:
 	call SlideFromMainCharStatPage ; $4dc3
 	wram_bank WRAM_SCENE ; $4dc6
 	xor a ; $4dcc
-	ld [wCharDataPageArrowMode], a ; $4dcd
+	ld [wCharDataStatPageView], a ; $4dcd
 	call ClearFrameTasks ; $4dd0
 	frame_task CharDataScreenBgScrollTask ; $4dd3
 	frame_task SlideCharDataArrowsInTask ; $4ddb
@@ -284,7 +284,7 @@ RunCharDataPageInputLoop:
 	call SlideFromPartnerStatPage ; $4e22
 	wram_bank WRAM_SCENE ; $4e25
 	xor a ; $4e2b
-	ld [wCharDataPageArrowMode], a ; $4e2c
+	ld [wCharDataStatPageView], a ; $4e2c
 	call ClearFrameTasks ; $4e2f
 	frame_task CharDataScreenBgScrollTask ; $4e32
 	frame_task SlideCharDataArrowsInTask ; $4e3a

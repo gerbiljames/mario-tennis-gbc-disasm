@@ -388,7 +388,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld [wCurrentStorySlot], a ; $6310
 	farcall CheckStorySlot ; $6313
 	or a ; $6316
-	jp z, .clearFrameTasks ; $6317
+	jp z, .slotLoaded ; $6317
 	call RunNewGameSetup ; $631a
 	cp $ff ; $631d
 	jp z, Unused_1b_RunDebugSaveDataFlow ; $631f
@@ -454,7 +454,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld [wUnlockDebugSelection], a ; $6390
 	farcall Unused_1b_RunMinigameFlagsDebugScreen ; $6393
 	jp .saveMenuLoop ; $6396
-.clearFrameTasks:
+.slotLoaded:
 	call ClearFrameTasks ; $6399
 	farcall Unused_02_ValidateN64TransferRecord ; $639c
 	or a ; $639f

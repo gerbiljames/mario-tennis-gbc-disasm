@@ -14,19 +14,19 @@ DataPtr_TitleScreenPalettes:
 	farptr ScrollOutIntroLogo ; $4014
 	farptr LoadIntroTilesAndPalette ; $4016
 	farptr QueueIntroSpriteBlock ; $4018
-DataPtr_AwardCeremonyTilemap:
-	dw AwardCeremonyTilemap ; $401a
-DataPtr_AwardCeremonyAttrmap:
-	dw AwardCeremonyAttrmap ; $401c
-DataPtr_AwardCeremonyTilemap2:
-	dw AwardCeremonyTilemap2 ; $401e
-DataPtr_AwardCeremonyAttrmap2:
-	dw AwardCeremonyAttrmap2 ; $4020
-DataPtr_AwardCeremonyTilemap3:
-	dw AwardCeremonyTilemap3 ; $4022
-DataPtr_AwardCeremonyAttrmap3:
-	dw AwardCeremonyAttrmap3 ; $4024
-DataPtr_AwardCeremonyTilemap4:
-	dw AwardCeremonyTilemap4 ; $4026
-DataPtr_AwardCeremonyAttrmap4:
-	dw AwardCeremonyAttrmap4 ; $4028
+DataPtr_DreamMatchEpilogueTilemap:
+	dw DreamMatchEpilogueTilemap ; $401a
+DataPtr_DreamMatchEpilogueAttrmap:
+	dw DreamMatchEpilogueAttrmap ; $401c
+DataPtr_DreamMatchEpilogueTilemap2:
+	dw DreamMatchEpilogueTilemap2 ; $401e
+DataPtr_DreamMatchEpilogueAttrmap2:
+	dw DreamMatchEpilogueAttrmap2 ; $4020
+DataPtr_DreamMatchEpilogueTilemap3:
+	dw DreamMatchEpilogueTilemap3 ; $4022
+DataPtr_DreamMatchEpilogueAttrmap3:
+	dw DreamMatchEpilogueAttrmap3 ; $4024
+DataPtr_DreamMatchEpilogueTilemap4:
+	dw DreamMatchEpilogueTilemap4 ; $4026
+DataPtr_DreamMatchEpilogueAttrmap4:
+	dw DreamMatchEpilogueAttrmap4 ; $4028

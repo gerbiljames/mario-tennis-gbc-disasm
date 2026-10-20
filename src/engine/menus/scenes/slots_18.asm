@@ -106,7 +106,7 @@ DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
 	farptr RunStorySceneByMode ; $408e
 	farptr Unused_18_DebugScreenAssetViewer ; $4090
-DataPtr_MatchWinLoseGfx:
-	dw MatchWinLoseGfx ; $4092
+DataPtr_WinLoseArrowGfx:
+	dw WinLoseArrowGfx ; $4092
 DataPtr_Unused_18_JpCourtStatLabelTiles:
 	dw Unused_18_JpCourtStatLabelTiles ; $4094

@@ -85,7 +85,7 @@ InitExpAwardScreenState:
 	ld d, $0a ; $54e5
 	call FillMemoryD ; $54e7
 	ld a, $01 ; $54ea
-	ld [wContinuePromptKind], a ; $54ec
+	ld [wResultsAlwaysShowPartner], a ; $54ec
 	ret ; $54ef
 FillMemoryD:
 	ld [hl+], a ; $54f0

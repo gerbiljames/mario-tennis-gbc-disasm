@@ -569,8 +569,8 @@ CharDataBand8RunsStep1_1c:
 	blit_run 20, 2, 12, 1
 	blit_run 20, 3, 18, 1
 	db $ff
-CharDataScreen_LoadScreenPalette:
-	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
+CharDataScreenBasePalettes:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenBasePalettes.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
 CharDataScreenTilemap_1c:

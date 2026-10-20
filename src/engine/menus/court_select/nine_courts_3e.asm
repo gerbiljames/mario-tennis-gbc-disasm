@@ -19,7 +19,7 @@ RunCourtSelect9Menu:
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
 	farcall LoadMenuSpritePalettePair ; $6530
-	call LoadCourtSelectHeader ; $6533
+	call LoadCourtStatsRow ; $6533
 	wram_bank WRAM_SCREEN ; $6536
 	ld a, [wMenuSlideDirection] ; $653c
 	ld b, a ; $653f
@@ -103,7 +103,7 @@ RunLinkCourtSelect9Menu:
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
 	farcall LoadMenuSpritePalettePair ; $65ea
-	call LoadCourtSelectHeader ; $65ed
+	call LoadCourtStatsRow ; $65ed
 	wram_bank WRAM_SCREEN ; $65f0
 	ld a, [wMenuSlideDirection] ; $65f6
 	ld b, a ; $65f9
@@ -375,7 +375,7 @@ RedrawCourtSelect9Menu:
 	jr z, .drawName ; $6858
 	ld b, d ; $685a
 .drawName:
-	call DrawCourtNameTiles ; $685b
+	call DrawCourtStatValues ; $685b
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $685e
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $6861
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $6864
@@ -472,7 +472,7 @@ CourtSelect9Palette7:
 	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette7.asm" ; $6923, 8 bytes (palettes)
 CourtSelect9Palette8:
 	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette8.asm" ; $692b, 8 bytes (palettes)
-Unused_3e_DrawCourtSelect9TitleText:
+Unused_3e_DrawCourtSelect9StatsText:
 	push_wram_bank WRAM_SCREEN ; $6933
 	ld c, $03 ; $693c
 	call GetMenuCursorIndex_3e ; $693e
@@ -481,12 +481,12 @@ Unused_3e_DrawCourtSelect9TitleText:
 	ld a, d ; $6943
 	ld c, a ; $6944
 	push bc ; $6945
-	call Unused_3e_DrawCourtSelectTitleTiles ; $6946
+	call Unused_3e_DrawCourtStatsLabelTiles ; $6946
 	pop bc ; $6949
 	push bc ; $694a
-	call Unused_3e_RenderCourtSelectTitleText ; $694b
+	call Unused_3e_RenderCourtSpeedText ; $694b
 	pop bc ; $694e
-	call Unused_3e_RenderCourtSelectTitleText2 ; $694f
+	call Unused_3e_RenderCourtBounceText ; $694f
 	jr .done ; $6952
 .done:
 	pop_wram_bank ; $6954
@@ -561,14 +561,14 @@ CourtUnlockFlagIds_3e:
 	dw SAVEFLAG_COURT_STAR ; 4
 StubNop_3e:
 	ret ; $69d4
-AwardCeremonyTiles:
-	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTiles.bin" ; $69d5, 2641 bytes
-AwardCeremonyPalettes:
-	INCLUDE "data/engine/menus/court_select/AwardCeremonyPalettes.asm" ; $7426, 64 bytes (palettes)
-AwardCeremonyTilemap5:
-	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTilemap5.bin" ; $7466, 279 bytes
-AwardCeremonyAttrmap5:
-	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyAttrmap5.bin" ; $757d, 107 bytes
+DreamMatchEpilogueTiles:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueTiles.bin" ; $69d5, 2641 bytes
+DreamMatchEpiloguePalettes:
+	INCLUDE "data/engine/menus/court_select/DreamMatchEpiloguePalettes.asm" ; $7426, 64 bytes (palettes)
+DreamMatchEpilogueTilemap5:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueTilemap5.bin" ; $7466, 279 bytes
+DreamMatchEpilogueAttrmap5:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueAttrmap5.bin" ; $757d, 107 bytes
 ClearStatusLabelGfx:
 	INCBIN "data/engine/menus/court_select/lz_ClearStatusLabelGfx.bin" ; $75e8, 179 bytes
 MarioStarGetsLabelGfx:

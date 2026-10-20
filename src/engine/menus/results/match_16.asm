@@ -96,10 +96,10 @@ ResultExhibitionBannerHeadGfx:
 	INCBIN "data/engine/menus/results/lz_ResultExhibitionBannerHeadGfx.bin" ; $5357, 106 bytes
 ResultExhibitionBannerTailGfx:
 	INCBIN "data/engine/menus/results/lz_ResultExhibitionBannerTailGfx.bin" ; $53c1, 109 bytes
-MatchResultTitleGfx:
-	INCBIN "data/engine/menus/results/lz_MatchResultTitleGfx.bin" ; $542e, 143 bytes
-MatchResultTitleGfxAlt:
-	INCBIN "data/engine/menus/results/lz_MatchResultTitleGfxAlt.bin" ; $54bd, 132 bytes
+SinglesResultTitleGfx:
+	INCBIN "data/engine/menus/results/lz_SinglesResultTitleGfx.bin" ; $542e, 143 bytes
+DoublesResultTitleGfx:
+	INCBIN "data/engine/menus/results/lz_DoublesResultTitleGfx.bin" ; $54bd, 132 bytes
 ResultFinalLabelGfx:
 	INCBIN "data/engine/menus/results/lz_ResultFinalLabelGfx.bin" ; $5541, 93 bytes
 ResultSemifinalLabelGfx:

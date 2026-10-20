@@ -102,10 +102,10 @@ DataPtr_ChampionMedalTilemap6:
 	dw ChampionMedalTilemap6 ; $4064
 DataPtr_ChampionMedalAttrmap6:
 	dw ChampionMedalAttrmap6 ; $4066
-DataPtr_AwardCeremonyTilemap6:
-	dw AwardCeremonyTilemap6 ; $4068
-DataPtr_AwardCeremonyAttrmap6:
-	dw AwardCeremonyAttrmap6 ; $406a
+DataPtr_DreamMatchEpilogueTilemap6:
+	dw DreamMatchEpilogueTilemap6 ; $4068
+DataPtr_DreamMatchEpilogueAttrmap6:
+	dw DreamMatchEpilogueAttrmap6 ; $406a
 CompanyLogosTiles:
 	INCBIN "data/gfx/lz_CompanyLogosTiles.bin" ; $406c, 1804 bytes
 CompanyLogosTilemap:
@@ -210,8 +210,8 @@ ChampionMedalTilemap6:
 	INCBIN "data/gfx/lz_ChampionMedalTilemap6.bin" ; $7a16, 265 bytes
 ChampionMedalAttrmap6:
 	INCBIN "data/gfx/lz_ChampionMedalAttrmap6.bin" ; $7b1f, 115 bytes
-AwardCeremonyTilemap6:
-	INCBIN "data/gfx/lz_AwardCeremonyTilemap6.bin" ; $7b92, 278 bytes
-AwardCeremonyAttrmap6:
-	INCBIN "data/gfx/lz_AwardCeremonyAttrmap6.bin" ; $7ca8, 118 bytes
+DreamMatchEpilogueTilemap6:
+	INCBIN "data/gfx/lz_DreamMatchEpilogueTilemap6.bin" ; $7b92, 278 bytes
+DreamMatchEpilogueAttrmap6:
+	INCBIN "data/gfx/lz_DreamMatchEpilogueAttrmap6.bin" ; $7ca8, 118 bytes
 	; $7d1e, 738 bytes fill to bank end (linker-padded)

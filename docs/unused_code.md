@@ -229,8 +229,8 @@ label between are a lone dead `ret` after a jump table, or a dead case inside
 a live routine's own scope.
 
 Two more sat inside palette blobs in bank `$3e`, straight after the last
-palette of each court-select screen: `Unused_3e_DrawCourtSelect4TitleText`
-and `Unused_3e_DrawCourtSelect9TitleText`, an older way of putting the
+palette of each court-select screen: `Unused_3e_DrawCourtSelect4StatsText`
+and `Unused_3e_DrawCourtSelect9StatsText`, an older way of putting the
 cursor's court name into the title row, sharing three helpers and four small
 tables after the first one. `Unused_08_AdvanceCharStatePhase`, a copy of
 `AdvanceCharStatePhase` after `CharPointEndState`'s jump table, had been read

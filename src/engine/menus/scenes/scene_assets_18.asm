@@ -303,8 +303,8 @@ MarioMiniGamesAttrmap:
 	INCBIN "data/engine/menus/scenes/lz_MarioMiniGamesAttrmap.bin" ; $740b, 214 bytes
 MarioMiniGamesPalettes:
 	INCLUDE "data/engine/menus/scenes/MarioMiniGamesPalettes.asm" ; $74e1, 64 bytes (palettes)
-MatchWinLoseGfx:
-	INCBIN "data/engine/menus/scenes/lz_MatchWinLoseGfx.bin" ; $7521, 71 bytes
+WinLoseArrowGfx:
+	INCBIN "data/engine/menus/scenes/lz_WinLoseArrowGfx.bin" ; $7521, 71 bytes
 Unused_18_JpCourtStatLabelTiles:
 	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpCourtStatLabelTiles.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
@@ -314,15 +314,15 @@ RunStorySceneByMode:
 	ld a, b ; $761e
 	or a ; $761f
 	jr nz, .checkMode1 ; $7620
-	call PlayScreenSequence0 ; $7622
+	call PlayTravelingTeamVictoryScene ; $7622
 	ret ; $7625
 .checkMode1:
 	cp $01 ; $7626
 	jr nz, .mode2 ; $7628
-	call PlayScreenSequence1 ; $762a
+	call PlayAwardsCeremonyScene ; $762a
 	ret ; $762d
 .mode2:
-	call PlayScreenSequence2 ; $762e
+	call PlayDreamMatchEpilogueScene ; $762e
 	ret ; $7631
 FadeOutAndResetScreen:
 	call EnableLCD ; $7632
@@ -376,11 +376,11 @@ Unused_18_DebugScreenAssetViewer:
 	ret ; $769b
 DebugScreenAssetViewerRecords:
 	; $769c, 24 bytes (bytes:12)
-	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6, SCREENASSET_ShopCutscene, SCREENASSET_ShopCutscene2, SCREENASSET_ShopCutscene3, SCREENASSET_ShopCutscene4, SCREENASSET_ShopCutscene5, SCREENASSET_ShopCutscene6 ; 0x00
-	db SCREENASSET_AwardCeremony, SCREENASSET_AwardCeremony2, SCREENASSET_AwardCeremony3, SCREENASSET_AwardCeremony4, SCREENASSET_AwardCeremony5, SCREENASSET_AwardCeremony6, SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x0c
-PlayScreenSequence0:
-	call SetupScreen0Assets ; $76b4
-	call LoadScreen0TilesAndPalette ; $76b7
+	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6, SCREENASSET_AwardsCeremonyCutscene, SCREENASSET_AwardsCeremonyCutscene2, SCREENASSET_AwardsCeremonyCutscene3, SCREENASSET_AwardsCeremonyCutscene4, SCREENASSET_AwardsCeremonyCutscene5, SCREENASSET_AwardsCeremonyCutscene6 ; 0x00
+	db SCREENASSET_DreamMatchEpilogue, SCREENASSET_DreamMatchEpilogue2, SCREENASSET_DreamMatchEpilogue3, SCREENASSET_DreamMatchEpilogue4, SCREENASSET_DreamMatchEpilogue5, SCREENASSET_DreamMatchEpilogue6, SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x0c
+PlayTravelingTeamVictoryScene:
+	call SetupTravelingTeamVictoryScreen ; $76b4
+	call LoadToBeContinuedGfx ; $76b7
 	call EnableLCD ; $76ba
 	script_fade_in 2 ; $76bd
 	call WaitFadeEnd ; $76c2
@@ -412,46 +412,46 @@ PlayScreenSequence0:
 	call EnableLCD ; $7703
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
-	frame_task QueueScreen0Sprites ; $770e
+	frame_task QueueToBeContinuedSprites ; $770e
 .waitDismiss:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
 	and PADF_A | PADF_B ; $771b
 	jr z, .waitDismiss ; $771d
 	ret ; $771f
-SetupScreen0Assets:
+SetupTravelingTeamVictoryScreen:
 	call ResetScrollAndCamera ; $7720
-	call LookupScreen0AssetId ; $7723
+	call LookupTravelingTeamVictoryAssetId ; $7723
 	farcall LoadScreenAssetRecord ; $7726
 	farcall QueueWram3MapToVRAM ; $7729
 	ret ; $772c
-LookupScreen0AssetId:
+LookupTravelingTeamVictoryAssetId:
 	ld a, [wStorySceneAssetIndex] ; $772d
-	ld hl, Screen0AssetIdTable ; $7730
+	ld hl, TravelingTeamVictoryAssetIds ; $7730
 	add_hl_a ; $7733
 	ld c, [hl] ; $7738
 	ret ; $7739
-Screen0AssetIdTable:
+TravelingTeamVictoryAssetIds:
 	; $773a, 6 bytes (bytes:6)
 	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6 ; 0x00
-LoadScreen0TilesAndPalette:
-	ld b, TILEBLOCK_Screen0Gfx ; $7740
-	ld c, Screen0Gfx_SIZE / 16 ; $7742
+LoadToBeContinuedGfx:
+	ld b, TILEBLOCK_ToBeContinuedGfx ; $7740
+	ld c, ToBeContinuedGfx_SIZE / 16 ; $7742
 	ld de, vTiles0 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
-	ld hl, Screen0Palette ; $774a
+	ld hl, ToBeContinuedPalette ; $774a
 	ld_obj_pals de, 0, 1 ; $774d
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
-Screen0Palette:
-	INCLUDE "data/engine/menus/scenes/Screen0Palette.asm" ; $7754, 8 bytes (palettes)
-QueueScreen0Sprites:
-	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
+ToBeContinuedPalette:
+	INCLUDE "data/engine/menus/scenes/ToBeContinuedPalette.asm" ; $7754, 8 bytes (palettes)
+QueueToBeContinuedSprites:
+	ld hl, QueueToBeContinuedSprites_SpriteTemplate ; $775c
 	ld_xy de, $28, $3a ; $775f
 	sprite_tile_attr $00, 0 ; $7762
 	call QueueSpriteTemplate ; $7766
 	ret ; $7769
-QueueScreen0Sprites_SpriteTemplate:
+QueueToBeContinuedSprites_SpriteTemplate:
 	; $776a, 81 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00

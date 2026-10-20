@@ -301,7 +301,7 @@ screens nothing reaches. The short-text copy is reached only from
 `LoadMenuObjPalettes3To7` (`$01:$5188`), called once at boot (`$01:$4088`),
 hands `LoadPaletteShadow` the source `vTiles0 tile $7c + 8` (`$87c8`)
 for object palettes 3-7. That is VRAM; bank `$01` has no palette data at the
-matching ROM address (`$47c8` is inside `MenuTilesBStagedTiles0`). Its
+matching ROM address (`$47c8` is inside `MenuFontUppercaseTiles_01`). Its
 unreachable twin `Unused_01_LoadMenuBgPalettes3To7` does the same for
 background palettes 3-7.
 

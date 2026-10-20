@@ -108,18 +108,18 @@ ScreenAssetRecordTable:
 	screen_asset VictoryCutscene4, DataPtr_VictoryCutsceneTiles, DataPtr_VictoryCutsceneTilemap4, DataPtr_VictoryCutsceneAttrmap4, DataPtr_VictoryCutscenePalettes ; record 47
 	screen_asset VictoryCutscene5, DataPtr_VictoryCutsceneTiles, DataPtr_VictoryCutsceneTilemap5, DataPtr_VictoryCutsceneAttrmap5, DataPtr_VictoryCutscenePalettes ; record 48
 	screen_asset VictoryCutscene6, DataPtr_VictoryCutsceneTiles, DataPtr_VictoryCutsceneTilemap6, DataPtr_VictoryCutsceneAttrmap6, DataPtr_VictoryCutscenePalettes ; record 49
-	screen_asset ShopCutscene, DataPtr_ShopCutsceneTiles, DataPtr_ShopCutsceneTilemap, DataPtr_ShopCutsceneAttrmap, DataPtr_ShopCutscenePalettes ; record 50
-	screen_asset ShopCutscene2, DataPtr_ShopCutsceneTiles, DataPtr_ShopCutsceneTilemap2, DataPtr_ShopCutsceneAttrmap2, DataPtr_ShopCutscenePalettes ; record 51
-	screen_asset ShopCutscene3, DataPtr_ShopCutsceneTiles, DataPtr_ShopCutsceneTilemap3, DataPtr_ShopCutsceneAttrmap3, DataPtr_ShopCutscenePalettes ; record 52
-	screen_asset ShopCutscene4, DataPtr_ShopCutsceneTiles, DataPtr_ShopCutsceneTilemap4, DataPtr_ShopCutsceneAttrmap4, DataPtr_ShopCutscenePalettes ; record 53
-	screen_asset ShopCutscene5, DataPtr_ShopCutsceneTiles, DataPtr_ShopCutsceneTilemap5, DataPtr_ShopCutsceneAttrmap5, DataPtr_ShopCutscenePalettes ; record 54
-	screen_asset ShopCutscene6, DataPtr_ShopCutsceneTiles, DataPtr_ShopCutsceneTilemap6, DataPtr_ShopCutsceneAttrmap6, DataPtr_ShopCutscenePalettes ; record 55
-	screen_asset AwardCeremony, DataPtr_AwardCeremonyTilesAlias4, DataPtr_AwardCeremonyTilemap, DataPtr_AwardCeremonyAttrmap, DataPtr_AwardCeremonyPalettes ; record 56
-	screen_asset AwardCeremony2, DataPtr_AwardCeremonyTilesAlias4, DataPtr_AwardCeremonyTilemap2, DataPtr_AwardCeremonyAttrmap2, DataPtr_AwardCeremonyPalettes ; record 57
-	screen_asset AwardCeremony3, DataPtr_AwardCeremonyTilesAlias4, DataPtr_AwardCeremonyTilemap3, DataPtr_AwardCeremonyAttrmap3, DataPtr_AwardCeremonyPalettes ; record 58
-	screen_asset AwardCeremony4, DataPtr_AwardCeremonyTilesAlias4, DataPtr_AwardCeremonyTilemap4, DataPtr_AwardCeremonyAttrmap4, DataPtr_AwardCeremonyPalettes ; record 59
-	screen_asset AwardCeremony5, DataPtr_AwardCeremonyTilesAlias4, DataPtr_AwardCeremonyTilemap5, DataPtr_AwardCeremonyAttrmap5, DataPtr_AwardCeremonyPalettes ; record 60
-	screen_asset AwardCeremony6, DataPtr_AwardCeremonyTilesAlias4, DataPtr_AwardCeremonyTilemap6, DataPtr_AwardCeremonyAttrmap6, DataPtr_AwardCeremonyPalettes ; record 61
+	screen_asset AwardsCeremonyCutscene, DataPtr_AwardsCeremonyCutsceneTiles, DataPtr_AwardsCeremonyCutsceneTilemap, DataPtr_AwardsCeremonyCutsceneAttrmap, DataPtr_AwardsCeremonyCutscenePalettes ; record 50
+	screen_asset AwardsCeremonyCutscene2, DataPtr_AwardsCeremonyCutsceneTiles, DataPtr_AwardsCeremonyCutsceneTilemap2, DataPtr_AwardsCeremonyCutsceneAttrmap2, DataPtr_AwardsCeremonyCutscenePalettes ; record 51
+	screen_asset AwardsCeremonyCutscene3, DataPtr_AwardsCeremonyCutsceneTiles, DataPtr_AwardsCeremonyCutsceneTilemap3, DataPtr_AwardsCeremonyCutsceneAttrmap3, DataPtr_AwardsCeremonyCutscenePalettes ; record 52
+	screen_asset AwardsCeremonyCutscene4, DataPtr_AwardsCeremonyCutsceneTiles, DataPtr_AwardsCeremonyCutsceneTilemap4, DataPtr_AwardsCeremonyCutsceneAttrmap4, DataPtr_AwardsCeremonyCutscenePalettes ; record 53
+	screen_asset AwardsCeremonyCutscene5, DataPtr_AwardsCeremonyCutsceneTiles, DataPtr_AwardsCeremonyCutsceneTilemap5, DataPtr_AwardsCeremonyCutsceneAttrmap5, DataPtr_AwardsCeremonyCutscenePalettes ; record 54
+	screen_asset AwardsCeremonyCutscene6, DataPtr_AwardsCeremonyCutsceneTiles, DataPtr_AwardsCeremonyCutsceneTilemap6, DataPtr_AwardsCeremonyCutsceneAttrmap6, DataPtr_AwardsCeremonyCutscenePalettes ; record 55
+	screen_asset DreamMatchEpilogue, DataPtr_DreamMatchEpilogueTilesAlias4, DataPtr_DreamMatchEpilogueTilemap, DataPtr_DreamMatchEpilogueAttrmap, DataPtr_DreamMatchEpiloguePalettes ; record 56
+	screen_asset DreamMatchEpilogue2, DataPtr_DreamMatchEpilogueTilesAlias4, DataPtr_DreamMatchEpilogueTilemap2, DataPtr_DreamMatchEpilogueAttrmap2, DataPtr_DreamMatchEpiloguePalettes ; record 57
+	screen_asset DreamMatchEpilogue3, DataPtr_DreamMatchEpilogueTilesAlias4, DataPtr_DreamMatchEpilogueTilemap3, DataPtr_DreamMatchEpilogueAttrmap3, DataPtr_DreamMatchEpiloguePalettes ; record 58
+	screen_asset DreamMatchEpilogue4, DataPtr_DreamMatchEpilogueTilesAlias4, DataPtr_DreamMatchEpilogueTilemap4, DataPtr_DreamMatchEpilogueAttrmap4, DataPtr_DreamMatchEpiloguePalettes ; record 59
+	screen_asset DreamMatchEpilogue5, DataPtr_DreamMatchEpilogueTilesAlias4, DataPtr_DreamMatchEpilogueTilemap5, DataPtr_DreamMatchEpilogueAttrmap5, DataPtr_DreamMatchEpiloguePalettes ; record 60
+	screen_asset DreamMatchEpilogue6, DataPtr_DreamMatchEpilogueTilesAlias4, DataPtr_DreamMatchEpilogueTilemap6, DataPtr_DreamMatchEpilogueAttrmap6, DataPtr_DreamMatchEpiloguePalettes ; record 61
 	screen_asset ChampionMedal, DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap, DataPtr_ChampionMedalAttrmap, DataPtr_ChampionMedalPalettes ; record 62
 	screen_asset ChampionMedal2, DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap2, DataPtr_ChampionMedalAttrmap2, DataPtr_ChampionMedalPalettes ; record 63
 	screen_asset ChampionMedal3, DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap3, DataPtr_ChampionMedalAttrmap3, DataPtr_ChampionMedalPalettes ; record 64
@@ -127,7 +127,7 @@ ScreenAssetRecordTable:
 	screen_asset ChampionMedal5, DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap5, DataPtr_ChampionMedalAttrmap5, DataPtr_ChampionMedalPalettes ; record 66
 	screen_asset ChampionMedal6, DataPtr_ChampionMedalTiles, DataPtr_ChampionMedalTilemap6, DataPtr_ChampionMedalAttrmap6, DataPtr_ChampionMedalPalettes ; record 67
 	screen_asset RulesScreen, DataPtr_RulesScreenTiles, DataPtr_RulesScreenTilemap, DataPtr_RulesScreenAttrmap, DataPtr_RulesScreenPalettes ; record 68
-	screen_asset AwardCeremonyTilesPtrs, DataPtr_AwardCeremonyTiles, DataPtr_AwardCeremonyTilesAlias1, DataPtr_AwardCeremonyTilesAlias2, DataPtr_AwardCeremonyTilesAlias3 ; record 69
+	screen_asset DreamMatchEpilogueTilesPtrs, DataPtr_DreamMatchEpilogueTiles, DataPtr_DreamMatchEpilogueTilesAlias1, DataPtr_DreamMatchEpilogueTilesAlias2, DataPtr_DreamMatchEpilogueTilesAlias3 ; record 69
 QueueWram3MapToVRAM:
 	wram_bank WRAM_SCREEN ; $4325
 	ld hl, wShadowTilemap ; $432b
@@ -356,25 +356,25 @@ AnimatedTilesSet3Frames:
 	dslot DataPtr_CharRosterIcon29 ; record 13
 	dslot DataPtr_CharRosterIcon30 ; record 14
 	dslot DataPtr_CharRosterIcon31 ; record 15
-LoadFixedTileBlockAndPalette:
+LoadCornerBracketCursorGfx:
 	push de ; $44d3
 	wram_bank WRAM_STAGING ; $44d4
-	ld hl, FixedTileBlockGfx ; $44da
+	ld hl, CornerBracketCursorGfx ; $44da
 	ld de, wDecompBuffer ; $44dd
 	call DecompressData ; $44e0
 	ld hl, wDecompBuffer ; $44e3
 	pop de ; $44e6
-	ld c, FixedTileBlockGfx_SIZE / 16 ; $44e7
+	ld c, CornerBracketCursorGfx_SIZE / 16 ; $44e7
 	call QueueVRAMCopy ; $44e9
-	ld hl, FixedTileBlockPalette ; $44ec
+	ld hl, CornerBracketCursorPalette ; $44ec
 	ld_obj_pals de, 0, 1 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
-FixedTileBlockGfx:
-	INCBIN "data/engine/menus/common/lz_FixedTileBlockGfx.bin" ; $44f6, 32 bytes
-	INCLUDE "data/engine/menus/common/lz_FixedTileBlockGfx.inc" ; DEF FixedTileBlockGfx_SIZE EQU its decoded length, generated from the .bin by make
-FixedTileBlockPalette:
-	INCLUDE "data/engine/menus/common/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
+CornerBracketCursorGfx:
+	INCBIN "data/engine/menus/common/lz_CornerBracketCursorGfx.bin" ; $44f6, 32 bytes
+	INCLUDE "data/engine/menus/common/lz_CornerBracketCursorGfx.inc" ; DEF CornerBracketCursorGfx_SIZE EQU its decoded length, generated from the .bin by make
+CornerBracketCursorPalette:
+	INCLUDE "data/engine/menus/common/CornerBracketCursorPalette.asm" ; $4516, 8 bytes (palettes)
 Unused_39_LoadFixedBgPalette0:
 	ld_bg_pals de, 0, 1 ; $451e
 	ld hl, FixedBgPalette0Palette ; $4521

@@ -1,5 +1,5 @@
-PlayScreenSequence1:
-	call SetupScreen1Assets ; $77bb
+PlayAwardsCeremonyScene:
+	call SetupAwardsCeremonyScreen ; $77bb
 	call InitObjectSceneA ; $77be
 	frame_task TaskDrawObjectSprites_18 ; $77c1
 	frame_task TaskUpdateObjects_18 ; $77c9
@@ -26,9 +26,9 @@ PlayScreenSequence1:
 	call DisableLCDSafely ; $7807
 	farcall RunScrollingTextScreen ; $780a
 	call DisableLCDSafely ; $780d
-	call LoadScreen1ObjTiles ; $7810
+	call LoadToBeContinuedOutlineGfx ; $7810
 	call FillAllBgPalettes ; $7813
-	frame_task QueueScreen1Sprites ; $7816
+	frame_task QueueToBeContinuedOutlineSprites ; $7816
 	call EnableLCD ; $781e
 	script_fade_in 64 ; $7821
 	call WaitFadeEnd ; $7826
@@ -39,24 +39,24 @@ PlayScreenSequence1:
 	and PADF_A | PADF_B ; $7830
 	jr z, .waitInput ; $7832
 	ret ; $7834
-SetupScreen1Assets:
+SetupAwardsCeremonyScreen:
 	call ResetScrollAndCamera ; $7835
-	call LookupScreen1AssetId ; $7838
+	call LookupAwardsCeremonyAssetId ; $7838
 	farcall LoadScreenAssetRecord ; $783b
 	farcall QueueWram3MapToVRAM ; $783e
 	ret ; $7841
-LookupScreen1AssetId:
+LookupAwardsCeremonyAssetId:
 	ld a, [wStorySceneAssetIndex] ; $7842
-	ld hl, Screen1AssetIdTable ; $7845
+	ld hl, AwardsCeremonyAssetIds ; $7845
 	add_hl_a ; $7848
 	ld c, [hl] ; $784d
 	ret ; $784e
-Screen1AssetIdTable:
+AwardsCeremonyAssetIds:
 	; $784f, 6 bytes (bytes:6)
-	db SCREENASSET_ShopCutscene, SCREENASSET_ShopCutscene2, SCREENASSET_ShopCutscene4, SCREENASSET_ShopCutscene3, SCREENASSET_ShopCutscene5, SCREENASSET_ShopCutscene6 ; 0x00
+	db SCREENASSET_AwardsCeremonyCutscene, SCREENASSET_AwardsCeremonyCutscene2, SCREENASSET_AwardsCeremonyCutscene4, SCREENASSET_AwardsCeremonyCutscene3, SCREENASSET_AwardsCeremonyCutscene5, SCREENASSET_AwardsCeremonyCutscene6 ; 0x00
 FillAllBgPalettes:
 	call ResetScrollAndCamera ; $7855
-	ld c, SCREENASSET_ShopCutscene ; $7858
+	ld c, SCREENASSET_AwardsCeremonyCutscene ; $7858
 	farcall LoadScreenAssetRecord ; $785a
 	ld hl, AllBgPalettes ; $785d
 	ld_bg_pals de, 0, 1 ; $7860
@@ -86,24 +86,24 @@ FillAllBgPalettes:
 	ret ; $78a8
 AllBgPalettes:
 	INCLUDE "data/engine/menus/scenes/AllBgPalettes.asm" ; $78a9, 8 bytes (palettes)
-LoadScreen1ObjTiles:
-	ld b, TILEBLOCK_Screen1ObjGfx ; $78b1
-	ld c, Screen1ObjGfx_SIZE / 16 ; $78b3
+LoadToBeContinuedOutlineGfx:
+	ld b, TILEBLOCK_ToBeContinuedOutlineGfx ; $78b1
+	ld c, ToBeContinuedOutlineGfx_SIZE / 16 ; $78b3
 	ld de, vTiles0 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
-	ld hl, Screen1ObjPalette ; $78bb
+	ld hl, ToBeContinuedOutlinePalette ; $78bb
 	ld_obj_pals de, 0, 1 ; $78be
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
-Screen1ObjPalette:
-	INCLUDE "data/engine/menus/scenes/Screen1ObjPalette.asm" ; $78c5, 8 bytes (palettes)
-QueueScreen1Sprites:
-	ld hl, QueueScreen1Sprites_SpriteTemplate ; $78cd
+ToBeContinuedOutlinePalette:
+	INCLUDE "data/engine/menus/scenes/ToBeContinuedOutlinePalette.asm" ; $78c5, 8 bytes (palettes)
+QueueToBeContinuedOutlineSprites:
+	ld hl, QueueToBeContinuedOutlineSprites_SpriteTemplate ; $78cd
 	ld_xy de, $28, $3a ; $78d0
 	sprite_tile_attr $00, 0 ; $78d3
 	call QueueSpriteTemplate ; $78d7
 	ret ; $78da
-QueueScreen1Sprites_SpriteTemplate:
+QueueToBeContinuedOutlineSprites_SpriteTemplate:
 	; $78db, 81 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -126,10 +126,10 @@ QueueScreen1Sprites_SpriteTemplate:
 	oam_sprite $10, $50, $24, $00
 	oam_sprite $20, $50, $26, $00
 	oam_sprite_end
-PlayScreenSequence2:
+PlayDreamMatchEpilogueScene:
 	call ResetScrollAndCamera ; $792c
 	sound BGM_WIN ; $792f
-	call LookupScreen2AssetIdA ; $7931
+	call LookupDreamMatchEpilogueAssetId ; $7931
 	farcall LoadScreenAssetRecord ; $7934
 	farcall QueueWram3MapToVRAM ; $7937
 	call InitObjectSceneB ; $793a
@@ -163,14 +163,14 @@ PlayScreenSequence2:
 .showTheEnd:
 	wram_bank WRAM_SCREEN ; $798a
 	xor a ; $7990
-	ld [wEndingSceneStep], a ; $7991
+	ld [wTheEndPaletteFadeStep], a ; $7991
 	call ClearFrameTasks ; $7994
 	call ResetScrollAndCamera ; $7997
 	call DisableLCDSafely ; $799a
-	call LookupScreen2AssetIdB ; $799d
+	call LookupChampionMedalAssetId ; $799d
 	farcall LoadScreenAssetRecord ; $79a0
 	farcall QueueWram3MapToVRAM ; $79a3
-	call LoadScreen2ObjTiles ; $79a6
+	call LoadTheEndGfx ; $79a6
 	call EnableLCD ; $79a9
 	script_fade_in 2 ; $79ac
 	call WaitFadeEnd ; $79b1
@@ -185,7 +185,7 @@ PlayScreenSequence2:
 	cp $b4 ; $79c8
 	jr nz, .theEndDelay ; $79ca
 	frame_task TaskFadeInPalette_18 ; $79cc
-	frame_task QueueScreen2Sprites ; $79d4
+	frame_task QueueTheEndSprites ; $79d4
 	sound BGM_THE_END ; $79dc
 .waitTheEndInput:
 	call AdvanceFrame ; $79de
@@ -206,42 +206,42 @@ PlayScreenSequence2:
 .done:
 	farcall SaveStorySlotWithTimer ; $7a03
 	ret ; $7a06
-LookupScreen2AssetIdA:
+LookupDreamMatchEpilogueAssetId:
 	ld a, [wStorySceneAssetIndex] ; $7a07
-	ld hl, Screen2AssetIdATable ; $7a0a
+	ld hl, DreamMatchEpilogueAssetIds ; $7a0a
 	add_hl_a ; $7a0d
 	ld c, [hl] ; $7a12
 	ret ; $7a13
-Screen2AssetIdATable:
+DreamMatchEpilogueAssetIds:
 	; $7a14, 6 bytes (bytes:6)
-	db SCREENASSET_AwardCeremony, SCREENASSET_AwardCeremony2, SCREENASSET_AwardCeremony4, SCREENASSET_AwardCeremony3, SCREENASSET_AwardCeremony5, SCREENASSET_AwardCeremony6 ; 0x00
-LookupScreen2AssetIdB:
+	db SCREENASSET_DreamMatchEpilogue, SCREENASSET_DreamMatchEpilogue2, SCREENASSET_DreamMatchEpilogue4, SCREENASSET_DreamMatchEpilogue3, SCREENASSET_DreamMatchEpilogue5, SCREENASSET_DreamMatchEpilogue6 ; 0x00
+LookupChampionMedalAssetId:
 	ld a, [wStorySceneAssetIndex] ; $7a1a
-	ld hl, Screen2AssetIdBTable ; $7a1d
+	ld hl, ChampionMedalAssetIds ; $7a1d
 	add_hl_a ; $7a20
 	ld c, [hl] ; $7a25
 	ret ; $7a26
-Screen2AssetIdBTable:
+ChampionMedalAssetIds:
 	; $7a27, 6 bytes (bytes:6)
 	db SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x00
-LoadScreen2ObjTiles:
-	ld b, TILEBLOCK_Screen2ObjGfx ; $7a2d
-	ld c, Screen2ObjGfx_SIZE / 16 ; $7a2f
+LoadTheEndGfx:
+	ld b, TILEBLOCK_TheEndGfx ; $7a2d
+	ld c, TheEndGfx_SIZE / 16 ; $7a2f
 	ld de, vTiles0 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
-	ld hl, Screen2ObjPalette ; $7a37
+	ld hl, TheEndPalette ; $7a37
 	ld_obj_pals de, 0, 1 ; $7a3a
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
-Screen2ObjPalette:
-	INCLUDE "data/engine/menus/scenes/Screen2ObjPalette.asm" ; $7a41, 8 bytes (palettes)
-QueueScreen2Sprites:
-	ld hl, QueueScreen2Sprites_SpriteTemplate ; $7a49
+TheEndPalette:
+	INCLUDE "data/engine/menus/scenes/TheEndPalette.asm" ; $7a41, 8 bytes (palettes)
+QueueTheEndSprites:
+	ld hl, QueueTheEndSprites_SpriteTemplate ; $7a49
 	ld_xy de, $28, $40 ; $7a4c
 	sprite_tile_attr $00, 0 ; $7a4f
 	call QueueSpriteTemplate ; $7a53
 	ret ; $7a56
-QueueScreen2Sprites_SpriteTemplate:
+QueueTheEndSprites_SpriteTemplate:
 	; $7a57, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -258,9 +258,9 @@ Unused_18_StubNop2:
 	ret ; $7a80
 TaskFadeInPalette_18:
 	push_wram_bank WRAM_SCREEN ; $7a81
-	ld a, [wEndingSceneStep] ; $7a8a
+	ld a, [wTheEndPaletteFadeStep] ; $7a8a
 	cp $10 ; $7a8d
-	jr z, .alt2 ; $7a8f
+	jr z, .done ; $7a8f
 	add a ; $7a91
 	add a ; $7a92
 	add a ; $7a93
@@ -270,11 +270,11 @@ TaskFadeInPalette_18:
 	call LoadPalettesImmediate ; $7a9f
 	ldh a, [hVBlankCounter] ; $7aa2
 	and $03 ; $7aa4
-	jr nz, .alt2 ; $7aa6
-	ld a, [wEndingSceneStep] ; $7aa8
+	jr nz, .done ; $7aa6
+	ld a, [wTheEndPaletteFadeStep] ; $7aa8
 	inc a ; $7aab
-	ld [wEndingSceneStep], a ; $7aac
-.alt2:
+	ld [wTheEndPaletteFadeStep], a ; $7aac
+.done:
 	pop_wram_bank ; $7aaf
 	ret ; $7ab4
 PaletteFadeTable_18:

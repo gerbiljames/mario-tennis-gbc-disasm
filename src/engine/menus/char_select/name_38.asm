@@ -298,8 +298,8 @@ RunNameEntryScreen:
 	ld a, $00 ; $6f6b
 	ret ; $6f6d
 SetupNameEntryScreen:
-	ld b, TILEBLOCK_NameEntryGfx ; $6f6e
-	ld c, NameEntryGfx_SIZE / 16 ; $6f70
+	ld b, TILEBLOCK_NameEntryUnderlineCursorGfx ; $6f6e
+	ld c, NameEntryUnderlineCursorGfx_SIZE / 16 ; $6f70
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, vTiles0 + VRAM_BANK1 ; $6f78

@@ -106,7 +106,7 @@ CharDataScreen_InitState:
 	ld [wCharDataStatsSlideX + 1], a ; $4116
 	inc a ; $4119
 	inc a ; $411a
-	ld [wCharDataPageArrowMode], a ; $411b
+	ld [wCharDataStatPageView], a ; $411b
 	ld a, CHARDATAPAGE_CONFIRM ; $411e
 	ld [wCharDataPage], a ; $4120
 	ld a, $0a ; $4123

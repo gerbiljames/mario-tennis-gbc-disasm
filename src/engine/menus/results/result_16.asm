@@ -4,27 +4,27 @@ LoadMatchResultPalettes:
 	jr z, .lost ; $4a14
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
-	ld hl, MatchResultPalettes1 ; $4a1b
+	ld hl, MatchResultWinnerPalette ; $4a1b
 	ld_bg_pals de, 1, 1 ; $4a1e
 	call LoadPaletteShadow ; $4a21
-	ld hl, MatchResultPalettes0 ; $4a24
+	ld hl, MatchResultLoserPalette ; $4a24
 	ld_bg_pals de, 2, 1 ; $4a27
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
 .lost:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
-	ld hl, MatchResultPalettes1 ; $4a33
+	ld hl, MatchResultWinnerPalette ; $4a33
 	ld_bg_pals de, 2, 1 ; $4a36
 	call LoadPaletteShadow ; $4a39
-	ld hl, MatchResultPalettes0 ; $4a3c
+	ld hl, MatchResultLoserPalette ; $4a3c
 	ld_bg_pals de, 1, 1 ; $4a3f
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
-MatchResultPalettes0:
-	INCLUDE "data/engine/menus/results/MatchResultPalettes0.asm" ; $4a46, 8 bytes (palettes)
-MatchResultPalettes1:
-	INCLUDE "data/engine/menus/results/MatchResultPalettes1.asm" ; $4a4e, 8 bytes (palettes)
+MatchResultLoserPalette:
+	INCLUDE "data/engine/menus/results/MatchResultLoserPalette.asm" ; $4a46, 8 bytes (palettes)
+MatchResultWinnerPalette:
+	INCLUDE "data/engine/menus/results/MatchResultWinnerPalette.asm" ; $4a4e, 8 bytes (palettes)
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp WINLOSE_LOSE ; $4a59
@@ -101,7 +101,7 @@ MatchResultTilemapScripts_16:
 	dw .varsity3 ; 12
 	dw .varsity2 ; 13
 	dw .varsity1 ; 14
-	dw .grassPractice0f ; 15
+	dw .islandOpenPractice ; 15
 	dw .islandOpenRound1 ; 16
 	dw .islandOpenRound2 ; 17
 	dw .islandOpenSemifinal ; 18
@@ -193,7 +193,7 @@ MatchResultTilemapScripts_16:
 	result_copy 9, 16, 0, 28, 7
 	result_copy 16, 16, 8, 28, 3
 	tilemap_copy_end
-.grassPractice0f:
+.islandOpenPractice:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 10, 16, 13, 30, 9
 	tilemap_copy_end
@@ -231,25 +231,25 @@ QueueResultScreenSprites:
 	cp WINLOSE_LOSE ; $4cb4
 	jr z, .lost ; $4cb6
 	ld de, $0824 ; $4cb8
-	call QueueResultPortraitPlayer ; $4cbb
+	call QueueWinTextSprite ; $4cbb
 	ld de, $502c ; $4cbe
-	call QueueWinnerMarkerForPlayer ; $4cc1
+	call QueueWinArrowRight ; $4cc1
 	ld de, $5060 ; $4cc4
-	call QueueResultPortraitOpponent ; $4cc7
+	call QueueLoseTextSprite ; $4cc7
 	ld de, $4e68 ; $4cca
-	call QueueLoserMarkerForOpponent ; $4ccd
+	call QueueLoseArrowLeft ; $4ccd
 	ret ; $4cd0
 .lost:
 	ld de, $5860 ; $4cd1
-	call QueueResultPortraitPlayer ; $4cd4
+	call QueueWinTextSprite ; $4cd4
 	ld de, $5068 ; $4cd7
-	call QueueLoserMarkerForPlayer ; $4cda
+	call QueueWinArrowLeft ; $4cda
 	ld de, $0024 ; $4cdd
-	call QueueResultPortraitOpponent ; $4ce0
+	call QueueLoseTextSprite ; $4ce0
 	ld de, $482c ; $4ce3
-	call QueueWinnerMarkerForOpponent ; $4ce6
+	call QueueLoseArrowRight ; $4ce6
 	ret ; $4ce9
-QueueResultPortraitPlayer:
+QueueWinTextSprite:
 	call GetResultSpriteWobbleOffset ; $4cea
 	ld b, a ; $4ced
 	ld a, d ; $4cee
@@ -262,10 +262,10 @@ QueueResultPortraitPlayer:
 	jr z, .maskClear ; $4cf9
 	ld b, OAM_BANK1 | 2 ; $4cfb
 .maskClear:
-	ld hl, ResultSpriteTemplateLeft_16 ; $4cfd
+	ld hl, WinTextSpriteTemplate_16 ; $4cfd
 	call QueueSpriteTemplate ; $4d00
 	ret ; $4d03
-ResultSpriteTemplateLeft_16:
+WinTextSpriteTemplate_16:
 	; $4d04, 65 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -284,15 +284,15 @@ ResultSpriteTemplateLeft_16:
 	oam_sprite $10, $40, $1c, $00
 	oam_sprite $20, $40, $1e, $00
 	oam_sprite_end
-QueueResultPortraitOpponent:
+QueueLoseTextSprite:
 	call GetResultSpriteWobbleOffset ; $4d45
 	add d ; $4d48
 	ld d, a ; $4d49
 	sprite_tile_attr $20, OAM_BANK1 | 1 ; $4d4a
-	ld hl, ResultSpriteTemplateRight_16 ; $4d4e
+	ld hl, LoseTextSpriteTemplate_16 ; $4d4e
 	call QueueSpriteTemplate ; $4d51
 	ret ; $4d54
-ResultSpriteTemplateRight_16:
+LoseTextSpriteTemplate_16:
 	; $4d55, 65 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -311,7 +311,7 @@ ResultSpriteTemplateRight_16:
 	oam_sprite $10, $40, $1c, $00
 	oam_sprite $20, $40, $1e, $00
 	oam_sprite_end
-QueueWinnerMarkerForPlayer:
+QueueWinArrowRight:
 	call GetResultSpriteWobbleOffset ; $4d96
 	ld b, a ; $4d99
 	ld a, d ; $4d9a
@@ -326,21 +326,21 @@ QueueWinnerMarkerForPlayer:
 .queueSprite:
 	call QueueSprite ; $4da9
 	ret ; $4dac
-QueueLoserMarkerForOpponent:
+QueueLoseArrowLeft:
 	call GetResultSpriteWobbleOffset ; $4dad
 	add d ; $4db0
 	ld d, a ; $4db1
 	sprite_tile_attr $42, OAM_BANK1 | 1 ; $4db2
 	call QueueSprite ; $4db6
 	ret ; $4db9
-QueueWinnerMarkerForOpponent:
+QueueLoseArrowRight:
 	call GetResultSpriteWobbleOffset ; $4dba
 	add d ; $4dbd
 	ld d, a ; $4dbe
 	sprite_tile_attr $40, OAM_BANK1 | 1 ; $4dbf
 	call QueueSprite ; $4dc3
 	ret ; $4dc6
-QueueLoserMarkerForPlayer:
+QueueWinArrowLeft:
 	call GetResultSpriteWobbleOffset ; $4dc7
 	ld b, a ; $4dca
 	ld a, d ; $4dcb
@@ -377,13 +377,13 @@ LoadResultScreenTileGraphics:
 	farcall FillTilemapRect ; $4e13
 	ld de, FLAG_DOUBLES ; $4e16
 	call TestGameFlagByNumber ; $4e19
-	jr nz, .decompressData ; $4e1c
-	ld hl, MatchResultTitleGfx ; $4e1e
+	jr nz, .doubles ; $4e1c
+	ld hl, SinglesResultTitleGfx ; $4e1e
 	ld de, vTiles2 ; $4e21
 	call DecompressData ; $4e24
 	jr .loadMatchResultGfxSet ; $4e27
-.decompressData:
-	ld hl, MatchResultTitleGfxAlt ; $4e29
+.doubles:
+	ld hl, DoublesResultTitleGfx ; $4e29
 	ld de, vTiles2 ; $4e2c
 	call DecompressData ; $4e2f
 .loadMatchResultGfxSet:

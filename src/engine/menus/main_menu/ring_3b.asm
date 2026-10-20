@@ -61,43 +61,43 @@ N64RingShot:
 	; $5278, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 Unused_3b_SeedDefaultRingShotRecords:
-	ld hl, DefaultRingShot0 ; $5288
+	ld hl, DefaultRingShotClears ; $5288
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS ; $528b
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $528e
 	call CopyMemoryBC ; $5291
-	ld hl, DefaultRingShot0 ; $5294
+	ld hl, DefaultRingShotClears ; $5294
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 4 * N64_RING_CLEARS_SIZE ; $5297
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $529a
 	call CopyMemoryBC ; $529d
-	ld hl, DefaultRingShot0 ; $52a0
+	ld hl, DefaultRingShotClears ; $52a0
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 8 * N64_RING_CLEARS_SIZE ; $52a3
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $52a6
 	call CopyMemoryBC ; $52a9
-	ld hl, DefaultRingShot0 ; $52ac
+	ld hl, DefaultRingShotClears ; $52ac
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 12 * N64_RING_CLEARS_SIZE ; $52af
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $52b2
 	call CopyMemoryBC ; $52b5
-	ld hl, DefaultRingShot1 ; $52b8
+	ld hl, DefaultRingShotScores ; $52b8
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES ; $52bb
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52be
 	call CopyMemoryBC ; $52c1
-	ld hl, DefaultRingShot1 ; $52c4
+	ld hl, DefaultRingShotScores ; $52c4
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 4 * N64_RING_SCORES_SIZE ; $52c7
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52ca
 	call CopyMemoryBC ; $52cd
-	ld hl, DefaultRingShot1 ; $52d0
+	ld hl, DefaultRingShotScores ; $52d0
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 8 * N64_RING_SCORES_SIZE ; $52d3
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52d6
 	call CopyMemoryBC ; $52d9
-	ld hl, DefaultRingShot1 ; $52dc
+	ld hl, DefaultRingShotScores ; $52dc
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 12 * N64_RING_SCORES_SIZE ; $52df
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52e2
 	call CopyMemoryBC ; $52e5
 	ret ; $52e8
-DefaultRingShot0:
+DefaultRingShotClears:
 	; $52e9, 16 bytes (bytes:16)
 	db $1f, $03, $0f, $01, $00, $01, $0f, $1f, $07, $05, $03, $0f, $1f, $03, $07, $03 ; 0x00
-DefaultRingShot1:
+DefaultRingShotScores:
 	; $52f9, 32 bytes (bytes:16)
 	db $00, $33, $00, $44, $00, $55, $00, $66, $00, $11, $00, $28, $00, $22, $01, $ff ; 0x00
 	db $00, $02, $00, $00, $01, $43, $01, $00, $00, $01, $00, $21, $00, $12, $00, $12 ; 0x10

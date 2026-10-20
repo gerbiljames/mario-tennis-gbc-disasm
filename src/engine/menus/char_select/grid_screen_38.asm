@@ -273,23 +273,23 @@ SetupCharGridScreen:
 	ld c, $00 ; $4f85
 	call SetMenuCursorFromIndex_38 ; $4f87
 	wram_bank WRAM_STAGING ; $4f8a
-	ld hl, CharGridScreenGfx1 ; $4f90
+	ld hl, CharGridArrowSpriteGfx ; $4f90
 	ld de, wDecompBuffer ; $4f93
 	call DecompressData ; $4f96
 	ld hl, wDecompBuffer ; $4f99
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f9c
-	ld c, CharGridScreenGfx1_SIZE / 16 ; $4f9f
+	ld c, CharGridArrowSpriteGfx_SIZE / 16 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
 	ld hl, CharGridScreenObjPalette ; $4fa4
 	ld_obj_pals de, 1, 1 ; $4fa7
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank WRAM_STAGING ; $4fad
-	ld hl, CharGridScreenGfx3 ; $4fb3
+	ld hl, PleaseWaitSpriteGfx ; $4fb3
 	ld de, wDecompBuffer ; $4fb6
 	call DecompressData ; $4fb9
 	ld hl, wDecompBuffer ; $4fbc
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $4fbf
-	ld c, CharGridScreenGfx3_SIZE / 16 ; $4fc2
+	ld c, PleaseWaitSpriteGfx_SIZE / 16 ; $4fc2
 	call QueueVRAMCopy ; $4fc4
 	ld c, SCREENASSET_ExhibitionSetup ; $4fc7
 	farcall LoadScreenAssetRecord ; $4fc9
@@ -317,8 +317,8 @@ SetupCharGridScreen:
 	ld c, StatLabelTiles_SIZE / 16 ; $500d
 	ld de, vTiles2 tile $10 ; $500f
 	farcall LoadCompressedTileBlock ; $5012
-	ld b, TILEBLOCK_CharGridGfx2 ; $5015
-	ld c, CharGridGfx2_SIZE / 16 ; $5017
+	ld b, TILEBLOCK_CharGridStatLabelSpriteGfx ; $5015
+	ld c, CharGridStatLabelSpriteGfx_SIZE / 16 ; $5017
 	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $5019
 	farcall LoadCompressedTileBlock ; $501c
 	ld b, TILEBLOCK_DigitFontTiles ; $501f
@@ -334,7 +334,7 @@ SetupCharGridScreen:
 	call DrawCharGridSlotIcons ; $503b
 	farcall QueueWram3MapToVRAM ; $503e
 	ld de, vTiles0 + VRAM_BANK1 ; $5041
-	farcall LoadFixedTileBlockAndPalette ; $5044
+	farcall LoadCornerBracketCursorGfx ; $5044
 	ld hl, CharGridScreenPalettes ; $5047
 	ld_obj_pals de, 3, 5 ; $504a
 	call LoadPalettesMasterOnly ; $504d
@@ -359,14 +359,14 @@ SetupCharGridScreen:
 	ret ; $507e
 CharGridScreenPalettes:
 	INCLUDE "data/engine/menus/char_select/CharGridScreenPalettes.asm" ; $507f, 40 bytes (palettes)
-CharGridScreenGfx1:
-	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
-	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
+CharGridArrowSpriteGfx:
+	INCBIN "data/engine/menus/char_select/lz_CharGridArrowSpriteGfx.bin" ; $50a7, 74 bytes
+	INCLUDE "data/engine/menus/char_select/lz_CharGridArrowSpriteGfx.inc" ; DEF CharGridArrowSpriteGfx_SIZE EQU its decoded length, generated from the .bin by make
 CharGridScreenObjPalette:
 	INCLUDE "data/engine/menus/char_select/CharGridScreenObjPalette.asm" ; $50f1, 8 bytes (palettes)
-CharGridScreenGfx3:
-	INCBIN "data/engine/menus/char_select/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
-	INCLUDE "data/engine/menus/char_select/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+PleaseWaitSpriteGfx:
+	INCBIN "data/engine/menus/char_select/lz_PleaseWaitSpriteGfx.bin" ; $50f9, 156 bytes
+	INCLUDE "data/engine/menus/char_select/lz_PleaseWaitSpriteGfx.inc" ; DEF PleaseWaitSpriteGfx_SIZE EQU its decoded length, generated from the .bin by make
 HandleCharGridDpad:
 	push_wram_bank WRAM_SCREEN ; $5195
 	ld a, [wCharSelectSlot] ; $519e
@@ -482,13 +482,13 @@ MoveCharGridCursorRight:
 	jr nz, .store ; $5264
 	ld a, [wCharGridPage] ; $5266
 	cp $02 ; $5269
-	jr c, .lastPage ; $526b
+	jr c, .toRosterRows ; $526b
 	ld a, [wCharGridPage] ; $526d
 	ld [wCharGridPrevPage], a ; $5270
 	xor a ; $5273
 	ld [wCharGridPage], a ; $5274
 	jr .firstColumn ; $5277
-.lastPage:
+.toRosterRows:
 	ld a, $03 ; $5279
 	ld [wCharGridPage], a ; $527b
 .firstColumn:
@@ -506,13 +506,13 @@ MoveCharGridCursorLeft:
 	jr nz, .store ; $5291
 	ld a, [wCharGridPage] ; $5293
 	cp $02 ; $5296
-	jr c, .firstPage ; $5298
+	jr c, .toRosterRows ; $5298
 	ld a, [wCharGridPage] ; $529a
 	ld [wCharGridPrevPage], a ; $529d
 	xor a ; $52a0
 	ld [wCharGridPage], a ; $52a1
 	jr .lastColumn ; $52a4
-.firstPage:
+.toRosterRows:
 	ld a, $03 ; $52a6
 	ld [wCharGridPage], a ; $52a8
 .lastColumn:
@@ -575,7 +575,7 @@ ConfirmCharGridSelection:
 	ld e, a ; $5319
 	call TestAndSetGridEntryTaken ; $531a
 	or a ; $531d
-	jr nz, .emptyCell ; $531e
+	jr nz, .rejectCell ; $531e
 	call GetGridSlotFromCursor ; $5320
 	ld b, a ; $5323
 	ld hl, wCharGridEntries ; $5324
@@ -584,7 +584,7 @@ ConfirmCharGridSelection:
 	add_hl_a ; $5329
 	ld a, [hl] ; $532e
 	cp $ff ; $532f
-	jr z, .emptyCell ; $5331
+	jr z, .rejectCell ; $5331
 	ld c, a ; $5333
 	ld a, [wCharSelectSlot] ; $5334
 	ld hl, wCharSelectSlotChars ; $5337
@@ -609,7 +609,7 @@ ConfirmCharGridSelection:
 	call DrawPlayerSlotPortrait ; $5361
 	sound SFX_MENU_SELECT ; $5364
 	jr .advanceSlot ; $5366
-.emptyCell:
+.rejectCell:
 	sound SFX_MENU_CANCEL ; $5368
 	pop_wram_bank ; $536a
 	ret ; $536f
@@ -625,11 +625,11 @@ ConfirmCharGridSelection:
 	ld c, a ; $5382
 	call NeedsCpuDifficultyPrompt ; $5383
 	or a ; $5386
-	jr z, .refresh ; $5387
+	jr z, .nextSlot ; $5387
 	ld a, $01 ; $5389
 	ld [wCpuDifficultyPrompt], a ; $538b
 	jr .done ; $538e
-.refresh:
+.nextSlot:
 	call AdvanceToNextPlayerSlot ; $5390
 	cp $ff ; $5393
 	jr nz, .done ; $5395

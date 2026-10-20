@@ -1622,7 +1622,7 @@ TEXT_POINTER_LABELS = {
     "RenderInlineString.checkMark": "hl",
     "WriteExpScreenStringTiles": "hl",
     "Unused_00_CopyTextString": "hl",
-    "Unused_16_DrawCourtDiagramMarkers": "hl",
+    "Unused_16_PlaceTextWithDiacritics": "hl",
     "Unused_1a_CopyNameToTileBuffer": "hl",
     "Unused_1a_DrawStringToTileBuffer": "hl",
     "TextInterpreterLoop.compare": "a",

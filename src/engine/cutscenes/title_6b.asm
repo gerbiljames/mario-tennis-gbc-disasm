@@ -205,20 +205,20 @@ TitleScreenPalettes:
 	INCLUDE "data/engine/cutscenes/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
 Palettes_6b_11:
 	INCLUDE "data/engine/cutscenes/Palettes_6b_11.asm" ; $794f, 8 bytes (palettes)
-AwardCeremonyTilemap:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap.bin" ; $7957, 293 bytes
-AwardCeremonyAttrmap:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap.bin" ; $7a7c, 114 bytes
-AwardCeremonyTilemap2:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap2.bin" ; $7aee, 292 bytes
-AwardCeremonyAttrmap2:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap2.bin" ; $7c12, 125 bytes
-AwardCeremonyTilemap3:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap3.bin" ; $7c8f, 296 bytes
-AwardCeremonyAttrmap3:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap3.bin" ; $7db7, 120 bytes
-AwardCeremonyTilemap4:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap4.bin" ; $7e2f, 296 bytes
-AwardCeremonyAttrmap4:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap4.bin" ; $7f57, 129 bytes
+DreamMatchEpilogueTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap.bin" ; $7957, 293 bytes
+DreamMatchEpilogueAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap.bin" ; $7a7c, 114 bytes
+DreamMatchEpilogueTilemap2:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap2.bin" ; $7aee, 292 bytes
+DreamMatchEpilogueAttrmap2:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap2.bin" ; $7c12, 125 bytes
+DreamMatchEpilogueTilemap3:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap3.bin" ; $7c8f, 296 bytes
+DreamMatchEpilogueAttrmap3:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap3.bin" ; $7db7, 120 bytes
+DreamMatchEpilogueTilemap4:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap4.bin" ; $7e2f, 296 bytes
+DreamMatchEpilogueAttrmap4:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap4.bin" ; $7f57, 129 bytes
 	; $7fd8, 40 bytes fill to bank end (linker-padded)

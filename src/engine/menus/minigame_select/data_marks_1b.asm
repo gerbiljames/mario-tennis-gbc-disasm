@@ -304,10 +304,10 @@ ObjectSceneBGfx1:
 	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx1.bin" ; $7ab5, 65 bytes
 ObjectSceneBGfx2:
 	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx2.bin" ; $7af6, 65 bytes
-Screen0Gfx:
-	INCBIN "data/engine/menus/minigame_select/lz_Screen0Gfx.bin" ; $7b37, 503 bytes
-Screen1ObjGfx:
-	INCBIN "data/engine/menus/minigame_select/lz_Screen1ObjGfx.bin" ; $7d2e, 321 bytes
-Screen2ObjGfx:
-	INCBIN "data/engine/menus/minigame_select/lz_Screen2ObjGfx.bin" ; $7e6f, 323 bytes
+ToBeContinuedGfx:
+	INCBIN "data/engine/menus/minigame_select/lz_ToBeContinuedGfx.bin" ; $7b37, 503 bytes
+ToBeContinuedOutlineGfx:
+	INCBIN "data/engine/menus/minigame_select/lz_ToBeContinuedOutlineGfx.bin" ; $7d2e, 321 bytes
+TheEndGfx:
+	INCBIN "data/engine/menus/minigame_select/lz_TheEndGfx.bin" ; $7e6f, 323 bytes
 	; $7fb2, 78 bytes fill to bank end (linker-padded)
