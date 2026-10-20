@@ -2,19 +2,30 @@
 
 ; A SoundTable entry's first word: which channel struct the track drives
 ; (StartSoundChannel indexes wSndChannels by the low byte, $20 per channel)
-; and the byte it stores into that struct.
+; and the SNDCHANTYPE_* it stores into that struct's hSndChannelType.
 MACRO snd_channel
 	db (\1) * $20, \2
 ENDM
 
-; Every command is two bytes, opcode then operand, and the driver steps them
-; by command index (RunSoundChannelScript; docs/sound_engine.md "Script
+; A track opens with snd_header; every command after it is two bytes, opcode
+; then operand, and the driver steps them by command index (RunSoundChannelScript; docs/sound_engine.md "Script
 ; command set"). snd_call is the one four-byte command: its target word is a
 ; byte offset from the track start that snd_track names. Note names C_ .. B_
 ; are in include/constants/; the octave is how many times the driver halves the
 ; table period.
 MACRO snd_track ; the track label the snd_call offsets are relative to
 REDEF _snd_track EQUS "\1"
+ENDM
+
+; tempo: low nibble = how many of every 16 engine ticks the channel skips
+;        (0 = full speed; the high nibble is ignored)
+; duty:  bits 0-1 = pulse duty; on the wave channel the envelope length
+; volume: low nibble = level, high nibble = envelope flags (nonzero
+;        disables snd_envelope)
+; wave:  wave-pattern id (wave channel, read only on a fresh start), the
+;        sweep register (pulse 1); unused elsewhere
+MACRO snd_header ; tempo, duty, volume, wave
+	db \1, \2, \3, \4
 ENDM
 
 MACRO snd_note ; note, octave, length in ticks
@@ -41,12 +52,17 @@ MACRO snd_duty ; duty (pulse) / envelope length (wave)
 	db $a2, \1
 ENDM
 
-MACRO snd_note_length ; note-length reload; $fe clears it
-	db $a3, \1
+MACRO snd_vibrato ; depth 0-14 (a SoundPitchTable row; 15 is off), delay in ticks (even, 0-30)
+	ASSERT (\2) % 2 == 0 && (\2) < 32 && (((\1) << 4) | ((\2) / 2)) != $fe, "snd_vibrato: delay is even, 0-30; 15, 28 is snd_vibrato_off"
+	db $a3, ((\1) << 4) | ((\2) / 2)
 ENDM
 
-MACRO snd_detune ; signed note offset, bit 7 = active
-	db $a4, \1
+MACRO snd_vibrato_off
+	db $a3, $fe
+ENDM
+
+MACRO snd_gate ; ticks: -n releases each note n ticks before its end (at least 1 in), n >= 0 after n ticks
+	db $a4, LOW(\1)
 ENDM
 
 MACRO snd_pan ; stereo mask; $01 swaps the current mask's nibbles
@@ -57,7 +73,7 @@ MACRO snd_master_volume ; written straight to rAUDVOL
 	db $a6, \1
 ENDM
 
-MACRO snd_glide ; note timer without a key-on
+MACRO snd_wait ; ticks: hold for that long without a key-on, no slide
 	db $a7, \1
 ENDM
 
@@ -65,12 +81,12 @@ MACRO snd_instrument ; instrument-envelope index (high nibble also picks the wav
 	db $a8, \1
 ENDM
 
-MACRO snd_transpose ; semitones; $f0-$f3 step the channel/global transpose, $fe/$ff read a jump table
+MACRO snd_switch ; < $80 sets the channel's switch, $80+ the global one; $f0-$f3 step them, $fe/$ff jump through the index table that follows
 	db $a9, \1
 ENDM
 
-MACRO snd_echo ; echo count (high nibble) and note offset (low); 0 clears
-	db $aa, \1
+MACRO snd_echo ; ticks 0-15 (0 clears), volume scale 0-15: the last ticks of each note play at (scale + 1) / 16 volume
+	db $aa, ((\1) << 4) | (\2)
 ENDM
 
 MACRO snd_call ; count, target -- run the block at target `count` times, snd_return comes back here
@@ -82,11 +98,11 @@ MACRO snd_return
 	db $ad, $00
 ENDM
 
-MACRO snd_tone_flag ; bit 4 selects the upper octave of NotePeriodTable
-	db $ae, \1
+MACRO snd_quarter_tone ; 1: notes come from NotePeriodTable's second half, a quarter tone higher
+	db $ae, (\1) << 4
 ENDM
 
-MACRO snd_length_nibble ; note-length increment, low nibble of hSndToneCtrl
+MACRO snd_tempo ; 0-15: the header's tempo nibble
 	db $af, \1
 ENDM
 
@@ -102,7 +118,7 @@ MACRO snd_jump ; slot: go back to the slot's point unconditionally
 	db $b0, $f0 | (\1)
 ENDM
 
-MACRO snd_envelope ; rate 0-15, length: instrument-envelope sweep
+MACRO snd_envelope ; shape 1-15 (a SoundEnvelopes row; 0 is off), length: instrument envelope
 	db $c0 | (\1), \2
 ENDM
 

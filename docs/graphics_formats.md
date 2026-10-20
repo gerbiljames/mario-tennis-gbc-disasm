@@ -806,11 +806,11 @@ pass:
 | `lz` | 863 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
 | `lz-labels` | 863 | no symbol lands inside a compressed stream |
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
-| `regions` | 4276 | manifest regions stay inside their bank and do not overlap |
+| `regions` | 4275 | manifest regions stay inside their bank and do not overlap |
 | `text` | 28 | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
 | `db-words` | 536 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
 | `addr-words` | 328 | a raw-`db` label's words are not all VRAM- or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
-| `layout` | 4276 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
+| `layout` | 4275 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
@@ -820,13 +820,13 @@ pass:
 | `literals` | 33797 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
 | `gfx` | 2905 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 121 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
+| `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
 | `tilemap` | 241 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4879 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `unnamed` | 8869 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 4745 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
+| `raw-ids` | 4734 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
 
 ---
 

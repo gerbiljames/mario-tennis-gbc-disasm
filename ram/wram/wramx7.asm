@@ -55,8 +55,8 @@ wSndFirstChannel:: db
 	ds 1
 ; [8-bit] Wave-pattern id currently loaded into wave RAM (change detection for the wave channel)
 wSndLoadedWaveId:: db
-; [8-bit] Global transpose added to note ids (cmd $a9 $fe/$f2/$f3)
-wSndTranspose:: db
+; [8-bit] Global switch value (snd_switch, cmd $a9): an index into the jump table $a9 $fe reads; never added to notes
+wSndSwitch:: db
 ; [8-bit] Non-zero to force the wave channel to reload its pattern on the next note
 wSndWaveReloadPending:: db
 

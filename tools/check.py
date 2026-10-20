@@ -24,9 +24,9 @@ after a real defect broke it:
             table is addresses, written `dw wShadowAttrmap + ...`
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
-  sound     every snd_script track decodes to whole commands over exactly
-            its extent, every snd_call lands on a command, and its rows
-            encode back to the same bytes
+  sound     every snd_script track decodes to a header and whole commands
+            over exactly its extent, every snd_call lands on a command, and
+            its rows encode back to the same bytes
   traj      every traj table is whole rows of its width and its rows parse
             back to the same bytes
   macros    every target_script, move_curve, frame_place, blit_runs and
@@ -308,9 +308,9 @@ def check_label_scopes(fail):
     return n
 
 def check_sound(rom, manifest, fail):
-    """Every snd_script track decodes to whole commands over exactly its
-    extent, with every snd_call target on a command, and renders to rows
-    that encode back to the same bytes."""
+    """Every snd_script track decodes to a header and whole commands over
+    exactly its extent, with every snd_call target on a command, and renders
+    to rows that encode back to the same bytes."""
     import snd
     n = 0
     for path, off, length, spec in manifest:

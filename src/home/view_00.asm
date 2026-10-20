@@ -329,7 +329,7 @@ ResumeBGM:
 	pop bc ; $2f4f
 	pop af ; $2f50
 	ret ; $2f51
-Unused_00_StopBGMIfPlaying:
+Unused_00_UnmuteToSilence:
 	push hl ; $2f52
 	ld hl, hMusic ; $2f53
 	bit 0, [hl] ; $2f56

@@ -233,15 +233,25 @@ class TileImages(unittest.TestCase):
 
 
 class SoundScript(unittest.TestCase):
-    """The channel-script codec: two-byte commands, the four-byte snd_call
-    with a byte-offset target, and the rendering round trip."""
+    """The channel-script codec: the four-byte header, two-byte commands,
+    the four-byte snd_call with a byte-offset target, and the rendering
+    round trip."""
+
+    HEADER = bytes([0x06, 0x00, 0x09, 0x00])
 
     def test_round_trip(self):
         import snd
-        track = bytes([0xa0, 0x1e, 0x41, 0x08, 0xfd, 0xf0, 0x2f, 0x04, 0xb2, 0xf0,
-                       0xac, 0x03, 0x10, 0x00, 0xff, 0xff, 0x53, 0x02, 0xad, 0x00])
+        track = self.HEADER + bytes([
+            0xa0, 0x1e, 0x41, 0x08, 0xfd, 0xf0, 0x2f, 0x04, 0xb2, 0xf0,
+            0xa3, 0x25, 0xa4, 0xfa, 0xa3, 0xfe, 0xaa, 0x23,
+            0xac, 0x03, 0x1c, 0x00, 0xff, 0xff, 0x53, 0x02, 0xad, 0x00])
         text = snd.render(track, "T", "pulse")
+        self.assertIn("snd_header 6, $00, 9, $00", text)
         self.assertIn("snd_note C#, 4, 8", text)
+        self.assertIn("snd_vibrato 2, 10", text)
+        self.assertIn("snd_gate -6", text)
+        self.assertIn("snd_vibrato_off", text)
+        self.assertIn("snd_echo 2, 3", text)
         self.assertIn("snd_call 3, .call0", text)
         self.assertIn(".call0:", text)
         self.assertEqual(snd.encode(text), track)
@@ -250,9 +260,13 @@ class SoundScript(unittest.TestCase):
     def test_rejects_bad_scripts(self):
         import snd
         with self.assertRaises(ValueError):
-            snd.decode(bytes([0xa0, 0x1e, 0xff]))          # odd length
+            snd.decode(bytes([0x06, 0x00, 0x09]))          # no whole header
         with self.assertRaises(ValueError):
-            snd.decode(bytes([0xac, 0x01, 0x03, 0x00, 0xff, 0xff]))   # target mid-command
+            snd.decode(self.HEADER + bytes([0xa0, 0x1e, 0xff]))          # odd length
+        with self.assertRaises(ValueError):
+            snd.decode(self.HEADER + bytes([0xac, 0x01, 0x07, 0x00, 0xff, 0xff]))   # target mid-command
+        with self.assertRaises(ValueError):
+            snd.decode(self.HEADER + bytes([0xac, 0x01, 0x00, 0x00, 0xff, 0xff]))   # target in the header
 
 
 @needs_rgbasm
@@ -331,6 +345,17 @@ class MacroBytes(unittest.TestCase):
         self.assertEqual(out[:3], bytes.fromhex("11e005"))
         self.assertEqual(out[3:5], bytes.fromhex("e005"))
         self.assertEqual(out[5:8], bytes.fromhex("e7" "e005"))  # rst $20; db bit<<5, byte
+
+    def test_sound_macros_match_the_codec(self):
+        sys.path.insert(0, str(TOOLS))
+        import snd
+        rows = ("\tsnd_track T\nT:\n\tsnd_header $a0, $02, 15, $03\n\tsnd_vibrato 13, 30\n"
+                "\tsnd_vibrato_off\n\tsnd_gate -9\n\tsnd_gate 5\n\tsnd_wait 12\n"
+                "\tsnd_switch $f2\n\tsnd_echo 3, 8\n\tsnd_quarter_tone 1\n\tsnd_tempo 7\n"
+                "\tsnd_envelope 14, $20\n\tsnd_end")
+        want = snd.encode(rows.replace("T:\n", ""))
+        self.assertEqual(want[:6], bytes.fromhex("a002" "0f03" "a3df"))
+        self.assertEqual(self.bytes_of(rows)[:len(want)], want)
 
 
 if __name__ == "__main__":

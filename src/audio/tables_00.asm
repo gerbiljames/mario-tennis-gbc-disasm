@@ -45,8 +45,8 @@ NotePeriodTable:
 	dw $0486 ; record 21
 	dw $0445 ; record 22
 	dw $0408 ; record 23
-SoundChannelMaskTable:
-	INCLUDE "data/audio/SoundChannelMaskTable.asm" ; $3b4d, 256 bytes (sound_data)
+SoundVolumeScaleTable:
+	INCLUDE "data/audio/SoundVolumeScaleTable.asm" ; $3b4d, 256 bytes (sound_data)
 SoundPitchTable:
 	INCLUDE "data/audio/SoundPitchTable.asm" ; $3c4d, 240 bytes (sound_data)
 LoadWavePatternIfChanged:
@@ -179,7 +179,8 @@ WavePatterns:
 	db $ee, $ee, $cd, $ac, $35, $23, $11, $11, $11, $11, $32, $53, $ca, $dc, $ee, $ee ; 0xe0
 	db $dd, $dd, $dd, $dd, $dd, $dd, $dd, $dd, $22, $22, $22, $22, $22, $22, $22, $22 ; 0xf0
 SoundEnvelopeTable:
-	INCLUDE "data/audio/SoundEnvelopeTable.asm" ; $3ed6, 2 bytes (sound_data)
+	; $3ed6, 2 bytes (records:2)
+	dw SoundEnvelopes ; record 0
 SoundEnvelopes:
 	INCLUDE "data/audio/SoundEnvelopes.asm" ; $3ed8, 240 bytes (sound_data)
 	; $3fc8, 56 bytes fill to bank end (linker-padded)

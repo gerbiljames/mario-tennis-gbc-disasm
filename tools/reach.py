@@ -455,7 +455,6 @@ def check(fail):
 # without a name.
 UNNAMED_OK = {
     "NintendoLogo": "the cartridge header's logo, which the boot ROM reads",
-    "SoundEnvelopes": "SoundEnvelopeTable holds its address as raw bytes",
 }
 UNNAMED_OK_PREFIXES = {
     "DataPtr_": "a $4000 slot-table row, found by slot number",

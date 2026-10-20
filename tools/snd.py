@@ -1,8 +1,11 @@
 """Codec for the sound driver's channel scripts (docs/sound_engine.md).
 
-A script is a run of two-byte commands, opcode then operand, stepped by
-RunSoundChannelScript ($00:$3558), which keeps its position as a command
-index and reads the command at base + index * 2. One command is four bytes:
+A track opens with a four-byte header (tempo, duty or envelope length,
+volume, wave or sweep id) that UpdateSoundChannels.loadHeader ($00:$34dd)
+reads before setting the command index to 2. The rest is a run of two-byte
+commands, opcode then operand, stepped by RunSoundChannelScript ($00:$3558),
+which keeps its position as a command index and reads the command at
+base + index * 2. One command is four bytes:
 `$ac count, target` (snd_call), whose target word is the byte offset of a
 command from the track's start. `decode` turns a track's bytes into
 commands and refuses anything that does not fit exactly; `render` writes
@@ -19,12 +22,12 @@ from pathlib import Path
 NOTE_NAMES = ["C_", "C#", "D_", "D#", "E_", "F_", "F#", "G_", "G#", "A_", "A#", "B_"]
 NOTE_VALUE = {n: i for i, n in enumerate(NOTE_NAMES)}
 
-# opcode -> (macro, operand rendering); the operand is rendered raw as $xx
+HEADER = 4
+
+# opcode -> macro whose operand is rendered raw as $xx
 SIMPLE = {
-    0xa0: "snd_volume", 0xa1: "snd_wave", 0xa2: "snd_duty", 0xa3: "snd_note_length",
-    0xa4: "snd_detune", 0xa5: "snd_pan", 0xa6: "snd_master_volume", 0xa7: "snd_glide",
-    0xa8: "snd_instrument", 0xa9: "snd_transpose", 0xaa: "snd_echo",
-    0xae: "snd_tone_flag", 0xaf: "snd_length_nibble",
+    0xa0: "snd_volume", 0xa1: "snd_wave", 0xa2: "snd_duty", 0xa5: "snd_pan",
+    0xa6: "snd_master_volume", 0xa8: "snd_instrument", 0xa9: "snd_switch",
 }
 SIMPLE_OP = {v: k for k, v in SIMPLE.items()}
 
@@ -41,9 +44,12 @@ class Cmd:
 
 
 def decode(data, start=0, end=None):
-    """[Cmd] covering data[start:end] exactly, else ValueError."""
+    """[Cmd] covering data[start + HEADER:end] exactly, else ValueError.
+    Offsets count from `start`, the header's first byte."""
     end = len(data) if end is None else end
-    cmds, i = [], start
+    if end - start < HEADER:
+        raise ValueError("shorter than the track header")
+    cmds, i = [], start + HEADER
     while i < end:
         if i + 1 >= end:
             raise ValueError(f"odd byte at {i - start}")
@@ -69,7 +75,7 @@ def render(data, label, kind="pulse"):
     cmds = decode(data)
     targets = sorted({c.target for c in cmds if c.target is not None})
     lab = {t: f".call{n}" for n, t in enumerate(targets)}
-    out = [f"\tsnd_track {label}"]
+    out = [f"\tsnd_track {label}", "\t" + render_header(data)]
     for c in cmds:
         if c.off in lab:
             out.append(f"{lab[c.off]}:")
@@ -78,6 +84,15 @@ def render(data, label, kind="pulse"):
     if last is not None and not (last.op in (0xff, 0xad, 0xb0) or last.op == 0xac):
         out.append("\t; no terminator: the script runs on into whatever follows")
     return "\n".join(out) + "\n"
+
+
+def _small(v):
+    return str(v) if v < 0x10 else f"${v:02x}"
+
+
+def render_header(data):
+    tempo, duty, volume, wave = data[:HEADER]
+    return f"snd_header {_small(tempo)}, ${duty:02x}, {_small(volume)}, ${wave:02x}"
 
 
 def render_cmd(c, kind, lab):
@@ -94,6 +109,20 @@ def render_cmd(c, kind, lab):
         return f"db ${op:02x}, {hx} ; hold, low nibble {n}"
     if op in SIMPLE:
         return f"{SIMPLE[op]} {hx}"
+    if op == 0xa3:
+        return "snd_vibrato_off" if a == 0xfe else f"snd_vibrato {a >> 4}, {(a & 0x0f) * 2}"
+    if op == 0xa4:
+        return f"snd_gate {a - 0x100 if a & 0x80 else a}"
+    if op == 0xa7:
+        return f"snd_wait {a}"
+    if op == 0xaa:
+        return f"snd_echo {a >> 4}, {a & 0x0f}"
+    if op == 0xae:
+        if a & ~0x10:
+            return f"db $ae, {hx} ; snd_quarter_tone with stray bits"
+        return f"snd_quarter_tone {a >> 4}"
+    if op == 0xaf:
+        return f"snd_tempo {a}" if a < 0x10 else f"db $af, {hx} ; snd_tempo with a high nibble"
     if op == 0xac:
         return f"snd_call {a}, {lab[c.target]}"
     if op == 0xad:
@@ -121,7 +150,7 @@ def render_cmd(c, kind, lab):
     return f"db ${op:02x}, {hx} ; unassigned opcode, skipped"
 
 
-_NUM = re.compile(r"^\$([0-9a-f]+)$|^(\d+)$")
+_NUM = re.compile(r"^\$([0-9a-f]+)$|^(-?\d+)$")
 
 
 def _num(s):
@@ -130,6 +159,9 @@ def _num(s):
     if not m:
         raise ValueError(f"not a number: {s}")
     return int(m.group(1), 16) if m.group(1) is not None else int(m.group(2))
+
+
+SIZES = {"snd_track": 0, "snd_header": HEADER, "snd_call": 4}
 
 
 def encode(text):
@@ -147,7 +179,7 @@ def encode(text):
             continue
         word, _, rest = s.partition(" ")
         args = [x.strip() for x in rest.split(",")] if rest else []
-        size = 4 if word == "snd_call" else (2 if word != "snd_track" else 0)
+        size = SIZES.get(word, 2)
         items.append((word, args))
         off += size
     out = bytearray()
@@ -156,6 +188,22 @@ def encode(text):
             continue
         if word == "db":
             out += bytes(_num(x) for x in args)
+        elif word == "snd_header":
+            out += bytes(_num(x) for x in args)
+        elif word == "snd_vibrato":
+            out += bytes([0xa3, (_num(args[0]) << 4) | (_num(args[1]) >> 1)])
+        elif word == "snd_vibrato_off":
+            out += b"\xa3\xfe"
+        elif word == "snd_gate":
+            out += bytes([0xa4, _num(args[0]) & 0xff])
+        elif word == "snd_wait":
+            out += bytes([0xa7, _num(args[0])])
+        elif word == "snd_echo":
+            out += bytes([0xaa, (_num(args[0]) << 4) | _num(args[1])])
+        elif word == "snd_quarter_tone":
+            out += bytes([0xae, _num(args[0]) << 4])
+        elif word == "snd_tempo":
+            out += bytes([0xaf, _num(args[0])])
         elif word == "snd_note":
             out += bytes([(_num(args[1]) << 4) | NOTE_VALUE[args[0]], _num(args[2])])
         elif word == "snd_hold":
