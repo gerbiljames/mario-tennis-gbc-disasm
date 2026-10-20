@@ -15,22 +15,22 @@
 	twin_in lookup_ball_pos_by_aim, Unused_2b_LookupBallPosByAim, 2b ; $4221 Unused_2b_LookupBallPosByAim
 	twin lookup_ball_pos_by_height, 2b ; $424c LookupBallPosByHeight_2b
 	twin lookup_ball_pos_by_shot_index, 2b ; $426e LookupBallPosByShotIndex_2b
-BallPosData_2b:
-	INCLUDE "data/shots/BallPosData_2b.asm" ; $427d, 7200 bytes (traj:6)
+BallPosDataServeFlat_2b:
+	INCLUDE "data/shots/BallPosDataServeFlat_2b.asm" ; $427d, 7200 bytes (traj:6)
 ShotBallPathServeFlat:
 	farcall ComputeShotPlacement ; $5e9d
-	ld hl, BallPosData_2b ; $5ea0
-	ld bc, BallPosBlockOffsets_2b ; $5ea3
+	ld hl, BallPosDataServeFlat_2b ; $5ea0
+	ld bc, BallPosBlockOffsetsServeFlat_2b ; $5ea3
 	xor a ; $5ea6
 	call LookupBallPosByShotIndex_2b ; $5ea7
-	ld bc, BallPosSubOffsets_2b ; $5eaa
+	ld bc, BallPosSubOffsetsServeFlat_2b ; $5eaa
 	ld a, [wSmashServeSpeedIndex] ; $5ead
 	call LookupBallPosByShotIndex_2b ; $5eb0
-	ld bc, BallPosHeightOffsets_2b ; $5eb3
+	ld bc, BallPosHeightOffsetsServeFlat_2b ; $5eb3
 	call LookupBallPosByHeight_2b ; $5eb6
 	call SetBallTargetByPrediction_2b ; $5eb9
 	ret ; $5ebc
-BallPosBlockOffsets_2b:
+BallPosBlockOffsetsServeFlat_2b:
 	; $5ebd, 20 bytes (records:2)
 	dw $0000 ; record 0
 	dw $02d0 ; record 1
@@ -42,7 +42,7 @@ BallPosBlockOffsets_2b:
 	dw $13b0 ; record 7
 	dw $1680 ; record 8
 	dw $1950 ; record 9
-BallPosSubOffsets_2b:
+BallPosSubOffsetsServeFlat_2b:
 	; $5ed1, 20 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0048 ; record 1
@@ -54,7 +54,7 @@ BallPosSubOffsets_2b:
 	dw $01f8 ; record 7
 	dw $0240 ; record 8
 	dw $0288 ; record 9
-BallPosHeightOffsets_2b:
+BallPosHeightOffsetsServeFlat_2b:
 	; $5ee5, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1

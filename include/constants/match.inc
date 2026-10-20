@@ -54,8 +54,8 @@ def SPRSLOT_SIZE equ _RS
 ; doubling a button gives its "power" variant. When the character is near the
 ; net (wCharBallReachFlags BALLREACHB_NEAR_NET) the ground strokes are swapped
 ; for their "reach" variants ($06/$07/$08, dispatched to bank $2c's
-; ProjectShotPlacement0-2), which fall back to SHOTTYPE_REACH when
-; CheckBallInSmashRange fails at the hit.
+; ShotBallPathReachBasic/ReachPowerTopspin/ReachPowerSlice), which fall back
+; to SHOTTYPE_REACH when CheckBallInSmashRange fails at the hit.
 ; Serves by first button: A -> topspin, B -> slice, A+B -> flat.
 	const_def
 	const SHOTTYPE_TOPSPIN             ; $00 A

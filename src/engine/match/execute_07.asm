@@ -353,7 +353,7 @@ ExecuteShotReachBasic:
 	call ApplyShotTypePresets ; $5945
 	call WeakenShotByCharge ; $5948
 	call ComputeShotTrajectory ; $594b
-	farcall ProjectShotPlacement0 ; $594e
+	farcall ShotBallPathReachBasic ; $594e
 	ret ; $5951
 ExecuteShotReachPowerTopspin:
 	call CheckBallInSmashRange ; $5952
@@ -362,7 +362,7 @@ ExecuteShotReachPowerTopspin:
 	call ApplyShotTypePresets ; $595a
 	call WeakenShotByCharge ; $595d
 	call ComputeShotTrajectory ; $5960
-	farcall ProjectShotPlacement1 ; $5963
+	farcall ShotBallPathReachPowerTopspin ; $5963
 	ret ; $5966
 ExecuteShotReachPowerSlice:
 	call CheckBallInSmashRange ; $5967
@@ -371,7 +371,7 @@ ExecuteShotReachPowerSlice:
 	call ApplyShotTypePresets ; $596f
 	call WeakenShotByCharge ; $5972
 	call ComputeShotTrajectory ; $5975
-	farcall ProjectShotPlacement2 ; $5978
+	farcall ShotBallPathReachPowerSlice ; $5978
 	ret ; $597b
 ExecuteShotReach:
 	ld a, SHOTTYPE_REACH ; $597c

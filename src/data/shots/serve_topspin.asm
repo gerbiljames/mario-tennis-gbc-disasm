@@ -49,22 +49,22 @@ Unused_29_ApplyBallTrajectoryCapped:
 	twin_in lookup_ball_pos_by_aim, Unused_29_LookupBallPosByAim, 29 ; $4221 Unused_29_LookupBallPosByAim
 	twin lookup_ball_pos_by_height, 29 ; $424c LookupBallPosByHeight_29
 	twin lookup_ball_pos_by_shot_index, 29 ; $426e LookupBallPosByShotIndex_29
-BallPosData_29:
-	INCLUDE "data/shots/BallPosData_29.asm" ; $427d, 7200 bytes (traj:6)
+BallPosDataServeTopspin_29:
+	INCLUDE "data/shots/BallPosDataServeTopspin_29.asm" ; $427d, 7200 bytes (traj:6)
 ShotBallPathServeTopspin:
 	farcall ComputeShotPlacement ; $5e9d
-	ld hl, BallPosData_29 ; $5ea0
-	ld bc, ShotBallPathServeTopspinTable ; $5ea3
+	ld hl, BallPosDataServeTopspin_29 ; $5ea0
+	ld bc, BallPosBlockOffsetsServeTopspin_29 ; $5ea3
 	ld a, [wTopspinPlacementIndex] ; $5ea6
 	call LookupBallPosByShotIndex_29 ; $5ea9
-	ld bc, ShotBallPathServeTopspinSpeeds ; $5eac
+	ld bc, BallPosSubOffsetsServeTopspin_29 ; $5eac
 	ld a, [wSmashServeSpeedIndex] ; $5eaf
 	call LookupBallPosByShotIndex_29 ; $5eb2
-	ld bc, ShotBallPathServeTopspinHeights ; $5eb5
+	ld bc, BallPosHeightOffsetsServeTopspin_29 ; $5eb5
 	call LookupBallPosByHeight_29 ; $5eb8
 	call SetBallTargetByPrediction_29 ; $5ebb
 	ret ; $5ebe
-ShotBallPathServeTopspinTable:
+BallPosBlockOffsetsServeTopspin_29:
 	; $5ebf, 20 bytes (records:2)
 	dw $0000 ; record 0
 	dw $02d0 ; record 1
@@ -76,7 +76,7 @@ ShotBallPathServeTopspinTable:
 	dw $13b0 ; record 7
 	dw $1680 ; record 8
 	dw $1950 ; record 9
-ShotBallPathServeTopspinSpeeds:
+BallPosSubOffsetsServeTopspin_29:
 	; $5ed3, 20 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0048 ; record 1
@@ -88,7 +88,7 @@ ShotBallPathServeTopspinSpeeds:
 	dw $01f8 ; record 7
 	dw $0240 ; record 8
 	dw $0288 ; record 9
-ShotBallPathServeTopspinHeights:
+BallPosHeightOffsetsServeTopspin_29:
 	; $5ee7, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1

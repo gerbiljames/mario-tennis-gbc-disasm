@@ -15,10 +15,10 @@
 	twin_in lookup_ball_pos_by_aim, Unused_21_LookupBallPosByAim, 21 ; $4221 Unused_21_LookupBallPosByAim
 	twin lookup_ball_pos_by_height, 21 ; $424c LookupBallPosByHeight_21
 	twin lookup_ball_pos_by_shot_index, 21 ; $426e LookupBallPosByShotIndex_21
-BallPosData_21:
-	INCLUDE "data/shots/BallPosData_21.asm" ; $427d, 15360 bytes (traj:6:64)
+BallPosDataPowerSlice_21:
+	INCLUDE "data/shots/BallPosDataPowerSlice_21.asm" ; $427d, 15360 bytes (traj:6:64)
 	twin_in shot_ball_path_slice, ShotBallPathPowerSlice, 21 ; $7e7d
-BallPosHeightOffsets_21:
+BallPosHeightOffsetsPowerSlice_21:
 	; $7e98, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -52,7 +52,7 @@ BallPosHeightOffsets_21:
 	dw $2d00 ; record 29
 	dw $2d00 ; record 30
 	dw $2d00 ; record 31
-BallPosBlockOffsets_21:
+BallPosBlockOffsetsPowerSlice_21:
 	; $7ed8, 20 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0180 ; record 1

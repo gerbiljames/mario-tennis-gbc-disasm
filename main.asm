@@ -383,6 +383,9 @@ SECTION "ROM Bank $20", ROMX[$4000], BANK[$20]
 
 DEF ApplyBallTrajectory4_20_NAME EQUS "Unused_20_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_20_NAME EQUS "ApplyFallbackBallTrajectoryFar_20"
+DEF BallPosBlockOffsets_20_NAME EQUS "BallPosBlockOffsetsSlice_20"
+DEF BallPosData_20_NAME EQUS "BallPosDataSlice_20"
+DEF BallPosHeightOffsets_20_NAME EQUS "BallPosHeightOffsetsSlice_20"
 DEF BallTrajEntryPtr4_20_NAME EQUS "Unused_20_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_20_NAME EQUS "BallTrajEntryPtr6_20"
 DEF SeekBallTrajEntry4_20_NAME EQUS "Unused_20_SeekBallTrajEntry4"
@@ -397,6 +400,9 @@ SECTION "ROM Bank $21", ROMX[$4000], BANK[$21]
 
 DEF ApplyBallTrajectory4_21_NAME EQUS "Unused_21_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_21_NAME EQUS "ApplyFallbackBallTrajectoryFar_21"
+DEF BallPosBlockOffsets_21_NAME EQUS "BallPosBlockOffsetsPowerSlice_21"
+DEF BallPosData_21_NAME EQUS "BallPosDataPowerSlice_21"
+DEF BallPosHeightOffsets_21_NAME EQUS "BallPosHeightOffsetsPowerSlice_21"
 DEF BallTrajEntryPtr4_21_NAME EQUS "Unused_21_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_21_NAME EQUS "BallTrajEntryPtr6_21"
 DEF SeekBallTrajEntry4_21_NAME EQUS "Unused_21_SeekBallTrajEntry4"
@@ -411,6 +417,9 @@ SECTION "ROM Bank $22", ROMX[$4000], BANK[$22]
 
 DEF ApplyBallTrajectory4_22_NAME EQUS "Unused_22_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_22_NAME EQUS "ApplyFallbackBallTrajectoryFar_22"
+DEF BallPosBlockOffsets_22_NAME EQUS "BallPosBlockOffsetsTopspin_22"
+DEF BallPosData_22_NAME EQUS "BallPosDataTopspin_22"
+DEF BallPosHeightOffsets_22_NAME EQUS "BallPosHeightOffsetsTopspin_22"
 DEF BallTrajEntryPtr4_22_NAME EQUS "Unused_22_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_22_NAME EQUS "BallTrajEntryPtr6_22"
 DEF SeekBallTrajEntry4_22_NAME EQUS "Unused_22_SeekBallTrajEntry4"
@@ -425,6 +434,9 @@ SECTION "ROM Bank $23", ROMX[$4000], BANK[$23]
 
 DEF ApplyBallTrajectory4_23_NAME EQUS "Unused_23_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_23_NAME EQUS "ApplyFallbackBallTrajectoryFar_23"
+DEF BallPosBlockOffsets_23_NAME EQUS "BallPosBlockOffsetsPowerTopspin_23"
+DEF BallPosData_23_NAME EQUS "BallPosDataPowerTopspin_23"
+DEF BallPosHeightOffsets_23_NAME EQUS "BallPosHeightOffsetsPowerTopspin_23"
 DEF BallTrajEntryPtr4_23_NAME EQUS "Unused_23_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_23_NAME EQUS "BallTrajEntryPtr6_23"
 DEF SeekBallTrajEntry4_23_NAME EQUS "Unused_23_SeekBallTrajEntry4"

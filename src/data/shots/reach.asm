@@ -1,6 +1,6 @@
-	farptr ProjectShotPlacement0 ; $4000
-	farptr ProjectShotPlacement1 ; $4002
-	farptr ProjectShotPlacement2 ; $4004
+	farptr ShotBallPathReachBasic ; $4000
+	farptr ShotBallPathReachPowerTopspin ; $4002
+	farptr ShotBallPathReachPowerSlice ; $4004
 	twin_in ball_traj_entry_ptr6, BallTrajEntryPtr6_2c, 2c ; $4006 BallTrajEntryPtr6_2c
 	twin_in ball_traj_entry_ptr4, BallTrajEntryPtr4_2c, 2c ; $4016 BallTrajEntryPtr4_2c
 	twin_in seek_ball_traj_entry6, SeekBallTrajEntry6_2c, 2c ; $4023 SeekBallTrajEntry6_2c
@@ -28,22 +28,22 @@ Unused_2c_LookupBallPosByShotIndex:
 	ld l, a ; $427e
 	add hl, de ; $427f
 	ret ; $4280
-ShotPlacementData0_2c:
-	INCLUDE "data/shots/ShotPlacementData0_2c.asm" ; $4281, 3072 bytes (traj:4)
-ShotPlacementData1_2c:
-	INCLUDE "data/shots/ShotPlacementData1_2c.asm" ; $4e81, 4608 bytes (traj:6)
-ShotPlacementData2_2c:
-	INCLUDE "data/shots/ShotPlacementData2_2c.asm" ; $6081, 4608 bytes (traj:6)
-ProjectShotPlacement0:
+BallPosDataReachBasic_2c:
+	INCLUDE "data/shots/BallPosDataReachBasic_2c.asm" ; $4281, 3072 bytes (traj:4)
+BallPosDataReachPowerTopspin_2c:
+	INCLUDE "data/shots/BallPosDataReachPowerTopspin_2c.asm" ; $4e81, 4608 bytes (traj:6)
+BallPosDataReachPowerSlice_2c:
+	INCLUDE "data/shots/BallPosDataReachPowerSlice_2c.asm" ; $6081, 4608 bytes (traj:6)
+ShotBallPathReachBasic:
 	farcall ComputeShotPlacement ; $7281
 	push bc ; $7284
-	ld hl, ShotPlacementData0_2c ; $7285
-	ld bc, ShotPlacementOffsets0_2c ; $7288
+	ld hl, BallPosDataReachBasic_2c ; $7285
+	ld bc, BallPosHeightOffsetsReachBasic_2c ; $7288
 	call LookupBallPosByHeight_2c ; $728b
 	pop bc ; $728e
 	call ApplyBallTrajectory4_2c ; $728f
 	ret ; $7292
-ShotPlacementOffsets0_2c:
+BallPosHeightOffsetsReachBasic_2c:
 	; $7293, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -77,16 +77,16 @@ ShotPlacementOffsets0_2c:
 	dw $0b00 ; record 29
 	dw $0b00 ; record 30
 	dw $0b00 ; record 31
-ProjectShotPlacement1:
+ShotBallPathReachPowerTopspin:
 	farcall ComputeShotPlacement ; $72d3
 	push bc ; $72d6
-	ld hl, ShotPlacementData1_2c ; $72d7
-	ld bc, ShotPlacementOffsets1_2c ; $72da
+	ld hl, BallPosDataReachPowerTopspin_2c ; $72d7
+	ld bc, BallPosHeightOffsetsReachPowerTopspin_2c ; $72da
 	call LookupBallPosByHeight_2c ; $72dd
 	pop bc ; $72e0
 	call ApplyBallTrajectory6_2c ; $72e1
 	ret ; $72e4
-ShotPlacementOffsets1_2c:
+BallPosHeightOffsetsReachPowerTopspin_2c:
 	; $72e5, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -120,16 +120,16 @@ ShotPlacementOffsets1_2c:
 	dw $1080 ; record 29
 	dw $1080 ; record 30
 	dw $1080 ; record 31
-ProjectShotPlacement2:
+ShotBallPathReachPowerSlice:
 	farcall ComputeShotPlacement ; $7325
 	push bc ; $7328
-	ld hl, ShotPlacementData2_2c ; $7329
-	ld bc, ShotPlacementOffsets2_2c ; $732c
+	ld hl, BallPosDataReachPowerSlice_2c ; $7329
+	ld bc, BallPosHeightOffsetsReachPowerSlice_2c ; $732c
 	call LookupBallPosByHeight_2c ; $732f
 	pop bc ; $7332
 	call ApplyBallTrajectory6_2c ; $7333
 	ret ; $7336
-ShotPlacementOffsets2_2c:
+BallPosHeightOffsetsReachPowerSlice_2c:
 	; $7337, 64 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
