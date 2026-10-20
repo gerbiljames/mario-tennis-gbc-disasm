@@ -111,7 +111,7 @@ def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 	const POINTWINNER_DROP_SHOT   ; $05
 
 ; --- Court banners (ShowCourtBanner / SpawnCourtBannerObj argument) ---
-; Both a VramTileset_09 record (the word art) and a CourtBannerObjTemplates_09
+; Both a CourtBannerTileRanges_09 record (the word art) and a CourtBannerObjTemplates_09
 ; record. The point-outcome banners share POINTOUTCOME_* values, and the
 ; winning-shot banners follow POINTWINNER_* order.
 def BANNER_CHANGE_ENDS     equ $00
@@ -329,7 +329,7 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
 
 ; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDisplayIsTiebreak) ---
-; GetGfxSourcePtr's index into VramGfxPtrTable_09 / Player1ScoreDigitGfxSource /
+; GetGfxSourcePtr's index into ScoreDigitGfxPtrs_09 / Player1ScoreDigitGfxSource /
 ; Player2ScoreDigitGfxSource.
 def DIGITGFX_TENNIS_CALLS    equ $00 ; 0/15/30/40/Ad: a normal game's points
 def DIGITGFX_NUMERALS        equ $01 ; plain numbers: tiebreak points, minigame counters, games and sets

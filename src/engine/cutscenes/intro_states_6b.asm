@@ -580,8 +580,8 @@ IntroCutsceneState07Exit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $464c
 	twin_named intro_cutscene_state07_update, IntroCutsceneState07Update_6b ; $464f
 IntroCutsceneState08Init_6b:
-	call InitTitleSceneGraphics ; $465e
-	call DecompressIntroTitleTiles ; $4661
+	call InitIntroOpponentsPanorama ; $465e
+	call LoadIntroAwesomeOpponentsCaption ; $4661
 	xor a ; $4664
 	ld [wCutsceneStepTimer], a ; $4665
 	ld [wCutsceneSpriteAX], a ; $4668
@@ -751,7 +751,7 @@ IntroCutsceneState12Exit_6b:
 	twin_named intro_cutscene_state11_update, IntroCutsceneState12Update_6b ; $4876
 Unused_6b_IntroCutsceneStateAInit:
 	call DisableLCDSafely ; $4885
-	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888
+	ld c, SCREENASSET_LoadIntroAwesomeOpponentsCaptionPtrs ; $4888
 	farcall LoadScreenAssetRecord ; $488a
 	ld a, BGVIEW_DEBUG_CONSOLE ; $488d
 	ldh [hBGViewMode], a ; $488f
@@ -906,7 +906,7 @@ IntroCutsceneState13Init_6b:
 	ld de, wWindowShadowAttrmap ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank WRAM_STAGING ; $4a1d
-	ld hl, CutsceneSceneAGfx0 ; $4a23
+	ld hl, IntroBallTossTiles ; $4a23
 	ld de, wDecompBuffer ; $4a26
 	call DecompressData ; $4a29
 	xor a ; $4a2c

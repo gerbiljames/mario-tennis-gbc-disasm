@@ -67,7 +67,7 @@ UpdateScorePanelDisplay:
 	call LoadPlayer2ScoreDigitGfx ; $40ad
 	ret ; $40b0
 .deuce:
-	call LoadDeuceAdvantageGfx ; $40b1
+	call LoadDeuceGfx ; $40b1
 	ret ; $40b4
 LoadOnCourtCharacterGfx:
 	ld a, $ff ; $40b5
@@ -285,7 +285,7 @@ ShowCourtBanner:
 	call ClearAllObjSlots ; $4368
 	pop af ; $436b
 	push af ; $436c
-	call LoadTilesetGfx ; $436d
+	call LoadCourtBannerGfx ; $436d
 	pop af ; $4370
 SpawnCourtBannerObj:
 	ld hl, CourtBannerObjTemplates_09 ; $4371

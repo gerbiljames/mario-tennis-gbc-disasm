@@ -6,10 +6,10 @@ DataPtr_TitleScreenAttrmap:
 	dw TitleScreenAttrmap ; $4006
 DataPtr_TitleScreenPalettes:
 	dw TitleScreenPalettes ; $4008
-	farptr DecompressIntroTitleTiles ; $400a
-	farptr DecompressIntroTitleTilesAlias1, DecompressIntroTitleTiles ; $400c
-	farptr DecompressIntroTitleTilesAlias2, DecompressIntroTitleTiles ; $400e
-	farptr DecompressIntroTitleTilesAlias3, DecompressIntroTitleTiles ; $4010
+	farptr LoadIntroAwesomeOpponentsCaption ; $400a
+	farptr LoadIntroAwesomeOpponentsCaptionAlias1, LoadIntroAwesomeOpponentsCaption ; $400c
+	farptr LoadIntroAwesomeOpponentsCaptionAlias2, LoadIntroAwesomeOpponentsCaption ; $400e
+	farptr LoadIntroAwesomeOpponentsCaptionAlias3, LoadIntroAwesomeOpponentsCaption ; $4010
 	farptr ShowIntroLogoScreen ; $4012
 	farptr ScrollOutIntroLogo ; $4014
 	farptr LoadIntroTilesAndPalette ; $4016

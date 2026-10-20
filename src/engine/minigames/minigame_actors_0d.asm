@@ -232,11 +232,11 @@ MinigameShotDifficultyRamp:
 	; $4546, 1 bytes (bytes:4)
 	db $01 ; 0x00
 ; Byte 1 of each 4-byte wMinigameServeTier record (byte 0 is
-; MinigameShotDifficultyRamp, byte 2 LaunchBallTable): a MinigameShotIntervalByTempo index.
-LaunchBallTableTempoColumn:
+; MinigameShotDifficultyRamp, byte 2 MinigameShotSpeedColumn): a MinigameShotIntervalByTempo index.
+MinigameShotTempoColumn:
 	db $01 ; $4547
-LaunchBallTable:
-	INCBIN "data/engine/minigames/LaunchBallTable.bin" ; $4548, 102 bytes
+MinigameShotSpeedColumn:
+	INCBIN "data/engine/minigames/MinigameShotSpeedColumn.bin" ; $4548, 102 bytes
 MinigameShotIntervalByTempo:
 	; $45ae, 5 bytes (bytes:5)
 	db $28, $28, $1e, $14, $0a ; 0x00
@@ -388,7 +388,7 @@ EndMinigamePoint:
 	ld a, [wMinigameServeTier] ; $4779
 	add a ; $477c
 	add a ; $477d
-	ld_hl_indexed LaunchBallTableTempoColumn ; $477e
+	ld_hl_indexed MinigameShotTempoColumn ; $477e
 	ld a, [hl] ; $4785
 	ld_hl_indexed MinigameShotIntervalByTempo ; $4786
 	ld a, [hl] ; $478d
@@ -454,7 +454,7 @@ LaunchBall:
 	ld a, [wMinigameServeTier] ; $4820
 	add a ; $4823
 	add a ; $4824
-	ld_hl_indexed LaunchBallTable ; $4825
+	ld_hl_indexed MinigameShotSpeedColumn ; $4825
 	ld a, [hl] ; $482c
 	dec a ; $482d
 	ld [wGroundStrokeSpeedIndex], a ; $482e

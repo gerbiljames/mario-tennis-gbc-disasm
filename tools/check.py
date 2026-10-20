@@ -714,7 +714,7 @@ def check_db_word_tables(rom, manifest, fail):
 # (records:N) regions whose size is not whole records, with what the tail is.
 # A tail of $ff bytes is a terminator and needs no entry.
 KNOWN_RECORD_TAILS = {
-    "VramTileset_09": "two $00 bytes of padding before the ALIGN[4] tile blob",
+    "CourtBannerTileRanges_09": "two $00 bytes of padding before the ALIGN[4] tile blob",
 }
 _RECORDS_HEADER_RE = re.compile(r"^\t(?:\w+ \".*\" )?; \$([0-9a-f]{4}), (\d+) bytes "
                                 r"\((?:records:(\d+)|(?:words|text_ids|ram_ptrs|save_flag_ids|mode_hooks)\b)[^)]*\)$")

@@ -23,7 +23,7 @@ wCutsceneSlideDone:: db
 	ds 41
 NEXTU
 ; scene animation frame counter (bank $03)
-; [8-bit] Frame of the ending's animated scene: zeroed by SetupSceneAnimationPalettes, stepped by UpdateSceneAnimation every fourth tick of wCutsceneSlideTimer up to $36, read by the six LoadCutsceneAnimFrameGfx_* loaders
+; [8-bit] Frame of the epilogue's animated "END..." text: zeroed by SetupSceneAnimationPalettes, stepped by UpdateSceneAnimation every fourth tick of wCutsceneSlideTimer up to $36, read by the six AnimateEpilogueEnd* loaders
 wSceneAnimFrame:: db
 NEXTU
 ; star warp transition (bank $0e)

@@ -49,8 +49,8 @@ MedallionObjTiles:
 	ds ALIGN[4]
 MatchSharedTiles_28:
 	INCBIN "data/engine/match/MatchSharedTiles_28.bin" ; $5590, 2208 bytes
-MatchGfxPalettesB_28:
-	INCLUDE "data/engine/match/MatchGfxPalettesB_28.asm" ; $5e30, 8 bytes (palettes)
+ShotDirectionArrowBluePalette:
+	INCLUDE "data/engine/match/ShotDirectionArrowBluePalette.asm" ; $5e30, 8 bytes (palettes)
 ShotDirectionArrowPalettes:
 	INCLUDE "data/engine/match/ShotDirectionArrowPalettes.asm" ; $5e38, 24 bytes (palettes)
 FruitPalettes:
@@ -126,7 +126,7 @@ LoadMatchVariantGraphics:
 	call LoadMinigameScoreDigitTiles ; $5f36
 	ret ; $5f39
 .shotDirectionArrows:
-	ld hl, MatchGfxPalettesB_28 ; $5f3a
+	ld hl, ShotDirectionArrowBluePalette ; $5f3a
 	ld_obj_pals de, 3, 1 ; $5f3d
 	call LoadPaletteShadow ; $5f40
 	ld hl, ShotDirectionArrowPalettes ; $5f43

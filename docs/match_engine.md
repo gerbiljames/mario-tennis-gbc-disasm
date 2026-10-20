@@ -1065,7 +1065,7 @@ restores. Level point counts zero all three, **so deuce is never a situation**.
 point → `$10`, tiebreak → `$0e`, else `wMatchBGM`) and banner (match point
 `$0a`, set point `$09`, game point `$07` or `$08` by whether server or receiver
 holds it — `wCurrentServingPlayer` XOR the flag's sign). Deuce surfaces only as
-`SFX_DEUCE` in the point-end sequence and `LoadDeuceAdvantageGfx` on the score
+`SFX_DEUCE` in the point-end sequence and `LoadDeuceGfx` on the score
 panel; at advantage the leader's digit stays 4 and the other side's is drawn as
 digit 5 (`$09:$403f`).
 

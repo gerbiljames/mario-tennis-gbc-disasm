@@ -125,7 +125,7 @@ NEXTU
 wMinigameServeCount:: dw
 ; [16-bit] Points shown by the score popup; AwardHitScore and the per-minigame scorers store the award here before AddToMinigameScore
 wScorePopupValue:: dw
-; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotDifficultyRamp/LaunchBallTable with it
+; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotDifficultyRamp/MinigameShotSpeedColumn with it
 wMinigameServeTier:: db
 ; [8-bit] Which serve the tennis machine plays next; the machine hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable indexes the aim table with it
 wMinigameServeSlot:: db

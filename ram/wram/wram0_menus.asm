@@ -163,7 +163,7 @@ wTennisDictAnimTimer:: db
 ; [8-bit] Second Tennis Dictionary animation counter, stepped only while wTennisDictFlags bit 1 is set and bit 0 clear; seeded by TennisDictionaryScreen
 wTennisDictScrollTimer:: db
 
-; [8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable
+; [8-bit] Bank $6b intro cutscene driver (RunIntroCutscene): current step index, dispatched through IntroCutsceneStateTable_6b
 wCutsceneStep:: db
 
 ; [8-bit] Bank $6b cutscene driver: frame counter for the current step, compared with per-step thresholds to advance wCutsceneStep

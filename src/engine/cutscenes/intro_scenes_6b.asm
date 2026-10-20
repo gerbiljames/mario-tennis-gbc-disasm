@@ -10,12 +10,12 @@ InitCutsceneSceneA:
 	farcall InitSceneScroll ; $53ff
 	farcall InitTextWindows ; $5402
 	wram_bank WRAM_STAGING ; $5405
-	ld hl, CutsceneSceneAGfx0 ; $540b
+	ld hl, IntroBallTossTiles ; $540b
 	ld de, wDecompBuffer ; $540e
 	call DecompressData ; $5411
 	ld hl, wDecompBuffer ; $5414
 	ld de, vTiles2 ; $5417
-	ld c, 128 ; $541a -- 128 of CutsceneSceneAGfx0's 144 tiles
+	ld c, 128 ; $541a -- 128 of IntroBallTossTiles's 144 tiles
 	call QueueVRAMCopy ; $541c
 	ld hl, wDecompBufferHigh ; $541f
 	ld de, vTiles1 ; $5422
@@ -44,12 +44,12 @@ Unused_6b_InitCutsceneSceneB:
 	farcall InitSceneScroll ; $5461
 	farcall InitTextWindows ; $5464
 	wram_bank WRAM_STAGING ; $5467
-	ld hl, CutsceneSceneAGfx0 ; $546d
+	ld hl, IntroBallTossTiles ; $546d
 	ld de, wDecompBuffer ; $5470
 	call DecompressData ; $5473
 	ld hl, wDecompBuffer ; $5476
 	ld de, vTiles2 ; $5479
-	ld c, 128 ; $547c -- 128 of CutsceneSceneAGfx0's 144 tiles
+	ld c, 128 ; $547c -- 128 of IntroBallTossTiles's 144 tiles
 	call QueueVRAMCopy ; $547e
 	ld hl, wDecompBufferHigh ; $5481
 	ld de, vTiles1 ; $5484
@@ -75,12 +75,12 @@ InitCutsceneSceneC:
 	farcall InitSceneScroll ; $54bc
 	farcall InitTextWindows ; $54bf
 	wram_bank WRAM_STAGING ; $54c2
-	ld hl, CutsceneSceneAGfx0 ; $54c8
+	ld hl, IntroBallTossTiles ; $54c8
 	ld de, wDecompBuffer ; $54cb
 	call DecompressData ; $54ce
 	ld hl, wDecompBuffer ; $54d1
 	ld de, vTiles2 ; $54d4
-	ld c, 128 ; $54d7 -- 128 of CutsceneSceneAGfx0's 144 tiles
+	ld c, 128 ; $54d7 -- 128 of IntroBallTossTiles's 144 tiles
 	call QueueVRAMCopy ; $54d9
 	ld hl, wDecompBufferHigh ; $54dc
 	ld de, vTiles1 ; $54df
@@ -104,8 +104,8 @@ InitCutsceneSceneC:
 	ld a, SCENECOPY_FROM_CAMERA ; $5517
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
-CutsceneSceneAGfx0:
-	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx0.bin" ; $551d, 1210 bytes
+IntroBallTossTiles:
+	INCBIN "data/engine/cutscenes/lz_IntroBallTossTiles.bin" ; $551d, 1210 bytes
 CutsceneSceneBTilemap:
 	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBTilemap.bin" ; $59d7, 512 bytes
 CutsceneSceneBAttrmap:
@@ -241,31 +241,31 @@ Unused_6b_RewriteCutsceneCameraY:
 	ld [wCameraY], a ; $6178
 .done:
 	ret ; $617b
-InitTitleSceneGraphics:
+InitIntroOpponentsPanorama:
 	call DisableLCDSafely ; $617c
 	farcall InitSceneScroll ; $617f
 	farcall InitTextWindows ; $6182
 	wram_bank WRAM_STAGING ; $6185
-	ld hl, TitleSceneGraphicsGfx0 ; $618b
+	ld hl, IntroOpponentsPanoramaTiles ; $618b
 	ld de, wDecompBuffer ; $618e
 	call DecompressData ; $6191
 	ld hl, wDecompBuffer ; $6194
 	ld de, vTiles2 + VRAM_BANK1 ; $6197
-	ld c, 128 ; $619a -- 128 of TitleSceneGraphicsGfx0's 241 tiles
+	ld c, 128 ; $619a -- 128 of IntroOpponentsPanoramaTiles's 241 tiles
 	call QueueVRAMCopy ; $619c
 	ld hl, wDecompBufferHigh ; $619f
 	ld de, vTiles1 + VRAM_BANK1 ; $61a2
 	ld c, wDecompBufferHigh_SIZE / 16 ; $61a5
 	call QueueVRAMCopy ; $61a7
 	wram_bank WRAM_COURT_PLANES ; $61aa
-	ld hl, TitleSceneAttrmap ; $61b0
+	ld hl, IntroOpponentsPanoramaAttrmap ; $61b0
 	ld de, wMapBuffer64 ; $61b3
 	call DecompressData ; $61b6
 	wram_bank WRAM_SCREEN ; $61b9
-	ld hl, TitleSceneTilemap ; $61bf
+	ld hl, IntroOpponentsPanoramaTilemap ; $61bf
 	ld de, wMapBuffer64 ; $61c2
 	call DecompressData ; $61c5
-	ld hl, TitleScenePalette ; $61c8
+	ld hl, IntroOpponentsPanoramaPalette ; $61c8
 	ld_bg_pals de, 0, 8 ; $61cb
 	call LoadPaletteShadow ; $61ce
 	ld a, $20 ; $61d1
@@ -277,14 +277,14 @@ InitTitleSceneGraphics:
 	ld a, SCENECOPY_FROM_CAMERA ; $61e0
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
-TitleSceneGraphicsGfx0:
-	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx0.bin" ; $61e6, 2774 bytes
-TitleSceneTilemap:
-	INCBIN "data/engine/cutscenes/lz_TitleSceneTilemap.bin" ; $6cbc, 595 bytes
-TitleSceneAttrmap:
-	INCBIN "data/engine/cutscenes/lz_TitleSceneAttrmap.bin" ; $6f0f, 308 bytes
-TitleScenePalette:
-	INCLUDE "data/engine/cutscenes/TitleScenePalette.asm" ; $7043, 64 bytes (palettes)
+IntroOpponentsPanoramaTiles:
+	INCBIN "data/engine/cutscenes/lz_IntroOpponentsPanoramaTiles.bin" ; $61e6, 2774 bytes
+IntroOpponentsPanoramaTilemap:
+	INCBIN "data/engine/cutscenes/lz_IntroOpponentsPanoramaTilemap.bin" ; $6cbc, 595 bytes
+IntroOpponentsPanoramaAttrmap:
+	INCBIN "data/engine/cutscenes/lz_IntroOpponentsPanoramaAttrmap.bin" ; $6f0f, 308 bytes
+IntroOpponentsPanoramaPalette:
+	INCLUDE "data/engine/cutscenes/IntroOpponentsPanoramaPalette.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:
 	ld a, [wCutsceneSpriteAX] ; $7083
 	inc a ; $7086

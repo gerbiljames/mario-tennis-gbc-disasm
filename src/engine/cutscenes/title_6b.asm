@@ -1,4 +1,4 @@
-DecompressIntroTitleTiles:
+LoadIntroAwesomeOpponentsCaption:
 	push_wram_bank WRAM_STAGING ; $73f2
 	ld_slot hl, DataPtr_IntroAwesomeTiles ; $73fb
 	ld de, wDecompBuffer ; $73fe
@@ -12,18 +12,18 @@ DecompressIntroTitleTiles:
 	ld c, wDecompBufferHigh_SIZE / 16 ; $7415
 	call QueueVRAMCopy ; $7417
 	wram_bank WRAM_TEXT ; $741a
-	ld hl, IntroTitleTilemap ; $7420
+	ld hl, IntroAwesomeOpponentsCaptionTilemap ; $7420
 	ld de, wWindowShadowTilemap ; $7423
 	call DecompressData ; $7426
-	ld hl, IntroTitleAttrmap ; $7429
+	ld hl, IntroAwesomeOpponentsCaptionAttrmap ; $7429
 	ld de, wWindowShadowAttrmap ; $742c
 	call DecompressData ; $742f
 	pop_wram_bank ; $7432
 	ret ; $7437
-IntroTitleTilemap:
-	INCBIN "data/engine/cutscenes/lz_IntroTitleTilemap.bin" ; $7438, 221 bytes
-IntroTitleAttrmap:
-	INCBIN "data/engine/cutscenes/lz_IntroTitleAttrmap.bin" ; $7515, 76 bytes
+IntroAwesomeOpponentsCaptionTilemap:
+	INCBIN "data/engine/cutscenes/lz_IntroAwesomeOpponentsCaptionTilemap.bin" ; $7438, 221 bytes
+IntroAwesomeOpponentsCaptionAttrmap:
+	INCBIN "data/engine/cutscenes/lz_IntroAwesomeOpponentsCaptionAttrmap.bin" ; $7515, 76 bytes
 Unused_6b_IncrementCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $7561
 	inc a ; $7564
@@ -86,7 +86,7 @@ RunTitleScreen:
 	ld b, TILEBLOCK_TitleGfx7 ; $762e
 	ld de, vTiles0 tile $60 ; $7630
 	farcall LoadCompressedTileBlock ; $7633
-	ld hl, Palettes_6b_11 ; $7636
+	ld hl, TitleSpritePalette ; $7636
 	ld_obj_pals de, 0, 1 ; $7639
 	call LoadPaletteShadow ; $763c
 	frame_task QueueTitleSprite ; $763f
@@ -203,8 +203,8 @@ TitleScreenAttrmap:
 	INCBIN "data/engine/cutscenes/lz_TitleScreenAttrmap.bin" ; $7872, 157 bytes
 TitleScreenPalettes:
 	INCLUDE "data/engine/cutscenes/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
-Palettes_6b_11:
-	INCLUDE "data/engine/cutscenes/Palettes_6b_11.asm" ; $794f, 8 bytes (palettes)
+TitleSpritePalette:
+	INCLUDE "data/engine/cutscenes/TitleSpritePalette.asm" ; $794f, 8 bytes (palettes)
 DreamMatchEpilogueTilemap:
 	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap.bin" ; $7957, 293 bytes
 DreamMatchEpilogueAttrmap:

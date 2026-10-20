@@ -226,22 +226,22 @@ SetupSceneAnimationPalettes:
 	push_wram_bank WRAM_SCENE ; $5b28
 	xor a ; $5b31
 	ld [wSceneAnimFrame], a ; $5b32
-	ld hl, SceneAnimObjPalette0_03 ; $5b35
+	ld hl, EpilogueEndOrangePalette ; $5b35
 	ld_obj_pals de, 2, 1 ; $5b38
 	call LoadPaletteShadow ; $5b3b
-	ld hl, SceneAnimObjPalette1_03 ; $5b3e
+	ld hl, EpilogueEndGreenPalette ; $5b3e
 	ld_obj_pals de, 3, 1 ; $5b41
 	call LoadPaletteShadow ; $5b44
 	pop_wram_bank ; $5b47
 	ret ; $5b4c
 UpdateSceneAnimation:
 	push_wram_bank WRAM_SCENE ; $5b4d
-	call LoadCutsceneAnimFrameGfx_00_08 ; $5b56
-	call LoadCutsceneAnimFrameGfx_09_11 ; $5b59
-	call LoadCutsceneAnimFrameGfx_12_1a ; $5b5c
-	call LoadCutsceneAnimFrameGfx_1b_23 ; $5b5f
-	call LoadCutsceneAnimFrameGfx_24_2c ; $5b62
-	call LoadCutsceneAnimFrameGfx_2d_35 ; $5b65
+	call AnimateEpilogueEndE ; $5b56
+	call AnimateEpilogueEndN ; $5b59
+	call AnimateEpilogueEndD ; $5b5c
+	call AnimateEpilogueEndDot1 ; $5b5f
+	call AnimateEpilogueEndDot2 ; $5b62
+	call AnimateEpilogueEndDot3 ; $5b65
 	wram_bank WRAM_SCENE ; $5b68
 	ld a, [wCutsceneSlideTimer] ; $5b6e
 	and $03 ; $5b71
@@ -256,7 +256,7 @@ UpdateSceneAnimation:
 .restore:
 	pop_wram_bank ; $5b83
 	ret ; $5b88
-LoadCutsceneAnimFrameGfx_00_08:
+AnimateEpilogueEndE:
 	wram_bank WRAM_SCENE ; $5b89
 	ld a, [wSceneAnimFrame] ; $5b8f
 	cp $00 ; $5b92
@@ -280,137 +280,137 @@ LoadCutsceneAnimFrameGfx_00_08:
 	jp .queueSpriteTemplate ; $5bbf
 .frame00:
 	wram_bank WRAM_STAGING ; $5bc2
-	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
+	ld hl, EpilogueEndLetterE_0 ; $5bc8
 	ld de, wDecompBuffer ; $5bcb
 	call DecompressData ; $5bce
 	ld hl, wDecompBuffer ; $5bd1
 	ld de, vTiles0 ; $5bd4
-	ld c, CutsceneAnimFrameLZ_00_SIZE / 16 ; $5bd7
+	ld c, EpilogueEndLetterE_0_SIZE / 16 ; $5bd7
 	call QueueVRAMCopy ; $5bd9
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate0 ; $5bdc
+	ld hl, AnimateEpilogueEndE_SpriteTemplate0 ; $5bdc
 	sprite_xy $fe, $80 ; $5bdf
 	ld_oam bc, 3, $00 ; $5be3
 	call QueueSpriteTemplate ; $5be6
 	ret ; $5be9
 .frame01:
 	wram_bank WRAM_STAGING ; $5bea
-	ld hl, CutsceneAnimFrameLZ_01 ; $5bf0
+	ld hl, EpilogueEndLetterE_1 ; $5bf0
 	ld de, wDecompBuffer ; $5bf3
 	call DecompressData ; $5bf6
 	ld hl, wDecompBuffer ; $5bf9
 	ld de, vTiles0 ; $5bfc
-	ld c, CutsceneAnimFrameLZ_01_SIZE / 16 ; $5bff
+	ld c, EpilogueEndLetterE_1_SIZE / 16 ; $5bff
 	call QueueVRAMCopy ; $5c01
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate1 ; $5c04
+	ld hl, AnimateEpilogueEndE_SpriteTemplate1 ; $5c04
 	sprite_xy $fe, $80 ; $5c07
 	ld_oam bc, 3, $00 ; $5c0b
 	call QueueSpriteTemplate ; $5c0e
 	ret ; $5c11
 .frame02:
 	wram_bank WRAM_STAGING ; $5c12
-	ld hl, CutsceneAnimFrameLZ_02 ; $5c18
+	ld hl, EpilogueEndLetterE_2 ; $5c18
 	ld de, wDecompBuffer ; $5c1b
 	call DecompressData ; $5c1e
 	ld hl, wDecompBuffer ; $5c21
 	ld de, vTiles0 ; $5c24
-	ld c, CutsceneAnimFrameLZ_02_SIZE / 16 ; $5c27
+	ld c, EpilogueEndLetterE_2_SIZE / 16 ; $5c27
 	call QueueVRAMCopy ; $5c29
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate2 ; $5c2c
+	ld hl, AnimateEpilogueEndE_SpriteTemplate2 ; $5c2c
 	sprite_xy $fe, $80 ; $5c2f
 	ld_oam bc, 3, $00 ; $5c33
 	call QueueSpriteTemplate ; $5c36
 	ret ; $5c39
 .frame03:
 	wram_bank WRAM_STAGING ; $5c3a
-	ld hl, CutsceneAnimFrameLZ_03 ; $5c40
+	ld hl, EpilogueEndLetterE_3 ; $5c40
 	ld de, wDecompBuffer ; $5c43
 	call DecompressData ; $5c46
 	ld hl, wDecompBuffer ; $5c49
 	ld de, vTiles0 ; $5c4c
-	ld c, CutsceneAnimFrameLZ_03_SIZE / 16 ; $5c4f
+	ld c, EpilogueEndLetterE_3_SIZE / 16 ; $5c4f
 	call QueueVRAMCopy ; $5c51
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate3 ; $5c54
+	ld hl, AnimateEpilogueEndE_SpriteTemplate3 ; $5c54
 	sprite_xy $fe, $80 ; $5c57
 	ld_oam bc, 3, $00 ; $5c5b
 	call QueueSpriteTemplate ; $5c5e
 	ret ; $5c61
 .frame04:
 	wram_bank WRAM_STAGING ; $5c62
-	ld hl, CutsceneAnimFrameLZ_04 ; $5c68
+	ld hl, EpilogueEndLetterE_4 ; $5c68
 	ld de, wDecompBuffer ; $5c6b
 	call DecompressData ; $5c6e
 	ld hl, wDecompBuffer ; $5c71
 	ld de, vTiles0 ; $5c74
-	ld c, CutsceneAnimFrameLZ_04_SIZE / 16 ; $5c77
+	ld c, EpilogueEndLetterE_4_SIZE / 16 ; $5c77
 	call QueueVRAMCopy ; $5c79
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate4 ; $5c7c
+	ld hl, AnimateEpilogueEndE_SpriteTemplate4 ; $5c7c
 	sprite_xy $fe, $80 ; $5c7f
 	ld_oam bc, 3, $00 ; $5c83
 	call QueueSpriteTemplate ; $5c86
 	ret ; $5c89
 .frame05:
 	wram_bank WRAM_STAGING ; $5c8a
-	ld hl, CutsceneAnimFrameLZ_05 ; $5c90
+	ld hl, EpilogueEndLetterE_5 ; $5c90
 	ld de, wDecompBuffer ; $5c93
 	call DecompressData ; $5c96
 	ld hl, wDecompBuffer ; $5c99
 	ld de, vTiles0 ; $5c9c
-	ld c, CutsceneAnimFrameLZ_05_SIZE / 16 ; $5c9f
+	ld c, EpilogueEndLetterE_5_SIZE / 16 ; $5c9f
 	call QueueVRAMCopy ; $5ca1
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate5 ; $5ca4
+	ld hl, AnimateEpilogueEndE_SpriteTemplate5 ; $5ca4
 	sprite_xy $fe, $80 ; $5ca7
 	ld_oam bc, 3, $00 ; $5cab
 	call QueueSpriteTemplate ; $5cae
 	ret ; $5cb1
 .frame06:
 	wram_bank WRAM_STAGING ; $5cb2
-	ld hl, CutsceneAnimFrameLZ_06 ; $5cb8
+	ld hl, EpilogueEndLetterE_6 ; $5cb8
 	ld de, wDecompBuffer ; $5cbb
 	call DecompressData ; $5cbe
 	ld hl, wDecompBuffer ; $5cc1
 	ld de, vTiles0 ; $5cc4
-	ld c, CutsceneAnimFrameLZ_06_SIZE / 16 ; $5cc7
+	ld c, EpilogueEndLetterE_6_SIZE / 16 ; $5cc7
 	call QueueVRAMCopy ; $5cc9
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate6 ; $5ccc
+	ld hl, AnimateEpilogueEndE_SpriteTemplate6 ; $5ccc
 	sprite_xy $fe, $80 ; $5ccf
 	ld_oam bc, 3, $00 ; $5cd3
 	call QueueSpriteTemplate ; $5cd6
 	ret ; $5cd9
 .frame07:
 	wram_bank WRAM_STAGING ; $5cda
-	ld hl, CutsceneAnimFrameLZ_07 ; $5ce0
+	ld hl, EpilogueEndLetterE_7 ; $5ce0
 	ld de, wDecompBuffer ; $5ce3
 	call DecompressData ; $5ce6
 	ld hl, wDecompBuffer ; $5ce9
 	ld de, vTiles0 ; $5cec
-	ld c, CutsceneAnimFrameLZ_07_SIZE / 16 ; $5cef
+	ld c, EpilogueEndLetterE_7_SIZE / 16 ; $5cef
 	call QueueVRAMCopy ; $5cf1
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate7 ; $5cf4
+	ld hl, AnimateEpilogueEndE_SpriteTemplate7 ; $5cf4
 	sprite_xy $fe, $80 ; $5cf7
 	ld_oam bc, 3, $00 ; $5cfb
 	call QueueSpriteTemplate ; $5cfe
 	ret ; $5d01
 .frame08:
 	wram_bank WRAM_STAGING ; $5d02
-	ld hl, CutsceneAnimFrameLZ_08 ; $5d08
+	ld hl, EpilogueEndLetterE_8 ; $5d08
 	ld de, wDecompBuffer ; $5d0b
 	call DecompressData ; $5d0e
 	ld hl, wDecompBuffer ; $5d11
 	ld de, vTiles0 ; $5d14
-	ld c, CutsceneAnimFrameLZ_08_SIZE / 16 ; $5d17
+	ld c, EpilogueEndLetterE_8_SIZE / 16 ; $5d17
 	call QueueVRAMCopy ; $5d19
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate8 ; $5d1c
+	ld hl, AnimateEpilogueEndE_SpriteTemplate8 ; $5d1c
 	sprite_xy $fe, $80 ; $5d1f
 	ld_oam bc, 3, $00 ; $5d23
 	call QueueSpriteTemplate ; $5d26
 	ret ; $5d29
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate8 ; $5d2a
+	ld hl, AnimateEpilogueEndE_SpriteTemplate8 ; $5d2a
 	sprite_xy $fe, $80 ; $5d2d
 	ld_oam bc, 3, $00 ; $5d31
 	call QueueSpriteTemplate ; $5d34
 	ret ; $5d37
-LoadCutsceneAnimFrameGfx_09_11:
+AnimateEpilogueEndN:
 	wram_bank WRAM_SCENE ; $5d38
 	ld a, [wSceneAnimFrame] ; $5d3e
 	ld b, a ; $5d41
@@ -438,137 +438,137 @@ LoadCutsceneAnimFrameGfx_09_11:
 	jp .queueSpriteTemplate ; $5d73
 .frame09:
 	wram_bank WRAM_STAGING ; $5d76
-	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
+	ld hl, EpilogueEndLetterN_0 ; $5d7c
 	ld de, wDecompBuffer tile 4 ; $5d7f
 	call DecompressData ; $5d82
 	ld hl, wDecompBuffer tile 4 ; $5d85
 	ld de, vTiles0 tile $04 ; $5d88
-	ld c, CutsceneAnimFrameLZ_09_SIZE / 16 ; $5d8b
+	ld c, EpilogueEndLetterN_0_SIZE / 16 ; $5d8b
 	call QueueVRAMCopy ; $5d8d
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate0 ; $5d90
+	ld hl, AnimateEpilogueEndN_SpriteTemplate0 ; $5d90
 	sprite_xy $0e, $80 ; $5d93
 	ld_oam bc, 2, $04 ; $5d97
 	call QueueSpriteTemplate ; $5d9a
 	ret ; $5d9d
 .frame0a:
 	wram_bank WRAM_STAGING ; $5d9e
-	ld hl, CutsceneAnimFrameLZ_0a ; $5da4
+	ld hl, EpilogueEndLetterN_1 ; $5da4
 	ld de, wDecompBuffer tile 4 ; $5da7
 	call DecompressData ; $5daa
 	ld hl, wDecompBuffer tile 4 ; $5dad
 	ld de, vTiles0 tile $04 ; $5db0
-	ld c, CutsceneAnimFrameLZ_0a_SIZE / 16 ; $5db3
+	ld c, EpilogueEndLetterN_1_SIZE / 16 ; $5db3
 	call QueueVRAMCopy ; $5db5
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate1 ; $5db8
+	ld hl, AnimateEpilogueEndN_SpriteTemplate1 ; $5db8
 	sprite_xy $0e, $80 ; $5dbb
 	ld_oam bc, 2, $04 ; $5dbf
 	call QueueSpriteTemplate ; $5dc2
 	ret ; $5dc5
 .frame0b:
 	wram_bank WRAM_STAGING ; $5dc6
-	ld hl, CutsceneAnimFrameLZ_0b ; $5dcc
+	ld hl, EpilogueEndLetterN_2 ; $5dcc
 	ld de, wDecompBuffer tile 4 ; $5dcf
 	call DecompressData ; $5dd2
 	ld hl, wDecompBuffer tile 4 ; $5dd5
 	ld de, vTiles0 tile $04 ; $5dd8
-	ld c, CutsceneAnimFrameLZ_0b_SIZE / 16 ; $5ddb
+	ld c, EpilogueEndLetterN_2_SIZE / 16 ; $5ddb
 	call QueueVRAMCopy ; $5ddd
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate2 ; $5de0
+	ld hl, AnimateEpilogueEndN_SpriteTemplate2 ; $5de0
 	sprite_xy $0e, $80 ; $5de3
 	ld_oam bc, 2, $04 ; $5de7
 	call QueueSpriteTemplate ; $5dea
 	ret ; $5ded
 .frame0c:
 	wram_bank WRAM_STAGING ; $5dee
-	ld hl, CutsceneAnimFrameLZ_0c ; $5df4
+	ld hl, EpilogueEndLetterN_3 ; $5df4
 	ld de, wDecompBuffer tile 4 ; $5df7
 	call DecompressData ; $5dfa
 	ld hl, wDecompBuffer tile 4 ; $5dfd
 	ld de, vTiles0 tile $04 ; $5e00
-	ld c, CutsceneAnimFrameLZ_0c_SIZE / 16 ; $5e03
+	ld c, EpilogueEndLetterN_3_SIZE / 16 ; $5e03
 	call QueueVRAMCopy ; $5e05
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate3 ; $5e08
+	ld hl, AnimateEpilogueEndN_SpriteTemplate3 ; $5e08
 	sprite_xy $0e, $80 ; $5e0b
 	ld_oam bc, 2, $04 ; $5e0f
 	call QueueSpriteTemplate ; $5e12
 	ret ; $5e15
 .frame0d:
 	wram_bank WRAM_STAGING ; $5e16
-	ld hl, CutsceneAnimFrameLZ_0d ; $5e1c
+	ld hl, EpilogueEndLetterN_4 ; $5e1c
 	ld de, wDecompBuffer tile 4 ; $5e1f
 	call DecompressData ; $5e22
 	ld hl, wDecompBuffer tile 4 ; $5e25
 	ld de, vTiles0 tile $04 ; $5e28
-	ld c, CutsceneAnimFrameLZ_0d_SIZE / 16 ; $5e2b
+	ld c, EpilogueEndLetterN_4_SIZE / 16 ; $5e2b
 	call QueueVRAMCopy ; $5e2d
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate4 ; $5e30
+	ld hl, AnimateEpilogueEndN_SpriteTemplate4 ; $5e30
 	sprite_xy $0e, $80 ; $5e33
 	ld_oam bc, 2, $04 ; $5e37
 	call QueueSpriteTemplate ; $5e3a
 	ret ; $5e3d
 .frame0e:
 	wram_bank WRAM_STAGING ; $5e3e
-	ld hl, CutsceneAnimFrameLZ_0e ; $5e44
+	ld hl, EpilogueEndLetterN_5 ; $5e44
 	ld de, wDecompBuffer tile 4 ; $5e47
 	call DecompressData ; $5e4a
 	ld hl, wDecompBuffer tile 4 ; $5e4d
 	ld de, vTiles0 tile $04 ; $5e50
-	ld c, CutsceneAnimFrameLZ_0e_SIZE / 16 ; $5e53
+	ld c, EpilogueEndLetterN_5_SIZE / 16 ; $5e53
 	call QueueVRAMCopy ; $5e55
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate5 ; $5e58
+	ld hl, AnimateEpilogueEndN_SpriteTemplate5 ; $5e58
 	sprite_xy $0e, $80 ; $5e5b
 	ld_oam bc, 2, $04 ; $5e5f
 	call QueueSpriteTemplate ; $5e62
 	ret ; $5e65
 .frame0f:
 	wram_bank WRAM_STAGING ; $5e66
-	ld hl, CutsceneAnimFrameLZ_0f ; $5e6c
+	ld hl, EpilogueEndLetterN_6 ; $5e6c
 	ld de, wDecompBuffer tile 4 ; $5e6f
 	call DecompressData ; $5e72
 	ld hl, wDecompBuffer tile 4 ; $5e75
 	ld de, vTiles0 tile $04 ; $5e78
-	ld c, CutsceneAnimFrameLZ_0f_SIZE / 16 ; $5e7b
+	ld c, EpilogueEndLetterN_6_SIZE / 16 ; $5e7b
 	call QueueVRAMCopy ; $5e7d
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate6 ; $5e80
+	ld hl, AnimateEpilogueEndN_SpriteTemplate6 ; $5e80
 	sprite_xy $0e, $80 ; $5e83
 	ld_oam bc, 2, $04 ; $5e87
 	call QueueSpriteTemplate ; $5e8a
 	ret ; $5e8d
 .frame10:
 	wram_bank WRAM_STAGING ; $5e8e
-	ld hl, CutsceneAnimFrameLZ_10 ; $5e94
+	ld hl, EpilogueEndLetterN_7 ; $5e94
 	ld de, wDecompBuffer tile 4 ; $5e97
 	call DecompressData ; $5e9a
 	ld hl, wDecompBuffer tile 4 ; $5e9d
 	ld de, vTiles0 tile $04 ; $5ea0
-	ld c, CutsceneAnimFrameLZ_10_SIZE / 16 ; $5ea3
+	ld c, EpilogueEndLetterN_7_SIZE / 16 ; $5ea3
 	call QueueVRAMCopy ; $5ea5
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate7 ; $5ea8
+	ld hl, AnimateEpilogueEndN_SpriteTemplate7 ; $5ea8
 	sprite_xy $0e, $80 ; $5eab
 	ld_oam bc, 2, $04 ; $5eaf
 	call QueueSpriteTemplate ; $5eb2
 	ret ; $5eb5
 .frame11:
 	wram_bank WRAM_STAGING ; $5eb6
-	ld hl, CutsceneAnimFrameLZ_11 ; $5ebc
+	ld hl, EpilogueEndLetterN_8 ; $5ebc
 	ld de, wDecompBuffer tile 4 ; $5ebf
 	call DecompressData ; $5ec2
 	ld hl, wDecompBuffer tile 4 ; $5ec5
 	ld de, vTiles0 tile $04 ; $5ec8
-	ld c, CutsceneAnimFrameLZ_11_SIZE / 16 ; $5ecb
+	ld c, EpilogueEndLetterN_8_SIZE / 16 ; $5ecb
 	call QueueVRAMCopy ; $5ecd
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate8 ; $5ed0
+	ld hl, AnimateEpilogueEndN_SpriteTemplate8 ; $5ed0
 	sprite_xy $0e, $80 ; $5ed3
 	ld_oam bc, 2, $04 ; $5ed7
 	call QueueSpriteTemplate ; $5eda
 	ret ; $5edd
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate8 ; $5ede
+	ld hl, AnimateEpilogueEndN_SpriteTemplate8 ; $5ede
 	sprite_xy $0e, $80 ; $5ee1
 	ld_oam bc, 2, $04 ; $5ee5
 	call QueueSpriteTemplate ; $5ee8
 	ret ; $5eeb
-LoadCutsceneAnimFrameGfx_12_1a:
+AnimateEpilogueEndD:
 	wram_bank WRAM_SCENE ; $5eec
 	ld a, [wSceneAnimFrame] ; $5ef2
 	ld b, a ; $5ef5
@@ -596,137 +596,137 @@ LoadCutsceneAnimFrameGfx_12_1a:
 	jp .queueSpriteTemplate ; $5f27
 .frame12:
 	wram_bank WRAM_STAGING ; $5f2a
-	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
+	ld hl, EpilogueEndLetterD_0 ; $5f30
 	ld de, wDecompBuffer tile 8 ; $5f33
 	call DecompressData ; $5f36
 	ld hl, wDecompBuffer tile 8 ; $5f39
 	ld de, vTiles0 tile $08 ; $5f3c
-	ld c, CutsceneAnimFrameLZ_12_SIZE / 16 ; $5f3f
+	ld c, EpilogueEndLetterD_0_SIZE / 16 ; $5f3f
 	call QueueVRAMCopy ; $5f41
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate0 ; $5f44
+	ld hl, AnimateEpilogueEndD_SpriteTemplate0 ; $5f44
 	sprite_xy $1e, $80 ; $5f47
 	ld_oam bc, 3, $08 ; $5f4b
 	call QueueSpriteTemplate ; $5f4e
 	ret ; $5f51
 .frame13:
 	wram_bank WRAM_STAGING ; $5f52
-	ld hl, CutsceneAnimFrameLZ_13 ; $5f58
+	ld hl, EpilogueEndLetterD_1 ; $5f58
 	ld de, wDecompBuffer tile 8 ; $5f5b
 	call DecompressData ; $5f5e
 	ld hl, wDecompBuffer tile 8 ; $5f61
 	ld de, vTiles0 tile $08 ; $5f64
-	ld c, CutsceneAnimFrameLZ_13_SIZE / 16 ; $5f67
+	ld c, EpilogueEndLetterD_1_SIZE / 16 ; $5f67
 	call QueueVRAMCopy ; $5f69
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate1 ; $5f6c
+	ld hl, AnimateEpilogueEndD_SpriteTemplate1 ; $5f6c
 	sprite_xy $1e, $80 ; $5f6f
 	ld_oam bc, 3, $08 ; $5f73
 	call QueueSpriteTemplate ; $5f76
 	ret ; $5f79
 .frame14:
 	wram_bank WRAM_STAGING ; $5f7a
-	ld hl, CutsceneAnimFrameLZ_14 ; $5f80
+	ld hl, EpilogueEndLetterD_2 ; $5f80
 	ld de, wDecompBuffer tile 8 ; $5f83
 	call DecompressData ; $5f86
 	ld hl, wDecompBuffer tile 8 ; $5f89
 	ld de, vTiles0 tile $08 ; $5f8c
-	ld c, CutsceneAnimFrameLZ_14_SIZE / 16 ; $5f8f
+	ld c, EpilogueEndLetterD_2_SIZE / 16 ; $5f8f
 	call QueueVRAMCopy ; $5f91
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate2 ; $5f94
+	ld hl, AnimateEpilogueEndD_SpriteTemplate2 ; $5f94
 	sprite_xy $1e, $80 ; $5f97
 	ld_oam bc, 3, $08 ; $5f9b
 	call QueueSpriteTemplate ; $5f9e
 	ret ; $5fa1
 .frame15:
 	wram_bank WRAM_STAGING ; $5fa2
-	ld hl, CutsceneAnimFrameLZ_15 ; $5fa8
+	ld hl, EpilogueEndLetterD_3 ; $5fa8
 	ld de, wDecompBuffer tile 8 ; $5fab
 	call DecompressData ; $5fae
 	ld hl, wDecompBuffer tile 8 ; $5fb1
 	ld de, vTiles0 tile $08 ; $5fb4
-	ld c, CutsceneAnimFrameLZ_15_SIZE / 16 ; $5fb7
+	ld c, EpilogueEndLetterD_3_SIZE / 16 ; $5fb7
 	call QueueVRAMCopy ; $5fb9
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate3 ; $5fbc
+	ld hl, AnimateEpilogueEndD_SpriteTemplate3 ; $5fbc
 	sprite_xy $1e, $80 ; $5fbf
 	ld_oam bc, 3, $08 ; $5fc3
 	call QueueSpriteTemplate ; $5fc6
 	ret ; $5fc9
 .frame16:
 	wram_bank WRAM_STAGING ; $5fca
-	ld hl, CutsceneAnimFrameLZ_16 ; $5fd0
+	ld hl, EpilogueEndLetterD_4 ; $5fd0
 	ld de, wDecompBuffer tile 8 ; $5fd3
 	call DecompressData ; $5fd6
 	ld hl, wDecompBuffer tile 8 ; $5fd9
 	ld de, vTiles0 tile $08 ; $5fdc
-	ld c, CutsceneAnimFrameLZ_16_SIZE / 16 ; $5fdf
+	ld c, EpilogueEndLetterD_4_SIZE / 16 ; $5fdf
 	call QueueVRAMCopy ; $5fe1
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate4 ; $5fe4
+	ld hl, AnimateEpilogueEndD_SpriteTemplate4 ; $5fe4
 	sprite_xy $1e, $80 ; $5fe7
 	ld_oam bc, 3, $08 ; $5feb
 	call QueueSpriteTemplate ; $5fee
 	ret ; $5ff1
 .frame17:
 	wram_bank WRAM_STAGING ; $5ff2
-	ld hl, CutsceneAnimFrameLZ_17 ; $5ff8
+	ld hl, EpilogueEndLetterD_5 ; $5ff8
 	ld de, wDecompBuffer tile 8 ; $5ffb
 	call DecompressData ; $5ffe
 	ld hl, wDecompBuffer tile 8 ; $6001
 	ld de, vTiles0 tile $08 ; $6004
-	ld c, CutsceneAnimFrameLZ_17_SIZE / 16 ; $6007
+	ld c, EpilogueEndLetterD_5_SIZE / 16 ; $6007
 	call QueueVRAMCopy ; $6009
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate5 ; $600c
+	ld hl, AnimateEpilogueEndD_SpriteTemplate5 ; $600c
 	sprite_xy $1e, $80 ; $600f
 	ld_oam bc, 3, $08 ; $6013
 	call QueueSpriteTemplate ; $6016
 	ret ; $6019
 .frame18:
 	wram_bank WRAM_STAGING ; $601a
-	ld hl, CutsceneAnimFrameLZ_18 ; $6020
+	ld hl, EpilogueEndLetterD_6 ; $6020
 	ld de, wDecompBuffer tile 8 ; $6023
 	call DecompressData ; $6026
 	ld hl, wDecompBuffer tile 8 ; $6029
 	ld de, vTiles0 tile $08 ; $602c
-	ld c, CutsceneAnimFrameLZ_18_SIZE / 16 ; $602f
+	ld c, EpilogueEndLetterD_6_SIZE / 16 ; $602f
 	call QueueVRAMCopy ; $6031
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate6 ; $6034
+	ld hl, AnimateEpilogueEndD_SpriteTemplate6 ; $6034
 	sprite_xy $1e, $80 ; $6037
 	ld_oam bc, 3, $08 ; $603b
 	call QueueSpriteTemplate ; $603e
 	ret ; $6041
 .frame19:
 	wram_bank WRAM_STAGING ; $6042
-	ld hl, CutsceneAnimFrameLZ_19 ; $6048
+	ld hl, EpilogueEndLetterD_7 ; $6048
 	ld de, wDecompBuffer tile 8 ; $604b
 	call DecompressData ; $604e
 	ld hl, wDecompBuffer tile 8 ; $6051
 	ld de, vTiles0 tile $08 ; $6054
-	ld c, CutsceneAnimFrameLZ_19_SIZE / 16 ; $6057
+	ld c, EpilogueEndLetterD_7_SIZE / 16 ; $6057
 	call QueueVRAMCopy ; $6059
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate7 ; $605c
+	ld hl, AnimateEpilogueEndD_SpriteTemplate7 ; $605c
 	sprite_xy $1e, $80 ; $605f
 	ld_oam bc, 3, $08 ; $6063
 	call QueueSpriteTemplate ; $6066
 	ret ; $6069
 .frame1a:
 	wram_bank WRAM_STAGING ; $606a
-	ld hl, CutsceneAnimFrameLZ_1a ; $6070
+	ld hl, EpilogueEndLetterD_8 ; $6070
 	ld de, wDecompBuffer tile 8 ; $6073
 	call DecompressData ; $6076
 	ld hl, wDecompBuffer tile 8 ; $6079
 	ld de, vTiles0 tile $08 ; $607c
-	ld c, CutsceneAnimFrameLZ_1a_SIZE / 16 ; $607f
+	ld c, EpilogueEndLetterD_8_SIZE / 16 ; $607f
 	call QueueVRAMCopy ; $6081
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate8 ; $6084
+	ld hl, AnimateEpilogueEndD_SpriteTemplate8 ; $6084
 	sprite_xy $1e, $80 ; $6087
 	ld_oam bc, 3, $08 ; $608b
 	call QueueSpriteTemplate ; $608e
 	ret ; $6091
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_12_1a_SpriteTemplate8 ; $6092
+	ld hl, AnimateEpilogueEndD_SpriteTemplate8 ; $6092
 	sprite_xy $1e, $80 ; $6095
 	ld_oam bc, 3, $08 ; $6099
 	call QueueSpriteTemplate ; $609c
 	ret ; $609f
-LoadCutsceneAnimFrameGfx_1b_23:
+AnimateEpilogueEndDot1:
 	wram_bank WRAM_SCENE ; $60a0
 	ld a, [wSceneAnimFrame] ; $60a6
 	ld b, a ; $60a9
@@ -754,137 +754,137 @@ LoadCutsceneAnimFrameGfx_1b_23:
 	jp .queueSpriteTemplate ; $60db
 .frame1b:
 	wram_bank WRAM_STAGING ; $60de
-	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
+	ld hl, EpilogueEndDot1_0 ; $60e4
 	ld de, wDecompBuffer tile 12 ; $60e7
 	call DecompressData ; $60ea
 	ld hl, wDecompBuffer tile 12 ; $60ed
 	ld de, vTiles0 tile $0c ; $60f0
-	ld c, CutsceneAnimFrameLZ_1b_SIZE / 16 ; $60f3
+	ld c, EpilogueEndDot1_0_SIZE / 16 ; $60f3
 	call QueueVRAMCopy ; $60f5
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate0 ; $60f8
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate0 ; $60f8
 	sprite_xy $2e, $80 ; $60fb
 	ld_oam bc, 3, $0c ; $60ff
 	call QueueSpriteTemplate ; $6102
 	ret ; $6105
 .frame1c:
 	wram_bank WRAM_STAGING ; $6106
-	ld hl, CutsceneAnimFrameLZ_1c ; $610c
+	ld hl, EpilogueEndDot1_1 ; $610c
 	ld de, wDecompBuffer tile 12 ; $610f
 	call DecompressData ; $6112
 	ld hl, wDecompBuffer tile 12 ; $6115
 	ld de, vTiles0 tile $0c ; $6118
-	ld c, CutsceneAnimFrameLZ_1c_SIZE / 16 ; $611b
+	ld c, EpilogueEndDot1_1_SIZE / 16 ; $611b
 	call QueueVRAMCopy ; $611d
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate1 ; $6120
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate1 ; $6120
 	sprite_xy $2e, $80 ; $6123
 	ld_oam bc, 3, $0c ; $6127
 	call QueueSpriteTemplate ; $612a
 	ret ; $612d
 .frame1d:
 	wram_bank WRAM_STAGING ; $612e
-	ld hl, CutsceneAnimFrameLZ_1d ; $6134
+	ld hl, EpilogueEndDot1_2 ; $6134
 	ld de, wDecompBuffer tile 12 ; $6137
 	call DecompressData ; $613a
 	ld hl, wDecompBuffer tile 12 ; $613d
 	ld de, vTiles0 tile $0c ; $6140
-	ld c, CutsceneAnimFrameLZ_1d_SIZE / 16 ; $6143
+	ld c, EpilogueEndDot1_2_SIZE / 16 ; $6143
 	call QueueVRAMCopy ; $6145
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate2 ; $6148
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate2 ; $6148
 	sprite_xy $2e, $80 ; $614b
 	ld_oam bc, 3, $0c ; $614f
 	call QueueSpriteTemplate ; $6152
 	ret ; $6155
 .frame1e:
 	wram_bank WRAM_STAGING ; $6156
-	ld hl, CutsceneAnimFrameLZ_1e ; $615c
+	ld hl, EpilogueEndDot1_3 ; $615c
 	ld de, wDecompBuffer tile 12 ; $615f
 	call DecompressData ; $6162
 	ld hl, wDecompBuffer tile 12 ; $6165
 	ld de, vTiles0 tile $0c ; $6168
-	ld c, CutsceneAnimFrameLZ_1e_SIZE / 16 ; $616b
+	ld c, EpilogueEndDot1_3_SIZE / 16 ; $616b
 	call QueueVRAMCopy ; $616d
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate3 ; $6170
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate3 ; $6170
 	sprite_xy $2e, $80 ; $6173
 	ld_oam bc, 3, $0c ; $6177
 	call QueueSpriteTemplate ; $617a
 	ret ; $617d
 .frame1f:
 	wram_bank WRAM_STAGING ; $617e
-	ld hl, CutsceneAnimFrameLZ_1f ; $6184
+	ld hl, EpilogueEndDot1_4 ; $6184
 	ld de, wDecompBuffer tile 12 ; $6187
 	call DecompressData ; $618a
 	ld hl, wDecompBuffer tile 12 ; $618d
 	ld de, vTiles0 tile $0c ; $6190
-	ld c, CutsceneAnimFrameLZ_1f_SIZE / 16 ; $6193
+	ld c, EpilogueEndDot1_4_SIZE / 16 ; $6193
 	call QueueVRAMCopy ; $6195
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate4 ; $6198
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate4 ; $6198
 	sprite_xy $2e, $80 ; $619b
 	ld_oam bc, 3, $0c ; $619f
 	call QueueSpriteTemplate ; $61a2
 	ret ; $61a5
 .frame20:
 	wram_bank WRAM_STAGING ; $61a6
-	ld hl, CutsceneAnimFrameLZ_20 ; $61ac
+	ld hl, EpilogueEndDot1_5 ; $61ac
 	ld de, wDecompBuffer tile 12 ; $61af
 	call DecompressData ; $61b2
 	ld hl, wDecompBuffer tile 12 ; $61b5
 	ld de, vTiles0 tile $0c ; $61b8
-	ld c, CutsceneAnimFrameLZ_20_SIZE / 16 ; $61bb
+	ld c, EpilogueEndDot1_5_SIZE / 16 ; $61bb
 	call QueueVRAMCopy ; $61bd
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate5 ; $61c0
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate5 ; $61c0
 	sprite_xy $2e, $80 ; $61c3
 	ld_oam bc, 3, $0c ; $61c7
 	call QueueSpriteTemplate ; $61ca
 	ret ; $61cd
 .frame21:
 	wram_bank WRAM_STAGING ; $61ce
-	ld hl, CutsceneAnimFrameLZ_21 ; $61d4
+	ld hl, EpilogueEndDot1_6 ; $61d4
 	ld de, wDecompBuffer tile 12 ; $61d7
 	call DecompressData ; $61da
 	ld hl, wDecompBuffer tile 12 ; $61dd
 	ld de, vTiles0 tile $0c ; $61e0
-	ld c, CutsceneAnimFrameLZ_21_SIZE / 16 ; $61e3
+	ld c, EpilogueEndDot1_6_SIZE / 16 ; $61e3
 	call QueueVRAMCopy ; $61e5
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate6 ; $61e8
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate6 ; $61e8
 	sprite_xy $2e, $80 ; $61eb
 	ld_oam bc, 3, $0c ; $61ef
 	call QueueSpriteTemplate ; $61f2
 	ret ; $61f5
 .frame22:
 	wram_bank WRAM_STAGING ; $61f6
-	ld hl, CutsceneAnimFrameLZ_22 ; $61fc
+	ld hl, EpilogueEndDot1_7 ; $61fc
 	ld de, wDecompBuffer tile 12 ; $61ff
 	call DecompressData ; $6202
 	ld hl, wDecompBuffer tile 12 ; $6205
 	ld de, vTiles0 tile $0c ; $6208
-	ld c, CutsceneAnimFrameLZ_22_SIZE / 16 ; $620b
+	ld c, EpilogueEndDot1_7_SIZE / 16 ; $620b
 	call QueueVRAMCopy ; $620d
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate7 ; $6210
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate7 ; $6210
 	sprite_xy $2e, $80 ; $6213
 	ld_oam bc, 3, $0c ; $6217
 	call QueueSpriteTemplate ; $621a
 	ret ; $621d
 .frame23:
 	wram_bank WRAM_STAGING ; $621e
-	ld hl, CutsceneAnimFrameLZ_23 ; $6224
+	ld hl, EpilogueEndDot1_8 ; $6224
 	ld de, wDecompBuffer tile 12 ; $6227
 	call DecompressData ; $622a
 	ld hl, wDecompBuffer tile 12 ; $622d
 	ld de, vTiles0 tile $0c ; $6230
-	ld c, CutsceneAnimFrameLZ_23_SIZE / 16 ; $6233
+	ld c, EpilogueEndDot1_8_SIZE / 16 ; $6233
 	call QueueVRAMCopy ; $6235
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate8 ; $6238
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate8 ; $6238
 	sprite_xy $2e, $80 ; $623b
 	ld_oam bc, 3, $0c ; $623f
 	call QueueSpriteTemplate ; $6242
 	ret ; $6245
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_1b_23_SpriteTemplate8 ; $6246
+	ld hl, AnimateEpilogueEndDot1_SpriteTemplate8 ; $6246
 	sprite_xy $2e, $80 ; $6249
 	ld_oam bc, 3, $0c ; $624d
 	call QueueSpriteTemplate ; $6250
 	ret ; $6253
-LoadCutsceneAnimFrameGfx_24_2c:
+AnimateEpilogueEndDot2:
 	wram_bank WRAM_SCENE ; $6254
 	ld a, [wSceneAnimFrame] ; $625a
 	ld b, a ; $625d
@@ -912,132 +912,132 @@ LoadCutsceneAnimFrameGfx_24_2c:
 	jp .queueSpriteTemplate ; $628f
 .frame24:
 	wram_bank WRAM_STAGING ; $6292
-	ld hl, CutsceneAnimFrameLZ_24 ; $6298
+	ld hl, EpilogueEndDot2_0 ; $6298
 	ld de, wDecompBuffer tile 14 ; $629b
 	call DecompressData ; $629e
 	ld hl, wDecompBuffer tile 14 ; $62a1
 	ld de, vTiles0 tile $0e ; $62a4
-	ld c, CutsceneAnimFrameLZ_24_SIZE / 16 ; $62a7
+	ld c, EpilogueEndDot2_0_SIZE / 16 ; $62a7
 	call QueueVRAMCopy ; $62a9
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate0 ; $62ac
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate0 ; $62ac
 	sprite_xy $36, $80 ; $62af
 	ld_oam bc, 2, $0e ; $62b3
 	call QueueSpriteTemplate ; $62b6
 	ret ; $62b9
 .frame25:
 	wram_bank WRAM_STAGING ; $62ba
-	ld hl, CutsceneAnimFrameLZ_25 ; $62c0
+	ld hl, EpilogueEndDot2_1 ; $62c0
 	ld de, wDecompBuffer tile 14 ; $62c3
 	call DecompressData ; $62c6
 	ld hl, wDecompBuffer tile 14 ; $62c9
 	ld de, vTiles0 tile $0e ; $62cc
-	ld c, CutsceneAnimFrameLZ_25_SIZE / 16 ; $62cf
+	ld c, EpilogueEndDot2_1_SIZE / 16 ; $62cf
 	call QueueVRAMCopy ; $62d1
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate1 ; $62d4
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate1 ; $62d4
 	sprite_xy $36, $80 ; $62d7
 	ld_oam bc, 2, $0e ; $62db
 	call QueueSpriteTemplate ; $62de
 	ret ; $62e1
 .frame26:
 	wram_bank WRAM_STAGING ; $62e2
-	ld hl, CutsceneAnimFrameLZ_26 ; $62e8
+	ld hl, EpilogueEndDot2_2 ; $62e8
 	ld de, wDecompBuffer tile 14 ; $62eb
 	call DecompressData ; $62ee
 	ld hl, wDecompBuffer tile 14 ; $62f1
 	ld de, vTiles0 tile $0e ; $62f4
-	ld c, CutsceneAnimFrameLZ_26_SIZE / 16 ; $62f7
+	ld c, EpilogueEndDot2_2_SIZE / 16 ; $62f7
 	call QueueVRAMCopy ; $62f9
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate2 ; $62fc
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate2 ; $62fc
 	sprite_xy $36, $80 ; $62ff
 	ld_oam bc, 2, $0e ; $6303
 	call QueueSpriteTemplate ; $6306
 	ret ; $6309
 .frame27:
 	wram_bank WRAM_STAGING ; $630a
-	ld hl, CutsceneAnimFrameLZ_27 ; $6310
+	ld hl, EpilogueEndDot2_3 ; $6310
 	ld de, wDecompBuffer tile 14 ; $6313
 	call DecompressData ; $6316
 	ld hl, wDecompBuffer tile 14 ; $6319
 	ld de, vTiles0 tile $0e ; $631c
-	ld c, CutsceneAnimFrameLZ_27_SIZE / 16 ; $631f
+	ld c, EpilogueEndDot2_3_SIZE / 16 ; $631f
 	call QueueVRAMCopy ; $6321
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate3 ; $6324
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate3 ; $6324
 	sprite_xy $36, $80 ; $6327
 	ld_oam bc, 2, $0e ; $632b
 	call QueueSpriteTemplate ; $632e
 	ret ; $6331
 .frame28:
 	wram_bank WRAM_STAGING ; $6332
-	ld hl, CutsceneAnimFrameLZ_28 ; $6338
+	ld hl, EpilogueEndDot2_4 ; $6338
 	ld de, wDecompBuffer tile 14 ; $633b
 	call DecompressData ; $633e
 	ld hl, wDecompBuffer tile 14 ; $6341
 	ld de, vTiles0 tile $0e ; $6344
-	ld c, CutsceneAnimFrameLZ_28_SIZE / 16 ; $6347
+	ld c, EpilogueEndDot2_4_SIZE / 16 ; $6347
 	call QueueVRAMCopy ; $6349
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate4 ; $634c
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate4 ; $634c
 	sprite_xy $36, $80 ; $634f
 	ld_oam bc, 2, $0e ; $6353
 	call QueueSpriteTemplate ; $6356
 	ret ; $6359
 .frame29:
 	wram_bank WRAM_STAGING ; $635a
-	ld hl, CutsceneAnimFrameLZ_29 ; $6360
+	ld hl, EpilogueEndDot2_5 ; $6360
 	ld de, wDecompBuffer tile 14 ; $6363
 	call DecompressData ; $6366
 	ld hl, wDecompBuffer tile 14 ; $6369
 	ld de, vTiles0 tile $0e ; $636c
-	ld c, CutsceneAnimFrameLZ_29_SIZE / 16 ; $636f
+	ld c, EpilogueEndDot2_5_SIZE / 16 ; $636f
 	call QueueVRAMCopy ; $6371
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate5 ; $6374
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate5 ; $6374
 	sprite_xy $36, $80 ; $6377
 	ld_oam bc, 2, $0e ; $637b
 	call QueueSpriteTemplate ; $637e
 	ret ; $6381
 .frame2a:
 	wram_bank WRAM_STAGING ; $6382
-	ld hl, CutsceneAnimFrameLZ_2a ; $6388
+	ld hl, EpilogueEndDot2_6 ; $6388
 	ld de, wDecompBuffer tile 14 ; $638b
 	call DecompressData ; $638e
 	ld hl, wDecompBuffer tile 14 ; $6391
 	ld de, vTiles0 tile $0e ; $6394
-	ld c, CutsceneAnimFrameLZ_2a_SIZE / 16 ; $6397
+	ld c, EpilogueEndDot2_6_SIZE / 16 ; $6397
 	call QueueVRAMCopy ; $6399
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate6 ; $639c
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate6 ; $639c
 	sprite_xy $36, $80 ; $639f
 	ld_oam bc, 2, $0e ; $63a3
 	call QueueSpriteTemplate ; $63a6
 	ret ; $63a9
 .frame2b:
 	wram_bank WRAM_STAGING ; $63aa
-	ld hl, CutsceneAnimFrameLZ_2b ; $63b0
+	ld hl, EpilogueEndDot2_7 ; $63b0
 	ld de, wDecompBuffer tile 14 ; $63b3
 	call DecompressData ; $63b6
 	ld hl, wDecompBuffer tile 14 ; $63b9
 	ld de, vTiles0 tile $0e ; $63bc
-	ld c, CutsceneAnimFrameLZ_2b_SIZE / 16 ; $63bf
+	ld c, EpilogueEndDot2_7_SIZE / 16 ; $63bf
 	call QueueVRAMCopy ; $63c1
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate7 ; $63c4
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate7 ; $63c4
 	sprite_xy $36, $80 ; $63c7
 	ld_oam bc, 2, $0e ; $63cb
 	call QueueSpriteTemplate ; $63ce
 	ret ; $63d1
 .frame2c:
 	wram_bank WRAM_STAGING ; $63d2
-	ld hl, CutsceneAnimFrameLZ_2c ; $63d8
+	ld hl, EpilogueEndDot2_8 ; $63d8
 	ld de, wDecompBuffer tile 14 ; $63db
 	call DecompressData ; $63de
 	ld hl, wDecompBuffer tile 14 ; $63e1
 	ld de, vTiles0 tile $0e ; $63e4
-	ld c, CutsceneAnimFrameLZ_2c_SIZE / 16 ; $63e7
+	ld c, EpilogueEndDot2_8_SIZE / 16 ; $63e7
 	call QueueVRAMCopy ; $63e9
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate8 ; $63ec
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate8 ; $63ec
 	sprite_xy $36, $80 ; $63ef
 	ld_oam bc, 2, $0e ; $63f3
 	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
 .queueSpriteTemplate:
-	ld hl, LoadCutsceneAnimFrameGfx_24_2c_SpriteTemplate8 ; $63fa
+	ld hl, AnimateEpilogueEndDot2_SpriteTemplate8 ; $63fa
 	sprite_xy $36, $80 ; $63fd
 	ld_oam bc, 2, $0e ; $6401
 	call QueueSpriteTemplate ; $6404

@@ -90,7 +90,7 @@ ScreenAssetRecordTable:
 	screen_asset IntroDive, DataPtr_IntroDiveTiles, DataPtr_IntroDiveTilemap, DataPtr_IntroDiveAttrmap, DataPtr_IntroDivePalettes ; record 29
 	screen_asset IntroGirlSwing, DataPtr_IntroGirlSwingTiles, DataPtr_IntroGirlSwingTilemap, DataPtr_IntroGirlSwingAttrmap, DataPtr_IntroGirlSwingPalettes ; record 30
 	screen_asset TitleScreen, DataPtr_TitleScreenTiles, DataPtr_TitleScreenTilemap, DataPtr_TitleScreenAttrmap, DataPtr_TitleScreenPalettes ; record 31
-	screen_asset DecompressIntroTitleTilesPtrs, FarPtr_DecompressIntroTitleTiles, FarPtr_DecompressIntroTitleTilesAlias1, FarPtr_DecompressIntroTitleTilesAlias2, FarPtr_DecompressIntroTitleTilesAlias3 ; record 32
+	screen_asset LoadIntroAwesomeOpponentsCaptionPtrs, FarPtr_LoadIntroAwesomeOpponentsCaption, FarPtr_LoadIntroAwesomeOpponentsCaptionAlias1, FarPtr_LoadIntroAwesomeOpponentsCaptionAlias2, FarPtr_LoadIntroAwesomeOpponentsCaptionAlias3 ; record 32
 	screen_asset EquipmentSelect, DataPtr_EquipmentSelectTiles, DataPtr_EquipmentSelectTilemap, DataPtr_EquipmentSelectAttrmap, DataPtr_EquipmentSelectPalettes ; record 33
 	screen_asset LinkError, DataPtr_LinkErrorTiles, DataPtr_LinkErrorTilemap, DataPtr_LinkErrorAttrmap, DataPtr_LinkErrorPalettes ; record 34
 	screen_asset MatchStats3, DataPtr_MatchStatsTiles, DataPtr_MatchStatsTilemap3, DataPtr_MatchStatsAttrmap3, DataPtr_MatchStatsPalettes ; record 35

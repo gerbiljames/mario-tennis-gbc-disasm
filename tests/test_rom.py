@@ -239,7 +239,7 @@ class Source(unittest.TestCase):
         by_addr = sum(1 for f in lines if re.fullmatch(r"(?:\w+/)*(d|lz|text|\w+)_[0-9a-f]{4}\.\w+", f[0]))
         self.assertLess(by_addr, 700, "most data files carry their label's name")
         self.assertTrue(any(f[0] == "sprites/AlexSpriteFrame00.bin" for f in lines))
-        self.assertTrue(any(f[0].endswith("/lz_CutsceneAnimFrameLZ_00.bin") for f in lines))
+        self.assertTrue(any(f[0].endswith("/lz_EpilogueEndLetterE_0.bin") for f in lines))
 
     def test_structured_regions_render(self):
         # a spec whose renderer gives up falls back to `db` on its first line
