@@ -29,7 +29,7 @@ def CHARREC_STAT_REACTION    rb   ; $29
 def CHARREC_STAT_STOP        rb   ; $2a
 def CHARREC_SPEED_BONUS      rb   ; $2b added to the Speed stat for the shot-placement row
 def CHARREC_EXP              rb 3 ; $2c accumulator, capped at 99999
-def CHARREC_BUILD_KIND       rb   ; $2f written by InitCa00RecordFromCharId ($03 main, $02 roster), read by nothing
+def CHARREC_BUILD_KIND       rb   ; $2f written by InitMatchRecordFromCharId ($03 main, $02 roster), read by nothing
 def CHARREC_PHYSICS_TEMPLATE rw 4 ; $30
 def CHARREC_TRAIN_LEVELS     rb 4 ; $38 spin first
 def CHARREC_EQUIPMENT        rb   ; $3c racket (low nibble) and shoes (high)
@@ -158,7 +158,7 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 	const CHAR_DRILL_STROKE_PRACTICE_3   ; $48
 
 ; --- Character-id sentinels (values outside the roster) ---
-; InitCa00RecordFromCharId branches on the id before using it as a roster
+; InitMatchRecordFromCharId branches on the id before using it as a roster
 ; index: $ff clears the slot and stamps $ff at record +$0b, and any id with
 ; bit 7 set names a story character record instead -- bit 0 selects $c900
 ; (main) or $c940 (partner). Ids $20 and up are remapped into 4-31 by

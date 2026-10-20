@@ -421,7 +421,7 @@ WalkCharsToNewEnds:
 	ld [wOffscreenArrowsEnabled], a ; $5fbd
 	call ResetBallState ; $5fc0
 	call GetServeCameraTarget ; $5fc3
-	call SnapCameraTo ; $5fc6
+	call SnapCameraTo_08 ; $5fc6
 	ld hl, StartCharChangeoverWalk ; $5fc9
 	call ForEachCharBank ; $5fcc
 .waitLoop:

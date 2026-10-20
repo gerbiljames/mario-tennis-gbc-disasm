@@ -297,7 +297,7 @@ Unused_04_SpawnScriptedActorScene:
 	ld hl, ScriptedActorSceneActorList1 ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
-ActorList_04_0:
+Unused_04_MatchNinaAlexActorList:
 	; $4d63, 66 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 1.0, 1.0, FACE_DOWN, OBJ_MATCH_NINA, ANIM_WALK, $00
 	map_actor $0000, ActorScript_Idle, 23.0, 29.0, FACE_DOWN, OBJ_MATCH_ALEX, ANIM_WALK, $00

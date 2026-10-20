@@ -320,7 +320,7 @@ LuigiSpriteFrame54:
 LuigiSpriteFrame55:
 	INCBIN "data/sprites/LuigiSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-LuigiSpriteFramesUnused:
+Unused_5b_LuigiSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/LuigiSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/LuigiSpriteFrame01.bin" ; $7740, 240 bytes

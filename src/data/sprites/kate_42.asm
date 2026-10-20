@@ -320,7 +320,7 @@ KateSpriteFrame54:
 KateSpriteFrame55:
 	INCBIN "data/sprites/KateSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-KateSpriteFramesUnused:
+Unused_42_KateSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/KateSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/KateSpriteFrame01.bin" ; $7740, 240 bytes

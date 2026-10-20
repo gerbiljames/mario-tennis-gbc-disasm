@@ -59,10 +59,20 @@ RecomputeStatsWithoutRacket:
 	pop af ; $47d3
 	ld [wStoryMainEquipment], a ; $47d4
 	ret ; $47d7
-EquipData_02:
-	; $47d8, 26 bytes (bytes:16)
-	db $f5, $21, $0b, $00, $09, $7e, $e6, $03, $87, $c6, $f2, $6f, $ce, $47, $95, $67 ; 0x00
-	db $2a, $66, $6f, $f1, $85, $6f, $30, $01, $24, $c9 ; 0x10
+Unused_02_GetCharArchetypeField:
+	push af ; $47d8
+	ld hl, CHARREC_CHAR ; $47d9
+	add hl, bc ; $47dc
+	ld a, [hl] ; $47dd
+	and $03 ; $47de
+	add a ; $47e0
+	ld_hl_indexed StatArchetypePtrs_02 ; $47e1
+	ld a, [hl+] ; $47e8
+	ld h, [hl] ; $47e9
+	ld l, a ; $47ea
+	pop af ; $47eb
+	add_hl_a ; $47ec
+	ret ; $47f1
 StatArchetypePtrs_02:
 	; $47f2, 8 bytes (records:2)
 	dw StatArchetype0_02 ; record 0

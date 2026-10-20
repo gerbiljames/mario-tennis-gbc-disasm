@@ -374,12 +374,12 @@ InitMatchCharsFromSelection:
 	and $81 ; $5ec7
 	ld b, a ; $5ec9
 	ld c, $00 ; $5eca
-	farcall InitCa00RecordFromCharId ; $5ecc
+	farcall InitMatchRecordFromCharId ; $5ecc
 	jr .slot2 ; $5ecf
 .slot1Created:
 	ld b, a ; $5ed1
 	ld c, $00 ; $5ed2
-	farcall InitCa00RecordFromCharId ; $5ed4
+	farcall InitMatchRecordFromCharId ; $5ed4
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $5ed7
 	cp $ff ; $5eda
@@ -395,12 +395,12 @@ InitMatchCharsFromSelection:
 	and $81 ; $5eec
 	ld b, a ; $5eee
 	ld c, $01 ; $5eef
-	farcall InitCa00RecordFromCharId ; $5ef1
+	farcall InitMatchRecordFromCharId ; $5ef1
 	jr .slot3 ; $5ef4
 .slot2Created:
 	ld b, a ; $5ef6
 	ld c, $01 ; $5ef7
-	farcall InitCa00RecordFromCharId ; $5ef9
+	farcall InitMatchRecordFromCharId ; $5ef9
 .slot3:
 	ld a, [wCharSelectSlotChars + 2] ; $5efc
 	cp $ff ; $5eff
@@ -416,12 +416,12 @@ InitMatchCharsFromSelection:
 	and $81 ; $5f11
 	ld b, a ; $5f13
 	ld c, $02 ; $5f14
-	farcall InitCa00RecordFromCharId ; $5f16
+	farcall InitMatchRecordFromCharId ; $5f16
 	jr .slot4 ; $5f19
 .slot3Created:
 	ld b, a ; $5f1b
 	ld c, $02 ; $5f1c
-	farcall InitCa00RecordFromCharId ; $5f1e
+	farcall InitMatchRecordFromCharId ; $5f1e
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $5f21
 	cp $ff ; $5f24
@@ -437,12 +437,12 @@ InitMatchCharsFromSelection:
 	and $81 ; $5f36
 	ld b, a ; $5f38
 	ld c, $03 ; $5f39
-	farcall InitCa00RecordFromCharId ; $5f3b
+	farcall InitMatchRecordFromCharId ; $5f3b
 	jr .done ; $5f3e
 .slot4Created:
 	ld b, a ; $5f40
 	ld c, $03 ; $5f41
-	farcall InitCa00RecordFromCharId ; $5f43
+	farcall InitMatchRecordFromCharId ; $5f43
 .done:
 	pop_wram_bank ; $5f46
 	ret ; $5f4b

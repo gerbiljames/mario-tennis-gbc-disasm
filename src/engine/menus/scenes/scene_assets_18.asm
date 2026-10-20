@@ -73,7 +73,7 @@ ConfirmScreenSpriteGfx0:
 	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
 	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
 ; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. Nothing references it.
-ConfirmScreenSpriteTemplate:
+Unused_18_ConfirmScreenSpriteTemplate:
 	; $57f4, 57 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -97,7 +97,7 @@ ConfirmScreenSpriteGfx1:
 	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.inc" ; DEF ConfirmScreenSpriteGfx1_SIZE EQU its decoded length, generated from the .bin by make
 ConfirmScreenSpritePalette1:
 	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette1.asm" ; $58ad, 48 bytes (palettes)
-ConfirmScreenSpritePalette1Pad:
+Padding_18_1:
 	; $58dd, 3 bytes (fill)
 	ds 3, $00
 	ds ALIGN[4]

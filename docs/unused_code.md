@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-900 labels carry an `Unused` prefix: 788 routines and 112 data blobs.
+943 labels carry an `Unused` prefix: 789 routines and 154 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -14,6 +14,19 @@ direction. Where an unused routine has a live twin, the comment above it in
 A dead copy inside a shared `src/twins` file is named per bank
 (`twin_in <file>, <Label>, <bank>`), so it is `Unused_<bank>_…` like any
 other; the check exempts nothing.
+
+Data is held to its name alone: a data label that no other label names --
+by name, `Label + n`, a split-base `LOW`/`HIGH` pair or a slot row, from
+live or dead code -- is `Unused_<bank>_<Name>`, and `make check`
+(`unnamed`) fails on one that is not. Before naming one, search the ROM for
+its address as a raw word too. The exceptions are listed with how each is
+found (`UNNAMED_OK` in `tools/reach.py`): `DataPtr_` slot rows, read by
+slot number; `Padding_` fill; the `SoundTable_` at `$4000` of each sound
+bank; the header's `NintendoLogo`; `SoundEnvelopes`, whose address
+`SoundEnvelopeTable` holds as raw bytes. Routines are left to `reach`, which
+already exempts the vectors and a twin template's fall-through entries. A
+data label only dead code names (`FontTiles`, read by a routine after a
+`ret`) keeps its name.
 
 ## Dead roots
 
@@ -114,7 +127,7 @@ bank's own scripts call survived as live code. `Unused_16_DrawAsciiDigitChar`
 and its copies in banks `$17`, `$1b`, `$3b` and `$3e` are the same include
 with no live copy at all.
 
-**3. A ROM0 library with spare parts.** Bank `$00` carries 59 unused routines,
+**3. A ROM0 library with spare parts.** Bank `$00` carries 60 unused routines,
 mostly small, all siblings of live ones: `Unused_00_ForceFadeOut` is
 `ForceFadeIn` with the other direction constant, `Unused_00_EnableSerialInterrupt`
 / `_EnableVBlankInterrupt` / two `SetInterrupts…` variants are the interrupt
@@ -160,11 +173,17 @@ nothing loads) are the largest bodies with no live twin at all.
 `Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** The 112 unused blobs are mostly two things:
+**8. Data that came along.** By bytes the 154 unused blobs are mostly
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
-tables never index (`docs/sound_engine.md`), and the Japanese font and
+tables never index (`docs/sound_engine.md`), the Japanese font and
 window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and
-`Unused_01_JpWindowTiles`), left over from the original release.
+`Unused_01_JpWindowTiles`), left over from the original release, and the
+seven spare frames at the end of each of the 30 character sprite banks
+(`Unused_50_MarioSpriteFramesCopy`, copies of frames 00-06). The racket
+students' practice scripts, live in banks `$11`, `$12` and `$27`, sit dead
+in the other story banks that carry them
+(`Unused_0f_ActorScriptStudentSwings` and its copies in `$0e`, `$10`,
+`$13`-`$15`).
 
 ## Where it sits
 
@@ -172,7 +191,7 @@ window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and
 |---|---|---|
 | `$1b` | 80 | the debug save-data flow and its screens |
 | `$1a` | 73 | minigame pause menu, EXP screen and editor, character viewer |
-| `$00` | 59 | ROM0 library spares |
+| `$00` | 60 | ROM0 library spares |
 | `$05` | 52 | text engine spares |
 | `$18` | 44 | confirm and two-option screens, box and number drawers |
 | `$10` | 36 | Test 2 NPC templates, story helpers |
@@ -211,3 +230,7 @@ cursor's court name into the title row, sharing three helpers and four small
 tables after the first one. `Unused_08_AdvanceCharStatePhase`, a copy of
 `AdvanceCharStatePhase` after `CharPointEndState`'s jump table, had been read
 as two more table entries.
+Three were carved as raw `db`: `Unused_02_GetCharArchetypeField`,
+`Unused_0a_FarcallUpdateSceneAnimation`, and
+`Unused_12_PushPartnerGenderShortTextArg`, a `ld a, [wStoryPartnerGender]`
+falling into `PushShortTextArg_12`.

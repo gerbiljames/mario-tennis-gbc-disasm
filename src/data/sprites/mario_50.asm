@@ -320,7 +320,7 @@ MarioSpriteFrame54:
 MarioSpriteFrame55:
 	INCBIN "data/sprites/MarioSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-MarioSpriteFramesUnused:
+Unused_50_MarioSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/MarioSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/MarioSpriteFrame01.bin" ; $7740, 240 bytes

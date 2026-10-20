@@ -183,7 +183,7 @@ Unused_0e_MapScriptHideLocationName:
 	xor a ; $7c9f
 	ld [wStoryModeShowLocationName], a ; $7ca0
 	ret ; $7ca3
-ActorScript_0e_23:
+Unused_0e_ActorScriptStudentSwingDownSide:
 	; $7ca4, 103 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 2.0
@@ -221,10 +221,10 @@ ActorScript_0e_23:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_0e_23
+	as_jump Unused_0e_ActorScriptStudentSwingDownSide
 	as_anim ANIM_STILL
 	as_wait 60
-ActorScript_0e_24:
+Unused_0e_ActorScriptStudentSwingUpSide:
 	; $7d0b, 103 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_target_rel -4.0, 0.0
@@ -262,10 +262,10 @@ ActorScript_0e_24:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_0e_24
+	as_jump Unused_0e_ActorScriptStudentSwingUpSide
 	as_anim ANIM_STILL
 	as_wait 30
-ActorScript_0e_25:
+Unused_0e_ActorScriptStudentSwingDown:
 	; $7d72, 105 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 0.0
@@ -303,11 +303,11 @@ ActorScript_0e_25:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_0e_25
+	as_jump Unused_0e_ActorScriptStudentSwingDown
 	as_anim ANIM_STILL
 	as_wait 30
 	as_wait 60
-ActorScript_0e_26:
+Unused_0e_ActorScriptStudentSwingUpDiagonal:
 	; $7ddb, 99 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_target_rel -4.0, -2.0
@@ -345,16 +345,16 @@ ActorScript_0e_26:
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_0e_26
-ActorScript_0e_27:
+	as_jump Unused_0e_ActorScriptStudentSwingUpDiagonal
+Unused_0e_ActorScriptStudentNod:
 	; $7e3e, 13 bytes (actor_script)
 	as_wait 240
 	as_anim ANIM_NOD
 	as_wait 80
 	as_anim ANIM_NOD
 	as_wait 60
-	as_jump ActorScript_0e_27
-ActorScript_0e_28:
+	as_jump Unused_0e_ActorScriptStudentNod
+Unused_0e_ActorScriptStudentShakeHead:
 	; $7e4b, 15 bytes (actor_script)
 	as_wait 140
 	as_anim ANIM_SHAKE
@@ -362,7 +362,7 @@ ActorScript_0e_28:
 	as_anim ANIM_SHAKE
 	as_wait 140
 	as_anim ANIM_NOD
-	as_jump ActorScript_0e_28
+	as_jump Unused_0e_ActorScriptStudentShakeHead
 	twin_in compute_ranking_progress_index, ComputeRankingProgressIndex_0e, 0e ; $7e5a ComputeRankingProgressIndex_0e
 ; This bank's copy of ComputeStoryRankTier_13.
 Unused_0e_ComputeStoryRankTier:

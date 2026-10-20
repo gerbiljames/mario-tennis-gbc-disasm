@@ -108,18 +108,22 @@ points.
 
 ## Unreferenced script-shaped blobs
 
-Five story-bank blobs decode as clean looping scripts with no outside
-reference. Four are rendered as scripts, referenced only by their own
-`as_jump`: `ActorScript_0e_23` (`$0e:$7ca4`), `ActorScript_14_4`
-(`$14:$78e7`), `Unused_13_ActorScriptHopNod`/`BounceShake` (`$13:$62db`) and
-`Unused_15_ActorScriptBlink3`/`5` (`$15:$7a23`). `Unused_27_ActorLists`
-(`$27:$4b41`) stays `db` rows.
+Scripts nothing points at are named `Unused_<bank>_ActorScript…` and
+referenced only by their own `as_jump`: the racket students' practice
+scripts in the story banks that never spawn them (`$0e:$7ca4`, split six
+ways in `$0e`, one blob each in `$0f`, `$10`, `$13`-`$15`; live in `$11`,
+`$12`, `$27`), four walks in `$27` (`Unused_27_ActorScriptWalkTo27x19` and
+siblings), `Unused_13_ActorScriptHopNod`/`BounceShake` (`$13:$62db`),
+`Unused_15_ActorScriptBlink3`/`5` (`$15:$7a23`), and three loops in bank
+`$0a`: `Unused_0a_ActorScriptFollowWaypoints` and `…FollowWaypoints2`,
+copies of `ActorScript_FollowWaypoints`, and
+`Unused_0a_ActorScriptSpinForever`, an `as_jump` to itself. `Unused_27_ActorLists` (`$27:$4b41`) stays `db` rows.
 
 ## What follows a script
 
 | Script | Followed by |
 |--------|-------------|
-| `ActorScript_0f_11` | four `Unused_0f_MapScript*` routines, then `ActorScript_0f_12` |
+| `ActorScript_0f_11` | four `Unused_0f_MapScript*` routines, then `Unused_0f_ActorScriptStudentSwings` |
 | `ActorScript_12_44` | more scripts (`ActorScript_12_45` onward) |
 | `ActorScript_15_25` | `Unused_15_ComputeRankingProgressIndex` and `ComputeStoryRankTier_15` |
 | `ActorScript_27_05` | `ActorScript_27_06`, then `Unused_27_Palettes` (two palettes nothing loads) and the scene palettes |

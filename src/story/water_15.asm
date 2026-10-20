@@ -272,8 +272,8 @@ InitWaterSpriteMinigameHud:
 	ret ; $58f9
 	; $58fa, 6 bytes (fill)
 	ds 6, $00
-Palettes_15_0:
-	INCLUDE "data/story/Palettes_15_0.asm" ; $5900, 16 bytes (palettes)
+Unused_15_WaterSpriteRacketRewardPalettes:
+	INCLUDE "data/story/Unused_15_WaterSpriteRacketRewardPalettes.asm" ; $5900, 16 bytes (palettes)
 WaterSpriteRacketRewardScenePalettes0:
 	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes0.asm" ; $5910, 64 bytes (palettes)
 WaterSpriteRacketRewardScenePalettes1:

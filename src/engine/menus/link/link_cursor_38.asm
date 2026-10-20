@@ -107,12 +107,12 @@ InitLinkMatchCharsFromSelection:
 	and $81 ; $6aab
 	ld b, a ; $6aad
 	ld c, $00 ; $6aae
-	farcall InitCa00RecordFromCharId ; $6ab0
+	farcall InitMatchRecordFromCharId ; $6ab0
 	jr .slot2 ; $6ab3
 .slot1Created:
 	ld b, a ; $6ab5
 	ld c, $00 ; $6ab6
-	farcall InitCa00RecordFromCharId ; $6ab8
+	farcall InitMatchRecordFromCharId ; $6ab8
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $6abb
 	cp $ff ; $6abe
@@ -128,12 +128,12 @@ InitLinkMatchCharsFromSelection:
 	and $81 ; $6ad0
 	ld b, a ; $6ad2
 	ld c, $01 ; $6ad3
-	farcall InitCa00RecordFromCharId ; $6ad5
+	farcall InitMatchRecordFromCharId ; $6ad5
 	jr .slot3 ; $6ad8
 .slot2Created:
 	ld b, a ; $6ada
 	ld c, $01 ; $6adb
-	farcall InitCa00RecordFromCharId ; $6add
+	farcall InitMatchRecordFromCharId ; $6add
 .slot3:
 	jr .applySettings ; $6ae0
 .slot3Entry:
@@ -151,12 +151,12 @@ InitLinkMatchCharsFromSelection:
 	and $81 ; $6af7
 	ld b, a ; $6af9
 	ld c, $02 ; $6afa
-	farcall InitCa00RecordFromCharId ; $6afc
+	farcall InitMatchRecordFromCharId ; $6afc
 	jr .slot4 ; $6aff
 .slot3Created:
 	ld b, a ; $6b01
 	ld c, $02 ; $6b02
-	farcall InitCa00RecordFromCharId ; $6b04
+	farcall InitMatchRecordFromCharId ; $6b04
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $6b07
 	cp $ff ; $6b0a
@@ -172,12 +172,12 @@ InitLinkMatchCharsFromSelection:
 	and $81 ; $6b1c
 	ld b, a ; $6b1e
 	ld c, $03 ; $6b1f
-	farcall InitCa00RecordFromCharId ; $6b21
+	farcall InitMatchRecordFromCharId ; $6b21
 	jr .applySettings ; $6b24
 .slot4Created:
 	ld b, a ; $6b26
 	ld c, $03 ; $6b27
-	farcall InitCa00RecordFromCharId ; $6b29
+	farcall InitMatchRecordFromCharId ; $6b29
 .applySettings:
 	pop_wram_bank ; $6b2c
 	ret ; $6b31

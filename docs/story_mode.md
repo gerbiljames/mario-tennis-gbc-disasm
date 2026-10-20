@@ -624,7 +624,7 @@ with one set of two games.
 (`$0a:$49aa`) and `RunMatch`; on return a save-and-quit saves and goes to the
 main menu, otherwise the caller's cutscene continues.
 `AssignStoryMatchCharacters` fills the four on-court records via
-`InitCa00RecordFromCharId`: selectors `$80`/`$81` copy the story main/partner
+`InitMatchRecordFromCharId`: selectors `$80`/`$81` copy the story main/partner
 record, the opponent uses its character id, and its doubles partner comes
 from `DoublesPartnerTable_0a` (`$0a:$49d9`) by opponent id.
 `RestoreOverworldAfterMatch` (`$0a:$4991`) restores palettes and menu font.
@@ -664,7 +664,7 @@ montage (`PlayScrollingStoryCutscene`).
 | --- | --- |
 | `$c900` / `$c940` | live story main character / partner — `GetPlayerRecordPtr` (`$02:$4206`): `$c900` for selector 0, else `$c940` |
 | `$c800` / `$c840` | a mirror of that pair, kept in step by a 128-byte copy and its own `RecomputeCharacterStats` (`$02:$4795`-`$47c2`) after an Iron racket or Iron shoes are dropped from the mirror's `+$3c`; front of the saved slot image |
-| `$ca00` + slot*`$40` | the four on-court match characters — `GetCa00RecordPtr` (`$02:$420e`) |
+| `$ca00` + slot*`$40` | the four on-court match characters — `GetMatchRecordPtr` (`$02:$420e`) |
 | `StoryCharacterRecords_02` | ROM attribute database, 29 bytes per character id, copied to `+$0f`-`+$2b` |
 
 Fields (code in `src/engine/story/*_02.asm`):
@@ -693,7 +693,7 @@ Fields (code in `src/engine/story/*_02.asm`):
 level, and `LookupExpTierForChar` (`$1e:$693e`,
 `src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
 
-`InitCa00RecordFromCharId` (`$02:$4066`) zeroes the 64 bytes, then by
+`InitMatchRecordFromCharId` (`$02:$4066`) zeroes the 64 bytes, then by
 selector: `$ff` empty (`+$0b = $ff`); `$90` the "main character" placeholder;
 bit 7 set copies the story record at `$c900 + (b & 1) * $40`; bit 7 clear
 loads character id *b* from `StoryCharacterRecords_02`, fetching the name
@@ -813,7 +813,7 @@ settings); `$dc08` `wStorySceneRecord` (bank `$06`).
   Menu state is in WRAM bank `$05` over the idle far-P1 character struct
   (`wClearStatusMode` / `Doubles` / `Format` / `Class` / `Rank` / `WindowId`
   / `ResultCode`, `$df00`-`$df06`, range-scoped).
-  `TrainingCourtClearFlagListPtrs_0a` (`$0a:$4dec`) parallels the branches
+  `Unused_0a_TrainingCourtClearFlagListPtrs` (`$0a:$4dec`) parallels the branches
   but has no reader.
 * **`$ff, $c9` list endings.** The `$c9` after the `$ff` of
   `JuniorClassCourtSinglesEntryPoints_11`,

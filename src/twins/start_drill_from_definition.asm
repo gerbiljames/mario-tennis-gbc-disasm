@@ -32,7 +32,7 @@
 	add hl, bc
 	ld b, [hl]
 	ld c, $00
-	farcall InitCa00RecordFromCharId
+	farcall InitMatchRecordFromCharId
 	ld a, [wStoryMainChar]
 	ld [wMatchPlayerChar], a
 	ld a, [wMatchOpponentChar]
@@ -40,7 +40,7 @@
 	jr z, .restore
 	ld b, a
 	ld c, $02
-	farcall InitCa00RecordFromCharId
+	farcall InitMatchRecordFromCharId
 .restore:
 	pop bc
 	ld hl, DRILLDEF_HOOKS

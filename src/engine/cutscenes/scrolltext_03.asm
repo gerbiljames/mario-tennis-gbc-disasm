@@ -1,4 +1,4 @@
-TestCartIdString_03:
+Unused_03_TestCartIdString:
 	; $5957, 30 bytes (ascii)
 	db "TESTCARTIDTESTCARTIDTESTCARTID"
 Unused_03_DebugTestMinigameRecords:

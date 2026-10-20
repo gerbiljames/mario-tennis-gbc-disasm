@@ -320,7 +320,7 @@ ACozSpriteFrame54:
 ACozSpriteFrame55:
 	INCBIN "data/sprites/ACozSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-ACozSpriteFramesUnused:
+Unused_4a_ACozSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/ACozSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/ACozSpriteFrame01.bin" ; $7740, 240 bytes

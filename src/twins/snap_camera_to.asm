@@ -1,6 +1,6 @@
-; Shared by SnapCameraTo, SnapCameraTo_0d (banks $08, $0d).
+; SnapCameraTo_<bank>, one copy in each of banks $08, $0d.
 
-{TWIN_LABEL}:
+SnapCameraTo_{TWIN}:
 	ld c, l
 	ld b, h
 	ld hl, wMatchCameraX

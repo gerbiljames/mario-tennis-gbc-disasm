@@ -312,7 +312,7 @@ story/TwinkleObjGfx.bin 053580 100 gfx
 story/TwinkleObjPalette_14.asm 053680 8 palettes
 story/WaterSpriteHudTiles_15.bin 0557d0 c0 gfx
 story/WaterSpriteHudPalette_15.asm 055890 8 palettes
-story/Palettes_15_0.asm 055900 10 palettes
+story/Unused_15_WaterSpriteRacketRewardPalettes.asm 055900 10 palettes
 story/WaterSpriteRacketRewardScenePalettes0.asm 055910 40 palettes
 story/WaterSpriteRacketRewardScenePalettes1.asm 055950 40 palettes
 story/WaterSpriteRacketRewardScenePalettes2.asm 055990 30 palettes
@@ -340,7 +340,7 @@ engine/menus/results/lz_MatchResultGfxC5.bin 05984d ad gfx
 engine/menus/results/lz_MatchResultGfxC6.bin 0598fa ac gfx
 engine/menus/results/lz_MatchResultGfxC7.bin 0599a6 a9 gfx
 engine/menus/results/lz_MatchResultGfxC8.bin 059a4f c0 gfx
-engine/menus/results/lz_MatchResultGfxCUnused.bin 059b0f e6 gfx
+engine/menus/results/lz_Unused_16_MatchResultGfxC.bin 059b0f e6 gfx
 engine/menus/results/lz_MatchResultGfxC9.bin 059bf5 1c gfx
 engine/menus/results/lz_WinLosePortrait0.bin 05a101 113 gfx
 engine/menus/results/lz_WinLosePortrait1.bin 05a214 101 gfx
@@ -734,38 +734,38 @@ engine/menus/char_data/lz_CharDataScreenUIPatch2Tilemap.bin 07282e 1a
 engine/menus/char_data/lz_CharDataScreenUIPatch2Attrmap.bin 072848 7
 engine/menus/char_data/lz_CharDataScreenUIPatch3Tilemap.bin 07284f 1c
 engine/menus/char_data/lz_CharDataScreenUIPatch3Attrmap.bin 07286b 7
-engine/menus/char_data/Unused_1c_ShiftGfx00.bin 072880 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx01.bin 0728c0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx02.bin 072900 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx03.bin 072940 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx04.bin 072980 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx05.bin 0729c0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx06.bin 072a00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx07.bin 072a40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx08.bin 072a80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx09.bin 072ac0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx10.bin 072b00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx11.bin 072b40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx12.bin 072b80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx13.bin 072bc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx14.bin 072c00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx15.bin 072c40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx16.bin 072c80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx17.bin 072cc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx18.bin 072d00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx19.bin 072d40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx20.bin 072d80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx21.bin 072dc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx22.bin 072e00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx23.bin 072e40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx24.bin 072e80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx25.bin 072ec0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx26.bin 072f00 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx27.bin 072f40 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx28.bin 072f80 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx29.bin 072fc0 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx30.bin 073000 40 gfx
-engine/menus/char_data/Unused_1c_ShiftGfx31.bin 073040 40 gfx
+engine/menus/char_data/CharDataShiftGfx00.bin 072880 40 gfx
+engine/menus/char_data/CharDataShiftGfx01.bin 0728c0 40 gfx
+engine/menus/char_data/CharDataShiftGfx02.bin 072900 40 gfx
+engine/menus/char_data/CharDataShiftGfx03.bin 072940 40 gfx
+engine/menus/char_data/CharDataShiftGfx04.bin 072980 40 gfx
+engine/menus/char_data/CharDataShiftGfx05.bin 0729c0 40 gfx
+engine/menus/char_data/CharDataShiftGfx06.bin 072a00 40 gfx
+engine/menus/char_data/CharDataShiftGfx07.bin 072a40 40 gfx
+engine/menus/char_data/CharDataShiftGfx08.bin 072a80 40 gfx
+engine/menus/char_data/CharDataShiftGfx09.bin 072ac0 40 gfx
+engine/menus/char_data/CharDataShiftGfx10.bin 072b00 40 gfx
+engine/menus/char_data/CharDataShiftGfx11.bin 072b40 40 gfx
+engine/menus/char_data/CharDataShiftGfx12.bin 072b80 40 gfx
+engine/menus/char_data/CharDataShiftGfx13.bin 072bc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx14.bin 072c00 40 gfx
+engine/menus/char_data/CharDataShiftGfx15.bin 072c40 40 gfx
+engine/menus/char_data/CharDataShiftGfx16.bin 072c80 40 gfx
+engine/menus/char_data/CharDataShiftGfx17.bin 072cc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx18.bin 072d00 40 gfx
+engine/menus/char_data/CharDataShiftGfx19.bin 072d40 40 gfx
+engine/menus/char_data/CharDataShiftGfx20.bin 072d80 40 gfx
+engine/menus/char_data/CharDataShiftGfx21.bin 072dc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx22.bin 072e00 40 gfx
+engine/menus/char_data/CharDataShiftGfx23.bin 072e40 40 gfx
+engine/menus/char_data/CharDataShiftGfx24.bin 072e80 40 gfx
+engine/menus/char_data/CharDataShiftGfx25.bin 072ec0 40 gfx
+engine/menus/char_data/CharDataShiftGfx26.bin 072f00 40 gfx
+engine/menus/char_data/CharDataShiftGfx27.bin 072f40 40 gfx
+engine/menus/char_data/CharDataShiftGfx28.bin 072f80 40 gfx
+engine/menus/char_data/CharDataShiftGfx29.bin 072fc0 40 gfx
+engine/menus/char_data/CharDataShiftGfx30.bin 073000 40 gfx
+engine/menus/char_data/CharDataShiftGfx31.bin 073040 40 gfx
 engine/menus/char_data/lz_CharDataScreenGfx13.bin 073080 96 gfx
 engine/menus/char_data/CharDataScreenBgAndPalettes.asm 073541 40 palettes
 engine/menus/char_data/lz_CharDataScreenBgGfx.bin 073581 75e gfx
@@ -976,7 +976,7 @@ text/TextStrings_34.asm 0d0242 3901 text_pool
 text/TextStrings_35.asm 0d4220 3909 text_pool
 text/TextStrings_36.asm 0d8592 392c text_pool
 text/TextStrings_37.asm 0dc204 391a text_pool
-engine/menus/char_select/MatchTypeLabelSpriteLayouts.bin 0e0695 8d
+engine/menus/char_select/Unused_38_MatchTypeLabelSpriteLayouts.bin 0e0695 8d
 engine/menus/char_select/CharGridScreenPalettes.asm 0e107f 28 palettes
 engine/menus/char_select/lz_CharGridScreenGfx1.bin 0e10a7 4a gfx
 engine/menus/char_select/CharGridScreenGfx2.asm 0e10f1 8 palettes
@@ -1214,7 +1214,7 @@ engine/menus/court_select/lz_SavedDataSourceGfx5.bin 0fb752 b3 gfx
 engine/menus/dictionary/lz_TennisDictionaryAttrmapChar6.bin 0fc4bf 82 tilemap:32
 engine/menus/dictionary/lz_TennisDictionaryAttrmapDefault.bin 0fc541 5b tilemap:32
 engine/menus/dictionary/lz_TennisDictionaryTilemap.bin 0fc59c 16f tilemap:32
-engine/menus/dictionary/lz_TennisDictionaryTilemapAlt.bin 0fc70b a3 tilemap:32
+engine/menus/dictionary/lz_Unused_3f_TennisDictionaryTilemapAlt.bin 0fc70b a3 tilemap:32
 engine/menus/dictionary/TennisDictionaryPalettesChar6.asm 0fc7ae 48 palettes
 engine/menus/dictionary/TennisDictionaryPalettesDefault.asm 0fc7f6 48 palettes
 engine/menus/dictionary/lz_TennisDictionaryTiles8000.bin 0fc83e 11f gfx
@@ -3261,7 +3261,7 @@ sprites/WalkSprite_6a_04_Gfx02.bin 1a9c70 100 gfx:2x2
 sprites/WalkSprite_6a_04_Gfx03.bin 1a9d70 100 gfx:2x2
 sprites/WalkSprite_6a_04_Gfx04.bin 1a9e70 100 gfx:2x2
 sprites/WalkSprite_6a_04_Gfx05.bin 1a9f70 100 gfx:2x2
-engine/cutscenes/Palettes_6b_00.asm 1ac2b2 40 palettes
+engine/cutscenes/Unused_6b_IntroCutsceneState01Palettes.asm 1ac2b2 40 palettes
 engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm 1ac36f 40 palettes
 engine/cutscenes/IntroCutsceneState04InitPalettes.asm 1ac4d0 40 palettes
 engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm 1ac75a 40 palettes

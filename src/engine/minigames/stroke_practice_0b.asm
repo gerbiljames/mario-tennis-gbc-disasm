@@ -648,15 +648,15 @@ RunDoublesDrillMatch:
 	ld a, b ; $7281
 	ld [wMatchPlayerChar], a ; $7282
 	ld c, $00 ; $7285
-	farcall InitCa00RecordFromCharId ; $7287
+	farcall InitMatchRecordFromCharId ; $7287
 	ld b, CHAR_WALUIGI ; $728a
 	ld a, b ; $728c
 	ld [wMatchOpponentChar], a ; $728d
 	ld c, $02 ; $7290
-	farcall InitCa00RecordFromCharId ; $7292
+	farcall InitMatchRecordFromCharId ; $7292
 	ld b, CHAR_WARIO ; $7295
 	ld c, $03 ; $7297
-	farcall InitCa00RecordFromCharId ; $7299
+	farcall InitMatchRecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a ; $729f
 	ld_hl_indexed TwoOnOneLevelSettingsPtrs ; $72a0

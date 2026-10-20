@@ -1,4 +1,4 @@
-ActorScript_27_20:
+Unused_27_ActorScriptWalkTo27x19:
 	; $6b94, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
@@ -8,7 +8,7 @@ ActorScript_27_20:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_halt
-ActorScript_27_21:
+Unused_27_ActorScriptWalkTo37x9:
 	; $6ba8, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
@@ -20,7 +20,7 @@ ActorScript_27_21:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-ActorScript_27_22:
+Unused_27_ActorScriptWalkTo27x21:
 	; $6bc2, 20 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move
@@ -30,7 +30,7 @@ ActorScript_27_22:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
-ActorScript_27_23:
+Unused_27_ActorScriptWalkTo37x11:
 	; $6bd6, 26 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_wait_move

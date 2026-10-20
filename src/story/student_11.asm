@@ -384,7 +384,7 @@ FollowGuideIntoAcademy:
 	script_fade_out 4 ; $4fbc
 	call WaitFadeEnd ; $4fc1
 	ret ; $4fc4
-AcademyArrivalInitScriptActorListEnd_11:
+Unused_11_AcademyArrivalActorListTail:
 	; $4fc5, 10 bytes (bytes:10)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
 AcademyArrivalInitScript_11.scriptRespawnLocationActors:

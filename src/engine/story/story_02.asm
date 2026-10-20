@@ -25,11 +25,11 @@ Unused_02_ValidateN64TransferRecord:
 .returnZero:
 	xor a ; $4064
 	ret ; $4065
-InitCa00RecordFromCharId:
+InitMatchRecordFromCharId:
 	ld a, b ; $4066
 	push af ; $4067
 	ld a, c ; $4068
-	call GetCa00RecordPtr ; $4069
+	call GetMatchRecordPtr ; $4069
 	ld l, c ; $406c
 	ld h, b ; $406d
 	pop af ; $406e
@@ -193,7 +193,7 @@ GetPlayerRecordPtr:
 	ret z ; $420a
 	ld c, $40 ; $420b
 	ret ; $420d
-GetCa00RecordPtr:
+GetMatchRecordPtr:
 	and $03 ; $420e
 	swap a ; $4210
 	add a ; $4212

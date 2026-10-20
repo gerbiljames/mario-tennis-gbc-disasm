@@ -320,7 +320,7 @@ AllieSpriteFrame54:
 AllieSpriteFrame55:
 	INCBIN "data/sprites/AllieSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-AllieSpriteFramesUnused:
+Unused_4c_AllieSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/AllieSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/AllieSpriteFrame01.bin" ; $7740, 240 bytes

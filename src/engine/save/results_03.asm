@@ -358,7 +358,7 @@ SaveResultSavedString_03:
 SaveResultDeletedString_03:
 	; $54d4, 12 bytes (ascii)
 	db "DELETED    ", $00
-SaveResultBlankString_03:
+Unused_03_SaveResultBlankString:
 	; $54e0, 8 bytes (ascii)
 	db "      ", $00, $00
 Unused_03_ByteRamp:
@@ -366,7 +366,7 @@ Unused_03_ByteRamp:
 	db $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d ; 0x00
 	; $54f5, 8 bytes (fill)
 	ds 8, $00
-MarioGolfSignature_03:
+Unused_03_MarioGolfSignature:
 	; $54fd, 16 bytes (ascii)
 	db "MARIO GOLF GB CH"
 RestoreStoryBlockFromBackup:

@@ -389,7 +389,7 @@ MarkOwnedRackets:
 	ld a, $02 ; $5796
 	ld [hl], a ; $5798
 	ret ; $5799
-Unused_3e_0:
+Unused_3e_RacketOwnedMapInit:
 	; $579a, 8 bytes (bytes:8)
 	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 RacketItemTiles_3e:
@@ -430,6 +430,6 @@ MarkOwnedShoes:
 	ld a, $02 ; $57e6
 	ld [hl], a ; $57e8
 	ret ; $57e9
-Unused_3e_1:
+Unused_3e_ShoeOwnedMapInit:
 	; $57ea, 8 bytes (bytes:8)
 	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00

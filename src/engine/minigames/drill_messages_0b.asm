@@ -16,7 +16,7 @@ StrokePracticePointTable:
 	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 3
 	; $4341, 1 bytes (fill)
 	ds 1, $ff
-TargetPositions_0b_0:
+Unused_0b_TargetPositions16:
 	; $4342, 64 bytes (records:4)
 ; 16 records x 4 bytes
 	dw $fe40, $fd40 ; record 0
@@ -37,7 +37,7 @@ TargetPositions_0b_0:
 	dw $01c0, $0000 ; record 15
 	; $4382, 2 bytes (fill)
 	ds 2, $ff
-TargetPositions_0b_1:
+Unused_0b_TargetPositions8:
 	; $4384, 32 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe40, $fd40 ; record 0
@@ -99,7 +99,7 @@ PlayDrillPointEndSequence:
 LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
-	farcall InitCa00RecordFromCharId ; $4407
+	farcall InitMatchRecordFromCharId ; $4407
 	push_wram_bank WRAM_TEXT ; $440a
 	farcall LoadCharacterAttributes ; $4413
 	pop_wram_bank ; $4416
@@ -515,7 +515,7 @@ ENDC
 	dw Text_DrillCoachDoubleFaultYourPoint ; record 106
 	dw Text_DrillCoachReturnedServeEarlyYourPoint ; record 107
 	dw Text_DrillNoMessageForCase ; record 108
-Unused_0b_1:
+Unused_0b_DrillMessageTableTail:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
 QueueDrillMarker1_0b:

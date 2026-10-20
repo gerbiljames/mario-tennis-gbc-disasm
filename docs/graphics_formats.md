@@ -212,7 +212,7 @@ them); BG cells handed to text and window routines are `ld_cell de, column,
 row` (`include/macros/`). Left as numbers: a packed attribute/tile pair
 (`ld bc, $800d` for `WriteWindowCellTileAttr`), a clamped return value
 (`ld hl, $8001` in `GetTangent`, `$00:$1793`), two `ld bc, $8000` arguments
-to `InitCa00RecordFromCharId` in `LoadStorySlot`, and three `map_script` flag
+to `InitMatchRecordFromCharId` in `LoadStorySlot`, and three `map_script` flag
 conditions.
 
 ### 2.4 The two map planes
@@ -524,7 +524,7 @@ with the flag and count of a 24- or 32-pixel frame, written `frame_place -4,
 
 Each character bank's 145-slot frame table points only at `SpriteFrame00`-`55`.
 The seven 240-byte frames after `Frame55` (`$7650`-`$7cdf`,
-`<Char>SpriteFramesUnused`) are byte-identical copies of frames 00-06 in all 30
+`Unused_<bank>_<Char>SpriteFramesCopy`) are byte-identical copies of frames 00-06 in all 30
 banks, and no pointer in the ROM reaches them. The source `INCBIN`s frames 00-06
 again in their place.
 
@@ -846,7 +846,7 @@ Settled:
   47-byte unreferenced routine that resets the firework objects on a button
   press (`Unused_14_ResetFireworkObjOnButton`); `0x618ad` (bank `$18`) is six
   palettes plus three `$00` bytes padding the next blob to `$58e0`
-  (`ConfirmScreenSpritePalette1Pad`).
+  (`Padding_18_1`).
 * Object-header bytes +2/+3 are a fixed per-family constant (§4.3) that no
   loader reads.
 * The 136-byte scene-config record: only `+2`…`+5` are read. The story loader

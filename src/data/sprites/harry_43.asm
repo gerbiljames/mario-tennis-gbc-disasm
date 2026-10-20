@@ -320,7 +320,7 @@ HarrySpriteFrame54:
 HarrySpriteFrame55:
 	INCBIN "data/sprites/HarrySpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-HarrySpriteFramesUnused:
+Unused_43_HarrySpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/HarrySpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/HarrySpriteFrame01.bin" ; $7740, 240 bytes

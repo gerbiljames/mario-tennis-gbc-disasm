@@ -158,12 +158,12 @@ IntroCutsceneState10_6b:
 	dw IntroCutsceneState10Init_6b ; record 0
 	dw IntroCutsceneState10Update_6b ; record 1
 	dw IntroCutsceneState10Exit_6b ; record 2
-IntroCutsceneState11_6b:
+Unused_6b_IntroCutsceneState11:
 	; $4123, 6 bytes (records:2)
 	dw Unused_6b_IntroCutsceneState11Init ; record 0
 	dw Unused_6b_IntroCutsceneState11Update ; record 1
 	dw Unused_6b_IntroCutsceneState11Exit ; record 2
-IntroCutsceneState12_6b:
+Unused_6b_IntroCutsceneState12:
 	; $4129, 6 bytes (records:2)
 	dw Unused_6b_IntroCutsceneState12Init ; record 0
 	dw Unused_6b_IntroCutsceneState12Update ; record 1
@@ -322,8 +322,8 @@ IntroCutsceneState01Init_6b:
 	call EnableLCD ; $42a7
 	script_fade_in 64 ; $42aa
 	jp DispatchCutsceneStateInit.runUpdate ; $42af
-Palettes_6b_00:
-	INCLUDE "data/engine/cutscenes/Palettes_6b_00.asm" ; $42b2, 64 bytes (palettes)
+Unused_6b_IntroCutsceneState01Palettes:
+	INCLUDE "data/engine/cutscenes/Unused_6b_IntroCutsceneState01Palettes.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5

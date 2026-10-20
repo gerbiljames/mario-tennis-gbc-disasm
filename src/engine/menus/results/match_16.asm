@@ -118,8 +118,8 @@ MatchResultGfxC7:
 	INCBIN "data/engine/menus/results/lz_MatchResultGfxC7.bin" ; $59a6, 169 bytes
 MatchResultGfxC8:
 	INCBIN "data/engine/menus/results/lz_MatchResultGfxC8.bin" ; $5a4f, 192 bytes
-MatchResultGfxCUnused:
-	INCBIN "data/engine/menus/results/lz_MatchResultGfxCUnused.bin" ; $5b0f, 230 bytes
+Unused_16_MatchResultGfxC:
+	INCBIN "data/engine/menus/results/lz_Unused_16_MatchResultGfxC.bin" ; $5b0f, 230 bytes
 MatchResultGfxC9:
 	INCBIN "data/engine/menus/results/lz_MatchResultGfxC9.bin" ; $5bf5, 28 bytes
 ApplyLinkRoleToWinLoseFlag:

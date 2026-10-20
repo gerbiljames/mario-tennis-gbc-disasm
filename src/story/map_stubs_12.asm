@@ -1,6 +1,5 @@
-Unclassified_12:
-	; $7a65, 3 bytes (bytes:3)
-	db $fa, $4d, $c9 ; 0x00
+Unused_12_PushPartnerGenderShortTextArg:
+	ld a, [wStoryPartnerGender] ; $7a65
 	twin push_short_text_arg, 12 ; $7a68 PushShortTextArg_12
 ActorScript_12_51:
 	; $7a89, 10 bytes (actor_script)
