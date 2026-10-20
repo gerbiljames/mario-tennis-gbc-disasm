@@ -160,9 +160,13 @@ Unused_0a_SetActorMoveTarget:
 	pop hl ; $475c
 	pop af ; $475d
 	ret ; $475e
-Unused_0a_1:
-	; $475f, 7 bytes (bytes:7)
-	db $0c, $ff, $ff, $0b, $0c, $fe, $ff ; 0x00
+Unused_0a_ActorScriptSpinForever:
+	; $475f, 3 bytes (actor_script)
+	as_jump Unused_0a_ActorScriptSpinForever
+Unused_0a_ActorScriptFollowWaypoints2:
+	; $4762, 4 bytes (actor_script)
+	as_follow_wp
+	as_jump Unused_0a_ActorScriptFollowWaypoints2
 ActorScript_0a:
 	; $4766, 6 bytes (actor_script)
 	as_halt

@@ -37,7 +37,7 @@ WalkCharsOffCourt:
 	ld a, 20 ; $6034
 	call StepMatchFrames ; $6036
 	call GetServeCameraTarget ; $6039
-	call SnapCameraTo ; $603c
+	call SnapCameraTo_08 ; $603c
 	ld hl, ParkCharOffCourt ; $603f
 	call ForEachCharBank ; $6042
 	ret ; $6045
@@ -217,7 +217,7 @@ PanCamera:
 	ret ; $6191
 ResetCameraForServe:
 	call GetServeCameraTarget ; $6192
-	call SnapCameraTo ; $6195
+	call SnapCameraTo_08 ; $6195
 	ret ; $6198
 GetServeCameraTarget:
 	ld a, [wServingCharCourtPos] ; $6199
@@ -228,7 +228,7 @@ GetServeCameraTarget:
 .done:
 	ld hl, $0000 ; $61a6
 	ret ; $61a9
-	twin_named snap_camera_to, SnapCameraTo ; $61aa
+	twin snap_camera_to, 08 ; $61aa SnapCameraTo_08
 SetCameraTarget:
 	ld c, l ; $61c9
 	ld b, h ; $61ca

@@ -1,4 +1,4 @@
-Padding_18:
+Padding_18_0:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
 	ds ALIGN[4]
@@ -289,7 +289,7 @@ LoadCharacterRecordToBuffer:
 	push bc ; $450c
 	push de ; $450d
 	push hl ; $450e
-	farcall LoadCharacterRecordToCa80 ; $450f
+	farcall LoadPlayer2MainRecord ; $450f
 	ld hl, wPlayer2MainName ; $4512
 	ld de, wCharRecordScratch ; $4515
 	ld c, wCharRecordScratch_SIZE / 16 ; $4518

@@ -54,23 +54,23 @@ RestoreOverworldAfterMatch:
 AssignStoryMatchCharacters:
 	ld b, CHAR_STORY_MAIN ; $49aa
 	ld c, $00 ; $49ac
-	farcall InitCa00RecordFromCharId ; $49ae
+	farcall InitMatchRecordFromCharId ; $49ae
 	ld a, [wMatchOpponentChar] ; $49b1
 	ld b, a ; $49b4
 	ld c, $02 ; $49b5
-	farcall InitCa00RecordFromCharId ; $49b7
+	farcall InitMatchRecordFromCharId ; $49b7
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a ; $49bd
 	jr z, .done ; $49be
 	ld b, CHAR_STORY_PARTNER ; $49c0
 	ld c, $01 ; $49c2
-	farcall InitCa00RecordFromCharId ; $49c4
+	farcall InitMatchRecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
 	ld hl, DoublesPartnerTable_0a ; $49ca
 	add_hl_a ; $49cd
 	ld b, [hl] ; $49d2
 	ld c, $03 ; $49d3
-	farcall InitCa00RecordFromCharId ; $49d5
+	farcall InitMatchRecordFromCharId ; $49d5
 .done:
 	ret ; $49d8
 DoublesPartnerTable_0a:
@@ -559,7 +559,7 @@ SetTrainingCourtClearFlags:
 	jr .setListB ; $4de9
 .done:
 	ret ; $4deb
-TrainingCourtClearFlagListPtrs_0a:
+Unused_0a_TrainingCourtClearFlagListPtrs:
 	; $4dec, 6 bytes (records:2)
 	dw $0000 ; record 0
 	dw TrainingCourtLevel1ClearFlags_0a ; record 1

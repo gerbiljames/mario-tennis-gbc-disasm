@@ -72,9 +72,10 @@ EndCutsceneScriptMode:
 	pop bc ; $4138
 	pop af ; $4139
 	ret ; $413a
-Unused_0a_0:
-	; $413b, 4 bytes (bytes:4)
-	db $0b, $0c, $fe, $ff ; 0x00
+Unused_0a_ActorScriptFollowWaypoints:
+	; $413b, 4 bytes (actor_script)
+	as_follow_wp
+	as_jump Unused_0a_ActorScriptFollowWaypoints
 WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140

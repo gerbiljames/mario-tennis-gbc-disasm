@@ -320,7 +320,7 @@ WaluigiSpriteFrame54:
 WaluigiSpriteFrame55:
 	INCBIN "data/sprites/WaluigiSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-WaluigiSpriteFramesUnused:
+Unused_51_WaluigiSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/WaluigiSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/WaluigiSpriteFrame01.bin" ; $7740, 240 bytes

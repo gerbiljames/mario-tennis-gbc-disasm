@@ -413,7 +413,7 @@ LoadTennisDictionaryScreen:
 	farcall CopyScrolledSceneTilemapToVram ; $4448
 	call EnableLCD ; $444b
 	ret ; $444e
-TennisDictionaryClearList:
+Unused_3f_TennisDictionaryClearList:
 	; $444f, 56 bytes (records:4)
 ; 14 records x 4 bytes
 	dw wShadowTilemap + 3 * TILEMAP_WIDTH + 6, $000a ; record 0
@@ -453,8 +453,8 @@ TennisDictionaryAttrmapDefault:
 	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapDefault.bin" ; $4541, 91 bytes
 TennisDictionaryTilemap:
 	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilemap.bin" ; $459c, 367 bytes
-TennisDictionaryTilemapAlt:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilemapAlt.bin" ; $470b, 163 bytes
+Unused_3f_TennisDictionaryTilemapAlt:
+	INCBIN "data/engine/menus/dictionary/lz_Unused_3f_TennisDictionaryTilemapAlt.bin" ; $470b, 163 bytes
 TennisDictionaryPalettesChar6:
 	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesChar6.asm" ; $47ae, 72 bytes (palettes)
 TennisDictionaryPalettesDefault:

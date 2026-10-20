@@ -53,11 +53,11 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 124,796 source lines of instructions and code macros (`tools/stats.py`) |
+| instructions | 124,812 source lines of instructions and code macros (`tools/stats.py`) |
 | source-spelled bytes | 914,903 bytes, 43.6% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
 | labels | 29,564: 14,410 routines and tables and 13,418 locals in ROM, 1,736 RAM names |
 | compressed graphics | 863 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 788 routines and 112 blobs nothing live reaches (`docs/unused_code.md`) |
+| `Unused_` routines | 789 routines and 154 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
@@ -144,7 +144,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
 - **Twins**: 139 live routines are instruction-identical copies (one per
   bank, mostly: `FetchText_25` / `FetchText_26`, the shot solver's helpers in
   every court bank, the menu-cursor library). All but three are assembled
-  from one of 62 shared files under `src/twins/` (275 copies, dead ones
+  from one of 90 shared files under `src/twins/` (338 copies, dead ones
   included) by a line such as `twin fetch_text, 25`, so a fix has one home
   (`docs/duplicated_code.md`).
 
@@ -249,7 +249,7 @@ nothing.
 
 ## Tools
 
-- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG, actor-slot names hold, `Unused` names match `reach.py`, `; debug warp only` entries match `routes.py`, no raw value where the variable's constant family has a name for it.
+- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG, actor-slot names hold, `Unused` names match `reach.py` and every data label nothing names is `Unused`, `; debug warp only` entries match `routes.py`, no raw value where the variable's constant family has a name for it.
 - `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.

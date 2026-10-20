@@ -108,7 +108,7 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLDEF_MODE     ; $03 -> wGameMode
 	const DRILLDEF_MATCH    ; $04 -> wCurrentMinigameStoryMatch + 1, under MATCHLIST_TRAINING
 	const DRILLDEF_BGM      ; $05 -> wMatchBGM
-def DRILLDEF_PLAYER       equ $07 ; the player's character, for InitCa00RecordFromCharId
+def DRILLDEF_PLAYER       equ $07 ; the player's character, for InitMatchRecordFromCharId
 def DRILLDEF_HOOKS        equ $08 ; word: SetModeHookTable
 def DRILLDEF_POINT_TABLE  equ $0a ; word: SetMinigamePointTable
 def DRILLDEF_INIT         equ $0c ; word: called if nonzero

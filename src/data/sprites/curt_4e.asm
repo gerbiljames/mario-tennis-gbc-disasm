@@ -320,7 +320,7 @@ CurtSpriteFrame54:
 CurtSpriteFrame55:
 	INCBIN "data/sprites/CurtSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-CurtSpriteFramesUnused:
+Unused_4e_CurtSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/CurtSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/CurtSpriteFrame01.bin" ; $7740, 240 bytes

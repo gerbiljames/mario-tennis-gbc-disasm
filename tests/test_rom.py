@@ -29,7 +29,7 @@ class Source(unittest.TestCase):
     def test_idiom_macro_sites(self):
         self.assertEqual(count(r"^\tpush_wram_bank "), 353)
         self.assertEqual(count(r"^\tpop_wram_bank"), 455)
-        self.assertEqual(count(r"^\tld_hl_indexed "), 424)
+        self.assertEqual(count(r"^\tld_hl_indexed "), 425)
         self.assertEqual(count(r"^\twait_frames "), 79)
         self.assertEqual(count(r"^\tld_story_char_field "), 114)
         self.assertEqual(count(r"^\tneg_(?:hl|de|bc)\b"), 146)
@@ -148,6 +148,27 @@ class Source(unittest.TestCase):
     def test_no_auto_names(self):
         for stem in ("Func_", "Label_", "Data_", "Lz_", "Fill_"):
             self.assertEqual(count(rf"^{stem}[0-9a-f_]+:"), 0, stem)
+        self.assertEqual(count(r"^Unclassified_\w*:"), 0)
+        self.assertEqual(count(r"^Unused_[0-9a-f]{2}_\d+:"), 0, "an Unused label named by number")
+
+    def test_doc_figures(self):
+        """The Unused and twin counts the docs quote, computed from src/."""
+        import reach
+        g = reach.graph()
+        unused = {n for n in g.labels if n.startswith("Unused")}
+        routines = len(unused & g.routines())
+        blobs = len(unused) - routines
+        files = len(list((ROOT / "src" / "twins").glob("*.asm")))
+        copies = sum(len(re.findall(r"^\ttwin\w* ", f.read_text(), re.M))
+                     for f in (ROOT / "src").rglob("*.asm") if "twins" not in f.parts)
+        for doc, quote in (
+                ("README.md", f"| `Unused_` routines | {routines} routines and {blobs} blobs "),
+                ("README.md", f"one of {files} shared files under `src/twins/` ({copies} copies"),
+                ("docs/STATUS.md", f"the {routines} routines and {blobs} blobs "),
+                ("docs/unused_code.md", f"{len(unused)} labels carry an `Unused` prefix: {routines} routines "
+                                        f"and {blobs} data blobs."),
+                ("docs/unused_code.md", f"the {blobs} unused blobs")):
+            self.assertIn(quote, (ROOT / doc).read_text(), doc)
 
     def test_unused_routine_notes(self):
         # every Unused routine with a live twin carries the note that says so

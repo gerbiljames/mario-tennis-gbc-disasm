@@ -44,20 +44,20 @@ Unused_07_RunDebugTestMatch:
 	ld [wMatchPlayerChar], a ; $5e6a
 	ld b, a ; $5e6d
 	ld c, $00 ; $5e6e
-	farcall InitCa00RecordFromCharId ; $5e70
+	farcall InitMatchRecordFromCharId ; $5e70
 	ld a, CHAR_BOWSER ; $5e73
 	ld [wMatchOpponentChar], a ; $5e75
 	ld b, a ; $5e78
 	ld c, $02 ; $5e79
-	farcall InitCa00RecordFromCharId ; $5e7b
+	farcall InitMatchRecordFromCharId ; $5e7b
 	ld a, CHAR_PEACH ; $5e7e
 	ld b, a ; $5e80
 	ld c, $01 ; $5e81
-	farcall InitCa00RecordFromCharId ; $5e83
+	farcall InitMatchRecordFromCharId ; $5e83
 	ld a, CHAR_YOSHI ; $5e86
 	ld b, a ; $5e88
 	ld c, $03 ; $5e89
-	farcall InitCa00RecordFromCharId ; $5e8b
+	farcall InitMatchRecordFromCharId ; $5e8b
 	ld a, $00 ; $5e8e
 	farcall SetStorySlotFlagB ; $5e90
 	ld a, $01 ; $5e93
@@ -182,7 +182,7 @@ Unused_07_TargetZonePointEndHook:
 	ld a, MATCHABORT_ALL ; $5f8e
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
-MinigamePointTable_07_0:
+Unused_07_MinigamePointTable1P:
 	; $5f94, 32 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
 	court_positions $00, $09, $09, $09, $00, $09, $09, $09 ; point 0
@@ -191,7 +191,7 @@ MinigamePointTable_07_0:
 	court_positions $02, $09, $09, $09, $00, $09, $09, $09 ; point 3
 	; $5fb4, 1 bytes (fill)
 	ds 1, $ff
-MinigamePointTable_07_1:
+Unused_07_MinigamePointTable2P:
 	; $5fb5, 64 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
 	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0

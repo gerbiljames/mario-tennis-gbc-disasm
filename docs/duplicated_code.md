@@ -125,7 +125,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/set_roommate_singles_no_reply_text.asm` | `SetRoommateSinglesNoReplyText_13`, `SetRoommateSinglesYesReplyText_13` | $13 |
 | `src/twins/shot_ball_path_slice.asm` | `ShotBallPathSlice`, `ShotBallPathPowerSlice` (`twin_in`) | $20, $21 |
 | `src/twins/shot_ball_path_topspin.asm` | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` (`twin_in`) | $22, $23 |
-| `src/twins/snap_camera_to.asm` | `SnapCameraTo`, `SnapCameraTo_0d` | $08, $0d |
+| `src/twins/snap_camera_to.asm` | `SnapCameraTo_<bank>` | $08, $0d |
 | `src/twins/start_drill_from_definition.asm` | `StartDrillFromDefinition`, `InitMinigameFromConfig` | $0b, $0d |
 | `src/twins/stroke_practice1_cases2.asm` | `StrokePractice1Cases2`, `StrokePractice3Cases2` | $0b |
 | `src/twins/stroke_practice1_evaluate_result.asm` | `StrokePractice1EvaluateResult`, `StrokePractice3EvaluateResult` | $0b |
@@ -202,7 +202,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 16 | $24, $2c | `SetBallVelocityFromEntry4_*` |
 | 2 | 11 | $20, $21 | `ShotBallPathSlice`, `ShotBallPathPowerSlice` |
 | 2 | 11 | $22, $23 | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` |
-| 2 | 21 | $08, $0d | `SnapCameraTo`, `SnapCameraTo_0d` |
+| 2 | 21 | $08, $0d | `SnapCameraTo_08`, `SnapCameraTo_0d` |
 | 2 | 64 | $0b, $0d | `StartDrillFromDefinition`, `InitMinigameFromConfig` |
 | 2 | 29 | $0b | `StrokePractice1Cases2`, `StrokePractice3Cases2` |
 | 2 | 34 | $0b | `StrokePractice1EvaluateResult`, `StrokePractice3EvaluateResult` |

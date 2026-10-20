@@ -320,7 +320,7 @@ ScoreBallHit:
 	ld [wMinigameHitScored], a ; $57c5
 	sound SFX_THUD ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
-	ld_de_indexed Unused_0d_BitMaskTable ; $57cd
+	ld_de_indexed BooBlastStreakPoints ; $57cd
 	ld a, [de] ; $57d4
 	ld hl, $0001 ; $57d5
 	call MulHLByA ; $57d8
@@ -339,7 +339,7 @@ ScoreBallHit:
 	ld [wPointOutcome], a ; $57f1
 .done:
 	ret ; $57f4
-Unused_0d_BitMaskTable:
+BooBlastStreakPoints:
 	; $57f5, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawBooBlastTargetSprite:

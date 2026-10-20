@@ -48,6 +48,9 @@ after a real defect broke it:
             once had no PNG)
   reach     a routine is named Unused exactly when nothing reachable from
             the reset, interrupt and rst vectors reaches it (tools/reach.py)
+  unnamed   a data label no other label names is Unused_ (a slot-table
+            row, padding and the few the hardware or a raw pointer finds
+            are listed in tools/reach.py); routines are reach's
   slots     every ACTOR_<list>_<object> name a story script uses holds that
             actor in every map_actor list tools/actorslots.py finds can be
             active at that line (a name is a row number, so reordering or
@@ -967,6 +970,7 @@ def main():
         "tilemap": check_tilemaps(manifest, fail),
         "slots": actorslots.check(fail),
         "reach": reach.check(fail),
+        "unnamed": reach.check_unnamed(fail),
         "entries": routes.check(fail),
         "raw-ids": check_raw_ids(fail),
     }

@@ -615,7 +615,7 @@ CharDataScreenAnimTask:
 	and $0f ; $461b
 	rlca ; $461d
 	push af ; $461e
-	ld_hl_indexed Unused_1c_0 ; $461f
+	ld_hl_indexed CharDataShiftGfxFramesA ; $461f
 	ld a, [hl+] ; $4626
 	ld h, [hl] ; $4627
 	ld l, a ; $4628
@@ -630,7 +630,7 @@ CharDataScreenAnimTask:
 	ld c, 2 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
-	ld_hl_indexed CharDataScreenAnimTask_CharDataFlushChunkTable ; $4643
+	ld_hl_indexed CharDataShiftGfxFramesB ; $4643
 	ld a, [hl+] ; $464a
 	ld h, [hl] ; $464b
 	ld l, a ; $464c

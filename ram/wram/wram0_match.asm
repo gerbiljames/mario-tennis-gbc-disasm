@@ -96,13 +96,13 @@ wShotAimAngle:: dw
 ; [16-bit] Base lateral aim spread for a rally shot's target, set at match init: $0220 singles, $0320 doubles. ComputeAimBaseOffset returns (this + |wCharPosDepth|/8) scaled by the character's aim stat $df69, which ComputeShotTargetX adds to or subtracts from wBallX before clamping
 wAimSpreadBase:: dw
 
-; [16-bit] Match camera current X (projected space). SnapCameraTo sets it with the target; UpdateMatchCamera eases it toward wMatchCameraTargetX and derives wCameraOffsetX from it
+; [16-bit] Match camera current X (projected space). SnapCameraTo_08 sets it with the target; UpdateMatchCamera eases it toward wMatchCameraTargetX and derives wCameraOffsetX from it
 wMatchCameraX:: dw
 
 ; [16-bit] Match camera current Y (projected space); eased toward wMatchCameraTargetY, shifted into wCameraOffsetY
 wMatchCameraY:: dw
 
-; [16-bit] Match camera target X, written by SetCameraTarget and SnapCameraTo (and bank $0d's SnapCameraTo_0d), and every frame from wBallGroundProjX while wCameraFollowBall is set. UpdateMatchCamera steps wMatchCameraX toward it by $0040, snapping on overshoot
+; [16-bit] Match camera target X, written by SetCameraTarget and SnapCameraTo_08 (and bank $0d's SnapCameraTo_0d), and every frame from wBallGroundProjX while wCameraFollowBall is set. UpdateMatchCamera steps wMatchCameraX toward it by $0040, snapping on overshoot
 wMatchCameraTargetX:: dw
 
 ; [16-bit] Match camera target Y; same writers and stepping as wMatchCameraTargetX
@@ -352,7 +352,7 @@ wMatchExitRequest:: db
 ; [8-bit] Set by InitViewFlipPreference when the court view is fixed instead of following the saved preference (link matches, game modes $08/$09, any minigame); the pause menus then lock the view row
 wCourtViewLocked:: db
 
-; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
+; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo_08 and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
 wCameraFollowBall:: db
 
 ; [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters

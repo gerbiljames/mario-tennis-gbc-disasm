@@ -181,7 +181,7 @@ PLUGINS = []
 # labels hooked for an event of their own (a list, talk or char record, an
 # interrupt), never logged as entered
 EVENT_LABELS = {"VBlankHandler", "LCDStatHandler", "TimerHandler", "SerialHandler",
-                "InitLocationActors", "RunNpcInteraction", "InitCa00RecordFromCharId"}
+                "InitLocationActors", "RunNpcInteraction", "InitMatchRecordFromCharId"}
 
 
 class Game:
@@ -265,7 +265,7 @@ class Game:
         add(self.sym["RunNpcInteraction"],
             lambda: self.log("talk", f"{label_at(mem[w['wStoryLocationBank']], mem[w['wMapNpcScriptsPtr']] | mem[w['wMapNpcScriptsPtr'] + 1] << 8)}"
                                      f"/{rf.A:02x}"))
-        add(self.sym["InitCa00RecordFromCharId"], lambda: self.log("char", f"{rf.B:02x}"))
+        add(self.sym["InitMatchRecordFromCharId"], lambda: self.log("char", f"{rf.B:02x}"))
         self.sync_points = set(hooks)
         self.names = {}
         for name in code_labels():

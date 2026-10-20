@@ -87,7 +87,7 @@ TestStorySlotFlagA:
 .notSet:
 	ld a, $00 ; $4d26
 	ret ; $4d28
-; The gate on awarding EXP: Unused_02_AddExpToCa00RecordChecked calls it and returns on
+; The gate on awarding EXP: Unused_02_AddExpToMatchRecordChecked calls it and returns on
 ; z. It cannot return z -- `xor a` / `dec a` sets the flags from $ff and the
 ; following `ld a, c` restores the caller's a without touching them -- so the
 ; gate always passes and the award always happens.
@@ -143,8 +143,8 @@ Compare24Bit:
 	sbc [hl] ; $4d5d
 	bit 7, a ; $4d5e
 	ret ; $4d60
-Unused_02_ClearCa00RecordExp:
-	call GetCa00RecordPtr ; $4d61
+Unused_02_ClearMatchRecordExp:
+	call GetMatchRecordPtr ; $4d61
 	ld hl, CHARREC_EXP ; $4d64
 	add hl, bc ; $4d67
 	xor a ; $4d68
@@ -152,13 +152,13 @@ Unused_02_ClearCa00RecordExp:
 	ld [hl+], a ; $4d6a
 	ld [hl+], a ; $4d6b
 	ret ; $4d6c
-Unused_02_AddExpToCa00RecordChecked:
+Unused_02_AddExpToMatchRecordChecked:
 	call Unused_02_CheckExpAwardAllowed ; $4d6d
 	ret z ; $4d70
-Unused_02_AddExpToCa00RecordHooked:
+Unused_02_AddExpToMatchRecordHooked:
 	call Unused_02_StubNop ; $4d71
-Unused_02_AddExpToCa00Record:
-	call GetCa00RecordPtr ; $4d74
+Unused_02_AddExpToMatchRecord:
+	call GetMatchRecordPtr ; $4d74
 	ld hl, CHARREC_EXP ; $4d77
 	add hl, bc ; $4d7a
 	jp AddExpCapped ; $4d7b

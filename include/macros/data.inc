@@ -29,7 +29,7 @@ EXPORT SCREENASSET_\1
 	dslot \2, \3, \4, \5
 ENDM
 
-; One StoryCharacterRecords_02 row: the 29 bytes InitCa00RecordFromCharId
+; One StoryCharacterRecords_02 row: the 29 bytes InitMatchRecordFromCharId
 ; copies into a character record at +$0f-+$2b and LoadCharacterAttributes
 ; turns into the wChar*/wAi* fields (docs/match_engine.md "Character stats
 ; into the engine").

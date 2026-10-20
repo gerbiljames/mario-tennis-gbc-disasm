@@ -1285,7 +1285,7 @@ Partner, Partner — not monotonic):
 | 2 | `$06` | `$ca40` — player 1 partner |
 | 3 | `$07` | `$cac0` — player 2 partner |
 
-`InitCa00RecordFromCharId` (`$02:$4066`) fills a slot:
+`InitMatchRecordFromCharId` (`$02:$4066`) fills a slot:
 
 - **Roster character** (id bit 7 clear): 29 bytes from
   `StoryCharacterRecords_02` (`$02:$52cf`, 100 `char_stats_row` rows) into offset

@@ -301,8 +301,8 @@ Unused_38_RefreshMatchTypeLabelRow:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $468f
 	call QueueVRAMCopy ; $4691
 	ret ; $4694
-MatchTypeLabelSpriteLayouts:
-	INCBIN "data/engine/menus/char_select/MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
+Unused_38_MatchTypeLabelSpriteLayouts:
+	INCBIN "data/engine/menus/char_select/Unused_38_MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
 Unused_38_DrawMatchTypeOptionLabel:
 	wram_bank WRAM_SCREEN ; $4722
 	ld c, $01 ; $4728

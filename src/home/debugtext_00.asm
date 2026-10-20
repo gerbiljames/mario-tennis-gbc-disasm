@@ -118,7 +118,7 @@ PrintString:
 	ldh [hDebugTextDirty], a ; $1921
 	pop af ; $1923
 	ret ; $1924
-HexDigits:
+Unused_00_HexDigits:
 	; $1925, 16 bytes (bytes:16)
 	db $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $41, $42, $43, $44, $45, $46 ; 0x00
 FormatHexWord:

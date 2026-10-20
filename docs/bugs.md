@@ -613,12 +613,12 @@ at worst unwinds one level early.
 ### Story character record `+$2f`
 
 Three writes put a constant into byte `+$2f` of the `$40`-byte character
-record: `InitCa00RecordFromCharId` writes `$03` on its main-character path
+record: `InitMatchRecordFromCharId` writes `$03` on its main-character path
 (`$02:$40b2`) and `$02` on its roster path when bit 6 of the id is set
 (`$4117`), and the unreachable `Unused_02_LoadMainCharacterFromRoster` writes
 `$00` (`$4465`). No code reads `+$2f` (nor `+$3d`-`+$3f`), and poisoning it
 changed nothing; it is a record-type tag nothing consults
-(`CHARREC_BUILD_KIND`). `+$2b` is live: `InitCa00RecordFromCharId` copies it
+(`CHARREC_BUILD_KIND`). `+$2b` is live: `InitMatchRecordFromCharId` copies it
 from the roster row and `LoadCharacterAttributes` adds it to Speed to pick the
 shot-placement row (`CHARREC_SPEED_BONUS`).
 
@@ -773,7 +773,7 @@ are named for the body, with the leading `ret` recorded in the note:
 The 58 routines named `StubNop` (most of them `Unused_<bank>_StubNop*`) have a
 bare `ret` for a body, which the name describes.
 
-`Unused_02_AddExpToCa00RecordChecked` calls `Unused_02_CheckExpAwardAllowed`
+`Unused_02_AddExpToMatchRecordChecked` calls `Unused_02_CheckExpAwardAllowed`
 and returns on z, but it cannot return z: `xor a` / `dec a` sets the flags from
 `$ff` and the following `ld a, c` restores the caller's `a` without touching
 them. The gate always passes, but its caller is itself unreachable. The

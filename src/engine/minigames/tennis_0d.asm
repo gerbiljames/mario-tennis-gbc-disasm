@@ -66,7 +66,7 @@ GetMinigameCharCoordsEntry:
 	ld l, c ; $4937
 	ld h, b ; $4938
 	ret ; $4939
-	twin_named snap_camera_to, SnapCameraTo_0d ; $493a
+	twin snap_camera_to, 0d ; $493a SnapCameraTo_0d
 MinigameConfig_TennisMachine2:
 	; $4959, 16 bytes
 	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_2, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine2, MinigamePointLayoutDuo, InitMinigame_TennisMachine2

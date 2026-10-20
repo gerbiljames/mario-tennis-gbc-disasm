@@ -29,6 +29,8 @@ check.
 check` holds every routine to it (`check()`): an `Unused` routine that is
 reachable, or an unreachable one that is not named so, fails. Labels inside
 a shared twin template cannot be renamed per bank and are exempt.
+`check_unnamed()` holds data to the name alone: a data label no other label
+names, live or dead, must be `Unused` unless UNNAMED_OK lists how it is found.
 """
 import argparse
 import collections
@@ -143,6 +145,7 @@ class Graph:
         # segments: (global, local or "") -> set of segment keys it reaches
         self.out = collections.defaultdict(set)
         self.sites = collections.defaultdict(list)     # (segment, target) -> [(bank index, line)]
+        self.named = set()                             # labels some other label's lines name
         self.first_is_code = {}
         for bi, (lines, _) in enumerate(self.banks):
             glob = seg = None
@@ -163,6 +166,13 @@ class Graph:
                         glob = g.group(1)
                     seg, last, dead = new, "", False
                     continue
+                code = re.sub(r'"[^"]*"', "", line.split(";")[0]).strip()
+                if code and not re.match(r"(ASSERT|DEF|PURGE)\b", code):
+                    for t in re.findall(r"\b([A-Za-z_]\w*)", code) + list(mrefs.get(code.split(" ")[0], ())):
+                        t = t[7:] if t.startswith("FarPtr_") else t
+                        t = alias.get(t, t)
+                        if t != glob:
+                            self.named.add(t)
                 if seg is None:
                     continue           # the $4000 slot table: a farptr row is not a call
                 code = line.split(";")[0].strip()
@@ -272,6 +282,20 @@ class Graph:
 
     def routines(self):
         return {n for n, c in self.first_is_code.items() if c}
+
+    def referenced(self):
+        """Labels another label's lines name (live or dead, code or data, a
+        slot row included) or code falls into."""
+        return self.named | {t for s, ts in self.out.items() for t, _ in ts if t != s[0]}
+
+
+_GRAPH = []
+
+
+def graph():
+    if not _GRAPH:
+        _GRAPH.append(Graph())
+    return _GRAPH[0]
 
 
 def constants():
@@ -401,7 +425,7 @@ def guard(lines, i, consts):
 
 
 def check(fail):
-    g = Graph()
+    g = graph()
     live = g.reach()
     for var in sorted(g.unreviewed):
         where = [f"{Path(f).relative_to(ROOT)}:{ln}" for (f, ln), *_ , v, _vals in g.data_dead()[1] if v == var]
@@ -417,6 +441,36 @@ def check(fail):
             fail("reach", f"{where}: {name} is reachable from the vectors")
         elif not name.startswith("Unused") and name not in live:
             fail("reach", f"{where}: {name} cannot be reached; name it Unused_<bank>_...")
+    return n
+
+
+# Labels no other label names that are not Unused: something finds them
+# without a name.
+UNNAMED_OK = {
+    "NintendoLogo": "the cartridge header's logo, which the boot ROM reads",
+    "SoundEnvelopes": "SoundEnvelopeTable holds its address as raw bytes",
+}
+UNNAMED_OK_PREFIXES = {
+    "DataPtr_": "a $4000 slot-table row, found by slot number",
+    "Padding_": "alignment fill",
+    "SoundTable_": "read at $4000 of the bank a sound id selects",
+}
+
+
+def check_unnamed(fail):
+    """A data label nothing names is Unused_. Routines are check()'s: a
+    routine nothing names is unreachable unless it is a vector or a twin
+    template's fall-through entry, which check() already exempts."""
+    g = graph()
+    named, rout = g.referenced(), g.routines()
+    n = 0
+    for name in sorted(g.labels - rout):
+        n += 1
+        if (name in named or name.startswith("Unused") or name in g.twin_internal or name in UNNAMED_OK
+                or name.startswith(tuple(UNNAMED_OK_PREFIXES))):
+            continue
+        where = f"{Path(g.origin[name][0]).relative_to(ROOT)}:{g.origin[name][1]}"
+        fail("unnamed", f"{where}: nothing names {name}; name it Unused_<bank>_...")
     return n
 
 

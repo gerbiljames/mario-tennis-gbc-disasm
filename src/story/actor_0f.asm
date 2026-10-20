@@ -202,7 +202,7 @@ Unused_0f_MapScriptHideLocationName:
 	xor a ; $7b88
 	ld [wStoryModeShowLocationName], a ; $7b89
 	ret ; $7b8c
-ActorScript_0f_12:
+Unused_0f_ActorScriptStudentSwings:
 	; $7b8d, 438 bytes (actor_script)
 	as_anim ANIM_WALK
 	as_target_rel 4.0, 2.0
@@ -240,7 +240,7 @@ ActorScript_0f_12:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_SWING
 	as_wait 75
-	as_jump ActorScript_0f_12
+	as_jump Unused_0f_ActorScriptStudentSwings
 	as_anim ANIM_STILL
 	as_wait 60
 .swingUpSideLoop:

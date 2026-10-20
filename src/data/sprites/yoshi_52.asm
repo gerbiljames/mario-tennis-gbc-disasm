@@ -320,7 +320,7 @@ YoshiSpriteFrame54:
 YoshiSpriteFrame55:
 	INCBIN "data/sprites/YoshiSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-YoshiSpriteFramesUnused:
+Unused_52_YoshiSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/YoshiSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/YoshiSpriteFrame01.bin" ; $7740, 240 bytes

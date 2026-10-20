@@ -320,7 +320,7 @@ SammiSpriteFrame54:
 SammiSpriteFrame55:
 	INCBIN "data/sprites/SammiSpriteFrame55.bin" ; $7560, 240 bytes
 	ds ALIGN[4]
-SammiSpriteFramesUnused:
+Unused_46_SammiSpriteFramesCopy:
 	; an unreferenced copy of frames 00-06
 	INCBIN "data/sprites/SammiSpriteFrame00.bin" ; $7650, 240 bytes
 	INCBIN "data/sprites/SammiSpriteFrame01.bin" ; $7740, 240 bytes

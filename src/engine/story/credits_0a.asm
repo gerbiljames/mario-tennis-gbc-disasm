@@ -161,7 +161,7 @@ FreezeAllActors:
 	jp nz, .actorLoop ; $6f3e
 	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
-Unused_0a_2:
-	; $6f45, 4 bytes (bytes:4)
-	db $df, $3a, $03, $c9 ; 0x00
+Unused_0a_FarcallUpdateSceneAnimation:
+	farcall UpdateSceneAnimation ; $6f45
+	ret ; $6f48
 	; $6f49, 4279 bytes fill to bank end (linker-padded)

@@ -332,7 +332,7 @@ BuildCharGridFromUnlockFlags:
 ; sitting immediately in front of that routine's own
 ; CharGridFromUnlockFlagsTable. Slots $09-$0e are zero and the rest are
 ; $01. Nothing loads its address.
-CharGridUnlockMask_38:
+Unused_38_CharGridUnlockMask:
 	; $5b6f, 36 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
