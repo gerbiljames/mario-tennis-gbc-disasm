@@ -884,7 +884,7 @@ are named for the body, with the leading `ret` recorded in the note:
 | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
 | `Unused_05_PagedMenuFrameTask` | a frame task whose body has no effect |
 
-The 58 routines named `StubNop` (most of them `Unused_<bank>_StubNop*`) have a
+The routines named `StubNop` (most of them `Unused_<bank>_StubNop*`) have a
 bare `ret` for a body, which the name describes.
 
 `Unused_02_AddExpToMatchRecordChecked` calls `Unused_02_CheckExpAwardAllowed`

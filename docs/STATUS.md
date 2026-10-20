@@ -13,10 +13,8 @@ user's `baserom.gbc` per `data.manifest`.
 
 | | |
 |---|---|
-| source-spelled bytes (`tools/stats.py`) | 915,910, 43.7% of the 2 MiB ROM; 976,782 `INCBIN`, 200,809 free |
-| instruction and code-macro lines | 124,810 |
-| labels | 29,698: ROM 14,453 global + 13,402 local, RAM 1,843; none state only an address |
-| extracted data regions | 4,275 (3,248 `INCBIN`, 1,027 generated `INCLUDE`s), 863 of them LZ streams |
+| headline counts | `tools/stats.py` |
+| labels | none state only an address |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
 
 Ids, records and layouts are checked at build time: id-indexed tables assert
@@ -24,7 +22,7 @@ their row count (`table_width` / `assert_table_length`), record layouts are
 `rsreset` / `rb` declarations and RAM structure macros (`char_record`,
 `match_stats`), enumerations are `const_def` / `const`, and code that relies
 on RAM adjacency or on an id being 0 asserts it. Routines copied into
-several banks are one file under `src/twins/` (90 families).
+several banks are one file under `src/twins/`.
 
 Everything once anonymous is classified, and the structure is rendered
 rather than binary: farcall slots, `rst` pseudo-ops, story map trees, actor
@@ -43,20 +41,20 @@ with a fork's edits under `mods/`.
 | `docs/sound_engine.md` | the sound driver and its scripts |
 | `docs/save_format.md` | the battery save and `tools/savetool.py` |
 | `docs/ram_map.md` | WRAM/HRAM, union overlays, free RAM |
-| `docs/bugs.md` | defects in the game, and the nine `make FIXES=1` fixes |
-| `docs/unused_code.md` | the 797 routines and 166 blobs nothing live reaches |
+| `docs/bugs.md` | defects in the game, and the `make FIXES=1` fixes |
+| `docs/unused_code.md` | the routines and blobs nothing live reaches |
 | `docs/duplicated_code.md` | the live routines assembled into several banks |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 
 ## What is still open
 
-* **Banked-WRAM operands:** 15 stay raw numbers, all inside `Unused_`
+* **Banked-WRAM operands:** a few stay raw numbers, all inside `Unused_`
   routines no trace can reach.
-* **Actor slots:** 32 operands on reached code stay numbers, each a slot that
+* **Actor slots:** some operands on reached code stay numbers, each a slot that
   holds different actors, or none, in the lists possible there
   (`docs/story_mode.md`).
-* **Entry and exit ids:** named per location (`ENTRY_*`, `EXIT_*`); two exit
-  requests and one exit row's entry stay numbers, having no row to name.
+* **Entry and exit ids:** named per location (`ENTRY_*`, `EXIT_*`); the exit
+  requests and exit-row entry with no row to name stay numbers.
 * **Behaviour:** the event test finds no difference between a shifted build
   and the original. Its only crashes are the Test2 debug screens' glyph
   underrun and, set apart as `FORCED`, singles states sent to the awards

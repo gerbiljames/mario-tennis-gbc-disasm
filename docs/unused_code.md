@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-963 labels carry an `Unused` prefix: 797 routines and 166 data blobs.
+An `Unused` prefix marks a routine or data blob nothing live reaches.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -33,7 +33,7 @@ data label only dead code names (`FontTiles`, read by a routine after a
 Many `Unused` routines have no reference at all: ROM0 spares
 (`Unused_00_FarCallIndexed1`-`3`, `Unused_00_FarCopyIndexed`,
 `Unused_00_AngleFromVector`, …), the save-repair block helpers, per-bank
-map-script helpers no bank calls, menu-cursor variants, 19 `ret`-only stubs,
+map-script helpers no bank calls, menu-cursor variants, `ret`-only stubs,
 and dead copies in `src/twins` groups (the trajectory helpers in banks
 `$20`-`$2c`, the menu-cursor and decimal-number copies).
 
@@ -80,12 +80,12 @@ match id word, all written through pointers.
 ## Checked at run time
 
 No `Unused` routine runs in play (one sweep artifact below) in the
-`tools/eventtest.py --coverage` sweeps (every story location under 36 story
-states, main-menu and targeted sessions, link play, damaged-save, drill-id and handler targets). The
+`tools/eventtest.py --coverage` sweeps (every story location under every story
+state, main-menu and targeted sessions, link play, damaged-save, drill-id and handler targets). The
 reverse holds too: every reachable routine has been entered, by play or, for
-the 158 nothing played into, by `tools/steer.py` forcing the branches on a
+those nothing played into, by `tools/steer.py` forcing the branches on a
 call chain down from a routine some session entered (`docs/STATUS.md` lists
-the runtime tools). Of those 158, `SeniorCourtReloadIntoVictoryScene` runs
+the runtime tools). Of those, `SeniorCourtReloadIntoVictoryScene` runs
 by entering the Senior Court by entry point `$0e`, which no `map_entry` row
 lists (the game sets it returning from a match), and two are the dead-by-data
 routines above.
@@ -176,7 +176,7 @@ contest (count task, then the GO sound), its counters two bytes lower.
 `Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** By bytes the 166 unused blobs are mostly
+**8. Data that came along.** By bytes the unused blobs are mostly
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), the Japanese font and
 window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and

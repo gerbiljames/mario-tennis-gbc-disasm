@@ -23,7 +23,7 @@ own symbols and a note naming the code that owns it. A variant's names appear
 only at sites whose scope matches: the referencing code's ROM bank and range,
 and/or the WRAM bank proven selected there (by dataflow or a traced run). So
 the same `$dxxx` offset reads as different symbols in different routines,
-and a site whose bank could not be proven keeps the number (15, all inside
+and a site whose bank could not be proven keeps the number (all such sites are inside
 `Unused_*` routines nothing reaches). The assembler accepts any variant's
 symbol anywhere, so when an edit moves an access to another owner, change the
 operand by hand; the variant notes say which one a routine may touch.
@@ -99,8 +99,7 @@ same scope as the base (`$dd1e` is `wBallHistory + 30`, `$ffd1`
 ### Reading a bank at a glance
 
 Each banked `SECTION` in `ram/*.asm` opens with a one-line-per-region
-summary, since a bank is 4 KiB of overlapping claims (bank `$03` alone has
-122 symbols across 33 variants):
+summary, since a bank is 4 KiB of overlapping claims:
 
 ```
 ; WRAMX bank 2 at a glance (ram/wram/):
@@ -215,11 +214,10 @@ poisoning every listed byte with `$5a` and playing each flow twice, poisoned
 and clean. The flows cover every story state at every location and entry
 point, the Test and Test2 maps, the main menu, exhibition matches, the Mario
 minigames, link sessions, the N64 Transfer Pak record screens, both unlock
-codes and every `NpcScripts` handler (237 flows; runs that crash, such as
+codes and every `NpcScripts` handler (runs that crash, such as
 impossible warps, are left out).
 
-**Totals: 4,408 free bytes in 103 ranges, 27 of them HRAM bytes in 9
-ranges (`ram_free.py`).** The last audit split the bytes listed then into
+`ram_free.py` prints the current totals. The last audit split the bytes listed then into
 untouched, cleared only and holding data, all explained; ranges freed since
 are not yet in the tables below. No flow reads a free byte; the only poison
 read ever seen, besides the since-declared speed bonus below, was in the

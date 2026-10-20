@@ -3,7 +3,6 @@ to have. They read `src/` as text and need no ROM. A pin here is a ratchet
 on structure that the byte compare cannot see -- an idiom written out by
 hand instead of through its macro, a raw sound id, a VRAM address as a bare
 number -- and an edit that adds or removes code moves it on purpose."""
-import hashlib
 import re
 import subprocess
 import sys
@@ -11,8 +10,6 @@ import unittest
 
 from tests.helpers import ROOT, needs_rom
 from banksrc import bank_text, holders
-
-USA_SHA1 = "414ba58340a27fc27b127bc01455b32764151ff0"
 
 # each bank as one text, its fragment files expanded in place
 SRC = [(h.name, bank_text(h)) for h in holders()]
@@ -255,91 +252,6 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^Unclassified_\w*:"), 0)
         self.assertEqual(count(r"^Unused_[0-9a-f]{2}_\d+:"), 0, "an Unused label named by number")
 
-    def test_doc_figures(self):
-        """The Unused and twin counts the docs quote, computed from src/."""
-        import reach
-        g = reach.graph()
-        unused = {n for n in g.labels if n.startswith("Unused")}
-        routines = len(unused & g.routines())
-        blobs = len(unused) - routines
-        files = len(list((ROOT / "src" / "twins").glob("*.asm")))
-        copies = sum(len(re.findall(r"^\ttwin\w* ", f.read_text(), re.M))
-                     for f in (ROOT / "src").rglob("*.asm") if "twins" not in f.parts)
-        for doc, quote in (
-                ("README.md", f"| `Unused_` routines | {routines} routines and {blobs} blobs "),
-                ("README.md", f"one of {files} shared files under `src/twins/` ({copies} copies"),
-                ("docs/STATUS.md", f"the {routines} routines and {blobs} blobs "),
-                ("docs/unused_code.md", f"{len(unused)} labels carry an `Unused` prefix: {routines} routines "
-                                        f"and {blobs} data blobs."),
-                ("docs/unused_code.md", f"the {blobs} unused blobs")):
-            self.assertIn(quote, (ROOT / doc).read_text(), doc)
-
-    def test_doc_drifting_figures(self):
-        """Counts docs quote that edits elsewhere keep moving."""
-        def text(doc):
-            return re.sub(r"\s+", " ", (ROOT / doc).read_text())
-        sys.path.insert(0, str(ROOT / "tools"))
-        import ram_free
-        ranges = ram_free.free_ranges()
-        hram = [r for r in ranges if r[0] == "h"]
-        self.assertIn(f"**Totals: {sum(e - s for _, _, s, e in ranges):,} free bytes in "
-                      f"{len(ranges)} ranges, {sum(e - s for _, _, s, e in hram)} of them HRAM "
-                      f"bytes in {len(hram)} ranges", text("docs/ram_map.md"))
-        regions = {k: count(rf"^\t; \$[0-9a-f]+, \d+ bytes \({k}\)$")
-                   + count(rf"^\t\w+ \".*\" ; \$[0-9a-f]+, \d+ bytes \({k}\)$")
-                   for k in ("sprite_template", "actor_script")}
-        self.assertIn(f"e.g. {regions['sprite_template']} `sprite_template` and "
-                      f"{regions['actor_script']} `actor_script` regions",
-                      text("docs/graphics_formats.md"))
-        twins = {}
-        for src in (ROOT / "src").rglob("*.asm"):
-            for f, name in re.findall(r"^\ttwin\w* (\w+), (\w+)", src.read_text(), re.M):
-                twins.setdefault(f, []).append(name)
-        dead = sorted(f for f, names in twins.items() if all(n.startswith("Unused") for n in names))
-        m = re.search(r"included too\. (.*?) have no live copy at all", text("docs/duplicated_code.md"))
-        self.assertEqual(sorted(re.findall(r"`(\w+)`", m.group(1))), dead)
-        flags = len(re.findall(r"^def FLAG_\w+\s+equ", (ROOT / "include" / "flag_constants.inc").read_text(), re.M))
-        saveflags = sum(len(re.findall(r"^def SAVEFLAG_\w+\s+equ", f.read_text(), re.M))
-                        for f in (ROOT / "include" / "constants").glob("*.inc"))
-        self.assertIn(f"| names | {flags} `FLAG_*` in `include/flag_constants.inc` | {saveflags} `SAVEFLAG_*` ",
-                      (ROOT / "docs" / "story_mode.md").read_text())
-        gfx, ui, ram = text("docs/graphics_formats.md"), text("docs/screens_and_ui.md"), text("docs/ram_map.md")
-        mid, fresh = re.search(r"(\d+) mid-group streams all pad with \$00, (\d+) fresh-group",
-                               text("tools/lz.py")).groups()
-        self.assertIn(f"all {mid} mid-group streams pad with `$00`; the {fresh} fresh-group", gfx)
-        vram = count(r"^\tcall QueueVRAMCopy\b")
-        self.assertIn(f"{vram} `call` sites", gfx)
-        self.assertIn(f"`src/home/memory_00.asm`, {vram} call sites", ui)
-        self.assertIn(f"({count(r'^\tcall AdvanceFrame\b')} call sites)", ui)
-        self.assertIn(f"`src/` calls `DecompressData` from {count(r'^\tcall DecompressData\b')} sites and "
-                      f"`DecompressDataFromBank` from {count(r'^\tcall DecompressDataFromBank\b')}.", gfx)
-        self.assertIn(f"There are {regions['sprite_template']} templates.", gfx)
-        coords = len(re.findall(r"^def Text_[0-9a-f]{2}_\d+\b", (ROOT / "include" / "text_ids.inc").read_text(), re.M))
-        self.assertIn(f"hand-maintained: {coords:,} `def Text_<bank>_<index>", gfx)
-        rows = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
-                if l.strip() and not l.startswith("#")]
-        tilemaps = sum(1 for f in rows if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin"))
-        self.assertIn(f"The {tilemaps} blobs `data.manifest` tags `tilemap:W`", gfx)
-        pals = [int(f[2], 16) for f in rows if len(f) > 3 and f[3] == "palettes"]
-        self.assertIn(f"{len(pals)} regions are `palettes`.", gfx)
-        self.assertIn(f"Sizes ({sum(pals):,} bytes over {len(pals)} regions): {pals.count(64)} full 64-byte "
-                      f"sets, {pals.count(8)} single palettes, {pals.count(32)} 32-byte half-sets, "
-                      f"{pals.count(128)} of 128 bytes", gfx)
-        unprovable = 0
-        for _, src in SRC:
-            scope = ""
-            for line in src.splitlines():
-                m = re.match(r"([A-Za-z_]\w*):", line)
-                if m:
-                    scope = m.group(1)
-                elif scope.startswith("Unused") and re.match(r"\t(?!d[bwl] )[a-z]", line):
-                    unprovable += len(re.findall(r"\$[cd][0-9a-f]{3}\b", line.split(";")[0]))
-        self.assertIn(f"keeps the number ({unprovable}, all inside `Unused_*` routines", ram)
-        self.assertIn(f"**Banked-WRAM operands:** {unprovable} stay raw numbers", text("docs/STATUS.md"))
-        bank3 = (ROOT / "ram" / "wram" / "wramx3.asm").read_text()
-        self.assertIn(f"{len(re.findall(r'^w\w+:', bank3, re.M))} symbols across "
-                      f"{len(re.findall(r'^\t?(?:UNION|NEXTU)$', bank3, re.M))} variants", ram)
-
     def test_mirrored_char_struct(self):
         """ram_mirrored.inc's untagged $df00 names sit where match_char_struct
         puts each bank's tagged copy, and name the same fields."""
@@ -371,7 +283,6 @@ class Manifest(unittest.TestCase):
         self.assertEqual(len(lines), 4275)
         streams = sum(1 for f in lines if "/lz_" in f[0])
         self.assertEqual(streams, 863)
-        self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
         specs = [f[3] for f in lines if len(f) > 3]
         self.assertEqual(sum(s.startswith("gfx") for s in specs), 2897)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
@@ -405,44 +316,6 @@ class Tools(unittest.TestCase):
         self.assertLessEqual(set(floors) - skipped, set(checked), r.stdout)
         for name, n in checked.items():
             self.assertGreaterEqual(n, floors.get(name, 1), f"{name} checks fewer sites")
-        rom = ROOT / "mariotennis.gbc"
-        if rom.exists() and hashlib.sha1(rom.read_bytes()).hexdigest() == USA_SHA1:
-            doc = (ROOT / "docs" / "graphics_formats.md").read_text()
-            section = doc[doc.index("### 7.5 "):doc.index("## 8. ")]
-            table = re.findall(r"^\| `([\w-]+)` \| (\d+) \|", section, re.M)
-            self.assertEqual({k: int(n) for k, n in table}, checked,
-                             "docs/graphics_formats.md section 7.5 quotes these counts")
-
-    def test_doc_counts(self):
-        """README and STATUS quote tools/stats.py; rerun it and update them."""
-        rom = ROOT / "mariotennis.gbc"
-        if not rom.exists() or hashlib.sha1(rom.read_bytes()).hexdigest() != USA_SHA1:
-            self.skipTest("the figures are the byte-perfect USA build's: run make on an unedited tree")
-        import stats
-        rom, ram = stats.labels()
-        instrs, incbin, fill = stats.source()
-        _, spelled = stats.rom_bytes(incbin, fill)
-        total = sum(rom.values()) + sum(ram.values())
-        regions = [line.split()[0] for line in (ROOT / "data.manifest").read_text().splitlines()
-                   if line.strip() and not line.startswith("#")]
-        included = sum(path.endswith(".asm") for path in regions)
-        lz = sum(path.rsplit("/", 1)[-1].startswith("lz_") for path in regions)
-        readme = (ROOT / "README.md").read_text()
-        status = (ROOT / "docs" / "STATUS.md").read_text()
-        for doc, text, quotes in (
-                ("README.md", readme, [
-                    f"| instructions | {instrs:,} ",
-                    f"| source-spelled bytes | {spelled:,} bytes, {100 * spelled / stats.ROM_SIZE:.1f}% ",
-                    f"| labels | {total:,}: {rom['global']:,} routines and tables and {rom['local']:,} locals in ROM, "
-                    f"{ram['global']:,} RAM names |"]),
-                ("docs/STATUS.md", status, [
-                    f"| instruction and code-macro lines | {instrs:,} |",
-                    f"| source-spelled bytes (`tools/stats.py`) | {spelled:,}, {100 * spelled / stats.ROM_SIZE:.1f}% ",
-                    f"| labels | {total:,}: ROM {rom['global']:,} global + {rom['local']:,} local, RAM {ram['global']:,};",
-                    f"| extracted data regions | {len(regions):,} ({len(regions) - included:,} `INCBIN`, "
-                    f"{included:,} generated `INCLUDE`s), {lz:,} of them LZ streams |"])):
-            for quote in quotes:
-                self.assertTrue(quote in text, f"{doc} does not say {quote!r}")
 
 
 if __name__ == "__main__":

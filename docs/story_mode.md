@@ -295,11 +295,11 @@ the same character under different scripts (the five seniors in all three
 Senior Court lists) or whoever plays a part (Island Open slot `$0a` is this
 round's opponent, Spike in one round and A. Coz in another) — gets a *role*
 name, `ACTOR_ROLE_<location>_<role>`, declared with its lists in
-`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Twelve roles cover 55 operands and 7
+`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`), covering operands and
 `NpcScripts` ids.
 
-The sites the tool reaches carry 5,494 slot names (row and role names,
-script operands, `NpcScripts` ids); 32 keep a number, and unreached code
+The sites the tool reaches carry slot names (row and role names,
+script operands, `NpcScripts` ids); a few keep a number, and unreached code
 keeps more. A PyBoy sweep that hooks each numbered site and records the
 installed list and the slot's object agrees with the analysis wherever it
 reached one. The numbered ones are:
@@ -554,7 +554,7 @@ player in place.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), in the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global |
 | accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 166 `FLAG_*` in `include/flag_constants.inc` | 49 `SAVEFLAG_*` in `include/constants/` |
+| names | `FLAG_*` in `include/flag_constants.inc` | `SAVEFLAG_*` in `include/constants/` |
 
 Both use one encoding: flag number = `byte * 8 + bit`; the inline operand is
 `bit << 5` then the byte index; the mask is `$80 >> bit`. `test_flag` leaves
