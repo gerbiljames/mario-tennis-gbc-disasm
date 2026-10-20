@@ -198,7 +198,7 @@ wCourtLimitX:: dw
 ; [16-bit] In-bounds depth limit, stored negated: $fb20 (-$4e0, the baseline) normally, $fd60 (-$2a0, the service line) while a serve is in flight. CheckBallOutOfBounds adds it to |wBallDepth| and sets bit 1 of the out mask on carry
 wCourtLimitDepth:: dw
 
-; [16-bit] Net height in ball-height units: $0060 in a match, $0000 in the netless solo minigames. When the ball crosses depth 0, HandleBallNetCrossing adds it to wBallHeight (negative is up); a non-negative sum means the ball clipped the net: sound $5a, bounce effect, wBallHasBouncedFlag set, depth position and velocity negated
+; [16-bit] Net height in ball-height units: $0060 in a match, $0000 in the netless solo minigames. When the ball crosses depth 0, HandleBallNetCrossing adds it to wBallHeight (negative is up); a non-negative sum means the ball clipped the net: sound $5a, bounce effect, wBallTouchedNetFlag set, depth position and velocity negated
 wNetHeight:: dw
 
 ; [16-bit] Shot solver: distance along the aim line from the ball to depth $0140 past the net, (|wBallDepth| + $0140) / sin(wShotAimAngle), from ComputeShotTrajectory. Every court bank's ApplyBallTrajectory passes it to BallTrajEntryPtr6/4 as the starting trajectory-table row
@@ -298,7 +298,7 @@ wRallyNetFrames:: db
 ; [8-bit] Rally Length; number of times the ball was hit in the span of a point
 wRallyLength:: db
 
-; [8-bit] Set to 1 by ExecuteShot, which refuses to run again while it is set. HandleBallHitEvent consumes it: increments wRallyLength, clears wBallHasBouncedFlag and wLandingMarkerActive, starts the landing marker and hit effect, updates every character's state. Cleared by ResetPointState
+; [8-bit] Set to 1 by ExecuteShot, which refuses to run again while it is set. HandleBallHitEvent consumes it: increments wRallyLength, clears wBallTouchedNetFlag and wLandingMarkerActive, starts the landing marker and hit effect, updates every character's state. Cleared by ResetPointState
 wBallHitEvent:: db
 
 ; [8-bit] Character index (0-3) of the hitter, from wCharIndex in ExecuteShot. Selects the wCharacterN stat block (index * 8) when crediting an ace/winner, its low bit gives the point outcome's side sign, and the bank $0d minigames test it for player vs machine
@@ -322,8 +322,8 @@ wBallTrailColor:: db
 ; [8-bit] wBallCourtQuadrant when the shot was struck. EvaluateBounceOutcome XORs it with the live quadrant: bit 1 = reached the other side of the net, bit 0 = changed lateral half (the serve's diagonal-box rule). The bank $0d wall-practice bounce flips bit 1 by hand
 wBallQuadrantAtHit:: db
 
-; [8-bit] Set to 1 when the ball bounces on the court (the same path fires StartBounceEffect); cleared by HandleBallHitEvent and ResetPointState. Read by EvaluateBounceOutcome, TickRallyTimers and AiTrackBallPhase
-wBallHasBouncedFlag:: db
+; [8-bit] Ball touched the net since the last strike: set to 1 only by HandleBallNetCrossing when the ball crosses depth 0 at or below net height (with SFX_NET_CORD and StartBounceEffect); cleared by HandleBallHitEvent and ResetPointState. Read by EvaluateBounceOutcome (a serve in the right box becomes a let), TickRallyTimers, AiTrackBallPhase and the drill hooks NetGamePractice2Cases1, NetGamePractice3Cases1, ServiceMatch2Cases1 and ServicePractice2Hook_Bounce
+wBallTouchedNetFlag:: db
 
 ; [8-bit] Nonzero freezes the match simulation: UpdateMatchFrame skips ClearSpriteSlots, UpdateMatchCamera, UpdateAllChars, ball events, UpdateBallVisuals, timers and the mode hook. $ff during match setup and while the pause menu is open
 wMatchSimFrozen:: db

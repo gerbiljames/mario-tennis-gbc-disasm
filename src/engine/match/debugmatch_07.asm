@@ -4,7 +4,7 @@ Unused_07_RunDebugTestMatch:
 	ld a, STORYSLOT_NONE ; $5dfe
 	ld [wCurrentStorySlot], a ; $5e00
 	ld a, $01 ; $5e03
-	ld [wKeepMatchStatsFlag], a ; $5e05
+	ld [wMatchSuspendedFlag], a ; $5e05
 	ld a, $01 ; $5e08
 	ld [wPlayer1SetsWon], a ; $5e0a
 	ld [wPlayer1GamesWon], a ; $5e0d

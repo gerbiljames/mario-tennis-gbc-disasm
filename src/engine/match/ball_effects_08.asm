@@ -670,7 +670,7 @@ HandleBallNetCrossing:
 	sound SFX_NET_CORD ; $5841
 	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
-	ld [wBallHasBouncedFlag], a ; $5848
+	ld [wBallTouchedNetFlag], a ; $5848
 	ld hl, wBallDepthFrac ; $584b
 	ASSERT wBallDepth == wBallDepthFrac + 2, "this code walks from wBallDepthFrac into wBallDepth"
 	ld a, [hl] ; $584e

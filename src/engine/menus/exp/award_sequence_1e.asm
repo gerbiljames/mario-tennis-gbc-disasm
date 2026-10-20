@@ -154,7 +154,7 @@ ProcessMatchRewards:
 	ld a, [wMatchExitRequest] ; $6534
 	or a ; $6537
 	ret nz ; $6538
-	ld a, [wKeepMatchStatsFlag] ; $6539
+	ld a, [wMatchSuspendedFlag] ; $6539
 	or a ; $653c
 	ret nz ; $653d
 	call DisableLCDSafely ; $653e

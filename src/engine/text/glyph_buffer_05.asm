@@ -437,7 +437,7 @@ UploadLastGlyphTiles:
 	ret ; $7630
 .maskSet:
 	push_wram_bank WRAM_SOUND ; $7631
-	ld a, [wKeepMatchStatsFlag] ; $763a
+	ld a, [wMatchSuspendedFlag] ; $763a
 	or a ; $763d
 	jr z, .defaultLimit ; $763e
 	ld b, $5f ; $7640

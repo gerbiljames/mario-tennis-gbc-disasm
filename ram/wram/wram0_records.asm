@@ -27,7 +27,7 @@ wSoundOptionBits:: db
 ; [8-bit] Message speed: MSGSPEED_FAST/NORMAL/SLOW in bits 0-6 (ApplyMessageSpeed). Bit 7, MSGSPEEDB_INSTANT, draws text at once whatever the speed: set by ShowLocationNamePopup, the Tennis Dictionary redraw, Unused_1a_ForceInstantMessageSpeed and ToggleCutsceneFastForward (as it clears FLAG_CUTSCENE_FAST_FORWARD), tested by ApplyMessageSpeed, FlushGlyphRow and UploadLastGlyphTiles, and cleared before saving
 wMessageSpeed:: db
 
-; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the results screen and saves the slot, and clears it with wKeepMatchStatsFlag
+; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the results screen and saves the slot, and clears it with wMatchSuspendedFlag
 wSaveAndQuitRequest:: db
 
 ; [8-bit] Game Mode
@@ -47,8 +47,8 @@ wSaveAndQuitRequest:: db
 ; See GAMEMODE_* in include/constants/. Bank $38 sets GAMEMODE_LINK_MATCH right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
 wGameMode:: db
 
-; [8-bit] Nonzero makes ResetMatchState keep the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps them); cleared after use
-wKeepMatchStatsFlag:: db
+; [8-bit] A match was suspended by Save & Quit and can be resumed; saved with the slot image. Set to 1 by MatchQuitMenu_SaveAndQuit and Unused_07_RunDebugTestMatch. While set, ResetMatchState keeps the per-character match stats (then clears it), ProcessMatchRewards gives no rewards, MatchSelectHandlersBHandler0 resumes with MatchSelectRunMatch on continue, MatchSelectHandlersBHandler3 takes the options flow, and UploadGlyphBufferQueued / UploadLastGlyphTiles clamp the glyph upload to columns $60/$5f instead of $80/$7f. Also cleared by InitDefaultMatchSettings, RunMinigameModeFlow, ConfirmDiscardSuspendedExhibMatch and the bank $0a/$10 post-match paths
+wMatchSuspendedFlag:: db
 
 ; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
 wVictoryScoreTableAlt:: db

@@ -252,7 +252,7 @@ UploadGlyphBufferQueued:
 	push af ; $77e3
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $77e4
 	wram_bank WRAM_SOUND ; $77e7
-	ld a, [wKeepMatchStatsFlag] ; $77ed
+	ld a, [wMatchSuspendedFlag] ; $77ed
 	or a ; $77f0
 	jr z, .defaultLimit ; $77f1
 	ld b, $60 ; $77f3

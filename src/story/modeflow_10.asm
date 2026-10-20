@@ -1,6 +1,6 @@
 RunMinigameModeFlow:
 	xor a ; $5216
-	ld [wKeepMatchStatsFlag], a ; $5217
+	ld [wMatchSuspendedFlag], a ; $5217
 	farcall RunMinigameSelect ; $521a
 	cp $ff ; $521d
 	jr nz, .levelMenu ; $521f
@@ -377,7 +377,7 @@ MatchSelectRunMatch:
 	jr nz, .chooseReturn ; $55da
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
 	xor a ; $55df
-	ld [wKeepMatchStatsFlag], a ; $55e0
+	ld [wMatchSuspendedFlag], a ; $55e0
 	ld b, STORYLOC_MAIN_MENU ; $55e3
 	ld c, ENTRY_MAIN_MENU_FROM_STORY ; $55e5
 	farcall SaveStoryReturnPoint ; $55e7

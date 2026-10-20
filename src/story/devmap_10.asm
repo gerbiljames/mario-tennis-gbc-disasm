@@ -438,7 +438,7 @@ MatchSelectHandlersBHandler0:
 	xor a ; $5020
 	ld [wSaveAndQuitRequest], a ; $5021
 	farcall SaveStorySlotWithTimer ; $5024
-	ld a, [wKeepMatchStatsFlag] ; $5027
+	ld a, [wMatchSuspendedFlag] ; $5027
 	or a ; $502a
 	jr z, .restoreReturnPoint ; $502b
 	jp MatchSelectRunMatch ; $502d
@@ -492,7 +492,7 @@ MatchSelectHandlersBHandler0:
 .clearMatchState:
 	xor a ; $50a4
 	ld [wSaveAndQuitRequest], a ; $50a5
-	ld [wKeepMatchStatsFlag], a ; $50a8
+	ld [wMatchSuspendedFlag], a ; $50a8
 	call RestoreGameTimer ; $50ab
 	farcall SaveStorySlotWithTimer ; $50ae
 	call GetStoryContinueDestination ; $50b1
@@ -543,7 +543,7 @@ MatchSelectHandlersBHandler3:
 	jr z, .startStory ; $5116
 	cp $ff ; $5118
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $511a
-	ld a, [wKeepMatchStatsFlag] ; $511d
+	ld a, [wMatchSuspendedFlag] ; $511d
 	or a ; $5120
 	jp nz, .optionsFlow ; $5121
 .startStory:

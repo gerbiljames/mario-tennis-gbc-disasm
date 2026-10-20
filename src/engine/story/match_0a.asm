@@ -38,7 +38,7 @@ RunStoryMatch:
 	ret ; $498b
 .matchFinished:
 	xor a ; $498c
-	ld [wKeepMatchStatsFlag], a ; $498d
+	ld [wMatchSuspendedFlag], a ; $498d
 	ret ; $4990
 RestoreOverworldAfterMatch:
 	script_fade_out 16 ; $4991

@@ -475,7 +475,7 @@ MatchQuitMenu_ReturnToGame:
 	ret ; $44b1
 MatchQuitMenu_SaveAndQuit:
 	ld a, $01 ; $44b2
-	ld [wKeepMatchStatsFlag], a ; $44b4
+	ld [wMatchSuspendedFlag], a ; $44b4
 	ld [wSaveAndQuitRequest], a ; $44b7
 	ld a, MATCHABORT_ALL ; $44ba
 	ld [wMatchAbortFlag], a ; $44bc

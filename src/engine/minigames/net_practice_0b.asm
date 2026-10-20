@@ -733,7 +733,7 @@ NetGamePractice2Cases1:
 	cp $01 ; $6072
 	ld a, $00 ; $6074
 	ret nz ; $6076
-	ld a, [wBallHasBouncedFlag] ; $6077
+	ld a, [wBallTouchedNetFlag] ; $6077
 	or a ; $607a
 	ld a, $00 ; $607b
 	ret nz ; $607d

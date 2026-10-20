@@ -525,7 +525,7 @@ def match_lost(g):
     the saved state's leftovers (a win at a stage the flags say is not won)
     send some of them through a jump table past its end."""
     for name, value in (("wMatchWinLoseFlag", WINLOSE_LOSE), ("wPointWinLoseFlag", WINLOSE_LOSE),
-                        ("wMatchExitRequest", 0), ("wPointOutcome", 0), ("wKeepMatchStatsFlag", 0)):
+                        ("wMatchExitRequest", 0), ("wPointOutcome", 0), ("wMatchSuspendedFlag", 0)):
         g.mem[g.sym[name][1]] = value
 
 

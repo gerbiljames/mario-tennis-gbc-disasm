@@ -278,7 +278,7 @@ frame, and `wBallCrossedNetFlag` is raised for that frame. Unless the
 wall-practice flag is set it then adds `wNetHeight` to `wBallHeight`; a
 non-negative sum means the ball is **at or below the net top**
 (`$08:$5836-$583f`), so it plays `SFX_NET_CORD`, starts the bounce effect, sets
-`wBallHasBouncedFlag`, quarters X velocity and reflects the depth position. Three
+`wBallTouchedNetFlag`, quarters X velocity and reflects the depth position. Three
 bands then apply (`$08:$5874-$5882`):
 
 | Contact height | Result |
@@ -287,10 +287,9 @@ bands then apply (`$08:$5874-$5882`):
 | `$58`-`$5a` | same kick from the current height, but depth velocity negated and cut to ⅛ — pops back |
 | below `$58` | depth velocity negated and cut to ⅛ — drops on the hitter's side |
 
-`wBallHasBouncedFlag` (`$c4bf`) is set only at `$08:$5848`, in that branch:
-**despite its name it means "touched the net since the last strike"**. That is
-how `EvaluateBounceOutcome`'s let rule reads, and also what `TickRallyTimers`
-(`$08:$4262`) and `AiTrackBallPhase` (`$08:$7d73`) use it for.
+`wBallTouchedNetFlag` (`$c4bf`) is set only at `$08:$5848`, in that branch.
+`EvaluateBounceOutcome`'s let rule, `TickRallyTimers` (`$08:$4262`) and
+`AiTrackBallPhase` (`$08:$7d73`) read it.
 
 **Fences.** `BounceBallOffCourtFences` (`$08:$5949`) applies the court damping
 twice and raises `wBallBounceEvent = 2`.
@@ -975,7 +974,7 @@ fall-through ladder:
 | `CheckBallOutOfBounds` reports anything | 5 `OUT` | `$ff` |
 | not the serve (`wRallyLength != 1`) | — (rally continues) | — |
 | serve did not change lateral half (`… & 1 == 0`) — wrong box | 5 `OUT` | `$ff` |
-| serve touched the net (`wBallHasBouncedFlag`), right box | 3 `LET` | `$00` |
+| serve touched the net (`wBallTouchedNetFlag`), right box | 3 `LET` | `$00` |
 
 `ApplyBallTouchOutcome` (`$08:$43e5`) sets **9** on a body hit.
 `DetectServeAceOutcome` (`$08:$4326`), inside `HandleBallHitEvent` on the second

@@ -5,7 +5,7 @@ ResetPointState:
 	ld [wRallyLength], a ; $4cc0
 	ld [wBallHitEvent], a ; $4cc3
 	ld [wBallTouchCharFlag], a ; $4cc6
-	ld [wBallHasBouncedFlag], a ; $4cc9
+	ld [wBallTouchedNetFlag], a ; $4cc9
 	ld [wServiceAceFlag], a ; $4ccc
 	ld [wReturnAceFlag], a ; $4ccf
 	ld [wLandingMarkerActive], a ; $4cd2

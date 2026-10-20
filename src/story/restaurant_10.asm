@@ -131,7 +131,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	jr z, .discarded ; $57dd
 	xor a ; $57df
 	ld [wSaveAndQuitRequest], a ; $57e0
-	ld [wKeepMatchStatsFlag], a ; $57e3
+	ld [wMatchSuspendedFlag], a ; $57e3
 	farcall WriteExhibitionSaveBlock ; $57e6
 	pop bc ; $57e9
 	pop af ; $57ea

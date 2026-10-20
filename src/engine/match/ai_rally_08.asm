@@ -125,7 +125,7 @@ AiChoosePositionByStrategy:
 	jp nz, AiRushToBallLanding ; $7d6d
 	jp AiMoveBehindBallLanding ; $7d70
 AiTrackBallPhase:
-	ld a, [wBallHasBouncedFlag] ; $7d73
+	ld a, [wBallTouchedNetFlag] ; $7d73
 	ld b, a ; $7d76
 	ld a, [wBallCrossedNetFlag] ; $7d77
 	and b ; $7d7a

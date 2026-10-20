@@ -1,6 +1,6 @@
 InitDefaultMatchSettings:
 	xor a ; $4070
-	ld [wKeepMatchStatsFlag], a ; $4071
+	ld [wMatchSuspendedFlag], a ; $4071
 	ld hl, wMatchMenuSelection ; $4074
 	ld c, $02 ; $4077
 	call ClearMemory16 ; $4079
@@ -28,7 +28,7 @@ ResetMatchState:
 	ld hl, wBallXFrac ; $40b1
 	ld c, $0e ; $40b4
 	call ClearMemory16 ; $40b6
-	ld a, [wKeepMatchStatsFlag] ; $40b9
+	ld a, [wMatchSuspendedFlag] ; $40b9
 	and a ; $40bc
 	jr nz, .keepStats ; $40bd
 	ld hl, wCharacter1ServiceAces ; $40bf
@@ -36,7 +36,7 @@ ResetMatchState:
 	call ClearMemory16 ; $40c4
 .keepStats:
 	xor a ; $40c7
-	ld [wKeepMatchStatsFlag], a ; $40c8
+	ld [wMatchSuspendedFlag], a ; $40c8
 	ld a, $ff ; $40cb
 	ld [wMatchSimFrozen], a ; $40cd
 	ld a, $01 ; $40d0
@@ -211,7 +211,7 @@ TickRallyTimers:
 	ld a, $01 ; $425d
 	ld [wCameraFollowBall], a ; $425f
 .checkBounce:
-	ld a, [wBallHasBouncedFlag] ; $4262
+	ld a, [wBallTouchedNetFlag] ; $4262
 	and a ; $4265
 	jr z, .modeHook ; $4266
 	ld hl, SetCharStateForRallyTick ; $4268
@@ -236,7 +236,7 @@ HandleBallHitEvent:
 .clearEvent:
 	xor a ; $4288
 	ld [wBallHitEvent], a ; $4289
-	ld [wBallHasBouncedFlag], a ; $428c
+	ld [wBallTouchedNetFlag], a ; $428c
 	ld [wLandingMarkerActive], a ; $428f
 	call StartLandingMarker ; $4292
 	call StartHitEffect ; $4295
@@ -386,7 +386,7 @@ EvaluateBounceOutcome:
 	jr z, .setOutcome ; $43bd
 	ld b, POINTOUTCOME_LET ; $43bf
 	ld c, $00 ; $43c1
-	ld a, [wBallHasBouncedFlag] ; $43c3
+	ld a, [wBallTouchedNetFlag] ; $43c3
 	and a ; $43c6
 	jr nz, .setOutcome ; $43c7
 .done:

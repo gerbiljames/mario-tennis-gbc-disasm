@@ -532,7 +532,7 @@ ServicePractice2EvaluateResult:
 ServicePractice2Hook_RallyTick:
 	ret ; $5031
 ServicePractice2Hook_Bounce:
-	ld a, [wBallHasBouncedFlag] ; $5032
+	ld a, [wBallTouchedNetFlag] ; $5032
 	or a ; $5035
 	ret nz ; $5036
 	ld a, [wRallyLength] ; $5037
