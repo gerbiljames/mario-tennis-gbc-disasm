@@ -85,7 +85,7 @@ ActorScriptOpHandlers_04:
 	dw ActorScriptOp_SetPos ; record 3
 	dw ActorScriptOp_SetTarget ; record 4
 	dw ActorScriptOp_Halt ; record 5
-	dw ActorScriptOp_TargetRel ; record 6
+	dw ActorScriptOp_MoveBy ; record 6
 	dw ActorScriptOp_Move ; record 7
 	dw ActorScriptOp_MoveRel ; record 8
 	dw ActorScriptOp_RandBox ; record 9
@@ -98,7 +98,7 @@ ActorScriptOpHandlers_04:
 	dw ActorScriptOp_Anim ; record 16
 	dw ActorScriptOp_Sound ; record 17
 	dw ActorScriptOp_Call ; record 18
-	dw ActorScriptOp_BeginPath ; record 19
+	dw ActorScriptOp_SetWanderHome ; record 19
 	dw ActorScriptOp_WaitMove2 ; record 20
 	dw ActorScriptOp_Flag ; record 21
 ActorScriptOp_Call:
@@ -224,7 +224,7 @@ ApplyActorHeadingStep:
 	ld h, [hl] ; $454d
 	add ACTORF_FLAGS ; $454e
 	ld l, a ; $4550
-	set 7, [hl] ; $4551
+	set ACTORFLAGB_MOVING, [hl] ; $4551
 	ld a, $01 ; $4553
 	ret ; $4555
 ActorScriptOp_SetPos:
@@ -248,7 +248,7 @@ ActorScriptOp_SetPos:
 	ld h, [hl] ; $4572
 	add ACTORF_FLAGS ; $4573
 	ld l, a ; $4575
-	res 7, [hl] ; $4576
+	res ACTORFLAGB_MOVING, [hl] ; $4576
 	ld a, $01 ; $4578
 	ret ; $457a
 ActorScriptOp_SetTarget:
@@ -272,10 +272,10 @@ ActorScriptOp_SetTarget:
 	ld h, [hl] ; $4597
 	add ACTORF_FLAGS ; $4598
 	ld l, a ; $459a
-	set 7, [hl] ; $459b
+	set ACTORFLAGB_MOVING, [hl] ; $459b
 	ld a, $01 ; $459d
 	ret ; $459f
-ActorScriptOp_TargetRel:
+ActorScriptOp_MoveBy:
 	inc de ; $45a0
 	ld a, [wActorScriptBank] ; $45a1
 	ld l, e ; $45a4
@@ -336,7 +336,7 @@ ActorScriptOp_TargetRel:
 	ld h, [hl] ; $45ef
 	add ACTORF_FLAGS ; $45f0
 	ld l, a ; $45f2
-	set 7, [hl] ; $45f3
+	set ACTORFLAGB_MOVING, [hl] ; $45f3
 	ld a, $01 ; $45f5
 	ret ; $45f7
 ActorScriptOp_WaitMove:
@@ -345,7 +345,7 @@ ActorScriptOp_WaitMove:
 	ld h, [hl] ; $45fc
 	add ACTORF_FLAGS ; $45fd
 	ld l, a ; $45ff
-	bit 7, [hl] ; $4600
+	bit ACTORFLAGB_MOVING, [hl] ; $4600
 	jr nz, .noAdvance ; $4602
 	inc de ; $4604
 	ld a, $01 ; $4605
@@ -515,10 +515,10 @@ ActorScriptOp_Step:
 	ld a, d ; $46e9
 	sub [hl] ; $46ea
 	bit 7, a ; $46eb
-	jr z, .negative ; $46ed
+	jr z, .squareDeltaX ; $46ed
 	cpl ; $46ef
 	inc a ; $46f0
-.negative:
+.squareDeltaX:
 	call GetSquareOfByte ; $46f1
 	push hl ; $46f4
 	ld hl, ACTORF_Y + 1 ; $46f5
@@ -526,21 +526,21 @@ ActorScriptOp_Step:
 	ld a, e ; $46f9
 	sub [hl] ; $46fa
 	bit 7, a ; $46fb
-	jr z, .apply ; $46fd
+	jr z, .squareDeltaDepth ; $46fd
 	cpl ; $46ff
 	inc a ; $4700
-.apply:
+.squareDeltaDepth:
 	call GetSquareOfByte ; $4701
 	pop de ; $4704
 	add hl, de ; $4705
 	ld a, l ; $4706
 	cp $08 ; $4707
-	jr nc, .depthAxis ; $4709
+	jr nc, .farEnough ; $4709
 	add sp, 8 ; $470b
 	pop de ; $470d
 	xor a ; $470e
 	ret ; $470f
-.depthAxis:
+.farEnough:
 	pop de ; $4710
 	ld hl, ACTORF_SPEED ; $4711
 	add hl, bc ; $4714
@@ -655,12 +655,12 @@ ActorScriptOp_SetField:
 	ld a, [hl] ; $47a7
 	pop hl ; $47a8
 	cp $02 ; $47a9
-	jr nz, .wordField ; $47ab
+	jr nz, .byteField ; $47ab
 	ld a, c ; $47ad
 	ld [hl+], a ; $47ae
 	ld [hl], b ; $47af
 	jr .done ; $47b0
-.wordField:
+.byteField:
 	cp $01 ; $47b2
 	jr nz, .done ; $47b4
 	ld [hl], c ; $47b6
@@ -696,7 +696,7 @@ ActorScriptOp_AddField:
 	ld a, [hl] ; $47e0
 	pop hl ; $47e1
 	cp $02 ; $47e2
-	jr nz, .wordField ; $47e4
+	jr nz, .byteField ; $47e4
 	push hl ; $47e6
 	ld a, [hl+] ; $47e7
 	ld h, [hl] ; $47e8
@@ -709,7 +709,7 @@ ActorScriptOp_AddField:
 	ld [hl+], a ; $47ef
 	ld [hl], b ; $47f0
 	jr .done ; $47f1
-.wordField:
+.byteField:
 	cp $01 ; $47f3
 	jr nz, .done ; $47f5
 	ld a, [hl] ; $47f7
@@ -719,9 +719,12 @@ ActorScriptOp_AddField:
 	ld a, $01 ; $47fa
 	ret ; $47fc
 ActorFieldTypeTable_04:
-	; $47fd, 39 bytes (bytes:35)
+	; $47fd, 35 bytes (bytes:35)
 	db $02, $00, $01, $01, $01, $01, $02, $00, $02, $00, $02, $00, $02, $00, $02, $00, $02, $00, $02, $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-	db $13, $3e, $01, $c9 ; 0x23
+Unused_04_ActorScriptOp_Nop:
+	inc de ; $4820
+	ld a, $01 ; $4821
+	ret ; $4823
 ActorScriptOp_Anim:
 	inc de ; $4824
 	ld a, [wActorScriptBank] ; $4825
@@ -750,7 +753,7 @@ ActorScriptOp_Sound:
 	call PlaySoundManaged ; $4848
 	ld a, $01 ; $484b
 	ret ; $484d
-ActorScriptOp_BeginPath:
+ActorScriptOp_SetWanderHome:
 	ld hl, hActorPtr ; $484e
 	ld a, [hl+] ; $4851
 	ld h, [hl] ; $4852
@@ -784,7 +787,7 @@ ActorScriptOp_BeginPath:
 	ld h, [hl] ; $487c
 	add ACTORF_FLAGS ; $487d
 	ld l, a ; $487f
-	set 2, [hl] ; $4880
+	set ACTORFLAGB_YIELD, [hl] ; $4880
 	inc de ; $4882
 	ld a, $00 ; $4883
 	ret ; $4885
@@ -794,7 +797,7 @@ ActorScriptOp_RandBox:
 	ld h, [hl] ; $488a
 	add ACTORF_STATUS ; $488b
 	ld l, a ; $488d
-	bit 7, [hl] ; $488e
+	bit ACTORSTATUSB_LIVE, [hl] ; $488e
 	jr z, .advance ; $4890
 	push de ; $4892
 	inc de ; $4893

@@ -284,10 +284,10 @@ wMatchSelectSubState:: db
 ; [8-bit] Next window tile id the text engine stamps into the shadow tilemap. A row starts at wGlyphRowStartCol + $80 and the cell loop increments it per cell, so a wrapped row continues where the previous one stopped
 wTextRowNextTile:: db
 
-; [16-bit] VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine)
-wGlyphTileWritePtr:: dw
+; [16-bit] Shadow-tilemap cell where StampGlyphTileAtPen writes the proportional-glyph tile ids ($80 + pen column); TextCmdNextGlyphStreamRow moves it two rows down
+wGlyphStampCellPtr:: dw
 
-; [8-bit] Nonzero when the text belongs to a window other than wMenuWindowId; StampGlyphTileAtPen writes glyph tiles through wGlyphTileWritePtr only then. Menu text goes through the tilemap alone
+; [8-bit] Nonzero when the text belongs to a window other than wMenuWindowId; StampGlyphTileAtPen writes glyph tiles through wGlyphStampCellPtr only then. Menu text goes through the tilemap alone
 wGlyphStampEnabled:: db
 	ds 119
 

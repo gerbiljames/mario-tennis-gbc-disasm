@@ -35,7 +35,7 @@ MACRO as_halt5       ; $05 inert (handler alias of $00)
 	db $05
 ENDM
 
-MACRO as_target_rel  ; $06 offset the move target by (dx, dy), in tiles with a point (4.0, -2.0)
+MACRO as_move_by     ; $06 start a move to the current position + (dx, dy), in tiles with a point (4.0, -2.0)
 	map_offset \1, \2
 	db $06
 	dw (\1) >> 8, (\2) >> 8
@@ -51,7 +51,7 @@ MACRO as_move_rel    ; $08 move by angle + distance, angle relative to facing
 	dw \2
 ENDM
 
-MACRO as_rand_box    ; $09 pick a random reachable point in a box (gated on +$30 bit7)
+MACRO as_rand_box    ; $09 pick a random reachable target in a box around the as_set_wander_home centre (only while ACTORSTATUSB_LIVE)
 	db $09, \1, \2
 ENDM
 
@@ -73,7 +73,7 @@ MACRO as_set_field   ; $0d write a state field (selector byte, value word; type 
 	dw \2
 ENDM
 
-MACRO as_add_field   ; $0e add to / set a state field (selector byte, value word)
+MACRO as_add_field   ; $0e add to a state field (selector byte, value word); unused, and adds the wrong word (docs/bugs.md)
 	db $0e, \1
 	dw \2
 ENDM
@@ -95,7 +95,7 @@ MACRO as_call        ; $12 call a same-bank function (actor state in bc); yield+
 	dw \1
 ENDM
 
-MACRO as_begin_path  ; $13 seed the path target (+$16) from the current position
+MACRO as_set_wander_home ; $13 centre as_rand_box's box (ACTORF_ANCHOR) on the current tile, speed 8, set ACTORFLAGB_YIELD
 	db $13
 ENDM
 

@@ -118,7 +118,7 @@ InitMatchRecordFromCharId:
 	ld hl, $000b ; $40f6
 	add hl, de ; $40f9
 	ld a, [hl] ; $40fa
-	ld hl, $001b ; $40fb
+	ld hl, Text_NameAlex ; $40fb
 	add_hl_a ; $40fe
 	push hl ; $4103
 	ld hl, $0000 ; $4104

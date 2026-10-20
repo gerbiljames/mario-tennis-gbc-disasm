@@ -162,6 +162,9 @@ NEXTU
 wCutscenePlaneX:: db
 ; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
 wCutscenePlaneY:: db
+NEXTU
+; [16-bit] Frames left in Unused_10_SwingContestPrototype; Unused_10_SwingContestCountTask counts it down (the bank $15 contest keeps it 2 bytes higher)
+wUnusedSwingProtoTimer:: dw
 ENDU
 
 ; Per-location scratch, rest of $c2b0-$c2bf. Bank $14's island cutscenes
@@ -199,6 +202,14 @@ wSwingContestSwingState:: db
 wSwingContestHudMode:: db
 ; [8-bit] HUD page shown; seeded by InitWaterSpriteMinigameHud, panels queued by QueueWaterSpriteMinigameHudPanels
 wSwingContestHudPage:: db
+NEXTU
+; bank $10's swing contest prototype (Unused_10_SwingContestPrototype)
+; [16-bit] Swings counted and printed by PrintHexWord
+wUnusedSwingProtoSwings:: dw
+; [8-bit] Previous frame's A/B state
+wUnusedSwingProtoPrevInput:: db
+; [8-bit] 1 while the count task runs; the prototype waits for 0
+wUnusedSwingProtoRunning:: db
 NEXTU
 ; Training Court challenger dialogue ids (bank $15, $5d00-$6400)
 ; [16-bit] Each challenger result scene writes its court's lose-dialogue text id here ($201d serve, $204a net, $2078 stroke) on a lost point, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerLoseTextId
@@ -405,8 +416,8 @@ wTextNumberRightAlign:: db
 ; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth print as text id $1b + id
 wTextCharNameArg:: db
 
-; [8-bit] Glyph-row indent, stored negated. The dialogue setup writes -c; StartGlyphStreamRow's caller negates and doubles it and adds it to wGlyphVramDest. Zeroed when a text window closes
-wTextRowIndent:: db
+; [8-bit] Destination row pitch, negated: the text setup writes -c (-$20 for a tilemap); TextCmdNextGlyphStreamRow negates and doubles it to step wTextRowStartPtr two rows. Zeroed when a text window closes
+wTextRowPitchNeg:: db
 
 ; [8-bit] Screen shake strength: $ff = off, else 1-3 (SetScreenShake clamps to 3 and registers/unregisters the UpdateScreenShake frame task). UpdateScreenShake masks a random word to that many bits for the two offsets
 wScreenShakeMagnitude:: db

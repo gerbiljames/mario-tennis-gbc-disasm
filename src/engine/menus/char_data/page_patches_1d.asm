@@ -639,9 +639,9 @@ WriteExpScreenStringTiles:
 	ld a, [hl+] ; $6d70
 	or a ; $6d71
 	ret z ; $6d72
-	cp $de ; $6d73
+	cp TX_DAKUTEN ; $6d73
 	jr z, .rowAbove ; $6d75
-	cp $df ; $6d77
+	cp TX_HANDAKUTEN ; $6d77
 	jr z, .rowAbove ; $6d79
 	ld b, a ; $6d7b
 	wram_bank WRAM_SCREEN ; $6d7c

@@ -73,8 +73,10 @@ after a real defect broke it:
   entries   every story entry point with no way in carries a `; debug
             warp only` mark, and only those do (tools/routes.py)
   raw-ids   a raw cp/store operand on a variable whose other values are
-            named from a constant family is not a member of that family, and
-            the macro and table rows RAW_ID_* lists name their ids
+            named from a constant family is not a member of that family, a
+            byte read through a known text pointer is not compared with a raw
+            TX_* code, and the macro and table rows RAW_ID_* lists name their
+            ids
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -833,7 +835,7 @@ _ROMX_WORD_RE = re.compile(r"\$[4-7][0-9a-fA-F]{3}")
 # The ROM0 routines that take a (bank << 8) | slot pair in hl.
 _SLOT_CONSUMERS = frozenset(
     "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarCallIndexed1 "
-    "Unused_00_FarCallIndexed2 Unused_00_FarCallIndexed3 Unused_00_FarCopyIndexed Unused_00_FarDispatchIndexed "
+    "Unused_00_FarCallIndexed2 Unused_00_FarCallIndexed3 Unused_00_FarCopyIndexed Unused_00_FarDecompressIndexed "
     "Unused_00_FarReadPtrIndexed".split())
 
 
@@ -1034,6 +1036,43 @@ RAW_ID_FAMILIES = {
     "TennisDictionaryScreen(a)": "TENNISDICT",
     "ShowRankingBoard(d)": "RANKINGBOARD",
 }
+# Text pointers: a byte read through one is a text byte, so its compares name
+# TX_* codes. Buffers by address loaded into hl; labels (Routine or
+# Routine.local) by the register that holds the pointer there, or "a" where
+# a jump target receives the byte itself.
+TEXT_BUFFERS = {"wTextBuffer", "wShortTextBuffer", "wInlineTextBuffer", "wNameEntryBuffer", "wStoryMainName"}
+TEXT_POINTER_LABELS = {
+    "TextInterpreterLoop": "hl",
+    "TextInterpreterLoop.readChar": "hl",
+    "FitWindowToText.charLoop": "hl",
+    "MeasureTextDimensions.loop": "hl",
+    "RenderInlineString.charLoop": "hl",
+    "WriteStringToWindow": "hl",
+    "TextCodeLiteral_05.storeChar": "hl",
+    "ProportionalTextCodeHandler5_05.glyph": "hl",
+    "Unused_05_WriteStringToTilemapStreamed.storeChar": "hl",
+    "Unused_05_WriteDialogueToTilemapStreamed.storeChar": "hl",
+    "Unused_05_WriteStringToTilemap": "hl",
+    "Unused_05_WriteStringToTilemapAlt": "hl",
+    "Unused_05_WriteStringToTilemapStreamed": "hl",
+    "Unused_05_WriteDialogueToTilemapStreamed": "hl",
+    "WriteNameStringTiles": "hl",
+    "RenderInlineString.checkMark": "hl",
+    "WriteExpScreenStringTiles": "hl",
+    "Unused_00_CopyTextString": "hl",
+    "Unused_16_DrawCourtDiagramMarkers": "hl",
+    "Unused_1a_CopyNameToTileBuffer": "hl",
+    "Unused_1a_DrawStringToTileBuffer": "hl",
+    "TextInterpreterLoop.compare": "a",
+    "FitWindowToText.checkArgShortText": "a",
+    "FitWindowToText.checkArgNumber": "a",
+    "FitWindowToText.checkMainCharName": "a",
+    "FitWindowToText.checkArgString": "a",
+    "FitWindowToText.checkPartnerName": "a",
+    "FitWindowToText.checkIndexedShortText": "a",
+    "MeasureTextDimensions.notLineBreak": "a",
+    "MeasureTextDimensions.notShortTextArg": "a",
+}
 # Variables whose bytes are separate fields, so wVar + n is not wVar.
 _FIELD_VARS = {"wCurrentMinigameStoryMatch"}
 _NUMBER_RE = re.compile(r"(\$[0-9a-fA-F]+|%[01]+|\d+)")
@@ -1073,20 +1112,37 @@ def _raw_id_uses():
     uses = {}
     for holder in holders():
         lines, origin = bank_lines(holder)
-        regs = {}      # register -> immediate, or "=wVar" when it holds that variable
+        regs = {}      # register -> immediate, "=wVar" when it holds that variable, "@src" a text pointer
         spent = set()  # registers whose immediate was stored, so not an argument
+        owner = ""
         for i, line in enumerate(lines):
             if _GLOBAL_RE.match(line) or re.match(r"[A-Za-z_]", line):
                 regs, spent = {}, set()
+                owner = re.match(r"\w+", line).group(0)
+                if r := TEXT_POINTER_LABELS.get(owner):
+                    regs[r] = ("=text@" if r == "a" else "@") + owner
                 continue
             t = line.split(";")[0].strip()
             if t.startswith("."):
-                # a local label is a jump target: keep what a was loaded from, drop immediates
-                regs = {r: v for r, v in regs.items() if v.startswith("=")}
+                # a local label is a jump target: keep what a was loaded from and
+                # text pointers, drop immediates
+                regs = {r: v for r, v in regs.items() if v[0] in "=@"}
+                label = owner + t.rstrip(":")
+                if r := TEXT_POINTER_LABELS.get(label):
+                    regs[r] = ("=text@" if r == "a" else "@") + label
                 continue
             if not t:
                 continue
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if m := re.match(r"ld a, \[(hl[+-]?|de)\]$", t):
+                ptr = regs.get(m.group(1)[:2], "")
+                _clobber(regs, spent, "a")
+                if ptr.startswith("@"):
+                    regs["a"] = "=text@" + ptr[1:]
+                    continue
+            if m := re.match(r"(inc|dec) (hl|de)$", t):
+                if regs.get(m.group(2), "").startswith("@"):
+                    continue
             if "[hl]" in t:
                 spent.add("hl")
             if re.search(r"\[hl[+-]\]", t):
@@ -1121,9 +1177,13 @@ def _raw_id_uses():
                 continue
             if m := re.match(r"(call|farcall) (\w+)$", t):
                 for r, v in regs.items():
-                    if not v.startswith("=") and r not in spent:
+                    if v[0] not in "=@" and r not in spent:
                         uses.setdefault(f"{_twin_base(m.group(2))}({r})", []).append((v, where))
-                regs, spent = {}, set()
+                # the text engine's callees keep the text pointer
+                regs, spent = {r: v for r, v in regs.items() if v[0] == "@"}, set()
+                continue
+            if re.match(r"(push_|pop_)?wram_bank\b", t):
+                regs = {r: v for r, v in regs.items() if v[0] == "@"}
                 continue
             if m := re.match(rf"ldh? a, \[{_VAR_RE}\]$", t):
                 _clobber(regs, spent, "a")
@@ -1131,7 +1191,7 @@ def _raw_id_uses():
                 continue
             if m := re.match(rf"ld hl, {_VAR_RE}$", t):
                 _clobber(regs, spent, "hl")
-                regs["hl"] = "=" + _var(m.group(1))
+                regs["hl"] = ("@" if m.group(1) in TEXT_BUFFERS else "=") + _var(m.group(1))
                 continue
             if m := re.match(r"ld ([a-ehl]|bc|de|hl), ([^\[]+)$", t):
                 r, v = m.groups()
@@ -1193,8 +1253,10 @@ def check_raw_ids(fail):
     """A raw cp/store operand on a variable (wVar + n counts as wVar) that
     names its other values from a constant family must not equal a member of
     that family. The immediates in a routine's argument registers at a call
-    count as variables `Routine(reg)`. Data rows of the macros and tables
-    RAW_ID_* list must name their ids."""
+    count as variables `Routine(reg)`, and a byte read through a
+    TEXT_BUFFERS / TEXT_POINTER_LABELS pointer as `text@source` in the TX
+    family. Data rows of the macros and tables RAW_ID_* list must name their
+    ids."""
     import consts
     values = consts.constants()
     uses = _raw_id_uses()
@@ -1208,7 +1270,7 @@ def check_raw_ids(fail):
         if var in _PER_LOCATION_VARS:
             continue
         families = {op.split("_")[0] for op, _ in ops if op in values and "_" in op}
-        families |= {RAW_ID_FAMILIES.get(var)} - {None}
+        families |= {RAW_ID_FAMILIES.get(var), "TX" if var.startswith("text@") else None} - {None}
         for op, where in ops:
             if not _NUMBER_RE.fullmatch(op):
                 continue

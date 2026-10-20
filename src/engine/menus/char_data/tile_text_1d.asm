@@ -39,9 +39,9 @@ WriteNameStringTiles:
 	ld a, [hl+] ; $47b0
 	or a ; $47b1
 	ret z ; $47b2
-	cp $de ; $47b3
+	cp TX_DAKUTEN ; $47b3
 	jr z, .nameTilePtrUpOneRow ; $47b5
-	cp $df ; $47b7
+	cp TX_HANDAKUTEN ; $47b7
 	jr z, .nameTilePtrUpOneRow ; $47b9
 	ld b, a ; $47bb
 	wram_bank WRAM_SCREEN ; $47bc

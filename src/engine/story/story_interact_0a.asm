@@ -353,7 +353,7 @@ RunStoryScriptOrDialogue:
 	push hl ; $543f
 	wram_bank WRAM_ACTORS ; $5440
 	ld hl, wActors + ACTORF_STATUS ; $5446
-	res 0, [hl] ; $5449
+	res ACTORSTATUSB_FACING_LOCKED, [hl] ; $5449
 	ld hl, wActors + ACTORF_HEADING ; $544b
 	ld a, [wPlayerMoveAngle] ; $544e
 	ld [hl], a ; $5451
@@ -475,7 +475,7 @@ RunNpcInteraction:
 	jr z, .faceThePlayer ; $5517
 	ld hl, ACTORF_FLAGS ; $5519
 	add hl, de ; $551c
-	set 0, [hl] ; $551d
+	set ACTORFLAGB_PAUSED, [hl] ; $551d
 	set 1, [hl] ; $551f
 .faceThePlayer:
 	bit NPCB_FACE_PLAYER, b ; $5521
@@ -506,7 +506,7 @@ RunNpcInteraction:
 	jr z, .restoreAnim ; $554a
 	ld hl, ACTORF_FLAGS ; $554c
 	add hl, de ; $554f
-	res 0, [hl] ; $5550
+	res ACTORFLAGB_PAUSED, [hl] ; $5550
 	res 1, [hl] ; $5552
 .restoreAnim:
 	ld a, b ; $5554

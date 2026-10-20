@@ -53,11 +53,11 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 124,740 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 915,944 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,567: 14,413 routines and tables and 13,418 locals in ROM, 1,736 RAM names |
+| instructions | 124,811 source lines of instructions and code macros (`tools/stats.py`) |
+| source-spelled bytes | 915,943 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 29,577: 14,416 routines and tables and 13,421 locals in ROM, 1,740 RAM names |
 | compressed graphics | 863 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 789 routines and 157 blobs nothing live reaches (`docs/unused_code.md`) |
+| `Unused_` routines | 792 routines and 158 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
@@ -121,7 +121,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   and the `rom_bank` and `sram_bank` counterparts, `frame_task`,
   `ld_hl_indexed` (`hl = Table + a`), `add_hl_a` (`hl += a`), `neg_hl`,
   `abs_hl`, `sub_hl_de`, `ld_story_char_field`, `wait_frames`, the register-pair
-  macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`,
+  macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`, `ld_bg_cell`,
   `ld_bg_pals` / `ld_obj_pals`), map positions in tiles with a point
   (`map_entry $03, FACE_DOWN, 18.0, 13.0`: the game's 1/256-tile words,
   checked by `map_pos`), `set_flag` / `test_flag` / `clear_flag` /

@@ -97,9 +97,9 @@ Unused_00_CopyTextString:
 	ld a, [hl+] ; $2aa9
 	cp $00 ; $2aaa
 	jr z, .restore ; $2aac
-	cp $de ; $2aae
+	cp TX_DAKUTEN ; $2aae
 	jr z, .applyMark ; $2ab0
-	cp $df ; $2ab2
+	cp TX_HANDAKUTEN ; $2ab2
 	jr z, .applyMark ; $2ab4
 	ld [de], a ; $2ab6
 	inc de ; $2ab7
@@ -334,43 +334,43 @@ DrawWindowFrameBottom:
 	ld [hl+], a ; $2be9
 	ret ; $2bea
 Unused_00_MoveCoordsByDpad:
-	bit 5, a ; $2beb
+	bit PADB_LEFT, a ; $2beb
 	jr z, .checkRight ; $2bed
 	dec d ; $2bef
 	ret ; $2bf0
 .checkRight:
-	bit 4, a ; $2bf1
+	bit PADB_RIGHT, a ; $2bf1
 	jr z, .checkUp ; $2bf3
 	inc d ; $2bf5
 	ret ; $2bf6
 .checkUp:
-	bit 6, a ; $2bf7
+	bit PADB_UP, a ; $2bf7
 	jr z, .checkDown ; $2bf9
 	dec e ; $2bfb
 	ret ; $2bfc
 .checkDown:
-	bit 7, a ; $2bfd
+	bit PADB_DOWN, a ; $2bfd
 	jr z, .done ; $2bff
 	inc e ; $2c01
 	ret ; $2c02
 .done:
 	ret ; $2c03
 Unused_00_MoveCursorVertical:
-	bit 6, b ; $2c04
-	jr nz, MoveCursorHorizontal.wrap ; $2c06
-	bit 7, b ; $2c08
-	jr nz, MoveCursorHorizontal.right ; $2c0a
+	bit PADB_UP, b ; $2c04
+	jr nz, MoveCursorHorizontal.decrement ; $2c06
+	bit PADB_DOWN, b ; $2c08
+	jr nz, MoveCursorHorizontal.increment ; $2c0a
 	ret ; $2c0c
 MoveCursorHorizontal:
-	bit 5, b ; $2c0d
-	jr nz, .wrap ; $2c0f
-	bit 4, b ; $2c11
-	jr nz, .right ; $2c13
+	bit PADB_LEFT, b ; $2c0d
+	jr nz, .decrement ; $2c0f
+	bit PADB_RIGHT, b ; $2c11
+	jr nz, .increment ; $2c13
 	ret ; $2c15
-.right:
+.increment:
 	inc a ; $2c16
 	inc a ; $2c17
-.wrap:
+.decrement:
 	dec a ; $2c18
 	add a ; $2c19
 	jr nc, .checkMax ; $2c1a
@@ -391,7 +391,7 @@ TickTimer:
 	dec [hl] ; $2c29
 	ret ; $2c2a
 QueueSprite24x32:
-	bit 5, b ; $2c2b
+	bit B_OAM_XFLIP, b ; $2c2b
 	jr nz, .flipped ; $2c2d
 	ld a, h ; $2c2f
 	add d ; $2c30

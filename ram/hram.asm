@@ -36,7 +36,7 @@ hFrameTasksReady:: db
 ; Bit 0 - A
 hPlayerInputFlags:: db
 
-; [8-bit] Buttons newly pressed this frame (same bit layout as hPlayerInputFlags)
+; [8-bit] Auto-repeat pulse from ReadJoypad: the held buttons on the frame the held set changes, again every hInputRepeatDelay frames after an initial $12, 0 on other frames (hPlayerInputFlags layout)
 hInputPressed:: db
 
 ; [8-bit] Buttons held for key-repeat tracking

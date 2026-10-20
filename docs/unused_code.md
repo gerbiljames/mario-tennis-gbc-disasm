@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-946 labels carry an `Unused` prefix: 789 routines and 157 data blobs.
+950 labels carry an `Unused` prefix: 792 routines and 158 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -156,9 +156,9 @@ the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `Unused_05_WriteDialogueToTilemapStreamed`) and the
 whole-plane queue helpers. Same shape as pattern 3, one bank up.
 
-**6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven identical
-NPC handlers on the "Test 2" debug map (its live NPCs `0B`-`0D` are the same
-template); three lone `ret`s in bank `$11` sit after list terminators
+**6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven
+drill-launcher handlers for the "Test 2" debug map, the template of its live
+NPCs `0B`-`0D` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
 (`Unused_11_NullScriptA`-`C`); `Unused_17_StubRet`, `Unused_18_StubRet3`
 and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
 `Unused_38_WramBank3Nop`, routines that do nothing but preserve registers — script slots that were filled and never wired.
@@ -170,10 +170,12 @@ Transfer Pak branch the game never takes. `Unused_06_RunMessagesMusicMenu` and
 `Unused_10_RunWaterSpriteMinigame` (94% of the live target-zone test mode)
 and `Unused_07_ApplyCharStatPreset` (168 instructions of stat presets
 nothing loads) are the largest bodies with no live twin at all.
+`Unused_10_SwingContestPrototype` is an early cut of bank `$15`'s swing
+contest (count task, then the GO sound), its counters two bytes lower.
 `Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** By bytes the 157 unused blobs are mostly
+**8. Data that came along.** By bytes the 158 unused blobs are mostly
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), the Japanese font and
 window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and

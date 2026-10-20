@@ -7,7 +7,7 @@ RenderProportionalTextAt:
 	push bc ; $5dba
 	push de ; $5dbb
 	push hl ; $5dbc
-	ld hl, wGlyphTileWritePtr ; $5dbd
+	ld hl, wGlyphStampCellPtr ; $5dbd
 	ld a, e ; $5dc0
 	ld [hl+], a ; $5dc1
 	ld [hl], d ; $5dc2
@@ -32,16 +32,16 @@ RenderProportionalTextAt:
 	ld d, a ; $5df2
 .destOk:
 	ld a, e ; $5df3
-	ld [wGlyphVramDest], a ; $5df4
+	ld [wTextRowStartPtr], a ; $5df4
 	ld a, d ; $5df7
-	ld [wGlyphVramDest + 1], a ; $5df8
+	ld [wTextRowStartPtr + 1], a ; $5df8
 	ld c, $20 ; $5dfb
 	ld b, $ff ; $5dfd
 	ld a, c ; $5dff
 	cpl ; $5e00
 	inc a ; $5e01
 	ld c, a ; $5e02
-	ld [wTextRowIndent], a ; $5e03
+	ld [wTextRowPitchNeg], a ; $5e03
 	call FetchDialogueText ; $5e06
 	ld hl, wTextBuffer ; $5e09
 	xor a ; $5e0c
@@ -121,9 +121,9 @@ ProportionalTextCodeHandler5_05:
 	call StampGlyphTileAtPen ; $5e92
 	inc hl ; $5e95
 	ld a, [hl] ; $5e96
-	cp $de ; $5e97
+	cp TX_DAKUTEN ; $5e97
 	jr z, .markFollows ; $5e99
-	cp $df ; $5e9b
+	cp TX_HANDAKUTEN ; $5e9b
 	jr nz, .nextCell ; $5e9d
 .markFollows:
 	push hl ; $5e9f
@@ -166,7 +166,7 @@ ProportionalTextCodeHandler0_05:
 	pop hl ; $5ecd
 	push_wram_bank WRAM_TEXT ; $5ece
 	xor a ; $5ed7
-	ld [wTextRowIndent], a ; $5ed8
+	ld [wTextRowPitchNeg], a ; $5ed8
 	ld [wTextArgStringWriteIndex], a ; $5edb
 	ld [wTextArgStringMeasureIndex], a ; $5ede
 	ld [wTextArgNumberWriteIndex], a ; $5ee1
@@ -199,7 +199,7 @@ StampGlyphTileAtPen:
 	ld a, [wGlyphStampEnabled] ; $5f11
 	or a ; $5f14
 	jr z, .restore ; $5f15
-	ld hl, wGlyphTileWritePtr ; $5f17
+	ld hl, wGlyphStampCellPtr ; $5f17
 	ld a, [hl+] ; $5f1a
 	ld d, [hl] ; $5f1b
 	ld e, a ; $5f1c
@@ -249,15 +249,15 @@ RenderTextToBuffer64:
 	xor a ; $5f5f
 	call AddTextIdOffset ; $5f60
 	ld a, e ; $5f63
-	ld [wGlyphVramDest], a ; $5f64
+	ld [wTextRowStartPtr], a ; $5f64
 	ld a, d ; $5f67
-	ld [wGlyphVramDest + 1], a ; $5f68
+	ld [wTextRowStartPtr + 1], a ; $5f68
 	ld b, $ff ; $5f6b
 	ld a, c ; $5f6d
 	cpl ; $5f6e
 	inc a ; $5f6f
 	ld c, a ; $5f70
-	ld [wTextRowIndent], a ; $5f71
+	ld [wTextRowPitchNeg], a ; $5f71
 	call FetchDialogueText ; $5f74
 	ld hl, wTextBuffer ; $5f77
 	pop_wram_bank ; $5f7a
@@ -305,9 +305,9 @@ TextCodeLiteral_05:
 	ld [de], a ; $5fbe
 	inc hl ; $5fbf
 	ld a, [hl] ; $5fc0
-	cp $de ; $5fc1
+	cp TX_DAKUTEN ; $5fc1
 	jr z, .applyDiacritic ; $5fc3
-	cp $df ; $5fc5
+	cp TX_HANDAKUTEN ; $5fc5
 	jr nz, .nextCell ; $5fc7
 .applyDiacritic:
 	push hl ; $5fc9
@@ -349,7 +349,7 @@ GetObjectSlotPointer:
 	ld hl, $0000 ; $5ff2
 	cp $ff ; $5ff5
 	ret z ; $5ff7
-	ld hl, wWindowShadowTilemap ; $5ff8
+	ld hl, wActors ; $5ff8
 	cp $18 ; $5ffb
 	jr nc, .done ; $5ffd
 	push bc ; $5fff
@@ -373,9 +373,9 @@ WriteStringToWindow:
 	ld a, [hl] ; $6013
 	or a ; $6014
 	jr z, .done ; $6015
-	cp $de ; $6017
+	cp TX_DAKUTEN ; $6017
 	jr z, .markChar ; $6019
-	cp $df ; $601b
+	cp TX_HANDAKUTEN ; $601b
 	jr z, .markChar ; $601d
 	jr .writeChar ; $601f
 .markChar:
@@ -397,7 +397,7 @@ WriteStringToWindow:
 	push bc ; $6034
 	ld c, a ; $6035
 	ld a, b ; $6036
-	ld b, $80 ; $6037
+	ld b, TILEATTR_PRIORITY ; $6037
 	dec d ; $6039
 	dec e ; $603a
 	call WriteWindowCellTileAttr ; $603b
@@ -411,7 +411,7 @@ WriteStringToWindow:
 	inc hl ; $6045
 	ld c, a ; $6046
 	ld a, b ; $6047
-	ld b, $80 ; $6048
+	ld b, TILEATTR_PRIORITY ; $6048
 	call WriteWindowCellTileAttr ; $604a
 	inc d ; $604d
 	jr .charLoop ; $604e

@@ -354,7 +354,7 @@ StepActorScript:
 	ld d, a ; $4242
 	ld a, [hl+] ; $4243
 	ld [wActorScriptBank], a ; $4244
-.applyGravity:
+.dispatchLoop:
 	push bc ; $4247
 	ld a, [wActorScriptBank] ; $4248
 	ld l, e ; $424b
@@ -377,7 +377,7 @@ ActorScriptOpcodeReturn:
 	ld [hl], d ; $4267
 	inc hl ; $4268
 	or a ; $4269
-	jr nz, StepActorScript.applyGravity ; $426a
+	jr nz, StepActorScript.dispatchLoop ; $426a
 	pop bc ; $426c
 	ret ; $426d
 UpdateActorJumpPhysics:

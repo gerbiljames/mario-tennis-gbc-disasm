@@ -610,6 +610,22 @@ point parity, so the message wording changes from point to point while the
 verdict does not. The sibling drills hard-code one table per rally, so whether
 the parity test was dropped on purpose is not known; left as is.
 
+### Actor-script `as_add_field` adds the wrong operand
+
+`ActorScriptOp_AddField` (`$04:$47ba`, opcode `$0e`) is `ActorScriptOp_SetField`
+with an add, but drops the `ld l, e / ld h, d` before its `FarReadWord`:
+
+```
+        call FarReadByte         ; a = selector, hl -> selector
+        inc de
+        ...
+        call FarReadWord         ; <- reads from hl, not de
+```
+
+`hl` still points at the selector byte, so the value added is
+`selector | value_lo << 8` rather than the operand word. No script uses the
+opcode; left as is.
+
 ## Dead stores
 
 Values written and never read, and one table written past its end (the menu
