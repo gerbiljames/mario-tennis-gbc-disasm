@@ -59,7 +59,7 @@ SeniorSinglesMatchConfirm:
 	jp nz, .callItOff ; $6b09
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $6b0c
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $6b13
-.declined:
+.startMatch:
 	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_NOD ; $6b18
 	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $6b1f
 	script_set_text Text_SeniorSinglesTakeTheCourt ; $6b24
@@ -67,12 +67,12 @@ SeniorSinglesMatchConfirm:
 	call StartSeniorRankingMatch ; $6b2f
 	farcall EndCutsceneScriptMode ; $6b32
 	ret ; $6b35
-.accepted:
+.calledOff:
 	script_set_text Text_SeniorSinglesConfirmPracticeFirst ; $6b36
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $6b3c
-	jr z, .startMatch ; $6b3f
+	jr z, .speak ; $6b3f
 	farcall AdvanceDialogueTextCursor ; $6b41
-.startMatch:
+.speak:
 	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $6b44
 	call ResumeSeniorOpponentScripts ; $6b49
 	script_wait_frames 30 ; $6b4c
@@ -85,8 +85,8 @@ SeniorSinglesMatchConfirm:
 	farcall ScriptCloseDialogueWindow ; $6b65
 	script_wait_frames 5 ; $6b68
 	and a ; $6b6f
-	jr z, .accepted ; $6b70
-	jp .declined ; $6b72
+	jr z, .calledOff ; $6b70
+	jp .startMatch ; $6b72
 	ret ; $6b75
 SeniorDoublesMatchConfirm:
 	script_set_text Text_SeniorDoublesMatchRules ; $6b76
@@ -106,11 +106,11 @@ SeniorDoublesMatchConfirm:
 	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $6bad
 	script_set_text Text_SeniorDoublesGamesBegin ; $6bb2
 	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $6bb8
-.declined:
+.startMatch:
 	call StartSeniorRankingMatch ; $6bbd
 	farcall EndCutsceneScriptMode ; $6bc0
 	ret ; $6bc3
-.accepted:
+.calledOff:
 	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $6bc4
 	call ResumeSeniorOpponentScripts ; $6bc9
 	script_wait_frames 30 ; $6bcc
@@ -124,10 +124,10 @@ SeniorDoublesMatchConfirm:
 	farcall ScriptCloseDialogueWindow ; $6bf2
 	script_wait_frames 5 ; $6bf5
 	and a ; $6bfc
-	jr z, .accepted ; $6bfd
+	jr z, .calledOff ; $6bfd
 	script_set_text Text_SeniorDoublesSoYouWillPlay ; $6bff
 	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $6c05
-	jp .declined ; $6c0a
+	jp .startMatch ; $6c0a
 ActorScript_12_00:
 	; $6c0d, 11 bytes (actor_script)
 	as_set_target 43.0, 27.0
@@ -352,16 +352,16 @@ SeniorMatchVictorySceneDispatch:
 	ret ; $6e0c
 SeniorMatchVictorySceneDispatchPtrs:
 	; $6e0d, 18 bytes (records:2)
-	dw SeniorSinglesRank4And3Victory ; record 0
-	dw SeniorSinglesRank4And3Victory ; record 1
-	dw SeniorSinglesRank2Victory ; record 2
-	dw SeniorSinglesRank1Victory ; record 3
-	dw SeniorSharedVictoryScene ; record 4
-	dw SeniorDoublesRank2Victory ; record 5
-	dw SeniorDoublesRank1Victory ; record 6
-	dw SeniorSharedVictoryScene ; record 7
-	dw IslandOpenDoublesVictory ; record 8
-SeniorDoublesRank2Victory:
+	dw SeniorSinglesRank4Victory ; record 0
+	dw SeniorSinglesRank4Victory ; record 1
+	dw SeniorSinglesRank3Victory ; record 2
+	dw SeniorSinglesRank2Victory ; record 3
+	dw SeniorSinglesRank1Victory ; record 4
+	dw SeniorDoublesRank3Victory ; record 5
+	dw SeniorDoublesRank2Victory ; record 6
+	dw SeniorSinglesRank1Victory ; record 7
+	dw SeniorDoublesRank1Victory ; record 8
+SeniorDoublesRank3Victory:
 	script_null_script ACTOR_PARTNER ; $6e1f
 	script_null_script ACTOR_SENIOR_COURT_B_BETH ; $6e24
 	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_LEFT ; $6e29
@@ -406,7 +406,7 @@ SeniorDoublesRank2Victory:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6f59
 	farcall EndCutsceneScriptMode ; $6f66
 	ret ; $6f69
-SeniorDoublesRank1Victory:
+SeniorDoublesRank2Victory:
 	script_null_script ACTOR_PARTNER ; $6f6a
 	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_RIGHT ; $6f6f
 	script_set_position ACTOR_SENIOR_COURT_B_BRIAN, 51.0, 17.0 ; $6f76

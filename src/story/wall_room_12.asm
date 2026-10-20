@@ -67,9 +67,9 @@ DormEntranceTile01_12:
 DormEntranceInitScript_12:
 	ld a, [wStoryModeEntryPoint] ; $4170
 	cp ENTRY_DORM_ENTRANCE_TOUR ; $4173
-	call z, DormEntranceEntry0fScene ; $4175
+	call z, DormEntranceTourScene ; $4175
 	ret ; $4178
-DormEntranceEntry0fScene:
+DormEntranceTourScene:
 	script_set_speed ACTOR_DORM_ENTRANCE_EMILY, 0.5 ; $4179
 	script_set_speed ACTOR_DORM_ENTRANCE_KATE, 0.5 ; $4181
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4189
@@ -318,14 +318,14 @@ WallPracticeRoomNpc03_12:
 	farcall InitDialogueTextCursor ; $472d
 	ld a, [wMapSceneStage] ; $4730
 	jumptable a ; $4733
-	dw WallPracticeRoomNpc03_12.altText ; $4735 jumptable
+	dw WallPracticeRoomNpc03_12.prompt ; $4735 jumptable
 	dw WallPracticeRoomNpc03_12.speak ; $4737 jumptable
-	dw WallPracticeRoomNpc03_12.altText ; $4739 jumptable
-	dw WallPracticeRoomNpc03_12.altText ; $473b jumptable
+	dw WallPracticeRoomNpc03_12.prompt ; $4739 jumptable
+	dw WallPracticeRoomNpc03_12.prompt ; $473b jumptable
 	dw WallPracticeRoomNpc03_12.bounceAndSpeak ; $473d jumptable
 	dw WallPracticeRoomNpc03_12.bounceAndSpeak ; $473f jumptable
 	dw WallPracticeRoomNpc03_12.speak ; $4741 jumptable
-.altText:
+.prompt:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_STUDENT_SIDE_PART_BOY ; $4743
 	farcall RunDialogueYesNoPrompt ; $4748
 	farcall ScriptCloseDialogueWindow ; $474b
@@ -538,7 +538,7 @@ WallPracticeMaxScoreScript:
 	pop_wram_bank ; $4955
 	ld de, $270f ; $495a
 	sub_hl_de ; $495d
-	jp c, RelaunchWallPracticeMasterLevel.saveMaxRecord ; $4963
+	jp c, WallPracticeMaxScoreScript.saveMaxRecord ; $4963
 	script_set_text Text_WallMasterTryAgain ; $4966
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $496c
 	farcall RunDialogueYesNoPrompt ; $4971
@@ -555,4 +555,4 @@ WallPracticeMaxScoreScript:
 	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $49b3
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $49be
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_DOWN ; $49c3
-	jp RelaunchWallPracticeMasterLevel.checkDoubles ; $49ca
+	jp WallPracticeMaxScoreScript.checkDoubles ; $49ca

@@ -1,4 +1,4 @@
-; Shared by Court2EntryWalkIn, RestaurantPlazaArrival06_13 (banks $13, $14).
+; Shared by Court2EntryWalkIn, RestaurantPlazaFromTrainingCourt_13 (banks $13, $14).
 
 {TWIN_LABEL}:
 	ld a, [wStoryModeEntryPoint]

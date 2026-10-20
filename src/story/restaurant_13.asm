@@ -18,18 +18,18 @@ RestaurantPlazaActors_13:
 	map_actor_end
 RestaurantPlazaEntryPoints_13:
 	; $401e, 65 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 7.0, 8.25, RestaurantPlazaArrival01_13, RESTAURANT_PLAZA_FROM_DORM_ENTRANCE
-	map_entry $02, FACE_DOWN, 21.0, 9.25, RestaurantPlazaArrival02_13, RESTAURANT_PLAZA_FROM_RESTAURANT
+	map_entry $01, FACE_DOWN, 7.0, 8.25, RestaurantPlazaFromDormEntrance_13, RESTAURANT_PLAZA_FROM_DORM_ENTRANCE
+	map_entry $02, FACE_DOWN, 21.0, 9.25, RestaurantPlazaFromRestaurant_13, RESTAURANT_PLAZA_FROM_RESTAURANT
 	map_entry $03, FACE_DOWN, 37.0, 8.25, RestaurantPlazaArrivalWalkIn_13, RESTAURANT_PLAZA_FROM_SENIOR_CLASS_COURT
-	map_entry $04, FACE_UP, 50.0, 15.0, RestaurantPlazaArrival04_13, RESTAURANT_PLAZA_FROM_COURTYARD
+	map_entry $04, FACE_UP, 50.0, 15.0, RestaurantPlazaFromCourtyard_13, RESTAURANT_PLAZA_FROM_COURTYARD
 	map_entry $05, FACE_DOWN, 55.0, 8.25, RestaurantPlazaArrivalWalkIn_13, RESTAURANT_PLAZA_FROM_JUNIOR_CLASS_COURT
-	map_entry $06, FACE_LEFT, 60.0, 13.0, RestaurantPlazaArrival06_13, RESTAURANT_PLAZA_FROM_TRAINING_COURT
+	map_entry $06, FACE_LEFT, 60.0, 13.0, RestaurantPlazaFromTrainingCourt_13, RESTAURANT_PLAZA_FROM_TRAINING_COURT
 	map_entry $0e, FACE_LEFT, 59.0, 15.0, $0000, RESTAURANT_PLAZA_SERVICE_ACE_INTRO
 	map_entry $0f, FACE_LEFT, 50.0, 15.0, $0000, RESTAURANT_PLAZA_COURTS_TOUR
 	db $ff
-	twin_named academy_main_bldg_arrival01, RestaurantPlazaArrival04_13 ; $405f
-	twin_named restaurant_plaza_arrival06, RestaurantPlazaArrival06_13 ; $40a5
-RestaurantPlazaArrival01_13:
+	twin_named academy_main_bldg_arrival01, RestaurantPlazaFromCourtyard_13 ; $405f
+	twin_named restaurant_plaza_from_training_court, RestaurantPlazaFromTrainingCourt_13 ; $40a5
+RestaurantPlazaFromDormEntrance_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
 	cp STORYENTRY_NONE ; $40ee
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $40f0
@@ -49,7 +49,7 @@ RestaurantPlazaArrival01_13:
 	script_wait_move ACTOR_PLAYER ; $4156
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $415b
 	ret ; $4162
-RestaurantPlazaArrival02_13:
+RestaurantPlazaFromRestaurant_13:
 	ld a, [wStoryModeEntryPoint] ; $4163
 	cp STORYENTRY_NONE ; $4166
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $4168
@@ -117,13 +117,13 @@ RestaurantPlazaFacingScripts_13:
 	db $ff
 RestaurantPlazaTileTriggers_13:
 	; $42b5, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, RestaurantPlazaTile01_13, $00, $00
-	map_script $02, FACEMASK_ANY, $0000, RestaurantPlazaTile02_13, $00, $00
-	map_script $03, FACEMASK_ANY, $0000, RestaurantPlazaTile03_13, $00, $00
-	map_script $05, FACEMASK_ANY, $0000, RestaurantPlazaTile05_13, $00, $00
-	map_script $06, FACEMASK_ANY, $0000, RestaurantPlazaTile06_13, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, RestaurantPlazaToDormEntrance_13, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, RestaurantPlazaToRestaurant_13, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, RestaurantPlazaToSeniorCourt_13, $00, $00
+	map_script $05, FACEMASK_ANY, $0000, RestaurantPlazaToJuniorCourt_13, $00, $00
+	map_script $06, FACEMASK_ANY, $0000, RestaurantPlazaToTrainingCourt_13, $00, $00
 	db $ff
-RestaurantPlazaTile01_13:
+RestaurantPlazaToDormEntrance_13:
 	script_move_target ACTOR_PARTNER, 7.0, 13.0 ; $42de
 	script_set_speed ACTOR_PLAYER, 0.5 ; $42e9
 	script_move_angle ACTOR_PLAYER, FACE_UP, 1.0 ; $42f1
@@ -133,7 +133,7 @@ RestaurantPlazaTile01_13:
 	ld [wUnusedExitTriggerIdMirror], a ; $4305
 	ld [wStoryModeExitTriggerRequest], a ; $4308
 	ret ; $430b
-RestaurantPlazaTile02_13:
+RestaurantPlazaToRestaurant_13:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $430c
 	script_move_target ACTOR_PARTNER, 21.0, 13.0 ; $4314
 	script_move_angle ACTOR_PLAYER, $c2, 2.0 ; $431f
@@ -147,7 +147,7 @@ RestaurantPlazaTile02_13:
 	ld [wUnusedExitTriggerIdMirror], a ; $4350
 	ld [wStoryModeExitTriggerRequest], a ; $4353
 	ret ; $4356
-RestaurantPlazaTile03_13:
+RestaurantPlazaToSeniorCourt_13:
 	script_set_speed ACTOR_PARTNER, 2.0 ; $4357
 	script_move_target ACTOR_PARTNER, 37.0, 13.0 ; $435f
 	script_set_speed ACTOR_PLAYER, 0.5 ; $436a
@@ -161,7 +161,7 @@ RestaurantPlazaTile03_13:
 	ld [wUnusedExitTriggerIdMirror], a ; $439a
 	ld [wStoryModeExitTriggerRequest], a ; $439d
 	ret ; $43a0
-RestaurantPlazaTile05_13:
+RestaurantPlazaToJuniorCourt_13:
 	script_move_target ACTOR_PARTNER, 55.0, 13.0 ; $43a1
 	script_set_speed ACTOR_PLAYER, 0.5 ; $43ac
 	script_set_speed ACTOR_PARTNER, 0.5 ; $43b4
@@ -177,7 +177,7 @@ RestaurantPlazaTile05_13:
 	ld [wStoryModeExitTriggerRequest], a ; $43db
 .done:
 	ret ; $43de
-RestaurantPlazaTile06_13:
+RestaurantPlazaToTrainingCourt_13:
 	script_set_speed ACTOR_PLAYER, 1.0 ; $43df
 	script_move_target ACTOR_PARTNER, 59.0, 13.0 ; $43e7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 6.0 ; $43f2
@@ -188,7 +188,7 @@ RestaurantPlazaTile06_13:
 	ld a, EXIT_RESTAURANT_PLAZA_TO_TRAINING_COURT ; $4412
 	ld [wUnusedExitTriggerIdMirror], a ; $4414
 	ld [wStoryModeExitTriggerRequest], a ; $4417
-	jr z, RestaurantPlazaTile05_13.done ; $441a
+	jr z, RestaurantPlazaToJuniorCourt_13.done ; $441a
 	ld a, EXIT_RESTAURANT_PLAZA_TO_TRAINING_COURT ; $441c
 	ld [wUnusedExitTriggerIdMirror], a ; $441e
 	ld [wStoryModeExitTriggerRequest], a ; $4421
@@ -227,9 +227,9 @@ StoryActorsWalkOffAndFadeOutDoubles_13:
 RestaurantPlazaInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $44df
 	cp ENTRY_RESTAURANT_PLAZA_COURTS_TOUR ; $44e2
-	jr nz, .ne0f ; $44e4
+	jr nz, .checkServiceAceIntro ; $44e4
 	call AcademyCourtsTourCutscene ; $44e6
-.ne0f:
+.checkServiceAceIntro:
 	cp ENTRY_RESTAURANT_PLAZA_SERVICE_ACE_INTRO ; $44e9
 	jr nz, .done ; $44eb
 	call ServiceAceCoachIntroCutscene ; $44ed

@@ -63,7 +63,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
 	const BGM_ACADEMY_BUILDING      ; $1a story_location: the Academy Main Building and the Academy Wing
 	const BGM_ACADEMY_OUTDOORS      ; $1b story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
-	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomEntry0fScene
+	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomTourEndScene
 	const BGM_ACADEMY_ROOMS         ; $1d story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
 	const BGM_TENNIS_MACHINE        ; $1e the Tennis Machine Room's drill_defs
 	const BGM_WALL_PRACTICE         ; $1f the Wall Practice Room's drill_defs
@@ -89,7 +89,7 @@ def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 ; wCurrentBGM when the music channels fall idle. $40 maps to music $00.
 def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
-def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomEntry0fScene, DormRoomEntry02Scene) and the save-slot debug editor
+def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomTourEndScene, DormRoomReturnFromEntranceScene) and the save-slot debug editor
 def JINGLE_COURT_INTRO_EXHIBITION equ $44 ; PlayCourtIntro, exhibition matches
 def JINGLE_COURT_INTRO       equ $45 ; PlayCourtIntro, story and minigame matches
 

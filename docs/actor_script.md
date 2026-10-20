@@ -87,8 +87,8 @@ The first two lines run once; the body loops between `(39, 19)` and
 - **`map_actor`** — the `objdef` field (initial script).
 - **`script_set_actor_script actor, addr`** (`ScriptSetActorScript`) — a
   script installed at runtime; every target is labelled `ActorScript_*`.
-- **`dw` selector tables** — e.g. `DormRoomNpc04IdleScripts_13`
-  (`$13:$526a`), indexed by `SetRandomDormRoomNpc04Script_13` with a random
+- **`dw` selector tables** — e.g. `DormRoomCatIdleScripts_13`
+  (`$13:$526a`), indexed by `SetRandomDormRoomCatScript_13` with a random
   0-7 to pick one of four entry points.
 
 ## Fragments and multiple entry points
@@ -101,7 +101,7 @@ in-blob jump targets get descriptive locals (`.pace`). Fragments fall through or
 into each other, and a jump to another entry point names its global label
 (`as_jump ActorScript_11_02`).
 
-`DormRoomNpc04IdleScripts_13` lands at offsets 0/24/34/44 of one 95-byte run
+`DormRoomCatIdleScripts_13` lands at offsets 0/24/34/44 of one 95-byte run
 (`ActorScript_13_00`…`_03`, `$13:$585f`-`$58bd`: a wander loop, two
 one-shots, a patrol loop); the shared body at `$11:$5b14…$5d27` has 19 entry
 points.

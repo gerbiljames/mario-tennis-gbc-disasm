@@ -132,24 +132,24 @@ ShowStoryTournamentBracket_13:
 	test_flag FLAG_DOUBLES ; $7afa
 	jr nz, .doublesBracket ; $7afd
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7aff
-	jr nz, .juniorBracket ; $7b02
+	jr nz, .singlesFinalWon ; $7b02
 	ld b, $00 ; $7b04
 	ld c, $04 ; $7b06
 	jr .show ; $7b08
-.juniorBracket:
+.singlesFinalWon:
 	ld b, $00 ; $7b0a
 	ld c, $01 ; $7b0c
 	jr .show ; $7b0e
 .doublesBracket:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7b10
-	jr nz, .doublesFinal ; $7b13
+	jr nz, .doublesFinalWon ; $7b13
 	ld b, $01 ; $7b15
 	ld c, $02 ; $7b17
 	jr .show ; $7b19
 .show:
 	farcall ShowTournamentBracket ; $7b1b
 	ret ; $7b1e
-.doublesFinal:
+.doublesFinalWon:
 	ld b, $01 ; $7b1f
 	ld c, $01 ; $7b21
 	jr .show ; $7b23

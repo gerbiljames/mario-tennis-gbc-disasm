@@ -302,39 +302,39 @@ VarsityCourtTourGfx3_13:
 VarsityCourtTourPalette_13:
 	INCLUDE "data/story/VarsityCourtTourPalette_13.asm" ; $6a08, 8 bytes (palettes)
 SetupVarsityCourtSinglesMatch_13:
-	script_null_script ACTOR_VARSITY_COURT_A_FAY ; $6a10
-	script_set_anim ACTOR_VARSITY_COURT_A_FAY, ANIM_WALK ; $6a15
-	script_null_script ACTOR_VARSITY_COURT_A_BETH ; $6a1c
-	script_set_speed ACTOR_VARSITY_COURT_A_BETH, 0.75 ; $6a21
-	script_set_actor_script ACTOR_VARSITY_COURT_A_KEVIN, ActorScript_13_04 ; $6a29
-	script_set_actor_script ACTOR_VARSITY_COURT_A_CURT, ActorScript_13_06 ; $6a34
-	script_set_actor_script ACTOR_VARSITY_COURT_A_BETH, ActorScript_13_08 ; $6a3f
-	script_set_actor_script ACTOR_VARSITY_COURT_A_FAY, ActorScript_13_10 ; $6a4a
+	script_null_script ACTOR_VARSITY_COURT_SINGLES_FAY ; $6a10
+	script_set_anim ACTOR_VARSITY_COURT_SINGLES_FAY, ANIM_WALK ; $6a15
+	script_null_script ACTOR_VARSITY_COURT_SINGLES_BETH ; $6a1c
+	script_set_speed ACTOR_VARSITY_COURT_SINGLES_BETH, 0.75 ; $6a21
+	script_set_actor_script ACTOR_VARSITY_COURT_SINGLES_KEVIN, ActorScript_13_04 ; $6a29
+	script_set_actor_script ACTOR_VARSITY_COURT_SINGLES_CURT, ActorScript_13_06 ; $6a34
+	script_set_actor_script ACTOR_VARSITY_COURT_SINGLES_BETH, ActorScript_13_08 ; $6a3f
+	script_set_actor_script ACTOR_VARSITY_COURT_SINGLES_FAY, ActorScript_13_10 ; $6a4a
 	script_move_player 12.0, 28.0 ; $6a55
 	farcall WaitPlayerMoveDone ; $6a5f
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6a62
-	script_wait_actor_script ACTOR_VARSITY_COURT_A_FAY ; $6a6d
+	script_wait_actor_script ACTOR_VARSITY_COURT_SINGLES_FAY ; $6a6d
 	farcall InitStoryMatchSettings ; $6a72
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_VARSITY_PRACTICE ; $6a75
 	farcall RunStoryMatch ; $6a82
 	farcall RestoreOverworldAfterMatch ; $6a85
 	ret ; $6a88
 SetupVarsityCourtDoublesMatch_13:
-	script_null_script ACTOR_VARSITY_COURT_B_FAY ; $6a89
-	script_null_script ACTOR_VARSITY_COURT_B_BETH ; $6a8e
-	script_set_speed ACTOR_VARSITY_COURT_B_BETH, 0.75 ; $6a93
-	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_WALK ; $6a9b
-	script_set_anim ACTOR_VARSITY_COURT_B_FAY, ANIM_NOD ; $6aa2
-	script_wait_idle ACTOR_VARSITY_COURT_B_FAY ; $6aa9
-	script_set_actor_script ACTOR_VARSITY_COURT_B_FAY, ActorScript_13_10 ; $6aae
-	script_set_actor_script ACTOR_VARSITY_COURT_B_CURT, ActorScript_13_11 ; $6ab9
-	script_set_actor_script ACTOR_VARSITY_COURT_B_BETH, ActorScript_13_08 ; $6ac4
+	script_null_script ACTOR_VARSITY_COURT_DOUBLES_FAY ; $6a89
+	script_null_script ACTOR_VARSITY_COURT_DOUBLES_BETH ; $6a8e
+	script_set_speed ACTOR_VARSITY_COURT_DOUBLES_BETH, 0.75 ; $6a93
+	script_set_anim ACTOR_VARSITY_COURT_DOUBLES_FAY, ANIM_WALK ; $6a9b
+	script_set_anim ACTOR_VARSITY_COURT_DOUBLES_FAY, ANIM_NOD ; $6aa2
+	script_wait_idle ACTOR_VARSITY_COURT_DOUBLES_FAY ; $6aa9
+	script_set_actor_script ACTOR_VARSITY_COURT_DOUBLES_FAY, ActorScript_13_10 ; $6aae
+	script_set_actor_script ACTOR_VARSITY_COURT_DOUBLES_CURT, ActorScript_13_11 ; $6ab9
+	script_set_actor_script ACTOR_VARSITY_COURT_DOUBLES_BETH, ActorScript_13_08 ; $6ac4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6acf
 	script_set_actor_script ACTOR_PARTNER, ActorScript_13_15 ; $6ada
-	script_set_actor_script ACTOR_VARSITY_COURT_B_KEVIN, ActorScript_13_04 ; $6ae5
+	script_set_actor_script ACTOR_VARSITY_COURT_DOUBLES_KEVIN, ActorScript_13_04 ; $6ae5
 	script_move_player 12.0, 28.0 ; $6af0
 	farcall WaitPlayerMoveDone ; $6afa
-	script_wait_actor_script ACTOR_VARSITY_COURT_B_FAY ; $6afd
+	script_wait_actor_script ACTOR_VARSITY_COURT_DOUBLES_FAY ; $6afd
 	farcall InitStoryMatchSettings ; $6b02
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_VARSITY_PRACTICE ; $6b05
 	farcall RunStoryMatch ; $6b12

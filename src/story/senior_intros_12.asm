@@ -105,7 +105,7 @@ SeniorDoublesRankOfferScene:
 	farcall ScriptCloseDialogueWindow ; $6036
 	script_wait_frames 5 ; $6039
 	and a ; $6040
-	jp nz, .setText ; $6041
+	jp nz, .declined ; $6041
 	script_set_text Text_EmilyFirstVsThirdTeam ; $6044
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $604a
 	jr z, .accepted ; $604d
@@ -123,7 +123,7 @@ SeniorDoublesRankOfferScene:
 	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $607e
 	call SeniorDoublesMatchConfirm ; $6083
 	ret ; $6086
-.setText:
+.declined:
 	script_set_text Text_EmilyDoublesTrainFirst ; $6087
 	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $608d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6092
