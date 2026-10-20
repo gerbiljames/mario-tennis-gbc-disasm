@@ -68,6 +68,7 @@ def wCharDataConfirmTopRows equ $dea0
 ; $04-$07, and its bank $05 overlays. The fields are documented once, in
 ; match_char_struct (include/macros/ram.inc), which declares the bank-tagged
 ; copies; tests/test_rom.py checks these names against them.
+def wCharStruct equ $df00
 def wCharPosX equ $df00
 def wClearStatusMode equ $df00
 def wTextArgFetchBuffer equ $df00
@@ -175,6 +176,10 @@ def wCharDepthKey equ $df96
 
 ; The game progress screen (bank $1e) keeps its lists in WRAM bank $05's
 ; $df00 page.
+; [1 byte] Window struct index CreateProgressListWindow returns; DrawTextWindowFrame redraws the list frame with it after each scroll
+; in WRAM banks $05
+def wProgressWindowId equ $df01
+
 ; [1 byte] How many progress entries BuildVisibleProgressEntryList found unlocked
 ; in WRAM banks $05
 def wProgressVisibleCount equ $df03
@@ -182,6 +187,14 @@ def wProgressVisibleCount equ $df03
 ; [1 byte] The row the progress list is scrolled to, an index into wProgressVisibleEntries
 ; in WRAM banks $05
 def wProgressListIndex equ $df05
+
+; [1 byte] Nonzero while the list can scroll up (wProgressListIndex is not 0): DrawProgressScreenSprites draws the up arrow
+; in WRAM banks $05
+def wProgressUpArrow equ $df07
+
+; [1 byte] 1 while rows remain below the visible seven: DrawProgressScreenSprites draws the down arrow
+; in WRAM banks $05
+def wProgressDownArrow equ $df08
 
 ; [48 bytes] Per progress entry, 1 if its flag is set (RunRewardCategoryList); BuildVisibleProgressEntryList packs the set ones into wProgressVisibleEntries
 ; in WRAM banks $05

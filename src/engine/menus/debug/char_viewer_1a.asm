@@ -407,7 +407,7 @@ Unused_1a_SetupCharViewerScene:
 	ld [wMatchPlayerChar], a ; $6fa4
 	ld d, a ; $6fa7
 	wram_bank WRAM_CHAR0 ; $6fa8
-	ld hl, wCharPosX ; $6fae
+	ld hl, wCharStruct ; $6fae
 	ld c, $10 ; $6fb1
 	call ClearMemory16 ; $6fb3
 	ld a, $00 ; $6fb6

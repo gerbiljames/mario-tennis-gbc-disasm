@@ -130,6 +130,7 @@ ladders at `$6063`/`$4ff5` indexed by `wOnCourtCharCountMinus1`:
 | 7 | far-side partner | 3 (Two-On-One), 4 |
 
 The fields are the untagged `wChar*` EQUs in `include/ram_mirrored.inc`
+(`wCharStruct` for the whole struct)
 (used where the WRAM bank is 4-7 or inside match banks `$07`/`$08`), with
 `w4Char*`...`w7Char*` from `match_char_struct` for the symbol file;
 `docs/match_engine.md` describes them. Other WRAM banks reuse `$dfxx` for
@@ -325,9 +326,9 @@ Free bytes that are written with real values, each explained:
 Bytes once counted free that are now declared: record fields `+$2b` (speed
 bonus, which `LoadCharacterAttributes` adds to the Speed stat), `+$0d`
 (gender, in the match records too) and `+$2f` (write-only build tag) in all
-eight `$40`-byte records; the game progress screen's five lists in bank
-`$05`'s `$df00` page (`wProgressEntryUnlocked`, `wProgressVisibleEntries`,
-...); `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
+eight `$40`-byte records; the game progress screen's lists, window id and
+scroll-arrow flags in bank `$05`'s `$df00` page (`wProgressEntryUnlocked`,
+`wProgressVisibleEntries`, `wProgressWindowId`, ...); `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
 single-character screens park the frame descriptor after the sprite slot;
 and the rest of `$c700-$c77f`, `wDebugStatsBackup`, where the debug stats
 editor saves character 0's `$df00-$df7f`.

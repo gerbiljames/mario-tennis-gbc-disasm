@@ -234,7 +234,7 @@ Unused_06_RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6b87
 	farcall Unused_01_LoadMenuTilesBChunk2 ; $6b8a
 	wram_bank WRAM_CHAR0 ; $6b8d
-	ld hl, wCharPosX ; $6b93
+	ld hl, wCharStruct ; $6b93
 	ld de, wDebugStatsBackup ; $6b96
 	ld c, wDebugStatsBackup_SIZE / 16 ; $6b99
 	call CopyMemoryFast ; $6b9b
@@ -268,7 +268,7 @@ Unused_06_RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6bdc
 	wram_bank WRAM_CHAR0 ; $6bdf
 	ld hl, wDebugStatsBackup ; $6be5
-	ld de, wCharPosX ; $6be8
+	ld de, wCharStruct ; $6be8
 	ld c, wDebugStatsBackup_SIZE / 16 ; $6beb
 	call CopyMemoryFast ; $6bed
 	pop_wram_bank ; $6bf0

@@ -114,7 +114,7 @@ LoadDrillOpponentBySide:
 Unused_0b_WriteCharStructByte:
 	ld b, a ; $442b
 	push_wram_bank WRAM_CHAR1 ; $442c
-	ld de, wCharPosX ; $4435
+	ld de, wCharStruct ; $4435
 	add hl, de ; $4438
 	ld [hl], b ; $4439
 	pop_wram_bank ; $443a
@@ -130,8 +130,8 @@ IsCharNearNet:
 	ld a, $04 ; $444b
 	add b ; $444d
 	wram_bank a ; $444e
-	ld de, wCharPosX ; $4453
-	ld hl, wCharBallReachFlags - wCharPosX ; $4456
+	ld de, wCharStruct ; $4453
+	ld hl, wCharBallReachFlags - wCharStruct ; $4456
 	add hl, de ; $4459
 	ld a, [hl] ; $445a
 	bit BALLREACHB_NEAR_NET, a ; $445b

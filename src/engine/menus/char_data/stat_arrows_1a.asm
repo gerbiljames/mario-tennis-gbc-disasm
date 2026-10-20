@@ -6,7 +6,7 @@ Unused_1a_DrawCharViewerCharSprite:
 	ld_xy de, $4e, $15 ; $701e
 	call QueueSprite ; $7021
 	wram_bank WRAM_CHAR0 ; $7024
-	ld hl, wCharPosX ; $702a
+	ld hl, wCharStruct ; $702a
 	ld b, h ; $702d
 	ld c, l ; $702e
 	farcall StepCharAnimation ; $702f

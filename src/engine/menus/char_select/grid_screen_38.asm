@@ -1,7 +1,7 @@
 UpdateCharSelectCharSprite:
 	ld c, l ; $4ce2
 	ld b, h ; $4ce3
-	ld hl, $0022 ; $4ce4
+	ld hl, wCharObjectBank - wCharStruct ; $4ce4
 	add hl, bc ; $4ce7
 	ld a, [hl] ; $4ce8
 	and a ; $4ce9
@@ -9,7 +9,7 @@ UpdateCharSelectCharSprite:
 	ld l, c ; $4ceb
 	ld h, b ; $4cec
 	push hl ; $4ced
-	ld de, wCharPosX ; $4cee
+	ld de, wCharStruct ; $4cee
 	ld c, $08 ; $4cf1
 	call CopyMemoryFast ; $4cf3
 	farcall EaseCharFacing ; $4cf6
@@ -22,7 +22,7 @@ UpdateCharSelectCharSprite:
 	pop de ; $4d06
 	farcall BuildCharSpriteSlots ; $4d07
 	pop de ; $4d0a
-	ld hl, wCharPosX ; $4d0b
+	ld hl, wCharStruct ; $4d0b
 	ld c, $06 ; $4d0e
 	call CopyMemoryFast ; $4d10
 	ret ; $4d13
@@ -73,8 +73,8 @@ ReloadSelectedCharGfx:
 TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4d9b
 	wram_bank b ; $4d9e
-	ld bc, wCharPosX ; $4da3
-	ld hl, wCharAnimId - wCharPosX ; $4da6
+	ld bc, wCharStruct ; $4da3
+	ld hl, wCharAnimId - wCharStruct ; $4da6
 	add hl, bc ; $4da9
 	ld a, [hl] ; $4daa
 	cp CHARANIM_IDLE ; $4dab

@@ -527,7 +527,7 @@ DrawExpScreenCharSprites:
 	ret ; $5953
 UpdateExpScreenCharSprite:
 	push af ; $5954
-	ld hl, wCharPosX ; $5955
+	ld hl, wCharStruct ; $5955
 	ld b, h ; $5958
 	ld c, l ; $5959
 	farcall StepCharAnimation ; $595a

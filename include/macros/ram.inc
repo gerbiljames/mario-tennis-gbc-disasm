@@ -79,7 +79,8 @@ MACRO match_stats
 \1DoubleFaults::    db
 ENDM
 
-; The match engine's per-character struct at $df00, labelled <prefix><Field>.
+; The match engine's per-character struct at $df00, labelled <prefix><Field>,
+; with <prefix>CharStruct naming the whole struct.
 ; WRAM banks $04-$07 each hold one copy, bank = character: 4 near-P1, 5
 ; far-P1, 6 near-partner, 7 far-partner. Each bank file declares its copy
 ; under a bank-tagged prefix (w4-w7) so the symbol file resolves the right
@@ -87,8 +88,9 @@ ENDM
 ; because the bank is chosen at run time. Bank $38's
 ; UpdateCharSelectCharSprite and TickCharSelectIdleAnim drive the same struct
 ; once per preview character, selecting WRAM banks $04-$07 in turn (bank
-; $38's own $df00 is wCharSelectHandedness in WRAM bank $03).
+; $38's own $df00 is wCharGridHandedness in WRAM bank $03).
 MACRO match_char_struct
+\1CharStruct::
 UNION
 ; clear-status developer menu (bank $0a): only bank $05's copy, over the idle far-P1 struct
 ; [8-bit] RunClearStatusSetupMenu's first choice (Text_MenuSetContinue): 0 Set, 1 Continue, $ff cancelled; Continue and cancel go straight to the result code. Cleared 32 bytes at a time on entry

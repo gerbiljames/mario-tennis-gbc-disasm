@@ -201,19 +201,19 @@ InitChar:
 	ret ; $687e
 InitAllChars:
 	wram_bank WRAM_CHAR3 ; $687f
-	ld hl, wCharPosX ; $6885
+	ld hl, wCharStruct ; $6885
 	ld c, $10 ; $6888
 	call ClearMemory16 ; $688a
 	wram_bank WRAM_CHAR2 ; $688d
-	ld hl, wCharPosX ; $6893
+	ld hl, wCharStruct ; $6893
 	ld c, $10 ; $6896
 	call ClearMemory16 ; $6898
 	wram_bank WRAM_CHAR1 ; $689b
-	ld hl, wCharPosX ; $68a1
+	ld hl, wCharStruct ; $68a1
 	ld c, $10 ; $68a4
 	call ClearMemory16 ; $68a6
 	wram_bank WRAM_CHAR0 ; $68a9
-	ld hl, wCharPosX ; $68af
+	ld hl, wCharStruct ; $68af
 	ld c, $10 ; $68b2
 	call ClearMemory16 ; $68b4
 	ld b, $00 ; $68b7

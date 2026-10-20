@@ -4,19 +4,19 @@ RunCharacterSelectScreen:
 	ld a, b ; $47cf
 	ld [wCharSelectIsPartner], a ; $47d0
 	wram_bank WRAM_CHAR3 ; $47d3
-	ld hl, wCharPosX ; $47d9
+	ld hl, wCharStruct ; $47d9
 	ld c, $10 ; $47dc
 	call ClearMemory16 ; $47de
 	wram_bank WRAM_CHAR2 ; $47e1
-	ld hl, wCharPosX ; $47e7
+	ld hl, wCharStruct ; $47e7
 	ld c, $10 ; $47ea
 	call ClearMemory16 ; $47ec
 	wram_bank WRAM_CHAR1 ; $47ef
-	ld hl, wCharPosX ; $47f5
+	ld hl, wCharStruct ; $47f5
 	ld c, $10 ; $47f8
 	call ClearMemory16 ; $47fa
 	wram_bank WRAM_CHAR0 ; $47fd
-	ld hl, wCharPosX ; $4803
+	ld hl, wCharStruct ; $4803
 	ld c, $10 ; $4806
 	call ClearMemory16 ; $4808
 	farcall ResetMatchState ; $480b
@@ -328,19 +328,19 @@ DrawCharacterSelectPrompt:
 	ret ; $4b20
 InitCharacterSelectChars:
 	wram_bank WRAM_CHAR3 ; $4b21
-	ld hl, wCharPosX ; $4b27
+	ld hl, wCharStruct ; $4b27
 	ld c, $10 ; $4b2a
 	call ClearMemory16 ; $4b2c
 	wram_bank WRAM_CHAR2 ; $4b2f
-	ld hl, wCharPosX ; $4b35
+	ld hl, wCharStruct ; $4b35
 	ld c, $10 ; $4b38
 	call ClearMemory16 ; $4b3a
 	wram_bank WRAM_CHAR1 ; $4b3d
-	ld hl, wCharPosX ; $4b43
+	ld hl, wCharStruct ; $4b43
 	ld c, $10 ; $4b46
 	call ClearMemory16 ; $4b48
 	wram_bank WRAM_CHAR0 ; $4b4b
-	ld hl, wCharPosX ; $4b51
+	ld hl, wCharStruct ; $4b51
 	ld c, $10 ; $4b54
 	call ClearMemory16 ; $4b56
 	ld a, CHAR_ALEX ; $4b59
@@ -375,28 +375,28 @@ InitCharacterSelectChars:
 	ret ; $4bab
 DrawCharacterSelectChars:
 	wram_bank WRAM_CHAR0 ; $4bac
-	ld hl, wCharPosX ; $4bb2
+	ld hl, wCharStruct ; $4bb2
 	call UpdateCharSelectCharSprite ; $4bb5
 	ld a, $58 ; $4bb8
 	ld [wCharSpriteSlot + 2], a ; $4bba
 	ld a, $20 ; $4bbd
 	ld [wCharSpriteSlot + 3], a ; $4bbf
 	wram_bank WRAM_CHAR1 ; $4bc2
-	ld hl, wCharPosX ; $4bc8
+	ld hl, wCharStruct ; $4bc8
 	call UpdateCharSelectCharSprite ; $4bcb
 	ld a, $58 ; $4bce
 	ld [wCharSpriteSlot + 2], a ; $4bd0
 	ld a, $61 ; $4bd3
 	ld [wCharSpriteSlot + 3], a ; $4bd5
 	wram_bank WRAM_CHAR2 ; $4bd8
-	ld hl, wCharPosX ; $4bde
+	ld hl, wCharStruct ; $4bde
 	call UpdateCharSelectCharSprite ; $4be1
 	ld a, $c8 ; $4be4
 	ld [wCharSpriteSlot + 2], a ; $4be6
 	ld a, $c8 ; $4be9
 	ld [wCharSpriteSlot + 3], a ; $4beb
 	wram_bank WRAM_CHAR3 ; $4bee
-	ld hl, wCharPosX ; $4bf4
+	ld hl, wCharStruct ; $4bf4
 	call UpdateCharSelectCharSprite ; $4bf7
 	ld a, $c8 ; $4bfa
 	ld [wCharSpriteSlot + 2], a ; $4bfc
