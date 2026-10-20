@@ -470,7 +470,7 @@ wSpriteBufferPage:: db
 ; [8-bit] Character id assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites
 wMatchPlayerChar:: db
 
-; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set by Unused_0a_SetStoryMatchOpponent
+; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup
 wMatchOpponentChar:: db
 
 ; [8-bit] BG attribute written for window-frame cells ($80 = BG priority)
