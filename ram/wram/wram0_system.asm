@@ -455,7 +455,7 @@ wBGRowBlitTiles:: ds 32
 ; [8-bit] Nonzero makes RenderInlineNumber right-align its number in a five-character field. Set and cleared around the Text_NumberArg line only
 wTextNumberRightAlign:: db
 
-; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth print as text id $1b + id
+; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintCharName and MeasureCharNameArgWidth print as text id $1b + id
 wTextCharNameArg:: db
 
 ; [8-bit] Destination row pitch, negated: the text setup writes -c (-$20 for a tilemap); TextCmdNextGlyphStreamRow negates and doubles it to step wTextRowStartPtr two rows. Zeroed when a text window closes

@@ -52,7 +52,7 @@ def solve_table(data: bytes):
 TEXT_CODES = {0x04: "TX_ARG_STRING", 0x05: "TX_DELAY_30", 0x06: "TX_DELAY_15",
               0x07: "TX_PLAYER_NAME", 0x08: "TX_SHORT_TEXT_ARG", 0x09: "TX_ARG_NUMBER",
               0x0A: "TX_NOP", 0x0B: "TX_PARTNER_NAME", 0x0C: "TX_DELAY_150",
-              0x0D: "TX_NEXT_GLYPH_ROW", 0x0E: "TX_SHORT_TEXT", 0x0F: "TX_NEWLINE_0F",
+              0x0D: "TX_NEXT_GLYPH_ROW", 0x0E: "TX_CHAR_NAME", 0x0F: "TX_NEWLINE_0F",
               0x10: "TX_NOP_10", 0x11: "TX_NOP_11", 0x12: "TX_NOP_12", 0x13: "TX_NOP_13",
               0xDE: "TX_DAKUTEN", 0xDF: "TX_HANDAKUTEN"}
 TEXT_CODES.update({c: f"TX_NEWLINE_{c:02X}" for c in range(0x14, 0x1E)})
@@ -60,7 +60,7 @@ TEXT_CODES.update({c: f"TX_NEWLINE_{c:02X}" for c in range(0x14, 0x1E)})
 
 def _char_names():
     """The CHAR_* roster ids of include/constants/, by value: the operand
-    of TX_SHORT_TEXT is a character id (short text $1b + id is the roster
+    of TX_CHAR_NAME is a character id (short text $1b + id is the roster
     name), so the pools spell it with the character's name."""
     names = {}
     try:
@@ -78,7 +78,7 @@ CHAR_NAMES = _char_names()
 def render_string(chunk: bytes) -> list:
     """Render one string as text/line/page macro lines (see include/macros/).
     Segments are split on the $01/$02 control bytes; the other control codes
-    are written by name (TEXT_CODES), TX_SHORT_TEXT keeps its operand byte
+    are written by name (TEXT_CODES), TX_CHAR_NAME keeps its operand byte
     numeric, and anything else stays a numeric arg, so any input reassembles
     identically."""
     out = []

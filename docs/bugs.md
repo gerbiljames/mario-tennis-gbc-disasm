@@ -675,7 +675,7 @@ opcode; left as is.
 so the cursor `MeasureNextArgNumberWidth` reads the number queue at becomes the
 window's top row. `OpenSpeechBubble` zeroes the string and short-text measure
 cursors after its fit but not this one, and on a page break
-`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueRestoreBG` (`$598f`)
+`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueKeepOpen` (`$598f`)
 fit the next page without resetting it, so a `TX_ARG_NUMBER` on page 2 or later
 is measured from queue entry `row` (past the 16-entry queue for rows 16-31), not
 the next unread one, and the window is sized for the wrong digit count. Drawing

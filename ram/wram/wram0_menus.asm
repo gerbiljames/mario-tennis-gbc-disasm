@@ -101,16 +101,16 @@ wRacketShoesTabIndex:: db
 ; [8-bit] The same for the Status -> MARIO CHARACTERS exhibition/mini-game data choice (RunMarioCharDataTypeSelect)
 wMarioCharDataTypeTabIndex:: db
 
-; [8-bit] Window handle of bank $1a's menu code, from CreateMenuWindowFromText or CreateWindow; passed to Unused_05_RunMenuSelectionShared, CloseWindow, WriteStringToWindow and GetWindowStructPtr
+; [8-bit] Window handle of bank $1a's menu code, from CreateMenuWindowFromText or CreateWindow; passed to Unused_05_RunOptionsMenuSelection, CloseWindow, WriteStringToWindow and GetWindowStructPtr
 wPauseMenuWindowId:: db
 
-; [8-bit] Preset cursor row for the next Unused_05_RunMenuSelectionShared: copied into the live row ($d830, WRAM bank $05) at menu open, then cleared so the default is row 0. Bank $1a stores the last selected row here before rebuilding the pause menu, and clears it when the menu closes for good
+; [8-bit] Preset cursor row for the next Unused_05_RunOptionsMenuSelection: copied into the live row ($d830, WRAM bank $05) at menu open, then cleared so the default is row 0. Bank $1a stores the last selected row here before rebuilding the pause menu, and clears it when the menu closes for good
 wMenuInitialRow:: db
 
 ; [8-bit] Menu rows on which LEFT/RIGHT adjust a value: bit 7 = mask present, bits 0-6 = one bit per row. Gates the menu driver's LEFT/RIGHT branch (Unused_05_IsCursorOnAdjustRow) and makes Unused_05_AnimateMenuScrollArrowsTask draw the arrows on that row. Bank $1a sets $83 (rows 0-1) for the pause menu and $8c (rows 2-3) for the minigame pause menu
 wMenuAdjustRowMask:: db
 
-; [8-bit] Menu rows that do not close the window when chosen (encoding as wMenuAdjustRowMask): bank $1a skips CloseWindow after Unused_05_RunMenuSelectionShared when the chosen row's bit is set. Same values as wMenuAdjustRowMask
+; [8-bit] Menu rows that do not close the window when chosen (encoding as wMenuAdjustRowMask): bank $1a skips CloseWindow after Unused_05_RunOptionsMenuSelection when the chosen row's bit is set. Same values as wMenuAdjustRowMask
 wMenuKeepOpenRowMask:: db
 
 ; [8-bit] Pause-menu options state: low nibble = toggle bits the music/sound rows flip, bit 5 gates Unused_1a_DrawPauseMenuSettingValues, bits 6-7 set once a row has been visited. Cleared by Unused_1a_ResetPauseMenuState

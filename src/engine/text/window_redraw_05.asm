@@ -30,7 +30,7 @@ ENDC
 	ld l, a ; $60b7
 	ld h, $00 ; $60b8
 	add hl, hl ; $60ba
-	ld de, SpeakerVoiceActorTypePropertyTable ; $60bb
+	ld de, SpeakerVoiceByObjectTable ; $60bb
 	add hl, de ; $60be
 	inc hl ; $60bf
 	ld b, [hl] ; $60c0
@@ -44,7 +44,7 @@ ENDC
 	pop de ; $60c8
 	pop bc ; $60c9
 	ret ; $60ca
-SpeakerVoiceActorTypePropertyTable:
+SpeakerVoiceByObjectTable:
 	; $60cb, 175 bytes (bytes:2)
 	db $1e, $04 ; 0x00
 	db $1f, $03 ; 0x02

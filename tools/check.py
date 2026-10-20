@@ -1631,7 +1631,7 @@ TEXT_POINTER_LABELS = {
     "FitWindowToText.checkMainCharName": "a",
     "FitWindowToText.checkArgString": "a",
     "FitWindowToText.checkPartnerName": "a",
-    "FitWindowToText.checkIndexedShortText": "a",
+    "FitWindowToText.checkCharName": "a",
     "MeasureTextDimensions.notLineBreak": "a",
     "MeasureTextDimensions.notShortTextArg": "a",
 }

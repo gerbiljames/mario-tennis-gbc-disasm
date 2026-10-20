@@ -172,14 +172,14 @@ RunDebugFlagEditor:
 	push bc ; $65a3
 	push de ; $65a4
 	push hl ; $65a5
-	test_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65a6
-	jr z, .notDebugFlagEditorOpen ; $65a9
-	set_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65ab
+	test_flag FLAG_DEBUG_FLAG_EDITOR_INITED ; $65a6
+	jr z, .skipCursorReset ; $65a9
+	set_flag FLAG_DEBUG_FLAG_EDITOR_INITED ; $65ab
 	xor a ; $65ae
 	ld [wDebugFlagBit], a ; $65af
 	ld [wDebugFlagByte], a ; $65b2
 	ld [wDebugFlagPage], a ; $65b5
-.notDebugFlagEditorOpen:
+.skipCursorReset:
 	ld_cell de, $00, $00 ; $65b8
 	ld_size bc, $14, $04 ; $65bb
 	call CreateWindow ; $65be
@@ -217,7 +217,7 @@ RunDebugFlagEditor:
 	jr nz, .closeWindow ; $661e
 	ldh a, [hInputRisingEdge] ; $6620
 	bit PADB_A, a ; $6622
-	jr z, .checkInputRisingEdge ; $6624
+	jr z, .checkStart ; $6624
 	call DebugToggleSelectedFlag ; $6626
 	call DebugDrawFlagsWindow1 ; $6629
 	call DebugDrawFlagsWindow2 ; $662c
@@ -225,10 +225,10 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6632
 	ld a, [wDebugFlagWindow2Id] ; $6635
 	call RedrawWindowRows ; $6638
-.checkInputRisingEdge:
+.checkStart:
 	ldh a, [hInputRisingEdge] ; $663b
 	bit PADB_START, a ; $663d
-	jr z, .checkPlayerInputFlags ; $663f
+	jr z, .checkDpad ; $663f
 	ld a, [wDebugFlagPage] ; $6641
 	inc a ; $6644
 	and $03 ; $6645
@@ -239,7 +239,7 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6653
 	ld a, [wDebugFlagWindow2Id] ; $6656
 	call RedrawWindowRows ; $6659
-.checkPlayerInputFlags:
+.checkDpad:
 	ldh a, [hPlayerInputFlags] ; $665c
 	and PADF_DPAD ; $665e
 	jr z, .advanceFrame ; $6660
@@ -425,7 +425,7 @@ RunDebugWarpMenu:
 	jr nz, .closeWindow ; $67f7
 	ldh a, [hInputRisingEdge] ; $67f9
 	and PADF_A ; $67fb
-	jr z, .checkInputPressed ; $67fd
+	jr z, .checkUpDown ; $67fd
 	ld a, [wDebugWarpLocation] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [wDebugWarpEntryPoint] ; $6805
@@ -434,7 +434,7 @@ RunDebugWarpMenu:
 	ld [wUnusedExitTriggerIdMirror], a ; $680d
 	ld [wStoryModeExitTriggerRequest], a ; $6810
 	jr .closeWindow ; $6813
-.checkInputPressed:
+.checkUpDown:
 	ldh a, [hInputPressed] ; $6815
 	and PADF_UP | PADF_DOWN ; $6817
 	jr z, .adjustValue ; $6819

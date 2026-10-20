@@ -191,7 +191,7 @@ Unused_05_SetTextVar:
 	pop bc ; $53c7
 	pop af ; $53c8
 	ret ; $53c9
-TextCmdPrintShortText:
+TextCmdPrintCharName:
 	push af ; $53ca
 	push bc ; $53cb
 	ld a, [wTextCharNameArg] ; $53cc
@@ -206,7 +206,7 @@ TextCmdPrintShortText:
 	pop bc ; $53e5
 	pop af ; $53e6
 	ret ; $53e7
-MeasureIndexedShortTextWidth:
+MeasureCharNameArgWidth:
 	push bc ; $53e8
 	push de ; $53e9
 	push hl ; $53ea
@@ -347,7 +347,7 @@ ControlCodeHandlers_05:
 	dw TextCmdPrintPartnerName ; record 11
 	dw TextCmdDelay150Skippable ; record 12
 	dw TextCmdNextGlyphStreamRow ; record 13
-	dw TextCmdPrintShortText ; record 14
+	dw TextCmdPrintCharName ; record 14
 	dw TextCmdNewline ; record 15
 	dw TextCmdNop10 ; record 16
 	dw TextCmdNop11 ; record 17

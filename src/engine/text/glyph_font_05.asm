@@ -135,7 +135,7 @@ InitGlyphStreamAt:
 	ld a, [wWindowId] ; $7741
 	cp b ; $7744
 	jr nz, .setRowStart ; $7745
-	test_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7747
+	test_flag FLAG_TEMP_NO_MENU_TEXT_INDENT ; $7747
 	jr nz, .setRowStart ; $774a
 	inc d ; $774c
 	ld e, c ; $774d
@@ -167,7 +167,7 @@ InitGlyphStreamAt:
 	pop bc ; $7771
 	pop af ; $7772
 	ret ; $7773
-SaveGlyphPenColumns:
+SetPendingGlyphUploadRange:
 	push af ; $7774
 	push bc ; $7775
 	push hl ; $7776

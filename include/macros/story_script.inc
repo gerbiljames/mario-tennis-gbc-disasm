@@ -171,11 +171,12 @@ MACRO script_speak
 	farcall ScriptShowSpeakerDialogue
 ENDM
 
-; script_speak, then restores the background the speaker's window covered.
+; script_speak that leaves the window open (wDialogueWindowId kept) for a later close,
+; such as ScriptCloseDialogueWindow or RunDialogueYesNoPrompt.
 ; Usage: script_speak_restore actor
 MACRO script_speak_restore
 	ld a, \1
-	farcall ScriptShowSpeakerDialogueRestoreBG
+	farcall ScriptShowSpeakerDialogueKeepOpen
 ENDM
 
 ; Usage: script_wait_idle actor

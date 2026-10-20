@@ -505,7 +505,7 @@ bank `$5e` (`Text_MarioWorldMarioMamaMia`-`Text_BobOmbWorldBelowExit`, ids `$308
 `a`, resets the three text-argument queues, applies `wMessageSpeed`, picks a
 voice, and opens a bubble over the actor. The location-name popup uses the
 same engine (`ShowLocationNamePopup`, `$0a:$52f5`, via
-`ShowSpeakerDialogueRestoreBG` with speaker `$83`, closing after 80 frames or
+`ShowSpeakerDialogueKeepOpen` with speaker `$83`, closing after 80 frames or
 any input).
 
 **There is no story bytecode VM.** Story flow is native code in the location

@@ -31,7 +31,7 @@ Unused_1a_RunPauseMenuWindow:
 .menuLoop:
 	call Unused_1a_DrawPauseMenuSettingValues ; $4048
 	ld a, [wPauseMenuWindowId] ; $404b
-	farcall Unused_05_RunMenuSelectionShared ; $404e
+	farcall Unused_05_RunOptionsMenuSelection ; $404e
 	push af ; $4051
 	push bc ; $4052
 	cp $ff ; $4053
@@ -242,7 +242,7 @@ Unused_1a_ToggleMusicSettingThunk:
 Unused_1a_MessageSpeedSettingHandler4:
 	xor a ; $41d6
 	ld [wSuppressMinigamePauseFlag], a ; $41d7
-	jp Unused_1a_RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
+	jp Unused_1a_RestoreMessageSpeed.scriptShowSpeakerDialogueKeepOpen ; $41da
 MusicSettingPtrs:
 	; $41dd, 4 bytes (records:2)
 	dw Unused_1a_MusicSettingHandler0 ; record 0
@@ -373,7 +373,7 @@ Unused_1a_RestoreMessageSpeed:
 	res MSGSPEEDB_INSTANT, a ; $42c8
 	ld [wMessageSpeed], a ; $42ca
 	ret ; $42cd
-.scriptShowSpeakerDialogueRestoreBG:
+.scriptShowSpeakerDialogueKeepOpen:
 	clear_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $42ce
 	script_set_text Text_OptionsSaveYourProgress ; $42d1
 	script_speak_restore SPEAKER_NONE ; $42d7

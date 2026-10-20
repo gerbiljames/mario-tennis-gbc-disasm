@@ -152,17 +152,17 @@ FitWindowToText:
 	jr .charLoop ; $56b1
 .checkPartnerName:
 	cp TX_PARTNER_NAME ; $56b3
-	jr nz, .checkIndexedShortText ; $56b5
+	jr nz, .checkCharName ; $56b5
 	call MeasurePartnerCharacterNameWidth ; $56b7
 	add b ; $56ba
 	ld b, a ; $56bb
 	jr .charLoop ; $56bc
-.checkIndexedShortText:
-	cp TX_SHORT_TEXT ; $56be
+.checkCharName:
+	cp TX_CHAR_NAME ; $56be
 	jr nz, .glyph ; $56c0
 	ld a, [hl+] ; $56c2
 	ld [wTextCharNameArg], a ; $56c3
-	call MeasureIndexedShortTextWidth ; $56c6
+	call MeasureCharNameArgWidth ; $56c6
 	add b ; $56c9
 	ld b, a ; $56ca
 	jr .charLoop ; $56cb
@@ -461,7 +461,7 @@ ShowSpeakerDialogue:
 	pop bc ; $58ed
 	pop af ; $58ee
 	ret ; $58ef
-ShowSpeakerDialogueRestoreBG:
+ShowSpeakerDialogueKeepOpen:
 	push af ; $58f0
 	push bc ; $58f1
 	push de ; $58f2

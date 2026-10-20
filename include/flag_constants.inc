@@ -16,12 +16,12 @@ def FLAG_DEBUG_EXIT_TO_TEST_2 equ 21 ; wGameFlags byte $02 bit 5
 def FLAG_CUTSCENE_FAST_FORWARD equ 22 ; wGameFlags byte $02 bit 6
 
 def FLAG_VRAM_UPDATE_BUSY equ 24 ; wGameFlags byte $03 bit 0
-def FLAG_TEXT_WAITING_FOR_BUTTON equ 25 ; wGameFlags byte $03 bit 1
+def FLAG_TEXT_PAGE_ADVANCED equ 25 ; wGameFlags byte $03 bit 1
 def FLAG_DEBUG_FREEZE_TILE_ANIM equ 26 ; wGameFlags byte $03 bit 2
 def FLAG_DEBUG_STATIC_TEXT_WINDOW equ 27 ; wGameFlags byte $03 bit 3
 def FLAG_CHAR_DATA_START_EXITS equ 28 ; wGameFlags byte $03 bit 4
 def FLAG_DRILL_FROM_MENU equ 30 ; wGameFlags byte $03 bit 6
-def FLAG_DEBUG_FLAG_EDITOR_OPEN equ 31 ; wGameFlags byte $03 bit 7
+def FLAG_DEBUG_FLAG_EDITOR_INITED equ 31 ; wGameFlags byte $03 bit 7
 
 def FLAG_DEBUG_SHOW_PLAYER_POS equ 32 ; wGameFlags byte $04 bit 0
 def FLAG_DEBUG_SHORT_MATCH equ 33 ; wGameFlags byte $04 bit 1
@@ -195,6 +195,6 @@ def FLAG_CLEARED_WALL_EXPERT equ 221 ; wGameFlags byte $1b bit 5
 def FLAG_TEMP_SCENE_VARIANT_A equ 224 ; wGameFlags byte $1c bit 0
 def FLAG_TEMP_SCENE_VARIANT_B equ 225 ; wGameFlags byte $1c bit 1
 
-def FLAG_TEMP_WIDE_GLYPH_STREAM equ 253 ; wGameFlags byte $1f bit 5
+def FLAG_TEMP_NO_MENU_TEXT_INDENT equ 253 ; wGameFlags byte $1f bit 5
 def FLAG_TEMP_COURT_STAR_EARNED equ 254 ; wGameFlags byte $1f bit 6
 def FLAG_TEMP_RESULTS_DOUBLES_LAYOUT equ 255 ; wGameFlags byte $1f bit 7

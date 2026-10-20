@@ -15,7 +15,7 @@
 	farptr RenderProportionalTextAt ; $401c
 	farptr FetchDialogueText ; $401e
 	farptr Unused_05_DrawTileAttrRect ; $4020
-	farptr Unused_05_CopyTilemapRowsAnimated ; $4022
+	farptr Unused_05_CopyTilemapRowsChunked ; $4022
 	farptr ApplyMessageSpeed ; $4024
 	farptr MeasureDialogueWidthTiles ; $4026
 	farptr ResetWindowState ; $4028
@@ -25,13 +25,13 @@
 	farptr RenderActiveWindowText ; $4030
 	farptr SetActiveWindowTextId ; $4032
 	farptr ShowSpeakerDialogue ; $4034
-	farptr ShowSpeakerDialogueRestoreBG ; $4036
+	farptr ShowSpeakerDialogueKeepOpen ; $4036
 	farptr Unused_05_ShowDialogueAtPosition ; $4038
 	farptr Unused_05_DrawDialogueAtPosition ; $403a
 	farptr RunMenuSelection ; $403c
 	farptr RunPagedTextMenu ; $403e
 	farptr Unused_05_RunPagedTextMenuAutoSize ; $4040
-	farptr Unused_05_RunMenuSelectionShared ; $4042
+	farptr Unused_05_RunOptionsMenuSelection ; $4042
 	farptr AddTextIdOffset ; $4044
 	farptr PushTextArgString ; $4046
 	farptr PushTextArgNumber ; $4048
