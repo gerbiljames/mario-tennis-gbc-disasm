@@ -184,7 +184,7 @@ AcademyMainBldgNpc05_10:
 	ld h, [hl] ; $767e
 	ld l, a ; $767f
 	farcall InitDialogueTextCursor ; $7680
-.loop:
+.speakRecord:
 	script_wait_frames 20 ; $7683
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $768a
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $7692
@@ -209,7 +209,7 @@ AcademyMainBldgNpc05_10.setText:
 	ld h, [hl] ; $76c0
 	ld l, a ; $76c1
 	farcall InitDialogueTextCursor ; $76c2
-	jr AcademyMainBldgNpc05_10.loop ; $76c5
+	jr AcademyMainBldgNpc05_10.speakRecord ; $76c5
 AcademyMainBldgNpc05TextIds2:
 	; $76c7, 10 bytes (text_ids)
 	dw Text_RecordsClerkDoublesJuniorClass ; record 0

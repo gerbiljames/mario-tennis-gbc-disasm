@@ -383,22 +383,22 @@ UnlockFlagIds_18:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
 Unused_18_MoveGridCursor:
-	bit 5, b ; $45ca
+	bit PADB_LEFT, b ; $45ca
 	jr z, .checkRight ; $45cc
 	dec d ; $45ce
 	jr .wrapX ; $45cf
 .checkRight:
-	bit 4, b ; $45d1
+	bit PADB_RIGHT, b ; $45d1
 	jr z, .checkUp ; $45d3
 	inc d ; $45d5
 	jr .wrapX ; $45d6
 .checkUp:
-	bit 6, b ; $45d8
+	bit PADB_UP, b ; $45d8
 	jr z, .checkDown ; $45da
 	dec e ; $45dc
 	jr .wrapX ; $45dd
 .checkDown:
-	bit 7, b ; $45df
+	bit PADB_DOWN, b ; $45df
 	jr z, .wrapX ; $45e1
 	inc e ; $45e3
 .wrapX:

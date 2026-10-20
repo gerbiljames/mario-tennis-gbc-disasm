@@ -75,6 +75,21 @@ def NUM_MATCHRECS equ const_value
 def NUM_TRAINSTATS equ const_value
 def TRAINSTAT_NONE equ $ff ; the level alone goes up
 
+; --- Created-character record (wCreatedCharRecords: main then partner of each
+; save slot, filled by BuildCreatedCharRecords from the story records) ---
+	rsreset
+def CREATEDCHAR_CHAR    rb   ; $00 CHAR_* id, $ff for an empty slot
+def CREATEDCHAR_PALETTE rb   ; $01
+def CREATEDCHAR_LEVEL   rb   ; $02
+def CREATEDCHAR_SPIN    rb   ; $03 the training levels, TRAINSTAT_* order
+def CREATEDCHAR_POWER   rb   ; $04
+def CREATEDCHAR_CONTROL rb   ; $05
+def CREATEDCHAR_SPEED   rb   ; $06
+def CREATEDCHAR_NAME    rb CHARREC_CHAR - CHARREC_NAME ; $07
+	rb_skip $20 - _RS                ; $12
+def CREATED_CHAR_RECORD_SIZE equ _RS
+	ASSERT CREATED_CHAR_RECORD_SIZE == $20
+
 ; --- Character ids (character record byte +$0b, wMatchPlayerChar/OpponentChar) ---
 ; The 32-entry roster, in the order every character-indexed table takes:
 ; CharSpriteSetTable, CharPaletteIndexTable, CharacterPortraitTable_16 and the

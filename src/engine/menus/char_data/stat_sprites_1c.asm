@@ -292,7 +292,7 @@ CharDataScreen_InputLoop:
 	push af ; $50af
 	test_flag FLAG_CHAR_DATA_START_EXITS ; $50b0
 	jr z, .readInput ; $50b3
-	bit 3, a ; $50b5
+	bit PADB_START, a ; $50b5
 	jr z, .readInput ; $50b7
 	pop af ; $50b9
 	jp .finish ; $50ba

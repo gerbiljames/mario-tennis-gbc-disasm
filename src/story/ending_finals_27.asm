@@ -121,7 +121,7 @@ End17AwardCeremonyInitScript_27:
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $4364
 	script_delay 60 ; $436b
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 11.25, 12.25 ; $4370
-.loop:
+.alexFinale:
 	ld a, [wStoryMainGender] ; $437b
 	ld d, OBJ_ALEX ; $437e
 	add d ; $4380
@@ -208,7 +208,7 @@ End17AwardCeremonyInitScript_27:
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $45a3
 	script_delay 60 ; $45aa
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.25, 12.375 ; $45af
-	jp .loop ; $45ba
+	jp .alexFinale ; $45ba
 	ret ; $45bd
 SetEnd17CeremonyObjectDefs_27:
 	test_flag FLAG_DOUBLES ; $45be

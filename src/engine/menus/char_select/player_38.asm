@@ -343,7 +343,7 @@ DrawCreatedCharStats:
 	push hl ; $57e0
 	push_wram_bank WRAM_SCREEN ; $57e1
 	ld a, c ; $57ea
-	ld de, $0020 ; $57eb
+	ld de, CREATED_CHAR_RECORD_SIZE ; $57eb
 	ld hl, wCreatedCharRecords ; $57ee
 .seekRecord:
 	or a ; $57f1
@@ -361,7 +361,7 @@ DrawCreatedCharStats:
 	push bc ; $5801
 	push de ; $5802
 	push hl ; $5803
-	ld hl, $0007 ; $5804
+	ld hl, CREATEDCHAR_NAME ; $5804
 	add hl, bc ; $5807
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 3 ; $5808
 	call DrawNameWithDiacritics_38 ; $580b
@@ -373,7 +373,7 @@ DrawCreatedCharStats:
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 11], a ; $5814
 	ld a, $56 ; $5817
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 12], a ; $5819
-	ld hl, $0002 ; $581c
+	ld hl, CREATEDCHAR_LEVEL ; $581c
 	add hl, bc ; $581f
 	ld l, [hl] ; $5820
 	ld h, $00 ; $5821
@@ -386,14 +386,14 @@ DrawCreatedCharStats:
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 3], a ; $5832
 	ld a, $1f ; $5835
 	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 4], a ; $5837
-	ld hl, $0003 ; $583a
+	ld hl, CREATEDCHAR_SPIN ; $583a
 	add hl, bc ; $583d
 	ld l, [hl] ; $583e
 	ld h, $00 ; $583f
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 7 ; $5841
 	ld a, $02 ; $5844
 	call DrawDecimalNumber ; $5846
-	ld hl, $0004 ; $5849
+	ld hl, CREATEDCHAR_POWER ; $5849
 	add hl, bc ; $584c
 	ld l, [hl] ; $584d
 	ld h, $00 ; $584e
@@ -418,7 +418,7 @@ DrawCreatedCharStats:
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 5], a ; $587d
 	ld a, $1c ; $5880
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 6], a ; $5882
-	ld hl, $0005 ; $5885
+	ld hl, CREATEDCHAR_CONTROL ; $5885
 	add hl, bc ; $5888
 	ld l, [hl] ; $5889
 	ld h, $00 ; $588a
@@ -433,7 +433,7 @@ DrawCreatedCharStats:
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 12], a ; $58a0
 	ld a, $13 ; $58a3
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 13], a ; $58a5
-	ld hl, $0006 ; $58a8
+	ld hl, CREATEDCHAR_SPEED ; $58a8
 	add hl, bc ; $58ab
 	ld l, [hl] ; $58ac
 	ld h, $00 ; $58ad

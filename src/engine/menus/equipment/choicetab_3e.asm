@@ -32,9 +32,9 @@ OpenChoiceTabPanel:
 CloseChoiceTabPanel:
 	ld a, b ; $50c4
 	or a ; $50c5
-	jr z, .close ; $50c6
+	jr z, .rewindIn ; $50c6
 	ld c, $00 ; $50c8
-.openLoop:
+.slideOutLoop:
 	call AdvanceFrame ; $50ca
 	ld b, PANELANIM_CHOICE_TAB_OUT ; $50cd
 	farcall RestoreMenuBgAndDrawPanel ; $50cf
@@ -44,11 +44,11 @@ CloseChoiceTabPanel:
 	inc a ; $50d8
 	ld c, a ; $50d9
 	cp $0a ; $50da
-	jr nz, .openLoop ; $50dc
+	jr nz, .slideOutLoop ; $50dc
 	ret ; $50de
-.close:
+.rewindIn:
 	ld c, $0c ; $50df
-.closeLoop:
+.rewindInLoop:
 	call AdvanceFrame ; $50e1
 	ld b, PANELANIM_CHOICE_TAB_IN ; $50e4
 	farcall RestoreMenuBgAndDrawPanel ; $50e6
@@ -58,7 +58,7 @@ CloseChoiceTabPanel:
 	dec a ; $50ef
 	ld c, a ; $50f0
 	or a ; $50f1
-	jr nz, .closeLoop ; $50f2
+	jr nz, .rewindInLoop ; $50f2
 	ret ; $50f4
 ChoiceTabCursorSpriteTask:
 	farcall TickMenuBgScroll ; $50f5

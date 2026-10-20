@@ -215,22 +215,22 @@ BuildCreatedCharRecords:
 	push af ; $5d9e
 	farcall LoadCharacterRecordToBuffer ; $5d9f
 	farcall CheckCharacterUnlocked ; $5da2
-	ld hl, $0000 ; $5da5
+	ld hl, CREATEDCHAR_CHAR ; $5da5
 	add hl, bc ; $5da8
 	ld a, [wShadowAttrmap + 12 * TILEMAP_WIDTH + 11] ; $5da9
 	cp $04 ; $5dac
 	jr c, .createdChar ; $5dae
 	ld a, $ff ; $5db0
 	ld [hl], a ; $5db2
-	ld hl, $0020 ; $5db3
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5db3
 	add hl, bc ; $5db6
 	ld b, h ; $5db7
 	ld c, l ; $5db8
-	ld hl, $0000 ; $5db9
+	ld hl, CREATEDCHAR_CHAR ; $5db9
 	add hl, bc ; $5dbc
 	ld a, $ff ; $5dbd
 	ld [hl], a ; $5dbf
-	ld hl, $0020 ; $5dc0
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5dc0
 	add hl, bc ; $5dc3
 	ld b, h ; $5dc4
 	ld c, l ; $5dc5
@@ -238,79 +238,79 @@ BuildCreatedCharRecords:
 .createdChar:
 	ld a, [wStoryMainChar] ; $5dc9
 	ld [hl], a ; $5dcc
-	ld hl, $0001 ; $5dcd
+	ld hl, CREATEDCHAR_PALETTE ; $5dcd
 	add hl, bc ; $5dd0
 	ld a, [wStoryMainPalette] ; $5dd1
 	ld [hl], a ; $5dd4
-	ld hl, $0002 ; $5dd5
+	ld hl, CREATEDCHAR_LEVEL ; $5dd5
 	add hl, bc ; $5dd8
 	ld a, [wStoryMainLevel] ; $5dd9
 	ld [hl], a ; $5ddc
-	ld hl, $0003 ; $5ddd
+	ld hl, CREATEDCHAR_SPIN ; $5ddd
 	add hl, bc ; $5de0
 	ld a, [wStoryMainSpinLevel] ; $5de1
 	ld [hl], a ; $5de4
-	ld hl, $0004 ; $5de5
+	ld hl, CREATEDCHAR_POWER ; $5de5
 	add hl, bc ; $5de8
 	ld a, [wStoryMainPowerLevel] ; $5de9
 	ld [hl], a ; $5dec
-	ld hl, $0005 ; $5ded
+	ld hl, CREATEDCHAR_CONTROL ; $5ded
 	add hl, bc ; $5df0
 	ld a, [wStoryMainControlLevel] ; $5df1
 	ld [hl], a ; $5df4
-	ld hl, $0006 ; $5df5
+	ld hl, CREATEDCHAR_SPEED ; $5df5
 	add hl, bc ; $5df8
 	ld a, [wStoryMainSpeedLevel] ; $5df9
 	ld [hl], a ; $5dfc
 	push bc ; $5dfd
-	ld a, $07 ; $5dfe
+	ld a, CREATEDCHAR_NAME ; $5dfe
 	add c ; $5e00
 	ld e, a ; $5e01
 	ld d, b ; $5e02
 	ld hl, wStoryMainName ; $5e03
-	ld bc, $000b ; $5e06
+	ld bc, CHARREC_CHAR - CHARREC_NAME ; $5e06
 	call CopyMemoryBC ; $5e09
 	pop bc ; $5e0c
-	ld hl, $0020 ; $5e0d
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5e0d
 	add hl, bc ; $5e10
 	ld b, h ; $5e11
 	ld c, l ; $5e12
 	ld a, [wStoryPartnerChar] ; $5e13
 	ld [hl], a ; $5e16
-	ld hl, $0001 ; $5e17
+	ld hl, CREATEDCHAR_PALETTE ; $5e17
 	add hl, bc ; $5e1a
 	ld a, [wStoryPartnerPalette] ; $5e1b
 	ld [hl], a ; $5e1e
-	ld hl, $0002 ; $5e1f
+	ld hl, CREATEDCHAR_LEVEL ; $5e1f
 	add hl, bc ; $5e22
 	ld a, [wStoryPartnerLevel] ; $5e23
 	ld [hl], a ; $5e26
-	ld hl, $0003 ; $5e27
+	ld hl, CREATEDCHAR_SPIN ; $5e27
 	add hl, bc ; $5e2a
 	ld a, [wStoryPartnerSpinLevel] ; $5e2b
 	ld [hl], a ; $5e2e
-	ld hl, $0004 ; $5e2f
+	ld hl, CREATEDCHAR_POWER ; $5e2f
 	add hl, bc ; $5e32
 	ld a, [wStoryPartnerPowerLevel] ; $5e33
 	ld [hl], a ; $5e36
-	ld hl, $0005 ; $5e37
+	ld hl, CREATEDCHAR_CONTROL ; $5e37
 	add hl, bc ; $5e3a
 	ld a, [wStoryPartnerControlLevel] ; $5e3b
 	ld [hl], a ; $5e3e
-	ld hl, $0006 ; $5e3f
+	ld hl, CREATEDCHAR_SPEED ; $5e3f
 	add hl, bc ; $5e42
 	ld a, [wStoryPartnerSpeedLevel] ; $5e43
 	ld [hl], a ; $5e46
 	push bc ; $5e47
-	ld a, $07 ; $5e48
+	ld a, CREATEDCHAR_NAME ; $5e48
 	add c ; $5e4a
 	ld e, a ; $5e4b
 	ld d, b ; $5e4c
 	ld hl, wStoryPartnerName ; $5e4d
-	ld bc, $000b ; $5e50
+	ld bc, CHARREC_CHAR - CHARREC_NAME ; $5e50
 	call CopyMemoryBC ; $5e53
 	pop bc ; $5e56
-	ld hl, $0020 ; $5e57
+	ld hl, CREATED_CHAR_RECORD_SIZE ; $5e57
 	add hl, bc ; $5e5a
 	ld b, h ; $5e5b
 	ld c, l ; $5e5c

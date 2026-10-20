@@ -227,14 +227,14 @@ Unused_1a_ShowGameProgressScreenThunk:
 	jp Unused_1a_RunPauseMenuWindow.done ; $41af
 Unused_1a_AdjustMessageSpeedSettingThunk:
 	call Unused_1a_AdjustMessageSpeedSetting ; $41b2
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41b5
+	ld a, [wMenuCursorRow] ; $41b5
 	ld [wMenuInitialRow], a ; $41b8
 	ld bc, MessageSpeedSettingPtrs ; $41bb
 	ld a, [wPauseMenuWindowId] ; $41be
 	jp Unused_1a_RunPauseMenuWindow.menuLoop ; $41c1
 Unused_1a_ToggleMusicSettingThunk:
 	call Unused_1a_ToggleMusicSetting ; $41c4
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41c7
+	ld a, [wMenuCursorRow] ; $41c7
 	ld [wMenuInitialRow], a ; $41ca
 	ld bc, MessageSpeedSettingPtrs ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
@@ -264,7 +264,7 @@ Unused_1a_MusicSettingHandler0:
 	ld a, [wPauseMenuOptionBits] ; $41f8
 	or $c0 ; $41fb
 	ld [wPauseMenuOptionBits], a ; $41fd
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $4200
+	ld a, [wMenuCursorRow] ; $4200
 	ld [wMenuInitialRow], a ; $4203
 	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
@@ -287,7 +287,7 @@ Unused_1a_MusicSettingHandler1:
 	ld a, [wPauseMenuOptionBits] ; $4227
 	or $c0 ; $422a
 	ld [wPauseMenuOptionBits], a ; $422c
-	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $422f
+	ld a, [wMenuCursorRow] ; $422f
 	ld [wMenuInitialRow], a ; $4232
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238

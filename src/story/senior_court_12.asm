@@ -78,11 +78,11 @@ SeniorCourtExit01_12:
 	script_fade_out 16 ; $55a8
 	script_wait_frames 30 ; $55ad
 	ret ; $55b4
-.loop:
+SpeakEmilyPostChampionLine:
 	ld a, [wMapSceneStage2] ; $55b5
 	sub SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55b8
 	add a ; $55ba
-	ld_hl_indexed SeniorCourtExit01TextIds ; $55bb
+	ld_hl_indexed EmilyPostChampionTextIds ; $55bb
 	ld a, [hl+] ; $55c2
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
@@ -93,7 +93,7 @@ SeniorCourtExit01_12:
 	call PushShortTextArg_12 ; $55d3
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $55d6
 	ret ; $55db
-SeniorCourtExit01TextIds:
+EmilyPostChampionTextIds:
 	; $55dc, 12 bytes (text_ids)
 	table_width 2
 	dw Text_EmilyMakeTravelingTeamFirst ; record 0
@@ -108,7 +108,7 @@ SeniorCourtNpc03_12:
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
 	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
-	jr nc, SeniorCourtExit01_12.loop ; $55f1
+	jr nc, SpeakEmilyPostChampionLine ; $55f1
 	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
 SeniorCourtNpc03FaceUpFlag0000_12:
@@ -116,7 +116,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55fe
-	jr nc, SeniorCourtExit01_12.loop ; $5600
+	jr nc, SpeakEmilyPostChampionLine ; $5600
 	call SeniorRankOfferScenePrepFacingUp ; $5602
 	ret ; $5605
 .checkDoubles:

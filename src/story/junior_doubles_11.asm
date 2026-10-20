@@ -160,33 +160,33 @@ JuniorClassCourtDoublesNpc07_11:
 JuniorClassCourtDoublesNpc08_11:
 	script_set_text Text_BrianJuniorDoublesDroppedOutRankings ; $5638
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $563e
-	jr nz, .loop ; $5641
+	jr nz, .speakBrian ; $5641
 	farcall AdvanceDialogueTextCursor ; $5643
-.loop:
+.speakBrian:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_BRIAN ; $5646
 	ret ; $564b
 JuniorClassCourtDoublesNpc09_11:
 	script_set_text Text_FayJuniorDoublesOutOfRankingsSad ; $564c
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5652
-	jr nz, JuniorClassCourtDoublesNpc08_11.loop ; $5655
+	jr nz, JuniorClassCourtDoublesNpc08_11.speakBrian ; $5655
 	farcall AdvanceDialogueTextCursor ; $5657
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_FAY ; $565a
 	ret ; $565f
-.loop:
+.speakAllie:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5660
 	script_face_pair ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5665
 	ret ; $566d
 JuniorClassCourtDoublesNpc0A_11:
 	script_set_text Text_AllieJuniorDoublesRankAfterBlisters ; $566e
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5674
-	jp nz, JuniorClassCourtDoublesNpc09_11.loop ; $5677
+	jp nz, JuniorClassCourtDoublesNpc09_11.speakAllie ; $5677
 	script_set_text Text_AllieJuniorDoublesPracticeMatchOffer ; $567a
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5680
 	farcall RunDialogueYesNoPrompt ; $5685
 	farcall ScriptCloseDialogueWindow ; $5688
 	script_wait_frames 5 ; $568b
 	and a ; $5692
-	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $5693
+	jr nz, JuniorClassCourtDoublesNpc09_11.speakAllie ; $5693
 	farcall AdvanceDialogueTextCursor ; $5695
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5698
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $56a0
@@ -194,7 +194,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	farcall ScriptCloseDialogueWindow ; $56a8
 	script_wait_frames 5 ; $56ab
 	and a ; $56b2
-	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $56b3
+	jr nz, JuniorClassCourtDoublesNpc09_11.speakAllie ; $56b3
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $56b5
 	script_null_script ACTOR_PARTNER ; $56bc
 	script_set_speed ACTOR_PARTNER, 1.0 ; $56c1

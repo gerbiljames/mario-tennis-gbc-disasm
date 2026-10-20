@@ -329,7 +329,7 @@ ENDU
 UNION
 ; created characters and the character grid (bank $38)
 ; [$c0 bytes] Six $20-byte records for the player-created characters, built from the save by BuildCreatedCharRecords and walked by DrawCreatedCharStats. A first byte of $ff ends the list
-wCreatedCharRecords:: ds 192
+wCreatedCharRecords:: ds 6 * CREATED_CHAR_RECORD_SIZE
 	export_size wCreatedCharRecords
 	ds 64
 ; [$80 bytes] The character-select grid as 32 four-byte entries, cleared on screen open and filled by BuildCharGridFromUnlockFlags; AddCreatedCharsToCharGrid appends the created characters from $da24

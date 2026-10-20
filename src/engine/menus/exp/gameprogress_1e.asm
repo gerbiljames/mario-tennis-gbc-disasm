@@ -108,11 +108,11 @@ BuildGameProgressScreen:
 	ldh a, [hInputPressed] ; $735c
 	bit PADB_UP, a ; $735e
 	call nz, ScrollProgressListUp ; $7360
-	bit 7, a ; $7363
+	bit PADB_DOWN, a ; $7363
 	call nz, ScrollProgressListDown ; $7365
-	bit 0, a ; $7368
+	bit PADB_A, a ; $7368
 	jr nz, .playSelectSfx ; $736a
-	bit 1, a ; $736c
+	bit PADB_B, a ; $736c
 	jr nz, .playCancelSfx ; $736e
 	jr .loop ; $7370
 .playCancelSfx:

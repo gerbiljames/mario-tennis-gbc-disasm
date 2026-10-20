@@ -388,17 +388,17 @@ UpdateMenuCursorFromLinkInput:
 	ld a, [wMenuCursor2Y] ; $6c98
 	ld e, a ; $6c9b
 	ld a, b ; $6c9c
-	xor $0f ; $6c9d
+	xor PADF_BUTTONS ; $6c9d
 	jr nz, .checkButtons ; $6c9f
 	ld b, LINKSEL_RESET ; $6ca1
 	jr .storeCommand ; $6ca3
 .checkButtons:
 	ld a, b ; $6ca5
-	and $f0 ; $6ca6
+	and PADF_DPAD ; $6ca6
 	ld a, b ; $6ca8
 	jr nz, .checkRight ; $6ca9
 	ld a, b ; $6cab
-	bit 0, a ; $6cac
+	bit PADB_A, a ; $6cac
 	jr z, .checkB ; $6cae
 	ld a, [wCharGridHandedness] ; $6cb0
 	cp HAND_LEFT ; $6cb3
@@ -409,27 +409,27 @@ UpdateMenuCursorFromLinkInput:
 	ld b, LINKSEL_PICK ; $6cbb
 	jr .storeCommand ; $6cbd
 .checkB:
-	bit 1, a ; $6cbf
+	bit PADB_B, a ; $6cbf
 	jr z, .checkRight ; $6cc1
 	ld b, LINKSEL_CANCEL ; $6cc3
 	jr .storeCommand ; $6cc5
 .checkRight:
-	bit 4, a ; $6cc7
+	bit PADB_RIGHT, a ; $6cc7
 	jr z, .checkLeft ; $6cc9
 	call MoveLinkCursorRight ; $6ccb
 	jp .afterMove ; $6cce
 .checkLeft:
-	bit 5, a ; $6cd1
+	bit PADB_LEFT, a ; $6cd1
 	jr z, .checkUp ; $6cd3
 	call MoveLinkCursorLeft ; $6cd5
 	jr .afterMove ; $6cd8
 .checkUp:
-	bit 6, a ; $6cda
+	bit PADB_UP, a ; $6cda
 	jr z, .checkDown ; $6cdc
 	call MoveLinkCursorUp ; $6cde
 	jr .afterMove ; $6ce1
 .checkDown:
-	bit 7, a ; $6ce3
+	bit PADB_DOWN, a ; $6ce3
 	jr z, .afterMove ; $6ce5
 	call MoveLinkCursorDown ; $6ce7
 	jr .afterMove ; $6cea

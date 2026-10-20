@@ -528,7 +528,7 @@ StoreLinkMatchCharInfo:
 	add hl, hl ; $7674
 	add hl, hl ; $7675
 	add hl, hl ; $7676
-	ld de, wCreatedCharRecords + 2 ; $7677
+	ld de, wCreatedCharRecords + CREATEDCHAR_LEVEL ; $7677
 	add hl, de ; $767a
 	ld a, [hl] ; $767b
 	ld [wLinkMatchCharLevel], a ; $767c

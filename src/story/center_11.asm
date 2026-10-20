@@ -398,24 +398,24 @@ AcademyArrivalNpc14_11:
 	test_flag FLAG_DOUBLES ; $4649
 	jr nz, .checkFlag ; $464c
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $464e
-	jr z, .loop ; $4651
+	jr z, .speak ; $4651
 	farcall AdvanceDialogueTextCursor ; $4653
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $4656
-	jr z, .loop ; $4659
+	jr z, .speak ; $4659
 	farcall AdvanceDialogueTextCursor ; $465b
-.loop:
+.speak:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2, ANIM_SHAKE ; $465e
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2 ; $4665
 	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2 ; $466a
 	ret ; $466f
 .checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $4670
-	jr z, .loop ; $4673
+	jr z, .speak ; $4673
 	farcall AdvanceDialogueTextCursor ; $4675
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $4678
-	jr z, .loop ; $467b
+	jr z, .speak ; $467b
 	farcall AdvanceDialogueTextCursor ; $467d
-	jr .loop ; $4680
+	jr .speak ; $4680
 AcademyArrivalNpcScripts_11:
 	; $4682, 33 bytes (map_scripts)
 	map_script ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, AcademyArrivalNpc03_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00

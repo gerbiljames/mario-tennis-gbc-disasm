@@ -87,17 +87,26 @@ after a real defect broke it:
             through a known text pointer is not compared with a raw TX_*
             code, the macro and table rows RAW_ID_* lists name their ids, and
             a routine passed Text_* in hl/de at two or more sites is passed
-            no raw number there
-  fields    a routine that names a CHARREC_* / ACTORF_* / OBJSLOT_* field
-            adds no raw offset under $100 to a record pointer (`ld hl, n /
-            add hl, rr`, `ld a, n / add c|e / ld e|c, a`): 25 once reached
-            a record by number beside the names (the record in de, bc named)
+            no raw number there, and no `bit n, r` on a joypad byte (loaded
+            from hInput* / wCharInputBits, or tested with a PADB_ bit before)
+            leaves n raw
+  fields    a routine that names a CHARREC_* / CREATEDCHAR_* / ACTORF_* /
+            OBJSLOT_* field adds no raw offset under $100 to a record pointer
+            (`ld hl, n / add hl, rr`, `ld a, n / add c|e / ld e|c, a`): 25
+            once reached a record by number beside the names (the record in
+            de, bc named), as the created-character routines all did
   templates every label handed to QueueSpriteTemplate in hl, directly or as
             a row of the pointer table hl is indexed into, is a
             sprite_template region (five were raw db rows)
   loops     a local named *loop* is the target of a branch or table row on a
-            later line, in its routine or by full name (seven named a
-            straight-line case or a fall-through)
+            later line, in its routine or by full name, and some path from it
+            (following branches, stopping at ret / jp out / as_halt) reaches
+            that branch or a computed jump (18 named shared exits, store and
+            speak tails, or another path's entry)
+  mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
+            are listed does not follow (with no pop_wram_bank between) a
+            `wram_bank` selecting a bank that lacks it (four read
+            wMenuCursorRow under WRAM_TEXT as a char-data page cell)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -1489,6 +1498,74 @@ def _raw_data_ids(seen):
     return out
 
 
+_PAD_SOURCE_RE = re.compile(r"ldh? ([abcdehl]), \[(?:hInput(?:Pressed|RisingEdge|RepeatButtons)|wCharInputBits)\]")
+_PAD_BRANCH_RE = re.compile(r"(jr|jp) (?:(?:nz|z|nc|c), )?([\w.]+)")
+_PAD_WRITE_RE = re.compile(r"(?:ldh?|inc|dec|swap|rlc?|rrc?|sla|sra|srl) ([abcdehl])\b|"
+                           r"(?:and|or|xor|add|adc|sub|sbc|cpl)\b()|pop (af|bc|de|hl)|(?:push_)?wram_bank \w+()")
+# Raw bit tests on a joypad byte left as numbers: (routine, bit).
+KNOWN_RAW_PAD_BITS = set()
+
+
+def _raw_pad_bits(fail):
+    """A raw `bit n, r` on a register holding a joypad byte -- loaded from
+    hInput* / wCharInputBits, or already tested with a PADB_ bit -- is a
+    PADB_ name. The register's state follows branches to local labels."""
+    n, seen = 0, set()
+    for h in holders():
+        lines, origin = bank_lines(h)
+        scope = owner = None
+        flags, pending = set(), {}
+        for i, line in enumerate(lines):
+            if m := _GLOBAL_RE.match(line):
+                scope = owner = m.group(1)
+                flags = set(pending.pop(scope, ()))
+                continue
+            if m := re.match(r"^(\w+)?(\.\w+):", line):
+                owner = m.group(1) or scope
+                flags |= pending.pop(owner + m.group(2), set())
+                continue
+            ins = line.split(";")[0].strip()
+            if not ins:
+                continue
+            if m := _PAD_SOURCE_RE.fullmatch(ins):
+                flags.add(m.group(1))
+                continue
+            if m := re.fullmatch(r"bit (\w+), ([abcdehl])", ins):
+                if m.group(1).startswith("PADB_") or m.group(2) in flags:
+                    n += 1
+                if m.group(1).startswith("PADB_"):
+                    flags.add(m.group(2))
+                elif m.group(2) in flags and _NUMBER_RE.fullmatch(m.group(1)):
+                    if (owner, m.group(1)) in KNOWN_RAW_PAD_BITS:
+                        seen.add((owner, m.group(1)))
+                    else:
+                        where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                        fail("raw-ids", f"{where}: {owner} bit {m.group(1)} on a joypad byte -- a PADB_ name?")
+                continue
+            if m := _PAD_BRANCH_RE.fullmatch(ins):
+                target = scope + m.group(2) if m.group(2).startswith(".") else m.group(2)
+                pending.setdefault(target, set()).update(flags)
+                if "," not in ins:
+                    flags = set()
+                continue
+            if ins in ("ret", "reti", "jp hl"):
+                flags = set()
+                continue
+            if m := re.fullmatch(r"ld ([abcdehl]), ([abcdehl])", ins):
+                (flags.add if m.group(2) in flags else flags.discard)(m.group(1))
+                continue
+            if m := _PAD_WRITE_RE.match(ins):
+                if m.group(1):
+                    flags.discard(m.group(1))
+                elif m.group(3):
+                    flags -= set(m.group(3).replace("f", ""))
+                else:
+                    flags.discard("a")
+    for key in sorted(KNOWN_RAW_PAD_BITS - seen):
+        fail("raw-ids", f"{key} is no longer tested raw -- drop it from KNOWN_RAW_PAD_BITS")
+    return n
+
+
 def check_raw_ids(fail):
     """A raw cp/store operand on a variable (wVar + n counts as wVar) that
     names its other values from a constant family must not equal a member of
@@ -1542,7 +1619,7 @@ def check_raw_ids(fail):
             fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
-    return n
+    return n + _raw_pad_bits(fail)
 
 
 # Raw offsets a field-naming routine adds to a pointer that are not fields of
@@ -1550,16 +1627,17 @@ def check_raw_ids(fail):
 KNOWN_RAW_FIELD_OFFSETS = {
     ("UpdateActorJumpPhysics", "$0010"): "gravity added to the vertical velocity",
 }
-_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
+_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
 _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
 
 
 def check_field_offsets(fail):
-    """In a routine that names a CHARREC_* / ACTORF_* / OBJSLOT_* field, an
-    offset added to a record pointer (`ld hl, off / add hl, bc|de`, or
-    `ld a, off / add c|e / ld e|c, a`) is not a raw number under $100: the
-    same record reached through another register is still that record."""
+    """In a routine that names a CHARREC_* / CREATEDCHAR_* / ACTORF_* /
+    OBJSLOT_* field, an offset added to a record pointer (`ld hl, off /
+    add hl, bc|de`, or `ld a, off / add c|e / ld e|c, a`) is not a raw number
+    under $100: the same record reached through another register is still
+    that record."""
     n, seen = 0, set()
     for holder in holders():
         lines, origin = bank_lines(holder)
@@ -1662,6 +1740,40 @@ def check_sprite_templates(fail):
                     break
     return n
 
+def check_mirrored_operands(fail):
+    """A direct `[wX]` operand on a ram_mirrored.inc symbol whose banks are
+    listed is not preceded, in its bank's source, by a `wram_bank` (with no
+    `pop_wram_bank` since) selecting a bank that lacks it."""
+    mirrored, banks = {}, None
+    for line in (ROOT / "include" / "ram_mirrored.inc").read_text().split("\n"):
+        m = re.search(r"WRAM banks? (\$[0-9a-f]{2}(?:(?:/|, | and )\$[0-9a-f]{2})*)", line)
+        if line.startswith(";") and m:
+            banks = {int(b, 16) for b in re.findall(r"\$([0-9a-f]+)", m.group(1))}
+        m = re.match(r"def (\w+) equ", line)
+        if m:
+            if banks:
+                mirrored[m.group(1)] = banks
+            banks = None
+    consts = {name: int(v, 16) for name, v in re.findall(
+        r"^\tconst (WRAM_\w+)\s*; \$([0-9a-f]+)", (ROOT / "include" / "constants" / "memory.inc").read_text(), re.M)}
+    for h in holders():
+        bank = bank_of(h)
+        cur = None
+        for line in bank_lines(h)[0]:
+            code = line.split(";")[0]
+            if re.match(r"\s*pop_wram_bank\b", code):
+                cur = None
+                continue
+            m = re.match(r"\s*(?:push_)?wram_bank\s+(\w+)", code)
+            if m:
+                cur = consts.get(m.group(1))
+                continue
+            for name in re.findall(r"\[\s*(w\w+)", code):
+                if name in mirrored and cur is not None and cur not in mirrored[name]:
+                    fail("mirrors", f"${bank:02x}: [{name}] read or written with WRAM bank {cur} selected")
+    return len(mirrored)
+
+
 # Routines whose "loop" locals name the domain, not the control flow.
 KNOWN_LOOP_NAMES = {
     "RunSoundChannelScript": "the sound-script loop opcodes it interprets",
@@ -1703,7 +1815,59 @@ def check_loop_labels(fail):
                     break
             else:
                 fail("loops", f"${bank:02x}: {owner}{m.group(2)} is never branched back to")
+                continue
+            if not _loops_back(lines, i, owner, m.group(2)):
+                fail("loops", f"${bank:02x}: {owner}{m.group(2)} runs to an exit without branching back")
     return n
+
+
+_LOOP_BRANCH_RE = re.compile(r"^\s*(jr|jp|as_jump)\s+(?:(nz|z|nc|c)\s*,\s*)?([\w.]+)\s*$")
+_LOOP_EXIT_RE = re.compile(r"^\s*(ret|reti|as_halt|as_end)\s*$")
+
+
+def _loops_back(lines, start, owner, local):
+    """Some path through the routine from `start` reaches a branch to the
+    label, or leaves through a computed jump (jp hl) that might."""
+    labels = {}
+    scope = None
+    for k, line in enumerate(lines):
+        g = _GLOBAL_RE.match(line)
+        if g:
+            scope = g.group(1)
+            labels[scope] = k
+            continue
+        lm = re.match(r"^(\w+)?(\.\w+):", line)
+        if lm:
+            labels[(lm.group(1) or scope) + lm.group(2)] = k
+    target = labels[owner + local]
+    todo, seen = [start + 1], set()
+    while todo:
+        k = todo.pop()
+        while k < len(lines) and k not in seen:
+            seen.add(k)
+            code = lines[k].split(";")[0]
+            if re.search(r"\bjp\s+(hl|\[)|^\s*(rst|jumptable)\b", code):
+                return True
+            b = _LOOP_BRANCH_RE.match(code)
+            if b:
+                name = b.group(3)
+                dest = labels.get(owner + name if name.startswith(".") else name)
+                if dest == target:
+                    return True
+                if dest is not None:
+                    todo.append(dest)
+                if not b.group(2):
+                    break
+            elif _LOOP_EXIT_RE.match(code):
+                break
+            else:
+                for ref in re.findall(r"(?<![\w.])(\.\w+)\b", code):
+                    if labels.get(owner + ref) == target:
+                        return True
+                    if owner + ref in labels:
+                        todo.append(labels[owner + ref])
+            k += 1
+    return False
 
 
 def main():
@@ -1748,6 +1912,7 @@ def main():
         "fields": check_field_offsets(fail),
         "templates": check_sprite_templates(fail),
         "loops": check_loop_labels(fail),
+        "mirrors": check_mirrored_operands(fail),
     }
     by_check = {}
     for check, msg in failures:

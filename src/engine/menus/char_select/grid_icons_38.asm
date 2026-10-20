@@ -401,7 +401,7 @@ AddCreatedCharsToCharGrid:
 	add a ; $5c08
 	ld [de], a ; $5c09
 	dec hl ; $5c0a
-	ld de, $0020 ; $5c0b
+	ld de, CREATED_CHAR_RECORD_SIZE ; $5c0b
 	add hl, de ; $5c0e
 	push hl ; $5c0f
 	ld hl, wCharGridEntries + 36 ; $5c10
@@ -428,12 +428,12 @@ AddCreatedCharsToCharGrid:
 	inc de ; $5c2c
 	ld [de], a ; $5c2d
 	dec hl ; $5c2e
-	ld de, $0020 ; $5c2f
+	ld de, CREATED_CHAR_RECORD_SIZE ; $5c2f
 	add hl, de ; $5c32
 	inc b ; $5c33
 	jr .done ; $5c34
 .storeCount:
-	ld de, $0040 ; $5c36
+	ld de, 2 * CREATED_CHAR_RECORD_SIZE ; $5c36
 	add hl, de ; $5c39
 .done:
 	ld a, c ; $5c3a

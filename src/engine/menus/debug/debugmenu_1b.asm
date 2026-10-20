@@ -388,22 +388,22 @@ Unused_1b_MoveUnlockDebugCursor:
 .done:
 	ret ; $6826
 Unused_1b_StepUnlockDebugCursor:
-	bit 5, b ; $6827
+	bit PADB_LEFT, b ; $6827
 	jr z, .checkRight ; $6829
 	dec d ; $682b
 	jr .wrapX ; $682c
 .checkRight:
-	bit 4, b ; $682e
+	bit PADB_RIGHT, b ; $682e
 	jr z, .checkUp ; $6830
 	inc d ; $6832
 	jr .wrapX ; $6833
 .checkUp:
-	bit 6, b ; $6835
+	bit PADB_UP, b ; $6835
 	jr z, .checkDown ; $6837
 	dec e ; $6839
 	jr .wrapX ; $683a
 .checkDown:
-	bit 7, b ; $683c
+	bit PADB_DOWN, b ; $683c
 	jr z, .wrapX ; $683e
 	inc e ; $6840
 .wrapX:

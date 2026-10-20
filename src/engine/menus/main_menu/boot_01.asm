@@ -195,7 +195,7 @@ Unused_01_ScreenTestSequence:
 	ldh [hDebugStepMode], a ; $41bd
 	farcall Unused_1a_RunDebugCharViewer ; $41bf
 Unused_01_DebugBootMenu.checkDown:
-	bit 7, a ; $41c2
+	bit PADB_DOWN, a ; $41c2
 	jr z, Unused_01_DebugBootMenu.checkRight ; $41c4
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
@@ -210,7 +210,7 @@ Unused_01_JumpToMainMenu:
 	db $18 ; $41d9
 	db $ef ; $41da
 Unused_01_DebugBootMenu.checkRight:
-	bit 4, a ; $41db
+	bit PADB_RIGHT, a ; $41db
 	jr z, Unused_01_DebugBootMenu.checkLeft ; $41dd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41df
 	ldh [hDebugStepMode], a ; $41e1
@@ -222,7 +222,7 @@ Unused_01_DebugBootMenu.checkRight:
 	ld [wStoryMainChar], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
 Unused_01_DebugBootMenu.checkLeft:
-	bit 5, a ; $41f5
+	bit PADB_LEFT, a ; $41f5
 	jr z, Unused_01_DebugBootMenu.advanceFrame ; $41f7
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $41f9
 	ldh [hDebugStepMode], a ; $41fb

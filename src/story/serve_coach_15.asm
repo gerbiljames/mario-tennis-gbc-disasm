@@ -198,14 +198,14 @@ ServiceAceMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $63f7
 	script_wait_frames 5 ; $63fa
 	and a ; $6401
-	jp nz, .loop ; $6402
+	jp nz, .declined ; $6402
 	farcall AdvanceDialogueTextCursor ; $6405
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $6408
 	farcall RunDialogueYesNoPrompt ; $640d
 	farcall ScriptCloseDialogueWindow ; $6410
 	script_wait_frames 5 ; $6413
 	and a ; $641a
-	jp nz, .loop ; $641b
+	jp nz, .declined ; $641b
 	farcall AdvanceDialogueTextCursor ; $641e
 	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $6421
 	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $6426
@@ -235,7 +235,7 @@ ServiceAceMatchChallengeScene:
 	ld a, MINIGAME_SERVICE_MATCH_1 ; $649c
 	farcall RunTrainingDrillByID ; $649e
 	ret ; $64a1
-.loop:
+.declined:
 	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $64a2
 	ret ; $64a7
 CenterLineServeMatchChallengeScene:
@@ -246,14 +246,14 @@ CenterLineServeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $64be
 	script_wait_frames 5 ; $64c1
 	and a ; $64c8
-	jp nz, ServiceAceMatchChallengeScene.loop ; $64c9
+	jp nz, ServiceAceMatchChallengeScene.declined ; $64c9
 	farcall AdvanceDialogueTextCursor ; $64cc
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $64cf
 	farcall RunDialogueYesNoPrompt ; $64d4
 	farcall ScriptCloseDialogueWindow ; $64d7
 	script_wait_frames 5 ; $64da
 	and a ; $64e1
-	jp nz, ServiceAceMatchChallengeScene.loop ; $64e2
+	jp nz, ServiceAceMatchChallengeScene.declined ; $64e2
 	farcall AdvanceDialogueTextCursor ; $64e5
 	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $64e8
 	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $64ed
@@ -296,14 +296,14 @@ AcademyRulesServeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $659c
 	script_wait_frames 5 ; $659f
 	and a ; $65a6
-	jp nz, ServiceAceMatchChallengeScene.loop ; $65a7
+	jp nz, ServiceAceMatchChallengeScene.declined ; $65a7
 	farcall AdvanceDialogueTextCursor ; $65aa
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_1 ; $65ad
 	farcall RunDialogueYesNoPrompt ; $65b2
 	farcall ScriptCloseDialogueWindow ; $65b5
 	script_wait_frames 5 ; $65b8
 	and a ; $65bf
-	jp nz, ServiceAceMatchChallengeScene.loop ; $65c0
+	jp nz, ServiceAceMatchChallengeScene.declined ; $65c0
 	farcall AdvanceDialogueTextCursor ; $65c3
 	script_speak ACTOR_TRAINING_COURT_BOB_1 ; $65c6
 	script_set_anim ACTOR_TRAINING_COURT_BOB_1, ANIM_NOD ; $65cb

@@ -360,17 +360,17 @@ ComputeMarioWorldProgressIndex:
 	jr nz, .doublesStage ; $5560
 	ld a, $00 ; $5562
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $5564
-	jr z, .loop ; $5567
+	jr z, .store ; $5567
 	inc a ; $5569
-.loop:
+.store:
 	ld [wMapSceneStage], a ; $556a
 	ret ; $556d
 .doublesStage:
 	ld a, $02 ; $556e
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $5570
-	jr z, .loop ; $5573
+	jr z, .store ; $5573
 	inc a ; $5575
-	jr .loop ; $5576
+	jr .store ; $5576
 	ret ; $5578
 MarioWorldArrivalSingles:
 	test_flag FLAG_DOUBLES ; $5579

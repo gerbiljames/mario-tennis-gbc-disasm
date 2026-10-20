@@ -286,50 +286,50 @@ ComputeSeniorCourtStage:
 	jp nz, .isDoubles ; $7759
 	ld a, SENIORCOURTSTAGE_SINGLES_PRE_JUNIOR ; $775c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $775e
-	jr z, .loop ; $7761
+	jr z, .store ; $7761
 	ld a, SENIORCOURTSTAGE_SINGLES_RANK4 ; $7763
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $7765
-	jr z, .loop ; $7768
+	jr z, .store ; $7768
 	ld a, SENIORCOURTSTAGE_SINGLES_RANK3 ; $776a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $776c
-	jr z, .loop ; $776f
+	jr z, .store ; $776f
 	ld a, SENIORCOURTSTAGE_SINGLES_RANK2 ; $7771
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $7773
-	jr z, .loop ; $7776
+	jr z, .store ; $7776
 	ld a, SENIORCOURTSTAGE_SINGLES_RANK1 ; $7778
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $777a
-	jr z, .loop ; $777d
+	jr z, .store ; $777d
 	ld a, SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $777f
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7781
-	jr z, .loop ; $7784
+	jr z, .store ; $7784
 	ld a, SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN ; $7786
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7788
-	jr z, .loop ; $778b
+	jr z, .store ; $778b
 	ld a, SENIORCOURTSTAGE_SINGLES_COMPLETE ; $778d
-.loop:
+.store:
 	ld [wMapSceneStage2], a ; $778f
 	ret ; $7792
 .isDoubles:
 	ld a, SENIORCOURTSTAGE_DOUBLES_PRE_JUNIOR ; $7793
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7795
-	jr z, .loop ; $7798
+	jr z, .store ; $7798
 	ld a, SENIORCOURTSTAGE_DOUBLES_RANK3 ; $779a
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $779c
-	jr z, .loop ; $779f
+	jr z, .store ; $779f
 	ld a, SENIORCOURTSTAGE_DOUBLES_RANK2 ; $77a1
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $77a3
-	jr z, .loop ; $77a6
+	jr z, .store ; $77a6
 	ld a, SENIORCOURTSTAGE_DOUBLES_RANK1 ; $77a8
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $77aa
-	jr z, .loop ; $77ad
+	jr z, .store ; $77ad
 	ld a, SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $77af
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $77b1
-	jr z, .loop ; $77b4
+	jr z, .store ; $77b4
 	ld a, SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN ; $77b6
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $77b8
-	jr z, .loop ; $77bb
+	jr z, .store ; $77bb
 	ld a, SENIORCOURTSTAGE_DOUBLES_COMPLETE ; $77bd
-	jr .loop ; $77bf
+	jr .store ; $77bf
 	ret ; $77c1
 FadeInSeniorCourtNearPairA:
 	call PlaceSeniorCourtPairA ; $77c2

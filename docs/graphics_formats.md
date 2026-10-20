@@ -802,7 +802,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty-nine
+the source claims is true, not just that the bytes come back. All thirty
 pass:
 
 | check | count | what it asserts |
@@ -820,7 +820,7 @@ pass:
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13780 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `labels` | 13781 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `headers` | 3103 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33806 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
@@ -829,13 +829,14 @@ pass:
 | `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
 | `tilemap` | 241 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
-| `reach` | 4903 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
+| `reach` | 4904 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
 | `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 4579 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
-| `fields` | 454 | a routine that names a `CHARREC_*`/`ACTORF_*`/`OBJSLOT_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c / ld e, a`) (exceptions allow-listed) |
+| `raw-ids` | 5020 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; a `bit` test on a joypad byte (loaded from `hInput*`/`wCharInputBits`, or already tested with a `PADB_` bit) names its bit; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
+| `fields` | 480 | a routine that names a `CHARREC_*`/`CREATEDCHAR_*`/`ACTORF_*`/`OBJSLOT_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c / ld e, a`) (exceptions allow-listed) |
 | `templates` | 161 | a label handed to `QueueSpriteTemplate` in `hl`, directly or as a row of the pointer table `hl` indexes, is a `sprite_template` region (one stale dead-code operand allow-listed) |
-| `loops` | 909 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted) |
+| `loops` | 891 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
+| `mirrors` | 21 | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
 
 ---
 

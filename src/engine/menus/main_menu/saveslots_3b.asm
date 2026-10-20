@@ -255,7 +255,7 @@ TryMainMenuLinkHandshake:
 	ei ; $5c73
 	cp LINKMSG_PROBE ; $5c74
 	jr z, .waitFramesCmd ; $5c76
-.linkAttemptLoop:
+.attemptLink:
 	farcall ShowLinkMessageScreen ; $5c78
 	farcall TryEstablishLink ; $5c7b
 	push af ; $5c7e
@@ -302,7 +302,7 @@ TryMainMenuLinkHandshake:
 .waitFramesCmd:
 	wait_frames 6 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
-	jr c, .linkAttemptLoop ; $5cde
+	jr c, .attemptLink ; $5cde
 .done:
 	ret ; $5ce0
 Unused_3b_RestoreScreenAfterLinkAttempt:

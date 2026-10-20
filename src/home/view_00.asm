@@ -245,7 +245,7 @@ QueueCharFrameTiles:
 	and a ; $2ea0
 	jr nz, .withShadow ; $2ea1
 	call QueueVRAMCopy ; $2ea3
-.loop:
+.restoreBank:
 	pop_rom_bank ; $2ea6
 	ret ; $2eac
 .withShadow:
@@ -271,7 +271,7 @@ QueueCharFrameTiles:
 	ld a, $40 ; $2edc
 	add_de_a ; $2ede
 	call QueueTileCopyAdvance ; $2ee3
-	jr .loop ; $2ee6
+	jr .restoreBank ; $2ee6
 .smallShadow:
 	ld bc, $00c0 ; $2ee8
 	add hl, bc ; $2eeb
@@ -284,7 +284,7 @@ QueueCharFrameTiles:
 	ld a, $40 ; $2f00
 	add_de_a ; $2f02
 	call QueueTileCopyAdvance ; $2f07
-	jr .loop ; $2f0a
+	jr .restoreBank ; $2f0a
 QueueTileCopyAdvance:
 	ld c, 1 ; $2f0c
 	push de ; $2f0e

@@ -225,19 +225,19 @@ Unused_18_RunTwoOptionSelect:
 .checkRight:
 	ldh a, [hInputRisingEdge] ; $542b
 	and PADF_RIGHT ; $542d
-	jr z, .checkUp ; $542f
+	jr z, .checkConfirm ; $542f
 	ld b, $01 ; $5431
 	sound SFX_MENU_MOVE ; $5433
-.checkUp:
+.checkConfirm:
 	ldh a, [hInputRisingEdge] ; $5435
 	and PADF_A ; $5437
 	jr nz, .confirm ; $5439
 	ldh a, [hInputRisingEdge] ; $543b
 	and PADF_B ; $543d
-	jr z, .checkDown ; $543f
+	jr z, .setCursorPos ; $543f
 	ld b, $ff ; $5441
 	jr .confirm ; $5443
-.checkDown:
+.setCursorPos:
 	ld de, $128e ; $5445
 	ld a, b ; $5448
 	and a ; $5449
@@ -269,19 +269,19 @@ Unused_18_RunTwoOptionSelectB:
 .checkRight:
 	ldh a, [hInputRisingEdge] ; $5473
 	and PADF_RIGHT ; $5475
-	jr z, .checkUp ; $5477
+	jr z, .checkConfirm ; $5477
 	ld b, $01 ; $5479
 	sound SFX_MENU_MOVE ; $547b
-.checkUp:
+.checkConfirm:
 	ldh a, [hInputRisingEdge] ; $547d
 	and PADF_A ; $547f
 	jr nz, .confirm ; $5481
 	ldh a, [hInputRisingEdge] ; $5483
 	and PADF_B ; $5485
-	jr z, .checkDown ; $5487
+	jr z, .setCursorPos ; $5487
 	ld b, $ff ; $5489
 	jr .confirm ; $548b
-.checkDown:
+.setCursorPos:
 	ld de, $2892 ; $548d
 	ld a, b ; $5490
 	and a ; $5491
