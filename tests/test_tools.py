@@ -2,11 +2,13 @@
 where it can run without PyBoy, run on the real tree, so a layout change that
 breaks one fails here rather than the next time someone reaches for it."""
 import importlib
+import struct
 import subprocess
 import sys
+import tempfile
 import unittest
 
-from tests.helpers import ROOT, TOOLS, needs_rom
+from tests.helpers import ROOT, TOOLS, assemble, needs_rgbasm, needs_rom
 
 SYM = ROOT / "build" / "mariotennis.sym"
 needs_build = unittest.skipUnless(SYM.exists(), "build/mariotennis.sym not present: run make first")
@@ -57,6 +59,19 @@ class Static(unittest.TestCase):
         self.assertEqual(target, "build/main.o")
         missing = [d for d in deps.split() if not d.startswith("data/") and not (ROOT / d).exists()]
         self.assertEqual(missing, [])
+
+    @needs_rgbasm
+    def test_consts_match_assembler(self):
+        import consts
+        values = consts.constants()
+        self.assertEqual((values["DRILLCTR_TOPSPIN_SERVES_LEFT"], values["PADF_BUTTONS"]), (1, 0x0f))
+        names = sorted(values)
+        with tempfile.TemporaryDirectory() as d:
+            for i in range(0, len(names), 3000):
+                chunk = names[i:i + 3000]
+                out = assemble("\n".join(f"\tdl {n}" for n in chunk), d)
+                for name, got in zip(chunk, struct.unpack(f"<{len(chunk)}i", out[:4 * len(chunk)])):
+                    self.assertEqual(values[name] & 0xffffffff, got & 0xffffffff, name)
 
     def test_savetool(self):
         save = ROOT / "maxed-unlocked.sav"

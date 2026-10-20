@@ -48,7 +48,7 @@ wSaveAndQuitRequest:: db
 ; 0x09 - Link-cable Versus Match
 ; 0x0a - Story Mode - Dream Match
 ;
-; See GAMEMODE_* in include/constants/. Bank $38 sets 0x09 right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
+; See GAMEMODE_* in include/constants/. Bank $38 sets GAMEMODE_LINK_MATCH right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
 wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState keep the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps them); cleared after use

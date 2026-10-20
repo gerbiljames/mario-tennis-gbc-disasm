@@ -177,15 +177,15 @@ RunMinigameRulesPages:
 MinigameRulesTextIdBases_17:
 	; $6fdb, 18 bytes (records:2)
 	table_width 2
-	dw $2cc6 ; record 0
-	dw $2cd0 ; record 1
-	dw $2cda ; record 2
-	dw $2ce2 ; record 3
-	dw $2cef ; record 4
-	dw $2cf6 ; record 5
-	dw $3007 ; record 6
-	dw $3017 ; record 7
-	dw $3026 ; record 8
+	dw Text_RulesBooBlastLevel1 ; record 0
+	dw Text_RulesShootingStarLevel1 ; record 1
+	dw Text_RulesPerfectShotLevel1 ; record 2
+	dw Text_RulesTargetShotLevel1 ; record 3
+	dw Text_RulesFruitFantasyLevel1 ; record 4
+	dw Text_RulesBananaBunchLevel1 ; record 5
+	dw Text_RulesTreasureBoxLevel1 ; record 6
+	dw Text_RulesMedallionMatchLevel1 ; record 7
+	dw Text_RulesTwoOnOneLevel1 ; record 8
 	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists_17:
 	; $6fed, 174 bytes (rules_pages:6)

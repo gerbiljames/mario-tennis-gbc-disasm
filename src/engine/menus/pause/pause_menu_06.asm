@@ -241,15 +241,15 @@ ShowMinigameRulesPages:
 MinigameRulesTextIdBases:
 	; $4262, 18 bytes (records:2)
 	table_width 2
-	dw $2c87 ; record 0
-	dw $2c8d ; record 1
-	dw $2c92 ; record 2
-	dw $2c96 ; record 3
-	dw $2c9f ; record 4
-	dw $2ca2 ; record 5
-	dw $2ca5 ; record 6
-	dw $2cb1 ; record 7
-	dw $2cbd ; record 8
+	dw Text_RulesBooBlast ; record 0
+	dw Text_RulesShootingStar ; record 1
+	dw Text_RulesPerfectShot ; record 2
+	dw Text_RulesTargetShot ; record 3
+	dw Text_RulesFruitFantasy ; record 4
+	dw Text_RulesBananaBunch ; record 5
+	dw Text_RulesTreasureBox ; record 6
+	dw Text_RulesMedallionMatch ; record 7
+	dw Text_RulesTwoOnOne ; record 8
 	assert_table_length NUM_MARIOGAMES
 MinigameRulesPageLists:
 	; $4274, 162 bytes (rules_pages:6)

@@ -181,7 +181,7 @@ ReadJoypadThunk:
 	call ReadJoypad ; $2851
 	ret ; $2854
 SoftResetIfABStartSelect:
-	xor $0f ; $2855
+	xor PADF_BUTTONS ; $2855
 	jr nz, .done ; $2857
 	jp SoftReset ; $2859
 .done:

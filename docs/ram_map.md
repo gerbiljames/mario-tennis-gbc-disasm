@@ -23,7 +23,7 @@ own symbols and a note naming the code that owns it. A variant's names appear
 only at sites whose scope matches: the referencing code's ROM bank and range,
 and/or the WRAM bank proven selected there (by dataflow or a traced run). So
 the same `$dxxx` offset reads as different symbols in different routines,
-and a site whose bank could not be proven keeps the number (97, all inside
+and a site whose bank could not be proven keeps the number (32, all inside
 `Unused_*` routines nothing reaches). The assembler accepts any variant's
 symbol anywhere, so when an edit moves an access to another owner, change the
 operand by hand; the variant notes say which one a routine may touch.
@@ -100,7 +100,7 @@ same scope as the base (`$dd1e` is `wBallHistory + 30`, `$ffd1`
 
 Each banked `SECTION` in `ram/*.asm` opens with a one-line-per-region
 summary, since a bank is 4 KiB of overlapping claims (bank `$03` alone has
-117 symbols across 28 variants):
+119 symbols across 30 variants):
 
 ```
 ; WRAMX bank 2 at a glance (ram/wram/):

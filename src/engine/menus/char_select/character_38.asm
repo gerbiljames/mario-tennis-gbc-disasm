@@ -163,7 +163,7 @@ LoadHighlightedCharPalette:
 ; Four bytes, $03 $01 $02 $00 -- a permutation of the four character-
 ; select slots. Sits between LoadHighlightedCharPalette and
 ; SetupCharacterSelectScreen; the palette routine computes its own
-; index arithmetically (cursor index + partner flag, then + 4) and
+; index arithmetically (cursor index + partner flag * 2, then + 4) and
 ; never consults a table. Nothing references it.
 Unused_38_SlotIndexOrder:
 	; $4971, 4 bytes (bytes:4)

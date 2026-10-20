@@ -182,15 +182,15 @@ MainMenuCaptionTable:
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 8
 MainMenuCaptionTextIds:
 	; $5c15, 18 bytes (records:2)
-	dw $007d ; record 0
-	dw $007e ; record 1
-	dw $007f ; record 2
-	dw $007c ; record 3
-	dw $007c ; record 4
-	dw $007c ; record 5
-	dw $0080 ; record 6
-	dw $0081 ; record 7
-	dw $0082 ; record 8
+	dw Text_MainMenuPlayForPractice ; record 0
+	dw Text_MainMenuPlayMiniGames ; record 1
+	dw Text_MainMenuLinkFor2Player ; record 2
+	dw Text_MainMenuCreateCharacter ; record 3
+	dw Text_MainMenuCreateCharacter ; record 4
+	dw Text_MainMenuCreateCharacter ; record 5
+	dw Text_MainMenuReviewCharData ; record 6
+	dw Text_MainMenuStudyVocabulary ; record 7
+	dw Text_MainMenuEraseSavedData ; record 8
 Print2DigitNumberRightAligned:
 	ld a, $02 ; $5c27
 	jr PrintNumberRightAligned.format ; $5c29

@@ -80,7 +80,7 @@ class Source(unittest.TestCase):
 
     def test_named_ids(self):
         self.assertEqual(count(r"ld hl, Text_\w+ ;"), 264)
-        self.assertEqual(count(r"^\tdw Text_\w+"), 752)
+        self.assertEqual(count(r"^\tdw Text_\w+"), 779)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n(?:ENDC\n)?\.clearLoop:\n\tpush de ; \$[0-9a-f]{4}\n\tcall ClearGameFlag "),
@@ -200,6 +200,37 @@ class Source(unittest.TestCase):
                         for f in (ROOT / "include" / "constants").glob("*.inc"))
         self.assertIn(f"| names | {flags} `FLAG_*` in `include/flag_constants.inc` | {saveflags} `SAVEFLAG_*` ",
                       (ROOT / "docs" / "story_mode.md").read_text())
+        gfx, ui, ram = text("docs/graphics_formats.md"), text("docs/screens_and_ui.md"), text("docs/ram_map.md")
+        mid, fresh = re.search(r"(\d+) mid-group streams all pad with \$00, (\d+) fresh-group",
+                               text("tools/lz.py")).groups()
+        self.assertIn(f"all {mid} mid-group streams pad with `$00`; the {fresh} fresh-group", gfx)
+        vram = count(r"^\tcall QueueVRAMCopy\b")
+        self.assertIn(f"{vram} `call` sites", gfx)
+        self.assertIn(f"`src/home/memory_00.asm`, {vram} call sites", ui)
+        self.assertIn(f"({count(r'^\tcall AdvanceFrame\b')} call sites)", ui)
+        self.assertIn(f"There are {regions['sprite_template']} templates.", gfx)
+        rows = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
+                if l.strip() and not l.startswith("#")]
+        tilemaps = sum(1 for f in rows if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin"))
+        self.assertIn(f"The {tilemaps} blobs `data.manifest` tags `tilemap:W`", gfx)
+        pals = [int(f[2], 16) for f in rows if len(f) > 3 and f[3] == "palettes"]
+        self.assertIn(f"{len(pals)} regions are `palettes`.", gfx)
+        self.assertIn(f"Sizes ({sum(pals):,} bytes over {len(pals)} regions): {pals.count(64)} full 64-byte "
+                      f"sets, {pals.count(8)} single palettes, {pals.count(32)} 32-byte half-sets, "
+                      f"{pals.count(128)} of 128 bytes", gfx)
+        unprovable = 0
+        for _, src in SRC:
+            scope = ""
+            for line in src.splitlines():
+                m = re.match(r"([A-Za-z_]\w*):", line)
+                if m:
+                    scope = m.group(1)
+                elif scope.startswith("Unused") and re.match(r"\t(?!d[bwl] )[a-z]", line):
+                    unprovable += len(re.findall(r"\$[cd][0-9a-f]{3}\b", line.split(";")[0]))
+        self.assertIn(f"keeps the number ({unprovable}, all inside `Unused_*` routines", ram)
+        bank3 = (ROOT / "ram" / "wram" / "wramx3.asm").read_text()
+        self.assertIn(f"{len(re.findall(r'^w\w+:', bank3, re.M))} symbols across "
+                      f"{len(re.findall(r'^\t?(?:UNION|NEXTU)$', bank3, re.M))} variants", ram)
 
     def test_mirrored_char_struct(self):
         """ram_mirrored.inc's untagged $df00 names sit where match_char_struct
@@ -256,10 +287,14 @@ class Tools(unittest.TestCase):
         r = subprocess.run([sys.executable, str(ROOT / "tools" / "check.py")],
                            capture_output=True, text=True, cwd=ROOT)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
-        # a tool that stops parsing part of the source passes vacuously: hold
-        # the actor-slot resolver to the script sites it reaches today
-        m = re.search(r"^slots\s+(\d+) checked", r.stdout, re.M)
-        self.assertGreaterEqual(int(m.group(1)), 5124, "the slot resolver reaches fewer script sites")
+        # a check that stops parsing part of the source passes vacuously: every
+        # one must check something, the source-parsing ones near today's count
+        checked = {k: int(n) for k, n in re.findall(r"^(\S+)\s+(\d+) checked", r.stdout, re.M)}
+        floors = {"scopes": 260, "labels": 13500, "branches": 12, "literals": 33000, "dma": 50,
+                  "reach": 4800, "unnamed": 8700, "raw-ids": 4700, "macros": 210, "slots": 5124}
+        self.assertLessEqual(set(floors), set(checked), r.stdout)
+        for name, n in checked.items():
+            self.assertGreaterEqual(n, floors.get(name, 1), f"{name} checks fewer sites")
 
     def test_doc_counts(self):
         """README and STATUS quote tools/stats.py; rerun it and update them."""

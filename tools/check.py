@@ -1032,6 +1032,7 @@ _PER_LOCATION_VARS = {"wMapSceneStage", "wMapSceneStage2"}
 KNOWN_RAW_IDS = {
     ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
     ("wPlayer1MainChar", "$3f"),   # debug_02's placeholder record id, not a drill opponent
+    ("QueueSprite(b)", "0"),       # no attribute bits; OAM_PAL0 is the DMG palette bit, unused on CGB
 }
 # Data rows whose values are ids: a macro's argument by position, and tables
 # by label or by the kind their header comment names.
@@ -1041,6 +1042,9 @@ RAW_ID_TABLES = {
     "MinigameSelectMenuTable": "MINIGAME_",
     "MinigameDrillIdTable": "MINIGAME_",
     "StorySlotBlockIds_03": "SAVEBLOCK_",
+    "MinigameRulesTextIdBases": "Text_",
+    "MinigameRulesTextIdBases_17": "Text_",
+    "MainMenuCaptionTextIds": "Text_",
 }
 # Families of variables and arguments with too few named sites to infer them.
 # `and X_MASK` counts as a variable, so the cp after it names the field's values.

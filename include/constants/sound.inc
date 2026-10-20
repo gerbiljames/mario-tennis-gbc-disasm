@@ -63,7 +63,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
 	const BGM_ACADEMY_BUILDING      ; $1a story_location: the Academy Main Building and the Academy Wing
 	const BGM_ACADEMY_OUTDOORS      ; $1b story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
-	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomNpc03_13
+	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomEntry0fScene
 	const BGM_ACADEMY_ROOMS         ; $1d story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
 	const BGM_TENNIS_MACHINE        ; $1e the Tennis Machine Room's drill_defs
 	const BGM_WALL_PRACTICE         ; $1f the Wall Practice Room's drill_defs
@@ -89,7 +89,7 @@ def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 ; wCurrentBGM when the music channels fall idle. These three are the ones used.
 def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
-def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the save-slot debug editor
+def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomEntry0fScene, DormRoomEntry02Scene) and the save-slot debug editor
 
 ; Sound effects, named for the event they play for.
 def SFX_STOP                 equ $50 ; silences the two effect channels

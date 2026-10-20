@@ -332,7 +332,7 @@ UNION
 wCreatedCharRecords:: ds 192
 	export_size wCreatedCharRecords
 	ds 64
-; [$80 bytes] The character-select grid as 32 four-byte entries, cleared on screen open and filled by BuildCharUnlockFlags; AddCreatedCharsToCharGrid appends the created characters from $da24
+; [$80 bytes] The character-select grid as 32 four-byte entries, cleared on screen open and filled by BuildCharGridFromUnlockFlags; AddCreatedCharsToCharGrid appends the created characters from $da24
 wCharGridEntries:: ds 128
 	export_size wCharGridEntries
 	ds 128

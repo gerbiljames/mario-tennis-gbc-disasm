@@ -107,8 +107,8 @@ run **3 to 34**. `.matchTail` ends `pop hl` (source pointer pushed at `$17f6`)
 encoder always writes **three** zero bytes. If the terminator starts a fresh
 group the decoder reads all three (`$00` control byte plus `$0000`); mid-group
 it reads only the `$0000` and the third byte is never read. `tools/lz.py`'s
-`decompress()` counts that byte so extents match: all 697 mid-group streams pad
-with `$00`; the 142 fresh-group streams have no pad.
+`decompress()` counts that byte so extents match: all 715 mid-group streams pad
+with `$00`; the 148 fresh-group streams have no pad.
 
 A distance of 2048 at minimum length would encode as `$0000`, the terminator;
 `lz.py`'s `MAX_DIST = 0x7FF` prevents it.
@@ -172,7 +172,7 @@ e.g. `wDecompBuffer tile 1` at `$0a:$58f9`.
 ### 2.2 `QueueVRAMCopy` counts tiles, not bytes
 
 `QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`) is **the only way
-anything reaches VRAM**: 610 `call` sites, no direct `ld [$8xxx], a` anywhere.
+anything reaches VRAM**: 613 `call` sites, no direct `ld [$8xxx], a` anywhere.
 
 ```
 hl = source
@@ -238,7 +238,7 @@ WRAM bank `$03`) and `wScreenAttrmap` (1024 bytes, WRAM bank `$02`).
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells. The 237 blobs `data.manifest`
+Screen layouts are written as rows of cells. The 241 blobs `data.manifest`
 tags `tilemap:W` (all `lz_*`, decompressed first) get a `.tilemap` text grid
 beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an edited grid
 back and `make check` (`tilemap`) round-trips every one. Character-data screen
@@ -393,7 +393,7 @@ With base attr bit 5 (X-flip) set, a second loop (`$1ee0`-`$1f05`) uses
 X = `base_x + (8 - dx)` (`cpl` / `add $09`) and combines attr with **`or`**
 (`$1f01`).
 
-There are 170 templates. `StandingShadowOamTemplate` (`$08:$6301`) is reached
+There are 173 templates. `StandingShadowOamTemplate` (`$08:$6301`) is reached
 by `jp QueueSpriteTemplate` (`DrawStandingShadowSlot`, `$08:$6534`); all others
 by `call`.
 
@@ -549,14 +549,14 @@ The game's `SplitColorComponents` / `CombineColorComponents` (`$00:$1c6a` /
 
 ### 5.2 The `palettes` spec
 
-157 regions are `palettes`. Their values are **not committed**: the source
+226 regions are `palettes`. Their values are **not committed**: the source
 `INCLUDE`s `data/<folder>/<Label>.asm`, generated at setup by
 `render_palettes` (`tools/extract.py`) with one `palette` macro per palette
 (four colours as 5-bit `r,g,b`, packed by the macro, `#rrggbb` in a comment).
-The nine palettes whose words set bit 15 (five files in banks `$17`, `$1c`,
-`$28`, `$39`) stay `dw`. Rows are fixed at 8 bytes.
+The ten palettes whose words set bit 15 (six files in banks `$17`, `$1c`,
+`$28`, `$39`, `$65`) stay `dw`. Rows are fixed at 8 bytes.
 
-Sizes (7,864 bytes over 157 regions): 86 full 64-byte sets, 28 single
+Sizes (8,696 bytes over 226 regions): 87 full 64-byte sets, 85 single
 palettes, 4 32-byte half-sets, 6 of 128 bytes (BG+OBJ, like
 `wMasterPalettes`), the rest in between; all whole palettes, so `render_palettes`' raw-`db` tail
 branch never fires.

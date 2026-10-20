@@ -18,7 +18,7 @@ dropped blue channel and the dead link-error check in `AdvanceFrame`).
 ### 1.1 `AdvanceFrame` — the barrier
 
 `AdvanceFrame` (`$00:$2631`, `src/home/flags_00.asm`) is the game's only frame
-barrier (417 call sites). Per call it:
+barrier (420 call sites). Per call it:
 
 1. Saves `af/bc/de/hl` and `rVBK`, clears `hVBlankOccurred` (`$2645`).
 2. Calls `RunFrameTasks` with `a = 0` (`$2647`, §1.3).
@@ -143,7 +143,7 @@ The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.buildS
 
 ### 2.1 `QueueVRAMCopy` is the only door
 
-`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`, 610 call sites); there
+`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`, 613 call sites); there
 is no direct `ld [$8xxx], a` in the ROM.
 
 ```
