@@ -1868,6 +1868,11 @@ _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 INDEXED_ARRAYS = {
     "CHARREC_TRAIN_LEVELS": "TRAINSTAT_",
     "wCharDataLevels": "TRAINSTAT_",
+    "wCharDataNewLevels": "TRAINSTAT_",
+    "wCharDataStats": "CHARSTAT_",
+    "wCharDataStatDeltas": "CHARSTAT_",
+    "wCharDataStatsNoEquipment": "CHARSTAT_",
+    "wCharDataEquipmentDeltas": "CHARSTAT_",
     "wActorObjDef": "OBJDEF_",
 }
 _INDEXED_ARRAY_RE = re.compile(rf"\b({'|'.join(INDEXED_ARRAYS)}) \+ ([^\],;]+)")

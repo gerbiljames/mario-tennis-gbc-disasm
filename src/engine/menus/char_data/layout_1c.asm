@@ -41,25 +41,25 @@ ApplyCharStatLevelUp:
 	push af ; $542e
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $542f
 	pop af ; $5442
-	ld a, [wCharDataNewLevels] ; $5443
+	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $5443
 	ld [hl], a ; $5446
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $5447
 	push af ; $544a
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $544b
 	pop af ; $545e
-	ld a, [wCharDataNewLevels + 1] ; $545f
+	ld a, [wCharDataNewLevels + TRAINSTAT_POWER] ; $545f
 	ld [hl], a ; $5462
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $5463
 	push af ; $5466
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $5467
 	pop af ; $547a
-	ld a, [wCharDataNewLevels + 2] ; $547b
+	ld a, [wCharDataNewLevels + TRAINSTAT_CONTROL] ; $547b
 	ld [hl], a ; $547e
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $547f
 	push af ; $5482
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $5483
 	pop af ; $5496
-	ld a, [wCharDataNewLevels + 3] ; $5497
+	ld a, [wCharDataNewLevels + TRAINSTAT_SPEED] ; $5497
 	ld [hl], a ; $549a
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $549b
 	ld a, [wStoryCharacterSlot] ; $549e
@@ -102,37 +102,37 @@ SelectCharDataConfirmSlot:
 	ret ; $54f1
 DrawStatArrowIndicators:
 	wram_bank WRAM_SCENE ; $54f2
-	ld a, [wCharDataStatDeltas] ; $54f8
+	ld a, [wCharDataStatDeltas + CHARSTAT_TOP] ; $54f8
 	ld_xy de, $4c, $24 ; $54fb
 	call QueueStatChangeArrow ; $54fe
-	ld a, [wCharDataStatDeltas + 1] ; $5501
+	ld a, [wCharDataStatDeltas + CHARSTAT_SLICE] ; $5501
 	ld_xy de, $4c, $34 ; $5504
 	call QueueStatChangeArrow ; $5507
-	ld a, [wCharDataStatDeltas + 2] ; $550a
+	ld a, [wCharDataStatDeltas + CHARSTAT_SERVE] ; $550a
 	ld_xy de, $4c, $4c ; $550d
 	call QueueStatChangeArrow ; $5510
-	ld a, [wCharDataStatDeltas + 3] ; $5513
+	ld a, [wCharDataStatDeltas + CHARSTAT_STROKE] ; $5513
 	ld_xy de, $4c, $5c ; $5516
 	call QueueStatChangeArrow ; $5519
-	ld a, [wCharDataStatDeltas + 4] ; $551c
+	ld a, [wCharDataStatDeltas + CHARSTAT_VOLLEY] ; $551c
 	ld_xy de, $4c, $6c ; $551f
 	call QueueStatChangeArrow ; $5522
-	ld a, [wCharDataStatDeltas + 5] ; $5525
+	ld a, [wCharDataStatDeltas + CHARSTAT_ANGLE] ; $5525
 	ld_xy de, $9c, $24 ; $5528
 	call QueueStatChangeArrow ; $552b
-	ld a, [wCharDataStatDeltas + 6] ; $552e
+	ld a, [wCharDataStatDeltas + CHARSTAT_PLACEMENT] ; $552e
 	ld_xy de, $9c, $34 ; $5531
 	call QueueStatChangeArrow ; $5534
-	ld a, [wCharDataStatDeltas + 7] ; $5537
+	ld a, [wCharDataStatDeltas + CHARSTAT_SPEED] ; $5537
 	ld_xy de, $9c, $4c ; $553a
 	call QueueStatChangeArrow ; $553d
-	ld a, [wCharDataStatDeltas + 8] ; $5540
+	ld a, [wCharDataStatDeltas + CHARSTAT_DASH] ; $5540
 	ld_xy de, $9c, $5c ; $5543
 	call QueueStatChangeArrow ; $5546
-	ld a, [wCharDataStatDeltas + 9] ; $5549
+	ld a, [wCharDataStatDeltas + CHARSTAT_REACTION] ; $5549
 	ld_xy de, $9c, $6c ; $554c
 	call QueueStatChangeArrow ; $554f
-	ld a, [wCharDataStatDeltas + 10] ; $5552
+	ld a, [wCharDataStatDeltas + CHARSTAT_STOP] ; $5552
 	ld_xy de, $9c, $7c ; $5555
 	call QueueStatChangeArrow ; $5558
 	ret ; $555b

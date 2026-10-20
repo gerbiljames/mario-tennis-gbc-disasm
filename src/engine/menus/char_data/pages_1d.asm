@@ -90,17 +90,17 @@ InitCharDataWorkRam:
 	ld [hl+], a ; $40f9
 	ld [hl], d ; $40fa
 	xor a ; $40fb
-	ld [wCharDataStatDeltas], a ; $40fc
-	ld [wCharDataStatDeltas + 1], a ; $40ff
-	ld [wCharDataStatDeltas + 2], a ; $4102
-	ld [wCharDataStatDeltas + 3], a ; $4105
-	ld [wCharDataStatDeltas + 4], a ; $4108
-	ld [wCharDataStatDeltas + 5], a ; $410b
-	ld [wCharDataStatDeltas + 6], a ; $410e
-	ld [wCharDataStatDeltas + 7], a ; $4111
-	ld [wCharDataStatDeltas + 8], a ; $4114
-	ld [wCharDataStatDeltas + 9], a ; $4117
-	ld [wCharDataStatDeltas + 10], a ; $411a
+	ld [wCharDataStatDeltas + CHARSTAT_TOP], a ; $40fc
+	ld [wCharDataStatDeltas + CHARSTAT_SLICE], a ; $40ff
+	ld [wCharDataStatDeltas + CHARSTAT_SERVE], a ; $4102
+	ld [wCharDataStatDeltas + CHARSTAT_STROKE], a ; $4105
+	ld [wCharDataStatDeltas + CHARSTAT_VOLLEY], a ; $4108
+	ld [wCharDataStatDeltas + CHARSTAT_ANGLE], a ; $410b
+	ld [wCharDataStatDeltas + CHARSTAT_PLACEMENT], a ; $410e
+	ld [wCharDataStatDeltas + CHARSTAT_SPEED], a ; $4111
+	ld [wCharDataStatDeltas + CHARSTAT_DASH], a ; $4114
+	ld [wCharDataStatDeltas + CHARSTAT_REACTION], a ; $4117
+	ld [wCharDataStatDeltas + CHARSTAT_STOP], a ; $411a
 	ret ; $411d
 BuildCharDataScreenPages:
 	farcall CharDataScreen_LoadScreen ; $411e

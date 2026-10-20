@@ -332,25 +332,25 @@ CommitCharDataToRecord:
 	push af ; $4a10
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4a11
 	pop af ; $4a24
-	ld a, [wCharDataNewLevels] ; $4a25
+	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $4a25
 	ld [hl], a ; $4a28
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4a29
 	push af ; $4a2c
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4a2d
 	pop af ; $4a40
-	ld a, [wCharDataNewLevels + 1] ; $4a41
+	ld a, [wCharDataNewLevels + TRAINSTAT_POWER] ; $4a41
 	ld [hl], a ; $4a44
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4a45
 	push af ; $4a48
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4a49
 	pop af ; $4a5c
-	ld a, [wCharDataNewLevels + 2] ; $4a5d
+	ld a, [wCharDataNewLevels + TRAINSTAT_CONTROL] ; $4a5d
 	ld [hl], a ; $4a60
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4a61
 	push af ; $4a64
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4a65
 	pop af ; $4a78
-	ld a, [wCharDataNewLevels + 3] ; $4a79
+	ld a, [wCharDataNewLevels + TRAINSTAT_SPEED] ; $4a79
 	ld [hl], a ; $4a7c
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4a7d
 	xor a ; $4a80
@@ -379,13 +379,13 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4acc
 	ld a, [hl] ; $4acd
 	inc a ; $4ace
-	ld [wCharDataStats], a ; $4acf
+	ld [wCharDataStats + CHARSTAT_TOP], a ; $4acf
 	push af ; $4ad2
 	ld_story_char_field CHARREC_STAT_SLICE ; $4ad3
 	pop af ; $4ae6
 	ld a, [hl] ; $4ae7
 	inc a ; $4ae8
-	ld [wCharDataStats + 1], a ; $4ae9
+	ld [wCharDataStats + CHARSTAT_SLICE], a ; $4ae9
 	push af ; $4aec
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4aed
 	pop af ; $4b00
@@ -396,19 +396,19 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b19
 	ld a, [hl] ; $4b1a
 	inc a ; $4b1b
-	ld [wCharDataStats + 2], a ; $4b1c
+	ld [wCharDataStats + CHARSTAT_SERVE], a ; $4b1c
 	push af ; $4b1f
 	ld_story_char_field CHARREC_STAT_STROKE ; $4b20
 	pop af ; $4b33
 	ld a, [hl] ; $4b34
 	inc a ; $4b35
-	ld [wCharDataStats + 3], a ; $4b36
+	ld [wCharDataStats + CHARSTAT_STROKE], a ; $4b36
 	push af ; $4b39
 	ld_story_char_field CHARREC_STAT_VOLLEY ; $4b3a
 	pop af ; $4b4d
 	ld a, [hl] ; $4b4e
 	inc a ; $4b4f
-	ld [wCharDataStats + 4], a ; $4b50
+	ld [wCharDataStats + CHARSTAT_VOLLEY], a ; $4b50
 	push af ; $4b53
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4b54
 	pop af ; $4b67
@@ -419,13 +419,13 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b80
 	ld a, [hl] ; $4b81
 	inc a ; $4b82
-	ld [wCharDataStats + 5], a ; $4b83
+	ld [wCharDataStats + CHARSTAT_ANGLE], a ; $4b83
 	push af ; $4b86
 	ld_story_char_field CHARREC_STAT_PLACEMENT ; $4b87
 	pop af ; $4b9a
 	ld a, [hl] ; $4b9b
 	inc a ; $4b9c
-	ld [wCharDataStats + 6], a ; $4b9d
+	ld [wCharDataStats + CHARSTAT_PLACEMENT], a ; $4b9d
 	push af ; $4ba0
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4ba1
 	pop af ; $4bb4
@@ -436,25 +436,25 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4bcd
 	ld a, [hl] ; $4bce
 	inc a ; $4bcf
-	ld [wCharDataStats + 7], a ; $4bd0
+	ld [wCharDataStats + CHARSTAT_SPEED], a ; $4bd0
 	push af ; $4bd3
 	ld_story_char_field CHARREC_STAT_DASH ; $4bd4
 	pop af ; $4be7
 	ld a, [hl] ; $4be8
 	inc a ; $4be9
-	ld [wCharDataStats + 8], a ; $4bea
+	ld [wCharDataStats + CHARSTAT_DASH], a ; $4bea
 	push af ; $4bed
 	ld_story_char_field CHARREC_STAT_REACTION ; $4bee
 	pop af ; $4c01
 	ld a, [hl] ; $4c02
 	inc a ; $4c03
-	ld [wCharDataStats + 9], a ; $4c04
+	ld [wCharDataStats + CHARSTAT_REACTION], a ; $4c04
 	push af ; $4c07
 	ld_story_char_field CHARREC_STAT_STOP ; $4c08
 	pop af ; $4c1b
 	ld a, [hl] ; $4c1c
 	inc a ; $4c1d
-	ld [wCharDataStats + 10], a ; $4c1e
+	ld [wCharDataStats + CHARSTAT_STOP], a ; $4c1e
 	ld a, [wCharDataPage] ; $4c21
 	cp CHARDATAPAGE_CONFIRM ; $4c24
 	jr z, .clearDeltas ; $4c26
@@ -490,13 +490,13 @@ LoadCharStats:
 	pop af ; $4c76
 	ld a, [hl] ; $4c77
 	inc a ; $4c78
-	ld [wCharDataStats], a ; $4c79
+	ld [wCharDataStats + CHARSTAT_TOP], a ; $4c79
 	push af ; $4c7c
 	ld_story_char_field CHARREC_STAT_SLICE ; $4c7d
 	pop af ; $4c90
 	ld a, [hl] ; $4c91
 	inc a ; $4c92
-	ld [wCharDataStats + 1], a ; $4c93
+	ld [wCharDataStats + CHARSTAT_SLICE], a ; $4c93
 	push af ; $4c96
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4c97
 	pop af ; $4caa
@@ -507,19 +507,19 @@ LoadCharStats:
 	pop af ; $4cc3
 	ld a, [hl] ; $4cc4
 	inc a ; $4cc5
-	ld [wCharDataStats + 2], a ; $4cc6
+	ld [wCharDataStats + CHARSTAT_SERVE], a ; $4cc6
 	push af ; $4cc9
 	ld_story_char_field CHARREC_STAT_STROKE ; $4cca
 	pop af ; $4cdd
 	ld a, [hl] ; $4cde
 	inc a ; $4cdf
-	ld [wCharDataStats + 3], a ; $4ce0
+	ld [wCharDataStats + CHARSTAT_STROKE], a ; $4ce0
 	push af ; $4ce3
 	ld_story_char_field CHARREC_STAT_VOLLEY ; $4ce4
 	pop af ; $4cf7
 	ld a, [hl] ; $4cf8
 	inc a ; $4cf9
-	ld [wCharDataStats + 4], a ; $4cfa
+	ld [wCharDataStats + CHARSTAT_VOLLEY], a ; $4cfa
 	push af ; $4cfd
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4cfe
 	pop af ; $4d11
@@ -530,13 +530,13 @@ LoadCharStats:
 	pop af ; $4d2a
 	ld a, [hl] ; $4d2b
 	inc a ; $4d2c
-	ld [wCharDataStats + 5], a ; $4d2d
+	ld [wCharDataStats + CHARSTAT_ANGLE], a ; $4d2d
 	push af ; $4d30
 	ld_story_char_field CHARREC_STAT_PLACEMENT ; $4d31
 	pop af ; $4d44
 	ld a, [hl] ; $4d45
 	inc a ; $4d46
-	ld [wCharDataStats + 6], a ; $4d47
+	ld [wCharDataStats + CHARSTAT_PLACEMENT], a ; $4d47
 	push af ; $4d4a
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4d4b
 	pop af ; $4d5e
@@ -547,25 +547,25 @@ LoadCharStats:
 	pop af ; $4d77
 	ld a, [hl] ; $4d78
 	inc a ; $4d79
-	ld [wCharDataStats + 7], a ; $4d7a
+	ld [wCharDataStats + CHARSTAT_SPEED], a ; $4d7a
 	push af ; $4d7d
 	ld_story_char_field CHARREC_STAT_DASH ; $4d7e
 	pop af ; $4d91
 	ld a, [hl] ; $4d92
 	inc a ; $4d93
-	ld [wCharDataStats + 8], a ; $4d94
+	ld [wCharDataStats + CHARSTAT_DASH], a ; $4d94
 	push af ; $4d97
 	ld_story_char_field CHARREC_STAT_REACTION ; $4d98
 	pop af ; $4dab
 	ld a, [hl] ; $4dac
 	inc a ; $4dad
-	ld [wCharDataStats + 9], a ; $4dae
+	ld [wCharDataStats + CHARSTAT_REACTION], a ; $4dae
 	push af ; $4db1
 	ld_story_char_field CHARREC_STAT_STOP ; $4db2
 	pop af ; $4dc5
 	ld a, [hl] ; $4dc6
 	inc a ; $4dc7
-	ld [wCharDataStats + 10], a ; $4dc8
+	ld [wCharDataStats + CHARSTAT_STOP], a ; $4dc8
 	ld hl, wCharDataStatDeltas ; $4dcb
 	ld b, $0b ; $4dce
 	xor a ; $4dd0

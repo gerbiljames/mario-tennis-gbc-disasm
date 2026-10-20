@@ -330,13 +330,13 @@ BuildCharStatDisplay:
 	pop af ; $4ec0
 	ld a, [hl] ; $4ec1
 	inc a ; $4ec2
-	ld [wCharDataStats], a ; $4ec3
+	ld [wCharDataStats + CHARSTAT_TOP], a ; $4ec3
 	push af ; $4ec6
 	ld_story_char_field CHARREC_STAT_SLICE ; $4ec7
 	pop af ; $4eda
 	ld a, [hl] ; $4edb
 	inc a ; $4edc
-	ld [wCharDataStats + 1], a ; $4edd
+	ld [wCharDataStats + CHARSTAT_SLICE], a ; $4edd
 	push af ; $4ee0
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4ee1
 	pop af ; $4ef4
@@ -347,19 +347,19 @@ BuildCharStatDisplay:
 	pop af ; $4f0d
 	ld a, [hl] ; $4f0e
 	inc a ; $4f0f
-	ld [wCharDataStats + 2], a ; $4f10
+	ld [wCharDataStats + CHARSTAT_SERVE], a ; $4f10
 	push af ; $4f13
 	ld_story_char_field CHARREC_STAT_STROKE ; $4f14
 	pop af ; $4f27
 	ld a, [hl] ; $4f28
 	inc a ; $4f29
-	ld [wCharDataStats + 3], a ; $4f2a
+	ld [wCharDataStats + CHARSTAT_STROKE], a ; $4f2a
 	push af ; $4f2d
 	ld_story_char_field CHARREC_STAT_VOLLEY ; $4f2e
 	pop af ; $4f41
 	ld a, [hl] ; $4f42
 	inc a ; $4f43
-	ld [wCharDataStats + 4], a ; $4f44
+	ld [wCharDataStats + CHARSTAT_VOLLEY], a ; $4f44
 	push af ; $4f47
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4f48
 	pop af ; $4f5b
@@ -370,13 +370,13 @@ BuildCharStatDisplay:
 	pop af ; $4f74
 	ld a, [hl] ; $4f75
 	inc a ; $4f76
-	ld [wCharDataStats + 5], a ; $4f77
+	ld [wCharDataStats + CHARSTAT_ANGLE], a ; $4f77
 	push af ; $4f7a
 	ld_story_char_field CHARREC_STAT_PLACEMENT ; $4f7b
 	pop af ; $4f8e
 	ld a, [hl] ; $4f8f
 	inc a ; $4f90
-	ld [wCharDataStats + 6], a ; $4f91
+	ld [wCharDataStats + CHARSTAT_PLACEMENT], a ; $4f91
 	push af ; $4f94
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4f95
 	pop af ; $4fa8
@@ -387,25 +387,25 @@ BuildCharStatDisplay:
 	pop af ; $4fc1
 	ld a, [hl] ; $4fc2
 	inc a ; $4fc3
-	ld [wCharDataStats + 7], a ; $4fc4
+	ld [wCharDataStats + CHARSTAT_SPEED], a ; $4fc4
 	push af ; $4fc7
 	ld_story_char_field CHARREC_STAT_DASH ; $4fc8
 	pop af ; $4fdb
 	ld a, [hl] ; $4fdc
 	inc a ; $4fdd
-	ld [wCharDataStats + 8], a ; $4fde
+	ld [wCharDataStats + CHARSTAT_DASH], a ; $4fde
 	push af ; $4fe1
 	ld_story_char_field CHARREC_STAT_REACTION ; $4fe2
 	pop af ; $4ff5
 	ld a, [hl] ; $4ff6
 	inc a ; $4ff7
-	ld [wCharDataStats + 9], a ; $4ff8
+	ld [wCharDataStats + CHARSTAT_REACTION], a ; $4ff8
 	push af ; $4ffb
 	ld_story_char_field CHARREC_STAT_STOP ; $4ffc
 	pop af ; $500f
 	ld a, [hl] ; $5010
 	inc a ; $5011
-	ld [wCharDataStats + 10], a ; $5012
+	ld [wCharDataStats + CHARSTAT_STOP], a ; $5012
 	farcall CharDataScreen_DrawStats ; $5015
 	wram_bank WRAM_SCREEN ; $5018
 	ld hl, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 1 ; $501e
