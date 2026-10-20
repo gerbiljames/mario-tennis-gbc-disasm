@@ -110,16 +110,16 @@ RunCharDataConfirmScreen:
 	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank WRAM_STAGING ; $794b
 	ld hl, CharDataConfirmScreenTopTilemap ; $7951
-	ld de, wTextTileBuffer tile 106 ; $7954
+	ld de, wDecompBufferHigh tile 106 ; $7954
 	call DecompressData ; $7957
-	ld hl, wTextTileBuffer tile 106 ; $795a
+	ld hl, wDecompBufferHigh tile 106 ; $795a
 	ld bc, $002a ; $795d
 	call CopyBank1ToBank3BufferAlt ; $7960
 	wram_bank WRAM_STAGING ; $7963
 	ld hl, CharDataConfirmScreenTopAttrmap ; $7969
-	ld de, wTextTileBuffer tile 106 ; $796c
+	ld de, wDecompBufferHigh tile 106 ; $796c
 	call DecompressData ; $796f
-	ld hl, wTextTileBuffer tile 106 ; $7972
+	ld hl, wDecompBufferHigh tile 106 ; $7972
 	ld bc, $002a ; $7975
 	call CopyBank1ToBank2BufferAlt ; $7978
 	ld hl, CharDataConfirmScreenTopPatchList ; $797b

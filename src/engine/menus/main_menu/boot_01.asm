@@ -405,9 +405,9 @@ ShowDmgLockoutScreen:
 	ld de, vTiles2 ; $6040
 	ld c, 128 ; $6043 -- 128 of DmgLockoutTilesLZ_01's 256 tiles
 	call CopyMemoryFast ; $6045
-	ld hl, wTextTileBuffer ; $6048
+	ld hl, wDecompBufferHigh ; $6048
 	ld de, vTiles1 ; $604b
-	ld c, wTextTileBuffer_SIZE / 16 ; $604e
+	ld c, wDecompBufferHigh_SIZE / 16 ; $604e
 	call CopyMemoryFast ; $6050
 	ld hl, DmgLockoutTilemapLZ_01 ; $6053
 	ld de, wDecompBuffer ; $6056

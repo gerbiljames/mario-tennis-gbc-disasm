@@ -115,9 +115,9 @@ LoadResultsScreenGraphics:
 	ld de, vTiles2 + VRAM_BANK1 ; $4129
 	ld c, 128 ; $412c -- 128 of ResultsScreenGfx_1e's 176 tiles
 	call QueueVRAMCopy ; $412e
-	ld hl, wTextTileBuffer ; $4131
+	ld hl, wDecompBufferHigh ; $4131
 	ld de, vTiles1 + VRAM_BANK1 ; $4134
-	ld c, wTextTileBuffer_SIZE / 16 ; $4137
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4137
 	call QueueVRAMCopy ; $4139
 	wram_bank WRAM_STAGING ; $413c
 	ld hl, ResultsScreenTilemap_1e ; $4142

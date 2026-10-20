@@ -263,7 +263,7 @@ Unused_0a_LoadSceneGraphicsDirect:
 	ld de, vTiles2 ; $5d79
 	ld bc, $0080 ; $5d7c
 	call StartVRAMDMAFromHL ; $5d7f
-	ld hl, wTextTileBuffer ; $5d82
+	ld hl, wDecompBufferHigh ; $5d82
 	ld de, vTiles1 ; $5d85
 	ld bc, $0080 ; $5d88
 	call StartVRAMDMAFromHL ; $5d8b

@@ -84,9 +84,9 @@ LoadMatchGraphics:
 	ld de, vTiles2 ; $5edf
 	ld c, 128 ; $5ee2 -- 128 of MatchGfxTilesA_28's 256 tiles
 	call QueueVRAMCopy ; $5ee4
-	ld hl, wTextTileBuffer ; $5ee7
+	ld hl, wDecompBufferHigh ; $5ee7
 	ld de, vTiles1 ; $5eea
-	ld c, wTextTileBuffer_SIZE / 16 ; $5eed
+	ld c, wDecompBufferHigh_SIZE / 16 ; $5eed
 	call QueueVRAMCopy ; $5eef
 	ld a, [wMatchContext] ; $5ef2
 	cp MATCHCONTEXT_MINIGAME ; $5ef5
@@ -366,16 +366,16 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $613e
 .queuedBlock3:
 	pop af ; $6141
-	ld hl, wTextTileBuffer ; $6142
+	ld hl, wDecompBufferHigh ; $6142
 	ld de, vTiles1 ; $6145
 	ld c, $20 ; $6148
-	ld hl, wTextTileBuffer tile 32 ; $614a
+	ld hl, wDecompBufferHigh tile 32 ; $614a
 	ld de, vTiles1 tile $20 ; $614d
 	ld c, $20 ; $6150
-	ld hl, wTextTileBuffer tile 64 ; $6152
+	ld hl, wDecompBufferHigh tile 64 ; $6152
 	ld de, vTiles1 tile $40 ; $6155
 	ld c, $20 ; $6158
-	ld hl, wTextTileBuffer tile 96 ; $615a
+	ld hl, wDecompBufferHigh tile 96 ; $615a
 	ld de, vTiles1 tile $60 ; $615d
 	ld c, 32 ; $6160
 	call QueueVRAMCopy ; $6162

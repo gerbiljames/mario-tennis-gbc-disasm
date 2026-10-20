@@ -118,9 +118,9 @@ LoadExpAwardScreenGraphics:
 	ld de, vTiles2 + VRAM_BANK1 ; $5539
 	ld c, 128 ; $553c -- 128 of ExpAwardScreenGfx_1e's 256 tiles
 	call QueueVRAMCopy ; $553e
-	ld hl, wTextTileBuffer ; $5541
+	ld hl, wDecompBufferHigh ; $5541
 	ld de, vTiles1 + VRAM_BANK1 ; $5544
-	ld c, wTextTileBuffer_SIZE / 16 ; $5547
+	ld c, wDecompBufferHigh_SIZE / 16 ; $5547
 	call QueueVRAMCopy ; $5549
 	wram_bank WRAM_STAGING ; $554c
 	ld hl, ExpAwardScreenTilemap_1e ; $5552

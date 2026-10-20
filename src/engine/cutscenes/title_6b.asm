@@ -7,9 +7,9 @@ DecompressIntroTitleTiles:
 	ld de, vTiles2 ; $7407
 	ld c, 128 ; $740a
 	call QueueVRAMCopy ; $740c
-	ld hl, wTextTileBuffer ; $740f
+	ld hl, wDecompBufferHigh ; $740f
 	ld de, vTiles1 ; $7412
-	ld c, wTextTileBuffer_SIZE / 16 ; $7415
+	ld c, wDecompBufferHigh_SIZE / 16 ; $7415
 	call QueueVRAMCopy ; $7417
 	wram_bank WRAM_TEXT ; $741a
 	ld hl, IntroTitleTilemap ; $7420
