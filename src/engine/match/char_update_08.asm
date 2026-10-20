@@ -343,25 +343,25 @@ SetCharTarget:
 	ld hl, wCharWalkTargetFlag ; $69bc
 	ld [hl], $00 ; $69bf
 	ret ; $69c1
-ReloadCharFrameGfx:
+ReloadCharPalette:
 	ld a, [wCharSpriteAttr] ; $69c2
 	and $07 ; $69c5
 	add $08 ; $69c7
 	ld d, a ; $69c9
-	ld a, [wCharGfxBank] ; $69ca
+	ld a, [wCharPaletteId] ; $69ca
 	ld b, a ; $69cd
-	ld_slot hl, FarPtr_LoadDebugMenuPalette ; $69ce
+	ld_slot hl, FarPtr_LoadCharObjPalette ; $69ce
 	call FarCallVector ; $69d1
 	ret ; $69d4
-LoadCharChargeFlashGfx:
+LoadCharChargeFlashPalette:
 	ld a, [wCharSpriteAttr] ; $69d5
 	and $07 ; $69d8
 	add $08 ; $69da
 	ld d, a ; $69dc
-	ld a, [wCharGfxBank] ; $69dd
+	ld a, [wCharPaletteId] ; $69dd
 	add $08 ; $69e0
 	ld b, a ; $69e2
-	ld_slot hl, FarPtr_LoadDebugMenuPalette ; $69e3
+	ld_slot hl, FarPtr_LoadCharObjPalette ; $69e3
 	call FarCallVector ; $69e6
 	ret ; $69e9
 SetCharAnimation:

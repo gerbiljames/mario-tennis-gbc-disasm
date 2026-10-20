@@ -111,7 +111,7 @@ def wCharAnimFrame equ $df33
 def wCharTileBase equ $df36
 def wCharSpriteAttr equ $df37
 def wCharFramePlaceTablePtr equ $df38
-def wCharGfxBank equ $df3a
+def wCharPaletteId equ $df3a
 def wCharVelX equ $df40
 def wCharVelDepth equ $df42
 def wCharVelHeight equ $df44
@@ -125,7 +125,7 @@ def wCharSwingHoldFrames equ $df4e
 def wCharLastShotButton equ $df4f
 def wCharBallReachFlags equ $df50
 def wCharChargeFlashOn equ $df51
-def wCharChargeFlashGfxLoaded equ $df52
+def wCharChargeFlashPalLoaded equ $df52
 def wCharScreenX equ $df53
 def wCharScreenY equ $df54
 def wCharWalkTargetFlag equ $df55

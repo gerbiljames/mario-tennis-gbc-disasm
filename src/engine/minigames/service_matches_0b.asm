@@ -167,7 +167,7 @@ ServiceMatch1Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4869
 	bit 0, a ; $486c
 	ret nz ; $486e
-	cp $08 ; $486f
+	cp DRILL_MATCH_POINTS ; $486f
 	jr z, .finalPoint ; $4871
 	ld hl, wDrillCounters + DRILLCTR_P1_SUCCESSES ; $4873
 	ld a, [hl+] ; $4876
@@ -417,7 +417,7 @@ ServiceMatch2Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a2d
 	bit 0, a ; $4a30
 	ret nz ; $4a32
-	cp $08 ; $4a33
+	cp DRILL_MATCH_POINTS ; $4a33
 	jr z, .finalPoint ; $4a35
 	ld hl, wDrillCounters + DRILLCTR_P1_SUCCESSES ; $4a37
 	ld a, [hl+] ; $4a3a

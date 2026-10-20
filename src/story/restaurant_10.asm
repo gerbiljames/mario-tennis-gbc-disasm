@@ -5,7 +5,7 @@ GetMinigameDrillId:
 	ret ; $56f2
 MinigameDrillIdTable:
 	; $56f3, 9 bytes (bytes:16)
-	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
+	db MINIGAME_BOO_BLAST, MINIGAME_SHOOTING_STAR, MINIGAME_PERFECT_SHOT, MINIGAME_TARGET_SHOT, MINIGAME_FRUIT_FANTASY, MINIGAME_BANANA_BUNCH, MINIGAME_TREASURE_BOX, MINIGAME_MEDALLION_MATCH, MINIGAME_TWO_ON_ONE ; 0x00
 CopyExhibitionCharSlotIds:
 	push af ; $56fc
 	push_wram_bank WRAM_SCREEN ; $56fd

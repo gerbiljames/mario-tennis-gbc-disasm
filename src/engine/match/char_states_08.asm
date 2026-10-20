@@ -67,7 +67,7 @@ Unused_08_AdvanceCharStatePhase:
 	inc [hl] ; $6d25
 	ret ; $6d26
 CharPointReactionPhase:
-	call ReloadCharFrameGfx ; $6d27
+	call ReloadCharPalette ; $6d27
 	ld a, [wCharPointResult] ; $6d2a
 	add a ; $6d2d
 	jr z, .advance ; $6d2e

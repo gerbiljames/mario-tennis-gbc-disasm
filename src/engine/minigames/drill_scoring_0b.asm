@@ -329,7 +329,7 @@ CountDrillResultBitsSetAlt:
 	jr nz, .loop ; $4264
 	pop bc ; $4266
 	ret ; $4267
-CountDrillResultBitsThisGame:
+TestDrillGateCrossThisPoint:
 	push bc ; $4268
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4269
 	ld c, a ; $426c

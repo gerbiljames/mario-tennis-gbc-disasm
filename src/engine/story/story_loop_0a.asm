@@ -208,7 +208,7 @@ RunStoryLocation:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4f5d
 	jr nz, .loadLocation ; $4f60
 	ld a, [wStoryLocationBGM] ; $4f62
-	cp $ff ; $4f65
+	cp BGM_UNCHANGED ; $4f65
 	jr z, .loadLocation ; $4f67
 	ld a, [wStoryLocationBGM] ; $4f69
 	call PlaySoundManaged ; $4f6c

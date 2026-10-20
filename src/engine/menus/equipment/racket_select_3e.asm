@@ -366,7 +366,7 @@ MarkOwnedRackets:
 .loop:
 	ld a, c ; $576b
 	push hl ; $576c
-	ld hl, RacketItemTiles_3e ; $576d
+	ld hl, OwnedRacketFlags_3e ; $576d
 	add_hl_a ; $5770
 	ld d, $00 ; $5775
 	ld e, [hl] ; $5777
@@ -392,9 +392,9 @@ MarkOwnedRackets:
 Unused_3e_RacketOwnedMapInit:
 	; $579a, 8 bytes (bytes:8)
 	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
-RacketItemTiles_3e:
-	; $57a2, 6 bytes (bytes:6)
-	db $61, $62, $63, $65, $64, $66 ; 0x00
+OwnedRacketFlags_3e:
+	; $57a2, 6 bytes (flag numbers, for TestGameFlagByNumber)
+	db FLAG_HAVE_LARGE_RACKET, FLAG_HAVE_SMALL_RACKET, FLAG_HAVE_IRON_RACKET, FLAG_HAVE_GOLD_RACKET, FLAG_HAVE_SILVER_RACKET, FLAG_HAVE_DRIVE_RACKET ; 0x00
 MarkOwnedShoes:
 	ld hl, wEquipOwnedMap ; $57a8
 	ld bc, wEquipOwnedMap_SIZE ; $57ab
@@ -406,7 +406,7 @@ MarkOwnedShoes:
 .loop:
 	ld a, c ; $57b9
 	push hl ; $57ba
-	ld hl, ShoeItemTiles_3e ; $57bb
+	ld hl, OwnedShoeFlags_3e ; $57bb
 	add_hl_a ; $57be
 	ld d, $00 ; $57c3
 	ld e, [hl] ; $57c5

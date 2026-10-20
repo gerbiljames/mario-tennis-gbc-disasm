@@ -251,7 +251,7 @@ RunSavedDataMenuFlow:
 MatchSelectHandlersBHandler7:
 	script_fade_out 16 ; $54b0
 	call WaitFadeEnd ; $54b5
-	ld a, $06 ; $54b8
+	ld a, TENNISDICT_INDEX ; $54b8
 	farcall TennisDictionaryScreen ; $54ba
 	call DisableLCDSafely ; $54bd
 	farcall LoadMenuFontGfx ; $54c0
@@ -395,7 +395,7 @@ MatchSelectRunMatch:
 	ret ; $5603
 .chooseReturn:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
-	cp $14 ; $5607
+	cp STORYMATCH_ISLAND_OPEN_FINAL + 1 ; $5607
 	jr c, .below14 ; $5609
 	ld a, STORYLOC_SPECIAL_COURT ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
@@ -406,7 +406,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeExitTriggerRequest], a ; $561a
 	ret ; $561d
 .below14:
-	cp $0f ; $561e
+	cp STORYMATCH_VARSITY_1 + 1 ; $561e
 	jr c, .below0f ; $5620
 	test_flag FLAG_DOUBLES ; $5622
 	jr nz, .below14Doubles ; $5625

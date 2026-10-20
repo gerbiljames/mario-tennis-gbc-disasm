@@ -368,11 +368,11 @@ RunLessonSelectMenu:
 	call ClearFrameTasks ; $44cc
 	ld b, $00 ; $44cf
 	ld c, $02 ; $44d1
-	ld d, $03 ; $44d3
+	ld d, RANKINGBOARD_SILENT ; $44d3
 	farcall ShowRankingBoard ; $44d5
 	ld b, $01 ; $44d8
 	ld c, $02 ; $44da
-	ld d, $03 ; $44dc
+	ld d, RANKINGBOARD_SILENT ; $44dc
 	farcall ShowRankingBoard ; $44de
 	push_wram_bank WRAM_SOUND ; $44e1
 	ld de, $0000 ; $44ea

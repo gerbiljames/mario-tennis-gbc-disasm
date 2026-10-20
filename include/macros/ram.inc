@@ -190,12 +190,12 @@ NEXTU
 	ds 2
 ; [8-bit] First VRAM tile of the character's sprite, from a per-character-index table
 \1CharTileBase:: db
-; [8-bit] OAM attribute byte. The low three bits are the CGB OBJ palette (wCharIndex + 4) and also the tile block ReloadCharFrameGfx uploads into (& $07, + $08); the high bits are the flip bits the animation's $fb command toggles, cleared by SetCharAnimation (`and $0f`)
+; [8-bit] OAM attribute byte. The low three bits are the CGB OBJ palette (wCharIndex + 4), the slot ReloadCharPalette loads into; the high bits are the flip bits the animation's $fb command toggles, cleared by SetCharAnimation (`and $0f`)
 \1CharSpriteAttr:: db
 ; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
 \1CharFramePlaceTablePtr:: dw
-; [8-bit] ROM bank of the character's frame graphics; ReloadCharFrameGfx and LoadCharChargeFlashGfx pass it to the far-call vector at $0110
-\1CharGfxBank:: db
+; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from wActorObjDef+0); LoadCharChargeFlashPalette loads entry + 8, the flash variant
+\1CharPaletteId:: db
 	ds 5
 ; [16-bit] X velocity (zeroed on placement and at point end)
 \1CharVelX:: dw
@@ -223,8 +223,8 @@ NEXTU
 \1CharBallReachFlags:: db
 ; [8-bit] Set while the charge flash plays; cleared when the swing starts or aborts
 \1CharChargeFlashOn:: db
-; [8-bit] 1 while the flashed tiles are in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2; this latch makes each half load its graphics once (set + LoadCharChargeFlashGfx, or clear + ReloadCharFrameGfx)
-\1CharChargeFlashGfxLoaded:: db
+; [8-bit] 1 while the flash palette is loaded. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2 and uses this latch to load each half's palette once (LoadCharChargeFlashPalette / ReloadCharPalette)
+\1CharChargeFlashPalLoaded:: db
 ; [8-bit] Last projected screen X (BuildCharSpriteSlots)
 \1CharScreenX:: db
 ; [8-bit] Last projected screen Y

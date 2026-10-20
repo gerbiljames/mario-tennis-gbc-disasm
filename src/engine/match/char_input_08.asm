@@ -7,20 +7,20 @@ UpdateChargeFlash:
 	ret c ; $7655
 	and $04 ; $7656
 	jr z, EndChargeFlash ; $7658
-	ld hl, wCharChargeFlashGfxLoaded ; $765a
+	ld hl, wCharChargeFlashPalLoaded ; $765a
 	ld a, [hl] ; $765d
 	and a ; $765e
 	ret nz ; $765f
 	ld [hl], $01 ; $7660
-	call LoadCharChargeFlashGfx ; $7662
+	call LoadCharChargeFlashPalette ; $7662
 	ret ; $7665
 EndChargeFlash:
-	ld hl, wCharChargeFlashGfxLoaded ; $7666
+	ld hl, wCharChargeFlashPalLoaded ; $7666
 	ld a, [hl] ; $7669
 	and a ; $766a
 	ret z ; $766b
 	ld [hl], $00 ; $766c
-	call ReloadCharFrameGfx ; $766e
+	call ReloadCharPalette ; $766e
 	ret ; $7671
 BuildCharSpriteSlots:
 	ld hl, wCharPosHeight + 1 ; $7672

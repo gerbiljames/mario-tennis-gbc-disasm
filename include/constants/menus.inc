@@ -153,6 +153,7 @@ def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open on
 	const RANKINGBOARD_PLAIN     ; $00
 	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
 	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation
+	const RANKINGBOARD_SILENT    ; $03 ShowRankingBoard argument only: stored as PLAIN with wRankingBoardSilent set
 
 ; --- EXP award screen record (wExpScreenCharStats) ---
 ; One per story character, slot 1 at + EXPSTAT_SIZE; filled by

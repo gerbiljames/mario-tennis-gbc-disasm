@@ -253,7 +253,7 @@ TryMainMenuLinkHandshake:
 	di ; $5c70
 	ldh a, [hLinkRxByte] ; $5c71
 	ei ; $5c73
-	cp $c1 ; $5c74
+	cp LINKMSG_PROBE ; $5c74
 	jr z, .waitFramesCmd ; $5c76
 .linkAttemptLoop:
 	farcall ShowLinkMessageScreen ; $5c78

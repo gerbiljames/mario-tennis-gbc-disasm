@@ -382,7 +382,7 @@ ServicePractice3QueueOutcomeMessage:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAIL ; $539c
 	ld b, DRILLWORDING_SAME ; $539e
 	call QueueDrillResultMessage ; $53a0
-	call CountDrillResultBitsThisGame ; $53a3
+	call TestDrillGateCrossThisPoint ; $53a3
 	jr z, .notFound ; $53a6
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $53a8
 	ld b, DRILLWORDING_SAME ; $53aa

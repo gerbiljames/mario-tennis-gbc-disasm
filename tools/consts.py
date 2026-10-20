@@ -1,12 +1,14 @@
 """The numeric constants of include/, by name: `def NAME equ <number>` lines
 and the `const_def` / `const` / `const_skip` enumerations, with the
 `def NUM_* equ const_value` counts that close them, and the `rsreset` /
-`rb` / `rw` record layouts with `def *_SIZE equ _RS`."""
+`rb` / `rw` record layouts with `def *_SIZE equ _RS`, and `def NAME equ OTHER`
+aliases of a name already read."""
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 _DEF_RE = re.compile(r"def (\w+)\s+equ (\$[0-9a-f]+|%[01]+|\d+|const_value|_RS)$", re.I)
+_ALIAS_RE = re.compile(r"def (\w+)\s+equ ([A-Za-z_]\w*)$", re.I)
 _RS_RE = re.compile(r"def (\w+)\s+(rb|rw|rl)(?:\s+(\S+))?$", re.I)
 
 
@@ -29,6 +31,10 @@ def constants(files=None):
             m = _DEF_RE.match(code)
             if m:
                 out[m.group(1)] = {"const_value": value, "_RS": rs}.get(m.group(2)) if m.group(2) in ("const_value", "_RS") else _num(m.group(2))
+                continue
+            m = _ALIAS_RE.match(code)
+            if m and m.group(2) in out:
+                out[m.group(1)] = out[m.group(2)]
                 continue
             m = _RS_RE.match(code)
             if m:

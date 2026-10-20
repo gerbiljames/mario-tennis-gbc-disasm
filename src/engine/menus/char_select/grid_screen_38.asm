@@ -67,7 +67,7 @@ ReloadSelectedCharGfx:
 	farcall LoadIndexedPalette ; $4d86
 	call GetSelectedCharWramBank ; $4d89
 	wram_bank b ; $4d8c
-	farcall ReloadCharFrameGfx ; $4d91
+	farcall ReloadCharPalette ; $4d91
 	wram_bank WRAM_CHAR0 ; $4d94
 	ret ; $4d9a
 TickCharSelectIdleAnim:

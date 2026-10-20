@@ -115,9 +115,9 @@ InitLinkMatchCharsFromSelection:
 	farcall InitMatchRecordFromCharId ; $6ab8
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $6abb
-	cp $ff ; $6abe
+	cp CHAR_NONE ; $6abe
 	jr z, .slot3 ; $6ac0
-	cp $80 ; $6ac2
+	cp CHAR_STORY_MAIN ; $6ac2
 	jr c, .slot2Created ; $6ac4
 	ld c, a ; $6ac6
 	and $07 ; $6ac7
@@ -138,9 +138,9 @@ InitLinkMatchCharsFromSelection:
 	jr .applySettings ; $6ae0
 .slot3Entry:
 	ld a, [wCharSelectSlotChars + 2] ; $6ae2
-	cp $ff ; $6ae5
+	cp CHAR_NONE ; $6ae5
 	jr z, .slot4 ; $6ae7
-	cp $80 ; $6ae9
+	cp CHAR_STORY_MAIN ; $6ae9
 	jr c, .slot3Created ; $6aeb
 	ld c, a ; $6aed
 	and $07 ; $6aee
@@ -159,9 +159,9 @@ InitLinkMatchCharsFromSelection:
 	farcall InitMatchRecordFromCharId ; $6b04
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $6b07
-	cp $ff ; $6b0a
+	cp CHAR_NONE ; $6b0a
 	jr z, .applySettings ; $6b0c
-	cp $80 ; $6b0e
+	cp CHAR_STORY_MAIN ; $6b0e
 	jr c, .slot4Created ; $6b10
 	ld c, a ; $6b12
 	and $07 ; $6b13

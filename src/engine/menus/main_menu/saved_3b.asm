@@ -27,13 +27,13 @@ BuildMarioCastUnlockMask:
 	ld [wMarioCastUnlockMask], a ; $66a5
 	ret ; $66a8
 MarioCastUnlockMaskTable:
-	; $66a9, 12 bytes (records:2)
-	dw $01e0 ; record 0
-	dw $01a0 ; record 1
-	dw $0180 ; record 2
-	dw $0160 ; record 3
-	dw $0140 ; record 4
-	dw $01c0 ; record 5
+	; $66a9, 12 bytes (save_flag_ids)
+	dw SAVEFLAG_UNLOCKED_ELDEN ; record 0
+	dw SAVEFLAG_UNLOCKED_SEAN ; record 1
+	dw SAVEFLAG_UNLOCKED_MARK ; record 2
+	dw SAVEFLAG_UNLOCKED_CURT ; record 3
+	dw SAVEFLAG_UNLOCKED_FAY ; record 4
+	dw SAVEFLAG_UNLOCKED_SAMMI ; record 5
 GetUnlockedMarioCastCharAtGridSlot:
 	call GetMarioCastCharAtGridSlot ; $66b5
 	cp CHAR_LUIGI ; $66b8

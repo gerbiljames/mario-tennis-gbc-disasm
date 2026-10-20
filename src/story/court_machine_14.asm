@@ -68,11 +68,11 @@ Unused_14_SetMachineLevelClearedFlag:
 	call SetGameFlagByNumber ; $46b9
 	ret ; $46bc
 TestMachineLevelClearedFlagTable:
-	; $46bd, 8 bytes (records:2)
-	dw $00d2 ; record 0
-	dw $00d3 ; record 1
-	dw $00d4 ; record 2
-	dw $00d5 ; record 3
+	; $46bd, 8 bytes (flag numbers, for *GameFlagByNumber)
+	dw FLAG_CLEARED_MACHINE_LEVEL_1 ; record 0
+	dw FLAG_CLEARED_MACHINE_LEVEL_2 ; record 1
+	dw FLAG_CLEARED_MACHINE_LEVEL_3 ; record 2
+	dw FLAG_CLEARED_MACHINE_LEVEL_4 ; record 3
 MachinePracticeResultScene:
 	xor a ; $46c5
 	ld [wStoryModeShowLocationName], a ; $46c6

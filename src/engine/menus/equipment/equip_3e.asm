@@ -1,6 +1,6 @@
-ShoeItemTiles_3e:
-	; $57f2, 2 bytes (bytes:2)
-	db $67, $68 ; 0x00
+OwnedShoeFlags_3e:
+	; $57f2, 2 bytes (flag numbers, for TestGameFlagByNumber)
+	db FLAG_HAVE_IRON_SHOES, FLAG_HAVE_LIGHT_SHOES ; 0x00
 LoadEquipSelectCommon:
 	farcall ResetTextWindowState ; $57f4
 	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $57f7

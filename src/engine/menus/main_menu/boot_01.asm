@@ -6,7 +6,7 @@
 	farptr LoadMenuFontGfx ; $400a
 	farptr Unused_01_LoadMenuBgPalettes3To7 ; $400c
 	farptr LoadMenuObjPalettes3To7 ; $400e
-	farptr LoadDebugMenuPalette ; $4010
+	farptr LoadCharObjPalette ; $4010
 	farptr Unused_01_LoadMenuTilesBChunk2 ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
 	farptr Unused_01_RunSoundTest ; $4016
@@ -151,9 +151,9 @@ Unused_01_DebugBootMenu:
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
 	farcall ShowTournamentBracket ; $4154
-	ld a, MINIGAME_SERVICE_MATCH_2 ; $4157
+	ld a, MATCHLIST_DOUBLES ; $4157
 	ld [wCurrentMinigameStoryMatch], a ; $4159
-	ld a, $11 ; $415c
+	ld a, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $415c
 	ld [wCurrentMinigameStoryMatch + 1], a ; $415e
 	ld a, WINLOSE_WIN ; $4161
 	ld [wMatchWinLoseFlag], a ; $4163
@@ -172,7 +172,7 @@ Unused_01_DebugBootMenu:
 	ld [wAnimatedTilePeriod], a ; $4184
 	ld de, FLAG_DOUBLES ; $4187
 	call SetGameFlagByNumber ; $418a
-	ld a, $00 ; $418d
+	ld a, STORYMATCH_JUNIOR_PRACTICE ; $418d
 	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
 .winLoseLoop:
 	farcall RunMatchWinLoseScreen ; $4192
@@ -347,8 +347,8 @@ LoadMenuFontGfxStaged:
 	call LoadMenuTilesA ; $50ef
 	call LoadMenuTilesBStaged ; $50f2
 	ret ; $50f5
-DebugMenuPalettes_01:
-	INCLUDE "data/engine/menus/main_menu/DebugMenuPalettes_01.asm" ; $50f6, 128 bytes (palettes)
+CharObjPalettes_01:
+	INCLUDE "data/engine/menus/main_menu/CharObjPalettes_01.asm" ; $50f6, 128 bytes (palettes)
 Unused_01_LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
@@ -375,12 +375,12 @@ LoadMenuObjPalettes3To7:
 	pop bc ; $5197
 	pop af ; $5198
 	ret ; $5199
-LoadDebugMenuPalette:
+LoadCharObjPalette:
 	ld a, b ; $519a
 	add a ; $519b
 	add a ; $519c
 	add a ; $519d
-	ld_hl_indexed DebugMenuPalettes_01 ; $519e
+	ld_hl_indexed CharObjPalettes_01 ; $519e
 	ld e, $01 ; $51a5
 	call LoadPaletteShadow ; $51a7
 	ret ; $51aa

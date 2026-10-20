@@ -261,7 +261,7 @@ CheckMinigameDataScrollable:
 	push bc ; $787f
 	push de ; $7880
 	push hl ; $7881
-	ld c, $04 ; $7882
+	ld c, MARIOGAME_FRUIT_FANTASY ; $7882
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7884
 	cp CHAR_UNUSED_15 ; $7887
 	jr nz, .scrollable ; $7889

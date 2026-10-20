@@ -231,25 +231,25 @@ QueueResultScreenSprites:
 	cp WINLOSE_LOSE ; $4cb4
 	jr z, .lost ; $4cb6
 	ld de, $0824 ; $4cb8
-	call QueueResultPortraitTop ; $4cbb
+	call QueueResultPortraitPlayer ; $4cbb
 	ld de, $502c ; $4cbe
 	call QueueWinnerMarkerForPlayer ; $4cc1
 	ld de, $5060 ; $4cc4
-	call QueueResultPortraitBottom ; $4cc7
+	call QueueResultPortraitOpponent ; $4cc7
 	ld de, $4e68 ; $4cca
 	call QueueLoserMarkerForOpponent ; $4ccd
 	ret ; $4cd0
 .lost:
 	ld de, $5860 ; $4cd1
-	call QueueResultPortraitTop ; $4cd4
+	call QueueResultPortraitPlayer ; $4cd4
 	ld de, $5068 ; $4cd7
 	call QueueLoserMarkerForPlayer ; $4cda
 	ld de, $0024 ; $4cdd
-	call QueueResultPortraitBottom ; $4ce0
+	call QueueResultPortraitOpponent ; $4ce0
 	ld de, $482c ; $4ce3
 	call QueueWinnerMarkerForOpponent ; $4ce6
 	ret ; $4ce9
-QueueResultPortraitTop:
+QueueResultPortraitPlayer:
 	call GetResultSpriteWobbleOffset ; $4cea
 	ld b, a ; $4ced
 	ld a, d ; $4cee
@@ -284,7 +284,7 @@ ResultSpriteTemplateLeft_16:
 	oam_sprite $10, $40, $1c, $00
 	oam_sprite $20, $40, $1e, $00
 	oam_sprite_end
-QueueResultPortraitBottom:
+QueueResultPortraitOpponent:
 	call GetResultSpriteWobbleOffset ; $4d45
 	add d ; $4d48
 	ld d, a ; $4d49

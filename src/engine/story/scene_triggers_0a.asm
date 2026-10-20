@@ -132,48 +132,48 @@ RunLocationExit:
 	ret ; $564e
 StoryLocationTable_0a:
 	; $564f, 252 bytes (story_locations)
-	story_location $00, SCENE_STAR_PATTERN_BG, DataPtr_MainMenuMapScripts_10, BGM_UNCHANGED ; loc 0 Main Menu
-	story_location $01, SCENE_STAR_PATTERN_BG, DataPtr_DevelopmentMapScripts_10, BGM_UNCHANGED ; loc 1 Development
-	story_location $02, SCENE_STAR_PATTERN_BG, DataPtr_SmallCharTestMapScripts_0f, BGM_UNCHANGED ; loc 2 Small Char. Test
-	story_location $03, SCENE_STAR_PATTERN_BG, DataPtr_MatchSelectMapScripts_10, BGM_UNCHANGED ; loc 3 Test
-	story_location $04, SCENE_STAR_PATTERN_BG, DataPtr_Test2MapScripts_10, BGM_EXP_AWARD ; loc 4 Test 2
-	story_location $05, SCENE_ACADEMY_MAIN_BLDG, DataPtr_AcademyMainBldgMapScripts_10, BGM_ACADEMY_BUILDING ; loc 5 Academy Main Bldg.
-	story_location $06, SCENE_ACADEMY_MAIN_BLDG, DataPtr_AcademyWingMapScripts_10, BGM_ACADEMY_BUILDING ; loc 6 Academy Wing
-	story_location $07, SCENE_COURTYARD, DataPtr_CourtyardMapScripts_13, BGM_ACADEMY_OUTDOORS ; loc 7 Courtyard
-	story_location $08, SCENE_RESTAURANT_PLAZA, DataPtr_RestaurantPlazaMapScripts_13, BGM_ACADEMY_OUTDOORS ; loc 8 Restaurant Plaza
-	story_location $09, SCENE_DORM_ENTRANCE, DataPtr_DormEntranceMapScripts_12, BGM_ACADEMY_OUTDOORS ; loc 9 Dorm Entrance
-	story_location $0a, SCENE_DORM_ROOM, DataPtr_DormRoomMapScripts_13, BGM_NONE ; loc 10 Dorm Room
-	story_location $0b, SCENE_JUNIOR_CLASS_COURT, DataPtr_JuniorClassCourtSinglesMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 11 Junior Class Court
-	story_location $0c, SCENE_JUNIOR_CLASS_COURT, DataPtr_JuniorClassCourtDoublesMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 12 Junior Class Court
-	story_location $0d, SCENE_RESTAURANT, DataPtr_RestaurantMapScripts_10, BGM_ACADEMY_ROOMS ; loc 13 Restaurant
-	story_location $0e, SCENE_RESTAURANT, DataPtr_CafeteriaMapScripts_10, BGM_ACADEMY_ROOMS ; loc 14 Cafeteria
-	story_location $0f, SCENE_TRAINING_COURT_MAP, DataPtr_TrainingCourtMapScripts_15, BGM_ACADEMY_OUTDOORS ; loc 15 Training Court
-	story_location $10, SCENE_SENIOR_CLASS_COURT, DataPtr_SeniorCourtMapScripts_12, BGM_ACADEMY_OUTDOORS ; loc 16 Senior Class Court
-	story_location $11, SCENE_TRAINING_CENTER, DataPtr_TrainingGymMapScripts_0e, BGM_ACADEMY_ROOMS ; loc 17 Training Center
-	story_location $12, SCENE_TRAINING_CENTER, DataPtr_TennisMachineRoomMapScripts_14, BGM_ACADEMY_ROOMS ; loc 18 Tennis Machine Room
-	story_location $13, SCENE_TRAINING_CENTER, DataPtr_WallPracticeRoomMapScripts_12, BGM_ACADEMY_ROOMS ; loc 19 Wall Practice Room
-	story_location $14, SCENE_ACADEMY_ENTRANCE, DataPtr_AcademyArrivalMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 20 Academy Entrance
-	story_location $15, SCENE_TOURNAMENT_COURTYARD, DataPtr_TournamentCourtyardMapScripts_15, BGM_ACADEMY_OUTDOORS ; loc 21 Tournament Courtyard
-	story_location $16, SCENE_COURT_1, DataPtr_Court1MapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 22 Court #1
-	story_location $17, SCENE_COURT_2, DataPtr_Court2MapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 23 Court #2
-	story_location $18, SCENE_CENTER_COURT_MAP, DataPtr_CenterCourtMapScripts_11, BGM_ACADEMY_ROOMS ; loc 24 Center Court
-	story_location $19, SCENE_TOURNAMENT, DataPtr_TournamentMapScripts_0f, BGM_ACADEMY_ROOMS ; loc 25 Tournament
-	story_location $1a, SCENE_AWARDS_CEREMONY, DataPtr_AwardsCeremonyMapScripts_0f, BGM_ACADEMY_OUTDOORS ; loc 26 Awards Ceremony
-	story_location $1b, SCENE_ISLAND_SKY, DataPtr_IslandSkyMapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 27 Island Sky
-	story_location $1c, SCENE_SPECIAL_COURT, DataPtr_SpecialCourtMapScripts_0e, BGM_MARIO_MINIGAME ; loc 28 Special Court
-	story_location $1d, SCENE_PEACHS_CASTLE, DataPtr_MarioWorldMapScripts_0e, BGM_COURT_CASTLE ; loc 29 Peach's Castle
-	story_location $1e, SCENE_ACADEMY_ENTRANCE, DataPtr_End1MainBldgMapScripts_27, BGM_CREDITS ; loc 30 End1 Main Bldg
-	story_location $1f, SCENE_RESTAURANT_PLAZA, DataPtr_EndRestaurantEntMapScripts_27, BGM_UNCHANGED ; loc 31 End Restaurant Ent.
-	story_location $20, SCENE_DORM_ENTRANCE, DataPtr_End3DormEntMapScripts_27, BGM_UNCHANGED ; loc 32 End3 Dorm Ent.
-	story_location $21, SCENE_JUNIOR_CLASS_COURT, DataPtr_End4JrCourtMapScripts_27, BGM_UNCHANGED ; loc 33 End4 Jr. Court
-	story_location $22, SCENE_RESTAURANT, DataPtr_End5ServiceAceMapScripts_27, BGM_UNCHANGED ; loc 34 End5 Service Ace
-	story_location $23, SCENE_TRAINING_CENTER, DataPtr_End7TrainingCtrMapScripts_27, BGM_UNCHANGED ; loc 35 End7 Training Ctr.
-	story_location $24, SCENE_SENIOR_CLASS_COURT, DataPtr_End8SrCourtMapScripts_27, BGM_UNCHANGED ; loc 36 End8 Sr. Court
-	story_location $25, SCENE_COURTYARD, DataPtr_End10VarsityCourtMapScripts_27, BGM_UNCHANGED ; loc 37 End10 Varsity Court
-	story_location $26, SCENE_TRAINING_COURT_MAP, DataPtr_End11TrainingCourtMapScripts_27, BGM_UNCHANGED ; loc 38 End11 Training Court
-	story_location $27, SCENE_ACADEMY_MAIN_BLDG, DataPtr_End12PrincipalsOfficeMapScripts_27, BGM_UNCHANGED ; loc 39 End12 Principal's Office
-	story_location $28, SCENE_TOURNAMENT, DataPtr_End16BeforeFinalsMapScripts_27, BGM_UNCHANGED ; loc 40 End16 Before Finals
-	story_location $29, SCENE_AWARDS_CEREMONY, DataPtr_End17AwardCeremonyMapScripts_27, BGM_UNCHANGED ; loc 41 End17 Award Ceremony
+	story_location STORYLOC_MAIN_MENU, SCENE_STAR_PATTERN_BG, DataPtr_MainMenuMapScripts_10, BGM_UNCHANGED ; loc 0 Main Menu
+	story_location STORYLOC_DEVELOPMENT, SCENE_STAR_PATTERN_BG, DataPtr_DevelopmentMapScripts_10, BGM_UNCHANGED ; loc 1 Development
+	story_location STORYLOC_SMALL_CHAR_TEST, SCENE_STAR_PATTERN_BG, DataPtr_SmallCharTestMapScripts_0f, BGM_UNCHANGED ; loc 2 Small Char. Test
+	story_location STORYLOC_TEST, SCENE_STAR_PATTERN_BG, DataPtr_MatchSelectMapScripts_10, BGM_UNCHANGED ; loc 3 Test
+	story_location STORYLOC_TEST_2, SCENE_STAR_PATTERN_BG, DataPtr_Test2MapScripts_10, BGM_EXP_AWARD ; loc 4 Test 2
+	story_location STORYLOC_ACADEMY_MAIN_BLDG, SCENE_ACADEMY_MAIN_BLDG, DataPtr_AcademyMainBldgMapScripts_10, BGM_ACADEMY_BUILDING ; loc 5 Academy Main Bldg.
+	story_location STORYLOC_ACADEMY_WING, SCENE_ACADEMY_MAIN_BLDG, DataPtr_AcademyWingMapScripts_10, BGM_ACADEMY_BUILDING ; loc 6 Academy Wing
+	story_location STORYLOC_COURTYARD, SCENE_COURTYARD, DataPtr_CourtyardMapScripts_13, BGM_ACADEMY_OUTDOORS ; loc 7 Courtyard
+	story_location STORYLOC_RESTAURANT_PLAZA, SCENE_RESTAURANT_PLAZA, DataPtr_RestaurantPlazaMapScripts_13, BGM_ACADEMY_OUTDOORS ; loc 8 Restaurant Plaza
+	story_location STORYLOC_DORM_ENTRANCE, SCENE_DORM_ENTRANCE, DataPtr_DormEntranceMapScripts_12, BGM_ACADEMY_OUTDOORS ; loc 9 Dorm Entrance
+	story_location STORYLOC_DORM_ROOM, SCENE_DORM_ROOM, DataPtr_DormRoomMapScripts_13, BGM_NONE ; loc 10 Dorm Room
+	story_location STORYLOC_JUNIOR_CLASS_COURT_SINGLES, SCENE_JUNIOR_CLASS_COURT, DataPtr_JuniorClassCourtSinglesMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 11 Junior Class Court
+	story_location STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, SCENE_JUNIOR_CLASS_COURT, DataPtr_JuniorClassCourtDoublesMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 12 Junior Class Court
+	story_location STORYLOC_RESTAURANT, SCENE_RESTAURANT, DataPtr_RestaurantMapScripts_10, BGM_ACADEMY_ROOMS ; loc 13 Restaurant
+	story_location STORYLOC_CAFETERIA, SCENE_RESTAURANT, DataPtr_CafeteriaMapScripts_10, BGM_ACADEMY_ROOMS ; loc 14 Cafeteria
+	story_location STORYLOC_TRAINING_COURT, SCENE_TRAINING_COURT_MAP, DataPtr_TrainingCourtMapScripts_15, BGM_ACADEMY_OUTDOORS ; loc 15 Training Court
+	story_location STORYLOC_SENIOR_CLASS_COURT, SCENE_SENIOR_CLASS_COURT, DataPtr_SeniorCourtMapScripts_12, BGM_ACADEMY_OUTDOORS ; loc 16 Senior Class Court
+	story_location STORYLOC_TRAINING_CENTER, SCENE_TRAINING_CENTER, DataPtr_TrainingGymMapScripts_0e, BGM_ACADEMY_ROOMS ; loc 17 Training Center
+	story_location STORYLOC_TENNIS_MACHINE_ROOM, SCENE_TRAINING_CENTER, DataPtr_TennisMachineRoomMapScripts_14, BGM_ACADEMY_ROOMS ; loc 18 Tennis Machine Room
+	story_location STORYLOC_WALL_PRACTICE_ROOM, SCENE_TRAINING_CENTER, DataPtr_WallPracticeRoomMapScripts_12, BGM_ACADEMY_ROOMS ; loc 19 Wall Practice Room
+	story_location STORYLOC_ACADEMY_ENTRANCE, SCENE_ACADEMY_ENTRANCE, DataPtr_AcademyArrivalMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 20 Academy Entrance
+	story_location STORYLOC_TOURNAMENT_COURTYARD, SCENE_TOURNAMENT_COURTYARD, DataPtr_TournamentCourtyardMapScripts_15, BGM_ACADEMY_OUTDOORS ; loc 21 Tournament Courtyard
+	story_location STORYLOC_COURT_1, SCENE_COURT_1, DataPtr_Court1MapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 22 Court #1
+	story_location STORYLOC_COURT_2, SCENE_COURT_2, DataPtr_Court2MapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 23 Court #2
+	story_location STORYLOC_CENTER_COURT, SCENE_CENTER_COURT_MAP, DataPtr_CenterCourtMapScripts_11, BGM_ACADEMY_ROOMS ; loc 24 Center Court
+	story_location STORYLOC_TOURNAMENT, SCENE_TOURNAMENT, DataPtr_TournamentMapScripts_0f, BGM_ACADEMY_ROOMS ; loc 25 Tournament
+	story_location STORYLOC_AWARDS_CEREMONY, SCENE_AWARDS_CEREMONY, DataPtr_AwardsCeremonyMapScripts_0f, BGM_ACADEMY_OUTDOORS ; loc 26 Awards Ceremony
+	story_location STORYLOC_ISLAND_SKY, SCENE_ISLAND_SKY, DataPtr_IslandSkyMapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 27 Island Sky
+	story_location STORYLOC_SPECIAL_COURT, SCENE_SPECIAL_COURT, DataPtr_SpecialCourtMapScripts_0e, BGM_MARIO_MINIGAME ; loc 28 Special Court
+	story_location STORYLOC_PEACHS_CASTLE, SCENE_PEACHS_CASTLE, DataPtr_MarioWorldMapScripts_0e, BGM_COURT_CASTLE ; loc 29 Peach's Castle
+	story_location STORYLOC_END1_MAIN_BLDG, SCENE_ACADEMY_ENTRANCE, DataPtr_End1MainBldgMapScripts_27, BGM_CREDITS ; loc 30 End1 Main Bldg
+	story_location STORYLOC_END_RESTAURANT_ENT, SCENE_RESTAURANT_PLAZA, DataPtr_EndRestaurantEntMapScripts_27, BGM_UNCHANGED ; loc 31 End Restaurant Ent.
+	story_location STORYLOC_END3_DORM_ENT, SCENE_DORM_ENTRANCE, DataPtr_End3DormEntMapScripts_27, BGM_UNCHANGED ; loc 32 End3 Dorm Ent.
+	story_location STORYLOC_END4_JR_COURT, SCENE_JUNIOR_CLASS_COURT, DataPtr_End4JrCourtMapScripts_27, BGM_UNCHANGED ; loc 33 End4 Jr. Court
+	story_location STORYLOC_END5_SERVICE_ACE, SCENE_RESTAURANT, DataPtr_End5ServiceAceMapScripts_27, BGM_UNCHANGED ; loc 34 End5 Service Ace
+	story_location STORYLOC_END7_TRAINING_CTR, SCENE_TRAINING_CENTER, DataPtr_End7TrainingCtrMapScripts_27, BGM_UNCHANGED ; loc 35 End7 Training Ctr.
+	story_location STORYLOC_END8_SR_COURT, SCENE_SENIOR_CLASS_COURT, DataPtr_End8SrCourtMapScripts_27, BGM_UNCHANGED ; loc 36 End8 Sr. Court
+	story_location STORYLOC_END10_VARSITY_COURT, SCENE_COURTYARD, DataPtr_End10VarsityCourtMapScripts_27, BGM_UNCHANGED ; loc 37 End10 Varsity Court
+	story_location STORYLOC_END11_TRAINING_COURT, SCENE_TRAINING_COURT_MAP, DataPtr_End11TrainingCourtMapScripts_27, BGM_UNCHANGED ; loc 38 End11 Training Court
+	story_location STORYLOC_END12_PRINCIPALS_OFFICE, SCENE_ACADEMY_MAIN_BLDG, DataPtr_End12PrincipalsOfficeMapScripts_27, BGM_UNCHANGED ; loc 39 End12 Principal's Office
+	story_location STORYLOC_END16_BEFORE_FINALS, SCENE_TOURNAMENT, DataPtr_End16BeforeFinalsMapScripts_27, BGM_UNCHANGED ; loc 40 End16 Before Finals
+	story_location STORYLOC_END17_AWARD_CEREMONY, SCENE_AWARDS_CEREMONY, DataPtr_End17AwardCeremonyMapScripts_27, BGM_UNCHANGED ; loc 41 End17 Award Ceremony
 GetStoryLocationCount:
 	ld a, $2a ; $574b
 	ret ; $574d

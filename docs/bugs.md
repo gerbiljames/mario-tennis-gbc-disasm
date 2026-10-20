@@ -227,7 +227,7 @@ then does this as its fourth:
 
 `MenuFontPalettes_01` is a palette (`LoadMenuFontPalette` hands it to
 `LoadPaletteShadow`). The copy puts its 64 bytes plus 448 bytes of what follows
-at `$5050`-`$520f` (the bank's loaders, `DebugMenuPalettes_01` at `$50f6`, the
+at `$5050`-`$520f` (the bank's loaders, `CharObjPalettes_01` at `$50f6`, the
 start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuTilesBStaged`
 itself) into VRAM `$8e00`-`$8fff`, tiles `$e0`-`$ff` of the `$8800` block.
 
@@ -588,6 +588,27 @@ six-byte table of two three-entry halves for entries 1-3.
 of `VarsityCourtTourCutscene`: the low byte of `ld hl, VarsityCourtTourActors_13`
 becomes its angle, so the direction depends on where that label sits. Nothing
 in retail enters the Courtyard at `$0a` (its row is `; debug warp only`).
+
+### The stroke drill's verdict tables never follow the point parity
+
+`SelectRallyVerdictsByPointParity` (`$0b:$668f`) and its inverted copy
+(`$0b:$66a2`) pick the verdict table for the first stroke match's rallies:
+
+```
+        ld a, [wTotalPointsScoredInCurrentGame]
+        and $01
+        ld a, $00                ; <- discards the parity
+        or a
+        jr nz, .oddVerdicts      ; never taken
+        ld hl, EvenRallyVerdicts
+```
+
+The `ld a, $00` sits where the parity was meant to be tested, so the first
+always returns `EvenRallyVerdicts` and the copy always `OddRallyVerdicts`.
+`SetDrillMessageByRallyParity`, called just before, does flip on the same
+point parity, so the message wording changes from point to point while the
+verdict does not. The sibling drills hard-code one table per rally, so whether
+the parity test was dropped on purpose is not known; left as is.
 
 ## Dead stores
 

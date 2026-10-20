@@ -486,7 +486,7 @@ StrokeMatch1JudgePoint:
 	ld a, a ; $6536
 	ld b, DRILLWORDING_STROKE ; $6537
 	call SetDrillMessageByRallyParity ; $6539
-	call SelectStrokeTargetTableByPoint ; $653c
+	call SelectRallyVerdictsByPointParity ; $653c
 	ld a, [wPointOutcome] ; $653f
 	add_hl_a ; $6542
 	ld a, [hl] ; $6547
@@ -518,7 +518,7 @@ StrokeMatch1Cases1:
 	ld a, a ; $6570
 	ld b, DRILLWORDING_STROKE ; $6571
 	call SetDrillMessageByRallyParity ; $6573
-	call SelectStrokeTargetTableByPointAlt ; $6576
+	call SelectRallyVerdictsByPointParityInverted ; $6576
 	ld a, [wPointOutcome] ; $6579
 	add_hl_a ; $657c
 	ld a, [hl] ; $6581
@@ -569,7 +569,7 @@ StrokeMatch1Cases2:
 	ld a, a ; $65d6
 	ld b, DRILLWORDING_STROKE ; $65d7
 	call SetDrillMessageByRallyParity ; $65d9
-	call SelectStrokeTargetTableByPoint ; $65dc
+	call SelectRallyVerdictsByPointParity ; $65dc
 	ld a, [wPointOutcome] ; $65df
 	add_hl_a ; $65e2
 	ld a, [hl] ; $65e7
@@ -617,7 +617,7 @@ StrokeMatch1Cases3:
 	ld a, a ; $6636
 	ld b, DRILLWORDING_STROKE ; $6637
 	call SetDrillMessageByRallyParity ; $6639
-	call SelectStrokeTargetTableByPointAlt ; $663c
+	call SelectRallyVerdictsByPointParityInverted ; $663c
 	ld a, [wPointOutcome] ; $663f
 	add_hl_a ; $6642
 	ld a, [hl] ; $6647
@@ -660,7 +660,7 @@ StrokeMatch1Cases4:
 	ld [wMatchAbortFlag], a ; $6689
 	ld a, $ff ; $668c
 	ret ; $668e
-SelectStrokeTargetTableByPoint:
+SelectRallyVerdictsByPointParity:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $668f
 	and $01 ; $6692
 	ld a, $00 ; $6694
@@ -672,7 +672,7 @@ SelectStrokeTargetTableByPoint:
 	ld hl, OddRallyVerdicts ; $669e
 .done:
 	ret ; $66a1
-SelectStrokeTargetTableByPointAlt:
+SelectRallyVerdictsByPointParityInverted:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $66a2
 	and $01 ; $66a5
 	ld a, $00 ; $66a7
