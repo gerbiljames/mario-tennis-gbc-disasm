@@ -1,4 +1,4 @@
-; Shared by MatchFormatSlideOut, CloseMatchRulesPanel (banks $3b, $3e).
+; Shared by MatchFormatSlideOut, CloseLinkMatchFormatPanel (banks $3b, $3e).
 
 {TWIN_LABEL}:
 	ld a, b

@@ -1,4 +1,4 @@
-	farptr RunLinkMatchRulesMenu ; $4000
+	farptr RunLinkMatchFormatMenu ; $4000
 	farptr RestoreMenuScreenAndFadeIn ; $4002
 	farptr ShowLinkMessageScreen ; $4004
 	farptr RunEraseDataConfirmMenu ; $4006

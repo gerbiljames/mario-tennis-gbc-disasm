@@ -1,51 +1,51 @@
 DrawSinglesDoublesRow:
 	ld b, MATCHFMTOPT_SINGLES ; $4817
 	ld c, ATTRRECT_INACTIVE ; $4819
-	call SetMatchRuleOptionAttrRect ; $481b
+	call SetLinkMatchFormatOptionAttrRect ; $481b
 	ld b, MATCHFMTOPT_DOUBLES ; $481e
 	ld c, ATTRRECT_INACTIVE ; $4820
-	call SetMatchRuleOptionAttrRect ; $4822
+	call SetLinkMatchFormatOptionAttrRect ; $4822
 	ld a, [wMatchFormatDoubles] ; $4825
 	ld b, a ; $4828
 	ld c, ATTRRECT_SELECTED ; $4829
-	call SetMatchRuleOptionAttrRect ; $482b
+	call SetLinkMatchFormatOptionAttrRect ; $482b
 	ret ; $482e
 DrawGameCountRow:
 	ld b, MATCHFMTOPT_GAMES ; $482f
 	ld c, ATTRRECT_INACTIVE ; $4831
-	call SetMatchRuleOptionAttrRect ; $4833
+	call SetLinkMatchFormatOptionAttrRect ; $4833
 	ld b, MATCHFMTOPT_GAMES + 1 ; $4836
 	ld c, ATTRRECT_INACTIVE ; $4838
-	call SetMatchRuleOptionAttrRect ; $483a
+	call SetLinkMatchFormatOptionAttrRect ; $483a
 	ld a, [wMatchFormatGames] ; $483d
 	add MATCHFMTOPT_GAMES ; $4840
 	ld b, a ; $4842
 	ld c, ATTRRECT_SELECTED ; $4843
-	call SetMatchRuleOptionAttrRect ; $4845
+	call SetLinkMatchFormatOptionAttrRect ; $4845
 	ret ; $4848
 DrawSetCountRow:
 	ld b, MATCHFMTOPT_SETS ; $4849
 	ld c, ATTRRECT_INACTIVE ; $484b
-	call SetMatchRuleOptionAttrRect ; $484d
+	call SetLinkMatchFormatOptionAttrRect ; $484d
 	ld b, MATCHFMTOPT_SETS + 1 ; $4850
 	ld c, ATTRRECT_INACTIVE ; $4852
-	call SetMatchRuleOptionAttrRect ; $4854
+	call SetLinkMatchFormatOptionAttrRect ; $4854
 	ld b, MATCHFMTOPT_SETS + 2 ; $4857
 	ld c, ATTRRECT_INACTIVE ; $4859
-	call SetMatchRuleOptionAttrRect ; $485b
+	call SetLinkMatchFormatOptionAttrRect ; $485b
 	ld a, [wMatchFormatSets] ; $485e
 	add MATCHFMTOPT_SETS ; $4861
 	ld b, a ; $4863
 	ld c, ATTRRECT_SELECTED ; $4864
-	call SetMatchRuleOptionAttrRect ; $4866
+	call SetLinkMatchFormatOptionAttrRect ; $4866
 	ret ; $4869
-SetMatchRuleOptionAttrRect:
+SetLinkMatchFormatOptionAttrRect:
 	push af ; $486a
 	push bc ; $486b
 	push de ; $486c
 	push hl ; $486d
 	push_wram_bank WRAM_SCREEN ; $486e
-	ld hl, MatchRuleOptionAttrAddrs_3e ; $4877
+	ld hl, LinkMatchFormatOptionAttrAddrs_3e ; $4877
 	ld a, b ; $487a
 	add a ; $487b
 	add_hl_a ; $487c
@@ -57,7 +57,7 @@ SetMatchRuleOptionAttrRect:
 	or a ; $4887
 	jr z, .fill ; $4888
 	ld a, b ; $488a
-	ld hl, MatchRuleOptionAttrWidths_3e ; $488b
+	ld hl, LinkMatchFormatOptionAttrWidths_3e ; $488b
 	add_hl_a ; $488e
 	ld a, [hl] ; $4893
 	ld h, a ; $4894
@@ -70,7 +70,7 @@ SetMatchRuleOptionAttrRect:
 	pop bc ; $48a3
 	pop af ; $48a4
 	ret ; $48a5
-MatchRuleOptionAttrAddrs_3e:
+LinkMatchFormatOptionAttrAddrs_3e:
 	; $48a6, 14 bytes (ram_ptrs:3)
 	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 3 ; record 0
 	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 12 ; record 1
@@ -79,11 +79,11 @@ MatchRuleOptionAttrAddrs_3e:
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 4
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 5
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 6
-MatchRuleOptionAttrWidths_3e:
+LinkMatchFormatOptionAttrWidths_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
-	twin_named flush_match_format_row_to_vram, FlushMatchRuleRowAttrs ; $48bb
-MatchRulesCursorSpriteTask:
+	twin_named flush_match_format_row_to_vram, FlushLinkMatchFormatRowAttrs ; $48bb
+LinkMatchFormatCursorSpriteTask:
 	ld c, $01 ; $48f1
 	call GetMenuCursorIndex_3e ; $48f3
 	or a ; $48f6
@@ -101,11 +101,11 @@ MatchRulesCursorSpriteTask:
 	add MATCHFMTOPT_SETS ; $490c
 .gotRuleValue:
 	push af ; $490e
-	ld hl, MatchRulesCursorTiles_3e ; $490f
+	ld hl, LinkMatchFormatCursorTiles_3e ; $490f
 	add_hl_a ; $4912
 	ld c, [hl] ; $4917
 	pop af ; $4918
-	ld hl, MatchRulesCursorPositions_3e ; $4919
+	ld hl, LinkMatchFormatCursorPositions_3e ; $4919
 	add a ; $491c
 	add_hl_a ; $491d
 	ld a, [hl+] ; $4922
@@ -113,7 +113,7 @@ MatchRulesCursorSpriteTask:
 	ld e, a ; $4924
 	farcall ApplySpriteBobOffset ; $4925
 	ld b, OAM_BANK1 ; $4928
-	ld hl, MatchRulesCursorSpriteTask_SpriteTemplate0 ; $492a
+	ld hl, LinkMatchFormatCursorSpriteTask_SpriteTemplate0 ; $492a
 	push de ; $492d
 	call QueueSpriteTemplate ; $492e
 	pop de ; $4931
@@ -121,11 +121,11 @@ MatchRulesCursorSpriteTask:
 	add hl, de ; $4935
 	ld d, h ; $4936
 	ld e, l ; $4937
-	ld hl, MatchRulesCursorSpriteTask_SpriteTemplate1 ; $4938
+	ld hl, LinkMatchFormatCursorSpriteTask_SpriteTemplate1 ; $4938
 	sprite_attr_tile OAM_BANK1, $70 ; $493b
 	call QueueSpriteTemplate ; $493f
 	ret ; $4942
-MatchRulesCursorSpriteTask_SpriteTemplate0:
+LinkMatchFormatCursorSpriteTask_SpriteTemplate0:
 	; $4943, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -136,18 +136,18 @@ MatchRulesCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-MatchRulesCursorSpriteTask_SpriteTemplate1:
+LinkMatchFormatCursorSpriteTask_SpriteTemplate1:
 	; $4964, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MatchRulesCursorPositions_3e:
+LinkMatchFormatCursorPositions_3e:
 	; $496d, 14 bytes (bytes:14)
 	db $2d, $0a, $2d, $54, $4f, $0c, $4f, $54, $6a, $00, $6a, $2c, $6a, $5d ; 0x00
-MatchRulesCursorTiles_3e:
+LinkMatchFormatCursorTiles_3e:
 	; $497b, 7 bytes (bytes:7)
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
-DrawMatchRulesCaption:
+DrawLinkMatchFormatCaption:
 	wram_bank WRAM_SCREEN ; $4982
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4988
 	rect_size $14, $01 ; $498b
@@ -167,13 +167,13 @@ DrawMatchRulesCaption:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $49b3
 	call QueueVRAMCopy ; $49b5
 	ret ; $49b8
-Unused_3e_DrawMatchRulesCaptionText:
+Unused_3e_DrawLinkMatchFormatCaptionText:
 	wram_bank WRAM_SCREEN ; $49b9
 	ld c, $01 ; $49bf
 	call GetMenuCursorIndex_3e ; $49c1
 	ld b, a ; $49c4
 	add a ; $49c5
-	ld hl, MatchRulesCaptionDests_3e ; $49c6
+	ld hl, LinkMatchFormatCaptionDests_3e ; $49c6
 	add_hl_a ; $49c9
 	ld a, [hl+] ; $49ce
 	ld d, [hl] ; $49cf
@@ -184,7 +184,7 @@ Unused_3e_DrawMatchRulesCaptionText:
 	ld c, $20 ; $49da
 	farcall RenderTextToBuffer64 ; $49dc
 	ret ; $49df
-MatchRulesCaptionDests_3e:
+LinkMatchFormatCaptionDests_3e:
 	; $49e0, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1

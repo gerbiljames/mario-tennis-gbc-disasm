@@ -207,7 +207,7 @@ RunLinkMatchSequence:
 	push de ; $7409
 	push hl ; $740a
 .rulesMenu:
-	farcall RunLinkMatchRulesMenu ; $740b
+	farcall RunLinkMatchFormatMenu ; $740b
 	cp $ff ; $740e
 	jp z, .done ; $7410
 	script_fade_out 16 ; $7413

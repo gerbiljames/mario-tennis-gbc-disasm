@@ -227,7 +227,7 @@ HandleTennisDictionaryIndexInput:
 	jr z, .checkB ; $5594
 	pop af ; $5596
 	sound SFX_MENU_SELECT ; $5597
-	ld a, $04 ; $5599
+	ld a, TDICTSTATE_OPEN_LIST ; $5599
 	push af ; $559b
 	jr .restore ; $559c
 .checkB:
@@ -235,7 +235,7 @@ HandleTennisDictionaryIndexInput:
 	jr z, .checkUp ; $55a0
 	pop af ; $55a2
 	sound SFX_MENU_CANCEL ; $55a3
-	ld a, $01 ; $55a5
+	ld a, TDICTSTATE_EXIT ; $55a5
 	push af ; $55a7
 	jr .restore ; $55a8
 .checkUp:
@@ -366,12 +366,12 @@ HandleTennisDictionaryListInput:
 	sound SFX_MENU_CANCEL ; $56a9
 	ld a, [wTennisDictMode] ; $56ab
 	cp TENNISDICT_INDEX ; $56ae
-	jr z, .backToChar6Page ; $56b0
-	ld a, $01 ; $56b2
+	jr z, .backToIndexPage ; $56b0
+	ld a, TDICTSTATE_EXIT ; $56b2
 	push af ; $56b4
 	jp .restore ; $56b5
-.backToChar6Page:
-	ld a, $10 ; $56b8
+.backToIndexPage:
+	ld a, TDICTSTATE_OPEN_INDEX ; $56b8
 	push af ; $56ba
 	jp .restore ; $56bb
 .checkUp:
