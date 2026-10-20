@@ -176,45 +176,45 @@ WriteTextToTilemap:
 DrawSinglesPlayerNames:
 	ld hl, wPlayer1MainName ; $4606
 	call CopyStringToTextBuffer ; $4609
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $460c
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $460c
 	call ShiftDestForLongName ; $460f
 	ld bc, $0020 ; $4612
 	call WriteTextToTilemap ; $4615
 	ld hl, Text_ResultsVs ; $4618
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 9 ; $461b
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 9 ; $461b
 	ld bc, $0020 ; $461e
 	call FetchAndDrawDialogueText ; $4621
 	ld hl, wPlayer2MainName ; $4624
 	call CopyStringToTextBuffer ; $4627
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 12 ; $462a
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 12 ; $462a
 	ld bc, $0020 ; $462d
 	call WriteTextToTilemap ; $4630
 	ret ; $4633
 DrawDoublesPlayerNames:
 	ld hl, wPlayer1MainName ; $4634
 	call CopyStringToTextBuffer ; $4637
-	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH + 3 ; $463a
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 3 ; $463a
 	call ShiftDestForLongName ; $463d
 	ld bc, $0020 ; $4640
 	call WriteTextToTilemap ; $4643
 	ld hl, wPlayer1PartnerName ; $4646
 	call CopyStringToTextBuffer ; $4649
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $464c
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $464c
 	call ShiftDestForLongName ; $464f
 	ld bc, $0020 ; $4652
 	call WriteTextToTilemap ; $4655
 	ld hl, Text_ResultsVs ; $4658
-	ld de, wScreenAttrmap + 13 * TILEMAP_WIDTH + 9 ; $465b
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; $465b
 	ld bc, $0020 ; $465e
 	call FetchAndDrawDialogueText ; $4661
 	ld hl, wPlayer2MainName ; $4664
 	call CopyStringToTextBuffer ; $4667
-	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH + 12 ; $466a
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 12 ; $466a
 	ld bc, $0020 ; $466d
 	call WriteTextToTilemap ; $4670
 	ld hl, wPlayer2PartnerName ; $4673
 	call CopyStringToTextBuffer ; $4676
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 12 ; $4679
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 12 ; $4679
 	ld bc, $0020 ; $467c
 	call WriteTextToTilemap ; $467f
 	ret ; $4682
@@ -245,31 +245,31 @@ ShiftDestForLongName:
 	ret ; $46a3
 DrawSetsGamesScore:
 	ld hl, Text_ResultsSets ; $46a4
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 2 ; $46a7
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $46a7
 	ld bc, $0020 ; $46aa
 	call FetchAndDrawDialogueText ; $46ad
 	ld a, [wPlayer1SetsWon] ; $46b0
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 6 ; $46b3
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 6 ; $46b3
 	call FormatAndDrawNumber ; $46b6
 	ld hl, Text_ResultsScoreDash ; $46b9
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 7 ; $46bc
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 7 ; $46bc
 	ld bc, $0020 ; $46bf
 	call FetchAndDrawDialogueText ; $46c2
 	ld a, [wPlayer2SetsWon] ; $46c5
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 8 ; $46c8
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 8 ; $46c8
 	call FormatAndDrawNumber ; $46cb
 	ld hl, Text_ResultsGames ; $46ce
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 11 ; $46d1
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 11 ; $46d1
 	ld bc, $0020 ; $46d4
 	call FetchAndDrawDialogueText ; $46d7
 	ld a, [wPlayer1GamesWon] ; $46da
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 15 ; $46dd
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 15 ; $46dd
 	call FormatAndDrawNumber ; $46e0
 	ld hl, Text_ResultsScoreDash ; $46e3
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 16 ; $46e6
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 16 ; $46e6
 	call FetchAndDrawDialogueText ; $46e9
 	ld a, [wPlayer2GamesWon] ; $46ec
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 17 ; $46ef
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 17 ; $46ef
 	call FormatAndDrawNumber ; $46f2
 	ret ; $46f5
 FormatAndDrawNumber:
@@ -315,7 +315,7 @@ DrawClassNameLabel:
 .varsity:
 	ld hl, Text_ResultsVarsitySquad ; $473c
 .draw:
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $473f
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $473f
 	ld bc, $0020 ; $4742
 	call DrawProportionalTextLine ; $4745
 	ret ; $4748
@@ -388,7 +388,7 @@ DrawRankMatchLabel:
 	ld h, a ; $47c6
 	farcall PushTextArgNumber ; $47c7
 	ld hl, Text_ResultsRankMatch ; $47ca
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $47cd
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $47cd
 	ld bc, $0020 ; $47d0
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
@@ -409,7 +409,7 @@ DrawRankMatchLabel:
 	ret ; $47f3
 DrawTournamentRoundLabel:
 	ld hl, Text_ResultsTournament ; $47f4
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $47f7
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $47f7
 	ld bc, $0020 ; $47fa
 	call DrawProportionalTextLine ; $47fd
 	ld hl, wTextBuffer ; $4800
@@ -443,21 +443,21 @@ DrawTournamentRoundLabel:
 	ld h, a ; $4836
 	farcall PushTextArgNumber ; $4837
 	ld hl, Text_ResultsRound ; $483a
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $483d
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $483d
 	ld bc, $0020 ; $4840
 	call DrawProportionalTextLine ; $4843
 	ret ; $4846
 .semifinal:
 	call ClearRoundLabelRow ; $4847
 	ld hl, Text_ResultsSemiFinals ; $484a
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 9 ; $484d
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 9 ; $484d
 	ld bc, $0020 ; $4850
 	call DrawProportionalTextLine ; $4853
 	ret ; $4856
 .final:
 	call ClearRoundLabelRow ; $4857
 	ld hl, Text_ResultsFinals ; $485a
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $485d
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $485d
 	ld bc, $0020 ; $4860
 	call DrawProportionalTextLine ; $4863
 	ret ; $4866

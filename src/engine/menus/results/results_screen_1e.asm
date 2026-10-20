@@ -78,7 +78,7 @@ InitResultsPromptState:
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
 	ld hl, Text_ResultsContinueGame ; $40c1
-	ld de, wDecompBuffer tile 4 + 1 ; $40c4
+	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
 	ld hl, Text_ResultsYourSavedGame ; $40cd
@@ -204,7 +204,7 @@ BuildResultsScreenPanels:
 	ld hl, wScreenAttrmap ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
-	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH + 1 ; $421e
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $421e
 	call DrawContinuePromptText ; $4221
 	wram_bank WRAM_SCREEN ; $4224
 	ld a, $02 ; $422a
@@ -330,11 +330,11 @@ LoadDoublesLabelTiles:
 DrawResultsNameLabelRows:
 	or a ; $435a
 	jr nz, .doublesLayout ; $435b
-	ld hl, wScreenAttrmap ; $435d
-	ld de, wScreenAttrmap + 11 * TILEMAP_WIDTH ; $4360
+	ld hl, wDecompBuffer ; $435d
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH ; $4360
 	ld c, $07 ; $4363
 	call CopyLabelTilesToTilemap ; $4365
-	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $4368
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $4368
 	ld c, $07 ; $436b
 	call CopyLabelTilesToTilemap ; $436d
 	wram_bank WRAM_SCREEN ; $4370
@@ -351,11 +351,11 @@ DrawResultsNameLabelRows:
 	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4392
 	ret ; $4395
 .doublesLayout:
-	ld hl, wScreenAttrmap ; $4396
-	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $4399
+	ld hl, wDecompBuffer ; $4396
+	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $4399
 	ld c, $07 ; $439c
 	call CopyLabelTilesToTilemap ; $439e
-	ld de, wScreenAttrmap + 10 * TILEMAP_WIDTH ; $43a1
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH ; $43a1
 	ld c, $07 ; $43a4
 	call CopyLabelTilesToTilemap ; $43a6
 	wram_bank WRAM_SCREEN ; $43a9
@@ -439,13 +439,13 @@ DrawStoryResultsHeader:
 	cp STORYLOC_PEACHS_CASTLE ; $446e
 	jr z, .altPosition ; $4470
 	ld hl, Text_ResultsTennisAcademy ; $4472
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $4475
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
 	jr .drawOpponentName ; $447e
 .skyScene:
 	ld hl, Text_ResultsIslandOpen ; $4480
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $4483
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
 .drawOpponentName:
@@ -455,7 +455,7 @@ DrawStoryResultsHeader:
 	adc $01 ; $4492
 	sub l ; $4494
 	ld h, a ; $4495
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 4 ; $4496
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $4496
 	ld bc, $0020 ; $4499
 	call DrawProportionalTextLine ; $449c
 	ret ; $449f
@@ -465,7 +465,7 @@ DrawStoryResultsHeader:
 	adc $01 ; $44a3
 	sub l ; $44a5
 	ld h, a ; $44a6
-	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 7 ; $44a7
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 7 ; $44a7
 	ld bc, $0020 ; $44aa
 	call DrawProportionalTextLine ; $44ad
 	ret ; $44b0
