@@ -152,7 +152,7 @@ StoryLocationTable_0a:
 	story_location STORYLOC_TRAINING_CENTER, SCENE_TRAINING_CENTER, DataPtr_TrainingGymMapScripts_0e, BGM_ACADEMY_ROOMS ; loc 17 Training Center
 	story_location STORYLOC_TENNIS_MACHINE_ROOM, SCENE_TRAINING_CENTER, DataPtr_TennisMachineRoomMapScripts_14, BGM_ACADEMY_ROOMS ; loc 18 Tennis Machine Room
 	story_location STORYLOC_WALL_PRACTICE_ROOM, SCENE_TRAINING_CENTER, DataPtr_WallPracticeRoomMapScripts_12, BGM_ACADEMY_ROOMS ; loc 19 Wall Practice Room
-	story_location STORYLOC_ACADEMY_ENTRANCE, SCENE_ACADEMY_ENTRANCE, DataPtr_AcademyArrivalMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 20 Academy Entrance
+	story_location STORYLOC_ACADEMY_ENTRANCE, SCENE_ACADEMY_ENTRANCE, DataPtr_AcademyEntranceMapScripts_11, BGM_ACADEMY_OUTDOORS ; loc 20 Academy Entrance
 	story_location STORYLOC_TOURNAMENT_COURTYARD, SCENE_TOURNAMENT_COURTYARD, DataPtr_TournamentCourtyardMapScripts_15, BGM_ACADEMY_OUTDOORS ; loc 21 Tournament Courtyard
 	story_location STORYLOC_COURT_1, SCENE_COURT_1, DataPtr_Court1MapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 22 Court #1
 	story_location STORYLOC_COURT_2, SCENE_COURT_2, DataPtr_Court2MapScripts_14, BGM_ACADEMY_OUTDOORS ; loc 23 Court #2

@@ -62,7 +62,7 @@ RunRankingOpponentWalkScript:
 	script_set_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB, ActorScript_11_42 ; $7358
 	script_wait_actor_script ACTOR_JUNIOR_CLASS_COURT_SINGLES_BOB ; $7363
 	ret ; $7368
-DrawRankingOpponentInfo:
+RankingOpponentStepUpScene:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $7369
 	jr z, .vsRank4 ; $736c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $736e
@@ -355,7 +355,7 @@ OfferSinglesRankingMatch:
 	farcall AdvanceDialogueTextCursor ; $77ee
 .announceOpponent:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH ; $77f1
-	call DrawRankingOpponentInfo ; $77f6
+	call RankingOpponentStepUpScene ; $77f6
 	script_face ACTOR_PLAYER, FACE_UP ; $77f9
 	script_wait_frames 15 ; $7800
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_SINGLES_JUNIOR_COACH, ANIM_BOUNCE ; $7807

@@ -308,7 +308,7 @@ reached one. The numbered ones are:
   B. Coz in the doubles award ceremony but a walk-sprite student in the
   singles one, where the flow cannot tie the list to the branch;
 * slots past the end of every candidate list: at run time the slot is
-  empty (`DormRoomTile0F_13` and `CenterCourtEntry0fScene` position slots
+  empty (`DormRoomTile0F_13` and `CenterCourtCreditsScene` position slots
   `$06` and `$0a`, which their lists never fill, so those lines move
   nothing), and the `NpcScripts` ids of locations whose lists are empty
   (the development map's sixteen, `RestaurantPlazaNpcScripts_13`'s `$03`);
@@ -614,7 +614,7 @@ Win flags are set by each court's own post-match cutscene, not a shared
 match-end routine: it checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
 sets the flag. E.g. on a win `JuniorClassCourtDoublesMatchReturn`
 (`$11:$5d38`) reloads the court at entry `$0d`, and
-`JuniorClassCourtDoublesEntry0dScene` dispatches on
+`JuniorClassCourtDoublesVictoryScene` dispatches on
 `wCurrentMatchIndex` (`$11:$5daa`) to `set_flag
 FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`.wonRank3`/`2`/`1`, `$11:$5db7`/
 `$5ec0`/`$5fbd`). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
