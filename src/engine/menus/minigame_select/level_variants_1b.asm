@@ -29,7 +29,7 @@ ClearMinigameLevelDescriptionRow:
 GetMinigameLevelColumnCount:
 	push af ; $6e1c
 	push_wram_bank WRAM_COURT_PLANES ; $6e1d
-	ld a, [wScreenAttrmap + 2] ; $6e26
+	ld a, [wLevelSelectColumns] ; $6e26
 	ld b, a ; $6e29
 	pop_wram_bank ; $6e2a
 	pop af ; $6e2f
@@ -48,7 +48,7 @@ RunMinigameLevelSelect2:
 	ld c, $01 ; $6e4d
 	farcall LoadMenuSpritePalettePair ; $6e4f
 	wram_bank WRAM_COURT_PLANES ; $6e52
-	ld a, [wScreenAttrmap + 1] ; $6e58
+	ld a, [wLevelSelectClearedCount] ; $6e58
 	ld c, a ; $6e5b
 	ld b, $02 ; $6e5c
 	call SetMenuCursorFromIndex ; $6e5e
@@ -80,7 +80,7 @@ RunMinigameLevelSelect2:
 	or a ; $6ea2
 	jr z, .playSelectSfx ; $6ea3
 	wram_bank WRAM_COURT_PLANES ; $6ea5
-	ld a, [wScreenAttrmap + 1] ; $6eab
+	ld a, [wLevelSelectClearedCount] ; $6eab
 	or a ; $6eae
 	jr nz, .playSelectSfx ; $6eaf
 	sound SFX_MENU_LOCKED ; $6eb1
@@ -98,7 +98,7 @@ RunMinigameLevelSelect2:
 	wram_bank WRAM_COURT_PLANES ; $6ecf
 	ld c, $03 ; $6ed5
 	call GetMenuCursorIndex_1b ; $6ed7
-	ld [wScreenAttrmap + 3], a ; $6eda
+	ld [wLevelSelectResult], a ; $6eda
 	ret ; $6edd
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6ede
@@ -112,7 +112,7 @@ RunMinigameLevelSelect2:
 	ld [wMenuSlideDirection], a ; $6ef5
 	wram_bank WRAM_COURT_PLANES ; $6ef8
 	ld a, $ff ; $6efe
-	ld [wScreenAttrmap + 3], a ; $6f00
+	ld [wLevelSelectResult], a ; $6f00
 	ret ; $6f03
 RedrawMinigameLevelSelect2:
 	wram_bank WRAM_SCREEN ; $6f04
@@ -235,7 +235,7 @@ RunMinigameLevelSelect3:
 	ld c, $01 ; $6fee
 	farcall LoadMenuSpritePalettePair ; $6ff0
 	wram_bank WRAM_COURT_PLANES ; $6ff3
-	ld a, [wScreenAttrmap + 1] ; $6ff9
+	ld a, [wLevelSelectClearedCount] ; $6ff9
 	ld c, a ; $6ffc
 	ld b, $03 ; $6ffd
 	call SetMenuCursorFromIndex ; $6fff
@@ -274,7 +274,7 @@ RunMinigameLevelSelect3:
 	wram_bank WRAM_COURT_PLANES ; $7058
 	ld c, $03 ; $705e
 	call GetMenuCursorIndex_1b ; $7060
-	ld [wScreenAttrmap + 3], a ; $7063
+	ld [wLevelSelectResult], a ; $7063
 	ret ; $7066
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7067
@@ -288,7 +288,7 @@ RunMinigameLevelSelect3:
 	ld [wMenuSlideDirection], a ; $707e
 	wram_bank WRAM_COURT_PLANES ; $7081
 	ld a, $ff ; $7087
-	ld [wScreenAttrmap + 3], a ; $7089
+	ld [wLevelSelectResult], a ; $7089
 	ret ; $708c
 RedrawMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $708d

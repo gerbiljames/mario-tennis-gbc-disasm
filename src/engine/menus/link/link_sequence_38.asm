@@ -30,7 +30,7 @@ AppendCharToName:
 	ld d, a ; $72cd
 	ld hl, NameEntryCharset_38 ; $72ce
 	wram_bank WRAM_COURT_PLANES ; $72d1
-	ld a, [wScreenAttrmap] ; $72d7
+	ld a, [wNameEntryCharsetPage] ; $72d7
 	or a ; $72da
 	jr z, .indexCharset ; $72db
 	ld hl, NameEntryCharset_38 ; $72dd
