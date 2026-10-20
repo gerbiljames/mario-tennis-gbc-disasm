@@ -93,10 +93,10 @@ Palette_1a_0:
 	INCLUDE "data/engine/menus/char_data/Palette_1a_0.asm" ; $70d9, 64 bytes (palettes)
 CharViewerScreenGfx0:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx0.bin" ; $7119, 1636 bytes
-CharViewerScreenGfx1:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx1.bin" ; $777d, 180 bytes
-CharViewerScreenGfx2:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx2.bin" ; $7831, 129 bytes
+CharViewerScreenTilemap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenTilemap.bin" ; $777d, 180 bytes
+CharViewerScreenAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenAttrmap.bin" ; $7831, 129 bytes
 CharViewerGridTilemap0:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
 CharViewerGridTilemap1:

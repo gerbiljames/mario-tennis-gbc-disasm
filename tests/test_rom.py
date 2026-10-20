@@ -186,8 +186,9 @@ class Source(unittest.TestCase):
                 label, offset, ld = de
                 self.assertIn(label, size, ld)
                 checked += 1
-                end = decoded[stream] + eval(offset.replace("tile", "+ 16 *").replace("TILEMAP_WIDTH", "32")
-                                             .replace("$", "0x") or "0")
+                end = decoded[stream] + eval(offset.replace("tile", "+ 16 *").replace("TILEMAP_AREA", "1024")
+                                             .replace("TILEMAP_WIDTH", "32")
+                                             .replace("RESULTS_PANEL_ATTRS", "200").replace("$", "0x") or "0")
                 if end <= size[label] or " -- " in ld:
                     continue
                 self.assertIn(label, self.DECOMP_OVERRUNS, f"{name}: {stream} ({decoded[stream]} bytes) "
@@ -196,6 +197,37 @@ class Source(unittest.TestCase):
                 over.add(label)
         self.assertGreaterEqual(checked, 220)
         self.assertEqual(over, set(self.DECOMP_OVERRUNS))
+
+    def test_palette_loads_fit_their_block(self):
+        # `ld hl, Palettes` up to three lines before `ld_bg_pals` /
+        # `ld_obj_pals de, first, n` reads n * 8 bytes: they fit the palettes region, or the load line
+        # carries a `-- note`
+        size = {}
+        for line in (ROOT / "data.manifest").read_text().splitlines():
+            f = line.split()
+            if len(f) >= 4 and f[3] == "palettes":
+                size[f[0].rsplit("/", 1)[1].rsplit(".", 1)[0]] = int(f[2], 16)
+        checked, noted = 0, []
+        for name, text in SRC:
+            lines = text.split("\n")
+            for i, line in enumerate(lines):
+                m = re.match(r"\tld_(?:bg|obj)_pals de, [^,]+, ([^;]+?) ;", line)
+                if not m:
+                    continue
+                prev = None
+                for back in reversed(lines[i - 3:i]):
+                    if re.match(r"[A-Za-z.]|\t(call|farcall|jp|jr|ret)\b|\tld_?\w* hl\b", back):
+                        prev = re.match(r"\tld hl, (\w+) ;", back)
+                        break
+                if not prev or prev[1] not in size:
+                    continue
+                checked += 1
+                if " -- " in line:
+                    noted.append(prev[1])
+                    continue
+                self.assertLessEqual(8 * int(m[1]), size[prev[1]], f"{name}: {prev[1]}: {line.strip()}")
+        self.assertGreaterEqual(checked, 112)
+        self.assertEqual(sorted(noted), ["TennisDictionaryPalettes", "WaterSpriteHudPalette_15"])
 
     def test_copy_lengths_follow_their_ram(self):
         # a copy or clear of one whole RAM object is written as its exported
@@ -341,12 +373,12 @@ class Manifest(unittest.TestCase):
         self.assertEqual(streams, 863)
         self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2897)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2891)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(s == "gfx:4x4" for s in specs), 4)
-        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 249)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 297)
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)

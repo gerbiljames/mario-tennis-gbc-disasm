@@ -238,7 +238,7 @@ LoadWaterSpriteMinigameHudGfx:
 	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, WaterSpriteHudPalette_15 ; $58ac
-	ld_obj_pals de, 0, 2 ; $58af
+	ld_obj_pals de, 0, 2 ; $58af -- 16 bytes from the 8-byte palette: OBJ palette 1 is LoadWaterSpriteMinigameHudGfx's code
 	call LoadPaletteShadow ; $58b2
 	pop_wram_bank ; $58b5
 	ret ; $58ba

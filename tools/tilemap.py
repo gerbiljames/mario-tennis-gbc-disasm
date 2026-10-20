@@ -11,8 +11,9 @@ blob is an `lz_*` stream) and `make check` round-trips every grid.
 
 A tile plane holds tile ids; an attribute plane the CGB attribute bytes
 (palette bits 0-2, VRAM bank bit 3, X flip bit 5, Y flip bit 6, priority
-bit 7) for the same cells. Editing either is byte-exact: the grid is the
-blob in rows.
+bit 7) for the same cells; a story collision or behaviour map one code per
+2x2-tile cell. Editing any of them is byte-exact: the grid is the blob in
+rows.
 
 usage: tilemap.py decode <bin> <txt> <width>   (lz_* stems are decompressed first)
        tilemap.py encode <txt> <bin>           (lz_* stems are compressed again)

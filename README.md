@@ -182,8 +182,8 @@ because the layout is recomputed rather than restated:
   `lz_*`) blob with the game's own encoder, so a touched but unchanged PNG
   or grid rebuilds byte-identical; enlarging a plain image's canvas grows
   its blob.
-- **Screen layouts are text.** The 249 tile and attribute planes (all LZ
-  streams) are also `.tilemap` grids, one `tilemap_row` of hex cells per
+- **Screen layouts are text.** The 255 tile and attribute planes and the 42
+  story collision and behaviour maps are also `.tilemap` grids, one `tilemap_row` of hex cells per
   row at the width the loader uses; `make` re-encodes an edited grid. The 37 scenes get a view-only
   `<Tilemap>.preview.png` (`make previews` redraws them).
 - **Tables are structured source** with named fields

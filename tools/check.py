@@ -72,8 +72,10 @@ after a real defect broke it:
             region named *Gfx*/*Tiles*, and no spec-less LZ stream of whole
             tiles that the source decompresses on to vTiles (192 graphics blobs
             once had no PNG); a gfx-tagged region the source indexes, reads
-            element by element or decompresses into a tilemap row or a
-            w*Tilemap / w*Attrmap / wMapBuffer64 plane fails
+            element by element, decompresses into a tilemap row or a
+            w*Tilemap / w*Attrmap / wMapBuffer64 plane, stages in
+            wDecompBuffer with CopyMemoryFast (tiles go to VRAM straight from
+            ROM) or hands on to a CopyBank*Buffer tilemap copy fails
   tilemap   every tilemap:W blob with a grid beside it encodes back to the
             bytes the grid was decoded from
   reach     a routine is named Unused exactly when nothing reachable from
@@ -935,9 +937,22 @@ def check_gfx_specs(rom, manifest, fail):
 TABLE_READ_GFX = {}
 
 _TABLE_READ_RE = re.compile(r"^\t(add_hl_a\b|add hl, |ld \w, \[hl\+?\]|"
-                            r"ld de, wDecompBuffer \+ .*TILEMAP_WIDTH|"
+                            r"ld de, wDecompBuffer \+ .*TILEMAP_(WIDTH|AREA)|"
                             r"ld de, (w\w*(Tilemap|Attrmap)|wMapBuffer64)\b)")
 _SCAN_END_RE = re.compile(r"^\t(call|ret|jp|jr|rst)\b|^\tld hl, |^\S")
+_DECOMP_CALL_RE = re.compile(r"^\t(call|farcall) DecompressData\b")
+_BANK_PLANE_COPY_RE = re.compile(r"^\tcall \w*CopyBank\w*Buffer")
+
+
+def _hands_to_bank_copy(after):
+    """The lines after a DecompressData pass the result on to a
+    CopyBank*Buffer copy (WRAM 1 into the tilemap banks 2 / 3)."""
+    for line in after:
+        if _BANK_PLANE_COPY_RE.match(line):
+            return True
+        if re.match(r"^\t(call|ret|jp|jr|rst|farcall)\b|^\S", line):
+            return False
+    return False
 
 
 def check_gfx_tables(manifest, fail):
@@ -945,7 +960,10 @@ def check_gfx_tables(manifest, fail):
     `ld hl, Label` and then indexes or reads element by element (add_hl_a,
     add hl, ld r,[hl]/[hl+]) before the next call, jump or `ld hl` is a
     table, and one decompressed to wDecompBuffer + n * TILEMAP_WIDTH or to
-    a w*Tilemap / w*Attrmap / wMapBuffer64 plane is a tilemap."""
+    a w*Tilemap / w*Attrmap / wMapBuffer64 plane, staged in wDecompBuffer
+    by CopyMemoryFast (tiles are queued to VRAM straight from ROM), or
+    decompressed and passed on to a CopyBank*Buffer copy into the tilemap
+    banks is a tilemap."""
     gfx = {}
     for path, off, length, spec in manifest:
         if spec == "gfx" or (spec or "").startswith("gfx:"):
@@ -958,16 +976,22 @@ def check_gfx_tables(manifest, fail):
             if not m or m.group(1) not in gfx:
                 continue
             label = m.group(1)
-            for nxt in lines[i + 1:i + 8]:
+            staged = False
+            for k in range(i + 1, min(i + 8, len(lines))):
+                nxt = lines[k]
+                staged |= nxt.startswith("\tld de, wDecompBuffer ")
                 if _SCAN_END_RE.match(nxt):
-                    break
-                if _TABLE_READ_RE.match(nxt):
-                    if label in TABLE_READ_GFX:
-                        seen.add(label)
-                    else:
-                        fail("gfx-specs", f"{gfx[label]}: tagged gfx but read as "
-                                          f"a table or tilemap ({f.relative_to(ROOT)}:{i + 1})")
-                    break
+                    if not (staged and nxt.startswith("\tcall CopyMemoryFast")
+                            or _DECOMP_CALL_RE.match(nxt) and _hands_to_bank_copy(lines[k + 1:k + 5])):
+                        break
+                elif not _TABLE_READ_RE.match(nxt):
+                    continue
+                if label in TABLE_READ_GFX:
+                    seen.add(label)
+                else:
+                    fail("gfx-specs", f"{gfx[label]}: tagged gfx but read as "
+                                      f"a table or tilemap ({f.relative_to(ROOT)}:{i + 1})")
+                break
     for label in sorted(set(TABLE_READ_GFX) - seen):
         fail("gfx-specs", f"{label}: no longer read as a table -- "
                           "drop it from TABLE_READ_GFX")

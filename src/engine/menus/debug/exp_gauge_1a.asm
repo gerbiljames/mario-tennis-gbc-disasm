@@ -20,7 +20,7 @@ Unused_1a_DrawExpScreenMessage_1:
 	ld de, vBGMap0 + VRAM_BANK1 ; $4dd9
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4ddc
 	call QueueVRAMCopy ; $4dde
-	ld hl, wDecompBuffer tile 64 ; $4de1
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $4de1
 	ld de, vBGMap0 ; $4de4
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4de7
 	call QueueVRAMCopy ; $4de9
@@ -55,7 +55,7 @@ Unused_1a_DrawExpScreenMessage_2:
 	ld de, vBGMap0 + VRAM_BANK1 ; $4e37
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4e3a
 	call QueueVRAMCopy ; $4e3c
-	ld hl, wDecompBuffer tile 64 ; $4e3f
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $4e3f
 	ld de, vBGMap0 ; $4e42
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4e45
 	call QueueVRAMCopy ; $4e47
@@ -741,7 +741,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld de, vBGMap0 + VRAM_BANK1 ; $54fe
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $5501
 	call QueueVRAMCopy ; $5503
-	ld hl, wDecompBuffer tile 64 ; $5506
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $5506
 	ld de, vBGMap0 ; $5509
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $550c
 	call QueueVRAMCopy ; $550e

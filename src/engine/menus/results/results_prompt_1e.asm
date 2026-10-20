@@ -35,7 +35,7 @@ DrawPlayerNameAndLevel:
 	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
 	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
-	ld de, wDecompBuffer tile 12 + 8 ; $48b3
+	ld de, wDecompBuffer + RESULTS_PANEL_ATTRS ; $48b3
 	call DecompressData ; $48b6
 	ld hl, wDecompBuffer ; $48b9
 	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH ; $48bc
@@ -110,7 +110,7 @@ CopyTilesAndAttrsRun:
 	ld [de], a ; $4970
 	wram_bank WRAM_STAGING ; $4971
 	push hl ; $4977
-	ld a, $c8 ; $4978
+	ld a, RESULTS_PANEL_ATTRS ; $4978
 	add_hl_a ; $497a
 	ld b, [hl] ; $497f
 	wram_bank WRAM_COURT_PLANES ; $4980

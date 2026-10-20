@@ -244,10 +244,12 @@ WRAM bank `$03`) and `wScreenAttrmap` (1024 bytes, WRAM bank `$02`).
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells. The 249 blobs `data.manifest`
-tags `tilemap:W` (all `lz_*`, decompressed first) get a `.tilemap` text grid
-beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an edited grid
-back and `make check` (`tilemap`) round-trips every one. Character-data screen
+Screen layouts are written as rows of cells. The 297 blobs `data.manifest`
+tags `tilemap:W` -- 255 tile and attribute planes and the 42 story collision
+and behaviour maps (32×32 cells, §3.3); all `lz_*` streams, decompressed first,
+but the four raw 32×18 planes of the bank `$1a` exp screen -- get a `.tilemap`
+text grid beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an
+edited grid back and `make check` (`tilemap`) round-trips every one. Character-data screen
 patches (runs of a 32-wide plane copied in at a row and column, e.g.
 `wDecompBuffer + 18 * TILEMAP_WIDTH`) are tagged when they start at column 0;
 those starting mid-row keep only their `.bin`. The 70 small layouts in the
@@ -829,9 +831,9 @@ thirty-three pass:
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33946 | no ROM address is written as a number where the source moves, no named WRAM address is split into `add`/`adc` halves, an `ld bc/de/hl` immediate is never a WRAM label's start, nor its negation ahead of an `add hl, rr` (`$10000 - wX`; exceptions allow-listed); no RAM/VRAM address half is a raw byte where it is checkable: a page added to an offset (`ld a, $d0 / add h / ld h, a`), a `cp` on a pointer's high byte, an `ld l/e` re-aiming a pointer loaded from a WRAM label, an `ld h/d` page the next instructions dereference |
 | `dma` | 59 | every label handed to a VRAM DMA routine is 16-byte aligned, including each entry of a `dw` table the source is read from (`Label tile n` / `Label + n` with `n` a multiple of 16 count) |
-| `gfx` | 2897 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row or a `w*Tilemap`/`w*Attrmap`/`wMapBuffer64` plane (exceptions allow-listed) |
-| `tilemap` | 249 | every tilemap grid encodes back to its blob |
+| `gfx` | 2891 | every PNG encodes back to the blob it was decoded from |
+| `gfx-specs` | 78 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element, decompressed into a tilemap row or a `w*Tilemap`/`w*Attrmap`/`wMapBuffer64` plane, staged in `wDecompBuffer` by `CopyMemoryFast` or decompressed on to a `CopyBank*Buffer` copy (exceptions allow-listed) |
+| `tilemap` | 297 | every tilemap grid encodes back to its blob |
 | `slots` | 5494 | every `ACTOR_*` slot name names a row of a list that can be active there and holds its actor in every such list, and no `map_actor` row name repeats a word run (`TOURNAMENT_TOURNAMENT_STAFF`) |
 | `reach` | 4902 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
 | `unnamed` | 8886 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
