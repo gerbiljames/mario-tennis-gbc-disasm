@@ -2,23 +2,23 @@ DataPtr_TennisDictionaryTiles:
 	dw TennisDictionaryTiles ; $4000
 DataPtr_TennisDictionaryListTiles:
 	dw TennisDictionaryListTiles ; $4002
-DataPtr_NameEntryTilemap:
+DataPtr_Unused_3a_FillerSlot_4004:
 	dw NameEntryTilemap ; $4004
-DataPtr_NameEntryTilemapAlias1:
+DataPtr_Unused_3a_FillerSlot_4006:
 	dw NameEntryTilemap ; $4006
-DataPtr_NameEntryTilemapAlias2:
+DataPtr_Unused_3a_FillerSlot_4008:
 	dw NameEntryTilemap ; $4008
-DataPtr_NameEntryTilemapAlias3:
+DataPtr_Unused_3a_FillerSlot_400a:
 	dw NameEntryTilemap ; $400a
-DataPtr_NameEntryTilemapAlias4:
+DataPtr_Unused_3a_FillerSlot_400c:
 	dw NameEntryTilemap ; $400c
-DataPtr_NameEntryTilemapAlias5:
+DataPtr_Unused_3a_FillerSlot_400e:
 	dw NameEntryTilemap ; $400e
-DataPtr_NameEntryTilemapAlias6:
+DataPtr_Unused_3a_FillerSlot_4010:
 	dw NameEntryTilemap ; $4010
-DataPtr_NameEntryTilemapAlias7:
+DataPtr_Unused_3a_FillerSlot_4012:
 	dw NameEntryTilemap ; $4012
-DataPtr_NameEntryTilemapAlias8:
+DataPtr_NameEntryTilemap:
 	dw NameEntryTilemap ; $4014
 DataPtr_NameEntryAttrmap:
 	dw NameEntryAttrmap ; $4016
@@ -26,13 +26,13 @@ DataPtr_CharSelectAltTilemap:
 	dw CharSelectAltTilemap ; $4018
 DataPtr_CharSelectAltAttrmap:
 	dw CharSelectAltAttrmap ; $401a
-DataPtr_NameEntryTilemapAlias9:
+DataPtr_Unused_3a_FillerSlot_401c:
 	dw NameEntryTilemap ; $401c
-DataPtr_NameEntryTilemapAlias10:
+DataPtr_Unused_3a_FillerSlot_401e:
 	dw NameEntryTilemap ; $401e
-DataPtr_NameEntryTilemapAlias11:
+DataPtr_Unused_3a_FillerSlot_4020:
 	dw NameEntryTilemap ; $4020
-DataPtr_NameEntryTilemapAlias12:
+DataPtr_Unused_3a_FillerSlot_4022:
 	dw NameEntryTilemap ; $4022
 DataPtr_ExhibitionSetupTiles:
 	dw ExhibitionSetupTiles ; $4024
@@ -42,14 +42,14 @@ DataPtr_ExhibitionSetupAttrmap:
 	dw ExhibitionSetupAttrmap ; $4028
 DataPtr_ExhibitionSetupPalettes:
 	dw ExhibitionSetupPalettes ; $402a
-DataPtr_ExhibitionMenuTiles:
-	dw ExhibitionMenuTiles ; $402c
-DataPtr_ExhibitionMenuTilemap:
-	dw ExhibitionMenuTilemap ; $402e
-DataPtr_ExhibitionMenuAttrmap:
-	dw ExhibitionMenuAttrmap ; $4030
-DataPtr_ExhibitionMenuPalettes:
-	dw ExhibitionMenuPalettes ; $4032
+DataPtr_ExhibitionRecordsTiles:
+	dw ExhibitionRecordsTiles ; $402c
+DataPtr_ExhibitionRecordsTilemap:
+	dw ExhibitionRecordsTilemap ; $402e
+DataPtr_ExhibitionRecordsAttrmap:
+	dw ExhibitionRecordsAttrmap ; $4030
+DataPtr_ExhibitionRecordsPalettes:
+	dw ExhibitionRecordsPalettes ; $4032
 DataPtr_N64TournamentTiles:
 	dw N64TournamentTiles ; $4034
 DataPtr_N64TournamentTilemap:
@@ -108,14 +108,14 @@ ExhibitionSetupAttrmap:
 	INCBIN "data/gfx/lz_ExhibitionSetupAttrmap.bin" ; $5afa, 109 bytes
 ExhibitionSetupPalettes:
 	INCLUDE "data/gfx/ExhibitionSetupPalettes.asm" ; $5b67, 64 bytes (palettes)
-ExhibitionMenuTiles:
-	INCBIN "data/gfx/lz_ExhibitionMenuTiles.bin" ; $5ba7, 1698 bytes
-ExhibitionMenuTilemap:
-	INCBIN "data/gfx/lz_ExhibitionMenuTilemap.bin" ; $6249, 255 bytes
-ExhibitionMenuAttrmap:
-	INCBIN "data/gfx/lz_ExhibitionMenuAttrmap.bin" ; $6348, 119 bytes
-ExhibitionMenuPalettes:
-	INCLUDE "data/gfx/ExhibitionMenuPalettes.asm" ; $63bf, 64 bytes (palettes)
+ExhibitionRecordsTiles:
+	INCBIN "data/gfx/lz_ExhibitionRecordsTiles.bin" ; $5ba7, 1698 bytes
+ExhibitionRecordsTilemap:
+	INCBIN "data/gfx/lz_ExhibitionRecordsTilemap.bin" ; $6249, 255 bytes
+ExhibitionRecordsAttrmap:
+	INCBIN "data/gfx/lz_ExhibitionRecordsAttrmap.bin" ; $6348, 119 bytes
+ExhibitionRecordsPalettes:
+	INCLUDE "data/gfx/ExhibitionRecordsPalettes.asm" ; $63bf, 64 bytes (palettes)
 N64TournamentTiles:
 	INCBIN "data/gfx/lz_N64TournamentTiles.bin" ; $63ff, 1650 bytes
 N64TournamentTilemap:

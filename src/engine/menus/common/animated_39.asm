@@ -58,27 +58,27 @@ LoadScreenAssetRecord:
 	ret ; $40f4
 ScreenAssetRecordTable:
 	; $40f5, 560 bytes (70 records x 4 slot words)
-	screen_asset MatchTypeMenu, DataPtr_NameEntryTilemapAlias9, DataPtr_NameEntryTilemapAlias10, DataPtr_NameEntryTilemapAlias11, DataPtr_NameEntryTilemapAlias12 ; record 0
+	screen_asset Placeholder0, DataPtr_Unused_3a_FillerSlot_401c, DataPtr_Unused_3a_FillerSlot_401e, DataPtr_Unused_3a_FillerSlot_4020, DataPtr_Unused_3a_FillerSlot_4022 ; record 0
 	screen_asset ExhibitionSetup, DataPtr_ExhibitionSetupTiles, DataPtr_ExhibitionSetupTilemap, DataPtr_ExhibitionSetupAttrmap, DataPtr_ExhibitionSetupPalettes ; record 1
-	screen_asset MainMenu, DataPtr_MainMenuTitleGfx, DataPtr_MainMenuTitleGfxAlias1, DataPtr_MainMenuTitleGfxAlias2, DataPtr_MainMenuTitleGfxAlias3 ; record 2
-	screen_asset MatchTypeMenuAlt, DataPtr_NameEntryTilemapAlias9, DataPtr_NameEntryTilemapAlias10, DataPtr_NameEntryTilemapAlias11, DataPtr_NameEntryTilemapAlias12 ; record 3
+	screen_asset Placeholder2, DataPtr_Unused_3d_FillerSlot_4012, DataPtr_Unused_3d_FillerSlot_4014, DataPtr_Unused_3d_FillerSlot_4016, DataPtr_Unused_3d_FillerSlot_4018 ; record 2
+	screen_asset Placeholder3, DataPtr_Unused_3a_FillerSlot_401c, DataPtr_Unused_3a_FillerSlot_401e, DataPtr_Unused_3a_FillerSlot_4020, DataPtr_Unused_3a_FillerSlot_4022 ; record 3
 	screen_asset JapanesePlayMode, DataPtr_JapanesePlayModeTiles, DataPtr_JapanesePlayModeTilemap, DataPtr_JapanesePlayModeAttrmap, DataPtr_JapanesePlayModePalettes ; record 4
 	screen_asset CharacterSelect, DataPtr_CharacterSelectTiles, DataPtr_CharacterSelectTilemap, DataPtr_CharacterSelectAttrmap, DataPtr_CharacterSelectPalettes ; record 5
-	screen_asset NameEntry, DataPtr_CharacterSelectTiles, DataPtr_NameEntryTilemapAlias8, DataPtr_NameEntryAttrmap, DataPtr_CharacterSelectPalettes ; record 6
+	screen_asset NameEntry, DataPtr_CharacterSelectTiles, DataPtr_NameEntryTilemap, DataPtr_NameEntryAttrmap, DataPtr_CharacterSelectPalettes ; record 6
 	screen_asset CharSelectAlt, DataPtr_CharacterSelectTiles, DataPtr_CharSelectAltTilemap, DataPtr_CharSelectAltAttrmap, DataPtr_CharacterSelectPalettes ; record 7
-	screen_asset NameEntryVariant1, DataPtr_NameEntryTilemap, DataPtr_NameEntryTilemapAlias1, DataPtr_NameEntryTilemapAlias2, DataPtr_NameEntryTilemapAlias3 ; record 8
+	screen_asset Placeholder8, DataPtr_Unused_3a_FillerSlot_4004, DataPtr_Unused_3a_FillerSlot_4006, DataPtr_Unused_3a_FillerSlot_4008, DataPtr_Unused_3a_FillerSlot_400a ; record 8
 	screen_asset QueueWram3MapToVRAMPtrs, FarPtr_QueueWram3MapToVRAMAlias1, FarPtr_QueueWram3MapToVRAMAlias2, FarPtr_QueueWram3MapToVRAMAlias3, FarPtr_QueueWram3MapToVRAMAlias4 ; record 9
-	screen_asset NameEntryVariant2, DataPtr_NameEntryTilemap, DataPtr_NameEntryTilemapAlias4, DataPtr_NameEntryTilemapAlias5, DataPtr_NameEntryTilemapAlias3 ; record 10
-	screen_asset NameEntryVariant3, DataPtr_NameEntryTilemap, DataPtr_NameEntryTilemapAlias6, DataPtr_NameEntryTilemapAlias7, DataPtr_NameEntryTilemapAlias3 ; record 11
-	screen_asset ExhibitionMenu, DataPtr_ExhibitionMenuTiles, DataPtr_ExhibitionMenuTilemap, DataPtr_ExhibitionMenuAttrmap, DataPtr_ExhibitionMenuPalettes ; record 12
+	screen_asset Placeholder10, DataPtr_Unused_3a_FillerSlot_4004, DataPtr_Unused_3a_FillerSlot_400c, DataPtr_Unused_3a_FillerSlot_400e, DataPtr_Unused_3a_FillerSlot_400a ; record 10
+	screen_asset Placeholder11, DataPtr_Unused_3a_FillerSlot_4004, DataPtr_Unused_3a_FillerSlot_4010, DataPtr_Unused_3a_FillerSlot_4012, DataPtr_Unused_3a_FillerSlot_400a ; record 11
+	screen_asset ExhibitionRecords, DataPtr_ExhibitionRecordsTiles, DataPtr_ExhibitionRecordsTilemap, DataPtr_ExhibitionRecordsAttrmap, DataPtr_ExhibitionRecordsPalettes ; record 12
 	screen_asset N64Tournament, DataPtr_N64TournamentTiles, DataPtr_N64TournamentTilemap, DataPtr_N64TournamentAttrmap, DataPtr_N64TournamentPalettes ; record 13
 	screen_asset N64Tournament2, DataPtr_N64TournamentTiles, DataPtr_N64TournamentTilemap2, DataPtr_N64TournamentAttrmap2, DataPtr_N64TournamentPalettes ; record 14
-	screen_asset ModeSelect, DataPtr_ModeSelectTiles, DataPtr_ModeSelectTilemap, DataPtr_ModeSelectAttrmap, DataPtr_ModeSelectPalettes ; record 15
+	screen_asset N64TnmtData, DataPtr_N64TnmtDataTiles, DataPtr_N64TnmtDataTilemap, DataPtr_N64TnmtDataAttrmap, DataPtr_N64TnmtDataPalettes ; record 15
 	screen_asset WarningScreen, DataPtr_WarningScreenTiles, DataPtr_WarningScreenTilemap, DataPtr_WarningScreenAttrmap, DataPtr_WarningScreenPalettes ; record 16
 	screen_asset LinkingScreen, DataPtr_LinkingScreenTiles, DataPtr_LinkingScreenTilemap, DataPtr_LinkingScreenAttrmap, DataPtr_LinkingScreenPalettes ; record 17
-	screen_asset RingShotHud, DataPtr_RingShotHudTiles, DataPtr_RingShotHudTilemap, DataPtr_RingShotHudAttrmap, DataPtr_RingShotHudPalettes ; record 18
-	screen_asset MatchStats, DataPtr_MatchStatsTiles, DataPtr_MatchStatsTilemap, DataPtr_MatchStatsAttrmap, DataPtr_MatchStatsPalettes ; record 19
-	screen_asset MatchStats2, DataPtr_MatchStatsTiles, DataPtr_MatchStatsTilemap2, DataPtr_MatchStatsAttrmap2, DataPtr_MatchStatsPalettes ; record 20
+	screen_asset N64RingShotPoints, DataPtr_N64RingShotPointsTiles, DataPtr_N64RingShotPointsTilemap, DataPtr_N64RingShotPointsAttrmap, DataPtr_N64RingShotPointsPalettes ; record 18
+	screen_asset MatchWinLose, DataPtr_MatchResultTiles, DataPtr_MatchWinLoseTilemap, DataPtr_MatchWinLoseAttrmap, DataPtr_MatchResultPalettes ; record 19
+	screen_asset MatchWinLoseVersus, DataPtr_MatchResultTiles, DataPtr_MatchWinLoseVersusTilemap, DataPtr_MatchWinLoseVersusAttrmap, DataPtr_MatchResultPalettes ; record 20
 	screen_asset CompanyLogos, DataPtr_CompanyLogosTiles, DataPtr_CompanyLogosTilemap, DataPtr_CompanyLogosAttrmap, DataPtr_CompanyLogosPalettes ; record 21
 	screen_asset IntroRallies, DataPtr_IntroRalliesTiles, DataPtr_IntroRalliesTilemap, DataPtr_IntroRalliesAttrmap, DataPtr_IntroRalliesPalettes ; record 22
 	screen_asset IntroRallies2, DataPtr_IntroRalliesTiles, DataPtr_IntroRalliesTilemap2, DataPtr_IntroRalliesAttrmap2, DataPtr_IntroRalliesPalettes ; record 23
@@ -93,12 +93,12 @@ ScreenAssetRecordTable:
 	screen_asset DecompressIntroTitleTilesPtrs, FarPtr_DecompressIntroTitleTiles, FarPtr_DecompressIntroTitleTilesAlias1, FarPtr_DecompressIntroTitleTilesAlias2, FarPtr_DecompressIntroTitleTilesAlias3 ; record 32
 	screen_asset EquipmentSelect, DataPtr_EquipmentSelectTiles, DataPtr_EquipmentSelectTilemap, DataPtr_EquipmentSelectAttrmap, DataPtr_EquipmentSelectPalettes ; record 33
 	screen_asset LinkError, DataPtr_LinkErrorTiles, DataPtr_LinkErrorTilemap, DataPtr_LinkErrorAttrmap, DataPtr_LinkErrorPalettes ; record 34
-	screen_asset MatchStats3, DataPtr_MatchStatsTiles, DataPtr_MatchStatsTilemap3, DataPtr_MatchStatsAttrmap3, DataPtr_MatchStatsPalettes ; record 35
+	screen_asset MatchStats, DataPtr_MatchResultTiles, DataPtr_MatchStatsTilemap, DataPtr_MatchStatsAttrmap, DataPtr_MatchResultPalettes ; record 35
 	screen_asset CourtDiagram, DataPtr_CourtDiagramTiles, DataPtr_CourtDiagramTilemap, DataPtr_CourtDiagramAttrmap, DataPtr_CourtDiagramPalettes ; record 36
 	screen_asset VarsityTeamChart, DataPtr_VarsityTeamChartTiles, DataPtr_VarsityTeamChartTilemap, DataPtr_VarsityTeamChartAttrmap, DataPtr_VarsityTeamChartPalettes ; record 37
 	screen_asset VarsityTeamChart2, DataPtr_VarsityTeamChartTiles, DataPtr_VarsityTeamChartTilemap2, DataPtr_VarsityTeamChartAttrmap2, DataPtr_VarsityTeamChartPalettes ; record 38
 	screen_asset IntroGreatestPlayer, DataPtr_IntroGreatestPlayerTiles, DataPtr_IntroGreatestPlayerTilemap, DataPtr_IntroGreatestPlayerAttrmap, DataPtr_IntroGreatestPlayerPalettes ; record 39
-	screen_asset IntroCharacterIcon, DataPtr_IntroCharacterIcon00, DataPtr_IntroCharacterIcon00Alias1, DataPtr_IntroCharacterIcon00Alias2, DataPtr_IntroCharacterIcon00Alias3 ; record 40
+	screen_asset Placeholder40, DataPtr_Unused_6d_FillerSlot_4028, DataPtr_Unused_6d_FillerSlot_402a, DataPtr_Unused_6d_FillerSlot_402c, DataPtr_Unused_6d_FillerSlot_402e ; record 40
 	screen_asset TournamentBracketSingles, DataPtr_TournamentBracketTiles, DataPtr_TournamentBracketSinglesTilemap, DataPtr_TournamentBracketSinglesAttrmap, DataPtr_TournamentBracketPalettes ; record 41
 	screen_asset TournamentBracketDoubles, DataPtr_TournamentBracketTiles, DataPtr_TournamentBracketDoublesTilemap, DataPtr_TournamentBracketDoublesAttrmap, DataPtr_TournamentBracketPalettes ; record 42
 	screen_asset MarioMiniGames, DataPtr_MarioMiniGamesTiles, DataPtr_MarioMiniGamesTilemap, DataPtr_MarioMiniGamesAttrmap, DataPtr_MarioMiniGamesPalettes ; record 43
@@ -252,110 +252,112 @@ AnimatedTilesSecondStripFrameLists:
 	dw $ffff ; record 1
 	dw AnimatedTilesSet3Frames ; record 2
 	dw AnimatedTilesSet2Frames ; record 3
+; UpdateAnimatedTiles masks the frame with `and $0f`, so records 16-31 here and in
+; AnimatedTilesSet1Frames are never read; they point at filler slots.
 AnimatedTilesSet0Frames:
 	; $4413, 64 bytes (32 records x 1 slot words)
-	dslot DataPtr_IntroCharacterIcon00Alias4 ; record 0
-	dslot DataPtr_IntroCharacterIcon01 ; record 1
-	dslot DataPtr_IntroCharacterIcon02 ; record 2
-	dslot DataPtr_IntroCharacterIcon03 ; record 3
-	dslot DataPtr_IntroCharacterIcon04 ; record 4
-	dslot DataPtr_IntroCharacterIcon05 ; record 5
-	dslot DataPtr_IntroCharacterIcon06 ; record 6
-	dslot DataPtr_IntroCharacterIcon07 ; record 7
-	dslot DataPtr_IntroCharacterIcon08 ; record 8
-	dslot DataPtr_IntroCharacterIcon09 ; record 9
-	dslot DataPtr_IntroCharacterIcon10 ; record 10
-	dslot DataPtr_IntroCharacterIcon11 ; record 11
-	dslot DataPtr_IntroCharacterIcon12 ; record 12
-	dslot DataPtr_IntroCharacterIcon13 ; record 13
-	dslot DataPtr_IntroCharacterIcon14 ; record 14
-	dslot DataPtr_IntroCharacterIcon15 ; record 15
-	dslot DataPtr_StarCourtNameGfx ; record 16
-	dslot DataPtr_StarCourtNameGfxAlias1 ; record 17
-	dslot DataPtr_StarCourtNameGfxAlias2 ; record 18
-	dslot DataPtr_StarCourtNameGfxAlias3 ; record 19
-	dslot DataPtr_StarCourtNameGfxAlias4 ; record 20
-	dslot DataPtr_StarCourtNameGfxAlias5 ; record 21
-	dslot DataPtr_StarCourtNameGfxAlias6 ; record 22
-	dslot DataPtr_StarCourtNameGfxAlias7 ; record 23
-	dslot DataPtr_StarCourtNameGfxAlias8 ; record 24
-	dslot DataPtr_StarCourtNameGfxAlias9 ; record 25
-	dslot DataPtr_StarCourtNameGfxAlias10 ; record 26
-	dslot DataPtr_StarCourtNameGfxAlias11 ; record 27
-	dslot DataPtr_StarCourtNameGfxAlias12 ; record 28
-	dslot DataPtr_StarCourtNameGfxAlias13 ; record 29
-	dslot DataPtr_StarCourtNameGfxAlias14 ; record 30
-	dslot DataPtr_StarCourtNameGfxAlias15 ; record 31
+	dslot DataPtr_TennisBallAnimFrame00 ; record 0
+	dslot DataPtr_TennisBallAnimFrame01 ; record 1
+	dslot DataPtr_TennisBallAnimFrame02 ; record 2
+	dslot DataPtr_TennisBallAnimFrame03 ; record 3
+	dslot DataPtr_TennisBallAnimFrame04 ; record 4
+	dslot DataPtr_TennisBallAnimFrame05 ; record 5
+	dslot DataPtr_TennisBallAnimFrame06 ; record 6
+	dslot DataPtr_TennisBallAnimFrame07 ; record 7
+	dslot DataPtr_TennisBallAnimFrame08 ; record 8
+	dslot DataPtr_TennisBallAnimFrame09 ; record 9
+	dslot DataPtr_TennisBallAnimFrame10 ; record 10
+	dslot DataPtr_TennisBallAnimFrame11 ; record 11
+	dslot DataPtr_TennisBallAnimFrame12 ; record 12
+	dslot DataPtr_TennisBallAnimFrame13 ; record 13
+	dslot DataPtr_TennisBallAnimFrame14 ; record 14
+	dslot DataPtr_TennisBallAnimFrame15 ; record 15
+	dslot DataPtr_Unused_6d_FillerSlot_4052 ; record 16
+	dslot DataPtr_Unused_6d_FillerSlot_4054 ; record 17
+	dslot DataPtr_Unused_6d_FillerSlot_4056 ; record 18
+	dslot DataPtr_Unused_6d_FillerSlot_4058 ; record 19
+	dslot DataPtr_Unused_6d_FillerSlot_405a ; record 20
+	dslot DataPtr_Unused_6d_FillerSlot_405c ; record 21
+	dslot DataPtr_Unused_6d_FillerSlot_405e ; record 22
+	dslot DataPtr_Unused_6d_FillerSlot_4060 ; record 23
+	dslot DataPtr_Unused_6d_FillerSlot_4062 ; record 24
+	dslot DataPtr_Unused_6d_FillerSlot_4064 ; record 25
+	dslot DataPtr_Unused_6d_FillerSlot_4066 ; record 26
+	dslot DataPtr_Unused_6d_FillerSlot_4068 ; record 27
+	dslot DataPtr_Unused_6d_FillerSlot_406a ; record 28
+	dslot DataPtr_Unused_6d_FillerSlot_406c ; record 29
+	dslot DataPtr_Unused_6d_FillerSlot_406e ; record 30
+	dslot DataPtr_Unused_6d_FillerSlot_4070 ; record 31
 AnimatedTilesSet1Frames:
 	; $4453, 64 bytes (32 records x 1 slot words)
-	dslot DataPtr_BracketCharIcon03 ; record 0
-	dslot DataPtr_BracketCharIcon04 ; record 1
-	dslot DataPtr_BracketCharIcon05 ; record 2
-	dslot DataPtr_BracketCharIcon06 ; record 3
-	dslot DataPtr_BracketCharIcon07 ; record 4
-	dslot DataPtr_BracketCharIcon08 ; record 5
-	dslot DataPtr_BracketCharIcon09 ; record 6
-	dslot DataPtr_BracketCharIcon10 ; record 7
-	dslot DataPtr_BracketCharIcon11 ; record 8
-	dslot DataPtr_BracketCharIcon12 ; record 9
-	dslot DataPtr_BracketCharIcon13 ; record 10
-	dslot DataPtr_BracketCharIcon14 ; record 11
-	dslot DataPtr_BracketCharIcon15 ; record 12
-	dslot DataPtr_BracketExtraIcon0 ; record 13
-	dslot DataPtr_BracketExtraIcon1 ; record 14
-	dslot DataPtr_BracketExtraIcon2 ; record 15
-	dslot DataPtr_SelectALevelTitleGfx ; record 16
-	dslot DataPtr_SelectALevelTitleGfxAlias1 ; record 17
-	dslot DataPtr_SelectALevelTitleGfxAlias2 ; record 18
-	dslot DataPtr_SelectALevelTitleGfxAlias3 ; record 19
-	dslot DataPtr_SelectALevelTitleGfxAlias4 ; record 20
-	dslot DataPtr_SelectALevelTitleGfxAlias5 ; record 21
-	dslot DataPtr_SelectALevelTitleGfxAlias6 ; record 22
-	dslot DataPtr_SelectALevelTitleGfxAlias7 ; record 23
-	dslot DataPtr_SelectALevelTitleGfxAlias8 ; record 24
-	dslot DataPtr_SelectALevelTitleGfxAlias9 ; record 25
-	dslot DataPtr_SelectALevelTitleGfxAlias10 ; record 26
-	dslot DataPtr_SelectALevelTitleGfxAlias11 ; record 27
-	dslot DataPtr_SelectALevelTitleGfxAlias12 ; record 28
-	dslot DataPtr_SelectALevelTitleGfxAlias13 ; record 29
-	dslot DataPtr_SelectALevelTitleGfxAlias14 ; record 30
-	dslot DataPtr_SelectALevelTitleGfxAlias15 ; record 31
+	dslot DataPtr_StarAnimFrame00 ; record 0
+	dslot DataPtr_StarAnimFrame01 ; record 1
+	dslot DataPtr_StarAnimFrame02 ; record 2
+	dslot DataPtr_StarAnimFrame03 ; record 3
+	dslot DataPtr_StarAnimFrame04 ; record 4
+	dslot DataPtr_StarAnimFrame05 ; record 5
+	dslot DataPtr_StarAnimFrame06 ; record 6
+	dslot DataPtr_StarAnimFrame07 ; record 7
+	dslot DataPtr_StarAnimFrame08 ; record 8
+	dslot DataPtr_StarAnimFrame09 ; record 9
+	dslot DataPtr_StarAnimFrame10 ; record 10
+	dslot DataPtr_StarAnimFrame11 ; record 11
+	dslot DataPtr_StarAnimFrame12 ; record 12
+	dslot DataPtr_StarAnimFrame13 ; record 13
+	dslot DataPtr_StarAnimFrame14 ; record 14
+	dslot DataPtr_StarAnimFrame15 ; record 15
+	dslot DataPtr_Unused_3f_FillerSlot_4056 ; record 16
+	dslot DataPtr_Unused_3f_FillerSlot_4058 ; record 17
+	dslot DataPtr_Unused_3f_FillerSlot_405a ; record 18
+	dslot DataPtr_Unused_3f_FillerSlot_405c ; record 19
+	dslot DataPtr_Unused_3f_FillerSlot_405e ; record 20
+	dslot DataPtr_Unused_3f_FillerSlot_4060 ; record 21
+	dslot DataPtr_Unused_3f_FillerSlot_4062 ; record 22
+	dslot DataPtr_Unused_3f_FillerSlot_4064 ; record 23
+	dslot DataPtr_Unused_3f_FillerSlot_4066 ; record 24
+	dslot DataPtr_Unused_3f_FillerSlot_4068 ; record 25
+	dslot DataPtr_Unused_3f_FillerSlot_406a ; record 26
+	dslot DataPtr_Unused_3f_FillerSlot_406c ; record 27
+	dslot DataPtr_Unused_3f_FillerSlot_406e ; record 28
+	dslot DataPtr_Unused_3f_FillerSlot_4070 ; record 29
+	dslot DataPtr_Unused_3f_FillerSlot_4072 ; record 30
+	dslot DataPtr_Unused_3f_FillerSlot_4074 ; record 31
 AnimatedTilesSet2Frames:
 	; $4493, 32 bytes (16 records x 1 slot words)
-	dslot DataPtr_CharRosterIcon00 ; record 0
-	dslot DataPtr_CharRosterIcon01 ; record 1
-	dslot DataPtr_CharRosterIcon02 ; record 2
-	dslot DataPtr_CharRosterIcon03 ; record 3
-	dslot DataPtr_CharRosterIcon04 ; record 4
-	dslot DataPtr_CharRosterIcon05 ; record 5
-	dslot DataPtr_CharRosterIcon06 ; record 6
-	dslot DataPtr_CharRosterIcon07 ; record 7
-	dslot DataPtr_CharRosterIcon08 ; record 8
-	dslot DataPtr_CharRosterIcon09 ; record 9
-	dslot DataPtr_CharRosterIcon10 ; record 10
-	dslot DataPtr_CharRosterIcon11 ; record 11
-	dslot DataPtr_CharRosterIcon12 ; record 12
-	dslot DataPtr_CharRosterIcon13 ; record 13
-	dslot DataPtr_CharRosterIcon14 ; record 14
-	dslot DataPtr_CharRosterIcon15 ; record 15
+	dslot DataPtr_MushroomAnimFrame00 ; record 0
+	dslot DataPtr_MushroomAnimFrame01 ; record 1
+	dslot DataPtr_MushroomAnimFrame02 ; record 2
+	dslot DataPtr_MushroomAnimFrame03 ; record 3
+	dslot DataPtr_MushroomAnimFrame04 ; record 4
+	dslot DataPtr_MushroomAnimFrame05 ; record 5
+	dslot DataPtr_MushroomAnimFrame06 ; record 6
+	dslot DataPtr_MushroomAnimFrame07 ; record 7
+	dslot DataPtr_MushroomAnimFrame08 ; record 8
+	dslot DataPtr_MushroomAnimFrame09 ; record 9
+	dslot DataPtr_MushroomAnimFrame10 ; record 10
+	dslot DataPtr_MushroomAnimFrame11 ; record 11
+	dslot DataPtr_MushroomAnimFrame12 ; record 12
+	dslot DataPtr_MushroomAnimFrame13 ; record 13
+	dslot DataPtr_MushroomAnimFrame14 ; record 14
+	dslot DataPtr_MushroomAnimFrame15 ; record 15
 AnimatedTilesSet3Frames:
 	; $44b3, 32 bytes (16 records x 1 slot words)
-	dslot DataPtr_CharRosterIcon16 ; record 0
-	dslot DataPtr_CharRosterIcon17 ; record 1
-	dslot DataPtr_CharRosterIcon18 ; record 2
-	dslot DataPtr_CharRosterIcon19 ; record 3
-	dslot DataPtr_CharRosterIcon20 ; record 4
-	dslot DataPtr_CharRosterIcon21 ; record 5
-	dslot DataPtr_CharRosterIcon22 ; record 6
-	dslot DataPtr_CharRosterIcon23 ; record 7
-	dslot DataPtr_CharRosterIcon24 ; record 8
-	dslot DataPtr_CharRosterIcon25 ; record 9
-	dslot DataPtr_CharRosterIcon26 ; record 10
-	dslot DataPtr_CharRosterIcon27 ; record 11
-	dslot DataPtr_CharRosterIcon28 ; record 12
-	dslot DataPtr_CharRosterIcon29 ; record 13
-	dslot DataPtr_CharRosterIcon30 ; record 14
-	dslot DataPtr_CharRosterIcon31 ; record 15
+	dslot DataPtr_InvertedStarAnimFrame00 ; record 0
+	dslot DataPtr_InvertedStarAnimFrame01 ; record 1
+	dslot DataPtr_InvertedStarAnimFrame02 ; record 2
+	dslot DataPtr_InvertedStarAnimFrame03 ; record 3
+	dslot DataPtr_InvertedStarAnimFrame04 ; record 4
+	dslot DataPtr_InvertedStarAnimFrame05 ; record 5
+	dslot DataPtr_InvertedStarAnimFrame06 ; record 6
+	dslot DataPtr_InvertedStarAnimFrame07 ; record 7
+	dslot DataPtr_InvertedStarAnimFrame08 ; record 8
+	dslot DataPtr_InvertedStarAnimFrame09 ; record 9
+	dslot DataPtr_InvertedStarAnimFrame10 ; record 10
+	dslot DataPtr_InvertedStarAnimFrame11 ; record 11
+	dslot DataPtr_InvertedStarAnimFrame12 ; record 12
+	dslot DataPtr_InvertedStarAnimFrame13 ; record 13
+	dslot DataPtr_InvertedStarAnimFrame14 ; record 14
+	dslot DataPtr_InvertedStarAnimFrame15 ; record 15
 LoadCornerBracketCursorGfx:
 	push de ; $44d3
 	wram_bank WRAM_STAGING ; $44d4

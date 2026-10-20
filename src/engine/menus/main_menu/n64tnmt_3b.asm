@@ -413,7 +413,7 @@ BuildN64RingShotScreen:
 	xor a ; $51b3
 	ld [wMenuCursorX], a ; $51b4
 	ld [wMenuCursorY], a ; $51b7
-	ld c, SCREENASSET_RingShotHud ; $51ba
+	ld c, SCREENASSET_N64RingShotPoints ; $51ba
 	farcall LoadScreenAssetRecord ; $51bc
 	wram_bank WRAM_SCREEN ; $51bf
 	call LoadN64RingShotRecords ; $51c5

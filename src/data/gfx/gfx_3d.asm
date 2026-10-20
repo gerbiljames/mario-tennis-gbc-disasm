@@ -16,15 +16,15 @@ DataPtr_Erase64IconTiles:
 	dw Erase64IconTiles ; $400e
 DataPtr_EraseAllIconTiles:
 	dw EraseAllIconTiles ; $4010
-DataPtr_MainMenuTitleGfx:
+DataPtr_Unused_3d_FillerSlot_4012:
 	dw MainMenuTitleGfx ; $4012
-DataPtr_MainMenuTitleGfxAlias1:
+DataPtr_Unused_3d_FillerSlot_4014:
 	dw MainMenuTitleGfx ; $4014
-DataPtr_MainMenuTitleGfxAlias2:
+DataPtr_Unused_3d_FillerSlot_4016:
 	dw MainMenuTitleGfx ; $4016
-DataPtr_MainMenuTitleGfxAlias3:
+DataPtr_Unused_3d_FillerSlot_4018:
 	dw MainMenuTitleGfx ; $4018
-DataPtr_MainMenuTitleGfxAlias4:
+DataPtr_MainMenuTitleGfx:
 	dw MainMenuTitleGfx ; $401a
 DataPtr_PlayMenuTitleGfx:
 	dw PlayMenuTitleGfx ; $401c
@@ -56,32 +56,32 @@ DataPtr_LinkingScreenAttrmap:
 	dw LinkingScreenAttrmap ; $4036
 DataPtr_LinkingScreenPalettes:
 	dw LinkingScreenPalettes ; $4038
-DataPtr_RingShotHudTiles:
-	dw RingShotHudTiles ; $403a
-DataPtr_RingShotHudTilemap:
-	dw RingShotHudTilemap ; $403c
-DataPtr_RingShotHudAttrmap:
-	dw RingShotHudAttrmap ; $403e
-DataPtr_RingShotHudPalettes:
-	dw RingShotHudPalettes ; $4040
+DataPtr_N64RingShotPointsTiles:
+	dw N64RingShotPointsTiles ; $403a
+DataPtr_N64RingShotPointsTilemap:
+	dw N64RingShotPointsTilemap ; $403c
+DataPtr_N64RingShotPointsAttrmap:
+	dw N64RingShotPointsAttrmap ; $403e
+DataPtr_N64RingShotPointsPalettes:
+	dw N64RingShotPointsPalettes ; $4040
 DataPtr_NumberSpriteGfx:
 	dw NumberSpriteGfx ; $4042
-DataPtr_MatchStatsTiles:
-	dw MatchStatsTiles ; $4044
+DataPtr_MatchResultTiles:
+	dw MatchResultTiles ; $4044
+DataPtr_MatchWinLoseTilemap:
+	dw MatchWinLoseTilemap ; $4046
+DataPtr_MatchWinLoseAttrmap:
+	dw MatchWinLoseAttrmap ; $4048
+DataPtr_MatchResultPalettes:
+	dw MatchResultPalettes ; $404a
+DataPtr_MatchWinLoseVersusTilemap:
+	dw MatchWinLoseVersusTilemap ; $404c
+DataPtr_MatchWinLoseVersusAttrmap:
+	dw MatchWinLoseVersusAttrmap ; $404e
 DataPtr_MatchStatsTilemap:
-	dw MatchStatsTilemap ; $4046
+	dw MatchStatsTilemap ; $4050
 DataPtr_MatchStatsAttrmap:
-	dw MatchStatsAttrmap ; $4048
-DataPtr_MatchStatsPalettes:
-	dw MatchStatsPalettes ; $404a
-DataPtr_MatchStatsTilemap2:
-	dw MatchStatsTilemap2 ; $404c
-DataPtr_MatchStatsAttrmap2:
-	dw MatchStatsAttrmap2 ; $404e
-DataPtr_MatchStatsTilemap3:
-	dw MatchStatsTilemap3 ; $4050
-DataPtr_MatchStatsAttrmap3:
-	dw MatchStatsAttrmap3 ; $4052
+	dw MatchStatsAttrmap ; $4052
 DataPtr_RacketIconTiles:
 	dw RacketIconTiles ; $4054
 DataPtr_ShoesIconTiles:
@@ -160,32 +160,32 @@ LinkingScreenAttrmap:
 	INCBIN "data/gfx/lz_LinkingScreenAttrmap.bin" ; $576e, 115 bytes
 LinkingScreenPalettes:
 	INCLUDE "data/gfx/LinkingScreenPalettes.asm" ; $57e1, 64 bytes (palettes)
-RingShotHudTiles:
-	INCBIN "data/gfx/lz_RingShotHudTiles.bin" ; $5821, 1216 bytes
-RingShotHudTilemap:
-	INCBIN "data/gfx/lz_RingShotHudTilemap.bin" ; $5ce1, 324 bytes
-RingShotHudAttrmap:
-	INCBIN "data/gfx/lz_RingShotHudAttrmap.bin" ; $5e25, 133 bytes
-RingShotHudPalettes:
-	INCLUDE "data/gfx/RingShotHudPalettes.asm" ; $5eaa, 64 bytes (palettes)
+N64RingShotPointsTiles:
+	INCBIN "data/gfx/lz_N64RingShotPointsTiles.bin" ; $5821, 1216 bytes
+N64RingShotPointsTilemap:
+	INCBIN "data/gfx/lz_N64RingShotPointsTilemap.bin" ; $5ce1, 324 bytes
+N64RingShotPointsAttrmap:
+	INCBIN "data/gfx/lz_N64RingShotPointsAttrmap.bin" ; $5e25, 133 bytes
+N64RingShotPointsPalettes:
+	INCLUDE "data/gfx/N64RingShotPointsPalettes.asm" ; $5eaa, 64 bytes (palettes)
 NumberSpriteGfx:
 	INCBIN "data/gfx/lz_NumberSpriteGfx.bin" ; $5eea, 175 bytes
-MatchStatsTiles:
-	INCBIN "data/gfx/lz_MatchStatsTiles.bin" ; $5f99, 2148 bytes
+MatchResultTiles:
+	INCBIN "data/gfx/lz_MatchResultTiles.bin" ; $5f99, 2148 bytes
+MatchWinLoseTilemap:
+	INCBIN "data/gfx/lz_MatchWinLoseTilemap.bin" ; $67fd, 361 bytes
+MatchWinLoseAttrmap:
+	INCBIN "data/gfx/lz_MatchWinLoseAttrmap.bin" ; $6966, 98 bytes
+MatchResultPalettes:
+	INCLUDE "data/gfx/MatchResultPalettes.asm" ; $69c8, 64 bytes (palettes)
 MatchStatsTilemap:
-	INCBIN "data/gfx/lz_MatchStatsTilemap.bin" ; $67fd, 361 bytes
+	INCBIN "data/gfx/lz_MatchStatsTilemap.bin" ; $6a08, 289 bytes
 MatchStatsAttrmap:
-	INCBIN "data/gfx/lz_MatchStatsAttrmap.bin" ; $6966, 98 bytes
-MatchStatsPalettes:
-	INCLUDE "data/gfx/MatchStatsPalettes.asm" ; $69c8, 64 bytes (palettes)
-MatchStatsTilemap3:
-	INCBIN "data/gfx/lz_MatchStatsTilemap3.bin" ; $6a08, 289 bytes
-MatchStatsAttrmap3:
-	INCBIN "data/gfx/lz_MatchStatsAttrmap3.bin" ; $6b29, 105 bytes
-MatchStatsTilemap2:
-	INCBIN "data/gfx/lz_MatchStatsTilemap2.bin" ; $6b92, 332 bytes
-MatchStatsAttrmap2:
-	INCBIN "data/gfx/lz_MatchStatsAttrmap2.bin" ; $6cde, 91 bytes
+	INCBIN "data/gfx/lz_MatchStatsAttrmap.bin" ; $6b29, 105 bytes
+MatchWinLoseVersusTilemap:
+	INCBIN "data/gfx/lz_MatchWinLoseVersusTilemap.bin" ; $6b92, 332 bytes
+MatchWinLoseVersusAttrmap:
+	INCBIN "data/gfx/lz_MatchWinLoseVersusAttrmap.bin" ; $6cde, 91 bytes
 RacketIconTiles:
 	INCBIN "data/gfx/lz_RacketIconTiles.bin" ; $6d39, 245 bytes
 ShoesIconTiles:

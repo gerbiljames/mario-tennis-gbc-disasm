@@ -4,12 +4,12 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ;
 ;   $d000-$d5ff  overworld actors
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 3]
-;   $d800-$dbff  wIntroCharactersTilemap
+;   $d800-$dbff  wIntroMarioTilemap
 ;   $da00-$da31  actor engine
 ;   $dac0-$dae9  actor engine
 ;   $daea-$daf7  actor engine
 ;   $dc00-$dcd1  minigames / minigame targets
-;   $dc00-$dfff  wIntroCharactersAttrmap
+;   $dc00-$dfff  wIntroMarioAttrmap
 ;   $dcf0-$dcff  minigame targets
 ;   $dd00-$dd23  match ball history ring
 ;   $dd80-$ddcf  match object slots

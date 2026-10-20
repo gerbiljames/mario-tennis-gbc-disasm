@@ -7,20 +7,20 @@ IntroCutsceneState13InitPalettes_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState14Init_6b:
 	wram_bank WRAM_ACTORS ; $4a98
-	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
+	ld hl, wIntroMarioTilemap + 6 * TILEMAP_WIDTH ; $4a9e
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH ; $4aa1
 	ld c, 8 * TILEMAP_WIDTH / 16 ; $4aa4
 	call QueueVRAMCopy ; $4aa6
-	ld hl, wIntroCharactersAttrmap + 6 * TILEMAP_WIDTH ; $4aa9
+	ld hl, wIntroMarioAttrmap + 6 * TILEMAP_WIDTH ; $4aa9
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $4aac
 	ld c, 8 * TILEMAP_WIDTH / 16 ; $4aaf
 	call QueueVRAMCopy ; $4ab1
 	call AdvanceFrame ; $4ab4
-	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4ab7
+	ld hl, wIntroMarioTilemap + 4 * TILEMAP_WIDTH ; $4ab7
 	ld de, vBGMap1 + 4 * TILEMAP_WIDTH ; $4aba
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4abd
 	call QueueVRAMCopy ; $4abf
-	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $4ac2
+	ld hl, wIntroMarioAttrmap + 4 * TILEMAP_WIDTH ; $4ac2
 	ld de, vBGMap1 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $4ac5
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4ac8
 	call QueueVRAMCopy ; $4aca
@@ -331,28 +331,28 @@ ScrollOutIntroLogo:
 	ldh [hScrollY], a ; $5207
 	ret ; $5209
 LoadCutsceneTileset:
-	ld b, TILEBLOCK_CutsceneGfx0 ; $520a
-	ld c, CutsceneGfx0_SIZE / 16 ; $520c
+	ld b, TILEBLOCK_IntroRalliesAlexGfx0 ; $520a
+	ld c, IntroRalliesAlexGfx0_SIZE / 16 ; $520c
 	ld de, vTiles0 + VRAM_BANK1 ; $520e
 	farcall LoadCompressedTileBlock ; $5211
-	ld b, TILEBLOCK_CutsceneGfx1 ; $5214
-	ld c, CutsceneGfx1_SIZE / 16 ; $5216
+	ld b, TILEBLOCK_IntroRalliesAlexGfx1 ; $5214
+	ld c, IntroRalliesAlexGfx1_SIZE / 16 ; $5216
 	ld de, vTiles0 tile $06 + VRAM_BANK1 ; $5218
 	farcall LoadCompressedTileBlock ; $521b
-	ld b, TILEBLOCK_CutsceneGfx2 ; $521e
-	ld c, CutsceneGfx2_SIZE / 16 ; $5220
+	ld b, TILEBLOCK_IntroRalliesAlexGfx2 ; $521e
+	ld c, IntroRalliesAlexGfx2_SIZE / 16 ; $5220
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5222
 	farcall LoadCompressedTileBlock ; $5225
-	ld b, TILEBLOCK_CutsceneGfx3 ; $5228
-	ld c, CutsceneGfx3_SIZE / 16 ; $522a
+	ld b, TILEBLOCK_IntroRalliesNinaGfx0 ; $5228
+	ld c, IntroRalliesNinaGfx0_SIZE / 16 ; $522a
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $522c
 	farcall LoadCompressedTileBlock ; $522f
-	ld b, TILEBLOCK_CutsceneGfx4 ; $5232
-	ld c, CutsceneGfx4_SIZE / 16 ; $5234
+	ld b, TILEBLOCK_IntroRalliesNinaGfx1 ; $5232
+	ld c, IntroRalliesNinaGfx1_SIZE / 16 ; $5234
 	ld de, vTiles0 tile $26 + VRAM_BANK1 ; $5236
 	farcall LoadCompressedTileBlock ; $5239
-	ld b, TILEBLOCK_CutsceneGfx5 ; $523c
-	ld c, CutsceneGfx5_SIZE / 16 ; $523e
+	ld b, TILEBLOCK_IntroRalliesNinaGfx2 ; $523c
+	ld c, IntroRalliesNinaGfx2_SIZE / 16 ; $523e
 	ld de, vTiles0 tile $38 + VRAM_BANK1 ; $5240
 	farcall LoadCompressedTileBlock ; $5243
 	ld b, TILEBLOCK_CutsceneGfx6 ; $5246

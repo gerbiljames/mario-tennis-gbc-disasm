@@ -278,11 +278,11 @@ LinkMatchFormatMenuGraphicsTable:
 	; $46d8, 14 bytes (7 records x 1 slot words)
 	dslot DataPtr_SinglesIconTiles ; record 0
 	dslot DataPtr_DoublesIconTiles ; record 1
-	dslot DataPtr_TwoGamesLabelTiles ; record 2
-	dslot DataPtr_SixGamesLabelTiles ; record 3
-	dslot DataPtr_OneSetLabelTiles ; record 4
-	dslot DataPtr_ThreeSetsLabelTiles ; record 5
-	dslot DataPtr_FiveSetsLabelTiles ; record 6
+	dslot DataPtr_TwoGamesIconTiles ; record 2
+	dslot DataPtr_SixGamesIconTiles ; record 3
+	dslot DataPtr_OneSetIconTiles ; record 4
+	dslot DataPtr_ThreeSetsIconTiles ; record 5
+	dslot DataPtr_FiveSetsIconTiles ; record 6
 LinkMatchFormatMenuTable:
 	; $46e6, 14 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0

@@ -26,18 +26,18 @@ DataPtr_IntroRalliesAttrmap4:
 	dw IntroRalliesAttrmap4 ; $4018
 DataPtr_IntroRalliesPalettes:
 	dw IntroRalliesPalettes ; $401a
-DataPtr_CutsceneGfx0:
-	dw CutsceneGfx0 ; $401c
-DataPtr_CutsceneGfx1:
-	dw CutsceneGfx1 ; $401e
-DataPtr_CutsceneGfx2:
-	dw CutsceneGfx2 ; $4020
-DataPtr_CutsceneGfx3:
-	dw CutsceneGfx3 ; $4022
-DataPtr_CutsceneGfx4:
-	dw CutsceneGfx4 ; $4024
-DataPtr_CutsceneGfx5:
-	dw CutsceneGfx5 ; $4026
+DataPtr_IntroRalliesAlexGfx0:
+	dw IntroRalliesAlexGfx0 ; $401c
+DataPtr_IntroRalliesAlexGfx1:
+	dw IntroRalliesAlexGfx1 ; $401e
+DataPtr_IntroRalliesAlexGfx2:
+	dw IntroRalliesAlexGfx2 ; $4020
+DataPtr_IntroRalliesNinaGfx0:
+	dw IntroRalliesNinaGfx0 ; $4022
+DataPtr_IntroRalliesNinaGfx1:
+	dw IntroRalliesNinaGfx1 ; $4024
+DataPtr_IntroRalliesNinaGfx2:
+	dw IntroRalliesNinaGfx2 ; $4026
 DataPtr_CutsceneGfx6:
 	dw CutsceneGfx6 ; $4028
 DataPtr_IntroSwingTiles:
@@ -80,14 +80,14 @@ DataPtr_IntroGirlSwingAttrmap:
 	dw IntroGirlSwingAttrmap ; $404e
 DataPtr_IntroGirlSwingPalettes:
 	dw IntroGirlSwingPalettes ; $4050
-DataPtr_IntroGfx0:
-	dw IntroGfx0 ; $4052
-DataPtr_IntroGfx1:
-	dw IntroGfx1 ; $4054
-DataPtr_IntroGfx2:
-	dw IntroGfx2 ; $4056
-DataPtr_IntroGfx3:
-	dw IntroGfx3 ; $4058
+DataPtr_IntroSpinningBallFrame0:
+	dw IntroSpinningBallFrame0 ; $4052
+DataPtr_IntroSpinningBallFrame1:
+	dw IntroSpinningBallFrame1 ; $4054
+DataPtr_IntroSpinningBallFrame2:
+	dw IntroSpinningBallFrame2 ; $4056
+DataPtr_IntroSpinningBallFrame3:
+	dw IntroSpinningBallFrame3 ; $4058
 DataPtr_IntroGfx4:
 	dw IntroGfx4 ; $405a
 DataPtr_IntroGfx5:
@@ -134,18 +134,18 @@ IntroRalliesAttrmap4:
 	INCBIN "data/gfx/lz_IntroRalliesAttrmap4.bin" ; $539e, 70 bytes
 IntroRalliesPalettes:
 	INCLUDE "data/gfx/IntroRalliesPalettes.asm" ; $53e4, 64 bytes (palettes)
-CutsceneGfx0:
-	INCBIN "data/gfx/lz_CutsceneGfx0.bin" ; $5424, 45 bytes
-CutsceneGfx1:
-	INCBIN "data/gfx/lz_CutsceneGfx1.bin" ; $5451, 151 bytes
-CutsceneGfx2:
-	INCBIN "data/gfx/lz_CutsceneGfx2.bin" ; $54e8, 222 bytes
-CutsceneGfx3:
-	INCBIN "data/gfx/lz_CutsceneGfx3.bin" ; $55c6, 48 bytes
-CutsceneGfx4:
-	INCBIN "data/gfx/lz_CutsceneGfx4.bin" ; $55f6, 259 bytes
-CutsceneGfx5:
-	INCBIN "data/gfx/lz_CutsceneGfx5.bin" ; $56f9, 232 bytes
+IntroRalliesAlexGfx0:
+	INCBIN "data/gfx/lz_IntroRalliesAlexGfx0.bin" ; $5424, 45 bytes
+IntroRalliesAlexGfx1:
+	INCBIN "data/gfx/lz_IntroRalliesAlexGfx1.bin" ; $5451, 151 bytes
+IntroRalliesAlexGfx2:
+	INCBIN "data/gfx/lz_IntroRalliesAlexGfx2.bin" ; $54e8, 222 bytes
+IntroRalliesNinaGfx0:
+	INCBIN "data/gfx/lz_IntroRalliesNinaGfx0.bin" ; $55c6, 48 bytes
+IntroRalliesNinaGfx1:
+	INCBIN "data/gfx/lz_IntroRalliesNinaGfx1.bin" ; $55f6, 259 bytes
+IntroRalliesNinaGfx2:
+	INCBIN "data/gfx/lz_IntroRalliesNinaGfx2.bin" ; $56f9, 232 bytes
 CutsceneGfx6:
 	INCBIN "data/gfx/lz_CutsceneGfx6.bin" ; $57e1, 16 bytes
 IntroSwingTiles:
@@ -188,14 +188,14 @@ IntroGirlSwingAttrmap:
 	INCBIN "data/gfx/lz_IntroGirlSwingAttrmap.bin" ; $7453, 72 bytes
 IntroGirlSwingPalettes:
 	INCLUDE "data/gfx/IntroGirlSwingPalettes.asm" ; $749b, 64 bytes (palettes)
-IntroGfx0:
-	INCBIN "data/gfx/lz_IntroGfx0.bin" ; $74db, 204 bytes
-IntroGfx1:
-	INCBIN "data/gfx/lz_IntroGfx1.bin" ; $75a7, 209 bytes
-IntroGfx2:
-	INCBIN "data/gfx/lz_IntroGfx2.bin" ; $7678, 204 bytes
-IntroGfx3:
-	INCBIN "data/gfx/lz_IntroGfx3.bin" ; $7744, 196 bytes
+IntroSpinningBallFrame0:
+	INCBIN "data/gfx/lz_IntroSpinningBallFrame0.bin" ; $74db, 204 bytes
+IntroSpinningBallFrame1:
+	INCBIN "data/gfx/lz_IntroSpinningBallFrame1.bin" ; $75a7, 209 bytes
+IntroSpinningBallFrame2:
+	INCBIN "data/gfx/lz_IntroSpinningBallFrame2.bin" ; $7678, 204 bytes
+IntroSpinningBallFrame3:
+	INCBIN "data/gfx/lz_IntroSpinningBallFrame3.bin" ; $7744, 196 bytes
 IntroGfx4:
 	INCBIN "data/gfx/lz_IntroGfx4.bin" ; $7808, 46 bytes
 IntroGfx5:

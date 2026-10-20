@@ -279,11 +279,11 @@ LoadWinLoseScreenAssets:
 	ld a, [wResultScreenIsVersus] ; $490c
 	or a ; $490f
 	jr z, .nonVersus ; $4910
-	ld c, SCREENASSET_MatchStats2 ; $4912
+	ld c, SCREENASSET_MatchWinLoseVersus ; $4912
 	farcall LoadScreenAssetRecord ; $4914
 	jr .checkDoubles ; $4917
 .nonVersus:
-	ld c, SCREENASSET_MatchStats ; $4919
+	ld c, SCREENASSET_MatchWinLose ; $4919
 	farcall LoadScreenAssetRecord ; $491b
 	jr .checkDoubles ; $491e
 .checkDoubles:

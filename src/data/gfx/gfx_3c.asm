@@ -1,11 +1,11 @@
-DataPtr_ModeSelectTiles:
-	dw ModeSelectTiles ; $4000
-DataPtr_ModeSelectTilemap:
-	dw ModeSelectTilemap ; $4002
-DataPtr_ModeSelectAttrmap:
-	dw ModeSelectAttrmap ; $4004
-DataPtr_ModeSelectPalettes:
-	dw ModeSelectPalettes ; $4006
+DataPtr_N64TnmtDataTiles:
+	dw N64TnmtDataTiles ; $4000
+DataPtr_N64TnmtDataTilemap:
+	dw N64TnmtDataTilemap ; $4002
+DataPtr_N64TnmtDataAttrmap:
+	dw N64TnmtDataAttrmap ; $4004
+DataPtr_N64TnmtDataPalettes:
+	dw N64TnmtDataPalettes ; $4006
 DataPtr_StadiumTiles:
 	dw StadiumTiles ; $4008
 DataPtr_StadiumTilemap:
@@ -14,8 +14,8 @@ DataPtr_StadiumAttrmap:
 	dw StadiumAttrmap ; $400c
 DataPtr_StadiumPalettes:
 	dw StadiumPalettes ; $400e
-DataPtr_ModeSelectIconGfx:
-	dw ModeSelectIconGfx ; $4010
+DataPtr_Unused_3c_DitherTiles:
+	dw Unused_3c_DitherTiles ; $4010
 DataPtr_ExhibitionModeIconTiles:
 	dw ExhibitionModeIconTiles ; $4012
 DataPtr_MarioFaceIconTiles:
@@ -100,16 +100,16 @@ DataPtr_SinglesIconTiles:
 	dw SinglesIconTiles ; $4062
 DataPtr_DoublesIconTiles:
 	dw DoublesIconTiles ; $4064
-DataPtr_TwoGamesLabelTiles:
-	dw TwoGamesLabelTiles ; $4066
-DataPtr_SixGamesLabelTiles:
-	dw SixGamesLabelTiles ; $4068
-DataPtr_OneSetLabelTiles:
-	dw OneSetLabelTiles ; $406a
-DataPtr_ThreeSetsLabelTiles:
-	dw ThreeSetsLabelTiles ; $406c
-DataPtr_FiveSetsLabelTiles:
-	dw FiveSetsLabelTiles ; $406e
+DataPtr_TwoGamesIconTiles:
+	dw TwoGamesIconTiles ; $4066
+DataPtr_SixGamesIconTiles:
+	dw SixGamesIconTiles ; $4068
+DataPtr_OneSetIconTiles:
+	dw OneSetIconTiles ; $406a
+DataPtr_ThreeSetsIconTiles:
+	dw ThreeSetsIconTiles ; $406c
+DataPtr_FiveSetsIconTiles:
+	dw FiveSetsIconTiles ; $406e
 DataPtr_CharacterSelectTiles:
 	dw CharacterSelectTiles ; $4070
 DataPtr_CharacterSelectTilemap:
@@ -124,14 +124,14 @@ DataPtr_ExhibitionIconTiles:
 	dw ExhibitionIconTiles ; $407a
 DataPtr_RingShotIconTiles:
 	dw RingShotIconTiles ; $407c
-ModeSelectTiles:
-	INCBIN "data/gfx/lz_ModeSelectTiles.bin" ; $407e, 1283 bytes
-ModeSelectTilemap:
-	INCBIN "data/gfx/lz_ModeSelectTilemap.bin" ; $4581, 268 bytes
-ModeSelectAttrmap:
-	INCBIN "data/gfx/lz_ModeSelectAttrmap.bin" ; $468d, 132 bytes
-ModeSelectPalettes:
-	INCLUDE "data/gfx/ModeSelectPalettes.asm" ; $4711, 64 bytes (palettes)
+N64TnmtDataTiles:
+	INCBIN "data/gfx/lz_N64TnmtDataTiles.bin" ; $407e, 1283 bytes
+N64TnmtDataTilemap:
+	INCBIN "data/gfx/lz_N64TnmtDataTilemap.bin" ; $4581, 268 bytes
+N64TnmtDataAttrmap:
+	INCBIN "data/gfx/lz_N64TnmtDataAttrmap.bin" ; $468d, 132 bytes
+N64TnmtDataPalettes:
+	INCLUDE "data/gfx/N64TnmtDataPalettes.asm" ; $4711, 64 bytes (palettes)
 StadiumTiles:
 	INCBIN "data/gfx/lz_StadiumTiles.bin" ; $4751, 2465 bytes
 StadiumTilemap:
@@ -140,8 +140,8 @@ StadiumAttrmap:
 	INCBIN "data/gfx/lz_StadiumAttrmap.bin" ; $52e6, 107 bytes
 StadiumPalettes:
 	INCLUDE "data/gfx/StadiumPalettes.asm" ; $5351, 64 bytes (palettes)
-ModeSelectIconGfx:
-	INCBIN "data/gfx/lz_ModeSelectIconGfx.bin" ; $5391, 71 bytes
+Unused_3c_DitherTiles:
+	INCBIN "data/gfx/lz_Unused_3c_DitherTiles.bin" ; $5391, 71 bytes
 ExhibitionModeIconTiles:
 	INCBIN "data/gfx/lz_ExhibitionModeIconTiles.bin" ; $53d8, 228 bytes
 MarioFaceIconTiles:
@@ -226,16 +226,16 @@ SinglesIconTiles:
 	INCBIN "data/gfx/lz_SinglesIconTiles.bin" ; $6eb9, 175 bytes
 DoublesIconTiles:
 	INCBIN "data/gfx/lz_DoublesIconTiles.bin" ; $6f68, 233 bytes
-TwoGamesLabelTiles:
-	INCBIN "data/gfx/lz_TwoGamesLabelTiles.bin" ; $7051, 178 bytes
-SixGamesLabelTiles:
-	INCBIN "data/gfx/lz_SixGamesLabelTiles.bin" ; $7103, 170 bytes
-OneSetLabelTiles:
-	INCBIN "data/gfx/lz_OneSetLabelTiles.bin" ; $71ad, 189 bytes
-ThreeSetsLabelTiles:
-	INCBIN "data/gfx/lz_ThreeSetsLabelTiles.bin" ; $726a, 218 bytes
-FiveSetsLabelTiles:
-	INCBIN "data/gfx/lz_FiveSetsLabelTiles.bin" ; $7344, 215 bytes
+TwoGamesIconTiles:
+	INCBIN "data/gfx/lz_TwoGamesIconTiles.bin" ; $7051, 178 bytes
+SixGamesIconTiles:
+	INCBIN "data/gfx/lz_SixGamesIconTiles.bin" ; $7103, 170 bytes
+OneSetIconTiles:
+	INCBIN "data/gfx/lz_OneSetIconTiles.bin" ; $71ad, 189 bytes
+ThreeSetsIconTiles:
+	INCBIN "data/gfx/lz_ThreeSetsIconTiles.bin" ; $726a, 218 bytes
+FiveSetsIconTiles:
+	INCBIN "data/gfx/lz_FiveSetsIconTiles.bin" ; $7344, 215 bytes
 CharacterSelectTiles:
 	INCBIN "data/gfx/lz_CharacterSelectTiles.bin" ; $741b, 453 bytes
 CharacterSelectTilemap:

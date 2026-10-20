@@ -367,7 +367,7 @@ ScrollN64TnmtDataCursor:
 .done:
 	ret ; $4dbc
 BuildN64TnmtDataScreen:
-	ld c, SCREENASSET_ModeSelect ; $4dbd
+	ld c, SCREENASSET_N64TnmtData ; $4dbd
 	farcall LoadScreenAssetRecord ; $4dbf
 	wram_bank WRAM_SCREEN ; $4dc2
 	xor a ; $4dc8

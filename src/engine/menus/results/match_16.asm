@@ -179,7 +179,7 @@ RunMatchStatsScreen:
 	ld a, $ff ; $5c87
 	ret ; $5c89
 InitMatchStatsScreen:
-	ld c, SCREENASSET_MatchStats3 ; $5c8a
+	ld c, SCREENASSET_MatchStats ; $5c8a
 	farcall LoadScreenAssetRecord ; $5c8c
 	ld de, vTiles0 + VRAM_BANK1 ; $5c8f
 	ld c, $00 ; $5c92
