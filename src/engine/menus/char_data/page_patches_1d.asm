@@ -490,7 +490,7 @@ InitExpScreenCharStats:
 	push af ; $6b8c
 	ld_story_char_field CHARREC_NAME ; $6b8d
 	pop af ; $6ba0
-	ld de, wCharDataChoiceBackup + 47 ; $6ba1
+	ld de, wCharDataScreenCell + 7 * TILEMAP_WIDTH + 12 ; $6ba1
 	ld c, $20 ; $6ba4
 	call WriteExpScreenStringTiles ; $6ba6
 	wram_bank WRAM_SCENE ; $6ba9
@@ -508,7 +508,7 @@ InitExpScreenCharStats:
 	ld a, $02 ; $6bcf
 	ld de, wCharDataNumberBuffer ; $6bd1
 	call FormatDecimalNumberUnsigned ; $6bd4
-	ld de, wCharDataChoiceLog + 65 ; $6bd7
+	ld de, wCharDataScreenCell + 3 * TILEMAP_WIDTH + 11 ; $6bd7
 	farcall CharDataScreen_WriteStatNumber ; $6bda
 	wram_bank WRAM_SCENE ; $6bdd
 	pop af ; $6be3
@@ -598,7 +598,7 @@ InitExpScreenCharStats:
 	push af ; $6cd0
 	ld_story_char_field CHARREC_NAME ; $6cd1
 	pop af ; $6ce4
-	ld de, wCharDataChoiceBackup + 47 ; $6ce5
+	ld de, wCharDataScreenCell + 7 * TILEMAP_WIDTH + 12 ; $6ce5
 	ld c, $20 ; $6ce8
 	call WriteExpScreenStringTiles ; $6cea
 	wram_bank WRAM_SCENE ; $6ced
@@ -611,7 +611,7 @@ InitExpScreenCharStats:
 	ld a, $02 ; $6d0c
 	ld de, wCharDataNumberBuffer ; $6d0e
 	call FormatDecimalNumberUnsigned ; $6d11
-	ld de, wCharDataChoiceLog + 65 ; $6d14
+	ld de, wCharDataScreenCell + 3 * TILEMAP_WIDTH + 11 ; $6d14
 	farcall CharDataScreen_WriteStatNumber ; $6d17
 	ld a, $01 ; $6d1a
 	ld [wStoryCharacterSlot], a ; $6d1c

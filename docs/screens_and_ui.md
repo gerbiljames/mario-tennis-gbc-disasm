@@ -246,7 +246,7 @@ attribute byte under another.
 Sharing an address lets one loop patch both planes: `ApplyTilemapPatchList`
 (`$1d:$4bb6`) copies `[hl]` → `[de]` under `wram_bank $03` (tile), then again
 under `wram_bank $02` (attribute) from the same address. Its callers pass `bc` = a source inside the mirrored region
-(`wScreenAttrmap + 28 * TILEMAP_WIDTH + 16` at `$1d:$414c`,
+(`wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16` at `$1d:$414c`,
 `wCharDataPagePlane + 7 * TILEMAP_WIDTH` at `$1d:$4ae4`). Patch-list record,
 4 bytes, `$ff`-terminated:
 

@@ -60,6 +60,10 @@ def wIntroCharactersAttrmap equ $dc00
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 3 or more (0 saves into wCharDataPagePlane + 13 * TILEMAP_WIDTH), once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot3 equ $dc60
 
+; [42 bytes] The character-data confirm screen's top banner rows, mirrored across WRAM banks $02/$03 (tile half / CGB attribute half). RunCharDataConfirmScreen decompresses each half to wTextTileBuffer tile 106 in bank $01 and CopyBank1ToBank3/2BufferAlt copy it to the same address here, from where ApplyTilemapPatchList_1a patches three 14-byte runs into wCharDataScreenCell.
+; in WRAM banks $02, $03
+def wCharDataConfirmTopRows equ $dea0
+
 ; $df00-$df96: the per-character match struct, one copy in each of WRAM banks
 ; $04-$07, and its bank $05 overlays. The fields are documented once, in
 ; match_char_struct (include/macros/ram.inc), which declares the bank-tagged

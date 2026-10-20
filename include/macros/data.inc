@@ -287,10 +287,10 @@ MACRO gfx_set
 ENDM
 
 ; One run of a tilemap patch list: copy `length` bytes from the source row
-; (bc) + `src` to cell (`col`, `row`) of the reader's planes. The readers are
-; BlitTilemapRunsFromTable and ApplyTilemapPatchListExpScreen (cells from
-; wScreenAttrmap), and ApplyTilemapPatchList and its _1a copy (cells from
-; wCharDataScreenCell, tile and attribute planes). A $ff byte ends the list.
+; (bc) + `src` to cell (`col`, `row`) of wCharDataScreenCell, tile and
+; attribute planes. The readers are BlitTilemapRunsFromTable,
+; ApplyTilemapPatchListExpScreen, ApplyTilemapPatchList and its _1a copy.
+; A $ff byte ends the list.
 ;   blit_run col, row, src, length
 MACRO blit_run
 	ASSERT (\1) < TILEMAP_WIDTH && (\2) * TILEMAP_WIDTH + (\1) < $ff00, "blit_run: bad cell"

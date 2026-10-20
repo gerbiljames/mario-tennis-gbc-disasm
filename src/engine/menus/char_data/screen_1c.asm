@@ -450,7 +450,7 @@ CharDataScreen_DrawStats:
 	call CharDataScreen_WriteStatNumber ; $44bf
 	pop af ; $44c2
 	ld c, $01 ; $44c3
-	ld de, wScreenAttrmap + 27 * TILEMAP_WIDTH + 2 ; $44c5
+	ld de, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 2 ; $44c5
 	call CharDataScreen_DrawStatBar ; $44c8
 	ret ; $44cb
 CharDataScreen_WriteStatNumber:

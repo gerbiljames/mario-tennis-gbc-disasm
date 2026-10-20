@@ -131,12 +131,13 @@ after a real defect broke it:
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
             wMenuCursorRow under WRAM_TEXT as a char-data page cell)
-  wram-ptrs a `ld de/hl, wX` on a banked WRAMX symbol is not dereferenced
-            (`[de]`, `[hl]`, `[hl+]`, `[hl-]`, before de/hl is rewritten)
+  wram-ptrs a `ld bc/de/hl, wX` on a banked WRAMX symbol is not dereferenced
+            (`[bc]`, `[de]`, `[hl]`, `[hl+]`, `[hl-]`, before it is rewritten)
             after a `wram_bank` selecting another bank (char-data bars drew
             through bank 6 names as wShadowTilemap cursors), nor passed by
             `call` to a listed tile-plane writer unless it is a bank-3 name
-            (results/award text went to wScreenAttrmap names)
+            (results/award text went to wScreenAttrmap names; char-data
+            blit/patch cells to wScreenAttrmap and bank 6 names)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -2040,7 +2041,8 @@ _PTR_WRITES = {"ld", "pop", "add", "adc", "sub", "sbc", "inc", "dec", "swap", "s
 
 # Routines that select WRAM_SCREEN themselves and write tile ids through the
 # register (most also the attribute, under WRAM_COURT_PLANES at the same address), so
-# a WRAMX destination passed in must be a bank-3 name. ShiftDestForLongName
+# a WRAMX destination passed in must be a bank-3 name. The bc routines read their
+# source rows the same way. ShiftDestForLongName
 # only steps de back before WriteTextToTilemap.
 _TILE_PLANE_WRITERS = {
     "DrawProportionalTextLine": "de", "WriteTextToTilemap": "de", "FetchAndDrawDialogueText": "de",
@@ -2048,12 +2050,17 @@ _TILE_PLANE_WRITERS = {
     "WriteNameStringTiles": "de", "PlotTilesAtOffsets": "de", "ShiftDestForLongName": "de",
     "DrawContinuePromptText": "hl", "DrawSaveWarningTextLine1": "hl", "DrawSaveWarningTextLine2": "hl",
     "FillTilemapRun": "hl", "DrawFourTileFlagLabel": "hl",
+    "CharDataScreen_WriteStatNumber": "de", "CharDataScreen_DrawStatBar": "de",
+    "WriteExpScreenStringTiles": "de",
+    "BlitTilemapRunsFromTable": "bc", "ApplyTilemapPatchList": "bc",
+    "ApplyTilemapPatchList_1a": "bc", "ApplyTilemapPatchListExpScreen": "bc",
 }
 
 
 def check_wram_pointers(fail):
-    """`ld de/hl, wX` with wX in one WRAMX bank, then `[de]`/`[hl]` in
-    straight-line source after a `wram_bank` selecting another. A global
+    """`ld bc/de/hl, wX` with wX in one WRAMX bank, then `[bc]`/`[de]`/`[hl]` in
+    straight-line source after a `wram_bank` selecting another, or wX
+    passed to a _TILE_PLANE_WRITERS routine that is not a bank-3 name. A global
     label, a call or an unknown macro forgets the pointers."""
     wbank = {n: b for b, a, n in read_sym() if 0xd000 <= a < 0xe000 and "." not in n}
     consts = {name: int(v, 16) for name, v in re.findall(
@@ -2076,14 +2083,14 @@ def check_wram_pointers(fail):
             if m:
                 cur = consts.get(m.group(1))
                 continue
-            m = re.match(r"ld (de|hl), (w\w+)\b", code)
+            m = re.match(r"ld (bc|de|hl), (w\w+)\b", code)
             if m:
                 ptr.pop(m.group(1), None)
                 if m.group(2) in wbank:
                     ptr[m.group(1)] = (m.group(2), wbank[m.group(2)], origin[i])
                     sites += 1
                 continue
-            for rr in ("de", "hl"):
+            for rr in ("bc", "de", "hl"):
                 if rr in ptr and cur is not None and re.search(r"\[" + rr + r"[+-]?\]", code):
                     sym, b, (f, ln) = ptr[rr]
                     if b != cur:
@@ -2099,7 +2106,7 @@ def check_wram_pointers(fail):
                                       f"passed to {args}, which writes the WRAM_SCREEN tile plane")
             if op in _PTR_WRITES:
                 dst = args.split(",")[0].strip()
-                for rr in ("de", "hl"):
+                for rr in ("bc", "de", "hl"):
                     if dst in (rr[0], rr[1]) or (dst == rr and op not in ("inc", "dec")):
                         ptr.pop(rr, None)
             elif op in ("lb", "ld_tile_run"):
@@ -2108,6 +2115,8 @@ def check_wram_pointers(fail):
                 ptr.pop("hl", None)
             elif op == "ld_de_indexed":
                 ptr.pop("de", None)
+            elif op == "ld_bc_indexed":
+                ptr.pop("bc", None)
             elif op in ("ret", "reti", "jp") and "," not in args:
                 ptr = {}
             elif op not in _PTR_KEEPS:

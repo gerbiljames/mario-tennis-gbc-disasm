@@ -120,7 +120,7 @@ BuildCharDataScreenPages:
 	ld a, $01 ; $4144
 	call SaveWorkTilemapToPage ; $4146
 	ld hl, CharDataAttrClearPatch_1d ; $4149
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $414c
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $414c
 	call ApplyTilemapPatchList ; $414f
 	wram_bank WRAM_SCREEN ; $4152
 	ld hl, wShadowTilemap ; $4158

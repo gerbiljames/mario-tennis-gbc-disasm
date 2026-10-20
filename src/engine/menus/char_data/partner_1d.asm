@@ -20,7 +20,7 @@ SlideToPartnerStatPage:
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $546d
 	call ApplyTilemapPatchList ; $5470
 	ld hl, CharDataAttrClearPatch_1d ; $5473
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5476
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $5476
 	call ApplyTilemapPatchList ; $5479
 	farcall FlushCharDataTilemapsFar ; $547c
 	wram_bank WRAM_SCENE ; $547f
@@ -54,7 +54,7 @@ SlideToPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $54ca
 	call ApplyTilemapPatchList ; $54cd
 	ld hl, StatPageTilemapPatch0 ; $54d0
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $54d3
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $54d3
 	call ApplyTilemapPatchList ; $54d6
 	farcall FlushCharDataTilemapsFar ; $54d9
 	wram_bank WRAM_SCENE ; $54dc
@@ -284,7 +284,7 @@ SlideFromPartnerStatPage:
 	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $572f
 	call ApplyTilemapPatchList ; $5732
 	ld hl, StatPageTilemapPatch0 ; $5735
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5738
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $5738
 	call ApplyTilemapPatchList ; $573b
 	farcall FlushCharDataTilemapsFar ; $573e
 	wram_bank WRAM_SCENE ; $5741
@@ -309,7 +309,7 @@ SlideFromPartnerStatPage:
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $5771
 	call ApplyTilemapPatchList ; $5774
 	ld hl, CharDataAttrClearPatch_1d ; $5777
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $577a
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $577a
 	call ApplyTilemapPatchList ; $577d
 	farcall FlushCharDataTilemapsFar ; $5780
 	wram_bank WRAM_SCENE ; $5783
@@ -334,7 +334,7 @@ SlideFromPartnerStatPage:
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $57b3
 	call ApplyTilemapPatchList ; $57b6
 	ld hl, CharDataAttrClearPatch_1d ; $57b9
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $57bc
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $57bc
 	call ApplyTilemapPatchList ; $57bf
 	farcall FlushCharDataTilemapsFar ; $57c2
 	wram_bank WRAM_SCENE ; $57c5

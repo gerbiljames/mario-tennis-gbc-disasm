@@ -123,7 +123,7 @@ RunCharDataConfirmScreen:
 	ld bc, $002a ; $7975
 	call CopyBank1ToBank2BufferAlt ; $7978
 	ld hl, CharDataConfirmScreenTopPatchList ; $797b
-	ld bc, wTextTileBuffer tile 106 ; $797e
+	ld bc, wCharDataConfirmTopRows ; $797e
 	call ApplyTilemapPatchList_1a ; $7981
 	farcall DrawCharDataConfirmPrompt ; $7984
 	wram_bank WRAM_SCREEN ; $7987

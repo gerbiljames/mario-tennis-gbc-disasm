@@ -385,7 +385,7 @@ ApplyTilemapPatchListExpScreen:
 	inc hl ; $7616
 	ld e, [hl] ; $7617
 	push hl ; $7618
-	ld hl, wScreenAttrmap ; $7619
+	ld hl, wCharDataScreenCell ; $7619
 	add hl, de ; $761c
 	ld d, h ; $761d
 	ld e, l ; $761e

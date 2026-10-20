@@ -213,19 +213,19 @@ BuildCharDataConfirmScreen:
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
 	ld hl, CharDataConfirmScreenTilemapPatch0 ; $5b87
-	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $5b8a
+	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $5b8a
 	call ApplyTilemapPatchList ; $5b8d
 	ld hl, CharDataConfirmScreenTilemapPatch1 ; $5b90
-	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $5b93
+	ld bc, wCharDataScreenCell + 20 * TILEMAP_WIDTH ; $5b93
 	call ApplyTilemapPatchList ; $5b96
 	ld hl, CharDataConfirmScreenTilemapPatch2 ; $5b99
-	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $5b9c
+	ld bc, wCharDataScreenCell + 22 * TILEMAP_WIDTH + 16 ; $5b9c
 	call ApplyTilemapPatchList ; $5b9f
 	ld hl, CharDataConfirmScreenTilemapPatch3 ; $5ba2
-	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $5ba5
+	ld bc, wCharDataScreenCell + 24 * TILEMAP_WIDTH + 16 ; $5ba5
 	call ApplyTilemapPatchList ; $5ba8
 	ld hl, CharDataConfirmScreenTilemapPatch4 ; $5bab
-	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $5bae
+	ld bc, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 16 ; $5bae
 	call ApplyTilemapPatchList ; $5bb1
 	ld hl, CharDataConfirmScreenTilemapPatch5 ; $5bb4
 	ld bc, wCharDataPagePlane + 10 * TILEMAP_WIDTH + 16 ; $5bb7
