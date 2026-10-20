@@ -312,8 +312,8 @@ ENDM
 
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
 ; immediate. Sites whose callee reads the halves separately use the named
-; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_*_pals,
-; ld_char_rec).
+; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_text_attr,
+; ld_*_pals, ld_char_rec).
 MACRO lb
 	ld \1, ((\2) << 8) | (\3)
 ENDM
@@ -344,6 +344,14 @@ ENDM
 ; ld_bg_cell pair, attr, tile -- WriteWindowCellTileAttr's arguments: the BG
 ; attribute byte (TILEATTR_*) in the high register, the tile id in the low.
 MACRO ld_bg_cell
+	lb \1, \2, \3
+ENDM
+
+; ld_text_attr pair, attr, stride -- WriteTextToTilemap's and
+; FetchAndDrawDialogueText's arguments: the BG attribute byte (TILEATTR_*)
+; for every character in the high register, the destination's row stride in
+; the low (a dakuten mark goes one row up from the character before it).
+MACRO ld_text_attr
 	lb \1, \2, \3
 ENDM
 

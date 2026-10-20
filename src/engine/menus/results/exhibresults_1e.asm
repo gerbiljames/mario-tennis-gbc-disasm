@@ -85,7 +85,7 @@ DrawPracticeResultsHeader:
 DrawProportionalTextLine:
 	ldh a, [hWramBank] ; $4563
 	push af ; $4565
-	ld bc, $0012 ; $4566
+	ld bc, $0012 ; $4566 ; callers' bc is ignored
 	farcall RenderProportionalTextAt ; $4569
 	pop_wram_bank ; $456c
 	ret ; $4571
@@ -178,16 +178,16 @@ DrawSinglesPlayerNames:
 	call CopyStringToTextBuffer ; $4609
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $460c
 	call ShiftDestForLongName ; $460f
-	ld bc, $0020 ; $4612
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4612
 	call WriteTextToTilemap ; $4615
 	ld hl, Text_ResultsVs ; $4618
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 9 ; $461b
-	ld bc, $0020 ; $461e
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $461e
 	call FetchAndDrawDialogueText ; $4621
 	ld hl, wPlayer2MainName ; $4624
 	call CopyStringToTextBuffer ; $4627
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 12 ; $462a
-	ld bc, $0020 ; $462d
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $462d
 	call WriteTextToTilemap ; $4630
 	ret ; $4633
 DrawDoublesPlayerNames:
@@ -195,27 +195,27 @@ DrawDoublesPlayerNames:
 	call CopyStringToTextBuffer ; $4637
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 3 ; $463a
 	call ShiftDestForLongName ; $463d
-	ld bc, $0020 ; $4640
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4640
 	call WriteTextToTilemap ; $4643
 	ld hl, wPlayer1PartnerName ; $4646
 	call CopyStringToTextBuffer ; $4649
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $464c
 	call ShiftDestForLongName ; $464f
-	ld bc, $0020 ; $4652
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4652
 	call WriteTextToTilemap ; $4655
 	ld hl, Text_ResultsVs ; $4658
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; $465b
-	ld bc, $0020 ; $465e
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $465e
 	call FetchAndDrawDialogueText ; $4661
 	ld hl, wPlayer2MainName ; $4664
 	call CopyStringToTextBuffer ; $4667
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 12 ; $466a
-	ld bc, $0020 ; $466d
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $466d
 	call WriteTextToTilemap ; $4670
 	ld hl, wPlayer2PartnerName ; $4673
 	call CopyStringToTextBuffer ; $4676
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 12 ; $4679
-	ld bc, $0020 ; $467c
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $467c
 	call WriteTextToTilemap ; $467f
 	ret ; $4682
 ShiftDestForLongName:
@@ -246,21 +246,21 @@ ShiftDestForLongName:
 DrawSetsGamesScore:
 	ld hl, Text_ResultsSets ; $46a4
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $46a7
-	ld bc, $0020 ; $46aa
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $46aa
 	call FetchAndDrawDialogueText ; $46ad
 	ld a, [wPlayer1SetsWon] ; $46b0
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 6 ; $46b3
 	call FormatAndDrawNumber ; $46b6
 	ld hl, Text_ResultsScoreDash ; $46b9
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 7 ; $46bc
-	ld bc, $0020 ; $46bf
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $46bf
 	call FetchAndDrawDialogueText ; $46c2
 	ld a, [wPlayer2SetsWon] ; $46c5
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 8 ; $46c8
 	call FormatAndDrawNumber ; $46cb
 	ld hl, Text_ResultsGames ; $46ce
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 11 ; $46d1
-	ld bc, $0020 ; $46d4
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $46d4
 	call FetchAndDrawDialogueText ; $46d7
 	ld a, [wPlayer1GamesWon] ; $46da
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 15 ; $46dd
@@ -281,7 +281,7 @@ FormatAndDrawNumber:
 	call FormatDecimalNumberUnsigned ; $46ff
 	pop de ; $4702
 	ld hl, wTextBuffer ; $4703
-	ld bc, $0020 ; $4706
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4706
 	call WriteTextToTilemap ; $4709
 	ret ; $470c
 CopyStringToTextBuffer:

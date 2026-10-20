@@ -51,6 +51,10 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld_size bc, "), 28)
         self.assertEqual(count(r"^\tld_tile_run bc, "), 63)
         self.assertEqual(count(r"^\tld_bg_cell bc, "), 2)
+        self.assertEqual(count(r"^\tld_text_attr bc, "), 30)
+        self.assertEqual(count(r"^\tld bc, \$[0-9a-f]{4}\b[^\n]*\n(?:\t(?!ld bc|ld_|(?:far)?call |jp |jr |ret)[^\n]*\n)*"
+                               r"\t(?:far)?call (?:WriteTextToTilemap|FetchAndDrawDialogueText)\b"), 0,
+                         "WriteTextToTilemap's attribute and stride loaded as one raw word -- ld_text_attr")
         # map positions are tiles with a point (map_pos), never raw 1/256-tile words
         self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3078)
         self.assertEqual(count(r"^\t(?:map_entry \S+, \S+,|map_actor \S+, \S+,|script_move_target \S+,|script_set_position \S+,|script_move_player|as_set_target|as_set_pos) \$[0-9a-f]{4}\b"), 0)

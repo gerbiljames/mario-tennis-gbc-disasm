@@ -1770,7 +1770,7 @@ def _raw_id_uses():
                 _clobber(regs, spent, m.group(1))
                 regs[m.group(1)[0]], regs[m.group(1)[1]] = m.group(2), m.group(3)
                 continue
-            if m := re.match(r"(?:ld_cell|ld_size|ld_bg_cell|ld_tile_run|ld_bg_pals|ld_obj_pals) (bc|de|hl),", t):
+            if m := re.match(r"(?:ld_cell|ld_size|ld_bg_cell|ld_text_attr|ld_tile_run|ld_bg_pals|ld_obj_pals) (bc|de|hl),", t):
                 _clobber(regs, spent, m.group(1))
                 continue
             m = re.match(r"(?:ldh? ([a-l]|bc|de|hl|sp), |(?:inc|dec|pop|swap|rlc?|rrc?|sla|sra|srl) "
@@ -2632,7 +2632,7 @@ def check_wram_pointers(fail):
                 for rr in ("bc", "de", "hl"):
                     if dst in (rr[0], rr[1]) or (dst == rr and op not in ("inc", "dec")):
                         ptr.pop(rr, None)
-            elif op in ("lb", "ld_tile_run"):
+            elif op in ("lb", "ld_tile_run", "ld_text_attr"):
                 ptr.pop(args.split(",")[0].strip(), None)
             elif op == "ld_hl_indexed":
                 ptr.pop("hl", None)

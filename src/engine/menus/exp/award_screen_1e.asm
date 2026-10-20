@@ -234,11 +234,11 @@ DrawExpSinglesPlayerPanel:
 	add hl, bc ; $565c
 	call CopyStringToTextBuffer ; $565d
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 4 ; $5660
-	ld bc, $0020 ; $5663
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5663
 	call WriteTextToTilemap ; $5666
 	ld hl, Text_LevelAbbrev ; $5669
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 12 ; $566c
-	ld bc, $0020 ; $566f
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $566f
 	call FetchAndDrawDialogueText ; $5672
 	pop bc ; $5675
 	ld hl, CHARREC_LEVEL ; $5676
@@ -247,7 +247,7 @@ DrawExpSinglesPlayerPanel:
 	ld h, $00 ; $567b
 	ld l, a ; $567d
 	ld a, $02 ; $567e
-	ld bc, $0020 ; $5680
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5680
 	ld de, wTextBuffer ; $5683
 	call FormatDecimalNumberUnsigned ; $5686
 	ld hl, wTextBuffer ; $5689
@@ -310,11 +310,11 @@ DrawExpDoublesPlayerPanel:
 	add hl, bc ; $571e
 	call CopyStringToTextBuffer ; $571f
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 1 ; $5722
-	ld bc, $0020 ; $5725
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5725
 	call WriteTextToTilemap ; $5728
 	ld hl, Text_LevelAbbrev ; $572b
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $572e
-	ld bc, $0020 ; $5731
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5731
 	call FetchAndDrawDialogueText ; $5734
 	pop bc ; $5737
 	ld hl, CHARREC_LEVEL ; $5738
@@ -323,12 +323,12 @@ DrawExpDoublesPlayerPanel:
 	ld h, $00 ; $573d
 	ld l, a ; $573f
 	ld a, $02 ; $5740
-	ld bc, $0020 ; $5742
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5742
 	ld de, wTextBuffer ; $5745
 	call FormatDecimalNumberUnsigned ; $5748
 	ld hl, wTextBuffer ; $574b
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; $574e
-	ld bc, $0020 ; $5751
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5751
 	call WriteTextToTilemap ; $5754
 	ret ; $5757
 DrawExpDoublesPartnerPanel:
@@ -385,11 +385,11 @@ DrawExpDoublesPartnerPanel:
 	add hl, bc ; $57dd
 	call CopyStringToTextBuffer ; $57de
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 12 ; $57e1
-	ld bc, $0020 ; $57e4
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $57e4
 	call WriteTextToTilemap ; $57e7
 	ld hl, Text_LevelAbbrev ; $57ea
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 12 ; $57ed
-	ld bc, $0020 ; $57f0
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $57f0
 	call FetchAndDrawDialogueText ; $57f3
 	pop bc ; $57f6
 	ld hl, CHARREC_LEVEL ; $57f7
@@ -398,7 +398,7 @@ DrawExpDoublesPartnerPanel:
 	ld h, $00 ; $57fc
 	ld l, a ; $57fe
 	ld a, $02 ; $57ff
-	ld bc, $0020 ; $5801
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5801
 	ld de, wTextBuffer ; $5804
 	call FormatDecimalNumberUnsigned ; $5807
 	ld hl, wTextBuffer ; $580a
@@ -447,7 +447,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5886
 	ld hl, Text_ExpPtsLabel ; $5889
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 3 ; $588c
-	ld bc, $0020 ; $588f
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $588f
 	call FetchAndDrawDialogueText ; $5892
 	ret ; $5895
 DrawExpMessageWindow:

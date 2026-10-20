@@ -66,11 +66,11 @@ DrawPlayerNameAndLevel:
 	ld hl, wStoryMainName ; $4904
 	call CopyStringToTextBuffer ; $4907
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $490a
-	ld bc, $0020 ; $490d
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $490d
 	call WriteTextToTilemap ; $4910
 	ld hl, Text_LevelAbbrev ; $4913
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
-	ld bc, $0020 ; $4919
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4919
 	call FetchAndDrawDialogueText ; $491c
 	ld a, [wStoryMainLevel] ; $491f
 	ld h, $00 ; $4922
@@ -80,7 +80,7 @@ DrawPlayerNameAndLevel:
 	call FormatDecimalNumberUnsigned ; $492a
 	ld hl, wTextBuffer ; $492d
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; $4930
-	ld bc, $0020 ; $4933
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4933
 	call WriteTextToTilemap ; $4936
 	wram_bank WRAM_COURT_PLANES ; $4939
 	ld a, $04 ; $493f
