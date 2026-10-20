@@ -269,7 +269,7 @@ UNION
 ; scrolling text screen (bank $03)
 ; [8-bit] Frames until the crawl scrolls one line; reloaded with 2 each time it hits 0
 wScrollTextDelay:: db
-; [8-bit] Write-only: seeded with 2 beside wScrollTextDelay, but the reload at $03:$5a0e uses the literal $02
+; [8-bit] Write-only: seeded with 2 beside wScrollTextDelay, but RunScrollingTextScreen's reload uses the literal $02
 wUnusedScrollTextDelayReload:: db
 ; [16-bit] Text id the crawl is rendering, seeded with $1863
 wScrollTextId:: dw

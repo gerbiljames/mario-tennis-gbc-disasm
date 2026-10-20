@@ -82,7 +82,7 @@ wShotAimTargetX:: dw
 ; [16-bit] World depth the shot is aimed at (net at 0, sign corrected for the hitter's side), written by ComputeShotTrajectory; copied to wBallTargetDepth and used for the aim marker
 wShotAimTargetDepth:: dw
 
-; [16-bit] wShotAimTargetX - wBallX, the lateral leg of the ball->target vector, written by ComputeShotTrajectory. Read by every court bank's SetBallTargetByPrediction and the trajectory-length path ($20:$416a, VectorLengthFromAngle with wShotAimDeltaDepth)
+; [16-bit] wShotAimTargetX - wBallX, the lateral leg of the ball->target vector, written by ComputeShotTrajectory. Read by every court bank's SetBallTargetByPrediction and the trajectory-length path (Unused_20_ApplyBallTrajectoryCapped, VectorLengthFromAngle with wShotAimDeltaDepth)
 wShotAimDeltaX:: dw
 
 ; [16-bit] wShotAimTargetDepth - wBallDepth, the depth leg, written by ComputeShotTrajectory and fed to AngleFromVector16 with wShotAimDeltaX to make wShotAimAngle; also read by the court banks' trajectory-length code
@@ -265,7 +265,7 @@ wSpecialHitTimer:: db
 ; [8-bit] Frames left of the ball-hit-a-character effect; started at $28 by StartBallTouchCharEffect, ticked and used as animation index by DrawBallTouchCharEffect
 wBallTouchCharTimer:: db
 
-; [8-bit] Court horizontal bounce damping (8-bit fraction, e.g. $cd = 0.80 on court 0), loaded per court from a 4-byte-per-court table at $08:$5dc4. ApplyCourtBounceDamping multiplies the X and depth velocities by it
+; [8-bit] Court horizontal bounce damping (8-bit fraction, e.g. $cd = 0.80 on court 0), loaded per court from CourtSceneDataTable (4 bytes per court). ApplyCourtBounceDamping multiplies the X and depth velocities by it
 wCourtSurfaceFriction:: db
 
 ; [8-bit] Court vertical restitution (8-bit fraction) from the same per-court record; ApplyCourtBounceDamping multiplies the height velocity by it

@@ -3,7 +3,7 @@
 ; [buffer] Base of the story-slot state image ($c800-$caff): the main character, game mode, match settings and roster fields, saved whole as save block 2N (docs/save_format.md) and reloaded on slot load
 wStorySlotData::
 ; Saved-slot copies of the story records at $c900/$c940, kept in step by a
-; 128-byte copy ($02:$4795). RefreshMainCharacterStats normalises
+; 128-byte copy in RefreshMainCharacterStats, which also normalises
 ; wSavedMainEquipment before the stats are recomputed: a low nibble of 3
 ; clears the low nibble, a high nibble of 1 the high one.
 	char_record wSavedMain

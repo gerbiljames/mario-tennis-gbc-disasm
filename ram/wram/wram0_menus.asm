@@ -33,7 +33,7 @@ wAnimatedTileFrame:: db
 ; [8-bit] UpdateAnimatedTiles' frame counter: counts 0..wAnimatedTilePeriod-1, tiles step when it wraps to 0
 wAnimatedTileTimer:: db
 
-; [8-bit] Animated-tile set the UpdateAnimatedTiles frame task cycles ($00-$03, index into the pointer tables at $39:$4403/$440b). Set by the screens that install the task: 0 for the main menu, court diagram, bank $3b screens and link screens; 1 for the star-chart results and a few others; 2/3 on the match result screen for win/lose
+; [8-bit] Animated-tile set the UpdateAnimatedTiles frame task cycles ($00-$03, index into the pointer tables UpdateAnimatedTilesTable / AnimatedTilesSecondStripFrameLists). Set by the screens that install the task: 0 for the main menu, court diagram, bank $3b screens and link screens; 1 for the star-chart results and a few others; 2/3 on the match result screen for win/lose
 wAnimatedTileSet:: db
 
 ; [8-bit] Frame period of the animated-tile task; usually $03 ($05 on a link screen, $06 on the match result screen)
@@ -218,7 +218,7 @@ wCharSelectIsPartner:: db
 ; [8-bit] Court select: the link partner's bonus-court unlock mask, from the received link block ($ca8a or $ca0a by hLinkState) after the block-$26 exchange that sends wUnlockedCourtMask; cleared for local play. ORed with wUnlockedCourtMask before StoreCourtUnlockBits and the 9-court vs 4-court menu choice
 wLinkPartnerCourtMask:: db
 
-; [8-bit] Bitmask of the five bonus courts (ids 4-8; 0-3 are always open, IsCourtUnlocked), built from save flags by ComputeUnlockedCourtFlags from the 5-entry table at $3e:$69ca. StoreCourtUnlockBits expands it into five per-court bytes at $d000 in WRAM bank $02; it also picks the 9-court or 4-court select menu and is the payload of link block $26
+; [8-bit] Bitmask of the five bonus courts (ids 4-8; 0-3 are always open, IsCourtUnlocked), built from save flags by ComputeUnlockedCourtFlags from CourtUnlockFlagIds_3e. StoreCourtUnlockBits expands it into five per-court bytes at $d000 in WRAM bank $02; it also picks the 9-court or 4-court select menu and is the payload of link block $26
 wUnlockedCourtMask:: db
 
 ; [4 bytes] The other Game Boy's packed unlock flags, received by the ExchangeLinkDataBlock that sends wLinkUnlockFlagsSend. MergeLinkUnlockFlags gives both sides the union
@@ -247,7 +247,7 @@ wBgMapShadowDirty:: db
 ; [8-bit] Debug character viewer (Unused_1a_RunDebugCharViewer): page of the 2x16 character grid, 0 or 1, stepped when the cursor wraps off the bottom/top row. Selected character id = (page << 4) + wDebugCharViewerIndex, stored to wCharViewerCharId and passed to LoadOnCourtCharTilesA
 wDebugCharViewerPage:: db
 
-; [8-bit] Debug character viewer: cursor 0-15 within the page; LEFT/RIGHT step 1 and wrap in the row of 8, UP/DOWN step 8 and roll into wDebugCharViewerPage. Also indexes the cursor-sprite position table at $1a:$6b0f
+; [8-bit] Debug character viewer: cursor 0-15 within the page; LEFT/RIGHT step 1 and wrap in the row of 8, UP/DOWN step 8 and roll into wDebugCharViewerPage. Also indexes DrawCharViewerGridCursorTable
 wDebugCharViewerIndex:: db
 
 ; [7 bytes] Per-digit working bytes for the number-sprite drawer, cleared by InitNumberSpriteGfx alongside wDigitSpriteTileBase and wDigitSpriteAttr

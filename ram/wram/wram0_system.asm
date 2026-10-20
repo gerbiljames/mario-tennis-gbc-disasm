@@ -13,10 +13,10 @@ wVRAMCopyQueue:: ds NUM_VRAMCOPY_SLOTS * VRAMCOPY_SLOT_SIZE
 ; [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)
 wGameTimer:: ds 4
 
-; [8-bit] Enables wSecondaryTimer: UpdateGameTimer ticks it only while this is exactly 1. The unused countdown at $00:$240a writes $ff here when its clock runs out ($ff = expired)
+; [8-bit] Enables wSecondaryTimer: UpdateGameTimer ticks it only while this is exactly 1. Unused_00_TickSecondaryTimerCountdown writes $ff here when its clock runs out ($ff = expired)
 wSecondaryTimerMode:: db
 
-; [3 bytes] Second clock, ticked by Unused_00_TickSecondaryTimer: frames (0-59), seconds, minutes. Saturates at 9:59. The unused countdown at $00:$240a runs it downwards, sound $af each second and sound $b0 at zero
+; [3 bytes] Second clock, ticked by Unused_00_TickSecondaryTimer: frames (0-59), seconds, minutes. Saturates at 9:59. Unused_00_TickSecondaryTimerCountdown runs it downwards, sound $af each second and sound $b0 at zero
 wSecondaryTimer:: ds 3
 
 ; [8-bit] Width in pixels of the glyph Unused_00_RenderGlyphToTiles is drawing (glyph byte 0); the per-column loop count. The caller re-reads the byte afterwards to advance the pen
@@ -134,7 +134,7 @@ wStoryModeTriggerScript:: db
 ; [8-bit] Nonzero requests leaving the location loop (RunLocationExit + reload); cleared with $c2a0-$c2a5 by ClearStoryEventRequests. The value is an exit-trigger id, not a location: RunLocationExit matches it against the id column of map_tree slot 1, and that row's arg0 is the destination STORYLOC_* id, so one id leads to different places per location
 wStoryModeExitTriggerRequest:: db
 
-; [8-bit] Set to 1 by the overworld player-move code ($04:$52a6) when the point ahead of the player has a nonzero behaviour value. The location event loop consumes it; together with wPlayerMoving reaching $1e frames at an unchanged angle it turns walking into a door or sign into an interaction
+; [8-bit] Set to 1 by UpdatePlayerControl when the point ahead of the player has a nonzero behaviour value. The location event loop consumes it; together with wPlayerMoving reaching $1e frames at an unchanged angle it turns walking into a door or sign into an interaction
 wStoryAutoInteractArmed:: db
 
 ; [8-bit] $ff once the auto-interact has raised wStoryModeInteractRequest this frame, else 0. Read only by the debug-menu check later in the frame, which then stands down
@@ -379,7 +379,7 @@ wScrollListLength:: db
 wCurrentScene:: db
 	ds 1
 
-; [8 bytes] Four scene tile-animation slots, 2 bytes each: current offset into the animation script at $05:$da88, then frame countdown. The scroll task calls AdvanceSceneTileAnimation on a slot whose countdown reaches zero
+; [8 bytes] Four scene tile-animation slots, 2 bytes each: current offset into the animation script at wSceneTileAnimEntries, then frame countdown. The scroll task calls AdvanceSceneTileAnimation on a slot whose countdown reaches zero
 wSceneTileAnimState:: ds 8
 
 ; [4 bytes] Script start offset of each tile-animation slot; AdvanceSceneTileAnimation rewinds here at the $ff terminator. $ff marks an unbuilt slot
