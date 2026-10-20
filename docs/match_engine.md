@@ -818,7 +818,8 @@ The rest of the movement chain:
 - `StepCharJumpPhysics` (`$08:$72a6`), airborne only, uses gravity `$0090` per
   frame (character height is 24-bit, not 32).
 - `HandleServePositioning` (`$08:$71dd`): the server's left/right shuffle, fixed
-  `$000a` step, committed only if `$20 ≤ |X| < $180`.
+  `$000a` step, committed only if `$20 ≤ |X| < $180` (wall minigames drop
+  the `$20` lower bound).
 
 ## The AI
 

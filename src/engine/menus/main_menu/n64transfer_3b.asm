@@ -131,7 +131,7 @@ RunN64RecordTypeSelect:
 	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
 	set B_IE_TIMER, [hl] ; $7217
-	ld b, $01 ; $7219
+	ld b, MENUSLIDE_FORWARD ; $7219
 	call N64RecordTypeSlideOut ; $721b
 	ld a, MENUSLIDE_FORWARD ; $721e
 	ld [wMenuSlideDirection], a ; $7220
@@ -144,7 +144,7 @@ RunN64RecordTypeSelect:
 	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
 	set B_IE_TIMER, [hl] ; $7234
-	ld b, $00 ; $7236
+	ld b, MENUSLIDE_BACK ; $7236
 	call N64RecordTypeSlideOut ; $7238
 	ld a, MENUSLIDE_BACK ; $723b
 	ld [wMenuSlideDirection], a ; $723d
@@ -510,7 +510,7 @@ RunN64TransferItemSelect:
 	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
 	set B_IE_TIMER, [hl] ; $7526
-	ld b, $01 ; $7528
+	ld b, MENUSLIDE_FORWARD ; $7528
 	farcall CloseCourtSelect4Panel ; $752a
 	ld a, MENUSLIDE_FORWARD ; $752d
 	ld [wMenuSlideDirection], a ; $752f
@@ -523,7 +523,7 @@ RunN64TransferItemSelect:
 	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540
 	set B_IE_TIMER, [hl] ; $7543
-	ld b, $00 ; $7545
+	ld b, MENUSLIDE_BACK ; $7545
 	farcall CloseCourtSelect4Panel ; $7547
 	ld a, MENUSLIDE_BACK ; $754a
 	ld [wMenuSlideDirection], a ; $754c

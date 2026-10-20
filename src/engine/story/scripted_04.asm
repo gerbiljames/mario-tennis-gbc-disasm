@@ -410,13 +410,13 @@ SpawnCompanionActor:
 	wram_bank WRAM_ACTORS ; $4f14
 	ld a, [wStoryPartnerGender] ; $4f1a
 	or a ; $4f1d
-	jr nz, .partnerSlot ; $4f1e
+	jr nz, .femalePartner ; $4f1e
 	ld hl, CompanionHarryActorList ; $4f20
 	ld a, $02 ; $4f23
 	test_flag FLAG_DOUBLES ; $4f25
 	jr nz, .spawn ; $4f28
 	jr .singlesList ; $4f2a
-.partnerSlot:
+.femalePartner:
 	ld hl, CompanionKateActorList ; $4f2c
 	ld a, $03 ; $4f2f
 	test_flag FLAG_DOUBLES ; $4f31

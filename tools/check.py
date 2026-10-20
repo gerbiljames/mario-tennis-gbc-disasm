@@ -1208,6 +1208,16 @@ RAW_ID_FAMILIES = {
     "GetDefaultMinigameRecordValue(a)": "MGRECORD",
     "CheckUnlockCondition(a)": "MGRECORD",
     "RestoreMenuBgAndDrawPanel(b)": "PANELANIM",
+    "CloseChoiceTabPanel(b)": "MENUSLIDE",
+    "CloseCourtSelect4Panel(b)": "MENUSLIDE",
+    "CloseCourtSelect9Panel(b)": "MENUSLIDE",
+    "SavedDataPickerSlideOut(b)": "MENUSLIDE",
+    "N64RecordTypeSlideOut(b)": "MENUSLIDE",
+    "MainMenuSlideOut(b)": "MENUSLIDE",
+    "MatchFormatSlideOut(b)": "MENUSLIDE",
+    "CloseMatchRulesPanel(b)": "MENUSLIDE",
+    "MinigameSelectSlideOut6(b)": "MENUSLIDE",
+    "MinigameSelectSlideOut9(b)": "MENUSLIDE",
     "FlushWram3MapRows(b)": "MAPROWS",
     "InitMatchRecordFromCharId(c)": "MATCHREC",
     "SetPendingExpAward(b)": "EXPAWARD",
@@ -2377,7 +2387,9 @@ def check_local_names(fail):
     `.done` / `.exit` / `.finish` local the line above does not fall into
     runs no dialogue, movement or prompt macro before it leaves. The `jr z`
     target after a yes/no prompt is not named as a no, nor the `jr nz` one
-    as a yes, and a local's constant 0 / 1 return agrees with its name."""
+    as a yes, and a local's constant 0 / 1 return agrees with its name. In a
+    run of `bit PADB_X / jr|jp nz` pairs, once one d-pad target names its
+    direction, every d-pad target not shared by several bits names its own."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
     n, seen, yes_no_used, return_used, mode_used = 0, set(), set(), set(), set()
@@ -2388,6 +2400,7 @@ def check_local_names(fail):
         n += _mode_names(fail, bank, lines, mode_used, external)
         n += _yes_no_branch_names(fail, bank, lines, yes_no_used)
         n += _return_value_names(fail, bank, lines, return_used)
+        n += _pad_dispatch_names(fail, bank, lines)
         labels, scope = {}, None
         for k, line in enumerate(lines):
             g = _GLOBAL_RE.match(line)
@@ -2599,6 +2612,51 @@ def _name_words(local):
     neg = bool(words) and (words[0] in ("no", "not") or any(w in _NEG_WORDS for w in words))
     pos = not neg and any(w in _POS_WORDS for w in words)
     return pos, neg
+
+
+
+_PAD_DIRS = ("UP", "DOWN", "LEFT", "RIGHT")
+
+
+def _pad_dispatch_names(fail, bank, lines):
+    """In a run of 2+ `bit PADB_X, r / jr|jp nz, T` pairs where some d-pad
+    target carries its own direction word, every d-pad target does, unless
+    several bits share it."""
+    code = [line.split(";")[0].strip() for line in lines]
+    owner, scope = [], None
+    for line in lines:
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+        owner.append(scope)
+    n, i = 0, 0
+    while i < len(code):
+        chain, j = [], i
+        while j + 1 < len(code):
+            m = re.fullmatch(r"bit PADB_(\w+), \w+", code[j])
+            b = re.fullmatch(r"j[rp] nz, ([\w.]+)", code[j + 1])
+            if not (m and b):
+                break
+            chain.append((m.group(1), b.group(1)))
+            j += 2
+        start, i = i, j + 1 if j > i else i + 1
+        pads = [(d, t) for d, t in chain if d in _PAD_DIRS]
+        if len(chain) < 2 or not pads:
+            continue
+        n += 1
+        targets = [t for _, t in chain]
+        own = [(d, t, d.lower() in _words(t.split(".")[-1])) for d, t in pads]
+        if not any(o for *_, o in own):
+            continue
+        for d, t, o in own:
+            if not o and targets.count(t) == 1:
+                full = owner[start] + t if t.startswith(".") else t
+                fail("localnames", f"${bank:02x}: {full} is the PADB_{d} target of a dispatch "
+                                   "whose other d-pad targets name their direction")
+    return n
+
+
+def _words(name):
+    return [w.lower() for w in re.findall(r"[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+", name)]
 
 
 def _return_value_names(fail, bank, lines, used):

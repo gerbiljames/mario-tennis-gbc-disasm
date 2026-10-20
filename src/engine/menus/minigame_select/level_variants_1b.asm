@@ -91,7 +91,7 @@ RunMinigameLevelSelect2:
 	ld hl, rIE ; $6eba
 	set B_IE_TIMER, [hl] ; $6ebd
 	wram_bank WRAM_SCREEN ; $6ebf
-	ld b, $01 ; $6ec5
+	ld b, MENUSLIDE_FORWARD ; $6ec5
 	farcall CloseChoiceTabPanel ; $6ec7
 	ld a, MENUSLIDE_FORWARD ; $6eca
 	ld [wMenuSlideDirection], a ; $6ecc
@@ -106,7 +106,7 @@ RunMinigameLevelSelect2:
 	ld hl, rIE ; $6ee3
 	set B_IE_TIMER, [hl] ; $6ee6
 	wram_bank WRAM_SCREEN ; $6ee8
-	ld b, $00 ; $6eee
+	ld b, MENUSLIDE_BACK ; $6eee
 	farcall CloseChoiceTabPanel ; $6ef0
 	ld a, MENUSLIDE_BACK ; $6ef3
 	ld [wMenuSlideDirection], a ; $6ef5
@@ -267,7 +267,7 @@ RunMinigameLevelSelect3:
 	ld hl, rIE ; $7043
 	set B_IE_TIMER, [hl] ; $7046
 	wram_bank WRAM_SCREEN ; $7048
-	ld b, $01 ; $704e
+	ld b, MENUSLIDE_FORWARD ; $704e
 	farcall N64RecordTypeSlideOut ; $7050
 	ld a, MENUSLIDE_FORWARD ; $7053
 	ld [wMenuSlideDirection], a ; $7055
@@ -282,7 +282,7 @@ RunMinigameLevelSelect3:
 	ld hl, rIE ; $706c
 	set B_IE_TIMER, [hl] ; $706f
 	wram_bank WRAM_SCREEN ; $7071
-	ld b, $00 ; $7077
+	ld b, MENUSLIDE_BACK ; $7077
 	farcall N64RecordTypeSlideOut ; $7079
 	ld a, MENUSLIDE_BACK ; $707c
 	ld [wMenuSlideDirection], a ; $707e
@@ -443,7 +443,7 @@ RunSavedDataTypeSelect:
 	ld hl, rIE ; $71c9
 	set B_IE_TIMER, [hl] ; $71cc
 	wram_bank WRAM_SCREEN ; $71ce
-	ld b, $01 ; $71d4
+	ld b, MENUSLIDE_FORWARD ; $71d4
 	farcall CloseChoiceTabPanel ; $71d6
 	ld a, MENUSLIDE_FORWARD ; $71d9
 	ld [wMenuSlideDirection], a ; $71db
@@ -457,7 +457,7 @@ RunSavedDataTypeSelect:
 	ld hl, rIE ; $71ec
 	set B_IE_TIMER, [hl] ; $71ef
 	wram_bank WRAM_SCREEN ; $71f1
-	ld b, $00 ; $71f7
+	ld b, MENUSLIDE_BACK ; $71f7
 	farcall CloseChoiceTabPanel ; $71f9
 	ld a, MENUSLIDE_BACK ; $71fc
 	ld [wMenuSlideDirection], a ; $71fe

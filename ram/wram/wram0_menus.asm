@@ -244,7 +244,7 @@ wCutsceneSlideTimer:: db
 ; [8-bit] Dirty flags for the bank $18 BG map shadow buffers: low nibble queues the $d800 -> $9800 tilemap copy, high nibble the $dc00 -> VRAM1 $9800 attribute copy; cleared by Unused_18_FlushBgMapShadowToVram
 wBgMapShadowDirty:: db
 
-; [8-bit] Debug character viewer (Unused_1a_RunDebugCharViewer): page of the 2x16 character grid, 0 or 1, stepped when the cursor wraps off the bottom/top row. Selected character id = (page << 4) + wDebugCharViewerIndex, stored to $d002 and passed to LoadOnCourtCharTilesA
+; [8-bit] Debug character viewer (Unused_1a_RunDebugCharViewer): page of the 2x16 character grid, 0 or 1, stepped when the cursor wraps off the bottom/top row. Selected character id = (page << 4) + wDebugCharViewerIndex, stored to wCharViewerCharId and passed to LoadOnCourtCharTilesA
 wDebugCharViewerPage:: db
 
 ; [8-bit] Debug character viewer: cursor 0-15 within the page; LEFT/RIGHT step 1 and wrap in the row of 8, UP/DOWN step 8 and roll into wDebugCharViewerPage. Also indexes the cursor-sprite position table at $1a:$6b0f

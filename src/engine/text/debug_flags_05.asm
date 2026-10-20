@@ -128,15 +128,15 @@ DebugMoveFlagCursor:
 	ld e, a ; $6551
 	ldh a, [hPlayerInputFlags] ; $6552
 	bit PADB_LEFT, a ; $6554
-	jr nz, .next ; $6556
+	jr nz, .left ; $6556
 	bit PADB_RIGHT, a ; $6558
 	jr nz, .right ; $655a
 	bit PADB_UP, a ; $655c
 	jr nz, .up ; $655e
 	bit PADB_DOWN, a ; $6560
-	jr nz, .negative ; $6562
+	jr nz, .down ; $6562
 	jr .wrapCursor ; $6564
-.next:
+.left:
 	dec d ; $6566
 	jr .wrapCursor ; $6567
 .right:
@@ -145,7 +145,7 @@ DebugMoveFlagCursor:
 .up:
 	dec e ; $656c
 	jr .wrapCursor ; $656d
-.negative:
+.down:
 	inc e ; $656f
 .wrapCursor:
 	ld a, d ; $6570

@@ -207,7 +207,7 @@ SpawnServeIndicatorObjs:
 	call SetObjSpriteTemplate ; $4257
 	ld a, [wScoreboardLayout] ; $425a
 	cp SCOREBOARD_LESSON ; $425d
-	jr z, .player2Indicator ; $425f
+	jr z, .lessonLayout ; $425f
 	ld a, [wServingCharCourtPos] ; $4261
 	ld hl, ServeIndicatorObjTemplates_09 ; $4264
 	ld bc, wObjSlot1 ; $4267
@@ -215,7 +215,7 @@ SpawnServeIndicatorObjs:
 	call GetPlayer2ServeIndicatorSprites ; $426d
 	call SetObjSpriteTemplate ; $4270
 	ret ; $4273
-.player2Indicator:
+.lessonLayout:
 	ld a, [wServingCharCourtPos] ; $4274
 	and COURTPOSF_FAR ; $4277
 	ret nz ; $4279

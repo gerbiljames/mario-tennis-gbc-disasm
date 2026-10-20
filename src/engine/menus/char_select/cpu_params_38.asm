@@ -429,7 +429,7 @@ NeedsCpuDifficultyPrompt:
 ; the Mario cast may be flipped; created characters set handedness at name entry
 ; instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
 ; "START: Change Hands", and DrawCharSelectSlotLabel swaps the word in it for one
-; of three pre-rendered labels on $df00's three values -- 30:150/151/152 are
+; of three pre-rendered labels on wCharGridHandedness's three values -- 30:150/151/152 are
 ; "START: Right-Handed", "START: Left-Handed" and "START: Change Hands".
 ; On confirm the slot's wCharSelectSlotLeftHanded is set, and
 ; ApplyHandednessToCharRecords copies it to the match record's +$0e, which
