@@ -52,19 +52,19 @@ ApplyN64RecordsUnlockFlags:
 	farcall SetSaveFlag ; $56cd
 	pop de ; $56d0
 	push de ; $56d1
-	ld de, SAVEFLAG_UNLOCKED_FAY ; $56d2
+	ld de, SAVEFLAG_UNLOCKED_WALUIGI ; $56d2
 	farcall SetSaveFlag ; $56d5
 	pop de ; $56d8
 	push de ; $56d9
-	ld de, SAVEFLAG_UNLOCKED_CURT ; $56da
+	ld de, SAVEFLAG_UNLOCKED_YOSHI ; $56da
 	farcall SetSaveFlag ; $56dd
 	pop de ; $56e0
 	push de ; $56e1
-	ld de, SAVEFLAG_UNLOCKED_MARK ; $56e2
+	ld de, SAVEFLAG_UNLOCKED_BOWSER ; $56e2
 	farcall SetSaveFlag ; $56e5
 	pop de ; $56e8
 	push de ; $56e9
-	ld de, SAVEFLAG_UNLOCKED_SEAN ; $56ea
+	ld de, SAVEFLAG_UNLOCKED_WARIO ; $56ea
 	farcall SetSaveFlag ; $56ed
 	pop de ; $56f0
 .restore:

@@ -572,12 +572,11 @@ screen-mode bits that cannot outlive a map transition.
 | `$0c`-`$0d` | equipment owned; ending-credits control bits |
 | `$0e`-`$10` | NPC talked/moved/turned and scene-seen bits (`FLAG_RESTAURANT_NPC12_MOVED_STAGE_*`, `FLAG_REPAIR_COUNTER_*`, …) |
 | `$11`-`$13` | `FLAG_TROPHY_EXP_GROUP_*_TIER_*`: one-time N64 trophy-EXP tiers (`TrophyExpTierFlags`) |
-| `$14`-`$17` | `FLAG_CHEAT_UNLOCK_0`-`_12` (`$14`-`$15`, set in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
+| `$14`-`$17` | `FLAG_UNLOCKED_<char>` (`$14`-`$15`: the 13 story-cast grid unlocks, set by story wins through `RewardUnlockFlagTable` and in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
 | `$18`-`$1b` | training-drill clears (Service / Net Game / Stroke match+practice, Tennis Machine, Wall) |
 
 `SAVEFLAG_*` covers what survives a slot erase: character unlocks
-(`SAVEFLAG_UNLOCKED_FAY` … `_ELDEN`, plus flags 20-31 whose number equals the
-character id they unlock), arcade-minigame clears, court unlocks, the
+(the six Mario-cast `SAVEFLAG_UNLOCKED_*`), arcade-minigame clears, court unlocks, the
 per-slot option bits (A = music on/off, `SetStorySlotMusicMuted` from
 `StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotCourtView` from
 `MatchPauseMenu_CameraSelect`), `SAVEFLAG_OPENING_SEEN`, and
@@ -601,7 +600,7 @@ progression flag exists in both.
    set (`$14:$7117`/`$7121`).
 5. Peach's Castle (29) and Special Court (28), gated on
    `FLAG_REACHED_MARIO_WORLD_*`, hosting the Dream Match
-   (`FLAG_WON_DREAM_MATCH_*`, granting `SAVEFLAG_UNLOCKED_SAMMI`/`_ELDEN`).
+   (`FLAG_WON_DREAM_MATCH_*`, granting `SAVEFLAG_UNLOCKED_MARIO`/`_PEACH`).
 
 Stages read back as scene variation: `InitTournamentSiteSceneVariant`
 (`$15:$4271`) and `SetupCenterCourtSceneVariant` (`$11:$41b6`) test the

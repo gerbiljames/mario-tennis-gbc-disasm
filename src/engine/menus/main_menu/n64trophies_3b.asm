@@ -110,17 +110,17 @@ ApplyUnlockEverythingCheat:
 	farcall SetSaveFlag ; $4b48
 	ld de, SAVEFLAG_COURT_WAREHOUSE ; $4b4b
 	farcall SetSaveFlag ; $4b4e
-	ld de, SAVEFLAG_UNLOCKED_FAY ; $4b51
+	ld de, SAVEFLAG_UNLOCKED_WALUIGI ; $4b51
 	farcall SetSaveFlag ; $4b54
-	ld de, SAVEFLAG_UNLOCKED_CURT ; $4b57
+	ld de, SAVEFLAG_UNLOCKED_YOSHI ; $4b57
 	farcall SetSaveFlag ; $4b5a
-	ld de, SAVEFLAG_UNLOCKED_MARK ; $4b5d
+	ld de, SAVEFLAG_UNLOCKED_BOWSER ; $4b5d
 	farcall SetSaveFlag ; $4b60
-	ld de, SAVEFLAG_UNLOCKED_SEAN ; $4b63
+	ld de, SAVEFLAG_UNLOCKED_WARIO ; $4b63
 	farcall SetSaveFlag ; $4b66
-	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $4b69
+	ld de, SAVEFLAG_UNLOCKED_MARIO ; $4b69
 	farcall SetSaveFlag ; $4b6c
-	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $4b6f
+	ld de, SAVEFLAG_UNLOCKED_PEACH ; $4b6f
 	farcall SetSaveFlag ; $4b72
 	ld de, SAVEFLAG_CLEARED_BOO_BLAST_1 ; $4b75
 	farcall SetSaveFlag ; $4b78
@@ -168,31 +168,31 @@ ApplyUnlockEverythingCheat:
 	farcall CheckStorySlot ; $4bec
 	cp $fe ; $4bef
 	jr z, .restore ; $4bf1
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_0 ; $4bf3
+	ld_flag_id de, FLAG_UNLOCKED_PAM ; $4bf3
 	call SetGameFlag ; $4bf6
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_1 ; $4bf9
+	ld_flag_id de, FLAG_UNLOCKED_BOB ; $4bf9
 	call SetGameFlag ; $4bfc
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_2 ; $4bff
+	ld_flag_id de, FLAG_UNLOCKED_BETH ; $4bff
 	call SetGameFlag ; $4c02
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_3 ; $4c05
+	ld_flag_id de, FLAG_UNLOCKED_FAY ; $4c05
 	call SetGameFlag ; $4c08
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_4 ; $4c0b
+	ld_flag_id de, FLAG_UNLOCKED_CURT ; $4c0b
 	call SetGameFlag ; $4c0e
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_5 ; $4c11
+	ld_flag_id de, FLAG_UNLOCKED_MARK ; $4c11
 	call SetGameFlag ; $4c14
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_6 ; $4c17
+	ld_flag_id de, FLAG_UNLOCKED_SEAN ; $4c17
 	call SetGameFlag ; $4c1a
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_7 ; $4c1d
+	ld_flag_id de, FLAG_UNLOCKED_SAMMI ; $4c1d
 	call SetGameFlag ; $4c20
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_8 ; $4c23
+	ld_flag_id de, FLAG_UNLOCKED_ELDEN ; $4c23
 	call SetGameFlag ; $4c26
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_9 ; $4c29
+	ld_flag_id de, FLAG_UNLOCKED_B_COZ ; $4c29
 	call SetGameFlag ; $4c2c
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_10 ; $4c2f
+	ld_flag_id de, FLAG_UNLOCKED_A_COZ ; $4c2f
 	call SetGameFlag ; $4c32
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_11 ; $4c35
+	ld_flag_id de, FLAG_UNLOCKED_SPIKE ; $4c35
 	call SetGameFlag ; $4c38
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_12 ; $4c3b
+	ld_flag_id de, FLAG_UNLOCKED_EMILY ; $4c3b
 	call SetGameFlag ; $4c3e
 	farcall SaveStorySlot ; $4c41
 .restore:

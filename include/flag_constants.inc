@@ -126,20 +126,20 @@ def FLAG_TROPHY_EXP_GROUP_5_TIER_2 equ 157 ; wGameFlags byte $13 bit 5
 def FLAG_TROPHY_EXP_GROUP_5_TIER_3 equ 158 ; wGameFlags byte $13 bit 6
 def FLAG_TROPHY_EXP_GROUP_5_TIER_4 equ 159 ; wGameFlags byte $13 bit 7
 
-def FLAG_CHEAT_UNLOCK_0 equ 160 ; wGameFlags byte $14 bit 0
-def FLAG_CHEAT_UNLOCK_1 equ 161 ; wGameFlags byte $14 bit 1
-def FLAG_CHEAT_UNLOCK_2 equ 162 ; wGameFlags byte $14 bit 2
-def FLAG_CHEAT_UNLOCK_3 equ 163 ; wGameFlags byte $14 bit 3
-def FLAG_CHEAT_UNLOCK_4 equ 164 ; wGameFlags byte $14 bit 4
-def FLAG_CHEAT_UNLOCK_5 equ 165 ; wGameFlags byte $14 bit 5
-def FLAG_CHEAT_UNLOCK_6 equ 166 ; wGameFlags byte $14 bit 6
-def FLAG_CHEAT_UNLOCK_7 equ 167 ; wGameFlags byte $14 bit 7
+def FLAG_UNLOCKED_PAM equ 160 ; wGameFlags byte $14 bit 0
+def FLAG_UNLOCKED_BOB equ 161 ; wGameFlags byte $14 bit 1
+def FLAG_UNLOCKED_BETH equ 162 ; wGameFlags byte $14 bit 2
+def FLAG_UNLOCKED_FAY equ 163 ; wGameFlags byte $14 bit 3
+def FLAG_UNLOCKED_CURT equ 164 ; wGameFlags byte $14 bit 4
+def FLAG_UNLOCKED_MARK equ 165 ; wGameFlags byte $14 bit 5
+def FLAG_UNLOCKED_SEAN equ 166 ; wGameFlags byte $14 bit 6
+def FLAG_UNLOCKED_SAMMI equ 167 ; wGameFlags byte $14 bit 7
 
-def FLAG_CHEAT_UNLOCK_8 equ 168 ; wGameFlags byte $15 bit 0
-def FLAG_CHEAT_UNLOCK_11 equ 169 ; wGameFlags byte $15 bit 1
-def FLAG_CHEAT_UNLOCK_12 equ 170 ; wGameFlags byte $15 bit 2
-def FLAG_CHEAT_UNLOCK_9 equ 171 ; wGameFlags byte $15 bit 3
-def FLAG_CHEAT_UNLOCK_10 equ 172 ; wGameFlags byte $15 bit 4
+def FLAG_UNLOCKED_ELDEN equ 168 ; wGameFlags byte $15 bit 0
+def FLAG_UNLOCKED_SPIKE equ 169 ; wGameFlags byte $15 bit 1
+def FLAG_UNLOCKED_EMILY equ 170 ; wGameFlags byte $15 bit 2
+def FLAG_UNLOCKED_B_COZ equ 171 ; wGameFlags byte $15 bit 3
+def FLAG_UNLOCKED_A_COZ equ 172 ; wGameFlags byte $15 bit 4
 def FLAG_REACHED_ISLAND_OPEN_SINGLES equ 174 ; wGameFlags byte $15 bit 6
 def FLAG_REACHED_ISLAND_OPEN_DOUBLES equ 175 ; wGameFlags byte $15 bit 7
 
