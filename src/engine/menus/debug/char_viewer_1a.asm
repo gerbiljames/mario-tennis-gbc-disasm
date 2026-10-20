@@ -214,7 +214,7 @@ Unused_1a_RunCharViewerInputLoop:
 	jr nz, .selectPalette ; $6df0
 	ld a, [wCharViewerCursor] ; $6df2
 	ld [wCharViewerSavedCursor], a ; $6df5
-	ld hl, CharViewerInputLoopTable ; $6df8
+	ld hl, CharViewerCursorAnimIds ; $6df8
 	add_hl_a ; $6dfb
 	ld d, [hl] ; $6e00
 	wram_bank WRAM_ACTORS ; $6e01

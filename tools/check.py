@@ -502,8 +502,8 @@ KNOWN_DB_WORDS = {
     ("TargetShotZoneOverlayTiles", 32): "tile ids",
     ("StarWarpPathY", 146): "Y coordinates",
     ("ContinuePreviousGamePromptString", 6): "tile data",
-    ("RankingMarkerFanfareCoordSet1", 8): "screen coordinates",
-    ("DoublesRankingMarkerFanfareCoordSet1", 8): "screen coordinates",
+    ("RankingMarkerFanfareCoordsRound2", 8): "screen coordinates",
+    ("DoublesRankingMarkerFanfareCoordsRound2", 8): "screen coordinates",
     **{(f"CharDataScreenStatBar{n}", 2): "bar tile ids" for n in range(11, 16)},
     ("NameEntryCursorTable", 54): "cursor y, x pairs",
 }
@@ -2342,7 +2342,7 @@ _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 INDEXED_ARRAYS = {
     "CHARREC_TRAIN_LEVELS": "TRAINSTAT_",
     "wCharDataLevels": "TRAINSTAT_",
-    "wCharDataNewLevels": "TRAINSTAT_",
+    "wCharDataStartLevels": "TRAINSTAT_",
     "wCharDataStats": "CHARSTAT_",
     "wCharDataStatDeltas": "CHARSTAT_",
     "wCharDataStatsNoEquipment": "CHARSTAT_",
@@ -2631,7 +2631,7 @@ _TILE_PLANE_WRITERS = {
     "FormatAndDrawNumber": "de", "CopyLabelTilesToTilemap": "de", "CopyTilesAndAttrsRun": "de",
     "WriteNameStringTiles": "de", "PlotTilesAtOffsets": "de", "ShiftDestForLongName": "de",
     "DrawContinuePromptText": "hl", "DrawSaveWarningTextLine1": "hl", "DrawSaveWarningTextLine2": "hl",
-    "FillTilemapRun": "hl", "DrawFourTileFlagLabel": "hl",
+    "FillTilemapRun": "hl", "DrawHandednessLabel": "hl",
     "CharDataScreen_WriteStatNumber": "de", "CharDataScreen_DrawStatBar": "de",
     "WriteExpScreenStringTiles": "de",
     "BlitTilemapRunsFromTable": "bc", "ApplyTilemapPatchList": "bc",

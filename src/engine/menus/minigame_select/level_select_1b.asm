@@ -352,7 +352,7 @@ CountClearedMinigameLevels:
 	ld c, $00 ; $6bd3
 	ld a, [wLevelSelectMinigame] ; $6bd5
 	add a ; $6bd8
-	ld hl, ClearedMinigameLevelsTable ; $6bd9
+	ld hl, MinigameLevelClearFlagPtrs ; $6bd9
 	add_hl_a ; $6bdc
 	ld a, [hl+] ; $6be1
 	ld h, [hl] ; $6be2
@@ -378,66 +378,66 @@ CountClearedMinigameLevels:
 	ld a, c ; $6bfa
 	ld [wLevelSelectClearedCount], a ; $6bfb
 	ld a, [wLevelSelectClearedCount] ; $6bfe
-	ld hl, CountClearedMinigameLevelsTable ; $6c01
+	ld hl, LevelSelectColumnsByClearedCount ; $6c01
 	add_hl_a ; $6c04
 	ld a, [hl] ; $6c09
 	ld [wLevelSelectColumns], a ; $6c0a
 	ret ; $6c0d
-CountClearedMinigameLevelsTable:
+LevelSelectColumnsByClearedCount:
 	; $6c0e, 3 bytes (bytes:3)
 	db $02, $02, $03 ; 0x00
-ClearedMinigameLevelsTable:
+MinigameLevelClearFlagPtrs:
 	; $6c11, 18 bytes (records:2)
-	dw MinigameLevelRow0 ; record 0
-	dw MinigameLevelRow1 ; record 1
-	dw MinigameLevelRow2 ; record 2
-	dw MinigameLevelRow3 ; record 3
-	dw MinigameLevelRow4 ; record 4
-	dw MinigameLevelRow5 ; record 5
-	dw MinigameLevelRow6 ; record 6
-	dw MinigameLevelRow7 ; record 7
-	dw MinigameLevelRow8 ; record 8
-MinigameLevelRow0:
+	dw BooBlastLevelClearFlags ; record 0
+	dw ShootingStarLevelClearFlags ; record 1
+	dw PerfectShotLevelClearFlags ; record 2
+	dw TargetShotLevelClearFlags ; record 3
+	dw FruitFantasyLevelClearFlags ; record 4
+	dw BananaBunchLevelClearFlags ; record 5
+	dw TreasureBoxLevelClearFlags ; record 6
+	dw MedallionMatchLevelClearFlags ; record 7
+	dw TwoOnOneLevelClearFlags ; record 8
+BooBlastLevelClearFlags:
 	; $6c23, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; 0
 	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; 1
 	dw SAVEFLAG_CLEARED_BOO_BLAST_3 ; 2
-MinigameLevelRow1:
+ShootingStarLevelClearFlags:
 	; $6c29, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; 1
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_3 ; 2
-MinigameLevelRow2:
+PerfectShotLevelClearFlags:
 	; $6c2f, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_1 ; 0
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; 1
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_3 ; 2
-MinigameLevelRow3:
+TargetShotLevelClearFlags:
 	; $6c35, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_TARGET_SHOT_1 ; 0
 	dw SAVEFLAG_CLEARED_TARGET_SHOT_2 ; 1
 	dw SAVEFLAG_CLEARED_TARGET_SHOT_3 ; 2
-MinigameLevelRow4:
+FruitFantasyLevelClearFlags:
 	; $6c3b, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_1 ; 0
 	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_2 ; 1
 	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_3 ; 2
-MinigameLevelRow5:
+BananaBunchLevelClearFlags:
 	; $6c41, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BANANA_BUNCH_1 ; 0
 	dw SAVEFLAG_CLEARED_BANANA_BUNCH_2 ; 1
 	dw SAVEFLAG_CLEARED_BANANA_BUNCH_3 ; 2
-MinigameLevelRow6:
+TreasureBoxLevelClearFlags:
 	; $6c47, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; 0
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_2 ; 1
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_3 ; 2
-MinigameLevelRow7:
+MedallionMatchLevelClearFlags:
 	; $6c4d, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; 0
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; 1
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_3 ; 2
-MinigameLevelRow8:
+TwoOnOneLevelClearFlags:
 	; $6c53, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; 0
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 1
@@ -448,7 +448,7 @@ LoadMinigameLevelSelectGfx:
 .loop:
 	ld a, c ; $6c64
 	add a ; $6c65
-	ld hl, MinigameLevelSelectGfxTable ; $6c66
+	ld hl, MinigameLevelFlagIconTilePtrs ; $6c66
 	add_hl_a ; $6c69
 	ld a, [hl+] ; $6c6e
 	ld h, [hl] ; $6c6f
@@ -463,7 +463,7 @@ LoadMinigameLevelSelectGfx:
 	pop de ; $6c7c
 	pop bc ; $6c7d
 	pop af ; $6c7e
-	ld hl, MinigameLevelSelectTable ; $6c7f
+	ld hl, MinigameLevelFlagIconVramDests ; $6c7f
 	ld a, c ; $6c82
 	add a ; $6c83
 	add_hl_a ; $6c84
@@ -495,12 +495,12 @@ LoadMinigameLevelSelectGfx:
 	ld a, c ; $6cb9
 	cp $03 ; $6cba
 	jr nz, .loop ; $6cbc
-	jr .loadGfx0 ; $6cbe
+	jr .loadLabelGfx ; $6cbe
 .noneCleared:
 	ld a, c ; $6cc0
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
-.loadGfx0:
+.loadLabelGfx:
 	ld b, TILEBLOCK_Level1LabelGfx ; $6cc5
 	ld c, Level1LabelGfx_SIZE / 16 ; $6cc7
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
@@ -542,13 +542,13 @@ LoadMinigameLevelSelectGfx:
 	farcall LoadIndexedPalette ; $6d24
 	pop_wram_bank ; $6d27
 	ret ; $6d2c
-MinigameLevelSelectGfxTable:
+MinigameLevelFlagIconTilePtrs:
 	; $6d2d, 8 bytes (records:2)
 	dslot DataPtr_Level1FlagIconTiles ; record 0
 	dslot DataPtr_Level2FlagIconTiles ; record 1
 	dslot DataPtr_Level3FlagIconTiles ; record 2
 	dslot DataPtr_LockedLevelFlagIconTiles ; record 3
-MinigameLevelSelectTable:
+MinigameLevelFlagIconVramDests:
 	; $6d35, 8 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -564,7 +564,7 @@ DrawMinigameLevelDescription:
 	cp $01 ; $6d51
 	jr nz, .getMenuCursorIndex ; $6d53
 	wram_bank WRAM_SCREEN ; $6d55
-	ld hl, $00c5 ; $6d5b
+	ld hl, Text_MinigameLevelCantPlayYet ; $6d5b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6d5e
 	jr .renderTextToBuffer64 ; $6d61
 .getMenuCursorIndex:

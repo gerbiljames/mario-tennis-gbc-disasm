@@ -25,7 +25,7 @@ MoveCharDataScreenSelection:
 	call CharDataScreen_DrawPageColumns ; $53fd
 	call FlushCharDataTilemaps ; $5400
 	ret ; $5403
-ApplyCharStatLevelUp:
+UndoLastCharStatPoint:
 	wram_bank WRAM_SCENE ; $5404
 	ld a, [wCharDataChoiceCount] ; $540a
 	or a ; $540d
@@ -36,30 +36,30 @@ ApplyCharStatLevelUp:
 	push af ; $5415
 	ld_story_char_field CHARREC_LEVEL ; $5416
 	pop af ; $5429
-	ld a, [wCharDataLevel] ; $542a
+	ld a, [wCharDataStartLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $542f
 	pop af ; $5442
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $5443
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $5443
 	ld [hl], a ; $5446
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $5447
 	push af ; $544a
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $544b
 	pop af ; $545e
-	ld a, [wCharDataNewLevels + TRAINSTAT_POWER] ; $545f
+	ld a, [wCharDataStartLevels + TRAINSTAT_POWER] ; $545f
 	ld [hl], a ; $5462
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $5463
 	push af ; $5466
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $5467
 	pop af ; $547a
-	ld a, [wCharDataNewLevels + TRAINSTAT_CONTROL] ; $547b
+	ld a, [wCharDataStartLevels + TRAINSTAT_CONTROL] ; $547b
 	ld [hl], a ; $547e
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $547f
 	push af ; $5482
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $5483
 	pop af ; $5496
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPEED] ; $5497
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPEED] ; $5497
 	ld [hl], a ; $549a
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $549b
 	ld a, [wStoryCharacterSlot] ; $549e
@@ -69,7 +69,7 @@ ApplyCharStatLevelUp:
 	ld b, $00 ; $54a8
 .loop:
 	dec c ; $54aa
-	jr z, .countDone ; $54ab
+	jr z, .replayDone ; $54ab
 	push bc ; $54ad
 	ld a, b ; $54ae
 	ld_hl_indexed wCharDataChoiceLog ; $54af
@@ -80,7 +80,7 @@ ApplyCharStatLevelUp:
 	pop bc ; $54be
 	inc b ; $54bf
 	jr .loop ; $54c0
-.countDone:
+.replayDone:
 	ld a, [wCharDataChoiceCount] ; $54c2
 	dec a ; $54c5
 	ld [wCharDataChoiceCount], a ; $54c6
@@ -94,11 +94,11 @@ ApplyCharStatLevelUp:
 	call FlushCharDataTilemaps ; $54dd
 	ld a, $01 ; $54e0
 	ret ; $54e2
-SelectCharDataConfirmSlot:
+ResetCharDataChoices:
 	wram_bank WRAM_SCENE ; $54e3
 	ld a, CHARDATAPAGE_CONFIRM ; $54e9
 	ld [wCharDataPage], a ; $54eb
-	call CommitCharDataToRecord ; $54ee
+	call RevertCharDataToStart ; $54ee
 	ret ; $54f1
 DrawStatArrowIndicators:
 	wram_bank WRAM_SCENE ; $54f2
@@ -651,34 +651,34 @@ CharDataScreenBand1Tilemap:
 CharDataScreenBand1Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin" ; $657f, 23 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.inc" ; DEF CharDataScreenBand1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage0Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage0Columns.asm" ; $6596, 50 bytes (bytes:10)
+CharDataScreenSpinPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenSpinPageAttrs.asm" ; $6596, 50 bytes (bytes:10)
 CharDataScreenBand2Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin" ; $65c8, 67 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.inc" ; DEF CharDataScreenBand2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand2Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin" ; $660b, 23 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.inc" ; DEF CharDataScreenBand2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage1Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage1Columns.asm" ; $6622, 70 bytes (bytes:10)
+CharDataScreenPowerPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPowerPageAttrs.asm" ; $6622, 70 bytes (bytes:10)
 CharDataScreenBand3Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin" ; $6668, 58 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.inc" ; DEF CharDataScreenBand3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand3Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin" ; $66a2, 24 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.inc" ; DEF CharDataScreenBand3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage2Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage2Columns.asm" ; $66ba, 50 bytes (bytes:10)
+CharDataScreenControlPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenControlPageAttrs.asm" ; $66ba, 50 bytes (bytes:10)
 CharDataScreenBand4Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin" ; $66ec, 72 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.inc" ; DEF CharDataScreenBand4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand4Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin" ; $6734, 25 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.inc" ; DEF CharDataScreenBand4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage3Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage3Columns.asm" ; $674d, 90 bytes (bytes:10)
-CharDataScreenPage4Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage4Columns.asm" ; $67a7, 30 bytes (bytes:10)
+CharDataScreenSpeedPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenSpeedPageAttrs.asm" ; $674d, 90 bytes (bytes:10)
+CharDataScreenConfirmPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenConfirmPageAttrs.asm" ; $67a7, 30 bytes (bytes:10)
 CharDataScreenBand5Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin" ; $67c5, 14 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.inc" ; DEF CharDataScreenBand5Tilemap_SIZE EQU its decoded length, generated from the .bin by make

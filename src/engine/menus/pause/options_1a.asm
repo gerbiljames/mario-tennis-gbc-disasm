@@ -5,7 +5,7 @@
 	farptr Unused_1a_RunDebugCharViewer ; $4008
 	farptr Unused_1a_ShowExpGainScreen ; $400a
 	farptr RunCharDataConfirmScreen ; $400c
-	farptr CharDataScreen_BuildStats ; $400e
+	farptr ComputeCharDataEquipmentDeltas ; $400e
 	farptr CharDataScreen_LoadGfx ; $4010
 	farptr DrawStatChangeArrows ; $4012
 Unused_1a_RunMinigameModePauseMenu:

@@ -56,7 +56,7 @@ DrawMinigameDataMarks:
 	call ClearMinigameMarkColumns ; $76ee
 	call DrawMinigameClearMarks ; $76f1
 	call DrawMinigameStarMarks ; $76f4
-	call DrawMinigameSpecialMark ; $76f7
+	call DrawTwoOnOneChallengeMark ; $76f7
 	ret ; $76fa
 DrawMinigameClearMarks:
 	ld hl, wMinigameDataClearFlags ; $76fb
@@ -94,7 +94,7 @@ DrawMinigameStarMarks:
 	cp $05 ; $7732
 	jr nz, .loop ; $7734
 	ret ; $7736
-DrawMinigameSpecialMark:
+DrawTwoOnOneChallengeMark:
 	ld a, [wMenuCursorY] ; $7737
 	cp $04 ; $773a
 	ret nz ; $773c
@@ -112,7 +112,7 @@ DrawMinigameMarkTile:
 	push bc ; $774d
 	push de ; $774e
 	push hl ; $774f
-	ld hl, MinigameMarkTileTable ; $7750
+	ld hl, MinigameMarkDestPtrs ; $7750
 	ld a, b ; $7753
 	add a ; $7754
 	add_hl_a ; $7755
@@ -142,26 +142,26 @@ DrawMinigameMarkTile:
 	pop bc ; $7785
 	pop af ; $7786
 	ret ; $7787
-MinigameMarkTileTable:
+MinigameMarkDestPtrs:
 	; $7788, 6 bytes (records:2)
-	dw MinigameStarRow0 ; record 0
-	dw MinigameStarRow1 ; record 1
-	dw MinigameStarRow2 ; record 2
-MinigameStarRow0:
+	dw MinigameLevel1MarkDests ; record 0
+	dw MinigameLevel2MarkDests ; record 1
+	dw MinigameChallengeMarkDests ; record 2
+MinigameLevel1MarkDests:
 	; $778e, 10 bytes (records:2)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 6 ; record 0
 	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 6 ; record 1
 	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; record 2
 	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 6 ; record 3
 	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 6 ; record 4
-MinigameStarRow1:
+MinigameLevel2MarkDests:
 	; $7798, 10 bytes (records:2)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 10 ; record 0
 	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 10 ; record 1
 	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; record 2
 	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 10 ; record 3
 	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; record 4
-MinigameStarRow2:
+MinigameChallengeMarkDests:
 	; $77a2, 10 bytes (records:2)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
 	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 14 ; record 1
@@ -194,7 +194,7 @@ ClearMinigameMarkColumns:
 	rect_size $02, $0a ; $77f3
 	farcall CopyTilemapRect ; $77f7
 	ret ; $77fa
-DrawStarLegendMark:
+DrawChallengeColumnHeader:
 	ld hl, wMinigameDataStarFlags ; $77fb
 	ld c, $00 ; $77fe
 .loop:

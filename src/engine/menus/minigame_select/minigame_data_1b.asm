@@ -5,41 +5,41 @@ DrawMarioCharDataTypeSelectCursor:
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex_1b ; $72aa
 	or a ; $72ad
-	jr nz, .drawMarioCharDataTypeCursorOption1 ; $72ae
-	call DrawMarioCharDataTypeCursorOption0 ; $72b0
+	jr nz, .minigames ; $72ae
+	call DrawMarioCharDataExhibitionCursor ; $72b0
 	ret ; $72b3
-.drawMarioCharDataTypeCursorOption1:
-	call DrawMarioCharDataTypeCursorOption1 ; $72b4
+.minigames:
+	call DrawMarioCharDataMinigamesCursor ; $72b4
 	ret ; $72b7
-DrawMarioCharDataTypeCursorOption0:
+DrawMarioCharDataExhibitionCursor:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
 	ld_xy de, $0c, $50 ; $72bc
 	farcall ApplySpriteBobOffset ; $72bf
-	ld hl, DrawMarioCharDataTypeCursorOption0_SpriteTemplate ; $72c2
+	ld hl, MarioCharDataExhibitionLabelTemplate ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld_xy de, $24, $48 ; $72cc
 	farcall ApplySpriteBobOffset ; $72cf
-	ld hl, DrawMarioCharDataTypeCursor_SpriteTemplate ; $72d2
+	ld hl, MarioCharDataTypeLabelTailTemplate ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
-DrawMarioCharDataTypeCursorOption1:
+DrawMarioCharDataMinigamesCursor:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
 	ld_xy de, $50, $50 ; $72dd
 	farcall ApplySpriteBobOffset ; $72e0
-	ld hl, DrawMarioCharDataTypeCursorOption1_SpriteTemplate ; $72e3
+	ld hl, MarioCharDataMinigamesLabelTemplate ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld_xy de, $6c, $48 ; $72ed
 	farcall ApplySpriteBobOffset ; $72f0
-	ld hl, DrawMarioCharDataTypeCursor_SpriteTemplate ; $72f3
+	ld hl, MarioCharDataTypeLabelTailTemplate ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
-DrawMarioCharDataTypeCursorOption0_SpriteTemplate:
+MarioCharDataExhibitionLabelTemplate:
 	; $72fa, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -50,7 +50,7 @@ DrawMarioCharDataTypeCursorOption0_SpriteTemplate:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawMarioCharDataTypeCursorOption1_SpriteTemplate:
+MarioCharDataMinigamesLabelTemplate:
 	; $731b, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -62,7 +62,7 @@ DrawMarioCharDataTypeCursorOption1_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-DrawMarioCharDataTypeCursor_SpriteTemplate:
+MarioCharDataTypeLabelTailTemplate:
 	; $7340, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -131,12 +131,12 @@ LoadMarioCharDataTypePalette:
 	ret ; $73c8
 MarioCharDataTypePalettePtrs:
 	; $73c9, 4 bytes (records:2)
-	dw MarioCharDataTypePalette0 ; record 0
-	dw MarioCharDataTypePalette1 ; record 1
-MarioCharDataTypePalette0:
-	INCLUDE "data/engine/menus/minigame_select/MarioCharDataTypePalette0.asm" ; $73cd, 8 bytes (palettes)
-MarioCharDataTypePalette1:
-	INCLUDE "data/engine/menus/minigame_select/MarioCharDataTypePalette1.asm" ; $73d5, 8 bytes (palettes)
+	dw MarioCharDataExhibitionPalette ; record 0
+	dw MarioCharDataMinigamesPalette ; record 1
+MarioCharDataExhibitionPalette:
+	INCLUDE "data/engine/menus/minigame_select/MarioCharDataExhibitionPalette.asm" ; $73cd, 8 bytes (palettes)
+MarioCharDataMinigamesPalette:
+	INCLUDE "data/engine/menus/minigame_select/MarioCharDataMinigamesPalette.asm" ; $73d5, 8 bytes (palettes)
 ShowMinigameDataScreen:
 	sound BGM_STATUS_SCREEN ; $73dd
 	call DisableLCDSafely ; $73df
@@ -206,7 +206,7 @@ BuildMinigameDataScreen:
 	call DrawMinigameDataMugshotsScrolled ; $7490
 .drawMinigameDataMarks:
 	call DrawMinigameDataMarks ; $7493
-	call DrawStarLegendMark ; $7496
+	call DrawChallengeColumnHeader ; $7496
 	farcall QueueWram3MapToVRAM ; $7499
 	ret ; $749c
 ScrollMinigameDataList:

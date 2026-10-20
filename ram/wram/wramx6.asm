@@ -70,12 +70,12 @@ wCharDataAnimCounter:: db
 wCharDataAnimSubStep:: db
 ; [8-bit] Which third of the screen still needs pushing to VRAM; FlushCharDataTilemapChunk sends one chunk per call (0, 1, 2). The animation task waits while it is nonzero
 wCharDataFlushChunk:: db
-; [8-bit] Points still unspent while editing. Heads the six bytes BackupCharData saves and RestoreCharData restores (this, wCharDataLevel, the four wCharDataNewLevels): everything a cancelled visit forgets
-wCharDataPointsWorking:: db
-; [8-bit] Level the character-data screen commits; CommitCharDataToRecord stores it to record +$18
-wCharDataLevel:: db
-; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; CommitCharDataToRecord stores them back into record +$38-$3b
-wCharDataNewLevels:: ds 4
+; [8-bit] Level-up points the visit started with: CharDataScreen_InitState counts the pending level-ups into it, RevertCharDataToStart copies it to wCharDataPointsLeft. Heads the six bytes BackupCharData saves and RestoreCharData restores (this, wCharDataStartLevel, the four wCharDataStartLevels): everything a cancelled visit forgets
+wCharDataPointsTotal:: db
+; [8-bit] The record's level before the pending level-ups, snapshotted by CharDataScreen_InitState; RevertCharDataToStart writes it back to record +$18
+wCharDataStartLevel:: db
+; [4 bytes] Spin/Power/Control/Speed levels before the pending level-ups, snapshotted by CharDataScreen_InitState; RevertCharDataToStart writes them back into record +$38-$3b
+wCharDataStartLevels:: ds 4
 ; [8-bit] Unspent level-up points, copied in from $d003 and decremented by CharDataScreen_InputLoop after each LevelUpPlayer
 wCharDataPointsLeft:: db
 ; [4 bytes] Spin/Power/Control/Speed levels as loaded from record +$38-$3b (LoadCharStats / LoadCharStatsWithLevelUpDeltas)
@@ -88,7 +88,7 @@ wCharDataStatDeltas:: ds 11
 wCharDataPage:: db
 ; [8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawConfirmSelectionCursor_1a draws the cursor from it
 wCharDataConfirmState:: db
-; [8-bit] Stat-digit fly-in step: GetStatDigitSpritePos indexes the RadialOffsetRamps_1c ramps with it. CharDataScreen_InitState seeds $0a and AnimateCharDataStatsReveal stores $09, $07, $05, $03, $02, $01, $00 as the reveal advances; nothing decrements it
+; [8-bit] Stat-digit fly-in step: GetStatDigitSpritePos indexes the StatDigitFlyInOffsetPtrs ramps with it. CharDataScreen_InitState seeds $0a and AnimateCharDataStatsReveal stores $09, $07, $05, $03, $02, $01, $00 as the reveal advances; nothing decrements it
 wCharDataDigitFlyInStep:: db
 ; [8-bit] AnimateCharDataStatsReveal step; CharDataScreen_InitState seeds it with $03
 wCharDataRevealStep:: db
@@ -146,7 +146,7 @@ wTrophyExpTotal:: dw
 wTrophyExpGroup:: db
 NEXTU
 ; character-data screen (bank $1a)
-; [100 bytes] One byte per level-up taken this visit: the confirmed wCharDataPage. Cleared by CommitCharDataToRecord before the screen opens
+; [100 bytes] One byte per level-up taken this visit: the confirmed wCharDataPage. Cleared by RevertCharDataToStart, which the screen also runs as it opens
 wCharDataChoiceLog:: ds 100
 ; [6 bytes] Number formatting scratch for the character-data and EXP screens: FormatExp24BitDecimal puts the top byte at +$00 and the low word's five digits from +$01
 wCharDataNumberBuffer:: ds 6
@@ -154,13 +154,13 @@ wCharDataNumberBuffer:: ds 6
 	ds 11
 ; [8-bit] Cleared by CharDataScreen_InitState with the rest of the screen state; nothing reads it
 wCharDataRevealDone:: db
-; [11 bytes] The eleven stats recomputed with racket and shoes unequipped, to show what the equipment is worth. Filled by CharDataScreen_BuildStats from wStoryMainStats after RecomputeStatsWithoutEquipment; untouched when nothing is equipped
+; [11 bytes] The eleven stats recomputed with racket and shoes unequipped, to show what the equipment is worth. Filled by ComputeCharDataEquipmentDeltas from wStoryMainStats after RecomputeStatsWithoutEquipment; untouched when nothing is equipped
 wCharDataStatsNoEquipment:: ds 11
 ; [11 bytes] Per-stat difference the equipped racket and shoes make, zeroed first so an unequipped character shows no arrows; read by DrawStatChangeArrows with wCharDataStatsNoEquipment
 wCharDataEquipmentDeltas:: ds 11
 ; [8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas computes no deltas, the input loop spends no points. Set by RunExpDistributionFlow and RestoreCharData
 wCharDataViewOnly:: db
-; [6 bytes] Copy of wCharDataPointsWorking onward taken as the screen opens; RestoreCharData copies it back and sets wCharDataViewOnly when a level-up is cancelled
+; [6 bytes] Copy of wCharDataPointsTotal onward taken as the screen opens; RestoreCharData copies it back and sets wCharDataViewOnly when a level-up is cancelled
 wCharDataEditBackup:: ds 6
 	export_size wCharDataEditBackup
 ; [101 bytes] Matching backup of wCharDataChoiceCount and the choice log, so a cancelled visit forgets every provisional level-up
@@ -171,7 +171,7 @@ NEXTU
 	ds 283
 ; [16-bit] X offset of the stat digits while a page slides; stepped by the Slide*StatPage routines, applied by DrawCharStatDigitsTask through ApplySlideOffsetToSpriteX
 wCharDataStatsSlideX:: dw
-; [16-bit] The same offset for the value column, applied by CharDataValuesSyncTask (the two columns slide at different times)
+; [16-bit] The same offset for the value column, applied by DrawCharDataSummarySpritesTask (the two columns slide at different times)
 wCharDataValuesSlideX:: dw
 	ds 24
 ; [2 x EXPSTAT_SIZE] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot
@@ -204,14 +204,14 @@ NEXTU
 	ds 280
 ; [8-bit] Stat page shown: 0 overview, 1 main character, 2 partner; picks the page arrows DrawCharDataPageArrowsTask draws, and DrawStatChangeArrows runs only on 1
 wCharDataStatPageView:: db
-; [8-bit] Nonzero freezes the arrow bob; while it is clear the task steps wCharDataArrowPhase
-wCharDataArrowHold:: db
+; [8-bit] How far the page arrows have slid out: SlideCharDataArrowsOutTask adds 4 a frame up to $40, SlideCharDataArrowsInTask takes 8 back to 0, and BobArrowSpriteLeft/Right add it to the arrows' X (negated on the left). The bob phase only advances while it is zero
+wCharDataArrowSlideX:: db
 ; [8-bit] Free-running counter the arrow bob reads for its offset
 wCharDataArrowPhase:: db
 NEXTU
 ; EXP distribution screen (bank $1d)
 	ds 248
-; [13 bytes] The main character's stat page as drawn: +$00 the four Spin/Power/Control/Speed levels from wCharDataLevels, +$04 six values copied to wCharStatPageShown, +$0a three more read by the value sync task
+; [13 bytes] The main character's stat page as drawn: +$00 the four Spin/Power/Control/Speed levels from wCharDataLevels, +$04 six values copied to wCharStatPageShown, +$0a the three exp-to-next digits DrawCharDataSummarySpritesTask draws
 wCharStatPageMain:: ds 13
 ; [13 bytes] The partner's page, same layout
 wCharStatPagePartner:: ds 13
@@ -219,11 +219,11 @@ wCharStatPagePartner:: ds 13
 wCharStatPageShown:: ds 6
 	export_size wCharStatPageShown
 	ds 7
-; [8-bit] Source of the pair CharDataValuesSyncTask pushes into the screen: zero = wSavedGameTimer + 2, nonzero = wGameTimer + 2 (minutes, hours)
-wCharDataSyncSource:: db
+; [8-bit] Which clock the summary's play time shows: zero = wSavedGameTimer + 2, nonzero = wGameTimer + 2 (minutes, hours)
+wCharDataPlayTimeLive:: db
 	ds 2
-; [2 bytes] The two bytes it copied, drawn as the screen's live readout
-wCharDataSyncPair:: dw
+; [2 bytes] Minutes and hours DrawCharDataSummarySpritesTask copied from that clock and draws as the play-time digits
+wCharDataPlayTime:: dw
 ; [16-bit] EXP points left to hand out: AssignExpPointToChar decrements it per point, DrawExpPoolReadout prints it, DrawExpPoolGauge draws it as a fraction of wExpPoolTotal
 wExpPoolRemaining:: dw
 ; [16-bit] Starting pool, the gauge's denominator. Both are seeded from hl by InitLevelUpScreenState

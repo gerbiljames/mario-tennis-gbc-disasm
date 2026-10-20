@@ -60,11 +60,11 @@ wScreenAttrmap:: ds 1024
 	export_size wScreenAttrmap
 NEXTU
 ; minigame level select (bank $1b): scalars in the plane's first bytes
-; [8-bit] Minigame whose levels are offered, from c of RunMinigameLevelSelect; indexes ClearedMinigameLevelsTable
+; [8-bit] Minigame whose levels are offered, from c of RunMinigameLevelSelect; indexes MinigameLevelClearFlagPtrs
 wLevelSelectMinigame:: db
 ; [8-bit] Levels cleared (0-2): CountClearedMinigameLevels counts the minigame's level-1 and level-2 clear flags. 2 runs RunMinigameLevelSelect3, else RunMinigameLevelSelect2; it is also the starting cursor, and 0 locks every level but the first and swaps the icon tiles
 wLevelSelectClearedCount:: db
-; [8-bit] Cursor grid columns, CountClearedMinigameLevelsTable[wLevelSelectClearedCount]; returned in b by GetMinigameLevelColumnCount
+; [8-bit] Cursor grid columns, LevelSelectColumnsByClearedCount[wLevelSelectClearedCount]; returned in b by GetMinigameLevelColumnCount
 wLevelSelectColumns:: db
 ; [8-bit] The chosen cursor index, or $ff on cancel; RunMinigameLevelSelect returns it in a
 wLevelSelectResult:: db

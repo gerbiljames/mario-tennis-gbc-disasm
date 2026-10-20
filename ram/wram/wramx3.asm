@@ -86,10 +86,10 @@ wResultScreenIsVersus:: db
 wResultScreenMode:: db
 NEXTU
 ; ranking board (bank $1b)
-; [8-bit] Nonzero shows the doubles ranking; from b of ShowRankingBoard. Picks the screen asset record and the singles or doubles Draw/Highlight*RankingRows pair
+; [8-bit] Nonzero shows the doubles ranking; from b of ShowRankingBoard. Picks the screen asset record and the singles or doubles Draw*RankingNames / Draw*RoundBracketLines pair
 wRankingBoardDoubles:: db
-; [8-bit] The player's ranking row, from c; the highlight and the marker animation use it
-wRankingBoardPlayerRow:: db
+; [8-bit] Island Open round (0-4), from c: GetIslandOpenRoundParams passes the scene stage + 1. Selects which bracket lines Draw*RoundBracketLines pre-draws and the per-round marker animation
+wRankingBoardRound:: db
 ; [8-bit] Board presentation, from d: 0 plain, 1 (won) plays BGM_ISLAND_OPEN_WIN, 2 (lost) plays BGM_ISLAND_OPEN_LOSE and registers RankingGameOverBobTask. 3 becomes 0 with wRankingBoardSilent set
 wRankingBoardMode:: db
 ; [8-bit] Base of the ranking marker slots: twelve 4-byte records [tile, X, Y, -], $d803-$d832, running into the $d810 block. GetRankingMarkerSlot returns base + index * 4; DrawRankingMarkersTask queues each as a sprite, skipping those whose +0 is $ff. ClearRankingMarkerSlots clears the $30 bytes, LoadRankingMarkerCoords copies $30 bytes of coordinates over them; BuildRankingBoardScreen's $53-byte clear wipes the whole screen state from here up to wRankingBannerAnimFrame
@@ -283,12 +283,12 @@ wStatsPrintBuffer:: ds 8
 NEXTU
 ; minigame data screen (bank $1b, $73dd-$78bd)
 	ds 2
-; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag; LoadMinigameStarFlags fills it from MinigameStarFlagsTable (the SAVEFLAG_CLEARED_*_2 run) as wMinigameDataClearFlags is filled. DrawMinigameStarMarks draws mark 1 per set row, DrawStarLegendMark draws the legend if any is set, and DrawMinigameHighScoreNumber shows no number for a row without a star
+; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag; LoadMinigameStarFlags fills it from MinigameStarFlagsTable (the SAVEFLAG_CLEARED_*_2 run) as wMinigameDataClearFlags is filled. DrawMinigameStarMarks draws mark 1 per set row, DrawChallengeColumnHeader draws the column-14 header if any is set, and DrawMinigameHighScoreNumber shows no number for a row without a star
 wMinigameDataStarFlags:: ds 9
 	export_size wMinigameDataStarFlags
 ; [8 x 16-bit] The number shown on each of the first eight rows: LoadMinigameHighScores reads record row + 2 of the block $38 minigame records with ReadMinigameRecord (value in wMinigameRecordValue, WRAM bank $07) and stores it at row * 2. Row 8 has no record; its slot is wMinigameDataTwoOnOneCleared
 wMinigameDataHighScores:: ds 16
-; [2 bytes] Row 8's slot, used as a flag pair: LoadMinigameHighScores writes $01 to both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set (after clearing all 18 bytes from $d81b). DrawMinigameSpecialMark draws mark 2 for it when the list is scrolled to the bottom (wMenuCursorY = 4)
+; [2 bytes] Row 8's slot, used as a flag pair: LoadMinigameHighScores writes $01 to both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set (after clearing all 18 bytes from $d81b). DrawTwoOnOneChallengeMark draws mark 2 for it when the list is scrolled to the bottom (wMenuCursorY = 4)
 wMinigameDataTwoOnOneCleared:: dw
 NEXTU
 ; trophies screen (bank $3b, $49e5-$4cfa)
@@ -311,11 +311,11 @@ wCharUnlockFlags:: ds 40
 	export_size wCharUnlockFlags
 NEXTU
 ; ranking board (bank $1b)
-; [4 x 16-bit] Per animation channel, the ranking marker slot it moves, from hl in StartRankingMarkerAnim<N> (via GetRankingMarkerSlot). UpdateScriptedOffsetChannel<N> adds the script's delta each frame to the slot's +1 (X) on channels 0-1 and +2 (Y) on channels 2-3
+; [4 x 16-bit] Per animation channel, the ranking marker slot it moves, from hl in StartRankingMarkerSlide<X0|X1|Y0|Y1> (via GetRankingMarkerSlot). UpdateRankingMarkerSlide* adds the script's delta each frame to the slot's +1 (X) on channels 0-1 and +2 (Y) on channels 2-3
 wRankingAnimSlotPtrs:: ds 8
-; [4 x 16-bit] Per channel, the delta script it plays, from de in StartRankingMarkerAnim<N>. One byte of movement per frame ($01 or $ff), ending at $40, where UpdateScriptedOffsetChannel<N> unregisters its frame task
+; [4 x 16-bit] Per channel, the delta script it plays, from de in StartRankingMarkerSlide*. One byte of movement per frame ($01 or $ff), ending at $40, where UpdateRankingMarkerSlide* unregisters its frame task
 wRankingAnimScriptPtrs:: ds 8
-; [4 bytes] Each channel's offset into its script: zeroed by StartRankingMarkerAnim<N>, incremented by UpdateScriptedOffsetChannel<N> after each non-terminator byte (so also the frame counter)
+; [4 bytes] Each channel's offset into its script: zeroed by StartRankingMarkerSlide*, incremented by UpdateRankingMarkerSlide* after each non-terminator byte (so also the frame counter)
 wRankingAnimStepIndex:: ds 4
 	ds 1
 ; [8-bit] Frame counter of the sliding CONGRATULATIONS banner: RankingCongratsSlideTask indexes RankingCongratsSlideXDeltas with it for the frame's X delta and unregisters at $87
@@ -323,7 +323,7 @@ wRankingBannerAnimFrame:: db
 ; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
 wRankingBannerX:: db
 	ds 1
-; [8-bit] Write-only: cleared by BuildRankingBoardScreen and set to 1 as each RankingAnimSinglesClimbRow* step ends; nothing reads it
+; [8-bit] Write-only: cleared by BuildRankingBoardScreen and set to 1 as each RankingAnimSinglesClimbRound* step ends; nothing reads it
 wRankingAnimStateDone:: db
 	ds 1
 ; [8-bit] Set when ShowRankingBoard gets mode $03 (rewritten to $00): no entrance animation (DispatchRankingBoardAnim returns at once) and no closing jingle, for when the board is part of a longer sequence
@@ -397,7 +397,7 @@ wRulesMinigameLevel:: db
 NEXTU
 ; N64 exhibition and Mario-cast charts (bank $3b)
 	ds 1
-; [16 bytes] Column each chart row shows. BuildMarioCastChartColumnList fills it from MarioCastChartColumnTable, using $10 (blank column) for entries whose save flag is clear, so a locked character leaves a gap
+; [16 bytes] Column each chart row shows. BuildMarioCastChartColumnList fills it from MarioCastChartColumnIconIds, using $10 (blank column) for entries whose save flag is clear, so a locked character leaves a gap
 wChartColumnList:: ds 16
 	export_size wChartColumnList
 	ds 1

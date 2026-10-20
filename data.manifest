@@ -664,8 +664,8 @@ engine/menus/minigame_select/UnlockDebugCursorPalette.asm 06e930 8 palettes
 engine/menus/minigame_select/MinigameLevel1Palette.asm 06edae 8 palettes
 engine/menus/minigame_select/MinigameLevel3Palette.asm 06edb6 8 palettes
 engine/menus/minigame_select/MinigameLevel2Palette.asm 06edbe 8 palettes
-engine/menus/minigame_select/MarioCharDataTypePalette0.asm 06f3cd 8 palettes
-engine/menus/minigame_select/MarioCharDataTypePalette1.asm 06f3d5 8 palettes
+engine/menus/minigame_select/MarioCharDataExhibitionPalette.asm 06f3cd 8 palettes
+engine/menus/minigame_select/MarioCharDataMinigamesPalette.asm 06f3d5 8 palettes
 engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx0.bin 06f8bd b3 gfx
 engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx1.bin 06f970 50 gfx
 engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx2.bin 06f9c0 b8 gfx
@@ -675,10 +675,10 @@ engine/menus/minigame_select/lz_DreamMatchEpilogueConfettiGfx2.bin 06faf6 41 gfx
 engine/menus/minigame_select/lz_ToBeContinuedGfx.bin 06fb37 1f7 gfx
 engine/menus/minigame_select/lz_ToBeContinuedOutlineGfx.bin 06fd2e 141 gfx
 engine/menus/minigame_select/lz_TheEndGfx.bin 06fe6f 143 gfx
-engine/menus/char_data/RadialOffsetRamp0_1c.asm 070ff1 16 bytes:2
-engine/menus/char_data/RadialOffsetRamp1_1c.asm 071007 16 bytes:2
-engine/menus/char_data/RadialOffsetRamp2_1c.asm 07101d 16 bytes:2
-engine/menus/char_data/RadialOffsetRamp3_1c.asm 071033 16 bytes:2
+engine/menus/char_data/StatDigitFlyInSpinOffsets.asm 070ff1 16 bytes:2
+engine/menus/char_data/StatDigitFlyInPowerOffsets.asm 071007 16 bytes:2
+engine/menus/char_data/StatDigitFlyInControlOffsets.asm 07101d 16 bytes:2
+engine/menus/char_data/StatDigitFlyInSpeedOffsets.asm 071033 16 bytes:2
 engine/menus/char_data/CharDataScreenBasePalettes.asm 07198c 40 palettes
 engine/menus/char_data/lz_CharDataScreenTiles.bin 0719cc a3a gfx
 engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin 072406 63 tilemap:32
@@ -718,17 +718,17 @@ engine/menus/char_data/CharDataScreenStatBar31.asm 07253f 5 bytes:5
 engine/menus/char_data/CharDataScreenStatBar32.asm 072544 5 bytes:5
 engine/menus/char_data/lz_CharDataScreenBand1Tilemap.bin 072549 36 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin 07257f 17 tilemap:32
-engine/menus/char_data/CharDataScreenPage0Columns.asm 072596 32 bytes:10
+engine/menus/char_data/CharDataScreenSpinPageAttrs.asm 072596 32 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin 0725c8 43 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin 07260b 17 tilemap:32
-engine/menus/char_data/CharDataScreenPage1Columns.asm 072622 46 bytes:10
+engine/menus/char_data/CharDataScreenPowerPageAttrs.asm 072622 46 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin 072668 3a
 engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin 0726a2 18
-engine/menus/char_data/CharDataScreenPage2Columns.asm 0726ba 32 bytes:10
+engine/menus/char_data/CharDataScreenControlPageAttrs.asm 0726ba 32 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin 0726ec 48
 engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin 072734 19
-engine/menus/char_data/CharDataScreenPage3Columns.asm 07274d 5a bytes:10
-engine/menus/char_data/CharDataScreenPage4Columns.asm 0727a7 1e bytes:10
+engine/menus/char_data/CharDataScreenSpeedPageAttrs.asm 07274d 5a bytes:10
+engine/menus/char_data/CharDataScreenConfirmPageAttrs.asm 0727a7 1e bytes:10
 engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin 0727c5 e
 engine/menus/char_data/lz_CharDataScreenBand5Attrmap.bin 0727d3 7
 engine/menus/char_data/lz_CharDataScreenUIPatch0Tilemap.bin 0727da 18 tilemap:32
@@ -772,7 +772,7 @@ engine/menus/char_data/CharDataBallAnimFrame29.bin 072fc0 40 gfx
 engine/menus/char_data/CharDataBallAnimFrame30.bin 073000 40 gfx
 engine/menus/char_data/CharDataBallAnimFrame31.bin 073040 40 gfx
 engine/menus/char_data/lz_CharDataLargeDigitGfx.bin 073080 96 gfx
-engine/menus/char_data/CharDataScreenBgAndPalettes.asm 073541 40 palettes
+engine/menus/char_data/CharDataScreenBgObjPalettes.asm 073541 40 palettes
 engine/menus/char_data/lz_CharDataScreenBgGfx.bin 073581 75e gfx
 engine/menus/char_data/lz_CharDataScreenBgTilemap.bin 073cdf 140 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin 073e1f d8 tilemap:32
@@ -789,8 +789,8 @@ engine/menus/char_data/StatPageTilemapPatch3.asm 075d0a 15 blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch2.asm 075d1f 15 blit_runs
 engine/menus/char_data/StatPageTilemapPatch4.asm 075d34 25 blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm 075d59 25 blit_runs
-engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm 075d7e 13 bytes:2
-engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm 075d91 13 bytes:2
+engine/menus/char_data/CharDataSummaryMainMugshotPlot.asm 075d7e 13 bytes:2
+engine/menus/char_data/CharDataSummaryPartnerMugshotPlot.asm 075d91 13 bytes:2
 engine/menus/char_data/MainCharStatPageTilemapPatch00.asm 075da4 d blit_runs
 engine/menus/char_data/PartnerStatPageTilemapPatch00.asm 075db1 d blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch4.asm 075dbe d blit_runs

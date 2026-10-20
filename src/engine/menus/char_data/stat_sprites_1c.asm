@@ -5,13 +5,13 @@ CharDataScreen_PageColumnsRects:
 	db $6a, $d0, $05, $0a ; 0x08
 	db $0a, $d1, $09, $0a ; 0x0c
 	db $e0, $d1, $03, $0a ; 0x10
-CharDataScreen_PageColumnsPtrs:
+CharDataScreen_PageAttrPtrs:
 	; $4e4a, 10 bytes (records:2)
-	dw CharDataScreenPage0Columns ; record 0
-	dw CharDataScreenPage1Columns ; record 1
-	dw CharDataScreenPage2Columns ; record 2
-	dw CharDataScreenPage3Columns ; record 3
-	dw CharDataScreenPage4Columns ; record 4
+	dw CharDataScreenSpinPageAttrs ; record 0
+	dw CharDataScreenPowerPageAttrs ; record 1
+	dw CharDataScreenControlPageAttrs ; record 2
+	dw CharDataScreenSpeedPageAttrs ; record 3
+	dw CharDataScreenConfirmPageAttrs ; record 4
 DrawStatValueSprites:
 	wram_bank WRAM_SCENE ; $4e54
 	ld b, $0e ; $4e5a
@@ -215,7 +215,7 @@ DrawStatValueSprites:
 	ret ; $4fcd
 GetStatDigitSpritePos:
 	rlca ; $4fce
-	ld_hl_indexed RadialOffsetRamps_1c ; $4fcf
+	ld_hl_indexed StatDigitFlyInOffsetPtrs ; $4fcf
 	ld a, [hl+] ; $4fd6
 	ld h, [hl] ; $4fd7
 	ld l, a ; $4fd8
@@ -229,16 +229,16 @@ GetStatDigitSpritePos:
 	add e ; $4fe6
 	ld e, a ; $4fe7
 	ret ; $4fe8
-RadialOffsetRamps_1c:
-	dw RadialOffsetRamp0_1c, RadialOffsetRamp1_1c, RadialOffsetRamp2_1c, RadialOffsetRamp3_1c ; $4fe9
-RadialOffsetRamp0_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp0_1c.asm" ; $4ff1, 22 bytes (bytes:2)
-RadialOffsetRamp1_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp1_1c.asm" ; $5007, 22 bytes (bytes:2)
-RadialOffsetRamp2_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp2_1c.asm" ; $501d, 22 bytes (bytes:2)
-RadialOffsetRamp3_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp3_1c.asm" ; $5033, 22 bytes (bytes:2)
+StatDigitFlyInOffsetPtrs:
+	dw StatDigitFlyInSpinOffsets, StatDigitFlyInPowerOffsets, StatDigitFlyInControlOffsets, StatDigitFlyInSpeedOffsets ; $4fe9
+StatDigitFlyInSpinOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInSpinOffsets.asm" ; $4ff1, 22 bytes (bytes:2)
+StatDigitFlyInPowerOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInPowerOffsets.asm" ; $5007, 22 bytes (bytes:2)
+StatDigitFlyInControlOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInControlOffsets.asm" ; $501d, 22 bytes (bytes:2)
+StatDigitFlyInSpeedOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInSpeedOffsets.asm" ; $5033, 22 bytes (bytes:2)
 DrawRemainingPointsSprite:
 	wram_bank WRAM_SCENE ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f
@@ -332,7 +332,7 @@ CharDataScreen_InputLoop:
 	ld a, [wCharDataPage] ; $50ff
 	cp CHARDATAPAGE_CONFIRM ; $5102
 	jr nz, .selectConfirmCell ; $5104
-	call ApplyCharStatLevelUp ; $5106
+	call UndoLastCharStatPoint ; $5106
 	or a ; $5109
 	jp nz, CharDataScreen_InputLoop ; $510a
 	ld a, $01 ; $510d
@@ -494,7 +494,7 @@ CharDataScreen_InputLoop:
 	ret ; $52c0
 .cancel:
 	sound SFX_MENU_CANCEL ; $52c1
-	call SelectCharDataConfirmSlot ; $52c3
+	call ResetCharDataChoices ; $52c3
 	call RestoreCharDataScreen ; $52c6
 	call LoadCharStats ; $52c9
 	call CharDataScreen_DrawStats ; $52cc

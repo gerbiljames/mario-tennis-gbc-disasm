@@ -122,21 +122,21 @@ WriteVarsityChartSinglesNames:
 	ret ; $7888
 WriteVarsityChartSinglesNamesPtrs:
 	; $7889, 10 bytes (records:2)
-	dw VarsityChartSinglesNames0 ; record 0
-	dw VarsityChartSinglesNames0 ; record 1
-	dw VarsityChartSinglesNames1 ; record 2
-	dw VarsityChartSinglesNames2 ; record 3
-	dw VarsityChartSinglesNames3 ; record 4
-VarsityChartSinglesNames0:
+	dw VarsityChartSinglesNamesPlayerRow0 ; record 0
+	dw VarsityChartSinglesNamesPlayerRow0 ; record 1
+	dw VarsityChartSinglesNamesPlayerRow1 ; record 2
+	dw VarsityChartSinglesNamesPlayerRow2 ; record 3
+	dw VarsityChartSinglesNamesPlayerRow3 ; record 4
+VarsityChartSinglesNamesPlayerRow0:
 	; $7893, 4 bytes (bytes:4)
 	db $00, $01, $02, $03 ; 0x00
-VarsityChartSinglesNames1:
+VarsityChartSinglesNamesPlayerRow1:
 	; $7897, 4 bytes (bytes:4)
 	db $01, $00, $02, $03 ; 0x00
-VarsityChartSinglesNames2:
+VarsityChartSinglesNamesPlayerRow2:
 	; $789b, 4 bytes (bytes:4)
 	db $01, $02, $00, $03 ; 0x00
-VarsityChartSinglesNames3:
+VarsityChartSinglesNamesPlayerRow3:
 	; $789f, 4 bytes (bytes:4)
 	db $01, $02, $03, $00 ; 0x00
 WriteVarsityChartName:
@@ -624,7 +624,7 @@ FlushMarioCastChartWindowToVram:
 BuildMarioCastChartColumnList:
 	ld c, $00 ; $7cca
 .loop:
-	ld hl, MarioCastChartColumnListTable ; $7ccc
+	ld hl, MarioCastChartColumnUnlockFlags ; $7ccc
 	ld a, c ; $7ccf
 	add a ; $7cd0
 	add_hl_a ; $7cd1
@@ -640,7 +640,7 @@ BuildMarioCastChartColumnList:
 	ld b, $10 ; $7ce4
 	jr .storeColumn ; $7ce6
 .unlocked:
-	ld hl, MarioCastChartColumnTable ; $7ce8
+	ld hl, MarioCastChartColumnIconIds ; $7ce8
 	ld a, c ; $7ceb
 	add_hl_a ; $7cec
 	ld b, [hl] ; $7cf1
@@ -654,7 +654,7 @@ BuildMarioCastChartColumnList:
 	cp $09 ; $7cfe
 	jr nz, .loop ; $7d00
 	ret ; $7d02
-MarioCastChartColumnListTable:
+MarioCastChartColumnUnlockFlags:
 	; $7d03, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_UNLOCKED_MARIO ; record 0
 	dw $ffff ; record 1
@@ -665,7 +665,7 @@ MarioCastChartColumnListTable:
 	dw SAVEFLAG_UNLOCKED_WARIO ; record 6
 	dw SAVEFLAG_UNLOCKED_WALUIGI ; record 7
 	dw SAVEFLAG_UNLOCKED_BOWSER ; record 8
-MarioCastChartColumnTable:
+MarioCastChartColumnIconIds:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00
 	db $03, $04, $05 ; 0x03

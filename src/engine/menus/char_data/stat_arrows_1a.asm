@@ -11,7 +11,7 @@ Unused_1a_DrawCharViewerCharSprite:
 	ld c, l ; $702e
 	farcall StepCharAnimation ; $702f
 	wram_bank WRAM_SCENE ; $7032
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $7038
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $7038
 	ld d, a ; $703b
 	wram_bank WRAM_CHAR0 ; $703c
 	push de ; $7042
@@ -82,10 +82,10 @@ Unused_1a_LoadCharViewerMugshot:
 	ret ; $70bf
 Unused_1a_ApplyCharViewerPalette:
 	wram_bank WRAM_SCENE ; $70c0
-	ld a, [wCharDataLevel] ; $70c6
+	ld a, [wCharDataStartLevel] ; $70c6
 	ld_bg_pals de, 7, 1 ; $70c9
 	farcall LoadIndexedPaletteThunk ; $70cc
-	ld a, [wCharDataLevel] ; $70cf
+	ld a, [wCharDataStartLevel] ; $70cf
 	ld_obj_pals de, 7, 1 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
@@ -101,7 +101,7 @@ CharViewerGridTilemap0:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
 CharViewerGridTilemap1:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
-CharViewerInputLoopTable:
+CharViewerCursorAnimIds:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 	db $10, $11, $12, $0b, $0c, $0d ; 0x10
@@ -139,7 +139,7 @@ RunCharDataConfirmScreen:
 	call EnableLCD ; $79a9
 	call AdvanceFrame ; $79ac
 	farcall StartCharDataScreenAnimTask ; $79af
-	farcall StartCharDataValuesSyncTask ; $79b2
+	farcall StartCharDataSummarySpritesTask ; $79b2
 	script_fade_in 16 ; $79b5
 	call WaitFadeEnd ; $79ba
 	wram_bank WRAM_SCENE ; $79bd
@@ -175,7 +175,7 @@ RunCharDataConfirmScreen:
 .beginFadeOut:
 	script_fade_out 16 ; $7a05
 	call WaitFadeEnd ; $7a0a
-	farcall StopCharDataValuesSyncTask ; $7a0d
+	farcall StopCharDataSummarySpritesTask ; $7a0d
 	farcall StopCharDataScreenAnimTask ; $7a10
 	wram_bank WRAM_SCENE ; $7a13
 	ld a, [wCharDataConfirmState] ; $7a19
@@ -253,7 +253,7 @@ ApplyTilemapPatchList_1a:
 	inc hl ; $7ab1
 	inc hl ; $7ab2
 	jr ApplyTilemapPatchList_1a ; $7ab3
-CharDataScreen_BuildStats:
+ComputeCharDataEquipmentDeltas:
 	ld a, [wStoryCharacterSlot] ; $7ab5
 	or a ; $7ab8
 	ret nz ; $7ab9

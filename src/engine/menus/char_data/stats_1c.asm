@@ -320,37 +320,37 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $49e4
 	call AdvanceFrame ; $49e7
 	ret ; $49ea
-CommitCharDataToRecord:
+RevertCharDataToStart:
 	wram_bank WRAM_SCENE ; $49eb
-	ld a, [wCharDataPointsWorking] ; $49f1
+	ld a, [wCharDataPointsTotal] ; $49f1
 	ld [wCharDataPointsLeft], a ; $49f4
 	push af ; $49f7
 	ld_story_char_field CHARREC_LEVEL ; $49f8
 	pop af ; $4a0b
-	ld a, [wCharDataLevel] ; $4a0c
+	ld a, [wCharDataStartLevel] ; $4a0c
 	ld [hl], a ; $4a0f
 	push af ; $4a10
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4a11
 	pop af ; $4a24
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $4a25
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $4a25
 	ld [hl], a ; $4a28
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4a29
 	push af ; $4a2c
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4a2d
 	pop af ; $4a40
-	ld a, [wCharDataNewLevels + TRAINSTAT_POWER] ; $4a41
+	ld a, [wCharDataStartLevels + TRAINSTAT_POWER] ; $4a41
 	ld [hl], a ; $4a44
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4a45
 	push af ; $4a48
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4a49
 	pop af ; $4a5c
-	ld a, [wCharDataNewLevels + TRAINSTAT_CONTROL] ; $4a5d
+	ld a, [wCharDataStartLevels + TRAINSTAT_CONTROL] ; $4a5d
 	ld [hl], a ; $4a60
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4a61
 	push af ; $4a64
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4a65
 	pop af ; $4a78
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPEED] ; $4a79
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPEED] ; $4a79
 	ld [hl], a ; $4a7c
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4a7d
 	xor a ; $4a80
@@ -589,7 +589,7 @@ CharDataScreen_DrawPageColumns:
 	ld b, [hl] ; $4dee
 	ld c, a ; $4def
 	pop af ; $4df0
-	ld_hl_indexed CharDataScreen_PageColumnsPtrs ; $4df1
+	ld_hl_indexed CharDataScreen_PageAttrPtrs ; $4df1
 	ld a, [hl+] ; $4df8
 	ld h, [hl] ; $4df9
 	ld l, a ; $4dfa

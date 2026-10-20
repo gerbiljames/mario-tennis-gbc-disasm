@@ -6,14 +6,14 @@
 	farptr SetPendingExpAward ; $400a
 	farptr InitCharDataScreenVideo ; $400c
 	farptr DrawCharDataConfirmPrompt ; $400e
-	farptr StartCharDataValuesSyncTask ; $4010
-	farptr StopCharDataValuesSyncTask ; $4012
+	farptr StartCharDataSummarySpritesTask ; $4010
+	farptr StopCharDataSummarySpritesTask ; $4012
 	farptr GrayscalePaletteColorInPlace ; $4014
 ShowCharDataScreen:
 	ld b, a ; $4016
 	wram_bank WRAM_SCENE ; $4017
 	ld a, b ; $401d
-	ld [wCharDataSyncSource], a ; $401e
+	ld [wCharDataPlayTimeLive], a ; $401e
 	sound BGM_STATUS_SCREEN ; $4021
 	farcall RefreshMainCharacterStats ; $4023
 	call EnableLCD ; $4026
@@ -49,7 +49,7 @@ ShowCharDataScreen:
 	call AdvanceFrame ; $407d
 	frame_task CharDataScreenBgScrollTask ; $4080
 	frame_task DrawCharDataPageArrowsTask ; $4088
-	frame_task CharDataValuesSyncTask ; $4090
+	frame_task DrawCharDataSummarySpritesTask ; $4090
 	farcall StartCharDataScreenAnimTask ; $4098
 	script_fade_in 16 ; $409b
 	call WaitFadeEnd ; $40a0
@@ -60,7 +60,7 @@ ShowCharDataScreen:
 	call WaitFadeEnd ; $40b0
 	ld hl, DrawCharDataPageArrowsTask ; $40b3
 	call UnregisterFrameTask ; $40b6
-	ld hl, CharDataValuesSyncTask ; $40b9
+	ld hl, DrawCharDataSummarySpritesTask ; $40b9
 	call UnregisterFrameTask ; $40bc
 	ld hl, CharDataScreenBgScrollTask ; $40bf
 	call UnregisterFrameTask ; $40c2
@@ -77,7 +77,7 @@ InitCharDataWorkRam:
 	ld [wCharDataAnimSubStep], a ; $40da
 	ld [wCharDataFlushChunk], a ; $40dd
 	ld [wCharDataStatPageView], a ; $40e0
-	ld [wCharDataArrowHold], a ; $40e3
+	ld [wCharDataArrowSlideX], a ; $40e3
 	ld [wCharDataArrowPhase], a ; $40e6
 	ld hl, wCharDataStatsSlideX ; $40e9
 	ld de, $00a8 ; $40ec
@@ -365,7 +365,7 @@ BuildCharDataSummaryFields:
 	ld de, wCharDataScreenCell + 30 * TILEMAP_WIDTH + 11 ; $4466
 	ld c, $0a ; $4469
 	call WriteNameStringTiles ; $446b
-	ld hl, CharDataSummaryFieldsTilePlot0 ; $446e
+	ld hl, CharDataSummaryMainMugshotPlot ; $446e
 	ld de, wCharDataScreenCell + 30 * TILEMAP_WIDTH ; $4471
 	ld b, $0c ; $4474
 	call PlotTilesAtOffsets ; $4476
@@ -374,7 +374,7 @@ BuildCharDataSummaryFields:
 	pop af ; $448d
 	ld a, [hl] ; $448e
 	ld hl, wCharDataScreenCell + 31 * TILEMAP_WIDTH + 3 ; $448f
-	call DrawFourTileFlagLabel ; $4492
+	call DrawHandednessLabel ; $4492
 	wram_bank WRAM_SCENE ; $4495
 	push af ; $449b
 	ld_story_char_field CHARREC_LEVEL ; $449c
@@ -488,7 +488,7 @@ BuildCharDataSummaryFields:
 	ld c, $0a ; $45f8
 	call WriteNameStringTiles ; $45fa
 	wram_bank WRAM_SCREEN ; $45fd
-	ld hl, CharDataSummaryFieldsTilePlot1 ; $4603
+	ld hl, CharDataSummaryPartnerMugshotPlot ; $4603
 	ld de, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 16 ; $4606
 	ld b, $09 ; $4609
 	call PlotTilesAtOffsets ; $460b
@@ -497,7 +497,7 @@ BuildCharDataSummaryFields:
 	pop af ; $4622
 	ld a, [hl] ; $4623
 	ld hl, wCharDataPagePlane + 3 * TILEMAP_WIDTH + 19 ; $4624
-	call DrawFourTileFlagLabel ; $4627
+	call DrawHandednessLabel ; $4627
 	wram_bank WRAM_SCENE ; $462a
 	push af ; $4630
 	ld_story_char_field CHARREC_LEVEL ; $4631

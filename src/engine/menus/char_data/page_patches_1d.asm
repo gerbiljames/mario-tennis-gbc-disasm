@@ -144,21 +144,21 @@ RunExpDistributionFlow:
 	ld c, STORYREC_MAIN ; $6854
 	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
-	jr z, .commitExp ; $685a
+	jr z, .revertExp ; $685a
 	inc a ; $685c
-	jr nz, .countLeft ; $685d
+	jr nz, .showPartner ; $685d
 	farcall BackupCharData ; $685f
 	ld c, STORYREC_PARTNER ; $6862
 	farcall CharDataScreen_Show ; $6864
 	dec a ; $6867
 	jr z, .restoreCharData ; $6868
-.countLeft:
+.showPartner:
 	ld c, STORYREC_PARTNER ; $686a
 	farcall CharDataScreen_Show ; $686c
 	dec a ; $686f
-	jr z, .countDone ; $6870
+	jr z, .partnerCancelled ; $6870
 	ret ; $6872
-.commitExp:
+.revertExp:
 	wram_bank WRAM_SCENE ; $6873
 	ld hl, wExpScreenCharStats + EXPSTAT_EXP ; $6879
 	ld de, wStoryMainExp ; $687c
@@ -186,8 +186,8 @@ RunExpDistributionFlow:
 .restoreCharData:
 	farcall RestoreCharData ; $689c
 	jr .showCharData ; $689f
-.countDone:
-	jr .commitExp ; $68a1
+.partnerCancelled:
+	jr .revertExp ; $68a1
 ShowExpDistributionScreen:
 	push hl ; $68a3
 	sound BGM_EXP_DISTRIBUTION ; $68a4

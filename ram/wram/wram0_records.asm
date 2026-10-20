@@ -17,7 +17,7 @@ wStorySaveSignature:: ds 4
 wStorySlotBlockTag:: ds 3
 	ds 7
 
-; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer). Its minutes and hours are what CharDataValuesSyncTask shows when wCharDataSyncSource is clear and what the save-slot summaries store
+; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer). Its minutes and hours are what DrawCharDataSummarySpritesTask shows when wCharDataPlayTimeLive is clear and what the save-slot summaries store
 wSavedGameTimer:: ds 4
 	ds 17
 
