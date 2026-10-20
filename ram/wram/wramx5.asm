@@ -55,8 +55,8 @@ wDialogueWindowRow:: db
 wDialogueWindowWidth:: db
 ; [8-bit] Dialogue window height in cells, from c at CreateDialogueWindow
 wDialogueWindowHeight:: db
-; [8-bit] Re-entrancy guard around RedrawActiveTextWindow: the delay/wait text commands redraw only while it is 0 and set it during their own redraw
-wTextRedrawGuard:: db
+; [8-bit] Frames DelayTextCharacter waits per glyph, set by ApplyMessageSpeed (0 instant or fast, 2 normal, 4 slow). While it is 0 nothing has been drawn yet, so the delay/wait text commands redraw the window first (setting it to 1 around that redraw)
+wTextCharDelayFrames:: db
 ; [8-bit] Text cursor column, 0-31. RenderTextString seeds it from d & $1f with wTextCursorRow; TextCmdNewline reloads it into d for GetTilemapCellAddress to re-point the write pointer
 wTextCursorColumn:: db
 ; [8-bit] Text cursor row, 0-31. TextCmdNewline advances it by two rows (the font is double height), wrapping with `and $1f`; the two glyph-stream row commands compare it against a row computed from the stream offset
@@ -113,7 +113,7 @@ wScriptDialogueTextId:: dw
 ; [8-bit] Widest line of the measured text in whole cells; written by FitWindowToText, returned by MeasureDialogueWidthTiles
 wFitTextWidthCells:: db
 	ds 7
-; [8-bit] 1 when OpenSpeechBubble / Unused_05_OpenCenteredDialogueWindow put the window on the lower half (speaker near the top), else 0. Write-only
+; [8-bit] 1 when OpenSpeechBubble / Unused_05_ChooseSpeechBubbleHalf put the window on the lower half (speaker near the top), else 0. Write-only
 wSpeechBubbleLowerHalf:: db
 ; [8-bit] Stored by Unused_05_SetTextVar; nothing reads it
 wUnusedTextByte:: db
@@ -121,7 +121,7 @@ wUnusedTextByte:: db
 ; [8-bit] 1 when RenderWindowText bails on the "no text" sentinel ($03 in the text id's high byte), 0 otherwise. Write-only
 wWindowTextEmpty:: db
 	ds 2
-; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) per glyph. Set from GetSpeakerVoice; $08 = silent, also forced by a negative message speed
+; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) per glyph. Set from GetSpeakerVoice; $08 = silent, also forced by a speaker id with bit 7 set
 wDialogueVoice:: db
 ; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, closed by Unused_05_RunFixedTextMenu with the menu window. Neither is called; Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before SetWindowTextId, so the "window id" they pass around is really the WRAM bank number
 wFixedMenuWindowId:: db

@@ -354,7 +354,7 @@ Unused_13_RunDoublesTravelingTeamVictoryIfWon:
 	jp z, DoublesTravelingTeamVictoryCutscene ; $744b
 	ret ; $744e
 DoublesTravelingTeamVictoryCutscene:
-	script_set_text Text_KevinDoublesConcede ; $744f
+	script_set_text Text_MarkDoublesConcede ; $744f
 	script_respawn_actors DoublesTravelingTeamActors_13 ; $7455
 	farcall BeginCutsceneScriptMode ; $745d
 	call SetPartnerObjDefByGender_13 ; $7460

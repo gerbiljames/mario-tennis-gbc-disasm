@@ -242,12 +242,12 @@ MarioWorldNpc0ABabyMario_0e:
 	ret ; $53dd
 MarioWorldNpc0C_0e:
 	script_set_text Text_DonkeyKongOoHoo ; $53de
-	sound SFX_PEACH_FANFARE ; $53e4
+	sound SFX_VOICE_DK ; $53e4
 	script_speak ACTOR_MARIO_WORLD_DK ; $53e6
 	ret ; $53eb
 MarioWorldNpc0D_0e:
 	script_set_text Text_BooGiggle ; $53ec
-	sound SFX_THUD ; $53f2
+	sound SFX_VOICE_BOO ; $53f2
 	script_speak ACTOR_MARIO_WORLD_BOO ; $53f4
 	ret ; $53f9
 MarioWorldNpc0FBowser_0e:

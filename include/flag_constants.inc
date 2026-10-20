@@ -12,7 +12,7 @@ def FLAG_NEW_GAME_SET_BIT equ 15 ; wGameFlags byte $01 bit 7
 def FLAG_DEBUG_NOCLIP equ 16 ; wGameFlags byte $02 bit 0
 def FLAG_PLAYER_RUNNING equ 17 ; wGameFlags byte $02 bit 1
 def FLAG_HIDE_OVERWORLD_ACTORS equ 20 ; wGameFlags byte $02 bit 4
-def FLAG_DEBUG_SKIP_LOCATION_EXIT equ 21 ; wGameFlags byte $02 bit 5
+def FLAG_DEBUG_EXIT_TO_TEST_2 equ 21 ; wGameFlags byte $02 bit 5
 def FLAG_CUTSCENE_FAST_FORWARD equ 22 ; wGameFlags byte $02 bit 6
 
 def FLAG_VRAM_UPDATE_BUSY equ 24 ; wGameFlags byte $03 bit 0
@@ -24,7 +24,7 @@ def FLAG_DRILL_FROM_MENU equ 30 ; wGameFlags byte $03 bit 6
 def FLAG_DEBUG_FLAG_EDITOR_OPEN equ 31 ; wGameFlags byte $03 bit 7
 
 def FLAG_DEBUG_SHOW_PLAYER_POS equ 32 ; wGameFlags byte $04 bit 0
-def FLAG_DEBUG_KEEP_MATCH_SETTINGS equ 33 ; wGameFlags byte $04 bit 1
+def FLAG_DEBUG_SHORT_MATCH equ 33 ; wGameFlags byte $04 bit 1
 def FLAG_DEBUG_SHORT_GLYPH_UPLOAD equ 34 ; wGameFlags byte $04 bit 2
 def FLAG_TEXT_RENDER_ACTIVE equ 35 ; wGameFlags byte $04 bit 3
 def FLAG_PROPORTIONAL_TEXT_MODE equ 36 ; wGameFlags byte $04 bit 4
@@ -83,9 +83,9 @@ def FLAG_RESTAURANT_NPC12_MOVED_STAGE_0 equ 112 ; wGameFlags byte $0e bit 0
 def FLAG_RESTAURANT_NPC12_MOVED_STAGE_1 equ 113 ; wGameFlags byte $0e bit 1
 def FLAG_RESTAURANT_NPC12_MOVED_STAGE_2 equ 114 ; wGameFlags byte $0e bit 2
 def FLAG_RESTAURANT_NPC12_MOVED_STAGE_3 equ 115 ; wGameFlags byte $0e bit 3
-def FLAG_SENIOR_COURT_NPC03_TURNED equ 116 ; wGameFlags byte $0e bit 4
-def FLAG_TOURNAMENT_NPC05_TALKED_SINGLES equ 118 ; wGameFlags byte $0e bit 6
-def FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES equ 119 ; wGameFlags byte $0e bit 7
+def FLAG_SENIOR_COURT_PARTNER_INTRO_DONE equ 116 ; wGameFlags byte $0e bit 4
+def FLAG_TALKED_TO_UNION_FAN_SINGLES equ 118 ; wGameFlags byte $0e bit 6
+def FLAG_TALKED_TO_UNION_FAN_DOUBLES equ 119 ; wGameFlags byte $0e bit 7
 
 def FLAG_COURT2_SPECTATORS_TALKED_SINGLES equ 120 ; wGameFlags byte $0f bit 0
 def FLAG_COURT2_SPECTATORS_TALKED_DOUBLES equ 121 ; wGameFlags byte $0f bit 1
@@ -96,8 +96,8 @@ def FLAG_PRACTICE_ROOM_SESSION_ACTIVE equ 125 ; wGameFlags byte $0f bit 5
 def FLAG_REPAIR_COUNTER_GREETED equ 126 ; wGameFlags byte $0f bit 6
 def FLAG_REPAIR_COUNTER_EQUIP_CHANGED equ 127 ; wGameFlags byte $0f bit 7
 
-def FLAG_SWING_PRACTICE_KID_PLACED equ 128 ; wGameFlags byte $10 bit 0
-def FLAG_JUNIOR_COURT_NPC0A_TALKED equ 130 ; wGameFlags byte $10 bit 2
+def FLAG_SWING_PRACTICE_KID_LEFT equ 128 ; wGameFlags byte $10 bit 0
+def FLAG_TALKED_TO_ALLIE_ISLAND_OPEN equ 130 ; wGameFlags byte $10 bit 2
 def FLAG_AWARDS_CEREMONY_SEEN_SINGLES equ 131 ; wGameFlags byte $10 bit 3
 def FLAG_AWARDS_CEREMONY_SEEN_DOUBLES equ 132 ; wGameFlags byte $10 bit 4
 
@@ -154,9 +154,9 @@ def FLAG_ISLAND_OPEN_IN_PROGRESS equ 185 ; wGameFlags byte $17 bit 1
 def FLAG_SERVE_CHALLENGER_DEFEATED equ 186 ; wGameFlags byte $17 bit 2
 def FLAG_NET_CHALLENGER_DEFEATED equ 187 ; wGameFlags byte $17 bit 3
 def FLAG_STROKE_CHALLENGER_DEFEATED equ 188 ; wGameFlags byte $17 bit 4
-def FLAG_SERVE_COACH_GREETED equ 189 ; wGameFlags byte $17 bit 5
-def FLAG_NET_COACH_GREETED equ 190 ; wGameFlags byte $17 bit 6
-def FLAG_RETURN_COACH_GREETED equ 191 ; wGameFlags byte $17 bit 7
+def FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT equ 189 ; wGameFlags byte $17 bit 5
+def FLAG_NET_COACH_LESSON_PASSED_THIS_VISIT equ 190 ; wGameFlags byte $17 bit 6
+def FLAG_RETURN_COACH_LESSON_PASSED_THIS_VISIT equ 191 ; wGameFlags byte $17 bit 7
 
 def FLAG_CLEARED_SERVICE_MATCH_1 equ 192 ; wGameFlags byte $18 bit 0
 def FLAG_CLEARED_SERVICE_MATCH_2 equ 193 ; wGameFlags byte $18 bit 1

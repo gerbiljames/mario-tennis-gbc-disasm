@@ -348,19 +348,19 @@ ActorScript_14_3:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderSmall
 MapScriptNop_14:

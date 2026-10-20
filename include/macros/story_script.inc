@@ -150,11 +150,11 @@ MACRO script_unlock_facing
 ENDM
 
 ; Sets the actor's ACTORF_MODE to an ACTORMODE_* value.
-; Usage: script_set_active actor, mode
-MACRO script_set_active
+; Usage: script_set_actor_mode actor, mode
+MACRO script_set_actor_mode
 	ld a, \1
 	ld b, \2
-	farcall SetActorActive
+	farcall ScriptSetActorMode
 ENDM
 
 ; Walks the player to `actor` (b is a position offset, always $00 here).

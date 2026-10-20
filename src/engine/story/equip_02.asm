@@ -75,11 +75,11 @@ Unused_02_GetCharArchetypeField:
 	ret ; $47f1
 StatArchetypePtrs_02:
 	; $47f2, 8 bytes (records:2)
-	dw StatArchetype0_02 ; record 0
-	dw StatArchetype1_02 ; record 1
-	dw StatArchetype2_02 ; record 2
-	dw StatArchetype3_02 ; record 3
-StatArchetype0_02:
+	dw AlexStatArchetype_02 ; record 0
+	dw NinaStatArchetype_02 ; record 1
+	dw HarryStatArchetype_02 ; record 2
+	dw KateStatArchetype_02 ; record 3
+AlexStatArchetype_02:
 	; $47fa, 113 bytes (stat archetype)
 	db 1 ; level / class tier -> record +$18
 	db $79, $00, $a0, $00, $99, $09, $0d, $00 ; physics template -> record +$30-+$37
@@ -96,7 +96,7 @@ StatArchetype0_02:
 	stat_thresholds 4, 7, 10, 13, 15, 18, 21, 25, 30 ; Reaction
 	stat_thresholds 3, 8, 11, 15, 18, 22, 26, 31, 38 ; Stop
 	db $ff
-StatArchetype1_02:
+NinaStatArchetype_02:
 	; $486b, 113 bytes (stat archetype)
 	db 1 ; level / class tier -> record +$18
 	db $80, $00, $a0, $00, $33, $09, $0e, $00 ; physics template -> record +$30-+$37
@@ -113,7 +113,7 @@ StatArchetype1_02:
 	stat_thresholds -4, 1, 5, 9, 13, 16, 21, 27, 34 ; Reaction
 	stat_thresholds 2, 6, 10, 13, 16, 20, 24, 29, 35 ; Stop
 	db $ff
-StatArchetype2_02:
+HarryStatArchetype_02:
 	; $48dc, 113 bytes (stat archetype)
 	db 1 ; level / class tier -> record +$18
 	db $90, $00, $a3, $00, $99, $07, $0b, $00 ; physics template -> record +$30-+$37
@@ -130,7 +130,7 @@ StatArchetype2_02:
 	stat_thresholds 3, 9, 13, 17, 21, 26, 31, 37, 45 ; Reaction
 	stat_thresholds 6, 14, 20, 26, 32, 38, 45, 54, 65 ; Stop
 	db $ff
-StatArchetype3_02:
+KateStatArchetype_02:
 	; $494d, 113 bytes (stat archetype)
 	db 1 ; level / class tier -> record +$18
 	db $86, $00, $a9, $00, $c2, $07, $0b, $00 ; physics template -> record +$30-+$37
@@ -531,7 +531,7 @@ Unused_02_ApplyLevelUpPreset:
 	jr .stat3Loop ; $4be8
 .stat3Done:
 	xor a ; $4bea
-	ld hl, CharDataPtr_02 ; $4beb
+	ld hl, ExpThresholdTablePtr_02 ; $4beb
 	add_hl_a ; $4bee
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4

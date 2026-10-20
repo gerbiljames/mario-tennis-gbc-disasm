@@ -220,8 +220,8 @@ LoadMatchSettingsFromTable:
 	ld [wMatchOpponentChar], a ; $4a82
 	ld a, [hl+] ; $4a85
 	ld [wCurrentlyUsedCourt], a ; $4a86
-	test_flag FLAG_DEBUG_KEEP_MATCH_SETTINGS ; $4a89
-	jr nz, .minigameDefaults ; $4a8c
+	test_flag FLAG_DEBUG_SHORT_MATCH ; $4a89
+	jr nz, .debugShortMatch ; $4a8c
 	ld a, [hl+] ; $4a8e
 	ld e, a ; $4a8f
 	and $0f ; $4a90
@@ -233,7 +233,7 @@ LoadMatchSettingsFromTable:
 	ld a, [hl] ; $4a9d
 	ld [wMatchBGM], a ; $4a9e
 	ret ; $4aa1
-.minigameDefaults:
+.debugShortMatch:
 	ld a, $02 ; $4aa2
 	ld [wMatchTypeNumberOfGames], a ; $4aa4
 	ld a, $01 ; $4aa7
@@ -384,7 +384,7 @@ RunClearStatusSetupMenu:
 	ld a, [wClearStatusFormat] ; $4c7b
 	cp $ff ; $4c7e
 	jp z, .modeMenu ; $4c80
-.setsMenu:
+.classMenu:
 	ld a, [wClearStatusWindowId] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
 	ld hl, Text_ClearStatusChooseClass ; $4c89
@@ -416,22 +416,22 @@ RunClearStatusSetupMenu:
 	farcall RedrawWindowRows ; $4cd6
 	ld a, [wClearStatusDoubles] ; $4cd9
 	or a ; $4cdc
-	jp nz, .setsCancel ; $4cdd
+	jp nz, .doublesRankList ; $4cdd
 	ld hl, $10db ; $4ce0
-	jr .checkSets ; $4ce3
-.setsCancel:
+	jr .pickRankList ; $4ce3
+.doublesRankList:
 	ld hl, $10df ; $4ce5
-.checkSets:
+.pickRankList:
 	ld a, [wClearStatusFormat] ; $4ce8
 	or a ; $4ceb
-	jr z, .storeSets ; $4cec
+	jr z, .showRankMenu ; $4cec
 	ld a, [wClearStatusClass] ; $4cee
 	inc a ; $4cf1
 	add l ; $4cf2
 	ld l, a ; $4cf3
-	jr nc, .storeSets ; $4cf4
+	jr nc, .showRankMenu ; $4cf4
 	inc h ; $4cf6
-.storeSets:
+.showRankMenu:
 	ld d, $07 ; $4cf7
 	ld e, $00 ; $4cf9
 	farcall CreateMenuWindowFromText ; $4cfb
@@ -443,7 +443,7 @@ RunClearStatusSetupMenu:
 	farcall CloseWindow ; $4d0d
 	ld a, [wClearStatusRank] ; $4d10
 	cp $ff ; $4d13
-	jp z, .setsMenu ; $4d15
+	jp z, .classMenu ; $4d15
 	call ApplyClearStatusFlags ; $4d18
 	call GetClearStatusResultCode ; $4d1b
 .done:

@@ -232,7 +232,7 @@ Unused_02_DebugStoryStatsScreen:
 	jp .redraw ; $517a
 .checkDown:
 	bit PADB_DOWN, a ; $517d
-	jr z, .positive ; $517f
+	jr z, .checkB ; $517f
 	push de ; $5181
 	ld a, STORYREC_MAIN ; $5182
 	ld d, TRAINSTAT_SPEED ; $5184
@@ -240,7 +240,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5189
 	sound SFX_MENU_MOVE ; $518a
 	jp .redraw ; $518c
-.positive:
+.checkB:
 	bit PADB_B, a ; $518f
 	jr z, .checkA ; $5191
 	push de ; $5193
@@ -334,7 +334,7 @@ LoadStorySlot:
 	ld a, [wLinkSessionActive] ; $5259
 	or a ; $525c
 	ld a, h ; $525d
-	jr nz, .storePlayer1CurrentMainCharacter ; $525e
+	jr nz, .linkSessionNoChar ; $525e
 	ld a, CHAR_EMPTY_SLOT ; $5260
 	ld [wPlayer1MainChar], a ; $5262
 	ld a, $03 ; $5265
@@ -342,7 +342,7 @@ LoadStorySlot:
 	ld a, b ; $526a
 	ld [wCurrentStorySlot], a ; $526b
 	ret ; $526e
-.storePlayer1CurrentMainCharacter:
+.linkSessionNoChar:
 	ld a, CHAR_NONE ; $526f
 	ld [wPlayer1MainChar], a ; $5271
 	ret ; $5274

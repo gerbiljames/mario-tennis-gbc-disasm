@@ -208,8 +208,8 @@ NEXTU
 ; minigame targets (banks $0a/$0d)
 ; [4 bytes] Start position of the floating score popup, copied from wBallHistory + 30 by StartScorePopup and stepped by UpdateScorePopup
 wScorePopupSource:: ds 4
-; [8-bit] Set at init by Banana Bunch and Fruit Fantasy, whose targets deflect the ball instead of absorbing it; UpdateMinigameTarget then runs the Alt draw, hit-test and scoring handlers
-wMinigameTargetsAltMode:: db
+; [8-bit] Set at init by Banana Bunch and Fruit Fantasy, whose targets score a hit (wMinigameHitTargetType) instead of deflecting the ball; UpdateMinigameTarget then runs the Alt draw, hit-test and scoring handlers
+wMinigameTargetsScoreMode:: db
 ENDU
 
 ; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while walking their weight tables

@@ -99,7 +99,7 @@ ActorScriptOpHandlers_04:
 	dw ActorScriptOp_Sound ; record 17
 	dw ActorScriptOp_Call ; record 18
 	dw ActorScriptOp_SetWanderHome ; record 19
-	dw ActorScriptOp_WaitMove2 ; record 20
+	dw ActorScriptOp_WaitMoveOrBlocked ; record 20
 	dw ActorScriptOp_Flag ; record 21
 ActorScriptOp_Call:
 	inc de ; $44a9
@@ -798,7 +798,7 @@ ActorScriptOp_RandBox:
 	ld h, [hl] ; $488a
 	add ACTORF_STATUS ; $488b
 	ld l, a ; $488d
-	bit ACTORSTATUSB_LIVE, [hl] ; $488e
+	bit ACTORSTATUSB_ON_SCREEN, [hl] ; $488e
 	jr z, .advance ; $4890
 	push de ; $4892
 	inc de ; $4893

@@ -390,7 +390,7 @@ InitMinigame_BananaBunch:
 	ld a, $05 ; $54ff
 	farcall SpawnMinigameTargetFormation ; $5501
 	ld a, $01 ; $5504
-	ld [wMinigameTargetsAltMode], a ; $5506
+	ld [wMinigameTargetsScoreMode], a ; $5506
 	ld a, $01 ; $5509
 	ld [wMinigameUsesWall], a ; $550b
 	ld a, [wMinigameLevel] ; $550e

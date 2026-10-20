@@ -43,7 +43,7 @@ commits. It leaves by writing `wStoryModeExitTriggerRequest`, looked up in
 | --- | --- | --- |
 | `$01` `NEW_GAME` | `ENTRY_ACADEMY_ENTRANCE_NEW_GAME` | new game (`$10:$5081`) |
 | `$02` `CONTINUE` | `ENTRY_DORM_ROOM_CONTINUE` | ordinary continue |
-| `$03` `TEST_2` | `ENTRY_TEST_2_SETUP_MENU` | `FLAG_DEBUG_SKIP_LOCATION_EXIT` shortcut (Test 2 runs the clear-status setup menu) |
+| `$03` `TEST_2` | `ENTRY_TEST_2_SETUP_MENU` | `FLAG_DEBUG_EXIT_TO_TEST_2` shortcut (Test 2 runs the clear-status setup menu) |
 | `$04` `CONTINUE_ISLAND_OPEN_WON` | `ENTRY_ACADEMY_WING_ISLAND_OPEN_WON` | Island Open final won, story not yet flagged complete |
 | `$05` `CONTINUE_TO_PEACHS_CASTLE` | `ENTRY_PEACHS_CASTLE_FIRST_VISIT` | story complete, Mario World not yet visited |
 
@@ -87,7 +87,7 @@ continue passes an explicit pair (`$10:$50df`: `b=$0a, c=$01`, the dorm room).
 `.frameLoop` (`$0a:$4ff5`) switches to WRAM bank `$04` and checks
 `CheckStoryEventRequests` (OR of `$c2a0-$c2a5`). With none set it drops into
 `.waitForEvent`, attaching the player's controller script and idling until a
-request appears. With one pending it re-installs `ActorScript_0a` on the
+request appears. With one pending it re-installs `ActorScript_Null` on the
 player (a 6-byte halting script) and tests in order:
 
 | order | request | handler |
@@ -640,7 +640,7 @@ macro). High byte `wCurrentMatchList` = category (0 singles, 1 doubles,
 `SinglesMatchSettingsTable_0a` (`$0a:$4ab2`) or `DoublesMatchSettingsTable_0a`
 (`$0a:$4b2f`), 25 five-byte records each, by `low byte * 5`: `wGameMode`,
 `wMatchOpponentChar`, `wCurrentlyUsedCourt`, a packed sets/games byte,
-`wMatchBGM`. `FLAG_DEBUG_KEEP_MATCH_SETTINGS` replaces the sets/games byte
+`wMatchBGM`. `FLAG_DEBUG_SHORT_MATCH` replaces the sets/games byte
 with one set of two games.
 
 `RunStoryMatch` (`$0a:$4962`) fades out, calls `AssignStoryMatchCharacters`
@@ -733,7 +733,8 @@ bar  = count of thresholds raw clears (0-9)     ; LookupStatBarLevel, 9-entry si
 ```
 
 `record[+$0b] & 3` picks one of four 113-byte archetype tables via
-`StatArchetypePtrs_02` (`StatArchetype0_02`-`3_02`, laid out as `STATARCH_*`):
+`StatArchetypePtrs_02` (`AlexStatArchetype_02`-`KateStatArchetype_02` by hero
+id, laid out as `STATARCH_*`):
 a tier byte, the 12-byte template copied to `+$30`-`+$3b` at build time,
 eleven `stat_thresholds` rows, then (level, icon) modifier pairs to a `$ff`
 (every archetype has none).

@@ -117,9 +117,9 @@ CreateMenuWindowFromText:
 	srl b ; $46da
 	srl b ; $46dc
 	and $07 ; $46de
-	jr z, .gotRows ; $46e0
+	jr z, .gotWidth ; $46e0
 	inc b ; $46e2
-.gotRows:
+.gotWidth:
 	inc b ; $46e3
 	inc b ; $46e4
 	inc b ; $46e5

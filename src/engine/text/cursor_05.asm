@@ -375,14 +375,14 @@ TextCmdNextGlyphStreamRow:
 	ret ; $4f31
 TextCmdDelay30:
 	push af ; $4f32
-	ld a, [wTextRedrawGuard] ; $4f33
+	ld a, [wTextCharDelayFrames] ; $4f33
 	or a ; $4f36
 	jr nz, .startDelay ; $4f37
 	ld a, $01 ; $4f39
-	ld [wTextRedrawGuard], a ; $4f3b
+	ld [wTextCharDelayFrames], a ; $4f3b
 	call RedrawActiveTextWindow ; $4f3e
 	xor a ; $4f41
-	ld [wTextRedrawGuard], a ; $4f42
+	ld [wTextCharDelayFrames], a ; $4f42
 .startDelay:
 	ld a, $1e ; $4f45
 .loop:
@@ -394,14 +394,14 @@ TextCmdDelay30:
 TextCmdDelay15Skippable:
 	push af ; $4f4f
 	push bc ; $4f50
-	ld a, [wTextRedrawGuard] ; $4f51
+	ld a, [wTextCharDelayFrames] ; $4f51
 	or a ; $4f54
 	jr nz, .startDelay ; $4f55
 	ld a, $01 ; $4f57
-	ld [wTextRedrawGuard], a ; $4f59
+	ld [wTextCharDelayFrames], a ; $4f59
 	call RedrawActiveTextWindow ; $4f5c
 	xor a ; $4f5f
-	ld [wTextRedrawGuard], a ; $4f60
+	ld [wTextCharDelayFrames], a ; $4f60
 .startDelay:
 	ld b, $0f ; $4f63
 .loop:

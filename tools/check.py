@@ -1500,7 +1500,7 @@ KNOWN_RAW_IDS = {
 # by label or by the kind their header comment names.
 RAW_ID_MACRO_ARGS = {
     ("story_location", 0): "STORYLOC_",
-    ("script_set_active", 1): "ACTORMODE_",
+    ("script_set_actor_mode", 1): "ACTORMODE_",
     ("as_set_field ACTORF_MODE", 1): "ACTORMODE_",
     **{("court_positions", k): "COURTPOS_" for k in range(4)},
     **{("court_positions", k): "SERVEROLE_" for k in range(4, 8)},
@@ -1608,7 +1608,7 @@ TEXT_POINTER_LABELS = {
     "RenderInlineString.charLoop": "hl",
     "WriteStringToWindow": "hl",
     "TextCodeLiteral_05.storeChar": "hl",
-    "ProportionalTextCodeHandler5_05.glyph": "hl",
+    "ProportionalTextCodeGlyph_05.glyph": "hl",
     "Unused_05_WriteStringToTilemapStreamed.storeChar": "hl",
     "Unused_05_WriteDialogueToTilemapStreamed.storeChar": "hl",
     "Unused_05_WriteStringToTilemap": "hl",

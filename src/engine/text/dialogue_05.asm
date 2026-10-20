@@ -534,7 +534,7 @@ AddTextIdOffset:
 	sra a ; $5d50
 	ld e, a ; $5d52
 	ld d, $00 ; $5d53
-	ld hl, AddTextIdOffsetWordLookupTable ; $5d55
+	ld hl, TextBankStringCounts_05 ; $5d55
 	add hl, de ; $5d58
 	ld e, [hl] ; $5d59
 	inc hl ; $5d5a
@@ -589,7 +589,7 @@ AddTextIdOffset:
 	pop bc ; $5d96
 	pop af ; $5d97
 	ret ; $5d98
-AddTextIdOffsetWordLookupTable:
+TextBankStringCounts_05:
 	; $5d99, 26 bytes (records:2)
 	dw $0230 ; record 0
 	dw $015b ; record 1

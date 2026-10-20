@@ -53,7 +53,7 @@ UpdateMinigameTarget:
 .runScript:
 	call RunMinigameTargetScript ; $65f0
 	call MoveMinigameTargetTowardGoal ; $65f3
-	ld a, [wMinigameTargetsAltMode] ; $65f6
+	ld a, [wMinigameTargetsScoreMode] ; $65f6
 	and a ; $65f9
 	jr nz, .altMode ; $65fa
 	call DrawMinigameTarget ; $65fc
@@ -171,7 +171,7 @@ DrawMinigameTarget:
 	ld a, [wMinigameTargetWork + MGTARGET_HIT_TIMER] ; $66bf
 	and $0f ; $66c2
 	jr z, .readSprite ; $66c4
-	ld_hl_indexed DrawMinigameTargetTable ; $66c6
+	ld_hl_indexed MinigameTargetHitShakeLengths ; $66c6
 	ld a, [hl] ; $66cd
 	ld h, $00 ; $66ce
 	ld l, a ; $66d0
@@ -189,18 +189,18 @@ DrawMinigameTarget:
 .readSprite:
 	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $66e1
 	add a ; $66e4
-	ld_hl_indexed MinigameTargetTable ; $66e5
+	ld_hl_indexed MinigameTargetKindSprites ; $66e5
 	ld a, [hl+] ; $66ec
 	ld b, [hl] ; $66ed
 	ld c, a ; $66ee
 	ld hl, DrawMinigameTarget_SpriteTemplate ; $66ef
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
-MinigameTargetTable:
+MinigameTargetKindSprites:
 	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
-DrawMinigameTargetTable:
-	INCLUDE "data/engine/story/DrawMinigameTargetTable.asm" ; $66fe, 16 bytes (bytes:16)
+MinigameTargetHitShakeLengths:
+	INCLUDE "data/engine/story/MinigameTargetHitShakeLengths.asm" ; $66fe, 16 bytes (bytes:16)
 DrawMinigameTarget_SpriteTemplate:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -258,11 +258,11 @@ CheckBallHitsMinigameTarget:
 DeflectBallOffMinigameTarget:
 	and $03 ; $6774
 	jumptable a ; $6776
-	dw DeflectBallOffMinigameTarget.pushX ; $6778 jumptable
+	dw DeflectBallOffMinigameTarget.pushRight ; $6778 jumptable
 	dw DeflectBallOffMinigameTarget.pushUp ; $677a jumptable
-	dw DeflectBallOffMinigameTarget.pushDepth ; $677c jumptable
-	dw DeflectBallOffMinigameTarget.reverse ; $677e jumptable
-.pushX:
+	dw DeflectBallOffMinigameTarget.pushLeft ; $677c jumptable
+	dw DeflectBallOffMinigameTarget.pushDown ; $677e jumptable
+.pushRight:
 	ld de, $0600 ; $6780
 	ld hl, wBallVelocityX ; $6783
 	ld a, [hl] ; $6786
@@ -289,7 +289,7 @@ DeflectBallOffMinigameTarget:
 	ld [hl+], a ; $67a2
 	ld [hl], d ; $67a3
 	ret ; $67a4
-.pushDepth:
+.pushLeft:
 	ld de, $fa00 ; $67a5
 	ld hl, wBallVelocityX ; $67a8
 	ld a, [hl] ; $67ab
@@ -299,7 +299,7 @@ DeflectBallOffMinigameTarget:
 	adc d ; $67af
 	ld [hl+], a ; $67b0
 	ret ; $67b1
-.reverse:
+.pushDown:
 	ld bc, $f400 ; $67b2
 	ld hl, wBallVelocityHeight ; $67b5
 	ld a, c ; $67b8
@@ -369,19 +369,19 @@ DrawDigitSprite_0a:
 	ret ; $6808
 MinigameTargetOpHandlers_0a:
 	; $6809, 18 bytes (records:2)
-	dw MinigameTargetOp_00 ; record 0
-	dw MinigameTargetOp_01 ; record 1
-	dw MinigameTargetOp_02 ; record 2
-	dw MinigameTargetOp_03 ; record 3
-	dw MinigameTargetOp_04 ; record 4
-	dw MinigameTargetOp_05 ; record 5
-	dw MinigameTargetOp_06 ; record 6
-	dw MinigameTargetOp_07 ; record 7
-	dw MinigameTargetOp_08 ; record 8
-MinigameTargetOp_00:
+	dw MinigameTargetOp_End ; record 0
+	dw MinigameTargetOp_Wait ; record 1
+	dw MinigameTargetOp_Jump ; record 2
+	dw MinigameTargetOp_Call ; record 3
+	dw MinigameTargetOp_WaitArrival ; record 4
+	dw MinigameTargetOp_SetPos ; record 5
+	dw MinigameTargetOp_Move ; record 6
+	dw MinigameTargetOp_SetType ; record 7
+	dw MinigameTargetOp_AddType ; record 8
+MinigameTargetOp_End:
 	xor a ; $681b
 	ret ; $681c
-MinigameTargetOp_01:
+MinigameTargetOp_Wait:
 	inc de ; $681d
 	ld a, [de] ; $681e
 	inc de ; $681f
@@ -389,7 +389,7 @@ MinigameTargetOp_01:
 	ld [wMinigameTargetWork + MGTARGET_SCRIPT_DELAY], a ; $6821
 	xor a ; $6824
 	ret ; $6825
-MinigameTargetOp_02:
+MinigameTargetOp_Jump:
 	inc de ; $6826
 	ld l, e ; $6827
 	ld h, d ; $6828
@@ -402,7 +402,7 @@ MinigameTargetOp_02:
 	ld d, h ; $682f
 	ld a, $01 ; $6830
 	ret ; $6832
-MinigameTargetOp_03:
+MinigameTargetOp_Call:
 	inc de ; $6833
 	ld a, [de] ; $6834
 	ld l, a ; $6835
@@ -414,17 +414,17 @@ MinigameTargetOp_03:
 	call JumpToHL ; $683b
 	pop de ; $683e
 	ret ; $683f
-MinigameTargetOp_04:
+MinigameTargetOp_WaitArrival:
 	ld hl, wMinigameTargetWork + MGTARGET_FLAGS ; $6840
 	bit MGTARGETB_MOVING, [hl] ; $6843
-	jr nz, .apply ; $6845
+	jr nz, .stillMoving ; $6845
 	inc de ; $6847
 	ld a, $01 ; $6848
 	ret ; $684a
-.apply:
+.stillMoving:
 	xor a ; $684b
 	ret ; $684c
-MinigameTargetOp_05:
+MinigameTargetOp_SetPos:
 	inc de ; $684d
 	ld l, e ; $684e
 	ld h, d ; $684f
@@ -447,7 +447,7 @@ MinigameTargetOp_05:
 	res MGTARGETB_MOVING, [hl] ; $6864
 	ld a, $01 ; $6866
 	ret ; $6868
-MinigameTargetOp_06:
+MinigameTargetOp_Move:
 	inc de ; $6869
 	ld a, [de] ; $686a
 	ld b, a ; $686b
@@ -490,14 +490,14 @@ MinigameTargetOp_06:
 	set MGTARGETB_MOVING, [hl] ; $689c
 	ld a, $01 ; $689e
 	ret ; $68a0
-MinigameTargetOp_07:
+MinigameTargetOp_SetType:
 	inc de ; $68a1
 	ld a, [de] ; $68a2
 	inc de ; $68a3
 	ld [wMinigameTargetWork + MGTARGET_KIND], a ; $68a4
 	ld a, $01 ; $68a7
 	ret ; $68a9
-MinigameTargetOp_08:
+MinigameTargetOp_AddType:
 	inc de ; $68aa
 	ld a, [de] ; $68ab
 	inc de ; $68ac
@@ -817,25 +817,25 @@ DrawMinigameTargetAlt:
 	ld a, [wMinigameTargetWork + MGTARGET_HIT_TIMER] ; $6d7f
 	and $0f ; $6d82
 	jr z, .readSprite ; $6d84
-	ld_hl_indexed DrawMinigameTargetAltTable ; $6d86
+	ld_hl_indexed MinigameTargetAltHitSwayOffsets ; $6d86
 	ld a, [hl] ; $6d8d
 	add d ; $6d8e
 	ld d, a ; $6d8f
 .readSprite:
 	ld a, [wMinigameTargetWork + MGTARGET_KIND] ; $6d90
 	add a ; $6d93
-	ld_hl_indexed MinigameTargetAltTable ; $6d94
+	ld_hl_indexed MinigameTargetAltKindSprites ; $6d94
 	ld a, [hl+] ; $6d9b
 	ld b, [hl] ; $6d9c
 	ld c, a ; $6d9d
 	ld hl, DrawMinigameTargetAlt_SpriteTemplate ; $6d9e
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
-MinigameTargetAltTable:
+MinigameTargetAltKindSprites:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
-DrawMinigameTargetAltTable:
-	INCLUDE "data/engine/story/DrawMinigameTargetAltTable.asm" ; $6dad, 16 bytes (bytes:16)
+MinigameTargetAltHitSwayOffsets:
+	INCLUDE "data/engine/story/MinigameTargetAltHitSwayOffsets.asm" ; $6dad, 16 bytes (bytes:16)
 DrawMinigameTargetAlt_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

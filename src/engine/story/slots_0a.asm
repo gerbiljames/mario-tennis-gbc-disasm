@@ -34,7 +34,7 @@
 	farptr ScriptSetActorJumpVelocity ; $4042
 	farptr ScriptWaitActorJumpDone ; $4044
 	farptr RunMenuFromText ; $4046
-	farptr SetActorActive ; $4048
+	farptr ScriptSetActorMode ; $4048
 	farptr InitStoryMatchSettings ; $404a
 	farptr RunStoryMatch ; $404c
 	farptr RestoreOverworldAfterMatch ; $404e

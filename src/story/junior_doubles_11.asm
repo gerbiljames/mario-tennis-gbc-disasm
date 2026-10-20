@@ -335,7 +335,7 @@ JuniorClassCourtDoublesDNpc07_11:
 JuniorClassCourtDoublesCNpc0A_11:
 	script_set_text Text_AllieJuniorDoublesOpenPlaceholder ; $5990
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5996
-	set_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $599b
+	set_flag FLAG_TALKED_TO_ALLIE_ISLAND_OPEN ; $599b
 	ret ; $599e
 JuniorClassCourtDoublesNpcScriptsD_11:
 	; $599f, 73 bytes (map_scripts)
@@ -350,7 +350,7 @@ JuniorClassCourtDoublesNpcScriptsD_11:
 	map_script ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY, FACEMASK_ANY, $0000, Text_JoyJuniorDoublesTrophyInOffice, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 JuniorClassCourtDoublesDNpc0A_11:
-	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $59e8
+	test_flag FLAG_TALKED_TO_ALLIE_ISLAND_OPEN ; $59e8
 	jr nz, .setText ; $59eb
 	script_set_text Text_AllieJuniorCourtCostellosWeird ; $59ed
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $59f3

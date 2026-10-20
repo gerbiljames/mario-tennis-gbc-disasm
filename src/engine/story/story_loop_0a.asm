@@ -129,7 +129,7 @@ GetClearStatusResultCode:
 	ld a, [wClearStatusFormat] ; $4ecd
 	ld b, a ; $4ed0
 	or a ; $4ed1
-	jr z, .doublesRow ; $4ed2
+	jr z, .minigameRow ; $4ed2
 	ld a, [wClearStatusClass] ; $4ed4
 	inc a ; $4ed7
 	inc a ; $4ed8
@@ -137,7 +137,7 @@ GetClearStatusResultCode:
 	ld b, a ; $4eda
 	ld a, [wClearStatusDoubles] ; $4edb
 	jr .index ; $4ede
-.doublesRow:
+.minigameRow:
 	ld a, [wClearStatusRank] ; $4ee0
 .index:
 	add b ; $4ee3
@@ -278,7 +278,7 @@ RunStoryLocation:
 	and a ; $4ffe
 	jp z, .waitForEvent ; $4fff
 	ld bc, wActors ; $5002
-	ld hl, ActorScript_0a ; $5005
+	ld hl, ActorScript_Null ; $5005
 	ldh a, [hRomBank] ; $5008
 	farcall SetActorScript ; $500a
 	ld hl, wActors ; $500d
@@ -319,14 +319,14 @@ RunStoryLocation:
 	jr z, .runInteract ; $5051
 	ld [hl], $00 ; $5053
 	wram_bank WRAM_ACTORS ; $5055
-	ld a, [wPlayerMoveAngleApplied] ; $505b
+	ld a, [wPlayerBlockedBy] ; $505b
 	and a ; $505e
 	jr z, .runInteract ; $505f
-	ld hl, wPlayerMoveAnglePrev ; $5061
-	ld a, [wPlayerMoveAngleApplied] ; $5064
+	ld hl, wPlayerBlockedByPrev ; $5061
+	ld a, [wPlayerBlockedBy] ; $5064
 	cp [hl] ; $5067
 	jr nz, .runInteract ; $5068
-	ld hl, wPlayerMoving ; $506a
+	ld hl, wPlayerWallPushFrames ; $506a
 	ld a, [hl] ; $506d
 	cp $1e ; $506e
 	jr c, .runInteract ; $5070

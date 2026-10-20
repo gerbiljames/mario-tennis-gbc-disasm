@@ -67,12 +67,12 @@ wPlayerObjDefPending:: db
 ; [8-bit] Heading the D-pad asks the overworld player to walk ($40 per quarter turn, as FACE_*). UpdatePlayerControl also writes it to actor field +$34, then probes $20/$40/$e0/$c0 away from it to slide along a blocked wall
 wPlayerMoveAngle:: db
 	ds 1
-; [8-bit] Heading actually walked this frame, 0 when the move was blocked
-wPlayerMoveAngleApplied:: db
-; [8-bit] Previous frame's wPlayerMoveAngleApplied, saved before it is recomputed
-wPlayerMoveAnglePrev:: db
-; [8-bit] Cleared when no direction is held, so the walk animation stops
-wPlayerMoving:: db
+; [8-bit] What stopped the player's straight-ahead move this frame (IsPointBlocked: actor slot, or terrain cell | $80); 0 when not blocked
+wPlayerBlockedBy:: db
+; [8-bit] Previous frame's wPlayerBlockedBy, saved before it is recomputed
+wPlayerBlockedByPrev:: db
+; [8-bit] Frames the player has kept walking into the same blocker; reset when unblocked or no direction is held. The location loop turns $1e frames into an interaction
+wPlayerWallPushFrames:: db
 ; [8-bit] How far ahead GetPointAheadOfActorRanged probes: times 32 plus the facing nibble indexes ActorMoveVectors_04, selecting the table's 32-byte range row. The unranged entry point uses $40
 wActorProbeRange:: db
 ; [16-bit] First coordinate of the point FindActorAtPoint searches at (from hl), before it walks wNearbyActorList

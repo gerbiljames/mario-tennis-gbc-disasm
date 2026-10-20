@@ -117,11 +117,11 @@ ActorScript_13_00:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 180
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 180
 	as_jump .wander
@@ -144,12 +144,12 @@ ActorScript_13_03:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 180
 	as_set_target 3.0, 8.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 80
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait 18
 	as_set_target 3.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_wait 240
 	as_set_field ACTORF_HEADING, FACE_RIGHT
@@ -350,8 +350,8 @@ ShowStoryNarration_13:
 	sound BGM_NONE ; $5a28
 	script_set_position ACTOR_DORM_ROOM_KATE, 63.0, 63.0 ; $5a2a
 	script_set_position ACTOR_DORM_ROOM_CAT, 63.0, 63.0 ; $5a35
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $5a40
-	script_set_active ACTOR_PARTNER, ACTORMODE_HIDDEN ; $5a47
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $5a40
+	script_set_actor_mode ACTOR_PARTNER, ACTORMODE_HIDDEN ; $5a47
 	script_copy_scene_rect 0, 32, 0, 0, 22, 24 ; $5a4e
 	script_fade_in 8 ; $5a5d
 	script_wait_frames 4 ; $5a62

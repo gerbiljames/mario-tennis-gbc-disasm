@@ -1676,7 +1676,7 @@ def Text_CurtNeverMakeDoublesTeam equ Text_31_10
 def Text_BethAcceptedNeverMakeTeam equ Text_31_11
 def Text_KevinDoublesChallengeOffer equ Text_31_12
 def Text_KevinDoublesLetsGetStarted equ Text_31_16
-def Text_KevinDoublesConcede equ Text_31_22
+def Text_MarkDoublesConcede equ Text_31_22
 def Text_PartnerIsThisForReal equ Text_31_24
 def Text_PartnerDreamComeTrue equ Text_31_26
 def Text_EmilyYouLostMark equ Text_31_28
@@ -2316,9 +2316,9 @@ def Text_ArrivalBoyHeadmasterTrophy equ Text_36_75
 def Text_ArrivalStudentLieInSun equ Text_36_76
 def Text_ArrivalGirlHowToSucceed equ Text_36_77
 def Text_ArrivalBoyDreamNotImpossible equ Text_36_78
-def Text_LateStudentImLate equ Text_36_79
-def Text_LateStudentForgiveMe equ Text_36_87
-def Text_LateStudentThankYou equ Text_36_89
+def Text_LateHeadmasterImLate equ Text_36_79
+def Text_LateHeadmasterForgiveMe equ Text_36_87
+def Text_LateHeadmasterThankYou equ Text_36_89
 def Text_ArrivalStudentNoLeavingCampus equ Text_36_96
 def Text_StaffCreditsLines equ Text_36_99
 def Text_TourEmilyTechniqueCoach equ Text_36_627

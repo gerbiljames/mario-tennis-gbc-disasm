@@ -557,7 +557,7 @@ the `$00`:
 On truncation it NUL-terminates (and plays `$2c` in debug step mode).
 
 `AddTextIdOffset` (`$05:$5d2b`) adds an offset to an id and **carries across
-text banks** using per-bank string counts (`AddTextIdOffsetWordLookupTable`,
+text banks** using per-bank string counts (`TextBankStringCounts_05`,
 `$05:$5d99`, 13 words), so ids form one flat sequence.
 
 `include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` and an alias
@@ -656,7 +656,7 @@ Message speed:
    `STORYMENUITEM_MSG_SLOW`/`NORMAL`/`FAST`) stores `2 - selection` in
    `wMessageSpeed` (`$c8a4`; 0 fast, 1 normal, 2 slow, bit 7 a transient
    "instant" override).
-2. `ApplyMessageSpeed` (`$05:$57e7`) sets `wTextRedrawGuard`: bit 7 or 0 → 0,
+2. `ApplyMessageSpeed` (`$05:$57e7`) sets `wTextCharDelayFrames`: bit 7 or 0 → 0,
    1 → 2, else 4.
 3. `DelayTextCharacter` (`$05:$579b`, per-character delay and blip) waits that
    many frames, aborting on input.
@@ -665,7 +665,7 @@ Message speed:
    does the opposite, uploading the finished row buffer only on FAST/instant,
    so FAST shows a row at a time.
 
-`wTextRedrawGuard` doubles as a re-entrancy guard for the wait and delay
+`wTextCharDelayFrames` doubles as a re-entrancy guard for the wait and delay
 commands ("if 0, set to 1, redraw, clear"), so on FAST those commands do an
 extra redraw that NORMAL and SLOW skip.
 

@@ -51,7 +51,7 @@ stops for the frame, *cont* runs the next opcode, *cond* depends on state.
 | `$11` | `as_sound id` | 2 | cont | `$483d` | Play sound id (`PlaySoundManaged`) |
 | `$12` | `as_call fn` | 3 | cond | `$44a9` | Call a same-bank function (actor state in `bc`); yield+retry if it reports busy |
 | `$13` | `as_set_wander_home` | 1 | yield | `$484e` | Centre the `as_rand_box` box (`ACTORF_ANCHOR`) on the current tile, set speed 8 and `ACTORFLAGB_YIELD` |
-| `$14` | `as_wait_move2` | 1 | yield | `$4949` | Once the move has finished (`+$05` bit7 clear), set a 40-frame wait and advance; while moving, advance with a 10-frame wait only if `+$05` bit6 is set |
+| `$14` | `as_wait_move_or_blocked` | 1 | yield | `$4949` | Once the move has finished (`+$05` bit7 clear), set a 40-frame wait and advance; while moving, advance with a 10-frame wait only if `+$05` bit6 is set |
 | `$15` | `as_flag mode, field, bit` | 4 | cont | `$49de` | Set (`mode=$01`) or clear bit `bit` of state field `field`; `bit` indexes the mask table `$4a1f` |
 
 \* Returns `a = 0` **without** advancing, so the opcode is re-read every

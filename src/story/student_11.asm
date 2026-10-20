@@ -41,7 +41,7 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_SHAKE ; $47f2
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $47f9
 	script_face ACTOR_ACADEMY_ARRIVAL_HEADMASTER, FACE_UP ; $47fe
-	script_set_text Text_LateStudentImLate ; $4805
+	script_set_text Text_LateHeadmasterImLate ; $4805
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $480b
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_NOD ; $4810
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4817
@@ -145,7 +145,7 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_BOUNCE ; $4ae8
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4aef
 .loop:
-	script_set_text Text_LateStudentForgiveMe ; $4af4
+	script_set_text Text_LateHeadmasterForgiveMe ; $4af4
 	script_speak_restore ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4afa
 	farcall RunDialogueYesNoPrompt ; $4aff
 	farcall ScriptCloseDialogueWindow ; $4b02
@@ -156,7 +156,7 @@ LateStudentCrashCutscene:
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4b16
 	jr .loop ; $4b1b
 .setText:
-	script_set_text Text_LateStudentThankYou ; $4b1d
+	script_set_text Text_LateHeadmasterThankYou ; $4b1d
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_NOD ; $4b23
 	script_wait_idle ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4b2a
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4b2f
@@ -205,11 +205,11 @@ LateStudentCrashCutscene:
 	script_set_anim ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ANIM_BOUNCE ; $4c56
 	script_move_player 24.0, 11.0 ; $4c5d
 	farcall WaitPlayerMoveDone ; $4c67
-	script_set_active ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ACTORMODE_HIDDEN ; $4c6a
+	script_set_actor_mode ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ACTORMODE_HIDDEN ; $4c6a
 	script_set_position ACTOR_ACADEMY_ARRIVAL_HEADMASTER, 25.0, 6.0 ; $4c71
 	script_speak ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4c7c
 	script_set_position ACTOR_ACADEMY_ARRIVAL_HEADMASTER, 25.0, 36.0 ; $4c81
-	script_set_active ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ACTORMODE_VISIBLE ; $4c8c
+	script_set_actor_mode ACTOR_ACADEMY_ARRIVAL_HEADMASTER, ACTORMODE_VISIBLE ; $4c8c
 	script_move_player 24.0, 36.0 ; $4c93
 	farcall WaitPlayerMoveDone ; $4c9d
 	script_face_toward ACTOR_PLAYER, ACTOR_ACADEMY_ARRIVAL_HEADMASTER ; $4ca0

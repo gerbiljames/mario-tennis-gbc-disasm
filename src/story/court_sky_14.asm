@@ -262,7 +262,7 @@ IslandSkyInitScript_14:
 	ld b, h ; $535f
 	farcall LoadActorObjectDefIfValid ; $5360
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $5363
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $536a
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $5374
 	jr nz, .fadeIn ; $5376
@@ -446,7 +446,7 @@ IslandSkyInitScript_14:
 	script_set_actor_script ACTOR_ISLAND_SKY_EMILY_SWEATS, ActorScript_14_1 ; $558f
 	script_wait_frames 80 ; $559a
 	script_set_position ACTOR_PLAYER, 6.0, 41.0 ; $55a1
-	script_set_active ACTOR_PLAYER, ACTORMODE_VISIBLE ; $55ac
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_VISIBLE ; $55ac
 	script_face ACTOR_PLAYER, FACE_DOWN ; $55b3
 	script_wait_frames 30 ; $55ba
 	script_move_target ACTOR_PLAYER, 11.0, 41.0 ; $55c1
@@ -468,7 +468,7 @@ IslandSkyInitScript_14:
 .toDormRoom:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
-	script_set_active ACTOR_PLAYER, ACTORMODE_HIDDEN ; $5613
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $5613
 	script_fade_out 4 ; $561a
 	call WaitFadeEnd ; $561f
 	call WaitFadeEnd ; $5622

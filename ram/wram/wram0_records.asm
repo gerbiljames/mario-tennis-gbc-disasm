@@ -388,7 +388,7 @@ wGameFlagsSpare:: ds 3
 ; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): FLAG_CHEAT_UNLOCK_0-12 (set by the unlock-everything cheat, never read), then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES
 wCheatUnlockFlags:: dw
 
-; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_GREETED bits
+; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_LESSON_PASSED_THIS_VISIT bits
 wStoryProgressFlags:: dw
 
 ; [8-bit] Story Mode - Minigame Completion Flags (1/4)

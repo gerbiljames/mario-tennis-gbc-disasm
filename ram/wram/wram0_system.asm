@@ -134,7 +134,7 @@ wStoryModeTriggerScript:: db
 ; [8-bit] Nonzero requests leaving the location loop (RunLocationExit + reload); cleared with $c2a0-$c2a5 by ClearStoryEventRequests. The value is an exit-trigger id, not a location: RunLocationExit matches it against the id column of map_tree slot 1, and that row's arg0 is the destination STORYLOC_* id, so one id leads to different places per location
 wStoryModeExitTriggerRequest:: db
 
-; [8-bit] Set to 1 by UpdatePlayerControl when the point ahead of the player has a nonzero behaviour value. The location event loop consumes it; together with wPlayerMoving reaching $1e frames at an unchanged angle it turns walking into a door or sign into an interaction
+; [8-bit] Set to 1 by UpdatePlayerControl when the point straight ahead of the player is blocked. The location event loop consumes it; together with wPlayerWallPushFrames reaching $1e frames against an unchanged wPlayerBlockedBy it turns walking into a door or sign into an interaction
 wStoryAutoInteractArmed:: db
 
 ; [8-bit] $ff once the auto-interact has raised wStoryModeInteractRequest this frame, else 0. Read only by the debug-menu check later in the frame, which then stands down
