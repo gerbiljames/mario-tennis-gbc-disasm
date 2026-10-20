@@ -1,7 +1,7 @@
 baserom.gbc
 /data/
 build/
-tools/rgbds/
+tools/rgbds
 *.o
 *.gbc
 *.sav
