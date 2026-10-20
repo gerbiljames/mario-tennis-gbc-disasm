@@ -463,7 +463,7 @@ CourtSelect4LabelYOffsets_3e:
 RedrawCourtSelect4Menu:
 	wram_bank WRAM_SCREEN ; $5f51
 	ld b, $00 ; $5f57
-	ld c, $00 ; $5f59
+	ld c, ATTRRECT_INACTIVE ; $5f59
 .tabLoop:
 	call SetCourtSelect4TabAttrRect ; $5f5b
 	ld a, b ; $5f5e
@@ -474,7 +474,7 @@ RedrawCourtSelect4Menu:
 	ld c, $02 ; $5f65
 	call GetMenuCursorIndex_3e ; $5f67
 	ld b, a ; $5f6a
-	ld c, $01 ; $5f6b
+	ld c, ATTRRECT_SELECTED ; $5f6b
 	call SetCourtSelect4TabAttrRect ; $5f6d
 	ld c, $02 ; $5f70
 	call GetMenuCursorIndex_3e ; $5f72

@@ -303,7 +303,7 @@ RunNewGameSetup:
 	ld [wStoryCharacterSlot], a ; $624f
 	ld a, [wStoryCharacterSlot] ; $6252
 	push af ; $6255
-	ld a, $01 ; $6256
+	ld a, STORYREC_PARTNER ; $6256
 	ld [wStoryCharacterSlot], a ; $6258
 	ld de, SAVEFLAG_OPENING_SEEN ; $625b
 	farcall TestSaveFlag ; $625e
@@ -470,10 +470,10 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld [wCharDataAnimCounter], a ; $63b5
 	pop_wram_bank ; $63b8
 	ld h, $01 ; $63bd
-	ld l, $00 ; $63bf
+	ld l, STORYREC_MAIN ; $63bf
 	ld a, $01 ; $63c1
 	farcall Unused_1a_ShowExpGainScreen ; $63c3
-	ld c, $00 ; $63c6
+	ld c, STORYREC_MAIN ; $63c6
 	farcall CharDataScreen_Show ; $63c8
 .checkTrophyExp:
 	ld hl, wN64TransferPartnerExp ; $63cb
@@ -487,10 +487,10 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld [wCharDataAnimCounter], a ; $63de
 	pop_wram_bank ; $63e1
 	ld h, $01 ; $63e6
-	ld l, $01 ; $63e8
+	ld l, STORYREC_PARTNER ; $63e8
 	ld a, $01 ; $63ea
 	farcall Unused_1a_ShowExpGainScreen ; $63ec
-	ld c, $01 ; $63ef
+	ld c, STORYREC_PARTNER ; $63ef
 	farcall CharDataScreen_Show ; $63f1
 .clearPendingExp:
 	xor a ; $63f4
@@ -538,11 +538,11 @@ Unused_1b_RunDebugSaveDataFlow:
 	pop bc ; $643d
 	pop af ; $643e
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $643f
-	ld c, $00 ; $6442
+	ld c, STORYREC_MAIN ; $6442
 	farcall CharDataScreen_Show ; $6444
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6447
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $644a
-	ld c, $01 ; $644d
+	ld c, STORYREC_PARTNER ; $644d
 	farcall CharDataScreen_Show ; $644f
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6452
 	farcall SaveStorySlotWithTimer ; $6455

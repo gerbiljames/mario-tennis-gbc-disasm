@@ -1234,6 +1234,27 @@ RAW_ID_FAMILIES = {
     "FlushWram3MapRows(b)": "MAPROWS",
     "InitMatchRecordFromCharId(c)": "MATCHREC",
     "SetPendingExpAward(b)": "EXPAWARD",
+    "wStoryCharacterSlot": "STORYREC",
+    "CharDataScreen_Show(c)": "STORYREC",
+    "LevelUpPlayer(a)": "STORYREC",
+    "GetExpRemainingToNextLevel(a)": "STORYREC",
+    "GetExpProgressInCurrentLevel(a)": "STORYREC",
+    "AddPlayerExp(a)": "STORYREC",
+    "InitPlayerRecordFromTemplate(a)": "STORYREC",
+    "Unused_1a_ShowExpGainScreen(l)": "STORYREC",
+    "Unused_1a_ResetCharDataScreenAnim(l)": "STORYREC",
+    "SetMatchRuleOptionAttrRect(c)": "ATTRRECT",
+    "FillMatchFormatOptionCell(c)": "ATTRRECT",
+    "SetSelectPanelAttrRect(c)": "ATTRRECT",
+    "SetSelectPanelAttrRect3(c)": "ATTRRECT",
+    "SetCourtSelect4TabAttrRect(c)": "ATTRRECT",
+    "SetCourtSelect9TabAttrRect(c)": "ATTRRECT",
+    "SetChoiceTabAttrRect(c)": "ATTRRECT",
+    "FillN64RecordTypeCell(c)": "ATTRRECT",
+    "SetMatchRuleOptionAttrRect(b)": "MATCHFMTOPT",
+    "FillMatchFormatOptionCell(b)": "MATCHFMTOPT",
+    "FlushMatchRuleRowAttrs(b)": "MATCHFMTROW",
+    "FlushMatchFormatRowToVram(b)": "MATCHFMTROW",
 }
 # Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
 # or `add <base>` into that register counts as passing the base.
@@ -1243,6 +1264,8 @@ BASE_ID_ARGS = {
     "VerifySaveBlock": "b",
     "ClearSaveBlock": "b",
     "RestoreStoryBlockFromBackup": "b",
+    "SetMatchRuleOptionAttrRect": "b",
+    "FillMatchFormatOptionCell": "b",
 }
 # Text pointers: a byte read through one is a text byte, so its compares name
 # TX_* codes. Buffers by address loaded into hl; labels (Routine or

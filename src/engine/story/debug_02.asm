@@ -204,7 +204,7 @@ Unused_02_DebugStoryStatsScreen:
 	bit PADB_UP, a ; $5147
 	jr z, .checkLeft ; $5149
 	push de ; $514b
-	ld a, $00 ; $514c
+	ld a, STORYREC_MAIN ; $514c
 	ld d, TRAINSTAT_SPIN ; $514e
 	call LevelUpPlayer ; $5150
 	pop de ; $5153
@@ -214,7 +214,7 @@ Unused_02_DebugStoryStatsScreen:
 	bit PADB_LEFT, a ; $5159
 	jr z, .checkRight ; $515b
 	push de ; $515d
-	ld a, $00 ; $515e
+	ld a, STORYREC_MAIN ; $515e
 	ld d, TRAINSTAT_POWER ; $5160
 	call LevelUpPlayer ; $5162
 	pop de ; $5165
@@ -224,7 +224,7 @@ Unused_02_DebugStoryStatsScreen:
 	bit PADB_RIGHT, a ; $516b
 	jr z, .checkDown ; $516d
 	push de ; $516f
-	ld a, $00 ; $5170
+	ld a, STORYREC_MAIN ; $5170
 	ld d, TRAINSTAT_CONTROL ; $5172
 	call LevelUpPlayer ; $5174
 	pop de ; $5177
@@ -234,7 +234,7 @@ Unused_02_DebugStoryStatsScreen:
 	bit PADB_DOWN, a ; $517d
 	jr z, .positive ; $517f
 	push de ; $5181
-	ld a, $00 ; $5182
+	ld a, STORYREC_MAIN ; $5182
 	ld d, TRAINSTAT_SPEED ; $5184
 	call LevelUpPlayer ; $5186
 	pop de ; $5189

@@ -327,9 +327,9 @@ DebugMenuShowCharData:
 	ld [wUnusedExitTriggerIdMirror], a ; $6704
 	ld [wStoryModeExitTriggerRequest], a ; $6707
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $670a
-	ld c, $00 ; $670d
+	ld c, STORYREC_MAIN ; $670d
 	farcall CharDataScreen_Show ; $670f
-	ld c, $01 ; $6712
+	ld c, STORYREC_PARTNER ; $6712
 	farcall CharDataScreen_Show ; $6714
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6717
 	farcall SaveStorySlotWithTimer ; $671a

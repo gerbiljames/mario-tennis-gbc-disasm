@@ -1,5 +1,5 @@
 BuildPartnerStatPage:
-	ld a, $01 ; $4b50
+	ld a, STORYREC_PARTNER ; $4b50
 	ld [wStoryCharacterSlot], a ; $4b52
 	call BuildCharStatDisplay ; $4b55
 	wram_bank WRAM_SCENE ; $4b58

@@ -357,7 +357,7 @@ Unused_10_RunCharDataScreen:
 	ld [wCurrentStorySlot], a ; $44b2
 	farcall CheckStorySlot ; $44b5
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $44b8
-	ld c, $00 ; $44bb
+	ld c, STORYREC_MAIN ; $44bb
 	farcall CharDataScreen_Show ; $44bd
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $44c0
 	ld a, $00 ; $44c3

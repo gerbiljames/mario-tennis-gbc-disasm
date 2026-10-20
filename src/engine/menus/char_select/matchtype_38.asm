@@ -214,7 +214,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld e, a ; $45c0
 	ld c, $01 ; $45c1
 	call GetMenuCursorIndex_38 ; $45c3
-	cp $01 ; $45c6
+	cp MATCHFMTROW_GAMES ; $45c6
 	jr z, .drawGames ; $45c8
 	ld bc, $3010 ; $45ca
 	call Unused_38_DrawCornerBrackets ; $45cd
@@ -232,7 +232,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld e, a ; $45e6
 	ld c, $01 ; $45e7
 	call GetMenuCursorIndex_38 ; $45e9
-	cp $02 ; $45ec
+	cp MATCHFMTROW_SETS ; $45ec
 	jr z, .drawSets ; $45ee
 	ld bc, $3010 ; $45f0
 	call Unused_38_DrawCornerBrackets ; $45f3
@@ -343,7 +343,7 @@ Unused_38_AdjustMatchTypeSetting:
 	ld [wMatchFormatDoubles], a ; $476a
 	ret ; $476d
 .decGames:
-	cp $01 ; $476e
+	cp MATCHFMTROW_GAMES ; $476e
 	jr nz, .decSets ; $4770
 	ld a, [wMatchFormatGames] ; $4772
 	xor $01 ; $4775
@@ -376,7 +376,7 @@ Unused_38_AdjustMatchTypeSetting:
 	ld [wMatchFormatDoubles], a ; $47a0
 	ret ; $47a3
 .incGames:
-	cp $01 ; $47a4
+	cp MATCHFMTROW_GAMES ; $47a4
 	jr nz, .incSets ; $47a6
 	ld a, [wMatchFormatGames] ; $47a8
 	xor $01 ; $47ab

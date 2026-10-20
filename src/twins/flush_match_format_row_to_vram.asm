@@ -15,7 +15,7 @@
 	call QueueVRAMCopy
 	jr .done
 .row1:
-	cp $01
+	cp MATCHFMTROW_GAMES
 	jr nz, .row2
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1

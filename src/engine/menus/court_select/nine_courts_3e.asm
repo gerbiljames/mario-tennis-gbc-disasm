@@ -349,7 +349,7 @@ AdjustCursorForLockedCourt:
 RedrawCourtSelect9Menu:
 	wram_bank WRAM_SCREEN ; $6824
 	ld b, $00 ; $682a
-	ld c, $00 ; $682c
+	ld c, ATTRRECT_INACTIVE ; $682c
 .tabLoop:
 	call SetCourtSelect9TabAttrRect ; $682e
 	ld a, b ; $6831
@@ -360,7 +360,7 @@ RedrawCourtSelect9Menu:
 	ld c, $03 ; $6838
 	call GetMenuCursorIndex_3e ; $683a
 	ld b, a ; $683d
-	ld c, $01 ; $683e
+	ld c, ATTRRECT_SELECTED ; $683e
 	call SetCourtSelect9TabAttrRect ; $6840
 	ld c, $03 ; $6843
 	call GetMenuCursorIndex_3e ; $6845

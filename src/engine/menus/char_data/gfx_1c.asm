@@ -393,7 +393,7 @@ LoadCharDataScreenMugshots:
 	ld de, vTiles1 tile $30 + VRAM_BANK1 ; $74d2
 	ld c, 9 ; $74d5
 	call QueueVRAMCopy ; $74d7
-	ld a, $01 ; $74da
+	ld a, STORYREC_PARTNER ; $74da
 	ld [wStoryCharacterSlot], a ; $74dc
 	push af ; $74df
 	ld_story_char_field CHARREC_PALETTE ; $74e0

@@ -141,23 +141,23 @@ DrawMatchRulesInitialState:
 	call SetMenuCursorFromIndex_3e ; $459f
 	ld a, [wMatchFormatDoubles] ; $45a2
 	ld b, a ; $45a5
-	ld c, $01 ; $45a6
+	ld c, ATTRRECT_SELECTED ; $45a6
 	call SetMatchRuleOptionAttrRect ; $45a8
-	ld b, $00 ; $45ab
+	ld b, MATCHFMTROW_MODE ; $45ab
 	call FlushMatchRuleRowAttrs ; $45ad
 	ld a, [wMatchFormatGames] ; $45b0
-	add $02 ; $45b3
+	add MATCHFMTOPT_GAMES ; $45b3
 	ld b, a ; $45b5
-	ld c, $01 ; $45b6
+	ld c, ATTRRECT_SELECTED ; $45b6
 	call SetMatchRuleOptionAttrRect ; $45b8
-	ld b, $01 ; $45bb
+	ld b, MATCHFMTROW_GAMES ; $45bb
 	call FlushMatchRuleRowAttrs ; $45bd
 	ld a, [wMatchFormatSets] ; $45c0
-	add $04 ; $45c3
+	add MATCHFMTOPT_SETS ; $45c3
 	ld b, a ; $45c5
-	ld c, $01 ; $45c6
+	ld c, ATTRRECT_SELECTED ; $45c6
 	call SetMatchRuleOptionAttrRect ; $45c8
-	ld b, $02 ; $45cb
+	ld b, MATCHFMTROW_SETS ; $45cb
 	call FlushMatchRuleRowAttrs ; $45cd
 	ld hl, MatchRulesInitialStatePalettes0 ; $45d0
 	ld d, $04 ; $45d3
@@ -344,18 +344,18 @@ HandleMatchRulesToggleInput:
 	ld [wMatchFormatDoubles], a ; $4778
 	call DrawSinglesDoublesRow ; $477b
 	call DrawMatchRulesCaption ; $477e
-	ld b, $00 ; $4781
+	ld b, MATCHFMTROW_MODE ; $4781
 	call FlushMatchRuleRowAttrs ; $4783
 	ret ; $4786
 .leftGames:
-	cp $01 ; $4787
+	cp MATCHFMTROW_GAMES ; $4787
 	jr nz, .decSets ; $4789
 	ld a, [wMatchFormatGames] ; $478b
 	xor $01 ; $478e
 	ld [wMatchFormatGames], a ; $4790
 	call DrawGameCountRow ; $4793
 	call DrawMatchRulesCaption ; $4796
-	ld b, $01 ; $4799
+	ld b, MATCHFMTROW_GAMES ; $4799
 	call FlushMatchRuleRowAttrs ; $479b
 	ret ; $479e
 .decSets:
@@ -375,7 +375,7 @@ HandleMatchRulesToggleInput:
 	ld [wMatchFormatSets], a ; $47b1
 	call DrawSetCountRow ; $47b4
 	call DrawMatchRulesCaption ; $47b7
-	ld b, $02 ; $47ba
+	ld b, MATCHFMTROW_SETS ; $47ba
 	call FlushMatchRuleRowAttrs ; $47bc
 	ret ; $47bf
 .right:
@@ -389,18 +389,18 @@ HandleMatchRulesToggleInput:
 	ld [wMatchFormatDoubles], a ; $47cf
 	call DrawSinglesDoublesRow ; $47d2
 	call DrawMatchRulesCaption ; $47d5
-	ld b, $00 ; $47d8
+	ld b, MATCHFMTROW_MODE ; $47d8
 	call FlushMatchRuleRowAttrs ; $47da
 	ret ; $47dd
 .rightGames:
-	cp $01 ; $47de
+	cp MATCHFMTROW_GAMES ; $47de
 	jr nz, .incSets ; $47e0
 	ld a, [wMatchFormatGames] ; $47e2
 	xor $01 ; $47e5
 	ld [wMatchFormatGames], a ; $47e7
 	call DrawGameCountRow ; $47ea
 	call DrawMatchRulesCaption ; $47ed
-	ld b, $01 ; $47f0
+	ld b, MATCHFMTROW_GAMES ; $47f0
 	call FlushMatchRuleRowAttrs ; $47f2
 	ret ; $47f5
 .incSets:
@@ -420,6 +420,6 @@ HandleMatchRulesToggleInput:
 	ld [wMatchFormatSets], a ; $4808
 	call DrawSetCountRow ; $480b
 	call DrawMatchRulesCaption ; $480e
-	ld b, $02 ; $4811
+	ld b, MATCHFMTROW_SETS ; $4811
 	call FlushMatchRuleRowAttrs ; $4813
 	ret ; $4816

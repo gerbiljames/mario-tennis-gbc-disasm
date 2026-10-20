@@ -117,7 +117,7 @@ RunMinigameLevelSelect2:
 RedrawMinigameLevelSelect2:
 	wram_bank WRAM_SCREEN ; $6f04
 	ld b, $00 ; $6f0a
-	ld c, $00 ; $6f0c
+	ld c, ATTRRECT_INACTIVE ; $6f0c
 .loop:
 	call SetSelectPanelAttrRect ; $6f0e
 	ld a, b ; $6f11
@@ -128,7 +128,7 @@ RedrawMinigameLevelSelect2:
 	ld c, $02 ; $6f18
 	call GetMenuCursorIndex_1b ; $6f1a
 	ld b, a ; $6f1d
-	ld c, $01 ; $6f1e
+	ld c, ATTRRECT_SELECTED ; $6f1e
 	call SetSelectPanelAttrRect ; $6f20
 	ld c, $03 ; $6f23
 	call GetMenuCursorIndex_1b ; $6f25
@@ -293,7 +293,7 @@ RunMinigameLevelSelect3:
 RedrawMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $708d
 	ld b, $00 ; $7093
-	ld c, $00 ; $7095
+	ld c, ATTRRECT_INACTIVE ; $7095
 .loop:
 	call SetSelectPanelAttrRect3 ; $7097
 	ld a, b ; $709a
@@ -304,7 +304,7 @@ RedrawMinigameLevelSelect3:
 	ld c, $02 ; $70a1
 	call GetMenuCursorIndex_1b ; $70a3
 	ld b, a ; $70a6
-	ld c, $01 ; $70a7
+	ld c, ATTRRECT_SELECTED ; $70a7
 	call SetSelectPanelAttrRect3 ; $70a9
 	ld c, $03 ; $70ac
 	call GetMenuCursorIndex_1b ; $70ae

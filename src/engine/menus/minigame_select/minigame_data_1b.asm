@@ -77,7 +77,7 @@ Unused_1b_SavedDataCursorCells:
 RedrawSavedDataTypeSelect:
 	wram_bank WRAM_SCREEN ; $7352
 	ld b, $00 ; $7358
-	ld c, $00 ; $735a
+	ld c, ATTRRECT_INACTIVE ; $735a
 .loop:
 	call SetSelectPanelAttrRect ; $735c
 	ld a, b ; $735f
@@ -88,7 +88,7 @@ RedrawSavedDataTypeSelect:
 	ld c, $02 ; $7366
 	call GetMenuCursorIndex_1b ; $7368
 	ld b, a ; $736b
-	ld c, $01 ; $736c
+	ld c, ATTRRECT_SELECTED ; $736c
 	call SetSelectPanelAttrRect ; $736e
 	ld c, $03 ; $7371
 	call GetMenuCursorIndex_1b ; $7373
