@@ -216,8 +216,8 @@ TilemapAssemblyDispatch_39:
 	dw .unusedPanelSlideOut ; PANELANIM_UNUSED_PANEL_OUT
 	dw .savedDataPickerSlideIn ; PANELANIM_SAVED_DATA_PICKER_IN
 	dw .savedDataPickerSlideOut ; PANELANIM_SAVED_DATA_PICKER_OUT
-	dw .n64RecordTypeSlideIn ; PANELANIM_N64_RECORD_TYPE_IN
-	dw .n64RecordTypeSlideOut ; PANELANIM_N64_RECORD_TYPE_OUT
+	dw .threeChoiceSlideIn ; PANELANIM_THREE_CHOICE_IN
+	dw .threeChoiceSlideOut ; PANELANIM_THREE_CHOICE_OUT
 	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
 	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
 	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
@@ -379,7 +379,7 @@ TilemapAssemblyDispatch_39:
 	dw .noRects
 	dw .noRects
 	dw .noRects
-.n64RecordTypeSlideIn:
+.threeChoiceSlideIn:
 	dw .noRects
 	dw .noRects
 	dw .noRects
@@ -393,7 +393,7 @@ TilemapAssemblyDispatch_39:
 	dw .n64RecordTypeInFrame10
 	dw .n64RecordTypeInFrame11
 	dw .n64RecordTypeInFrame12
-.n64RecordTypeSlideOut:
+.threeChoiceSlideOut:
 	dw .n64RecordTypeOutFrame0
 	dw .n64RecordTypeOutFrame1
 	dw .n64RecordTypeOutFrame2

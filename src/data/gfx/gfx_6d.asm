@@ -135,14 +135,14 @@ DataPtr_MinigameLevelSelectIconGfx:
 	dw MinigameLevelSelectIconGfx ; $4086
 DataPtr_MinigameLevelSelectGfx1:
 	dw MinigameLevelSelectGfx1 ; $4088
-DataPtr_MinigameLabelTiles0:
-	dw MinigameLabelTiles0 ; $408a
-DataPtr_MinigameLabelTiles1:
-	dw MinigameLabelTiles1 ; $408c
-DataPtr_MinigameLabelTiles2:
-	dw MinigameLabelTiles2 ; $408e
-DataPtr_MinigameLabelTiles3:
-	dw MinigameLabelTiles3 ; $4090
+DataPtr_Level1FlagIconTiles:
+	dw Level1FlagIconTiles ; $408a
+DataPtr_Level2FlagIconTiles:
+	dw Level2FlagIconTiles ; $408c
+DataPtr_Level3FlagIconTiles:
+	dw Level3FlagIconTiles ; $408e
+DataPtr_LockedLevelFlagIconTiles:
+	dw LockedLevelFlagIconTiles ; $4090
 DataPtr_MarioMiniGamesTiles:
 	dw MarioMiniGamesTiles ; $4092
 TitleGfx0:
@@ -270,14 +270,14 @@ MinigameLevelSelectIconGfx:
 	INCBIN "data/gfx/lz_MinigameLevelSelectIconGfx.bin" ; $758a, 144 bytes
 MinigameLevelSelectGfx1:
 	INCBIN "data/gfx/lz_MinigameLevelSelectGfx1.bin" ; $761a, 152 bytes
-MinigameLabelTiles0:
-	INCBIN "data/gfx/lz_MinigameLabelTiles0.bin" ; $76b2, 231 bytes
-MinigameLabelTiles1:
-	INCBIN "data/gfx/lz_MinigameLabelTiles1.bin" ; $7799, 238 bytes
-MinigameLabelTiles2:
-	INCBIN "data/gfx/lz_MinigameLabelTiles2.bin" ; $7887, 233 bytes
-MinigameLabelTiles3:
-	INCBIN "data/gfx/lz_MinigameLabelTiles3.bin" ; $7970, 232 bytes
+Level1FlagIconTiles:
+	INCBIN "data/gfx/lz_Level1FlagIconTiles.bin" ; $76b2, 231 bytes
+Level2FlagIconTiles:
+	INCBIN "data/gfx/lz_Level2FlagIconTiles.bin" ; $7799, 238 bytes
+Level3FlagIconTiles:
+	INCBIN "data/gfx/lz_Level3FlagIconTiles.bin" ; $7887, 233 bytes
+LockedLevelFlagIconTiles:
+	INCBIN "data/gfx/lz_LockedLevelFlagIconTiles.bin" ; $7970, 232 bytes
 MarioMiniGamesTiles:
 	INCBIN "data/gfx/lz_MarioMiniGamesTiles.bin" ; $7a58, 757 bytes
 	; $7d4d, 691 bytes fill to bank end (linker-padded)

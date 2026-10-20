@@ -226,12 +226,12 @@ LoadMainMenuGfx:
 	ret ; $57df
 MainMenuLabelTilePtrs:
 	; $57e0, 6 slot words
-	dslot DataPtr_ModeSelectLabelTiles0 ; record 0
-	dslot DataPtr_ModeSelectLabelTiles1 ; record 1
-	dslot DataPtr_ModeSelectLabelTiles2 ; record 2
-	dslot DataPtr_ModeSelectLabelTiles3 ; record 3
-	dslot DataPtr_ModeSelectLabelTiles4 ; record 4
-	dslot DataPtr_ModeSelectLabelTiles5 ; record 5
+	dslot DataPtr_ExhibitionModeIconTiles ; record 0
+	dslot DataPtr_MarioFaceIconTiles ; record 1
+	dslot DataPtr_LinkedPlayIconTiles ; record 2
+	dslot DataPtr_StatusIconTiles ; record 3
+	dslot DataPtr_DictionaryIconTiles ; record 4
+	dslot DataPtr_SavedDataIconTiles ; record 5
 MainMenuLabelTileVramDests:
 	; $57ec, 20 bytes (bytes:2)
 	dw vTiles1 + VRAM_BANK1 ; 0x00

@@ -229,7 +229,7 @@ RunMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $6fdc
 	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
-	farcall N64RecordTypeSlideIn ; $6fe6
+	farcall ThreeChoiceSlideIn ; $6fe6
 	farcall InitMenuBgScroll ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
@@ -268,7 +268,7 @@ RunMinigameLevelSelect3:
 	set B_IE_TIMER, [hl] ; $7046
 	wram_bank WRAM_SCREEN ; $7048
 	ld b, MENUSLIDE_FORWARD ; $704e
-	farcall N64RecordTypeSlideOut ; $7050
+	farcall ThreeChoiceSlideOut ; $7050
 	ld a, MENUSLIDE_FORWARD ; $7053
 	ld [wMenuSlideDirection], a ; $7055
 	wram_bank WRAM_COURT_PLANES ; $7058
@@ -283,7 +283,7 @@ RunMinigameLevelSelect3:
 	set B_IE_TIMER, [hl] ; $706f
 	wram_bank WRAM_SCREEN ; $7071
 	ld b, MENUSLIDE_BACK ; $7077
-	farcall N64RecordTypeSlideOut ; $7079
+	farcall ThreeChoiceSlideOut ; $7079
 	ld a, MENUSLIDE_BACK ; $707c
 	ld [wMenuSlideDirection], a ; $707e
 	wram_bank WRAM_COURT_PLANES ; $7081

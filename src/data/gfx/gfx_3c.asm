@@ -16,22 +16,22 @@ DataPtr_StadiumPalettes:
 	dw StadiumPalettes ; $400e
 DataPtr_ModeSelectIconGfx:
 	dw ModeSelectIconGfx ; $4010
-DataPtr_ModeSelectLabelTiles0:
-	dw ModeSelectLabelTiles0 ; $4012
-DataPtr_ModeSelectLabelTiles1:
-	dw ModeSelectLabelTiles1 ; $4014
-DataPtr_ModeSelectLabelTiles2:
-	dw ModeSelectLabelTiles2 ; $4016
-DataPtr_ModeSelectLabelTiles3:
-	dw ModeSelectLabelTiles3 ; $4018
-DataPtr_ModeSelectLabelTiles4:
-	dw ModeSelectLabelTiles4 ; $401a
-DataPtr_ModeSelectLabelTiles5:
-	dw ModeSelectLabelTiles5 ; $401c
-DataPtr_ModeSelectLabelTiles6:
-	dw ModeSelectLabelTiles6 ; $401e
-DataPtr_ModeSelectLabelTiles7:
-	dw ModeSelectLabelTiles7 ; $4020
+DataPtr_ExhibitionModeIconTiles:
+	dw ExhibitionModeIconTiles ; $4012
+DataPtr_MarioFaceIconTiles:
+	dw MarioFaceIconTiles ; $4014
+DataPtr_LinkedPlayIconTiles:
+	dw LinkedPlayIconTiles ; $4016
+DataPtr_StatusIconTiles:
+	dw StatusIconTiles ; $4018
+DataPtr_DictionaryIconTiles:
+	dw DictionaryIconTiles ; $401a
+DataPtr_SavedDataIconTiles:
+	dw SavedDataIconTiles ; $401c
+DataPtr_EmptyBarTiles:
+	dw EmptyBarTiles ; $401e
+DataPtr_N64DataIconTiles:
+	dw N64DataIconTiles ; $4020
 DataPtr_SharedMenuGfx27:
 	dw SharedMenuGfx27 ; $4022
 DataPtr_MainMenuGfx0:
@@ -100,10 +100,10 @@ DataPtr_SinglesIconTiles:
 	dw SinglesIconTiles ; $4062
 DataPtr_DoublesIconTiles:
 	dw DoublesIconTiles ; $4064
-DataPtr_GamesLabelTiles:
-	dw GamesLabelTiles ; $4066
-DataPtr_GamesLabelTiles2:
-	dw GamesLabelTiles2 ; $4068
+DataPtr_TwoGamesLabelTiles:
+	dw TwoGamesLabelTiles ; $4066
+DataPtr_SixGamesLabelTiles:
+	dw SixGamesLabelTiles ; $4068
 DataPtr_OneSetLabelTiles:
 	dw OneSetLabelTiles ; $406a
 DataPtr_ThreeSetsLabelTiles:
@@ -142,22 +142,22 @@ StadiumPalettes:
 	INCLUDE "data/gfx/StadiumPalettes.asm" ; $5351, 64 bytes (palettes)
 ModeSelectIconGfx:
 	INCBIN "data/gfx/lz_ModeSelectIconGfx.bin" ; $5391, 71 bytes
-ModeSelectLabelTiles0:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles0.bin" ; $53d8, 228 bytes
-ModeSelectLabelTiles1:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles1.bin" ; $54bc, 248 bytes
-ModeSelectLabelTiles2:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles2.bin" ; $55b4, 235 bytes
-ModeSelectLabelTiles3:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles3.bin" ; $569f, 243 bytes
-ModeSelectLabelTiles4:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles4.bin" ; $5792, 231 bytes
-ModeSelectLabelTiles5:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles5.bin" ; $5879, 238 bytes
-ModeSelectLabelTiles6:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles6.bin" ; $5967, 51 bytes
-ModeSelectLabelTiles7:
-	INCBIN "data/gfx/lz_ModeSelectLabelTiles7.bin" ; $599a, 268 bytes
+ExhibitionModeIconTiles:
+	INCBIN "data/gfx/lz_ExhibitionModeIconTiles.bin" ; $53d8, 228 bytes
+MarioFaceIconTiles:
+	INCBIN "data/gfx/lz_MarioFaceIconTiles.bin" ; $54bc, 248 bytes
+LinkedPlayIconTiles:
+	INCBIN "data/gfx/lz_LinkedPlayIconTiles.bin" ; $55b4, 235 bytes
+StatusIconTiles:
+	INCBIN "data/gfx/lz_StatusIconTiles.bin" ; $569f, 243 bytes
+DictionaryIconTiles:
+	INCBIN "data/gfx/lz_DictionaryIconTiles.bin" ; $5792, 231 bytes
+SavedDataIconTiles:
+	INCBIN "data/gfx/lz_SavedDataIconTiles.bin" ; $5879, 238 bytes
+EmptyBarTiles:
+	INCBIN "data/gfx/lz_EmptyBarTiles.bin" ; $5967, 51 bytes
+N64DataIconTiles:
+	INCBIN "data/gfx/lz_N64DataIconTiles.bin" ; $599a, 268 bytes
 SharedMenuGfx27:
 	INCBIN "data/gfx/lz_SharedMenuGfx27.bin" ; $5aa6, 29 bytes
 MainMenuGfx0:
@@ -226,10 +226,10 @@ SinglesIconTiles:
 	INCBIN "data/gfx/lz_SinglesIconTiles.bin" ; $6eb9, 175 bytes
 DoublesIconTiles:
 	INCBIN "data/gfx/lz_DoublesIconTiles.bin" ; $6f68, 233 bytes
-GamesLabelTiles:
-	INCBIN "data/gfx/lz_GamesLabelTiles.bin" ; $7051, 178 bytes
-GamesLabelTiles2:
-	INCBIN "data/gfx/lz_GamesLabelTiles2.bin" ; $7103, 170 bytes
+TwoGamesLabelTiles:
+	INCBIN "data/gfx/lz_TwoGamesLabelTiles.bin" ; $7051, 178 bytes
+SixGamesLabelTiles:
+	INCBIN "data/gfx/lz_SixGamesLabelTiles.bin" ; $7103, 170 bytes
 OneSetLabelTiles:
 	INCBIN "data/gfx/lz_OneSetLabelTiles.bin" ; $71ad, 189 bytes
 ThreeSetsLabelTiles:

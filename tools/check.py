@@ -1532,7 +1532,7 @@ RAW_ID_FAMILIES = {
     "CloseCourtSelect4Panel(b)": "MENUSLIDE",
     "CloseCourtSelect9Panel(b)": "MENUSLIDE",
     "SavedDataPickerSlideOut(b)": "MENUSLIDE",
-    "N64RecordTypeSlideOut(b)": "MENUSLIDE",
+    "ThreeChoiceSlideOut(b)": "MENUSLIDE",
     "MainMenuSlideOut(b)": "MENUSLIDE",
     "MatchFormatSlideOut(b)": "MENUSLIDE",
     "CloseMatchRulesPanel(b)": "MENUSLIDE",
