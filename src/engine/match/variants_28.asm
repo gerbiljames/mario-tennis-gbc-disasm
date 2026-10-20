@@ -75,7 +75,7 @@ LoadMatchGraphics:
 	call LoadPaletteShadow ; $5ec5
 	ld hl, MatchGraphicsGfx ; $5ec8
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $5ecb
-	ld c, 64 ; $5ece
+	ld c, (SpecialHitEffectTiles_28 - MatchGraphicsGfx) / 16 + 12 ; $5ece
 	call QueueVRAMCopy ; $5ed0
 	ld hl, MatchGfxTilesA_28 ; $5ed3
 	ld de, wDecompBuffer ; $5ed6
@@ -119,7 +119,7 @@ LoadMatchVariantGraphics:
 .loadObjTiles:
 	ld hl, MinigameObjTiles_28 ; $5f2a
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f2d
-	ld c, 32 ; $5f30 -- the 20 tiles plus the first 12 of MatchVariantTiles0
+	ld c, (MatchVariantTiles0 - MinigameObjTiles_28) / 16 + 12 ; $5f30
 	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
 .loadMatchSharedTiles:
