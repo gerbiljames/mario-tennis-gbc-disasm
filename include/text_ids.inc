@@ -704,6 +704,7 @@ def Text_34_228 equ $10e4
 def Text_34_229 equ $10e5
 def Text_34_230 equ $10e6
 def Text_34_232 equ $10e8
+def Text_34_240 equ $10f0
 def Text_35_48 equ $1430
 def Text_35_55 equ $1437
 def Text_35_143 equ $148f
@@ -2176,6 +2177,7 @@ def Text_ClearStatusChooseMode equ Text_34_228
 def Text_ClearStatusChooseClass equ Text_34_229
 def Text_ClearStatusChooseGame equ Text_34_230
 def Text_ClearStatusSetOrHandOver equ Text_34_232
+def Text_TennisDictTermAce equ Text_34_240
 def Text_DefineAce equ Text_35_48
 def Text_DefineDoublesBackPlayer equ Text_35_55
 def Text_TennisDictionaryLetterA equ Text_35_143

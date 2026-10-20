@@ -30,7 +30,7 @@ MoveLinkCursorDown:
 	jr nc, .nextPage ; $6d36
 	cp $01 ; $6d38
 	ret z ; $6d3a
-	ld a, [wCharGridCreatedCount] ; $6d3b
+	ld a, [wCharGridMarioCastCount] ; $6d3b
 	cp $07 ; $6d3e
 	jr c, .done ; $6d40
 	ld a, $01 ; $6d42
@@ -58,13 +58,13 @@ MoveLinkCursorRight:
 	jr nz, .store ; $6d5e
 	ldh a, [hLinkCursorPage] ; $6d60
 	or a ; $6d62
-	jr z, .wrapToFirst ; $6d63
+	jr z, .toRosterRows ; $6d63
 	cp $01 ; $6d65
-	jr z, .wrapToFirst ; $6d67
+	jr z, .toRosterRows ; $6d67
 	xor a ; $6d69
 	ldh [hLinkCursorPage], a ; $6d6a
 	jr .firstColumn ; $6d6c
-.wrapToFirst:
+.toRosterRows:
 	ld a, $03 ; $6d6e
 	ldh [hLinkCursorPage], a ; $6d70
 .firstColumn:
@@ -79,13 +79,13 @@ MoveLinkCursorLeft:
 	jr nz, .store ; $6d7d
 	ldh a, [hLinkCursorPage] ; $6d7f
 	or a ; $6d81
-	jr z, .wrapToLast ; $6d82
+	jr z, .toRosterRows ; $6d82
 	cp $01 ; $6d84
-	jr z, .wrapToLast ; $6d86
+	jr z, .toRosterRows ; $6d86
 	xor a ; $6d88
 	ldh [hLinkCursorPage], a ; $6d89
 	jr .lastColumn ; $6d8b
-.wrapToLast:
+.toRosterRows:
 	ld a, $03 ; $6d8d
 	ldh [hLinkCursorPage], a ; $6d8f
 .lastColumn:
@@ -252,7 +252,7 @@ RunNameEntryScreen:
 	pop_wram_bank ; $6ef0
 	ld a, b ; $6ef5
 	cp $00 ; $6ef6
-	jr z, .storeName ; $6ef8
+	jr z, .keepDefaultName ; $6ef8
 	wram_bank WRAM_SCREEN ; $6efa
 	call TrimTrailingSpacesFromName ; $6f00
 	call GetActiveStoryNameBuffer ; $6f03
@@ -269,7 +269,7 @@ RunNameEntryScreen:
 	set B_IE_TIMER, [hl] ; $6f21
 	ld a, $00 ; $6f23
 	ret ; $6f25
-.storeName:
+.keepDefaultName:
 	wram_bank WRAM_SCREEN ; $6f26
 	call GetActiveStoryNameBuffer ; $6f2c
 	ld h, b ; $6f2f

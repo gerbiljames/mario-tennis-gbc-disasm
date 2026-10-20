@@ -144,7 +144,7 @@ wTennisDictSingleEntry:: db
 wTennisDictMode:: db
 	ds 2
 
-; [8-bit] Tennis Dictionary display flags, cleared on entry. Bit 0 = a description window is open (freezes the hand-cursor animation). Bit 1 = the term list is on screen (gates the cursor sprites, shifts the index-page sprites $10 px). Bits 2/3 = flash the left/right page arrow this frame, set on LEFT/RIGHT, drawn by UpdateTennisDictionarySprites_SpriteTemplate0 and cleared every input tick
+; [8-bit] Tennis Dictionary display flags, cleared on entry. Bit 0 = a description window is open (freezes the hand-cursor animation). Bit 1 = the term list is on screen (gates the cursor sprites, shifts the index-page sprites $10 px). Bits 2/3 = flash the left/right page arrow this frame, set on LEFT/RIGHT, drawn by TennisDictPageArrowTemplate and cleared every input tick
 wTennisDictFlags:: db
 
 ; [8-bit] Tennis Dictionary mascot animation state: 3 and 4 alternate when wTennisDictAnimTimer expires; StartTennisDictionaryAnim restarts it from the VBlank counter's low bits so the pose varies
@@ -206,7 +206,7 @@ wCutsceneSpriteAnimTick:: db
 ; [8-bit] Idle-animation state of the character-select portrait, cleared with wCharSelectIdleTimer and wCharSelectHandedness and stepped by TickCharSelectIdleAnim when the timer expires
 wCharSelectIdleAnimState:: db
 
-; [8-bit] Story character select (bank $38): handedness, 0 = default, 1 = mirrored (left-handed). Cleared on entry, flipped by START (prompt text 30:118 "START: Change Hands"). When set, DrawCharacterSelectChars sets OAM X-flip in wCharSpriteSlot+1 for the four shown characters and DrawCharacterSelectCursor uses tile base $00 instead of $02. Stored into the story character record at +$0e
+; [8-bit] Story character select (bank $38): handedness, 0 = default, 1 = mirrored (left-handed). Cleared on entry, flipped by START (prompt text 30:118 "START: Change Hands"). When set, DrawCharacterSelectChars sets OAM X-flip in wCharSpriteSlot+1 for the four shown characters and DrawCharSelectHandednessMarker uses tile base $00 instead of $02. Stored into the story character record at +$0e
 wCharSelectHandedness:: db
 
 ; [8-bit] Frames until the character-select portrait idles: TickCharSelectIdleAnim counts to $0f, switches the character from animation 5 to 7 and restarts

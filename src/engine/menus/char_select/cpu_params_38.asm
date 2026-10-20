@@ -142,7 +142,7 @@ ApplyHandednessToCharRecords:
 .done:
 	pop_wram_bank ; $6055
 	ret ; $605a
-CacheStorySlotNames:
+CacheStorySlotRecords:
 	push af ; $605b
 	push bc ; $605c
 	push de ; $605d
@@ -179,7 +179,7 @@ CacheStorySlotNames:
 	farcall InitStoryModeState ; $60b2
 	farcall InitDefaultMatchSettings ; $60b5
 	ret ; $60b8
-LoadCachedStorySlotName:
+LoadCachedStorySlotRecords:
 	push af ; $60b9
 	push bc ; $60ba
 	push de ; $60bb
@@ -187,7 +187,7 @@ LoadCachedStorySlotName:
 	push_wram_bank WRAM_STAGING ; $60bd
 	ld a, b ; $60c6
 	add a ; $60c7
-	ld hl, CachedStorySlotNameTable ; $60c8
+	ld hl, CachedStorySlotRecordPtrs ; $60c8
 	add_hl_a ; $60cb
 	ld a, [hl+] ; $60d0
 	ld h, [hl] ; $60d1
@@ -201,7 +201,7 @@ LoadCachedStorySlotName:
 	pop bc ; $60e3
 	pop af ; $60e4
 	ret ; $60e5
-CachedStorySlotNameTable:
+CachedStorySlotRecordPtrs:
 	; $60e6, 6 bytes (ram_ptrs:1)
 	dw wDecompBuffer ; record 0
 	dw wDecompBuffer tile 16 ; record 1
@@ -395,7 +395,7 @@ CountCharGridEntries:
 	cp $09 ; $61c2
 	jr nz, .countPageLoop ; $61c4
 	ld a, b ; $61c6
-	ld [wCharGridCreatedCount], a ; $61c7
+	ld [wCharGridMarioCastCount], a ; $61c7
 	ret ; $61ca
 SetCharGridPageCount:
 	ld a, [wCharGridEntryCount] ; $61cb
@@ -428,7 +428,7 @@ NeedsCpuDifficultyPrompt:
 ; branch on `bit 3` (START) and refuse the toggle unless this returns 1, so only
 ; the Mario cast may be flipped; created characters set handedness at name entry
 ; instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
-; "START: Change Hands", and DrawCharSelectSlotLabel swaps the word in it for one
+; "START: Change Hands", and DrawCharGridHandednessLabel swaps the word in it for one
 ; of three pre-rendered labels on wCharGridHandedness's three values -- 30:150/151/152 are
 ; "START: Right-Handed", "START: Left-Handed" and "START: Change Hands".
 ; On confirm the slot's wCharSelectSlotLeftHanded is set, and

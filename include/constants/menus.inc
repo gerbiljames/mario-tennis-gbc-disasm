@@ -84,7 +84,7 @@ def NUM_STORYMENUS equ const_value
 def NUM_STORYMENUITEMS equ const_value
 
 ; --- Character-select mode (wCharSelectMode) ---
-; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5
+; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing* by mode
 ; and friends). RunExhibitionCharSelectScreen takes modes 0-1 in b from
 ; wMatchFormatDoubles; RunLinkCharSelectScreen stores the link modes from
 ; wMatchIsDoubles and hLinkState. The P2 modes start the cursor at seat 2.

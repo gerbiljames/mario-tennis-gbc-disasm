@@ -1,7 +1,7 @@
 OpenChoiceTabPanel:
 	ld a, b ; $5092
 	or a ; $5093
-	jr z, .close ; $5094
+	jr z, .rewindOut ; $5094
 	ld c, $00 ; $5096
 .openLoop:
 	call AdvanceFrame ; $5098
@@ -15,9 +15,9 @@ OpenChoiceTabPanel:
 	cp $0c ; $50a8
 	jr nz, .openLoop ; $50aa
 	ret ; $50ac
-.close:
+.rewindOut:
 	ld c, $08 ; $50ad
-.closeLoop:
+.rewindOutLoop:
 	call AdvanceFrame ; $50af
 	ld b, PANELANIM_CHOICE_TAB_OUT ; $50b2
 	farcall RestoreMenuBgAndDrawPanel ; $50b4
@@ -27,7 +27,7 @@ OpenChoiceTabPanel:
 	dec a ; $50bd
 	ld c, a ; $50be
 	cp $ff ; $50bf
-	jr nz, .closeLoop ; $50c1
+	jr nz, .rewindOutLoop ; $50c1
 	ret ; $50c3
 CloseChoiceTabPanel:
 	ld a, b ; $50c4
@@ -77,7 +77,7 @@ ChoiceTabCursorSpriteTask:
 	ld e, a ; $5113
 	farcall ApplySpriteBobOffset ; $5114
 	ld b, OAM_BANK1 ; $5117
-	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate0 ; $5119
+	ld hl, ChoiceTabBannerTemplate ; $5119
 	push de ; $511c
 	call QueueSpriteTemplate ; $511d
 	pop de ; $5120
@@ -85,11 +85,11 @@ ChoiceTabCursorSpriteTask:
 	add hl, de ; $5124
 	ld d, h ; $5125
 	ld e, l ; $5126
-	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate1 ; $5127
+	ld hl, ChoiceTabTailTemplate ; $5127
 	sprite_attr_tile OAM_BANK1, $70 ; $512a
 	call QueueSpriteTemplate ; $512e
 	ret ; $5131
-ChoiceTabCursorSpriteTask_SpriteTemplate0:
+ChoiceTabBannerTemplate:
 	; $5132, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -100,7 +100,7 @@ ChoiceTabCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-ChoiceTabCursorSpriteTask_SpriteTemplate1:
+ChoiceTabTailTemplate:
 	; $5153, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

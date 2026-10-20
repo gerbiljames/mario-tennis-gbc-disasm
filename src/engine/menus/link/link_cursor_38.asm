@@ -87,7 +87,7 @@ SetGridEntryTakenByCharId:
 	ret ; $6a7e
 InitLinkMatchCharsFromSelection:
 	push_wram_bank WRAM_SCREEN ; $6a7f
-	call CacheStorySlotNames ; $6a88
+	call CacheStorySlotRecords ; $6a88
 	ld a, [wCharSelectMode] ; $6a8b
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6a8e
 	jr z, .slot3Entry ; $6a90
@@ -103,7 +103,7 @@ InitLinkMatchCharsFromSelection:
 	srl a ; $6aa4
 	ld b, a ; $6aa6
 	ld a, c ; $6aa7
-	call LoadCachedStorySlotName ; $6aa8
+	call LoadCachedStorySlotRecords ; $6aa8
 	and $81 ; $6aab
 	ld b, a ; $6aad
 	ld c, MATCHREC_P1_MAIN ; $6aae
@@ -124,7 +124,7 @@ InitLinkMatchCharsFromSelection:
 	srl a ; $6ac9
 	ld b, a ; $6acb
 	ld a, c ; $6acc
-	call LoadCachedStorySlotName ; $6acd
+	call LoadCachedStorySlotRecords ; $6acd
 	and $81 ; $6ad0
 	ld b, a ; $6ad2
 	ld c, MATCHREC_P1_PARTNER ; $6ad3
@@ -147,7 +147,7 @@ InitLinkMatchCharsFromSelection:
 	srl a ; $6af0
 	ld b, a ; $6af2
 	ld a, c ; $6af3
-	call LoadCachedStorySlotName ; $6af4
+	call LoadCachedStorySlotRecords ; $6af4
 	and $81 ; $6af7
 	ld b, a ; $6af9
 	ld c, MATCHREC_P2_MAIN ; $6afa
@@ -168,7 +168,7 @@ InitLinkMatchCharsFromSelection:
 	srl a ; $6b15
 	ld b, a ; $6b17
 	ld a, c ; $6b18
-	call LoadCachedStorySlotName ; $6b19
+	call LoadCachedStorySlotRecords ; $6b19
 	and $81 ; $6b1c
 	ld b, a ; $6b1e
 	ld c, MATCHREC_P2_PARTNER ; $6b1f

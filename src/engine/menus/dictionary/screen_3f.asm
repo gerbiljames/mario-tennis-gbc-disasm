@@ -77,7 +77,7 @@ TennisDictionaryScreen:
 	wram_bank WRAM_SCENE ; $4124
 	ld a, [wTennisDictMode] ; $412a
 	cp TENNISDICT_INDEX ; $412d
-	jr nz, .checkTennisDictFlags ; $412f
+	jr nz, .startInList ; $412f
 	wram_bank WRAM_SCENE ; $4131
 	ld a, [wTennisDictFlags] ; $4137
 	res TDICTFLAGB_WINDOW_OPEN, a ; $413a
@@ -86,7 +86,7 @@ TennisDictionaryScreen:
 	wait_frames 1 ; $4142
 	ld a, TDICTSTATE_INDEX ; $4146
 	jr .loop ; $4148
-.checkTennisDictFlags:
+.startInList:
 	ld a, [wTennisDictFlags] ; $414a
 	set TDICTFLAGB_LIST_SHOWN, a ; $414d
 	ld [wTennisDictFlags], a ; $414f
@@ -544,7 +544,7 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictSpriteTimer] ; $4edc
 	dec a ; $4edf
 	ld [wTennisDictSpriteTimer], a ; $4ee0
-	jr nz, .countLeft ; $4ee3
+	jr nz, .drawDemo ; $4ee3
 	ld a, $08 ; $4ee5
 	ld [wTennisDictSpriteTimer], a ; $4ee7
 	ld a, [wTennisDictSpritePhase] ; $4eea
@@ -554,7 +554,7 @@ UpdateTennisDictionarySprites:
 	xor a ; $4ef2
 .store:
 	ld [wTennisDictSpritePhase], a ; $4ef3
-.countLeft:
+.drawDemo:
 	ld hl, TennisDictDemoAnimFrames ; $4ef6
 	ld a, [wTennisDictAnimState] ; $4ef9
 	add a ; $4efc
@@ -585,7 +585,7 @@ UpdateTennisDictionarySprites:
 	ld_xy de, $80, $7d ; $4f2b
 .queueBase:
 	push hl ; $4f2e
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate2 ; $4f2f
+	ld hl, TennisDictDemoCenterTemplate ; $4f2f
 	call QueueSpriteTemplate ; $4f32
 	pop hl ; $4f35
 	ld a, [hl+] ; $4f36
@@ -601,7 +601,7 @@ UpdateTennisDictionarySprites:
 	ld_xy de, $78, $6d ; $4f46
 .queueTop:
 	push hl ; $4f49
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f4a
+	ld hl, TennisDictDemoRowTemplate ; $4f4a
 	call QueueSpriteTemplate ; $4f4d
 	pop hl ; $4f50
 	ld a, [hl+] ; $4f51
@@ -617,7 +617,7 @@ UpdateTennisDictionarySprites:
 	ld_xy de, $78, $7d ; $4f61
 .queueMiddle:
 	push hl ; $4f64
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f65
+	ld hl, TennisDictDemoRowTemplate ; $4f65
 	call QueueSpriteTemplate ; $4f68
 	pop hl ; $4f6b
 	ld a, [hl+] ; $4f6c
@@ -632,7 +632,7 @@ UpdateTennisDictionarySprites:
 .leftBottomPos:
 	ld_xy de, $78, $8d ; $4f7c
 .queueBottom:
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f7f
+	ld hl, TennisDictDemoRowTemplate ; $4f7f
 	call QueueSpriteTemplate ; $4f82
 .checkScrollAnim:
 	ld a, [wTennisDictFlags] ; $4f85
@@ -658,20 +658,20 @@ UpdateTennisDictionarySprites:
 	add e ; $4fa8
 	add $14 ; $4fa9
 	ld e, a ; $4fab
-	ld hl, TennisDictionarySprites0 ; $4fac
+	ld hl, TennisDictCursorBobOffsets ; $4fac
 	ld a, [wTennisDictScrollTimer] ; $4faf
 	and $0f ; $4fb2
 	add_hl_a ; $4fb4
 	ld a, [hl] ; $4fb9
 	add $0a ; $4fba
 	ld d, a ; $4fbc
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate1 ; $4fbd
+	ld hl, TennisDictListCursorTemplate ; $4fbd
 	ld_oam bc, OAM_BANK1 | 3, $28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
 	bit TDICTFLAGB_LEFT_ARROW, a ; $4fc9
 	jr z, .checkRightArrow ; $4fcb
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
+	ld hl, TennisDictPageArrowTemplate ; $4fcd
 	ld_xy de, $18, $10 ; $4fd0
 	ld_oam bc, OAM_BANK1 | 5, $34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
@@ -679,7 +679,7 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4fd9
 	bit TDICTFLAGB_RIGHT_ARROW, a ; $4fdc
 	jr z, .restore ; $4fde
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
+	ld hl, TennisDictPageArrowTemplate ; $4fe0
 	ld_xy de, $88, $10 ; $4fe3
 	ld_oam bc, OAM_BANK1 | 5, $3a ; $4fe6
 	call QueueSpriteTemplate ; $4fe9
@@ -690,10 +690,10 @@ UpdateTennisDictionarySprites:
 	pop af ; $4fef
 	pop_wram_bank ; $4ff0
 	ret ; $4ff5
-TennisDictionarySprites0:
+TennisDictCursorBobOffsets:
 	; $4ff6, 16 bytes (bytes:16)
 	db $00, $01, $01, $02, $03, $04, $06, $08, $06, $04, $03, $02, $01, $01, $00, $00 ; 0x00
-UpdateTennisDictionarySprites_SpriteTemplate0:
+TennisDictPageArrowTemplate:
 	; $5006, 25 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $10, $00, $20, $00
@@ -702,7 +702,7 @@ UpdateTennisDictionarySprites_SpriteTemplate0:
 	oam_sprite $00, $10, $04, $00
 	oam_sprite $10, $10, $24, $00
 	oam_sprite_end
-UpdateTennisDictionarySprites_SpriteTemplate1:
+TennisDictListCursorTemplate:
 	; $501f, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
@@ -711,12 +711,12 @@ TennisDictDemoAnimFrames:
 	INCLUDE "data/engine/menus/dictionary/TennisDictDemoAnimFrames.asm" ; $5028, 80 bytes (bytes:16)
 TennisDictDemoFrameOam:
 	INCLUDE "data/engine/menus/dictionary/TennisDictDemoFrameOam.asm" ; $5078, 88 bytes (bytes:8)
-UpdateTennisDictionarySprites_SpriteTemplate2:
+TennisDictDemoCenterTemplate:
 	; $50d0, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
 	oam_sprite_end
-UpdateTennisDictionarySprites_SpriteTemplate3:
+TennisDictDemoRowTemplate:
 	; $50d9, 17 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
@@ -1069,7 +1069,7 @@ DrawTennisDictionaryList:
 	jr z, .nextEntry ; $52e7
 	dec c ; $52e9
 	push hl ; $52ea
-	ld hl, $10f0 ; $52eb
+	ld hl, Text_TennisDictTermAce ; $52eb
 	ld a, c ; $52ee
 	add_hl_a ; $52ef
 	inc c ; $52f4
