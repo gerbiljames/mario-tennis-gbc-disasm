@@ -125,8 +125,8 @@ NEXTU
 wMinigameServeCount:: dw
 ; [16-bit] Points shown by the score popup; AwardHitScore and the per-minigame scorers store the award here before AddToMinigameScore
 wScorePopupValue:: dw
-; [8-bit] Ball speed LaunchMinigameServe passed to LaunchBall for this serve
-wMinigameServeSpeed:: db
+; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotDifficultyRamp/LaunchBallTable with it
+wMinigameServeTier:: db
 ; [8-bit] Which serve the tennis machine plays next; the machine hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable indexes the aim table with it
 wMinigameServeSlot:: db
 ; [8-bit] wMinigameServeSlot / 3, taken by LaunchMinigameServe and read back by LaunchBall
@@ -189,7 +189,7 @@ wTargetZoneX2:: dw
 ; [16-bit] Target zone depth bound 2 (world units)
 wTargetZoneDepth2:: dw
 
-; [4 bytes] First drill gate: two 16-bit coordinates (+$00 from hl, +$02 from de in SetBallGatePoint1). DidBallCrossGate tests the ball against it each frame; QueueDrillMarker1_0b draws the marker there
+; [4 bytes] First drill gate: two 16-bit coordinates (+$00 from hl, +$02 from de in SetBallGatePoint1). DidBallCrossGate tests the ball against it each frame; QueueDrillGate1Pole draws its pole there
 wDrillGate1:: ds 4
 
 ; [4 bytes] The second gate, set and tested the same way
@@ -212,14 +212,14 @@ wScorePopupSource:: ds 4
 wMinigameTargetsAltMode:: db
 ENDU
 
-; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while walking their weight tables
-wMinigameShotRoll:: db
+; [8-bit] Target zone picked at random from the level's zone pool by SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone; LoadTargetZoneConfig, the score rules and the treasure-box spawn points key on it
+wMinigameTargetZone:: db
 
 ; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessTargetTileHit scores each tile hit at this + 1 and increments it when AreAllTargetsHit. Zeroed with wModeScratch at match start
 wTargetGridClearCount:: db
 
-; [8-bit] Where the minigame is in its serve: StartMinigameMatch seeds it, DrawMinigameScoreHud and LaunchMinigameServe branch on it
-wMinigameServeState:: db
+; [8-bit] 1 when the opponent is CHAR_UNUSED_15 (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
+wMinigameServerIsMachine:: db
 
 ; [8-bit] Nonzero makes AiServePressToss release the serve at once instead of running the wAiServeStyle toss table (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
 wAiServeSkipToss:: db

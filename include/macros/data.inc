@@ -119,8 +119,8 @@ MACRO court_positions
 	db \1, \2, \3, \4, \5, \6, \7, \8
 ENDM
 
-; One point of a training drill's *PointStartDrillPositions table
-; (IndexDrillTableByPoint): the two ball-gate points the drill sets for
+; One point of a training drill's *GatePositions table
+; (SetDrillGateForPoint): the two ball-gate points the drill sets for
 ; that point, each an X and a depth in court units. The list ends on $ff, $ff.
 ;   drill_gates x1, depth1, x2, depth2
 MACRO drill_gates
@@ -139,10 +139,10 @@ MACRO drill_def
 ENDM
 
 ; One Target Shot scoring rule (TargetShotScoreRules; LookupMinigameShotResult
-; walks them to the first match): the shot roll (wMinigameShotRoll), the
+; walks them to the first match): the target zone (wMinigameTargetZone), the
 ; button combination (wLastShotButtons), the shot type it applies to
 ; (SHOTTYPE_*, or $ff for any) and the points awarded. The list ends on $ff.
-;   score_rule roll, buttons, shot, points
+;   score_rule zone, buttons, shot, points
 MACRO score_rule
 	db \1, \2, \3, \4
 ENDM

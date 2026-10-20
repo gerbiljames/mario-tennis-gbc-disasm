@@ -36,9 +36,9 @@ StrokePractice1Hook_BallHit:
 	ld a, [wRallyLength] ; $6c55
 	cp $01 ; $6c58
 	ret nz ; $6c5a
-	call ResetActiveCharState ; $6c5b
+	call SetOpponentCharInert ; $6c5b
 	ret ; $6c5e
-StrokePractice1Table:
+StrokePractice1TargetZones:
 	; $6c5f, 34 bytes (records:2)
 	dw $fe50 ; record 0
 	dw $fb20 ; record 1
@@ -182,7 +182,7 @@ StrokePractice2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6de6
 	xor a ; $6de9
 	ld [wTargetZoneEnabled], a ; $6dea
-	ld hl, StrokePractice2PointStartDrillPositions ; $6ded
+	ld hl, StrokePractice2TargetZones ; $6ded
 	call SetDrillTargetZoneForPoint ; $6df0
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $6df3
@@ -269,7 +269,7 @@ StrokePractice2Hook_RallyTick:
 	ld a, [wRallyLength] ; $6e95
 	cp $02 ; $6e98
 	ret nz ; $6e9a
-	call ResetActiveCharState ; $6e9b
+	call SetOpponentCharInert ; $6e9b
 	ret ; $6e9e
 StrokePractice2Hook_Bounce:
 	call StrokePractice2JudgeOnBounce ; $6e9f
@@ -277,7 +277,7 @@ StrokePractice2Hook_Bounce:
 StrokePractice2Hook_BallHit:
 	call StrokePractice2JudgeOnBallHit ; $6ea3
 	ret ; $6ea6
-StrokePractice2PointStartDrillPositions:
+StrokePractice2TargetZones:
 	; $6ea7, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $fe50, $fb20, $0000, $fd60 ; point 0
@@ -476,7 +476,7 @@ StrokePractice3Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $704b
 	xor a ; $704e
 	ld [wTargetZoneEnabled], a ; $704f
-	ld hl, StrokePractice3PointStartDrillPositions ; $7052
+	ld hl, StrokePractice3TargetZones ; $7052
 	call SetDrillTargetZoneForPoint ; $7055
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $7058
@@ -519,7 +519,7 @@ StrokePractice3Hook_RallyTick:
 	ld a, [wRallyLength] ; $70f1
 	cp $02 ; $70f4
 	ret nz ; $70f6
-	call ResetActiveCharState ; $70f7
+	call SetOpponentCharInert ; $70f7
 	ret ; $70fa
 StrokePractice3Hook_Bounce:
 	call StrokePractice3JudgeOnBounce ; $70fb
@@ -530,7 +530,7 @@ StrokePractice3Hook_BallHit:
 	cp $01 ; $7105
 	ret nz ; $7107
 	ret ; $7108
-StrokePractice3PointStartDrillPositions:
+StrokePractice3TargetZones:
 	; $7109, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $0120, $fb20, $01b0, $fd60 ; point 0

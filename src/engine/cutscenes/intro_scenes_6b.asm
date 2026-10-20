@@ -3,7 +3,7 @@ CheckIntroSkipInput:
 	and PADF_A | PADF_START ; $53f3
 	ret z ; $53f5
 	ld a, $01 ; $53f6
-	ld [wIntroCutsceneCheck], a ; $53f8
+	ld [wIntroCutsceneDone], a ; $53f8
 	ret ; $53fb
 InitCutsceneSceneA:
 	call DisableLCDSafely ; $53fc

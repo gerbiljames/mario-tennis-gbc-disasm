@@ -241,7 +241,7 @@ NetGamePractice1Hook_PointStart:
 	ld [wDrillCounters + 6], a ; $5c23
 	ld a, $01 ; $5c26
 	ld [wTargetZoneEnabled], a ; $5c28
-	ld hl, NetGamePractice1Table ; $5c2b
+	ld hl, NetGamePractice1TargetZones ; $5c2b
 	call SetDrillTargetZoneForPoint ; $5c2e
 	ld a, CHAR_DRILL_NET_GAME_PRACTICE_1 ; $5c31
 	call LoadDrillOpponentChar ; $5c33
@@ -332,10 +332,10 @@ NetGamePractice1Hook_BallHit:
 	ld a, [wLastShotCharIndex] ; $5ccc
 	cp $01 ; $5ccf
 	jr nz, .done ; $5cd1
-	call ResetActiveCharState ; $5cd3
+	call SetOpponentCharInert ; $5cd3
 .done:
 	ret ; $5cd6
-NetGamePractice1Table:
+NetGamePractice1TargetZones:
 	; $5cd7, 34 bytes (records:2)
 	dw $0000 ; record 0
 	dw $fb20 ; record 1
@@ -487,13 +487,13 @@ NetGamePractice1Cases3:
 	xor a ; $5e38
 	call IsCharNearNet ; $5e39
 	or a ; $5e3c
-	jp z, .storeMatchAbortFlag ; $5e3d
+	jp z, .pointLost ; $5e3d
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL ; $5e40
 	ld b, DRILLWORDING_SAME ; $5e42
 	call QueueDrillResultMessage ; $5e44
 	ld a, [wShotRecoilVariant] ; $5e47
 	cp $01 ; $5e4a
-	jp nz, .storeMatchAbortFlag ; $5e4c
+	jp nz, .pointLost ; $5e4c
 	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $5e4f
 	dec [hl] ; $5e52
 	xor a ; $5e53
@@ -519,7 +519,7 @@ NetGamePractice1Cases3:
 	call QueueDrillResultMessage ; $5e79
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET ; $5e7c
 	inc [hl] ; $5e7f
-	jp .storeMatchAbortFlag ; $5e80
+	jp .pointLost ; $5e80
 .ignoreRallyTick:
 	xor a ; $5e83
 	ret ; $5e84
@@ -528,7 +528,7 @@ NetGamePractice1Cases3:
 	ld [wMatchAbortFlag], a ; $5e87
 	ld a, WINLOSE_WIN ; $5e8a
 	ret ; $5e8c
-.storeMatchAbortFlag:
+.pointLost:
 	ld a, MATCHABORT_POINT ; $5e8d
 	ld [wMatchAbortFlag], a ; $5e8f
 	ld a, WINLOSE_LOSE ; $5e92
@@ -566,7 +566,7 @@ NetGamePractice2Hook_PointStart:
 	ld [wDrillCounters + 6], a ; $5ede
 	ld a, $01 ; $5ee1
 	ld [wTargetZoneEnabled], a ; $5ee3
-	ld hl, NetGamePractice2PointStartDrillPositions ; $5ee6
+	ld hl, NetGamePractice2TargetZones ; $5ee6
 	call SetDrillTargetZoneForPoint ; $5ee9
 	ld a, CHAR_DRILL_NET_GAME_PRACTICE_2 ; $5eec
 	call LoadDrillOpponentChar ; $5eee
@@ -658,10 +658,10 @@ NetGamePractice2Hook_BallHit:
 	ld a, [wLastShotCharIndex] ; $5f86
 	cp $01 ; $5f89
 	jr nz, .done ; $5f8b
-	call ResetActiveCharState ; $5f8d
+	call SetOpponentCharInert ; $5f8d
 .done:
 	ret ; $5f90
-NetGamePractice2PointStartDrillPositions:
+NetGamePractice2TargetZones:
 	; $5f91, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $fe50, $fd60, $0000, $fe40 ; point 0
@@ -751,7 +751,7 @@ NetGamePractice2Cases1:
 	call RecordDrillTargetZoneMiss ; $6095
 	call CheckDrillTargetZoneHit ; $6098
 	or a ; $609b
-	jp z, NetGamePractice2Cases3.notSmash ; $609c
+	jp z, NetGamePractice2Cases3.pointLost ; $609c
 	xor a ; $609f
 	ret ; $60a0
 .ignoreRallyTick:
@@ -789,7 +789,7 @@ NetGamePractice2Cases2:
 	call QueueDrillResultMessage ; $60e0
 	ld a, [wCurrentShotType] ; $60e3
 	cp SHOTTYPE_LOB ; $60e6
-	jp nz, NetGamePractice2Cases3.storeMatchAbortFlag ; $60e8
+	jp nz, NetGamePractice2Cases3.pointWon ; $60e8
 	xor a ; $60eb
 	ret ; $60ec
 .ignoreBounce:
@@ -827,7 +827,7 @@ NetGamePractice2Cases3:
 	call QueueDrillResultMessage ; $6129
 	ld a, [wCurrentShotType] ; $612c
 	cp SHOTTYPE_SMASH ; $612f
-	jp nz, .notSmash ; $6131
+	jp nz, .pointLost ; $6131
 	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $6134
 	dec [hl] ; $6137
 	xor a ; $6138
@@ -838,12 +838,12 @@ NetGamePractice2Cases3:
 .ignoreRallyTick:
 	xor a ; $613c
 	ret ; $613d
-.storeMatchAbortFlag:
+.pointWon:
 	ld a, MATCHABORT_POINT ; $613e
 	ld [wMatchAbortFlag], a ; $6140
 	ld a, WINLOSE_WIN ; $6143
 	ret ; $6145
-.notSmash:
+.pointLost:
 	ld a, MATCHABORT_POINT ; $6146
 	ld [wMatchAbortFlag], a ; $6148
 	ld a, WINLOSE_LOSE ; $614b

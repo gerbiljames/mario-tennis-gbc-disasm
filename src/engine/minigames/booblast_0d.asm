@@ -137,7 +137,7 @@ MinigameHooks_BooBlast:
 	dw BooBlastHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 BooBlastHook_MinigameStart:
-	call InitMinigameControllerActor ; $5668
+	call InitBooBlastTargetActor ; $5668
 	call InitBooBlastScore ; $566b
 	ret ; $566e
 BooBlastHook_PerFrame:
@@ -151,7 +151,7 @@ BooBlastHook_PointStart:
 	call DisableOffscreenArrows ; $567a
 	ret ; $567d
 BooBlastHook_PointEnd:
-	call DisableMinigameControllerActor ; $567e
+	call DisableBooBlastTargetActor ; $567e
 	call ResolveAndShowMinigamePoint ; $5681
 	ret ; $5684
 BooBlastHook_RallyTick:
@@ -163,9 +163,9 @@ BooBlastHook_Bounce:
 BooBlastHook_BallHit:
 	call UpdateBooBlastHitStreak ; $568d
 	ret ; $5690
-InitMinigameControllerActor:
+InitBooBlastTargetActor:
 	call ClearMinigameActors ; $5691
-	ld de, BooBlastControllerActorHandler ; $5694
+	ld de, BooBlastTargetActorHandler ; $5694
 	ld bc, wMinigameActors ; $5697
 	call SetMinigameActorHandler ; $569a
 	ld hl, $0000 ; $569d
@@ -173,7 +173,7 @@ InitMinigameControllerActor:
 	ld bc, wMinigameActors ; $56a3
 	call SetMinigameActorPosition ; $56a6
 	ret ; $56a9
-DisableMinigameControllerActor:
+DisableBooBlastTargetActor:
 	ld hl, wMinigameActors ; $56aa
 	res 0, [hl] ; $56ad
 	ret ; $56af
@@ -211,12 +211,12 @@ StubNop_0d_2:
 UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
 	and $01 ; $56f3
-	jr nz, .maskSet ; $56f5
+	jr nz, .opponentShot ; $56f5
 	ld a, [wMinigameHitScored] ; $56f7
 	and a ; $56fa
 	jr z, .clearHitScored ; $56fb
 	jr .incrementCappedCounter ; $56fd
-.maskSet:
+.opponentShot:
 	ld a, [wMinigameHitScored] ; $56ff
 	and a ; $5702
 	jr nz, .incrementCappedCounter ; $5703
@@ -232,27 +232,27 @@ UpdateBooBlastHitStreak:
 	xor a ; $5714
 	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5715
 	ret ; $5718
-BooBlastControllerActorHandler:
+BooBlastTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5719
-	dw BooBlastControllerState0 ; $571d jumptable
-	dw BooBlastControllerState1 ; $571f jumptable
-	dw BooBlastControllerState2 ; $5721 jumptable
-	dw BooBlastControllerState3 ; $5723 jumptable
+	dw BooBlastTargetState0 ; $571d jumptable
+	dw BooBlastTargetState1 ; $571f jumptable
+	dw BooBlastTargetState2 ; $5721 jumptable
+	dw BooBlastTargetState3 ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
-AdvanceMinigameScriptState:
+AdvanceBooBlastActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
-BooBlastControllerState0:
-	call AdvanceMinigameScriptState ; $572c
-BooBlastControllerState1:
+BooBlastTargetState0:
+	call AdvanceBooBlastActorState ; $572c
+BooBlastTargetState1:
 	call DrawBooBlastTargetSprite ; $572f
 	call IsBallWithinTargetZone ; $5732
 	and a ; $5735
 	ret z ; $5736
 	call ScoreBallHit ; $5737
-	jp AdvanceMinigameScriptState ; $573a
-BooBlastControllerState2:
+	jp AdvanceBooBlastActorState ; $573a
+BooBlastTargetState2:
 	call DrawBooBlastHitBurst ; $573d
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5740
 	dec [hl] ; $5743
@@ -267,8 +267,8 @@ BooBlastControllerState2:
 	add hl, de ; $5751
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
-	jp AdvanceMinigameScriptState ; $5758
-BooBlastControllerState3:
+	jp AdvanceBooBlastActorState ; $5758
+BooBlastTargetState3:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:
@@ -380,11 +380,11 @@ ProjectBooSprite:
 	ld h, d ; $5854
 	farcall ApplyCameraProjection ; $5855
 	ld a, [wMinigameHitStreak] ; $5858
-	ld_hl_indexed MinigameHitStreakValueTable_0d ; $585b
+	ld_hl_indexed BooBlastSpriteOamAttrByHitStreak ; $585b
 	ld b, [hl] ; $5862
 	ld b, $0e ; $5863
 	ret ; $5865
-MinigameHitStreakValueTable_0d:
+BooBlastSpriteOamAttrByHitStreak:
 	; $5866, 8 bytes (bytes:8)
 	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 MinigameConfig_PerfectShot:
@@ -401,7 +401,7 @@ InitMinigame_PerfectShot:
 .initMinigameTargets:
 	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
-	ld_hl_indexed PerfectShotLevelHasTargets ; $5895
+	ld_hl_indexed PerfectShotFormationByLevel ; $5895
 	ld a, [hl] ; $589c
 	and a ; $589d
 	ret z ; $589e

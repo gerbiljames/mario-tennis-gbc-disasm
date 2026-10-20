@@ -766,7 +766,7 @@ have no consumer.
 
 ### `ProjectBooSprite` reads the hit-streak table and throws the value away
 
-`ProjectBooSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
+`ProjectBooSprite` (`$0d:$5848`) indexes `BooBlastSpriteOamAttrByHitStreak` by
 `wMinigameHitStreak` (deliberately, via the split-base `ld_hl_indexed`), loads
 the entry into `b`, and overwrites it:
 
@@ -776,9 +776,9 @@ the entry into `b`, and overwrites it:
         ret
 ```
 
-The table holds `$0f, $0e ×6, $0d`, apparently a per-streak sprite tile (or
-size) flattened to the middle value. The eight bytes and the lookup have no
-effect.
+The table holds `$0f, $0e ×6, $0d`, a per-streak OAM attribute for
+`QueueSprite24x32` (palettes 7, 6, 5) flattened to the middle value. The eight bytes and the
+lookup have no effect.
 
 ### `ShowMatchResultsScreen` compares the game mode and never branches
 

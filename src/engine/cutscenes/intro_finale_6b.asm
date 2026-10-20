@@ -1,11 +1,11 @@
-	twin_named intro_cutscene_state16_update, IntroCutsceneState16Update_6b ; $4a42
-IntroCutsceneState16Exit_6b:
+	twin_named intro_cutscene_state13_update, IntroCutsceneState13Update_6b ; $4a42
+IntroCutsceneState13Exit_6b:
 	xor a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp DispatchCutsceneStateInit.nextState ; $4a55
-IntroCutsceneState16InitPalettes_6b:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
-IntroCutsceneState17Init_6b:
+IntroCutsceneState13InitPalettes_6b:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
+IntroCutsceneState14Init_6b:
 	wram_bank WRAM_ACTORS ; $4a98
 	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH ; $4aa1
@@ -31,11 +31,11 @@ IntroCutsceneState17Init_6b:
 	xor a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
 	jp DispatchCutsceneStateInit.runUpdate ; $4add
-	twin_named intro_cutscene_state16_update, IntroCutsceneState17Update_6b ; $4ae0
-IntroCutsceneState17Exit_6b:
+	twin_named intro_cutscene_state13_update, IntroCutsceneState14Update_6b ; $4ae0
+IntroCutsceneState14Exit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $4aef
-IntroCutsceneState18Init_6b:
-	ld hl, IntroCutsceneState18InitPalettes_6b ; $4af2
+IntroCutsceneState15Init_6b:
+	ld hl, IntroCutsceneState15InitPalettes_6b ; $4af2
 	ld_bg_pals de, 0, 8 ; $4af5
 	call LoadPaletteShadow ; $4af8
 	wram_bank WRAM_TEXT ; $4afb
@@ -111,7 +111,7 @@ IntroCutsceneState18Init_6b:
 	xor a ; $4bc9
 	ld [wCutsceneStepTimer], a ; $4bca
 	jp DispatchCutsceneStateInit.runUpdate ; $4bcd
-IntroCutsceneState18Update_6b:
+IntroCutsceneState15Update_6b:
 	ld a, [wCutsceneSpriteAX] ; $4bd0
 	sub $04 ; $4bd3
 	ld [wCutsceneSpriteAX], a ; $4bd5
@@ -125,7 +125,7 @@ IntroCutsceneState18Update_6b:
 	inc a ; $4be6
 	ld [wCutsceneStepTimer], a ; $4be7
 	jp DispatchCutsceneStateInit.runUpdate ; $4bea
-IntroCutsceneState18Exit_6b:
+IntroCutsceneState15Exit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank WRAM_SCREEN ; $4bf3
@@ -134,7 +134,7 @@ IntroCutsceneState18Exit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $4bfd
 Palettes_6b_03:
 	INCLUDE "data/engine/cutscenes/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
-IntroCutsceneState19Init_6b:
+IntroCutsceneState16Init_6b:
 	ld hl, Palette_6b_1 ; $4c38
 	ld_bg_pals de, 0, 8 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
@@ -159,11 +159,11 @@ IntroCutsceneState19Init_6b:
 	ld [hl+], a ; $4c69
 	ld [hl], d ; $4c6a
 	jp DispatchCutsceneStateInit.runUpdate ; $4c6b
-IntroCutsceneState19Exit_6b:
+IntroCutsceneState16Exit_6b:
 	script_fade_out 4 ; $4c6e
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.nextState ; $4c76
-	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
+	twin_named intro_cutscene_state00_update, IntroCutsceneState16Update_6b ; $4c79
 UpdateIntroScrollY:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, IntroScrollYDeltaTable ; $4ca1

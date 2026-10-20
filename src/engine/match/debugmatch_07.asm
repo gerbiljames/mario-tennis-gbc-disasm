@@ -15,7 +15,7 @@ Unused_07_RunDebugTestMatch:
 	ld a, $02 ; $5e1c
 	ld [wPlayer1GamesWon], a ; $5e1e
 	ld a, $01 ; $5e21
-	ld [wTotalGamesWonInMatch], a ; $5e23
+	ld [wTotalGamesPlayedInMatch], a ; $5e23
 	ld [wCharacter1ServiceAces], a ; $5e26
 	ld [wCharacter1ReturnAces], a ; $5e29
 	ld [wCharacter1SmashAces], a ; $5e2c

@@ -592,7 +592,7 @@ RunStoryModeMenu:
 	ld a, TILEATTR_PRIORITY | TILEATTR_PAL1 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
 	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e35
-	farcall LoadMatchStoryGfx ; $6e38
+	farcall LoadStoryPauseMenuGfx ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
 	rect_cell $00, $0e ; $6e3e
 	rect_size $13, $03 ; $6e42

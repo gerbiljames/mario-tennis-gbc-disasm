@@ -387,7 +387,7 @@ LoadResultScreenTileGraphics:
 	ld de, vTiles2 ; $4e2c
 	call DecompressData ; $4e2f
 .loadMatchResultGfxSet:
-	ld a, [wResultScreenWon] ; $4e32
+	ld a, [wResultScreenIsVersus] ; $4e32
 	or a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
 	ld hl, ResultExhibitionBannerHeadGfx ; $4e38

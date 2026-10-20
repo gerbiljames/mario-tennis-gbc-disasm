@@ -61,7 +61,7 @@ ComputeMatchStatsReward:
 	call GetPlayerExpTier ; $6858
 	pop de ; $685b
 	ld hl, GamesWonExpByTier ; $685c
-	ld a, [wTotalGamesWonInMatch] ; $685f
+	ld a, [wTotalGamesPlayedInMatch] ; $685f
 	call AccumulateStatExp ; $6862
 	ld l, e ; $6865
 	ld h, d ; $6866

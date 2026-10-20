@@ -169,16 +169,16 @@ wCutsceneStep:: db
 ; [8-bit] Bank $6b cutscene driver: frame counter for the current step, compared with per-step thresholds to advance wCutsceneStep
 wCutsceneStepTimer:: db
 
-; [8-bit] Intro Cutscene Check (0x00 when in intro cutscene, 0x01 otherwise)
-wIntroCutsceneCheck:: db
+; [8-bit] Nonzero ends the intro: set by CheckIntroSkipInput (A or Start) or by the last state, IntroCutsceneState17Init_6b
+wIntroCutsceneDone:: db
 
 ; [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame
 wCutsceneScrollX:: db
 
-; [8-bit] Second pan position, stepped 3 px the opposite way to wCutsceneScrollX: hScrollX in IntroCutsceneState03Update_6b, wRasterScrollX in UpdateCutsceneScroll
+; [8-bit] Second pan position, stepped 3 px the opposite way to wCutsceneScrollX: hScrollX in IntroCutsceneState04Update_6b, wRasterScrollX in UpdateCutsceneScroll
 wCutsceneReverseScrollX:: db
 
-; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueCutsceneSpriteGroupA
+; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueCutsceneSpriteGroupA. IntroCutsceneState15 reuses it as the BG scroll Y (ApplyScrollYFromWram copies it to hScrollY)
 wCutsceneSpriteAX:: db
 
 ; [8-bit] Y of the intro cutscene's first sprite group

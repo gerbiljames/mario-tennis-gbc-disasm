@@ -6,9 +6,9 @@ RepairAllSaveSlots:
 	call RestoreStoryBlockFromBackup ; $5676
 	ld b, SAVEBLOCK_SLOT2 ; $5679
 	call RestoreStoryBlockFromBackup ; $567b
-	call RestoreBlock36FromBackup ; $567e
+	call RestoreExhibitionBlockFromBackup ; $567e
 	ret ; $5681
-RestoreBlock36FromBackup:
+RestoreExhibitionBlockFromBackup:
 	ld a, SAVEBLOCK_EXHIBITION ; $5682
 	ld b, a ; $5684
 	ld hl, wDecompBuffer ; $5685

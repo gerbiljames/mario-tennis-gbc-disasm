@@ -1,4 +1,4 @@
-LoadMatchUiCourtTilemap:
+DrawTargetShotZoneOverlay:
 	add a ; $50fa
 	ld_hl_indexed TargetShotZoneOverlayOffsets ; $50fb
 	ld a, [hl+] ; $5102

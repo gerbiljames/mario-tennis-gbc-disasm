@@ -244,9 +244,9 @@ HandleBallHitEvent:
 	call SetCharStateOnBallHit ; $429e
 	wram_bank WRAM_CHAR2 ; $42a1
 	call SetCharStateOnBallHit ; $42a7
-	wram_bank WRAM_TEXT ; $42aa
+	wram_bank WRAM_CHAR1 ; $42aa
 	call SetCharStateOnBallHit ; $42b0
-	wram_bank WRAM_ACTORS ; $42b3
+	wram_bank WRAM_CHAR0 ; $42b3
 	call SetCharStateOnBallHit ; $42b9
 	call DetectServeAceOutcome ; $42bc
 	ld d, MODEHOOK_BALL_HIT ; $42bf

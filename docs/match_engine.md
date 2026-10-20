@@ -682,11 +682,11 @@ counter, then advances — so a new swing cannot start inside the old one.
 | Value | Handler | Source |
 |---|---|---|
 | 0 | `ReadCharPadInput` | the local human |
-| 1 | `CharInputHandler1_08` | the CPU AI |
+| 1 | `ReadCharAiInput` | the CPU AI |
 | 2, 3 | `ReadCharPadInput` | never assigned |
-| 4 | `CharInputHandler4_08` | raw `hLinkInput` |
-| 5 | `CharInputHandler5_08` | link, local seat |
-| 6 | `CharInputHandler6_08` | link, remote seat |
+| 4 | `ReadCharLinkInput` | raw `hLinkInput` |
+| 5 | `ReadCharLinkMasterInput` | link, the master's character |
+| 6 | `ReadCharLinkSlaveInput` | link, the slave's character |
 
 `InitChar` (`$08:$684a`) makes every character an AI (`$08:$687b`);
 `InitAllChars` sets character 0 to the pad (`$08:$6925`). A link match sets
@@ -822,13 +822,13 @@ The rest of the movement chain:
 
 ## The AI
 
-The AI is a **fake controller**: `CharInputHandler1_08` (`$08:$7863`) writes
+The AI is a **fake controller**: `ReadCharAiInput` (`$08:$7863`) writes
 `wCharInputBits` and the human's state machine consumes it, so all swing,
 movement and contact rules apply.
 
 ### Structure
 
-1. `CharInputHandler1_08` ticks `wAiActionTimer` and **returns while it is
+1. `ReadCharAiInput` ticks `wAiActionTimer` and **returns while it is
    nonzero, input zero** — the reaction delay, fully inert. Then it ticks
    `wAiSecondButtonDelay` and picks a jumptable on `wCharState`: singles,
    doubles net player or doubles baseliner (by `wCharServeRole & $02`,
@@ -1050,7 +1050,7 @@ rules, anything else = 6-game rules.
 Awards: `AwardPoint` increments the winner's points, clears `wServeFaultFlag`,
 bumps `wTotalPointsScoredInCurrentGame`. `AwardGame` increments games, zeroes
 both point counts, the in-game point counter and `wDeuceIndicator`, bumps
-`wTotalGamesWonInMatch`. `AwardSet` increments sets, zeroes both game counts and
+`wTotalGamesPlayedInMatch`. `AwardSet` increments sets, zeroes both game counts and
 `wTiebreakerIndicator`.
 
 ### Situation flags — game, set and match point
@@ -1113,15 +1113,15 @@ new ends.
 
 The position tables drive it:
 
-- Normal games: `GetGamePositionHandler` (`$08:$4808`) indexes an 8-byte record
-  by `wTotalGamesWonInMatch & $03`; character 0's end bit goes 0, 1, 1, 0 —
+- Normal games: `LoadGameCourtPositions` (`$08:$4808`) indexes an 8-byte record
+  by `wTotalGamesPlayedInMatch & $03`; character 0's end bit goes 0, 1, 1, 0 —
   **ends change after every odd game**, serve role alternates every game.
 - Within a game, `wTotalPointsScoredInCurrentGame` bit 0 flips only the service
   box (`FlipCharPositionCode` XORs bit 0).
-- Tiebreak: `TiebreakPositionTables` indexed by
+- Tiebreak: the `TiebreakPositions*` tables, indexed by
   `wTotalPointsScoredInCurrentGame` (0-23), end bit flipping **every six
   points**. `InitTiebreakPointCounter` (`$08:$47cd`) seeds the counter from
-  `wTotalGamesWonInMatch & 3` via a table of multiples of six so the phase is
+  `wTotalGamesPlayedInMatch & 3` via a table of multiples of six so the phase is
   right for either game parity.
 
 A position record is four `wCharCourtPos` codes then four `wCharServeRole`
@@ -1374,7 +1374,7 @@ set, less addresses already given in the text:
 | `$c8e0`-`$c8e5` | `wPlayer{1,2}{Sets,Games,Points}Won` | points 0-3 = 0/15/30/40, 4 = advantage, 5-7 tiebreak only |
 | `$c8e6`/`$c8e7` | `wDeuceIndicator` / `wTiebreakerIndicator` | |
 | `$c8e8`-`$c8eb` | `wMatch`/`wSet`/`wGame`/`wPointWinLoseFlag` | `$01` even-index side, `$ff` odd, 0 undecided |
-| `$c8ec`/`$c8ed` | `wTotalGamesWonInMatch` / `wTotalPointsScoredInCurrentGame` | drive ends and service boxes |
+| `$c8ec`/`$c8ed` | `wTotalGamesPlayedInMatch` / `wTotalPointsScoredInCurrentGame` | drive ends and service boxes |
 | `$c8ee` | `wServeFaultFlag` | 1 after a first-serve fault |
 | `$ffc2` | `hLinkState` | 0 idle, 1 master, 2 slave |
 | `$ffd3`-`$ffd6` | `hLinkInput`, `hLinkRemoteInput`, `hLinkRemoteInputBuf`, `hLinkTxInput` | per-frame input plumbing |

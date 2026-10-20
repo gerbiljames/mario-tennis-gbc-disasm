@@ -42,7 +42,7 @@ DrawNearTeamChars:
 	wram_bank WRAM_CHAR0 ; $6377
 	ld a, [hl] ; $637d
 	cp b ; $637e
-	jr c, DrawNearTeamCharsDoubles ; $637f
+	jr c, DrawNearTeamCharsSwapped ; $637f
 	wram_bank WRAM_CHAR0 ; $6381
 	ld hl, wCharSpriteSlot ; $6387
 	call DrawCharSprite ; $638a
@@ -51,7 +51,7 @@ DrawNearTeamChars:
 	call DrawCharSprite ; $6396
 	wram_bank WRAM_CHAR0 ; $6399
 	ret ; $639f
-DrawNearTeamCharsDoubles:
+DrawNearTeamCharsSwapped:
 	wram_bank WRAM_CHAR2 ; $63a0
 	ld hl, wCharSpriteSlot ; $63a6
 	call DrawCharSprite ; $63a9
@@ -67,7 +67,7 @@ DrawFarTeamChars:
 	wram_bank WRAM_CHAR1 ; $63c9
 	ld a, [hl] ; $63cf
 	cp b ; $63d0
-	jr c, DrawFarTeamCharsDoubles ; $63d1
+	jr c, DrawFarTeamCharsSwapped ; $63d1
 	wram_bank WRAM_CHAR1 ; $63d3
 	ld hl, wCharSpriteSlot ; $63d9
 	call DrawCharSprite ; $63dc
@@ -76,7 +76,7 @@ DrawFarTeamChars:
 	call DrawCharSprite ; $63e8
 	wram_bank WRAM_CHAR0 ; $63eb
 	ret ; $63f1
-DrawFarTeamCharsDoubles:
+DrawFarTeamCharsSwapped:
 	wram_bank WRAM_CHAR3 ; $63f2
 	ld hl, wCharSpriteSlot ; $63f8
 	call DrawCharSprite ; $63fb
@@ -98,11 +98,11 @@ DrawBallAndEffects:
 DrawActorsByDepth:
 	ld a, [wMinigameUsesTennisMachine] ; $6429
 	and a ; $642c
-	jr nz, .done ; $642d
+	jr nz, .fixedOrder ; $642d
 	ld hl, wCharDepthKey ; $642f
-	wram_bank WRAM_TEXT ; $6432
+	wram_bank WRAM_CHAR1 ; $6432
 	ld b, [hl] ; $6438
-	wram_bank WRAM_ACTORS ; $6439
+	wram_bank WRAM_CHAR0 ; $6439
 	ld a, [hl] ; $643f
 	cp b ; $6440
 	jr nc, .nearFirst ; $6441
@@ -131,7 +131,7 @@ DrawActorsByDepth:
 	call DrawBallAndEffects ; $6470
 	call DrawFarTeamChars ; $6473
 	ret ; $6476
-.done:
+.fixedOrder:
 	call DrawNearTeamChars ; $6477
 	call DrawBallAndEffects ; $647a
 	call DrawFarTeamChars ; $647d
