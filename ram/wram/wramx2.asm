@@ -55,8 +55,26 @@ wMapScrollPlane1:: ds 1024
 NEXTU
 ; screen attribute plane
 ; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03; FlushCharDataTilemapChunk sends the pair to $99e0 in VRAM banks 0 and 1. Written by seventeen ROM banks. The character-data page images above it keep numeric addresses. Plane writers such as FillTilemapRun, WriteTextToTilemap and RenderProportionalTextAt select both banks themselves (tile under $03, attribute under $02)
+UNION
 wScreenAttrmap:: ds 1024
 	export_size wScreenAttrmap
+NEXTU
+; minigame level select (bank $1b): scalars in the plane's first bytes
+; [8-bit] Minigame whose levels are offered, from c of RunMinigameLevelSelect; indexes ClearedMinigameLevelsTable
+wLevelSelectMinigame:: db
+; [8-bit] Levels cleared (0-2): CountClearedMinigameLevels counts the minigame's level-1 and level-2 clear flags. 2 runs RunMinigameLevelSelect3, else RunMinigameLevelSelect2; it is also the starting cursor, and 0 locks every level but the first and swaps the icon tiles
+wLevelSelectClearedCount:: db
+; [8-bit] Cursor grid columns, CountClearedMinigameLevelsTable[wLevelSelectClearedCount]; returned in b by GetMinigameLevelColumnCount
+wLevelSelectColumns:: db
+; [8-bit] The chosen cursor index, or $ff on cancel; RunMinigameLevelSelect returns it in a
+wLevelSelectResult:: db
+NEXTU
+; name entry (bank $38): scalars in the plane's first bytes
+; [8-bit] Charset page: SetupNameEntryScreen writes 0 and AppendCharToName tests it, but both branches index NameEntryCharset_38
+wNameEntryCharsetPage:: db
+; [8-bit] Character whose mugshot the screen shows, from c of RunNameEntryScreen
+wNameEntryMugshotChar:: db
+ENDU
 NEXTU
 ; character record scratch (banks $18/$1b/$3b)
 	ds 1408

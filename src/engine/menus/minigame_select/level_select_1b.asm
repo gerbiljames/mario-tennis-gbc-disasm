@@ -329,12 +329,12 @@ Unused_1b_ShowTrophiesPlaceholderScreen:
 RunMinigameLevelSelect:
 	push_wram_bank WRAM_COURT_PLANES ; $6b9c
 	ld a, c ; $6ba5
-	ld [wScreenAttrmap], a ; $6ba6
+	ld [wLevelSelectMinigame], a ; $6ba6
 	xor a ; $6ba9
-	ld [wScreenAttrmap + 1], a ; $6baa
+	ld [wLevelSelectClearedCount], a ; $6baa
 	call CountClearedMinigameLevels ; $6bad
 	call LoadMinigameLevelSelectGfx ; $6bb0
-	ld a, [wScreenAttrmap + 1] ; $6bb3
+	ld a, [wLevelSelectClearedCount] ; $6bb3
 	cp $02 ; $6bb6
 	jr z, .runMinigameLevelSelect3 ; $6bb8
 	call RunMinigameLevelSelect2 ; $6bba
@@ -343,14 +343,14 @@ RunMinigameLevelSelect:
 	call RunMinigameLevelSelect3 ; $6bbf
 .readResult:
 	wram_bank WRAM_COURT_PLANES ; $6bc2
-	ld a, [wScreenAttrmap + 3] ; $6bc8
+	ld a, [wLevelSelectResult] ; $6bc8
 	ld c, a ; $6bcb
 	pop_wram_bank ; $6bcc
 	ld a, c ; $6bd1
 	ret ; $6bd2
 CountClearedMinigameLevels:
 	ld c, $00 ; $6bd3
-	ld a, [wScreenAttrmap] ; $6bd5
+	ld a, [wLevelSelectMinigame] ; $6bd5
 	add a ; $6bd8
 	ld hl, ClearedMinigameLevelsTable ; $6bd9
 	add_hl_a ; $6bdc
@@ -376,12 +376,12 @@ CountClearedMinigameLevels:
 	inc c ; $6bf9
 .countDone:
 	ld a, c ; $6bfa
-	ld [wScreenAttrmap + 1], a ; $6bfb
-	ld a, [wScreenAttrmap + 1] ; $6bfe
+	ld [wLevelSelectClearedCount], a ; $6bfb
+	ld a, [wLevelSelectClearedCount] ; $6bfe
 	ld hl, CountClearedMinigameLevelsTable ; $6c01
 	add_hl_a ; $6c04
 	ld a, [hl] ; $6c09
-	ld [wScreenAttrmap + 2], a ; $6c0a
+	ld [wLevelSelectColumns], a ; $6c0a
 	ret ; $6c0d
 CountClearedMinigameLevelsTable:
 	; $6c0e, 3 bytes (bytes:3)
@@ -486,7 +486,7 @@ LoadMinigameLevelSelectGfx:
 	ld c, a ; $6c9f
 	call AdvanceFrame ; $6ca0
 	push_wram_bank WRAM_COURT_PLANES ; $6ca3
-	ld a, [wScreenAttrmap + 1] ; $6cac
+	ld a, [wLevelSelectClearedCount] ; $6cac
 	ld b, a ; $6caf
 	pop_wram_bank ; $6cb0
 	ld a, b ; $6cb5
@@ -507,7 +507,7 @@ LoadMinigameLevelSelectGfx:
 	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
 	push_wram_bank WRAM_COURT_PLANES ; $6cd2
-	ld a, [wScreenAttrmap + 1] ; $6cdb
+	ld a, [wLevelSelectClearedCount] ; $6cdb
 	ld b, a ; $6cde
 	pop_wram_bank ; $6cdf
 	ld a, b ; $6ce4
@@ -556,7 +556,7 @@ MinigameLevelSelectTable:
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 3
 DrawMinigameLevelDescription:
 	push_wram_bank WRAM_COURT_PLANES ; $6d3d
-	ld a, [wScreenAttrmap + 1] ; $6d46
+	ld a, [wLevelSelectClearedCount] ; $6d46
 	or a ; $6d49
 	jr nz, .getMenuCursorIndex ; $6d4a
 	ld c, $03 ; $6d4c

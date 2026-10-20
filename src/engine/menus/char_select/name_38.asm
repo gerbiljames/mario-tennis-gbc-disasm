@@ -166,7 +166,7 @@ RunNameEntryScreen:
 	ld [wStoryCharacterSlot], a ; $6e15
 	wram_bank WRAM_COURT_PLANES ; $6e18
 	ld a, c ; $6e1e
-	ld [wScreenAttrmap + 1], a ; $6e1f
+	ld [wNameEntryMugshotChar], a ; $6e1f
 	call DisableLCDSafely ; $6e22
 	call ClearFrameTasks ; $6e25
 	call SetupNameEntryScreen ; $6e28
@@ -342,7 +342,7 @@ SetupNameEntryScreen:
 	ld c, $0c ; $6fe8
 	farcall LoadIndexedPalette ; $6fea
 	push_wram_bank WRAM_COURT_PLANES ; $6fed
-	ld a, [wScreenAttrmap + 1] ; $6ff6
+	ld a, [wNameEntryMugshotChar] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
 	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
@@ -367,7 +367,7 @@ SetupNameEntryScreen:
 	farcall LoadCompressedTileBlock ; $7033
 	push_wram_bank WRAM_COURT_PLANES ; $7036
 	xor a ; $703f
-	ld [wScreenAttrmap], a ; $7040
+	ld [wNameEntryCharsetPage], a ; $7040
 	wram_bank WRAM_SCREEN ; $7043
 	call GetActiveStoryNameBuffer ; $7049
 	ld h, b ; $704c
