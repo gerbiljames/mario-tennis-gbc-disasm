@@ -157,12 +157,12 @@ End10VarsityCourtEntry01Scene:
 	script_move_player 11.0, 23.0 ; $5886
 	farcall WaitPlayerMoveDone ; $5890
 	script_move_target ACTOR_PARTNER, 13.0, 29.0 ; $5893
-	script_move_target ACTOR_END10_VARSITY_COURT_ALT_B_MARK, 11.0, 23.0 ; $589e
-	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $58a9
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ANIM_SHAKE ; $58ae
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $58b5
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_BOB, ANIM_BOUNCE ; $58ba
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_BOB ; $58c1
+	script_move_target ACTOR_END10_VARSITY_COURT_ALTB_MARK, 11.0, 23.0 ; $589e
+	script_wait_move ACTOR_END10_VARSITY_COURT_ALTB_MARK ; $58a9
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALTB_MARK, ANIM_SHAKE ; $58ae
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALTB_MARK ; $58b5
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALTB_BOB, ANIM_BOUNCE ; $58ba
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALTB_BOB ; $58c1
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $58c6
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $58cd
 	script_wait_idle ACTOR_PLAYER ; $58d4
@@ -178,9 +178,9 @@ End10VarsityCourtEntry01Scene:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $590e
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5915
 	sound SFX_APPEAR2 ; $591c
-	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 12.0, 27.5 ; $591e
+	script_set_position ACTOR_END10_VARSITY_COURT_ALTB_BALLOON_SWEAT, 12.0, 27.5 ; $591e
 	script_wait_frames 40 ; $5929
-	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 63.0, 63.0 ; $5930
+	script_set_position ACTOR_END10_VARSITY_COURT_ALTB_BALLOON_SWEAT, 63.0, 63.0 ; $5930
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $593b
 	script_wait_frames 10 ; $5943
 	script_lock_facing ACTOR_PLAYER ; $594a
@@ -227,9 +227,9 @@ CeremonyDoublesReaction_27:
 	script_wait_idle ACTOR_PARTNER ; $5a2c
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5a31
 	sound SFX_APPEAR2 ; $5a39
-	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 12.0, 27.5 ; $5a3b
+	script_set_position ACTOR_END10_VARSITY_COURT_ALTB_BALLOON_SWEAT, 12.0, 27.5 ; $5a3b
 	script_wait_frames 40 ; $5a46
-	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 63.0, 63.0 ; $5a4d
+	script_set_position ACTOR_END10_VARSITY_COURT_ALTB_BALLOON_SWEAT, 63.0, 63.0 ; $5a4d
 	script_wait_frames 10 ; $5a58
 	script_lock_facing ACTOR_PLAYER ; $5a5f
 	script_wait_frames 10 ; $5a66
@@ -267,28 +267,28 @@ CeremonyDoublesReaction_27:
 	script_unlock_facing ACTOR_PLAYER ; $5b13
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5b1a
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5b21
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ActorScript_27_07 ; $5b28
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ActorScript_27_08 ; $5b33
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALTB_EMILY, ActorScript_27_07 ; $5b28
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALTB_KEVIN, ActorScript_27_08 ; $5b33
 	script_wait_frames 20 ; $5b3e
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ActorScript_27_12 ; $5b45
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALTB_MARK, ActorScript_27_12 ; $5b45
 	script_move_player 11.0, 29.0 ; $5b50
 	farcall WaitPlayerMoveDone ; $5b5a
-	script_wait_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $5b5d
-	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $5b62
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ACTOR_PARTNER ; $5b6a
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ANIM_SHAKE ; $5b72
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $5b79
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ACTOR_PLAYER ; $5b7e
-	script_move_target ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, 10.0, 31.0 ; $5b86
-	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_B_EMILY ; $5b91
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ACTOR_PLAYER ; $5b96
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ACTOR_PARTNER ; $5b9e
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ANIM_NOD ; $5ba6
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_EMILY ; $5bad
-	script_move_target ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, 12.0, 31.0 ; $5bb2
-	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN ; $5bbd
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ANIM_BOUNCE ; $5bc2
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN ; $5bc9
+	script_wait_actor_script ACTOR_END10_VARSITY_COURT_ALTB_MARK ; $5b5d
+	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_ALTB_MARK ; $5b62
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALTB_KEVIN, ACTOR_PARTNER ; $5b6a
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALTB_MARK, ANIM_SHAKE ; $5b72
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALTB_MARK ; $5b79
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALTB_MARK, ACTOR_PLAYER ; $5b7e
+	script_move_target ACTOR_END10_VARSITY_COURT_ALTB_EMILY, 10.0, 31.0 ; $5b86
+	script_wait_move ACTOR_END10_VARSITY_COURT_ALTB_EMILY ; $5b91
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALTB_EMILY, ACTOR_PLAYER ; $5b96
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALTB_KEVIN, ACTOR_PARTNER ; $5b9e
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALTB_EMILY, ANIM_NOD ; $5ba6
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALTB_EMILY ; $5bad
+	script_move_target ACTOR_END10_VARSITY_COURT_ALTB_KEVIN, 12.0, 31.0 ; $5bb2
+	script_wait_move ACTOR_END10_VARSITY_COURT_ALTB_KEVIN ; $5bbd
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALTB_KEVIN, ANIM_BOUNCE ; $5bc2
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALTB_KEVIN ; $5bc9
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $5bce
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5bd6
 	script_wait_idle ACTOR_PARTNER ; $5bdd
@@ -299,8 +299,8 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5bef
 	script_wait_idle ACTOR_PLAYER ; $5bf6
 	script_wait_frames 10 ; $5bfb
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ACTOR_PLAYER ; $5c02
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ACTOR_PARTNER ; $5c0a
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALTB_EMILY, ACTOR_PLAYER ; $5c02
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALTB_KEVIN, ACTOR_PARTNER ; $5c0a
 	script_wait_frames 10 ; $5c12
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5c19
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5c20
@@ -390,17 +390,17 @@ End10VarsityCourtActorsAlt_27:
 	map_actor_end
 End10VarsityCourtActorsAltB_27:
 	; $5d71, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 25.0, 29.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_KEVIN
-	map_actor $0000, ActorScript_27_27, 13.0, 23.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, END10_VARSITY_COURT_ALT_B_BOB
-	map_actor $0000, ActorScript_27_27, 19.0, 33.0, FACE_LEFT, OBJ_FAY, ANIM_WALK, $03, END10_VARSITY_COURT_ALT_B_FAY
-	map_actor $0000, ActorScript_27_27, 19.0, 35.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, END10_VARSITY_COURT_ALT_B_CURT
-	map_actor $0000, ActorScript_27_27, 19.0, 23.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $06, END10_VARSITY_COURT_ALT_B_BETH
-	map_actor $0000, ActorScript_27_27, 23.0, 29.0, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_EMILY
-	map_actor $0000, ActorScript_27_27, 11.0, 19.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_MARK
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_EXCLAIM_1
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_EXCLAIM_2
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_EXCLAIM_3
+	map_actor $0000, ActorScript_27_27, 25.0, 29.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_KEVIN
+	map_actor $0000, ActorScript_27_27, 13.0, 23.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, END10_VARSITY_COURT_ALTB_BOB
+	map_actor $0000, ActorScript_27_27, 19.0, 33.0, FACE_LEFT, OBJ_FAY, ANIM_WALK, $03, END10_VARSITY_COURT_ALTB_FAY
+	map_actor $0000, ActorScript_27_27, 19.0, 35.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, END10_VARSITY_COURT_ALTB_CURT
+	map_actor $0000, ActorScript_27_27, 19.0, 23.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $06, END10_VARSITY_COURT_ALTB_BETH
+	map_actor $0000, ActorScript_27_27, 23.0, 29.0, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_EMILY
+	map_actor $0000, ActorScript_27_27, 11.0, 19.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_MARK
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_BALLOON_SWEAT
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_BALLOON_EXCLAIM_1
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_BALLOON_EXCLAIM_2
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALTB_BALLOON_EXCLAIM_3
 	map_actor_end
 End8SrCourtMapScripts_27:
 	; $5e15, 14 bytes (map_tree)

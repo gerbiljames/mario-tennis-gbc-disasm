@@ -77,7 +77,8 @@ after a real defect broke it:
             row of a map_actor list tools/actorslots.py finds can be active
             at that line, and holds that actor in every such list (a name is
             a row number, so reordering or retargeting a list keeps the
-            bytes and changes the actor)
+            bytes and changes the actor); no map_actor row name repeats a
+            word run (TOURNAMENT_TOURNAMENT_STAFF)
   entries   every story entry point with no way in carries a `; debug
             warp only` mark, and only those do (tools/routes.py)
   raw-ids   a raw cp/store operand on a variable whose other values are

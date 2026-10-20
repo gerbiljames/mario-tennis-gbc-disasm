@@ -419,8 +419,8 @@ RestaurantMapScripts_10:
 	dw RestaurantInitScript_10 ; slot 6 InitScript
 RestaurantActors_10:
 	; $5a8e, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, 17.0, 25.0, FACE_LEFT, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, RESTAURANT_RESTAURANT_SERVER_1
-	map_actor $0000, ActorScript_10_2, 33.0, 21.0, FACE_UP, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, RESTAURANT_RESTAURANT_SERVER_2
+	map_actor $0000, ActorScript_10_2, 17.0, 25.0, FACE_LEFT, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, RESTAURANT_SERVER_1
+	map_actor $0000, ActorScript_10_2, 33.0, 21.0, FACE_UP, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, RESTAURANT_SERVER_2
 	map_actor $0000, ActorScript_10_2, 22.0, 19.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, RESTAURANT_STUDENT_LONG_HAIR_1
 	map_actor $0000, ActorScript_10_2, 29.0, 23.0, FACE_UP, OBJ_CHEF, ANIM_WALK, $00, RESTAURANT_CHEF
 	map_actor $0000, ActorScript_10_2, 41.0, 41.0, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, RESTAURANT_BALLOON_EXCLAIM
@@ -464,7 +464,7 @@ RestaurantNpc03_10:
 	jr nz, .speak ; $5c08
 	farcall AdvanceDialogueTextCursor ; $5c0a
 .speak:
-	script_speak ACTOR_RESTAURANT_RESTAURANT_SERVER_1 ; $5c0d
+	script_speak ACTOR_RESTAURANT_SERVER_1 ; $5c0d
 	ret ; $5c12
 RestaurantNpc03TextIds:
 	; $5c13, 10 bytes (text_ids)
@@ -483,7 +483,7 @@ RestaurantNpc04_10:
 	ld h, [hl] ; $5c29
 	ld l, a ; $5c2a
 	farcall InitDialogueTextCursor ; $5c2b
-	script_speak ACTOR_RESTAURANT_RESTAURANT_SERVER_2 ; $5c2e
+	script_speak ACTOR_RESTAURANT_SERVER_2 ; $5c2e
 	ret ; $5c33
 RestaurantNpc04TextIds:
 	; $5c34, 10 bytes (text_ids)
@@ -917,8 +917,8 @@ RestaurantNpc10TextIds:
 	assert_table_length NUM_STORYTIERS
 RestaurantNpcScripts_10:
 	; $6076, 121 bytes (map_scripts)
-	map_script ACTOR_RESTAURANT_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, RestaurantNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_RESTAURANT_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, RestaurantNpc04_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, RestaurantNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, RestaurantNpc04_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_RESTAURANT_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, RestaurantNpc05_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_RESTAURANT_CHEF, FACEMASK_ANY, $0000, RestaurantNpc06_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_RESTAURANT_STUDENT_PIGTAILS_GIRL_2, FACEMASK_ANY, $0000, RestaurantNpc12_10, $00, $00

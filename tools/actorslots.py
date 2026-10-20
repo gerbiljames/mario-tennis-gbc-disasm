@@ -800,7 +800,18 @@ def check(fail):
     renames, conflicts, counts = evaluate(src, flow)
     for f, ln, name, why in conflicts:
         fail("slots", f"{Path(f).relative_to(ROOT)}:{ln}: {name} {why}")
+    for lst, names in src.rowname.items():
+        for name in filter(None, names):
+            if stutters(name):
+                fail("slots", f"{lst}: ACTOR_{name} repeats a word run")
     return counts["names"]
+
+
+def stutters(name):
+    """True if a run of `_` words repeats right after itself (TOURNAMENT_TOURNAMENT_STAFF)."""
+    t = name.split("_")
+    return any(t[i:i + n] == t[i + n:i + 2 * n]
+               for n in range(1, len(t) // 2 + 1) for i in range(len(t) - 2 * n + 1))
 
 
 def apply_renames(renames):
