@@ -21,7 +21,7 @@
 .haveInput:
 	ld h, a
 	ld a, [wMenuCursorLockFlags]
-	and $01
+	and CURSORLOCKF_PRIMARY
 	ld a, h
 	jr nz, .checkLock
 	bit PADB_RIGHT, a
@@ -101,11 +101,11 @@
 	sound SFX_MENU_SELECT
 	ld a, [wMenuCursorLockFlags]
 	ld b, a
-	and $01
+	and CURSORLOCKF_PRIMARY
 	jr nz, .compare
 	sound SFX_MENU_SELECT
 	ld a, b
-	or $01
+	or CURSORLOCKF_PRIMARY
 	ld [wMenuCursorLockFlags], a
 	jr .compare
 .checkUnlock:
@@ -114,14 +114,14 @@
 	sound SFX_MENU_CANCEL
 	ld a, [wMenuCursorLockFlags]
 	ld b, a
-	and $03
+	and CURSORLOCKF_PRIMARY | CURSORLOCKF_SECONDARY
 	ld a, b
 	jr nz, .clearLock
-	and $fa
-	or $04
+	and ~(CURSORLOCKF_PRIMARY | CURSORLOCKF_PRIMARY_CANCEL)
+	or CURSORLOCKF_PRIMARY_CANCEL
 	jr .storeLock
 .clearLock:
-	and $fe
+	and ~CURSORLOCKF_PRIMARY
 .storeLock:
 	ld [wMenuCursorLockFlags], a
 .compare:

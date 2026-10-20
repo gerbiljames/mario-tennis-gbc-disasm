@@ -207,7 +207,7 @@ Unused_3b_MoveMenuCursorLinkLocal:
 .gotInput:
 	ld h, a ; $4240
 	ld a, [wMenuCursorLockFlags] ; $4241
-	and $01 ; $4244
+	and CURSORLOCKF_PRIMARY ; $4244
 	ld a, h ; $4246
 	jr nz, .checkA ; $4247
 	bit PADB_RIGHT, a ; $4249
@@ -287,11 +287,11 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	sound SFX_MENU_SELECT ; $42b1
 	ld a, [wMenuCursorLockFlags] ; $42b3
 	ld b, a ; $42b6
-	and $01 ; $42b7
+	and CURSORLOCKF_PRIMARY ; $42b7
 	jr nz, .checkMoved ; $42b9
 	sound SFX_MENU_SELECT ; $42bb
 	ld a, b ; $42bd
-	or $01 ; $42be
+	or CURSORLOCKF_PRIMARY ; $42be
 	ld [wMenuCursorLockFlags], a ; $42c0
 	jr .checkMoved ; $42c3
 .checkB:
@@ -300,14 +300,14 @@ Unused_3b_MoveMenuCursorLinkLocal:
 	sound SFX_MENU_CANCEL ; $42c9
 	ld a, [wMenuCursorLockFlags] ; $42cb
 	ld b, a ; $42ce
-	and $03 ; $42cf
+	and CURSORLOCKF_PRIMARY | CURSORLOCKF_SECONDARY ; $42cf
 	ld a, b ; $42d1
 	jr nz, .unlock ; $42d2
-	and $fa ; $42d4
-	or $04 ; $42d6
+	and ~(CURSORLOCKF_PRIMARY | CURSORLOCKF_PRIMARY_CANCEL) ; $42d4
+	or CURSORLOCKF_PRIMARY_CANCEL ; $42d6
 	jr .storeLockFlags ; $42d8
 .unlock:
-	and $fe ; $42da
+	and ~CURSORLOCKF_PRIMARY ; $42da
 .storeLockFlags:
 	ld [wMenuCursorLockFlags], a ; $42dc
 .checkMoved:
@@ -341,7 +341,7 @@ Unused_3b_MoveMenuCursorLinkRemote:
 .gotInput:
 	ld h, a ; $430b
 	ld a, [wMenuCursorLockFlags] ; $430c
-	and $02 ; $430f
+	and CURSORLOCKF_SECONDARY ; $430f
 	ld a, h ; $4311
 	jr nz, .checkA ; $4312
 	bit PADB_RIGHT, a ; $4314
@@ -420,11 +420,11 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	jr z, .checkB ; $437a
 	ld a, [wMenuCursorLockFlags] ; $437c
 	ld b, a ; $437f
-	and $02 ; $4380
+	and CURSORLOCKF_SECONDARY ; $4380
 	jr nz, .checkMoved ; $4382
 	sound SFX_MENU_SELECT ; $4384
 	ld a, b ; $4386
-	or $02 ; $4387
+	or CURSORLOCKF_SECONDARY ; $4387
 	ld [wMenuCursorLockFlags], a ; $4389
 	jr .checkMoved ; $438c
 .checkB:
@@ -433,14 +433,14 @@ Unused_3b_MoveMenuCursorLinkRemote:
 	sound SFX_MENU_CANCEL ; $4392
 	ld a, [wMenuCursorLockFlags] ; $4394
 	ld b, a ; $4397
-	and $03 ; $4398
+	and CURSORLOCKF_PRIMARY | CURSORLOCKF_SECONDARY ; $4398
 	ld a, b ; $439a
 	jr nz, .unlock ; $439b
-	and $f5 ; $439d
-	or $08 ; $439f
+	and ~(CURSORLOCKF_SECONDARY | CURSORLOCKF_SECONDARY_CANCEL) ; $439d
+	or CURSORLOCKF_SECONDARY_CANCEL ; $439f
 	jr .storeLockFlags ; $43a1
 .unlock:
-	and $fd ; $43a3
+	and ~CURSORLOCKF_SECONDARY ; $43a3
 .storeLockFlags:
 	ld [wMenuCursorLockFlags], a ; $43a5
 .checkMoved:

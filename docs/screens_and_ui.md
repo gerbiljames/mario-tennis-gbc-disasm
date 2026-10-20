@@ -909,8 +909,9 @@ Bank `$39` also has `MoveMinigameGridCursor` (`$39:$6df9`), a 3×2 walker whose
 second row is a two-position toggle, and `FillMenuGridCellTile` (`$39:$6dc2`),
 which fills that grid's 3×3 attribute cell from `FillMenuGridCellTileTable`.
 
-`wMenuCursorLockFlags` (`$cb08`) bits 0/1 freeze the primary/secondary cursor
-while a confirmed selection runs.
+`wMenuCursorLockFlags` (`$cb08`) (`CURSORLOCKB_*`) bits 0/1 freeze the
+primary/secondary cursor while a confirmed selection runs; B with neither
+locked sets bits 2/3, which nothing reads.
 
 ### 8.4 Confirm dialogs
 

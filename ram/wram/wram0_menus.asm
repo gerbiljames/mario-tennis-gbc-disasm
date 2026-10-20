@@ -24,7 +24,7 @@ wMenuCursor2X:: db
 ; [8-bit] Secondary menu cursor row (parallel to wMenuCursorY)
 wMenuCursor2Y:: db
 
-; [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor (set on confirm) in the shared menu-input handler
+; [8-bit] Menu cursor lock flags (CURSORLOCKB_*): bit 0 / bit 1 freeze the primary / secondary cursor (set on confirm) in the shared menu-input handler; bits 2 / 3 are set by B while unlocked and never read
 wMenuCursorLockFlags:: db
 
 ; [8-bit] Animation step of the current tile set, advanced when wAnimatedTileTimer wraps; low nibble picks the frame

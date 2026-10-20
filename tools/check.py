@@ -1784,6 +1784,7 @@ FLAG_BYTES = {
     "hMusicFlags": "MUSICB_",
     "wSoundOptionBits": "SOUNDOPTB_",
     "wCharSpriteDirty": "CHARSPRITEB_",
+    "wMenuCursorLockFlags": "CURSORLOCKB_",
 }
 # Record fields of the same kind, reached through `ld hl, FIELD / add hl, rr`,
 # `ld hl, wRecord + FIELD` or `ld a, FIELD / add l / ld l, a`.
@@ -1870,8 +1871,9 @@ def _raw_flag_bits(fail):
                 continue
             if (m := re.fullmatch(r"(?:and|or|xor) (.+)", ins)) and "a" in state and m.group(1) not in _REGS8:
                 n += 1
-                if not m.group(1).lstrip("~").startswith(state["a"].split("B_")[0]):
+                if not m.group(1).lstrip("~(").startswith(state["a"].split("B_")[0]):
                     fail("raw-ids", f"{where}: {owner} mask {m.group(1)} on a {state['a']}* byte -- a name?")
+                continue
             if m := _FLAG_BIT_RE.fullmatch(ins):
                 if m.group(3) in state:
                     judge(m.group(2), state[m.group(3)])

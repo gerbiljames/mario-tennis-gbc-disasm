@@ -133,7 +133,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 .gotInput:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec
-	and $02 ; $42ef
+	and CURSORLOCKF_SECONDARY ; $42ef
 	ld a, h ; $42f1
 	jr nz, .checkLock ; $42f2
 	bit PADB_RIGHT, a ; $42f4
@@ -212,11 +212,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	jr z, .checkB ; $435a
 	ld a, [wMenuCursorLockFlags] ; $435c
 	ld b, a ; $435f
-	and $02 ; $4360
+	and CURSORLOCKF_SECONDARY ; $4360
 	jr nz, .compare ; $4362
 	sound SFX_MENU_SELECT ; $4364
 	ld a, b ; $4366
-	or $02 ; $4367
+	or CURSORLOCKF_SECONDARY ; $4367
 	ld [wMenuCursorLockFlags], a ; $4369
 	jr .compare ; $436c
 .checkB:
@@ -225,14 +225,14 @@ Unused_38_MoveMenuCursor2GridRemote:
 	sound SFX_MENU_CANCEL ; $4372
 	ld a, [wMenuCursorLockFlags] ; $4374
 	ld b, a ; $4377
-	and $03 ; $4378
+	and CURSORLOCKF_PRIMARY | CURSORLOCKF_SECONDARY ; $4378
 	ld a, b ; $437a
 	jr nz, .clearLock ; $437b
-	and $f5 ; $437d
-	or $08 ; $437f
+	and ~(CURSORLOCKF_SECONDARY | CURSORLOCKF_SECONDARY_CANCEL) ; $437d
+	or CURSORLOCKF_SECONDARY_CANCEL ; $437f
 	jr .storeLock ; $4381
 .clearLock:
-	and $fd ; $4383
+	and ~CURSORLOCKF_SECONDARY ; $4383
 .storeLock:
 	ld [wMenuCursorLockFlags], a ; $4385
 .compare:

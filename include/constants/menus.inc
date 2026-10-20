@@ -165,6 +165,19 @@ def MSGSPEED_MASK     equ $7f
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
+; --- Menu cursor locks (wMenuCursorLockFlags) ---
+; A locks a cursor; B unlocks it, or, when neither is locked, sets its
+; CANCEL bit, which nothing reads.
+	const_def
+	const CURSORLOCKB_PRIMARY          ; $00
+	const CURSORLOCKB_SECONDARY        ; $01
+	const CURSORLOCKB_PRIMARY_CANCEL   ; $02
+	const CURSORLOCKB_SECONDARY_CANCEL ; $03
+def CURSORLOCKF_PRIMARY          equ 1 << CURSORLOCKB_PRIMARY
+def CURSORLOCKF_SECONDARY        equ 1 << CURSORLOCKB_SECONDARY
+def CURSORLOCKF_PRIMARY_CANCEL   equ 1 << CURSORLOCKB_PRIMARY_CANCEL
+def CURSORLOCKF_SECONDARY_CANCEL equ 1 << CURSORLOCKB_SECONDARY_CANCEL
+
 ; --- Sprite bob/bounce/wobble direction (c of ApplyCursorBounceX/Y,
 ; ApplySpriteBobOffsetX/Y, ApplySelectionBoxWobbleX/Y and kin) ---
 ; The routines add the hVBlankCounter-driven offset to d (X) or e (Y).
