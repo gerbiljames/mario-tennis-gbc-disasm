@@ -9,7 +9,7 @@ LoadPalettesMasterOnly:
 	add a ; $05e8
 	add a ; $05e9
 	ld e, a ; $05ea
-	ld d, $c2 ; $05eb
+	ld d, HIGH(wMasterPalettes) ; $05eb
 .copyLoop:
 	ld a, [hl+] ; $05ed
 	ld [de], a ; $05ee

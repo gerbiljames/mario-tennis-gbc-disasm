@@ -7,6 +7,10 @@ def WRAMX_SIZE equ $1000
 def WRAMX_END  equ WRAMX_BASE + WRAMX_SIZE
 def STACK_TOP equ $d000
 
+; --- VBlank VRAM copy queue (wVRAMCopyQueue) ---
+def NUM_VRAMCOPY_SLOTS equ 10
+def VRAMCOPY_SLOT_SIZE equ 8
+
 ; --- Battery save (docs/save_format.md) ---
 ; SRAM bank 0 opens with the 2 KiB header: signature, master checksum, flags
 ; and the 113-entry block directory. MirrorSaveHeaderToBank1 copies it to

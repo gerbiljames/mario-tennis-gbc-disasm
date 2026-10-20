@@ -304,7 +304,7 @@ ProcessBGBlitQueue:
 	ld de, wBGColumnBlitAttrs ; $21d5
 	ld a, [wBGColumnBlitX] ; $21d8
 	ld l, a ; $21db
-	ld h, $98 ; $21dc
+	ld h, HIGH(vBGMap0) ; $21dc
 	ld b, $20 ; $21de
 .attrLoop:
 	ld a, [de] ; $21e0
@@ -321,7 +321,7 @@ ProcessBGBlitQueue:
 	ld de, wBGColumnBlitTiles ; $21ef
 	ld a, [wBGColumnBlitX] ; $21f2
 	ld l, a ; $21f5
-	ld h, $98 ; $21f6
+	ld h, HIGH(vBGMap0) ; $21f6
 	ld b, $20 ; $21f8
 .tileLoop:
 	ld a, [de] ; $21fa
