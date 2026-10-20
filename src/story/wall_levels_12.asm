@@ -19,7 +19,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, e ; $49f7
 	ld [hl+], a ; $49f8
 	ld [hl], d ; $49f9
-	ld a, $00 ; $49fa
+	ld a, MGRECORD_WALL ; $49fa
 	farcall UpdateMinigameRecord ; $49fc
 	pop_wram_bank ; $49ff
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4a04
@@ -133,7 +133,7 @@ WallPracticeLevelResultScript.variant2:
 	ld a, e ; $4bc1
 	ld [hl+], a ; $4bc2
 	ld [hl], d ; $4bc3
-	ld a, $00 ; $4bc4
+	ld a, MGRECORD_WALL ; $4bc4
 	farcall UpdateMinigameRecord ; $4bc6
 	pop_wram_bank ; $4bc9
 	script_set_text Text_WallClearedThirdLevel ; $4bce
@@ -480,7 +480,7 @@ WallPracticeRoomNpc07_12:
 	cp WALLPRACTICESTAGE_EXPERT ; $50f1
 	jr nz, .prompt ; $50f3
 	push_wram_bank WRAM_SOUND ; $50f5
-	ld a, $00 ; $50fe
+	ld a, MGRECORD_WALL ; $50fe
 	farcall ReadMinigameRecord ; $5100
 	ld hl, wMinigameRecordValue ; $5103
 	ld a, [hl+] ; $5106

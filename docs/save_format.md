@@ -154,7 +154,8 @@ blocks 0/1, 11, 27/28, 54/55 and 56-62 are valid.
 ## Minigame record blocks (`$38-$3d`)
 
 11 records of 16-bit values, accessed by `ReadMinigameRecord` /
-`UpdateMinigameRecord` (03:5015/5072) with the record id in `a` and the
+`UpdateMinigameRecord` (03:5015/5072) with the record id (`MGRECORD_*`:
+0 wall, 1 machine, then `MARIOGAME_*` + 2) in `a` and the
 value passed through WRAM7 `$de00`. Records 0-1 are per-story-slot
 (block `$38 + wCurrentStorySlot`); records 2-10 always live in block
 `$38`. Per-record defaults come from `FarPtr_GetDefaultMinigameRecordValue`
@@ -165,7 +166,8 @@ defaults on save init; `InitCurrentSlotMinigameRecords` (03:5141)
 resets just records 0-1 of the current slot (called from
 `EraseStorySlotSaveData`). Staging buffer is WRAM7 `$d480`.
 `CheckUnlockCondition` (03:57e2) compares a record against its default
-(plus a save flag) to award the six unlockables in the N64 block.
+(plus the minigame's level-3 clear flag, `UnlockConditionFlagRows_03`) to
+award the six unlockables in the N64 block.
 
 ## N64 (Transfer Pak) records block (`$0b`)
 
@@ -175,8 +177,8 @@ resets just records 0-1 of the current slot (called from
 
 | off | contents |
 |---|---|
-| +0/+1 | data-present indicator (`CheckN64DataPresent` tests `[+0] or [+1]`, `ApplyN64RecordsUnlockFlags` the 8-bit sum `[+0]+[+1]`) |
-| +2..+7 | per-character unlock/toggle flags for characters `$1a-$1f`, flipped by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4), whose only caller is the unreachable minigame-flags debug screen `Unused_1b_RunMinigameFlagsDebugScreen`; set by `UpdateUnlockablesSaveBlock` when the matching minigame record beats its default + save flag (mapping id→off: 2→+2, 9→+3, 6→+4, $0a→+5, 8→+6, 4→+7) |
+| +0/+1 | `N64REC_PRESENT`: data-present indicator (`CheckN64DataPresent` tests `[+0] or [+1]`, `ApplyN64RecordsUnlockFlags` the 8-bit sum `[+0]+[+1]`) |
+| +2..+7 | `N64REC_UNLOCK_MARIO`-`_PEACH`: per-character unlock/toggle flags for characters `$1a-$1f`, flipped by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4), whose only caller is the unreachable minigame-flags debug screen `Unused_1b_RunMinigameFlagsDebugScreen`; set by `UpdateUnlockablesSaveBlock` when the record of the minigame that character hosts beats its default |
 
 When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets
 `SAVEFLAG_N64_RECORDS_PRESENT` and `SAVEFLAG_UNLOCKED_FAY`/`_CURT`/`_MARK`/

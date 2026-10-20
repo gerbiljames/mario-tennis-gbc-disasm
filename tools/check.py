@@ -1052,6 +1052,7 @@ RAW_ID_TABLES = {
     "MinigameRulesTextIdBases": "Text_",
     "MinigameRulesTextIdBases_17": "Text_",
     "MainMenuCaptionTextIds": "Text_",
+    "MinigameRecordSlotIds": "MGRECORD_",
 }
 # Families of variables and arguments with too few named sites to infer them.
 # `and X_MASK` counts as a variable, so the cp after it names the field's values.
@@ -1061,6 +1062,10 @@ RAW_ID_FAMILIES = {
     "ShowRankingBoard(d)": "RANKINGBOARD",
     "LINKTAG_MASK": "LINKTAG",
     "wDrillPointJudgement": "WINLOSE",
+    "ReadMinigameRecord(a)": "MGRECORD",
+    "UpdateMinigameRecord(a)": "MGRECORD",
+    "GetDefaultMinigameRecordValue(a)": "MGRECORD",
+    "CheckUnlockCondition(a)": "MGRECORD",
 }
 # Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
 # or `add <base>` into that register counts as passing the base.
@@ -1242,6 +1247,10 @@ def _raw_id_uses():
             if m := re.match(rf"ld hl, {_VAR_RE}$", t):
                 _clobber(regs, spent, "hl")
                 regs["hl"] = ("@" if m.group(1) in TEXT_BUFFERS else "=") + _var(m.group(1))
+                continue
+            if m := re.match(r"ld hl, ([wh][A-Z]\w* \+ [A-Z][A-Z0-9_]*)$", t):
+                _clobber(regs, spent, "hl")
+                regs["hl"] = "=" + m.group(1)     # a named field: its own variable
                 continue
             if m := re.match(r"ld ([a-ehl]|bc|de|hl), ([^\[]+)$", t):
                 r, v = m.groups()

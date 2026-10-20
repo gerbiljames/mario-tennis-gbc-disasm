@@ -166,10 +166,10 @@ ActorScript_14_0:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-; Reads tennis-machine record $01 and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it. It never calls UpdateMinigameRecord, so the 80 would not persist.
+; Reads the machine record (MGRECORD_MACHINE) and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it. It never calls UpdateMinigameRecord, so the 80 would not persist.
 Unused_14_MachineRecordOverrideAndReturn:
 	push_wram_bank WRAM_SOUND ; $4813
-	ld a, $01 ; $481c
+	ld a, MGRECORD_MACHINE ; $481c
 	farcall ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
 	ld hl, wMinigameRecordValue ; $4824
@@ -205,7 +205,7 @@ MachineExpertResultScene:
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
 	push_wram_bank WRAM_SOUND ; $4874
-	ld a, $01 ; $487d
+	ld a, MGRECORD_MACHINE ; $487d
 	farcall ReadMinigameRecord ; $487f
 	ld hl, wMinigameRecordValue ; $4882
 	ld a, [hl+] ; $4885
@@ -254,7 +254,7 @@ MachineExpertNewRecordScene:
 	ret ; $48f8
 MachineExpertCounterMaxScene:
 	push_wram_bank WRAM_SOUND ; $48f9
-	ld a, $01 ; $4902
+	ld a, MGRECORD_MACHINE ; $4902
 	farcall ReadMinigameRecord ; $4904
 	ld hl, wMinigameRecordValue ; $4907
 	ld a, [hl+] ; $490a
@@ -302,7 +302,7 @@ SaveMachineExpertRecord:
 	ld a, e ; $4986
 	ld [hl+], a ; $4987
 	ld [hl], d ; $4988
-	ld a, $01 ; $4989
+	ld a, MGRECORD_MACHINE ; $4989
 	farcall UpdateMinigameRecord ; $498b
 	pop_wram_bank ; $498e
 	call ComputeMachineCourtProgress ; $4993

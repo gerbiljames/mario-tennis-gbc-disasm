@@ -230,14 +230,14 @@ JuniorClassCourtDoublesNpc0A_11:
 JuniorClassCourtDoublesNpc0B_11:
 	script_set_text Text_JoyJuniorDoublesRealTeamwork ; $5771
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5777
-	jr nz, Unused_11_JuniorClassCourtDoublesNpcSpeech.speak ; $577a
+	jr nz, SpeakJuniorDoublesJoyLine_11 ; $577a
 	script_set_text Text_JoyJuniorDoublesPartnerBlistered ; $577c
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $5782
 	script_face_toward ACTOR_PLAYER, ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5787
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE, ANIM_BOUNCE ; $578f
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_ALLIE ; $5796
 	jp JuniorClassCourtDoublesNpc0A_11 ; $579b
-Unused_11_JuniorClassCourtDoublesNpcSpeech:
+Unused_11_AllieBlistersNoPracticeScene:
 	script_set_text Text_AllieJuniorSinglesBlistersNoPractice ; $579e
 	script_face_toward ACTOR_PLAYER, $0a ; $57a4
 	script_set_anim $0a, ANIM_SHAKE ; $57ac
@@ -245,7 +245,7 @@ Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	script_speak $0a ; $57b8
 	script_face_toward $0b, $0a ; $57bd
 	ret ; $57c5
-.speak:
+SpeakJuniorDoublesJoyLine_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JOY ; $57c6
 	ret ; $57cb
 JuniorClassCourtDoublesANpc0A_11:

@@ -20,7 +20,7 @@
 	ld e, l
 	ld d, h
 	pop hl
-	jp c, {ApplyBallTrajectory4_{TWIN}_NAME}.applyFallbackBallTrajectory
+	jp c, {ApplyFallbackBallTrajectoryFar_{TWIN}_NAME}
 	call {SeekBallTrajEntry4_{TWIN}_NAME}
 	push de
 	call {SetBallVelocityFromEntry4_{TWIN}_NAME}

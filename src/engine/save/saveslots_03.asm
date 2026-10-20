@@ -332,7 +332,7 @@ ReadMinigameRecord:
 	ld b, a ; $5019
 	push_wram_bank WRAM_SOUND ; $501a
 	ld a, b ; $5023
-	sub $02 ; $5024
+	sub MGRECORD_BOO_BLAST ; $5024
 	jr nc, .read ; $5026
 	ld a, [wCurrentStorySlot] ; $5028
 	cp NUM_STORY_SLOTS ; $502b
@@ -351,7 +351,7 @@ ReadMinigameRecord:
 	pop bc ; $503e
 	pop af ; $503f
 	ld a, b ; $5040
-	sub $02 ; $5041
+	sub MGRECORD_BOO_BLAST ; $5041
 	jr nc, .notStory ; $5043
 	ld a, [wCurrentStorySlot] ; $5045
 	jr .gotBlockId ; $5048
@@ -392,7 +392,7 @@ UpdateMinigameRecord:
 	ld b, a ; $5075
 	push_wram_bank WRAM_SOUND ; $5076
 	ld a, b ; $507f
-	sub $02 ; $5080
+	sub MGRECORD_BOO_BLAST ; $5080
 	jr nc, .readSlot0 ; $5082
 	ld a, [wCurrentStorySlot] ; $5084
 	cp NUM_STORY_SLOTS ; $5087
@@ -533,7 +533,7 @@ InitCurrentSlotMinigameRecords:
 	ld a, e ; $5161
 	ld [hl+], a ; $5162
 	ld [hl], d ; $5163
-	ld a, $01 ; $5164
+	ld a, MGRECORD_MACHINE ; $5164
 	farcall GetDefaultMinigameRecordValue ; $5166
 	ld hl, wMinigameRecordBlock + 2 ; $5169
 	ld a, e ; $516c
@@ -581,7 +581,7 @@ InitAllMinigameRecordBlocks:
 	ld hl, wMinigameRecordBlock ; $51b8
 	xor a ; $51bb
 .loop:
-	cp $0b ; $51bc
+	cp NUM_MGRECORDS ; $51bc
 	jr z, .saveRecords ; $51be
 	push af ; $51c0
 	push hl ; $51c1

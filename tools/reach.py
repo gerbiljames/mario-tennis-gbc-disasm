@@ -27,7 +27,8 @@ check.
 
 `Unused` in a name claims the routine's entry is unreachable, and `make
 check` holds every routine to it (`check()`): an `Unused` routine that is
-reachable, or an unreachable one that is not named so, fails. Labels inside
+reachable, or an unreachable one that is not named so, fails, and so does a
+reachable local label under an `Unused` routine. Labels inside
 a shared twin template cannot be renamed per bank and are exempt.
 `check_unnamed()` holds data to the name alone: a data label no other label
 names, live or dead, must be `Unused` unless UNNAMED_OK lists how it is found.
@@ -264,9 +265,9 @@ class Graph:
         head = stmt.split(" ")[0]
         return head in MNEMONICS or self.mcode.get(head, False)
 
-    def reach(self, drop=None):
-        """Routines reachable from the vectors; `drop` defaults to the edges
-        data_dead() finds."""
+    def reach_segments(self, drop=None):
+        """(global, local) segments reachable from the vectors; `drop`
+        defaults to the edges data_dead() finds."""
         drop = self.data_dead()[0] if drop is None else drop
         live = {(r, "") for r in ROOTS}
         stack = list(live)
@@ -278,7 +279,11 @@ class Graph:
                 if t not in live:
                     live.add(t)
                     stack.append(t)
-        return {g for (g, loc) in live if loc == ""}
+        return live
+
+    def reach(self, drop=None):
+        """Routines reachable from the vectors."""
+        return {g for (g, loc) in self.reach_segments(drop) if loc == ""}
 
     def routines(self):
         return {n for n, c in self.first_is_code.items() if c}
@@ -448,6 +453,10 @@ def check(fail):
             fail("reach", f"{where}: {name} is reachable from the vectors")
         elif not name.startswith("Unused") and name not in live:
             fail("reach", f"{where}: {name} cannot be reached; name it Unused_<bank>_...")
+    for name, loc in sorted(g.reach_segments()):
+        if loc and name.startswith("Unused"):
+            where = f"{Path(g.origin[name][0]).relative_to(ROOT)}:{g.origin[name][1]}"
+            fail("reach", f"{where}: {name}{loc} is reachable; make it a global named for what it does")
     return n
 
 

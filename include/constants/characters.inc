@@ -31,11 +31,21 @@ def CHARREC_SPEED_BONUS      rb   ; $2b added to the Speed stat for the shot-pla
 def CHARREC_EXP              rb 3 ; $2c accumulator, capped at 99999
 def CHARREC_BUILD_KIND       rb   ; $2f written by InitMatchRecordFromCharId ($03 main, $02 roster), read by nothing
 def CHARREC_PHYSICS_TEMPLATE rw 4 ; $30
-def CHARREC_TRAIN_LEVELS     rb 4 ; $38 spin first
+def CHARREC_TRAIN_LEVELS     rb 4 ; $38 in TRAINSTAT_* order
 def CHARREC_EQUIPMENT        rb   ; $3c racket (low nibble) and shoes (high)
 	rb_skip 3                        ; $3d
 def CHAR_RECORD_SIZE equ _RS
 	ASSERT CHAR_RECORD_SIZE == $40
+def MAX_LEVEL equ 99 ; CHARREC_LEVEL stops here
+
+; --- Training stat (LevelUpPlayer's d; CHARREC_TRAIN_LEVELS + n) ---
+	const_def
+	const TRAINSTAT_SPIN    ; $00
+	const TRAINSTAT_POWER   ; $01
+	const TRAINSTAT_CONTROL ; $02
+	const TRAINSTAT_SPEED   ; $03
+def NUM_TRAINSTATS equ const_value
+def TRAINSTAT_NONE equ $ff ; the level alone goes up
 
 ; --- Character ids (character record byte +$0b, wMatchPlayerChar/OpponentChar) ---
 ; The 32-entry roster, in the order every character-indexed table takes:

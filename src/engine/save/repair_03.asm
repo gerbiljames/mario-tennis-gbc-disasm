@@ -91,51 +91,51 @@ UpdateUnlockablesSaveBlock:
 	add [hl] ; $5719
 	or a ; $571a
 	jp z, .restore ; $571b
-	ld a, $02 ; $571e
+	ld a, MGRECORD_BOO_BLAST ; $571e
 	call CheckUnlockCondition ; $5720
 	or a ; $5723
-	jr z, .checkUnlock04 ; $5724
-	ld hl, wSaveBlockBuffer + 2 ; $5726
+	jr z, .checkPerfectShot ; $5724
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_MARIO ; $5726
 	ld a, $01 ; $5729
 	ld [hl], a ; $572b
-.checkUnlock04:
-	ld a, $04 ; $572c
+.checkPerfectShot:
+	ld a, MGRECORD_PERFECT_SHOT ; $572c
 	call CheckUnlockCondition ; $572e
 	or a ; $5731
-	jr z, .checkUnlock06 ; $5732
-	ld hl, wSaveBlockBuffer + 7 ; $5734
+	jr z, .checkFruitFantasy ; $5732
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_PEACH ; $5734
 	ld a, $01 ; $5737
 	ld [hl], a ; $5739
-.checkUnlock06:
-	ld a, $06 ; $573a
+.checkFruitFantasy:
+	ld a, MGRECORD_FRUIT_FANTASY ; $573a
 	call CheckUnlockCondition ; $573c
 	or a ; $573f
-	jr z, .checkUnlock08 ; $5740
-	ld hl, wSaveBlockBuffer + 4 ; $5742
+	jr z, .checkTreasureBox ; $5740
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_YOSHI ; $5742
 	ld a, $01 ; $5745
 	ld [hl], a ; $5747
-.checkUnlock08:
-	ld a, $08 ; $5748
+.checkTreasureBox:
+	ld a, MGRECORD_TREASURE_BOX ; $5748
 	call CheckUnlockCondition ; $574a
 	or a ; $574d
-	jr z, .checkUnlock09 ; $574e
-	ld hl, wSaveBlockBuffer + 6 ; $5750
+	jr z, .checkMedallionMatch ; $574e
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_WARIO ; $5750
 	ld a, $01 ; $5753
 	ld [hl], a ; $5755
-.checkUnlock09:
-	ld a, $09 ; $5756
+.checkMedallionMatch:
+	ld a, MGRECORD_MEDALLION_MATCH ; $5756
 	call CheckUnlockCondition ; $5758
 	or a ; $575b
-	jr z, .checkUnlock0a ; $575c
-	ld hl, wSaveBlockBuffer + 3 ; $575e
+	jr z, .checkTwoOnOne ; $575c
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_WALUIGI ; $575e
 	ld a, $01 ; $5761
 	ld [hl], a ; $5763
-.checkUnlock0a:
-	ld a, $0a ; $5764
+.checkTwoOnOne:
+	ld a, MGRECORD_TWO_ON_ONE ; $5764
 	call CheckUnlockCondition ; $5766
 	or a ; $5769
 	jr z, .writeRecords ; $576a
-	ld hl, wSaveBlockBuffer + 5 ; $576c
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_BOWSER ; $576c
 	ld a, $01 ; $576f
 	ld [hl], a ; $5771
 .writeRecords:
@@ -161,22 +161,22 @@ SetAllUnlockablesInSaveBlock:
 	call ReadSaveBlock ; $5799
 	or a ; $579c
 	jp nz, .restore ; $579d
-	ld hl, wSaveBlockBuffer + 2 ; $57a0
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_MARIO ; $57a0
 	ld a, $01 ; $57a3
 	ld [hl], a ; $57a5
-	ld hl, wSaveBlockBuffer + 7 ; $57a6
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_PEACH ; $57a6
 	ld a, $01 ; $57a9
 	ld [hl], a ; $57ab
-	ld hl, wSaveBlockBuffer + 4 ; $57ac
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_YOSHI ; $57ac
 	ld a, $01 ; $57af
 	ld [hl], a ; $57b1
-	ld hl, wSaveBlockBuffer + 6 ; $57b2
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_WARIO ; $57b2
 	ld a, $01 ; $57b5
 	ld [hl], a ; $57b7
-	ld hl, wSaveBlockBuffer + 3 ; $57b8
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_WALUIGI ; $57b8
 	ld a, $01 ; $57bb
 	ld [hl], a ; $57bd
-	ld hl, wSaveBlockBuffer + 5 ; $57be
+	ld hl, wSaveBlockBuffer + N64REC_UNLOCK_BOWSER ; $57be
 	ld a, $01 ; $57c1
 	ld [hl], a ; $57c3
 	ld hl, wSaveBlockBuffer ; $57c4
@@ -192,22 +192,22 @@ SetAllUnlockablesInSaveBlock:
 	ret ; $57d8
 UnlockConditionFlagRows_03:
 	; $57d9, 9 bytes (bytes:1)
-	db $16 ; 0x00
-	db $19 ; 0x01
-	db $1c ; 0x02
-	db $1f ; 0x03
-	db $2a ; 0x04
-	db $2d ; 0x05
-	db $30 ; 0x06
-	db $33 ; 0x07
-	db $36 ; 0x08
+	db SAVEFLAG_CLEARED_BOO_BLAST_3 / $20
+	db SAVEFLAG_CLEARED_SHOOTING_STAR_3 / $20
+	db SAVEFLAG_CLEARED_PERFECT_SHOT_3 / $20
+	db SAVEFLAG_CLEARED_TARGET_SHOT_3 / $20
+	db SAVEFLAG_CLEARED_FRUIT_FANTASY_3 / $20
+	db SAVEFLAG_CLEARED_BANANA_BUNCH_3 / $20
+	db SAVEFLAG_CLEARED_TREASURE_BOX_3 / $20
+	db SAVEFLAG_CLEARED_MEDALLION_MATCH_3 / $20
+	db SAVEFLAG_CLEARED_TWO_ON_ONE_3 / $20
 CheckUnlockCondition:
 	push bc ; $57e2
 	push de ; $57e3
 	push hl ; $57e4
 	ld b, a ; $57e5
 	push_wram_bank WRAM_SOUND ; $57e6
-	cp $02 ; $57ef
+	cp MGRECORD_BOO_BLAST ; $57ef
 	jr nc, .saveFlagCondition ; $57f1
 	or a ; $57f3
 	jr nz, .machineWall ; $57f4
@@ -220,7 +220,7 @@ CheckUnlockCondition:
 	jr .checkRecord ; $5802
 .saveFlagCondition:
 	ld a, b ; $5804
-	sub $02 ; $5805
+	sub MGRECORD_BOO_BLAST ; $5805
 	ld hl, UnlockConditionFlagRows_03 ; $5807
 	ld d, $00 ; $580a
 	ld e, a ; $580c

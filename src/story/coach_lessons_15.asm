@@ -52,14 +52,14 @@ NetCoachVolleyLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6ff2
 	script_wait_frames 5 ; $6ff5
 	and a ; $6ffc
-	jr nz, .loop ; $6ffd
+	jr nz, .declined ; $6ffd
 	farcall AdvanceDialogueTextCursor ; $6fff
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $7002
 	farcall RunDialogueYesNoPrompt ; $7007
 	farcall ScriptCloseDialogueWindow ; $700a
 	script_wait_frames 5 ; $700d
 	and a ; $7014
-	jr nz, .loop ; $7015
+	jr nz, .declined ; $7015
 	farcall AdvanceDialogueTextCursor ; $7017
 	script_speak ACTOR_TRAINING_COURT_BETH ; $701a
 	call MovePartyToNetCoachSpot ; $701f
@@ -82,7 +82,7 @@ NetCoachVolleyLessonScene:
 	call WaitFadeEnd ; $7061
 	farcall ShowDrillBriefingScreen ; $7064
 	ret ; $7067
-.loop:
+.declined:
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7068
 	ret ; $706d
 NetCoachSmashLessonScene:
@@ -93,21 +93,21 @@ NetCoachSmashLessonScene:
 	farcall ScriptCloseDialogueWindow ; $7084
 	script_wait_frames 5 ; $7087
 	and a ; $708e
-	jr nz, NetCoachVolleyLessonScene.loop ; $708f
+	jr nz, NetCoachVolleyLessonScene.declined ; $708f
 	farcall AdvanceDialogueTextCursor ; $7091
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $7094
 	farcall RunDialogueYesNoPrompt ; $7099
 	farcall ScriptCloseDialogueWindow ; $709c
 	script_wait_frames 5 ; $709f
 	and a ; $70a6
-	jr nz, NetCoachVolleyLessonScene.loop ; $70a7
+	jr nz, NetCoachVolleyLessonScene.declined ; $70a7
 	farcall AdvanceDialogueTextCursor ; $70a9
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $70ac
 	farcall RunDialogueYesNoPrompt ; $70b1
 	farcall ScriptCloseDialogueWindow ; $70b4
 	script_wait_frames 5 ; $70b7
 	and a ; $70be
-	jr nz, NetCoachVolleyLessonScene.loop ; $70bf
+	jr nz, NetCoachVolleyLessonScene.declined ; $70bf
 	farcall AdvanceDialogueTextCursor ; $70c1
 	script_speak ACTOR_TRAINING_COURT_BETH ; $70c4
 	call MovePartyToNetCoachSpot ; $70c9
@@ -140,21 +140,21 @@ NetCoachDropShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $7133
 	script_wait_frames 5 ; $7136
 	and a ; $713d
-	jp nz, NetCoachVolleyLessonScene.loop ; $713e
+	jp nz, NetCoachVolleyLessonScene.declined ; $713e
 	farcall AdvanceDialogueTextCursor ; $7141
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $7144
 	farcall RunDialogueYesNoPrompt ; $7149
 	farcall ScriptCloseDialogueWindow ; $714c
 	script_wait_frames 5 ; $714f
 	and a ; $7156
-	jp nz, NetCoachVolleyLessonScene.loop ; $7157
+	jp nz, NetCoachVolleyLessonScene.declined ; $7157
 	farcall AdvanceDialogueTextCursor ; $715a
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $715d
 	farcall RunDialogueYesNoPrompt ; $7162
 	farcall ScriptCloseDialogueWindow ; $7165
 	script_wait_frames 5 ; $7168
 	and a ; $716f
-	jp nz, NetCoachVolleyLessonScene.loop ; $7170
+	jp nz, NetCoachVolleyLessonScene.declined ; $7170
 	farcall AdvanceDialogueTextCursor ; $7173
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7176
 	call MovePartyToNetCoachSpot ; $717b

@@ -153,7 +153,7 @@ CharDataScreen_InitState:
 	farcall HasReachedNextLevelExp ; $41c5
 	jr nz, .writeCharStatsToDisplayBuffer ; $41c8
 	ld a, [wStoryCharacterSlot] ; $41ca
-	ld d, $00 ; $41cd
+	ld d, TRAINSTAT_SPIN ; $41cd
 	farcall LevelUpPlayer ; $41cf
 	ld hl, wCharDataPointsWorking ; $41d2
 	inc [hl] ; $41d5

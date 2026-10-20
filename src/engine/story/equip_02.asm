@@ -153,7 +153,7 @@ LevelUpPlayerRecord:
 	ld hl, CHARREC_LEVEL ; $49c1
 	add hl, bc ; $49c4
 	ld a, [hl] ; $49c5
-	cp $63 ; $49c6
+	cp MAX_LEVEL ; $49c6
 	jp nc, .done ; $49c8
 	ld a, d ; $49cb
 	or a ; $49cc
@@ -163,23 +163,23 @@ LevelUpPlayerRecord:
 	inc [hl] ; $49d3
 	jr .recomputeCharacterStats ; $49d4
 .notSpin:
-	cp $01 ; $49d6
+	cp TRAINSTAT_POWER ; $49d6
 	jr nz, .notPower ; $49d8
-	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $49da
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $49da
 	add hl, bc ; $49dd
 	inc [hl] ; $49de
 	jr .recomputeCharacterStats ; $49df
 .notPower:
-	cp $02 ; $49e1
+	cp TRAINSTAT_CONTROL ; $49e1
 	jr nz, .notControl ; $49e3
-	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $49e5
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $49e5
 	add hl, bc ; $49e8
 	inc [hl] ; $49e9
 	jr .recomputeCharacterStats ; $49ea
 .notControl:
-	cp $03 ; $49ec
+	cp TRAINSTAT_SPEED ; $49ec
 	jr nz, .recomputeCharacterStats ; $49ee
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $49f0
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $49f0
 	add hl, bc ; $49f3
 	inc [hl] ; $49f4
 	jr .recomputeCharacterStats ; $49f5
@@ -469,13 +469,13 @@ ComputeLevelUpStatDeltas:
 	call CopyMemoryFast ; $4b93
 	add sp, 64 ; $4b96
 	ret ; $4b98
-Unused_02_ListForEach:
+Unused_02_ApplyLevelUpPreset:
 	add a ; $4b99
 	add a ; $4b9a
-	ld hl, Unused_02_4b99_Table ; $4b9b
+	ld hl, Unused_02_LevelUpPresets ; $4b9b
 	add_hl_a ; $4b9e
 	push hl ; $4ba3
-	ld d, $ff ; $4ba4
+	ld d, TRAINSTAT_NONE ; $4ba4
 	call LevelUpPlayer ; $4ba6
 	pop hl ; $4ba9
 	ld a, [hl+] ; $4baa
@@ -484,7 +484,7 @@ Unused_02_ListForEach:
 	jr z, .readStat1 ; $4bac
 	push af ; $4bae
 	push hl ; $4baf
-	ld d, $00 ; $4bb0
+	ld d, TRAINSTAT_SPIN ; $4bb0
 	call LevelUpPlayer ; $4bb2
 	pop hl ; $4bb5
 	pop af ; $4bb6
@@ -497,7 +497,7 @@ Unused_02_ListForEach:
 	jr z, .readStat2 ; $4bbc
 	push af ; $4bbe
 	push hl ; $4bbf
-	ld d, $01 ; $4bc0
+	ld d, TRAINSTAT_POWER ; $4bc0
 	call LevelUpPlayer ; $4bc2
 	pop hl ; $4bc5
 	pop af ; $4bc6
@@ -510,7 +510,7 @@ Unused_02_ListForEach:
 	jr z, .readStat3 ; $4bcc
 	push af ; $4bce
 	push hl ; $4bcf
-	ld d, $02 ; $4bd0
+	ld d, TRAINSTAT_CONTROL ; $4bd0
 	call LevelUpPlayer ; $4bd2
 	pop hl ; $4bd5
 	pop af ; $4bd6
@@ -523,7 +523,7 @@ Unused_02_ListForEach:
 	jr z, .stat3Done ; $4bdc
 	push af ; $4bde
 	push hl ; $4bdf
-	ld d, $03 ; $4be0
+	ld d, TRAINSTAT_SPEED ; $4be0
 	call LevelUpPlayer ; $4be2
 	pop hl ; $4be5
 	pop af ; $4be6
@@ -561,7 +561,7 @@ Unused_02_ListForEach:
 	ld [hl], a ; $4c16
 .done:
 	ret ; $4c17
-Unused_02_4b99_Table:
+Unused_02_LevelUpPresets:
 	; $4c18, 64 bytes (bytes:16)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $07, $03, $05, $03, $0a, $08, $06, $05, $12, $09, $0d, $06, $10, $06, $08, $04 ; 0x10

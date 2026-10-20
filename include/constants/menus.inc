@@ -138,12 +138,11 @@ def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingT
 ; --- Character-data screen cursor (wCharDataPage) ---
 ; The four level-up choices (the training levels, CHARREC_TRAIN_LEVELS order),
 ; then the confirm cell.
-	const_def
-	const CHARDATAPAGE_SPIN    ; $00
-	const CHARDATAPAGE_POWER   ; $01
-	const CHARDATAPAGE_CONTROL ; $02
-	const CHARDATAPAGE_SPEED   ; $03
-	const CHARDATAPAGE_CONFIRM ; $04
+def CHARDATAPAGE_SPIN    equ TRAINSTAT_SPIN
+def CHARDATAPAGE_POWER   equ TRAINSTAT_POWER
+def CHARDATAPAGE_CONTROL equ TRAINSTAT_CONTROL
+def CHARDATAPAGE_SPEED   equ TRAINSTAT_SPEED
+def CHARDATAPAGE_CONFIRM equ NUM_TRAINSTATS
 
 ; --- Tennis Dictionary mode (wTennisDictMode) ---
 ; Modes 0-4 open the term list filtered to category bit 1 << mode. Only

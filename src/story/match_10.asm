@@ -380,9 +380,9 @@ RunLessonSelectMenu:
 	ld a, [hl+] ; $44f0
 	ld d, [hl] ; $44f1
 	ld e, a ; $44f2
-	ld a, $01 ; $44f3
+	ld a, MGRECORD_MACHINE ; $44f3
 	farcall UpdateMinigameRecord ; $44f5
-	ld a, $00 ; $44f8
+	ld a, MGRECORD_WALL ; $44f8
 	farcall UpdateMinigameRecord ; $44fa
 	pop_wram_bank ; $44fd
 	ld l, c ; $4502

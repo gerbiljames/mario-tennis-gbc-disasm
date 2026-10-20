@@ -55,9 +55,9 @@ tilemaps and text.
 |---|---|
 | instructions | 124,811 source lines of instructions and code macros (`tools/stats.py`) |
 | source-spelled bytes | 915,943 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,579: 14,416 routines and tables and 13,421 locals in ROM, 1,742 RAM names |
+| labels | 29,579: 14,434 routines and tables and 13,403 locals in ROM, 1,742 RAM names |
 | compressed graphics | 863 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 792 routines and 158 blobs nothing live reaches (`docs/unused_code.md`) |
+| `Unused_` routines | 796 routines and 158 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot

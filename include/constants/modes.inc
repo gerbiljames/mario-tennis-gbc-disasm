@@ -353,6 +353,25 @@ def NUM_GAMEMODES equ const_value
 	const MARIOGAME_TWO_ON_ONE      ; $08 Bowser
 def NUM_MARIOGAMES equ const_value
 
+; --- Minigame record id (a to ReadMinigameRecord, UpdateMinigameRecord,
+; GetDefaultMinigameRecordValue and CheckUnlockCondition) ---
+; The word index into the SAVEBLOCK_MINIGAME_RECORDS block: the wall and
+; machine records are per story slot, the Mario-minigame records sit in slot
+; 0's block for every slot.
+	const_def
+	const MGRECORD_WALL    ; $00
+	const MGRECORD_MACHINE ; $01
+def MGRECORD_BOO_BLAST       equ const_value + MARIOGAME_BOO_BLAST
+def MGRECORD_SHOOTING_STAR   equ const_value + MARIOGAME_SHOOTING_STAR
+def MGRECORD_PERFECT_SHOT    equ const_value + MARIOGAME_PERFECT_SHOT
+def MGRECORD_TARGET_SHOT     equ const_value + MARIOGAME_TARGET_SHOT
+def MGRECORD_FRUIT_FANTASY   equ const_value + MARIOGAME_FRUIT_FANTASY
+def MGRECORD_BANANA_BUNCH    equ const_value + MARIOGAME_BANANA_BUNCH
+def MGRECORD_TREASURE_BOX    equ const_value + MARIOGAME_TREASURE_BOX
+def MGRECORD_MEDALLION_MATCH equ const_value + MARIOGAME_MEDALLION_MATCH
+def MGRECORD_TWO_ON_ONE      equ const_value + MARIOGAME_TWO_ON_ONE
+def NUM_MGRECORDS equ const_value + NUM_MARIOGAMES
+
 ; --- Minigame level (wMinigameLevel, level - 1) ---
 def MINIGAMELEVEL_HIGH_SCORE equ $02 ; a Mario minigame's third level sets wMinigameHighScoreMode
 

@@ -228,6 +228,7 @@ class Source(unittest.TestCase):
                 elif scope.startswith("Unused") and re.match(r"\t(?!d[bwl] )[a-z]", line):
                     unprovable += len(re.findall(r"\$[cd][0-9a-f]{3}\b", line.split(";")[0]))
         self.assertIn(f"keeps the number ({unprovable}, all inside `Unused_*` routines", ram)
+        self.assertIn(f"**Banked-WRAM operands:** {unprovable} stay raw numbers", text("docs/STATUS.md"))
         bank3 = (ROOT / "ram" / "wram" / "wramx3.asm").read_text()
         self.assertIn(f"{len(re.findall(r'^w\w+:', bank3, re.M))} symbols across "
                       f"{len(re.findall(r'^\t?(?:UNION|NEXTU)$', bank3, re.M))} variants", ram)
@@ -296,6 +297,13 @@ class Tools(unittest.TestCase):
         self.assertLessEqual(set(floors) - skipped, set(checked), r.stdout)
         for name, n in checked.items():
             self.assertGreaterEqual(n, floors.get(name, 1), f"{name} checks fewer sites")
+        rom = ROOT / "mariotennis.gbc"
+        if rom.exists() and hashlib.sha1(rom.read_bytes()).hexdigest() == USA_SHA1:
+            doc = (ROOT / "docs" / "graphics_formats.md").read_text()
+            section = doc[doc.index("### 7.5 "):doc.index("## 8. ")]
+            table = re.findall(r"^\| `([\w-]+)` \| (\d+) \|", section, re.M)
+            self.assertEqual({k: int(n) for k, n in table}, checked,
+                             "docs/graphics_formats.md section 7.5 quotes these counts")
 
     def test_doc_counts(self):
         """README and STATUS quote tools/stats.py; rerun it and update them."""

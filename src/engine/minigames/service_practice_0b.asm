@@ -1,9 +1,9 @@
-Unused_0b_StoreMatchAbortFlag_2:
+Unused_0b_DrillPointWon_2:
 	ld a, MATCHABORT_POINT ; $4c03
 	ld [wMatchAbortFlag], a ; $4c05
 	ld a, WINLOSE_WIN ; $4c08
 	ret ; $4c0a
-.storeMatchAbortFlag:
+DrillPointLost_2:
 	ld a, MATCHABORT_POINT ; $4c0b
 	ld [wMatchAbortFlag], a ; $4c0d
 	ld a, WINLOSE_LOSE ; $4c10
@@ -208,7 +208,7 @@ ServiceMatch3Cases2:
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4dc3
 	ld b, DRILLWORDING_SERVICE ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
-	jr Unused_0b_StoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
+	jr DrillPointLost_3 ; $4dca
 .unreachable:
 	xor a ; $4dcc
 	ret ; $4dcd
@@ -218,12 +218,12 @@ ServiceMatch3Cases2:
 .ignoreRallyTick:
 	xor a ; $4dd0
 	ret ; $4dd1
-Unused_0b_StoreMatchAbortFlag_3:
+Unused_0b_DrillPointWon_3:
 	ld a, MATCHABORT_POINT ; $4dd2
 	ld [wMatchAbortFlag], a ; $4dd4
 	ld a, WINLOSE_WIN ; $4dd7
 	ret ; $4dd9
-.storeMatchAbortFlag:
+DrillPointLost_3:
 	ld a, MATCHABORT_POINT ; $4dda
 	ld [wMatchAbortFlag], a ; $4ddc
 	ld a, WINLOSE_LOSE ; $4ddf

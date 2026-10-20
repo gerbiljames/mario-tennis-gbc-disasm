@@ -8,18 +8,18 @@ Unused_03_DebugTestMinigameRecords:
 	push hl ; $5978
 	wram_bank WRAM_SOUND ; $5979
 	ld hl, wMinigameRecordValue ; $597f
-	ld de, $270f ; $5982
+	ld de, 9999 ; $5982
 	ld a, e ; $5985
 	ld [hl+], a ; $5986
 	ld [hl], d ; $5987
 	xor a ; $5988
 	call UpdateMinigameRecord ; $5989
 	ld hl, wMinigameRecordValue ; $598c
-	ld de, $03e7 ; $598f
+	ld de, 999 ; $598f
 	ld a, e ; $5992
 	ld [hl+], a ; $5993
 	ld [hl], d ; $5994
-	ld a, $01 ; $5995
+	ld a, MGRECORD_MACHINE ; $5995
 	call UpdateMinigameRecord ; $5997
 	ld hl, wMinigameRecordValue ; $599a
 	ld de, $0000 ; $599d
@@ -28,7 +28,7 @@ Unused_03_DebugTestMinigameRecords:
 	ld [hl], d ; $59a2
 	xor a ; $59a3
 	call ReadMinigameRecord ; $59a4
-	ld a, $01 ; $59a7
+	ld a, MGRECORD_MACHINE ; $59a7
 	call ReadMinigameRecord ; $59a9
 	pop hl ; $59ac
 	pop de ; $59ad

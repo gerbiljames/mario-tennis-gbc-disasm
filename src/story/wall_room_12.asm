@@ -454,7 +454,7 @@ WallPracticeScoreRetryPrompt:
 	ld b, [hl] ; $486c
 	ld c, a ; $486d
 	push_wram_bank WRAM_SOUND ; $486e
-	ld a, $00 ; $4877
+	ld a, MGRECORD_WALL ; $4877
 	farcall ReadMinigameRecord ; $4879
 	ld hl, wMinigameRecordValue ; $487c
 	ld a, [hl+] ; $487f
@@ -507,7 +507,7 @@ WallPracticeNewRecordScript:
 	ld a, e ; $48fd
 	ld [hl+], a ; $48fe
 	ld [hl], d ; $48ff
-	ld a, $00 ; $4900
+	ld a, MGRECORD_WALL ; $4900
 	farcall UpdateMinigameRecord ; $4902
 	pop_wram_bank ; $4905
 	call SetupWallPracticeLevelSigns ; $490a
@@ -529,7 +529,7 @@ WallPracticeMaxScoreScript:
 	script_set_text Text_WallMasterMaxScore ; $4936
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $493c
 	push_wram_bank WRAM_SOUND ; $4941
-	ld a, $00 ; $494a
+	ld a, MGRECORD_WALL ; $494a
 	farcall ReadMinigameRecord ; $494c
 	ld hl, wMinigameRecordValue ; $494f
 	ld a, [hl+] ; $4952

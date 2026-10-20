@@ -344,7 +344,7 @@ ServiceMatch1Cases2:
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $49a8
 	ld b, DRILLWORDING_SERVICE ; $49aa
 	call QueueDrillResultMessage ; $49ac
-	jr Unused_0b_StoreMatchAbortFlag_1.storeMatchAbortFlag ; $49af
+	jr DrillPointLost_1 ; $49af
 .unreachable:
 	xor a ; $49b1
 	ret ; $49b2
@@ -354,12 +354,12 @@ ServiceMatch1Cases2:
 .ignoreRallyTick:
 	xor a ; $49b5
 	ret ; $49b6
-Unused_0b_StoreMatchAbortFlag_1:
+Unused_0b_DrillPointWon_1:
 	ld a, MATCHABORT_POINT ; $49b7
 	ld [wMatchAbortFlag], a ; $49b9
 	ld a, WINLOSE_WIN ; $49bc
 	ret ; $49be
-.storeMatchAbortFlag:
+DrillPointLost_1:
 	ld a, MATCHABORT_POINT ; $49bf
 	ld [wMatchAbortFlag], a ; $49c1
 	ld a, WINLOSE_LOSE ; $49c4
@@ -575,7 +575,7 @@ ServiceMatch2Cases1:
 	ld b, DRILLWORDING_SERVICE ; $4ba4
 	call QueueDrillResultMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
-	jr z, Unused_0b_StoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bac
+	jr z, DrillPointLost_2 ; $4bac
 	xor a ; $4bae
 	ld [wDrillGateActive], a ; $4baf
 	xor a ; $4bb2
@@ -613,7 +613,7 @@ ServiceMatch2Cases2:
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4bf4
 	ld b, DRILLWORDING_SERVICE ; $4bf6
 	call QueueDrillResultMessage ; $4bf8
-	jr Unused_0b_StoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bfb
+	jr DrillPointLost_2 ; $4bfb
 .unreachable:
 	xor a ; $4bfd
 	ret ; $4bfe

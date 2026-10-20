@@ -236,13 +236,13 @@ NetGameMatch1Cases3:
 	and $01 ; $55c1
 	call IsCharBallInNormalReach ; $55c3
 	or a ; $55c6
-	jp z, Unused_0b_StoreMatchAbortFlag_4.storeMatchAbortFlag ; $55c7
+	jp z, DrillPointLost_4 ; $55c7
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_THE_BALL_SO_YOU_FAIL ; $55ca
 	ld b, DRILLWORDING_NET ; $55cc
 	call QueueDrillResultMessage ; $55ce
 	ld a, [wShotRecoilVariant] ; $55d1
 	cp $01 ; $55d4
-	jp nz, Unused_0b_StoreMatchAbortFlag_4.storeMatchAbortFlag ; $55d6
+	jp nz, DrillPointLost_4 ; $55d6
 	xor a ; $55d9
 	ret ; $55da
 .ignoreBounce:
@@ -297,19 +297,19 @@ NetGameMatch1Cases4:
 	ld a, DRILLMSG_YOU_DIDNT_SCORE_SO_YOU_FAIL ; $5626
 	ld b, DRILLWORDING_NET ; $5628
 	call QueueDrillResultMessage ; $562a
-	jp Unused_0b_StoreMatchAbortFlag_4.storeMatchAbortFlag ; $562d
+	jp DrillPointLost_4 ; $562d
 .rally5IgnoreBounce:
 	xor a ; $5630
 	ret ; $5631
 .rally5IgnoreRallyTick:
 	xor a ; $5632
 	ret ; $5633
-Unused_0b_StoreMatchAbortFlag_4:
+Unused_0b_DrillPointWon_4:
 	ld a, MATCHABORT_POINT ; $5634
 	ld [wMatchAbortFlag], a ; $5636
 	ld a, WINLOSE_WIN ; $5639
 	ret ; $563b
-.storeMatchAbortFlag:
+DrillPointLost_4:
 	ld a, MATCHABORT_POINT ; $563c
 	ld [wMatchAbortFlag], a ; $563e
 	ld a, WINLOSE_LOSE ; $5641

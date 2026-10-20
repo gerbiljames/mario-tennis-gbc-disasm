@@ -379,7 +379,7 @@ CharDataScreen_InputLoop:
 	ld_story_char_field CHARREC_LEVEL ; $5175
 	pop af ; $5188
 	ld a, [hl] ; $5189
-	cp $63 ; $518a
+	cp MAX_LEVEL ; $518a
 	jr z, .finish ; $518c
 .redraw:
 	call RestoreCharDataScreen ; $518e

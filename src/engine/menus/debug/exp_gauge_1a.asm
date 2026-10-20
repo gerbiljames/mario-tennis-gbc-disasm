@@ -91,7 +91,7 @@ Unused_1a_ExpScreenNumberTask:
 	ld_story_char_field CHARREC_LEVEL ; $4e8e
 	pop af ; $4ea1
 	ld a, [hl] ; $4ea2
-	cp $63 ; $4ea3
+	cp MAX_LEVEL ; $4ea3
 	ret z ; $4ea5
 	ld a, [wCharDataAnimCounter] ; $4ea6
 	and a ; $4ea9

@@ -25,6 +25,6 @@ ASSERT STRCMP("{TWIN_LABEL}", "{ApplyBallTrajectory4_{TWIN}_NAME}") == 0
 	rr l
 	call {SetBallTargetFromAim_{TWIN}_NAME}
 	ret
-.applyFallbackBallTrajectory:
+{ApplyFallbackBallTrajectoryFar_{TWIN}_NAME}:
 	farcall ApplyFallbackBallTrajectory_24
 	ret

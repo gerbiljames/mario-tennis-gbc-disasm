@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-950 labels carry an `Unused` prefix: 792 routines and 158 data blobs.
+954 labels carry an `Unused` prefix: 796 routines and 158 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -8,7 +8,8 @@ call, jump, branch, pointer table, macro body, fall-through or farcall. A
 routine only its slot names, with no `farcall` of that slot anywhere, is
 unreachable. `tools/reach.py` computes this, and `make check` (`reach`)
 fails if a routine's name and its reachability disagree in either
-direction. Where an unused routine has a live twin, the comment above it in
+direction, or if a local label under an `Unused` routine is reachable (a
+live tail gets a global name of its own). Where an unused routine has a live twin, the comment above it in
 `src/` gives the exact difference.
 
 A dead copy inside a shared `src/twins` file is named per bank

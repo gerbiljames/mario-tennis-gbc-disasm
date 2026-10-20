@@ -3,7 +3,7 @@ Unused_08_LatchSwingHoldButton:
 	ld [wCharSwingHoldButton], a ; $7279
 	xor a ; $727c
 	ld [wCharSwingHoldFrames], a ; $727d
-.tickTimer:
+TickSwingHoldFrames:
 	ld hl, wCharSwingHoldFrames ; $7280
 	inc [hl] ; $7283
 	xor a ; $7284

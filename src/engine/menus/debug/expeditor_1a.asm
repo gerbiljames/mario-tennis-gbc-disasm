@@ -186,7 +186,7 @@ Unused_1a_ShowExpGainScreen:
 	ld_story_char_field CHARREC_LEVEL ; $453f
 	pop af ; $4552
 	ld a, [hl] ; $4553
-	cp $63 ; $4554
+	cp MAX_LEVEL ; $4554
 	jr z, .captionMaxLevel ; $4556
 	ld a, $02 ; $4558
 	call Unused_1a_DrawExpScreenCaption ; $455a

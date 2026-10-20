@@ -369,7 +369,7 @@ HandleServePositioning:
 CheckSwingRelease:
 	ld a, [wCharInputBits] ; $7267
 	and PADF_SELECT ; $726a
-	jr z, Unused_08_LatchSwingHoldButton.tickTimer ; $726c
+	jr z, TickSwingHoldFrames ; $726c
 	xor a ; $726e
 	ld [wCharSwingHoldButton], a ; $726f
 	ld [wCharSwingHoldFrames], a ; $7272
