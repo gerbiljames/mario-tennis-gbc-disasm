@@ -223,6 +223,48 @@ wChallengerRivalLostTextId:: dw
 ; [16-bit] Follow-up dialogue text id spoken after the verdict line; overlaps the swing contest's two HUD bytes
 wChallengerFollowupTextId:: dw
 NEXTU
+; saved player position (SavePlayerActorPosition, bank $0f; the test maps read it back)
+; [16-bit] Player actor's ACTORF_X
+wSavedPlayerX:: dw
+; [16-bit] Player actor's ACTORF_Y
+wSavedPlayerY:: dw
+NEXTU
+; Training Center (bank $0e): gym runners and the repair counter
+; [16-bit] The running student's ACTORF_X; TrainingGymRunnerCheckClearance compares it with wGymRunnerTargetX
+wGymRunnerX:: dw
+; [16-bit] The running student's ACTORF_Y
+wGymRunnerY:: dw
+; [16-bit] The next runner's ACTORF_TARGET_X
+wGymRunnerTargetX:: dw
+; [16-bit] The next runner's ACTORF_TARGET_Y
+wGymRunnerTargetY:: dw
+; [8-bit] wStoryMainEquipment before the racket/shoes select screen; CheckEquipmentUnchanged compares against it
+wRepairCounterEquipSnapshot:: db
+	ds 1
+; [8-bit] Text_MenuEquipChange choice: 0 rackets, 1 shoes, 2 / $ff leave. Also the offset added to the per-item text ids
+wRepairCounterChoice:: db
+NEXTU
+; Peach's exhibition match prompt (bank $0e: PromptExhibitionMatch, ExhibitionMatchIntroCutscene, PrepareStoryMatch)
+; [16-bit] Text id of the singles/doubles prompt
+wExhibitionPromptTextId:: dw
+; [8-bit] ENTRY_SPECIAL_COURT_* the warp enters by; the Special Court intro rewrites it as entry - 1, PrepareStoryMatchTable's index
+wExhibitionMatchEntry:: db
+NEXTU
+; roommate dialogue (bank $13: DormRoomEntry02Scene, RunAcademyQuestionsMenu)
+; [16-bit] First text id of the scene's dialogue variant; the scene and the AcademyTopic* handlers add line offsets to it
+wRoommateTextIdBase:: dw
+NEXTU
+	ds 6
+; [8-bit] Tennis Machine level being offered (0-based); MachinePracticeLevelPrompt prints it + 1 and runs MINIGAME_TENNIS_MACHINE_1 + it
+wMachinePracticeLevel:: db
+NEXTU
+	ds 6
+; actor placement near the player (ComputeEmoteActorPosition_13, PlaceRoommateAtPlayerTarget_13, RestaurantShowActor11NearPlayer_10), passed to ScriptSetActorPosition
+; [16-bit] World X
+wPlaceActorX:: dw
+; [16-bit] World Y
+wPlaceActorY:: dw
+NEXTU
 ; generic location scratch
 ; [14 bytes] Rest of the location's scratch block after wMapSceneStage / wMapSceneStage2. Story scripts in banks $0e-$13 use it for whatever the location needs (a saved actor position, a name for a text argument, menu working bytes); the fixed-layout overlays are the variants above
 wMapScratch:: ds 14

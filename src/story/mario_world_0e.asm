@@ -1,5 +1,5 @@
 CheckEquipmentUnchanged:
-	ld a, [wMapScratch + 8] ; $5005
+	ld a, [wRepairCounterEquipSnapshot] ; $5005
 	ld b, a ; $5008
 	ld a, [wStoryMainEquipment] ; $5009
 	cp b ; $500c
@@ -17,7 +17,7 @@ RepairCounterCheckEquipChanged:
 	call CheckEquipmentUnchanged ; $5021
 	cp $ff ; $5024
 	jp nz, .equipmentChanged ; $5026
-	ld a, [wMapScratch + 10] ; $5029
+	ld a, [wRepairCounterChoice] ; $5029
 	ld hl, Text_RepairCounterAlreadyUsingRacket ; $502c
 	add_hl_a ; $502f
 	farcall InitDialogueTextCursor ; $5034
@@ -28,11 +28,11 @@ RepairCounterCheckEquipChanged:
 	script_wait_frames 5 ; $5045
 	and a ; $504c
 	jp nz, .noChange ; $504d
-	ld a, [wMapScratch + 10] ; $5050
+	ld a, [wRepairCounterChoice] ; $5050
 	jp RepairCounterServiceMenu.handleChoice ; $5053
 .equipmentChanged:
 	ld a, [wStoryMainEquipment] ; $5056
-	ld [wMapScratch + 8], a ; $5059
+	ld [wRepairCounterEquipSnapshot], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
 	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $505f
 	call ShowEquipChangeConfirmation ; $5064
@@ -79,7 +79,7 @@ RepairCounterReopenServiceMenu:
 	ld hl, Text_MenuEquipChange ; $5100
 	ld_cell de, $01, $01 ; $5103
 	farcall RunMenuFromText ; $5106
-	ld [wMapScratch + 10], a ; $5109
+	ld [wRepairCounterChoice], a ; $5109
 	cp $ff ; $510c
 	jp z, RepairCounterFarewell ; $510e
 	cp $02 ; $5111
@@ -101,12 +101,12 @@ RepairCounterReopenServiceMenu:
 	script_face ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, FACE_RIGHT ; $514b
 	ret ; $5152
 ShowEquipChangeConfirmation:
-	ld a, [wMapScratch + 10] ; $5153
+	ld a, [wRepairCounterChoice] ; $5153
 	ld hl, Text_RepairCounterPlayerEquipped ; $5156
 	add_hl_a ; $5159
 	farcall InitDialogueTextCursor ; $515e
 	call PushEquipmentNameTextArg ; $5161
-	ld a, [wMapScratch + 10] ; $5164
+	ld a, [wRepairCounterChoice] ; $5164
 	and a ; $5167
 	jr nz, .handOver ; $5168
 	call MirrorPlayerSpriteIfLeftHanded ; $516a

@@ -58,7 +58,7 @@ PrepareStoryMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $7b8b
 	ld [wStoryModeExitTriggerRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
-	ld a, [wMapScratch + 2] ; $7b94
+	ld a, [wExhibitionMatchEntry] ; $7b94
 	add a ; $7b97
 	ld_hl_indexed PrepareStoryMatchTable ; $7b98
 	ld a, [hl+] ; $7b9f

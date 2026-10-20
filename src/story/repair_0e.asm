@@ -7,7 +7,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, [hl+] ; $4c42
 	ld d, [hl] ; $4c43
 	ld e, a ; $4c44
-	ld hl, wMapScratch + 2 ; $4c45
+	ld hl, wGymRunnerY ; $4c45
 	ld a, e ; $4c48
 	ld [hl+], a ; $4c49
 	ld [hl], d ; $4c4a
@@ -16,7 +16,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, [hl+] ; $4c4f
 	ld d, [hl] ; $4c50
 	ld e, a ; $4c51
-	ld hl, wMapScratch ; $4c52
+	ld hl, wGymRunnerX ; $4c52
 	ld a, e ; $4c55
 	ld [hl+], a ; $4c56
 	ld [hl], d ; $4c57
@@ -28,7 +28,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, [hl+] ; $4c63
 	ld d, [hl] ; $4c64
 	ld e, a ; $4c65
-	ld hl, wMapScratch + 6 ; $4c66
+	ld hl, wGymRunnerTargetY ; $4c66
 	ld a, e ; $4c69
 	ld [hl+], a ; $4c6a
 	ld [hl], d ; $4c6b
@@ -37,7 +37,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, [hl+] ; $4c70
 	ld d, [hl] ; $4c71
 	ld e, a ; $4c72
-	ld hl, wMapScratch + 4 ; $4c73
+	ld hl, wGymRunnerTargetX ; $4c73
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
@@ -62,7 +62,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, [hl+] ; $4c99
 	ld d, [hl] ; $4c9a
 	ld e, a ; $4c9b
-	ld hl, wMapScratch + 2 ; $4c9c
+	ld hl, wGymRunnerY ; $4c9c
 	ld a, e ; $4c9f
 	ld [hl+], a ; $4ca0
 	ld [hl], d ; $4ca1
@@ -71,7 +71,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, [hl+] ; $4ca6
 	ld d, [hl] ; $4ca7
 	ld e, a ; $4ca8
-	ld hl, wMapScratch ; $4ca9
+	ld hl, wGymRunnerX ; $4ca9
 	ld a, e ; $4cac
 	ld [hl+], a ; $4cad
 	ld [hl], d ; $4cae
@@ -83,7 +83,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, [hl+] ; $4cba
 	ld d, [hl] ; $4cbb
 	ld e, a ; $4cbc
-	ld hl, wMapScratch + 6 ; $4cbd
+	ld hl, wGymRunnerTargetY ; $4cbd
 	ld a, e ; $4cc0
 	ld [hl+], a ; $4cc1
 	ld [hl], d ; $4cc2
@@ -92,7 +92,7 @@ TrainingGymRunner0BWaitWaypointClear:
 	ld a, [hl+] ; $4cc7
 	ld d, [hl] ; $4cc8
 	ld e, a ; $4cc9
-	ld hl, wMapScratch + 4 ; $4cca
+	ld hl, wGymRunnerTargetX ; $4cca
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
@@ -117,7 +117,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, [hl+] ; $4cf0
 	ld d, [hl] ; $4cf1
 	ld e, a ; $4cf2
-	ld hl, wMapScratch + 2 ; $4cf3
+	ld hl, wGymRunnerY ; $4cf3
 	ld a, e ; $4cf6
 	ld [hl+], a ; $4cf7
 	ld [hl], d ; $4cf8
@@ -126,7 +126,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, [hl+] ; $4cfd
 	ld d, [hl] ; $4cfe
 	ld e, a ; $4cff
-	ld hl, wMapScratch ; $4d00
+	ld hl, wGymRunnerX ; $4d00
 	ld a, e ; $4d03
 	ld [hl+], a ; $4d04
 	ld [hl], d ; $4d05
@@ -138,7 +138,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, [hl+] ; $4d11
 	ld d, [hl] ; $4d12
 	ld e, a ; $4d13
-	ld hl, wMapScratch + 6 ; $4d14
+	ld hl, wGymRunnerTargetY ; $4d14
 	ld a, e ; $4d17
 	ld [hl+], a ; $4d18
 	ld [hl], d ; $4d19
@@ -147,7 +147,7 @@ TrainingGymRunner0CWaitWaypointClear:
 	ld a, [hl+] ; $4d1e
 	ld d, [hl] ; $4d1f
 	ld e, a ; $4d20
-	ld hl, wMapScratch + 4 ; $4d21
+	ld hl, wGymRunnerTargetX ; $4d21
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
@@ -162,13 +162,13 @@ Unused_0e_TrainingGymRunner0CUnpause:
 	ld b, $00 ; $4d37
 	ld a, $00 ; $4d39
 	ret ; $4d3b
-; a = b = 1 while both coordinate pairs in wMapScratch are within 5 tiles of each other.
+; a = b = 1 while wGymRunnerX/Y is within 5 tiles of wGymRunnerTargetX/Y.
 TrainingGymRunnerCheckClearance:
-	ld hl, wMapScratch + 2 ; $4d3c
+	ld hl, wGymRunnerY ; $4d3c
 	ld a, [hl+] ; $4d3f
 	ld d, [hl] ; $4d40
 	ld e, a ; $4d41
-	ld hl, wMapScratch + 6 ; $4d42
+	ld hl, wGymRunnerTargetY ; $4d42
 	ld a, [hl+] ; $4d45
 	ld h, [hl] ; $4d46
 	ld l, a ; $4d47
@@ -177,11 +177,11 @@ TrainingGymRunnerCheckClearance:
 	ld a, h ; $4d58
 	cp $05 ; $4d59
 	jr nc, .outOfRange ; $4d5b
-	ld hl, wMapScratch ; $4d5d
+	ld hl, wGymRunnerX ; $4d5d
 	ld a, [hl+] ; $4d60
 	ld d, [hl] ; $4d61
 	ld e, a ; $4d62
-	ld hl, wMapScratch + 4 ; $4d63
+	ld hl, wGymRunnerTargetX ; $4d63
 	ld a, [hl+] ; $4d66
 	ld h, [hl] ; $4d67
 	ld l, a ; $4d68
@@ -272,7 +272,7 @@ RepairCounterServiceMenu:
 	ld_cell de, $01, $01 ; $4e64
 	farcall RunMenuFromText ; $4e67
 .handleChoice:
-	ld [wMapScratch + 10], a ; $4e6a
+	ld [wRepairCounterChoice], a ; $4e6a
 	cp $ff ; $4e6d
 	jp z, RepairCounterFarewell ; $4e6f
 	cp $02 ; $4e72
@@ -295,7 +295,7 @@ RepairCounterServiceMenu:
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
 	ld a, [wStoryMainEquipment] ; $4eb2
-	ld [wMapScratch + 8], a ; $4eb5
+	ld [wRepairCounterEquipSnapshot], a ; $4eb5
 	ld a, STORYLOC_TRAINING_CENTER ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
 	ld a, [wMapSceneStage2] ; $4ebd
@@ -350,7 +350,7 @@ RestoreScreenAfterEquipSelect:
 	ret ; $4f3b
 	twin push_short_text_arg, 0e ; $4f3c PushShortTextArg_0e
 GetSelectedEquipmentNibble:
-	ld a, [wMapScratch + 10] ; $4f5d
+	ld a, [wRepairCounterChoice] ; $4f5d
 	and a ; $4f60
 	jr z, .lowNibble ; $4f61
 	jr .highNibble ; $4f63
@@ -364,7 +364,7 @@ GetSelectedEquipmentNibble:
 	swap a ; $4f70
 	ret ; $4f72
 PushEquipmentNameTextArg:
-	ld a, [wMapScratch + 10] ; $4f73
+	ld a, [wRepairCounterChoice] ; $4f73
 	and a ; $4f76
 	jr z, .racket ; $4f77
 	jr .shoes ; $4f79
@@ -381,7 +381,7 @@ PushEquipmentNameTextArg:
 	call PushShortTextArg_0e ; $4f95
 	ret ; $4f98
 InitEquipmentHandoutDialogue:
-	ld a, [wMapScratch + 10] ; $4f99
+	ld a, [wRepairCounterChoice] ; $4f99
 	and a ; $4f9c
 	jr z, .racket ; $4f9d
 	jr .shoes ; $4f9f

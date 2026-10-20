@@ -407,7 +407,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f63
 	ld d, [hl] ; $5f64
 	ld e, a ; $5f65
-	ld hl, wMapScratch ; $5f66
+	ld hl, wSavedPlayerX ; $5f66
 	ld a, e ; $5f69
 	ld [hl+], a ; $5f6a
 	ld [hl], d ; $5f6b
@@ -416,7 +416,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f70
 	ld d, [hl] ; $5f71
 	ld e, a ; $5f72
-	ld hl, wMapScratch + 2 ; $5f73
+	ld hl, wSavedPlayerY ; $5f73
 	ld a, e ; $5f76
 	ld [hl+], a ; $5f77
 	ld [hl], d ; $5f78

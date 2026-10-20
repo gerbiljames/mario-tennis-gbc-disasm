@@ -924,11 +924,11 @@ AwardsCeremonyInitScript_0f:
 	test_flag FLAG_DOUBLES ; $5600
 	jp nz, .done ; $5603
 	call SavePlayerActorPosition ; $5606
-	ld hl, wMapScratch ; $5609
+	ld hl, wSavedPlayerX ; $5609
 	ld a, [hl+] ; $560c
 	ld b, [hl] ; $560d
 	ld c, a ; $560e
-	ld hl, wMapScratch + 2 ; $560f
+	ld hl, wSavedPlayerY ; $560f
 	ld a, [hl+] ; $5612
 	ld d, [hl] ; $5613
 	ld e, a ; $5614

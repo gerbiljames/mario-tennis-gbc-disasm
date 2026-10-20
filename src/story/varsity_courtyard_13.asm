@@ -37,7 +37,7 @@ ComputeEmoteActorPosition_13:
 	add hl, de ; $5c0a
 	ld e, l ; $5c0b
 	ld d, h ; $5c0c
-	ld hl, wMapScratch + 6 ; $5c0d
+	ld hl, wPlaceActorX ; $5c0d
 	ld a, e ; $5c10
 	ld [hl+], a ; $5c11
 	ld [hl], d ; $5c12
@@ -50,17 +50,17 @@ ComputeEmoteActorPosition_13:
 	add hl, de ; $5c1d
 	ld e, l ; $5c1e
 	ld d, h ; $5c1f
-	ld hl, wMapScratch + 8 ; $5c20
+	ld hl, wPlaceActorY ; $5c20
 	ld a, e ; $5c23
 	ld [hl+], a ; $5c24
 	ld [hl], d ; $5c25
 	ret ; $5c26
 PlaceEmoteActorAtComputedPosition_13:
-	ld hl, wMapScratch + 6 ; $5c27
+	ld hl, wPlaceActorX ; $5c27
 	ld a, [hl+] ; $5c2a
 	ld b, [hl] ; $5c2b
 	ld c, a ; $5c2c
-	ld hl, wMapScratch + 8 ; $5c2d
+	ld hl, wPlaceActorY ; $5c2d
 	ld a, [hl+] ; $5c30
 	ld d, [hl] ; $5c31
 	ld e, a ; $5c32
@@ -80,7 +80,7 @@ PlaceRoommateAtPlayerTarget_13:
 	add hl, de ; $5c4a
 	ld e, l ; $5c4b
 	ld d, h ; $5c4c
-	ld hl, wMapScratch + 6 ; $5c4d
+	ld hl, wPlaceActorX ; $5c4d
 	ld a, e ; $5c50
 	ld [hl+], a ; $5c51
 	ld [hl], d ; $5c52
@@ -93,15 +93,15 @@ PlaceRoommateAtPlayerTarget_13:
 	add hl, de ; $5c5d
 	ld e, l ; $5c5e
 	ld d, h ; $5c5f
-	ld hl, wMapScratch + 8 ; $5c60
+	ld hl, wPlaceActorY ; $5c60
 	ld a, e ; $5c63
 	ld [hl+], a ; $5c64
 	ld [hl], d ; $5c65
-	ld hl, wMapScratch + 6 ; $5c66
+	ld hl, wPlaceActorX ; $5c66
 	ld a, [hl+] ; $5c69
 	ld b, [hl] ; $5c6a
 	ld c, a ; $5c6b
-	ld hl, wMapScratch + 8 ; $5c6c
+	ld hl, wPlaceActorY ; $5c6c
 	ld a, [hl+] ; $5c6f
 	ld d, [hl] ; $5c70
 	ld e, a ; $5c71

@@ -336,7 +336,7 @@ ExhibitionMatchIntroCutscene:
 	ld [wStoryModeShowLocationName], a ; $76fc
 	ld a, [wStoryModeEntryPoint] ; $76ff
 	dec a ; $7702
-	ld [wMapScratch + 2], a ; $7703
+	ld [wExhibitionMatchEntry], a ; $7703
 	test_flag FLAG_DOUBLES ; $7706
 	jp nz, .startMatch ; $7709
 	script_set_speed ACTOR_SPECIAL_COURT_TOAD, 0.625 ; $770c
