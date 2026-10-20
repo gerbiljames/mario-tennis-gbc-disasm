@@ -159,11 +159,11 @@ RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
 	jr z, .variantB ; $58c1
 	ld hl, wRoommateTextIdBase ; $58c3
-	ld de, $054f ; $58c6
+	ld de, Text_RoommateAnythingElse ; $58c6
 	jr .menuLoop ; $58c9
 .variantB:
 	ld hl, wRoommateTextIdBase ; $58cb
-	ld de, $0808 ; $58ce
+	ld de, Text_RoommateIsThereAnythingElse ; $58ce
 .menuLoop:
 	ld a, e ; $58d1
 	ld [hl+], a ; $58d2

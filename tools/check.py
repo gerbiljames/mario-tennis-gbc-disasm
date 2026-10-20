@@ -90,7 +90,9 @@ after a real defect broke it:
             argument), a byte read through a known text pointer is not
             compared with a raw TX_* code, the macro and table rows RAW_ID_*
             lists name their ids, and a routine passed Text_* in hl/de at
-            two or more sites is passed no raw number there, and no `bit n, r` on a joypad byte (loaded
+            two or more sites (or in a TEXT_ID_ARGS register) is passed no
+            raw number there, nor is a word stored into a *TextId* variable
+            (`ld de, X` .. `ld a, e / ld [hl+], a / ld [hl], d`), and no `bit n, r` on a joypad byte (loaded
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
             leaves n raw, nor does a bit/set/res on a FLAG_BYTES byte
             (wCharFlags, wCharBallReachFlags, wExpScreenBusyFlags, ...) or
@@ -1262,6 +1264,8 @@ RAW_ID_FAMILIES = {
     "LoadPlayer2ScoreDigitGfx(b)": "DIGITGFX",
     "wScoreDisplayIsTiebreak": "DIGITGFX",
 }
+# Text-id arguments with too few named sites to infer them: no raw number.
+TEXT_ID_ARGS = {"ShowMessageWindow(hl)"}
 # Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
 # or `add <base>` into that register counts as passing the base.
 BASE_ID_ARGS = {
@@ -1503,6 +1507,9 @@ def _raw_id_uses():
             if m := re.match(r"(?:lb|ld_char_rec) (bc|de|hl), ([^,]+), (.+)$", t):
                 _clobber(regs, spent, m.group(1))
                 regs[m.group(1)[0]], regs[m.group(1)[1]] = m.group(2), m.group(3)
+                continue
+            if m := re.match(r"(?:ld_cell|ld_size|ld_bg_cell|ld_tile_run|ld_bg_pals|ld_obj_pals) (bc|de|hl),", t):
+                _clobber(regs, spent, m.group(1))
                 continue
             m = re.match(r"(?:ldh? ([a-l]|bc|de|hl|sp), |(?:inc|dec|pop|swap|rlc?|rrc?|sla|sra|srl) "
                          r"([a-l]|bc|de|hl|af)$|(?:res|set) \w+, ([a-l])$|add (hl|sp), |"
@@ -1844,7 +1851,8 @@ def check_raw_ids(fail):
             continue
         families = {op.split("_")[0] for op, _ in ops
                     if op in values and "_" in op and not op.endswith("_SIZE")}
-        families |= {RAW_ID_FAMILIES.get(var), "TX" if var.startswith("text@") else None} - {None}
+        families |= {RAW_ID_FAMILIES.get(var), "TX" if var.startswith("text@") else None,
+                     "Text" if var in TEXT_ID_ARGS else None} - {None}
         for op, where in ops:
             if not _NUMBER_RE.fullmatch(op):
                 continue
@@ -1852,8 +1860,9 @@ def check_raw_ids(fail):
             names = names_of(_number(op), families)
             if names and (var, op) not in KNOWN_RAW_IDS:
                 fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
-            elif (var.endswith(("(hl)", "(de)")) and (var, op) not in KNOWN_RAW_IDS
-                  and sum(o.startswith("Text_") for o, _ in ops) >= 2):
+            elif ((var, op) not in KNOWN_RAW_IDS
+                  and (var in TEXT_ID_ARGS or var.endswith(("(hl)", "(de)"))
+                       and sum(o.startswith("Text_") for o, _ in ops) >= 2)):
                 fail("raw-ids", f"{where}: {var} {op} -- a text id with no Text_ name?")
     seen = set()
     for prefix, op, where in _raw_data_ids(seen):
@@ -1866,15 +1875,94 @@ def check_raw_ids(fail):
             fail("raw-ids", f"{where}: {op} is not a {prefix}* id")
     for key in sorted((set(RAW_ID_TABLES) | set(RAW_ID_TABLE_KINDS)) - seen):
         fail("raw-ids", f"{key}: matches no table -- drop it from RAW_ID_TABLES/_KINDS")
-    for var in sorted(set(RAW_ID_FAMILIES) - set(uses)):
-        fail("raw-ids", f"{var} is no longer used -- drop it from RAW_ID_FAMILIES")
+    for var in sorted((set(RAW_ID_FAMILIES) | TEXT_ID_ARGS) - set(uses)):
+        fail("raw-ids", f"{var} is no longer used -- drop it from RAW_ID_FAMILIES/TEXT_ID_ARGS")
     for routine, r in sorted(BASE_ID_ARGS.items()):
         if f"{routine}({r})" not in uses:
             fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
     return (n + _raw_pad_bits(fail) + _raw_flag_bits(fail) + _text_cell_offsets(fail)
-            + _raw_flag_conds(fail))
+            + _raw_flag_conds(fail) + _text_id_stores(fail))
+
+
+_KEEPS_HL_DE_RE = re.compile(r"(ldh? a, [^\[\]]+|ldh? \[[wh]\w*\], a|test_flag \w+|cp .+|and a|or a|"
+                             r"(jr|jp) (n?z|n?c), \S+)$")
+
+
+def _text_id_stores(fail):
+    """A word stored into a *TextId* variable is a Text_ name: `ld de, X` and
+    `ld hl, wVar` (stepped by `ld [hl+], r` / `inc hl`, so `wVar + n` is
+    named through the symbol file) meet at `ld a, e / ld [hl+], a / ld [hl], d`
+    or `ld [hl], e / inc hl / ld [hl], d`, also at a local label every
+    earlier jump into (and the fall-through) agrees on hl for; a later jump
+    back in only adds values unseen."""
+    import consts
+    from banksrc import read_sym
+    values = consts.constants()
+    at, named = {}, {}
+    for bank, addr, name in read_sym():
+        if addr >= 0x8000:
+            at.setdefault(name, (bank, addr))
+            named.setdefault((bank, addr), []).append(name)
+
+    def target(hl):
+        var, off = hl
+        if not off:
+            return var
+        if var not in at:
+            return None
+        bank, addr = at[var]
+        return next((x for x in named.get((bank, addr + off), []) if "TextId" in x), None)
+
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        hl = de = None
+        owner, jumps, after_jump = "", {}, False
+        for i, line in enumerate(lines):
+            if _GLOBAL_RE.match(line) or re.match(r"[A-Za-z_]", line):
+                owner = re.match(r"\w+", line).group(0)
+                hl = de = None
+                after_jump = False
+                continue
+            t = line.split(";")[0].strip()
+            if not t:
+                continue
+            if t.startswith("."):
+                label = owner + t.rstrip(":")
+                ways = jumps.get(label, []) + ([] if after_jump else [(hl, de)])
+                hl = de = None
+                if ways and all(w[0] == ways[0][0] and w[1] for w in ways):
+                    hl, de = ways[0][0], tuple(dict.fromkeys(x for w in ways for x in w[1]))
+                after_jump = False
+                continue
+            code = [c for c in (x.split(";")[0].strip() for x in lines[i:i + 3]) if c]
+            after_jump = bool(_NO_FALLTHROUGH_RE.match(t))
+            if m := re.match(r"(?:jr|jp) (?:(?:n?z|n?c), )?(\.\w+)$", t):
+                jumps.setdefault(owner + m.group(1), []).append((hl, de))
+            if hl and de and code in (["ld a, e", "ld [hl+], a", "ld [hl], d"],
+                                      ["ld [hl], e", "inc hl", "ld [hl], d"]):
+                var = target(hl)
+                if var and "TextId" in var:
+                    for x, where in de:
+                        n += 1
+                        if _NUMBER_RE.fullmatch(x):
+                            names = sorted((k for k, v in values.items() if v == _number(x) and k.startswith("Text_")),
+                                           key=lambda k: bool(_TEXT_INDEX_RE.match(k)))
+                            fail("raw-ids", f"{where}: {var} {x} -- {names[0] if names else 'a text id with no Text_ name'}?")
+            if m := re.match(rf"ld hl, {_VAR_RE}$", t):
+                var, _, off = m.group(1).partition(" + ")
+                hl = (var, _number(off) if off else 0) if not off or _NUMBER_RE.fullmatch(off) else None
+            elif m := re.match(r"ld de, ([^\[]+)$", t):
+                de = ((m.group(1), f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"),)
+            elif re.match(r"ld \[hl\+\], [a-e]$|inc hl$", t):
+                hl = hl and (hl[0], hl[1] + 1)
+            elif re.match(r"ld \[hl\], [a-e]$", t) or _KEEPS_HL_DE_RE.match(t):
+                pass
+            elif t not in ("ld a, e", "ld a, d") and not t.startswith(("jr ", "jp ")):
+                hl = de = None
+    return n
 
 
 _FLAG_COND_ARG = {"map_actor": 0, "map_script": 2}

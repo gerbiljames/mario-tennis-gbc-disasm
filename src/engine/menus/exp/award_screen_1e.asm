@@ -649,8 +649,14 @@ DrawNextExpAwardMessage:
 	xor a ; $5a42
 	ret ; $5a43
 DrawNextExpAwardMessageTable:
-	; $5a44, 10 bytes (bytes:10)
-	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
+	; $5a44, 10 bytes (text_ids)
+	table_width 2
+	dw Text_ExpForMarioTennisN64 ; EXPAWARD_N64
+	dw Text_ExpForExhibitionMode ; EXPAWARD_EXHIBITION
+	dw Text_ExpForLinkedPlay ; EXPAWARD_LINKED
+	dw Text_ExpForMatchTypes ; EXPAWARD_MATCH
+	dw Text_ExpForWinningTrophy ; EXPAWARD_TROPHY
+	assert_table_length NUM_EXPAWARDS
 DrawExpTotalDigits:
 	wram_bank WRAM_SCENE ; $5a4e
 	ld hl, wExpAwardRunningTotal ; $5a54

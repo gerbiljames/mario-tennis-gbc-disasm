@@ -87,6 +87,7 @@ def Text_30_300 equ $012c
 def Text_30_309 equ $0135
 def Text_30_310 equ $0136
 def Text_30_311 equ $0137
+def Text_30_319 equ $013f
 def Text_30_343 equ $0157
 def Text_30_344 equ $0158
 def Text_30_345 equ $0159
@@ -99,7 +100,10 @@ def Text_30_351 equ $015f
 def Text_30_353 equ $0161
 def Text_30_354 equ $0162
 def Text_30_370 equ $0172
+def Text_30_372 equ $0174
+def Text_30_373 equ $0175
 def Text_30_374 equ $0176
+def Text_30_377 equ $0179
 def Text_30_419 equ $01a3
 def Text_30_421 equ $01a5
 def Text_30_426 equ $01aa
@@ -220,6 +224,11 @@ def Text_31_157 equ $049d
 def Text_31_160 equ $04a0
 def Text_31_199 equ $04c7
 def Text_31_200 equ $04c8
+def Text_31_201 equ $04c9
+def Text_31_202 equ $04ca
+def Text_31_203 equ $04cb
+def Text_31_204 equ $04cc
+def Text_31_209 equ $04d1
 def Text_31_210 equ $04d2
 def Text_31_211 equ $04d3
 def Text_31_212 equ $04d4
@@ -274,6 +283,8 @@ def Text_31_278 equ $0516
 def Text_31_289 equ $0521
 def Text_31_290 equ $0522
 def Text_31_291 equ $0523
+def Text_31_292 equ $0524
+def Text_31_298 equ $052a
 def Text_31_304 equ $0530
 def Text_31_307 equ $0533
 def Text_31_310 equ $0536
@@ -283,6 +294,8 @@ def Text_31_328 equ $0548
 def Text_31_332 equ $054c
 def Text_31_333 equ $054d
 def Text_31_334 equ $054e
+def Text_31_335 equ $054f
+def Text_32_8 equ $0808
 def Text_32_28 equ $081c
 def Text_32_34 equ $0822
 def Text_32_37 equ $0825
@@ -809,6 +822,7 @@ def Text_36_79 equ $184f
 def Text_36_87 equ $1857
 def Text_36_89 equ $1859
 def Text_36_96 equ $1860
+def Text_36_99 equ $1863
 def Text_36_627 equ $1a73
 def Text_36_633 equ $1a79
 def Text_36_634 equ $1a7a
@@ -1414,7 +1428,9 @@ def Text_5e_99 equ $3063
 def Text_5e_102 equ $3066
 def Text_5e_125 equ $307d
 def Text_5e_128 equ $3080
+def Text_5e_131 equ $3083
 def Text_5e_136 equ $3088
+def Text_5e_137 equ $3089
 def Text_5e_142 equ $308e
 def Text_5e_143 equ $308f
 def Text_5e_147 equ $3093
@@ -1517,6 +1533,7 @@ def Text_LinkCableConnection equ Text_30_300
 def Text_DebugTextDisplayTest equ Text_30_309
 def Text_NumberArg equ Text_30_310
 def Text_MenuDebugTools equ Text_30_311
+def Text_CheckRules equ Text_30_319
 def Text_ControlsMoveAndStrokes equ Text_30_343
 def Text_ControlsPowerShots equ Text_30_344
 def Text_ControlsSelectStart equ Text_30_345
@@ -1529,7 +1546,10 @@ def Text_TrainingFailedOrPassed equ Text_30_351
 def Text_TestMapMiniGameNumber equ Text_30_353
 def Text_StoryMenuCaptions equ Text_30_354
 def Text_StoryMenuSaveProgress equ Text_30_370
+def Text_RulesReturnServeAfterBounce equ Text_30_372
+def Text_RulesOnlyReceiverMayReturn equ Text_30_373
 def Text_MenuSceneViewerScenes equ Text_30_374
+def Text_DebugWarpLocationNames equ Text_30_377
 def Text_EmilyYoureThePlayerRight equ Text_30_419
 def Text_AcademyArrivalRightOnTime equ Text_30_421
 def Text_EmilyShowYouAroundAcademy equ Text_30_426
@@ -1650,6 +1670,11 @@ def Text_OptionsBackToMenu equ Text_31_157
 def Text_ProgressStarCourt equ Text_31_160
 def Text_ExpCalculatingFor equ Text_31_199
 def Text_ExpAndFor equ Text_31_200
+def Text_ExpForMarioTennisN64 equ Text_31_201
+def Text_ExpForExhibitionMode equ Text_31_202
+def Text_ExpForLinkedPlay equ Text_31_203
+def Text_ExpForMatchTypes equ Text_31_204
+def Text_ExpForWinningTrophy equ Text_31_209
 def Text_ResultsContinueGame equ Text_31_210
 def Text_ResultsYourSavedGame equ Text_31_211
 def Text_ResultsWillBeLostOk equ Text_31_212
@@ -1704,6 +1729,8 @@ def Text_RoommateAreYouReadyPlayer equ Text_31_278
 def Text_RoommateAskMeSomething equ Text_31_289
 def Text_RoommateHardDayOfTraining equ Text_31_290
 def Text_RoommateTimeToTrain equ Text_31_291
+def Text_RoommateWelcomeBackWornOut equ Text_31_292
+def Text_RoommateYoureBackPrettyBeat equ Text_31_298
 def Text_RoommateWannaPlayDoubles equ Text_31_304
 def Text_RoommateSinglesAllOfSudden equ Text_31_307
 def Text_RoommatePlayDoublesToday equ Text_31_310
@@ -1713,6 +1740,8 @@ def Text_RoommateOhShootForgotToTell equ Text_31_328
 def Text_MenuAcademyQuestions equ Text_31_332
 def Text_MenuAcademyQuestionsAfterSenior equ Text_31_333
 def Text_MenuAcademyQuestionsAfterVarsity equ Text_31_334
+def Text_RoommateAnythingElse equ Text_31_335
+def Text_RoommateIsThereAnythingElse equ Text_32_8
 def Text_JuniorCoachOfferSinglesRankingMatch equ Text_32_28
 def Text_JuniorRankingMatchRulesThreeSets equ Text_32_34
 def Text_JuniorRankingMatchDeclined equ Text_32_37
@@ -2239,6 +2268,7 @@ def Text_LateStudentImLate equ Text_36_79
 def Text_LateStudentForgiveMe equ Text_36_87
 def Text_LateStudentThankYou equ Text_36_89
 def Text_ArrivalStudentNoLeavingCampus equ Text_36_96
+def Text_StaffCreditsLines equ Text_36_99
 def Text_TourEmilyTechniqueCoach equ Text_36_627
 def Text_CourtServeStudentImproveServe equ Text_36_633
 def Text_CourtServeStudentGoodToss equ Text_36_634
@@ -2844,7 +2874,9 @@ def Text_BowserExhibitionAcceptedSingles equ Text_5e_99
 def Text_ToadPrincessPeachDoubles equ Text_5e_102
 def Text_BowserYouWillPlayMarioDoubles equ Text_5e_125
 def Text_BowserExhibitionAcceptedDoubles equ Text_5e_128
+def Text_PeachPlayMarioExhibition equ Text_5e_131
 def Text_MenuCpuDifficulty equ Text_5e_136
+def Text_PeachPlayMarioAndMeDoubles equ Text_5e_137
 def Text_MarioWorldMarioMamaMia equ Text_5e_142
 def Text_MarioWorldHostessAggressivePlayer equ Text_5e_143
 def Text_LuigiYouWorkSoHard equ Text_5e_147

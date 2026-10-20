@@ -570,14 +570,14 @@ DormRoomEntry02Scene:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5593
 	jr z, .morningAlt ; $5596
 	ld hl, wRoommateTextIdBase ; $5598
-	ld de, $052a ; $559b
+	ld de, Text_RoommateYoureBackPrettyBeat ; $559b
 	ld a, e ; $559e
 	ld [hl+], a ; $559f
 	ld [hl], d ; $55a0
 	jr .morningEnd ; $55a1
 .morningAlt:
 	ld hl, wRoommateTextIdBase ; $55a3
-	ld de, $0524 ; $55a6
+	ld de, Text_RoommateWelcomeBackWornOut ; $55a6
 	ld a, e ; $55a9
 	ld [hl+], a ; $55aa
 	ld [hl], d ; $55ab
