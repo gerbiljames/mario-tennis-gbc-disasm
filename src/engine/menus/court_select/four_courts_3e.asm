@@ -524,8 +524,11 @@ SetCourtSelect4TabAttrRect:
 	pop af ; $5fd4
 	ret ; $5fd5
 CourtSelect4TabAttrAddrs_3e:
-	; $5fd6, 8 bytes (bytes:8)
-	db $84, $d4, $8b, $d4, $24, $d5, $2b, $d5 ; 0x00
+	; $5fd6, 8 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 4 ; record 0
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; record 1
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 4 ; record 2
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 3
 SetCourtSelect4Palette:
 	ld hl, CourtSelect4PalettePtrs ; $5fde
 	add a ; $5fe1

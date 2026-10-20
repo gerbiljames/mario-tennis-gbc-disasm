@@ -16,13 +16,13 @@ Unused_02_DebugStoryStatsScreen:
 	or a ; $4fce
 	jr z, .slotOk ; $4fcf
 	push de ; $4fd1
-	ld hl, MenuTilemaps_02 ; $4fd2
+	ld hl, SaveResultFailedString_02 ; $4fd2
 	ld_cell de, $08, $02 ; $4fd5
 	call PrintString ; $4fd8
 	pop de ; $4fdb
 	jp .printString ; $4fdc
 .slotOk:
-	ld hl, DebugStoryStatsScreenString0 ; $4fdf
+	ld hl, SaveResultLoadedString_02 ; $4fdf
 	ld_cell de, $08, $02 ; $4fe2
 	call PrintString ; $4fe5
 	call Unused_02_ValidateN64TransferRecord ; $4fe8
@@ -58,10 +58,10 @@ Unused_02_DebugStoryStatsScreen:
 	jr .redraw ; $5014
 .printString:
 	push de ; $5016
-	ld hl, DebugStoryStatsScreenString2 ; $5017
+	ld hl, SaveResultBlankString_02 ; $5017
 	ld_cell de, $02, $10 ; $501a
 	call PrintString ; $501d
-	ld hl, DebugStoryStatsScreenString2 ; $5020
+	ld hl, SaveResultBlankString_02 ; $5020
 	ld_cell de, $08, $10 ; $5023
 	call PrintString ; $5026
 	pop de ; $5029
@@ -294,7 +294,7 @@ Unused_02_DebugStoryStatsScreen:
 	jr z, .skipSave ; $51e2
 	sound SFX_MENU_SELECT ; $51e4
 	push de ; $51e6
-	ld hl, DebugStoryStatsScreenString1 ; $51e7
+	ld hl, SaveResultSavedString_02 ; $51e7
 	ld_cell de, $08, $02 ; $51ea
 	call PrintString ; $51ed
 	farcall SaveStorySlotWithTimer ; $51f0
@@ -302,18 +302,23 @@ Unused_02_DebugStoryStatsScreen:
 	jp .redraw ; $51f4
 .skipSave:
 	jp .inputLoop ; $51f7
-MenuTilemaps_02:
-	; $51fa, 8 bytes (bytes:16)
-	db $46, $41, $49, $4c, $45, $44, $20, $00 ; 0x00
-DebugStoryStatsScreenString0:
-	INCLUDE "data/engine/story/DebugStoryStatsScreenString0.asm" ; $5202, 8 bytes
-DebugStoryStatsScreenString1:
-	INCLUDE "data/engine/story/DebugStoryStatsScreenString1.asm" ; $520a, 16 bytes
-DebugStoryStatsScreenString2:
-	; $521a, 45 bytes (bytes:16)
-	db $20, $20, $20, $20, $20, $20, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
-	db $09, $0a, $0b, $0c, $0d, $00, $00, $00, $00, $00, $00, $00, $00, $4d, $41, $52 ; 0x10
-	db $49, $4f, $20, $47, $4f, $4c, $46, $20, $47, $42, $20, $43, $48 ; 0x20
+SaveResultFailedString_02:
+	INCLUDE "data/engine/story/SaveResultFailedString_02.asm" ; $51fa, 8 bytes (text)
+SaveResultLoadedString_02:
+	INCLUDE "data/engine/story/SaveResultLoadedString_02.asm" ; $5202, 8 bytes (text)
+SaveResultSavedString_02:
+	INCLUDE "data/engine/story/SaveResultSavedString_02.asm" ; $520a, 8 bytes (text)
+Unused_02_SaveResultDeletedString:
+	INCLUDE "data/engine/story/Unused_02_SaveResultDeletedString.asm" ; $5212, 8 bytes (text)
+SaveResultBlankString_02:
+	INCLUDE "data/engine/story/SaveResultBlankString_02.asm" ; $521a, 8 bytes (text)
+Unused_02_ByteRamp:
+	; $5222, 13 bytes (bytes:13)
+	db $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d ; 0x00
+	; $522f, 8 bytes (fill)
+	ds 8, $00
+Unused_02_MarioGolfSignature:
+	INCLUDE "data/engine/story/Unused_02_MarioGolfSignature.asm" ; $5237, 16 bytes (text)
 LoadStorySlot:
 	push de ; $5247
 	ld hl, wStorySlotData ; $5248

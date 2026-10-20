@@ -18,12 +18,18 @@ engine/menus/main_menu/Unused_01_JpFontTiles.bin 0053b0 c40 gfx
 engine/menus/main_menu/Unused_01_JpFontPalettes.asm 005ff0 40 palettes
 engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin 00607c 887 gfx
 engine/menus/main_menu/lz_DmgLockoutTilemapLZ_01.bin 006903 158 tilemap:32
-engine/menus/main_menu/SoundTestStrings_01.asm 006b64 6 sound_data
-engine/menus/main_menu/SoundTestString0.asm 006b6a 7
+engine/menus/main_menu/SoundTestMusicString.asm 006b64 6 text
+engine/menus/main_menu/SoundTestEffectString.asm 006b6a 7 text
+engine/menus/main_menu/SoundTestCursorString.asm 006b71 2 text
+engine/menus/main_menu/SoundTestCursorBlankString.asm 006b73 2 text
 engine/menus/main_menu/SoundTestSoundsA_01.asm 006b75 3f sound_data
 engine/menus/main_menu/SoundTestSoundsB_01.asm 006bb4 72 sound_data
-engine/story/DebugStoryStatsScreenString0.asm 009202 8
-engine/story/DebugStoryStatsScreenString1.asm 00920a 10
+engine/story/SaveResultFailedString_02.asm 0091fa 8 text
+engine/story/SaveResultLoadedString_02.asm 009202 8 text
+engine/story/SaveResultSavedString_02.asm 00920a 8 text
+engine/story/Unused_02_SaveResultDeletedString.asm 009212 8 text
+engine/story/SaveResultBlankString_02.asm 00921a 8 text
+engine/story/Unused_02_MarioGolfSignature.asm 009237 10 text
 engine/save/SaveSignature.asm 00c7e9 10
 engine/save/SaveEditorCursorTiles_03.bin 00d2f0 20 gfx
 engine/cutscenes/ScrollTextPalette_03.asm 00db20 8 palettes
@@ -902,6 +908,7 @@ engine/menus/exp/lz_ExpAwardScreenTilemap_1e.bin 07a2ca 185 tilemap:32
 engine/menus/exp/lz_ExpAwardScreenAttrmap_1e.bin 07a44f 46 tilemap:32
 engine/menus/exp/ExpAwardScreenPalettes1.asm 07a495 8 palettes
 engine/menus/exp/lz_ExpDigitSpriteGfx_1e.bin 07a49d 96 gfx
+engine/menus/exp/TrophyExpValueTable.asm 07a7a7 30 words:4
 engine/menus/exp/lz_GameProgressHeaderGfx_1e.bin 07b5a6 ec gfx
 engine/menus/exp/lz_GameProgressHeaderTilemap_1e.bin 07b692 50 tilemap:32
 engine/menus/exp/lz_GameProgressHeaderAttrmap_1e.bin 07b6e2 18 tilemap:32
@@ -1181,7 +1188,9 @@ engine/menus/link/LinkStatusPalette1.asm 0f8a8f 8 palettes
 engine/menus/link/LinkStatusPalette2.asm 0f8a97 8 palettes
 engine/menus/link/LinkStatusPalette3.asm 0f8a9f 8 palettes
 engine/menus/link/LinkErrorPalette_3e.asm 0f8b83 8 palettes
+engine/menus/link/LinkErrorFlashColors_3e.asm 0f8b8b 18 palettes
 engine/menus/equipment/EraseConfirmPalette_3e.asm 0f8e80 8 palettes
+engine/menus/equipment/EraseConfirmFlashColors_3e.asm 0f8e88 18 palettes
 engine/menus/equipment/RacketShoesChoicePalette0.asm 0f905d 8 palettes
 engine/menus/equipment/RacketShoesChoicePalette1.asm 0f9065 8 palettes
 engine/menus/equipment/PlayAlonePartnerPalette.asm 0f9345 10 palettes

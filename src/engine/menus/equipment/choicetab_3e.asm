@@ -141,8 +141,9 @@ SetChoiceTabAttrRect:
 	pop af ; $518c
 	ret ; $518d
 ChoiceTabAttrAddrs_3e:
-	; $518e, 4 bytes (bytes:4)
-	db $e3, $d4, $ec, $d4 ; 0x00
+	; $518e, 4 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 3 ; record 0
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 12 ; record 1
 RunPlayAlonePartnerMenu:
 	sound BGM_MENU ; $5192
 	ld hl, rIE ; $5194
@@ -367,8 +368,9 @@ DrawPlayAlonePartnerCaption:
 	pop_wram_bank ; $537e
 	ret ; $5383
 PlayAlonePartnerCaptionDests_3e:
-	; $5384, 4 bytes (bytes:4)
-	db $01, $d2, $01, $d2 ; 0x00
+	; $5384, 4 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
 ShowEquipmentStatusScreen:
 	call ClearFrameTasks ; $5388
 	script_fade_out 16 ; $538b

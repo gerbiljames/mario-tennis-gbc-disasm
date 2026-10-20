@@ -405,14 +405,32 @@ StatModRowAddrPtrs:
 	dw StatModRowAddr1 ; record 1
 	dw StatModRowAddr2 ; record 2
 StatModRowAddr0:
-	; $5b69, 16 bytes (bytes:8)
-	db $e1, $d0, $eb, $d0, $21, $d1, $2b, $d1 ; 0x00
-	db $61, $d1, $6b, $d1, $00, $00, $00, $00 ; 0x08
+	; $5b69, 16 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 11 ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 11 ; record 3
+	dw wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 11 * TILEMAP_WIDTH + 11 ; record 5
+	dw 0 ; record 6
+	dw 0 ; record 7
 StatModRowAddr1:
-	; $5b79, 16 bytes (bytes:8)
-	db $61, $d0, $6b, $d0, $a1, $d0, $ab, $d0 ; 0x00
-	db $e1, $d0, $eb, $d0, $00, $00, $00, $00 ; 0x08
+	; $5b79, 16 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 3 * TILEMAP_WIDTH + 11 ; record 1
+	dw wShadowTilemap + 5 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 5 * TILEMAP_WIDTH + 11 ; record 3
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 11 ; record 5
+	dw 0 ; record 6
+	dw 0 ; record 7
 StatModRowAddr2:
-	; $5b89, 16 bytes (bytes:8)
-	db $81, $d1, $8b, $d1, $c1, $d1, $cb, $d1 ; 0x00
-	db $01, $d2, $0b, $d2, $00, $00, $00, $00 ; 0x08
+	; $5b89, 16 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 11 ; record 1
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 11 ; record 3
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 11 ; record 5
+	dw 0 ; record 6
+	dw 0 ; record 7

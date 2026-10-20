@@ -590,8 +590,10 @@ DrawMinigameLevelDescription:
 	pop_wram_bank ; $6d89
 	ret ; $6d8e
 MinigameLevelDescriptionTable:
-	; $6d8f, 6 bytes (bytes:6)
-	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
+	; $6d8f, 6 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
 LoadMinigameLevelSelectPalette:
 	ld hl, MinigameLevelSelectPalettePtrs ; $6d95
 	add a ; $6d98

@@ -431,6 +431,13 @@ def check(fail):
         where = [f"{Path(f).relative_to(ROOT)}:{ln}" for (f, ln), *_ , v, _vals in g.data_dead()[1] if v == var]
         fail("reach", f"{where[0]}: {var} decides a call no visible store can take; review it in "
                       f"DATA_FLAGS (tools/reach.py)")
+    for var in sorted(set(DATA_FLAGS) - {v for *_, v, _vals in g.data_dead()[1]}):
+        fail("reach", f"{var} no longer decides a call no visible store can take -- "
+                      f"drop it from DATA_FLAGS (tools/reach.py)")
+    for name in sorted(KNOWN_UNEXPLAINED):
+        if name not in g.routines() or name in live or name.startswith("Unused"):
+            fail("reach", f"{name} is no longer an unreachable routine named as live -- "
+                          f"drop it from KNOWN_UNEXPLAINED (tools/reach.py)")
     n = 0
     for name in sorted(g.routines()):
         n += 1

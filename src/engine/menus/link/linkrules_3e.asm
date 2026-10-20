@@ -71,8 +71,14 @@ SetMatchRuleOptionAttrRect:
 	pop af ; $48a4
 	ret ; $48a5
 MatchRuleOptionAttrAddrs_3e:
-	; $48a6, 14 bytes (bytes:14)
-	db $63, $d4, $6c, $d4, $e3, $d4, $ec, $d4, $61, $d5, $67, $d5, $6d, $d5 ; 0x00
+	; $48a6, 14 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 3 ; record 0
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 12 ; record 1
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 3 ; record 2
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 12 ; record 3
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 5
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 6
 MatchRuleOptionAttrWidths_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
@@ -179,8 +185,10 @@ Unused_3e_DrawMatchRulesCaptionText:
 	farcall RenderTextToBuffer64 ; $49dc
 	ret ; $49df
 MatchRulesCaptionDests_3e:
-	; $49e0, 6 bytes (bytes:6)
-	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
+	; $49e0, 6 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
 ShowLinkMessageScreen:
 	push af ; $49e6
 	push bc ; $49e7
@@ -360,9 +368,7 @@ AnimateLinkErrorPalette:
 LinkErrorPalette_3e:
 	INCLUDE "data/engine/menus/link/LinkErrorPalette_3e.asm" ; $4b83, 8 bytes (palettes)
 LinkErrorFlashColors_3e:
-	; $4b8b, 24 bytes (bytes:16)
-	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
-	db $bf, $02, $ff, $01, $df, $00, $1f, $00 ; 0x10
+	INCLUDE "data/engine/menus/link/LinkErrorFlashColors_3e.asm" ; $4b8b, 24 bytes (palettes)
 ShowLinkStatusMessage:
 	push bc ; $4ba3
 	wram_bank WRAM_SCREEN ; $4ba4

@@ -116,8 +116,9 @@ DrawSavedDataTypeDescription:
 	pop_wram_bank ; $73ac
 	ret ; $73b1
 SavedDataTypeDescriptionTable:
-	; $73b2, 4 bytes (bytes:4)
-	db $01, $d2, $01, $d2 ; 0x00
+	; $73b2, 4 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
 LoadSavedDataTypePalette:
 	ld hl, SavedDataTypePalettePtrs ; $73b6
 	add a ; $73b9

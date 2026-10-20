@@ -247,9 +247,7 @@ AnimateEraseConfirmPalette:
 EraseConfirmPalette_3e:
 	INCLUDE "data/engine/menus/equipment/EraseConfirmPalette_3e.asm" ; $4e80, 8 bytes (palettes)
 EraseConfirmFlashColors_3e:
-	; $4e88, 24 bytes (bytes:16)
-	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
-	db $bf, $02, $ff, $01, $df, $00, $1f, $00 ; 0x10
+	INCLUDE "data/engine/menus/equipment/EraseConfirmFlashColors_3e.asm" ; $4e88, 24 bytes (palettes)
 RunRacketShoesChoiceMenu:
 	sound BGM_MENU ; $4ea0
 	ld hl, rIE ; $4ea2

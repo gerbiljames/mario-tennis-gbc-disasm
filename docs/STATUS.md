@@ -1,4 +1,4 @@
-# Project status — 2026-10-19
+# Project status — 2026-10-20
 
 Where the disassembly stands and what is still open. The subsystem docs under
 `docs/` are the writeups; the git log has the history.
@@ -13,10 +13,10 @@ user's `baserom.gbc` per `data.manifest`.
 
 | | |
 |---|---|
-| source-spelled bytes (`tools/stats.py`) | 915,831, 43.7% of the 2 MiB ROM; 976,903 `INCBIN`, 200,809 free |
+| source-spelled bytes (`tools/stats.py`) | 915,823, 43.7% of the 2 MiB ROM; 976,903 `INCBIN`, 200,809 free |
 | instruction and code-macro lines | 124,740 |
-| labels | 29,565: ROM 14,410 global + 13,418 local, RAM 1,737; none state only an address |
-| extracted data regions | 4,267 (3,249 `INCBIN`, 1,018 generated `INCLUDE`s), 863 of them LZ streams |
+| labels | 29,568: ROM 14,413 global + 13,418 local, RAM 1,737; none state only an address |
+| extracted data regions | 4,276 (3,249 `INCBIN`, 1,027 generated `INCLUDE`s), 863 of them LZ streams |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
 
 Ids, records and layouts are checked at build time: id-indexed tables assert
@@ -44,7 +44,7 @@ with a fork's edits under `mods/`.
 | `docs/save_format.md` | the battery save and `tools/savetool.py` |
 | `docs/ram_map.md` | WRAM/HRAM, union overlays, free RAM |
 | `docs/bugs.md` | defects in the game, and the nine `make FIXES=1` fixes |
-| `docs/unused_code.md` | the 789 routines and 154 blobs nothing live reaches |
+| `docs/unused_code.md` | the 789 routines and 157 blobs nothing live reaches |
 | `docs/duplicated_code.md` | the live routines assembled into several banks |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 

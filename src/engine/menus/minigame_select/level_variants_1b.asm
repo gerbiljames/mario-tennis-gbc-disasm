@@ -167,8 +167,9 @@ SetSelectPanelAttrRect:
 	pop af ; $6f5c
 	ret ; $6f5d
 SelectPanelAttrRectTable:
-	; $6f5e, 4 bytes (bytes:4)
-	db $e3, $d4, $ec, $d4 ; 0x00
+	; $6f5e, 4 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 3 ; record 0
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 12 ; record 1
 DrawMinigameLevelSelect2Cursor:
 	farcall TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
@@ -342,8 +343,10 @@ SetSelectPanelAttrRect3:
 	pop af ; $70e5
 	ret ; $70e6
 SelectPanelAttrRect3Table:
-	; $70e7, 6 bytes (bytes:6)
-	db $e1, $d4, $e7, $d4, $ed, $d4 ; 0x00
+	; $70e7, 6 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 7 ; record 1
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 13 ; record 2
 DrawMinigameLevelSelect3Cursor:
 	farcall TickMenuBgScroll ; $70ed
 	ld c, $03 ; $70f0

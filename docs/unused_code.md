@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-943 labels carry an `Unused` prefix: 789 routines and 154 data blobs.
+946 labels carry an `Unused` prefix: 789 routines and 157 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -173,7 +173,7 @@ nothing loads) are the largest bodies with no live twin at all.
 `Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** By bytes the 154 unused blobs are mostly
+**8. Data that came along.** By bytes the 157 unused blobs are mostly
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), the Japanese font and
 window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and

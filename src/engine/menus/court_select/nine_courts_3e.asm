@@ -423,9 +423,16 @@ SetCourtSelect9TabAttrRect:
 	pop af ; $68b2
 	ret ; $68b3
 CourtSelect9TabAttrAddrs_3e:
-	; $68b4, 18 bytes (bytes:16)
-	db $61, $d4, $67, $d4, $6d, $d4, $e1, $d4, $e7, $d4, $ed, $d4, $61, $d5, $67, $d5 ; 0x00
-	db $6d, $d5 ; 0x10
+	; $68b4, 18 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 7 ; record 1
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 13 ; record 2
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 7 ; record 4
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 13 ; record 5
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 6
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 7
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 8
 SetCourtSelect9Palette:
 	ld hl, CourtSelect9PalettePtrs ; $68c6
 	add a ; $68c9

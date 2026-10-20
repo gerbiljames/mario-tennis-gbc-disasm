@@ -321,8 +321,10 @@ Unused_38_DrawMatchTypeOptionLabel:
 	farcall RenderTextToBuffer64 ; $4745
 	ret ; $4748
 MatchTypeOptionLabelTable:
-	; $4749, 6 bytes (bytes:6)
-	db $01, $d2, $02, $d2, $02, $d2 ; 0x00
+	; $4749, 6 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; record 2
 Unused_38_AdjustMatchTypeSetting:
 	ld a, [wMenuInputPressed] ; $474f
 	bit PADB_LEFT, a ; $4752

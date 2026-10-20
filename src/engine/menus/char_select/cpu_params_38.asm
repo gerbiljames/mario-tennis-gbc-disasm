@@ -201,8 +201,10 @@ LoadCachedStorySlotName:
 	pop af ; $60e4
 	ret ; $60e5
 CachedStorySlotNameTable:
-	; $60e6, 6 bytes (bytes:6)
-	db $00, $d0, $00, $d1, $00, $d2 ; 0x00
+	; $60e6, 6 bytes (ram_ptrs:1)
+	dw wDecompBuffer ; record 0
+	dw wDecompBuffer tile 16 ; record 1
+	dw wDecompBuffer tile 32 ; record 2
 CompactRosterGridEntries:
 	ld hl, wCharGridEntries + 36 ; $60ec
 	ld c, $00 ; $60ef

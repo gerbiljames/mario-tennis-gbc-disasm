@@ -223,7 +223,7 @@ class Manifest(unittest.TestCase):
     def test_counts(self):
         lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                  if l.strip() and not l.startswith("#")]
-        self.assertEqual(len(lines), 4267)
+        self.assertEqual(len(lines), 4276)
         streams = sum(1 for f in lines if "/lz_" in f[0])
         self.assertEqual(streams, 863)
         self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
@@ -237,7 +237,7 @@ class Manifest(unittest.TestCase):
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1018)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1027)
 
 
 @needs_rom

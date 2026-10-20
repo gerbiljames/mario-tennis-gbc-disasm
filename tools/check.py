@@ -19,6 +19,9 @@ after a real defect broke it:
             (49 position tables once rendered as strings)
   db-words  a label holding only db rows has no little-endian word equal to
             a label of its bank: a pointer the assembler cannot move
+  addr-words a label holding only raw db bytes does not hold words that are
+            all VRAM- or WRAM-shaped ($80-$9f / $c0-$df high bytes): such a
+            table is addresses, written `dw wShadowAttrmap + ...`
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
   macros    every target_script, move_curve, frame_place, blit_runs and
@@ -447,18 +450,88 @@ def check_db_pointers(rom, manifest, fail):
     return n
 
 
+# db tables whose words look like RAM/VRAM addresses but are not, with what
+# they are.
+KNOWN_ADDR_SHAPED = {
+    "TennisDictionaryIndexCursorTable1": "2x2 tile-id cells, $84 the blank tile",
+    "MinigameHighScoreNumberTable": "sprite y, x pairs",
+}
+_DB_HEX_RE = re.compile(r"\$([0-9a-fA-F]{2})")
+
+
+def _db_bytes(body, specs, rom, offsets):
+    """The bytes of a label body that is only `db $xx` rows or one INCLUDE
+    of a bytes-spec region; None for anything else."""
+    inc = re.fullmatch(r'INCLUDE "data/([^"]+)"', body[0]) if len(body) == 1 else None
+    if inc:
+        path = inc.group(1)
+        if not (specs.get(path) or "").startswith("bytes") or path not in offsets:
+            return None
+        off, length = offsets[path]
+        return rom[off:off + length]
+    out = []
+    for s in body:
+        if not s.startswith("db "):
+            return None
+        for tok in s[3:].split(","):
+            m = _DB_HEX_RE.fullmatch(tok.strip())
+            if not m:
+                return None
+            out.append(int(m.group(1), 16))
+    return bytes(out)
+
+
+def check_addr_shaped(rom, manifest, fail):
+    """A table of raw bytes (inline `db` rows or a `bytes` region) whose
+    words all look like VRAM ($80-$9f high byte) or WRAM ($c0-$df)
+    addresses is a word table written as bytes: it wants `dw` rows of the
+    RAM/VRAM symbols it addresses. $0000 words (unused slots) are skipped."""
+    specs = {p: s for p, _o, _n, s in manifest}
+    offsets = {p: (o, n) for p, o, n, _s in manifest}
+    found, n = set(), 0
+    for h in holders():
+        name, body = None, []
+        for line in bank_lines(h)[0] + ["End:"]:
+            m = _GLOBAL_RE.match(line)
+            if not m:
+                s = line.split(";")[0].strip()
+                if s and not s.endswith(":"):
+                    body.append(s)
+                continue
+            data = _db_bytes(body, specs, rom, offsets) if name and body else None
+            if data and len(data) % 2 == 0:
+                n += 1
+                words = [w for w in (data[k] | data[k + 1] << 8 for k in range(0, len(data), 2)) if w]
+                his = {w >> 8 for w in words}
+                if len(words) >= 2 and (his <= set(range(0x80, 0xa0)) or his <= set(range(0xc0, 0xe0))):
+                    found.add(name)
+                    if name not in KNOWN_ADDR_SHAPED:
+                        fail("addr-words", f"{name}: words " + " ".join(f"${w:04x}" for w in words[:6])
+                             + " -- addresses written as bytes? (dw <symbol> + ...)")
+            name, body = m.group(1), []
+    for name in sorted(set(KNOWN_ADDR_SHAPED) - found):
+        fail("addr-words", f"{name} is no longer address-shaped -- drop it from KNOWN_ADDR_SHAPED")
+    return n
+
+
 def check_text_regions(rom, manifest, fail):
     """A spec-less .asm region is rendered as game text, so it must be text:
     printable characters and text codes in NUL-terminated strings of two or
-    more bytes. Anything else wants a spec."""
+    more bytes. Anything else wants a spec. A region declared `text` (a
+    one-character string, an unterminated signature, NUL padding) need only
+    hold text bytes and NULs."""
     from extract import SAFE, TEXT_CODES
     ok = SAFE | set(TEXT_CODES) | {0x01, 0x02, 0x03}
     n = 0
     for path, off, length, spec in manifest:
-        if spec or not path.endswith(".asm"):
+        if spec not in (None, "text") or not path.endswith(".asm"):
             continue
         n += 1
         data = rom[off:off + length]
+        if spec == "text":
+            if any(b not in ok for b in data if b):
+                fail("text", f"{path}: declared text but holds non-text bytes")
+            continue
         strings = data[:-1].split(b"\0")
         if (not data.endswith(b"\0") or any(len(s) < 2 for s in strings)
                 or any(b not in ok for b in data[:-1] if b)):
@@ -545,7 +618,8 @@ def check_gfx(manifest, fail):
     try:
         import gfx
         from PIL import Image
-    except ImportError:
+    except ImportError as e:
+        fail("gfx", f"cannot check the PNGs: {e} (run with the venv's python, `make venv`)")
         return 0
     n = 0
     for path, off, length, spec in manifest:
@@ -729,6 +803,9 @@ def check_collapsed_branches(fail):
                 found[key] = f"{origin[i][0].name}:{origin[i][1]}"
     for key in sorted(set(found) - KNOWN_COLLAPSED_BRANCHES, key=str):
         fail("branches", f"new collapsed branch at {found[key]}")
+    for bank, addr in sorted(KNOWN_COLLAPSED_BRANCHES - set(found), key=str):
+        fail("branches", f"${bank:02x}:${addr:04x} no longer branches to the next "
+                         "instruction -- drop it from KNOWN_COLLAPSED_BRANCHES")
     return len(found)
 
 
@@ -1155,6 +1232,7 @@ def main():
         "regions": check_regions(manifest, fail),
         "text": check_text_regions(rom, manifest, fail),
         "db-words": check_db_pointers(rom, manifest, fail),
+        "addr-words": check_addr_shaped(rom, manifest, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),

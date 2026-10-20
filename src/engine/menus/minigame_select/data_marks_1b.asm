@@ -19,8 +19,12 @@ GetMinigameRowTilemapDest:
 	ld l, a ; $76ad
 	ret ; $76ae
 MinigameRowTilemapDestTable:
-	; $76af, 10 bytes (bytes:10)
-	db $c3, $d0, $03, $d1, $43, $d1, $83, $d1, $c3, $d1 ; 0x00
+	; $76af, 10 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; record 0
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; record 1
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 3 ; record 2
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 3 ; record 3
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; record 4
 DrawMinigameDataScrollArrows:
 	call CheckMinigameDataScrollable ; $76b9
 	or a ; $76bc

@@ -1,8 +1,5 @@
 TrophyExpValueTable:
-	; $67a7, 48 bytes (bytes:16)
-	db $32, $00, $32, $00, $32, $00, $32, $00, $64, $00, $64, $00, $64, $00, $64, $00 ; 0x00
-	db $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00 ; 0x10
-	db $90, $01, $90, $01, $90, $01, $90, $01, $bc, $02, $bc, $02, $bc, $02, $bc, $02 ; 0x20
+	INCLUDE "data/engine/menus/exp/TrophyExpValueTable.asm" ; $67a7, 48 bytes (words:4)
 MatchStatsRewardTable0:
 	; $67d7, 8 bytes (bytes:8)
 	db $02, $03, $04, $05, $06, $07, $08, $00 ; 0x00

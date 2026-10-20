@@ -32,12 +32,20 @@ else
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 endif
 
+.DELETE_ON_ERROR:
+
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
+
 # The mods/ overlay: edited data files a fork commits (mods/README.md) are
 # copied over data/ before anything is built, at parse time so no target can
 # race it. A copy is newer than the .bin it covers, so a PNG or grid from
 # mods/ is re-encoded by the rules below.
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(info $(shell python3 tools/mods.py apply))
+MODS_APPLIED := $(shell $(PYTHON) tools/mods.py apply)
+ifneq ($(.SHELLSTATUS),0)
+$(error tools/mods.py apply failed)
+endif
+$(info $(MODS_APPLIED))
 endif
 
 .PHONY: all compare check test shift-test event-test slot-audit venv previews clean
@@ -72,13 +80,13 @@ $(BUILD)/ram.o: $(RAM_SRCS) | $(BUILD)/rgbdscheck.o
 # PNG only exists for blobs the manifest tags gfx, and extract.py writes the
 # .bin last, so an untouched tree never triggers this.
 data/%.bin: data/%.png
-	python3 tools/gfx.py encode $< $@
+	$(PYTHON) tools/gfx.py encode $< $@
 
 # A tilemap or attribute-map blob whose grid (.tilemap, written by extract.py
 # beside it) is newer is re-encoded from the text, and re-compressed if it is
 # an LZ stream. Same discipline as the PNGs: an untouched tree never triggers it.
 data/%.bin: data/%.tilemap
-	python3 tools/tilemap.py encode $< $@
+	$(PYTHON) tools/tilemap.py encode $< $@
 
 # `DEF <Label>_SIZE EQU <decoded length>` for an LZ stream the source copies
 # whole after decompressing (`ld c, Label_SIZE / 16`): the assembler cannot
@@ -94,7 +102,7 @@ $(BUILD)/rgbdscheck.o: rgbdscheck.asm | $(BUILD)
 # they INCBIN or INCLUDE; tools/deps.py lists them.
 FRAGMENTS := $(shell find src -mindepth 2 -name '*.asm')
 
-$(BUILD)/deps.mk: main.asm $(FRAGMENTS) tools/deps.py tools/banksrc.py | $(BUILD)
+$(BUILD)/deps.mk: main.asm $(FRAGMENTS) include/lz_sizes.inc tools/deps.py tools/banksrc.py | $(BUILD)
 	python3 tools/deps.py $(BUILD) > $@
 
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
@@ -113,22 +121,21 @@ compare: $(ROM)
 # regions do not overlap, and that every PNG and tilemap grid encodes back to
 # its blob. See tools/check.py.
 check: $(ROM)
-	python3 tools/check.py
+	$(PYTHON) tools/check.py
 
 # Redraw the view-only scene pictures (data/<bank>/<Tilemap>.preview.png)
 # from the current grids, tiles and palettes, e.g. after editing a grid.
 previews:
-	python3 tools/tilemap.py previews data.previews data/
+	$(PYTHON) tools/tilemap.py previews data.previews data/
 
 # The unit tests need no ROM; the regression pins in tests/test_rom.py skip
 # themselves when baserom.gbc is absent, and otherwise read the build.
-PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 test: $(if $(wildcard baserom.gbc),$(ROM))
 	$(PYTHON) -m unittest discover -s tests -t . -v
 
-# check, shift-test, event-test and slot-audit read build/ and
+# check, test, shift-test, event-test and slot-audit read build/ and
 # mariotennis.gbc, the USA byte-perfect build.
-USA_ONLY := check shift-test event-test slot-audit
+USA_ONLY := check test shift-test event-test slot-audit
 ifneq ($(filter $(USA_ONLY),$(MAKECMDGOALS)),)
 ifneq ($(filter 1,$(FIXES) $(EUROPE)),)
 $(error $(filter $(USA_ONLY),$(MAKECMDGOALS)) runs on the USA build only, without FIXES or EUROPE)

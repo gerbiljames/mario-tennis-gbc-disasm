@@ -722,7 +722,8 @@ edited directly as those macro rows; the retired generator and its
 2,751 declarations at that tag (today's source differs, e.g. 173
 `sprite_template` and 269 `actor_script` regions; `*` counts are today's,
 for kinds added since). `data.manifest` holds the
-extracted regions.
+extracted regions. `tools/extract.py` renders only the kinds it lists and
+rejects any other spec; the rest exist as inline declarations only.
 
 | spec | count | renders as |
 |---|---|---|
@@ -759,12 +760,13 @@ extracted regions.
 | `frame_place` | 30* | `*FramePlace` rows (§4.5) |
 | `scene_config` | 21* | a story `SceneConfig`: `scene_bounds` and the unread bytes |
 | `move_curve` | 16* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
+| `text` | 10* | game text that is not NUL-terminated strings of two or more bytes (one-character strings, a signature, NUL padding) |
 | one each | | `cart_header`, `squares`, `story_locations`, `location_entries`, `minigame_configs`, `tilemap_scripts`, `gfx_ptr_table`, `lz_ptr_table`, `char_lz_ptr_table`, `mugshot_ptr_table`, `tilemap_dispatch` |
 
 ### 7.2 No ROM values in the repository
 
 Kinds whose rows are literal ROM values (`palettes`, `sound_index`,
-`sound_data`, `text_pool`, `words`, the `*` kinds above) are generated into the gitignored `data/` tree at
+`sound_data`, `text_pool`, `text`, `words`, the `*` kinds above) are generated into the gitignored `data/` tree at
 setup by `tools/extract.py`'s `render_spec` and `INCLUDE`d. Kinds whose rows
 are label arithmetic, pointer symbols or macro calls are written inline, since
 rgbasm recomputes them from the layout.
@@ -796,7 +798,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty-three
+the source claims is true, not just that the bytes come back. All twenty-four
 pass:
 
 | check | count | what it asserts |
@@ -804,24 +806,25 @@ pass:
 | `lz` | 863 | every stream decodes inside its extent and re-encodes to a stream that decodes back |
 | `lz-labels` | 863 | no symbol lands inside a compressed stream |
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
-| `regions` | 4267 | manifest regions stay inside their bank and do not overlap |
-| `text` | 21 | a spec-less `.asm` region is NUL-terminated text |
-| `db-words` | 559 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
-| `layout` | 4267 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
+| `regions` | 4276 | manifest regions stay inside their bank and do not overlap |
+| `text` | 28 | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
+| `db-words` | 536 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `addr-words` | 328 | a raw-`db` label's words are not all VRAM- or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
+| `layout` | 4276 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
 | `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13745 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `labels` | 13748 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33797 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
 | `gfx` | 2907 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 124 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
+| `gfx-specs` | 121 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
 | `tilemap` | 239 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4879 | a routine is named `Unused` exactly when nothing reachable reaches it |
-| `unnamed` | 8866 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
+| `unnamed` | 8869 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
 | `raw-ids` | 4745 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
 
