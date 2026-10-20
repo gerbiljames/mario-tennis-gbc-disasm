@@ -551,8 +551,8 @@ VarsityTeamChartTilemap2:
 	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap2.bin" ; $6a11, 317 bytes
 VarsityTeamChartAttrmap2:
 	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap2.bin" ; $6b4e, 143 bytes
-TournamentBracketGfx:
-	INCBIN "data/engine/menus/dictionary/lz_TournamentBracketGfx.bin" ; $6bdd, 38 bytes
+VarsityTeamChartNameBoxTiles:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartNameBoxTiles.bin" ; $6bdd, 38 bytes
 MugshotTiles:
 	INCBIN "data/engine/menus/dictionary/lz_MugshotTiles.bin" ; $6c03, 1000 bytes
 TournamentBracketTiles:

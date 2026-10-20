@@ -18,16 +18,16 @@ TickLevelUpJingle:
 	ret ; $77c7
 ExpPromptWindowFrame_1d:
 	INCLUDE "data/engine/menus/exp/ExpPromptWindowFrame_1d.asm" ; $77c8, 25 bytes (blit_runs)
-ExpLevelDownTilemapPatch0:
-	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch0.asm" ; $77e1, 21 bytes (blit_runs)
-ExpLevelDownTilemapPatch1:
-	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch1.asm" ; $77f6, 17 bytes (blit_runs)
-ExpLevelDownTilemapPatch2:
-	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch2.asm" ; $7807, 13 bytes (blit_runs)
-ExpLevelDownTilemapPatch3:
-	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch3.asm" ; $7814, 9 bytes (blit_runs)
-ExpLevelDownTilemapPatch4:
-	INCLUDE "data/engine/menus/exp/ExpLevelDownTilemapPatch4.asm" ; $781d, 5 bytes (blit_runs)
+ExpPromptWindowAnimStep0:
+	INCLUDE "data/engine/menus/exp/ExpPromptWindowAnimStep0.asm" ; $77e1, 21 bytes (blit_runs)
+ExpPromptWindowAnimStep1:
+	INCLUDE "data/engine/menus/exp/ExpPromptWindowAnimStep1.asm" ; $77f6, 17 bytes (blit_runs)
+ExpPromptWindowAnimStep2:
+	INCLUDE "data/engine/menus/exp/ExpPromptWindowAnimStep2.asm" ; $7807, 13 bytes (blit_runs)
+ExpPromptWindowAnimStep3:
+	INCLUDE "data/engine/menus/exp/ExpPromptWindowAnimStep3.asm" ; $7814, 9 bytes (blit_runs)
+ExpPromptWindowAnimStep4:
+	INCLUDE "data/engine/menus/exp/ExpPromptWindowAnimStep4.asm" ; $781d, 5 bytes (blit_runs)
 ExpDistributionScreenPatchTilemap:
 	INCBIN "data/engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.bin" ; $7822, 47 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpDistributionScreenPatchTilemap.inc" ; DEF ExpDistributionScreenPatchTilemap_SIZE EQU its decoded length, generated from the .bin by make

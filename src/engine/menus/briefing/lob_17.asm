@@ -143,7 +143,7 @@ DrillBriefing_ReturnLob:
 	frame_task DrawBriefingBallSprite ; $6aec
 	frame_task DrawBriefingMarkerHFlip ; $6af4
 	frame_task DrawBriefingMarkerRotated ; $6afc
-	frame_task DrawBriefingSwingAnim ; $6b04
+	frame_task DrawBriefingCmdPrompt ; $6b04
 	ld a, $0d ; $6b0c
 	ld [wBriefingBracketWidth], a ; $6b0e
 	ld a, $09 ; $6b11
@@ -162,7 +162,7 @@ DrillBriefing_ReturnLob:
 	frame_task DrawBriefingBallSprite ; $6b4a
 	frame_task DrawBriefingMarkerHFlip ; $6b52
 	frame_task DrawBriefingMarkerRotated ; $6b5a
-	frame_task DrawBriefingSwingAnim ; $6b62
+	frame_task DrawBriefingCmdPrompt ; $6b62
 	ld a, $0d ; $6b6a
 	ld [wBriefingBracketWidth], a ; $6b6c
 	ld a, $09 ; $6b6f
@@ -266,19 +266,19 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c47
 	ld [wBriefingRotMarkerY], a ; $6c48
 	ld a, [wBriefingAnimStep] ; $6c4b
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_SwingFrameTable ; $6c4e
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_CmdPromptTable ; $6c4e
 	ld a, [hl] ; $6c55
-	ld [wBriefingSwingFrame], a ; $6c56
+	ld [wBriefingCmdPrompt], a ; $6c56
 	ld a, c ; $6c59
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_SwingPosTable ; $6c5a
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_CmdPromptPosTable ; $6c5a
 	ld a, [hl] ; $6c61
 	inc hl ; $6c62
 	inc hl ; $6c63
 	ld b, [hl] ; $6c64
 	ld a, a ; $6c65
-	ld [wBriefingSwingX], a ; $6c66
+	ld [wBriefingCmdPromptX], a ; $6c66
 	ld a, b ; $6c69
-	ld [wBriefingSwingY], a ; $6c6a
+	ld [wBriefingCmdPromptY], a ; $6c6a
 	ret ; $6c6d
 ReturnLobBriefing_AdvanceAnimTable:
 	; $6c6e, 16 bytes (records:2)
@@ -304,10 +304,10 @@ ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $6cb6, 16 bytes (words:2)
 ReturnLobBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_BracketPosTable.asm" ; $6cc6, 16 bytes (words:2)
-ReturnLobBriefing_AdvanceAnim_SwingFrameTable:
-	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingFrameTable.asm" ; $6cd6, 4 bytes (bytes:4)
-ReturnLobBriefing_AdvanceAnim_SwingPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_SwingPosTable.asm" ; $6cda, 16 bytes (words:2)
+ReturnLobBriefing_AdvanceAnim_CmdPromptTable:
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_CmdPromptTable.asm" ; $6cd6, 4 bytes (bytes:4)
+ReturnLobBriefing_AdvanceAnim_CmdPromptPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnLobBriefing_AdvanceAnim_CmdPromptPosTable.asm" ; $6cda, 16 bytes (words:2)
 DrillBriefing_ReturnDownLine:
 	ld a, $55 ; $6cea
 	ld [wBriefingPlayerX], a ; $6cec

@@ -98,12 +98,12 @@ DrillBriefing_ServeAndSmash:
 	ld [wBriefingVMarkerY], a ; $637c
 	frame_task DrawBriefingMarkerVFlip ; $637f
 	ld a, $04 ; $6387
-	ld [wBriefingSwingFrame], a ; $6389
+	ld [wBriefingCmdPrompt], a ; $6389
 	ld a, $2d ; $638c
-	ld [wBriefingSwingX], a ; $638e
+	ld [wBriefingCmdPromptX], a ; $638e
 	ld a, $30 ; $6391
-	ld [wBriefingSwingY], a ; $6393
-	frame_task DrawBriefingSwingAnim ; $6396
+	ld [wBriefingCmdPromptY], a ; $6393
+	frame_task DrawBriefingCmdPrompt ; $6396
 	ld hl, Text_BriefServeSmashSmashLob ; $639e
 	call DrawBriefingCaption ; $63a1
 	call WaitForInputBlinking ; $63a4
@@ -337,12 +337,12 @@ DrillBriefing_ServeAndSmash2:
 	ld [wBriefingVMarkerY], a ; $6685
 	frame_task DrawBriefingMarkerVFlip ; $6688
 	ld a, $05 ; $6690
-	ld [wBriefingSwingFrame], a ; $6692
+	ld [wBriefingCmdPrompt], a ; $6692
 	ld a, $2d ; $6695
-	ld [wBriefingSwingX], a ; $6697
+	ld [wBriefingCmdPromptX], a ; $6697
 	ld a, $30 ; $669a
-	ld [wBriefingSwingY], a ; $669c
-	frame_task DrawBriefingSwingAnim ; $669f
+	ld [wBriefingCmdPromptY], a ; $669c
+	frame_task DrawBriefingCmdPrompt ; $669f
 	ld hl, Text_BriefDropShotMiddleBlank ; $66a7
 	call DrawBriefingCaption ; $66aa
 	call WaitForInputBlinking ; $66ad

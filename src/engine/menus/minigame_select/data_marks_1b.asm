@@ -292,18 +292,18 @@ CompactMinigameDataRows:
 	ld [wMinigameDataHighScores + 9], a ; $78b4
 	pop_wram_bank ; $78b7
 	ret ; $78bc
-ObjectSceneAGfx0:
-	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneAGfx0.bin" ; $78bd, 179 bytes
-ObjectSceneAGfx1:
-	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneAGfx1.bin" ; $7970, 80 bytes
-ObjectSceneAGfx2:
-	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneAGfx2.bin" ; $79c0, 184 bytes
-ObjectSceneBGfx0:
-	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx0.bin" ; $7a78, 61 bytes
-ObjectSceneBGfx1:
-	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx1.bin" ; $7ab5, 65 bytes
-ObjectSceneBGfx2:
-	INCBIN "data/engine/menus/minigame_select/lz_ObjectSceneBGfx2.bin" ; $7af6, 65 bytes
+AwardsCeremonyConfettiGfx0:
+	INCBIN "data/engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx0.bin" ; $78bd, 179 bytes
+AwardsCeremonyConfettiGfx1:
+	INCBIN "data/engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx1.bin" ; $7970, 80 bytes
+AwardsCeremonyConfettiGfx2:
+	INCBIN "data/engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx2.bin" ; $79c0, 184 bytes
+DreamMatchEpilogueConfettiGfx0:
+	INCBIN "data/engine/menus/minigame_select/lz_DreamMatchEpilogueConfettiGfx0.bin" ; $7a78, 61 bytes
+DreamMatchEpilogueConfettiGfx1:
+	INCBIN "data/engine/menus/minigame_select/lz_DreamMatchEpilogueConfettiGfx1.bin" ; $7ab5, 65 bytes
+DreamMatchEpilogueConfettiGfx2:
+	INCBIN "data/engine/menus/minigame_select/lz_DreamMatchEpilogueConfettiGfx2.bin" ; $7af6, 65 bytes
 ToBeContinuedGfx:
 	INCBIN "data/engine/menus/minigame_select/lz_ToBeContinuedGfx.bin" ; $7b37, 503 bytes
 ToBeContinuedOutlineGfx:

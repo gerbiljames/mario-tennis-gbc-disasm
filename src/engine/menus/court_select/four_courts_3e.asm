@@ -379,12 +379,12 @@ CourtSelect4CursorSpriteTask:
 	ld c, $02 ; $5e96
 	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b
-	ld hl, CourtSelect4CursorTiles_3e ; $5e9c
+	ld hl, CourtSelect4BannerTileBases ; $5e9c
 	add_hl_a ; $5e9f
 	ld c, [hl] ; $5ea4
 	pop af ; $5ea5
 	push af ; $5ea6
-	ld hl, CourtSelect4CursorPositions_3e ; $5ea7
+	ld hl, CourtSelect4BannerPositions ; $5ea7
 	add a ; $5eaa
 	add_hl_a ; $5eab
 	ld a, [hl+] ; $5eb0
@@ -394,7 +394,7 @@ CourtSelect4CursorSpriteTask:
 	ld b, [hl] ; $5eb6
 	pop af ; $5eb7
 	add a ; $5eb8
-	ld hl, CourtSelect4CursorTemplatePtrs ; $5eb9
+	ld hl, CourtSelect4BannerTemplatePtrs ; $5eb9
 	add_hl_a ; $5ebc
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
@@ -405,7 +405,7 @@ CourtSelect4CursorSpriteTask:
 	pop de ; $5eca
 	ld c, $02 ; $5ecb
 	call GetMenuCursorIndex_3e ; $5ecd
-	ld hl, CourtSelect4LabelYOffsets_3e ; $5ed0
+	ld hl, CourtSelect4CursorXOffsets ; $5ed0
 	add_hl_a ; $5ed3
 	ld a, [hl] ; $5ed8
 	ld h, a ; $5ed9
@@ -417,13 +417,13 @@ CourtSelect4CursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $5ee2
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
-CourtSelect4CursorTemplatePtrs:
+CourtSelect4BannerTemplatePtrs:
 	; $5eea, 8 bytes (records:2)
-	dw CourtSelect4Cursor8WideTemplate ; record 0
-	dw CourtSelect4Cursor8WideTemplate ; record 1
-	dw CourtSelect4Cursor8WideTemplate ; record 2
-	dw CourtSelect4Cursor9WideTemplate ; record 3
-CourtSelect4Cursor8WideTemplate:
+	dw CourtSelect4Banner8WideTemplate ; record 0
+	dw CourtSelect4Banner8WideTemplate ; record 1
+	dw CourtSelect4Banner8WideTemplate ; record 2
+	dw CourtSelect4Banner9WideTemplate ; record 3
+CourtSelect4Banner8WideTemplate:
 	; $5ef2, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -434,7 +434,7 @@ CourtSelect4Cursor8WideTemplate:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-CourtSelect4Cursor9WideTemplate:
+CourtSelect4Banner9WideTemplate:
 	; $5f13, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -451,13 +451,13 @@ CourtSelect4CursorSpriteTask_SpriteTemplate:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-CourtSelect4CursorPositions_3e:
+CourtSelect4BannerPositions:
 	; $5f41, 8 bytes (bytes:8)
 	db $38, $14, $38, $4c, $60, $14, $60, $48 ; 0x00
-CourtSelect4CursorTiles_3e:
+CourtSelect4BannerTileBases:
 	; $5f49, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
-CourtSelect4LabelYOffsets_3e:
+CourtSelect4CursorXOffsets:
 	; $5f4d, 4 bytes (bytes:4)
 	db $17, $17, $17, $1b ; 0x00
 RedrawCourtSelect4Menu:
@@ -550,23 +550,23 @@ SetCourtSelect4Palette:
 	ret ; $5ff0
 CourtSelect4PalettePtrs:
 	; $5ff1, 18 bytes (records:2)
-	dw CourtSelect4Palette0 ; record 0
-	dw CourtSelect4Palette1 ; record 1
-	dw CourtSelect4Palette2 ; record 2
-	dw CourtSelect4Palette3 ; record 3
-	dw CourtSelect4Palette0 ; record 4
-	dw CourtSelect4Palette0 ; record 5
-	dw CourtSelect4Palette0 ; record 6
-	dw CourtSelect4Palette0 ; record 7
-	dw CourtSelect4Palette0 ; record 8
-CourtSelect4Palette0:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette0.asm" ; $6003, 8 bytes (palettes)
-CourtSelect4Palette1:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette1.asm" ; $600b, 8 bytes (palettes)
-CourtSelect4Palette2:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette2.asm" ; $6013, 8 bytes (palettes)
-CourtSelect4Palette3:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette3.asm" ; $601b, 8 bytes (palettes)
+	dw CourtSelect4HardPalette ; record 0
+	dw CourtSelect4ClayPalette ; record 1
+	dw CourtSelect4GrassPalette ; record 2
+	dw CourtSelect4CompositionPalette ; record 3
+	dw CourtSelect4HardPalette ; record 4
+	dw CourtSelect4HardPalette ; record 5
+	dw CourtSelect4HardPalette ; record 6
+	dw CourtSelect4HardPalette ; record 7
+	dw CourtSelect4HardPalette ; record 8
+CourtSelect4HardPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4HardPalette.asm" ; $6003, 8 bytes (palettes)
+CourtSelect4ClayPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4ClayPalette.asm" ; $600b, 8 bytes (palettes)
+CourtSelect4GrassPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4GrassPalette.asm" ; $6013, 8 bytes (palettes)
+CourtSelect4CompositionPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4CompositionPalette.asm" ; $601b, 8 bytes (palettes)
 Unused_3e_DrawCourtSelect4StatsText:
 	push_wram_bank WRAM_SCREEN ; $6023
 	ld c, $02 ; $602c

@@ -571,8 +571,8 @@ CharDataBand8RunsStep1_1c:
 	db $ff
 CharDataScreenBasePalettes:
 	INCLUDE "data/engine/menus/char_data/CharDataScreenBasePalettes.asm" ; $598c, 64 bytes (palettes)
-CharDataScreenGfx0_1c:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
+CharDataScreenTiles:
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenTiles.bin" ; $59cc, 2618 bytes
 CharDataScreenTilemap_1c:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin" ; $6406, 99 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenTilemap_1c.inc" ; DEF CharDataScreenTilemap_1c_SIZE EQU its decoded length, generated from the .bin by make

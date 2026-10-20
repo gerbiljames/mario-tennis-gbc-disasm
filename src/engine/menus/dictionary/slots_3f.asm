@@ -39,8 +39,8 @@ DataPtr_VarsityTeamChartTilemap2:
 	dw VarsityTeamChartTilemap2 ; $4026
 DataPtr_VarsityTeamChartAttrmap2:
 	dw VarsityTeamChartAttrmap2 ; $4028
-DataPtr_TournamentBracketGfx:
-	dw TournamentBracketGfx ; $402a
+DataPtr_VarsityTeamChartNameBoxTiles:
+	dw VarsityTeamChartNameBoxTiles ; $402a
 DataPtr_MugshotTiles:
 	dw MugshotTiles ; $402c
 DataPtr_TournamentBracketTiles:

@@ -1,6 +1,6 @@
 TrophyExpValueTable:
 	INCLUDE "data/engine/menus/exp/TrophyExpValueTable.asm" ; $67a7, 48 bytes (words:4)
-GamesWonExpByTier:
+GamesPlayedExpByTier:
 	; $67d7, 8 bytes (bytes:8)
 	db $02, $03, $04, $05, $06, $07, $08, $00 ; 0x00
 ServiceAceExpByTier:
@@ -60,7 +60,7 @@ ComputeMatchStatsReward:
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
 	pop de ; $685b
-	ld hl, GamesWonExpByTier ; $685c
+	ld hl, GamesPlayedExpByTier ; $685c
 	ld a, [wTotalGamesPlayedInMatch] ; $685f
 	call AccumulateStatExp ; $6862
 	ld l, e ; $6865

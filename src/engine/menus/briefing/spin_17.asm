@@ -227,7 +227,7 @@ DrillBriefing_SpinServe:
 	frame_task DrawBriefingBallSprite ; $59d3
 	frame_task DrawBriefingMarkerRotated ; $59db
 	frame_task DrawSpinServeBriefingMarker ; $59e3
-	frame_task DrawBriefingSwingAnim ; $59eb
+	frame_task DrawBriefingCmdPrompt ; $59eb
 	frame_task CycleDiagramTargetPalette ; $59f3
 	ld hl, Text_BriefSpinServeTopspinRight ; $59fb
 	ld a, [wStoryMainLeftHanded] ; $59fe
@@ -418,19 +418,19 @@ SpinServeBriefing_AdvanceAnim2:
 .rightHanded:
 	ld a, [wBriefingAnimStep] ; $5bb3
 	add b ; $5bb6
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SwingFrameTable ; $5bb7
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_CmdPromptTable ; $5bb7
 	ld a, [hl] ; $5bbe
-	ld [wBriefingSwingFrame], a ; $5bbf
+	ld [wBriefingCmdPrompt], a ; $5bbf
 	ld a, c ; $5bc2
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SwingPosTable ; $5bc3
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable ; $5bc3
 	ld a, [hl] ; $5bca
 	inc hl ; $5bcb
 	inc hl ; $5bcc
 	ld b, [hl] ; $5bcd
 	ld a, a ; $5bce
-	ld [wBriefingSwingX], a ; $5bcf
+	ld [wBriefingCmdPromptX], a ; $5bcf
 	ld a, b ; $5bd2
-	ld [wBriefingSwingY], a ; $5bd3
+	ld [wBriefingCmdPromptY], a ; $5bd3
 	ld a, [wBriefingAnimStep] ; $5bd6
 	ld_hl_indexed SpinServeBriefing_TargetOverlayTable ; $5bd9
 	ld b, [hl] ; $5be0
@@ -469,7 +469,7 @@ SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable:
 	db $00 ; $5c52
 SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.asm" ; $5c53, 8 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_SwingFrameTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.asm" ; $5c5b, 4 bytes (bytes:4)
-SpinServeBriefing_AdvanceAnim2_SwingPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm" ; $5c5f, 8 bytes (words:2)
+SpinServeBriefing_AdvanceAnim2_CmdPromptTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_CmdPromptTable.asm" ; $5c5b, 4 bytes (bytes:4)
+SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable.asm" ; $5c5f, 8 bytes (words:2)

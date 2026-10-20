@@ -97,13 +97,13 @@ LoadRacketSelectScreen:
 	ld c, SharedMenuGfx99_SIZE / 16 ; $5546
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
-	ld hl, Palette_3e ; $554e
+	ld hl, EquipmentSelectObjPalette ; $554e
 	ld_obj_pals de, 1, 1 ; $5551
 	call LoadPaletteShadow ; $5554
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
-Palette_3e:
-	INCLUDE "data/engine/menus/equipment/Palette_3e.asm" ; $555b, 8 bytes (palettes)
+EquipmentSelectObjPalette:
+	INCLUDE "data/engine/menus/equipment/EquipmentSelectObjPalette.asm" ; $555b, 8 bytes (palettes)
 DrawOwnedItemIcons:
 	ld hl, wEquipItemList ; $5563
 	ld a, [wEquipItemCount] ; $5566
@@ -302,7 +302,7 @@ LoadShoesSelectScreen:
 	ld c, SharedMenuGfx99_SIZE / 16 ; $56ef
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
-	ld hl, Palette_3e ; $56f7
+	ld hl, EquipmentSelectObjPalette ; $56f7
 	ld_obj_pals de, 1, 1 ; $56fa
 	call LoadPaletteShadow ; $56fd
 	farcall QueueWram3MapToVRAM ; $5700

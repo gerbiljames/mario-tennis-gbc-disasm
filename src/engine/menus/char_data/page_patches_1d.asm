@@ -82,7 +82,7 @@ CharDataSmallDigitGfx:
 CharDataMoreLeftArrowGfx:
 	INCBIN "data/engine/menus/char_data/lz_CharDataMoreLeftArrowGfx.bin" ; $65e4, 134 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataMoreLeftArrowGfx.inc" ; DEF CharDataMoreLeftArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate0:
+CharDataMoreLeftArrowTemplate:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -93,7 +93,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate0:
 CharDataMoreRightArrowGfx:
 	INCBIN "data/engine/menus/char_data/lz_CharDataMoreRightArrowGfx.bin" ; $667f, 141 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataMoreRightArrowGfx.inc" ; DEF CharDataMoreRightArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate1:
+CharDataMoreRightArrowTemplate:
 	; $670c, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -104,7 +104,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate1:
 CharDataBackLeftArrowGfx:
 	INCBIN "data/engine/menus/char_data/lz_CharDataBackLeftArrowGfx.bin" ; $6721, 121 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataBackLeftArrowGfx.inc" ; DEF CharDataBackLeftArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate2:
+CharDataBackLeftArrowTemplate:
 	; $679a, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -114,7 +114,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate2:
 CharDataBackRightArrowGfx:
 	INCBIN "data/engine/menus/char_data/lz_CharDataBackRightArrowGfx.bin" ; $67ab, 112 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataBackRightArrowGfx.inc" ; DEF CharDataBackRightArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate3:
+CharDataBackRightArrowTemplate:
 	; $681b, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

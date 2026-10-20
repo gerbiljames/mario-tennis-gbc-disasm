@@ -260,12 +260,12 @@ CourtSelect9CursorSpriteTask:
 	ld c, $03 ; $6717
 	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c
-	ld hl, CourtSelect9CursorTiles_3e ; $671d
+	ld hl, CourtSelect9BannerTileBases ; $671d
 	add_hl_a ; $6720
 	ld c, [hl] ; $6725
 	pop af ; $6726
 	push af ; $6727
-	ld hl, CourtSelect9CursorPositions_3e ; $6728
+	ld hl, CourtSelect9BannerPositions ; $6728
 	add a ; $672b
 	add_hl_a ; $672c
 	ld a, [hl+] ; $6731
@@ -275,13 +275,13 @@ CourtSelect9CursorSpriteTask:
 	push bc ; $6737
 	ld c, $03 ; $6738
 	call GetMenuCursorIndex_3e ; $673a
-	ld hl, CourtSelect9CursorAttrs_3e ; $673d
+	ld hl, CourtSelect9BannerAttrs ; $673d
 	add_hl_a ; $6740
 	pop bc ; $6745
 	ld b, [hl] ; $6746
 	pop af ; $6747
 	add a ; $6748
-	ld hl, CourtSelect9CursorTemplatePtrs_3e ; $6749
+	ld hl, CourtSelect9BannerTemplatePtrs ; $6749
 	add_hl_a ; $674c
 	ld a, [hl+] ; $6751
 	ld h, [hl] ; $6752
@@ -292,7 +292,7 @@ CourtSelect9CursorSpriteTask:
 	pop de ; $675b
 	ld c, $03 ; $675c
 	call GetMenuCursorIndex_3e ; $675e
-	ld hl, CourtSelect9LabelYOffsets_3e ; $6761
+	ld hl, CourtSelect9CursorXOffsets ; $6761
 	add_hl_a ; $6764
 	ld a, [hl] ; $6769
 	ld h, a ; $676a
@@ -304,28 +304,28 @@ CourtSelect9CursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $6773
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
-CourtSelect9CursorTemplatePtrs_3e:
-	dw CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate1_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e ; $677b
-CourtSelect9CursorTemplate0_3e:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.asm" ; $678d, 33 bytes (sprite_template)
-CourtSelect9CursorTemplate1_3e:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.asm" ; $67ae, 37 bytes (sprite_template)
+CourtSelect9BannerTemplatePtrs:
+	dw CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner9WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate ; $677b
+CourtSelect9Banner8WideTemplate:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9Banner8WideTemplate.asm" ; $678d, 33 bytes (sprite_template)
+CourtSelect9Banner9WideTemplate:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9Banner9WideTemplate.asm" ; $67ae, 37 bytes (sprite_template)
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-CourtSelect9CursorPositions_3e:
+CourtSelect9BannerPositions:
 	; $67dc, 18 bytes (bytes:16)
 	db $30, $fc, $30, $2c, $30, $5c, $50, $fe, $50, $2c, $50, $5c, $6c, $fc, $6c, $2c ; 0x00
 	db $6c, $5c ; 0x10
-CourtSelect9CursorTiles_3e:
+CourtSelect9BannerTileBases:
 	; $67ee, 10 bytes (bytes:10)
 	db $00, $10, $20, $30, $42, $52, $62, $20, $30, $00 ; 0x00
-CourtSelect9CursorAttrs_3e:
+CourtSelect9BannerAttrs:
 	; $67f8, 10 bytes (bytes:10)
 	db $08, $08, $08, $08, $08, $08, $08, $00, $00, $00 ; 0x00
-CourtSelect9LabelYOffsets_3e:
+CourtSelect9CursorXOffsets:
 	; $6802, 10 bytes (bytes:10)
 	db $17, $17, $17, $1b, $17, $17, $17, $17, $17, $17 ; 0x00
 AdjustCursorForLockedCourt:
@@ -445,33 +445,33 @@ SetCourtSelect9Palette:
 	ret ; $68d8
 CourtSelect9PalettePtrs:
 	; $68d9, 18 bytes (records:2)
-	dw CourtSelect9Palette0 ; record 0
-	dw CourtSelect9Palette1 ; record 1
-	dw CourtSelect9Palette2 ; record 2
-	dw CourtSelect9Palette3 ; record 3
-	dw CourtSelect9Palette6 ; record 4
-	dw CourtSelect9Palette5 ; record 5
-	dw CourtSelect9Palette4 ; record 6
-	dw CourtSelect9Palette7 ; record 7
-	dw CourtSelect9Palette8 ; record 8
-CourtSelect9Palette0:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette0.asm" ; $68eb, 8 bytes (palettes)
-CourtSelect9Palette1:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette1.asm" ; $68f3, 8 bytes (palettes)
-CourtSelect9Palette2:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette2.asm" ; $68fb, 8 bytes (palettes)
-CourtSelect9Palette3:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette3.asm" ; $6903, 8 bytes (palettes)
-CourtSelect9Palette4:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette4.asm" ; $690b, 8 bytes (palettes)
-CourtSelect9Palette5:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette5.asm" ; $6913, 8 bytes (palettes)
-CourtSelect9Palette6:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette6.asm" ; $691b, 8 bytes (palettes)
-CourtSelect9Palette7:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette7.asm" ; $6923, 8 bytes (palettes)
-CourtSelect9Palette8:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette8.asm" ; $692b, 8 bytes (palettes)
+	dw CourtSelect9HardPalette ; record 0
+	dw CourtSelect9ClayPalette ; record 1
+	dw CourtSelect9GrassPalette ; record 2
+	dw CourtSelect9CompositionPalette ; record 3
+	dw CourtSelect9StarPalette ; record 4
+	dw CourtSelect9CastlePalette ; record 5
+	dw CourtSelect9TropicsPalette ; record 6
+	dw CourtSelect9JunglePalette ; record 7
+	dw CourtSelect9WarehousePalette ; record 8
+CourtSelect9HardPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9HardPalette.asm" ; $68eb, 8 bytes (palettes)
+CourtSelect9ClayPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9ClayPalette.asm" ; $68f3, 8 bytes (palettes)
+CourtSelect9GrassPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9GrassPalette.asm" ; $68fb, 8 bytes (palettes)
+CourtSelect9CompositionPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CompositionPalette.asm" ; $6903, 8 bytes (palettes)
+CourtSelect9TropicsPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9TropicsPalette.asm" ; $690b, 8 bytes (palettes)
+CourtSelect9CastlePalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CastlePalette.asm" ; $6913, 8 bytes (palettes)
+CourtSelect9StarPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9StarPalette.asm" ; $691b, 8 bytes (palettes)
+CourtSelect9JunglePalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9JunglePalette.asm" ; $6923, 8 bytes (palettes)
+CourtSelect9WarehousePalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9WarehousePalette.asm" ; $692b, 8 bytes (palettes)
 Unused_3e_DrawCourtSelect9StatsText:
 	push_wram_bank WRAM_SCREEN ; $6933
 	ld c, $03 ; $693c

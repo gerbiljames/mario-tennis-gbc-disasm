@@ -12,9 +12,9 @@ RunMinigameEndMenu:
 	call PrepareScoreboardGfx ; $4014
 	farcall StepMatchFrame ; $4017
 	call LoadScoreboardModeGfx ; $401a
-	ld hl, ScoreboardModeGfxTail ; $401d
+	ld hl, MatchMenuCursorArrowTiles ; $401d
 	ld de, vTiles0 tile $64 ; $4020
-	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
+	ld c, (MatchMenuItemGfx_Rules - MatchMenuCursorArrowTiles) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
 	wram_bank WRAM_COURT_PLANES ; $402b
@@ -55,9 +55,9 @@ RunMatchPauseMenu:
 	call PrepareScoreboardGfx ; $408a
 	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
-	ld hl, ScoreboardModeGfxTail ; $4093
+	ld hl, MatchMenuCursorArrowTiles ; $4093
 	ld de, vTiles0 tile $64 ; $4096
-	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
+	ld c, (MatchMenuItemGfx_Rules - MatchMenuCursorArrowTiles) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e
 	wram_bank WRAM_COURT_PLANES ; $40a1

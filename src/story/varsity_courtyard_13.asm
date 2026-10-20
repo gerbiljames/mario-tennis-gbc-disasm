@@ -351,7 +351,7 @@ CourtyardFacingScripts_13:
 	map_script $01, FACEMASK_ANY, $0000, CourtyardFacing01_13, $00, $00
 	db $ff
 CourtyardFacing01_13:
-	call ShowStoryTournamentBracket_13 ; $616d
+	call ShowStoryVarsityTeamChart_13 ; $616d
 	ld hl, wStoryModePlayersXPosition ; $6170
 	ld de, wStoryModeSpawnPosition ; $6173
 	ld bc, wStoryModeSpawnPosition_SIZE ; $6176
@@ -372,7 +372,7 @@ CourtyardInitScript_13:
 .notTour:
 	cp ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6196
 	jr nz, .notBracket ; $6198
-	call RunTravelingTeamBracketIfWon_13 ; $619a
+	call RunTravelingTeamChartIfWon_13 ; $619a
 	ret ; $619d
 .notBracket:
 	cp ENTRY_COURTYARD_TRAVELING_TEAM_WON ; $619e

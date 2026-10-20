@@ -132,12 +132,12 @@ Unused_17_ShowCourtDiagramTestScreen:
 	call ClearFrameTasks ; $4563
 	frame_task UpdateAnimatedTilesTask_17 ; $4566
 	ld a, $09 ; $456e
-	ld [wBriefingSwingFrame], a ; $4570
+	ld [wBriefingCmdPrompt], a ; $4570
 	ld a, $40 ; $4573
-	ld [wBriefingSwingX], a ; $4575
+	ld [wBriefingCmdPromptX], a ; $4575
 	ld a, $32 ; $4578
-	ld [wBriefingSwingY], a ; $457a
-	frame_task DrawBriefingSwingAnim ; $457d
+	ld [wBriefingCmdPromptY], a ; $457a
+	frame_task DrawBriefingCmdPrompt ; $457d
 	ld a, $40 ; $4585
 	ld [wBriefingPole1X], a ; $4587
 	ld a, $20 ; $458a
@@ -336,30 +336,30 @@ DrawBriefingMarkerHFlip_SpriteTemplate:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-DrawBriefingSwingAnim:
+DrawBriefingCmdPrompt:
 	push_wram_bank WRAM_SCREEN ; $478e
-	ld a, [wBriefingSwingFrame] ; $4797
-	ld hl, BriefingSwingFrameTileTable ; $479a
+	ld a, [wBriefingCmdPrompt] ; $4797
+	ld hl, BriefingCmdPromptTileTable ; $479a
 	add_hl_a ; $479d
 	ld c, [hl] ; $47a2
-	ld hl, DrawBriefingSwingAnim_SmallSpriteTemplate ; $47a3
-	ld a, [wBriefingSwingFrame] ; $47a6
+	ld hl, BriefingCmdPromptShortTemplate ; $47a3
+	ld a, [wBriefingCmdPrompt] ; $47a6
 	cp $06 ; $47a9
 	jr nc, .gotTemplate ; $47ab
-	ld hl, DrawBriefingSwingAnim_SpriteTemplate ; $47ad
+	ld hl, BriefingCmdPromptLongTemplate ; $47ad
 .gotTemplate:
-	ld a, [wBriefingSwingX] ; $47b0
+	ld a, [wBriefingCmdPromptX] ; $47b0
 	ld d, a ; $47b3
-	ld a, [wBriefingSwingY] ; $47b4
+	ld a, [wBriefingCmdPromptY] ; $47b4
 	ld e, a ; $47b7
 	ld b, OAM_BANK1 | 1 ; $47b8
 	call QueueSpriteTemplate ; $47ba
 	pop_wram_bank ; $47bd
 	ret ; $47c2
-BriefingSwingFrameTileTable:
+BriefingCmdPromptTileTable:
 	; $47c3, 10 bytes (bytes:10)
 	db $08, $12, $1c, $36, $40, $4a, $26, $2c, $54, $5a ; 0x00
-DrawBriefingSwingAnim_SpriteTemplate:
+BriefingCmdPromptLongTemplate:
 	; $47cd, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -367,7 +367,7 @@ DrawBriefingSwingAnim_SpriteTemplate:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-DrawBriefingSwingAnim_SmallSpriteTemplate:
+BriefingCmdPromptShortTemplate:
 	; $47e2, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
