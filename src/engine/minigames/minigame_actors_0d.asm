@@ -319,7 +319,7 @@ DrawMinigameScoreHud:
 	and a ; $46e0
 	jr z, .done ; $46e1
 	push_wram_bank WRAM_CHAR1 ; $46e3
-	ld hl, wCharSpriteSlot + 1 ; $46ec
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $46ec
 	res B_OAM_XFLIP, [hl] ; $46ef
 	pop_wram_bank ; $46f1
 .done:

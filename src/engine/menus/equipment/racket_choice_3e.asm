@@ -62,7 +62,7 @@ LoadEraseDataConfirmScreen:
 	ld b, $01 ; $4cb1
 	call SetMenuCursorFromIndex_3e ; $4cb3
 	ld hl, vTiles0 + VRAM_BANK1 ; $4cb6
-	ld de, $0801 ; $4cb9
+	ld_obj_pals de, 0, 1 ; $4cb9
 	farcall LoadMenuHandCursorGfx ; $4cbc
 	ld a, $0a ; $4cbf
 	ld [wDigitSpriteAttr], a ; $4cc1

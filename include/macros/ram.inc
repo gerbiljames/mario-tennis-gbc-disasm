@@ -292,7 +292,7 @@ NEXTU
 \1CharSpriteSetId:: db
 ; [8-bit] Where the AI stands between shots (0/5 baseline, 1 net, others mid-court); RST00 index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
 \1AiPositionStrategy:: db
-; [4 bytes] Sprite-slot record [tile, attr, screenY, screenX] for the character sprite
+; [4 bytes] Sprite-slot record [tile, attr, screenY, screenX] (SPRSLOT_*) for the character sprite
 \1CharSpriteSlot:: ds 4
 ; [4 bytes] Frame descriptor the single-character screens (Unused_1a_DrawCharViewerCharSprite, the results/EXP screen drawers) write after the sprite slot: wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (Y and X offsets for QueueSprite24x32), and a depth key (slot * 8 + $80). The match engine's drawer does not use it
 \1CharSpriteSlotFrame:: ds 4

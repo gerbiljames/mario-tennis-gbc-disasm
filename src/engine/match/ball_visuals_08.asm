@@ -207,19 +207,19 @@ BuildBallTrailSlots:
 	ld de, wBallTrailSlots ; $5206
 	call BuildTrailSlot ; $5209
 	ld hl, wBallHistory + 3 * BALLHIST_SIZE ; $520c
-	ld de, wBallTrailSlots + 4 ; $520f
+	ld de, wBallTrailSlots + 1 * SPRSLOT_SIZE ; $520f
 	call BuildTrailSlot ; $5212
 	ld a, [wBallTrailColor] ; $5215
 	and a ; $5218
 	jr z, .done ; $5219
 	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $521b
-	ld de, wBallTrailSlots + 8 ; $521e
+	ld de, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $521e
 	call BuildTrailSlot ; $5221
 	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $5224
-	ld de, wBallTrailSlots + 12 ; $5227
+	ld de, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $5227
 	call BuildTrailSlot ; $522a
 	ld hl, wBallHistory ; $522d
-	ld de, wBallTrailSlots + 16 ; $5230
+	ld de, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $5230
 	call BuildTrailSlot ; $5233
 .done:
 	ret ; $5236

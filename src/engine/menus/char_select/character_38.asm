@@ -378,30 +378,30 @@ DrawCharacterSelectChars:
 	ld hl, wCharStruct ; $4bb2
 	call UpdateCharSelectCharSprite ; $4bb5
 	ld a, $58 ; $4bb8
-	ld [wCharSpriteSlot + 2], a ; $4bba
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4bba
 	ld a, $20 ; $4bbd
-	ld [wCharSpriteSlot + 3], a ; $4bbf
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4bbf
 	wram_bank WRAM_CHAR1 ; $4bc2
 	ld hl, wCharStruct ; $4bc8
 	call UpdateCharSelectCharSprite ; $4bcb
 	ld a, $58 ; $4bce
-	ld [wCharSpriteSlot + 2], a ; $4bd0
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4bd0
 	ld a, $61 ; $4bd3
-	ld [wCharSpriteSlot + 3], a ; $4bd5
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4bd5
 	wram_bank WRAM_CHAR2 ; $4bd8
 	ld hl, wCharStruct ; $4bde
 	call UpdateCharSelectCharSprite ; $4be1
 	ld a, $c8 ; $4be4
-	ld [wCharSpriteSlot + 2], a ; $4be6
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4be6
 	ld a, $c8 ; $4be9
-	ld [wCharSpriteSlot + 3], a ; $4beb
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4beb
 	wram_bank WRAM_CHAR3 ; $4bee
 	ld hl, wCharStruct ; $4bf4
 	call UpdateCharSelectCharSprite ; $4bf7
 	ld a, $c8 ; $4bfa
-	ld [wCharSpriteSlot + 2], a ; $4bfc
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4bfc
 	ld a, $c8 ; $4bff
-	ld [wCharSpriteSlot + 3], a ; $4c01
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c01
 	wram_bank WRAM_ACTORS ; $4c04
 	push_wram_bank WRAM_COURT_PLANES ; $4c0a
 	ld a, [wCharSelectIsPartner] ; $4c13
@@ -412,24 +412,24 @@ DrawCharacterSelectChars:
 	jr z, .applyHandedness ; $4c1e
 	wram_bank WRAM_CHAR0 ; $4c20
 	ld a, $c8 ; $4c26
-	ld [wCharSpriteSlot + 2], a ; $4c28
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c28
 	ld a, $c8 ; $4c2b
-	ld [wCharSpriteSlot + 3], a ; $4c2d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c2d
 	wram_bank WRAM_CHAR1 ; $4c30
 	ld a, $c8 ; $4c36
-	ld [wCharSpriteSlot + 2], a ; $4c38
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c38
 	ld a, $c8 ; $4c3b
-	ld [wCharSpriteSlot + 3], a ; $4c3d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c3d
 	wram_bank WRAM_CHAR2 ; $4c40
 	ld a, $58 ; $4c46
-	ld [wCharSpriteSlot + 2], a ; $4c48
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c48
 	ld a, $20 ; $4c4b
-	ld [wCharSpriteSlot + 3], a ; $4c4d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c4d
 	wram_bank WRAM_CHAR3 ; $4c50
 	ld a, $58 ; $4c56
-	ld [wCharSpriteSlot + 2], a ; $4c58
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c58
 	ld a, $61 ; $4c5b
-	ld [wCharSpriteSlot + 3], a ; $4c5d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c5d
 	wram_bank WRAM_ACTORS ; $4c60
 .applyHandedness:
 	push_wram_bank WRAM_COURT_PLANES ; $4c66
@@ -440,16 +440,16 @@ DrawCharacterSelectChars:
 	or a ; $4c79
 	jr z, .drawSprites ; $4c7a
 	wram_bank WRAM_CHAR0 ; $4c7c
-	ld hl, wCharSpriteSlot + 1 ; $4c82
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4c82
 	set B_OAM_XFLIP, [hl] ; $4c85
 	wram_bank WRAM_CHAR1 ; $4c87
-	ld hl, wCharSpriteSlot + 1 ; $4c8d
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4c8d
 	set B_OAM_XFLIP, [hl] ; $4c90
 	wram_bank WRAM_CHAR2 ; $4c92
-	ld hl, wCharSpriteSlot + 1 ; $4c98
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4c98
 	set B_OAM_XFLIP, [hl] ; $4c9b
 	wram_bank WRAM_CHAR3 ; $4c9d
-	ld hl, wCharSpriteSlot + 1 ; $4ca3
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4ca3
 	set B_OAM_XFLIP, [hl] ; $4ca6
 .drawSprites:
 	wram_bank WRAM_CHAR0 ; $4ca8
