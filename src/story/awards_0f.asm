@@ -31,7 +31,7 @@ ActorScript_0f_00:
 	twin wait_script_frames_save_a, 0f ; $5678 WaitScriptFramesSaveA_0f
 CutsceneStompScreenShake:
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_SPIKE, -2.0 ; $567f
-	script_wait_jump ACTOR_AWARDS_CEREMONY_DOUBLES_SPIKE ; $5687
+	script_wait_jump ACTOR_AWARDS_CEREMONY_SPIKE ; $5687
 	sound SFX_STOMP ; $568c
 	ld a, $02 ; $568e
 	farcall SetScreenShake ; $5690
@@ -268,7 +268,7 @@ AwardsCeremonyArrivalIntro:
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_SHAKE ; $5bc0
 	script_wait_idle ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bc7
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, -2.0 ; $5bcc
-	script_wait_jump ACTOR_AWARDS_CEREMONY_DOUBLES_BALLOON_ANGRY ; $5bd4
+	script_wait_jump ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bd4
 	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 1.0 ; $5bd9
 	script_move_target ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 7.5 ; $5be1
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT ; $5bec

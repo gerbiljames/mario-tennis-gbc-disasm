@@ -73,10 +73,11 @@ after a real defect broke it:
   unnamed   a data label no other label names is Unused_ (a slot-table
             row, padding and the few the hardware or a raw pointer finds
             are listed in tools/reach.py); routines are reach's
-  slots     every ACTOR_<list>_<object> name a story script uses holds that
-            actor in every map_actor list tools/actorslots.py finds can be
-            active at that line (a name is a row number, so reordering or
-            retargeting a list keeps the bytes and changes the actor)
+  slots     every ACTOR_<list>_<object> name a story script uses names a
+            row of a map_actor list tools/actorslots.py finds can be active
+            at that line, and holds that actor in every such list (a name is
+            a row number, so reordering or retargeting a list keeps the
+            bytes and changes the actor)
   entries   every story entry point with no way in carries a `; debug
             warp only` mark, and only those do (tools/routes.py)
   raw-ids   a raw cp/store operand on a variable whose other values are

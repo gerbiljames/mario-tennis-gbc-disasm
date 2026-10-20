@@ -91,7 +91,7 @@ SpeakEmilyPostChampionLine:
 	ld hl, Text_NameHarry ; $55cb
 	add_hl_a ; $55ce
 	call PushShortTextArg_12 ; $55d3
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $55d6
+	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $55d6
 	ret ; $55db
 EmilyPostChampionTextIds:
 	; $55dc, 12 bytes (text_ids)
@@ -166,7 +166,7 @@ SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	script_wait_move ACTOR_PARTNER ; $56e0
 	script_move_target ACTOR_PARTNER, 43.0, 25.0 ; $56e5
 	script_wait_move ACTOR_PARTNER ; $56f0
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $56f5
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PARTNER ; $56f5
 	script_wait_move ACTOR_PLAYER ; $56fd
 	jr .face ; $5702
 .checkFlag:
@@ -181,14 +181,14 @@ SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $573a
 	script_wait_move ACTOR_PLAYER ; $5742
 .face:
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5747
-	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $574f
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $5757
-	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $575e
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PLAYER ; $5747
+	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_B_EMILY ; $574f
+	script_set_anim ACTOR_SENIOR_COURT_B_EMILY, ANIM_NOD ; $5757
+	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $575e
 	script_wait_frames 30 ; $5763
-	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $576a
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $5772
-	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5779
+	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_B_EMILY ; $576a
+	script_set_anim ACTOR_SENIOR_COURT_B_EMILY, ANIM_NOD ; $5772
+	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $5779
 	script_unlock_facing ACTOR_PLAYER ; $577e
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_EmilyPartnerIsMyStudent ; $578c
@@ -198,9 +198,9 @@ SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	jr nz, .speak ; $5799
 	script_set_text Text_EmilyThatsWhyPartners ; $579b
 .speak:
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $57a1
-	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $57a6
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $57ae
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $57a1
+	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_B_EMILY ; $57a6
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $57ae
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $57b3
 	script_wait_idle ACTOR_PARTNER ; $57ba
 	script_speak ACTOR_PARTNER ; $57bf
@@ -208,11 +208,11 @@ SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	script_set_speed ACTOR_PARTNER, 0.75 ; $57cc
 	script_move_target ACTOR_PARTNER, 43.0, 27.0 ; $57d4
 	script_wait_move ACTOR_PARTNER ; $57df
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $57e4
-	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $57ec
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PARTNER ; $57e4
+	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_B_EMILY ; $57ec
 .setText:
 	script_set_text Text_EmilyCantWaitToSeeDoubles ; $57f4
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $57fa
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $57fa
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $57ff
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5806
 	script_wait_idle ACTOR_PARTNER ; $580d
@@ -270,7 +270,7 @@ SeniorCourtNpc05_12:
 	jr z, .speak ; $588a
 	farcall AdvanceDialogueTextCursor ; $588c
 .speak:
-	script_speak ACTOR_SENIOR_COURT_ALLIE ; $588f
+	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $588f
 	ret ; $5894
 SeniorCourtNpc05TextIds_12:
 	; $5895, 30 bytes (text_ids)
@@ -391,29 +391,29 @@ SeniorCourtNpc08_12:
 	script_wait_frames 5 ; $5984
 	and a ; $598b
 	jr z, .confirmPractice ; $598c
-	script_speak ACTOR_SENIOR_COURT_BETH ; $598e
+	script_speak ACTOR_SENIOR_COURT_A_BETH ; $598e
 	ret ; $5993
 .confirmPractice:
 	farcall AdvanceDialogueTextCursor ; $5994
-	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_BOUNCE ; $5997
-	script_wait_idle ACTOR_SENIOR_COURT_BETH ; $599e
+	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_BOUNCE ; $5997
+	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $599e
 	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $59a3
 	farcall RunDialogueYesNoPrompt ; $59a8
 	farcall ScriptCloseDialogueWindow ; $59ab
 	script_wait_frames 5 ; $59ae
 	and a ; $59b5
 	jr z, .playPracticeMatch ; $59b6
-	script_speak ACTOR_SENIOR_COURT_BETH ; $59b8
+	script_speak ACTOR_SENIOR_COURT_A_BETH ; $59b8
 	ret ; $59bd
 .playPracticeMatch:
 	script_wait_frames 10 ; $59be
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_50 ; $59c5
-	script_move_target ACTOR_SENIOR_COURT_BETH, 12.0, 21.0 ; $59d0
-	script_wait_move ACTOR_SENIOR_COURT_BETH ; $59db
-	script_set_actor_script ACTOR_SENIOR_COURT_BETH, ActorScript_12_49 ; $59e0
+	script_move_target ACTOR_SENIOR_COURT_A_BETH, 12.0, 21.0 ; $59d0
+	script_wait_move ACTOR_SENIOR_COURT_A_BETH ; $59db
+	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_49 ; $59e0
 	script_move_player 10.0, 17.0 ; $59eb
 	farcall WaitPlayerMoveDone ; $59f5
-	script_wait_actor_script ACTOR_SENIOR_COURT_BETH ; $59f8
+	script_wait_actor_script ACTOR_SENIOR_COURT_A_BETH ; $59f8
 	ld hl, wStoryModePlayersXPosition ; $59fd
 	ld de, wStoryModeSpawnPosition ; $5a00
 	ld bc, wStoryModeSpawnPosition_SIZE ; $5a03
@@ -773,7 +773,7 @@ SeniorCourtPositionActorsByProgressB:
 	cp SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $5df7
 	jr c, .done ; $5df9
 	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, 63.0, 63.0 ; $5dfb
-	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 63.0, 63.0 ; $5e06
+	script_set_position ACTOR_SENIOR_COURT_B_ALLIE, 63.0, 63.0 ; $5e06
 	ret ; $5e11
 SeniorCourtPositionActorsByProgressA:
 	test_flag FLAG_DOUBLES ; $5e12
@@ -795,16 +795,16 @@ SeniorCourtPositionActorsByProgressA:
 	jr c, .checkStage10 ; $5e3d
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5e3f
 	jr nc, .checkStage10 ; $5e41
-	script_set_position ACTOR_SENIOR_COURT_A_CURT, 27.0, 11.0 ; $5e43
-	script_set_position ACTOR_SENIOR_COURT_A_BETH, 27.0, 13.0 ; $5e4e
-	script_face ACTOR_SENIOR_COURT_A_CURT, FACE_LEFT ; $5e59
-	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_LEFT ; $5e60
-	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $5e67
-	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $5e6c
+	script_set_position ACTOR_SENIOR_COURT_B_CURT, 27.0, 11.0 ; $5e43
+	script_set_position ACTOR_SENIOR_COURT_B_BETH, 27.0, 13.0 ; $5e4e
+	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_LEFT ; $5e59
+	script_face ACTOR_SENIOR_COURT_B_BETH, FACE_LEFT ; $5e60
+	script_null_script ACTOR_SENIOR_COURT_B_BETH ; $5e67
+	script_set_anim ACTOR_SENIOR_COURT_B_BETH, ANIM_WALK ; $5e6c
 .checkStage10:
 	ld a, [wMapSceneStage2] ; $5e73
 	cp SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $5e76
 	jr c, .checkStage9 ; $5e78
 	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, 63.0, 63.0 ; $5e7a
-	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 63.0, 63.0 ; $5e85
+	script_set_position ACTOR_SENIOR_COURT_B_ALLIE, 63.0, 63.0 ; $5e85
 	ret ; $5e90

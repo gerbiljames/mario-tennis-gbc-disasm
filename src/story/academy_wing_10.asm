@@ -175,7 +175,7 @@ AcademyWingInitScript_10:
 	ld a, [wMapSceneStage] ; $649e
 	cp ACADEMYWINGSTAGE_SENIOR_CHAMP ; $64a1
 	jr nz, .setupScroll ; $64a3
-	script_set_position ACTOR_ACADEMY_WING_HEADMASTER, 25.625, 50.75 ; $64a5
+	script_set_position ACTOR_ACADEMY_WING_INIT1_HEADMASTER, 25.625, 50.75 ; $64a5
 .setupScroll:
 	ld a, $16 ; $64b0
 	ld [wMapScrollMinX], a ; $64b2

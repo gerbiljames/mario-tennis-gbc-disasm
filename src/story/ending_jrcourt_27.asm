@@ -334,31 +334,31 @@ ActorScript_27_16:
 	as_jump .pace
 End4JrCourtApproachSingles_27:
 	script_wait_frames 15 ; $6866
-	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $686d
+	script_face_toward ACTOR_END4_JR_COURT_PAM, ACTOR_END4_JR_COURT_JUNIOR_COACH ; $686d
 	script_wait_frames 10 ; $6875
-	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_PLAYER ; $687c
+	script_face_toward ACTOR_END4_JR_COURT_PAM, ACTOR_PLAYER ; $687c
 	script_wait_frames 30 ; $6884
 	script_player_speed 1.0 ; $688b
-	script_move_player_to_actor ACTOR_END4_JR_COURT_ALT_PAM ; $6891
+	script_move_player_to_actor ACTOR_END4_JR_COURT_PAM ; $6891
 	farcall WaitPlayerMoveDone ; $6898
-	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_END4_JR_COURT_ALT_PAM ; $689b
-	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_NOD ; $68a3
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $68aa
-	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_DOWN ; $68af
+	script_face_toward ACTOR_END4_JR_COURT_JUNIOR_COACH, ACTOR_END4_JR_COURT_PAM ; $689b
+	script_set_anim ACTOR_END4_JR_COURT_PAM, ANIM_NOD ; $68a3
+	script_wait_idle ACTOR_END4_JR_COURT_PAM ; $68aa
+	script_face ACTOR_END4_JR_COURT_PAM, FACE_DOWN ; $68af
 	script_wait_frames 10 ; $68b6
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_PAM, ActorScript_27_17 ; $68bd
+	script_set_actor_script ACTOR_END4_JR_COURT_PAM, ActorScript_27_17 ; $68bd
 	script_wait_frames 20 ; $68c8
 	script_move_player_to_actor ACTOR_PLAYER ; $68cf
-	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $68d6
+	script_face ACTOR_END4_JR_COURT_JUNIOR_COACH, FACE_DOWN ; $68d6
 	script_move_player_to_actor ACTOR_PLAYER ; $68dd
-	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_PAM ; $68e4
-	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_ALT_PAM ; $68e9
-	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_BOUNCE ; $68f1
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $68f8
-	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_NOD ; $68fd
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $6904
+	script_wait_actor_script ACTOR_END4_JR_COURT_PAM ; $68e4
+	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_PAM ; $68e9
+	script_set_anim ACTOR_END4_JR_COURT_PAM, ANIM_BOUNCE ; $68f1
+	script_wait_idle ACTOR_END4_JR_COURT_PAM ; $68f8
+	script_set_anim ACTOR_END4_JR_COURT_PAM, ANIM_NOD ; $68fd
+	script_wait_idle ACTOR_END4_JR_COURT_PAM ; $6904
 	script_wait_frames 15 ; $6909
-	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_UP ; $6910
+	script_face ACTOR_END4_JR_COURT_PAM, FACE_UP ; $6910
 	ret ; $6917
 ActorScript_27_17:
 	; $6918, 23 bytes (actor_script)
@@ -388,25 +388,25 @@ ActorScript_27_19:
 	as_halt
 End4JrCourtSceneSingles_27:
 	farcall BeginCutsceneScriptMode ; $6951
-	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $6954
+	script_face ACTOR_END4_JR_COURT_JUNIOR_COACH, FACE_DOWN ; $6954
 	call End4JrCourtApproachSingles_27 ; $695b
 	script_face ACTOR_PLAYER, FACE_UP ; $695e
 	script_wait_frames 15 ; $6965
-	script_set_anim ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ANIM_BOUNCE ; $696c
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $6973
-	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_RIGHT ; $6978
+	script_set_anim ACTOR_END4_JR_COURT_JUNIOR_COACH, ANIM_BOUNCE ; $696c
+	script_wait_idle ACTOR_END4_JR_COURT_JUNIOR_COACH ; $6973
+	script_face ACTOR_END4_JR_COURT_JUNIOR_COACH, FACE_RIGHT ; $6978
 	script_wait_frames 15 ; $697f
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6986
-	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_RIGHT ; $698d
+	script_face ACTOR_END4_JR_COURT_PAM, FACE_RIGHT ; $698d
 	script_wait_frames 30 ; $6994
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_RACKET_STUDENT_3, ActorScript_27_14 ; $699b
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_RACKET_STUDENT_4, ActorScript_27_15 ; $69a6
-	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_RACKET_STUDENT_4 ; $69b1
+	script_set_actor_script ACTOR_END4_JR_COURT_RACKET_STUDENT_3, ActorScript_27_14 ; $699b
+	script_set_actor_script ACTOR_END4_JR_COURT_RACKET_STUDENT_4, ActorScript_27_15 ; $69a6
+	script_wait_actor_script ACTOR_END4_JR_COURT_RACKET_STUDENT_4 ; $69b1
 	script_move_player 23.0, 17.0 ; $69b6
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_PAM, ActorScript_27_18 ; $69c0
+	script_set_actor_script ACTOR_END4_JR_COURT_PAM, ActorScript_27_18 ; $69c0
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_19 ; $69cb
 	farcall WaitPlayerMoveDone ; $69d6
-	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_PAM ; $69d9
+	script_wait_actor_script ACTOR_END4_JR_COURT_PAM ; $69d9
 	script_wait_frames 20 ; $69de
 	ld a, EXIT_END4_JR_COURT_DONE ; $69e5
 	ld [wUnusedExitTriggerIdMirror], a ; $69e7

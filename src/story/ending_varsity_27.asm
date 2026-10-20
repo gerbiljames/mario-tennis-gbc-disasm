@@ -511,44 +511,44 @@ End8SrCourtInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $6071
 	ret ; $6074
 .notDoubles:
-	script_set_speed ACTOR_END8_SR_COURT_ALT_FAY, 0.75 ; $6075
+	script_set_speed ACTOR_END8_SR_COURT_FAY, 0.75 ; $6075
 	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $607d
 	script_face ACTOR_PLAYER, FACE_UP ; $6088
 	xor a ; $608f
 	ld [wStoryModeShowLocationName], a ; $6090
 	script_fade_in 4 ; $6093
-	script_move_target ACTOR_END8_SR_COURT_ALT_FAY, 36.0, 19.0 ; $6098
-	script_wait_move ACTOR_END8_SR_COURT_ALT_FAY ; $60a3
+	script_move_target ACTOR_END8_SR_COURT_FAY, 36.0, 19.0 ; $6098
+	script_wait_move ACTOR_END8_SR_COURT_FAY ; $60a3
 	script_delay 20 ; $60a8
 	script_delay 40 ; $60ad
-	script_set_anim ACTOR_END8_SR_COURT_ALT_FAY, ANIM_BOUNCE ; $60b2
+	script_set_anim ACTOR_END8_SR_COURT_FAY, ANIM_BOUNCE ; $60b2
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $60b9
 	script_wait_idle ACTOR_PLAYER ; $60c0
 	script_face ACTOR_PLAYER, FACE_DOWN ; $60c5
 	script_delay 30 ; $60cc
 	script_player_speed 1.5 ; $60d1
-	script_set_speed ACTOR_END8_SR_COURT_ALT_EMILY, 0.5 ; $60d7
+	script_set_speed ACTOR_END8_SR_COURT_EMILY, 0.5 ; $60d7
 	script_move_player 43.0, 31.0 ; $60df
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 43.0, 31.0 ; $60e9
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 43.0, 31.0 ; $60e9
 	script_delay 90 ; $60f4
 	script_player_speed 0.5 ; $60f9
 	script_move_player 36.0, 27.0 ; $60ff
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6109
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 31.0 ; $610e
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6119
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 30.0 ; $611e
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6129
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 29.0 ; $612e
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6139
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6109
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 36.0, 31.0 ; $610e
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6119
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 36.0, 30.0 ; $611e
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6129
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 36.0, 29.0 ; $612e
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6139
 	script_delay 30 ; $613e
-	script_set_anim ACTOR_END8_SR_COURT_ALT_EMILY, ANIM_BOUNCE ; $6143
-	script_wait_idle ACTOR_END8_SR_COURT_ALT_EMILY ; $614a
+	script_set_anim ACTOR_END8_SR_COURT_EMILY, ANIM_BOUNCE ; $6143
+	script_wait_idle ACTOR_END8_SR_COURT_EMILY ; $614a
 	script_delay 30 ; $614f
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6154
 	script_wait_idle ACTOR_PLAYER ; $615b
 	script_delay 20 ; $6160
-	script_set_anim ACTOR_END8_SR_COURT_ALT_EMILY, ANIM_NOD ; $6165
-	script_wait_idle ACTOR_END8_SR_COURT_ALT_EMILY ; $616c
+	script_set_anim ACTOR_END8_SR_COURT_EMILY, ANIM_NOD ; $6165
+	script_wait_idle ACTOR_END8_SR_COURT_EMILY ; $616c
 	script_delay 40 ; $6171
 	ld a, EXIT_END8_SR_COURT_DONE ; $6176
 	ld [wUnusedExitTriggerIdMirror], a ; $6178

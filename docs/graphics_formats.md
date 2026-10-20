@@ -828,7 +828,7 @@ pass:
 | `gfx` | 2903 | every PNG encodes back to the blob it was decoded from |
 | `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
 | `tilemap` | 243 | every tilemap grid encodes back to its blob |
-| `slots` | 5494 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
+| `slots` | 5494 | every `ACTOR_*` slot name names a row of a list that can be active there and holds its actor in every such list |
 | `reach` | 4904 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
 | `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
