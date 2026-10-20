@@ -271,6 +271,10 @@ class Tools(unittest.TestCase):
         instrs, incbin, fill = stats.source()
         _, spelled = stats.rom_bytes(incbin, fill)
         total = sum(rom.values()) + sum(ram.values())
+        regions = [line.split()[0] for line in (ROOT / "data.manifest").read_text().splitlines()
+                   if line.strip() and not line.startswith("#")]
+        included = sum(path.endswith(".asm") for path in regions)
+        lz = sum(path.rsplit("/", 1)[-1].startswith("lz_") for path in regions)
         readme = (ROOT / "README.md").read_text()
         status = (ROOT / "docs" / "STATUS.md").read_text()
         for doc, text, quotes in (
@@ -282,7 +286,9 @@ class Tools(unittest.TestCase):
                 ("docs/STATUS.md", status, [
                     f"| instruction and code-macro lines | {instrs:,} |",
                     f"| source-spelled bytes (`tools/stats.py`) | {spelled:,}, {100 * spelled / stats.ROM_SIZE:.1f}% ",
-                    f"| labels | {total:,}: ROM {rom['global']:,} global + {rom['local']:,} local, RAM {ram['global']:,};"])):
+                    f"| labels | {total:,}: ROM {rom['global']:,} global + {rom['local']:,} local, RAM {ram['global']:,};",
+                    f"| extracted data regions | {len(regions):,} ({len(regions) - included:,} `INCBIN`, "
+                    f"{included:,} generated `INCLUDE`s), {lz:,} of them LZ streams |"])):
             for quote in quotes:
                 self.assertTrue(quote in text, f"{doc} does not say {quote!r}")
 

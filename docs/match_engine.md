@@ -406,9 +406,12 @@ Charge then bends it: `WeakenShotByCharge` subtracts `charge*4`,
      `(wAimSpreadBase + |charDepth|/8) * wCharAimOffsetScale/256`, with
      `wAimSpreadBase` `$0220` singles / `$0320` doubles — deeper hitters swing
      the ball further sideways.
-   - `ClampShotTargetX` (`$07:$56e3`) clamps to `-(wCourtLimitX + $20)`, and
-     every path adds or subtracts one `GetRandomAimJitter` (`$07:$570d`) —
-     `rng * wCharAimJitterScale`, high byte only, effectively `rng*scale/16`.
+   - Jitter is `GetRandomAimJitter` (`$07:$570d`): `rng *
+     wCharAimJitterScale`, high byte only, effectively `rng*scale/16`. The
+     four side paths go through `ClampShotTargetX` (`$07:$56e3`), which
+     clamps to `-(wCourtLimitX + $20)` and applies one draw; the centre
+     path (`.straight`) skips the clamp and draws twice, subtracting one
+     (`$56a4`) and adding the other (`$56ad`); the serve gets none.
      **The human is jittered too.**
 3. **Aim angle** = `AngleFromVector16(depth leg, X leg)` → `wShotAimAngle`.
 4. **The distance window** (`$07:$5783`, `$07:$57b8`):
@@ -562,10 +565,11 @@ come from `SelectRallyShotType`/`SelectServeShotType` (see
   about `$150` (≈ 3.2 m) is a power serve.
 
 `ShotRecoilFrameTask` (`$07:$5463`), pushed as `ExecuteShot`'s return address,
-calls `ApplyShotRecoil` (`$07:$546b`): set `CHARB_RECOIL`, quarter the hitter's
+calls `ApplyShotRecoil` (`$07:$546b`), then clears `wCharSwingFrames`
+(`$5466`). `ApplyShotRecoil`: set `CHARB_RECOIL`, clear `CHARB_CHARGING`, quarter the hitter's
 depth velocity (and X unless diving), add a push of the pre-hit ball depth
 velocity scaled by `ShotRecoilTable_07` (indexed by the speed-index byte the
-preset's recoil variant selects), clear `wCharSwingFrames`.
+preset's recoil variant selects).
 
 ## On-court characters
 

@@ -148,7 +148,7 @@ def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNe
 	const SFX_BANNER_GAME_WON ; $6b the GAME, SET MATCH and MATCH banners (rows 11-13)
 	const SFX_BANNER_CALL     ; $6c the LET, NET, OUT and START banners (rows 3-6)
 def SFX_LOGO_JINGLE            equ $65 ; the intro logo screen, and TriggerCheatUnlock
-def SFX_DEUCE                  equ $69 ; the deuce call after a point (DelayAfterPointResolution $08)
+def SFX_DEUCE                  equ $69 ; the deuce call after a point (ShowPointScoreSequence $08)
 def SFX_LANDING_MARKER         equ $6d ; the landing marker appearing (StartLandingMarker $08)
 def SFX_DEBUG_ALARM            equ $6f ; QueueVRAMCopy on queue overflow, debug step mode only
 def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/DecodeInput), the debug window demo

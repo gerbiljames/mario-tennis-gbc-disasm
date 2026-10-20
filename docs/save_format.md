@@ -41,7 +41,7 @@ computed callers are bounded (character ids stop at `$1f`,
 | `$00`-`$03` | 0-31 | **character unlocks**, one bit per character id — `CheckCharacterUnlocked` (18:452a) tests flag number = char id (ids 0-3 always unlocked) |
 | `$01` | 9-15 | within that: #9 opening seen, #10-13 Fay/Curt/Mark/Sean (granted by N64 transfer records), #14/#15 Sammi/Elden (singles/doubles Dream Match) |
 | `$02`-`$03` | 20-31 | also the first 12 **minigame-clear** flags (Boo Blast → Target Shot, 3 levels each) — the same bit, which is why clearing a minigame level unlocks a character |
-| `$04` | 32-38 | per-story-slot: `SetStorySlotFlagA` #32-34, `SetStorySlotFlagB` #36-38; `EraseStorySlotSaveData` clears the erased slot's pair |
+| `$04` | 32-39 | per-story-slot: `SetStorySlotFlagA` (music on/off) #32-35, `SetStorySlotFlagB` (camera view) #36-39, indexed by `wCurrentStorySlot` (3 = exhibition); `EraseStorySlotSaveData` clears the erased story slot's pair |
 | `$05`-`$06` | 40-54 | the remaining minigame clears (Fruit Fantasy → Two-On-One) |
 | `$07` | 57-63 | court unlocks (#57 Star, #58 Castle, #59 Tropics, #60 Jungle, #61 Warehouse), #62 "N64 records present", #63 the bank `$01` debug-menu toggle |
 
@@ -128,7 +128,7 @@ runs are `SAVEBLOCK_UNUSED_BANK0`-`_BANK6` + n, one base per SRAM bank
 | blocks | bank:off | len | contents |
 |---|---|---|---|
 | 0/2/4 | 0:`$0800/$0d00/$1200` | `$300` | story slot N primary: image of WRAM `$c800-$caff` |
-| 1/3/5 | 0:`$0b00/$1000/$1500` | `$200` | story slot N secondary block (written during play) |
+| 1/3/5 | 0:`$0b00/$1000/$1500` | `$200` | story slot N secondary block: never written with data, only zero-filled by `EraseStorySlotSaveData` or invalidated |
 | 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamPreservingBlock6`) |
 | 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`Unused_03_WriteBlock7WithBackup` ... `Unused_03_ReadBlock10`, 03:587b+) are unreachable — never valid in a real save |
 | 11 (`$0b`) | 0:`$1800` | `$200` | N64 (Transfer Pak) records block, see below |
@@ -175,7 +175,7 @@ resets just records 0-1 of the current slot (called from
 
 | off | contents |
 |---|---|
-| +0/+1 | data-present indicator (checked as `[+0]+[+1] != 0` by `CheckN64DataPresent` / `ApplyN64RecordsUnlockFlags`) |
+| +0/+1 | data-present indicator (`CheckN64DataPresent` tests `[+0] or [+1]`, `ApplyN64RecordsUnlockFlags` the 8-bit sum `[+0]+[+1]`) |
 | +2..+7 | per-character unlock/toggle flags for characters `$1a-$1f`, flipped by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4), whose only caller is the unreachable minigame-flags debug screen `Unused_1b_RunMinigameFlagsDebugScreen`; set by `UpdateUnlockablesSaveBlock` when the matching minigame record beats its default + save flag (mapping id→off: 2→+2, 9→+3, 6→+4, $0a→+5, 8→+6, 4→+7) |
 
 When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets
@@ -205,7 +205,7 @@ engine's bank and WRAM bank `$07`); the rest stay numeric.
 |---|---|
 | WRAM1 `$d000` | generic block scratch: `RestoreStoryBlockFromBackup`/`RepairAllSaveSlots`, block-6 preserve, `$d400` = tag readback |
 | WRAM7 `$d480` `wMinigameRecordBlock` | minigame-record block image (blocks `$38-$3d`) |
-| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `StorySlotBlockIds_03`, 03:52af = `00 02 04 0b`) |
+| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block; the unreachable debug save editor's `Unused_03_*CurrentSlotBlock` helpers stage the primary block from `StorySlotBlockIds_03` (03:52af = `00 02 04 0b`) |
 | WRAM7 `$de00` `wMinigameRecordValue` | 16-bit minigame-record value in/out parameter |
 | WRAM6 `$d400` | N64 block staging in bank $1b char select |
 | WRAM3 `$d900` | N64 block and star victory grid staging in bank $3b; on the trophies screen, the unlock code's two press counters |

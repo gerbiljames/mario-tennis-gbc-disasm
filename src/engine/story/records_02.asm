@@ -36,7 +36,7 @@ StorySlotFlagBIds_02:
 	dw SAVEFLAG_STORY_SLOT0_B ; 0
 	dw SAVEFLAG_STORY_SLOT1_B ; 1
 	dw SAVEFLAG_STORY_SLOT2_B ; 2
-	dw $04e0 ; 3: flag $04, 7
+	dw SAVEFLAG_STORY_SLOT3_B ; 3
 TestStorySlotFlagB:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a ; $4cd7
@@ -72,7 +72,7 @@ StorySlotFlagAIds_02:
 	dw SAVEFLAG_STORY_SLOT0_A ; 0
 	dw SAVEFLAG_STORY_SLOT1_A ; 1
 	dw SAVEFLAG_STORY_SLOT2_A ; 2
-	dw $0460 ; 3: flag $04, 3
+	dw SAVEFLAG_STORY_SLOT3_A ; 3
 TestStorySlotFlagA:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a ; $4d13

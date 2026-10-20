@@ -533,7 +533,7 @@ player in place.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), in the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global |
 | accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 166 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants/` |
+| names | 166 `FLAG_*` in `include/flag_constants.inc` | 49 `SAVEFLAG_*` in `include/constants/` |
 
 Both use one encoding: flag number = `byte * 8 + bit`; the inline operand is
 `bit << 5` then the byte index; the mask is `$80 >> bit`. `test_flag` leaves
@@ -557,7 +557,9 @@ screen-mode bits that cannot outlive a map transition.
 `SAVEFLAG_*` covers what survives a slot erase: character unlocks
 (`SAVEFLAG_UNLOCKED_FAY` … `_ELDEN`, plus flags 20-31 whose number equals the
 character id they unlock), arcade-minigame clears, court unlocks, the
-per-slot "save exists" A/B bits, `SAVEFLAG_OPENING_SEEN`, and
+per-slot option bits (A = music on/off, `SetStorySlotFlagA` from
+`StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotFlagB` from
+`MatchPauseMenu_CameraSelect`), `SAVEFLAG_OPENING_SEEN`, and
 `SAVEFLAG_DEBUG_TEST_MENU`.
 
 ### The ranking ladder and the tournament arc
@@ -593,8 +595,8 @@ sets the flag. E.g. on a win `JuniorClassCourtDoublesMatchReturn`
 (`$11:$5d38`) reloads the court at entry `$0d`, and
 `JuniorClassCourtDoublesEntry0dScene` dispatches on
 `wCurrentMinigameStoryMatch + 1` (`$11:$5daa`) to `set_flag
-FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm` lines 41,
-84, 126). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
+FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`.wonRank3`/`2`/`1`, `$11:$5db7`/
+`$5ec0`/`$5fbd`). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
 (`$1e:$6edc`) indexes `MinigameClearFlagTable_1e` and calls `SetSaveFlag`.
 
 `CheckAllProgressComplete` (`$1e:$6f8d`, from `ProcessMatchRewards` after
@@ -754,7 +756,7 @@ level-99 requirement is under 65536. Awards are staged per source
 (`wPendingExpStory`, `wPendingExpTrophy`, `wPendingExpExhibition`,
 `wPendingExpLinked`) and applied by `ApplyPendingExpAwards` (`$1e:$6afd`) on
 the next slot load; `ScaleExpByPlayerLevel` averages the two story records'
-`+$18` and scales as the average crosses 10/20/30/40/50.
+`+$18` and scales by x1, x1.5, x2 … x3.5 in steps of 10 levels, x4 from 60.
 
 ### Save signature
 
@@ -819,6 +821,5 @@ settings); `$dc08` `wStorySceneRecord` (bank `$06`).
   `JuniorClassCourtSinglesEntryPoints_11`,
   `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is an
   unreferenced one-byte `ret` script, carved as `Unused_11_NullScriptA`-`C`.
-  `FireworkMapActors_14` (`$14:$6675`) and a same-shaped bank `$1a` table
-  carry one `$00` past `map_actor_end` (padding before a 2 KiB tile blob),
-  rendered as `db $00`.
+  `FireworkMapActors_14` (`$14:$6675`) carries one `$00` past
+  `map_actor_end` (padding before a 2 KiB tile blob), rendered as `db $00`.

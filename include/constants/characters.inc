@@ -5,7 +5,7 @@
 	rsreset
 def CHARREC_NAME             rb 7 ; $00 then padding
 	rb_skip 3                        ; $07
-def CHARREC_LINK_COURT_MASK  rb   ; $0a name padding; ExchangeLinkUnlockFlags borrows the main records' byte
+def CHARREC_LINK_COURT_MASK  rb   ; $0a name padding; ExchangeLinkCharSelection borrows the main records' byte
 def CHARREC_CHAR             rb   ; $0b CHAR_* id
 def CHARREC_PALETTE          rb   ; $0c
 def CHARREC_GENDER           rb   ; $0d 0 male, 1 female

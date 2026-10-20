@@ -80,8 +80,9 @@ ApplyCpuDifficultyToCharRecords:
 ; the records' Difficulty fields, and an EXP tier read only for
 ; characters that are not created ones.
 ;
-; Records 1-4 are EASY/NORMAL/HARD/INTENSE: reaction delays 28/18/10/2,
-; tracking 60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7. Slot 0
+; Records 1-4 are EASY/NORMAL/HARD/INTENSE: reaction delays 28/18/10/2 near
+; and 24/15/9/2 far, tracking 12/9/5/0, aim-away 60/120/190/230,
+; difficulty 0/1/2/3, tier 1/3/5/7. Slot 0
 ; duplicates INTENSE and is what an unset difficulty selects.
 CpuDifficultyParamPtrs_38:
 	; $5feb, 10 bytes (records:2)
