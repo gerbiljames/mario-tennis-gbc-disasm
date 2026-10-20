@@ -395,11 +395,11 @@ LoadStorySceneGraphics:
 	call DecompressDataFromBank ; $58cc
 	wram_bank WRAM_COURT_PLANES ; $58cf
 	pop hl ; $58d5
-	ld de, wScreenAttrmap ; $58d6
+	ld de, wMapBuffer64 ; $58d6
 	call DecompressDataFromBank ; $58d9
 	wram_bank WRAM_SCREEN ; $58dc
 	pop hl ; $58e2
-	ld de, wShadowTilemap ; $58e3
+	ld de, wMapBuffer64 ; $58e3
 	call DecompressDataFromBank ; $58e6
 	wram_bank WRAM_STAGING ; $58e9
 	pop hl ; $58ef
