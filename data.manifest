@@ -21,8 +21,8 @@ engine/menus/main_menu/SoundTestMusicString.asm 006b64 6 text
 engine/menus/main_menu/SoundTestEffectString.asm 006b6a 7 text
 engine/menus/main_menu/SoundTestCursorString.asm 006b71 2 text
 engine/menus/main_menu/SoundTestCursorBlankString.asm 006b73 2 text
-engine/menus/main_menu/SoundTestSoundsA_01.asm 006b75 3f sound_data
-engine/menus/main_menu/SoundTestSoundsB_01.asm 006bb4 72 sound_data
+engine/menus/main_menu/SoundTestMusicIds_01.asm 006b75 3f sound_data
+engine/menus/main_menu/SoundTestSfxIds_01.asm 006bb4 72 sound_data
 engine/story/SaveResultFailedString_02.asm 0091fa 8 text
 engine/story/SaveResultLoadedString_02.asm 009202 8 text
 engine/story/SaveResultSavedString_02.asm 00920a 8 text
@@ -664,8 +664,8 @@ engine/menus/minigame_select/UnlockDebugCursorPalette.asm 06e930 8 palettes
 engine/menus/minigame_select/MinigameLevel1Palette.asm 06edae 8 palettes
 engine/menus/minigame_select/MinigameLevel3Palette.asm 06edb6 8 palettes
 engine/menus/minigame_select/MinigameLevel2Palette.asm 06edbe 8 palettes
-engine/menus/minigame_select/MarioCharDataTypePalette0.asm 06f3cd 8 palettes
-engine/menus/minigame_select/MarioCharDataTypePalette1.asm 06f3d5 8 palettes
+engine/menus/minigame_select/MarioCharDataExhibitionPalette.asm 06f3cd 8 palettes
+engine/menus/minigame_select/MarioCharDataMinigamesPalette.asm 06f3d5 8 palettes
 engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx0.bin 06f8bd b3 gfx
 engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx1.bin 06f970 50 gfx
 engine/menus/minigame_select/lz_AwardsCeremonyConfettiGfx2.bin 06f9c0 b8 gfx
@@ -675,10 +675,10 @@ engine/menus/minigame_select/lz_DreamMatchEpilogueConfettiGfx2.bin 06faf6 41 gfx
 engine/menus/minigame_select/lz_ToBeContinuedGfx.bin 06fb37 1f7 gfx
 engine/menus/minigame_select/lz_ToBeContinuedOutlineGfx.bin 06fd2e 141 gfx
 engine/menus/minigame_select/lz_TheEndGfx.bin 06fe6f 143 gfx
-engine/menus/char_data/RadialOffsetRamp0_1c.asm 070ff1 16 bytes:2
-engine/menus/char_data/RadialOffsetRamp1_1c.asm 071007 16 bytes:2
-engine/menus/char_data/RadialOffsetRamp2_1c.asm 07101d 16 bytes:2
-engine/menus/char_data/RadialOffsetRamp3_1c.asm 071033 16 bytes:2
+engine/menus/char_data/StatDigitFlyInSpinOffsets.asm 070ff1 16 bytes:2
+engine/menus/char_data/StatDigitFlyInPowerOffsets.asm 071007 16 bytes:2
+engine/menus/char_data/StatDigitFlyInControlOffsets.asm 07101d 16 bytes:2
+engine/menus/char_data/StatDigitFlyInSpeedOffsets.asm 071033 16 bytes:2
 engine/menus/char_data/CharDataScreenBasePalettes.asm 07198c 40 palettes
 engine/menus/char_data/lz_CharDataScreenTiles.bin 0719cc a3a gfx
 engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin 072406 63 tilemap:32
@@ -718,17 +718,17 @@ engine/menus/char_data/CharDataScreenStatBar31.asm 07253f 5 bytes:5
 engine/menus/char_data/CharDataScreenStatBar32.asm 072544 5 bytes:5
 engine/menus/char_data/lz_CharDataScreenBand1Tilemap.bin 072549 36 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin 07257f 17 tilemap:32
-engine/menus/char_data/CharDataScreenPage0Columns.asm 072596 32 bytes:10
+engine/menus/char_data/CharDataScreenSpinPageAttrs.asm 072596 32 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin 0725c8 43 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin 07260b 17 tilemap:32
-engine/menus/char_data/CharDataScreenPage1Columns.asm 072622 46 bytes:10
+engine/menus/char_data/CharDataScreenPowerPageAttrs.asm 072622 46 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin 072668 3a
 engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin 0726a2 18
-engine/menus/char_data/CharDataScreenPage2Columns.asm 0726ba 32 bytes:10
+engine/menus/char_data/CharDataScreenControlPageAttrs.asm 0726ba 32 bytes:10
 engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin 0726ec 48
 engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin 072734 19
-engine/menus/char_data/CharDataScreenPage3Columns.asm 07274d 5a bytes:10
-engine/menus/char_data/CharDataScreenPage4Columns.asm 0727a7 1e bytes:10
+engine/menus/char_data/CharDataScreenSpeedPageAttrs.asm 07274d 5a bytes:10
+engine/menus/char_data/CharDataScreenConfirmPageAttrs.asm 0727a7 1e bytes:10
 engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin 0727c5 e
 engine/menus/char_data/lz_CharDataScreenBand5Attrmap.bin 0727d3 7
 engine/menus/char_data/lz_CharDataScreenUIPatch0Tilemap.bin 0727da 18 tilemap:32
@@ -772,7 +772,7 @@ engine/menus/char_data/CharDataBallAnimFrame29.bin 072fc0 40 gfx
 engine/menus/char_data/CharDataBallAnimFrame30.bin 073000 40 gfx
 engine/menus/char_data/CharDataBallAnimFrame31.bin 073040 40 gfx
 engine/menus/char_data/lz_CharDataLargeDigitGfx.bin 073080 96 gfx
-engine/menus/char_data/CharDataScreenBgAndPalettes.asm 073541 40 palettes
+engine/menus/char_data/CharDataScreenBgObjPalettes.asm 073541 40 palettes
 engine/menus/char_data/lz_CharDataScreenBgGfx.bin 073581 75e gfx
 engine/menus/char_data/lz_CharDataScreenBgTilemap.bin 073cdf 140 tilemap:32
 engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin 073e1f d8 tilemap:32
@@ -789,8 +789,8 @@ engine/menus/char_data/StatPageTilemapPatch3.asm 075d0a 15 blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch2.asm 075d1f 15 blit_runs
 engine/menus/char_data/StatPageTilemapPatch4.asm 075d34 25 blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm 075d59 25 blit_runs
-engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm 075d7e 13 bytes:2
-engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm 075d91 13 bytes:2
+engine/menus/char_data/CharDataSummaryMainMugshotPlot.asm 075d7e 13 bytes:2
+engine/menus/char_data/CharDataSummaryPartnerMugshotPlot.asm 075d91 13 bytes:2
 engine/menus/char_data/MainCharStatPageTilemapPatch00.asm 075da4 d blit_runs
 engine/menus/char_data/PartnerStatPageTilemapPatch00.asm 075db1 d blit_runs
 engine/menus/char_data/CharDataConfirmScreenTilemapPatch4.asm 075dbe d blit_runs
@@ -1043,26 +1043,26 @@ gfx/lz_LinkErrorTilemap.bin 0ebc6f ef tilemap:32
 gfx/lz_LinkErrorAttrmap.bin 0ebd5e 5c tilemap:32
 gfx/LinkErrorPalettes.asm 0ebdba 40 palettes
 gfx/lz_MushroomIconTiles.bin 0ebdfa e3 gfx
-engine/menus/main_menu/MainMenuItemPalette0.asm 0eda7c 8 palettes
-engine/menus/main_menu/MainMenuItemPalette1.asm 0eda84 8 palettes
-engine/menus/main_menu/MainMenuItemPalette2.asm 0eda8c 8 palettes
-engine/menus/main_menu/MainMenuItemPalette3.asm 0eda94 8 palettes
-engine/menus/main_menu/MainMenuItemPalette4.asm 0eda9c 8 palettes
-engine/menus/main_menu/MainMenuItemPalette5.asm 0edaa4 8 palettes
-engine/menus/main_menu/MatchFormatOptionsPalettes0.asm 0eddd4 8 palettes
-engine/menus/main_menu/MatchFormatOptionsPalettes1.asm 0edddc 8 palettes
-engine/menus/main_menu/MatchFormatOptionsPalettes2.asm 0edde4 8 palettes
-engine/menus/main_menu/StatusSourceCellPalette0.asm 0eeb73 8 palettes
-engine/menus/main_menu/StatusSourceCellPalette1.asm 0eeb7b 8 palettes
-engine/menus/main_menu/SavedDataCellPalette0.asm 0ef0f0 8 palettes
-engine/menus/main_menu/SavedDataCellPalette1.asm 0ef0f8 8 palettes
-engine/menus/main_menu/N64RecordTypeCellPalette0.asm 0ef482 8 palettes
-engine/menus/main_menu/N64RecordTypeCellPalette1.asm 0ef48a 8 palettes
-engine/menus/main_menu/N64RecordTypeCellPalette2.asm 0ef492 8 palettes
-engine/menus/main_menu/GbDataItemCellPalette0.asm 0ef6a5 8 palettes
-engine/menus/main_menu/GbDataItemCellPalette1.asm 0ef6ad 8 palettes
-engine/menus/main_menu/GbDataItemCellPalette2.asm 0ef6b5 8 palettes
-engine/menus/main_menu/GbDataItemCellPalette3.asm 0ef6bd 8 palettes
+engine/menus/main_menu/MainMenuExhibitionPalette.asm 0eda7c 8 palettes
+engine/menus/main_menu/MainMenuDictionaryPalette.asm 0eda84 8 palettes
+engine/menus/main_menu/MainMenuMiniGamesPalette.asm 0eda8c 8 palettes
+engine/menus/main_menu/MainMenuLinkedPlayPalette.asm 0eda94 8 palettes
+engine/menus/main_menu/MainMenuStatusPalette.asm 0eda9c 8 palettes
+engine/menus/main_menu/MainMenuSavedDataPalette.asm 0edaa4 8 palettes
+engine/menus/main_menu/MatchFormatModeRowPalette.asm 0eddd4 8 palettes
+engine/menus/main_menu/MatchFormatGamesRowPalette.asm 0edddc 8 palettes
+engine/menus/main_menu/MatchFormatSetsRowPalette.asm 0edde4 8 palettes
+engine/menus/main_menu/StatusN64DataPalette.asm 0eeb73 8 palettes
+engine/menus/main_menu/StatusMarioCharactersPalette.asm 0eeb7b 8 palettes
+engine/menus/main_menu/EraseAllDataPalette.asm 0ef0f0 8 palettes
+engine/menus/main_menu/EraseN64DataPalette.asm 0ef0f8 8 palettes
+engine/menus/main_menu/N64RecordTournamentPalette.asm 0ef482 8 palettes
+engine/menus/main_menu/N64RecordRingShotPalette.asm 0ef48a 8 palettes
+engine/menus/main_menu/N64RecordExhibitionPalette.asm 0ef492 8 palettes
+engine/menus/main_menu/GbDataCharacterDataPalette.asm 0ef6a5 8 palettes
+engine/menus/main_menu/GbDataN64TournamentsPalette.asm 0ef6ad 8 palettes
+engine/menus/main_menu/GbDataSetItemsPalette.asm 0ef6b5 8 palettes
+engine/menus/main_menu/GbDataClearStatusPalette.asm 0ef6bd 8 palettes
 engine/menus/ranking/VarsityChartHighlightBlinkPalettes0.asm 0ef9e9 8 palettes
 engine/menus/ranking/VarsityChartHighlightBlinkPalettes1.asm 0ef9f1 8 palettes
 gfx/lz_N64TnmtDataTiles.bin 0f007e 503 gfx
@@ -1180,9 +1180,9 @@ gfx/TournamentBracketPalettes.asm 0f7ace 40 palettes
 gfx/lz_TournamentBracketDoublesTilemap.bin 0f7b0e 14b tilemap:32
 gfx/lz_TournamentBracketDoublesAttrmap.bin 0f7c59 66 tilemap:32
 engine/menus/common/SelectionBoxWobbleYTable_3e.asm 0f80ef 10 bytes:16
-engine/menus/link/LinkMatchFormatInitialStatePalettes0.asm 0f85ef 8 palettes
-engine/menus/link/LinkMatchFormatInitialStatePalettes1.asm 0f85f7 8 palettes
-engine/menus/link/LinkMatchFormatInitialStatePalettes2.asm 0f85ff 8 palettes
+engine/menus/link/LinkMatchFormatModeRowPalette.asm 0f85ef 8 palettes
+engine/menus/link/LinkMatchFormatGamesRowPalette.asm 0f85f7 8 palettes
+engine/menus/link/LinkMatchFormatSetsRowPalette.asm 0f85ff 8 palettes
 engine/menus/link/LinkStatusPalette0.asm 0f8a87 8 palettes
 engine/menus/link/LinkStatusPalette1.asm 0f8a8f 8 palettes
 engine/menus/link/LinkStatusPalette2.asm 0f8a97 8 palettes

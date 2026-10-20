@@ -118,48 +118,48 @@ CharDataScreen_InitState:
 	or a ; $4133
 	ret nz ; $4134
 	xor a ; $4135
-	ld [wCharDataPointsWorking], a ; $4136
+	ld [wCharDataPointsTotal], a ; $4136
 	push af ; $4139
 	ld_story_char_field CHARREC_LEVEL ; $413a
 	pop af ; $414d
 	ld a, [hl] ; $414e
-	ld [wCharDataLevel], a ; $414f
+	ld [wCharDataStartLevel], a ; $414f
 	push af ; $4152
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4153
 	pop af ; $4166
 	ld a, [hl] ; $4167
-	ld [wCharDataNewLevels + TRAINSTAT_SPIN], a ; $4168
+	ld [wCharDataStartLevels + TRAINSTAT_SPIN], a ; $4168
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $416b
 	push af ; $416e
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $416f
 	pop af ; $4182
 	ld a, [hl] ; $4183
-	ld [wCharDataNewLevels + TRAINSTAT_POWER], a ; $4184
+	ld [wCharDataStartLevels + TRAINSTAT_POWER], a ; $4184
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4187
 	push af ; $418a
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $418b
 	pop af ; $419e
 	ld a, [hl] ; $419f
-	ld [wCharDataNewLevels + TRAINSTAT_CONTROL], a ; $41a0
+	ld [wCharDataStartLevels + TRAINSTAT_CONTROL], a ; $41a0
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $41a3
 	push af ; $41a6
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $41a7
 	pop af ; $41ba
 	ld a, [hl] ; $41bb
-	ld [wCharDataNewLevels + TRAINSTAT_SPEED], a ; $41bc
+	ld [wCharDataStartLevels + TRAINSTAT_SPEED], a ; $41bc
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $41bf
 .loop:
 	ld a, [wStoryCharacterSlot] ; $41c2
 	farcall HasReachedNextLevelExp ; $41c5
-	jr nz, .writeCharStatsToDisplayBuffer ; $41c8
+	jr nz, .revertToStart ; $41c8
 	ld a, [wStoryCharacterSlot] ; $41ca
 	ld d, TRAINSTAT_SPIN ; $41cd
 	farcall LevelUpPlayer ; $41cf
-	ld hl, wCharDataPointsWorking ; $41d2
+	ld hl, wCharDataPointsTotal ; $41d2
 	inc [hl] ; $41d5
 	jr .loop ; $41d6
-.writeCharStatsToDisplayBuffer:
-	call CommitCharDataToRecord ; $41d8
+.revertToStart:
+	call RevertCharDataToStart ; $41d8
 	ret ; $41db
 CharDataScreen_BuildTilemap:
 	call CharDataScreen_LoadUIGraphics ; $41dc
@@ -264,7 +264,7 @@ CharDataScreen_DrawStats:
 	jr z, .statsReady ; $4300
 	call LoadCharStats ; $4302
 .statsReady:
-	farcall CharDataScreen_BuildStats ; $4305
+	farcall ComputeCharDataEquipmentDeltas ; $4305
 	wram_bank WRAM_SCENE ; $4308
 	ld a, [wCharDataStats + CHARSTAT_TOP] ; $430e
 	ld c, a ; $4311
@@ -478,7 +478,7 @@ CharDataScreen_DrawStatBar:
 	ld b, a ; $4502
 	ld a, c ; $4503
 	or a ; $4504
-	jr nz, .altTable ; $4505
+	jr nz, .ruledBar ; $4505
 	ld a, b ; $4507
 	rlca ; $4508
 	ld_hl_indexed CharDataScreen_DrawStatBarPtrs ; $4509
@@ -486,10 +486,10 @@ CharDataScreen_DrawStatBar:
 	ld h, [hl] ; $4511
 	ld l, a ; $4512
 	jr .copyTiles ; $4513
-.altTable:
+.ruledBar:
 	ld a, b ; $4515
 	rlca ; $4516
-	ld_hl_indexed CharDataScreen_StatBarAltTilePtrs ; $4517
+	ld_hl_indexed CharDataScreen_StatBarRuledTilePtrs ; $4517
 	ld a, [hl+] ; $451e
 	ld h, [hl] ; $451f
 	ld l, a ; $4520
@@ -546,7 +546,7 @@ CharDataScreen_DrawStatBarPtrs:
 	dw CharDataScreenStatBar08 ; record 8
 	dw CharDataScreenStatBar09 ; record 9
 	dw CharDataScreenStatBar10 ; record 10
-CharDataScreen_StatBarAltTilePtrs:
+CharDataScreen_StatBarRuledTilePtrs:
 	; $456e, 22 bytes (records:2)
 	dw CharDataScreenStatBar11 ; record 0
 	dw CharDataScreenStatBar12 ; record 1

@@ -486,9 +486,9 @@ RedrawCourtSelect4Menu:
 	call IsCourtUnlocked ; $5f7f
 	or a ; $5f82
 	ld b, $ff ; $5f83
-	jr z, .drawName ; $5f85
+	jr z, .drawStats ; $5f85
 	ld b, d ; $5f87
-.drawName:
+.drawStats:
 	call DrawCourtStatValues ; $5f88
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $5f8b
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $5f8e

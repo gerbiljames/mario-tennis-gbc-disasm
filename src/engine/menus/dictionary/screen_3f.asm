@@ -67,7 +67,7 @@ TennisDictionaryScreen:
 	ld [wTennisDictSingleEntry], a ; $4103
 .disableLCDSafely:
 	call DisableLCDSafely ; $4106
-	farcall LoadMenuTilesA ; $4109
+	farcall LoadMenuWindowTiles ; $4109
 	call EnableLCD ; $410c
 	sound BGM_DICTIONARY ; $410f
 	call AdvanceFrame ; $4111

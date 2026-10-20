@@ -34,7 +34,7 @@ DrawRingShotRowIcons:
 LoadN64RingShotRecords:
 	wram_bank WRAM_SCREEN ; $523e
 	call ReadN64RecordsSaveBlock ; $5244
-	ld hl, N64RingShot ; $5247
+	ld hl, N64RingShotRowChars ; $5247
 	ld de, wRingShotEntryList ; $524a
 	ld bc, wRingShotEntryList_SIZE ; $524d
 	call CopyMemoryBC ; $5250
@@ -57,7 +57,7 @@ LoadN64RingShotRecords:
 	call ClearBytes ; $5271
 	call BuildRingShotResultsGrid ; $5274
 	ret ; $5277
-N64RingShot:
+N64RingShotRowChars:
 	; $5278, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 Unused_3b_SeedDefaultRingShotRecords:
@@ -105,7 +105,7 @@ BuildRingShotResultsGrid:
 	ld de, wChartRows ; $5319
 	ld c, $00 ; $531c
 .clearsLoop:
-	ld hl, RingShotResultsGridTable ; $531e
+	ld hl, RingShotRowRecordOrder ; $531e
 	ld a, c ; $5321
 	add_hl_a ; $5322
 	ld b, [hl] ; $5327
@@ -122,7 +122,7 @@ BuildRingShotResultsGrid:
 	ld de, wChartRows + 4 ; $5338
 	ld c, $00 ; $533b
 .scoresLoop:
-	ld hl, RingShotResultsGridTable ; $533d
+	ld hl, RingShotRowRecordOrder ; $533d
 	ld a, c ; $5340
 	add_hl_a ; $5341
 	ld b, [hl] ; $5346
@@ -137,7 +137,7 @@ BuildRingShotResultsGrid:
 	cp $10 ; $5353
 	jr nz, .scoresLoop ; $5355
 	ret ; $5357
-RingShotResultsGridTable:
+RingShotRowRecordOrder:
 	; $5358, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
 CopyRingShotCharScores:

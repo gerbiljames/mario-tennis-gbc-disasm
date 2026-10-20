@@ -159,32 +159,32 @@ DrawLinkMatchFormatInitialState:
 	call SetLinkMatchFormatOptionAttrRect ; $45c8
 	ld b, MATCHFMTROW_SETS ; $45cb
 	call FlushLinkMatchFormatRowAttrs ; $45cd
-	ld hl, LinkMatchFormatInitialStatePalettes0 ; $45d0
+	ld hl, LinkMatchFormatModeRowPalette ; $45d0
 	ld d, $04 ; $45d3
 	ld e, $01 ; $45d5
 	call LoadPaletteShadow ; $45d7
-	ld hl, LinkMatchFormatInitialStatePalettes1 ; $45da
+	ld hl, LinkMatchFormatGamesRowPalette ; $45da
 	ld d, $06 ; $45dd
 	ld e, $01 ; $45df
 	call LoadPaletteShadow ; $45e1
-	ld hl, LinkMatchFormatInitialStatePalettes2 ; $45e4
+	ld hl, LinkMatchFormatSetsRowPalette ; $45e4
 	ld d, $07 ; $45e7
 	ld e, $01 ; $45e9
 	call LoadPaletteShadow ; $45eb
 	ret ; $45ee
-LinkMatchFormatInitialStatePalettes0:
-	INCLUDE "data/engine/menus/link/LinkMatchFormatInitialStatePalettes0.asm" ; $45ef, 8 bytes (palettes)
-LinkMatchFormatInitialStatePalettes1:
-	INCLUDE "data/engine/menus/link/LinkMatchFormatInitialStatePalettes1.asm" ; $45f7, 8 bytes (palettes)
-LinkMatchFormatInitialStatePalettes2:
-	INCLUDE "data/engine/menus/link/LinkMatchFormatInitialStatePalettes2.asm" ; $45ff, 8 bytes (palettes)
+LinkMatchFormatModeRowPalette:
+	INCLUDE "data/engine/menus/link/LinkMatchFormatModeRowPalette.asm" ; $45ef, 8 bytes (palettes)
+LinkMatchFormatGamesRowPalette:
+	INCLUDE "data/engine/menus/link/LinkMatchFormatGamesRowPalette.asm" ; $45f7, 8 bytes (palettes)
+LinkMatchFormatSetsRowPalette:
+	INCLUDE "data/engine/menus/link/LinkMatchFormatSetsRowPalette.asm" ; $45ff, 8 bytes (palettes)
 LoadLinkMatchFormatMenuGraphics:
 	push_wram_bank WRAM_STAGING ; $4607
 	ld c, $00 ; $4610
 .loop:
 	ld a, c ; $4612
 	add a ; $4613
-	ld hl, LinkMatchFormatMenuGraphicsTable ; $4614
+	ld hl, LinkMatchFormatIconTilePtrs ; $4614
 	add_hl_a ; $4617
 	ld a, [hl+] ; $461c
 	ld h, [hl] ; $461d
@@ -199,7 +199,7 @@ LoadLinkMatchFormatMenuGraphics:
 	pop de ; $462a
 	pop bc ; $462b
 	pop af ; $462c
-	ld hl, LinkMatchFormatMenuTable ; $462d
+	ld hl, LinkMatchFormatIconTileVramDests ; $462d
 	ld a, c ; $4630
 	add a ; $4631
 	add_hl_a ; $4632
@@ -274,7 +274,7 @@ LoadLinkMatchFormatMenuGraphics:
 	farcall LoadIndexedPalette ; $46cf
 	pop_wram_bank ; $46d2
 	ret ; $46d7
-LinkMatchFormatMenuGraphicsTable:
+LinkMatchFormatIconTilePtrs:
 	; $46d8, 14 bytes (7 records x 1 slot words)
 	dslot DataPtr_SinglesIconTiles ; record 0
 	dslot DataPtr_DoublesIconTiles ; record 1
@@ -283,7 +283,7 @@ LinkMatchFormatMenuGraphicsTable:
 	dslot DataPtr_OneSetIconTiles ; record 4
 	dslot DataPtr_ThreeSetsIconTiles ; record 5
 	dslot DataPtr_FiveSetsIconTiles ; record 6
-LinkMatchFormatMenuTable:
+LinkMatchFormatIconTileVramDests:
 	; $46e6, 14 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1

@@ -187,7 +187,7 @@ DrawMinigameLevelSelect2Cursor:
 	ld e, a ; $6f80
 	farcall ApplySpriteBobOffset ; $6f81
 	ld b, OAM_BANK1 ; $6f84
-	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate0 ; $6f86
+	ld hl, MinigameLevelSelect2LabelTemplate ; $6f86
 	push de ; $6f89
 	call QueueSpriteTemplate ; $6f8a
 	pop de ; $6f8d
@@ -195,11 +195,11 @@ DrawMinigameLevelSelect2Cursor:
 	add hl, de ; $6f91
 	ld d, h ; $6f92
 	ld e, l ; $6f93
-	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate1 ; $6f94
+	ld hl, MinigameLevelSelect2LabelTailTemplate ; $6f94
 	sprite_attr_tile OAM_BANK1, $70 ; $6f97
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
-DrawMinigameLevelSelect2Cursor_SpriteTemplate0:
+MinigameLevelSelect2LabelTemplate:
 	; $6f9f, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -210,7 +210,7 @@ DrawMinigameLevelSelect2Cursor_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawMinigameLevelSelect2Cursor_SpriteTemplate1:
+MinigameLevelSelect2LabelTailTemplate:
 	; $6fc0, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -364,7 +364,7 @@ DrawMinigameLevelSelect3Cursor:
 	ld e, a ; $710b
 	farcall ApplySpriteBobOffset ; $710c
 	ld b, OAM_BANK1 ; $710f
-	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate0 ; $7111
+	ld hl, MinigameLevelSelect3LabelTemplate ; $7111
 	push de ; $7114
 	call QueueSpriteTemplate ; $7115
 	pop de ; $7118
@@ -372,11 +372,11 @@ DrawMinigameLevelSelect3Cursor:
 	add hl, de ; $711c
 	ld d, h ; $711d
 	ld e, l ; $711e
-	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate1 ; $711f
+	ld hl, MinigameLevelSelect3LabelTailTemplate ; $711f
 	sprite_attr_tile OAM_BANK1, $70 ; $7122
 	call QueueSpriteTemplate ; $7126
 	ret ; $7129
-DrawMinigameLevelSelect3Cursor_SpriteTemplate0:
+MinigameLevelSelect3LabelTemplate:
 	; $712a, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -387,7 +387,7 @@ DrawMinigameLevelSelect3Cursor_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawMinigameLevelSelect3Cursor_SpriteTemplate1:
+MinigameLevelSelect3LabelTailTemplate:
 	; $714b, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

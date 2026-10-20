@@ -252,7 +252,7 @@ FlushCharDataTilemapsFar:
 	ret ; $72ff
 BackupCharData:
 	wram_bank WRAM_SCENE ; $7300
-	ld hl, wCharDataPointsWorking ; $7306
+	ld hl, wCharDataPointsTotal ; $7306
 	ld de, wCharDataEditBackup ; $7309
 	ld bc, wCharDataEditBackup_SIZE ; $730c
 	call CopyMemoryBC ; $730f
@@ -264,7 +264,7 @@ BackupCharData:
 RestoreCharData:
 	wram_bank WRAM_SCENE ; $731f
 	ld hl, wCharDataEditBackup ; $7325
-	ld de, wCharDataPointsWorking ; $7328
+	ld de, wCharDataPointsTotal ; $7328
 	ld bc, wCharDataEditBackup_SIZE ; $732b
 	call CopyMemoryBC ; $732e
 	ld hl, wCharDataChoiceBackup ; $7331
@@ -275,35 +275,35 @@ RestoreCharData:
 	ld [wCharDataViewOnly], a ; $733f
 	xor a ; $7342
 	ld [wStoryCharacterSlot], a ; $7343
-	ld a, [wCharDataPointsWorking] ; $7346
+	ld a, [wCharDataPointsTotal] ; $7346
 	ld [wCharDataPointsLeft], a ; $7349
 	push af ; $734c
 	ld_story_char_field CHARREC_LEVEL ; $734d
 	pop af ; $7360
-	ld a, [wCharDataLevel] ; $7361
+	ld a, [wCharDataStartLevel] ; $7361
 	ld [hl], a ; $7364
 	push af ; $7365
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $7366
 	pop af ; $7379
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $737a
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $737a
 	ld [hl], a ; $737d
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $737e
 	push af ; $7381
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $7382
 	pop af ; $7395
-	ld a, [wCharDataNewLevels + TRAINSTAT_POWER] ; $7396
+	ld a, [wCharDataStartLevels + TRAINSTAT_POWER] ; $7396
 	ld [hl], a ; $7399
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $739a
 	push af ; $739d
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $739e
 	pop af ; $73b1
-	ld a, [wCharDataNewLevels + TRAINSTAT_CONTROL] ; $73b2
+	ld a, [wCharDataStartLevels + TRAINSTAT_CONTROL] ; $73b2
 	ld [hl], a ; $73b5
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $73b6
 	push af ; $73b9
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $73ba
 	pop af ; $73cd
-	ld a, [wCharDataNewLevels + TRAINSTAT_SPEED] ; $73ce
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPEED] ; $73ce
 	ld [hl], a ; $73d1
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $73d2
 	xor a ; $73d5
@@ -325,14 +325,14 @@ RestoreCharData:
 	jr nz, .loop ; $73f1
 	ret ; $73f3
 LoadCharDataScreenGraphics:
-	call LoadCharDataScreenBgAndPalettes ; $73f4
+	call LoadCharDataScreenPalettes ; $73f4
 	call LoadCharDataScreenMugshots ; $73f7
 	ret ; $73fa
-LoadCharDataScreenBgAndPalettes:
-	ld hl, CharDataScreenBgAndPalettes ; $73fb
+LoadCharDataScreenPalettes:
+	ld hl, CharDataScreenBgObjPalettes ; $73fb
 	ld_bg_pals de, 0, 8 ; $73fe
 	call LoadPaletteShadow ; $7401
-	ld hl, CharDataScreenBgAndPalettes ; $7404
+	ld hl, CharDataScreenBgObjPalettes ; $7404
 	ld_obj_pals de, 0, 8 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank WRAM_SCENE ; $740d
@@ -423,8 +423,8 @@ LoadCharDataScreenMugshots:
 	ld hl, wMasterPalettes + 2 * PAL_SIZE + 3 * COLOR_SIZE ; $753a
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
-CharDataScreenBgAndPalettes:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenBgAndPalettes.asm" ; $7541, 64 bytes (palettes)
+CharDataScreenBgObjPalettes:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenBgObjPalettes.asm" ; $7541, 64 bytes (palettes)
 CharDataScreenBgGfx:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgGfx.bin" ; $7581, 1886 bytes
 CharDataScreenBgTilemap:

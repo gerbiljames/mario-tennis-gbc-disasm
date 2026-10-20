@@ -264,11 +264,11 @@ DrawCharDataConfirmPrompt:
 	ld bc, wCharDataPagePlane + 12 * TILEMAP_WIDTH ; $5c0e
 	call ApplyTilemapPatchList ; $5c11
 	ret ; $5c14
-StartCharDataValuesSyncTask:
-	frame_task CharDataValuesSyncTask ; $5c15
+StartCharDataSummarySpritesTask:
+	frame_task DrawCharDataSummarySpritesTask ; $5c15
 	ret ; $5c1d
-StopCharDataValuesSyncTask:
-	ld hl, CharDataValuesSyncTask ; $5c1e
+StopCharDataSummarySpritesTask:
+	ld hl, DrawCharDataSummarySpritesTask ; $5c1e
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
 CharDataAttrClearPatch_1d:
@@ -297,10 +297,10 @@ StatPageTilemapPatch4:
 	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch4.asm" ; $5d34, 37 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch3:
 	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm" ; $5d59, 37 bytes (blit_runs)
-CharDataSummaryFieldsTilePlot0:
-	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm" ; $5d7e, 19 bytes (bytes:2)
-CharDataSummaryFieldsTilePlot1:
-	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm" ; $5d91, 19 bytes (bytes:2)
+CharDataSummaryMainMugshotPlot:
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryMainMugshotPlot.asm" ; $5d7e, 19 bytes (bytes:2)
+CharDataSummaryPartnerMugshotPlot:
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryPartnerMugshotPlot.asm" ; $5d91, 19 bytes (bytes:2)
 MainCharStatPageTilemapPatch00:
 	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch00.asm" ; $5da4, 13 bytes (blit_runs)
 PartnerStatPageTilemapPatch00:

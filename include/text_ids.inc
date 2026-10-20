@@ -52,7 +52,9 @@ def Text_30_149 equ $0095
 def Text_30_153 equ $0099
 def Text_30_169 equ $00a9
 def Text_30_178 equ $00b2
+def Text_30_187 equ $00bb
 def Text_30_194 equ $00c2
+def Text_30_197 equ $00c5
 def Text_30_199 equ $00c7
 def Text_30_200 equ $00c8
 def Text_30_201 equ $00c9
@@ -1525,7 +1527,9 @@ def Text_CharGridCpuDifficulty equ Text_30_149
 def Text_CharTypePower equ Text_30_153
 def Text_CourtSpeedSlow equ Text_30_169
 def Text_MinigameNameBooBlast equ Text_30_178
+def Text_MinigameCantPlayYet equ Text_30_187
 def Text_MinigameLevelClearThisFirst equ Text_30_194
+def Text_MinigameLevelCantPlayYet equ Text_30_197
 def Text_StatusN64TennisData equ Text_30_199
 def Text_StatusNoDataInFile equ Text_30_200
 def Text_StatusMarioCharData equ Text_30_201

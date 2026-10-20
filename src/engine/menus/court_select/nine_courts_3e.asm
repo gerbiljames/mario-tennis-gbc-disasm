@@ -287,7 +287,7 @@ CourtSelect9CursorSpriteTask:
 	ld h, [hl] ; $6752
 	ld l, a ; $6753
 	push de ; $6754
-	call AdjustCursorForLockedCourt ; $6755
+	call UseLockedCourtBanner ; $6755
 	call QueueSpriteTemplate ; $6758
 	pop de ; $675b
 	ld c, $03 ; $675c
@@ -328,7 +328,7 @@ CourtSelect9BannerAttrs:
 CourtSelect9CursorXOffsets:
 	; $6802, 10 bytes (bytes:10)
 	db $17, $17, $17, $1b, $17, $17, $17, $17, $17, $17 ; 0x00
-AdjustCursorForLockedCourt:
+UseLockedCourtBanner:
 	push bc ; $680c
 	push hl ; $680d
 	ld c, $03 ; $680e
@@ -372,9 +372,9 @@ RedrawCourtSelect9Menu:
 	call IsCourtUnlocked ; $6852
 	or a ; $6855
 	ld b, $ff ; $6856
-	jr z, .drawName ; $6858
+	jr z, .drawStats ; $6858
 	ld b, d ; $685a
-.drawName:
+.drawStats:
 	call DrawCourtStatValues ; $685b
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $685e
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $6861
@@ -494,7 +494,7 @@ Unused_3e_DrawCourtSelect9StatsText:
 StoreCourtUnlockBits:
 	push_wram_bank WRAM_COURT_PLANES ; $695a
 	ld c, $00 ; $6963
-	ld hl, wScreenAttrmap ; $6965
+	ld hl, wCourtUnlockedFlags ; $6965
 .loop:
 	ld a, b ; $6968
 	and $01 ; $6969
@@ -517,7 +517,7 @@ IsCourtUnlocked:
 	push_wram_bank WRAM_COURT_PLANES ; $6983
 	ld a, b ; $698c
 	sub COURT_STAR ; $698d
-	ld hl, wScreenAttrmap ; $698f
+	ld hl, wCourtUnlockedFlags ; $698f
 	add_hl_a ; $6992
 	ld a, [hl] ; $6997
 	ld b, a ; $6998
@@ -536,11 +536,11 @@ ComputeUnlockedCourtFlags:
 	ld d, [hl] ; $69af
 	ld e, a ; $69b0
 	farcall TestSaveFlag ; $69b1
-	jr z, .countDone ; $69b4
+	jr z, .nextFlag ; $69b4
 	ld a, $01 ; $69b6
 	or b ; $69b8
 	ld b, a ; $69b9
-.countDone:
+.nextFlag:
 	ld a, c ; $69ba
 	inc a ; $69bb
 	ld c, a ; $69bc

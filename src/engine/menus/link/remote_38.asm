@@ -1,13 +1,13 @@
 StoreRemoteCpuDifficulty:
 	ld a, [wCharSelectMode] ; $6609
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $660c
-	jr z, .slot0 ; $660e
+	jr z, .remoteIsP1 ; $660e
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6610
-	jr z, .slot0 ; $6612
+	jr z, .remoteIsP1 ; $6612
 	ld a, c ; $6614
 	ld [wCharSelectSlotDifficulty + 3], a ; $6615
 	ret ; $6618
-.slot0:
+.remoteIsP1:
 	ld a, c ; $6619
 	ld [wCharSelectSlotDifficulty + 1], a ; $661a
 	ret ; $661d
@@ -26,11 +26,11 @@ ApplyRemoteCharSelection:
 	pop bc ; $663a
 	ld a, [wCharSelectRemoteSlot] ; $663b
 	cp $00 ; $663e
-	jr nz, .slot2 ; $6640
+	jr nz, .slot1 ; $6640
 	ld a, c ; $6642
 	ld [wCharSelectRemoteChars], a ; $6643
 	jr .advanceSlot ; $6646
-.slot2:
+.slot1:
 	ld a, c ; $6648
 	ld [wCharSelectRemoteChars + 1], a ; $6649
 .advanceSlot:
@@ -46,11 +46,11 @@ ApplyRemoteCharCancel:
 	jr z, .refresh ; $665c
 	ld a, [wCharSelectRemoteSlot] ; $665e
 	cp $00 ; $6661
-	jr nz, .slot2 ; $6663
+	jr nz, .slot1 ; $6663
 	ld a, [wCharSelectRemoteChars] ; $6665
 	ld c, a ; $6668
 	jr .clearEntry ; $6669
-.slot2:
+.slot1:
 	ld a, [wCharSelectRemoteChars + 1] ; $666b
 	ld c, a ; $666e
 .clearEntry:
@@ -60,9 +60,9 @@ ApplyRemoteCharCancel:
 	wram_bank WRAM_SCREEN ; $6675
 	ld a, [wCharSelectMode] ; $667b
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $667e
-	jr z, .clearOwnSlot ; $6680
+	jr z, .remoteIsP1 ; $6680
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6682
-	jr z, .clearOwnSlot ; $6684
+	jr z, .remoteIsP1 ; $6684
 	ld a, [wCharSelectRemoteSlot] ; $6686
 	ld hl, wCharSelectSlotDifficulty + 2 ; $6689
 	add_hl_a ; $668c
@@ -74,7 +74,7 @@ ApplyRemoteCharCancel:
 	xor a ; $669e
 	ld [hl], a ; $669f
 	jr .retreatSlot ; $66a0
-.clearOwnSlot:
+.remoteIsP1:
 	ld a, [wCharSelectRemoteSlot] ; $66a2
 	ld hl, wCharSelectSlotDifficulty ; $66a5
 	add_hl_a ; $66a8
@@ -93,15 +93,15 @@ ApplyRemoteCharCancel:
 Unused_38_CopyRemoteCharsToSlots:
 	ld a, [wCharSelectMode] ; $66c3
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $66c6
-	jr z, .redraw ; $66c8
+	jr z, .remoteIsP1 ; $66c8
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $66ca
-	jr z, .redraw ; $66cc
+	jr z, .remoteIsP1 ; $66cc
 	ld a, [wCharSelectRemoteChars] ; $66ce
 	ld [wCharSelectSlotChars + 2], a ; $66d1
 	ld a, [wCharSelectRemoteChars + 1] ; $66d4
 	ld [wCharSelectSlotChars + 3], a ; $66d7
 	jr .done ; $66da
-.redraw:
+.remoteIsP1:
 	ld a, [wCharSelectRemoteChars] ; $66dc
 	ld [wCharSelectSlotChars], a ; $66df
 	ld a, [wCharSelectRemoteChars + 1] ; $66e2
@@ -165,12 +165,12 @@ HandleLinkGridButtons:
 	sound SFX_MENU_MOVE ; $6754
 	ld a, [wCharGridHandedness] ; $6756
 	cp HAND_UNCHOSEN ; $6759
-	jr z, .starChar ; $675b
+	jr z, .firstToggle ; $675b
 	xor $01 ; $675d
 	ld [wCharGridHandedness], a ; $675f
 	call RefreshCharInfoPanel ; $6762
 	ret ; $6765
-.starChar:
+.firstToggle:
 	ld a, HAND_LEFT ; $6766
 	ld [wCharGridHandedness], a ; $6768
 	call RefreshCharInfoPanel ; $676b
@@ -180,13 +180,13 @@ ConfirmLinkGridSelection:
 	push_wram_bank WRAM_SCREEN ; $676f
 	ld a, [wCharSelectSlot] ; $6778
 	cp CHARSELECTSLOT_DONE ; $677b
-	jr z, .emptyCell ; $677d
+	jr z, .reject ; $677d
 	ldh a, [hLinkRemoteInput] ; $677f
 	cp LINKSEL_PICK ; $6781
 	jr nz, .readEntry ; $6783
 	ld a, LINKSEL_NONE ; $6785
 	ldh [hLinkRemoteInput], a ; $6787
-	jr .emptyCell ; $6789
+	jr .reject ; $6789
 .readEntry:
 	ld a, [wCharGridPage] ; $678b
 	ld c, a ; $678e
@@ -196,7 +196,7 @@ ConfirmLinkGridSelection:
 	ld e, a ; $6796
 	call TestAndSetGridEntryTaken ; $6797
 	or a ; $679a
-	jr nz, .emptyCell ; $679b
+	jr nz, .reject ; $679b
 	sound SFX_MENU_SELECT ; $679d
 	call GetGridSlotFromCursor ; $679f
 	ld b, a ; $67a2
@@ -206,7 +206,7 @@ ConfirmLinkGridSelection:
 	add_hl_a ; $67a8
 	ld a, [hl] ; $67ad
 	cp $ff ; $67ae
-	jr z, .emptyCell ; $67b0
+	jr z, .reject ; $67b0
 	ld c, a ; $67b2
 	call IsMarioCastCharacter ; $67b3
 	or a ; $67b6
@@ -226,7 +226,7 @@ ConfirmLinkGridSelection:
 	ld [hl], b ; $67d9
 	call DrawPlayerSlotPortrait ; $67da
 	jr .refresh ; $67dd
-.emptyCell:
+.reject:
 	sound SFX_MENU_CANCEL ; $67df
 	pop_wram_bank ; $67e1
 	ret ; $67e6
@@ -316,9 +316,9 @@ DrawRemoteSlotPortrait:
 	call DrawRemoteSlotLeftHandedMark ; $68aa
 	ld a, [wCharSelectMode] ; $68ad
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $68b0
-	jr z, .slot0 ; $68b2
+	jr z, .remoteIsP1 ; $68b2
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $68b4
-	jr z, .slot0 ; $68b6
+	jr z, .remoteIsP1 ; $68b6
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $68b8
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $68bb
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $68be
@@ -328,7 +328,7 @@ DrawRemoteSlotPortrait:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $68c9
 	call QueueVRAMCopy ; $68cb
 	jr .done ; $68ce
-.slot0:
+.remoteIsP1:
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $68d0
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $68d3
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $68d6
@@ -343,9 +343,9 @@ DrawRemoteSlotPortrait:
 DrawRemoteSlotLeftHandedMark:
 	ld a, [wCharSelectMode] ; $68ec
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $68ef
-	jr z, .checkOwnSlot ; $68f1
+	jr z, .remoteIsP1 ; $68f1
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $68f3
-	jr z, .checkOwnSlot ; $68f5
+	jr z, .remoteIsP1 ; $68f5
 	ld a, [wCharSelectRemoteSlot] ; $68f7
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $68fa
 	add_hl_a ; $68fd
@@ -353,7 +353,7 @@ DrawRemoteSlotLeftHandedMark:
 	or a ; $6903
 	ret z ; $6904
 	jr .draw ; $6905
-.checkOwnSlot:
+.remoteIsP1:
 	ld a, [wCharSelectRemoteSlot] ; $6907
 	ld hl, wCharSelectSlotLeftHanded ; $690a
 	add_hl_a ; $690d
@@ -370,16 +370,16 @@ DrawRemoteSlotLeftHandedMark:
 Unused_38_DrawRemoteDifficultyDigit:
 	ld a, [wCharSelectMode] ; $6920
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6923
-	jr z, .queueVram ; $6925
+	jr z, .remoteIsP1 ; $6925
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6927
-	jr z, .queueVram ; $6929
+	jr z, .remoteIsP1 ; $6929
 	ld a, [wCharSelectSlotDifficulty + 3] ; $692b
 	ld c, $33 ; $692e
 	add c ; $6930
 	ld hl, wShadowTilemap + 10 * TILEMAP_WIDTH + 15 ; $6931
 	ld [hl], a ; $6934
 	jr .done ; $6935
-.queueVram:
+.remoteIsP1:
 	ld a, [wCharSelectSlotDifficulty + 1] ; $6937
 	ld c, $33 ; $693a
 	add c ; $693c
@@ -413,9 +413,9 @@ ClearRemoteSlotPortrait:
 	ld [hl], a ; $696a
 	ld a, [wCharSelectMode] ; $696b
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $696e
-	jr z, .slot0 ; $6970
+	jr z, .remoteIsP1 ; $6970
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6972
-	jr z, .slot0 ; $6974
+	jr z, .remoteIsP1 ; $6974
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $6976
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $6979
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $697c
@@ -425,7 +425,7 @@ ClearRemoteSlotPortrait:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $6987
 	call QueueVRAMCopy ; $6989
 	jr .done ; $698c
-.slot0:
+.remoteIsP1:
 	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $698e
 	ld de, vBGMap0 + 6 * TILEMAP_WIDTH ; $6991
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $6994
@@ -459,33 +459,33 @@ GetRemoteSlotBoxAddress:
 RemoteSlotBoxAddrPtrs_38:
 	; $69c1, 12 bytes (records:2)
 	table_width 2
-	dw RemoteSlotBoxAddrs0 ; record 0
-	dw RemoteSlotBoxAddrs0 ; record 1
-	dw RemoteSlotBoxAddrs1 ; record 2
-	dw RemoteSlotBoxAddrs0 ; record 3
-	dw RemoteSlotBoxAddrs3 ; record 4
-	dw RemoteSlotBoxAddrs2 ; record 5
+	dw RemoteSlotBoxAddrsLinkSinglesP2 ; record 0
+	dw RemoteSlotBoxAddrsLinkSinglesP2 ; record 1
+	dw RemoteSlotBoxAddrsLinkSinglesP1 ; record 2
+	dw RemoteSlotBoxAddrsLinkSinglesP2 ; record 3
+	dw RemoteSlotBoxAddrsLinkDoublesP1 ; record 4
+	dw RemoteSlotBoxAddrsLinkDoublesP2 ; record 5
 	assert_table_length NUM_CHARSELECTMODES
-RemoteSlotBoxAddrs0:
+RemoteSlotBoxAddrsLinkSinglesP2:
 	; $69cd, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0
 	dw NO_BOX ; record 1
 	dw NO_BOX ; record 2
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
-RemoteSlotBoxAddrs1:
+RemoteSlotBoxAddrsLinkSinglesP1:
 	; $69d7, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 0
 	dw NO_BOX ; record 1
 	dw NO_BOX ; record 2
-RemoteSlotBoxAddrs2:
+RemoteSlotBoxAddrsLinkDoublesP2:
 	; $69dd, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 13 ; record 0
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 17 ; record 1
 	dw NO_BOX ; record 2
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
-RemoteSlotBoxAddrs3:
+RemoteSlotBoxAddrsLinkDoublesP1:
 	; $69e7, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 13 ; record 0
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 17 ; record 1

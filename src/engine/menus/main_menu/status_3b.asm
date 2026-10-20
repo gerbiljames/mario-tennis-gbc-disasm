@@ -10,11 +10,11 @@ BuildMarioCastUnlockMask:
 	ld d, [hl] ; $668e
 	ld e, a ; $668f
 	farcall TestSaveFlag ; $6690
-	jr z, .countDone ; $6693
+	jr z, .nextFlag ; $6693
 	ld a, $01 ; $6695
 	or b ; $6697
 	ld b, a ; $6698
-.countDone:
+.nextFlag:
 	ld a, c ; $6699
 	inc a ; $669a
 	ld c, a ; $669b
@@ -44,7 +44,7 @@ GetUnlockedMarioCastCharAtGridSlot:
 	ret z ; $66c0
 	ld d, a ; $66c1
 	sub CHAR_MARIO ; $66c2
-	ld hl, UnlockedMarioCastCharAtGridSlotTable ; $66c4
+	ld hl, MarioCastUnlockBitByChar ; $66c4
 	add_hl_a ; $66c7
 	ld b, [hl] ; $66cc
 	ld a, [wMarioCastUnlockMask] ; $66cd
@@ -55,7 +55,7 @@ GetUnlockedMarioCastCharAtGridSlot:
 .unlocked:
 	ld a, d ; $66d6
 	ret ; $66d7
-UnlockedMarioCastCharAtGridSlotTable:
+MarioCastUnlockBitByChar:
 	; $66d8, 6 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20 ; 0x00
 GetMarioCastCharAtGridSlot:
@@ -440,7 +440,7 @@ StatusSourceCursorSpriteTask:
 	ld e, a ; $69fa
 	farcall ApplySpriteBobOffset ; $69fb
 	ld b, OAM_BANK1 ; $69fe
-	ld hl, StatusSourceCursorSpriteTask_SpriteTemplate0 ; $6a00
+	ld hl, StatusSourceLabelTemplate ; $6a00
 	push de ; $6a03
 	call QueueSpriteTemplate ; $6a04
 	pop de ; $6a07
@@ -448,11 +448,11 @@ StatusSourceCursorSpriteTask:
 	add hl, de ; $6a0b
 	ld d, h ; $6a0c
 	ld e, l ; $6a0d
-	ld hl, StatusSourceCursorSpriteTask_SpriteTemplate1 ; $6a0e
+	ld hl, StatusSourceLabelTailTemplate ; $6a0e
 	sprite_attr_tile OAM_BANK1, $70 ; $6a11
 	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18
-StatusSourceCursorSpriteTask_SpriteTemplate0:
+StatusSourceLabelTemplate:
 	; $6a19, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -463,7 +463,7 @@ StatusSourceCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-StatusSourceCursorSpriteTask_SpriteTemplate1:
+StatusSourceLabelTailTemplate:
 	; $6a3a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -608,19 +608,19 @@ LoadStatusSourceCellPalette:
 	ret ; $6b60
 StatusSourceCellPalettePtrs:
 	; $6b61, 18 bytes (records:2)
-	dw StatusSourceCellPalette0 ; record 0
-	dw StatusSourceCellPalette0 ; record 1
-	dw StatusSourceCellPalette0 ; record 2
-	dw StatusSourceCellPalette1 ; record 3
-	dw StatusSourceCellPalette0 ; record 4
-	dw StatusSourceCellPalette0 ; record 5
-	dw StatusSourceCellPalette0 ; record 6
-	dw StatusSourceCellPalette0 ; record 7
-	dw StatusSourceCellPalette0 ; record 8
-StatusSourceCellPalette0:
-	INCLUDE "data/engine/menus/main_menu/StatusSourceCellPalette0.asm" ; $6b73, 8 bytes (palettes)
-StatusSourceCellPalette1:
-	INCLUDE "data/engine/menus/main_menu/StatusSourceCellPalette1.asm" ; $6b7b, 8 bytes (palettes)
+	dw StatusN64DataPalette ; record 0
+	dw StatusN64DataPalette ; record 1
+	dw StatusN64DataPalette ; record 2
+	dw StatusMarioCharactersPalette ; record 3
+	dw StatusN64DataPalette ; record 4
+	dw StatusN64DataPalette ; record 5
+	dw StatusN64DataPalette ; record 6
+	dw StatusN64DataPalette ; record 7
+	dw StatusN64DataPalette ; record 8
+StatusN64DataPalette:
+	INCLUDE "data/engine/menus/main_menu/StatusN64DataPalette.asm" ; $6b73, 8 bytes (palettes)
+StatusMarioCharactersPalette:
+	INCLUDE "data/engine/menus/main_menu/StatusMarioCharactersPalette.asm" ; $6b7b, 8 bytes (palettes)
 DrawStatusSourceCaption:
 	push_wram_bank WRAM_SCREEN ; $6b83
 	ld c, $03 ; $6b8c

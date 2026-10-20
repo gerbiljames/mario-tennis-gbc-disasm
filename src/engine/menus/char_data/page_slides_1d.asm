@@ -85,7 +85,7 @@ ApplyTilemapPatchList:
 	jr ApplyTilemapPatchList ; $4c02
 DrawCharDataPageArrowsTask:
 	wram_bank WRAM_SCENE ; $4c04
-	ld a, [wCharDataArrowHold] ; $4c0a
+	ld a, [wCharDataArrowSlideX] ; $4c0a
 	or a ; $4c0d
 	jr nz, .drawArrows ; $4c0e
 	ld hl, wCharDataArrowPhase ; $4c10
@@ -132,7 +132,7 @@ BobArrowSpriteLeft:
 	inc a ; $4c75
 	add d ; $4c76
 	ld d, a ; $4c77
-	ld a, [wCharDataArrowHold] ; $4c78
+	ld a, [wCharDataArrowSlideX] ; $4c78
 	cpl ; $4c7b
 	inc a ; $4c7c
 	add d ; $4c7d
@@ -147,7 +147,7 @@ BobArrowSpriteRight:
 	ld a, [hl] ; $4c93
 	add d ; $4c94
 	ld d, a ; $4c95
-	ld a, [wCharDataArrowHold] ; $4c96
+	ld a, [wCharDataArrowSlideX] ; $4c96
 	add d ; $4c99
 	ld d, a ; $4c9a
 	ret ; $4c9b
@@ -257,7 +257,7 @@ RunCharDataPageInputLoop:
 	frame_task CharDataScreenBgScrollTask ; $4dd3
 	frame_task SlideCharDataArrowsInTask ; $4ddb
 	frame_task DrawCharDataPageArrowsTask ; $4de3
-	frame_task CharDataValuesSyncTask ; $4deb
+	frame_task DrawCharDataSummarySpritesTask ; $4deb
 	farcall StartCharDataScreenAnimTask ; $4df3
 	jp .overviewLoop ; $4df6
 .mainPageCancel:
@@ -289,7 +289,7 @@ RunCharDataPageInputLoop:
 	frame_task CharDataScreenBgScrollTask ; $4e32
 	frame_task SlideCharDataArrowsInTask ; $4e3a
 	frame_task DrawCharDataPageArrowsTask ; $4e42
-	frame_task CharDataValuesSyncTask ; $4e4a
+	frame_task DrawCharDataSummarySpritesTask ; $4e4a
 	farcall StartCharDataScreenAnimTask ; $4e52
 	jp .overviewLoop ; $4e55
 .partnerPageCancel:
@@ -300,9 +300,9 @@ RunCharDataPageInputLoop:
 	ret ; $4e5d
 SlideCharDataArrowsOutTask:
 	wram_bank WRAM_SCENE ; $4e5e
-	ld a, [wCharDataArrowHold] ; $4e64
+	ld a, [wCharDataArrowSlideX] ; $4e64
 	add $04 ; $4e67
-	ld [wCharDataArrowHold], a ; $4e69
+	ld [wCharDataArrowSlideX], a ; $4e69
 	cp $40 ; $4e6c
 	ret c ; $4e6e
 	ld hl, SlideCharDataArrowsOutTask ; $4e6f
@@ -310,9 +310,9 @@ SlideCharDataArrowsOutTask:
 	ret ; $4e75
 SlideCharDataArrowsInTask:
 	wram_bank WRAM_SCENE ; $4e76
-	ld a, [wCharDataArrowHold] ; $4e7c
+	ld a, [wCharDataArrowSlideX] ; $4e7c
 	sub $08 ; $4e7f
-	ld [wCharDataArrowHold], a ; $4e81
+	ld [wCharDataArrowSlideX], a ; $4e81
 	or a ; $4e84
 	ret nz ; $4e85
 	ld hl, SlideCharDataArrowsInTask ; $4e86

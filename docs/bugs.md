@@ -203,12 +203,12 @@ engine's live entry fades to grayscale, and its fade-to-black setup,
 `Unused_03_InitBlackPaletteFade`, is unreachable too
 (`docs/graphics_formats.md` §5.4).
 
-### `LoadMenuTilesBStaged` uploads palettes and code to VRAM as tiles
+### `LoadMenuFontTilesStaged` uploads palettes and code to VRAM as tiles
 
 Bank `$01` has two loaders for the same menu tile set. The plain one:
 
 ```
-LoadMenuTilesB:
+LoadMenuFontTiles_01:
         ld hl, MenuFontTiles_01     / ld de, vTiles2 tile $20 / ld c, $60 / call QueueVRAMCopy
         ld hl, MenuFontFillTiles_01 / ld de, vTiles1 / ld c, $60 / call QueueVRAMCopy
 ```
@@ -228,7 +228,7 @@ then does this as its fourth:
 `MenuFontPalettes_01` is a palette (`LoadMenuFontPalette` hands it to
 `LoadPaletteShadow`). The copy puts its 64 bytes plus 448 bytes of what follows
 at `$5050`-`$520f` (the bank's loaders, `CharObjPalettes_01` at `$50f6`, the
-start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuTilesBStaged`
+start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuFontTilesStaged`
 itself) into VRAM `$8e00`-`$8fff`, tiles `$e0`-`$ff` of the `$8800` block.
 
 `MenuFontFillTiles_01` is never uploaded, so `$8800`-`$8dff` keeps whatever the

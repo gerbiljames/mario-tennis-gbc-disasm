@@ -1,13 +1,13 @@
 	farptr InitAndRunGame ; $4000
 	farptr ShowDmgLockoutScreen ; $4002
-	farptr LoadMenuTilesA ; $4004
-	farptr LoadMenuTilesB ; $4006
+	farptr LoadMenuWindowTiles ; $4004
+	farptr LoadMenuFontTiles_01 ; $4006
 	farptr LoadMenuFontPalette ; $4008
 	farptr LoadMenuFontGfx ; $400a
 	farptr Unused_01_LoadMenuBgPalettes3To7 ; $400c
 	farptr LoadMenuObjPalettes3To7 ; $400e
 	farptr LoadCharObjPalette ; $4010
-	farptr Unused_01_LoadMenuTilesBChunk2 ; $4012
+	farptr Unused_01_LoadMenuFontUppercaseTiles ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
 	farptr Unused_01_RunSoundTest ; $4016
 InitAndRunGame:
@@ -78,18 +78,18 @@ ENDC
 .waitStartLoop:
 	ldh a, [hInputPressed] ; $40bf
 	bit PADB_A, a ; $40c1
-	jr z, .advanceFrame ; $40c3
+	jr z, .checkStart ; $40c3
 	push de ; $40c5
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $40c6
 	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
-	jr .setDebugStepMode ; $40cd
-.advanceFrame:
+	jr .enterMainMenu ; $40cd
+.checkStart:
 	bit PADB_START, a ; $40cf
-	jr nz, .setDebugStepMode ; $40d1
+	jr nz, .enterMainMenu ; $40d1
 	call AdvanceFrame ; $40d3
 	jr .waitStartLoop ; $40d6
-.setDebugStepMode:
+.enterMainMenu:
 	ld a, DEBUGSTEP_OFF ; $40d8
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
@@ -269,7 +269,7 @@ LoadMenuFontPalette:
 	pop bc ; $505f
 	pop af ; $5060
 	ret ; $5061
-LoadMenuTilesA:
+LoadMenuWindowTiles:
 	push af ; $5062
 	push bc ; $5063
 	push de ; $5064
@@ -283,7 +283,7 @@ LoadMenuTilesA:
 	pop bc ; $5073
 	pop af ; $5074
 	ret ; $5075
-LoadMenuTilesB:
+LoadMenuFontTiles_01:
 	push af ; $5076
 	push bc ; $5077
 	push de ; $5078
@@ -301,7 +301,7 @@ LoadMenuTilesB:
 	pop bc ; $5092
 	pop af ; $5093
 	ret ; $5094
-LoadMenuTilesBStaged:
+LoadMenuFontTilesStaged:
 	push af ; $5095
 	push bc ; $5096
 	push de ; $5097
@@ -331,7 +331,7 @@ LoadMenuTilesBStaged:
 	pop bc ; $50d3
 	pop af ; $50d4
 	ret ; $50d5
-Unused_01_LoadMenuTilesBChunk2:
+Unused_01_LoadMenuFontUppercaseTiles:
 	ld hl, MenuFontUppercaseTiles_01 ; $50d6
 	ld de, vTiles2 tile $40 ; $50d9
 	ld c, (MenuFontLowercaseTiles_01 - MenuFontUppercaseTiles_01) / 16 ; $50dc
@@ -339,13 +339,13 @@ Unused_01_LoadMenuTilesBChunk2:
 	ret ; $50e1
 LoadMenuFontGfx:
 	call LoadMenuFontPalette ; $50e2
-	call LoadMenuTilesA ; $50e5
-	call LoadMenuTilesB ; $50e8
+	call LoadMenuWindowTiles ; $50e5
+	call LoadMenuFontTiles_01 ; $50e8
 	ret ; $50eb
 LoadMenuFontGfxStaged:
 	call LoadMenuFontPalette ; $50ec
-	call LoadMenuTilesA ; $50ef
-	call LoadMenuTilesBStaged ; $50f2
+	call LoadMenuWindowTiles ; $50ef
+	call LoadMenuFontTilesStaged ; $50f2
 	ret ; $50f5
 CharObjPalettes_01:
 	INCLUDE "data/engine/menus/main_menu/CharObjPalettes_01.asm" ; $50f6, 128 bytes (palettes)
@@ -464,11 +464,11 @@ Unused_01_RunSoundTest:
 	call AdvanceFrame ; $6a8a
 	ldh a, [hInputPressed] ; $6a8d
 	and PADF_UP | PADF_DOWN ; $6a8f
-	jr z, .clampTrack ; $6a91
+	jr z, .checkRow ; $6a91
 	ld a, b ; $6a93
 	xor $01 ; $6a94
 	ld b, a ; $6a96
-.clampTrack:
+.checkRow:
 	ld a, b ; $6a97
 	or a ; $6a98
 	jr nz, .editSfx ; $6a99
@@ -476,47 +476,47 @@ Unused_01_RunSoundTest:
 	bit PADB_RIGHT, a ; $6a9d
 	jr z, .checkTrackLeft ; $6a9f
 	inc d ; $6aa1
-	jr .clampBank ; $6aa2
+	jr .clampMusicIndex ; $6aa2
 .checkTrackLeft:
 	bit PADB_LEFT, a ; $6aa4
-	jr z, .clampTrackDown ; $6aa6
+	jr z, .drawCursor ; $6aa6
 	dec d ; $6aa8
-.clampBank:
+.clampMusicIndex:
 	ld a, d ; $6aa9
 	cp $ff ; $6aaa
 	jr nz, .noTrackUnderflow ; $6aac
 	ld d, $3e ; $6aae
-	jr .clampTrackDown ; $6ab0
+	jr .drawCursor ; $6ab0
 .noTrackUnderflow:
 	ld a, d ; $6ab2
 	cp $3e ; $6ab3
-	jr c, .clampTrackDown ; $6ab5
-	jr z, .clampTrackDown ; $6ab7
+	jr c, .drawCursor ; $6ab5
+	jr z, .drawCursor ; $6ab7
 	ld d, $00 ; $6ab9
-	jr .clampTrackDown ; $6abb
+	jr .drawCursor ; $6abb
 .editSfx:
 	ldh a, [hInputPressed] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
-	jr z, .checkLeft ; $6ac1
+	jr z, .checkSfxLeft ; $6ac1
 	inc e ; $6ac3
 	jr .clampSfx ; $6ac4
-.checkLeft:
+.checkSfxLeft:
 	bit PADB_LEFT, a ; $6ac6
-	jr z, .clampTrackDown ; $6ac8
+	jr z, .drawCursor ; $6ac8
 	dec e ; $6aca
 .clampSfx:
 	ld a, e ; $6acb
 	cp $ff ; $6acc
 	jr nz, .noSfxUnderflow ; $6ace
 	ld e, $71 ; $6ad0
-	jr .clampTrackDown ; $6ad2
+	jr .drawCursor ; $6ad2
 .noSfxUnderflow:
 	ld a, e ; $6ad4
 	cp $71 ; $6ad5
-	jr c, .clampTrackDown ; $6ad7
-	jr z, .clampTrackDown ; $6ad9
+	jr c, .drawCursor ; $6ad7
+	jr z, .drawCursor ; $6ad9
 	ld e, $00 ; $6adb
-.clampTrackDown:
+.drawCursor:
 	ld a, b ; $6add
 	or a ; $6ade
 	jr nz, .sfxRowSelected ; $6adf
@@ -575,7 +575,7 @@ Unused_01_RunSoundTest:
 	push de ; $6b39
 	push hl ; $6b3a
 	ld a, d ; $6b3b
-	ld_hl_indexed SoundTestSoundsA_01 ; $6b3c
+	ld_hl_indexed SoundTestMusicIds_01 ; $6b3c
 	ld a, [hl] ; $6b43
 	call PlaySoundManaged ; $6b44
 	pop hl ; $6b47
@@ -589,7 +589,7 @@ Unused_01_RunSoundTest:
 	push de ; $6b4f
 	push hl ; $6b50
 	ld a, e ; $6b51
-	ld_hl_indexed SoundTestSoundsB_01 ; $6b52
+	ld_hl_indexed SoundTestSfxIds_01 ; $6b52
 	ld a, [hl] ; $6b59
 	call PlaySoundManaged ; $6b5a
 	pop hl ; $6b5d
@@ -606,8 +606,8 @@ SoundTestCursorString:
 	INCLUDE "data/engine/menus/main_menu/SoundTestCursorString.asm" ; $6b71, 2 bytes (text)
 SoundTestCursorBlankString:
 	INCLUDE "data/engine/menus/main_menu/SoundTestCursorBlankString.asm" ; $6b73, 2 bytes (text)
-SoundTestSoundsA_01:
-	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsA_01.asm" ; $6b75, 63 bytes (sound_data)
-SoundTestSoundsB_01:
-	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsB_01.asm" ; $6bb4, 114 bytes (sound_data)
+SoundTestMusicIds_01:
+	INCLUDE "data/engine/menus/main_menu/SoundTestMusicIds_01.asm" ; $6b75, 63 bytes (sound_data)
+SoundTestSfxIds_01:
+	INCLUDE "data/engine/menus/main_menu/SoundTestSfxIds_01.asm" ; $6bb4, 114 bytes (sound_data)
 	; $6c26, 5082 bytes fill to bank end (linker-padded)

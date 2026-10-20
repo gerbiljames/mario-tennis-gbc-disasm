@@ -139,7 +139,7 @@ LoadMinigameSelectGfx:
 	push bc ; $6306
 	ld a, c ; $6307
 	add a ; $6308
-	ld hl, MinigameSelectTable ; $6309
+	ld hl, MinigameSelectPortraitVramDests ; $6309
 	add_hl_a ; $630c
 	ld a, [hl+] ; $6311
 	ld d, [hl] ; $6312
@@ -235,7 +235,7 @@ Unused_3b_TableAfterLoadMinigameSelectGfx:
 	db $6a, $3c ; 0x08
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
-MinigameSelectTable:
+MinigameSelectPortraitVramDests:
 	; $63f6, 20 bytes (records:2)
 	dw vTiles2 tile $68 + VRAM_BANK1 ; record 0
 	dw vTiles2 tile $71 + VRAM_BANK1 ; record 1
@@ -331,7 +331,7 @@ MinigameSelectCursorSpriteTask:
 	add_hl_a ; $6494
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
-	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate0 ; $649d
+	ld hl, MinigameSelectLabelTemplate ; $649d
 	push de ; $64a0
 	call QueueSpriteTemplate ; $64a1
 	pop de ; $64a4
@@ -339,7 +339,7 @@ MinigameSelectCursorSpriteTask:
 	add hl, de ; $64a8
 	ld d, h ; $64a9
 	ld e, l ; $64aa
-	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate1 ; $64ab
+	ld hl, MinigameSelectLabelTailTemplate ; $64ab
 	sprite_attr_tile OAM_BANK1, $70 ; $64ae
 	call QueueSpriteTemplate ; $64b2
 	ret ; $64b5
@@ -348,17 +348,17 @@ GetMinigameCursorPosTable:
 	push bc ; $64b7
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
-	jr nz, .altTable ; $64bc
+	jr nz, .expandedGrid ; $64bc
 	ld hl, MinigameCursorPositionsCompact ; $64be
 	jr .done ; $64c1
-.altTable:
+.expandedGrid:
 	ld hl, MinigameCursorPositionsExpanded ; $64c3
 .done:
 	pop af ; $64c6
 	pop bc ; $64c7
 	pop de ; $64c8
 	ret ; $64c9
-MinigameSelectCursorSpriteTask_SpriteTemplate0:
+MinigameSelectLabelTemplate:
 	; $64ca, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -369,7 +369,7 @@ MinigameSelectCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-MinigameSelectCursorSpriteTask_SpriteTemplate1:
+MinigameSelectLabelTailTemplate:
 	; $64eb, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -451,7 +451,7 @@ RenderMinigameNameText:
 	cp CHAR_UNUSED_15 ; $65b0
 	jr nz, .restore ; $65b2
 	pop af ; $65b4
-	ld hl, $00bb ; $65b5
+	ld hl, Text_MinigameCantPlayYet ; $65b5
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $65b8
 	jr .renderTextToBuffer64 ; $65bb
 .restore:
