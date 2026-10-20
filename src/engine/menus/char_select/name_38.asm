@@ -433,7 +433,7 @@ DrawNameEntryCharGrid:
 	ld c, $05 ; $7185
 	ld b, $03 ; $7187
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 1 ; $7189
-.lowerCase:
+.nextGroup:
 	ld a, $20 ; $718c
 	ld [de], a ; $718e
 	inc de ; $718f
@@ -450,7 +450,7 @@ DrawNameEntryCharGrid:
 	jr nz, .drawRows ; $7199
 	ld c, $05 ; $719b
 	dec b ; $719d
-	jr nz, .lowerCase ; $719e
+	jr nz, .nextGroup ; $719e
 	ld a, [hl] ; $71a0
 	or a ; $71a1
 	jr z, .done ; $71a2
@@ -461,7 +461,7 @@ DrawNameEntryCharGrid:
 	ld d, h ; $71ab
 	ld e, l ; $71ac
 	pop hl ; $71ad
-	jr .lowerCase ; $71ae
+	jr .nextGroup ; $71ae
 .done:
 	pop_wram_bank ; $71b0
 	ret ; $71b5
