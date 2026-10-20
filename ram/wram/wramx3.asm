@@ -80,8 +80,8 @@ wNameEntryBuffer:: ds 11
 	export_size wNameEntryBuffer
 NEXTU
 ; match results (bank $16)
-; [8-bit] 1 if the player won the match just played, else 0; written with wResultScreenMode by RunMatchWinLoseScreen, used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
-wResultScreenWon:: db
+; [8-bit] 1 for an exhibition or link match, 0 for a story match; written with wResultScreenMode by RunMatchWinLoseScreen, used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
+wResultScreenIsVersus:: db
 ; [8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it
 wResultScreenMode:: db
 NEXTU
@@ -442,7 +442,7 @@ wCharGridRightPressCount:: db
 wCharGridHandedness:: db
 NEXTU
 ; intro swing scene (bank $6b)
-; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroSwingTilemap. IntroCutsceneState02Init and State04Init queue rows 4-13 of it to $9880 in VRAM bank 0
+; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroSwingTilemap. IntroCutsceneState03Init and State05Init queue rows 4-13 of it to $9880 in VRAM bank 0
 wIntroSwingTilemap:: ds 1024
 ; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroSwingAttrmap; copied to the same VRAM addresses in bank 1
 wIntroSwingAttrmap:: ds 1024

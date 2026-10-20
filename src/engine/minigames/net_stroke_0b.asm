@@ -28,7 +28,7 @@ NetGamePractice3Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6190
 	ld a, $01 ; $6193
 	ld [wTargetZoneEnabled], a ; $6195
-	ld hl, NetGamePractice3PointStartDrillPositions ; $6198
+	ld hl, NetGamePractice3TargetZones ; $6198
 	call SetDrillTargetZoneForPoint ; $619b
 	ld a, CHAR_DRILL_NET_GAME_PRACTICE_3 ; $619e
 	call LoadDrillOpponentChar ; $61a0
@@ -127,10 +127,10 @@ NetGamePractice3Hook_BallHit:
 	ld a, [wLastShotCharIndex] ; $6245
 	cp $01 ; $6248
 	jr nz, .done ; $624a
-	call ResetActiveCharState ; $624c
+	call SetOpponentCharInert ; $624c
 .done:
 	ret ; $624f
-NetGamePractice3PointStartDrillPositions:
+NetGamePractice3TargetZones:
 	; $6250, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $fe50, $fd60, $0000, $fe40 ; point 0

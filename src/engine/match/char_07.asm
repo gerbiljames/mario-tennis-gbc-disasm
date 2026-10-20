@@ -176,7 +176,7 @@ LoadCharacterAttributes:
 	add hl, de ; $5b29
 	ld a, [hl] ; $5b2a
 	add a ; $5b2b
-	ld_hl_indexed CharStatTable_07_0 ; $5b2c
+	ld_hl_indexed CharMaxSpeedByStat ; $5b2c
 	ld a, [hl+] ; $5b33
 	ld b, [hl] ; $5b34
 	ld c, a ; $5b35
@@ -202,7 +202,7 @@ LoadCharacterAttributes:
 	dec a ; $5b53
 .readDepthSpeed:
 	add a ; $5b54
-	ld_hl_indexed CharStatTable_07_0 ; $5b55
+	ld_hl_indexed CharMaxSpeedByStat ; $5b55
 	ld a, [hl+] ; $5b5c
 	ld b, [hl] ; $5b5d
 	ld c, a ; $5b5e
@@ -214,7 +214,7 @@ LoadCharacterAttributes:
 	add hl, de ; $5b68
 	ld a, [hl] ; $5b69
 	add a ; $5b6a
-	ld_hl_indexed CharStatTable_07_1 ; $5b6b
+	ld_hl_indexed CharAccelByStat ; $5b6b
 	ld a, [hl+] ; $5b72
 	ld b, [hl] ; $5b73
 	ld c, a ; $5b74
@@ -226,7 +226,7 @@ LoadCharacterAttributes:
 	add hl, de ; $5b7e
 	ld a, [hl] ; $5b7f
 	add a ; $5b80
-	ld_hl_indexed CharStatTable_07_2 ; $5b81
+	ld_hl_indexed CharDecelByStat ; $5b81
 	ld a, [hl+] ; $5b88
 	ld b, [hl] ; $5b89
 	ld c, a ; $5b8a
@@ -237,19 +237,19 @@ LoadCharacterAttributes:
 	ld hl, CHARREC_STAT_REACTION ; $5b91
 	add hl, de ; $5b94
 	ld a, [hl] ; $5b95
-	ld_hl_indexed CharStatTable_07_3 ; $5b96
+	ld_hl_indexed CharFacingEaseRateByStat ; $5b96
 	ld a, [hl] ; $5b9d
 	ld [wCharFacingEaseRate], a ; $5b9e
 	ld hl, CHARREC_STAT_ANGLE ; $5ba1
 	add hl, de ; $5ba4
 	ld a, [hl] ; $5ba5
-	ld_hl_indexed CharStatTable_07_4 ; $5ba6
+	ld_hl_indexed CharAimOffsetScaleByStat ; $5ba6
 	ld a, [hl] ; $5bad
 	ld [wCharAimOffsetScale], a ; $5bae
 	ld hl, CHARREC_STAT_PLACEMENT ; $5bb1
 	add hl, de ; $5bb4
 	ld a, [hl] ; $5bb5
-	ld_hl_indexed CharStatTable_07_5 ; $5bb6
+	ld_hl_indexed CharAimJitterScaleByStat ; $5bb6
 	ld a, [hl] ; $5bbd
 	ld [wCharAimJitterScale], a ; $5bbe
 	ld hl, CHARREC_STAT_STROKE ; $5bc1
@@ -322,7 +322,7 @@ CharAttrStructPtrs_07:
 	dw wPlayer2Main ; record 1
 	dw wPlayer1Partner ; record 2
 	dw wPlayer2Partner ; record 3
-CharStatTable_07_0:
+CharMaxSpeedByStat:
 	; $5c4a, 20 bytes (records:2)
 	dw $0a00 ; record 0
 	dw $0a80 ; record 1
@@ -334,7 +334,7 @@ CharStatTable_07_0:
 	dw $0d80 ; record 7
 	dw $0e00 ; record 8
 	dw $0e80 ; record 9
-CharStatTable_07_1:
+CharAccelByStat:
 	; $5c5e, 20 bytes (records:2)
 	dw $0030 ; record 0
 	dw $003c ; record 1
@@ -346,7 +346,7 @@ CharStatTable_07_1:
 	dw $0084 ; record 7
 	dw $0090 ; record 8
 	dw $009c ; record 9
-CharStatTable_07_2:
+CharDecelByStat:
 	; $5c72, 20 bytes (records:2)
 	dw $0040 ; record 0
 	dw $0060 ; record 1
@@ -358,13 +358,13 @@ CharStatTable_07_2:
 	dw $0120 ; record 7
 	dw $0140 ; record 8
 	dw $0160 ; record 9
-CharStatTable_07_3:
+CharFacingEaseRateByStat:
 	; $5c86, 10 bytes (bytes:10)
 	db $06, $07, $08, $09, $0a, $0b, $0c, $0e, $10, $18 ; 0x00
-CharStatTable_07_4:
+CharAimOffsetScaleByStat:
 	; $5c90, 10 bytes (bytes:10)
 	db $75, $84, $93, $a3, $b2, $c1, $d1, $e0, $ef, $ff ; 0x00
-CharStatTable_07_5:
+CharAimJitterScaleByStat:
 	; $5c9a, 10 bytes (bytes:10)
 	db $0c, $0b, $0a, $09, $08, $07, $06, $05, $04, $03 ; 0x00
 CharStatPresets_07:
@@ -403,7 +403,7 @@ Unused_07_ApplyCharStatPreset:
 	ld a, [hl+] ; $5d29
 	push hl ; $5d2a
 	add a ; $5d2b
-	ld_hl_indexed CharStatTable_07_0 ; $5d2c
+	ld_hl_indexed CharMaxSpeedByStat ; $5d2c
 	ld a, [hl+] ; $5d33
 	ld d, [hl] ; $5d34
 	ld e, a ; $5d35
@@ -416,7 +416,7 @@ Unused_07_ApplyCharStatPreset:
 	ld a, [hl+] ; $5d3e
 	push hl ; $5d3f
 	add a ; $5d40
-	ld_hl_indexed CharStatTable_07_0 ; $5d41
+	ld_hl_indexed CharMaxSpeedByStat ; $5d41
 	ld a, [hl+] ; $5d48
 	ld d, [hl] ; $5d49
 	ld e, a ; $5d4a
@@ -429,7 +429,7 @@ Unused_07_ApplyCharStatPreset:
 	ld a, [hl+] ; $5d53
 	push hl ; $5d54
 	add a ; $5d55
-	ld_hl_indexed CharStatTable_07_1 ; $5d56
+	ld_hl_indexed CharAccelByStat ; $5d56
 	ld a, [hl+] ; $5d5d
 	ld d, [hl] ; $5d5e
 	ld e, a ; $5d5f
@@ -442,7 +442,7 @@ Unused_07_ApplyCharStatPreset:
 	ld a, [hl+] ; $5d68
 	push hl ; $5d69
 	add a ; $5d6a
-	ld_hl_indexed CharStatTable_07_2 ; $5d6b
+	ld_hl_indexed CharDecelByStat ; $5d6b
 	ld a, [hl+] ; $5d72
 	ld d, [hl] ; $5d73
 	ld e, a ; $5d74
@@ -454,7 +454,7 @@ Unused_07_ApplyCharStatPreset:
 	pop hl ; $5d7c
 	ld a, [hl+] ; $5d7d
 	push hl ; $5d7e
-	ld_hl_indexed CharStatTable_07_3 ; $5d7f
+	ld_hl_indexed CharFacingEaseRateByStat ; $5d7f
 	ld a, [hl] ; $5d86
 	ld hl, $0068 ; $5d87
 	add hl, bc ; $5d8a
@@ -462,7 +462,7 @@ Unused_07_ApplyCharStatPreset:
 	pop hl ; $5d8c
 	ld a, [hl+] ; $5d8d
 	push hl ; $5d8e
-	ld_hl_indexed CharStatTable_07_4 ; $5d8f
+	ld_hl_indexed CharAimOffsetScaleByStat ; $5d8f
 	ld a, [hl] ; $5d96
 	ld hl, $0069 ; $5d97
 	add hl, bc ; $5d9a
@@ -470,7 +470,7 @@ Unused_07_ApplyCharStatPreset:
 	pop hl ; $5d9c
 	ld a, [hl+] ; $5d9d
 	push hl ; $5d9e
-	ld_hl_indexed CharStatTable_07_5 ; $5d9f
+	ld_hl_indexed CharAimJitterScaleByStat ; $5d9f
 	ld a, [hl] ; $5da6
 	ld hl, $006a ; $5da7
 	add hl, bc ; $5daa

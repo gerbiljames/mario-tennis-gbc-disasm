@@ -2,7 +2,7 @@ RunIntroCutscene:
 	xor a ; $402a
 	ld [wCutsceneStep], a ; $402b
 	ld [wCutsceneStepTimer], a ; $402e
-	ld [wIntroCutsceneCheck], a ; $4031
+	ld [wIntroCutsceneDone], a ; $4031
 	ld [wCutsceneScrollX], a ; $4034
 	ld [wCutsceneReverseScrollX], a ; $4037
 	ldh [hBGViewMode], a ; $403a
@@ -37,7 +37,7 @@ DispatchCutsceneStateInit:
 	ld l, a ; $407a
 	jp hl ; $407b
 .runUpdate:
-	ld a, [wIntroCutsceneCheck] ; $407c
+	ld a, [wIntroCutsceneDone] ; $407c
 	or a ; $407f
 	jr nz, .done ; $4080
 	call AdvanceFrame ; $4082
@@ -78,7 +78,7 @@ DispatchCutsceneStateInit:
 	ld a, [wCutsceneStep] ; $40af
 	inc a ; $40b2
 	ld [wCutsceneStep], a ; $40b3
-	ld a, [wIntroCutsceneCheck] ; $40b6
+	ld a, [wIntroCutsceneDone] ; $40b6
 	or a ; $40b9
 	jr z, DispatchCutsceneStateInit ; $40ba
 .done:
@@ -86,146 +86,146 @@ DispatchCutsceneStateInit:
 IntroCutsceneStateTable_6b:
 	; $40bd, 36 bytes (records:2)
 	dw IntroCutsceneState00_6b ; record 0
-	dw IntroCutsceneState15_6b ; record 1
-	dw IntroCutsceneState01_6b ; record 2
-	dw IntroCutsceneState02_6b ; record 3
-	dw IntroCutsceneState03_6b ; record 4
-	dw IntroCutsceneState04_6b ; record 5
-	dw IntroCutsceneState05_6b ; record 6
-	dw IntroCutsceneState06_6b ; record 7
-	dw IntroCutsceneState07_6b ; record 8
-	dw IntroCutsceneState13_6b ; record 9
-	dw IntroCutsceneState08_6b ; record 10
-	dw IntroCutsceneState09_6b ; record 11
-	dw IntroCutsceneState10_6b ; record 12
-	dw IntroCutsceneState16_6b ; record 13
-	dw IntroCutsceneState17_6b ; record 14
-	dw IntroCutsceneState18_6b ; record 15
-	dw IntroCutsceneState19_6b ; record 16
-	dw IntroCutsceneState14_6b ; record 17
+	dw IntroCutsceneState01_6b ; record 1
+	dw IntroCutsceneState02_6b ; record 2
+	dw IntroCutsceneState03_6b ; record 3
+	dw IntroCutsceneState04_6b ; record 4
+	dw IntroCutsceneState05_6b ; record 5
+	dw IntroCutsceneState06_6b ; record 6
+	dw IntroCutsceneState07_6b ; record 7
+	dw IntroCutsceneState08_6b ; record 8
+	dw IntroCutsceneState09_6b ; record 9
+	dw IntroCutsceneState10_6b ; record 10
+	dw IntroCutsceneState11_6b ; record 11
+	dw IntroCutsceneState12_6b ; record 12
+	dw IntroCutsceneState13_6b ; record 13
+	dw IntroCutsceneState14_6b ; record 14
+	dw IntroCutsceneState15_6b ; record 15
+	dw IntroCutsceneState16_6b ; record 16
+	dw IntroCutsceneState17_6b ; record 17
 IntroCutsceneState00_6b:
 	; $40e1, 6 bytes (records:2)
 	dw IntroCutsceneState00Init_6b ; record 0
 	dw IntroCutsceneState00Update_6b ; record 1
 	dw IntroCutsceneState00Exit_6b ; record 2
-IntroCutsceneState01_6b:
-	; $40e7, 6 bytes (records:2)
-	dw IntroCutsceneState01Init_6b ; record 0
-	dw IntroCutsceneState01Update_6b ; record 1
-	dw IntroCutsceneState01Exit_6b ; record 2
 IntroCutsceneState02_6b:
-	; $40ed, 6 bytes (records:2)
+	; $40e7, 6 bytes (records:2)
 	dw IntroCutsceneState02Init_6b ; record 0
 	dw IntroCutsceneState02Update_6b ; record 1
 	dw IntroCutsceneState02Exit_6b ; record 2
 IntroCutsceneState03_6b:
-	; $40f3, 6 bytes (records:2)
+	; $40ed, 6 bytes (records:2)
 	dw IntroCutsceneState03Init_6b ; record 0
 	dw IntroCutsceneState03Update_6b ; record 1
 	dw IntroCutsceneState03Exit_6b ; record 2
 IntroCutsceneState04_6b:
-	; $40f9, 6 bytes (records:2)
+	; $40f3, 6 bytes (records:2)
 	dw IntroCutsceneState04Init_6b ; record 0
 	dw IntroCutsceneState04Update_6b ; record 1
 	dw IntroCutsceneState04Exit_6b ; record 2
 IntroCutsceneState05_6b:
-	; $40ff, 6 bytes (records:2)
+	; $40f9, 6 bytes (records:2)
 	dw IntroCutsceneState05Init_6b ; record 0
 	dw IntroCutsceneState05Update_6b ; record 1
 	dw IntroCutsceneState05Exit_6b ; record 2
 IntroCutsceneState06_6b:
-	; $4105, 6 bytes (records:2)
+	; $40ff, 6 bytes (records:2)
 	dw IntroCutsceneState06Init_6b ; record 0
 	dw IntroCutsceneState06Update_6b ; record 1
 	dw IntroCutsceneState06Exit_6b ; record 2
 IntroCutsceneState07_6b:
-	; $410b, 6 bytes (records:2)
+	; $4105, 6 bytes (records:2)
 	dw IntroCutsceneState07Init_6b ; record 0
 	dw IntroCutsceneState07Update_6b ; record 1
 	dw IntroCutsceneState07Exit_6b ; record 2
 IntroCutsceneState08_6b:
-	; $4111, 6 bytes (records:2)
+	; $410b, 6 bytes (records:2)
 	dw IntroCutsceneState08Init_6b ; record 0
 	dw IntroCutsceneState08Update_6b ; record 1
 	dw IntroCutsceneState08Exit_6b ; record 2
-IntroCutsceneState09_6b:
-	; $4117, 6 bytes (records:2)
-	dw IntroCutsceneState09Init_6b ; record 0
-	dw IntroCutsceneState09Update_6b ; record 1
-	dw IntroCutsceneState09Exit_6b ; record 2
 IntroCutsceneState10_6b:
-	; $411d, 6 bytes (records:2)
+	; $4111, 6 bytes (records:2)
 	dw IntroCutsceneState10Init_6b ; record 0
 	dw IntroCutsceneState10Update_6b ; record 1
 	dw IntroCutsceneState10Exit_6b ; record 2
-Unused_6b_IntroCutsceneState11:
+IntroCutsceneState11_6b:
+	; $4117, 6 bytes (records:2)
+	dw IntroCutsceneState11Init_6b ; record 0
+	dw IntroCutsceneState11Update_6b ; record 1
+	dw IntroCutsceneState11Exit_6b ; record 2
+IntroCutsceneState12_6b:
+	; $411d, 6 bytes (records:2)
+	dw IntroCutsceneState12Init_6b ; record 0
+	dw IntroCutsceneState12Update_6b ; record 1
+	dw IntroCutsceneState12Exit_6b ; record 2
+Unused_6b_IntroCutsceneStateA:
 	; $4123, 6 bytes (records:2)
-	dw Unused_6b_IntroCutsceneState11Init ; record 0
-	dw Unused_6b_IntroCutsceneState11Update ; record 1
-	dw Unused_6b_IntroCutsceneState11Exit ; record 2
-Unused_6b_IntroCutsceneState12:
+	dw Unused_6b_IntroCutsceneStateAInit ; record 0
+	dw Unused_6b_IntroCutsceneStateAUpdate ; record 1
+	dw Unused_6b_IntroCutsceneStateAExit ; record 2
+Unused_6b_IntroCutsceneStateB:
 	; $4129, 6 bytes (records:2)
-	dw Unused_6b_IntroCutsceneState12Init ; record 0
-	dw Unused_6b_IntroCutsceneState12Update ; record 1
-	dw Unused_6b_IntroCutsceneState12Exit ; record 2
-IntroCutsceneState13_6b:
+	dw Unused_6b_IntroCutsceneStateBInit ; record 0
+	dw Unused_6b_IntroCutsceneStateBUpdate ; record 1
+	dw Unused_6b_IntroCutsceneStateBExit ; record 2
+IntroCutsceneState09_6b:
 	; $412f, 6 bytes (records:2)
+	dw IntroCutsceneState09Init_6b ; record 0
+	dw IntroCutsceneState09Update_6b ; record 1
+	dw IntroCutsceneState09Exit_6b ; record 2
+IntroCutsceneState17_6b:
+	; $4135, 6 bytes (records:2)
+	dw IntroCutsceneState17Init_6b ; record 0
+	dw IntroCutsceneState17Update_6b ; record 1
+	dw IntroCutsceneState17Exit_6b ; record 2
+IntroCutsceneState01_6b:
+	; $413b, 6 bytes (records:2)
+	dw IntroCutsceneState01Init_6b ; record 0
+	dw IntroCutsceneState01Update_6b ; record 1
+	dw IntroCutsceneState01Exit_6b ; record 2
+IntroCutsceneState13_6b:
+	; $4141, 6 bytes (records:2)
 	dw IntroCutsceneState13Init_6b ; record 0
 	dw IntroCutsceneState13Update_6b ; record 1
 	dw IntroCutsceneState13Exit_6b ; record 2
 IntroCutsceneState14_6b:
-	; $4135, 6 bytes (records:2)
+	; $4147, 6 bytes (records:2)
 	dw IntroCutsceneState14Init_6b ; record 0
 	dw IntroCutsceneState14Update_6b ; record 1
 	dw IntroCutsceneState14Exit_6b ; record 2
 IntroCutsceneState15_6b:
-	; $413b, 6 bytes (records:2)
+	; $414d, 6 bytes (records:2)
 	dw IntroCutsceneState15Init_6b ; record 0
 	dw IntroCutsceneState15Update_6b ; record 1
 	dw IntroCutsceneState15Exit_6b ; record 2
 IntroCutsceneState16_6b:
-	; $4141, 6 bytes (records:2)
+	; $4153, 6 bytes (records:2)
 	dw IntroCutsceneState16Init_6b ; record 0
 	dw IntroCutsceneState16Update_6b ; record 1
 	dw IntroCutsceneState16Exit_6b ; record 2
-IntroCutsceneState17_6b:
-	; $4147, 6 bytes (records:2)
-	dw IntroCutsceneState17Init_6b ; record 0
-	dw IntroCutsceneState17Update_6b ; record 1
-	dw IntroCutsceneState17Exit_6b ; record 2
-IntroCutsceneState18_6b:
-	; $414d, 6 bytes (records:2)
-	dw IntroCutsceneState18Init_6b ; record 0
-	dw IntroCutsceneState18Update_6b ; record 1
-	dw IntroCutsceneState18Exit_6b ; record 2
-IntroCutsceneState19_6b:
-	; $4153, 6 bytes (records:2)
-	dw IntroCutsceneState19Init_6b ; record 0
-	dw IntroCutsceneState19Update_6b ; record 1
-	dw IntroCutsceneState19Exit_6b ; record 2
 Unused_6b_UpdateHandler:
 	jp DispatchCutsceneStateInit.runUpdate ; $4159
-IntroCutsceneState14Exit_6b:
+IntroCutsceneState17Exit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $415c
 Unused_6b_ExitHandler:
 	xor a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
 	jp DispatchCutsceneStateInit.nextState ; $4163
-IntroCutsceneState14Init_6b:
+IntroCutsceneState17Init_6b:
 	ld a, $01 ; $4166
-	ld [wIntroCutsceneCheck], a ; $4168
+	ld [wIntroCutsceneDone], a ; $4168
 	jp DispatchCutsceneStateInit.runUpdate ; $416b
-IntroCutsceneState14Update_6b:
+IntroCutsceneState17Update_6b:
 	jp DispatchCutsceneStateInit.runUpdate ; $416e
-IntroCutsceneState15Init_6b:
+IntroCutsceneState01Init_6b:
 	xor a ; $4171
 	ld [wCutsceneStepTimer], a ; $4172
 	jp DispatchCutsceneStateInit.runUpdate ; $4175
-IntroCutsceneState15Exit_6b:
+IntroCutsceneState01Exit_6b:
 	xor a ; $4178
 	ld [wCutsceneStepTimer], a ; $4179
 	jp DispatchCutsceneStateInit.nextState ; $417c
-IntroCutsceneState15Update_6b:
+IntroCutsceneState01Update_6b:
 	ld a, [wCutsceneStepTimer] ; $417f
 	inc a ; $4182
 	ld [wCutsceneStepTimer], a ; $4183
@@ -276,7 +276,7 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraY + 1], a ; $41f4
 	jp DispatchCutsceneStateInit.nextState ; $41f7
 	twin_named intro_cutscene_state00_update, IntroCutsceneState00Update_6b ; $41fa
-IntroCutsceneState01Init_6b:
+IntroCutsceneState02Init_6b:
 	call DisableLCDSafely ; $421f
 	xor a ; $4222
 	ld [wCutsceneScrollX], a ; $4223
@@ -322,9 +322,9 @@ IntroCutsceneState01Init_6b:
 	call EnableLCD ; $42a7
 	script_fade_in 64 ; $42aa
 	jp DispatchCutsceneStateInit.runUpdate ; $42af
-Unused_6b_IntroCutsceneState01Palettes:
-	INCLUDE "data/engine/cutscenes/Unused_6b_IntroCutsceneState01Palettes.asm" ; $42b2, 64 bytes (palettes)
-IntroCutsceneState01Exit_6b:
+Unused_6b_IntroCutsceneState02Palettes:
+	INCLUDE "data/engine/cutscenes/Unused_6b_IntroCutsceneState02Palettes.asm" ; $42b2, 64 bytes (palettes)
+IntroCutsceneState02Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5
 	xor a ; $42f8
@@ -332,7 +332,7 @@ IntroCutsceneState01Exit_6b:
 	ld [wCutsceneScrollX], a ; $42fc
 	ldh [hScrollX], a ; $42ff
 	jp DispatchCutsceneStateInit.nextState ; $4301
-IntroCutsceneState01Update_6b:
+IntroCutsceneState02Update_6b:
 	ld a, [wCutsceneScrollX] ; $4304
 	add $03 ; $4307
 	ld [wCutsceneScrollX], a ; $4309
@@ -348,7 +348,7 @@ IntroCutsceneState01Update_6b:
 	jp DispatchCutsceneStateInit.runUpdate ; $4320
 .timerExpired:
 	jp DispatchCutsceneStateInit.runExit ; $4323
-IntroCutsceneState02Init_6b:
+IntroCutsceneState03Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4326
 	ld hl, wIntroSwingTilemap + 4 * TILEMAP_WIDTH ; $432f
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4332
@@ -368,14 +368,14 @@ IntroCutsceneState02Init_6b:
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $4359
 	call QueueVRAMCopy ; $435b
 	pop_wram_bank ; $435e
-	ld hl, IntroCutsceneState02InitPalette_6b ; $4363
+	ld hl, IntroCutsceneState03InitPalette_6b ; $4363
 	ld_bg_pals de, 0, 8 ; $4366
 	call LoadPalettesImmediate ; $4369
 	jp DispatchCutsceneStateInit.runUpdate ; $436c
-IntroCutsceneState02InitPalette_6b:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
-	twin_named intro_cutscene_state02_exit, IntroCutsceneState02Exit_6b ; $43af
-IntroCutsceneState02Update_6b:
+IntroCutsceneState03InitPalette_6b:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState03InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
+	twin_named intro_cutscene_state03_exit, IntroCutsceneState03Exit_6b ; $43af
+IntroCutsceneState03Update_6b:
 	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
 	ld [wCutsceneStepTimer], a ; $43c2
@@ -384,7 +384,7 @@ IntroCutsceneState02Update_6b:
 	jp DispatchCutsceneStateInit.runUpdate ; $43c9
 .timerExpired:
 	jp DispatchCutsceneStateInit.runExit ; $43cc
-IntroCutsceneState03Init_6b:
+IntroCutsceneState04Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, SCREENASSET_IntroRallies2 ; $43d2
 	farcall LoadScreenAssetRecord ; $43d4
@@ -425,7 +425,7 @@ IntroCutsceneState03Init_6b:
 	script_fade_in 127 ; $444a
 	call WaitFadeEnd ; $444f
 	jp DispatchCutsceneStateInit.runUpdate ; $4452
-IntroCutsceneState03Exit_6b:
+IntroCutsceneState04Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupB ; $4455
 	call UnregisterFrameTask ; $4458
 	xor a ; $445b
@@ -433,7 +433,7 @@ IntroCutsceneState03Exit_6b:
 	ld [wCutsceneReverseScrollX], a ; $445f
 	ldh [hScrollX], a ; $4462
 	jp DispatchCutsceneStateInit.nextState ; $4464
-IntroCutsceneState03Update_6b:
+IntroCutsceneState04Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4467
 	inc a ; $446a
 	ld [wCutsceneStepTimer], a ; $446b
@@ -447,7 +447,7 @@ IntroCutsceneState03Update_6b:
 	dec a ; $4480
 	ld [wCutsceneSpriteBX], a ; $4481
 	jp DispatchCutsceneStateInit.runUpdate ; $4484
-IntroCutsceneState04Init_6b:
+IntroCutsceneState05Init_6b:
 	push_wram_bank WRAM_SCREEN ; $4487
 	ld hl, wIntroSwingTilemap + 4 * TILEMAP_WIDTH ; $4490
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH ; $4493
@@ -467,21 +467,21 @@ IntroCutsceneState04Init_6b:
 	ld c, 5 * TILEMAP_WIDTH / 16 ; $44ba
 	call QueueVRAMCopy ; $44bc
 	pop_wram_bank ; $44bf
-	ld hl, IntroCutsceneState04InitPalettes ; $44c4
+	ld hl, IntroCutsceneState05InitPalettes ; $44c4
 	ld_bg_pals de, 0, 8 ; $44c7
 	call LoadPalettesImmediate ; $44ca
 	jp DispatchCutsceneStateInit.runUpdate ; $44cd
-IntroCutsceneState04InitPalettes:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
-	twin_named intro_cutscene_state02_exit, IntroCutsceneState04Exit_6b ; $4510
-IntroCutsceneState04Update_6b:
+IntroCutsceneState05InitPalettes:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState05InitPalettes.asm" ; $44d0, 64 bytes (palettes)
+	twin_named intro_cutscene_state03_exit, IntroCutsceneState05Exit_6b ; $4510
+IntroCutsceneState05Update_6b:
 	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
 	ld [wCutsceneStepTimer], a ; $4523
 	cp $1e ; $4526
 	jp z, DispatchCutsceneStateInit.runExit ; $4528
 	jp DispatchCutsceneStateInit.runUpdate ; $452b
-IntroCutsceneState05Init_6b:
+IntroCutsceneState06Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, SCREENASSET_IntroRallies3 ; $4531
 	farcall LoadScreenAssetRecord ; $4533
@@ -523,7 +523,7 @@ IntroCutsceneState05Init_6b:
 	script_fade_in 16 ; $45aa
 	call WaitFadeEnd ; $45af
 	jp DispatchCutsceneStateInit.runUpdate ; $45b2
-IntroCutsceneState05Exit_6b:
+IntroCutsceneState06Exit_6b:
 	ld hl, rIE ; $45b5
 	res B_IE_STAT, [hl] ; $45b8
 	push_wram_bank WRAM_SCREEN ; $45ba
@@ -557,7 +557,7 @@ IntroCutsceneState05Exit_6b:
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
 	jp DispatchCutsceneStateInit.nextState ; $461d
-IntroCutsceneState05Update_6b:
+IntroCutsceneState06Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4620
 	inc a ; $4623
 	ld [wCutsceneStepTimer], a ; $4624
@@ -570,16 +570,16 @@ IntroCutsceneState05Update_6b:
 	dec a ; $4636
 	ld [wCutsceneSpriteBX], a ; $4637
 	jp DispatchCutsceneStateInit.runUpdate ; $463a
-IntroCutsceneState06Init_6b:
+IntroCutsceneState07Init_6b:
 	xor a ; $463d
 	ld [wCutsceneStepTimer], a ; $463e
 	jp DispatchCutsceneStateInit.runUpdate ; $4641
-IntroCutsceneState06Exit_6b:
+IntroCutsceneState07Exit_6b:
 	script_fade_out 16 ; $4644
 	call WaitFadeEnd ; $4649
 	jp DispatchCutsceneStateInit.nextState ; $464c
-	twin_named intro_cutscene_state06_update, IntroCutsceneState06Update_6b ; $464f
-IntroCutsceneState07Init_6b:
+	twin_named intro_cutscene_state07_update, IntroCutsceneState07Update_6b ; $464f
+IntroCutsceneState08Init_6b:
 	call InitTitleSceneGraphics ; $465e
 	call DecompressIntroTitleTiles ; $4661
 	xor a ; $4664
@@ -593,7 +593,7 @@ IntroCutsceneState07Init_6b:
 	call WaitFadeEnd ; $467c
 	frame_task IntroSequenceTimerTask ; $467f
 	jp DispatchCutsceneStateInit.runUpdate ; $4687
-IntroCutsceneState07Exit_6b:
+IntroCutsceneState08Exit_6b:
 	call ClearFrameTasks ; $468a
 	frame_task CheckIntroSkipInput ; $468d
 	xor a ; $4695
@@ -604,7 +604,7 @@ IntroCutsceneState07Exit_6b:
 	ld [wCameraY], a ; $46a0
 	ld [wCameraY + 1], a ; $46a3
 	jp DispatchCutsceneStateInit.nextState ; $46a6
-IntroCutsceneState07Update_6b:
+IntroCutsceneState08Update_6b:
 	ld a, [wCameraX + 1] ; $46a9
 	cp $40 ; $46ac
 	jp nz, .checkCutsceneStepTimer ; $46ae
@@ -633,13 +633,13 @@ IntroCutsceneState07Update_6b:
 	ld a, l ; $46de
 	ld [wCameraX], a ; $46df
 	jp DispatchCutsceneStateInit.runUpdate ; $46e2
-IntroCutsceneState13Init_6b:
+IntroCutsceneState09Init_6b:
 	xor a ; $46e5
 	ldh [hScrollY], a ; $46e6
 	ldh [hScrollX], a ; $46e8
 	ld [wCutsceneStepTimer], a ; $46ea
 	push_wram_bank WRAM_TEXT ; $46ed
-	ld hl, IntroCutsceneState13InitPalettes_6b ; $46f6
+	ld hl, IntroCutsceneState09InitPalettes_6b ; $46f6
 	ld_bg_pals de, 0, 8 ; $46f9
 	call LoadPaletteShadow ; $46fc
 	ld hl, wWindowShadowTilemap + 6 * TILEMAP_WIDTH ; $46ff
@@ -662,17 +662,17 @@ IntroCutsceneState13Init_6b:
 	call AdvanceFrame ; $472e
 	pop_wram_bank ; $4731
 	jp DispatchCutsceneStateInit.runUpdate ; $4736
-IntroCutsceneState13Exit_6b:
+IntroCutsceneState09Exit_6b:
 	script_fade_out 16 ; $4739
 	call WaitFadeEnd ; $473e
 	call DisableLCDSafely ; $4741
 	xor a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
 	jp DispatchCutsceneStateInit.nextState ; $4748
-	twin_named intro_cutscene_state06_update, IntroCutsceneState13Update_6b ; $474b
-IntroCutsceneState13InitPalettes_6b:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
-IntroCutsceneState08Init_6b:
+	twin_named intro_cutscene_state07_update, IntroCutsceneState09Update_6b ; $474b
+IntroCutsceneState09InitPalettes_6b:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState09InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
+IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $479a
 	ld c, SCREENASSET_IntroWave ; $479d
 	farcall LoadScreenAssetRecord ; $479f
@@ -686,7 +686,7 @@ IntroCutsceneState08Init_6b:
 	script_fade_in 16 ; $47b9
 	call WaitFadeEnd ; $47be
 	jp DispatchCutsceneStateInit.runUpdate ; $47c1
-IntroCutsceneState08Exit_6b:
+IntroCutsceneState10Exit_6b:
 	script_fade_out 10 ; $47c4
 	call WaitFadeEnd ; $47c9
 	ld hl, ScrollCutsceneXRightTask ; $47cc
@@ -694,14 +694,14 @@ IntroCutsceneState08Exit_6b:
 	xor a ; $47d2
 	ldh [hScrollX], a ; $47d3
 	jp DispatchCutsceneStateInit.nextState ; $47d5
-IntroCutsceneState08Update_6b:
+IntroCutsceneState10Update_6b:
 	ld a, [wCutsceneStepTimer] ; $47d8
 	inc a ; $47db
 	ld [wCutsceneStepTimer], a ; $47dc
 	cp $2c ; $47df
 	jp z, DispatchCutsceneStateInit.runExit ; $47e1
 	jp DispatchCutsceneStateInit.runUpdate ; $47e4
-IntroCutsceneState09Init_6b:
+IntroCutsceneState11Init_6b:
 	call DisableLCDSafely ; $47e7
 	ld c, SCREENASSET_IntroDive ; $47ea
 	farcall LoadScreenAssetRecord ; $47ec
@@ -716,7 +716,7 @@ IntroCutsceneState09Init_6b:
 	script_fade_in 16 ; $4808
 	call WaitFadeEnd ; $480d
 	jp DispatchCutsceneStateInit.runUpdate ; $4810
-IntroCutsceneState09Exit_6b:
+IntroCutsceneState11Exit_6b:
 	script_fade_out 10 ; $4813
 	call WaitFadeEnd ; $4818
 	ld hl, ScrollCutsceneXLeftTask ; $481b
@@ -724,8 +724,8 @@ IntroCutsceneState09Exit_6b:
 	xor a ; $4821
 	ldh [hScrollX], a ; $4822
 	jp DispatchCutsceneStateInit.nextState ; $4824
-	twin_named intro_cutscene_state09_update, IntroCutsceneState09Update_6b ; $4827
-IntroCutsceneState10Init_6b:
+	twin_named intro_cutscene_state11_update, IntroCutsceneState11Update_6b ; $4827
+IntroCutsceneState12Init_6b:
 	call DisableLCDSafely ; $4836
 	ld c, SCREENASSET_IntroGirlSwing ; $4839
 	farcall LoadScreenAssetRecord ; $483b
@@ -740,7 +740,7 @@ IntroCutsceneState10Init_6b:
 	script_fade_in 16 ; $4857
 	call WaitFadeEnd ; $485c
 	jp DispatchCutsceneStateInit.runUpdate ; $485f
-IntroCutsceneState10Exit_6b:
+IntroCutsceneState12Exit_6b:
 	script_fade_out 10 ; $4862
 	call WaitFadeEnd ; $4867
 	ld hl, ScrollCutsceneLeftTask ; $486a
@@ -748,8 +748,8 @@ IntroCutsceneState10Exit_6b:
 	xor a ; $4870
 	ldh [hScrollX], a ; $4871
 	jp DispatchCutsceneStateInit.nextState ; $4873
-	twin_named intro_cutscene_state09_update, IntroCutsceneState10Update_6b ; $4876
-Unused_6b_IntroCutsceneState11Init:
+	twin_named intro_cutscene_state11_update, IntroCutsceneState12Update_6b ; $4876
+Unused_6b_IntroCutsceneStateAInit:
 	call DisableLCDSafely ; $4885
 	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888
 	farcall LoadScreenAssetRecord ; $488a
@@ -774,7 +774,7 @@ Unused_6b_IntroCutsceneState11Init:
 	xor a ; $48c3
 	ld [wCutsceneStepTimer], a ; $48c4
 	jp DispatchCutsceneStateInit.runUpdate ; $48c7
-Unused_6b_IntroCutsceneState11Exit:
+Unused_6b_IntroCutsceneStateAExit:
 	ld a, BGVIEW_NORMAL ; $48ca
 	ldh [hBGViewMode], a ; $48cc
 	ld hl, rLCDC ; $48ce
@@ -785,14 +785,14 @@ Unused_6b_IntroCutsceneState11Exit:
 	xor a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
 	jp DispatchCutsceneStateInit.nextState ; $48e0
-Unused_6b_IntroCutsceneState11Update:
+Unused_6b_IntroCutsceneStateAUpdate:
 	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
 	ld [wCutsceneStepTimer], a ; $48e7
 	cp $70 ; $48ea
 	jp z, DispatchCutsceneStateInit.runExit ; $48ec
 	jp DispatchCutsceneStateInit.runUpdate ; $48ef
-Unused_6b_IntroCutsceneState12Init:
+Unused_6b_IntroCutsceneStateBInit:
 	xor a ; $48f2
 	ld [wCutsceneStepTimer], a ; $48f3
 	ld [wCutsceneSpriteAY], a ; $48f6
@@ -814,11 +814,11 @@ Unused_6b_IntroCutsceneState12Init:
 	ld [hl+], a ; $491a
 	ld [hl], d ; $491b
 	jp DispatchCutsceneStateInit.runUpdate ; $491c
-Unused_6b_IntroCutsceneState12Exit:
+Unused_6b_IntroCutsceneStateBExit:
 	script_fade_out 4 ; $491f
 	call WaitFadeEnd ; $4924
 	jp DispatchCutsceneStateInit.nextState ; $4927
-Unused_6b_IntroCutsceneState12Update:
+Unused_6b_IntroCutsceneStateBUpdate:
 	ld a, [wCutsceneSpriteAY] ; $492a
 	cp $0a ; $492d
 	jr z, .checkCutsceneStepTimer ; $492f
@@ -842,7 +842,7 @@ Unused_6b_IntroCutsceneState12Update:
 	call QueueScrollingSprite ; $4957
 	call QueueCutsceneAnimatedSprites ; $495a
 	jp DispatchCutsceneStateInit.runUpdate ; $495d
-IntroCutsceneState16Init_6b:
+IntroCutsceneState13Init_6b:
 	call DisableLCDSafely ; $4960
 	call InitCutsceneSceneA ; $4963
 	call LoadIntroTilesAndPalette ; $4966
@@ -876,7 +876,7 @@ IntroCutsceneState16Init_6b:
 	ld de, vBGMap1 + VRAM_BANK1 ; $49b7
 	ld c, TILEMAP_AREA / 16 ; $49ba
 	call QueueVRAMCopy ; $49bc
-	ld hl, IntroCutsceneState16InitPalettes_6b ; $49bf
+	ld hl, IntroCutsceneState13InitPalettes_6b ; $49bf
 	ld_bg_pals de, 0, 8 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank WRAM_STAGING ; $49c8

@@ -24,7 +24,7 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ; bank and calls RestoreBgTilemap / RestoreBgTilemapRegion /
 ; FlushTilemapToVram, so there $d000 is the tile half sent to VRAM bank 0.
 ; Bank $0a's LoadCourtSceneGraphics decompresses the court into the saved
-; pair at $d800/$dc00 before the match. Bank $0d's LoadMatchUiCourtTilemap
+; pair at $d800/$dc00 before the match. Bank $0d's DrawTargetShotZoneOverlay
 ; writes all four planes: the target-zone overlay's tile and attribute
 ; halves go to $d12b, $d92b, $d52b and $dd2b; QueueMinigameHudVRAMCopy sends
 ; $d120 to $9920 and $d520 to $9920 + VRAM_BANK1.

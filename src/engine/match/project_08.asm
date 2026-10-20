@@ -363,7 +363,7 @@ AwardGame:
 	ld [wPlayer2PointsWon], a ; $5c06
 	ld [wTotalPointsScoredInCurrentGame], a ; $5c09
 	ld [wDeuceIndicator], a ; $5c0c
-	ld hl, wTotalGamesWonInMatch ; $5c0f
+	ld hl, wTotalGamesPlayedInMatch ; $5c0f
 	inc [hl] ; $5c12
 	ret ; $5c13
 AwardPoint:

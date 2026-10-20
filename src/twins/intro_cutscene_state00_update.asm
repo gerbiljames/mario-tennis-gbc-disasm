@@ -1,4 +1,4 @@
-; Shared by IntroCutsceneState19Update_6b, IntroCutsceneState00Update_6b (bank
+; Shared by IntroCutsceneState16Update_6b, IntroCutsceneState00Update_6b (bank
 ; $6b).
 
 {TWIN_LABEL}:

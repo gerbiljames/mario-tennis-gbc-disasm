@@ -1,5 +1,5 @@
 ApplyMinigameCharTargetFromTable:
-	push_wram_bank WRAM_TEXT ; $48b6
+	push_wram_bank WRAM_CHAR1 ; $48b6
 	ld a, [wMinigameServeSlot] ; $48bf
 	call GetMinigameCharCoordsEntry ; $48c2
 	farcall SetCharTarget ; $48c5
@@ -289,21 +289,21 @@ StartMinigameSoloPoint:
 	ld a, e ; $4b0e
 	ld [hl+], a ; $4b0f
 	ld [hl], d ; $4b10
-	push_wram_bank WRAM_ACTORS ; $4b11
+	push_wram_bank WRAM_CHAR0 ; $4b11
 	ld hl, $0000 ; $4b1a
 	ld de, $04e0 ; $4b1d
 	farcall SetCharPosAndTarget ; $4b20
 	pop_wram_bank ; $4b23
 	ret ; $4b28
 HandleMinigamePointEnd:
-	push_wram_bank WRAM_ACTORS ; $4b29
+	push_wram_bank WRAM_CHAR0 ; $4b29
 	ld a, CHARSTATE_STANDBY ; $4b32
 	farcall SetCharState ; $4b34
 	pop_wram_bank ; $4b37
 	call ShowPointOutcomeBanner ; $4b3c
 	call DetermineMinigamePointResult ; $4b3f
 	push de ; $4b42
-	push_wram_bank WRAM_ACTORS ; $4b43
+	push_wram_bank WRAM_CHAR0 ; $4b43
 	farcall CharPointEndReaction ; $4b4c
 	pop_wram_bank ; $4b4f
 	pop de ; $4b54
@@ -368,7 +368,7 @@ ReflectBallVelocity:
 	ld a, [wPointOutcome] ; $4bae
 	and a ; $4bb1
 	ret nz ; $4bb2
-	push_wram_bank WRAM_ACTORS ; $4bb3
+	push_wram_bank WRAM_CHAR0 ; $4bb3
 	ld a, CHARSTATE_RALLY ; $4bbc
 	farcall SetCharState ; $4bbe
 	pop_wram_bank ; $4bc1

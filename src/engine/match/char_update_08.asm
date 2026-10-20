@@ -233,7 +233,7 @@ InitAllChars:
 	dw InitAllChars.char3 ; $68d3 jumptable
 	dw InitAllChars.char4 ; $68d5 jumptable
 .char4:
-	wram_bank WRAM_SCENE ; $68d7
+	wram_bank WRAM_CHAR2 ; $68d7
 	ld a, [wPlayer1PartnerChar] ; $68dd
 	ld d, a ; $68e0
 	ld a, [wPlayer1PartnerPalette] ; $68e1
@@ -241,7 +241,7 @@ InitAllChars:
 	ld a, $02 ; $68e5
 	call InitChar ; $68e7
 .char3:
-	wram_bank WRAM_SOUND ; $68ea
+	wram_bank WRAM_CHAR3 ; $68ea
 	ld a, [wPlayer2PartnerChar] ; $68f0
 	ld d, a ; $68f3
 	ld a, [wPlayer2PartnerPalette] ; $68f4
@@ -249,7 +249,7 @@ InitAllChars:
 	ld a, $03 ; $68f8
 	call InitChar ; $68fa
 .char2:
-	wram_bank WRAM_TEXT ; $68fd
+	wram_bank WRAM_CHAR1 ; $68fd
 	ld a, [wPlayer2MainChar] ; $6903
 	ld d, a ; $6906
 	ld a, [wPlayer2MainPalette] ; $6907

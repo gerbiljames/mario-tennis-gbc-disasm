@@ -33,8 +33,8 @@ ApplyScrollYFromWram:
 	ld a, [wCutsceneSpriteAX] ; $7569
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
-IntroCutsceneState18InitPalettes_6b:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState18InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
+IntroCutsceneState15InitPalettes_6b:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneState15InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
 	wram_bank WRAM_SCREEN ; $75b2

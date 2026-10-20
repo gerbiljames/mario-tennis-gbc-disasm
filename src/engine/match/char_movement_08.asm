@@ -515,9 +515,9 @@ EaseCharFacing:
 UpdateCharFacingOctant:
 	ld a, [wCharAnimId] ; $75e8
 	cp CHARANIM_RUN ; $75eb
-	jr z, .mirrored ; $75ed
+	jr z, .roundShownFacing ; $75ed
 	cp CHARANIM_IDLE ; $75ef
-	jr z, .mirrored ; $75f1
+	jr z, .roundShownFacing ; $75f1
 	cp CHARANIM_DIVE ; $75f3
 	jr z, .easeToShown ; $75f5
 	ld a, [wCharBaseFacing] ; $75f7
@@ -529,7 +529,7 @@ UpdateCharFacingOctant:
 	sra a ; $7603
 	add [hl] ; $7605
 	jr .toOctant ; $7606
-.mirrored:
+.roundShownFacing:
 	ld a, [wCharFacingShown] ; $7608
 	add $10 ; $760b
 .toOctant:

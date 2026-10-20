@@ -142,8 +142,8 @@ wGameWinLoseFlag:: db
 ; [8-bit] Point Win/Lose Flag (0x01 - win, 0xff - lose, 0x00 otherwise)
 wPointWinLoseFlag:: db
 
-; [8-bit] Total Games Won In Match
-wTotalGamesWonInMatch:: db
+; [8-bit] Games played so far in the match, by either side; AwardGame increments it
+wTotalGamesPlayedInMatch:: db
 
 ; [8-bit] Total Points Scored In Current Game; a drill ends at DRILL_LESSON_POINTS or DRILL_MATCH_POINTS
 wTotalPointsScoredInCurrentGame:: db

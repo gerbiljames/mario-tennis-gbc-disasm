@@ -383,8 +383,8 @@ ServiceMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $49e7
 	ret ; $49ea
 ServiceMatch2Hook_Draw:
-	call QueueDrillMarker1_0b ; $49eb
-	call QueueDrillMarker2_0b ; $49ee
+	call QueueDrillGate1Pole ; $49eb
+	call QueueDrillGate2Pole ; $49ee
 	ret ; $49f1
 ServiceMatch2Hook_PointStart:
 	xor a ; $49f2
@@ -394,8 +394,8 @@ ServiceMatch2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $49fb
 	ld a, $01 ; $49fe
 	ld [wDrillGateActive], a ; $4a00
-	ld hl, ServiceMatch2PointStartDrillPositions ; $4a03
-	call IndexDrillTableByPoint ; $4a06
+	ld hl, ServiceMatch2GatePositions ; $4a03
+	call SetDrillGateForPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
 	ld hl, ServiceMatch2ServeAims ; $4a0e
@@ -454,7 +454,7 @@ ServiceMatch2Hook_Bounce:
 ServiceMatch2Hook_BallHit:
 	call ServiceMatch2JudgeOnBallHit ; $4a66
 	ret ; $4a69
-ServiceMatch2PointStartDrillPositions:
+ServiceMatch2GatePositions:
 	; $4a6a, 66 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $0000, $0000, $01b0, $0000 ; point 0

@@ -283,24 +283,24 @@ ReadCharInput:
 CharInputPtrs:
 	; $781f, 14 bytes (records:2)
 	dw ReadCharPadInput ; record 0
-	dw CharInputHandler1_08 ; record 1
+	dw ReadCharAiInput ; record 1
 	dw ReadCharPadInput ; record 2
 	dw ReadCharPadInput ; record 3
-	dw CharInputHandler4_08 ; record 4
-	dw CharInputHandler5_08 ; record 5
-	dw CharInputHandler6_08 ; record 6
-CharInputHandler4_08:
+	dw ReadCharLinkInput ; record 4
+	dw ReadCharLinkMasterInput ; record 5
+	dw ReadCharLinkSlaveInput ; record 6
+ReadCharLinkInput:
 	ldh a, [hLinkInput] ; $782d
 	ld [wCharInputBits], a ; $782f
 	ret ; $7832
-CharInputHandler5_08:
+ReadCharLinkMasterInput:
 	ldh a, [hLinkState] ; $7833
 	cp LINKSTATE_SLAVE ; $7835
-	jr z, CharInputHandler6_08.remoteLive ; $7837
+	jr z, ReadCharLinkSlaveInput.remoteLive ; $7837
 	cp LINKSTATE_MASTER ; $7839
-	jr z, CharInputHandler6_08.remoteBuffered ; $783b
+	jr z, ReadCharLinkSlaveInput.remoteBuffered ; $783b
 	jr ReadCharPadInput ; $783d
-CharInputHandler6_08:
+ReadCharLinkSlaveInput:
 	ldh a, [hLinkState] ; $783f
 	cp LINKSTATE_SLAVE ; $7841
 	jr z, .remoteBuffered ; $7843
@@ -324,7 +324,7 @@ ReadCharPadInput:
 	or c ; $785e
 	ld [wCharInputBits], a ; $785f
 	ret ; $7862
-CharInputHandler1_08:
+ReadCharAiInput:
 	ld hl, wAiActionTimer ; $7863
 	ld a, [hl] ; $7866
 	and a ; $7867

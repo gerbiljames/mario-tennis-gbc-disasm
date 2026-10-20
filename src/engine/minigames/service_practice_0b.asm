@@ -260,7 +260,7 @@ ServicePractice1Hook_PointStart:
 	ld [wDrillMessageId], a ; $4e16
 	ld a, $01 ; $4e19
 	ld [wTargetZoneEnabled], a ; $4e1b
-	ld hl, ServicePractice1PointStartDrillPositions ; $4e1e
+	ld hl, ServicePractice1TargetZones ; $4e1e
 	call SetDrillTargetZoneForPoint ; $4e21
 	ret ; $4e24
 ServicePractice1Hook_PointEnd:
@@ -329,11 +329,11 @@ ServicePractice1Hook_BallHit:
 	jr c, .done ; $4e93
 	ld a, $01 ; $4e95
 	ld [wDrillAbortCountdownActive], a ; $4e97
-	call ResetActiveCharState ; $4e9a
+	call SetOpponentCharInert ; $4e9a
 	sound SFX_MENU_SELECT ; $4e9d
 .done:
 	ret ; $4e9f
-ServicePractice1PointStartDrillPositions:
+ServicePractice1TargetZones:
 	; $4ea0, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $fe50, $fd60, $ff28, $feb0 ; point 0
@@ -452,7 +452,7 @@ ServicePractice2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $4fa2
 	ld a, $01 ; $4fa5
 	ld [wTargetZoneEnabled], a ; $4fa7
-	ld hl, ServicePractice2PointStartDrillPositions ; $4faa
+	ld hl, ServicePractice2TargetZones ; $4faa
 	call SetDrillTargetZoneForPoint ; $4fad
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $4fb0

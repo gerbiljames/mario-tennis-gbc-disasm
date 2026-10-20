@@ -141,7 +141,7 @@ text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
 | `$df00-02` | X position (lateral), 24-bit fixed point: fraction byte, then signed 16-bit integer part |
 | `$df03-05` | depth position, same format; signed, net at 0, the two court sides have opposite signs |
 | `$df06-08` | height above court, same format (zeroed by `SetCharPosAndTarget`) |
-| `$df09` | serve/side role code, from byte 4-7 of the court-position record (`GamePositionTables`); XORed with 2 to swap court side per point, mapped through the `$4fa0` table to a char state at point start |
+| `$df09` | serve/side role code, from byte 4-7 of the court-position record (`GamePositionsSingles`); XORed with 2 to swap court side per point, mapped through the `$4fa0` table to a char state at point start |
 | `$df0a` | court position code, from byte 0-3 of the court-position record (XORed with 3 on the tiebreak side-swap path) |
 | `$df0b` | character index 0-3 (== bank - 4); bit 0 set = far side, so `CharPointEndReaction` negates `wPointWinLoseFlag` through it for `$df57`, and it selects the off-screen edge-arrow sprite (index * 8) |
 | `$df0d`/`$df0e` | facing direction: desired / displayed (eased toward desired in `$75c0` by at most `$df68` per frame) |

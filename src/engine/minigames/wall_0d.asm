@@ -302,11 +302,11 @@ SelectRandomMinigameShot:
 	and $0f ; $4e3a
 	add_hl_a ; $4e3c
 	ld a, [hl] ; $4e41
-	ld [wMinigameShotRoll], a ; $4e42
-	ld a, [wMinigameShotRoll] ; $4e45
+	ld [wMinigameTargetZone], a ; $4e42
+	ld a, [wMinigameTargetZone] ; $4e45
 	call LoadTargetZoneConfig ; $4e48
-	ld a, [wMinigameShotRoll] ; $4e4b
-	call LoadMatchUiCourtTilemap ; $4e4e
+	ld a, [wMinigameTargetZone] ; $4e4b
+	call DrawTargetShotZoneOverlay ; $4e4e
 	call QueueMinigameHudVRAMCopy ; $4e51
 	pop_wram_bank ; $4e54
 	ret ; $4e59
@@ -346,7 +346,7 @@ LookupMinigameShotResult:
 	ld c, a ; $4ea2
 	ld a, [hl+] ; $4ea3
 	ld b, a ; $4ea4
-	ld a, [wMinigameShotRoll] ; $4ea5
+	ld a, [wMinigameTargetZone] ; $4ea5
 	cp e ; $4ea8
 	jr nz, .loop ; $4ea9
 	ld a, [wLastShotButtons] ; $4eab

@@ -635,7 +635,7 @@ StrokePractice1Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6b9a
 	xor a ; $6b9d
 	ld [wTargetZoneEnabled], a ; $6b9e
-	ld hl, StrokePractice1Table ; $6ba1
+	ld hl, StrokePractice1TargetZones ; $6ba1
 	call SetDrillTargetZoneForPoint ; $6ba4
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $6ba7

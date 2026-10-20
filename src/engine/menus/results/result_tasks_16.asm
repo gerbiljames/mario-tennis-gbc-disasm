@@ -129,7 +129,7 @@ RunMatchWinLoseScreen:
 .storyMatch:
 	xor a ; $449a
 .store:
-	ld [wResultScreenWon], a ; $449b
+	ld [wResultScreenIsVersus], a ; $449b
 	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
 	ld [wMatchWinLoseState], a ; $44a4
@@ -276,7 +276,7 @@ MatchWinLoseScreenGfx1:
 MatchWinLoseScreenPalettes:
 	INCLUDE "data/engine/menus/results/MatchWinLoseScreenPalettes.asm" ; $48f4, 24 bytes (palettes)
 LoadWinLoseScreenAssets:
-	ld a, [wResultScreenWon] ; $490c
+	ld a, [wResultScreenIsVersus] ; $490c
 	or a ; $490f
 	jr z, .nonVersus ; $4910
 	ld c, SCREENASSET_MatchStats2 ; $4912

@@ -13,10 +13,10 @@ ServicePractice2Hook_BallHit:
 	jr c, .done ; $5055
 	ld a, $01 ; $5057
 	ld [wDrillAbortCountdownActive], a ; $5059
-	call ResetActiveCharState ; $505c
+	call SetOpponentCharInert ; $505c
 .done:
 	ret ; $505f
-ServicePractice2PointStartDrillPositions:
+ServicePractice2TargetZones:
 	; $5060, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $fe50, $fd60, $fee0, $fe40 ; point 0
@@ -25,7 +25,7 @@ ServicePractice2PointStartDrillPositions:
 	drill_gates $fe50, $01c0, $fee0, $02a0 ; point 3
 	db $ff, $ff ; end
 ServicePractice2HandlePointEnd:
-	call ServicePractice2SetupShotTarget ; $5082
+	call CheckServicePractice2ServeSpin ; $5082
 	farcall UpdateScorePanelDisplay ; $5085
 	call ServicePractice2QueueOutcomeMessage ; $5088
 	ld [wPointWinLoseFlag], a ; $508b
@@ -62,7 +62,7 @@ ServicePractice2HandlePointEnd:
 	call UnregisterFrameTask ; $50de
 	call PlayDrillPointEndSequence ; $50e1
 	ret ; $50e4
-ServicePractice2SetupShotTarget:
+CheckServicePractice2ServeSpin:
 	ld a, [wRallyLength] ; $50e5
 	cp $01 ; $50e8
 	ret nz ; $50ea
@@ -205,8 +205,8 @@ ServicePractice3Hook_PerFrame:
 .done:
 	ret ; $520b
 ServicePractice3Hook_Draw:
-	call QueueDrillMarker1_0b ; $520c
-	call QueueDrillMarker2_0b ; $520f
+	call QueueDrillGate1Pole ; $520c
+	call QueueDrillGate2Pole ; $520f
 	ret ; $5212
 ServicePractice3Hook_PointStart:
 	xor a ; $5213
@@ -219,8 +219,8 @@ ServicePractice3Hook_PointStart:
 	call SetDrillTargetZoneForPoint ; $5224
 	ld a, $01 ; $5227
 	ld [wDrillGateActive], a ; $5229
-	ld hl, ServicePractice3PointStartDrillPositions ; $522c
-	call IndexDrillTableByPoint ; $522f
+	ld hl, ServicePractice3GatePositions ; $522c
+	call SetDrillGateForPoint ; $522f
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $5232
 	ld [wDrillMessageId], a ; $5233
@@ -291,16 +291,16 @@ ServicePractice3Hook_RallyTick:
 	ret ; $52a5
 	twin_named service_practice1_hook_bounce, ServicePractice3Hook_Bounce ; $52a6
 ServicePractice3Hook_BallHit:
-	call ServicePractice3SetupShotTarget ; $52b0
+	call CheckServicePractice3ServeTiming ; $52b0
 	ld a, [wRallyLength] ; $52b3
 	cp $02 ; $52b6
 	jr c, .done ; $52b8
 	ld a, $01 ; $52ba
 	ld [wDrillAbortCountdownActive], a ; $52bc
-	call ResetActiveCharState ; $52bf
+	call SetOpponentCharInert ; $52bf
 .done:
 	ret ; $52c2
-ServicePractice3SetupShotTarget:
+CheckServicePractice3ServeTiming:
 	ld a, [wRallyLength] ; $52c3
 	cp $01 ; $52c6
 	ret nz ; $52c8
@@ -317,7 +317,7 @@ ServicePractice3SetupShotTarget:
 	ld hl, wDrillCounters + DRILLCTR_TIMED_SERVES_LEFT ; $52db
 	dec [hl] ; $52de
 	ret ; $52df
-ServicePractice3PointStartDrillPositions:
+ServicePractice3GatePositions:
 	; $52e0, 34 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $0000, $02a0, $006c, $02a0 ; point 0

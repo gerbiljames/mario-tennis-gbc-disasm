@@ -82,11 +82,11 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/get_menu_cursor_index.asm` | `GetMenuCursorIndex_<bank>` | $16, $1b, $38, $3b, $3e |
 | `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $1b, $38 |
 | `src/twins/init_minigame_medallion_match.asm` | the four `InitMinigame_*` tennis-machine setups | $0d |
-| `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` | $6b |
-| `src/twins/intro_cutscene_state02_exit.asm` | `IntroCutsceneState02Exit_6b`, `IntroCutsceneState04Exit_6b` | $6b |
-| `src/twins/intro_cutscene_state06_update.asm` | `IntroCutsceneState06Update_6b`, `IntroCutsceneState13Update_6b` | $6b |
-| `src/twins/intro_cutscene_state09_update.asm` | `IntroCutsceneState09Update_6b`, `IntroCutsceneState10Update_6b` | $6b |
-| `src/twins/intro_cutscene_state16_update.asm` | `IntroCutsceneState16Update_6b`, `IntroCutsceneState17Update_6b` | $6b |
+| `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneState00Update_6b`, `IntroCutsceneState16Update_6b` | $6b |
+| `src/twins/intro_cutscene_state03_exit.asm` | `IntroCutsceneState03Exit_6b`, `IntroCutsceneState05Exit_6b` | $6b |
+| `src/twins/intro_cutscene_state07_update.asm` | `IntroCutsceneState07Update_6b`, `IntroCutsceneState09Update_6b` | $6b |
+| `src/twins/intro_cutscene_state11_update.asm` | `IntroCutsceneState11Update_6b`, `IntroCutsceneState12Update_6b` | $6b |
+| `src/twins/intro_cutscene_state13_update.asm` | `IntroCutsceneState13Update_6b`, `IntroCutsceneState14Update_6b` | $6b |
 | `src/twins/is_ball_in_medallion_match_hit_zone.asm` | `IsBallInTreasureBoxHitZone`, `IsBallInMedallionMatchHitZone` | $0d |
 | `src/twins/island_open_round_doubles_npc04.asm` | `IslandOpenRoundSinglesNpc04_0f`, `IslandOpenRoundDoublesNpc04_0f` | $0f |
 | `src/twins/junior_class_court_singles_npc03_face_up.asm` | `JuniorClassCourtSinglesNpc03FaceUp_11`, `JuniorClassCourtDoublesNpc03FaceUp_11` | $11 |
@@ -190,7 +190,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
 | 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushLinkMatchFormatRowAttrs` |
 | 2 | 10 | $13 | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` |
-| 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` |
+| 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState16Update_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
 | 3 | 21 | $11, $14, $15 | `LoadPlayerPartnerObjDefs_11`, `LoadPlayerPartnerObjDefs_14`, `LoadPlayerPartnerObjDefs_15` |

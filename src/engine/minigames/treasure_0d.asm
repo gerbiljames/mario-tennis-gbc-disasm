@@ -1,4 +1,4 @@
-PerfectShotLevelHasTargets:
+PerfectShotFormationByLevel:
 	; $58a3, 3 bytes (bytes:3)
 	db $00, $07, $08 ; 0x00
 MinigameHooks_PerfectShot:
@@ -231,8 +231,8 @@ SelectRandomTreasureBoxTargetZone:
 	and $0f ; $5a81
 	add_hl_a ; $5a83
 	ld a, [hl] ; $5a88
-	ld [wMinigameShotRoll], a ; $5a89
-	ld a, [wMinigameShotRoll] ; $5a8c
+	ld [wMinigameTargetZone], a ; $5a89
+	ld a, [wMinigameTargetZone] ; $5a8c
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [wMinigameHitScored] ; $5a92
 	and a ; $5a95
@@ -288,7 +288,7 @@ TreasureBoxTargetState0:
 	add_hl_a ; $5afc
 	ld a, [hl] ; $5b01
 	ld [wMinigameSceneActor + MGACTOR_SUBTYPE], a ; $5b02
-	ld a, [wMinigameShotRoll] ; $5b05
+	ld a, [wMinigameTargetZone] ; $5b05
 	add a ; $5b08
 	ld_hl_indexed TreasureBoxSpawnPointsByZone ; $5b09
 	ld a, [hl+] ; $5b10
