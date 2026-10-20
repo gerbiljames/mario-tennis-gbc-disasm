@@ -326,7 +326,7 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const_def
 	const MATCHCONTEXT_EXHIBITION ; $00 cleared by RestoreOverworldAfterMatch
 	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
-	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
+	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunTwoOnOneMatch: fixed view, doubles scoreboard
 
 ; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDisplayIsTiebreak) ---
 ; GetGfxSourcePtr's index into ScoreDigitGfxPtrs_09 / Player1ScoreDigitGfxSource /

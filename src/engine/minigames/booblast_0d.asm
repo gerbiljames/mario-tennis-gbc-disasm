@@ -12,7 +12,7 @@ BananaBunchHook_PointStart:
 	ld a, [hl+] ; $5541
 	ld h, [hl] ; $5542
 	ld l, a ; $5543
-	call CopyMinigameTilemapBlock ; $5544
+	call LoadMinigameTargetGrid ; $5544
 	ret ; $5547
 BananaBunchGridLayoutsByLevel:
 	; $5548, 6 bytes (records:2)
@@ -50,7 +50,7 @@ UpdateBananaBunchTargetHits:
 	call ScoreMinigameTargetHitOrDeflectBall ; $55a6
 	ret ; $55a9
 	twin_named banana_bunch_reflect_ball_and_record_cell, BananaBunchReflectBallAndRecordCell ; $55aa
-CopyMinigameTilemapBlock:
+LoadMinigameTargetGrid:
 	wram_bank WRAM_COURT_PLANES ; $55b4
 	ld de, wMinigameTargetGrid ; $55ba
 	ld bc, wMinigameTargetGrid_SIZE ; $55bd
@@ -225,7 +225,7 @@ UpdateBooBlastHitStreak:
 	jr .clearHitScored ; $5709
 .incrementCappedCounter:
 	ld b, $07 ; $570b
-	call IncrementCappedCounter ; $570d
+	call IncrementMinigameHitStreak ; $570d
 .clearHitScored:
 	xor a ; $5710
 	ld [wMinigameHitScored], a ; $5711
@@ -234,25 +234,25 @@ UpdateBooBlastHitStreak:
 	ret ; $5718
 BooBlastTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5719
-	dw BooBlastTargetState0 ; $571d jumptable
-	dw BooBlastTargetState1 ; $571f jumptable
-	dw BooBlastTargetState2 ; $5721 jumptable
-	dw BooBlastTargetState3 ; $5723 jumptable
+	dw BooBlastTargetStart ; $571d jumptable
+	dw BooBlastTargetAwaitHit ; $571f jumptable
+	dw BooBlastTargetHitBurst ; $5721 jumptable
+	dw BooBlastTargetIdle ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
 AdvanceBooBlastActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
-BooBlastTargetState0:
+BooBlastTargetStart:
 	call AdvanceBooBlastActorState ; $572c
-BooBlastTargetState1:
+BooBlastTargetAwaitHit:
 	call DrawBooBlastTargetSprite ; $572f
 	call IsBallWithinTargetZone ; $5732
 	and a ; $5735
 	ret z ; $5736
 	call ScoreBallHit ; $5737
 	jp AdvanceBooBlastActorState ; $573a
-BooBlastTargetState2:
+BooBlastTargetHitBurst:
 	call DrawBooBlastHitBurst ; $573d
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5740
 	dec [hl] ; $5743
@@ -268,7 +268,7 @@ BooBlastTargetState2:
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
 	jp AdvanceBooBlastActorState ; $5758
-BooBlastTargetState3:
+BooBlastTargetIdle:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:

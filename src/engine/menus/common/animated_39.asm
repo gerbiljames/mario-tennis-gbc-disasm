@@ -84,8 +84,8 @@ ScreenAssetRecordTable:
 	screen_asset IntroRallies2, DataPtr_IntroRalliesTiles, DataPtr_IntroRalliesTilemap2, DataPtr_IntroRalliesAttrmap2, DataPtr_IntroRalliesPalettes ; record 23
 	screen_asset IntroRallies3, DataPtr_IntroRalliesTiles, DataPtr_IntroRalliesTilemap3, DataPtr_IntroRalliesAttrmap3, DataPtr_IntroRalliesPalettes ; record 24
 	screen_asset IntroRallies4, DataPtr_IntroRalliesTiles, DataPtr_IntroRalliesTilemap4, DataPtr_IntroRalliesAttrmap4, DataPtr_IntroRalliesPalettes ; record 25
-	screen_asset IntroSwing, DataPtr_IntroSwingTiles, DataPtr_IntroSwingTilemap, DataPtr_IntroSwingAttrmap, DataPtr_IntroSwingPalettes ; record 26
-	screen_asset IntroCloseup, DataPtr_IntroCloseupTiles, DataPtr_IntroCloseupTilemap, DataPtr_IntroCloseupAttrmap, DataPtr_IntroCloseupPalettes ; record 27
+	screen_asset IntroAlexSwing, DataPtr_IntroAlexSwingTiles, DataPtr_IntroAlexSwingTilemap, DataPtr_IntroAlexSwingAttrmap, DataPtr_IntroAlexSwingPalettes ; record 26
+	screen_asset IntroNinaSwing, DataPtr_IntroNinaSwingTiles, DataPtr_IntroNinaSwingTilemap, DataPtr_IntroNinaSwingAttrmap, DataPtr_IntroNinaSwingPalettes ; record 27
 	screen_asset IntroWave, DataPtr_IntroWaveTiles, DataPtr_IntroWaveTilemap, DataPtr_IntroWaveAttrmap, DataPtr_IntroWavePalettes ; record 28
 	screen_asset IntroDive, DataPtr_IntroDiveTiles, DataPtr_IntroDiveTilemap, DataPtr_IntroDiveAttrmap, DataPtr_IntroDivePalettes ; record 29
 	screen_asset IntroGirlSwing, DataPtr_IntroGirlSwingTiles, DataPtr_IntroGirlSwingTilemap, DataPtr_IntroGirlSwingAttrmap, DataPtr_IntroGirlSwingPalettes ; record 30

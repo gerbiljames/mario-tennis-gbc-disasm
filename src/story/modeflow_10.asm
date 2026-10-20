@@ -344,7 +344,7 @@ EraseAllDataFlow:
 	ld [wMainMenuCursor], a ; $558c
 	jp RunEraseSavedDataFlow ; $558f
 .reinitSram:
-	farcall ReinitSaveRamPreservingBlock6 ; $5592
+	farcall ReinitSaveRamKeepingPreservedBlock ; $5592
 	call DisableLCDSafely ; $5595
 	farcall LoadMenuFontGfx ; $5598
 	farcall ResetScreenAndTextWindows ; $559b

@@ -1,4 +1,4 @@
-; Shared by IntroCutsceneState16Update_6b, IntroCutsceneState00Update_6b (bank
+; Shared by IntroCutsceneClosingTossUpdate_6b, IntroCutsceneOpeningTossUpdate_6b (bank
 ; $6b).
 
 {TWIN_LABEL}:
@@ -8,12 +8,12 @@
 	cp $80
 	jp z, DispatchCutsceneStateInit.runExit
 	cp $64
-	jr nc, .updateCutsceneScrollY
-	call AdvanceSpriteAnimTimer
-.updateCutsceneScrollY:
-	call UpdateCutsceneScrollY
+	jr nc, .updateBallY
+	call AdvanceIntroBallSpinFrame
+.updateBallY:
+	call UpdateIntroBallY
 	call UpdateIntroScrollY
 	call SetCameraYFromScrollPos
-	call QueueScrollingSprite
+	call QueueIntroSpinningBall
 	call QueueCutsceneAnimatedSprites
 	jp DispatchCutsceneStateInit.runUpdate

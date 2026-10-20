@@ -123,21 +123,21 @@ NEXTU
 ; minigames (bank $0d)
 ; [16-bit] Serves launched this round. LaunchMinigameServe increments it and derives the ball speed from it (count / 10, capped at $19), so the feed speeds up
 wMinigameServeCount:: dw
-; [16-bit] Points shown by the score popup; AwardHitScore and the per-minigame scorers store the award here before AddToMinigameScore
+; [16-bit] Points shown by the score popup; AwardShootingStarHitScore and the per-minigame scorers store the award here before AddToMinigameScore
 wScorePopupValue:: dw
-; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotDifficultyRamp/MinigameShotSpeedColumn with it
+; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotButtonPoolColumn/MinigameShotSpeedColumn with it
 wMinigameServeTier:: db
-; [8-bit] Which serve the tennis machine plays next; the machine hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable indexes the aim table with it
-wMinigameServeSlot:: db
-; [8-bit] wMinigameServeSlot / 3, taken by LaunchMinigameServe and read back by LaunchBall
-wMinigameServeGroup:: db
+; [8-bit] Cell (0-8) of the 3x3 MinigameCharCoordsTable grid the feeding opponent serves from; the hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable walks the opponent there
+wMinigameFeederPos:: db
+; [8-bit] wMinigameFeederPos / 3 (the depth row), taken by LaunchMinigameServe; LaunchBall picks the aim scale and launch height by it
+wMinigameFeederRow:: db
 ; [8-bit] Frames left on the score popup, seeded with $10 by StartScorePopup; UpdateScorePopup ticks it and uses it as the rise offset
 wScorePopupTimer:: db
-; [8-bit] Set while a hit is being scored; ResetTargetHitState clears the streak only when this is clear, which keeps a streak alive across one rally's points
+; [8-bit] Set while a hit is being scored; ResetShootingStarHitState clears the streak only when this is clear, which keeps a streak alive across one rally's points
 wMinigameHitScored:: db
-; [8-bit] Consecutive scoring hits, stepped by IncrementCappedCounter (cap in b). AwardHitScore indexes a sound table and a score table with it
+; [8-bit] Consecutive scoring hits, stepped by IncrementMinigameHitStreak (cap in b). AwardShootingStarHitScore indexes a sound table and a score table with it
 wMinigameHitStreak:: db
-; [8-bit] Treasure Box animation timer: zeroed by TreasureBoxTargetState0, incremented on every DrawTreasureBoxSprite, whose low 5 bits index TreasureBoxSpriteAnimFrames
+; [8-bit] Treasure Box animation timer: zeroed by TreasureBoxTargetSpawn, incremented on every DrawTreasureBoxSprite, whose low 5 bits index TreasureBoxSpriteAnimFrames
 wTreasureBoxAnimTimer:: db
 NEXTU
 ; training drills (bank $0b)
@@ -212,7 +212,7 @@ wScorePopupSource:: ds 4
 wMinigameTargetsScoreMode:: db
 ENDU
 
-; [8-bit] Target zone picked at random from the level's zone pool by SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone; LoadTargetZoneConfig, the score rules and the treasure-box spawn points key on it
+; [8-bit] Target zone picked at random from the level's zone pool by SelectRandomTargetShotZone and SelectRandomTreasureBoxTargetZone; LoadTargetZoneConfig, the score rules and the treasure-box spawn points key on it
 wMinigameTargetZone:: db
 
 ; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessTargetTileHit scores each tile hit at this + 1 and increments it when AreAllTargetsHit. Zeroed with wModeScratch at match start
@@ -249,7 +249,7 @@ wMinigameUsesWall:: db
 ; [8-bit] Set to 1 by InitMinigame_BooBlast
 wMinigameIsBooBlast:: db
 
-; [8-bit] Set to 1 by the bank $0b Service/NetGame practice drills (coach lessons). RecordDrillPointResultBits stores per-point results differently while set; SelectScoreboardLayout picks layout 3
+; [8-bit] Set to 1 by the bank $0b Service/NetGame/Stroke practice drills (coach lessons). RecordDrillPointResultBits stores per-point results differently while set; SelectScoreboardLayout picks layout 3
 wDrillIsPracticeLesson:: db
 
 ; [8-bit] Set to 1 for a high-score attempt: outright by the InitMinigame_*HighScore entries, and by ordinary minigames at wMinigameLevel 2. SelectScoreboardLayout picks layout 7

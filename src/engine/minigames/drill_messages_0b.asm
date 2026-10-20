@@ -250,7 +250,7 @@ QueueDrillOutcomeMessage:
 	ld a, DRILLMSG_HIDE ; $452e
 	ld [wDrillMessageId], a ; $4530
 	ret ; $4533
-QueueDrillResultMessage:
+SetDrillServerMessage:
 	cp DRILLMSG_HIDE ; $4534
 	jr z, .store ; $4536
 	ld c, a ; $4538
@@ -263,7 +263,7 @@ QueueDrillResultMessage:
 .store:
 	ld [wDrillMessageId], a ; $4541
 	ret ; $4544
-SetDrillMessageByServer:
+SetDrillReceiverMessage:
 	cp DRILLMSG_HIDE ; $4545
 	jr z, .store ; $4547
 	ld c, a ; $4549

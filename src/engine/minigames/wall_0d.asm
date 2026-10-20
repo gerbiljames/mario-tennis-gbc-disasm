@@ -235,7 +235,7 @@ MinigameHooks_TargetShot:
 	assert_table_length NUM_MODEHOOKS
 TargetShotHook_MinigameStart:
 	ld a, $01 ; $4dbd
-	ld [wMinigameServeSlot], a ; $4dbf
+	ld [wMinigameFeederPos], a ; $4dbf
 	call StartMinigameMatch ; $4dc2
 	ld a, $01 ; $4dc5
 	ld [wTargetZoneEnabled], a ; $4dc7
@@ -245,11 +245,11 @@ TargetShotHook_PerFrame:
 	call UpdateTargetShotScorePopup ; $4dce
 	ret ; $4dd1
 TargetShotHook_PointStart:
-	call SelectRandomMinigameShot ; $4dd2
+	call SelectRandomTargetShotZone ; $4dd2
 	farcall AdvanceMatchRng ; $4dd5
 	and $01 ; $4dd8
 	inc a ; $4dda
-	ld hl, wMinigameServeSlot ; $4ddb
+	ld hl, wMinigameFeederPos ; $4ddb
 	add [hl] ; $4dde
 	cp $03 ; $4ddf
 	jr c, .store ; $4de1
@@ -269,11 +269,11 @@ TargetShotHook_Bounce:
 	and a ; $4df5
 	ret nz ; $4df6
 	call AwardWinnerOnFourthShotBounce ; $4df7
-	call CheckBallLandedOut ; $4dfa
+	call CheckBallMissedTargetZone ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
 	cp POINTOUTCOME_WINNER ; $4e00
 	ret nz ; $4e02
-	call LookupMinigameShotResult ; $4e03
+	call LookupTargetShotPoints ; $4e03
 	ld d, $00 ; $4e06
 	ld e, a ; $4e08
 	ld hl, wScorePopupValue ; $4e09
@@ -290,7 +290,7 @@ TargetShotHook_BallHit:
 UpdateTargetShotScorePopup:
 	call UpdateScorePopup ; $4e1c
 	ret ; $4e1f
-SelectRandomMinigameShot:
+SelectRandomTargetShotZone:
 	push_wram_bank WRAM_COURT_PLANES ; $4e20
 	ld a, [wMinigameLevel] ; $4e29
 	add a ; $4e2c
@@ -321,7 +321,7 @@ TargetShotZonePool0:
 TargetShotZonePool1:
 	; $4e70, 16 bytes (bytes:16)
 	db $00, $00, $00, $00, $01, $01, $01, $01, $02, $02, $02, $03, $03, $03, $04, $04 ; 0x00
-CheckBallLandedOut:
+CheckBallMissedTargetZone:
 	ld a, [wLastShotCharIndex] ; $4e80
 	and $01 ; $4e83
 	ret nz ; $4e85
@@ -333,7 +333,7 @@ CheckBallLandedOut:
 	ld a, $ff ; $4e90
 	ld [wPointOutcomeSide], a ; $4e92
 	ret ; $4e95
-LookupMinigameShotResult:
+LookupTargetShotPoints:
 	ld hl, TargetShotScoreRules ; $4e96
 .loop:
 	ld a, [hl+] ; $4e99
@@ -366,7 +366,7 @@ LookupMinigameShotResult:
 	ret ; $4ec0
 TargetShotScoreRules:
 	; $4ec1, 69 bytes (score_rule)
-; score_rule roll, buttons, shot, points
+; score_rule zone, buttons, shot, points
 	score_rule 0, $11, SHOTTYPE_POWER_TOPSPIN, 3
 	score_rule 0, $11, SHOTTYPE_REACH_POWER_TOPSPIN, 3
 	score_rule 0, $11, $ff, 3

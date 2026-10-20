@@ -97,7 +97,7 @@ ENDM
 ; A training drill's per-outcome rows: ten entries indexed by wPointOutcome --
 ; 0 undecided, then POINTOUTCOME_FAULT, DOUBLE_FAULT, LET, NET, OUT, WINNER,
 ; SERVE_VOLLEYED, WRONG_RECEIVER, BALL_HIT_PLAYER. *Messages rows hold the
-; DRILLMSG_* id for the player serving (QueueDrillResultMessage adds an offset
+; DRILLMSG_* id for the player serving (SetDrillServerMessage adds an offset
 ; otherwise); *Verdicts rows hold the WINLOSE_* the point gives.
 MACRO drill_messages
 	ASSERT _NARG == 10, "drill_messages takes 10 entries"
@@ -127,6 +127,14 @@ MACRO drill_gates
 	dw \1, \2, \3, \4
 ENDM
 
+; One point of a training drill's *TargetZones table
+; (SetDrillTargetZoneForPoint): the two corners of the target zone the
+; drill sets for that point, each an X and a depth in court units.
+;   drill_target_zone x1, depth1, x2, depth2
+MACRO drill_target_zone
+	dw \1, \2, \3, \4
+ENDM
+
 ; One training drill (DrillDefinitionPtrs; StartDrillFromDefinition reads it
 ; through the DRILLDEF_* offsets). Bytes 6, 14 and 15 are never read.
 ;   drill_def opponent, court, chars, mode, match, bgm, player, hooks, point_table, init
@@ -138,7 +146,7 @@ MACRO drill_def
 	db $00, $00
 ENDM
 
-; One Target Shot scoring rule (TargetShotScoreRules; LookupMinigameShotResult
+; One Target Shot scoring rule (TargetShotScoreRules; LookupTargetShotPoints
 ; walks them to the first match): the target zone (wMinigameTargetZone), the
 ; button combination (wLastShotButtons), the shot type it applies to
 ; (SHOTTYPE_*, or $ff for any) and the points awarded. The list ends on $ff.

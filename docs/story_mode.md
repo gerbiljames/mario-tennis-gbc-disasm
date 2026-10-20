@@ -664,7 +664,7 @@ walks `EndingCutsceneLocationList` (`$0a:$6e40`), 21 (location, entry point)
 pairs: the twelve `$27` "End*" rooms plus Island Sky, Center Court, Peach's
 Castle and Special Court. After each `RunStoryLocation`, unless
 `FLAG_ENDING_CREDITS_PENDING` was raised, it freezes the actors, fades to
-grayscale and plays `PlayScrollingStoryCutscene` (bank `$03`).
+sepia and shows the next staff page, `ShowEndingCreditsStaffPage` (bank `$03`).
 `ShowFinalCreditsCard` closes the sequence. The index is read with `ld a,
 [wStoryCharacterSlot]`; the `byte0 == 0` branch at `$0a:$6ea4`-`$6eab`
 computes `sprite * 2` and discards it, and no record has a zero first byte.
@@ -675,8 +675,8 @@ computes `sprite * 2` and discards it, and no record has a zero first byte.
 the credits caption scroll and its own TO BE CONTINUED; `PlayDreamMatchEpilogueScene`
 (from bank `$0e`) runs the ending credits on the first clear, then the
 champion-medal screen with "The End", and sets `SAVEFLAG_OPENING_SEEN`. Bank
-`$03` owns the scrolling caption screen (`RunScrollingTextScreen`,
-`$03:$59c5`) and the credits montage (`PlayScrollingStoryCutscene`).
+`$03` owns the scrolling staff roll (`RunStaffCreditsRoll`,
+`$03:$59c5`) and the credits montage's staff pages (`ShowEndingCreditsStaffPage`).
 
 ## The character record
 

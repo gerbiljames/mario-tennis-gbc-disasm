@@ -102,14 +102,14 @@ RunEndingCreditsSequence:
 	jr nz, .fadeOut ; $6ec6
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $6ec8
 	call FreezeAllActors ; $6ecb
-	farcall InitGrayscalePaletteFade ; $6ece
+	farcall InitSepiaPaletteFade ; $6ece
 	ld b, $3f ; $6ed1
 	ld c, $ff ; $6ed3
 	ld d, $1e ; $6ed5
 	farcall SetupPaletteFadeMask ; $6ed7
 	farcall AnimatePaletteFadeToTarget ; $6eda
 	ld a, [wStoryCharacterSlot] ; $6edd
-	farcall PlayScrollingStoryCutscene ; $6ee0
+	farcall ShowEndingCreditsStaffPage ; $6ee0
 .fadeOut:
 	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
 	script_fade_out 4 ; $6ee6
@@ -161,7 +161,7 @@ FreezeAllActors:
 	jp nz, .actorLoop ; $6f3e
 	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
-Unused_0a_FarcallUpdateSceneAnimation:
-	farcall UpdateSceneAnimation ; $6f45
+Unused_0a_FarcallUpdateEpilogueEndAnimation:
+	farcall UpdateEpilogueEndAnimation ; $6f45
 	ret ; $6f48
 	; $6f49, 4279 bytes fill to bank end (linker-padded)

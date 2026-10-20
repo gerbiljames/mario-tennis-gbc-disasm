@@ -235,14 +235,14 @@ ClearSaveBlockEntry:
 	pop de ; $4f7a
 	pop hl ; $4f7b
 	ret ; $4f7c
-ReinitSaveRamPreservingBlock6:
+ReinitSaveRamKeepingPreservedBlock:
 	push af ; $4f7d
 	push bc ; $4f7e
 	push de ; $4f7f
 	push hl ; $4f80
 	push_wram_bank WRAM_STAGING ; $4f81
 	ld hl, wDecompBuffer ; $4f8a
-	call ReadBlock6 ; $4f8d
+	call ReadPreservedBlock ; $4f8d
 	ld b, a ; $4f90
 	push bc ; $4f91
 	call EraseAndInitSaveRam ; $4f92
@@ -251,7 +251,7 @@ ReinitSaveRamPreservingBlock6:
 	cp $fe ; $4f97
 	jr z, .initAllMinigameRecordBlocks ; $4f99
 	ld hl, wDecompBuffer ; $4f9b
-	call WriteBlock6WithBackup ; $4f9e
+	call WritePreservedBlockWithBackup ; $4f9e
 .initAllMinigameRecordBlocks:
 	call InitAllMinigameRecordBlocks ; $4fa1
 	pop_wram_bank ; $4fa4

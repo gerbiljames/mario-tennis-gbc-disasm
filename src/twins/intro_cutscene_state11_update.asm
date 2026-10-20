@@ -1,4 +1,4 @@
-; Shared by IntroCutsceneState11Update_6b, IntroCutsceneState12Update_6b (bank $6b).
+; Shared by IntroCutsceneDiveUpdate_6b, IntroCutsceneGirlSwingUpdate_6b (bank $6b).
 
 {TWIN_LABEL}:
 	ld a, [wCutsceneStepTimer]

@@ -24,7 +24,7 @@ AwardTreasureBoxHitScore:
 	call AddToMinigameScore ; $5c67
 	call StartScorePopup ; $5c6a
 	ld b, $03 ; $5c6d
-	call IncrementCappedCounter ; $5c6f
+	call IncrementMinigameHitStreak ; $5c6f
 	ld a, POINTOUTCOME_WINNER ; $5c72
 	ld [wPointOutcome], a ; $5c74
 	ld a, $01 ; $5c77
@@ -61,7 +61,7 @@ TreasureBoxSpriteAnimFrames:
 	db $ff, $ff, $ff, $ff, $ff, $02, $ff, $ff ; 0x08
 	db $ff, $ff, $ff, $ff, $03, $ff, $ff, $ff ; 0x10
 	db $ff, $ff, $04, $ff, $ff, $ff, $ff, $ff ; 0x18
-DrawTreasureBoxHitCountdown:
+DrawTreasureBoxHitBurst:
 	call ProjectTreasureBoxWorldPosition ; $5ccb
 	ld c, $3c ; $5cce
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5cd0
@@ -87,7 +87,7 @@ MinigameHooks_MedallionMatch:
 MedallionMatchHook_MinigameStart:
 	call SpawnMedallionMatchTargets ; $5d1c
 	ld a, $01 ; $5d1f
-	ld [wMinigameServeSlot], a ; $5d21
+	ld [wMinigameFeederPos], a ; $5d21
 	call StartMinigameMatch ; $5d24
 	xor a ; $5d27
 	ld [wStandingShadowsEnabled], a ; $5d28
@@ -106,7 +106,7 @@ MedallionMatchHook_PointStart:
 	farcall AdvanceMatchRng ; $5d3d
 	and $01 ; $5d40
 	inc a ; $5d42
-	ld hl, wMinigameServeSlot ; $5d43
+	ld hl, wMinigameFeederPos ; $5d43
 	add [hl] ; $5d46
 	cp $03 ; $5d47
 	jr c, .store ; $5d49
@@ -192,26 +192,26 @@ ResetMedallionMatchHitState:
 	ret ; $5ded
 MedallionMatchTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5dee
-	dw MedallionMatchTargetState0 ; $5df2 jumptable
-	dw MedallionMatchTargetState1 ; $5df4 jumptable
-	dw MedallionMatchTargetState2 ; $5df6 jumptable
-	dw MedallionMatchTargetState3 ; $5df8 jumptable
+	dw MedallionMatchTargetStart ; $5df2 jumptable
+	dw MedallionMatchTargetAwaitHit ; $5df4 jumptable
+	dw MedallionMatchTargetHitBurst ; $5df6 jumptable
+	dw MedallionMatchTargetIdle ; $5df8 jumptable
 	dw RetStub ; $5dfa jumptable
 AdvanceMedallionMatchActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5dfc
 	inc [hl] ; $5dff
 	ret ; $5e00
-MedallionMatchTargetState0:
+MedallionMatchTargetStart:
 	call AdvanceMedallionMatchActorState ; $5e01
-MedallionMatchTargetState1:
+MedallionMatchTargetAwaitHit:
 	call DrawMedallionMatchSprite ; $5e04
 	call IsBallInMedallionMatchHitZone ; $5e07
 	and a ; $5e0a
 	ret z ; $5e0b
 	call AwardMedallionMatchHitScore ; $5e0c
 	jp AdvanceMedallionMatchActorState ; $5e0f
-MedallionMatchTargetState2:
-	call DrawMedallionMatchHitCountdown ; $5e12
+MedallionMatchTargetHitBurst:
+	call DrawMedallionMatchHitBurst ; $5e12
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5e15
 	dec [hl] ; $5e18
 	ld a, [hl] ; $5e19
@@ -229,7 +229,7 @@ MedallionMatchTargetState2:
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
 	jp AdvanceMedallionMatchActorState ; $5e30
-MedallionMatchTargetState3:
+MedallionMatchTargetIdle:
 	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
 	twin_named is_ball_in_medallion_match_hit_zone, IsBallInMedallionMatchHitZone ; $5e37
@@ -285,7 +285,7 @@ DrawMedallionMatchSprite:
 MedallionMatchSpriteAnimFrames:
 	; $5f0f, 4 bytes (bytes:4)
 	db $20, $24, $28, $2c ; 0x00
-DrawMedallionMatchHitCountdown:
+DrawMedallionMatchHitBurst:
 	call ProjectMedallionMatchWorldPosition ; $5f13
 	ld c, $3c ; $5f16
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5f18
@@ -336,7 +336,7 @@ FruitFantasyHook_PointStart:
 	ld a, [hl+] ; $5f87
 	ld h, [hl] ; $5f88
 	ld l, a ; $5f89
-	call CopyMinigameTilemapBlock ; $5f8a
+	call LoadMinigameTargetGrid ; $5f8a
 	ret ; $5f8d
 FruitFantasyGridLayoutsByLevel:
 	; $5f8e, 6 bytes (records:2)

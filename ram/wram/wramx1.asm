@@ -15,8 +15,8 @@ SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 ; the single upper WRAM half, the bytes a CGB calls bank 1.
 UNION
 ; cutscene text scroll buffer (bank $03)
-; [640 bytes] Eight 80-column rows of rendered cutscene text: DrawCutsceneTextLines draws each line from column 19 of row 1, and BlitCutsceneTextWindow copies a 20-column window of it, one column further per call, into wWindowShadowTilemap to scroll the text. Both select the bank themselves
-wCutsceneTextScrollBuffer:: ds 640
+; [640 bytes] Eight 80-column rows of rendered cutscene text: DrawCreditsStaffLines draws each line from column 19 of row 1, and BlitCreditsStaffWindow copies a 20-column window of it, one column further per call, into wWindowShadowTilemap to scroll the text. Both select the bank themselves
+wCreditsStaffScrollBuffer:: ds 640
 	ds 3456
 NEXTU
 ; character record copy (bank $1b)

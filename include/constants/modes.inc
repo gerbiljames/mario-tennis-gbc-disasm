@@ -1,5 +1,5 @@
 ; --- Drill result messages (wDrillMessageId, DrillMessageTextIds_0b) ---
-; Named after the text each id shows. QueueDrillResultMessage adds an offset
+; Named after the text each id shows. SetDrillServerMessage adds an offset
 ; in b (DRILLWORDING_*) when the other side served, to reach the same
 ; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md)
 ; and get no name.
@@ -101,7 +101,7 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_I_RETURNED_YOUR_SERVE_BEFORE_IT_BOUNCED_YOUR_POINT     ; $6b
 	const DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE                      ; $6c
 
-; b for QueueDrillResultMessage and its siblings: "you" wording to "I" wording
+; b for SetDrillServerMessage and its siblings: "you" wording to "I" wording
 def DRILLWORDING_SAME    equ 0
 def DRILLWORDING_SERVICE equ DRILLMSG_SERVICE_ACE_I_GET_A_POINT - DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $06
 def DRILLWORDING_NET     equ DRILLMSG_NICE_VOLLEY_I_GET_A_POINT - DRILLMSG_NICE_VOLLEY_YOU_GET_A_POINT ; $0d
@@ -286,7 +286,7 @@ def NUM_GAMEMODES equ const_value
 ; The argument of RunTrainingDrillByID, the single entry point for
 ; MATCHLIST_TRAINING: below $12 it indexes DrillDefinitionPtrs, otherwise
 ; StartMinigameByID indexes MinigameConfigTable with id - $12 ($24 is
-; special-cased into RunDoublesDrillMatch).
+; special-cased into RunTwoOnOneMatch).
 ; The 18 drill names come from the debug drill list (text 31:141-31:147, item
 ; order == id). Match drills run on COURT_TRAINING_MATCH, Practice drills on
 ; COURT_TRAINING_PRACTICE; the story lesson menus add $03/$09/$0f to a 0-2

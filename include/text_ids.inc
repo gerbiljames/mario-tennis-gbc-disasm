@@ -1472,6 +1472,7 @@ def Text_5e_167 equ $30a7
 def Text_5e_168 equ $30a8
 def Text_5e_169 equ $30a9
 def Text_5e_170 equ $30aa
+def Text_5e_171 equ $30ab
 def Text_5e_320 equ $3140
 def Text_5e_322 equ $3142
 

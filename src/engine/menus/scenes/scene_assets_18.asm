@@ -394,7 +394,7 @@ PlayTravelingTeamVictoryScene:
 	ld [wScreenSequenceTimer], a ; $76d6
 	cp $fa ; $76d9
 	jr nz, .scrollLoop ; $76db
-	farcall InitGrayscalePaletteFade ; $76dd
+	farcall InitSepiaPaletteFade ; $76dd
 	ld b, $3f ; $76e0
 	ld c, $3f ; $76e2
 	ld d, $1e ; $76e4

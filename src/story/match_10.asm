@@ -66,14 +66,14 @@ MatchSelectRunCharacterSelect:
 	ret ; $40ee
 MatchSelectPlayEpilogueScene:
 	farcall BeginCutsceneScriptMode ; $40ef
-	farcall RunScrollingTextScreen ; $40f2
+	farcall RunStaffCreditsRoll ; $40f2
 	wait_frames 60 ; $40f5
 	call EnableLCD ; $40f9
-	farcall SetupSceneAnimationPalettes ; $40fc
+	farcall SetupEpilogueEndAnimation ; $40fc
 	script_fade_in 4 ; $40ff
 	call WaitFadeEnd ; $4104
 	sound BGM_COURT_WAREHOUSE ; $4107
-	frame_task SceneAnimationFrameTask_10 ; $4109
+	frame_task EpilogueEndAnimationFrameTask_10 ; $4109
 	wait_frames 120 ; $4111
 	wait_frames 255 ; $4115
 	wait_frames 255 ; $4119
@@ -81,7 +81,7 @@ MatchSelectPlayEpilogueScene:
 	wait_frames 255 ; $4121
 	wait_frames 255 ; $4125
 	wait_frames 255 ; $4129
-	ld hl, SceneAnimationFrameTask_10 ; $412d
+	ld hl, EpilogueEndAnimationFrameTask_10 ; $412d
 	call UnregisterFrameTask ; $4130
 	farcall EndCutsceneScriptMode ; $4133
 	ret ; $4136
@@ -90,8 +90,8 @@ MatchSelectRunEndingCredits:
 	farcall RunEndingCreditsSequence ; $413a
 	farcall EndCutsceneScriptMode ; $413d
 	ret ; $4140
-SceneAnimationFrameTask_10:
-	farcall UpdateSceneAnimation ; $4141
+EpilogueEndAnimationFrameTask_10:
+	farcall UpdateEpilogueEndAnimation ; $4141
 	ret ; $4144
 MatchSelectHandlerTable_10:
 	; $4145, 73 bytes (map_scripts)

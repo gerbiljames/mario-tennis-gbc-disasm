@@ -55,7 +55,7 @@ FillMemory16:
 	dec c ; $59c1
 	jr nz, FillMemory16 ; $59c2
 	ret ; $59c4
-RunScrollingTextScreen:
+RunStaffCreditsRoll:
 	call ClearFrameTasks ; $59c5
 	farcall LoadMenuFontGfx ; $59c8
 	call DisableLCDSafely ; $59cb
@@ -72,7 +72,7 @@ RunScrollingTextScreen:
 	ld hl, ScrollTextPalette_03 ; $59e6
 	ld_bg_pals de, 0, 1 ; $59e9
 	call LoadPaletteShadow ; $59ec
-	call InitScrollingTextScreen ; $59ef
+	call InitStaffCreditsRoll ; $59ef
 	call EnableLCD ; $59f2
 	sound BGM_CREDITS ; $59f5
 	ld c, $08 ; $59f7
@@ -142,7 +142,7 @@ RunScrollingTextScreen:
 .checkSkip:
 	ldh a, [hPlayerInputFlags] ; $5a7e
 	and PADF_A | PADF_B | PADF_START ; $5a80
-	jr nz, .maskSet ; $5a82
+	jr nz, .skip ; $5a82
 .advanceFrame:
 	call AdvanceFrame ; $5a84
 	wram_bank WRAM_SCREEN ; $5a87
@@ -154,13 +154,13 @@ RunScrollingTextScreen:
 	inc b ; $5a94
 	jr nz, .clearShadowLoop ; $5a95
 	jp .mainLoop ; $5a97
-.maskSet:
+.skip:
 	script_fade_out 1 ; $5a9a
 	call WaitFadeEnd ; $5a9f
 	call ClearFrameTasks ; $5aa2
 	farcall LoadMenuFontGfx ; $5aa5
 	ret ; $5aa8
-InitScrollingTextScreen:
+InitStaffCreditsRoll:
 	wram_bank WRAM_SCENE ; $5aa9
 	ld hl, wScrollTextDelay ; $5aaf
 	ld a, $02 ; $5ab2
@@ -222,10 +222,10 @@ TestTextEndMarker:
 	ret ; $5b1f
 ScrollTextPalette_03:
 	INCLUDE "data/engine/cutscenes/ScrollTextPalette_03.asm" ; $5b20, 8 bytes (palettes)
-SetupSceneAnimationPalettes:
+SetupEpilogueEndAnimation:
 	push_wram_bank WRAM_SCENE ; $5b28
 	xor a ; $5b31
-	ld [wSceneAnimFrame], a ; $5b32
+	ld [wEpilogueEndAnimFrame], a ; $5b32
 	ld hl, EpilogueEndOrangePalette ; $5b35
 	ld_obj_pals de, 2, 1 ; $5b38
 	call LoadPaletteShadow ; $5b3b
@@ -234,7 +234,7 @@ SetupSceneAnimationPalettes:
 	call LoadPaletteShadow ; $5b44
 	pop_wram_bank ; $5b47
 	ret ; $5b4c
-UpdateSceneAnimation:
+UpdateEpilogueEndAnimation:
 	push_wram_bank WRAM_SCENE ; $5b4d
 	call AnimateEpilogueEndE ; $5b56
 	call AnimateEpilogueEndN ; $5b59
@@ -246,19 +246,19 @@ UpdateSceneAnimation:
 	ld a, [wCutsceneSlideTimer] ; $5b6e
 	and $03 ; $5b71
 	jr nz, .restore ; $5b73
-	ld a, [wSceneAnimFrame] ; $5b75
+	ld a, [wEpilogueEndAnimFrame] ; $5b75
 	ld b, a ; $5b78
 	sub $36 ; $5b79
 	jp nc, .restore ; $5b7b
 	ld a, b ; $5b7e
 	inc a ; $5b7f
-	ld [wSceneAnimFrame], a ; $5b80
+	ld [wEpilogueEndAnimFrame], a ; $5b80
 .restore:
 	pop_wram_bank ; $5b83
 	ret ; $5b88
 AnimateEpilogueEndE:
 	wram_bank WRAM_SCENE ; $5b89
-	ld a, [wSceneAnimFrame] ; $5b8f
+	ld a, [wEpilogueEndAnimFrame] ; $5b8f
 	cp $00 ; $5b92
 	jp z, .frame00 ; $5b94
 	cp $01 ; $5b97
@@ -412,7 +412,7 @@ AnimateEpilogueEndE:
 	ret ; $5d37
 AnimateEpilogueEndN:
 	wram_bank WRAM_SCENE ; $5d38
-	ld a, [wSceneAnimFrame] ; $5d3e
+	ld a, [wEpilogueEndAnimFrame] ; $5d3e
 	ld b, a ; $5d41
 	sub $09 ; $5d42
 	ret c ; $5d44
@@ -570,7 +570,7 @@ AnimateEpilogueEndN:
 	ret ; $5eeb
 AnimateEpilogueEndD:
 	wram_bank WRAM_SCENE ; $5eec
-	ld a, [wSceneAnimFrame] ; $5ef2
+	ld a, [wEpilogueEndAnimFrame] ; $5ef2
 	ld b, a ; $5ef5
 	sub $12 ; $5ef6
 	ret c ; $5ef8
@@ -728,7 +728,7 @@ AnimateEpilogueEndD:
 	ret ; $609f
 AnimateEpilogueEndDot1:
 	wram_bank WRAM_SCENE ; $60a0
-	ld a, [wSceneAnimFrame] ; $60a6
+	ld a, [wEpilogueEndAnimFrame] ; $60a6
 	ld b, a ; $60a9
 	sub $1b ; $60aa
 	ret c ; $60ac
@@ -886,7 +886,7 @@ AnimateEpilogueEndDot1:
 	ret ; $6253
 AnimateEpilogueEndDot2:
 	wram_bank WRAM_SCENE ; $6254
-	ld a, [wSceneAnimFrame] ; $625a
+	ld a, [wEpilogueEndAnimFrame] ; $625a
 	ld b, a ; $625d
 	sub $24 ; $625e
 	ret c ; $6260

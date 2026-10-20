@@ -10,14 +10,14 @@
 	ret nz
 	ld a, DRILLMSG_NICE_RETURN_YOU_DID_IT
 	ld b, DRILLWORDING_SAME
-	call QueueDrillResultMessage
+	call SetDrillServerMessage
 	call RecordDrillTargetZoneMiss
 	call CheckDrillTargetZoneHit
 	or a
 	jp nz, .hitTarget
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3
 	ld b, DRILLWORDING_SAME
-	call QueueDrillResultMessage
+	call SetDrillServerMessage
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET
 	inc [hl]
 	jp .storeMatchAbortFlag

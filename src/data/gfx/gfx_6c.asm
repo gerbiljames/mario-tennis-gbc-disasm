@@ -38,24 +38,24 @@ DataPtr_IntroRalliesNinaGfx1:
 	dw IntroRalliesNinaGfx1 ; $4024
 DataPtr_IntroRalliesNinaGfx2:
 	dw IntroRalliesNinaGfx2 ; $4026
-DataPtr_CutsceneGfx6:
-	dw CutsceneGfx6 ; $4028
-DataPtr_IntroSwingTiles:
-	dw IntroSwingTiles ; $402a
-DataPtr_IntroSwingTilemap:
-	dw IntroSwingTilemap ; $402c
-DataPtr_IntroSwingAttrmap:
-	dw IntroSwingAttrmap ; $402e
-DataPtr_IntroSwingPalettes:
-	dw IntroSwingPalettes ; $4030
-DataPtr_IntroCloseupTiles:
-	dw IntroCloseupTiles ; $4032
-DataPtr_IntroCloseupTilemap:
-	dw IntroCloseupTilemap ; $4034
-DataPtr_IntroCloseupAttrmap:
-	dw IntroCloseupAttrmap ; $4036
-DataPtr_IntroCloseupPalettes:
-	dw IntroCloseupPalettes ; $4038
+DataPtr_IntroRalliesNinaGfx3:
+	dw IntroRalliesNinaGfx3 ; $4028
+DataPtr_IntroAlexSwingTiles:
+	dw IntroAlexSwingTiles ; $402a
+DataPtr_IntroAlexSwingTilemap:
+	dw IntroAlexSwingTilemap ; $402c
+DataPtr_IntroAlexSwingAttrmap:
+	dw IntroAlexSwingAttrmap ; $402e
+DataPtr_IntroAlexSwingPalettes:
+	dw IntroAlexSwingPalettes ; $4030
+DataPtr_IntroNinaSwingTiles:
+	dw IntroNinaSwingTiles ; $4032
+DataPtr_IntroNinaSwingTilemap:
+	dw IntroNinaSwingTilemap ; $4034
+DataPtr_IntroNinaSwingAttrmap:
+	dw IntroNinaSwingAttrmap ; $4036
+DataPtr_IntroNinaSwingPalettes:
+	dw IntroNinaSwingPalettes ; $4038
 DataPtr_IntroWaveTiles:
 	dw IntroWaveTiles ; $403a
 DataPtr_IntroWaveTilemap:
@@ -146,24 +146,24 @@ IntroRalliesNinaGfx1:
 	INCBIN "data/gfx/lz_IntroRalliesNinaGfx1.bin" ; $55f6, 259 bytes
 IntroRalliesNinaGfx2:
 	INCBIN "data/gfx/lz_IntroRalliesNinaGfx2.bin" ; $56f9, 232 bytes
-CutsceneGfx6:
-	INCBIN "data/gfx/lz_CutsceneGfx6.bin" ; $57e1, 16 bytes
-IntroSwingTiles:
-	INCBIN "data/gfx/lz_IntroSwingTiles.bin" ; $57f1, 1085 bytes
-IntroSwingTilemap:
-	INCBIN "data/gfx/lz_IntroSwingTilemap.bin" ; $5c2e, 225 bytes
-IntroSwingAttrmap:
-	INCBIN "data/gfx/lz_IntroSwingAttrmap.bin" ; $5d0f, 70 bytes
-IntroSwingPalettes:
-	INCLUDE "data/gfx/IntroSwingPalettes.asm" ; $5d55, 64 bytes (palettes)
-IntroCloseupTiles:
-	INCBIN "data/gfx/lz_IntroCloseupTiles.bin" ; $5d95, 1061 bytes
-IntroCloseupTilemap:
-	INCBIN "data/gfx/lz_IntroCloseupTilemap.bin" ; $61ba, 170 bytes
-IntroCloseupAttrmap:
-	INCBIN "data/gfx/lz_IntroCloseupAttrmap.bin" ; $6264, 74 bytes
-IntroCloseupPalettes:
-	INCLUDE "data/gfx/IntroCloseupPalettes.asm" ; $62ae, 64 bytes (palettes)
+IntroRalliesNinaGfx3:
+	INCBIN "data/gfx/lz_IntroRalliesNinaGfx3.bin" ; $57e1, 16 bytes
+IntroAlexSwingTiles:
+	INCBIN "data/gfx/lz_IntroAlexSwingTiles.bin" ; $57f1, 1085 bytes
+IntroAlexSwingTilemap:
+	INCBIN "data/gfx/lz_IntroAlexSwingTilemap.bin" ; $5c2e, 225 bytes
+IntroAlexSwingAttrmap:
+	INCBIN "data/gfx/lz_IntroAlexSwingAttrmap.bin" ; $5d0f, 70 bytes
+IntroAlexSwingPalettes:
+	INCLUDE "data/gfx/IntroAlexSwingPalettes.asm" ; $5d55, 64 bytes (palettes)
+IntroNinaSwingTiles:
+	INCBIN "data/gfx/lz_IntroNinaSwingTiles.bin" ; $5d95, 1061 bytes
+IntroNinaSwingTilemap:
+	INCBIN "data/gfx/lz_IntroNinaSwingTilemap.bin" ; $61ba, 170 bytes
+IntroNinaSwingAttrmap:
+	INCBIN "data/gfx/lz_IntroNinaSwingAttrmap.bin" ; $6264, 74 bytes
+IntroNinaSwingPalettes:
+	INCLUDE "data/gfx/IntroNinaSwingPalettes.asm" ; $62ae, 64 bytes (palettes)
 IntroWaveTiles:
 	INCBIN "data/gfx/lz_IntroWaveTiles.bin" ; $62ee, 1266 bytes
 IntroWaveTilemap:

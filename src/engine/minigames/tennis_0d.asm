@@ -1,6 +1,6 @@
 ApplyMinigameCharTargetFromTable:
 	push_wram_bank WRAM_CHAR1 ; $48b6
-	ld a, [wMinigameServeSlot] ; $48bf
+	ld a, [wMinigameFeederPos] ; $48bf
 	call GetMinigameCharCoordsEntry ; $48c2
 	farcall SetCharTarget ; $48c5
 	pop_wram_bank ; $48c8
@@ -96,7 +96,7 @@ TennisMachine2Hook_PointStart:
 	farcall AdvanceMatchRng ; $4991
 	and $01 ; $4994
 	inc a ; $4996
-	ld hl, wMinigameServeSlot ; $4997
+	ld hl, wMinigameFeederPos ; $4997
 	add [hl] ; $499a
 	cp $03 ; $499b
 	jr c, .store ; $499d
@@ -146,7 +146,7 @@ TennisMachine3Hook_PointStart:
 	farcall AdvanceMatchRng ; $49ee
 	and $03 ; $49f1
 	inc a ; $49f3
-	ld hl, wMinigameServeSlot ; $49f4
+	ld hl, wMinigameFeederPos ; $49f4
 	add [hl] ; $49f7
 	cp $06 ; $49f8
 	jr c, .store ; $49fa

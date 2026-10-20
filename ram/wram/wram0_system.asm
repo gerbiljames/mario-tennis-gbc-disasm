@@ -312,7 +312,7 @@ wDrillAbortCountdownActive:: db
 ; [8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing
 wUnusedDrillPointStartByte:: db
 
-; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
+; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice*/StrokePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
 ; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneMiss when the ball's first bounce landed outside the target zone (IsBallInTargetZone returned z); CountDrillTargetZoneMisses and CheckDrillTargetZoneHit read it back
@@ -328,7 +328,7 @@ wDrillMessageId:: db
 wDrillCounters:: ds 9
 	ds 8
 
-; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1 (target hit) / -1 (missed) from CheckDrillTargetZoneHit
+; [2 bytes] Indexed by wCurrentServingPlayer: +1 (target hit) / -1 (missed) from CheckDrillTargetZoneHit; only the unreferenced Unused_0b_StoreDrillServeTargetResult stores it. Read by ServiceMatch2HandlePointEnd and the Service Match 2 ace message
 wDrillServeTargetResult:: dw
 	ds 2
 
@@ -509,7 +509,7 @@ wDeferredTilemapPending:: db
 wSpriteBufferPage:: db
 	ds 8
 
-; [8-bit] Write-only: the court slot 0 character id, stored by match setup (InitStoryMatchSettings, RunLinkMatchSequence, RunDoublesDrillMatch, the drill and minigame starters, the debug test modes and character viewer); nothing reads it
+; [8-bit] Write-only: the court slot 0 character id, stored by match setup (InitStoryMatchSettings, RunLinkMatchSequence, RunTwoOnOneMatch, the drill and minigame starters, the debug test modes and character viewer); nothing reads it
 wMatchPlayerChar:: db
 
 ; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup

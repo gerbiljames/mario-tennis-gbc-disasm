@@ -334,13 +334,13 @@ SaveStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d08
 	cp NUM_STORY_SLOTS ; $4d0b
 	ret nc ; $4d0d
-	jr SaveStorySlotWithTimer.checkCurrentStorySlot ; $4d0e
+	jr SaveStorySlotWithTimer.writeSlot ; $4d0e
 SaveStorySlotWithTimer:
 	ld a, [wCurrentStorySlot] ; $4d10
 	cp NUM_STORY_SLOTS ; $4d13
 	ret nc ; $4d15
 	call SaveGameTimer ; $4d16
-.checkCurrentStorySlot:
+.writeSlot:
 	ld a, [wCurrentStorySlot] ; $4d19
 	add a ; $4d1c
 	ld b, a ; $4d1d

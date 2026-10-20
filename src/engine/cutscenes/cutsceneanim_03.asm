@@ -1,6 +1,6 @@
 AnimateEpilogueEndDot3:
 	wram_bank WRAM_SCENE ; $6408
-	ld a, [wSceneAnimFrame] ; $640e
+	ld a, [wEpilogueEndAnimFrame] ; $640e
 	ld b, a ; $6411
 	sub $2d ; $6412
 	ret c ; $6414

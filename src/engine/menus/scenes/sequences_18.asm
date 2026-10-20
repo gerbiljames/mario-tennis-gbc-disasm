@@ -24,7 +24,7 @@ PlayAwardsCeremonyScene:
 	call WaitFadeEnd ; $7801
 	call ClearFrameTasks ; $7804
 	call DisableLCDSafely ; $7807
-	farcall RunScrollingTextScreen ; $780a
+	farcall RunStaffCreditsRoll ; $780a
 	call DisableLCDSafely ; $780d
 	call LoadToBeContinuedOutlineGfx ; $7810
 	call FillAllBgPalettes ; $7813

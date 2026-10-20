@@ -57,7 +57,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_COURT_CASTLE          ; $12 row 5; the Peach's Castle story_location and Perfect Shot use it
 	const BGM_COURT_TROPIC          ; $13 row 6; MinigameConfig_FruitFantasy
 	const BGM_COURT_WAREHOUSE       ; $14 row 8; MinigameConfig_TreasureBox
-	const BGM_TWO_ON_ONE            ; $15 RunDoublesDrillMatch
+	const BGM_TWO_ON_ONE            ; $15 RunTwoOnOneMatch
 	const BGM_COURT_JUNGLE          ; $16 row 7; MinigameConfig_BananaBunch
 	const_def $19
 	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
