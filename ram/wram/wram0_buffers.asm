@@ -168,7 +168,7 @@ UNION
 ; minigame targets (banks $0a/$0d)
 ; [8-bit] Type of the target the ball just hit, an index into MinigameTargetTypeScores; $ff = scores nothing
 wMinigameHitTargetType:: db
-; [8-bit] Set by the deflect hit-test and cleared by ScoreMinigameTargetHitOrDeflectBall once the hit has been scored
+; [8-bit] Set whenever wBallCrossedNetFlag is (before any position test); ScoreMinigameTargetHitOrDeflectBall clears it whether or not a target was hit
 wMinigameHitPending:: db
 	ds 1
 NEXTU
@@ -215,8 +215,8 @@ ENDU
 ; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while walking their weight tables
 wMinigameShotRoll:: db
 
-; [8-bit] Set when the ball lands on a target tile; ProcessTargetTileHit clears it as it scores the hit
-wTargetTileHit:: db
+; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessTargetTileHit scores each tile hit at this + 1 and increments it when AreAllTargetsHit. Zeroed with wModeScratch at match start
+wTargetGridClearCount:: db
 
 ; [8-bit] Where the minigame is in its serve: StartMinigameMatch seeds it, DrawMinigameScoreHud and LaunchMinigameServe branch on it
 wMinigameServeState:: db

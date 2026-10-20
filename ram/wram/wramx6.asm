@@ -327,7 +327,7 @@ ENDU
 
 ; Story-scene decompression scratch.
 ; story scene load (bank $0a)
-; [1024 bytes] Third decompression destination of LoadStorySceneGraphics, never used: its `ld de, $d800` is overwritten by the next `ld de, $d400` before any call. The live siblings decompress into $d400 and $d000 of this bank; the later planes go to wScreenAttrmap and the bank $03 tilemap
+; [1024 bytes] Third decompression destination of LoadStorySceneGraphics, never used there (only the unreachable Unused_0a_LoadSceneGraphicsDirect fills it): its `ld de, $d800` is overwritten by the next `ld de, $d400` before any call. The live siblings decompress into $d400 and $d000 of this bank; the later planes go to wScreenAttrmap and the bank $03 tilemap
 wStorySceneUnusedBuffer:: ds 1024
 
 	ds 8

@@ -51,7 +51,7 @@ ProcessTargetTileHit:
 	farcall FlushTilemapToVram ; $58f8
 	pop_wram_bank ; $58fb
 	sound SFX_CHIME ; $5900
-	ld a, [wTargetTileHit] ; $5902
+	ld a, [wTargetGridClearCount] ; $5902
 	inc a ; $5905
 	ld e, a ; $5906
 	ld d, $00 ; $5907
@@ -66,7 +66,7 @@ ProcessTargetTileHit:
 	call AreAllTargetsHit ; $5918
 	and a ; $591b
 	ret z ; $591c
-	ld hl, wTargetTileHit ; $591d
+	ld hl, wTargetGridClearCount ; $591d
 	ld a, [hl] ; $5920
 	cp $09 ; $5921
 	jr nc, .clearGrid ; $5923

@@ -427,10 +427,14 @@ wStoryModeMinigameCompletionFlags2:: db
 ; Bit 0 - Wall Level 2
 wStoryModeMinigameCompletionFlags3:: db
 
-; [Upper4] Story Mode - Minigame Completion Flags (4/4)
+; Story Mode - Minigame Completion Flags (4/4)
 ;
 ; Bit 7 - Wall Level 3
 ; Bit 6 - Wall Level 4
+; Bit 5 - Tennis Machine master (FLAG_CLEARED_MACHINE_MASTER)
+; Bit 4 - Wall master
+; Bit 3 - Tennis Machine expert
+; Bit 2 - Wall expert
 wStoryModeMinigameCompletionFlags4:: db
 
 ; [4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff), temporary: ClearTemporaryStoryFlags zeroes them at the top of RunStoryLocation, so they last until the next location load. Used for per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear ($1f)

@@ -165,10 +165,10 @@ NEXTU
 	ds 1
 ; [8-bit] Object-definition id passed to SetupCharSpriteFromObjectDef; write-only
 \1CharObjectDefId:: db
-; [8-bit] ROM bank of the character's object definition, animation scripts and frame tables, banked in by GetPerspectiveScale and passed to FarReadWordDI by SetCharAnimation / StepCharAnimation. 0 = no object loaded (UpdateChar exits)
+; [8-bit] ROM bank of the character's object definition, animation scripts and frame tables, banked in by QueueCharFrameTiles and passed to FarReadWordDI by SetCharAnimation / StepCharAnimation. 0 = no object loaded (UpdateChar exits)
 \1CharObjectBank:: db
 	ds 1
-; [16-bit] Pointer (in wCharObjectBank) to the frame graphics table GetPerspectiveScale walks for a frame's tile data
+; [16-bit] Pointer (in wCharObjectBank) to the frame graphics table QueueCharFrameTiles walks for a frame's tile data
 \1CharFrameTablePtr:: dw
 ; [16-bit] VRAM destination of the character's frame tiles
 \1CharFrameVramDest:: dw
@@ -213,7 +213,7 @@ NEXTU
 \1CharAimOffset:: db
 ; [8-bit] Frames in the current swing phase, reset at windup start, incremented by the windup and contact phases
 \1CharSwingFrames:: db
-; [8-bit] Set when the swing was quick (uncharged): written by StartCharSwing, copied to wShotWasQuickSwing by ExecuteShot so the shot gets no charge bonus
+; [8-bit] Set when the swing was quick (uncharged): written by StartCharSwing; its only reader copies it into the write-only wShotWasQuickSwing (ExecuteShot), so it has no effect
 \1CharQuickSwing:: db
 ; [8-bit] Shot button latched while the swing is held, from b in CheckSwingRelease; cleared there when SELECT is down and by CharRallyReadyPhase. Write-only
 \1CharSwingHoldButton:: db
