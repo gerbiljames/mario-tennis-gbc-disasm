@@ -225,7 +225,8 @@ IsMinigameTargetReached:
 .notReached:
 	xor a ; $41ec
 	ret ; $41ed
-IsMinigameScoreLimitReached:
+; nz when the current score beats wMinigameHighScore or has hit the 9999 cap
+IsNewMinigameHighScore:
 	ld hl, wMinigamesCurrentScore ; $41ee
 	ld a, [hl+] ; $41f1
 	ld d, [hl] ; $41f2

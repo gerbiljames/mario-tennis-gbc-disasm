@@ -106,7 +106,7 @@ ShootingStarHook_RallyTick:
 	call KeepMinigameCameraFixed ; $51f9
 	ret ; $51fc
 ShootingStarHook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $51fd
+	call AwardWinnerOnFourthShotBounce ; $51fd
 	ret ; $5200
 ShootingStarHook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $5201

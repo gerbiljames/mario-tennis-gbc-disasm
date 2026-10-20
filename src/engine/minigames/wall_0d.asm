@@ -168,7 +168,7 @@ TennisMachineHighScoreHook_RallyTick:
 	call KeepMinigameCameraFixed ; $4d2f
 	ret ; $4d32
 TennisMachineHighScoreHook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $4d33
+	call AwardWinnerOnFourthShotBounce ; $4d33
 	ret ; $4d36
 TennisMachineHighScoreHook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4d37
@@ -268,7 +268,7 @@ TargetShotHook_Bounce:
 	ld a, [wPointOutcome] ; $4df2
 	and a ; $4df5
 	ret nz ; $4df6
-	call CheckMinigameStartBannerTrigger ; $4df7
+	call AwardWinnerOnFourthShotBounce ; $4df7
 	call CheckBallLandedOut ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
 	cp POINTOUTCOME_WINNER ; $4e00

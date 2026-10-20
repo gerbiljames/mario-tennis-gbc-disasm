@@ -48,9 +48,9 @@ UpdateMinigameTarget:
 	ld hl, wMinigameTargetWork + MGTARGET_HIT_TIMER ; $65e8
 	ld a, [hl] ; $65eb
 	and a ; $65ec
-	jr z, .hit ; $65ed
+	jr z, .runScript ; $65ed
 	dec [hl] ; $65ef
-.hit:
+.runScript:
 	call RunMinigameTargetScript ; $65f0
 	call MoveMinigameTargetTowardGoal ; $65f3
 	ld a, [wMinigameTargetsAltMode] ; $65f6

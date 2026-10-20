@@ -123,7 +123,7 @@ MedallionMatchHook_RallyTick:
 	call KeepMinigameCameraFixed ; $5d59
 	ret ; $5d5c
 MedallionMatchHook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $5d5d
+	call AwardWinnerOnFourthShotBounce ; $5d5d
 	ret ; $5d60
 MedallionMatchHook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $5d61

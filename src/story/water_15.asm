@@ -89,7 +89,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5673
 	ld a, $18 ; $5676
 	sub b ; $5678
-	ld [wSwingContestHudMode], a ; $5679
+	ld [wSwingContestTimerPanelX], a ; $5679
 	ld a, $80 ; $567c
 	add b ; $567e
 	ld d, a ; $567f
@@ -97,7 +97,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5683
 	ld a, $74 ; $5686
 	add b ; $5688
-	ld [wSwingContestHudPage], a ; $5689
+	ld [wSwingContestCounterPanelX], a ; $5689
 	script_wait_frames 1 ; $568c
 	dec b ; $5693
 	jp nz, .slideHudIn ; $5694
@@ -168,7 +168,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5731
 	ld a, $e8 ; $5734
 	add b ; $5736
-	ld [wSwingContestHudMode], a ; $5737
+	ld [wSwingContestTimerPanelX], a ; $5737
 	ld a, $b0 ; $573a
 	sub b ; $573c
 	ld d, a ; $573d
@@ -179,7 +179,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5744
 	ld a, $a4 ; $5747
 	sub b ; $5749
-	ld [wSwingContestHudPage], a ; $574a
+	ld [wSwingContestCounterPanelX], a ; $574a
 	script_wait_frames 1 ; $574d
 	dec b ; $5754
 	jp nz, .slideHudOut ; $5755
@@ -253,11 +253,11 @@ QueueWaterSpriteMinigameCounterPanel:
 	call QueueSpriteTemplate ; $58cd
 	ret ; $58d0
 QueueWaterSpriteMinigameHudPanels:
-	ld a, [wSwingContestHudMode] ; $58d1
+	ld a, [wSwingContestTimerPanelX] ; $58d1
 	ld d, a ; $58d4
 	ld e, $18 ; $58d5
 	call QueueWaterSpriteMinigameTimerPanel ; $58d7
-	ld a, [wSwingContestHudPage] ; $58da
+	ld a, [wSwingContestCounterPanelX] ; $58da
 	ld d, a ; $58dd
 	ld e, $18 ; $58de
 	call QueueWaterSpriteMinigameCounterPanel ; $58e0
@@ -265,9 +265,9 @@ QueueWaterSpriteMinigameHudPanels:
 InitWaterSpriteMinigameHud:
 	call LoadWaterSpriteMinigameHudGfx ; $58e4
 	ld a, $e8 ; $58e7
-	ld [wSwingContestHudMode], a ; $58e9
+	ld [wSwingContestTimerPanelX], a ; $58e9
 	ld a, $a0 ; $58ec
-	ld [wSwingContestHudPage], a ; $58ee
+	ld [wSwingContestCounterPanelX], a ; $58ee
 	frame_task QueueWaterSpriteMinigameHudPanels ; $58f1
 	ret ; $58f9
 	; $58fa, 6 bytes (fill)

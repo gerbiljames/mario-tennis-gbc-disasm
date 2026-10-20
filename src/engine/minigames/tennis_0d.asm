@@ -112,7 +112,7 @@ TennisMachine2Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $49aa
 	ret ; $49ad
 TennisMachine2Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $49ae
+	call AwardWinnerOnFourthShotBounce ; $49ae
 	ret ; $49b1
 TennisMachine2Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $49b2
@@ -162,7 +162,7 @@ TennisMachine3Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $4a07
 	ret ; $4a0a
 TennisMachine3Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $4a0b
+	call AwardWinnerOnFourthShotBounce ; $4a0b
 	ret ; $4a0e
 TennisMachine3Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4a0f
@@ -200,7 +200,7 @@ TennisMachine4Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $4a64
 	ret ; $4a67
 TennisMachine4Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $4a68
+	call AwardWinnerOnFourthShotBounce ; $4a68
 	ret ; $4a6b
 TennisMachine4Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4a6c

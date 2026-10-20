@@ -19,15 +19,15 @@ ShowPointOutcomeBanner:
 DetermineMinigamePointResult:
 	ld a, [wMinigameHighScoreMode] ; $43df
 	and a ; $43e2
-	jr nz, .isMinigameScoreLimitReached ; $43e3
+	jr nz, .checkNewHighScore ; $43e3
 	ld a, [wPointOutcome] ; $43e5
 	cp POINTOUTCOME_MINIGAME_CLEARED ; $43e8
 	jr z, .cleared ; $43ea
 	jr .storePointWinLoseFlag ; $43ec
-.isMinigameScoreLimitReached:
-	call IsMinigameScoreLimitReached ; $43ee
+.checkNewHighScore:
+	call IsNewMinigameHighScore ; $43ee
 	and a ; $43f1
-	jr nz, .scoreLimitReached ; $43f2
+	jr nz, .newHighScore ; $43f2
 	jr .storePointWinLoseFlag ; $43f4
 .cleared:
 	ld a, WINLOSE_WIN ; $43f6
@@ -36,7 +36,7 @@ DetermineMinigamePointResult:
 	add BANNER_LEVEL_1_CLEARED ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
-.scoreLimitReached:
+.newHighScore:
 	ld a, WINLOSE_WIN ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
 	ld d, BANNER_HIGH_SCORE ; $4407
@@ -223,7 +223,7 @@ TennisMachine1Hook_RallyTick:
 	call KeepMinigameCameraFixed ; $453a
 	ret ; $453d
 TennisMachine1Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $453e
+	call AwardWinnerOnFourthShotBounce ; $453e
 	ret ; $4541
 TennisMachine1Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4542
@@ -413,7 +413,7 @@ KeepMinigameCameraFixed:
 	xor a ; $47be
 	ld [wCameraFollowBall], a ; $47bf
 	ret ; $47c2
-CheckMinigameStartBannerTrigger:
+AwardWinnerOnFourthShotBounce:
 	ld a, [wPointOutcome] ; $47c3
 	and a ; $47c6
 	jr nz, .done ; $47c7

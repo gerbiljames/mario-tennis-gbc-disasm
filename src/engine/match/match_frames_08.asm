@@ -336,9 +336,9 @@ CheckBallOutOfBounds:
 	ld l, a ; $4647
 	abs_hl ; $4648
 	add hl, bc ; $4652
-	jr nc, .outOfBounds ; $4653
+	jr nc, .checkDepth ; $4653
 	set 0, d ; $4655
-.outOfBounds:
+.checkDepth:
 	ld hl, wCourtLimitDepth ; $4657
 	ld a, [hl+] ; $465a
 	ld b, [hl] ; $465b

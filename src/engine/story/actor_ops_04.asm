@@ -593,6 +593,7 @@ ActorScriptOp_Step:
 	pop de ; $4757
 	xor a ; $4758
 	ret ; $4759
+; z when the actor is at its target
 IsActorAtTarget:
 	ld hl, ACTORF_X ; $475a
 	add hl, bc ; $475d

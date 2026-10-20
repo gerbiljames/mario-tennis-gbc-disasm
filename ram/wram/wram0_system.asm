@@ -198,10 +198,10 @@ wSwingContestSwings:: dw
 wSwingContestPrevInput:: db
 ; [8-bit] 2 when a swing registers, 1 the frame after; triggers the swing animation once
 wSwingContestSwingState:: db
-; [8-bit] Which HUD panels QueueWaterSpriteMinigameHudPanels draws
-wSwingContestHudMode:: db
-; [8-bit] HUD page shown; seeded by InitWaterSpriteMinigameHud, panels queued by QueueWaterSpriteMinigameHudPanels
-wSwingContestHudPage:: db
+; [8-bit] Screen X of the timer panel QueueWaterSpriteMinigameHudPanels draws; slid on and off by the scene
+wSwingContestTimerPanelX:: db
+; [8-bit] Screen X of the counter panel; seeded by InitWaterSpriteMinigameHud
+wSwingContestCounterPanelX:: db
 NEXTU
 ; bank $10's swing contest prototype (Unused_10_SwingContestPrototype)
 ; [16-bit] Swings counted and printed by PrintHexWord

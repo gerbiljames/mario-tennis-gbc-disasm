@@ -200,7 +200,7 @@ TreasureBoxHook_Bounce:
 	ld a, [wPointOutcome] ; $5a45
 	and a ; $5a48
 	ret nz ; $5a49
-	call CheckMinigameStartBannerTrigger ; $5a4a
+	call AwardWinnerOnFourthShotBounce ; $5a4a
 	call CheckBallLandedOut ; $5a4d
 	ld a, [wPointOutcome] ; $5a50
 	cp POINTOUTCOME_WINNER ; $5a53

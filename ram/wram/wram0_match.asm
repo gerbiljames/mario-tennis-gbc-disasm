@@ -280,7 +280,7 @@ wBallTouchCharIndex:: db
 ; [8-bit] Court quadrant under the ball: bit 1 = sign of wBallDepth (net side), bit 0 = sign of wBallX (lateral half). Rebuilt every frame by StepBallPhysics; forced to $02 by the bank $0d wall-practice setup
 wBallCourtQuadrant:: db
 
-; [8-bit] CheckBallOutOfBounds' verdict bits for the frame (which bound the ball passed). Write-only; the caller uses the returned a
+; [8-bit] CheckBallOutOfBounds' verdict bits for the frame (which bound the ball passed). read only by Unused_0b_CheckBallOutOfBounds; the caller uses the returned a
 wBallOutOfBoundsBits:: db
 
 ; [8-bit] Bounces since the ball was last struck, saturating at $0a. Zeroed by HandleBallHitEvent and ResetPointState, incremented by HandleBallBounceEvent. Tested for == 1 (first bounce) by EvaluateBounceOutcome, the fault check, the bank $0b drill graders and bank $0d
