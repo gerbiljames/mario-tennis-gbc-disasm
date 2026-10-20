@@ -77,7 +77,7 @@ GetDebugTextBufferAddr:
 	push af ; $18f1
 	push hl ; $18f2
 	ld l, d ; $18f3
-	ld h, $cc ; $18f4
+	ld h, HIGH(wDebugTextBuffer) ; $18f4
 	ld a, e ; $18f6
 	rrca ; $18f7
 	rrca ; $18f8

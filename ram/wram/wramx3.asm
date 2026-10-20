@@ -49,6 +49,7 @@ ENDU
 ; [1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400
 ; higher (the attribute of cell $d08b is $d48b)
 wShadowAttrmap:: ds 1024
+	export_size wShadowAttrmap
 
 ; $d800 on: the screen-local blocks below, or the intro's swing planes.
 UNION

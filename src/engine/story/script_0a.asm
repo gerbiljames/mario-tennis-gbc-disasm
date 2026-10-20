@@ -356,7 +356,7 @@ GetActorStateAddr:
 	srl h ; $431e
 	rra ; $4320
 	ld l, a ; $4321
-	ld a, $d0 ; $4322
+	ld a, HIGH(wActors) ; $4322
 	add h ; $4324
 	ld h, a ; $4325
 .haveAddr:

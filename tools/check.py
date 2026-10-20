@@ -1239,6 +1239,129 @@ def check_literal_pointers(fail):
     return n
 
 
+_VRAM_DEF_RE = re.compile(r"^def (v\w+) equ \$([0-9a-fA-F]{4})\b")
+_BYTE_RE = re.compile(r"\$([0-9a-fA-F]{2})")
+_PAIR_WRITES = {
+    "h": re.compile(r"^(ld (h|hl),|pop hl|inc hl|dec hl|ldi|ldd|ld \[hl[+-]\]|ld a, \[hl[+-]\]|call|rst|j[pr] (?!n?[zc],)|reti?$)"),
+    "d": re.compile(r"^(ld (d|de),|pop de|inc de|dec de|call|rst|j[pr] (?!n?[zc],)|reti?$)"),
+}
+
+
+def check_ram_byte_literals(fail):
+    """The halves of a RAM or VRAM address written as numbers: `ld a, $d0 /
+    add h / ld h, a` adding a page to an offset, `cp $c6` after the high byte
+    of a pointer (`ld a, [wPtr + 1]`, `ld a, h`), `ld l, $a8` re-aiming hl or
+    de within the WRAM label it was loaded with, and `ld h, $98` building a
+    pointer that the next instructions dereference. A page counts when an
+    address label (RAM) or a VRAM region constant starts on it."""
+    pages, ram = {}, {}
+    for bank, addr, name in read_sym():
+        if 0xa000 <= addr < 0xe000 and "." not in name:
+            ram.setdefault(name, (bank, addr))
+            if not addr & 0xff:
+                pages.setdefault(addr >> 8, []).append(name)
+    for line in (ROOT / "include/constants/memory.inc").read_text().splitlines():
+        if (m := _VRAM_DEF_RE.match(line)) and not int(m.group(2), 16) & 0xff:
+            pages.setdefault(int(m.group(2), 16) >> 8, []).append(m.group(1))
+    spans = {}
+    for name, (bank, addr) in ram.items():
+        spans.setdefault(bank, []).append((addr, name))
+    for v in spans.values():
+        v.sort()
+
+    def inside(base, target):
+        bank, addr = ram[base]
+        labels = spans[bank]
+        i = bisect.bisect_right(labels, (target, "\uffff")) - 1
+        if i >= 0 and labels[i][0] >= addr:
+            off = target - labels[i][0]
+            return labels[i][1] + (f" + {off}" if off else "")
+        return None
+
+    def high(p):
+        names = pages[p]
+        more = f" (or {len(names) - 1} more)" if len(names) > 1 else ""
+        return f"HIGH({names[0]}){more}"
+
+    def page(arg, lo=0x80, hi=0xdf):
+        if re.match(r"(HIGH|LOW)\(", arg):
+            return -1
+        m = _BYTE_RE.fullmatch(arg)
+        return int(m.group(1), 16) if m and lo <= int(m.group(1), 16) <= hi else None
+
+    n = 0
+    for holder in holders():
+        bank = bank_of(holder)
+        lines = bank_lines(holder)[0]
+        code = []
+        for line in lines:
+            if _GLOBAL_RE.match(line) or _LOCAL_RE.match(line):
+                code.append((line[:-1], None, None, ""))
+            elif (m := _OPERAND_RE.match(line)) and m.group(1) in _MNEMONICS:
+                a = _ADDR_RE.search(line)
+                code.append((m.group(1), [x.strip() for x in m.group(2).split(",")],
+                             f"${bank:02x}:{a.group(1) if a else '?'}",
+                             f"{m.group(1)} {m.group(2).strip()}"))
+            elif (m := re.match(r"^\t([a-z]+)\s*(;.*)?$", line)) and m.group(1) in _MNEMONICS:
+                code.append((m.group(1), [], None, m.group(1)))
+        held = {"h": None, "d": None}
+
+        def derefs(k, pair, reg):
+            """The pointer in hl/de is dereferenced before `reg` changes."""
+            ptr = ("[hl]", "[hl+]", "[hl-]") if pair == "h" else ("[de]",)
+            for op2, args2, _w, text2 in code[k + 1:k + 17]:
+                if args2 is None:
+                    if op2.startswith("."):
+                        continue
+                    return False
+                if any(x in ptr for x in args2):
+                    return True
+                if _PAIR_WRITES[pair].match(text2) or re.match(rf"(ld|inc|dec|pop) {reg}\b", text2):
+                    return False
+            return False
+
+        def flag(where, text, name, why):
+            fail("literals", f"{where} {text} -- {why} {name}")
+
+        for k, (op, args, where, text) in enumerate(code):
+            if args is None:
+                held = {"h": None, "d": None}
+                continue
+            nxt = code[k + 1:k + 3]
+            if op == "ld" and args[0] == "a" and (p := page(args[1], 0xc0)) is not None \
+                    and len(nxt) == 2 and nxt[0][3] in ("add h", "add d") \
+                    and nxt[1][3] == f"ld {nxt[0][3][-1]}, a":
+                n += 1
+                if p in pages:
+                    flag(where, text, high(p), "adds the page of")
+            if op == "cp" and (p := page(args[-1], 0xc0)) is not None and k:
+                prev = code[k - 1][3]
+                if prev in ("ld a, h", "ld a, d") or re.fullmatch(r"ld a, \[\w+ \+ 1\]", prev):
+                    n += 1
+                    if p in pages:
+                        flag(where, text, high(p), "compares a pointer's high byte with")
+            if op == "ld" and args[0] in ("l", "e") and (lo := page(args[1], 0, 0xff)) is not None:
+                base = held["h" if args[0] == "l" else "d"]
+                if base and derefs(k, "h" if args[0] == "l" else "d", args[0]):
+                    n += 1
+                    name = lo >= 0 and inside(base, ram[base][1] & 0xff00 | lo)
+                    if name:
+                        flag(where, text, f"LOW({name})", "re-aims a pointer at")
+            if op == "ld" and args[0] in ("h", "d") and (p := page(args[1])) is not None:
+                if derefs(k, args[0], args[0]):
+                    n += 1
+                    if p in pages:
+                        flag(where, text, high(p), "builds a pointer into")
+            for reg in held:
+                if _PAIR_WRITES[reg].match(text):
+                    held[reg] = None
+            if op == "ld" and args[0] in ("hl", "de"):
+                name = re.match(r"(\w+)", args[1])
+                if name and name.group(1) in ram and ram[name.group(1)][1] >= 0xc000:
+                    held[args[0][0]] = name.group(1)
+    return n
+
+
 _DMA_ROUTINES = frozenset({"QueueVRAMCopy", "StartVRAMDMATransfer", "StartVRAMDMAFromHL"})
 
 
@@ -3064,7 +3187,8 @@ def main():
         "labels": check_label_scopes(fail),
         "headers": check_region_headers(fail),
         "branches": check_collapsed_branches(fail),
-        "literals": check_literal_pointers(fail) + check_blob_pointers(rom, manifest, fail),
+        "literals": (check_literal_pointers(fail) + check_ram_byte_literals(fail)
+                     + check_blob_pointers(rom, manifest, fail)),
         "dma": check_dma_alignment(fail),
         "gfx": check_gfx(manifest, fail),
         "gfx-specs": check_gfx_specs(rom, manifest, fail),

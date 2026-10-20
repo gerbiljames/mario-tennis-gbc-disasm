@@ -7,7 +7,7 @@ wShadowOAM:: ds 160
 	export_size wShadowOAM
 
 ; [80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank (0 = slot free), wram bank, src hi, src lo, vbk, dest hi, dest lo, length in 16-byte blocks - 1]. ProcessVRAMCopyQueues banks in the source, writes +$02..+$06 to $ff51-$ff54 and rVBK, starts the transfer by writing +$07 to $ff55, and clears +$00
-wVRAMCopyQueue:: ds 80
+wVRAMCopyQueue:: ds NUM_VRAMCOPY_SLOTS * VRAMCOPY_SLOT_SIZE
 	export_size wVRAMCopyQueue
 
 ; [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)

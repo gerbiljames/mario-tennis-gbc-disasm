@@ -505,9 +505,9 @@ CopyTileRectToShadowAttrmap:
 	ld a, $20 ; $78c5
 	add_de_a ; $78c7
 	ld a, d ; $78cc
-	cp $d8 ; $78cd
+	cp HIGH(wShadowAttrmap + wShadowAttrmap_SIZE) ; $78cd
 	jr c, .nextRow ; $78cf
-	ld d, $d4 ; $78d1
+	ld d, HIGH(wShadowAttrmap) ; $78d1
 .nextRow:
 	dec c ; $78d3
 	jr nz, CopyTileRectToShadowAttrmap ; $78d4

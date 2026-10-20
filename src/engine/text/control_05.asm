@@ -368,7 +368,7 @@ ControlCodeHandlers_05:
 RenderInlineString:
 	push af ; $54cf
 	ld a, [wTextStreamPtr + 1] ; $54d0
-	cp $c6 ; $54d3
+	cp HIGH(wTextBuffer) ; $54d3
 	jr nz, .checkWrap ; $54d5
 	ld a, [wTextStreamPtr] ; $54d7
 	or a ; $54da

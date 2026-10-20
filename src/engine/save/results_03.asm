@@ -178,7 +178,7 @@ Unused_03_SaveSlotDebugEditor:
 	push de ; $5385
 	push hl ; $5386
 	ld a, h ; $5387
-	sub $d3 ; $5388
+	sub HIGH(wSaveEditorBlock) ; $5388
 	ld h, a ; $538a
 	call PrintHexWord ; $538b
 	pop hl ; $538e
