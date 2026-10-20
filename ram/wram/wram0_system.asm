@@ -163,6 +163,12 @@ wCutscenePlaneX:: db
 ; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
 wCutscenePlaneY:: db
 NEXTU
+; courts-tour pointer sprite (bank $13: AcademyCourtsTourCutscene, AnimateTourPointerSprite_13)
+; [8-bit] Screen X of the pointer arrow
+wTourPointerX:: db
+; [8-bit] Screen Y of the pointer arrow's lowest point; the animator bobs it up to 7 px above
+wTourPointerY:: db
+NEXTU
 ; [16-bit] Frames left in Unused_10_SwingContestPrototype; Unused_10_SwingContestCountTask counts it down (the bank $15 contest keeps it 2 bytes higher)
 wUnusedSwingProtoTimer:: dw
 ENDU
@@ -181,11 +187,11 @@ wCutsceneObjY:: dw
 wCutsceneObjPhase:: dw
 ; [2 bytes] Per-slot frame timer: the splash's hit counter (0-8), the firework's countdown to the next burst frame
 wCutsceneObjTimer:: dw
-; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns; AnimateIslandSkyEffectSprites_14 instead counts frames in byte 0 (sprite frame 1-3, wraps at 3)
+; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns; AnimateRainbowSprites_14 instead counts frames in byte 0 (sprite frame 1-3, wraps at 3)
 wCutsceneObjLimit:: dw
 ; [2 bytes] Frames left in the rise, counted down by AdvanceWaterSplash0Rise_14 / AdvanceWaterSplash1Rise_14, which also lift wCutsceneObjY by 2 per frame
 wCutsceneObjRiseTimer:: dw
-; [2 bytes] Per-slot halt flag: 0 while the effect runs (cleared when it starts), 1 set just before the scene exits. Nonzero skips the rise step and the island anim tick, and lets a splash finish instead of respawning
+; [2 bytes] Per-slot halt flag: 0 while the effect runs (cleared when it starts), 1 set just before the scene exits. Nonzero skips the rise step and the rainbow frame tick, and lets a splash finish instead of respawning
 wCutsceneObjHalt:: dw
 NEXTU
 ; water-sprite swing contest (bank $15)
@@ -259,7 +265,7 @@ NEXTU
 wMachinePracticeLevel:: db
 NEXTU
 	ds 6
-; actor placement near the player (ComputeEmoteActorPosition_13, PlaceRoommateAtPlayerTarget_13, RestaurantShowEllipsisBalloonNearPlayer_10), passed to ScriptSetActorPosition
+; actor placement near the player (ComputeEmoteActorPosition_13, PlaceRoommateAtPlayerPosition_13, RestaurantShowEllipsisBalloonNearPlayer_10), passed to ScriptSetActorPosition
 ; [16-bit] World X
 wPlaceActorX:: dw
 ; [16-bit] World Y

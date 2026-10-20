@@ -53,7 +53,7 @@ def FLAG_WON_SENIOR_DOUBLES_RANK_2 equ 69 ; wGameFlags byte $08 bit 5
 def FLAG_WON_SENIOR_DOUBLES_RANK_1 equ 70 ; wGameFlags byte $08 bit 6
 
 def FLAG_WON_VARSITY_DOUBLES_RANK_2 equ 72 ; wGameFlags byte $09 bit 0
-def FLAG_ISLAND_SKY_SCENE_ACTIVE equ 79 ; wGameFlags byte $09 bit 7
+def FLAG_AT_ISLAND_OPEN equ 79 ; wGameFlags byte $09 bit 7
 
 def FLAG_WON_JUNIOR_SINGLES_RANK_4 equ 80 ; wGameFlags byte $0a bit 0
 def FLAG_WON_JUNIOR_SINGLES_RANK_3 equ 81 ; wGameFlags byte $0a bit 1
@@ -91,7 +91,7 @@ def FLAG_COURT2_SPECTATORS_TALKED_SINGLES equ 120 ; wGameFlags byte $0f bit 0
 def FLAG_COURT2_SPECTATORS_TALKED_DOUBLES equ 121 ; wGameFlags byte $0f bit 1
 def FLAG_RESTAURANT_NPC12_MOVED_STAGE_4 equ 122 ; wGameFlags byte $0f bit 2
 def FLAG_RESTAURANT_NPC08_MOVED equ 123 ; wGameFlags byte $0f bit 3
-def FLAG_SENIOR_COURT_TILE01_TRIGGERED equ 124 ; wGameFlags byte $0f bit 4
+def FLAG_SENIOR_COURT_BOB_PAM_BLOCKING equ 124 ; wGameFlags byte $0f bit 4
 def FLAG_PRACTICE_ROOM_SESSION_ACTIVE equ 125 ; wGameFlags byte $0f bit 5
 def FLAG_REPAIR_COUNTER_GREETED equ 126 ; wGameFlags byte $0f bit 6
 def FLAG_REPAIR_COUNTER_EQUIP_CHANGED equ 127 ; wGameFlags byte $0f bit 7

@@ -1537,8 +1537,8 @@ RAW_ID_FAMILIES = {
     "SavedDataPickerSlideOut(b)": "MENUSLIDE",
     "ThreeChoiceSlideOut(b)": "MENUSLIDE",
     "MainMenuSlideOut(b)": "MENUSLIDE",
-    "MatchFormatSlideOut(b)": "MENUSLIDE",
-    "CloseLinkMatchFormatPanel(b)": "MENUSLIDE",
+    "SlideMatchFormatPanel(b)": "MENUSLIDE",
+    "SlideLinkMatchFormatPanel(b)": "MENUSLIDE",
     "MinigameSelectSlideOut6(b)": "MENUSLIDE",
     "MinigameSelectSlideOut9(b)": "MENUSLIDE",
     "ApplyCursorBounceX(c)": "BOBDIR",
@@ -3004,9 +3004,9 @@ KNOWN_LOCAL_NAMES = {
 _END_LOCAL_RE = re.compile(r"\.(?:done|exit|finish)\d*$")
 # End locals entered only by a jump that run a scene: (routine, local) -> why.
 KNOWN_END_SCENES = {
-    ("TrainingCourtNpc07_15", ".done"): "the all-lessons-done line",
-    ("TrainingCourtNpc12_15", ".done"): "the all-lessons-done line",
-    ("TrainingCourtNpc0D_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc07Curt_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc12Beth_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc0DBob_15", ".done"): "the all-lessons-done line",
     ("WaterSpriteSwingContestScene", ".finish"): "the contest's end, left from its swing loop",
 }
 _END_SCENE_RE = re.compile(r"(?:script_(?:set_text|speak\w*|move\w*|set_position|face\w*|follow|set_anim)"

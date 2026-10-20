@@ -375,7 +375,7 @@ ResumeSuspendedStoryMatch:
 	ld a, [wGameMode] ; $55d5
 	cp GAMEMODE_EXHIBITION ; $55d8
 	jr nz, .chooseReturn ; $55da
-	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
+	clear_flag FLAG_AT_ISLAND_OPEN ; $55dc
 	xor a ; $55df
 	ld [wMatchSuspendedFlag], a ; $55e0
 	ld b, STORYLOC_MAIN_MENU ; $55e3

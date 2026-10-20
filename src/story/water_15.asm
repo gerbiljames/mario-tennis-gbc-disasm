@@ -130,7 +130,7 @@ WaterSpriteSwingContestScene:
 	dec l ; $56d5
 	jp nz, .countdownLoop ; $56d6
 	sound SFX_COUNTDOWN_GO ; $56d9
-	call TogglePlayerSpriteXFlip ; $56db
+	call MirrorPlayerSpriteIfLeftHanded_15 ; $56db
 	frame_task WaterSpriteSwingCountTask ; $56de
 .swingLoop:
 	call AdvanceFrame ; $56e6
@@ -155,7 +155,7 @@ WaterSpriteSwingContestScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
 	script_wait_frames 60 ; $5716
-	call TogglePlayerSpriteXFlip ; $571d
+	call MirrorPlayerSpriteIfLeftHanded_15 ; $571d
 	ld hl, DrawWaterSpriteMinigameCounters ; $5720
 	call UnregisterFrameTask ; $5723
 	ld b, $30 ; $5726
@@ -194,7 +194,7 @@ WaterSpriteSwingContestScene:
 	farcall PushTextArgNumber ; $576e
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
-	twin_named mirror_player_sprite_if_left_handed, TogglePlayerSpriteXFlip ; $5777
+	twin_named mirror_player_sprite_if_left_handed, MirrorPlayerSpriteIfLeftHanded_15 ; $5777
 DrawWaterSpriteMinigameCounters:
 	ld hl, wSwingContestTimer ; $578d
 	ld a, [hl+] ; $5790
@@ -274,12 +274,12 @@ InitWaterSpriteMinigameHud:
 	ds 6, $00
 Unused_15_WaterSpriteRacketRewardPalettes:
 	INCLUDE "data/story/Unused_15_WaterSpriteRacketRewardPalettes.asm" ; $5900, 16 bytes (palettes)
-WaterSpriteRacketRewardScenePalettes0:
-	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes0.asm" ; $5910, 64 bytes (palettes)
-WaterSpriteRacketRewardScenePalettes1:
-	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes1.asm" ; $5950, 64 bytes (palettes)
-WaterSpriteRacketRewardScenePalettes2:
-	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes2.asm" ; $5990, 48 bytes (palettes)
+WaterSpriteRewardNormalPalettes:
+	INCLUDE "data/story/WaterSpriteRewardNormalPalettes.asm" ; $5910, 64 bytes (palettes)
+WaterSpriteRewardDimPalettes:
+	INCLUDE "data/story/WaterSpriteRewardDimPalettes.asm" ; $5950, 64 bytes (palettes)
+WaterSpriteRewardDarkPalettes:
+	INCLUDE "data/story/WaterSpriteRewardDarkPalettes.asm" ; $5990, 48 bytes (palettes)
 TrainingCourtIntroTourScene:
 	xor a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1

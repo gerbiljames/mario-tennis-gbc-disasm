@@ -512,7 +512,7 @@ RunStoryFileFlow:
 	call RestoreGameTimer ; $50d0
 	ld a, GAMEMODE_NONE ; $50d3
 	ld [wGameMode], a ; $50d5
-	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $50d8
+	clear_flag FLAG_AT_ISLAND_OPEN ; $50d8
 	ld b, STORYLOC_DORM_ROOM ; $50db
 	ld c, ENTRY_DORM_ROOM_CONTINUE ; $50dd
 	farcall SaveStoryReturnPoint ; $50df

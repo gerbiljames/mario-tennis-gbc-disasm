@@ -34,7 +34,7 @@ bank whole.
 A file can hold more copies than its live group below, since dead copies are
 included too. `apply_sprite_wobble_x`, `draw_ascii_digit_char`,
 `draw_corner_brackets`, `draw_decimal_number`,
-`compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
+`compute_ranking_progress_index_13`,
 `get_menu_cursor_index_from_ptr`, `set_menu_cursor_from_index_to_ptr`,
 `lookup_ball_pos_by_aim`, `move_menu_cursor2_grid_remote`,
 `move_menu_cursor_grid_remote`, `move_menu_cursor_grid_from_link_input` and
@@ -78,9 +78,8 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/extract_decimal_digit.asm` | `ExtractDecimalDigit`, `ExtractDecimalDigitUnsigned` | $00 |
 | `src/twins/fetch_text.asm` | `FetchText_<bank>` | the thirteen text banks |
 | `src/twins/flush_match_format_row_to_vram.asm` | `FlushMatchFormatRowToVram`, `FlushLinkMatchFormatRowAttrs` | $3b, $3e |
-| `src/twins/get_cell_index_from_cursor_ptr.asm` | `Unused_<bank>_GetCellIndexFromCursorPtr` | $16, $3b, $3e |
 | `src/twins/get_menu_cursor_index.asm` | `GetMenuCursorIndex_<bank>` | $16, $1b, $38, $3b, $3e |
-| `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $1b, $38 |
+| `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $16, $1b, $38, $3b, $3e |
 | `src/twins/init_minigame_medallion_match.asm` | the four `InitMinigame_*` tennis-machine setups | $0d |
 | `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneState00Update_6b`, `IntroCutsceneState16Update_6b` | $6b |
 | `src/twins/intro_cutscene_state03_exit.asm` | `IntroCutsceneState03Exit_6b`, `IntroCutsceneState05Exit_6b` | $6b |
@@ -95,8 +94,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/lookup_ball_pos_by_aim_24.asm` | `LookupBallPosByAim_<bank>` | $24, $2c |
 | `src/twins/lookup_ball_pos_by_height.asm` | `LookupBallPosByHeight_<bank>` | $20-$24, $29-$2c |
 | `src/twins/lookup_ball_pos_by_shot_index.asm` | `LookupBallPosByShotIndex_<bank>` | $20-$24, $29-$2b |
-| `src/twins/match_format_slide_out.asm` | `MatchFormatSlideOut`, `CloseLinkMatchFormatPanel` | $3b, $3e |
-| `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` | $0e, $15 |
+| `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `MirrorPlayerSpriteIfLeftHanded_15` | $0e, $15 |
 | `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3e |
 | `src/twins/move_menu_cursor_grid.asm` | `MoveMenuCursorGrid_<bank>` | $38, $3b, $3e |
 | `src/twins/move_menu_cursor_grid_17.asm` | `MoveMenuCursorGrid_<bank>` | $17, $1b |
@@ -126,6 +124,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/set_roommate_singles_no_reply_text.asm` | `SetRoommateSinglesNoReplyText_13`, `SetRoommateSinglesYesReplyText_13` | $13 |
 | `src/twins/shot_ball_path_slice.asm` | `ShotBallPathSlice`, `ShotBallPathPowerSlice` (`twin_in`) | $20, $21 |
 | `src/twins/shot_ball_path_topspin.asm` | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` (`twin_in`) | $22, $23 |
+| `src/twins/slide_match_format_panel.asm` | `SlideMatchFormatPanel`, `SlideLinkMatchFormatPanel` | $3b, $3e |
 | `src/twins/snap_camera_to.asm` | `SnapCameraTo_<bank>` | $08, $0d |
 | `src/twins/start_drill_from_definition.asm` | `StartDrillFromDefinition`, `InitMinigameFromConfig` | $0b, $0d |
 | `src/twins/stroke_practice1_cases2.asm` | `StrokePractice1Cases2`, `StrokePractice3Cases2` | $0b |
@@ -135,7 +134,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/tennis_machine1_hook_minigame_start.asm` | `TennisMachine1/2Hook_MinigameStart` | $0d |
 | `src/twins/tennis_machine3_hook_minigame_start.asm` | `TennisMachine3/4Hook_MinigameStart`, `TennisMachineHighScoreHook_MinigameStart` | $0d |
 | `src/twins/tennis_machine4_hook__point_start.asm` | `TennisMachine4Hook_PointStart`, `TennisMachineHighScoreHook_PointStart` | $0d |
-| `src/twins/varsity_court_npc03_face_up.asm` | `VarsityCourtSinglesNpc03FaceUp_13`, `VarsityCourtDoublesNpc03FaceUp_13` | $13 |
+| `src/twins/varsity_court_npc03_face_up.asm` | `VarsityCourtSinglesNpc03KevinFaceUp_13`, `VarsityCourtDoublesNpc03KevinFaceUp_13` | $13 |
 | `src/twins/wait_script_frames_save_a.asm` | `WaitScriptFramesSaveA_<bank>` (five instructions, under the floor; `script_delay` picks its bank's copy) | $0f, $27 |
 
 ## The families
@@ -194,8 +193,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04Emily_0f`, `IslandOpenRoundSinglesNpc04Emily_0f` |
 | 3 | 21 | $11, $14, $15 | `LoadPlayerPartnerObjDefs_11`, `LoadPlayerPartnerObjDefs_14`, `LoadPlayerPartnerObjDefs_15` |
-| 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseLinkMatchFormatPanel` |
-| 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |
+| 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `MirrorPlayerSpriteIfLeftHanded_15` |
 | 2 | 14 | $0d | `ProjectMedallionMatchWorldPosition`, `ProjectTreasureBoxWorldPosition` |
 | 2 | 19 | $0f, $10 | `ReadSceneTilemapTile_*` |
 | 2 | 13 | $13, $14 | `RestaurantPlazaFromTrainingCourt_13`, `Court2EntryWalkIn` |
@@ -203,6 +201,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 16 | $24, $2c | `SetBallVelocityFromEntry4_*` |
 | 2 | 11 | $20, $21 | `ShotBallPathSlice`, `ShotBallPathPowerSlice` |
 | 2 | 11 | $22, $23 | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` |
+| 2 | 27 | $3b, $3e | `SlideMatchFormatPanel`, `SlideLinkMatchFormatPanel` |
 | 2 | 21 | $08, $0d | `SnapCameraTo_08`, `SnapCameraTo_0d` |
 | 2 | 64 | $0b, $0d | `StartDrillFromDefinition`, `InitMinigameFromConfig` |
 | 2 | 29 | $0b | `StrokePractice1Cases2`, `StrokePractice3Cases2` |

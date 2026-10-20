@@ -325,7 +325,7 @@ AdvanceFirework1Ascent_14:
 IslandSkyToPeachsCastleScene:
 	call DisableLCDSafely ; $6f7b
 	call LoadPlaneFrontObjGfx_14 ; $6f7e
-	call LoadIslandSkyEffectObjGfx_14 ; $6f81
+	call LoadRainbowObjGfx_14 ; $6f81
 	call EnableLCD ; $6f84
 	ld a, $50 ; $6f87
 	ld [wCutscenePlaneX], a ; $6f89
@@ -336,7 +336,7 @@ IslandSkyToPeachsCastleScene:
 	ld [wCutsceneObjLimit], a ; $6f9b
 	ld [wCutsceneObjLimit + 1], a ; $6f9e
 	ld [wCutsceneObjHalt], a ; $6fa1
-	frame_task AnimateIslandSkyEffectSprites_14 ; $6fa4
+	frame_task AnimateRainbowSprites_14 ; $6fa4
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $6fac
 	test_flag FLAG_DOUBLES ; $6fb7
 	jp z, .fadeIn ; $6fba

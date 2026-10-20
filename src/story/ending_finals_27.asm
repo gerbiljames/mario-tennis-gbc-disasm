@@ -22,7 +22,7 @@ End17AwardCeremonyActors_27:
 	map_actor $0000, ActorScript_27_27, 9.5, 27.0, FACE_UP, OBJ_ISLAND_SPECTATOR_A, ANIM_WALK, $00, END17_AWARD_CEREMONY_ISLAND_SPECTATOR_A
 	map_actor $0000, ActorScript_27_27, 8.0, 25.25, FACE_RIGHT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $05, END17_AWARD_CEREMONY_TOURNAMENT_STAFF_3
 	map_actor_end
-End17AwardCeremonyActorsAlt_27:
+End17AwardCeremonyActorsDoubles_27:
 	; $40d8, 178 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 15.0, 22.0, FACE_UP, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1
 	map_actor $0000, ActorScript_27_27, 14.0, 19.0, FACE_UP, OBJ_HEADMASTER, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_HEADMASTER
@@ -53,12 +53,12 @@ End17AwardCeremonyTileTriggers_27:
 	db $ff ; $419e
 End17AwardCeremonyInitScript_27:
 	test_flag FLAG_DOUBLES ; $419f
-	jr z, .animate ; $41a2
-	script_respawn_actors End17AwardCeremonyActorsAlt_27 ; $41a4
+	jr z, .singles ; $41a2
+	script_respawn_actors End17AwardCeremonyActorsDoubles_27 ; $41a4
 	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $41ac
 	farcall BeginCutsceneScriptMode ; $41bb
 	jr .setEnd17CeremonyObjectDefs ; $41be
-.animate:
+.singles:
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_TROPHY, ANIM_TROPHY_SINGLES ; $41c0
 .setEnd17CeremonyObjectDefs:
 	call SetEnd17CeremonyObjectDefs_27 ; $41c7
@@ -279,14 +279,14 @@ End16BeforeFinalsTileTriggers_27:
 End16BeforeFinalsInitScript_27:
 	test_flag FLAG_DOUBLES ; $46fd
 	jr nz, .isDoubles ; $4700
-	script_respawn_actors End16BeforeFinalsActorsAlt_27 ; $4702
+	script_respawn_actors End16BeforeFinalsActorsSingles_27 ; $4702
 	call End16BeforeFinalsCutscene_27 ; $470a
 	ret ; $470d
 .isDoubles:
-	script_respawn_actors End16BeforeFinalsActorsAltB_27 ; $470e
+	script_respawn_actors End16BeforeFinalsActorsDoubles_27 ; $470e
 	call End16BeforeFinalsCutscene_27 ; $4716
 	ret ; $4719
-End16BeforeFinalsActorsAlt_27:
+End16BeforeFinalsActorsSingles_27:
 	; $471a, 206 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 39.0, 17.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_1
 	map_actor $0000, ActorScript_27_27, 19.0, 15.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_2
@@ -303,7 +303,7 @@ End16BeforeFinalsActorsAlt_27:
 	map_actor $0000, ActorScript_27_27, 5.0, 33.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_FRANK
 	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_ELLIS
 	map_actor_end
-End16BeforeFinalsActorsAltB_27:
+End16BeforeFinalsActorsDoubles_27:
 	; $47e8, 192 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 39.0, 17.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_1
 	map_actor $0000, ActorScript_27_27, 19.0, 15.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_2
@@ -319,7 +319,7 @@ End16BeforeFinalsActorsAltB_27:
 	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_ELLIS
 	map_actor $0000, ActorScript_27_29, 36.0, 24.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $05, END16_BEFORE_FINALS_ALTB_EDGAR
 	map_actor_end
-End16BeforeFinalsScriptBody_27:
+End16BeforeFinalsWalkPlayersIn_27:
 	script_move_target ACTOR_PLAYER, 28.0, 25.0 ; $48a8
 	script_wait_move ACTOR_PLAYER ; $48b3
 	test_flag FLAG_DOUBLES ; $48b8
@@ -351,7 +351,7 @@ SetEnd16BeforeFinalsDoublesWalkScripts_27:
 End16BeforeFinalsCutscene_27:
 	script_fade_in 8 ; $490c
 	call WaitFadeEnd ; $4911
-	call End16BeforeFinalsScriptBody_27 ; $4914
+	call End16BeforeFinalsWalkPlayersIn_27 ; $4914
 	farcall BeginCutsceneScriptMode ; $4917
 	script_move_player 17.0, 15.0 ; $491a
 	farcall WaitPlayerMoveDone ; $4924

@@ -323,7 +323,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
 IslandSkyHomeFromIslandOpenScene:
-	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $628b
+	clear_flag FLAG_AT_ISLAND_OPEN ; $628b
 	call DisableLCDSafely ; $628e
 	call LoadPlaneRearObjGfx_14 ; $6291
 	call EnableLCD ; $6294

@@ -1,5 +1,5 @@
-	twin_named varsity_court_npc03_face_up, VarsityCourtSinglesNpc03FaceUp_13 ; $6c13
-VarsityCourtSinglesNpc03_13:
+	twin_named varsity_court_npc03_face_up, VarsityCourtSinglesNpc03KevinFaceUp_13 ; $6c13
+VarsityCourtSinglesNpc03Kevin_13:
 	script_set_text Text_KevinChallengeTravelingTeam ; $6c40
 	script_speak_restore ACTOR_VARSITY_COURT_SINGLES_KEVIN ; $6c46
 	farcall RunDialogueYesNoPrompt ; $6c4b
@@ -91,8 +91,8 @@ VarsityCourtSinglesNpc03_13:
 	script_speak ACTOR_VARSITY_COURT_SINGLES_KEVIN ; $6e17
 	call ReturnVarsityCourtSinglesBobToSpawn_13 ; $6e1c
 	ret ; $6e1f
-	twin_named varsity_court_npc03_face_up, VarsityCourtDoublesNpc03FaceUp_13 ; $6e20
-VarsityCourtDoublesNpc03_13:
+	twin_named varsity_court_npc03_face_up, VarsityCourtDoublesNpc03KevinFaceUp_13 ; $6e20
+VarsityCourtDoublesNpc03Kevin_13:
 	script_null_script ACTOR_PARTNER ; $6e4d
 	script_set_text Text_KevinDoublesChallengeOffer ; $6e52
 	script_speak_restore ACTOR_VARSITY_COURT_DOUBLES_KEVIN ; $6e58
@@ -239,41 +239,41 @@ SinglesTravelingTeamVictoryCutscene:
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_BOB ; $7180
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7185
 	script_wait_idle ACTOR_PLAYER ; $718c
-	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7191
+	script_speak ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $7191
 	script_set_position ACTOR_SINGLES_TRAVELING_TEAM_BALLOON_QUESTION, 12.25, 27.75 ; $7196
 	sound SFX_EMOTE ; $71a1
 	script_wait_frames 40 ; $71a3
 	script_set_position ACTOR_SINGLES_TRAVELING_TEAM_BALLOON_QUESTION, 63.0, 63.0 ; $71aa
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $71b5
-	script_move_player_to_actor ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $71bc
+	script_move_player_to_actor ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $71bc
 	farcall WaitPlayerMoveDone ; $71c3
 	script_wait_frames 40 ; $71c6
 	script_move_player_to_actor ACTOR_PLAYER ; $71cd
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ActorScript_13_21 ; $71d4
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_MARK, ActorScript_13_25 ; $71df
-	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_KATE, ActorScript_13_24 ; $71ea
+	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ActorScript_13_24 ; $71ea
 	script_wait_frames 10 ; $71f5
 	script_set_actor_script ACTOR_SINGLES_TRAVELING_TEAM_KEVIN, ActorScript_13_23 ; $71fc
 	farcall WaitPlayerMoveDone ; $7207
 	script_wait_actor_script ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $720a
-	script_face_toward ACTOR_PLAYER, ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $720f
+	script_face_toward ACTOR_PLAYER, ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $720f
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7217
-	jr z, .variantB ; $721a
+	jr z, .kate ; $721a
 	farcall AdvanceDialogueTextCursor ; $721c
-	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KATE, ANIM_BOUNCE ; $721f
-	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7226
-	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $722b
-	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_KATE, ACTOR_PLAYER ; $7230
-	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KATE, ANIM_NOD ; $7238
+	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ANIM_BOUNCE ; $721f
+	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $7226
+	script_speak ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $722b
+	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ACTOR_PLAYER ; $7230
+	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ANIM_NOD ; $7238
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $723f
 	script_wait_idle ACTOR_PLAYER ; $7246
 	jr .celebrate ; $724b
-.variantB:
-	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KATE, ANIM_BOUNCE ; $724d
-	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7254
-	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7259
-	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_KATE, ACTOR_PLAYER ; $725e
-	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KATE, ANIM_NOD ; $7266
+.kate:
+	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ANIM_BOUNCE ; $724d
+	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $7254
+	script_speak ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $7259
+	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ACTOR_PLAYER ; $725e
+	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ANIM_NOD ; $7266
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $726d
 	script_wait_idle ACTOR_PLAYER ; $7274
 	farcall AdvanceDialogueTextCursor ; $7279
@@ -291,7 +291,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_wait_move ACTOR_SINGLES_TRAVELING_TEAM_EMILY ; $72c1
 	script_wait_frames 20 ; $72c6
 	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_PLAYER ; $72cd
-	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $72d5
+	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $72d5
 	script_wait_frames 20 ; $72dd
 	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_EMILY, ANIM_NOD ; $72e4
 	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_EMILY ; $72eb
@@ -303,15 +303,15 @@ SinglesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KEVIN, ANIM_BOUNCE ; $7313
 	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $731a
 	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KEVIN ; $731f
-	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_KATE, ANIM_BOUNCE ; $7324
-	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $732b
-	script_face_toward ACTOR_PLAYER, ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7330
+	script_set_anim ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ANIM_BOUNCE ; $7324
+	script_wait_idle ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $732b
+	script_face_toward ACTOR_PLAYER, ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $7330
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7338
 	jr z, .speakVictory ; $733b
 	farcall AdvanceDialogueTextCursor ; $733d
 .speakVictory:
-	script_speak ACTOR_SINGLES_TRAVELING_TEAM_KATE ; $7340
-	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_KATE, ACTOR_PLAYER ; $7345
+	script_speak ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE ; $7340
+	script_face_toward ACTOR_SINGLES_TRAVELING_TEAM_ROOMMATE, ACTOR_PLAYER ; $7345
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $734d
 	script_wait_idle ACTOR_PLAYER ; $7354
 	script_wait_frames 10 ; $7359
@@ -345,7 +345,7 @@ SinglesTravelingTeamActors_13:
 	map_actor $0000, ActorScript_13_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_BALLOON_SWEAT
 	map_actor $0000, ActorScript_13_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_13_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_BALLOON_QUESTION
-	map_actor $0000, ActorScript_13_27, 23.0, 29.0, FACE_LEFT, OBJ_KATE, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_KATE
+	map_actor $0000, ActorScript_13_27, 23.0, 29.0, FACE_LEFT, OBJ_KATE, ANIM_WALK, $00, SINGLES_TRAVELING_TEAM_ROOMMATE
 	map_actor_end
 Unused_13_RunDoublesTravelingTeamVictoryIfWon:
 	wram_bank WRAM_ACTORS ; $7440
@@ -390,7 +390,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $7525
 	script_wait_idle ACTOR_PARTNER ; $752c
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $7531
-	jp z, .variantB ; $7534
+	jp z, .katePartner ; $7534
 	script_set_text Text_PartnerDreamComeTrue ; $7537
 	script_speak ACTOR_PARTNER ; $753d
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7542
@@ -444,7 +444,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7663
 	script_wait_idle ACTOR_PLAYER ; $766a
 	jp .celebrate ; $766f
-.variantB:
+.katePartner:
 	script_set_text Text_PartnerIsThisForReal ; $7672
 	script_speak ACTOR_PARTNER ; $7678
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $767d

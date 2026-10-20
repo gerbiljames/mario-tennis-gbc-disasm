@@ -6,7 +6,7 @@ ActorScript_27_26:
 End1MainBldgGroupDepartureCutscene_27:
 	script_set_position ACTOR_END1_MAIN_BLDG_HEADMASTER_1, 63.0, 63.0 ; $760e
 	test_flag FLAG_DOUBLES ; $7619
-	jp z, .checkStoryModeGenderOfMainCharacter ; $761c
+	jp z, .loadPlayerObjDef ; $761c
 	script_null_script ACTOR_PARTNER ; $761f
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $7624
 	ld a, [wStoryPartnerGender] ; $762f
@@ -20,7 +20,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_set_anim ACTOR_END1_MAIN_BLDG_MARK_SWEATS, ANIM_WALK ; $7640
 	script_set_position ACTOR_END1_MAIN_BLDG_MARK, 26.0, 17.0 ; $7647
 	script_face ACTOR_END1_MAIN_BLDG_MARK, FACE_DOWN ; $7652
-.checkStoryModeGenderOfMainCharacter:
+.loadPlayerObjDef:
 	ld a, [wStoryMainGender] ; $7659
 	ld d, OBJ_ALEX_B ; $765c
 	add d ; $765e
@@ -36,7 +36,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	call WaitFadeEnd ; $7688
 	script_delay 60 ; $768b
 	test_flag FLAG_DOUBLES ; $7690
-	jp z, .face ; $7693
+	jp z, .singles ; $7693
 	script_face_pair ACTOR_END1_MAIN_BLDG_MARK_SWEATS, ACTOR_PLAYER ; $7696
 	script_delay 30 ; $769e
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $76a3
@@ -55,7 +55,7 @@ End1MainBldgGroupDepartureCutscene_27:
 	script_face ACTOR_END1_MAIN_BLDG_MARK, FACE_DOWN ; $76f3
 	script_face ACTOR_END1_MAIN_BLDG_HEADMASTER_2, FACE_DOWN ; $76fa
 	jp .step ; $7701
-.face:
+.singles:
 	script_face_pair ACTOR_END1_MAIN_BLDG_EMILY_SWEATS, ACTOR_PLAYER ; $7704
 	script_delay 30 ; $770c
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $7711
@@ -332,7 +332,8 @@ ActorScript_27_33:
 	as_anim ANIM_NOD
 	as_jump .shakeHeadLoop
 	twin_in compute_ranking_progress_index, Unused_27_ComputeRankingProgressIndex, 27 ; $7a49 Unused_27_ComputeRankingProgressIndex
-Unused_27_SetStoryRankTier:
+; This bank's copy of ComputeStoryRankTier_13.
+Unused_27_ComputeStoryRankTier:
 	ld a, $00 ; $7a90
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7a92
 	jr z, .store ; $7a95

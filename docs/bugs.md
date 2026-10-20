@@ -237,8 +237,8 @@ previous screen left. The chunks go to `$9200`, `$9400`, `$9600`, then `$8e00`
 first three missing and the survivor's source label wrong.
 
 Bank `$14` over-reads the same way: `LoadPlaneRearObjGfx_14` copies 96 tiles from
-the 64-tile `PlaneRearObjTiles_14`, and `LoadIslandSkyEffectObjGfx_14` 48 from the
-12-tile `IslandSkyTilesB_14`, putting templates, palettes, code and other tiles into object
+the 64-tile `PlaneRearObjTiles_14`, and `LoadRainbowObjGfx_14` 48 from the
+12-tile `RainbowEndTiles_14`, putting templates, palettes, code and other tiles into object
 tiles `$40`-`$5f` (VRAM bank 1) and `$2c`-`$4f`.
 
 ### Fifteen drill messages point past their text bank

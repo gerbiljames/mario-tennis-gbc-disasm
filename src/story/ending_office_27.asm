@@ -171,7 +171,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_face ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, FACE_LEFT ; $4eb6
 	script_delay 10 ; $4ebd
 	test_flag FLAG_DOUBLES ; $4ec2
-	jp z, .playSfx ; $4ec5
+	jp z, .singles ; $4ec5
 	script_delay 60 ; $4ec8
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $4ecd
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4ed5
@@ -196,7 +196,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_move_target ACTOR_PARTNER, 33.0, 50.0 ; $4f4f
 	script_wait_move ACTOR_PARTNER ; $4f5a
 	jp .storeStoryModeExitLocationRequest ; $4f5f
-.playSfx:
+.singles:
 	sound SFX_APPEAR2 ; $4f62
 	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, 33.5, 51.5 ; $4f64
 	script_delay 80 ; $4f6f
@@ -227,7 +227,7 @@ End12PrincipalsOfficeInitScript_27:
 	farcall BeginCutsceneScriptMode ; $4ff8
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
 	test_flag FLAG_DOUBLES ; $5002
-	jp z, .placeActors ; $5005
+	jp z, .altSingles ; $5005
 	script_null_script ACTOR_PARTNER ; $5008
 	script_set_position ACTOR_PLAYER, 31.0, 52.0 ; $500d
 	script_set_position ACTOR_PARTNER, 33.0, 52.0 ; $5018
@@ -236,7 +236,7 @@ End12PrincipalsOfficeInitScript_27:
 	jr nz, .face ; $502d
 	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, 63.0, 63.0 ; $502f
 	jr .face ; $503a
-.placeActors:
+.altSingles:
 	script_set_position ACTOR_PLAYER, 32.0, 52.0 ; $503c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5047
 	jr nz, .face ; $504a
@@ -248,7 +248,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_fade_in 4 ; $5062
 	call WaitFadeEnd ; $5067
 	test_flag FLAG_DOUBLES ; $506a
-	jp z, .animate ; $506d
+	jp z, .altSinglesExit ; $506d
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5070
 	script_wait_idle ACTOR_PLAYER ; $5077
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_HEADMASTER, ANIM_NOD ; $507c
@@ -270,7 +270,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_04 ; $50ed
 	script_delay 20 ; $50f8
 	jr .closeDoorBehind ; $50fd
-.animate:
+.altSinglesExit:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $50ff
 	script_wait_idle ACTOR_PLAYER ; $5106
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_HEADMASTER, ANIM_NOD ; $510b
@@ -398,11 +398,11 @@ End11TrainingCourtInitScript_27:
 	script_set_actor_mode ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $5352
 	script_player_speed 0.5 ; $5359
 	script_move_player_to_actor ACTOR_END11_TRAINING_COURT_WATER_SPRITE ; $535f
-	ld hl, End11TrainingCourtInitScriptPalette0_27 ; $5366
+	ld hl, End11TrainingCourtDimPalettes_27 ; $5366
 	ld_bg_pals de, 2, 6 ; $5369
 	call LoadPalettesImmediate ; $536c
 	script_delay 30 ; $536f
-	ld hl, End11TrainingCourtInitScriptPalette1_27 ; $5374
+	ld hl, End11TrainingCourtDarkPalettes_27 ; $5374
 	ld_bg_pals de, 2, 6 ; $5377
 	call LoadPalettesImmediate ; $537a
 	ld a, $10 ; $537d

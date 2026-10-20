@@ -1,4 +1,4 @@
-	twin_in get_cell_index_from_cursor_ptr, Unused_3b_GetCellIndexFromCursorPtr, 3b ; $43cb Unused_3b_GetCellIndexFromCursorPtr
+	twin_in get_menu_cursor_index_from_ptr, Unused_3b_GetMenuCursorIndexFromPtr, 3b ; $43cb Unused_3b_GetMenuCursorIndexFromPtr
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3b, 3b ; $43db SetMenuCursorFromIndex_3b
 Unused_3b_StoreCellIndexToCursorPtr:
 	ld d, $00 ; $43ed

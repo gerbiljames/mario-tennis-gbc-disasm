@@ -127,4 +127,4 @@ copies of `ActorScript_FollowWaypoints`, and
 | `ActorScript_12_44` | more scripts (`ActorScript_12_45` onward) |
 | `ActorScript_15_25` | `Unused_15_ComputeRankingProgressIndex` and `ComputeStoryRankTier_15` |
 | `ActorScript_27_05` | `ActorScript_27_06`, then `Unused_27_Palettes` (two palettes nothing loads) and the scene palettes |
-| `ActorScript_27_33` | `Unused_27_ComputeRankingProgressIndex` and `Unused_27_SetStoryRankTier` |
+| `ActorScript_27_33` | `Unused_27_ComputeRankingProgressIndex` and `Unused_27_ComputeStoryRankTier` |

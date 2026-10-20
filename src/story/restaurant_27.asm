@@ -228,7 +228,7 @@ EndRestaurantEntInitScript_27:
 .done:
 	ret ; $6f56
 EndRestaurantEntCutscene_27:
-	script_respawn_actors EndRestaurantEntActorsAlt_27 ; $6f57
+	script_respawn_actors EndRestaurantEntCutsceneActors_27 ; $6f57
 	farcall BeginCutsceneScriptMode ; $6f5f
 	test_flag FLAG_DOUBLES ; $6f62
 	jr z, .placeActors ; $6f65
@@ -290,7 +290,7 @@ EndRestaurantEntCutscene_27:
 	ld [wStoryModeExitTriggerRequest], a ; $7106
 	farcall EndCutsceneScriptMode ; $7109
 	ret ; $710c
-EndRestaurantEntActorsAlt_27:
+EndRestaurantEntCutsceneActors_27:
 	; $710d, 94 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END_RESTAURANT_ENT_ALT_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_27_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END_RESTAURANT_ENT_ALT_BALLOON_QUESTION

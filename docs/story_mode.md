@@ -309,9 +309,9 @@ reached one. The numbered ones are:
   B. Coz in the doubles award ceremony but a walk-sprite student in the
   singles one, where the flow cannot tie the list to the branch;
 * slots past the end of every candidate list: at run time the slot is
-  empty (`DormRoomTile0F_13` and `CenterCourtCreditsScene` position slots
-  `$06` and `$0a`, which their lists never fill, so those lines move
-  nothing), and the `NpcScripts` ids of locations whose lists are empty
+  empty (`DormRoomTravelingTeamMeetingTrigger_13` and
+  `CenterCourtCreditsScene` position slots `$06` and `$0a`, which their
+  lists never fill, so those lines move nothing), and the `NpcScripts` ids of locations whose lists are empty
   (the development map's sixteen, `RestaurantPlazaNpcScripts_13`'s `$03`);
 * lines inside shared twin files;
 * tables of locations the player never controls.

@@ -1,4 +1,4 @@
-	twin_in get_cell_index_from_cursor_ptr, Unused_3e_GetCellIndexFromCursorPtr, 3e ; $43db Unused_3e_GetCellIndexFromCursorPtr
+	twin_in get_menu_cursor_index_from_ptr, Unused_3e_GetMenuCursorIndexFromPtr, 3e ; $43db Unused_3e_GetMenuCursorIndexFromPtr
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3e, 3e ; $43eb SetMenuCursorFromIndex_3e
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_3e_SetMenuCursorFromIndexToPtr, 3e ; $43fd Unused_3e_SetMenuCursorFromIndexToPtr
 Unused_3e_ClearWram3Row64:
@@ -110,7 +110,7 @@ RunLinkMatchFormatMenu:
 	call EnableTimerInterrupt ; $455e
 	call ClearFrameTasks ; $4561
 	ld b, MENUSLIDE_FORWARD ; $4564
-	call CloseLinkMatchFormatPanel ; $4566
+	call SlideLinkMatchFormatPanel ; $4566
 	ld a, MENUSLIDE_FORWARD ; $4569
 	ld [wMenuSlideDirection], a ; $456b
 	ld c, $03 ; $456e
@@ -128,7 +128,7 @@ RunLinkMatchFormatMenu:
 	call ResetSerialState ; $4583
 	call ClearFrameTasks ; $4586
 	ld b, MENUSLIDE_BACK ; $4589
-	call CloseLinkMatchFormatPanel ; $458b
+	call SlideLinkMatchFormatPanel ; $458b
 	ld a, MENUSLIDE_BACK ; $458e
 	ld [wMenuSlideDirection], a ; $4590
 	ld hl, rIE ; $4593
@@ -325,7 +325,7 @@ OpenLinkMatchFormatPanel:
 	jr nz, .slideBackLoop ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
-	twin_named match_format_slide_out, CloseLinkMatchFormatPanel ; $472c
+	twin_named slide_match_format_panel, SlideLinkMatchFormatPanel ; $472c
 HandleLinkMatchFormatToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
 	bit PADB_LEFT, a ; $4760

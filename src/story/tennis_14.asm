@@ -42,17 +42,17 @@ TennisMachineRoomExitTriggers_14:
 	; $4086, 9 bytes (map_scripts:exit)
 	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM, TENNIS_MACHINE_ROOM_TO_TRAINING_CENTER
 	db $ff
-TennisMachineRoomNpc03_14:
+TennisMachineRoomNpc03MachineEngineer_14:
 	ld a, [wMapSceneStage] ; $408f
 	add a ; $4092
-	ld_hl_indexed TennisMachineRoomNpc03TextIds ; $4093
+	ld_hl_indexed TennisMachineRoomNpc03MachineEngineerTextIds ; $4093
 	ld a, [hl+] ; $409a
 	ld h, [hl] ; $409b
 	ld l, a ; $409c
 	farcall InitDialogueTextCursor ; $409d
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ENGINEER_1 ; $40a0
 	ret ; $40a5
-TennisMachineRoomNpc03TextIds:
+TennisMachineRoomNpc03MachineEngineerTextIds:
 	; $40a6, 14 bytes (text_ids)
 	table_width 2
 	dw Text_MachineEngineerLatestTech ; record 0
@@ -63,10 +63,10 @@ TennisMachineRoomNpc03TextIds:
 	dw Text_MachineEngineerRecordImpressive ; record 5
 	dw Text_MachineEngineerExceededHopes ; record 6
 	assert_table_length NUM_MACHINECOURTSTAGES
-TennisMachineRoomNpc04_14:
+TennisMachineRoomNpc04MachineEngineer_14:
 	ld a, [wMapSceneStage] ; $40b4
 	add a ; $40b7
-	ld_hl_indexed TennisMachineRoomNpc04TextIds ; $40b8
+	ld_hl_indexed TennisMachineRoomNpc04MachineEngineerTextIds ; $40b8
 	ld a, [hl+] ; $40bf
 	ld h, [hl] ; $40c0
 	ld l, a ; $40c1
@@ -86,7 +86,7 @@ TennisMachineRoomNpc04_14:
 .speak:
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ENGINEER_2 ; $40e6
 	ret ; $40eb
-TennisMachineRoomNpc04TextIds:
+TennisMachineRoomNpc04MachineEngineerTextIds:
 	; $40ec, 14 bytes (text_ids)
 	table_width 2
 	dw Text_MachineEngineerHundredAllStar ; record 0
@@ -99,9 +99,9 @@ TennisMachineRoomNpc04TextIds:
 	assert_table_length NUM_MACHINECOURTSTAGES
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
-	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ENGINEER_1, FACEMASK_ANY, $0000, TennisMachineRoomNpc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ENGINEER_2, FACEMASK_ANY, $0000, TennisMachineRoomNpc04_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, FACEMASK_ANY, $0000, TennisMachineRoomNpc05_14, $00, $00
+	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ENGINEER_1, FACEMASK_ANY, $0000, TennisMachineRoomNpc03MachineEngineer_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ENGINEER_2, FACEMASK_ANY, $0000, TennisMachineRoomNpc04MachineEngineer_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, FACEMASK_ANY, $0000, TennisMachineRoomNpc05MachineAttendant_14, $00, $00
 	db $ff
 MachineLevel1FailedPrompt:
 	script_set_text Text_MachineLevelFailedRetry ; $4113
@@ -257,7 +257,7 @@ MachineCourtResultScene:
 	jp nz, MachineCourtGameOverExitScene ; $4309
 	ld a, [wPointWinLoseFlag] ; $430c
 	cp WINLOSE_WIN ; $430f
-	jr z, .done ; $4311
+	jr z, .levelCleared ; $4311
 	ld a, [wMapSceneStage] ; $4313
 	jumptable a ; $4316
 	dw MachineLevel1FailedPrompt ; $4318 jumptable
@@ -267,7 +267,7 @@ MachineCourtResultScene:
 	dw MachineExpertResultScene ; $4320 jumptable
 	dw MachineExpertResultScene ; $4322 jumptable
 	dw MachineExpertResultScene ; $4324 jumptable
-.done:
+.levelCleared:
 	ld a, [wMapSceneStage] ; $4326
 	dec a ; $4329
 	jumptable a ; $432a
@@ -330,12 +330,12 @@ ComputeMachineCourtProgress:
 .storeStage:
 	ld [wMapSceneStage], a ; $4429
 	ret ; $442c
-TennisMachineRoomNpc05_14:
+TennisMachineRoomNpc05MachineAttendant_14:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $442d
 	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [wMapSceneStage] ; $4433
 	add a ; $4436
-	ld_hl_indexed TennisMachineRoomNpc05TextIds ; $4437
+	ld_hl_indexed TennisMachineRoomNpc05MachineAttendantTextIds ; $4437
 	ld a, [hl+] ; $443e
 	ld h, [hl] ; $443f
 	ld l, a ; $4440
@@ -373,7 +373,7 @@ TennisMachineRoomNpc05_14:
 	jr nz, MachineCourtStartLevelScene ; $44a7
 .declined:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
-	jr z, .done ; $44ac
+	jr z, .declinedReply ; $44ac
 	script_set_text Text_MachineAttendantPracticeCleared ; $44ae
 	script_speak_restore ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $44b4
 	farcall RunDialogueYesNoPrompt ; $44b9
@@ -381,10 +381,10 @@ TennisMachineRoomNpc05_14:
 	script_wait_frames 5 ; $44bf
 	and a ; $44c6
 	jp z, MachineCourtStartLevelScene.startPracticeSession ; $44c7
-.done:
+.declinedReply:
 	ld a, [wMapSceneStage] ; $44ca
 	add a ; $44cd
-	ld_hl_indexed TennisMachineRoomNpc05TextIds ; $44ce
+	ld_hl_indexed TennisMachineRoomNpc05MachineAttendantTextIds ; $44ce
 	ld a, [hl+] ; $44d5
 	ld h, [hl] ; $44d6
 	ld l, a ; $44d7

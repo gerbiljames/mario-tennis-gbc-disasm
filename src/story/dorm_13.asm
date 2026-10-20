@@ -15,13 +15,13 @@ QueueTourPointerSprite_13:
 	call QueueSpriteTemplate ; $4d06
 	ret ; $4d09
 AnimateTourPointerSprite_13:
-	ld a, [wMapSceneStage] ; $4d0a
+	ld a, [wTourPointerX] ; $4d0a
 	ld d, a ; $4d0d
 	ldh a, [hVBlankCounter] ; $4d0e
 	srl a ; $4d10
 	and $07 ; $4d12
 	ld e, a ; $4d14
-	ld a, [wMapSceneStage2] ; $4d15
+	ld a, [wTourPointerY] ; $4d15
 	add $08 ; $4d18
 	sub e ; $4d1a
 	ld e, a ; $4d1b
@@ -73,7 +73,7 @@ DormRoomExitTriggers_13:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, ENTRY_DORM_ENTRANCE_FROM_DORM_ROOM, DORM_ROOM_TO_DORM_ENTRANCE
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, ENTRY_MAIN_MENU_FROM_STORY, DORM_ROOM_END_OF_DAY
 	db $ff
-DormRoomNpc04_13:
+DormRoomNpc04Cat_13:
 	call AdvanceRandomSeed ; $4ea4
 	ld a, l ; $4ea7
 	and $07 ; $4ea8
@@ -87,8 +87,8 @@ DormRoomNpc04_13:
 	ret ; $4eb9
 DormRoomNpcScripts_13:
 	; $4eba, 17 bytes (map_scripts)
-	map_script ACTOR_DORM_ROOM_ROOMMATE, FACEMASK_ANY, $0000, DormRoomNpc03_13, $00, $00
-	map_script ACTOR_DORM_ROOM_CAT, FACEMASK_ANY, $0000, DormRoomNpc04_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_DORM_ROOM_ROOMMATE, FACEMASK_ANY, $0000, DormRoomNpc03Roommate_13, $00, $00
+	map_script ACTOR_DORM_ROOM_CAT, FACEMASK_ANY, $0000, DormRoomNpc04Cat_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)
@@ -97,9 +97,9 @@ DormRoomFacingScripts_13:
 	twin_named development_facing01, DormRoomFacing01_13 ; $4ed4
 DormRoomTileTriggers_13:
 	; $4eeb, 9 bytes (map_scripts)
-	map_script $0f, FACEMASK_DOWN, $0000, DormRoomTile0F_13, $00, $00
+	map_script $0f, FACEMASK_DOWN, $0000, DormRoomTravelingTeamMeetingTrigger_13, $00, $00
 	db $ff
-DormRoomTile0F_13:
+DormRoomTravelingTeamMeetingTrigger_13:
 	script_null_script ACTOR_DORM_ROOM_ROOMMATE ; $4ef4
 	ld a, $03 ; $4ef9
 	script_set_text Text_RoommateOhNoForgotToTell ; $4efb
@@ -321,7 +321,7 @@ PlaceDormRoomArrivalActors_13:
 	ret ; $51d2
 .entry01:
 	test_flag FLAG_DOUBLES ; $51d3
-	jr z, .placeKateSingles ; $51d6
+	jr z, .placeRoommateSingles ; $51d6
 	script_set_position ACTOR_DORM_ROOM_ROOMMATE, 11.0, 10.0 ; $51d8
 	script_face ACTOR_DORM_ROOM_ROOMMATE, FACE_DOWN ; $51e3
 	script_null_script ACTOR_PARTNER ; $51ea
@@ -333,16 +333,16 @@ PlaceDormRoomArrivalActors_13:
 	add hl, bc ; $5204
 	set ACTORFLAGB_TALKABLE, [hl] ; $5205
 	ret ; $5207
-.placeKateSingles:
+.placeRoommateSingles:
 	script_set_position ACTOR_DORM_ROOM_ROOMMATE, 11.0, 10.0 ; $5208
 	script_face ACTOR_DORM_ROOM_ROOMMATE, FACE_DOWN ; $5213
 	ret ; $521a
 .noEntryPoint:
 	test_flag FLAG_DOUBLES ; $521b
-	jr z, .placeKateSingles ; $521e
+	jr z, .placeRoommateSingles ; $521e
 	script_null_script ACTOR_PARTNER ; $5220
 	script_set_position ACTOR_PARTNER, 1.0, 1.0 ; $5225
-	call PlaceRoommateAtPlayerTarget_13 ; $5230
+	call PlaceRoommateAtPlayerPosition_13 ; $5230
 	script_follow ACTOR_DORM_ROOM_ROOMMATE, ACTOR_PLAYER ; $5233
 	script_get_actor_state ACTOR_DORM_ROOM_ROOMMATE ; $5240
 	ld c, l ; $5245
@@ -386,7 +386,7 @@ PlaceDormRoomArrivalActors_13.isDoubles:
 	call WaitFadeEnd ; $52a1
 	script_move_target ACTOR_DORM_ROOM_ROOMMATE, 11.0, 10.0 ; $52a4
 	ret ; $52af
-DormRoomNpc03_13:
+DormRoomNpc03Roommate_13:
 	script_face_toward ACTOR_PLAYER, ACTOR_DORM_ROOM_ROOMMATE ; $52b0
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52b8
 	jr z, .kate ; $52bb
@@ -480,11 +480,11 @@ DormRoomTourEndScene:
 	farcall ScriptCloseDialogueWindow ; $540e
 	script_wait_frames 5 ; $5411
 	and a ; $5418
-	jr nz, .variantB ; $5419
+	jr nz, .notReady ; $5419
 	script_speak ACTOR_DORM_ROOM_ROOMMATE ; $541b
 	farcall AdvanceDialogueTextCursor ; $5420
 	jr .roommateWalks ; $5423
-.variantB:
+.notReady:
 	farcall AdvanceDialogueTextCursor ; $5425
 	script_speak ACTOR_DORM_ROOM_ROOMMATE ; $5428
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $542d
@@ -507,11 +507,11 @@ DormRoomTourEndScene:
 	farcall ScriptCloseDialogueWindow ; $5493
 	script_wait_frames 5 ; $5496
 	and a ; $549d
-	jr nz, .variantBAlt ; $549e
+	jr nz, .forgotTour ; $549e
 	script_speak ACTOR_DORM_ROOM_ROOMMATE ; $54a0
 	farcall AdvanceDialogueTextCursor ; $54a5
 	jr .continueScene ; $54a8
-.variantBAlt:
+.forgotTour:
 	farcall AdvanceDialogueTextCursor ; $54aa
 	script_speak ACTOR_DORM_ROOM_ROOMMATE ; $54ad
 .continueScene:
@@ -626,7 +626,7 @@ DormRoomReturnFromEntranceScene:
 	farcall ScriptCloseDialogueWindow ; $5631
 	script_wait_frames 5 ; $5634
 	and a ; $563b
-	jr nz, .finalText ; $563c
+	jr nz, .notDoneForDay ; $563c
 	ld hl, wRoommateTextIdBase ; $563e
 	ld a, [hl+] ; $5641
 	ld h, [hl] ; $5642
@@ -652,7 +652,7 @@ DormRoomReturnFromEntranceScene:
 	farcall SaveStoryReturnPoint ; $5688
 	farcall SaveStorySlotWithTimer ; $568b
 	ret ; $568e
-.finalText:
+.notDoneForDay:
 	ld hl, wRoommateTextIdBase ; $568f
 	ld a, [hl+] ; $5692
 	ld h, [hl] ; $5693

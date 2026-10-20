@@ -20,7 +20,7 @@
 	call QueueDrillResultMessage
 	ld hl, wDrillCounters + DRILLCTR_OFF_TARGET
 	inc [hl]
-	jp .storeMatchAbortFlag
+	jp .missedTarget
 .ignoreRallyTick:
 	xor a
 	ret
@@ -29,7 +29,7 @@
 	ld [wMatchAbortFlag], a
 	ld a, WINLOSE_WIN
 	ret
-.storeMatchAbortFlag:
+.missedTarget:
 	ld a, MATCHABORT_POINT
 	ld [wMatchAbortFlag], a
 	ld a, WINLOSE_LOSE

@@ -174,7 +174,7 @@ ChallengerResultTied:
 .declined:
 	farcall AdvanceDialogueTextCursor ; $5f48
 	script_speak [wChallengerActor] ; $5f4b
-	call WalkChallengerOntoCourt ; $5f51
+	call WalkChallengerBackToPost ; $5f51
 	farcall EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
 ChallengerResultRivalWon:
@@ -214,10 +214,10 @@ ChallengerResultRivalWon:
 	farcall InitDialogueTextCursor ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5fab
 	script_speak [wChallengerActor] ; $5fae
-	call WalkChallengerOntoCourt ; $5fb4
+	call WalkChallengerBackToPost ; $5fb4
 	farcall EndCutsceneScriptMode ; $5fb7
 	ret ; $5fba
-	call WalkChallengerOntoCourt ; $5fbb
+	call WalkChallengerBackToPost ; $5fbb
 	farcall EndCutsceneScriptMode ; $5fbe
 	ret ; $5fc1
 ChallengerResultRivalLost:
@@ -311,7 +311,7 @@ WalkChallengerAwayDefeated:
 	script_wait_move [wChallengerActor] ; $616f
 	set_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $6175
 	ret ; $6178
-WalkChallengerOntoCourt:
+WalkChallengerBackToPost:
 	ld a, [wCurrentMatchIndex] ; $6179
 	sub $0a ; $617c
 	jr nc, .strokeCourt ; $617e
