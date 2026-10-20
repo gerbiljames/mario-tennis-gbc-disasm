@@ -178,7 +178,7 @@ LoadCourtSelectGraphics:
 .loop:
 	ld a, c ; $5d28
 	add a ; $5d29
-	ld hl, CourtSelectGraphicsTable ; $5d2a
+	ld hl, CourtIconTilePtrs ; $5d2a
 	add_hl_a ; $5d2d
 	ld a, [hl+] ; $5d32
 	ld h, [hl] ; $5d33
@@ -187,14 +187,14 @@ LoadCourtSelectGraphics:
 	push bc ; $5d36
 	push de ; $5d37
 	push hl ; $5d38
-	call GetCourtThumbnailPtr ; $5d39
+	call GetCourtIconPtr ; $5d39
 	ld de, wDecompBuffer ; $5d3c
 	call DecompressDataFromBank ; $5d3f
 	pop hl ; $5d42
 	pop de ; $5d43
 	pop bc ; $5d44
 	pop af ; $5d45
-	ld hl, CourtSelectTable ; $5d46
+	ld hl, CourtIconTileVramDests ; $5d46
 	ld a, c ; $5d49
 	add a ; $5d4a
 	add_hl_a ; $5d4b
@@ -218,40 +218,40 @@ LoadCourtSelectGraphics:
 	ld a, c ; $5d67
 	cp $09 ; $5d68
 	jr nz, .loop ; $5d6a
-	ld b, TILEBLOCK_CourtSelectGfx1 ; $5d6c
-	ld c, 18 ; $5d6e -- 18 of CourtSelectGfx1's 16 tiles
+	ld b, TILEBLOCK_HardCourtNameGfx ; $5d6c
+	ld c, 18 ; $5d6e -- 18 of HardCourtNameGfx's 16 tiles
 	ld de, vTiles0 + VRAM_BANK1 ; $5d70
 	farcall LoadCompressedTileBlock ; $5d73
-	ld b, TILEBLOCK_CourtSelectGfx2 ; $5d76
-	ld c, 18 ; $5d78 -- 18 of CourtSelectGfx2's 16 tiles
+	ld b, TILEBLOCK_ClayCourtNameGfx ; $5d76
+	ld c, 18 ; $5d78 -- 18 of ClayCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5d7a
 	farcall LoadCompressedTileBlock ; $5d7d
-	ld b, TILEBLOCK_CourtSelectGfx3 ; $5d80
-	ld c, 18 ; $5d82 -- 18 of CourtSelectGfx3's 16 tiles
+	ld b, TILEBLOCK_GrassCourtNameGfx ; $5d80
+	ld c, 18 ; $5d82 -- 18 of GrassCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5d84
 	farcall LoadCompressedTileBlock ; $5d87
-	ld b, TILEBLOCK_CourtSelectGfx4 ; $5d8a
-	ld c, 20 ; $5d8c -- 20 of CourtSelectGfx4's 18 tiles
+	ld b, TILEBLOCK_CompositionCourtNameGfx ; $5d8a
+	ld c, 20 ; $5d8c -- 20 of CompositionCourtNameGfx's 18 tiles
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5d8e
 	farcall LoadCompressedTileBlock ; $5d91
-	ld b, TILEBLOCK_CourtSelectGfx5Alias16 ; $5d94
-	ld c, 18 ; $5d96 -- 18 of CourtSelectGfx5's 16 tiles
+	ld b, TILEBLOCK_StarCourtNameGfxAlias16 ; $5d94
+	ld c, 18 ; $5d96 -- 18 of StarCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5d98
 	farcall LoadCompressedTileBlock ; $5d9b
-	ld b, TILEBLOCK_CourtSelectGfx6 ; $5d9e
-	ld c, 18 ; $5da0 -- 18 of CourtSelectGfx6's 16 tiles
+	ld b, TILEBLOCK_CastleCourtNameGfx ; $5d9e
+	ld c, 18 ; $5da0 -- 18 of CastleCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $52 + VRAM_BANK1 ; $5da2
 	farcall LoadCompressedTileBlock ; $5da5
-	ld b, TILEBLOCK_CourtSelectGfx7 ; $5da8
-	ld c, 18 ; $5daa -- 18 of CourtSelectGfx7's 16 tiles
+	ld b, TILEBLOCK_TropicsCourtNameGfx ; $5da8
+	ld c, 18 ; $5daa -- 18 of TropicsCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $62 + VRAM_BANK1 ; $5dac
 	farcall LoadCompressedTileBlock ; $5daf
-	ld b, TILEBLOCK_CourtSelectGfx8 ; $5db2
-	ld c, 18 ; $5db4 -- 18 of CourtSelectGfx8's 16 tiles
+	ld b, TILEBLOCK_JungleCourtNameGfx ; $5db2
+	ld c, 18 ; $5db4 -- 18 of JungleCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $20 ; $5db6
 	farcall LoadCompressedTileBlock ; $5db9
-	ld b, TILEBLOCK_CourtSelectGfx9 ; $5dbc
-	ld c, 18 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
+	ld b, TILEBLOCK_WarehouseCourtNameGfx ; $5dbc
+	ld c, 18 ; $5dbe -- 18 of WarehouseCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $30 ; $5dc0
 	farcall LoadCompressedTileBlock ; $5dc3
 	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $5dc6
@@ -262,8 +262,8 @@ LoadCourtSelectGraphics:
 	ld c, SharedMenuGfx27_SIZE / 16 ; $5dd2
 	ld de, vTiles0 tile $72 + VRAM_BANK1 ; $5dd4
 	farcall LoadCompressedTileBlock ; $5dd7
-	ld b, TILEBLOCK_CourtSelectGfx0 ; $5dda
-	ld c, CourtSelectGfx0_SIZE / 16 ; $5ddc
+	ld b, TILEBLOCK_SelectACourtHeadingGfx ; $5dda
+	ld c, SelectACourtHeadingGfx_SIZE / 16 ; $5ddc
 	ld de, vTiles0 ; $5dde
 	farcall LoadCompressedTileBlock ; $5de1
 	ld b, $08 ; $5de4
@@ -271,19 +271,19 @@ LoadCourtSelectGraphics:
 	farcall LoadIndexedPalette ; $5de8
 	pop_wram_bank ; $5deb
 	ret ; $5df0
-CourtSelectGraphicsTable:
+CourtIconTilePtrs:
 	; $5df1, 20 bytes (10 records x 1 slot words)
-	dslot DataPtr_HardCourtLabelTiles ; record 0
-	dslot DataPtr_ClayCourtLabelTiles ; record 1
-	dslot DataPtr_GrassCourtLabelTiles ; record 2
-	dslot DataPtr_CompositionCourtLabelTiles ; record 3
-	dslot DataPtr_CourtNameLabelTiles0 ; record 4
-	dslot DataPtr_CourtNameLabelTiles1 ; record 5
-	dslot DataPtr_CourtNameLabelTiles2 ; record 6
-	dslot DataPtr_CourtNameLabelTiles3 ; record 7
-	dslot DataPtr_CourtNameLabelTiles4 ; record 8
-	dslot DataPtr_CourtNameLabelTiles5 ; record 9
-CourtSelectTable:
+	dslot DataPtr_HardCourtIconTiles ; record 0
+	dslot DataPtr_ClayCourtIconTiles ; record 1
+	dslot DataPtr_GrassCourtIconTiles ; record 2
+	dslot DataPtr_CompositionCourtIconTiles ; record 3
+	dslot DataPtr_StarCourtIconTiles ; record 4
+	dslot DataPtr_CastleCourtIconTiles ; record 5
+	dslot DataPtr_TropicsCourtIconTiles ; record 6
+	dslot DataPtr_JungleCourtIconTiles ; record 7
+	dslot DataPtr_WarehouseCourtIconTiles ; record 8
+	dslot DataPtr_LockedCourtIconTiles ; record 9
+CourtIconTileVramDests:
 	; $5e05, 18 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -294,7 +294,7 @@ CourtSelectTable:
 	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
 	dw vTiles1 tile $70 + VRAM_BANK1 ; record 7
 	dw vTiles2 tile $70 + VRAM_BANK1 ; record 8
-GetCourtThumbnailPtr:
+GetCourtIconPtr:
 	push af ; $5e17
 	push bc ; $5e18
 	push de ; $5e19
@@ -304,7 +304,7 @@ GetCourtThumbnailPtr:
 	or a ; $5e1f
 	pop hl ; $5e20
 	jr nz, .restore ; $5e21
-	ld hl, $3f14 ; $5e23
+	ld_slot hl, DataPtr_LockedCourtIconTiles ; $5e23
 .restore:
 	pop de ; $5e26
 	pop bc ; $5e27

@@ -28,8 +28,8 @@ DataPtr_MainMenuTitleGfxAlias4:
 	dw MainMenuTitleGfx ; $401a
 DataPtr_PlayMenuTitleGfx:
 	dw PlayMenuTitleGfx ; $401c
-DataPtr_CourtSelectGfx0:
-	dw CourtSelectGfx0 ; $401e
+DataPtr_SelectACourtHeadingGfx:
+	dw SelectACourtHeadingGfx ; $401e
 DataPtr_SavedDataTitleGfx:
 	dw SavedDataTitleGfx ; $4020
 DataPtr_StatusTitleGfx:
@@ -130,8 +130,8 @@ MainMenuTitleGfx:
 	INCBIN "data/gfx/lz_MainMenuTitleGfx.bin" ; $4830, 179 bytes
 PlayMenuTitleGfx:
 	INCBIN "data/gfx/lz_PlayMenuTitleGfx.bin" ; $48e3, 187 bytes
-CourtSelectGfx0:
-	INCBIN "data/gfx/lz_CourtSelectGfx0.bin" ; $499e, 183 bytes
+SelectACourtHeadingGfx:
+	INCBIN "data/gfx/lz_SelectACourtHeadingGfx.bin" ; $499e, 183 bytes
 SavedDataTitleGfx:
 	INCBIN "data/gfx/lz_SavedDataTitleGfx.bin" ; $4a55, 167 bytes
 StatusTitleGfx:
