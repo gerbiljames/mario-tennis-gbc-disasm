@@ -100,7 +100,7 @@ same scope as the base (`$dd1e` is `wBallHistory + 30`, `$ffd1`
 
 Each banked `SECTION` in `ram/*.asm` opens with a one-line-per-region
 summary, since a bank is 4 KiB of overlapping claims (bank `$03` alone has
-120 symbols across 32 variants):
+122 symbols across 33 variants):
 
 ```
 ; WRAMX bank 2 at a glance (ram/wram/):

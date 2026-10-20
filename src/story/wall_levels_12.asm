@@ -431,7 +431,7 @@ WallPracticeRoomInitScript_12:
 	ld a, EXITTRIGGER_DIRECT ; $5050
 	ld [wUnusedExitTriggerIdMirror], a ; $5052
 	ld [wStoryModeExitTriggerRequest], a ; $5055
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
+	ld a, [wCurrentMatchIndex] ; $5058
 	farcall RunTrainingDrillByID ; $505b
 .done:
 	ret ; $505e

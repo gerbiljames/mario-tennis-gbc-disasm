@@ -113,7 +113,7 @@ def DRILLWORDING_STROKE  equ DRILLMSG_NICE_STROKE_MY_POINT - DRILLMSG_NICE_STROK
 	const DRILLDEF_COURT    ; $01 -> wCurrentlyUsedCourt
 	const DRILLDEF_CHARS    ; $02 -> wOnCourtCharCount
 	const DRILLDEF_MODE     ; $03 -> wGameMode
-	const DRILLDEF_MATCH    ; $04 -> wCurrentMinigameStoryMatch + 1, under MATCHLIST_TRAINING
+	const DRILLDEF_MATCH    ; $04 -> wCurrentMatchIndex, under MATCHLIST_TRAINING
 	const DRILLDEF_BGM      ; $05 -> wMatchBGM
 def DRILLDEF_PLAYER       equ $07 ; the player's character, for InitMatchRecordFromCharId
 def DRILLDEF_HOOKS        equ $08 ; word: SetModeHookTable
@@ -243,7 +243,7 @@ def LESSON_PASSED equ $00
 	const GAMEMODE_DREAM_MATCH    ; $0a story Dream Match against the Mario cast
 def NUM_GAMEMODES equ const_value
 
-; --- Match-list category (wCurrentMinigameStoryMatch high byte) ---
+; --- Match-list category (wCurrentMatchList) ---
 ; The 16-bit selector is (category, index). 0/1: the index is a row of
 ; SinglesMatchSettingsTable_0a / DoublesMatchSettingsTable_0a; 2: the index is
 ; a MINIGAME_* id (written by every drill and minigame setup path).
@@ -252,7 +252,7 @@ def NUM_GAMEMODES equ const_value
 	const MATCHLIST_DOUBLES  ; $01
 	const MATCHLIST_TRAINING ; $02
 
-; --- Story match ids (wCurrentMinigameStoryMatch low byte under
+; --- Story match ids (wCurrentMatchIndex under
 ; MATCHLIST_SINGLES / MATCHLIST_DOUBLES): the row of the match settings table.
 ; The ranked matches count down to #1. $0f, $14 and $15 are table rows no
 ; documented match uses (two grass practice matches and an empty row).
@@ -282,7 +282,7 @@ def NUM_GAMEMODES equ const_value
 	const STORYMATCH_DREAM_INTENSE ; $17
 	const STORYMATCH_DREAM_HARD    ; $18
 
-; --- Training/minigame ids (wCurrentMinigameStoryMatch low byte, $c8f7) ---
+; --- Training/minigame ids (wCurrentMatchIndex, $c8f7) ---
 ; The argument of RunTrainingDrillByID, the single entry point for
 ; MATCHLIST_TRAINING: below $12 it indexes DrillDefinitionPtrs, otherwise
 ; StartMinigameByID indexes MinigameConfigTable with id - $12 ($24 is

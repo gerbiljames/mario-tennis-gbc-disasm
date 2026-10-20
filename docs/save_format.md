@@ -74,8 +74,8 @@ Two button codes call it (`eventtest` targets `menu-cheat` and
   the buffer with `CheatCodeEntryTable` (`$39:$6fc6`): 29 presses and three
   empty entries. `wCheatUnlockTriggered` stops it matching twice.
 * **Trophies screen** (Saved Data → a story slot → the third item):
-  `RunTrophiesScreen` zeroes two bytes at WRAM3 `$d900`, counts Right
-  presses in the first and Left in the second, and on A with Select held
+  `RunTrophiesScreen` zeroes `wTrophiesCheatRightPresses` and
+  `wTrophiesCheatLeftPresses` (WRAM3 `$d900`), counts the presses, and on A with Select held
   `CheckTrophiesCheatCode` unlocks when they are `$0c` and `$22` -- Right 12
   times, Left 34 times, then Select+A.
 
@@ -179,6 +179,11 @@ award the six unlockables in the N64 block.
 |---|---|
 | +0/+1 | `N64REC_PRESENT`: data-present indicator (`CheckN64DataPresent` tests `[+0] or [+1]`, `ApplyN64RecordsUnlockFlags` the 8-bit sum `[+0]+[+1]`) |
 | +2..+7 | `N64REC_UNLOCK_MARIO`-`_PEACH`: per-character unlock/toggle flags for characters `$1a-$1f`, flipped by `Unused_1b_ToggleSelectedUnlockFlag` (1b:68a4), whose only caller is the unreachable minigame-flags debug screen `Unused_1b_RunMinigameFlagsDebugScreen`; set by `UpdateUnlockablesSaveBlock` when the record of the minigame that character hosts beats its default |
+| +8 | `N64REC_TROPHIES`: one trophy byte per N64 roster character (`NUM_N64_CHARS` = 16), decoded by `BuildN64TnmtTrophyGrid` |
+| +24 | `N64REC_RING_CLEARS`: 16 × `N64_RING_CLEARS_SIZE` (4) ring-shot clear bytes, each a run of set bits (`DecodeRingShotCharClears`) |
+| +88 | `N64REC_RING_SCORES`: 16 × `N64_RING_SCORES_SIZE` (8) ring-shot scores, four big-endian words (`CopyRingShotCharScores`) |
+| +216 | `N64REC_EXHIB_ROWS`: 16 × `N64_EXHIB_ROW_SIZE` (8) exhibition result rows (`DecodeN64ExhibResultsRow`) |
+| +344 | `N64REC_STAR_UNLOCKS`: bits 0/1 keep roster entries 14/15 on the trophy, ring-shot and exhibition screens |
 
 When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets
 `SAVEFLAG_N64_RECORDS_PRESENT` and `SAVEFLAG_UNLOCKED_FAY`/`_CURT`/`_MARK`/

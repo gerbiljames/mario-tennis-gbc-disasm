@@ -158,7 +158,7 @@ LevelUpPlayerRecord:
 	ld a, d ; $49cb
 	or a ; $49cc
 	jr nz, .notSpin ; $49cd
-	ld hl, CHARREC_TRAIN_LEVELS ; $49cf
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $49cf
 	add hl, bc ; $49d2
 	inc [hl] ; $49d3
 	jr .recomputeCharacterStats ; $49d4

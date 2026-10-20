@@ -35,19 +35,19 @@ ShowIslandOpenRankingBoard:
 	farcall ShowRankingBoard ; $6fbb
 	ret ; $6fbe
 SetupRankingBoardArgs:
-	ld a, [wCurrentMinigameStoryMatch] ; $6fbf
+	ld a, [wCurrentMatchList] ; $6fbf
 	and $01 ; $6fc2
 	ld b, a ; $6fc4
 	or a ; $6fc5
 	jr nz, .oddMatch ; $6fc6
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fc8
+	ld a, [wCurrentMatchIndex] ; $6fc8
 	sub STORYMATCH_ISLAND_OPEN_FINAL ; $6fcb
 	add $04 ; $6fcd
 	and $07 ; $6fcf
 	ld c, a ; $6fd1
 	jr .checkMatchWinLoseFlag ; $6fd2
 .oddMatch:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fd4
+	ld a, [wCurrentMatchIndex] ; $6fd4
 	sub STORYMATCH_ISLAND_OPEN_FINAL ; $6fd7
 	add $03 ; $6fd9
 	and $03 ; $6fdb

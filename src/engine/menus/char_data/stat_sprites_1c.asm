@@ -15,7 +15,7 @@ CharDataScreen_PageColumnsPtrs:
 DrawStatValueSprites:
 	wram_bank WRAM_SCENE ; $4e54
 	ld b, $0e ; $4e5a
-	ld a, [wCharDataLevels] ; $4e5c
+	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $4e5c
 	ld l, a ; $4e5f
 	ld a, [wCharDataLevelPreview] ; $4e60
 	or a ; $4e63
@@ -65,7 +65,7 @@ DrawStatValueSprites:
 	call QueueSprite ; $4eb0
 .powerLevel:
 	ld b, $0e ; $4eb3
-	ld a, [wCharDataLevels + 1] ; $4eb5
+	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $4eb5
 	ld l, a ; $4eb8
 	ld a, [wCharDataLevelPreview] ; $4eb9
 	or a ; $4ebc
@@ -114,7 +114,7 @@ DrawStatValueSprites:
 	call QueueSprite ; $4f0d
 .controlLevel:
 	ld b, $0e ; $4f10
-	ld a, [wCharDataLevels + 2] ; $4f12
+	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $4f12
 	ld l, a ; $4f15
 	ld a, [wCharDataLevelPreview] ; $4f16
 	or a ; $4f19
@@ -163,7 +163,7 @@ DrawStatValueSprites:
 	call QueueSprite ; $4f6a
 .speedLevel:
 	ld b, $0e ; $4f6d
-	ld a, [wCharDataLevels + 3] ; $4f6f
+	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $4f6f
 	ld l, a ; $4f72
 	ld a, [wCharDataLevelPreview] ; $4f73
 	or a ; $4f76

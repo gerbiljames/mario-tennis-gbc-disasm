@@ -104,6 +104,25 @@ def FACE_UP      equ $c0
 	const ACTOR_PLAYER_SHADOW ; $01 player's paired follower actor (AttachActorWaypointFollower)
 	const ACTOR_PARTNER       ; $02 companion/doubles partner (SpawnCompanionActor)
 
+; --- map_entry / map_script record fields (include/macros/story_maps.inc) ---
+; The bank $0a engine copies the matched record to wStoryMapRecord.
+	rsreset
+def MAPENTRY_ID     rb ; $00
+def MAPENTRY_FACING rb ; $01 FACE_*
+def MAPENTRY_X      rw ; $02
+def MAPENTRY_Y      rw ; $04
+def MAPENTRY_SCRIPT rw ; $06 arrival_script
+def MAPENTRY_SIZE   equ _RS
+	rsreset
+def MAPSCRIPT_ID          rb ; $00 an NpcScripts record's is the actor slot
+def MAPSCRIPT_FACING_MASK rb ; $01 FACEMASK_*
+def MAPSCRIPT_FLAG_COND   rw ; $02
+def MAPSCRIPT_HANDLER     rw ; $04 text id or code address
+def MAPSCRIPT_ARG0        rb ; $06 NpcScripts: NPC_* flags; ExitTriggers: STORYLOC_*
+def MAPSCRIPT_ARG1        rb ; $07 ExitTriggers: the destination's entry id
+def MAPSCRIPT_SIZE        equ _RS
+	ASSERT MAPSCRIPT_SIZE == MAPENTRY_SIZE
+
 ; --- Story-script facing mask (map_script `facing_mask`) ---
 ; The direction an actor must face for FindStoryScriptEntry to run the record.
 ; PADF-layout bits (matched against the facing->PADF table lookup);

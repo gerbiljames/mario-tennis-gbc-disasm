@@ -389,7 +389,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $44bf
 	wram_bank WRAM_SCENE ; $44c2
 	push af ; $44c8
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $44c9
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $44c9
 	pop af ; $44dc
 	ld a, [hl] ; $44dd
 	ld h, $00 ; $44de
@@ -401,7 +401,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $44ec
 	wram_bank WRAM_SCENE ; $44ef
 	push af ; $44f5
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $44f6
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $44f6
 	pop af ; $4509
 	ld a, [hl] ; $450a
 	ld h, $00 ; $450b
@@ -413,7 +413,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4519
 	wram_bank WRAM_SCENE ; $451c
 	push af ; $4522
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4523
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4523
 	pop af ; $4536
 	ld a, [hl] ; $4537
 	ld h, $00 ; $4538
@@ -425,7 +425,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4546
 	wram_bank WRAM_SCENE ; $4549
 	push af ; $454f
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4550
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4550
 	pop af ; $4563
 	ld a, [hl] ; $4564
 	ld h, $00 ; $4565
@@ -512,7 +512,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4654
 	wram_bank WRAM_SCENE ; $4657
 	push af ; $465d
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $465e
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $465e
 	pop af ; $4671
 	ld a, [hl] ; $4672
 	ld h, $00 ; $4673
@@ -524,7 +524,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $4681
 	wram_bank WRAM_SCENE ; $4684
 	push af ; $468a
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $468b
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $468b
 	pop af ; $469e
 	ld a, [hl] ; $469f
 	ld h, $00 ; $46a0
@@ -536,7 +536,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $46ae
 	wram_bank WRAM_SCENE ; $46b1
 	push af ; $46b7
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $46b8
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $46b8
 	pop af ; $46cb
 	ld a, [hl] ; $46cc
 	ld h, $00 ; $46cd
@@ -548,7 +548,7 @@ BuildCharDataSummaryFields:
 	farcall CharDataScreen_WriteStatNumber ; $46db
 	wram_bank WRAM_SCENE ; $46de
 	push af ; $46e4
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $46e5
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $46e5
 	pop af ; $46f8
 	ld a, [hl] ; $46f9
 	ld h, $00 ; $46fa

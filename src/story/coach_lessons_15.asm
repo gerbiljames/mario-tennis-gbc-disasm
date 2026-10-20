@@ -70,7 +70,7 @@ NetCoachVolleyLessonScene:
 	script_set_text Text_BethServeVolleyBasics ; $703a
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7040
 	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $7045
-	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
+	ld [wCurrentMatchIndex], a ; $7047
 	ld a, STORYLOC_TRAINING_COURT ; $704a
 	ld [wStoryModeCurrentLocation], a ; $704c
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $704f
@@ -120,7 +120,7 @@ NetCoachSmashLessonScene:
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $70f0
 	script_speak ACTOR_TRAINING_COURT_BETH ; $70f5
 	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $70fa
-	ld [wCurrentMinigameStoryMatch + 1], a ; $70fc
+	ld [wCurrentMatchIndex], a ; $70fc
 	ld a, STORYLOC_TRAINING_COURT ; $70ff
 	ld [wStoryModeCurrentLocation], a ; $7101
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $7104
@@ -164,7 +164,7 @@ NetCoachDropShotLessonScene:
 	script_wait_idle ACTOR_TRAINING_COURT_BETH ; $7191
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7196
 	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $719b
-	ld [wCurrentMinigameStoryMatch + 1], a ; $719d
+	ld [wCurrentMatchIndex], a ; $719d
 	ld a, STORYLOC_TRAINING_COURT ; $71a0
 	ld [wStoryModeCurrentLocation], a ; $71a2
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $71a5

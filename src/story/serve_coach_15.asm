@@ -1,8 +1,8 @@
 MovePlayerToLessonCourtSpot:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $6253
+	ld a, [wCurrentMatchIndex] ; $6253
 	sub $0a ; $6256
 	jr nc, .netCourtSpot ; $6258
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $625a
+	ld a, [wCurrentMatchIndex] ; $625a
 	sub $04 ; $625d
 	jr c, .serveCourtSpot ; $625f
 	jp .strokeCourtSpot ; $6261
@@ -410,7 +410,7 @@ ServeCoachJuniorLessonScene:
 	script_wait_frames 20 ; $674f
 	script_speak ACTOR_TRAINING_COURT_CURT ; $6756
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $675b
-	ld [wCurrentMinigameStoryMatch + 1], a ; $675d
+	ld [wCurrentMatchIndex], a ; $675d
 	ld a, STORYLOC_TRAINING_COURT ; $6760
 	ld [wStoryModeCurrentLocation], a ; $6762
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6765
@@ -445,7 +445,7 @@ ServeCoachSeniorLessonScene:
 	script_wait_frames 20 ; $67cd
 	script_speak ACTOR_TRAINING_COURT_CURT ; $67d4
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $67d9
-	ld [wCurrentMinigameStoryMatch + 1], a ; $67db
+	ld [wCurrentMatchIndex], a ; $67db
 	ld a, STORYLOC_TRAINING_COURT ; $67de
 	ld [wStoryModeCurrentLocation], a ; $67e0
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $67e3
@@ -480,7 +480,7 @@ ServeCoachVarsityLessonScene:
 	script_wait_frames 20 ; $684b
 	script_speak ACTOR_TRAINING_COURT_CURT ; $6852
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $6857
-	ld [wCurrentMinigameStoryMatch + 1], a ; $6859
+	ld [wCurrentMatchIndex], a ; $6859
 	ld a, STORYLOC_TRAINING_COURT ; $685c
 	ld [wStoryModeCurrentLocation], a ; $685e
 	ld a, ENTRY_TRAINING_COURT_PENDING_LESSON ; $6861

@@ -356,7 +356,7 @@ GetFirstClearRewardExp:
 	ld de, $0000 ; $66d5
 	ret nz ; $66d8
 	push hl ; $66d9
-	ld a, [wCurrentMinigameStoryMatch] ; $66da
+	ld a, [wCurrentMatchList] ; $66da
 	ld hl, FirstClearExpTablePtrs_1e ; $66dd
 	add a ; $66e0
 	add_hl_a ; $66e1

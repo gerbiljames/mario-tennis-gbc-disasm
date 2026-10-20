@@ -228,7 +228,7 @@ NEXTU
 wMapScratch:: ds 14
 ENDU
 
-; [8 bytes] Staging copy of one map-table record, far-copied from wStoryLocationBank after FindStoryScriptEntry finds it. A map_entry gives facing at +1, X and Y at +2 and +4, arrival_script at +6; a map_script gives the flag condition at +2, the handler at +4 and two argument bytes at +6/+7 (RunLocationExit reads them as destination location and entry point)
+; [8 bytes] Staging copy of one map-table record, far-copied from wStoryLocationBank after FindStoryScriptEntry finds it. Read through the MAPENTRY_* or MAPSCRIPT_* fields (RunLocationExit reads the two map_script args as destination location and entry point)
 wStoryMapRecord:: ds 8
 	export_size wStoryMapRecord
 	ds 8

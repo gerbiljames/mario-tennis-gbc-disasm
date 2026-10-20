@@ -49,7 +49,7 @@ RunTrainingDrillByID:
 	ld [wAiServeSkipToss], a ; $474f
 	ld a, [wMatchRetryRequest] ; $4752
 	or a ; $4755
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4756
+	ld a, [wCurrentMatchIndex] ; $4756
 	jp nz, RunTrainingDrillByID ; $4759
 	ld a, [wMatchExitRequest] ; $475c
 	or a ; $475f

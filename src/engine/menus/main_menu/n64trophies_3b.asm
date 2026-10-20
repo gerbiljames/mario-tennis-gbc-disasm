@@ -88,10 +88,10 @@ DrawTrophiesCharSprite:
 	ret ; $4b18
 CheckTrophiesCheatCode:
 	sound BGM_SENIOR_RANKING ; $4b19
-	ld a, [wN64RecordsBlock] ; $4b1b
+	ld a, [wTrophiesCheatRightPresses] ; $4b1b
 	cp $0c ; $4b1e
 	jp nz, .saveStorySlot ; $4b20
-	ld a, [wN64RecordsBlock + 1] ; $4b23
+	ld a, [wTrophiesCheatLeftPresses] ; $4b23
 	cp $22 ; $4b26
 	jp nz, .saveStorySlot ; $4b28
 	call ApplyUnlockEverythingCheat ; $4b2b
@@ -400,7 +400,7 @@ LoadN64TnmtDataRecords:
 	ld bc, wN64TnmtLayout_SIZE ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
-	ld hl, wN64RecordsBlock + 344 ; $4e1d
+	ld hl, wN64RecordsBlock + N64REC_STAR_UNLOCKS ; $4e1d
 	ld a, [hl] ; $4e20
 	ld b, a ; $4e21
 	and $01 ; $4e22
@@ -427,7 +427,7 @@ N64TnmtData:
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 BuildN64TnmtTrophyGrid:
 	ld de, wN64TnmtTrophyCells ; $4e54
-	ld hl, wN64RecordsBlock + 8 ; $4e57
+	ld hl, wN64RecordsBlock + N64REC_TROPHIES ; $4e57
 	ld c, $00 ; $4e5a
 .loop:
 	ld b, c ; $4e5c
@@ -451,7 +451,7 @@ GetN64CharTrophyRowPtr:
 	ld hl, N64CharTrophyRowPtrTable ; $4e75
 	add_hl_a ; $4e78
 	ld a, [hl] ; $4e7d
-	ld hl, wN64RecordsBlock + 8 ; $4e7e
+	ld hl, wN64RecordsBlock + N64REC_TROPHIES ; $4e7e
 	add_hl_a ; $4e81
 	ret ; $4e86
 N64CharTrophyRowPtrTable:

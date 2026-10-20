@@ -429,20 +429,20 @@ ENDM
 
 ; Story match launcher: store the 16-bit big-endian match id into
 ; wCurrentMinigameStoryMatch, then farcall LoadMatchSettingsFromTable. The
-; high byte is the category (0 singles, 1 doubles, 2 minigame/practice), the
-; low byte the match.
+; high byte (wCurrentMatchList) is the category (0 singles, 1 doubles,
+; 2 minigame/practice), the low byte (wCurrentMatchIndex) the match.
 ; Usage: load_match_settings MATCHLIST_*, STORYMATCH_* (or one 16-bit id)
 MACRO load_match_settings
 IF _NARG == 2
 	ld a, \1
-	ld [wCurrentMinigameStoryMatch], a
+	ld [wCurrentMatchList], a
 	ld a, \2
 ELSE
 	ld a, HIGH(\1)
-	ld [wCurrentMinigameStoryMatch], a
+	ld [wCurrentMatchList], a
 	ld a, LOW(\1)
 ENDC
-	ld [wCurrentMinigameStoryMatch + 1], a
+	ld [wCurrentMatchIndex], a
 	farcall LoadMatchSettingsFromTable
 ENDM
 

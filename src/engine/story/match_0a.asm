@@ -7,7 +7,7 @@ InitStoryMatchSettings:
 	add $02 ; $493e
 	ld [wOnCourtCharCount], a ; $4940
 	ld a, MATCHLIST_SINGLES ; $4943
-	ld [wCurrentMinigameStoryMatch], a ; $4945
+	ld [wCurrentMatchList], a ; $4945
 	ld a, CHAR_MARK ; $4948
 	ld [wMatchOpponentChar], a ; $494a
 	ld a, COURT_GRASS ; $494d
@@ -199,7 +199,7 @@ Unused_0a_SetMatchNumberOfGames:
 	ret ; $4a5b
 LoadMatchSettingsFromTable:
 	ld de, SinglesMatchSettingsTable_0a ; $4a5c
-	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
+	ld a, [wCurrentMatchList] ; $4a5f
 	cp MATCHLIST_DOUBLES ; $4a62
 	ld a, $00 ; $4a64
 	jr nz, .haveTable ; $4a66
@@ -207,7 +207,7 @@ LoadMatchSettingsFromTable:
 	ld de, DoublesMatchSettingsTable_0a ; $4a69
 .haveTable:
 	call SetMatchDoublesMode ; $4a6c
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a6f
+	ld a, [wCurrentMatchIndex] ; $4a6f
 	ld l, a ; $4a72
 	ld h, $00 ; $4a73
 	add hl, hl ; $4a75

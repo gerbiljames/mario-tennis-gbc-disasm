@@ -30,7 +30,7 @@ JuniorClassCourtDoublesEntry0dScene:
 	ld [wStoryModeShowLocationName], a ; $5d9c
 	script_null_script ACTOR_PARTNER ; $5d9f
 	script_player_speed 2.0 ; $5da4
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5daa
+	ld a, [wCurrentMatchIndex] ; $5daa
 	sub STORYMATCH_JUNIOR_3 ; $5dad
 	jumptable a ; $5daf
 	dw JuniorClassCourtDoublesEntry0dScene.wonRank3 ; $5db1 jumptable

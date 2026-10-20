@@ -394,7 +394,7 @@ MatchSelectRunMatch:
 	ld [wStoryModeExitTriggerRequest], a ; $5600
 	ret ; $5603
 .chooseReturn:
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
+	ld a, [wCurrentMatchIndex] ; $5604
 	cp STORYMATCH_ISLAND_OPEN_FINAL + 1 ; $5607
 	jr c, .tournament ; $5609
 	ld a, STORYLOC_SPECIAL_COURT ; $560b

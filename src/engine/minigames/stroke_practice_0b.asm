@@ -633,9 +633,9 @@ RunDoublesDrillMatch:
 	ld a, GAMEMODE_MARIO_MINIGAME ; $725c
 	ld [wGameMode], a ; $725e
 	ld a, MATCHLIST_TRAINING ; $7261
-	ld [wCurrentMinigameStoryMatch], a ; $7263
+	ld [wCurrentMatchList], a ; $7263
 	ld a, MINIGAME_TWO_ON_ONE ; $7266
-	ld [wCurrentMinigameStoryMatch + 1], a ; $7268
+	ld [wCurrentMatchIndex], a ; $7268
 	ld a, BGM_TWO_ON_ONE ; $726b
 	ld [wMatchBGM], a ; $726d
 	ld a, $01 ; $7270

@@ -15,7 +15,7 @@ user's `baserom.gbc` per `data.manifest`.
 |---|---|
 | source-spelled bytes (`tools/stats.py`) | 915,910, 43.7% of the 2 MiB ROM; 976,782 `INCBIN`, 200,809 free |
 | instruction and code-macro lines | 124,810 |
-| labels | 29,662: ROM 14,446 global + 13,402 local, RAM 1,814; none state only an address |
+| labels | 29,666: ROM 14,446 global + 13,402 local, RAM 1,818; none state only an address |
 | extracted data regions | 4,275 (3,248 `INCBIN`, 1,027 generated `INCLUDE`s), 863 of them LZ streams |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
 

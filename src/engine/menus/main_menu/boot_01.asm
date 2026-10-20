@@ -152,9 +152,9 @@ Unused_01_DebugBootMenu:
 	ld c, $02 ; $4152
 	farcall ShowTournamentBracket ; $4154
 	ld a, MATCHLIST_DOUBLES ; $4157
-	ld [wCurrentMinigameStoryMatch], a ; $4159
+	ld [wCurrentMatchList], a ; $4159
 	ld a, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $415c
-	ld [wCurrentMinigameStoryMatch + 1], a ; $415e
+	ld [wCurrentMatchIndex], a ; $415e
 	ld a, WINLOSE_WIN ; $4161
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
@@ -173,12 +173,12 @@ Unused_01_DebugBootMenu:
 	ld de, FLAG_DOUBLES ; $4187
 	call SetGameFlagByNumber ; $418a
 	ld a, STORYMATCH_JUNIOR_PRACTICE ; $418d
-	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
+	ld [wCurrentMatchIndex], a ; $418f
 .winLoseLoop:
 	farcall RunMatchWinLoseScreen ; $4192
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
+	ld a, [wCurrentMatchIndex] ; $4195
 	inc a ; $4198
-	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
+	ld [wCurrentMatchIndex], a ; $4199
 	jr .winLoseLoop ; $419c
 Unused_01_ScreenTestSequence:
 	farcall ShowEquipmentStatusScreen ; $419e

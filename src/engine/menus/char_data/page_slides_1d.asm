@@ -3,13 +3,13 @@ BuildPartnerStatPage:
 	ld [wStoryCharacterSlot], a ; $4b52
 	call BuildCharStatDisplay ; $4b55
 	wram_bank WRAM_SCENE ; $4b58
-	ld a, [wCharDataLevels] ; $4b5e
+	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $4b5e
 	ld [wCharStatPagePartner], a ; $4b61
-	ld a, [wCharDataLevels + 1] ; $4b64
+	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $4b64
 	ld [wCharStatPagePartner + 1], a ; $4b67
-	ld a, [wCharDataLevels + 2] ; $4b6a
+	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $4b6a
 	ld [wCharStatPagePartner + 2], a ; $4b6d
-	ld a, [wCharDataLevels + 3] ; $4b70
+	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $4b70
 	ld [wCharStatPagePartner + 3], a ; $4b73
 	ld hl, PartnerStatPageTilemapPatch01 ; $4b76
 	ld bc, wCharDataPagePlane + 8 * TILEMAP_WIDTH ; $4b79
@@ -184,13 +184,13 @@ RunDrillResultInputLoop:
 	frame_task DrawCharStatDigitsTask ; $4cef
 	wram_bank WRAM_SCENE ; $4cf7
 	ld a, [wCharStatPagePartner] ; $4cfd
-	ld [wCharDataLevels], a ; $4d00
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4d00
 	ld a, [wCharStatPagePartner + 1] ; $4d03
-	ld [wCharDataLevels + 1], a ; $4d06
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4d06
 	ld a, [wCharStatPagePartner + 2] ; $4d09
-	ld [wCharDataLevels + 2], a ; $4d0c
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4d0c
 	ld a, [wCharStatPagePartner + 3] ; $4d0f
-	ld [wCharDataLevels + 3], a ; $4d12
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4d12
 	ld hl, wCharStatPagePartner + 4 ; $4d15
 	ld de, wCharStatPageShown ; $4d18
 	ld bc, wCharStatPageShown_SIZE ; $4d1b
@@ -211,13 +211,13 @@ RunDrillResultInputLoop:
 	frame_task DrawCharStatDigitsTask ; $4d50
 	wram_bank WRAM_SCENE ; $4d58
 	ld a, [wCharStatPageMain] ; $4d5e
-	ld [wCharDataLevels], a ; $4d61
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4d61
 	ld a, [wCharStatPageMain + 1] ; $4d64
-	ld [wCharDataLevels + 1], a ; $4d67
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4d67
 	ld a, [wCharStatPageMain + 2] ; $4d6a
-	ld [wCharDataLevels + 2], a ; $4d6d
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4d6d
 	ld a, [wCharStatPageMain + 3] ; $4d70
-	ld [wCharDataLevels + 3], a ; $4d73
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4d73
 	ld hl, wCharStatPageMain + 4 ; $4d76
 	ld de, wCharStatPageShown ; $4d79
 	ld bc, wCharStatPageShown_SIZE ; $4d7c
@@ -321,10 +321,10 @@ SlideCharDataArrowsInTask:
 BuildCharStatDisplay:
 	wram_bank WRAM_SCENE ; $4e8d
 	push af ; $4e93
-	ld_story_char_field CHARREC_TRAIN_LEVELS ; $4e94
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $4e94
 	pop af ; $4ea7
 	ld a, [hl] ; $4ea8
-	ld [wCharDataLevels], a ; $4ea9
+	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $4ea9
 	push af ; $4eac
 	ld_story_char_field CHARREC_STAT_TOP ; $4ead
 	pop af ; $4ec0
@@ -338,10 +338,10 @@ BuildCharStatDisplay:
 	inc a ; $4edc
 	ld [wCharDataStats + 1], a ; $4edd
 	push af ; $4ee0
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 1 ; $4ee1
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4ee1
 	pop af ; $4ef4
 	ld a, [hl] ; $4ef5
-	ld [wCharDataLevels + 1], a ; $4ef6
+	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $4ef6
 	push af ; $4ef9
 	ld_story_char_field CHARREC_STAT_SERVE ; $4efa
 	pop af ; $4f0d
@@ -361,10 +361,10 @@ BuildCharStatDisplay:
 	inc a ; $4f43
 	ld [wCharDataStats + 4], a ; $4f44
 	push af ; $4f47
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 2 ; $4f48
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4f48
 	pop af ; $4f5b
 	ld a, [hl] ; $4f5c
-	ld [wCharDataLevels + 2], a ; $4f5d
+	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $4f5d
 	push af ; $4f60
 	ld_story_char_field CHARREC_STAT_ANGLE ; $4f61
 	pop af ; $4f74
@@ -378,10 +378,10 @@ BuildCharStatDisplay:
 	inc a ; $4f90
 	ld [wCharDataStats + 6], a ; $4f91
 	push af ; $4f94
-	ld_story_char_field CHARREC_TRAIN_LEVELS + 3 ; $4f95
+	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4f95
 	pop af ; $4fa8
 	ld a, [hl] ; $4fa9
-	ld [wCharDataLevels + 3], a ; $4faa
+	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $4faa
 	push af ; $4fad
 	ld_story_char_field CHARREC_STAT_SPEED ; $4fae
 	pop af ; $4fc1

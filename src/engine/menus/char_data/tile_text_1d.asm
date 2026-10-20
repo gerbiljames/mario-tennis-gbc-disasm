@@ -442,13 +442,13 @@ BuildMainCharStatPage:
 	ld [wStoryCharacterSlot], a ; $4aec
 	call BuildCharStatDisplay ; $4aef
 	wram_bank WRAM_SCENE ; $4af2
-	ld a, [wCharDataLevels] ; $4af8
+	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $4af8
 	ld [wCharStatPageMain], a ; $4afb
-	ld a, [wCharDataLevels + 1] ; $4afe
+	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $4afe
 	ld [wCharStatPageMain + 1], a ; $4b01
-	ld a, [wCharDataLevels + 2] ; $4b04
+	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $4b04
 	ld [wCharStatPageMain + 2], a ; $4b07
-	ld a, [wCharDataLevels + 3] ; $4b0a
+	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $4b0a
 	ld [wCharStatPageMain + 3], a ; $4b0d
 	ld hl, MainCharStatPageTilemapPatch00 ; $4b10
 	ld bc, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 16 ; $4b13

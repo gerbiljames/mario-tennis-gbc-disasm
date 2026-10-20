@@ -164,7 +164,7 @@ RunMatchWinLoseScreen:
 	frame_task AdvanceResultScreenTimer ; $44f1
 .loop:
 	call AdvanceFrame ; $44f9
-	ld a, [wCurrentMinigameStoryMatch + 1] ; $44fc
+	ld a, [wCurrentMatchIndex] ; $44fc
 	push de ; $44ff
 	push af ; $4500
 	ld a, a ; $4501

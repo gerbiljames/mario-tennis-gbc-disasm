@@ -128,7 +128,7 @@ RecomputeCharacterStats:
 	push de ; $44fc
 	push bc ; $44fd
 	push de ; $44fe
-	ld hl, CHARREC_TRAIN_LEVELS ; $44ff
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $44ff
 	add hl, bc ; $4502
 	ld a, $05 ; $4503
 	call ScaleStatForBarLevel ; $4505
@@ -144,7 +144,7 @@ RecomputeCharacterStats:
 	push de ; $4517
 	push bc ; $4518
 	push de ; $4519
-	ld hl, CHARREC_TRAIN_LEVELS ; $451a
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $451a
 	add hl, bc ; $451d
 	ld a, $05 ; $451e
 	call ScaleStatForBarLevel ; $4520
@@ -160,7 +160,7 @@ RecomputeCharacterStats:
 	push de ; $4532
 	push bc ; $4533
 	push de ; $4534
-	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $4535
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4535
 	add hl, bc ; $4538
 	ld a, $05 ; $4539
 	call ScaleStatForBarLevel ; $453b
@@ -176,7 +176,7 @@ RecomputeCharacterStats:
 	push de ; $454d
 	push bc ; $454e
 	push de ; $454f
-	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $4550
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4550
 	add hl, bc ; $4553
 	ld a, $05 ; $4554
 	call ScaleStatForBarLevel ; $4556
@@ -192,7 +192,7 @@ RecomputeCharacterStats:
 	push de ; $4568
 	push bc ; $4569
 	push de ; $456a
-	ld hl, CHARREC_TRAIN_LEVELS + 1 ; $456b
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $456b
 	add hl, bc ; $456e
 	ld a, $05 ; $456f
 	call ScaleStatForBarLevel ; $4571
@@ -208,7 +208,7 @@ RecomputeCharacterStats:
 	push de ; $4583
 	push bc ; $4584
 	push de ; $4585
-	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $4586
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4586
 	add hl, bc ; $4589
 	ld a, $05 ; $458a
 	call ScaleStatForBarLevel ; $458c
@@ -224,7 +224,7 @@ RecomputeCharacterStats:
 	push de ; $459e
 	push bc ; $459f
 	push de ; $45a0
-	ld hl, CHARREC_TRAIN_LEVELS + 2 ; $45a1
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $45a1
 	add hl, bc ; $45a4
 	ld a, $05 ; $45a5
 	call ScaleStatForBarLevel ; $45a7
@@ -240,7 +240,7 @@ RecomputeCharacterStats:
 	push de ; $45b9
 	push bc ; $45ba
 	push de ; $45bb
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $45bc
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $45bc
 	add hl, bc ; $45bf
 	ld a, $05 ; $45c0
 	call ScaleStatForBarLevel ; $45c2
@@ -256,7 +256,7 @@ RecomputeCharacterStats:
 	push de ; $45d4
 	push bc ; $45d5
 	push de ; $45d6
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $45d7
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $45d7
 	add hl, bc ; $45da
 	ld a, $05 ; $45db
 	call ScaleStatForBarLevel ; $45dd
@@ -272,7 +272,7 @@ RecomputeCharacterStats:
 	push de ; $45ef
 	push bc ; $45f0
 	push de ; $45f1
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $45f2
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $45f2
 	add hl, bc ; $45f5
 	ld a, $05 ; $45f6
 	call ScaleStatForBarLevel ; $45f8
@@ -288,7 +288,7 @@ RecomputeCharacterStats:
 	push de ; $460a
 	push bc ; $460b
 	push de ; $460c
-	ld hl, CHARREC_TRAIN_LEVELS + 3 ; $460d
+	ld hl, CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $460d
 	add hl, bc ; $4610
 	ld a, $05 ; $4611
 	call ScaleStatForBarLevel ; $4613
