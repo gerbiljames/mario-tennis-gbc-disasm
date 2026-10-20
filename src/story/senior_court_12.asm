@@ -18,7 +18,7 @@ SeniorCourtActors_12:
 	map_actor $0000, ActorScript_12_58, 11.0, 19.0, FACE_DOWN, OBJ_CURT, ANIM_WALK, $03, SENIOR_COURT_CURT
 	map_actor $0000, ActorScript_12_56, 21.0, 23.0, FACE_UP, OBJ_BOB, ANIM_WALK, $06, SENIOR_COURT_BOB
 	map_actor $0000, ActorScript_12_55, 19.0, 11.0, FACE_DOWN, OBJ_PAM, ANIM_WALK, $03, SENIOR_COURT_PAM
-	map_actor $05e0, ActorScript_12_52, 9.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_KATE
+	map_actor FLAG_DOUBLES, ActorScript_12_52, 9.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_KATE
 	map_actor $0000, ActorScript_12_53, 34.0, 19.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_12_54, 37.0, 29.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $04, SENIOR_COURT_RACKET_STUDENT_2
 	map_actor_end
@@ -33,7 +33,7 @@ SeniorCourtActorsA_12:
 	map_actor $0000, ActorScript_12_51, 3.0, 23.0, FACE_RIGHT, OBJ_CURT, ANIM_WALK, $03, SENIOR_COURT_A_CURT
 	map_actor $0000, ActorScript_12_57, 18.0, 13.0, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $06, SENIOR_COURT_A_BOB
 	map_actor $0000, ActorScript_12_44, 21.0, 13.0, FACE_DOWN, OBJ_PAM, ANIM_SWING_LOOP, $03, SENIOR_COURT_A_PAM
-	map_actor $05e0, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_A_KATE
+	map_actor FLAG_DOUBLES, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_A_KATE
 	map_actor $0000, ActorScript_12_53, 34.0, 17.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $05, SENIOR_COURT_A_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_12_54, 38.0, 29.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_A_RACKET_STUDENT_2
 	map_actor $0000, ActorScript_12_55, 50.0, 17.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_A_RACKET_STUDENT_3
@@ -51,7 +51,7 @@ SeniorCourtActorsB_12:
 	map_actor $0000, ActorScript_12_51, 35.0, 28.0, FACE_DOWN, OBJ_CURT, ANIM_WALK, $03, SENIOR_COURT_B_CURT
 	map_actor $0000, ActorScript_12_51, 9.0, 7.0, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $06, SENIOR_COURT_B_BOB
 	map_actor $0000, ActorScript_12_51, 11.0, 7.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $03, SENIOR_COURT_B_PAM
-	map_actor $05e0, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_B_KATE
+	map_actor FLAG_DOUBLES, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_B_KATE
 	map_actor $0000, ActorScript_12_53, 18.0, 11.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $05, SENIOR_COURT_B_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_12_54, 22.0, 22.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_B_RACKET_STUDENT_2
 	map_actor $0000, ActorScript_12_55, 50.0, 17.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_B_RACKET_STUDENT_3
@@ -106,12 +106,12 @@ EmilyPostChampionTextIds:
 SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
-	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
+	jr c, SeniorCourtNpc03FaceUp_12.checkDoubles ; $55ed
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
 	jr nc, SpeakEmilyPostChampionLine ; $55f1
 	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
-SeniorCourtNpc03FaceUpFlag0000_12:
+SeniorCourtNpc03FaceUp_12:
 	ld a, [wMapSceneStage2] ; $55f7
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
@@ -121,7 +121,7 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 	ret ; $5605
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $5606
-	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.checkFlag ; $5609
+	jp nz, SeniorCourtNpc03FaceUpBeforeDoublesRank1_12.checkFlag ; $5609
 	script_set_text Text_EmilyUsedToAcademyLife ; $560c
 	script_speak_restore ACTOR_SENIOR_COURT_EMILY ; $5612
 	farcall RunDialogueYesNoPrompt ; $5617
@@ -137,7 +137,7 @@ SeniorCourtNpc03FaceRight_12:
 	test_flag FLAG_DOUBLES ; $5630
 	jr z, SeniorCourtNpc03_12 ; $5633
 	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5635
-	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.setText ; $5638
+	jp nz, SeniorCourtNpc03FaceUpBeforeDoublesRank1_12.setText ; $5638
 	script_set_speed ACTOR_PLAYER, 0.5 ; $563b
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5643
 	script_null_script ACTOR_PARTNER ; $564b
@@ -150,10 +150,10 @@ SeniorCourtNpc03FaceRight_12:
 	script_wait_move ACTOR_PARTNER ; $5686
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $568b
 	script_wait_move ACTOR_PLAYER ; $5693
-	jp SeniorCourtNpc03FaceUpFlag0840_12.face ; $5698
-SeniorCourtNpc03FaceUpFlag0840_12:
+	jp SeniorCourtNpc03FaceUpBeforeDoublesRank1_12.face ; $5698
+SeniorCourtNpc03FaceUpBeforeDoublesRank1_12:
 	test_flag FLAG_DOUBLES ; $569b
-	jp z, SeniorCourtNpc03FaceUpFlag0000_12 ; $569e
+	jp z, SeniorCourtNpc03FaceUp_12 ; $569e
 	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $56a1
 	jp nz, .setText ; $56a4
 	script_set_speed ACTOR_PARTNER, 0.5 ; $56a7
@@ -664,15 +664,15 @@ SeniorCourtNpc0C_12Table:
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0840, SeniorCourtNpc03FaceUpFlag0840_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0000, SeniorCourtNpc03FaceUpFlag0000_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, FLAG_WON_JUNIOR_DOUBLES_RANK_1, SeniorCourtNpc03FaceRight_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, FLAG_WON_JUNIOR_DOUBLES_RANK_1, SeniorCourtNpc03FaceUpBeforeDoublesRank1_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0000, SeniorCourtNpc03FaceUp_12, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_ANY, $0000, SeniorCourtNpc03_12, NPC_FACE_PLAYER, $00
 	map_script ACTOR_ROLE_SENIOR_COURT_FAY, FACEMASK_ANY, $0000, SeniorCourtNpc04_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
 	map_script ACTOR_SENIOR_COURT_ALLIE, FACEMASK_ANY, $0000, SeniorCourtNpc05_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, $08a0, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, FLAG_WON_SENIOR_DOUBLES_RANK_2, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, $0000, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $08a0, SeniorCourtNpc07_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, FLAG_WON_SENIOR_DOUBLES_RANK_2, SeniorCourtNpc07_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $0000, SeniorCourtNpc07_12, NPC_FACE_PLAYER, $00
 	map_script ACTOR_SENIOR_COURT_BETH, FACEMASK_ANY, $0000, SeniorCourtNpc08_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM, $00
 	map_script ACTOR_ROLE_SENIOR_COURT_CURT, FACEMASK_ANY, $0000, SeniorCourtNpc09_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
@@ -684,7 +684,7 @@ SeniorCourtFacingScripts_12:
 	ds 1, $ff ; $5cc6, fill
 SeniorCourtTileTriggers_12:
 	; $5cc7, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0f80, SeniorCourtTile01_12, $00, $00
+	map_script $01, FACEMASK_ANY, FLAG_SENIOR_COURT_TILE01_TRIGGERED, SeniorCourtTile01_12, $00, $00
 	db $ff
 SeniorCourtTile01_12:
 	set_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5cd0

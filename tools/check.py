@@ -95,7 +95,8 @@ after a real defect broke it:
             a FLAG_FIELDS record field (also via `ld a, FIELD / add l /
             ld l, a`) use anything but its family, and no Text_* id is the X of
             `ld hl, X / add hl, rr / ld e, l / ld d, h` (five scoreboard
-            caption cells were)
+            caption cells were), and no map_script / map_actor flag
+            condition is a nonzero number (flag_cond FLAG_X / ~FLAG_X)
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
             ACTORF_* / OBJSLOT_* field adds no raw offset under $100 to a
             record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c|e /
@@ -1805,7 +1806,28 @@ def check_raw_ids(fail):
             fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
-    return n + _raw_pad_bits(fail) + _raw_flag_bits(fail) + _text_cell_offsets(fail)
+    return (n + _raw_pad_bits(fail) + _raw_flag_bits(fail) + _text_cell_offsets(fail)
+            + _raw_flag_conds(fail))
+
+
+_FLAG_COND_ARG = {"map_actor": 0, "map_script": 2}
+
+
+def _raw_flag_conds(fail):
+    """A map_script / map_actor flag condition is 0 or a FLAG_ name."""
+    n = 0
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        for i, line in enumerate(lines):
+            word, _, rest = line.split(";")[0].strip().partition(" ")
+            if word not in _FLAG_COND_ARG:
+                continue
+            n += 1
+            op = rest.split(",")[_FLAG_COND_ARG[word]].strip()
+            if _NUMBER_RE.fullmatch(op) and _number(op):
+                where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                fail("raw-ids", f"{where}: {word} flag condition {op} -- FLAG_ or ~FLAG_ name?")
+    return n
 
 
 def _text_cell_offsets(fail):

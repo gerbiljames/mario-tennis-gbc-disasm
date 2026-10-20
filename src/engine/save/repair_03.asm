@@ -20,13 +20,13 @@ RestoreBlock36FromBackup:
 	ld b, a ; $5691
 	call ReadSaveBlock ; $5692
 	or a ; $5695
-	jr nz, .restore ; $5696
+	jr nz, .bothBad ; $5696
 	pop bc ; $5698
 	ld hl, wDecompBuffer ; $5699
 	ld de, wDecompBuffer tile 64 ; $569c
 	call WriteSaveBlock ; $569f
 	ret ; $56a2
-.restore:
+.bothBad:
 	pop bc ; $56a3
 	call InvalidateSaveBlock ; $56a4
 	ret ; $56a7

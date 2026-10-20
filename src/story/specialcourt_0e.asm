@@ -368,12 +368,12 @@ ExhibitionMatchIntroCutscene:
 	script_wait_idle ACTOR_PLAYER ; $77e4
 	script_wait_frames 20 ; $77e9
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
-	jr z, .doubles ; $77f3
+	jr z, .peachExhibitionIntro ; $77f3
 	ld a, EXIT_SPECIAL_COURT_DONE ; $77f5
 	ld [wUnusedExitTriggerIdMirror], a ; $77f7
 	ld [wStoryModeExitTriggerRequest], a ; $77fa
 	ret ; $77fd
-.doubles:
+.peachExhibitionIntro:
 	script_move_target ACTOR_PLAYER, 15.0, 26.0 ; $77fe
 	script_wait_move ACTOR_PLAYER ; $7809
 	script_move_target ACTOR_PLAYER, 15.0, 23.0 ; $780e

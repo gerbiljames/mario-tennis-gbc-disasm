@@ -29,23 +29,23 @@ Unused_02_DebugStoryStatsScreen:
 	or a ; $4feb
 	jr z, .printString ; $4fec
 	push de ; $4fee
-	ld hl, wPendingExpStory ; $4fef
+	ld hl, wN64TransferMainExp ; $4fef
 	ld a, [hl+] ; $4ff2
 	ld h, [hl] ; $4ff3
 	ld l, a ; $4ff4
 	ld_cell de, $02, $10 ; $4ff5
 	call Unused_00_PrintDecimalWord ; $4ff8
-	ld hl, wPendingExpTrophy ; $4ffb
+	ld hl, wN64TransferPartnerExp ; $4ffb
 	ld a, [hl+] ; $4ffe
 	ld h, [hl] ; $4fff
 	ld l, a ; $5000
 	ld_cell de, $0a, $10 ; $5001
 	call Unused_00_PrintDecimalWord ; $5004
 	pop de ; $5007
-	ld hl, wPendingExpStory ; $5008
-	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
-	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
-	ASSERT wN64TrophyCounts == wPendingExpStory + 5, "this code walks from wPendingExpStory into wN64TrophyCounts"
+	ld hl, wN64TransferMainExp ; $5008
+	ASSERT wN64TransferPartnerExp == wN64TransferMainExp + 2, "this code walks from wN64TransferMainExp into wN64TransferPartnerExp"
+	ASSERT wN64TransferMarker == wN64TransferMainExp + 4, "this code walks from wN64TransferMainExp into wN64TransferMarker"
+	ASSERT wN64TrophyCounts == wN64TransferMainExp + 5, "this code walks from wN64TransferMainExp into wN64TrophyCounts"
 	xor a ; $500b
 	ld [hl+], a ; $500c
 	ld [hl+], a ; $500d

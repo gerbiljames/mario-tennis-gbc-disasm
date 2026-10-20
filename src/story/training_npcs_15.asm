@@ -399,7 +399,7 @@ TrainingCourtFacing01_15:
 	ret ; $5309
 TrainingCourtTileTriggers_15:
 	; $530a, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_UP, $9000, TrainingCourtTile01_15, $00, $00
+	map_script $01, FACEMASK_UP, ~FLAG_SWING_PRACTICE_KID_PLACED, TrainingCourtTile01_15, $00, $00
 	db $ff
 TrainingCourtTile01_15:
 	script_move_target ACTOR_PLAYER, 51.0, 13.0 ; $5313

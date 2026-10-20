@@ -147,11 +147,11 @@ DormEntranceEntry0fScene:
 	script_set_position ACTOR_DORM_ENTRANCE_EMILY, 21.0, 11.0 ; $4391
 	ld a, [wStoryPartnerGender] ; $439c
 	or a ; $439f
-	jr nz, .doubles ; $43a0
+	jr nz, .keepKate ; $43a0
 	script_set_text Text_EmilyWonderingWhoHeIs ; $43a2
 	script_set_objdef OBJ_HARRY, ACTOR_DORM_ENTRANCE_KATE ; $43a8
 	script_set_anim ACTOR_DORM_ENTRANCE_KATE, ANIM_WALK ; $43b4
-.doubles:
+.keepKate:
 	script_move_target ACTOR_DORM_ENTRANCE_EMILY, 21.0, 15.0 ; $43bb
 	script_wait_move ACTOR_DORM_ENTRANCE_EMILY ; $43c6
 	script_move_target ACTOR_DORM_ENTRANCE_KATE, 23.0, 15.0 ; $43cb

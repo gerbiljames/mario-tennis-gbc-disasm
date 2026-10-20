@@ -182,7 +182,7 @@ WallPracticeRoomFacingScripts_12:
 	twin_named development_facing01, WallPracticeRoomFacing01_12 ; $4ca9
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
-	map_script $02, FACEMASK_ANY, $9c00, WallPracticeRoomTile02_12, $00, $00
+	map_script $02, FACEMASK_ANY, ~FLAG_TEMP_SCENE_VARIANT_A, WallPracticeRoomTile02_12, $00, $00
 	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomTile03_12, TILETRIGGER_PRESS_ONLY, $00
 	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomTile04_12, TILETRIGGER_PRESS_ONLY, $00
 	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomTile05_12, TILETRIGGER_PRESS_ONLY, $00

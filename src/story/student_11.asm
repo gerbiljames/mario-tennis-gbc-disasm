@@ -284,9 +284,9 @@ AcademyArrivalGreetingScene:
 	script_wait_move ACTOR_PLAYER ; $4de7
 	ld a, [wStoryMainGender] ; $4dec
 	or a ; $4def
-	jr z, .doubles ; $4df0
+	jr z, .speak ; $4df0
 	farcall AdvanceDialogueTextCursor ; $4df2
-.doubles:
+.speak:
 	script_speak ACTOR_ACADEMY_ARRIVAL_EMILY ; $4df5
 	script_set_position ACTOR_ACADEMY_ARRIVAL_BALLOON_EXCLAIM, 25.25, 17.75 ; $4dfa
 	sound SFX_CHIME ; $4e05

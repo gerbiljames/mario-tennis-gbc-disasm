@@ -754,8 +754,8 @@ rows, 99 levels), `$ff,$ff,$ff`-terminated, indexed by `(level-1)*3`, read by
 `GetExpProgressInCurrentLevel` and `HasReachedNextLevelExp`. The two
 `GetExp*` readers use only the low two bytes, which suffices since the
 level-99 requirement is under 65536. Awards are staged per source
-(`wPendingExpStory`, `wPendingExpTrophy`, `wPendingExpExhibition`,
-`wPendingExpLinked`) and applied by `ApplyPendingExpAwards` (`$1e:$6afd`) on
+(`wPendingExpExhibition`, `wPendingExpLinked`, and the N64 transfer words
+`wN64TransferMainExp`/`wN64TransferPartnerExp`, which no ROM code fills) and applied by `ApplyPendingExpAwards` (`$1e:$6afd`) on
 the next slot load; `ScaleExpByPlayerLevel` averages the two story records'
 `+$18` and scales by x1, x1.5, x2 … x3.5 in steps of 10 levels, x4 from 60.
 

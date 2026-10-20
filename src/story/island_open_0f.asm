@@ -159,7 +159,7 @@ TournamentInitScript_0f:
 	call ComputeIslandOpenRound ; $6227
 	ld a, [wMapSceneStage] ; $622a
 	and a ; $622d
-	jr nz, .singles ; $622e
+	jr nz, .laterRound ; $622e
 	script_respawn_actors IslandOpenRoundActors_0f ; $6230
 	ld hl, IslandOpenRoundNpcScripts_0f ; $6238
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation ; $623b
@@ -177,7 +177,7 @@ TournamentInitScript_0f:
 .setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $628a
 	ret ; $628d
-.singles:
+.laterRound:
 	test_flag FLAG_DOUBLES ; $628e
 	jr nz, .doubles ; $6291
 	script_respawn_actors IslandOpenRoundActorsSingles_0f ; $6293

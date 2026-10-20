@@ -159,7 +159,7 @@ CharDataScreen_InitState:
 	inc [hl] ; $41d5
 	jr .loop ; $41d6
 .writeCharStatsToDisplayBuffer:
-	call WriteCharStatsToDisplayBuffer ; $41d8
+	call CommitCharDataToRecord ; $41d8
 	ret ; $41db
 CharDataScreen_BuildTilemap:
 	call CharDataScreen_LoadUIGraphics ; $41dc

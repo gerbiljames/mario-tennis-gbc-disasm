@@ -116,7 +116,7 @@ SpawnGameScoreDisplayObjs:
 	call ClearAllObjSlots ; $4130
 	ld a, [wScoreboardLayout] ; $4133
 	cp SCOREBOARD_LESSON ; $4136
-	jr z, .doubles ; $4138
+	jr z, .lessonPanel ; $4138
 	ld a, [wCurrentServingPlayer] ; $413a
 	cpl ; $413d
 	and $01 ; $413e
@@ -147,7 +147,7 @@ SpawnGameScoreDisplayObjs:
 	ld bc, wObjSlot2 ; $417d
 	call LoadObjTemplate_09 ; $4180
 	ret ; $4183
-.doubles:
+.lessonPanel:
 	ld a, $00 ; $4184
 	ld hl, GameScoreDisplayObjsObjTemplate ; $4186
 	ld bc, wObjSlot0 ; $4189
@@ -156,7 +156,7 @@ SpawnGameScoreDisplayObjs:
 DismissGameScoreDisplayObjs:
 	ld a, [wDrillIsPracticeLesson] ; $4190
 	and a ; $4193
-	jr nz, .doubles ; $4194
+	jr nz, .lessonPanel ; $4194
 	ld hl, ObjTemplates_09 ; $4196
 	ld bc, wObjSlot0 ; $4199
 	call StartObjExitAnim ; $419c
@@ -167,7 +167,7 @@ DismissGameScoreDisplayObjs:
 	ld bc, wObjSlot2 ; $41ab
 	call StartObjExitAnim ; $41ae
 	ret ; $41b1
-.doubles:
+.lessonPanel:
 	ld hl, GameScoreDisplayObjsObjTemplate ; $41b2
 	ld bc, wObjSlot0 ; $41b5
 	call StartObjExitAnim ; $41b8

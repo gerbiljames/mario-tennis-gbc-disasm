@@ -289,11 +289,11 @@ wMatchBGM:: db
 	char_record wStoryPartner
 	ds 48
 
-; [16-bit] EXP a story match earned, pending like wPendingExpExhibition / wPendingExpLinked. ApplyPendingExpAwards adds it to wPendingExpTrophy, scales the total by player level and folds in the trophy awards
-wPendingExpStory:: dw
+; [16-bit] Head of the N64 transfer record that wN64TransferMarker ends (Unused_02_ValidateN64TransferRecord checksums it). No ROM code stores a nonzero value; story matches award through SetPendingExpAward_Match. ApplyPendingExpAwards sums it with wN64TransferPartnerExp, scales by player level and awards it as EXPAWARD_N64; the old debug path shows it against the main character
+wN64TransferMainExp:: dw
 
-; [16-bit] Trophy half of the pending award, summed with wPendingExpStory before scaling. Unused_02_ValidateN64TransferRecord and the debug stats screen treat the pair as the head of the N64 transfer record that wN64TransferMarker ends
-wPendingExpTrophy:: dw
+; [16-bit] Second N64 transfer EXP word, summed with wN64TransferMainExp; the old debug path shows it against the partner
+wN64TransferPartnerExp:: dw
 
 ; [8-bit] Marker byte of the N64 transfer record at $c9b0: Unused_02_ValidateN64TransferRecord rejects the record unless it is $64, then checksums the bytes around it
 wN64TransferMarker:: db

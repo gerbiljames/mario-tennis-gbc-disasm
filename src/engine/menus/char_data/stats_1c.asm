@@ -320,7 +320,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $49e4
 	call AdvanceFrame ; $49e7
 	ret ; $49ea
-WriteCharStatsToDisplayBuffer:
+CommitCharDataToRecord:
 	wram_bank WRAM_SCENE ; $49eb
 	ld a, [wCharDataPointsWorking] ; $49f1
 	ld [wCharDataPointsLeft], a ; $49f4

@@ -98,7 +98,7 @@ SelectCharDataConfirmSlot:
 	wram_bank WRAM_SCENE ; $54e3
 	ld a, CHARDATAPAGE_CONFIRM ; $54e9
 	ld [wCharDataPage], a ; $54eb
-	call WriteCharStatsToDisplayBuffer ; $54ee
+	call CommitCharDataToRecord ; $54ee
 	ret ; $54f1
 DrawStatArrowIndicators:
 	wram_bank WRAM_SCENE ; $54f2

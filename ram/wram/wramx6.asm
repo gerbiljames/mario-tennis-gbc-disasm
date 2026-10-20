@@ -75,9 +75,9 @@ wCharDataAnimSubStep:: db
 wCharDataFlushChunk:: db
 ; [8-bit] Points still unspent while editing. Heads the six bytes BackupCharData saves and RestoreCharData restores (this, wCharDataLevel, the four wCharDataNewLevels): everything a cancelled visit forgets
 wCharDataPointsWorking:: db
-; [8-bit] Level the character-data screen commits; WriteCharStatsToDisplayBuffer stores it to record +$18
+; [8-bit] Level the character-data screen commits; CommitCharDataToRecord stores it to record +$18
 wCharDataLevel:: db
-; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; WriteCharStatsToDisplayBuffer stores them back into record +$38-$3b
+; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; CommitCharDataToRecord stores them back into record +$38-$3b
 wCharDataNewLevels:: ds 4
 ; [8-bit] Unspent level-up points, copied in from $d003 and decremented by CharDataScreen_InputLoop after each LevelUpPlayer
 wCharDataPointsLeft:: db
@@ -157,7 +157,7 @@ wTrophyExpTotal:: dw
 wTrophyExpGroup:: db
 NEXTU
 ; character-data screen (bank $1a)
-; [100 bytes] One byte per level-up taken this visit: the confirmed wCharDataPage. Cleared by WriteCharStatsToDisplayBuffer before the screen opens
+; [100 bytes] One byte per level-up taken this visit: the confirmed wCharDataPage. Cleared by CommitCharDataToRecord before the screen opens
 wCharDataChoiceLog:: ds 100
 ; [6 bytes] Number formatting scratch for the character-data and EXP screens: FormatExp24BitDecimal puts the top byte at +$00 and the low word's five digits from +$01
 wCharDataNumberBuffer:: ds 6

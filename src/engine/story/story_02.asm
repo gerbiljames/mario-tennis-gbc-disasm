@@ -2,7 +2,7 @@ Unused_02_ValidateN64TransferRecord:
 	ld a, [wN64TransferMarker] ; $4044
 	cp $64 ; $4047
 	jr nz, .returnZero ; $4049
-	ld hl, wPendingExpStory ; $404b
+	ld hl, wN64TransferMainExp ; $404b
 	ld a, [hl+] ; $404e
 	add [hl] ; $404f
 	inc l ; $4050

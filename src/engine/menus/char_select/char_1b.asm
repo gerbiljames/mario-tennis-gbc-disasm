@@ -459,7 +459,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall Unused_02_ValidateN64TransferRecord ; $639c
 	or a ; $639f
 	jr z, .showNoN64DataFoundScreen ; $63a0
-	ld hl, wPendingExpStory ; $63a2
+	ld hl, wN64TransferMainExp ; $63a2
 	ld a, [hl+] ; $63a5
 	ld d, [hl] ; $63a6
 	ld e, a ; $63a7
@@ -476,7 +476,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld c, $00 ; $63c6
 	farcall CharDataScreen_Show ; $63c8
 .checkTrophyExp:
-	ld hl, wPendingExpTrophy ; $63cb
+	ld hl, wN64TransferPartnerExp ; $63cb
 	ld a, [hl+] ; $63ce
 	ld d, [hl] ; $63cf
 	ld e, a ; $63d0
@@ -494,9 +494,9 @@ Unused_1b_RunDebugSaveDataFlow:
 	farcall CharDataScreen_Show ; $63f1
 .clearPendingExp:
 	xor a ; $63f4
-	ld hl, wPendingExpStory ; $63f5
-	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
-	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
+	ld hl, wN64TransferMainExp ; $63f5
+	ASSERT wN64TransferPartnerExp == wN64TransferMainExp + 2, "this code walks from wN64TransferMainExp into wN64TransferPartnerExp"
+	ASSERT wN64TransferMarker == wN64TransferMainExp + 4, "this code walks from wN64TransferMainExp into wN64TransferMarker"
 	ld [hl+], a ; $63f8
 	ld [hl+], a ; $63f9
 	ld [hl+], a ; $63fa

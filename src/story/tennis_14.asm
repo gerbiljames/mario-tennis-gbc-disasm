@@ -174,7 +174,7 @@ TennisMachineRoomFacingScripts_14:
 	ds 1, $ff ; $41e6, fill
 TennisMachineRoomTileTriggers_14:
 	; $41e7, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $9c20, TennisMachineRoomTile01_14, $00, $00
+	map_script $01, FACEMASK_ANY, ~FLAG_TEMP_SCENE_VARIANT_B, TennisMachineRoomTile01_14, $00, $00
 	map_script $03, FACEMASK_ANY, $0000, TennisMachineRoomTile03_14, TILETRIGGER_PRESS_ONLY, $00
 	map_script $04, FACEMASK_ANY, $0000, TennisMachineRoomTile04_14, TILETRIGGER_PRESS_ONLY, $00
 	map_script $05, FACEMASK_ANY, $0000, TennisMachineRoomTile05_14, TILETRIGGER_PRESS_ONLY, $00

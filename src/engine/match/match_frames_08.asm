@@ -160,13 +160,13 @@ ApplyMatchBgmPreference:
 SelectScoreboardLayout:
 	ld a, [wMatchContext] ; $454b
 	cp MATCHCONTEXT_MINIGAME ; $454e
-	jr z, .doubles ; $4550
+	jr z, .minigame ; $4550
 	ld a, [wOnCourtCharCount] ; $4552
 	sub $02 ; $4555
 	and $03 ; $4557
 	ld [wScoreboardLayout], a ; $4559
 	ret ; $455c
-.doubles:
+.minigame:
 	ld b, SCOREBOARD_LESSON ; $455d
 	ld a, [wDrillIsPracticeLesson] ; $455f
 	and a ; $4562
