@@ -583,7 +583,7 @@ AdvanceRulesScreenAnimFrame:
 	srl a ; $743a
 	srl a ; $743c
 	and $3f ; $743e
-	ld hl, RulesScreenAnimFrameTable1 ; $7440
+	ld hl, RulesScreenNewPageAnimFrameTable ; $7440
 	add_hl_a ; $7443
 	ld a, [hl] ; $7448
 	ld [wRulesScreenAnimFrame], a ; $7449
@@ -630,7 +630,7 @@ RulesScreenAnimFrameTable:
 	dw $0000 ; record 13
 	dw $0001 ; record 14
 	dw $0000 ; record 15
-RulesScreenAnimFrameTable1:
+RulesScreenNewPageAnimFrameTable:
 	; $749f, 60 bytes (records:2)
 	dw $0402 ; record 0
 	dw $0404 ; record 1
@@ -665,13 +665,13 @@ RulesScreenAnimFrameTable1:
 DrawRulesScreenCharacters:
 	push_wram_bank WRAM_SCREEN ; $74db
 	ld a, [wRulesScreenAnimFrame] ; $74e4
-	ld hl, RulesScreenCharactersTable0 ; $74e7
+	ld hl, RulesScreenCharFrameTileTable ; $74e7
 	add_hl_a ; $74ea
 	ld a, [hl] ; $74ef
 	ld c, a ; $74f0
 	push bc ; $74f1
 	ld a, [wRulesScreenAnimFrame] ; $74f2
-	ld hl, RulesScreenCharactersTable1 ; $74f5
+	ld hl, RulesScreenCharBaseAttrTable ; $74f5
 	add_hl_a ; $74f8
 	ld b, [hl] ; $74fd
 	ld_xy de, $7e, $68 ; $74fe
@@ -682,7 +682,7 @@ DrawRulesScreenCharacters:
 	add c ; $750a
 	ld c, a ; $750b
 	ld a, [wRulesScreenAnimFrame] ; $750c
-	ld hl, RulesScreenCharactersTable2 ; $750f
+	ld hl, RulesScreenCharOverlayAttrTable ; $750f
 	add_hl_a ; $7512
 	ld b, [hl] ; $7517
 	ld_xy de, $7e, $68 ; $7518
@@ -702,13 +702,13 @@ DrawRulesScreenCharacters_SpriteTemplate:
 	oam_sprite $20, $18, $0e, $00
 	oam_sprite $30, $18, $10, $00
 	oam_sprite_end
-RulesScreenCharactersTable0:
+RulesScreenCharFrameTileTable:
 	; $754c, 6 bytes (bytes:6)
 	db $00, $24, $48, $10, $34, $58 ; 0x00
-RulesScreenCharactersTable1:
+RulesScreenCharBaseAttrTable:
 	; $7552, 6 bytes (bytes:6)
 	db $01, $01, $01, $09, $09, $09 ; 0x00
-RulesScreenCharactersTable2:
+RulesScreenCharOverlayAttrTable:
 	; $7558, 6 bytes (bytes:6)
 	db $02, $02, $02, $0a, $0a, $0a ; 0x00
 DrawRulesNextPageArrow:

@@ -313,7 +313,7 @@ MinigameSelectCursorSpriteTask:
 	ld c, $03 ; $6470
 	call GetMenuCursorIndex_3b ; $6472
 	push af ; $6475
-	ld hl, MinigameSelectCursorSpriteTaskTable1 ; $6476
+	ld hl, MinigameSelectCursorTileBases ; $6476
 	add_hl_a ; $6479
 	ld c, [hl] ; $647e
 	pop af ; $647f
@@ -326,7 +326,7 @@ MinigameSelectCursorSpriteTask:
 	ld e, a ; $648c
 	farcall ApplySpriteBobOffset ; $648d
 	pop af ; $6490
-	ld hl, MinigameSelectCursorSpriteTaskTable0 ; $6491
+	ld hl, MinigameSelectCursorOamAttrs ; $6491
 	add_hl_a ; $6494
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
@@ -348,10 +348,10 @@ GetMinigameCursorPosTable:
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
 	jr nz, .altTable ; $64bc
-	ld hl, MinigameCursorPosTable1 ; $64be
+	ld hl, MinigameCursorPositionsCompact ; $64be
 	jr .done ; $64c1
 .altTable:
-	ld hl, MinigameCursorPosTable0 ; $64c3
+	ld hl, MinigameCursorPositionsExpanded ; $64c3
 .done:
 	pop af ; $64c6
 	pop bc ; $64c7
@@ -373,17 +373,17 @@ MinigameSelectCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MinigameSelectCursorSpriteTaskTable0:
+MinigameSelectCursorOamAttrs:
 	; $64f4, 9 bytes (bytes:9)
 	db $08, $00, $08, $00, $08, $00, $08, $08, $08 ; 0x00
-MinigameCursorPosTable0:
+MinigameCursorPositionsExpanded:
 	; $64fd, 18 bytes (bytes:16)
 	db $30, $fc, $30, $2c, $30, $5c, $50, $fc, $50, $2c, $50, $5e, $6c, $fc, $6c, $2c ; 0x00
 	db $6c, $5e ; 0x10
-MinigameCursorPosTable1:
+MinigameCursorPositionsCompact:
 	; $650f, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $14, $60, $44, $60, $44 ; 0x00
-MinigameSelectCursorSpriteTaskTable1:
+MinigameSelectCursorTileBases:
 	; $651b, 50 bytes (bytes:16)
 	db $00, $30, $50, $40, $20, $20, $40, $10, $30, $10, $08, $00, $00, $10, $10, $02 ; 0x00
 	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10

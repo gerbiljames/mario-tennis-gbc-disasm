@@ -139,11 +139,11 @@ RunTitleScreen:
 QueueTitleSprite:
 	push_wram_bank WRAM_SCREEN ; $76b6
 	ld a, [wTitleSpriteFrame] ; $76bf
-	ld hl, TitleSpriteTable0 ; $76c2
+	ld hl, TitleSpriteFrameTileBases ; $76c2
 	add_hl_a ; $76c5
 	ld c, [hl] ; $76ca
 	ld a, [wTitleSpriteFrame] ; $76cb
-	ld hl, TitleSpriteTable1 ; $76ce
+	ld hl, TitleSpriteFrameAttrs ; $76ce
 	add_hl_a ; $76d1
 	ld b, [hl] ; $76d6
 	ld_xy de, $28, $58 ; $76d7
@@ -151,10 +151,10 @@ QueueTitleSprite:
 	call QueueSpriteTemplate ; $76dd
 	pop_wram_bank ; $76e0
 	ret ; $76e5
-TitleSpriteTable0:
+TitleSpriteFrameTileBases:
 	; $76e6, 8 bytes (bytes:8)
 	db $00, $20, $40, $60, $00, $20, $40, $60 ; 0x00
-TitleSpriteTable1:
+TitleSpriteFrameAttrs:
 	; $76ee, 8 bytes (bytes:8)
 	db $08, $08, $08, $08, $00, $00, $00, $00 ; 0x00
 QueueTitleSprite_SpriteTemplate:

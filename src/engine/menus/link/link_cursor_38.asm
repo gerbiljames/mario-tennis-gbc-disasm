@@ -20,17 +20,17 @@ RetreatRemotePlayerSlot:
 RemotePlayerSlotLists_38:
 	; $6a27, 12 bytes (records:2)
 	table_width 2
-	dw RemotePlayerSlotList0 ; record 0
-	dw RemotePlayerSlotList0 ; record 1
-	dw RemotePlayerSlotList0 ; record 2
-	dw RemotePlayerSlotList0 ; record 3
-	dw RemotePlayerSlotList1 ; record 4
-	dw RemotePlayerSlotList1 ; record 5
+	dw RemotePlayerSlotsDefault ; record 0
+	dw RemotePlayerSlotsDefault ; record 1
+	dw RemotePlayerSlotsDefault ; record 2
+	dw RemotePlayerSlotsDefault ; record 3
+	dw RemotePlayerSlotsLinkDoubles ; record 4
+	dw RemotePlayerSlotsLinkDoubles ; record 5
 	assert_table_length NUM_CHARSELECTMODES
-RemotePlayerSlotList0:
+RemotePlayerSlotsDefault:
 	; $6a33, 4 bytes (bytes:4)
 	db $ff, $00, $02, $ff ; 0x00
-RemotePlayerSlotList1:
+RemotePlayerSlotsLinkDoubles:
 	; $6a37, 5 bytes (bytes:5)
 	db $ff, $00, $01, $02, $ff ; 0x00
 Unused_38_GetGridEntryAtCursor:

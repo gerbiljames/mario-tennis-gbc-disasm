@@ -297,7 +297,7 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6ed5
 .topVertical:
 	ld a, [wMenuCursorX] ; $6ed7
-	ld hl, SavedDataPickerCursorTable0 ; $6eda
+	ld hl, SavedDataPickerTopToBottomColumnMap ; $6eda
 	add_hl_a ; $6edd
 	ld a, [hl] ; $6ee2
 	ld [wMenuCursorX], a ; $6ee3
@@ -354,7 +354,7 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6f38
 .bottomVertical:
 	ld a, [wMenuCursorX] ; $6f3a
-	ld hl, SavedDataPickerCursorTable1 ; $6f3d
+	ld hl, SavedDataPickerBottomToTopColumnMap ; $6f3d
 	add_hl_a ; $6f40
 	ld a, [hl] ; $6f45
 	ld [wMenuCursorX], a ; $6f46
@@ -365,10 +365,10 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6f53
 .done:
 	ret ; $6f55
-SavedDataPickerCursorTable0:
+SavedDataPickerTopToBottomColumnMap:
 	; $6f56, 3 bytes (bytes:8)
 	db $00, $01, $01 ; 0x00
-SavedDataPickerCursorTable1:
+SavedDataPickerBottomToTopColumnMap:
 	db $00 ; $6f59
 	db $02 ; $6f5a
 EraseSavedDataCursorSpriteTask:
@@ -376,11 +376,11 @@ EraseSavedDataCursorSpriteTask:
 	ld c, $03 ; $6f5e
 	call GetMenuCursorIndex_3b ; $6f60
 	push af ; $6f63
-	ld hl, EraseSavedDataCursorSpriteTaskTable1 ; $6f64
+	ld hl, EraseSavedDataCursorTileBases ; $6f64
 	add_hl_a ; $6f67
 	ld c, [hl] ; $6f6c
 	pop af ; $6f6d
-	ld hl, EraseSavedDataCursorSpriteTaskTable0 ; $6f6e
+	ld hl, EraseSavedDataCursorPositions ; $6f6e
 	add a ; $6f71
 	add_hl_a ; $6f72
 	ld a, [hl+] ; $6f77
@@ -416,10 +416,10 @@ EraseSavedDataCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-EraseSavedDataCursorSpriteTaskTable0:
+EraseSavedDataCursorPositions:
 	; $6fc2, 10 bytes (bytes:10)
 	db $3a, $fe, $3a, $2c, $3a, $5c, $60, $0c, $60, $4c ; 0x00
-EraseSavedDataCursorSpriteTaskTable1:
+EraseSavedDataCursorTileBases:
 	; $6fcc, 47 bytes (bytes:16)
 	db $00, $10, $20, $30, $40, $30, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
 	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10

@@ -4,7 +4,7 @@ DrawTennisDictionaryLetterLabels:
 	inc b ; $5338
 	ld a, [wTennisDictCategoryMask] ; $5339
 	ld e, a ; $533c
-	ld hl, SelectionMaskGrid_3f ; $533d
+	ld hl, TennisDictEntryCategories ; $533d
 	ld d, $00 ; $5340
 .findSelectedLoop:
 	ld a, [hl+] ; $5342
@@ -54,12 +54,13 @@ DrawTennisDictionaryLetterLabels:
 	jr .waitQueueLoop ; $539b
 .done:
 	ret ; $539d
-SelectionMaskGrid_3f:
-	INCBIN "data/engine/menus/dictionary/SelectionMaskGrid_3f.bin" ; $539e, 121 bytes
+; One TDICTCAT_* mask per Text_Define* entry, $00 between initial letters, $40 at the end.
+TennisDictEntryCategories:
+	INCLUDE "data/engine/menus/dictionary/TennisDictEntryCategories.asm" ; $539e, 121 bytes (bytes:16)
 SetTennisDictionaryListFromIndexRow:
 	wram_bank WRAM_SCENE ; $5417
 	ld c, $00 ; $541d
-	ld hl, SelectionMaskGrid_3f ; $541f
+	ld hl, TennisDictEntryCategories ; $541f
 	ld a, [wTennisDictCategoryMask] ; $5422
 	ld e, a ; $5425
 	ld a, [wTennisDictCursorRow] ; $5426
@@ -109,7 +110,7 @@ SetTennisDictionaryIndexRowFromList:
 	ld b, a ; $5475
 	inc b ; $5476
 	ld c, $00 ; $5477
-	ld hl, SelectionMaskGrid_3f ; $5479
+	ld hl, TennisDictEntryCategories ; $5479
 	ld a, [wTennisDictCategoryMask] ; $547c
 	ld e, a ; $547f
 .loop:
@@ -149,10 +150,10 @@ TennisDictionaryLetterRowTable:
 DrawTennisDictionaryIndexCursor:
 	or a ; $54c8
 	jr z, .compactTiles ; $54c9
-	ld hl, TennisDictionaryIndexCursorTable0 ; $54cb
+	ld hl, TennisDictionaryIndexCursorHighlightTiles ; $54cb
 	jr .gotTiles ; $54ce
 .compactTiles:
-	ld hl, TennisDictionaryIndexCursorTable1 ; $54d0
+	ld hl, TennisDictionaryIndexCursorNormalTiles ; $54d0
 .gotTiles:
 	wram_bank WRAM_SCREEN ; $54d3
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 19 - $80 ; $54d9 one step back: .rowLoop adds $80 first
@@ -207,12 +208,12 @@ DrawTennisDictionaryIndexCursor:
 	call QueueVRAMCopy ; $5536
 	wram_bank WRAM_SCENE ; $5539
 	ret ; $553f
-TennisDictionaryIndexCursorTable0:
+TennisDictionaryIndexCursorHighlightTiles:
 	; $5540, 36 bytes (bytes:16)
 	db $76, $77, $86, $87, $78, $79, $88, $89, $7a, $7b, $8a, $8b, $7c, $7d, $8c, $8d ; 0x00
 	db $7e, $7f, $8e, $8f, $a8, $a9, $b8, $b9, $aa, $ab, $ba, $bb, $ac, $ad, $bc, $bd ; 0x10
 	db $ae, $af, $be, $bf ; 0x20
-TennisDictionaryIndexCursorTable1:
+TennisDictionaryIndexCursorNormalTiles:
 	; $5564, 36 bytes (bytes:16)
 	db $96, $84, $97, $84, $98, $84, $99, $84, $9a, $84, $9b, $84, $9c, $84, $9d, $84 ; 0x00
 	db $9e, $84, $9f, $84, $c8, $84, $c9, $84, $ca, $84, $cb, $84, $cc, $84, $cd, $84 ; 0x10

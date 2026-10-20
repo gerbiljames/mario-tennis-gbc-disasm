@@ -449,7 +449,7 @@ StartNextDoublesRankingMatch:
 	farcall RunStoryMatch ; $6799
 	farcall RestoreOverworldAfterMatch ; $679c
 	ret ; $679f
-LoadDoublesRankingOpponentGraphics:
+RunDoublesRankingOpponentWalkScripts:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $67a0
 	jr z, .vsRank3 ; $67a3
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $67a5

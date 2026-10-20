@@ -1,12 +1,12 @@
-CompareEquippedRacketToMinigameFlag:
+CheckEquipmentUnchanged:
 	ld a, [wMapScratch + 8] ; $5005
 	ld b, a ; $5008
 	ld a, [wStoryMainEquipment] ; $5009
 	cp b ; $500c
-	jr z, .failed ; $500d
+	jr z, .unchanged ; $500d
 	ld a, $00 ; $500f
 	ret ; $5011
-.failed:
+.unchanged:
 	ld a, $ff ; $5012
 	ret ; $5014
 RepairCounterCheckEquipChanged:
@@ -14,9 +14,9 @@ RepairCounterCheckEquipChanged:
 	ld [wStoryModeShowLocationName], a ; $5016
 	script_fade_in 8 ; $5019
 	call WaitFadeEnd ; $501e
-	call CompareEquippedRacketToMinigameFlag ; $5021
+	call CheckEquipmentUnchanged ; $5021
 	cp $ff ; $5024
-	jp nz, .repairRacket ; $5026
+	jp nz, .equipmentChanged ; $5026
 	ld a, [wMapScratch + 10] ; $5029
 	ld hl, Text_RepairCounterAlreadyUsingRacket ; $502c
 	add_hl_a ; $502f
@@ -30,7 +30,7 @@ RepairCounterCheckEquipChanged:
 	jp nz, .noChange ; $504d
 	ld a, [wMapScratch + 10] ; $5050
 	jp RepairCounterServiceMenu.loop ; $5053
-.repairRacket:
+.equipmentChanged:
 	ld a, [wStoryMainEquipment] ; $5056
 	ld [wMapScratch + 8], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c

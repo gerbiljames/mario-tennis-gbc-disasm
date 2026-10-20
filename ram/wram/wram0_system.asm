@@ -423,8 +423,8 @@ wScreenShakeOffsetY:: db
 wCurrentStorySlot:: db
 	ds 2
 
-; [8-bit] Nonzero when the EXP screen has a bonus to add after the gauge fills; the level-up path folds wExpBonusAmount into wExpAwardTotal and clears it
-wExpBonusPending:: db
+; [8-bit] Message id Unused_1a_DrawExpBonusMessage shows ($01-$03, $14-$1e) when the EXP screen has a bonus to add after the gauge fills, else 0; the level-up path folds wExpBonusAmount into wExpAwardTotal and clears it
+wExpBonusMessageId:: db
 
 ; [16-bit] The bonus EXP added to wExpAwardTotal after the first fill
 wExpBonusAmount:: dw

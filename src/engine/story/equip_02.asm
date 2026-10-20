@@ -48,7 +48,7 @@ RefreshMainCharacterStats:
 	ld bc, wStorySlotData ; $47bf
 	call RecomputeCharacterStats ; $47c2
 	ret ; $47c5
-RecomputeStatsWithoutRacket:
+RecomputeStatsWithoutEquipment:
 	ld hl, wStoryMainEquipment ; $47c6
 	ld a, [hl] ; $47c9
 	push af ; $47ca

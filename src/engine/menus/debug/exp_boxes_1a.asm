@@ -374,9 +374,8 @@ Unused_1a_DrawExpScreenYesNoBox:
 	pop af ; $4ab2
 	ret ; $4ab3
 ; 32 words walked by Unused_1a_FillTileBufferBlockFromTable, one per cell
-; of the 4x8 block it fills. The values run $0b38-$0b6f
-; consecutively, so the high byte is constant and only the low byte
-; varies across the block.
+; of the 4x8 block it fills: four runs of 8 ($0b38-$0b3f, $0b48-$0b4f,
+; $0b58-$0b5f, $0b68-$0b6f), one per row, with only the low byte varying.
 TileBufferBlockCells_1a:
 	; $4ab4, 64 bytes (records:2)
 	dw $0b38 ; record 0

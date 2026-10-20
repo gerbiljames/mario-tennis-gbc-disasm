@@ -428,11 +428,11 @@ SavedDataSourceCursorSpriteTask:
 	ld c, $03 ; $69df
 	call GetMenuCursorIndex_3b ; $69e1
 	push af ; $69e4
-	ld hl, SavedDataSourceCursorSpriteTaskTable1 ; $69e5
+	ld hl, SavedDataSourceCursorTileBases ; $69e5
 	add_hl_a ; $69e8
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
-	ld hl, SavedDataSourceCursorSpriteTaskTable0 ; $69ef
+	ld hl, SavedDataSourceCursorPositions ; $69ef
 	add a ; $69f2
 	add_hl_a ; $69f3
 	ld a, [hl+] ; $69f8
@@ -468,10 +468,10 @@ SavedDataSourceCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-SavedDataSourceCursorSpriteTaskTable0:
+SavedDataSourceCursorPositions:
 	; $6a43, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $0c, $60, $4d, $60, $3e ; 0x00
-SavedDataSourceCursorSpriteTaskTable1:
+SavedDataSourceCursorTileBases:
 	; $6a4f, 47 bytes (bytes:16)
 	db $00, $10, $20, $40, $30, $40, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
 	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10

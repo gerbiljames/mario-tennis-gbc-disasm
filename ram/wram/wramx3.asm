@@ -171,7 +171,7 @@ wBriefingBallY:: db
 wBriefingPole2X:: db
 ; [8-bit] Drill-briefing diagram: second pole sprite Y
 wBriefingPole2Y:: db
-; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingAnimTable0 for the base tile, and < 6 selects the 5-sprite racket template
+; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingFrameTileTable for the base tile, and < 6 selects the 5-sprite racket template
 wBriefingSwingFrame:: db
 ; [8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip
 wBriefingVMarkerX:: db
@@ -290,7 +290,7 @@ ENDU
 ; animation share these 40 bytes.
 UNION
 ; character unlock flags (bank $38)
-; [40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears it and walks CharUnlockFlagsTable0, marking a character whose entry is $ffff (always available) or whose save flag TestSaveFlag finds set. PackUnlockFlagsForLink packs it eight to a byte for the link exchange
+; [40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears it and walks CharUnlockSaveFlags, marking a character whose entry is $ffff (always available) or whose save flag TestSaveFlag finds set. PackUnlockFlagsForLink packs it eight to a byte for the link exchange
 wCharUnlockFlags:: ds 40
 	export_size wCharUnlockFlags
 NEXTU
@@ -385,7 +385,7 @@ wN64ExhibPage:: db
 wN64ExhibCursorRow:: db
 NEXTU
 ; rules screen (bank $17)
-; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharactersTable0-2 with it
+; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharFrameTileTable-2 with it
 wRulesScreenAnimFrame:: db
 ENDU
 

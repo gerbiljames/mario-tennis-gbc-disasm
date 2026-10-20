@@ -235,12 +235,12 @@ TennisMachineRoomInitScript_14:
 	ret ; $42af
 MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42b0
-	jr z, .win ; $42b3
+	jr z, .placeAttendant ; $42b3
 	script_null_script ACTOR_PARTNER ; $42b5
 	script_wait_frames 10 ; $42ba
 	script_set_position ACTOR_PARTNER, 41.0, 43.0 ; $42c1
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $42cc
-.win:
+.placeAttendant:
 	script_set_position ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, 45.0, 41.0 ; $42d3
 	script_face ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, FACE_DOWN ; $42de
 	script_fade_in 6 ; $42e5

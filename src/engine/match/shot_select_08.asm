@@ -111,25 +111,25 @@ SelectRallyShotType:
 	ld d, $00 ; $7089
 	ld hl, wCharBallReachFlags ; $708b
 	bit 4, [hl] ; $708e
-	jr z, SelectRallyShotType.neutralTable ; $7090
-	ld hl, RallyShotTypeTable0 ; $7092
+	jr z, SelectRallyShotType.standardTable ; $7090
+	ld hl, RallyReachShotTypeTable ; $7092
 	add hl, de ; $7095
 	ld a, [hl] ; $7096
 	ld [wCharShotType], a ; $7097
 	ret ; $709a
-RallyShotTypeTable0:
+RallyReachShotTypeTable:
 	; $709b, 16 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_BASIC, SHOTTYPE_NEUTRAL ; 0x00
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_REACH_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
 	db SHOTTYPE_REACH_BASIC, SHOTTYPE_LOB, SHOTTYPE_REACH_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
 	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
-SelectRallyShotType.neutralTable:
-	ld hl, RallyShotTypeTable1 ; $70ab
+SelectRallyShotType.standardTable:
+	ld hl, RallyStandardShotTypeTable ; $70ab
 	add hl, de ; $70ae
 	ld a, [hl] ; $70af
 	ld [wCharShotType], a ; $70b0
 	ret ; $70b3
-RallyShotTypeTable1:
+RallyStandardShotTypeTable:
 	; $70b4, 16 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_TOPSPIN, SHOTTYPE_SLICE, SHOTTYPE_NEUTRAL ; 0x00
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04

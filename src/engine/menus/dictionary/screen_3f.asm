@@ -3,39 +3,39 @@ TennisDictionaryScreen:
 	wram_bank WRAM_SCENE ; $407b
 	pop af ; $4081
 	ld [wTennisDictMode], a ; $4082
-	cp $00 ; $4085
-	jr z, .category0 ; $4087
-	cp $01 ; $4089
+	cp TENNISDICT_TERMS ; $4085
+	jr z, .terms ; $4087
+	cp TENNISDICT_CATEGORY1 ; $4089
 	jr z, .category1 ; $408b
-	cp $02 ; $408d
+	cp TENNISDICT_CATEGORY2 ; $408d
 	jr z, .category2 ; $408f
-	cp $03 ; $4091
-	jr z, .category3 ; $4093
-	cp $04 ; $4095
-	jr z, .category4 ; $4097
-	cp $05 ; $4099
+	cp TENNISDICT_TECHNIQUE ; $4091
+	jr z, .technique ; $4093
+	cp TENNISDICT_COURT ; $4095
+	jr z, .court ; $4097
+	cp TENNISDICT_SINGLE_ENTRY ; $4099
 	jr z, .singleEntryMode ; $409b
-	ld a, $1f ; $409d
+	ld a, TDICTCAT_ALL ; $409d
 	jr .store ; $409f
-.category0:
-	ld a, $01 ; $40a1
+.terms:
+	ld a, TDICTCAT_TERMS ; $40a1
 	jr .store ; $40a3
 .category1:
-	ld a, $02 ; $40a5
+	ld a, TDICTCAT_1 ; $40a5
 	jr .store ; $40a7
 .category2:
-	ld a, $04 ; $40a9
+	ld a, TDICTCAT_2 ; $40a9
 	jr .store ; $40ab
-.category3:
-	ld a, $08 ; $40ad
+.technique:
+	ld a, TDICTCAT_TECHNIQUE ; $40ad
 	jr .store ; $40af
-.category4:
-	ld a, $10 ; $40b1
+.court:
+	ld a, TDICTCAT_COURT ; $40b1
 	jr .store ; $40b3
 .singleEntryMode:
 	ld a, $01 ; $40b5
 	ld [wTennisDictSingleEntry], a ; $40b7
-	ld a, $1f ; $40ba
+	ld a, TDICTCAT_ALL ; $40ba
 	jr .store ; $40bc
 .store:
 	ld [wTennisDictCategoryMask], a ; $40be
@@ -61,7 +61,7 @@ TennisDictionaryScreen:
 	call AdvanceFrame ; $40f4
 	call DrawTennisDictionaryList ; $40f7
 	ld a, [wTennisDictMode] ; $40fa
-	cp $05 ; $40fd
+	cp TENNISDICT_SINGLE_ENTRY ; $40fd
 	jr nz, .disableLCDSafely ; $40ff
 	ld a, $01 ; $4101
 	ld [wTennisDictSingleEntry], a ; $4103
@@ -252,7 +252,7 @@ LoadTennisDictionaryAssetsChar6:
 ClearTennisDictionaryTilemap:
 	wram_bank WRAM_COURT_PLANES ; $42de
 	ld c, $0e ; $42e4
-	ld hl, TennisDictionaryClearList2 ; $42e6
+	ld hl, TennisDictionaryListClearSpans ; $42e6
 .loop:
 	push bc ; $42e9
 	ld a, [hl+] ; $42ea
@@ -357,7 +357,7 @@ LoadTennisDictionaryScreen:
 	call DecompressData ; $43d9
 	wram_bank WRAM_SCREEN ; $43dc
 	ld c, $0e ; $43e2
-	ld hl, TennisDictionaryClearList2 ; $43e4
+	ld hl, TennisDictionaryListClearSpans ; $43e4
 .clearRowLoop:
 	push bc ; $43e7
 	ld a, [hl+] ; $43e8
@@ -430,7 +430,7 @@ Unused_3f_TennisDictionaryClearList:
 	dw wShadowTilemap + 29 * TILEMAP_WIDTH + 5, $0001 ; record 11
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 18, $000a ; record 12
 	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 18, $000a ; record 13
-TennisDictionaryClearList2:
+TennisDictionaryListClearSpans:
 	; $4487, 56 bytes (records:4)
 ; 14 records x 4 bytes
 	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 15, $0010 ; record 0
@@ -738,7 +738,7 @@ FillBytes_3f:
 	ret ; $50f6
 CountTennisDictionaryEntries:
 	wram_bank WRAM_SCENE ; $50f7
-	ld hl, SelectionMaskGrid_3f ; $50fd
+	ld hl, TennisDictEntryCategories ; $50fd
 	ld c, $00 ; $5100
 	ld a, [wTennisDictCategoryMask] ; $5102
 	ld d, a ; $5105
@@ -758,7 +758,7 @@ CountTennisDictionaryEntries:
 	ret ; $5119
 FindTennisDictionaryListEnd:
 	wram_bank WRAM_SCENE ; $511a
-	ld hl, SelectionMaskGrid_3f ; $5120
+	ld hl, TennisDictEntryCategories ; $5120
 	ld c, $00 ; $5123
 .loop:
 	ld a, [hl+] ; $5125
@@ -774,7 +774,7 @@ GetTennisDictionaryEntryIndex:
 	ld d, $00 ; $5134
 	ld c, a ; $5136
 	inc c ; $5137
-	ld hl, SelectionMaskGrid_3f ; $5138
+	ld hl, TennisDictEntryCategories ; $5138
 .loop:
 	ld a, [hl+] ; $513b
 	cp $00 ; $513c
@@ -791,7 +791,7 @@ GetTennisDictionaryEntryCategory:
 	ld d, $00 ; $514a
 	ld c, a ; $514c
 	inc c ; $514d
-	ld hl, SelectionMaskGrid_3f ; $514e
+	ld hl, TennisDictEntryCategories ; $514e
 .loop:
 	ld a, [hl+] ; $5151
 	cp $00 ; $5152
@@ -802,16 +802,16 @@ GetTennisDictionaryEntryCategory:
 	dec c ; $515a
 	jr nz, .loop ; $515b
 	cp $01 ; $515d
-	jr z, .category0 ; $515f
+	jr z, .terms ; $515f
 	cp $02 ; $5161
 	jr z, .category1 ; $5163
 	cp $04 ; $5165
 	jr z, .category2 ; $5167
 	cp $08 ; $5169
-	jr z, .category3 ; $516b
+	jr z, .technique ; $516b
 	ld a, $04 ; $516d
 	ret ; $516f
-.category0:
+.terms:
 	xor a ; $5170
 	ret ; $5171
 .category1:
@@ -820,7 +820,7 @@ GetTennisDictionaryEntryCategory:
 .category2:
 	ld a, $02 ; $5175
 	ret ; $5177
-.category3:
+.technique:
 	ld a, $03 ; $5178
 	ret ; $517a
 GetTennisDictionarySelectedIndex:
@@ -838,7 +838,7 @@ GetTennisDictionarySelectedIndex:
 	ret ; $5191
 ScrollTennisDictionaryToPrevLetter:
 	wram_bank WRAM_SCENE ; $5192
-	ld hl, SelectionMaskGrid_3f ; $5198
+	ld hl, TennisDictEntryCategories ; $5198
 	call GetTennisDictionarySelectedIndex ; $519b
 	ld b, a ; $519e
 	ld c, a ; $519f
@@ -914,7 +914,7 @@ WrapTennisDictionaryScanToEnd:
 	cp $40 ; $51fc
 	jr nz, .testFirstMatch ; $51fe
 	ld c, $00 ; $5200
-	ld hl, SelectionMaskGrid_3f ; $5202
+	ld hl, TennisDictEntryCategories ; $5202
 	jr .findFirstMatchLoop ; $5205
 .testFirstMatch:
 	and e ; $5207
@@ -924,7 +924,7 @@ WrapTennisDictionaryScanToEnd:
 	ret ; $520e
 ScrollTennisDictionaryToNextLetter:
 	wram_bank WRAM_SCENE ; $520f
-	ld hl, SelectionMaskGrid_3f ; $5215
+	ld hl, TennisDictEntryCategories ; $5215
 	ld a, [wTennisDictEntryCount] ; $5218
 	ld b, a ; $521b
 	ld a, [wTennisDictCursorRow] ; $521c
@@ -960,7 +960,7 @@ ScrollTennisDictionaryToNextLetter:
 	ld a, c ; $5244
 	cp $40 ; $5245
 	jr nz, .toLetterEndLoop ; $5247
-	ld hl, SelectionMaskGrid_3f ; $5249
+	ld hl, TennisDictEntryCategories ; $5249
 	ld d, $ff ; $524c
 .atNextLetter:
 	inc d ; $524e
@@ -968,7 +968,7 @@ ScrollTennisDictionaryToNextLetter:
 	ld a, [hl+] ; $524f
 	cp $40 ; $5250
 	jr nz, .testCategory ; $5252
-	ld hl, SelectionMaskGrid_3f ; $5254
+	ld hl, TennisDictEntryCategories ; $5254
 	ld d, $00 ; $5257
 .testCategory:
 	and e ; $5259
@@ -980,7 +980,7 @@ DrawTennisDictionaryList:
 	farcall PrepareGlyphBuffer ; $5261
 	wram_bank WRAM_SCREEN ; $5264
 	ld c, $0e ; $526a
-	ld hl, TennisDictionaryClearList2 ; $526c
+	ld hl, TennisDictionaryListClearSpans ; $526c
 .clearLoop:
 	push bc ; $526f
 	ld a, [hl+] ; $5270
@@ -1005,7 +1005,7 @@ DrawTennisDictionaryList:
 	ld a, [wTennisDictScrollTop] ; $528d
 	ld b, a ; $5290
 	inc b ; $5291
-	ld hl, SelectionMaskGrid_3f ; $5292
+	ld hl, TennisDictEntryCategories ; $5292
 	ld a, [wTennisDictCategoryMask] ; $5295
 	ld e, a ; $5298
 .skipEntry:
@@ -1060,7 +1060,7 @@ DrawTennisDictionaryList:
 	jr z, .scanLoop ; $52d9
 	cp $40 ; $52db
 	jr nz, .checkMask ; $52dd
-	ld hl, SelectionMaskGrid_3f ; $52df
+	ld hl, TennisDictEntryCategories ; $52df
 	ld c, $00 ; $52e2
 	jr .nextEntry ; $52e4
 .checkMask:

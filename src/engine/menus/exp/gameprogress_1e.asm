@@ -236,29 +236,29 @@ RunRewardCategoryList:
 	ret ; $7444
 RewardCategoryEntryListPtrs_1e:
 	; $7445, 12 bytes (records:2)
-	dw RewardCategoryEntryList0_1e ; record 0
-	dw RewardCategoryEntryList1_1e ; record 1
-	dw RewardCategoryEntryList2_1e ; record 2
-	dw RewardCategoryEntryList3_1e ; record 3
-	dw RewardCategoryEntryList4_1e ; record 4
-	dw RewardCategoryEntryList5_1e ; record 5
-RewardCategoryEntryList0_1e:
+	dw RewardCategoryEntryListBase_1e ; record 0
+	dw RewardCategoryEntryListJuniorSinglesChamp_1e ; record 1
+	dw RewardCategoryEntryListSeniorSinglesChamp_1e ; record 2
+	dw RewardCategoryEntryListVarsitySinglesRank4_1e ; record 3
+	dw RewardCategoryEntryListIslandOpenSinglesFinal_1e ; record 4
+	dw RewardCategoryEntryListCourtStar_1e ; record 5
+RewardCategoryEntryListBase_1e:
 	; $7451, 21 bytes (bytes:16)
 	db $03, $04, $05, $06, $07, $08, $0b, $0e, $11, $14, $17, $1a, $1d, $1e, $1f, $20 ; 0x00
 	db $21, $22, $23, $24, $ff ; 0x10
-RewardCategoryEntryList1_1e:
+RewardCategoryEntryListJuniorSinglesChamp_1e:
 	; $7466, 7 bytes (bytes:16)
 	db $0c, $0f, $12, $15, $18, $1b, $ff ; 0x00
-RewardCategoryEntryList2_1e:
+RewardCategoryEntryListSeniorSinglesChamp_1e:
 	; $746d, 7 bytes (bytes:16)
 	db $0d, $10, $13, $16, $19, $1c, $ff ; 0x00
-RewardCategoryEntryList3_1e:
+RewardCategoryEntryListVarsitySinglesRank4_1e:
 	; $7474, 3 bytes (bytes:16)
 	db $09, $0a, $ff ; 0x00
-RewardCategoryEntryList4_1e:
+RewardCategoryEntryListIslandOpenSinglesFinal_1e:
 	; $7477, 3 bytes (bytes:16)
 	db $01, $02, $ff ; 0x00
-RewardCategoryEntryList5_1e:
+RewardCategoryEntryListCourtStar_1e:
 	; $747a, 2 bytes (bytes:16)
 	db $00, $ff ; 0x00
 BuildVisibleProgressEntryList:

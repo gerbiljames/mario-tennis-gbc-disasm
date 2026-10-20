@@ -17,11 +17,8 @@ wStorySaveSignature:: ds 4
 wStorySlotBlockTag:: ds 3
 	ds 7
 
-; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer)
-wSavedGameTimer:: dw
-
-; [2 bytes] The pair CharDataValuesSyncTask pushes into the character-data screen at $d14c when $d149 is clear (wGameTimer + 2 when set)
-wCharDataSyncValues:: dw
+; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer). Its minutes and hours are what CharDataValuesSyncTask shows when wCharDataSyncSource is clear and what the save-slot summaries store
+wSavedGameTimer:: ds 4
 	ds 17
 
 ; [8-bit] Sound options. Bit 0 is music on/off: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when clear. Other bits are preserved
@@ -57,7 +54,7 @@ wGameMode:: db
 ; [8-bit] Nonzero makes ResetMatchState keep the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps them); cleared after use
 wKeepMatchStatsFlag:: db
 
-; [8-bit] Nonzero selects VictoryScoreTable1 over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
+; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
 wVictoryScoreTableAlt:: db
 
 ; [8-bit] Location SaveStoryReturnPoint recorded to return to; called with b = $ff it snapshots the live position instead of a door

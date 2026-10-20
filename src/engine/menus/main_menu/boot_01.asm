@@ -455,7 +455,7 @@ Unused_01_RunSoundTest:
 	pop hl ; $6a7c
 	push hl ; $6a7d
 	push de ; $6a7e
-	ld hl, SoundTestString0 ; $6a7f
+	ld hl, SoundTestEffectString ; $6a7f
 	ld_cell de, $0d, $0b ; $6a82
 	call PrintString ; $6a85
 	pop de ; $6a88
@@ -522,14 +522,14 @@ Unused_01_RunSoundTest:
 	jr nz, .sfxRowSelected ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
-	ld hl, SoundTestString1 ; $6ae3
+	ld hl, SoundTestCursorString ; $6ae3
 	ld_cell de, $0c, $09 ; $6ae6
 	call PrintString ; $6ae9
 	pop de ; $6aec
 	pop hl ; $6aed
 	push hl ; $6aee
 	push de ; $6aef
-	ld hl, SoundTestString2 ; $6af0
+	ld hl, SoundTestBlankString ; $6af0
 	ld_cell de, $0c, $0b ; $6af3
 	call PrintString ; $6af6
 	pop de ; $6af9
@@ -538,14 +538,14 @@ Unused_01_RunSoundTest:
 .sfxRowSelected:
 	push hl ; $6afd
 	push de ; $6afe
-	ld hl, SoundTestString1 ; $6aff
+	ld hl, SoundTestCursorString ; $6aff
 	ld_cell de, $0c, $0b ; $6b02
 	call PrintString ; $6b05
 	pop de ; $6b08
 	pop hl ; $6b09
 	push hl ; $6b0a
 	push de ; $6b0b
-	ld hl, SoundTestString2 ; $6b0c
+	ld hl, SoundTestBlankString ; $6b0c
 	ld_cell de, $0c, $09 ; $6b0f
 	call PrintString ; $6b12
 	pop de ; $6b15
@@ -600,12 +600,12 @@ Unused_01_RunSoundTest:
 	jp .loop ; $6b61
 SoundTestStrings_01:
 	INCLUDE "data/engine/menus/main_menu/SoundTestStrings_01.asm" ; $6b64, 6 bytes (sound_data)
-SoundTestString0:
-	INCLUDE "data/engine/menus/main_menu/SoundTestString0.asm" ; $6b6a, 7 bytes
-SoundTestString1:
+SoundTestEffectString:
+	INCLUDE "data/engine/menus/main_menu/SoundTestEffectString.asm" ; $6b6a, 7 bytes
+SoundTestCursorString:
 	db $3e ; $6b71
 	db $00 ; $6b72
-SoundTestString2:
+SoundTestBlankString:
 	db $20 ; $6b73
 	db $00 ; $6b74
 SoundTestSoundsA_01:

@@ -11,9 +11,9 @@ Unused_1a_DrawExpScreenMessage_1:
 	ld [wExpScreenFlags], a ; $4dbb
 	call AdvanceFrame ; $4dbe
 	call Unused_1a_DrawExpScreenMessageBox ; $4dc1
-	ld hl, ExtendModifierByteTable0 ; $4dc4
+	ld hl, ContinuePreviousGameString ; $4dc4
 	call Unused_1a_DrawPositionedStringToTileBuffer ; $4dc7
-	ld hl, ExtendModifierByteGfx1 ; $4dca
+	ld hl, ContinuePreviousGamePromptString ; $4dca
 	call Unused_1a_DrawPositionedStringToTileBuffer ; $4dcd
 	wram_bank WRAM_STAGING ; $4dd0
 	ld hl, wDecompBuffer ; $4dd6
@@ -46,9 +46,9 @@ Unused_1a_DrawExpScreenMessage_2:
 	ld [wExpScreenFlags], a ; $4e19
 	call AdvanceFrame ; $4e1c
 	call Unused_1a_DrawExpScreenMessageBox ; $4e1f
-	ld hl, ExtendModifierByteTable2 ; $4e22
+	ld hl, SuspendDataEraseWarningString ; $4e22
 	call Unused_1a_DrawPositionedStringToTileBuffer ; $4e25
-	ld hl, ExtendModifierByteGfx3 ; $4e28
+	ld hl, SuspendDataEraseConfirmString ; $4e28
 	call Unused_1a_DrawPositionedStringToTileBuffer ; $4e2b
 	wram_bank WRAM_STAGING ; $4e2e
 	ld hl, wDecompBuffer ; $4e34

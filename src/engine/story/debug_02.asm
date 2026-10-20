@@ -22,7 +22,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $4fdb
 	jp .printString ; $4fdc
 .slotOk:
-	ld hl, DebugStoryStatsScreenString0 ; $4fdf
+	ld hl, DebugStoryLoadedString ; $4fdf
 	ld_cell de, $08, $02 ; $4fe2
 	call PrintString ; $4fe5
 	call Unused_02_ValidateN64TransferRecord ; $4fe8
@@ -58,10 +58,10 @@ Unused_02_DebugStoryStatsScreen:
 	jr .redraw ; $5014
 .printString:
 	push de ; $5016
-	ld hl, DebugStoryStatsScreenString2 ; $5017
+	ld hl, DebugStoryBlankFieldString ; $5017
 	ld_cell de, $02, $10 ; $501a
 	call PrintString ; $501d
-	ld hl, DebugStoryStatsScreenString2 ; $5020
+	ld hl, DebugStoryBlankFieldString ; $5020
 	ld_cell de, $08, $10 ; $5023
 	call PrintString ; $5026
 	pop de ; $5029
@@ -294,7 +294,7 @@ Unused_02_DebugStoryStatsScreen:
 	jr z, .skipSave ; $51e2
 	sound SFX_MENU_SELECT ; $51e4
 	push de ; $51e6
-	ld hl, DebugStoryStatsScreenString1 ; $51e7
+	ld hl, DebugStorySavedString ; $51e7
 	ld_cell de, $08, $02 ; $51ea
 	call PrintString ; $51ed
 	farcall SaveStorySlotWithTimer ; $51f0
@@ -305,11 +305,11 @@ Unused_02_DebugStoryStatsScreen:
 MenuTilemaps_02:
 	; $51fa, 8 bytes (bytes:16)
 	db $46, $41, $49, $4c, $45, $44, $20, $00 ; 0x00
-DebugStoryStatsScreenString0:
-	INCLUDE "data/engine/story/DebugStoryStatsScreenString0.asm" ; $5202, 8 bytes
-DebugStoryStatsScreenString1:
-	INCLUDE "data/engine/story/DebugStoryStatsScreenString1.asm" ; $520a, 16 bytes
-DebugStoryStatsScreenString2:
+DebugStoryLoadedString:
+	INCLUDE "data/engine/story/DebugStoryLoadedString.asm" ; $5202, 8 bytes
+DebugStorySavedString:
+	INCLUDE "data/engine/story/DebugStorySavedString.asm" ; $520a, 16 bytes
+DebugStoryBlankFieldString:
 	; $521a, 45 bytes (bytes:16)
 	db $20, $20, $20, $20, $20, $20, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
 	db $09, $0a, $0b, $0c, $0d, $00, $00, $00, $00, $00, $00, $00, $00, $4d, $41, $52 ; 0x10

@@ -298,12 +298,12 @@ RunLinkMatchSequence:
 	pop bc ; $74e1
 	ret ; $74e2
 ApplyMatchTypeSettingsLink:
-	ld hl, MatchTypeSettingsLinkTable0 ; $74e3
+	ld hl, SetsPerMatchChoicesLink ; $74e3
 	ld a, [wMatchFormatSets] ; $74e6
 	add_hl_a ; $74e9
 	ld a, [hl] ; $74ee
 	ld [wMatchTypeNumberOfSets], a ; $74ef
-	ld hl, MatchTypeSettingsLinkTable1 ; $74f2
+	ld hl, GamesPerSetChoicesLink ; $74f2
 	ld a, [wMatchFormatGames] ; $74f5
 	add_hl_a ; $74f8
 	ld a, [hl] ; $74fd
@@ -322,10 +322,10 @@ ApplyMatchTypeSettingsLink:
 	clear_flag FLAG_DOUBLES ; $7519
 .done:
 	ret ; $751c
-MatchTypeSettingsLinkTable0:
+SetsPerMatchChoicesLink:
 	; $751d, 3 bytes (bytes:3)
 	db $01, $03, $05 ; 0x00
-MatchTypeSettingsLinkTable1:
+GamesPerSetChoicesLink:
 	; $7520, 2 bytes (bytes:2)
 	db $02, $06 ; 0x00
 ExchangeLinkCharSelection:

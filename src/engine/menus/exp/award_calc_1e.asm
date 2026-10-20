@@ -3,22 +3,22 @@ TrophyExpValueTable:
 	db $32, $00, $32, $00, $32, $00, $32, $00, $64, $00, $64, $00, $64, $00, $64, $00 ; 0x00
 	db $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00, $c8, $00 ; 0x10
 	db $90, $01, $90, $01, $90, $01, $90, $01, $bc, $02, $bc, $02, $bc, $02, $bc, $02 ; 0x20
-MatchStatsRewardTable0:
+GamesWonExpByTier:
 	; $67d7, 8 bytes (bytes:8)
 	db $02, $03, $04, $05, $06, $07, $08, $00 ; 0x00
-MatchStatsRewardTable1:
+ServiceAceExpByTier:
 	; $67df, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $0c, $10, $14, $00 ; 0x00
-MatchStatsRewardTable2:
+ReturnAceExpByTier:
 	; $67e7, 8 bytes (bytes:8)
 	db $01, $02, $03, $06, $09, $0c, $0f, $00 ; 0x00
-MatchStatsRewardTable3:
+SmashAceExpByTier:
 	; $67ef, 8 bytes (bytes:8)
 	db $01, $02, $03, $04, $05, $06, $07, $00 ; 0x00
-MatchStatsRewardTable4:
+LobWinnerExpByTier:
 	; $67f7, 8 bytes (bytes:8)
 	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
-MatchStatsRewardTable5:
+DropShotWinnerExpByTier:
 	; $67ff, 8 bytes (bytes:8)
 	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
 GetScoreBonus:
@@ -63,7 +63,7 @@ ComputeMatchStatsReward:
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
 	pop de ; $685b
-	ld hl, MatchStatsRewardTable0 ; $685c
+	ld hl, GamesWonExpByTier ; $685c
 	ld a, [wTotalGamesWonInMatch] ; $685f
 	call AccumulateStatExp ; $6862
 	ld l, e ; $6865
@@ -74,34 +74,34 @@ ComputeMatchStatsReward:
 	push hl ; $686d
 	call GetOpponentExpTier ; $686e
 	pop de ; $6871
-	ld hl, MatchStatsRewardTable1 ; $6872
+	ld hl, ServiceAceExpByTier ; $6872
 	ld a, [wCharacter1ServiceAces] ; $6875
 	call AccumulateStatExp ; $6878
-	ld hl, MatchStatsRewardTable1 ; $687b
+	ld hl, ServiceAceExpByTier ; $687b
 	ld a, [wCharacter3ServiceAces] ; $687e
 	call AccumulateStatExp ; $6881
-	ld hl, MatchStatsRewardTable2 ; $6884
+	ld hl, ReturnAceExpByTier ; $6884
 	ld a, [wCharacter1ReturnAces] ; $6887
 	call AccumulateStatExp ; $688a
-	ld hl, MatchStatsRewardTable2 ; $688d
+	ld hl, ReturnAceExpByTier ; $688d
 	ld a, [wCharacter3ReturnAces] ; $6890
 	call AccumulateStatExp ; $6893
-	ld hl, MatchStatsRewardTable3 ; $6896
+	ld hl, SmashAceExpByTier ; $6896
 	ld a, [wCharacter1SmashAces] ; $6899
 	call AccumulateStatExp ; $689c
-	ld hl, MatchStatsRewardTable3 ; $689f
+	ld hl, SmashAceExpByTier ; $689f
 	ld a, [wCharacter3SmashAces] ; $68a2
 	call AccumulateStatExp ; $68a5
-	ld hl, MatchStatsRewardTable4 ; $68a8
+	ld hl, LobWinnerExpByTier ; $68a8
 	ld a, [wCharacter1LobShotWinners] ; $68ab
 	call AccumulateStatExp ; $68ae
-	ld hl, MatchStatsRewardTable4 ; $68b1
+	ld hl, LobWinnerExpByTier ; $68b1
 	ld a, [wCharacter3LobShotWinners] ; $68b4
 	call AccumulateStatExp ; $68b7
-	ld hl, MatchStatsRewardTable5 ; $68ba
+	ld hl, DropShotWinnerExpByTier ; $68ba
 	ld a, [wCharacter1DropShotWinners] ; $68bd
 	call AccumulateStatExp ; $68c0
-	ld hl, MatchStatsRewardTable5 ; $68c3
+	ld hl, DropShotWinnerExpByTier ; $68c3
 	ld a, [wCharacter3DropShotWinners] ; $68c6
 	call AccumulateStatExp ; $68c9
 	ld l, e ; $68cc

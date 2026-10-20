@@ -7,7 +7,7 @@
 	farptr ComputeLevelUpStatDeltas ; $400c
 	farptr RefreshPlayerStatsAndGetPtr ; $400e
 	farptr RefreshMainCharacterStats ; $4010
-	farptr RecomputeStatsWithoutRacket ; $4012
+	farptr RecomputeStatsWithoutEquipment ; $4012
 	farptr RollStoryRandomByte ; $4014
 	farptr GenerateUniqueStorySaveSignature ; $4016
 	farptr InitMatchRecordFromCharId ; $4018

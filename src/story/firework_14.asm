@@ -68,12 +68,12 @@ AdvanceFirework0Ascent_14:
 	ld b, $03 ; $64be
 	ld a, [wCutsceneObjTimer] ; $64c0
 	cp $14 ; $64c3
-	jr nc, .checkWaterSpriteMinigameTimer ; $64c5
+	jr nc, .rise ; $64c5
 	dec b ; $64c7
 	cp $0a ; $64c8
-	jr nc, .checkWaterSpriteMinigameTimer ; $64ca
+	jr nc, .rise ; $64ca
 	dec b ; $64cc
-.checkWaterSpriteMinigameTimer:
+.rise:
 	ld a, [wCutsceneObjY] ; $64cd
 	sub b ; $64d0
 	ld [wCutsceneObjY], a ; $64d1
@@ -359,7 +359,7 @@ IslandSkyEntry0fAnd0dScene:
 	dec h ; $6ff5
 	jr nz, .planeLoop ; $6ff6
 	ld h, $08 ; $6ff8
-.planeArrived:
+.driftLoop:
 	script_wait_frames 4 ; $6ffa
 	call PlayPlaneMoveSfx_14 ; $7001
 	ld a, [wCutscenePlaneY] ; $7004
@@ -371,9 +371,9 @@ IslandSkyEntry0fAnd0dScene:
 	add b ; $7011
 	ld [wCutscenePlaneX], a ; $7012
 	dec h ; $7015
-	jr nz, .planeArrived ; $7016
+	jr nz, .driftLoop ; $7016
 	ld h, $18 ; $7018
-.descend:
+.diagonalLoop:
 	script_wait_frames 3 ; $701a
 	call PlayPlaneMoveSfx_14 ; $7021
 	ld a, [wCutscenePlaneY] ; $7024
@@ -383,11 +383,11 @@ IslandSkyEntry0fAnd0dScene:
 	inc a ; $702e
 	ld [wCutscenePlaneX], a ; $702f
 	dec h ; $7032
-	jr nz, .descend ; $7033
+	jr nz, .diagonalLoop ; $7033
 	script_player_speed 0.5625 ; $7035
 	script_move_player 11.0, 24.0 ; $703b
 	ld h, $18 ; $7045
-.land:
+.levelOutLoop:
 	script_wait_frames 2 ; $7047
 	call PlayPlaneMoveSfx_14 ; $704e
 	ld a, [wCutscenePlaneX] ; $7051
@@ -399,9 +399,9 @@ IslandSkyEntry0fAnd0dScene:
 	add b ; $705e
 	ld [wCutscenePlaneY], a ; $705f
 	dec h ; $7062
-	jr nz, .land ; $7063
+	jr nz, .levelOutLoop ; $7063
 	ld h, $20 ; $7065
-.disembark:
+.cruiseLoop:
 	script_wait_frames 2 ; $7067
 	call PlayPlaneMoveSfx_14 ; $706e
 	ld a, [wCutscenePlaneX] ; $7071
@@ -409,21 +409,21 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wCutscenePlaneX], a ; $7075
 	and $03 ; $7078
 	cp $03 ; $707a
-	jr nz, .walkOff ; $707c
+	jr nz, .cruiseStep ; $707c
 	ld a, [wCutscenePlaneY] ; $707e
 	inc a ; $7081
 	ld [wCutscenePlaneY], a ; $7082
-.walkOff:
+.cruiseStep:
 	dec h ; $7085
-	jr nz, .disembark ; $7086
+	jr nz, .cruiseLoop ; $7086
 	ld hl, QueuePlaneSpriteByHeight_14 ; $7088
 	call UnregisterFrameTask ; $708b
 	ld h, $1e ; $708e
-.doublesWalkOff:
+.waitLoop:
 	script_wait_frames 2 ; $7090
 	call PlayPlaneMoveSfx_14 ; $7097
 	dec h ; $709a
-	jr nz, .doublesWalkOff ; $709b
+	jr nz, .waitLoop ; $709b
 	script_move_player 11.0, 13.0 ; $709d
 	call LoadDistantPlaneObjGfx_14 ; $70a7
 	ld a, $04 ; $70aa
@@ -432,7 +432,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wCutscenePlaneY], a ; $70b1
 	frame_task QueueDistantPlaneSprite_14 ; $70b4
 	ld h, $50 ; $70bc
-.speak:
+.distantPlaneLoop:
 	script_wait_frames 2 ; $70be
 	call PlayPlaneMoveSfx_14 ; $70c5
 	ld a, [wCutscenePlaneY] ; $70c8
@@ -443,12 +443,12 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wCutscenePlaneX], a ; $70d3
 	ld a, h ; $70d6
 	cp $1e ; $70d7
-	jr nz, .speakDoubles ; $70d9
+	jr nz, .distantPlaneStep ; $70d9
 	ld a, $00 ; $70db
 	ld [wCutsceneObjPhase], a ; $70dd
-.speakDoubles:
+.distantPlaneStep:
 	dec h ; $70e0
-	jr nz, .speak ; $70e1
+	jr nz, .distantPlaneLoop ; $70e1
 	ld hl, QueueDistantPlaneSprite_14 ; $70e3
 	call UnregisterFrameTask ; $70e6
 	call LoadTwinkleObjGfx_14 ; $70e9
@@ -456,25 +456,25 @@ IslandSkyEntry0fAnd0dScene:
 	script_wait_frames 70 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $70f9
-	jp nz, .fadeOut ; $70fb
+	jp nz, .markStoryComplete ; $70fb
 	ld a, $01 ; $70fe
 	ld [wCutsceneObjActive], a ; $7100
 	ld a, EXIT_ISLAND_SKY_DONE ; $7103
 	ld [wUnusedExitTriggerIdMirror], a ; $7105
 	ld [wStoryModeExitTriggerRequest], a ; $7108
 	ret ; $710b
-.fadeOut:
+.markStoryComplete:
 	test_flag FLAG_DOUBLES ; $710c
-	jp z, .transition ; $710f
+	jp z, .singles ; $710f
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7112
-	jr nz, .doublesLocation ; $7115
+	jr nz, .doublesRevisitCheck ; $7115
 	set_flag FLAG_STORY_COMPLETE_DOUBLES ; $7117
-	jr .setLocation ; $711a
-.transition:
+	jr .saveAndReturnToTitle ; $711a
+.singles:
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $711c
-	jr nz, .storeLocation ; $711f
+	jr nz, .singlesRevisitCheck ; $711f
 	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
-.setLocation:
+.saveAndReturnToTitle:
 	ld b, STORYLOC_PEACHS_CASTLE ; $7124
 	ld c, ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $7126
 	farcall SaveStoryReturnPoint ; $7128
@@ -489,14 +489,14 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $7142
 	ld [wStoryModeExitTriggerRequest], a ; $7145
 	ret ; $7148
-.doublesLocation:
+.doublesRevisitCheck:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $7149
-	jr z, .done ; $714c
-	jr .finish ; $714e
-.storeLocation:
+	jr z, .firstVisit ; $714c
+	jr .revisit ; $714e
+.singlesRevisitCheck:
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $7150
-	jr z, .done ; $7153
-.finish:
+	jr z, .firstVisit ; $7153
+.revisit:
 	script_fade_out 4 ; $7155
 	call WaitFadeEnd ; $715a
 	ld a, STORYLOC_PEACHS_CASTLE ; $715d
@@ -507,7 +507,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $7169
 	ld [wStoryModeExitTriggerRequest], a ; $716c
 	ret ; $716f
-.done:
+.firstVisit:
 	script_fade_out 4 ; $7170
 	call WaitFadeEnd ; $7175
 	ld a, STORYLOC_PEACHS_CASTLE ; $7178

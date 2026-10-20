@@ -148,7 +148,7 @@ TournamentTile0F_0f:
 	call IslandOpenRoundCallCutscene ; $620b
 	ret ; $620e
 TournamentInitScript_0f:
-	frame_task UpdateTournamentActorDrawModes_0f ; $620f
+	frame_task UpdatePlayerPairDrawModes_0f ; $620f
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp STORYENTRY_NONE ; $621a
 	jr z, .inProgress ; $621c
@@ -221,7 +221,7 @@ TournamentInitScript_0f:
 	call SetPlayerAndPartnerObjectDefs ; $6309
 	call WalkActorsInFromEntryPoint_0f ; $630c
 	ret ; $630f
-UpdateTournamentActorDrawModes_0f:
+UpdatePlayerPairDrawModes_0f:
 	ld a, $00 ; $6310
 	call SetActorDrawModeFromSceneTile_0f ; $6312
 	test_flag FLAG_DOUBLES ; $6315
@@ -282,7 +282,7 @@ SetActorDrawModeFromSceneTile_0f:
 	call ReadSceneTilemapTile_0f ; $6370
 	and $07 ; $6373
 	cp $05 ; $6375
-	jr nz, .actorLoop ; $6377
+	jr nz, .notOnTile ; $6377
 	wram_bank WRAM_ACTORS ; $6379
 	ld hl, ACTORF_MODE ; $637f
 	add hl, bc ; $6382
@@ -290,7 +290,7 @@ SetActorDrawModeFromSceneTile_0f:
 	xor $01 ; $6384
 	ld [hl], a ; $6386
 	ret ; $6387
-.actorLoop:
+.notOnTile:
 	wram_bank WRAM_ACTORS ; $6388
 	ld hl, ACTORF_MODE ; $638e
 	add hl, bc ; $6391

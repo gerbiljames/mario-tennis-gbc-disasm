@@ -349,7 +349,7 @@ RestoreScreenAfterEquipSelect:
 	call RestoreScreenAfterEquipSelect ; $4f38
 	ret ; $4f3b
 	twin push_short_text_arg, 0e ; $4f3c PushShortTextArg_0e
-GetEquippedRacketNibble:
+GetSelectedEquipmentNibble:
 	ld a, [wMapScratch + 10] ; $4f5d
 	and a ; $4f60
 	jr z, .lowNibble ; $4f61
@@ -369,13 +369,13 @@ PushEquipmentNameTextArg:
 	jr z, .racket ; $4f77
 	jr .shoes ; $4f79
 .racket:
-	call GetEquippedRacketNibble ; $4f7b
+	call GetSelectedEquipmentNibble ; $4f7b
 	ld hl, Text_RacketNormal ; $4f7e
 	add_hl_a ; $4f81
 	call PushShortTextArg_0e ; $4f86
 	ret ; $4f89
 .shoes:
-	call GetEquippedRacketNibble ; $4f8a
+	call GetSelectedEquipmentNibble ; $4f8a
 	ld hl, $00f4 ; $4f8d
 	add_hl_a ; $4f90
 	call PushShortTextArg_0e ; $4f95
@@ -386,13 +386,13 @@ InitEquipmentHandoutDialogue:
 	jr z, .racket ; $4f9d
 	jr .shoes ; $4f9f
 .racket:
-	call GetEquippedRacketNibble ; $4fa1
+	call GetSelectedEquipmentNibble ; $4fa1
 	ld hl, Text_EquipHandoutNormalRacket ; $4fa4
 	add_hl_a ; $4fa7
 	farcall InitDialogueTextCursor ; $4fac
 	ret ; $4faf
 .shoes:
-	call GetEquippedRacketNibble ; $4fb0
+	call GetSelectedEquipmentNibble ; $4fb0
 	ld hl, Text_EquipHandoutNormalShoes ; $4fb3
 	add_hl_a ; $4fb6
 	farcall InitDialogueTextCursor ; $4fbb

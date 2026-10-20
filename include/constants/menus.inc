@@ -146,7 +146,24 @@ def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingT
 	const CHARDATAPAGE_CONFIRM ; $04
 
 ; --- Tennis Dictionary mode (wTennisDictMode) ---
-def TENNISDICT_INDEX equ $06 ; the 9-cell category index page; modes 0-5 open one category's term list
+; Modes 0-4 open the term list filtered to category bit 1 << mode. Only
+; TENNISDICT_INDEX is ever passed.
+	const_def
+	const TENNISDICT_TERMS        ; $00
+	const TENNISDICT_CATEGORY1    ; $01 no entries carry its bit
+	const TENNISDICT_CATEGORY2    ; $02 no entries carry its bit
+	const TENNISDICT_TECHNIQUE    ; $03
+	const TENNISDICT_COURT        ; $04
+	const TENNISDICT_SINGLE_ENTRY ; $05 all categories, one fixed entry
+	const TENNISDICT_INDEX        ; $06 the 9-cell category index page
+
+; --- Tennis Dictionary category bits (wTennisDictCategoryMask, TennisDictEntryCategories) ---
+def TDICTCAT_TERMS     equ 1 << TENNISDICT_TERMS     ; rules, scoring, shots, formations
+def TDICTCAT_1         equ 1 << TENNISDICT_CATEGORY1
+def TDICTCAT_2         equ 1 << TENNISDICT_CATEGORY2
+def TDICTCAT_TECHNIQUE equ 1 << TENNISDICT_TECHNIQUE ; strokes, spin, grip, footwork
+def TDICTCAT_COURT     equ 1 << TENNISDICT_COURT     ; lines, areas, surfaces
+def TDICTCAT_ALL       equ $1f
 
 ; --- Ranking board presentation (wRankingBoardMode) ---
 	const_def

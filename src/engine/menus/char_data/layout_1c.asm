@@ -10,7 +10,7 @@ MoveCharDataScreenSelection:
 	sound SFX_MENU_MOVE ; $53d8
 	cp $04 ; $53da
 	jr z, .redraw ; $53dc
-	call RestoreCharDataScreenRow ; $53de
+	call RestoreCharDataScreen ; $53de
 	call LoadCharStatsWithLevelUpDeltas ; $53e1
 	call CharDataScreen_DrawStats ; $53e4
 	call DrawCharStatsAndFlush ; $53e7
@@ -18,7 +18,7 @@ MoveCharDataScreenSelection:
 	call FlushCharDataTilemaps ; $53ed
 	ret ; $53f0
 .redraw:
-	call RestoreCharDataScreenRow ; $53f1
+	call RestoreCharDataScreen ; $53f1
 	call LoadCharStats ; $53f4
 	call CharDataScreen_DrawStats ; $53f7
 	call DrawCharStatsAndFlush ; $53fa
@@ -86,7 +86,7 @@ ApplyCharStatLevelUp:
 	ld [wCharDataChoiceCount], a ; $54c6
 	ld a, CHARDATAPAGE_CONFIRM ; $54c9
 	ld [wCharDataPage], a ; $54cb
-	call RestoreCharDataScreenRow ; $54ce
+	call RestoreCharDataScreen ; $54ce
 	call LoadCharStats ; $54d1
 	call CharDataScreen_DrawStats ; $54d4
 	call DrawCharStatsAndFlush ; $54d7
@@ -150,7 +150,7 @@ QueueStatChangeArrow:
 	ret ; $5571
 SetupCharDataScreen:
 	sound BGM_STAT_DISTRIBUTION ; $5572
-	call BackupCharDataScreenRow ; $5574
+	call BackupCharDataScreen ; $5574
 	ld hl, CharDataBand0RunsStep7_1c ; $5577
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $557a
 	call BlitTilemapRunsFromTable ; $557d
@@ -168,7 +168,7 @@ SetupCharDataScreen:
 	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank WRAM_SCENE ; $55a4
 	xor a ; $55aa
-	ld [wCharDataRevealTimer], a ; $55ab
+	ld [wCharDataDigitFlyInStep], a ; $55ab
 	wram_bank WRAM_SCREEN ; $55ae
 	ld hl, wCharDataScreenCell ; $55b4
 	ld de, vBGMap0 ; $55b7
@@ -191,13 +191,13 @@ SetupCharDataScreen:
 	script_fade_in 16 ; $55f1
 	call WaitFadeEnd ; $55f6
 	frame_task CharDataScreenAnimTask ; $55f9
-	call RestoreCharDataScreenRow ; $5601
+	call RestoreCharDataScreen ; $5601
 	call DrawCharStatRows ; $5604
 	ld hl, CharDataBand8RunsStep1_1c ; $5607
 	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $560a
 	call BlitTilemapRunsFromTable ; $560d
 	call FlushCharDataTilemaps ; $5610
-	call RestoreCharDataScreenRow ; $5613
+	call RestoreCharDataScreen ; $5613
 	call DrawCharStatRows ; $5616
 	ld hl, CharDataBand7RunsStep1_1c ; $5619
 	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $561c
@@ -206,7 +206,7 @@ SetupCharDataScreen:
 	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $5625
 	call BlitTilemapRunsFromTable ; $5628
 	call FlushCharDataTilemaps ; $562b
-	call RestoreCharDataScreenRow ; $562e
+	call RestoreCharDataScreen ; $562e
 	call DrawCharStatRows ; $5631
 	ld hl, CharDataBand7RunsStep2_1c ; $5634
 	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5637
@@ -215,7 +215,7 @@ SetupCharDataScreen:
 	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $5640
 	call BlitTilemapRunsFromTable ; $5643
 	call FlushCharDataTilemaps ; $5646
-	call RestoreCharDataScreenRow ; $5649
+	call RestoreCharDataScreen ; $5649
 	call DrawCharStatRows ; $564c
 	ld hl, CharDataBand7RunsStep3_1c ; $564f
 	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5652

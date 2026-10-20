@@ -28,7 +28,7 @@ DrawSinglesRankingEntry:
 	push hl ; $5539
 	ld a, b ; $553a
 	add a ; $553b
-	ld hl, SinglesRankingEntryTable1 ; $553c
+	ld hl, SinglesRankingNameTilemapPtrs ; $553c
 	add_hl_a ; $553f
 	ld a, [hl+] ; $5544
 	ld d, [hl] ; $5545
@@ -61,7 +61,7 @@ SinglesRankingEntryTable:
 	dw Text_NameACoz ; record 9
 	dw Text_NameElden ; record 10
 	dw Text_NameMark ; record 11
-SinglesRankingEntryTable1:
+SinglesRankingNameTilemapPtrs:
 	; $5576, 24 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; record 1
@@ -146,7 +146,7 @@ DrawDoublesRankingEntry:
 	push hl ; $5602
 	ld a, b ; $5603
 	add a ; $5604
-	ld hl, DoublesRankingEntryTable1 ; $5605
+	ld hl, DoublesRankingNameTilemapPtrs ; $5605
 	add_hl_a ; $5608
 	ld a, [hl+] ; $560d
 	ld d, [hl] ; $560e
@@ -180,7 +180,7 @@ DoublesRankingEntryTable:
 	dw Text_NameKevin ; record 10
 	dw Text_NameEmilyDoubles ; record 11
 	dw Text_NameSpike ; record 12
-DoublesRankingEntryTable1:
+DoublesRankingNameTilemapPtrs:
 	; $5641, 24 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; record 1

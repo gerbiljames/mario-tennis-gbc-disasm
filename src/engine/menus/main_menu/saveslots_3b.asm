@@ -56,7 +56,7 @@ BuildSaveSlotSummaries:
 	ld [hl], a ; $5b23
 	ld hl, $000e ; $5b24
 	add hl, bc ; $5b27
-	ld a, [wCharDataSyncValues] ; $5b28
+	ld a, [wSavedGameTimer + 2] ; $5b28
 	ld [hl], a ; $5b2b
 	ld hl, $0010 ; $5b2c
 	add hl, bc ; $5b2f
@@ -158,7 +158,7 @@ DrawMainMenuCaption:
 	ld d, [hl] ; $5be9
 	ld e, a ; $5bea
 	ld a, b ; $5beb
-	ld hl, MainMenuCaptionTable1 ; $5bec
+	ld hl, MainMenuCaptionTextIds ; $5bec
 	add a ; $5bef
 	add_hl_a ; $5bf0
 	ld a, [hl+] ; $5bf5
@@ -180,7 +180,7 @@ MainMenuCaptionTable:
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 6
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 7
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 8
-MainMenuCaptionTable1:
+MainMenuCaptionTextIds:
 	; $5c15, 18 bytes (records:2)
 	dw $007d ; record 0
 	dw $007e ; record 1
@@ -420,7 +420,7 @@ LoadMatchFormatGfx:
 .loop:
 	ld a, c ; $5df7
 	add a ; $5df8
-	ld hl, MatchFormatTable0 ; $5df9
+	ld hl, MatchFormatLabelTilePtrs ; $5df9
 	add_hl_a ; $5dfc
 	ld a, [hl+] ; $5e01
 	ld h, [hl] ; $5e02
@@ -435,7 +435,7 @@ LoadMatchFormatGfx:
 	pop de ; $5e0f
 	pop bc ; $5e10
 	pop af ; $5e11
-	ld hl, MatchFormatTable1 ; $5e12
+	ld hl, MatchFormatLabelTileVramDests ; $5e12
 	ld a, c ; $5e15
 	add a ; $5e16
 	add_hl_a ; $5e17
@@ -510,7 +510,7 @@ LoadMatchFormatGfx:
 	farcall LoadIndexedPalette ; $5eb4
 	pop_wram_bank ; $5eb7
 	ret ; $5ebc
-MatchFormatTable0:
+MatchFormatLabelTilePtrs:
 	; $5ebd, 7 slot words
 	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
 	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
@@ -519,7 +519,7 @@ MatchFormatTable0:
 	dslot DataPtr_OneSetLabelTiles ; record 4
 	dslot DataPtr_ThreeSetsLabelTiles ; record 5
 	dslot DataPtr_FiveSetsLabelTiles ; record 6
-MatchFormatTable1:
+MatchFormatLabelTileVramDests:
 	; $5ecb, 14 bytes (bytes:2)
 	db $00, $a8 ; 0x00
 	db $00, $a9 ; 0x02
@@ -761,11 +761,11 @@ MatchFormatCursorSpriteTask:
 	add $04 ; $60ee
 .gotRuleValue:
 	push af ; $60f0
-	ld hl, MatchFormatCursorSpriteTaskTable1 ; $60f1
+	ld hl, MatchFormatCursorTileBases ; $60f1
 	add_hl_a ; $60f4
 	ld c, [hl] ; $60f9
 	pop af ; $60fa
-	ld hl, MatchFormatCursorSpriteTaskTable0 ; $60fb
+	ld hl, MatchFormatCursorPositions ; $60fb
 	add a ; $60fe
 	add_hl_a ; $60ff
 	ld a, [hl+] ; $6104
@@ -801,10 +801,10 @@ MatchFormatCursorSpriteTask_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MatchFormatCursorSpriteTaskTable0:
+MatchFormatCursorPositions:
 	; $614f, 14 bytes (bytes:14)
 	db $2d, $0a, $2d, $54, $4f, $0c, $4f, $54, $6a, $00, $6a, $2c, $6a, $5d ; 0x00
-MatchFormatCursorSpriteTaskTable1:
+MatchFormatCursorTileBases:
 	; $615d, 7 bytes (bytes:7)
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchFormatCaption:

@@ -21,6 +21,11 @@ after a real defect broke it:
             a label of its bank: a pointer the assembler cannot move
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
+  sound     every snd_script track decodes to whole commands over exactly
+            its extent, every snd_call lands on a command, and its rows
+            encode back to the same bytes
+  traj      every traj table is whole rows of its width and its rows parse
+            back to the same bytes
   macros    every target_script, move_curve, frame_place, blit_runs and
             scoreboard_columns region renders through its macros alone
   scopes    no global label covers both actor-script bytecode and CPU code
@@ -35,18 +40,24 @@ after a real defect broke it:
   literals  no ROM address is written as a number where the source moves:
             a jp/call target, a macro argument that elsewhere always takes a
             label, or an ld rr/dw literal equal to a label in the same bank
-            (96 as_calls once reached two unlabelled routines by number)
+            (96 as_calls once reached two unlabelled routines by number),
+            and no blob opens with words pointing back into itself (a
+            pointer table to split into a dw table of labels)
   labels    code lives under the name of the routine it belongs to: a
             data-named label's scope does not run on into code (a routine's
             tail after a table is `Routine.local:`), a dw table does not
             dispatch to another routine's local that starts after a ret/jp
             (a case is a routine of its own), and no unreferenced label sits
             where code falls into it (it would split a routine in two)
+  gfx       every gfx blob with a PNG beside it encodes back to the bytes
+            the PNG was decoded from
   gfx-specs graphics carry a gfx spec, so they get a PNG: no spec-less
             region named *Gfx*/*Tiles*, and no spec-less LZ stream of whole
             tiles that the source decompresses on to vTiles (192 graphics blobs
             once had no PNG); a gfx-tagged region the source indexes, reads
             element by element or decompresses into a tilemap row fails
+  tilemap   every tilemap:W blob with a grid beside it encodes back to the
+            bytes the grid was decoded from
   reach     a routine is named Unused exactly when nothing reachable from
             the reset, interrupt and rst vectors reaches it (tools/reach.py)
   unnamed   a data label no other label names is Unused_ (a slot-table
@@ -56,6 +67,11 @@ after a real defect broke it:
             actor in every map_actor list tools/actorslots.py finds can be
             active at that line (a name is a row number, so reordering or
             retargeting a list keeps the bytes and changes the actor)
+  entries   every story entry point with no way in carries a `; debug
+            warp only` mark, and only those do (tools/routes.py)
+  raw-ids   a raw cp/store operand on a variable whose other values are
+            named from a constant family is not a member of that family, and
+            the macro and table rows RAW_ID_* lists name their ids
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -388,9 +404,9 @@ KNOWN_DB_WORDS = {
     ("ShotRecoilTable_07", 2): "recoil speeds",
     ("TargetShotZoneOverlayTiles", 32): "tile ids",
     ("StarWarpPathY", 146): "Y coordinates",
-    ("ExtendModifierByteGfx1", 6): "tile data",
-    ("RankingMarkerCoordsTable0Set1", 8): "screen coordinates",
-    ("RankingMarkerCoordsTable1Set1", 8): "screen coordinates",
+    ("ContinuePreviousGamePromptString", 6): "tile data",
+    ("RankingMarkerFanfareCoordSet1", 8): "screen coordinates",
+    ("DoublesRankingMarkerFanfareCoordSet1", 8): "screen coordinates",
     **{(f"CharDataScreenStatBar{n}", 2): "bar tile ids" for n in range(11, 16)},
     ("NameEntryCursorTable", 54): "cursor y, x pairs",
 }

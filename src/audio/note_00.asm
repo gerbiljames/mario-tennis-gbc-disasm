@@ -1,7 +1,7 @@
 NoiseNoteTable:
 	; $3836, 16 bytes (bytes:16)
 	db $00, $01, $11, $12, $14, $23, $07, $15, $17, $32, $33, $60, $61, $45, $53, $62 ; 0x00
-SndTriggerNoteBody:
+SndTriggerRest:
 	xor a ; $3846
 	ldh [hSndRestFlag], a ; $3847
 	ld a, [wSndChannelType] ; $3849
@@ -56,7 +56,7 @@ SndTriggerNote:
 	jr nz, .tonePeriod ; $3894
 	ld a, b ; $3896
 	cp $1f ; $3897
-	jr z, SndTriggerNoteBody ; $3899
+	jr z, SndTriggerRest ; $3899
 	cp $10 ; $389b
 	jr nc, .rawNoisePeriod ; $389d
 	ld hl, NoiseNoteTable ; $389f
@@ -76,7 +76,7 @@ SndTriggerNote:
 	ld a, b ; $38b2
 	and $0f ; $38b3
 	cp $0c ; $38b5
-	jr nc, SndTriggerNoteBody ; $38b7
+	jr nc, SndTriggerRest ; $38b7
 	add a ; $38b9
 	ld e, a ; $38ba
 	ldh a, [hSndToneCtrl] ; $38bb
@@ -250,7 +250,7 @@ TickVibrato:
 ApplyChannelVolumeEnvelope:
 	ld a, [wSndChannelType] ; $39d0
 	cp SNDCHANTYPE_WAVE ; $39d3
-	jr z, WriteChannelReg.writeChannelReg ; $39d5
+	jr z, WriteChannelReg.writeVolume ; $39d5
 	ldh a, [hSndEnvRate] ; $39d7
 	and a ; $39d9
 	jp nz, TickInstrumentEnvelope.readEnvelope ; $39da
@@ -300,7 +300,7 @@ WriteChannelReg:
 	ld a, b ; $3a1a
 	ldh [c], a ; $3a1b
 	ret ; $3a1c
-.writeChannelReg:
+.writeVolume:
 	ldh a, [hSndVolume] ; $3a1d
 	ld c, $12 ; $3a1f
 	jr WriteChannelReg ; $3a21
@@ -313,7 +313,7 @@ ResetChannelLength:
 	and $c0 ; $3a2b
 	ldh [c], a ; $3a2d
 	ret ; $3a2e
-.loop:
+.setWaveEnvelopeLevel:
 	ld a, e ; $3a2f
 	srl a ; $3a30
 	add $02 ; $3a32
@@ -355,7 +355,7 @@ TickInstrumentEnvelope:
 	jr nz, .loop ; $3a69
 	ld a, [wSndChannelType] ; $3a6b
 	cp SNDCHANTYPE_WAVE ; $3a6e
-	jr z, ResetChannelLength.loop ; $3a70
+	jr z, ResetChannelLength.setWaveEnvelopeLevel ; $3a70
 	ldh a, [hSndEnvRate] ; $3a72
 	or e ; $3a74
 	ld e, a ; $3a75

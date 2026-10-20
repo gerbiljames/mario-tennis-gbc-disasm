@@ -441,11 +441,11 @@ RankingAnimSinglesClimbRow01:
 	sound SFX_MARKER ; $5083
 	ld c, $00 ; $5085
 	call GetRankingMarkerSlot ; $5087
-	ld de, RankingAnimSinglesClimbRow01Table3 ; $508a
+	ld de, RankingAnimSinglesClimbRow01Right12 ; $508a
 	call StartRankingMarkerAnim2 ; $508d
 	ld c, $01 ; $5090
 	call GetRankingMarkerSlot ; $5092
-	ld de, RankingAnimSinglesClimbRow01Table4 ; $5095
+	ld de, RankingAnimSinglesClimbRow01Left8 ; $5095
 	call StartRankingMarkerAnim1 ; $5098
 	ld b, $01 ; $509b
 	call HighlightRankingRow ; $509d
@@ -454,21 +454,21 @@ RankingAnimSinglesClimbRow01:
 	sound SFX_RANKING_HIGHLIGHT ; $50a7
 	ld c, $03 ; $50a9
 	call GetRankingMarkerSlot ; $50ab
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $50ae
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $50ae
 	call StartRankingMarkerAnim0 ; $50b1
 	ld c, $04 ; $50b4
 	call GetRankingMarkerSlot ; $50b6
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $50b9
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $50b9
 	call StartRankingMarkerAnim1 ; $50bc
 	wait_frames 90 ; $50bf
 	sound SFX_MARKER ; $50c3
 	ld c, $03 ; $50c5
 	call GetRankingMarkerSlot ; $50c7
-	ld de, RankingAnimSinglesClimbRow01Table3 ; $50ca
+	ld de, RankingAnimSinglesClimbRow01Right12 ; $50ca
 	call StartRankingMarkerAnim2 ; $50cd
 	ld c, $04 ; $50d0
 	call GetRankingMarkerSlot ; $50d2
-	ld de, RankingAnimSinglesClimbRow01Table4 ; $50d5
+	ld de, RankingAnimSinglesClimbRow01Left8 ; $50d5
 	call StartRankingMarkerAnim1 ; $50d8
 	ld b, $02 ; $50db
 	call HighlightRankingRow ; $50dd
@@ -477,21 +477,21 @@ RankingAnimSinglesClimbRow01:
 	sound SFX_RANKING_HIGHLIGHT ; $50e7
 	ld c, $06 ; $50e9
 	call GetRankingMarkerSlot ; $50eb
-	ld de, RankingAnimSinglesClimbRow01Table2 ; $50ee
+	ld de, RankingAnimSinglesClimbRow01Left7 ; $50ee
 	call StartRankingMarkerAnim0 ; $50f1
 	ld c, $07 ; $50f4
 	call GetRankingMarkerSlot ; $50f6
-	ld de, RankingAnimSinglesClimbRow01Table2 ; $50f9
+	ld de, RankingAnimSinglesClimbRow01Left7 ; $50f9
 	call StartRankingMarkerAnim1 ; $50fc
 	wait_frames 90 ; $50ff
 	sound SFX_MARKER ; $5103
 	ld c, $06 ; $5105
 	call GetRankingMarkerSlot ; $5107
-	ld de, RankingAnimSinglesClimbRow01Table3 ; $510a
+	ld de, RankingAnimSinglesClimbRow01Right12 ; $510a
 	call StartRankingMarkerAnim2 ; $510d
 	ld c, $07 ; $5110
 	call GetRankingMarkerSlot ; $5112
-	ld de, RankingAnimSinglesClimbRow01Table1 ; $5115
+	ld de, RankingAnimSinglesClimbRow01Right7 ; $5115
 	call StartRankingMarkerAnim1 ; $5118
 	ld b, $03 ; $511b
 	call HighlightRankingRow ; $511d
@@ -500,21 +500,21 @@ RankingAnimSinglesClimbRow01:
 	sound SFX_RANKING_HIGHLIGHT ; $5127
 	ld c, $09 ; $5129
 	call GetRankingMarkerSlot ; $512b
-	ld de, RankingAnimSinglesClimbRow01Table2 ; $512e
+	ld de, RankingAnimSinglesClimbRow01Left7 ; $512e
 	call StartRankingMarkerAnim0 ; $5131
 	ld c, $0a ; $5134
 	call GetRankingMarkerSlot ; $5136
-	ld de, RankingAnimSinglesClimbRow01Table2 ; $5139
+	ld de, RankingAnimSinglesClimbRow01Left7 ; $5139
 	call StartRankingMarkerAnim1 ; $513c
 	wait_frames 90 ; $513f
 	sound SFX_MARKER ; $5143
 	ld c, $09 ; $5145
 	call GetRankingMarkerSlot ; $5147
-	ld de, RankingAnimSinglesClimbRow01Table3 ; $514a
+	ld de, RankingAnimSinglesClimbRow01Right12 ; $514a
 	call StartRankingMarkerAnim2 ; $514d
 	ld c, $0a ; $5150
 	call GetRankingMarkerSlot ; $5152
-	ld de, RankingAnimSinglesClimbRow01Table1 ; $5155
+	ld de, RankingAnimSinglesClimbRow01Right7 ; $5155
 	call StartRankingMarkerAnim1 ; $5158
 	ld b, $04 ; $515b
 	call HighlightRankingRow ; $515d
@@ -529,11 +529,11 @@ RankingAnimSinglesClimbRow2:
 	sound SFX_MARKER ; $517b
 	ld c, $00 ; $517d
 	call GetRankingMarkerSlot ; $517f
-	ld de, RankingAnimSinglesClimbRow2Table0 ; $5182
+	ld de, RankingAnimSinglesClimbRow2Right16 ; $5182
 	call StartRankingMarkerAnim2 ; $5185
 	ld c, $02 ; $5188
 	call GetRankingMarkerSlot ; $518a
-	ld de, RankingAnimSinglesClimbRow2Table3 ; $518d
+	ld de, RankingAnimSinglesClimbRow2Left16 ; $518d
 	call StartRankingMarkerAnim1 ; $5190
 	ld b, $05 ; $5193
 	call HighlightRankingRow ; $5195
@@ -542,22 +542,22 @@ RankingAnimSinglesClimbRow2:
 	sound SFX_RANKING_HIGHLIGHT ; $519f
 	ld c, $05 ; $51a1
 	call GetRankingMarkerSlot ; $51a3
-	ld de, RankingAnimSinglesClimbRow2Table0 ; $51a6
+	ld de, RankingAnimSinglesClimbRow2Right16 ; $51a6
 	call StartRankingMarkerAnim1 ; $51a9
 	wait_frames 4 ; $51ac
 	ld c, $03 ; $51b0
 	call GetRankingMarkerSlot ; $51b2
-	ld de, RankingAnimSinglesClimbRow2Table2 ; $51b5
+	ld de, RankingAnimSinglesClimbRow2Right8 ; $51b5
 	call StartRankingMarkerAnim0 ; $51b8
 	wait_frames 120 ; $51bb
 	sound SFX_MARKER ; $51bf
 	ld c, $05 ; $51c1
 	call GetRankingMarkerSlot ; $51c3
-	ld de, RankingAnimSinglesClimbRow2Table3 ; $51c6
+	ld de, RankingAnimSinglesClimbRow2Left16 ; $51c6
 	call StartRankingMarkerAnim3 ; $51c9
 	ld c, $03 ; $51cc
 	call GetRankingMarkerSlot ; $51ce
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $51d1
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $51d1
 	call StartRankingMarkerAnim0 ; $51d4
 	ld b, $06 ; $51d7
 	call HighlightRankingRow ; $51d9
@@ -566,22 +566,22 @@ RankingAnimSinglesClimbRow2:
 	sound SFX_RANKING_HIGHLIGHT ; $51e3
 	ld c, $08 ; $51e5
 	call GetRankingMarkerSlot ; $51e7
-	ld de, RankingAnimSinglesClimbRow2Table4 ; $51ea
+	ld de, RankingAnimSinglesClimbRow2Left15 ; $51ea
 	call StartRankingMarkerAnim1 ; $51ed
 	wait_frames 4 ; $51f0
 	ld c, $06 ; $51f4
 	call GetRankingMarkerSlot ; $51f6
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $51f9
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $51f9
 	call StartRankingMarkerAnim0 ; $51fc
 	wait_frames 90 ; $51ff
 	sound SFX_MARKER ; $5203
 	ld c, $08 ; $5205
 	call GetRankingMarkerSlot ; $5207
-	ld de, RankingAnimSinglesClimbRow2Table3 ; $520a
+	ld de, RankingAnimSinglesClimbRow2Left16 ; $520a
 	call StartRankingMarkerAnim3 ; $520d
 	ld c, $06 ; $5210
 	call GetRankingMarkerSlot ; $5212
-	ld de, RankingAnimSinglesClimbRow2Table2 ; $5215
+	ld de, RankingAnimSinglesClimbRow2Right8 ; $5215
 	call StartRankingMarkerAnim0 ; $5218
 	ld b, $07 ; $521b
 	call HighlightRankingRow ; $521d
@@ -590,22 +590,22 @@ RankingAnimSinglesClimbRow2:
 	sound SFX_RANKING_HIGHLIGHT ; $5227
 	ld c, $0b ; $5229
 	call GetRankingMarkerSlot ; $522b
-	ld de, RankingAnimSinglesClimbRow2Table4 ; $522e
+	ld de, RankingAnimSinglesClimbRow2Left15 ; $522e
 	call StartRankingMarkerAnim1 ; $5231
 	wait_frames 4 ; $5234
 	ld c, $09 ; $5238
 	call GetRankingMarkerSlot ; $523a
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $523d
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $523d
 	call StartRankingMarkerAnim0 ; $5240
 	wait_frames 90 ; $5243
 	sound SFX_MARKER ; $5247
 	ld c, $0b ; $5249
 	call GetRankingMarkerSlot ; $524b
-	ld de, RankingAnimSinglesClimbRow2Table1 ; $524e
+	ld de, RankingAnimSinglesClimbRow2Right15 ; $524e
 	call StartRankingMarkerAnim1 ; $5251
 	ld c, $09 ; $5254
 	call GetRankingMarkerSlot ; $5256
-	ld de, RankingAnimSinglesClimbRow2Table0 ; $5259
+	ld de, RankingAnimSinglesClimbRow2Right16 ; $5259
 	call StartRankingMarkerAnim2 ; $525c
 	ld b, $08 ; $525f
 	call HighlightRankingRow ; $5261
@@ -620,11 +620,11 @@ RankingAnimSinglesClimbRow3:
 	sound SFX_MARKER ; $527f
 	ld c, $00 ; $5281
 	call GetRankingMarkerSlot ; $5283
-	ld de, RankingAnimSinglesClimbRow3Table0 ; $5286
+	ld de, RankingAnimSinglesClimbRow3Right36 ; $5286
 	call StartRankingMarkerAnim2 ; $5289
 	ld c, $05 ; $528c
 	call GetRankingMarkerSlot ; $528e
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $5291
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $5291
 	call StartRankingMarkerAnim0 ; $5294
 	ld b, $09 ; $5297
 	call HighlightRankingRow ; $5299
@@ -633,21 +633,21 @@ RankingAnimSinglesClimbRow3:
 	sound SFX_RANKING_HIGHLIGHT ; $52a3
 	ld c, $08 ; $52a5
 	call GetRankingMarkerSlot ; $52a7
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $52aa
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $52aa
 	call StartRankingMarkerAnim0 ; $52ad
 	ld c, $09 ; $52b0
 	call GetRankingMarkerSlot ; $52b2
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $52b5
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $52b5
 	call StartRankingMarkerAnim1 ; $52b8
 	wait_frames 90 ; $52bb
 	sound SFX_MARKER ; $52bf
 	ld c, $08 ; $52c1
 	call GetRankingMarkerSlot ; $52c3
-	ld de, RankingAnimSinglesClimbRow01Table1 ; $52c6
+	ld de, RankingAnimSinglesClimbRow01Right7 ; $52c6
 	call StartRankingMarkerAnim0 ; $52c9
 	ld c, $09 ; $52cc
 	call GetRankingMarkerSlot ; $52ce
-	ld de, RankingAnimSinglesClimbRow3Table1 ; $52d1
+	ld de, RankingAnimSinglesClimbRow3Left36 ; $52d1
 	call StartRankingMarkerAnim3 ; $52d4
 	ld b, $0a ; $52d7
 	call HighlightRankingRow ; $52d9
@@ -667,11 +667,11 @@ RankingAnimSinglesMarkRow01:
 	sound SFX_RANKING_HIGHLIGHT ; $5303
 	ld c, $00 ; $5305
 	call GetRankingMarkerSlot ; $5307
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $530a
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $530a
 	call StartRankingMarkerAnim0 ; $530d
 	ld c, $01 ; $5310
 	call GetRankingMarkerSlot ; $5312
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $5315
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $5315
 	call StartRankingMarkerAnim1 ; $5318
 	wait_frames 20 ; $531b
 	jp RankingBoardAnimNop_1b ; $531f
@@ -680,12 +680,12 @@ RankingAnimSinglesMarkRow2:
 	sound SFX_RANKING_HIGHLIGHT ; $5326
 	ld c, $02 ; $5328
 	call GetRankingMarkerSlot ; $532a
-	ld de, RankingAnimSinglesClimbRow2Table0 ; $532d
+	ld de, RankingAnimSinglesClimbRow2Right16 ; $532d
 	call StartRankingMarkerAnim1 ; $5330
 	wait_frames 4 ; $5333
 	ld c, $00 ; $5337
 	call GetRankingMarkerSlot ; $5339
-	ld de, RankingAnimSinglesClimbRow2Table2 ; $533c
+	ld de, RankingAnimSinglesClimbRow2Right8 ; $533c
 	call StartRankingMarkerAnim0 ; $533f
 	wait_frames 20 ; $5342
 	jp RankingBoardAnimNop_1b ; $5346
@@ -694,11 +694,11 @@ RankingAnimSinglesMarkRow3:
 	sound SFX_RANKING_HIGHLIGHT ; $534d
 	ld c, $00 ; $534f
 	call GetRankingMarkerSlot ; $5351
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $5354
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $5354
 	call StartRankingMarkerAnim0 ; $5357
 	ld c, $05 ; $535a
 	call GetRankingMarkerSlot ; $535c
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $535f
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $535f
 	call StartRankingMarkerAnim1 ; $5362
 	jp RankingBoardAnimNop_1b ; $5365
 RankingAnimSinglesMarkRow4:
@@ -706,11 +706,11 @@ RankingAnimSinglesMarkRow4:
 	sound SFX_RANKING_HIGHLIGHT ; $536c
 	ld c, $00 ; $536e
 	call GetRankingMarkerSlot ; $5370
-	ld de, RankingAnimSinglesMarkRow4Table0 ; $5373
+	ld de, RankingAnimSinglesMarkRow4Right4 ; $5373
 	call StartRankingMarkerAnim0 ; $5376
 	ld c, $09 ; $5379
 	call GetRankingMarkerSlot ; $537b
-	ld de, RankingAnimSinglesMarkRow4Table1 ; $537e
+	ld de, RankingAnimSinglesMarkRow4Left4 ; $537e
 	call StartRankingMarkerAnim1 ; $5381
 	jp RankingBoardAnimNop_1b ; $5384
 RankingAnimDoublesClimbRow01:
@@ -719,11 +719,11 @@ RankingAnimDoublesClimbRow01:
 	sound SFX_MARKER ; $5393
 	ld c, $00 ; $5395
 	call GetRankingMarkerSlot ; $5397
-	ld de, RankingAnimDoublesClimbRow01Table1 ; $539a
+	ld de, RankingAnimDoublesClimbRow01Right20 ; $539a
 	call StartRankingMarkerAnim2 ; $539d
 	ld c, $01 ; $53a0
 	call GetRankingMarkerSlot ; $53a2
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $53a5
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $53a5
 	call StartRankingMarkerAnim1 ; $53a8
 	ld b, $01 ; $53ab
 	call HighlightDoublesRankingRow ; $53ad
@@ -732,21 +732,21 @@ RankingAnimDoublesClimbRow01:
 	sound SFX_RANKING_HIGHLIGHT ; $53b7
 	ld c, $03 ; $53b9
 	call GetRankingMarkerSlot ; $53bb
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $53be
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $53be
 	call StartRankingMarkerAnim0 ; $53c1
 	ld c, $04 ; $53c4
 	call GetRankingMarkerSlot ; $53c6
-	ld de, RankingAnimSinglesClimbRow01Table2 ; $53c9
+	ld de, RankingAnimSinglesClimbRow01Left7 ; $53c9
 	call StartRankingMarkerAnim1 ; $53cc
 	wait_frames 90 ; $53cf
 	sound SFX_MARKER ; $53d3
 	ld c, $03 ; $53d5
 	call GetRankingMarkerSlot ; $53d7
-	ld de, RankingAnimDoublesClimbRow01Table1 ; $53da
+	ld de, RankingAnimDoublesClimbRow01Right20 ; $53da
 	call StartRankingMarkerAnim2 ; $53dd
 	ld c, $04 ; $53e0
 	call GetRankingMarkerSlot ; $53e2
-	ld de, RankingAnimDoublesClimbRow01Table0 ; $53e5
+	ld de, RankingAnimDoublesClimbRow01Right6 ; $53e5
 	call StartRankingMarkerAnim1 ; $53e8
 	ld b, $02 ; $53eb
 	call HighlightDoublesRankingRow ; $53ed
@@ -763,7 +763,7 @@ RankingAnimDoublesClimbRow2:
 	call StartRankingMarkerAnim2 ; $5410
 	ld c, $02 ; $5413
 	call GetRankingMarkerSlot ; $5415
-	ld de, RankingAnimSinglesClimbRow2Table3 ; $5418
+	ld de, RankingAnimSinglesClimbRow2Left16 ; $5418
 	call StartRankingMarkerAnim1 ; $541b
 	ld b, $03 ; $541e
 	call HighlightDoublesRankingRow ; $5420
@@ -772,11 +772,11 @@ RankingAnimDoublesClimbRow2:
 	sound SFX_RANKING_HIGHLIGHT ; $542a
 	ld c, $03 ; $542c
 	call GetRankingMarkerSlot ; $542e
-	ld de, RankingAnimSinglesClimbRow2Table5 ; $5431
+	ld de, RankingAnimSinglesClimbRow2Left8 ; $5431
 	call StartRankingMarkerAnim0 ; $5434
 	ld c, $05 ; $5437
 	call GetRankingMarkerSlot ; $5439
-	ld de, RankingAnimSinglesClimbRow2Table3 ; $543c
+	ld de, RankingAnimSinglesClimbRow2Left16 ; $543c
 	call StartRankingMarkerAnim1 ; $543f
 	wait_frames 140 ; $5442
 	sound SFX_MARKER ; $5446
@@ -786,7 +786,7 @@ RankingAnimDoublesClimbRow2:
 	call StartRankingMarkerAnim2 ; $5450
 	ld c, $05 ; $5453
 	call GetRankingMarkerSlot ; $5455
-	ld de, RankingAnimSinglesClimbRow2Table0 ; $5458
+	ld de, RankingAnimSinglesClimbRow2Right16 ; $5458
 	call StartRankingMarkerAnim1 ; $545b
 	ld b, $04 ; $545e
 	call HighlightDoublesRankingRow ; $5460
@@ -803,7 +803,7 @@ RankingAnimDoublesClimbRow3:
 	call StartRankingMarkerAnim0 ; $5483
 	ld c, $03 ; $5486
 	call GetRankingMarkerSlot ; $5488
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $548b
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $548b
 	call StartRankingMarkerAnim1 ; $548e
 	ld b, $06 ; $5491
 	call HighlightDoublesRankingRow ; $5493
@@ -817,11 +817,11 @@ RankingAnimDoublesMarkRow01:
 	sound SFX_RANKING_HIGHLIGHT ; $54a7
 	ld c, $00 ; $54a9
 	call GetRankingMarkerSlot ; $54ab
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $54ae
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $54ae
 	call StartRankingMarkerAnim0 ; $54b1
 	ld c, $01 ; $54b4
 	call GetRankingMarkerSlot ; $54b6
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $54b9
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $54b9
 	call StartRankingMarkerAnim1 ; $54bc
 	jp RankingBoardAnimNop_1b ; $54bf
 RankingAnimDoublesMarkRow2:
@@ -829,12 +829,12 @@ RankingAnimDoublesMarkRow2:
 	sound SFX_RANKING_HIGHLIGHT ; $54c6
 	ld c, $02 ; $54c8
 	call GetRankingMarkerSlot ; $54ca
-	ld de, RankingAnimSinglesClimbRow2Table0 ; $54cd
+	ld de, RankingAnimSinglesClimbRow2Right16 ; $54cd
 	call StartRankingMarkerAnim1 ; $54d0
 	wait_frames 8 ; $54d3
 	ld c, $00 ; $54d7
 	call GetRankingMarkerSlot ; $54d9
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $54dc
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $54dc
 	call StartRankingMarkerAnim0 ; $54df
 	jp RankingBoardAnimNop_1b ; $54e2
 RankingAnimDoublesMarkRow3:
@@ -842,11 +842,11 @@ RankingAnimDoublesMarkRow3:
 	sound SFX_RANKING_HIGHLIGHT ; $54e9
 	ld c, $00 ; $54eb
 	call GetRankingMarkerSlot ; $54ed
-	ld de, RankingAnimSinglesClimbRow01Table0 ; $54f0
+	ld de, RankingAnimSinglesClimbRow01Right8 ; $54f0
 	call StartRankingMarkerAnim0 ; $54f3
 	ld c, $03 ; $54f6
 	call GetRankingMarkerSlot ; $54f8
-	ld de, RankingAnimSinglesClimbRow01Table2 ; $54fb
+	ld de, RankingAnimSinglesClimbRow01Left7 ; $54fb
 	call StartRankingMarkerAnim1 ; $54fe
 	jp RankingBoardAnimNop_1b ; $5501
 RankingAnimDoublesMarkRow4:

@@ -81,7 +81,7 @@ WaterSpriteSwingContestScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5661
 	ld b, $20 ; $5668
 	ld e, $10 ; $566a
-.contest:
+.slideHudIn:
 	ld a, $20 ; $566c
 	sub b ; $566e
 	ld d, a ; $566f
@@ -100,7 +100,7 @@ WaterSpriteSwingContestScene:
 	ld [wSwingContestHudPage], a ; $5689
 	script_wait_frames 1 ; $568c
 	dec b ; $5693
-	jp nz, .contest ; $5694
+	jp nz, .slideHudIn ; $5694
 	ld de, $0258 ; $5697
 	ld hl, wSwingContestTimer ; $569a
 	ld a, e ; $569d
@@ -119,37 +119,37 @@ WaterSpriteSwingContestScene:
 	ld l, $03 ; $56bc
 	ld h, $00 ; $56be
 	ld_xy de, $50, $2c ; $56c0
-.win:
+.countdownLoop:
 	sound SFX_CONTEST_WIN ; $56c3
 	ld b, $3c ; $56c5
-.lose:
+.countdownTick:
 	farcall DrawDecimalNumberSprites_39 ; $56c7
 	script_wait_frames 1 ; $56ca
 	dec b ; $56d1
-	jp nz, .lose ; $56d2
+	jp nz, .countdownTick ; $56d2
 	dec l ; $56d5
-	jp nz, .win ; $56d6
+	jp nz, .countdownLoop ; $56d6
 	sound SFX_COUNTDOWN_GO ; $56d9
 	call TogglePlayerSpriteXFlip ; $56db
 	frame_task WaterSpriteSwingCountTask ; $56de
-.reward:
+.swingLoop:
 	call AdvanceFrame ; $56e6
 	ld a, [wSwingContestSwingState] ; $56e9
 	cp $00 ; $56ec
 	jr z, .finish ; $56ee
 	cp $01 ; $56f0
-	jr z, .rewardWait ; $56f2
+	jr z, .swingRecover ; $56f2
 	ld a, $09 ; $56f4
 	ld d, a ; $56f6
 	ld a, $00 ; $56f7
 	farcall ScriptSetActorAnimation ; $56f9
-	jr .reward ; $56fc
-.rewardWait:
+	jr .swingLoop ; $56fc
+.swingRecover:
 	ld a, $0a ; $56fe
 	ld d, a ; $5700
 	ld a, $00 ; $5701
 	farcall ScriptSetActorAnimation ; $5703
-	jr .reward ; $5706
+	jr .swingLoop ; $5706
 .finish:
 	sound SFX_CONTEST_FINISH ; $5708
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $570a
@@ -160,7 +160,7 @@ WaterSpriteSwingContestScene:
 	call UnregisterFrameTask ; $5723
 	ld b, $30 ; $5726
 	ld e, $10 ; $5728
-.done:
+.slideHudOut:
 	ld a, b ; $572a
 	sub $10 ; $572b
 	ld d, a ; $572d
@@ -182,7 +182,7 @@ WaterSpriteSwingContestScene:
 	ld [wSwingContestHudPage], a ; $574a
 	script_wait_frames 1 ; $574d
 	dec b ; $5754
-	jp nz, .done ; $5755
+	jp nz, .slideHudOut ; $5755
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
 	wait_frames 60 ; $575e

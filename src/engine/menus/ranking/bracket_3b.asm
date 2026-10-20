@@ -236,7 +236,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
 	ld a, [wDataScreenPage] ; $7963
-	ld hl, BracketPlayerRowTable0 ; $7966
+	ld hl, BracketSinglesMarkerAttrPtrs ; $7966
 	add a ; $7969
 	add_hl_a ; $796a
 	ld a, [hl+] ; $796f
@@ -254,7 +254,7 @@ HighlightBracketPlayerRow:
 	ret ; $7984
 .doubles:
 	ld a, [wDataScreenPage] ; $7985
-	ld hl, BracketPlayerRowTable1 ; $7988
+	ld hl, BracketDoublesRowAttrPtrs ; $7988
 	add a ; $798b
 	add_hl_a ; $798c
 	ld a, [hl+] ; $7991
@@ -264,7 +264,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
 	ld a, [wDataScreenPage] ; $799d
-	ld hl, BracketPlayerRowTable2 ; $79a0
+	ld hl, BracketDoublesMarkerAttrPtrs ; $79a0
 	add a ; $79a3
 	add_hl_a ; $79a4
 	ld a, [hl+] ; $79a9
@@ -281,19 +281,19 @@ HighlightBracketPlayerRowTable:
 	dw wShadowAttrmap + 10 * TILEMAP_WIDTH + 9 ; record 2
 	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 3
 	dw wShadowAttrmap + 14 * TILEMAP_WIDTH + 9 ; record 4
-BracketPlayerRowTable0:
+BracketSinglesMarkerAttrPtrs:
 	; $79c0, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 5 ; record 2
 	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 3
 	dw wShadowAttrmap + 15 * TILEMAP_WIDTH + 5 ; record 4
-BracketPlayerRowTable1:
+BracketDoublesRowAttrPtrs:
 	; $79ca, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; record 1
 	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 2
-BracketPlayerRowTable2:
+BracketDoublesMarkerAttrPtrs:
 	; $79d0, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1

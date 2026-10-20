@@ -260,49 +260,49 @@ GetItemStatModListPtr:
 	ret ; $5a5e
 ItemStatModListPtrPtrs:
 	; $5a5f, 14 bytes (records:2)
-	dw ItemStatModList0 ; record 0
-	dw ItemStatModList1 ; record 1
-	dw ItemStatModList2 ; record 2
-	dw ItemStatModList3 ; record 3
-	dw ItemStatModList5 ; record 4
-	dw ItemStatModList4 ; record 5
-	dw ItemStatModList6 ; record 6
+	dw NormalItemStatMods ; record 0
+	dw LargeRacketStatMods ; record 1
+	dw SmallRacketStatMods ; record 2
+	dw IronRacketStatMods ; record 3
+	dw GoldRacketStatMods ; record 4
+	dw SilverRacketStatMods ; record 5
+	dw DriveRacketStatMods ; record 6
 ItemStatModListPtrTable:
 	; $5a6d, 6 bytes (records:2)
-	dw ItemStatModList0 ; record 0
-	dw ItemStatModListTable0 ; record 1
-	dw ItemStatModListTable1 ; record 2
-ItemStatModList0:
+	dw NormalItemStatMods ; record 0
+	dw IronShoesStatMods ; record 1
+	dw LightShoesStatMods ; record 2
+NormalItemStatMods:
 	; $5a73, 7 bytes (bytes:8)
 	db $fe, $fe, $fe, $fe, $0a, $fe, $ff ; 0x00
-ItemStatModList1:
+LargeRacketStatMods:
 	; $5a7a, 11 bytes (bytes:8)
 	db $00, $81, $01, $81, $03, $82, $04, $02 ; 0x00
 	db $05, $01, $ff ; 0x08
-ItemStatModList2:
+SmallRacketStatMods:
 	; $5a85, 11 bytes (bytes:8)
 	db $00, $02, $01, $01, $03, $01, $04, $82 ; 0x00
 	db $05, $82, $ff ; 0x08
-ItemStatModList3:
+IronRacketStatMods:
 	; $5a90, 11 bytes (bytes:8)
 	db $00, $82, $01, $82, $02, $82, $fe, $fe ; 0x00
 	db $0b, $fe, $ff ; 0x08
-ItemStatModList4:
+SilverRacketStatMods:
 	; $5a9b, 11 bytes (bytes:8)
 	db $00, $81, $01, $81, $02, $03, $04, $01 ; 0x00
 	db $05, $01, $ff ; 0x08
-ItemStatModList5:
+GoldRacketStatMods:
 	; $5aa6, 9 bytes (bytes:8)
 	db $00, $02, $01, $02, $02, $81, $04, $81 ; 0x00
 	db $ff ; 0x08
-ItemStatModList6:
+DriveRacketStatMods:
 	; $5aaf, 7 bytes (bytes:8)
 	db $00, $82, $03, $03, $01, $82, $ff ; 0x00
-ItemStatModListTable0:
+IronShoesStatMods:
 	; $5ab6, 11 bytes (bytes:8)
 	db $07, $82, $0c, $82, $08, $82, $09, $82 ; 0x00
 	db $0b, $fe, $ff ; 0x08
-ItemStatModListTable1:
+LightShoesStatMods:
 	; $5ac1, 9 bytes (bytes:8)
 	db $07, $02, $0c, $02, $08, $82, $09, $82 ; 0x00
 	db $ff ; 0x08
@@ -401,18 +401,18 @@ GetStatModRowAddr:
 	ret ; $5b62
 StatModRowAddrPtrs:
 	; $5b63, 6 bytes (records:2)
-	dw StatModRowAddr0 ; record 0
-	dw StatModRowAddr1 ; record 1
-	dw StatModRowAddr2 ; record 2
-StatModRowAddr0:
+	dw StatModRowAddrSelectScreen ; record 0
+	dw StatModRowAddrRacketPanel ; record 1
+	dw StatModRowAddrShoesPanel ; record 2
+StatModRowAddrSelectScreen:
 	; $5b69, 16 bytes (bytes:8)
 	db $e1, $d0, $eb, $d0, $21, $d1, $2b, $d1 ; 0x00
 	db $61, $d1, $6b, $d1, $00, $00, $00, $00 ; 0x08
-StatModRowAddr1:
+StatModRowAddrRacketPanel:
 	; $5b79, 16 bytes (bytes:8)
 	db $61, $d0, $6b, $d0, $a1, $d0, $ab, $d0 ; 0x00
 	db $e1, $d0, $eb, $d0, $00, $00, $00, $00 ; 0x08
-StatModRowAddr2:
+StatModRowAddrShoesPanel:
 	; $5b89, 16 bytes (bytes:8)
 	db $81, $d1, $8b, $d1, $c1, $d1, $cb, $d1 ; 0x00
 	db $01, $d2, $0b, $d2, $00, $00, $00, $00 ; 0x08

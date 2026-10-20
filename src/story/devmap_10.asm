@@ -225,12 +225,12 @@ MainMenuInitScript_10:
 	call SetMusicMuted ; $4eca
 	ret ; $4ecd
 ApplyMatchTypeSettings:
-	ld hl, MatchTypeSettingsTable0 ; $4ece
+	ld hl, SetsPerMatchChoices ; $4ece
 	ld a, [wMatchFormatSets] ; $4ed1
 	add_hl_a ; $4ed4
 	ld a, [hl] ; $4ed9
 	ld [wMatchTypeNumberOfSets], a ; $4eda
-	ld hl, MatchTypeSettingsTable1 ; $4edd
+	ld hl, GamesPerSetChoices ; $4edd
 	ld a, [wMatchFormatGames] ; $4ee0
 	add_hl_a ; $4ee3
 	ld a, [hl] ; $4ee8
@@ -249,10 +249,10 @@ ApplyMatchTypeSettings:
 	clear_flag FLAG_DOUBLES ; $4f04
 .done:
 	ret ; $4f07
-MatchTypeSettingsTable0:
+SetsPerMatchChoices:
 	; $4f08, 3 bytes (bytes:16)
 	db $01, $03, $05 ; 0x00
-MatchTypeSettingsTable1:
+GamesPerSetChoices:
 	db $02 ; $4f0b
 	db $06 ; $4f0c
 RunTitleAndMainMenuLoop:

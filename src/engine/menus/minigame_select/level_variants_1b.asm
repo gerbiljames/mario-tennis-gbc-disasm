@@ -174,11 +174,11 @@ DrawMinigameLevelSelect2Cursor:
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex_1b ; $6f67
 	push af ; $6f6a
-	ld hl, MinigameLevelSelect2CursorTable1 ; $6f6b
+	ld hl, MinigameLevelSelect2CursorTileBases ; $6f6b
 	add_hl_a ; $6f6e
 	ld c, [hl] ; $6f73
 	pop af ; $6f74
-	ld hl, MinigameLevelSelect2CursorTable0 ; $6f75
+	ld hl, MinigameLevelSelect2CursorPositions ; $6f75
 	add a ; $6f78
 	add_hl_a ; $6f79
 	ld a, [hl+] ; $6f7e
@@ -214,10 +214,10 @@ DrawMinigameLevelSelect2Cursor_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MinigameLevelSelect2CursorTable0:
+MinigameLevelSelect2CursorPositions:
 	; $6fc9, 6 bytes (bytes:6)
 	db $50, $0c, $50, $54, $50, $5c ; 0x00
-MinigameLevelSelect2CursorTable1:
+MinigameLevelSelect2CursorTileBases:
 	; $6fcf, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
 RunMinigameLevelSelect3:
@@ -349,11 +349,11 @@ DrawMinigameLevelSelect3Cursor:
 	ld c, $03 ; $70f0
 	call GetMenuCursorIndex_1b ; $70f2
 	push af ; $70f5
-	ld hl, MinigameLevelSelect3CursorTable1 ; $70f6
+	ld hl, MinigameLevelSelect3CursorTileBases ; $70f6
 	add_hl_a ; $70f9
 	ld c, [hl] ; $70fe
 	pop af ; $70ff
-	ld hl, MinigameLevelSelect3CursorTable0 ; $7100
+	ld hl, MinigameLevelSelect3CursorPositions ; $7100
 	add a ; $7103
 	add_hl_a ; $7104
 	ld a, [hl+] ; $7109
@@ -389,10 +389,10 @@ DrawMinigameLevelSelect3Cursor_SpriteTemplate1:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MinigameLevelSelect3CursorTable0:
+MinigameLevelSelect3CursorPositions:
 	; $7154, 6 bytes (bytes:6)
 	db $50, $fc, $50, $2c, $50, $5c ; 0x00
-MinigameLevelSelect3CursorTable1:
+MinigameLevelSelect3CursorTileBases:
 	; $715a, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
 RunSavedDataTypeSelect:

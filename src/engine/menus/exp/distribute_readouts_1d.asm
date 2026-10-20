@@ -238,7 +238,7 @@ CheckExpLevelDown:
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491
 	sound SFX_MENU_SELECT ; $7493
-	farcall BackupCharDataScreenRow ; $7495
+	farcall BackupCharDataScreen ; $7495
 	ld hl, ExpLevelDownTilemapPatch4 ; $7498
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $749b
 	call ApplyTilemapPatchListExpScreen ; $749e
@@ -338,37 +338,37 @@ DrawExpPromptCursor:
 	ret ; $7593
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7594
-	farcall RestoreCharDataScreenRow ; $7596
+	farcall RestoreCharDataScreen ; $7596
 	ld hl, ExpLevelDownTilemapPatch0 ; $7599
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $759c
 	call ApplyTilemapPatchListExpScreen ; $759f
 	call UploadExpPromptWindowRowsClosing ; $75a2
 	wait_frames 2 ; $75a5
-	farcall RestoreCharDataScreenRow ; $75a9
+	farcall RestoreCharDataScreen ; $75a9
 	ld hl, ExpLevelDownTilemapPatch1 ; $75ac
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75af
 	call ApplyTilemapPatchListExpScreen ; $75b2
 	call UploadExpPromptWindowRowsClosing ; $75b5
 	wait_frames 2 ; $75b8
-	farcall RestoreCharDataScreenRow ; $75bc
+	farcall RestoreCharDataScreen ; $75bc
 	ld hl, ExpLevelDownTilemapPatch2 ; $75bf
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75c2
 	call ApplyTilemapPatchListExpScreen ; $75c5
 	call UploadExpPromptWindowRowsClosing ; $75c8
 	wait_frames 2 ; $75cb
-	farcall RestoreCharDataScreenRow ; $75cf
+	farcall RestoreCharDataScreen ; $75cf
 	ld hl, ExpLevelDownTilemapPatch3 ; $75d2
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75d5
 	call ApplyTilemapPatchListExpScreen ; $75d8
 	call UploadExpPromptWindowRowsClosing ; $75db
 	wait_frames 2 ; $75de
-	farcall RestoreCharDataScreenRow ; $75e2
+	farcall RestoreCharDataScreen ; $75e2
 	ld hl, ExpLevelDownTilemapPatch4 ; $75e5
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75e8
 	call ApplyTilemapPatchListExpScreen ; $75eb
 	call UploadExpPromptWindowRowsClosing ; $75ee
 	wait_frames 2 ; $75f1
-	farcall RestoreCharDataScreenRow ; $75f5
+	farcall RestoreCharDataScreen ; $75f5
 	call UploadExpPromptWindowRowsClosing ; $75f8
 	wait_frames 2 ; $75fb
 	wram_bank WRAM_SCENE ; $75ff

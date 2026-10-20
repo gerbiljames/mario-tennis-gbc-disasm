@@ -254,7 +254,7 @@ ServiceMatch1JudgeOnBallHit:
 ; means the body never runs, so this drill does not judge on a bounce.
 ;
 ; Each drill has four of these, one per hook: PointEnd, BallHit, Bounce and
-; RallyTick, passing 0-3 to its JudgePoint as the event code. 18 of the 52 in
+; RallyTick, passing 0-3 to its JudgePoint as the event code. 20 of the 60 in
 ; this bank start with `ret`, and which ones varies by drill -- most disable
 ; only RallyTick, the serve and net drills also disable Bounce, and
 ; ServiceMatch2 disables Bounce while leaving RallyTick live, so each drill
