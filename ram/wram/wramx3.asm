@@ -427,10 +427,10 @@ ENDU
 
 	ds 416
 
-; Character-grid scroll counter, bank $38.
+; Character-grid Right-press counter, bank $38.
 ; character select (bank $38)
-; [8-bit] Incremented each time the grid scrolls down a row; the select screen prints it as a decimal byte at row 3, column 1 every frame (a leftover on-screen counter, no other reader)
-wCharGridScrollCount:: db
+; [8-bit] Incremented on each Right press in HandleCharGridDpad; the select screen prints it as a decimal byte at row 3, column 1 every frame (a leftover on-screen counter, no other reader)
+wCharGridRightPressCount:: db
 
 	ds 255
 

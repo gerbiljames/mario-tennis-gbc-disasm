@@ -181,7 +181,7 @@ RunExhibitionCharSelectScreen:
 	ldh a, [hInputPressed] ; $4ead
 	ld [wMenuInputPressed], a ; $4eaf
 	wram_bank WRAM_SCREEN ; $4eb2
-	ld a, [wCharGridScrollCount] ; $4eb8
+	ld a, [wCharGridRightPressCount] ; $4eb8
 	push de ; $4ebb
 	push af ; $4ebc
 	ld a, a ; $4ebd
@@ -375,18 +375,18 @@ HandleCharGridDpad:
 	ld a, [wMenuInputPressed] ; $51a5
 	ldh a, [hInputPressed] ; $51a8
 	bit PADB_RIGHT, a ; $51aa
-	jr nz, .scrollDown ; $51ac
+	jr nz, .moveRight ; $51ac
 	bit PADB_LEFT, a ; $51ae
 	jr nz, .moveLeft ; $51b0
 	bit PADB_UP, a ; $51b2
-	jr nz, .moveRight ; $51b4
+	jr nz, .moveUp ; $51b4
 	bit PADB_DOWN, a ; $51b6
 	jr nz, .moveDown ; $51b8
 	jr .done ; $51ba
-.scrollDown:
-	ld a, [wCharGridScrollCount] ; $51bc
+.moveRight:
+	ld a, [wCharGridRightPressCount] ; $51bc
 	inc a ; $51bf
-	ld [wCharGridScrollCount], a ; $51c0
+	ld [wCharGridRightPressCount], a ; $51c0
 	ld a, HAND_UNCHOSEN ; $51c3
 	ld [wCharGridHandedness], a ; $51c5
 	call MoveCharGridCursorRight ; $51c8
@@ -398,7 +398,7 @@ HandleCharGridDpad:
 	ld [wCharGridHandedness], a ; $51d4
 	call MoveCharGridCursorLeft ; $51d7
 	jr .done ; $51da
-.moveRight:
+.moveUp:
 	ld a, HAND_UNCHOSEN ; $51dc
 	ld [wCharGridHandedness], a ; $51de
 	call MoveCharGridCursorUp ; $51e1
