@@ -29,8 +29,8 @@ MatchGfxPalettesA_28:
 MatchGraphicsPalettes:
 	INCLUDE "data/engine/match/MatchGraphicsPalettes.asm" ; $4be0, 16 bytes (palettes)
 	ds ALIGN[4]
-MatchGfxMapsA_28:
-	INCBIN "data/engine/match/MatchGfxMapsA_28.bin" ; $4bf0, 320 bytes
+MinigameObjTiles_28:
+	INCBIN "data/engine/match/MinigameObjTiles_28.bin" ; $4bf0, 320 bytes
 	ds ALIGN[4]
 MatchVariantTiles0:
 	INCBIN "data/engine/match/MatchVariantTiles0.bin" ; $4d30, 256 bytes
@@ -95,7 +95,7 @@ LoadMatchGraphics:
 LoadMatchVariantGraphics:
 	ld a, [wCurrentMatchIndex] ; $5efb
 	sub MINIGAME_TENNIS_MACHINE_1 ; $5efe
-	jr c, .loadMapsA ; $5f00
+	jr c, .loadObjTiles ; $5f00
 	jumptable a ; $5f02
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f04 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f06 jumptable
@@ -115,11 +115,11 @@ LoadMatchVariantGraphics:
 	dw LoadMatchVariantGraphics.bananaBunch ; $5f22 jumptable
 	dw LoadMatchVariantGraphics.treasureBox ; $5f24 jumptable
 	dw LoadMatchVariantGraphics.medallionMatch ; $5f26 jumptable
-	dw LoadMatchVariantGraphics.loadMapsA ; $5f28 jumptable
-.loadMapsA:
-	ld hl, MatchGfxMapsA_28 ; $5f2a
+	dw LoadMatchVariantGraphics.loadObjTiles ; $5f28 jumptable
+.loadObjTiles:
+	ld hl, MinigameObjTiles_28 ; $5f2a
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f2d
-	ld c, 32 ; $5f30
+	ld c, 32 ; $5f30 -- the 20 tiles plus the first 12 of MatchVariantTiles0
 	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
 .loadMatchSharedTiles:
@@ -139,9 +139,9 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
 .targetShot:
-	ld hl, MatchGfxMapsA_28 ; $5f5b
+	ld hl, MinigameObjTiles_28 ; $5f5b
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5f5e
-	ld c, 8 ; $5f61 -- 8 of MatchGfxMapsA_28's 20 tiles
+	ld c, 8 ; $5f61 -- 8 of MinigameObjTiles_28's 20 tiles
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
@@ -180,9 +180,9 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
 .treasureBox:
-	ld hl, MatchGfxMapsA_28 ; $5fbd
+	ld hl, MinigameObjTiles_28 ; $5fbd
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5fc0
-	ld c, 8 ; $5fc3 -- 8 of MatchGfxMapsA_28's 20 tiles
+	ld c, 8 ; $5fc3 -- 8 of MinigameObjTiles_28's 20 tiles
 	call QueueVRAMCopy ; $5fc5
 	ld hl, MatchVariantGraphicsPalettes4 ; $5fc8
 	ld_obj_pals de, 6, 1 ; $5fcb

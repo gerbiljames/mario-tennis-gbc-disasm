@@ -222,7 +222,7 @@ Unused_1b_UpdateUnlockDebugSelectedMugshot:
 	jr .registerStatTask ; $66b4
 .locked:
 	ld a, $20 ; $66b6
-	ld [wCharRecordBuffer + 11], a ; $66b8
+	ld [wCharRecordBuffer + CHARREC_CHAR], a ; $66b8
 .registerStatTask:
 	frame_task Unused_1b_UpdateUnlockDebugStatOnChange, $0a ; $66bb
 	ret ; $66c3
@@ -244,7 +244,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	farcall LoadCharacterRecordToBuffer ; $66de
 	farcall Unused_18_CheckUnlockFlag ; $66e1
 	jr z, .nextEntry ; $66e4
-	ld a, [wCharRecordBuffer + 11] ; $66e6
+	ld a, [wCharRecordBuffer + CHARREC_CHAR] ; $66e6
 	farcall LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
@@ -253,7 +253,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call Unused_1b_GetUnlockDebugRosterField ; $66fa
-	ld a, [wCharRecordBuffer + 12] ; $66fd
+	ld a, [wCharRecordBuffer + CHARREC_PALETTE] ; $66fd
 	farcall Unused_1b_SetMugshotAttrs ; $6700
 .nextEntry:
 	ld a, $08 ; $6703
@@ -263,7 +263,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	jr nz, .loop ; $670d
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
-	ld a, [wCharRecordBuffer + 11] ; $6715
+	ld a, [wCharRecordBuffer + CHARREC_CHAR] ; $6715
 	farcall Unused_1b_StubNop0 ; $6718
 	ret ; $671b
 Unused_1b_RunMinigameFlagsDebugScreen:
@@ -379,7 +379,7 @@ Unused_1b_MoveUnlockDebugCursor:
 	jr .storeCursor ; $6817
 .locked:
 	ld a, $20 ; $6819
-	ld [wCharRecordBuffer + 11], a ; $681b
+	ld [wCharRecordBuffer + CHARREC_CHAR], a ; $681b
 .storeCursor:
 	ld a, d ; $681e
 	ld [wCharSelectCol], a ; $681f

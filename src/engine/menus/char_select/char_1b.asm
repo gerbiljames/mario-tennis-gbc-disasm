@@ -246,9 +246,9 @@ RunNewGameSetup:
 .rosterLoop:
 	push af ; $61d8
 	farcall LoadCharacterRecordToBuffer ; $61d9
-	ld a, [wCharRecordBuffer + 14] ; $61dc
+	ld a, [wCharRecordBuffer + CHARREC_LEFT_HANDED] ; $61dc
 	ld [hl+], a ; $61df
-	ld a, [wCharRecordBuffer + 12] ; $61e0
+	ld a, [wCharRecordBuffer + CHARREC_PALETTE] ; $61e0
 	ld [hl+], a ; $61e3
 	pop af ; $61e4
 	inc a ; $61e5

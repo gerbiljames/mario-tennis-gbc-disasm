@@ -1861,6 +1861,7 @@ def _text_cell_offsets(fail):
 # a record: (routine, operand) -> what the number is.
 KNOWN_RAW_FIELD_OFFSETS = {
     ("UpdateActorJumpPhysics", "$0010"): "gravity added to the vertical velocity",
+    ("Unused_1b_DrawUnlockDebugMugshots", "$08"): "wCharSelectRoster entry stride",
 }
 _FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT|SCENEOBJ|WINDOW)_(?!SIZE\b)\w+")
 _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")

@@ -944,7 +944,7 @@ engine/match/BallTouchCharEffectTilesB_28.bin 0a0560 80 gfx
 engine/match/lz_MatchGfxTilesA_28.bin 0a05e0 5c0 gfx
 engine/match/MatchGfxPalettesA_28.asm 0a0ba0 40 palettes
 engine/match/MatchGraphicsPalettes.asm 0a0be0 10 palettes
-engine/match/MatchGfxMapsA_28.bin 0a0bf0 140 gfx
+engine/match/MinigameObjTiles_28.bin 0a0bf0 140 gfx
 engine/match/MatchVariantTiles0.bin 0a0d30 100 gfx
 engine/match/MatchVariantTiles1.bin 0a0e30 300 gfx
 engine/match/MatchVariantTiles2.bin 0a1130 340 gfx
