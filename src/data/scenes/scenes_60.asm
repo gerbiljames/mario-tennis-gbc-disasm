@@ -58,8 +58,8 @@ DataPtr_HardCourtScoreboardColumnTilesAlias1:
 	dw HardCourtScoreboardColumnTiles ; $4038
 DataPtr_HardCourtScoreboardColumnAttrs:
 	dw HardCourtScoreboardColumnAttrs ; $403a
-DataPtr_HardCourtSceneUnusedSlot:
-	dw HardCourtSceneUnusedSlot ; $403c
+DataPtr_HardCourtSceneNoAnimTiles:
+	dw HardCourtSceneNoAnimTiles ; $403c
 DataPtr_HardCourtTiles:
 	dw HardCourtTiles ; $403e
 GrassCourtPalettes:
@@ -110,5 +110,5 @@ HardCourtScoreboardColumnTiles:
 	INCLUDE "data/scenes/HardCourtScoreboardColumnTiles.asm" ; $7bad, 40 bytes (scoreboard_columns)
 HardCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/HardCourtScoreboardColumnAttrs.asm" ; $7bd5, 40 bytes (scoreboard_columns)
-HardCourtSceneUnusedSlot:
+HardCourtSceneNoAnimTiles:
 	; $7bfd, 1027 bytes fill to bank end (linker-padded)

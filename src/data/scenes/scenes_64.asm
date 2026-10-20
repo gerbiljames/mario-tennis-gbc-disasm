@@ -42,8 +42,8 @@ DataPtr_CourtyardCollisionMap:
 	dw CourtyardCollisionMap ; $4028
 DataPtr_CourtyardBehaviorMap:
 	dw CourtyardBehaviorMap ; $402a
-DataPtr_CourtyardSceneUnusedSlot:
-	dw CourtyardSceneUnusedSlot ; $402c
+DataPtr_CourtyardSceneAnimTiles:
+	dw CourtyardSceneAnimTiles ; $402c
 DataPtr_CourtyardTiles:
 	dw CourtyardTiles ; $402e
 DormRoomSceneConfig:
@@ -90,5 +90,6 @@ CourtyardBehaviorMap:
 	INCBIN "data/scenes/lz_CourtyardBehaviorMap.bin" ; $76d9, 79 bytes
 	; $7728, 8 bytes (fill)
 	ds 8, $00
-CourtyardSceneUnusedSlot:
-	INCBIN "data/scenes/CourtyardSceneUnusedSlot.bin" ; $7730, 2256 bytes
+CourtyardSceneAnimTiles:
+	INCBIN "data/scenes/CourtyardSceneAnimTiles.bin" ; $7730, 1536 bytes
+	; $7d30, 720 bytes fill to bank end (linker-padded)

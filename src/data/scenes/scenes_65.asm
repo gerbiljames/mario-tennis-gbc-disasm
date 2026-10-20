@@ -10,8 +10,8 @@ DataPtr_IslandSkyCollisionMap:
 	dw IslandSkyCollisionMap ; $4008
 DataPtr_IslandSkyBehaviorMap:
 	dw IslandSkyBehaviorMap ; $400a
-DataPtr_IslandSkySceneUnusedSlot:
-	dw IslandSkySceneUnusedSlot ; $400c
+DataPtr_IslandSkySceneAnimTiles:
+	dw IslandSkySceneAnimTiles ; $400c
 DataPtr_IslandSkyTiles:
 	dw IslandSkyTiles ; $400e
 DataPtr_SpecialCourtSceneConfig:
@@ -26,8 +26,8 @@ DataPtr_SpecialCourtCollisionMap:
 	dw SpecialCourtCollisionMap ; $4018
 DataPtr_SpecialCourtBehaviorMap:
 	dw SpecialCourtBehaviorMap ; $401a
-DataPtr_SpecialCourtSceneUnusedSlot:
-	dw SpecialCourtSceneUnusedSlot ; $401c
+DataPtr_SpecialCourtSceneAnimTiles:
+	dw SpecialCourtSceneAnimTiles ; $401c
 DataPtr_SpecialCourtTiles:
 	dw SpecialCourtTiles ; $401e
 DataPtr_SeniorClassCourtSceneConfig:
@@ -42,8 +42,8 @@ DataPtr_SeniorClassCourtCollisionMap:
 	dw SeniorClassCourtCollisionMap ; $4028
 DataPtr_SeniorClassCourtBehaviorMap:
 	dw SeniorClassCourtBehaviorMap ; $402a
-DataPtr_SeniorClassCourtSceneUnusedSlot:
-	dw SeniorClassCourtSceneUnusedSlot ; $402c
+DataPtr_SeniorClassCourtSceneNoAnimTiles:
+	dw SeniorClassCourtSceneNoAnimTiles ; $402c
 DataPtr_SeniorClassCourtTiles:
 	dw SeniorClassCourtTiles ; $402e
 IslandSkySceneConfig:
@@ -62,8 +62,8 @@ IslandSkyBehaviorMap:
 	INCBIN "data/scenes/lz_IslandSkyBehaviorMap.bin" ; $50c8, 73 bytes
 	; $5111, 15 bytes (fill)
 	ds 15, $00
-IslandSkySceneUnusedSlot:
-	INCBIN "data/scenes/IslandSkySceneUnusedSlot.bin" ; $5120, 1536 bytes
+IslandSkySceneAnimTiles:
+	INCBIN "data/scenes/IslandSkySceneAnimTiles.bin" ; $5120, 1536 bytes
 SpecialCourtSceneConfig:
 	INCLUDE "data/scenes/SpecialCourtSceneConfig.asm" ; $5720, 23 bytes (scene_config)
 SpecialCourtPalettes:
@@ -80,8 +80,8 @@ SpecialCourtBehaviorMap:
 	INCBIN "data/scenes/lz_SpecialCourtBehaviorMap.bin" ; $64b4, 70 bytes
 	; $64fa, 6 bytes (fill)
 	ds 6, $00
-SpecialCourtSceneUnusedSlot:
-	INCBIN "data/scenes/SpecialCourtSceneUnusedSlot.bin" ; $6500, 1536 bytes
+SpecialCourtSceneAnimTiles:
+	INCBIN "data/scenes/SpecialCourtSceneAnimTiles.bin" ; $6500, 1536 bytes
 SeniorClassCourtSceneConfig:
 	INCLUDE "data/scenes/SeniorClassCourtSceneConfig.asm" ; $6b00, 42 bytes (scene_config)
 SeniorClassCourtPalettes:
@@ -96,5 +96,5 @@ SeniorClassCourtCollisionMap:
 	INCBIN "data/scenes/lz_SeniorClassCourtCollisionMap.bin" ; $7c97, 110 bytes
 SeniorClassCourtBehaviorMap:
 	INCBIN "data/scenes/lz_SeniorClassCourtBehaviorMap.bin" ; $7d05, 81 bytes
-SeniorClassCourtSceneUnusedSlot:
+SeniorClassCourtSceneNoAnimTiles:
 	; $7d56, 682 bytes fill to bank end (linker-padded)

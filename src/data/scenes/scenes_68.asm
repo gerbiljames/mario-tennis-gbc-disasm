@@ -42,8 +42,8 @@ DataPtr_PeachsCastleCollisionMap:
 	dw PeachsCastleCollisionMap ; $4028
 DataPtr_PeachsCastleBehaviorMap:
 	dw PeachsCastleBehaviorMap ; $402a
-DataPtr_PeachsCastleSceneUnusedSlot:
-	dw PeachsCastleSceneUnusedSlot ; $402c
+DataPtr_PeachsCastleSceneAnimTiles:
+	dw PeachsCastleSceneAnimTiles ; $402c
 DataPtr_PeachsCastleTiles:
 	dw PeachsCastleTiles ; $402e
 Court2SceneConfig:
@@ -90,5 +90,6 @@ PeachsCastleBehaviorMap:
 	INCBIN "data/scenes/lz_PeachsCastleBehaviorMap.bin" ; $73f7, 74 bytes
 	; $7441, 15 bytes (fill)
 	ds 15, $00
-PeachsCastleSceneUnusedSlot:
-	INCBIN "data/scenes/PeachsCastleSceneUnusedSlot.bin" ; $7450, 2992 bytes
+PeachsCastleSceneAnimTiles:
+	INCBIN "data/scenes/PeachsCastleSceneAnimTiles.bin" ; $7450, 1536 bytes
+	; $7a50, 1456 bytes fill to bank end (linker-padded)

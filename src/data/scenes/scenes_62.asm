@@ -58,8 +58,8 @@ DataPtr_CastleCourtScoreboardColumnTilesAlias1:
 	dw CastleCourtScoreboardColumnTiles ; $4038
 DataPtr_CastleCourtScoreboardColumnAttrs:
 	dw CastleCourtScoreboardColumnAttrs ; $403a
-DataPtr_CastleCourtSceneUnusedSlot:
-	dw CastleCourtSceneUnusedSlot ; $403c
+DataPtr_CastleCourtSceneNoAnimTiles:
+	dw CastleCourtSceneNoAnimTiles ; $403c
 DataPtr_CastleCourtTiles:
 	dw CastleCourtTiles ; $403e
 StarCourtPalettes:
@@ -110,5 +110,5 @@ CastleCourtScoreboardColumnTiles:
 	INCLUDE "data/scenes/CastleCourtScoreboardColumnTiles.asm" ; $6f2e, 40 bytes (scoreboard_columns)
 CastleCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/CastleCourtScoreboardColumnAttrs.asm" ; $6f56, 40 bytes (scoreboard_columns)
-CastleCourtSceneUnusedSlot:
+CastleCourtSceneNoAnimTiles:
 	; $6f7e, 4226 bytes fill to bank end (linker-padded)

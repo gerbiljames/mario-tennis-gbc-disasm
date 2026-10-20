@@ -434,17 +434,36 @@ def render_scoreboard_columns(data: bytes) -> str:
 
 
 def render_scene_config(data: bytes) -> str:
-    """A story scene config: LoadStorySceneGraphics reads only bytes 2-5,
-    the scroll origin and map size in tiles."""
+    """A story scene config: LoadStorySceneGraphics reads bytes 2-5, the
+    scroll origin and map size in tiles; InitSceneTileAnimations reads the
+    tile-animation list from byte 8 to its $fe."""
     if len(data) < 6:
         return render_byte_table(data, 8)
     out = ["\tdb " + ", ".join(f"${b:02x}" for b in data[:2]) + " ; not read",
            "\tscene_bounds " + ", ".join(str(b) for b in data[2:6])]
     if len(data) > 6:
+        out.append("\tdb " + ", ".join(f"${b:02x}" for b in data[6:8]) + " ; not read")
+    i = 8
+    while i < len(data):
+        b = data[i]
+        if b == 0xFE:
+            out.append("\tscene_tile_anim_end")
+            i += 1
+            break
+        if b == 0xFF and i + 2 <= len(data):
+            out.append(f"\tscene_tile_anim_loop {data[i + 1]}")
+            i += 2
+        elif i + 4 <= len(data) and max(data[i:i + 4]) < 0xFE:
+            src, count, dest, delay = data[i:i + 4]
+            out.append(f"\tscene_tile_anim {src}, {count}, {dest}, {delay}")
+            i += 4
+        else:
+            break
+    if i < len(data):
         out.append("; not read")
-    for i in range(6, len(data), 8):
-        row = ", ".join(f"${b:02x}" for b in data[i:i + 8])
-        out.append(f"\tdb {row} ; +{i}")
+    for j in range(i, len(data), 8):
+        row = ", ".join(f"${b:02x}" for b in data[j:j + 8])
+        out.append(f"\tdb {row} ; +{j}")
     return "\n".join(out) + "\n"
 
 

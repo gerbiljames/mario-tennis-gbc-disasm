@@ -294,8 +294,11 @@ the scene id in `a`, computes `SceneGfxSlotTable + 16*a`, pushes slots 0-6
 | 6 | — | **popped and discarded** | `$58bd` |
 | 7 | `wDecompBuffer` → VRAM | LZ, then `QueueVRAMCopy` | `$589e` |
 
-Slot 6 is a fossil: `$58bd` pops it and `$58be` sets
-`de = wStorySceneUnusedBuffer`, but both are overwritten before any call.
+The loader drops slot 6 (`$58bd` pops it; `$58be`'s
+`de = wStorySceneUnusedBuffer` is overwritten before any call). Its reader is
+the tile animator: `AdvanceSceneTileAnimation` (`$0a:$6522`) copies raw 2bpp
+tiles from it per step of the config's `scene_tile_anim` list, into
+`vTiles2 + VRAM_BANK1` (`story_mode.md`).
 
 Slot 7's tiles go to `vTiles2 + VRAM_BANK1`, `c = 128`, and `wTextTileBuffer`
 to `vTiles1 + VRAM_BANK1`, `c = wTextTileBuffer_SIZE / 16` (128)
@@ -765,7 +768,7 @@ rejects any other spec; the rest exist as inline declarations only.
 | `target_script` | 57* | `tgt_*` commands (`include/macros/minigame_targets.inc`) |
 | `scoreboard_columns` | 32* | a court's `ScoreboardColumnTiles` or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
 | `frame_place` | 30* | `*FramePlace` rows (§4.5) |
-| `scene_config` | 21* | a story `SceneConfig`: `scene_bounds` and the unread bytes |
+| `scene_config` | 21* | a story `SceneConfig`: `scene_bounds`, the `scene_tile_anim` list and the unread bytes |
 | `move_curve` | 16* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
 | `text` | 10* | game text that is not NUL-terminated strings of two or more bytes (one-character strings, a signature, NUL padding) |
 | one each | | `cart_header`, `squares`, `story_locations`, `location_entries`, `minigame_configs`, `tilemap_scripts`, `gfx_ptr_table`, `lz_ptr_table`, `char_lz_ptr_table`, `mugshot_ptr_table`, `tilemap_dispatch` |
@@ -829,8 +832,8 @@ thirty-three pass:
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33946 | no ROM address is written as a number where the source moves, no named WRAM address is split into `add`/`adc` halves, an `ld bc/de/hl` immediate is never a WRAM label's start, nor its negation ahead of an `add hl, rr` (`$10000 - wX`; exceptions allow-listed); no RAM/VRAM address half is a raw byte where it is checkable: a page added to an offset (`ld a, $d0 / add h / ld h, a`), a `cp` on a pointer's high byte, an `ld l/e` re-aiming a pointer loaded from a WRAM label, an `ld h/d` page the next instructions dereference |
 | `dma` | 59 | every label handed to a VRAM DMA routine is 16-byte aligned, including each entry of a `dw` table the source is read from (`Label tile n` / `Label + n` with `n` a multiple of 16 count) |
-| `gfx` | 2897 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row or a `w*Tilemap`/`w*Attrmap`/`wMapBuffer64` plane (exceptions allow-listed) |
+| `gfx` | 2903 | every PNG encodes back to the blob it was decoded from |
+| `gfx-specs` | 114 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row or a `w*Tilemap`/`w*Attrmap`/`wMapBuffer64` plane (exceptions allow-listed) |
 | `tilemap` | 249 | every tilemap grid encodes back to its blob |
 | `slots` | 5494 | every `ACTOR_*` slot name names a row of a list that can be active there and holds its actor in every such list, and no `map_actor` row name repeats a word run (`TOURNAMENT_TOURNAMENT_STAFF`) |
 | `reach` | 4902 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |

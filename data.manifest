@@ -3121,7 +3121,7 @@ scenes/lz_CourtyardTilemap.bin 192e0a 595 tilemap:64
 scenes/lz_CourtyardAttrmap.bin 19339f 2a7 tilemap:64
 scenes/lz_CourtyardCollisionMap.bin 193646 93
 scenes/lz_CourtyardBehaviorMap.bin 1936d9 4f
-scenes/CourtyardSceneUnusedSlot.bin 193730 8d0
+scenes/CourtyardSceneAnimTiles.bin 193730 600 gfx
 scenes/IslandSkySceneConfig.asm 194030 1b scene_config
 scenes/IslandSkyPalettes.asm 19404b 40 palettes
 scenes/lz_IslandSkyTiles.bin 19408b bab gfx
@@ -3129,7 +3129,7 @@ scenes/lz_IslandSkyTilemap.bin 194c36 2ac tilemap:64
 scenes/lz_IslandSkyAttrmap.bin 194ee2 1a0 tilemap:64
 scenes/lz_IslandSkyCollisionMap.bin 195082 46
 scenes/lz_IslandSkyBehaviorMap.bin 1950c8 49
-scenes/IslandSkySceneUnusedSlot.bin 195120 600
+scenes/IslandSkySceneAnimTiles.bin 195120 600 gfx
 scenes/SpecialCourtSceneConfig.asm 195720 17 scene_config
 scenes/SpecialCourtPalettes.asm 195737 40 palettes
 scenes/lz_SpecialCourtTiles.bin 195777 769 gfx
@@ -3137,7 +3137,7 @@ scenes/lz_SpecialCourtTilemap.bin 195ee0 389 tilemap:64
 scenes/lz_SpecialCourtAttrmap.bin 196269 205 tilemap:64
 scenes/lz_SpecialCourtCollisionMap.bin 19646e 46
 scenes/lz_SpecialCourtBehaviorMap.bin 1964b4 46
-scenes/SpecialCourtSceneUnusedSlot.bin 196500 600
+scenes/SpecialCourtSceneAnimTiles.bin 196500 600 gfx
 scenes/SeniorClassCourtSceneConfig.asm 196b00 2a scene_config
 scenes/SeniorClassCourtPalettes.asm 196b2a 40 palettes
 scenes/lz_SeniorClassCourtTiles.bin 196b6a 8ee gfx
@@ -3180,7 +3180,7 @@ scenes/lz_TournamentCourtyardTilemap.bin 19cc77 44d tilemap:64
 scenes/lz_TournamentCourtyardAttrmap.bin 19d0c4 2b1 tilemap:64
 scenes/lz_TournamentCourtyardCollisionMap.bin 19d375 6a
 scenes/lz_TournamentCourtyardBehaviorMap.bin 19d3df 53
-scenes/TournamentCourtyardSceneUnusedSlot.bin 19d440 600
+scenes/TournamentCourtyardSceneAnimTiles.bin 19d440 600 gfx
 scenes/Court1SceneConfig.asm 19da40 2a scene_config
 scenes/Court1Palettes.asm 19da6a 40 palettes
 scenes/lz_Court1Tiles.bin 19daaa 935 gfx
@@ -3216,7 +3216,7 @@ scenes/lz_PeachsCastleTilemap.bin 1a2dec 351 tilemap:64
 scenes/lz_PeachsCastleAttrmap.bin 1a313d 253 tilemap:64
 scenes/lz_PeachsCastleCollisionMap.bin 1a3390 67
 scenes/lz_PeachsCastleBehaviorMap.bin 1a33f7 4a
-scenes/PeachsCastleSceneUnusedSlot.bin 1a3450 bb0
+scenes/PeachsCastleSceneAnimTiles.bin 1a3450 600 gfx
 scenes/TrainingCenterSceneConfig.asm 1a4030 2a scene_config
 scenes/TrainingCenterPalettes.asm 1a405a 40 palettes
 scenes/lz_TrainingCenterTiles.bin 1a409a bc3 gfx
@@ -3238,7 +3238,7 @@ scenes/lz_AwardsCeremonyTilemap.bin 1a6f53 3e7 tilemap:64
 scenes/lz_AwardsCeremonyAttrmap.bin 1a733a 287 tilemap:64
 scenes/lz_AwardsCeremonyCollisionMap.bin 1a75c1 54
 scenes/lz_AwardsCeremonyBehaviorMap.bin 1a7615 4b
-scenes/AwardsCeremonySceneUnusedSlot.bin 1a7660 9a0
+scenes/AwardsCeremonySceneAnimTiles.bin 1a7660 600 gfx
 sprites/WalkSprite_6a_00_Gfx00.bin 1a8030 100 gfx:2x2
 sprites/WalkSprite_6a_00_Gfx01.bin 1a8130 100 gfx:2x2
 sprites/WalkSprite_6a_00_Gfx02.bin 1a8230 100 gfx:2x2

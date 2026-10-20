@@ -26,8 +26,8 @@ DataPtr_TargetShotCourtScoreboardColumnTilesAlias1:
 	dw TargetShotCourtScoreboardColumnTiles ; $4018
 DataPtr_TargetShotCourtScoreboardColumnAttrs:
 	dw TargetShotCourtScoreboardColumnAttrs ; $401a
-DataPtr_TargetShotCourtSceneUnusedSlot:
-	dw TargetShotCourtSceneUnusedSlot ; $401c
+DataPtr_TargetShotCourtSceneNoAnimTiles:
+	dw TargetShotCourtSceneNoAnimTiles ; $401c
 DataPtr_TargetShotCourtTiles:
 	dw TargetShotCourtTiles ; $401e
 MinigameCourtPalettes:
@@ -54,5 +54,5 @@ TargetShotCourtScoreboardColumnTiles:
 	INCLUDE "data/scenes/TargetShotCourtScoreboardColumnTiles.asm" ; $5904, 40 bytes (scoreboard_columns)
 TargetShotCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/TargetShotCourtScoreboardColumnAttrs.asm" ; $592c, 40 bytes (scoreboard_columns)
-TargetShotCourtSceneUnusedSlot:
+TargetShotCourtSceneNoAnimTiles:
 	; $5954, 9900 bytes fill to bank end (linker-padded)

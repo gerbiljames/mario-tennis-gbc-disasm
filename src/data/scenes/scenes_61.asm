@@ -58,8 +58,8 @@ DataPtr_TropicsCourtScoreboardColumnTilesAlias1:
 	dw TropicsCourtScoreboardColumnTiles ; $4038
 DataPtr_TropicsCourtScoreboardColumnAttrs:
 	dw TropicsCourtScoreboardColumnAttrs ; $403a
-DataPtr_TropicsCourtSceneUnusedSlot:
-	dw TropicsCourtSceneUnusedSlot ; $403c
+DataPtr_TropicsCourtSceneNoAnimTiles:
+	dw TropicsCourtSceneNoAnimTiles ; $403c
 DataPtr_TropicsCourtTiles:
 	dw TropicsCourtTiles ; $403e
 MachineCourtPalettes:
@@ -110,5 +110,5 @@ TropicsCourtScoreboardColumnTiles:
 	INCLUDE "data/scenes/TropicsCourtScoreboardColumnTiles.asm" ; $7a47, 40 bytes (scoreboard_columns)
 TropicsCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/TropicsCourtScoreboardColumnAttrs.asm" ; $7a6f, 40 bytes (scoreboard_columns)
-TropicsCourtSceneUnusedSlot:
+TropicsCourtSceneNoAnimTiles:
 	; $7a97, 1385 bytes fill to bank end (linker-padded)

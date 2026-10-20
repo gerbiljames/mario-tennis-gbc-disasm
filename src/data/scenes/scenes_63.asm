@@ -58,8 +58,8 @@ DataPtr_AcademyMainBldgCollisionMap:
 	dw AcademyMainBldgCollisionMap ; $4038
 DataPtr_AcademyMainBldgBehaviorMap:
 	dw AcademyMainBldgBehaviorMap ; $403a
-DataPtr_AcademyMainBldgSceneUnusedSlot:
-	dw AcademyMainBldgSceneUnusedSlot ; $403c
+DataPtr_AcademyMainBldgSceneNoAnimTiles:
+	dw AcademyMainBldgSceneNoAnimTiles ; $403c
 DataPtr_AcademyMainBldgTiles:
 	dw AcademyMainBldgTiles ; $403e
 WallPracticeCourtPalettes:
@@ -114,5 +114,5 @@ AcademyMainBldgCollisionMap:
 	INCBIN "data/scenes/lz_AcademyMainBldgCollisionMap.bin" ; $7a10, 147 bytes
 AcademyMainBldgBehaviorMap:
 	INCBIN "data/scenes/lz_AcademyMainBldgBehaviorMap.bin" ; $7aa3, 94 bytes
-AcademyMainBldgSceneUnusedSlot:
+AcademyMainBldgSceneNoAnimTiles:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

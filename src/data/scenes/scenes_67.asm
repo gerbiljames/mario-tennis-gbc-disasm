@@ -10,8 +10,8 @@ DataPtr_TournamentCourtyardCollisionMap:
 	dw TournamentCourtyardCollisionMap ; $4008
 DataPtr_TournamentCourtyardBehaviorMap:
 	dw TournamentCourtyardBehaviorMap ; $400a
-DataPtr_TournamentCourtyardSceneUnusedSlot:
-	dw TournamentCourtyardSceneUnusedSlot ; $400c
+DataPtr_TournamentCourtyardSceneAnimTiles:
+	dw TournamentCourtyardSceneAnimTiles ; $400c
 DataPtr_TournamentCourtyardTiles:
 	dw TournamentCourtyardTiles ; $400e
 DataPtr_Court1SceneConfig:
@@ -42,8 +42,8 @@ DataPtr_TrainingCourtMapCollisionMap:
 	dw TrainingCourtMapCollisionMap ; $4028
 DataPtr_TrainingCourtMapBehaviorMap:
 	dw TrainingCourtMapBehaviorMap ; $402a
-DataPtr_TrainingCourtMapSceneUnusedSlot:
-	dw TrainingCourtMapSceneUnusedSlot ; $402c
+DataPtr_TrainingCourtMapSceneNoAnimTiles:
+	dw TrainingCourtMapSceneNoAnimTiles ; $402c
 DataPtr_TrainingCourtMapTiles:
 	dw TrainingCourtMapTiles ; $402e
 TournamentCourtyardSceneConfig:
@@ -62,8 +62,8 @@ TournamentCourtyardBehaviorMap:
 	INCBIN "data/scenes/lz_TournamentCourtyardBehaviorMap.bin" ; $53df, 83 bytes
 	; $5432, 14 bytes (fill)
 	ds 14, $00
-TournamentCourtyardSceneUnusedSlot:
-	INCBIN "data/scenes/TournamentCourtyardSceneUnusedSlot.bin" ; $5440, 1536 bytes
+TournamentCourtyardSceneAnimTiles:
+	INCBIN "data/scenes/TournamentCourtyardSceneAnimTiles.bin" ; $5440, 1536 bytes
 Court1SceneConfig:
 	INCLUDE "data/scenes/Court1SceneConfig.asm" ; $5a40, 42 bytes (scene_config)
 Court1Palettes:
@@ -92,5 +92,5 @@ TrainingCourtMapCollisionMap:
 	INCBIN "data/scenes/lz_TrainingCourtMapCollisionMap.bin" ; $7bd2, 128 bytes
 TrainingCourtMapBehaviorMap:
 	INCBIN "data/scenes/lz_TrainingCourtMapBehaviorMap.bin" ; $7c52, 76 bytes
-TrainingCourtMapSceneUnusedSlot:
+TrainingCourtMapSceneNoAnimTiles:
 	; $7c9e, 866 bytes fill to bank end (linker-padded)

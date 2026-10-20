@@ -42,8 +42,8 @@ DataPtr_AwardsCeremonyCollisionMap:
 	dw AwardsCeremonyCollisionMap ; $4028
 DataPtr_AwardsCeremonyBehaviorMap:
 	dw AwardsCeremonyBehaviorMap ; $402a
-DataPtr_AwardsCeremonySceneUnusedSlot:
-	dw AwardsCeremonySceneUnusedSlot ; $402c
+DataPtr_AwardsCeremonySceneAnimTiles:
+	dw AwardsCeremonySceneAnimTiles ; $402c
 DataPtr_AwardsCeremonyTiles:
 	dw AwardsCeremonyTiles ; $402e
 TrainingCenterSceneConfig:
@@ -88,5 +88,6 @@ AwardsCeremonyCollisionMap:
 	INCBIN "data/scenes/lz_AwardsCeremonyCollisionMap.bin" ; $75c1, 84 bytes
 AwardsCeremonyBehaviorMap:
 	INCBIN "data/scenes/lz_AwardsCeremonyBehaviorMap.bin" ; $7615, 75 bytes
-AwardsCeremonySceneUnusedSlot:
-	INCBIN "data/scenes/AwardsCeremonySceneUnusedSlot.bin" ; $7660, 2464 bytes
+AwardsCeremonySceneAnimTiles:
+	INCBIN "data/scenes/AwardsCeremonySceneAnimTiles.bin" ; $7660, 1536 bytes
+	; $7c60, 928 bytes fill to bank end (linker-padded)

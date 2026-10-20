@@ -417,7 +417,7 @@ courts have `ScoreboardColumnTiles`/`ScoreboardColumnAttrs` in place of
 | slot | destination | meaning |
 | --- | --- | --- |
 | 7 | `wDecompBuffer` (WRAM `$01`), then `$80` tiles to VRAM bank 1 `$9000` | BG tiles |
-| 6 | **discarded** (meant for `wStorySceneUnusedBuffer`; [`graphics_formats.md`](graphics_formats.md)) | — |
+| 6 | skipped here; read per frame by the tile animator (below) | animation tiles |
 | 5 | `$d400`, WRAM `$06` | behaviour map (1 KiB) |
 | 4 | `$d000`, WRAM `$06` | collision map (1 KiB) |
 | 3 | `wScreenAttrmap` (WRAM `$02`) | BG attribute map |
@@ -425,15 +425,24 @@ courts have `ScoreboardColumnTiles`/`ScoreboardColumnAttrs` in place of
 | 1 | 64 raw bytes to `wDecompBuffer`, palettes from +16 | palettes |
 | 0 | 136 raw bytes to `wStorySceneRecord` (WRAM `$06`) | scene config |
 
-Slots 2-5 and 7 are decompressed. Most records' slot 6 holds an
-`*SceneUnusedSlot` filler or a stray pointer to the next scene's config. For
-the 16 court records, read by the court loader, slots 0 and 4 are
-`*ScoreboardColumnTiles` and slot 5 is `*ScoreboardColumnAttrs` (`graphics_formats.md` §3.4).
+Slots 2-5 and 7 are decompressed. For the 16 court records, read by the
+court loader, slots 0 and 4 are `*ScoreboardColumnTiles` and slot 5 is
+`*ScoreboardColumnAttrs` (`graphics_formats.md` §3.4).
 
-Only scene-config bytes `+2..+5` are read: `wMapScrollMinX`,
-`wMapScrollMinY`, `wMapWidthTiles`, `wMapHeightTiles` (`$0a:$5912`). The
-fixed `$88`-byte copy over-reads the 9-42-byte story config blobs,
-harmlessly.
+`LoadStorySceneGraphics` reads scene-config bytes `+2..+5` (`scene_bounds`):
+`wMapScrollMinX`, `wMapScrollMinY`, `wMapWidthTiles`, `wMapHeightTiles`
+(`$0a:$5912`). `InitSceneTileAnimations` (`$0a:$639b`) copies the config
+again and reads from `+8` (`wSceneTileAnimEntries`) a list of 4-byte
+`scene_tile_anim src, count, dest, delay` steps, `$ff` (`scene_tile_anim_loop`)
+closing each animation and `$fe` ending the list. `AdvanceSceneTileAnimation`
+copies `count` tiles from tile `src` of the slot-6 sheet to tile `dest` of VRAM
+bank 1 `$9000`. Six scenes animate (Courtyard, IslandSky, SpecialCourt,
+TournamentCourtyard, PeachsCastle, AwardsCeremony): their slot 6 is a raw
+96-tile `*SceneAnimTiles` sheet, one frame per 16-tile row. The rest have an
+empty list; their slot 6 points at the next scene's config or at bank-end
+padding (`*SceneNoAnimTiles`). Only animation slots 0-2 ever advance
+(`UpdateSceneTileAnimations` stops at slot 3). The fixed `$88`-byte copies
+over-read the 9-42-byte configs, harmlessly.
 
 ### The two 32x32 maps
 

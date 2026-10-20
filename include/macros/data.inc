@@ -325,3 +325,28 @@ ENDM
 MACRO scene_bounds
 	db \1, \2, \3, \4
 ENDM
+
+; The tile-animation list from byte 8 of a story scene config
+; (InitSceneTileAnimations, AdvanceSceneTileAnimation). One step copies
+; `count` tiles from tile `src` of the scene's slot-6 sheet to tile `dest` of
+; vTiles2 + VRAM_BANK1 and holds for `delay` frames. Init finds the markers by
+; scanning single bytes, so no field may be $fe or $ff.
+; Usage: scene_tile_anim src, count, dest, delay
+MACRO scene_tile_anim
+	REPT 4
+	ASSERT (\1) < $fe, "scene_tile_anim: \1 would read as a list marker"
+	db \1
+	SHIFT
+	ENDR
+ENDM
+
+; Closes an animation (it loops to its first step). The next animation's first
+; step waits first_delay + 1 frames; the byte is consumed even before the end.
+; Usage: scene_tile_anim_loop first_delay
+MACRO scene_tile_anim_loop
+	db $ff, \1
+ENDM
+
+MACRO scene_tile_anim_end
+	db $fe
+ENDM
