@@ -650,7 +650,7 @@ toward a target:
 
 Farptr entry slots: `$03:$4040` (`InitGrayscalePaletteFade`), `$03:$4042`
 (`SetupPaletteFadeMask`), `$03:$4044` (`AnimatePaletteFadeToTarget`). The live
-callers, `RunEndingCreditsSequence` (`$0a:$6ece`) and `PlayScreenSequence0`
+callers, `RunEndingCreditsSequence` (`$0a:$6ece`) and `PlayTravelingTeamVictoryScene`
 (`$18:$76dd`), fade to grayscale; `Unused_03_InitBlackPaletteFade`
 (`$03:$75ca`) is unreachable, so nothing fades to black.
 

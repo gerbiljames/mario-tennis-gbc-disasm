@@ -244,11 +244,11 @@ MenuWindowTiles_01:
 MenuFontTiles_01:
 	INCBIN "data/engine/menus/main_menu/MenuFontTiles_01.bin" ; $4410, 512 bytes
 	ds ALIGN[4]
-MenuTilesBStagedTiles0:
-	INCBIN "data/engine/menus/main_menu/MenuTilesBStagedTiles0.bin" ; $4610, 512 bytes
+MenuFontUppercaseTiles_01:
+	INCBIN "data/engine/menus/main_menu/MenuFontUppercaseTiles_01.bin" ; $4610, 512 bytes
 	ds ALIGN[4]
-MenuTilesBStagedTiles1:
-	INCBIN "data/engine/menus/main_menu/MenuTilesBStagedTiles1.bin" ; $4810, 512 bytes
+MenuFontLowercaseTiles_01:
+	INCBIN "data/engine/menus/main_menu/MenuFontLowercaseTiles_01.bin" ; $4810, 512 bytes
 	ds ALIGN[4]
 MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
@@ -308,17 +308,17 @@ LoadMenuTilesBStaged:
 	push hl ; $5098
 	ld hl, MenuFontTiles_01 ; $5099
 	ld de, vTiles2 tile $20 ; $509c
-	ld c, (MenuTilesBStagedTiles0 - MenuFontTiles_01) / 16 ; $509f
+	ld c, (MenuFontUppercaseTiles_01 - MenuFontTiles_01) / 16 ; $509f
 	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
-	ld hl, MenuTilesBStagedTiles0 ; $50a7
+	ld hl, MenuFontUppercaseTiles_01 ; $50a7
 	ld de, vTiles2 tile $40 ; $50aa
-	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50ad
+	ld c, (MenuFontLowercaseTiles_01 - MenuFontUppercaseTiles_01) / 16 ; $50ad
 	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
-	ld hl, MenuTilesBStagedTiles1 ; $50b5
+	ld hl, MenuFontLowercaseTiles_01 ; $50b5
 	ld de, vTiles2 tile $60 ; $50b8
-	ld c, (MenuFontFillTiles_01 - MenuTilesBStagedTiles1) / 16 ; $50bb
+	ld c, (MenuFontFillTiles_01 - MenuFontLowercaseTiles_01) / 16 ; $50bb
 	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
@@ -332,9 +332,9 @@ LoadMenuTilesBStaged:
 	pop af ; $50d4
 	ret ; $50d5
 Unused_01_LoadMenuTilesBChunk2:
-	ld hl, MenuTilesBStagedTiles0 ; $50d6
+	ld hl, MenuFontUppercaseTiles_01 ; $50d6
 	ld de, vTiles2 tile $40 ; $50d9
-	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50dc
+	ld c, (MenuFontLowercaseTiles_01 - MenuFontUppercaseTiles_01) / 16 ; $50dc
 	call QueueVRAMCopy ; $50de
 	ret ; $50e1
 LoadMenuFontGfx:

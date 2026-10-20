@@ -94,23 +94,23 @@ CharDataShiftGfx30:
 	ds ALIGN[4]
 CharDataShiftGfx31:
 	INCBIN "data/engine/menus/char_data/CharDataShiftGfx31.bin" ; $7040, 64 bytes
-CharDataScreenGfx13:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx13.bin" ; $7080, 150 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx13.inc" ; DEF CharDataScreenGfx13_SIZE EQU its decoded length, generated from the .bin by make
+CharDataLargeDigitGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataLargeDigitGfx.bin" ; $7080, 150 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataLargeDigitGfx.inc" ; DEF CharDataLargeDigitGfx_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreen_LoadScreen:
-	ld hl, CharDataScreen_LoadScreenPalette ; $7116
+	ld hl, CharDataScreenBasePalettes ; $7116
 	ld_bg_pals de, 0, 8 ; $7119
 	call LoadPaletteShadow ; $711c
-	ld hl, CharDataScreen_LoadScreenPalette ; $711f
+	ld hl, CharDataScreenBasePalettes ; $711f
 	ld_obj_pals de, 0, 8 ; $7122
 	call LoadPaletteShadow ; $7125
 	wram_bank WRAM_STAGING ; $7128
-	ld hl, CharDataScreenGfx13 ; $712e
+	ld hl, CharDataLargeDigitGfx ; $712e
 	ld de, wDecompBuffer ; $7131
 	call DecompressData ; $7134
 	ld hl, wDecompBuffer ; $7137
 	ld de, vTiles0 + VRAM_BANK1 ; $713a
-	ld c, CharDataScreenGfx13_SIZE / 16 ; $713d
+	ld c, CharDataLargeDigitGfx_SIZE / 16 ; $713d
 	call QueueVRAMCopy ; $713f
 	farcall CharDataScreen_LoadGfx ; $7142
 	wram_bank WRAM_STAGING ; $7145

@@ -33,9 +33,9 @@ DataPtr_ObjectSceneBGfx1:
 	dw ObjectSceneBGfx1 ; $4036
 DataPtr_ObjectSceneBGfx2:
 	dw ObjectSceneBGfx2 ; $4038
-DataPtr_Screen0Gfx:
-	dw Screen0Gfx ; $403a
-DataPtr_Screen1ObjGfx:
-	dw Screen1ObjGfx ; $403c
-DataPtr_Screen2ObjGfx:
-	dw Screen2ObjGfx ; $403e
+DataPtr_ToBeContinuedGfx:
+	dw ToBeContinuedGfx ; $403a
+DataPtr_ToBeContinuedOutlineGfx:
+	dw ToBeContinuedOutlineGfx ; $403c
+DataPtr_TheEndGfx:
+	dw TheEndGfx ; $403e

@@ -90,7 +90,7 @@ NEXTU
 wRankingBoardDoubles:: db
 ; [8-bit] The player's ranking row, from c; the highlight and the marker animation use it
 wRankingBoardPlayerRow:: db
-; [8-bit] Board presentation, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. 3 becomes 0 with w3_d85a set
+; [8-bit] Board presentation, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. 3 becomes 0 with wRankingBoardSilent set
 wRankingBoardMode:: db
 ; [8-bit] Base of the ranking marker slots: twelve 4-byte records [tile, X, Y, -], $d803-$d832, running into the $d810 block. GetRankingMarkerSlot returns base + index * 4; DrawRankingMarkersTask queues each as a sprite, skipping those whose +0 is $ff. ClearRankingMarkerSlots clears the $30 bytes, LoadRankingMarkerCoords copies $30 bytes of coordinates over them; BuildRankingBoardScreen's $53-byte clear wipes the whole screen state from here up to wRankingBannerAnimFrame
 wRankingMarkerSlots:: db
@@ -361,9 +361,9 @@ wTrophiesCheatLeftPresses:: db
 NEXTU
 ; screen sequences (bank $18)
 	ds 256
-; [8-bit] Cleared as the ending sequence enters its third scene and stepped through the scenes that follow
-wEndingSceneStep:: db
-; [8-bit] Frame counter each PlayScreenSequence* routine runs from 0 to $fa while its screen scrolls, then fades out
+; [8-bit] Step of TaskFadeInPalette_18 fading in the "The End" sprite palette, 0 to $10; cleared before PlayDreamMatchEpilogueScene loads that screen
+wTheEndPaletteFadeStep:: db
+; [8-bit] Frame counter for the timed waits of the RunStorySceneByMode scenes: to $fa (traveling team), $af every fourth frame (awards ceremony), $b4 before "The End"
 wScreenSequenceTimer:: db
 ENDU
 

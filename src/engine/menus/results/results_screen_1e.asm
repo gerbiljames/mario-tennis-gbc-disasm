@@ -71,7 +71,7 @@ ShowMatchResultsScreen:
 InitResultsPromptState:
 	wram_bank WRAM_SCENE ; $40ac
 	ld a, c ; $40b2
-	ld [wContinuePromptKind], a ; $40b3
+	ld [wResultsAlwaysShowPartner], a ; $40b3
 	xor a ; $40b6
 	ld [wContinuePromptRow], a ; $40b7
 	ld [wContinuePromptPage], a ; $40ba
@@ -438,18 +438,18 @@ DrawStoryResultsHeader:
 	jr nz, .skyScene ; $4469
 	ld a, [wStoryReturnLocation] ; $446b
 	cp STORYLOC_PEACHS_CASTLE ; $446e
-	jr z, .altPosition ; $4470
+	jr z, .peachsCastle ; $4470
 	ld hl, Text_ResultsTennisAcademy ; $4472
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
-	jr .drawOpponentName ; $447e
+	jr .drawLocationName ; $447e
 .skyScene:
 	ld hl, Text_ResultsIslandOpen ; $4480
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
-.drawOpponentName:
+.drawLocationName:
 	ld a, [wStoryReturnLocation] ; $448c
 	add $79 ; $448f
 	ld l, a ; $4491
@@ -460,7 +460,7 @@ DrawStoryResultsHeader:
 	ld bc, $0020 ; $4499
 	call DrawProportionalTextLine ; $449c
 	ret ; $449f
-.altPosition:
+.peachsCastle:
 	add $79 ; $44a0
 	ld l, a ; $44a2
 	adc $01 ; $44a3

@@ -117,7 +117,7 @@ AnimateCharDataStatsReveal:
 	ld bc, wCharDataScreenCell + 24 * TILEMAP_WIDTH + 16 ; $47e3
 	call BlitTilemapRunsFromTable ; $47e6
 	wram_bank WRAM_SCENE ; $47e9
-	ld hl, wCharDataPageArrowMode ; $47ef
+	ld hl, wCharDataStatPageView ; $47ef
 	dec [hl] ; $47f2
 	xor a ; $47f3
 	ld [wCharDataDigitFlyInStep], a ; $47f4

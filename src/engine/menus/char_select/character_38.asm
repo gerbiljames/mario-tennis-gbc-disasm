@@ -253,8 +253,8 @@ SetupCharacterSelectScreen:
 	ld h, $0f ; $4a5c
 	farcall FillTilemapRect ; $4a5e
 .secondRow:
-	ld b, TILEBLOCK_CharacterSelectGfx ; $4a61
-	ld c, CharacterSelectGfx_SIZE / 16 ; $4a63
+	ld b, TILEBLOCK_HandednessLRSpriteGfx ; $4a61
+	ld c, HandednessLRSpriteGfx_SIZE / 16 ; $4a63
 	ld de, vTiles0 ; $4a65
 	farcall LoadCompressedTileBlock ; $4a68
 	ld b, $08 ; $4a6b

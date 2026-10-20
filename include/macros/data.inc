@@ -13,7 +13,7 @@ ENDM
 
 ; One row of TileBlockPtrs_39, the table LoadCompressedTileBlock indexes with
 ; b: the slot word for DataPtr_<name>, and TILEBLOCK_<name>, its index (`ld b,
-; TILEBLOCK_MatchWinLoseGfx`). Inserting a row renumbers the rows after it.
+; TILEBLOCK_WinLoseArrowGfx`). Inserting a row renumbers the rows after it.
 MACRO tileblock
 DEF TILEBLOCK_\1 EQU (@ - TileBlockPtrs_39) / 2
 EXPORT TILEBLOCK_\1

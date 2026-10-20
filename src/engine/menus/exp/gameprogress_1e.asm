@@ -390,17 +390,17 @@ LoadGameProgressScreenTiles:
 	ld e, $02 ; $7568
 	call LoadPaletteShadow ; $756a
 	pop_wram_bank ; $756d
-	ld hl, GameProgressScreenTiles0 ; $7572
+	ld hl, GameProgressStarBadgeTiles ; $7572
 	ld de, vTiles0 + VRAM_BANK1 ; $7575
-	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578
+	ld c, (GameProgressScreenPalettes1 - GameProgressStarBadgeTiles) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
-	ld hl, GameProgressScreenTiles2 ; $757d
+	ld hl, GameProgressArrowTiles ; $757d
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $7580
-	ld c, 4 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
+	ld c, 4 ; $7583 -- 4 of GameProgressArrowTiles's 8 tiles
 	call QueueVRAMCopy ; $7585
-	ld hl, GameProgressScreenTiles1 ; $7588
+	ld hl, GameProgressMedalTrophyTiles ; $7588
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $758b
-	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
+	ld c, (GameProgressArrowTiles - GameProgressMedalTrophyTiles) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593
 	ld_obj_pals de, 2, 1 ; $7596
@@ -422,15 +422,15 @@ GameProgressHeaderAttrmap_1e:
 GameProgressScreenPalettes0:
 	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
 	ds ALIGN[4]
-GameProgressScreenTiles0:
-	INCBIN "data/engine/menus/exp/GameProgressScreenTiles0.bin" ; $7710, 256 bytes
+GameProgressStarBadgeTiles:
+	INCBIN "data/engine/menus/exp/GameProgressStarBadgeTiles.bin" ; $7710, 256 bytes
 GameProgressScreenPalettes1:
 	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
 	ds ALIGN[4]
-GameProgressScreenTiles1:
-	INCBIN "data/engine/menus/exp/GameProgressScreenTiles1.bin" ; $7820, 320 bytes
+GameProgressMedalTrophyTiles:
+	INCBIN "data/engine/menus/exp/GameProgressMedalTrophyTiles.bin" ; $7820, 320 bytes
 	ds ALIGN[4]
-GameProgressScreenTiles2:
-	INCBIN "data/engine/menus/exp/GameProgressScreenTiles2.bin" ; $7960, 128 bytes
+GameProgressArrowTiles:
+	INCBIN "data/engine/menus/exp/GameProgressArrowTiles.bin" ; $7960, 128 bytes
 GameProgressScreenPalettes2:
 	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes2.asm" ; $79e0, 8 bytes (palettes)

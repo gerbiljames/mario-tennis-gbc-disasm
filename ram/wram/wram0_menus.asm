@@ -275,8 +275,8 @@ wCheatUnlockTriggered:: db
 ; [8-bit] Frames the link character-select screen waits before it accepts input; WaitLinkSelectStartupFrames counts it up to 3
 wLinkSelectStartupFrames:: db
 
-; [8-bit] Stage of RunMatchWinLoseScreen, set as the screen opens and branched on twice
-wMatchWinLoseState:: db
+; [8-bit] wMatchWinLoseFlag as RunMatchWinLoseScreen opens, before ApplyLinkRoleToWinLoseFlag; copied back on both exits
+wSavedMatchWinLoseFlag:: db
 
 ; [8-bit] GetStoryContinueDestination's EXIT_MAIN_MENU_* id, held across the save and passed on as wStoryModeExitTriggerRequest
 wStoryContinueExitId:: db

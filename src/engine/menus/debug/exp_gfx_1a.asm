@@ -21,9 +21,9 @@ ExpScreenGfxPalettes0:
 Unused_1a_ExpScreenGfx9:
 	INCBIN "data/engine/menus/debug/lz_Unused_1a_ExpScreenGfx9.bin" ; $6530, 280 bytes
 	ds 8, $00 ; $6648
-ExpScreenGfx5:
-	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx5.bin" ; $6650, 24 bytes
-	INCLUDE "data/engine/menus/debug/lz_ExpScreenGfx5.inc" ; DEF ExpScreenGfx5_SIZE EQU its decoded length, generated from the .bin by make
+ExpScreenCursorGfx:
+	INCBIN "data/engine/menus/debug/lz_ExpScreenCursorGfx.bin" ; $6650, 24 bytes
+	INCLUDE "data/engine/menus/debug/lz_ExpScreenCursorGfx.inc" ; DEF ExpScreenCursorGfx_SIZE EQU its decoded length, generated from the .bin by make
 ExpScreenGfxPalettes1:
 	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes1.asm" ; $6668, 24 bytes (palettes)
 ExpScreenGfx6:
@@ -36,8 +36,8 @@ ExpScreenGfxPalettes2:
 	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes2.asm" ; $6711, 16 bytes (palettes)
 ExpScreenGfxPalettes3:
 	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes3.asm" ; $6721, 8 bytes (palettes)
-ExpScreenGfx8:
-	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx8.bin" ; $6729, 171 bytes
+ExpScreenDigitGfx:
+	INCBIN "data/engine/menus/debug/lz_ExpScreenDigitGfx.bin" ; $6729, 171 bytes
 Unused_1a_RunDebugCharViewer:
 	xor a ; $67d4
 	ld [wDebugCharViewerPage], a ; $67d5

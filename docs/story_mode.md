@@ -669,12 +669,14 @@ grayscale and plays `PlayScrollingStoryCutscene` (bank `$03`).
 [wStoryCharacterSlot]`; the `byte0 == 0` branch at `$0a:$6ea4`-`$6eab`
 computes `sprite * 2` and discards it, and no record has a zero first byte.
 
-`RunStorySceneByMode` (`$18:$7617`): `b` picks `PlayScreenSequence0/1/2`, `c`
-the artwork. Sequence 1 is the Awards-Ceremony congratulations (from
-`$0f:$4e91`/`$556b`, gender-derived key); sequence 2 the ending/Dream-Match
-epilogue (sets `SAVEFLAG_OPENING_SEEN`). Bank `$03` owns the scrolling
-caption screen (`RunScrollingTextScreen`, `$03:$59c5`) and the credits
-montage (`PlayScrollingStoryCutscene`).
+`RunStorySceneByMode` (`$18:$7617`): `b` picks the scene, `c` the artwork.
+`PlayTravelingTeamVictoryScene` (from bank `$13`) ends on TO BE CONTINUED;
+`PlayAwardsCeremonyScene` (from `$0f:$4e91`/`$556b`, gender-derived key) runs
+the credits caption scroll and its own TO BE CONTINUED; `PlayDreamMatchEpilogueScene`
+(from bank `$0e`) runs the ending credits on the first clear, then the
+champion-medal screen with "The End", and sets `SAVEFLAG_OPENING_SEEN`. Bank
+`$03` owns the scrolling caption screen (`RunScrollingTextScreen`,
+`$03:$59c5`) and the credits montage (`PlayScrollingStoryCutscene`).
 
 ## The character record
 

@@ -174,7 +174,7 @@ InitResultsScreenCharacters:
 	ld_obj_pals de, 7, 1 ; $49ee
 	farcall LoadIndexedPaletteThunk ; $49f1
 	wram_bank WRAM_SCENE ; $49f4
-	ld a, [wContinuePromptKind] ; $49fa
+	ld a, [wResultsAlwaysShowPartner] ; $49fa
 	or a ; $49fd
 	jr nz, .initPartner ; $49fe
 	wram_bank WRAM_ACTORS ; $4a00

@@ -11,7 +11,7 @@ LoadEquipSelectCommon:
 	call CreateEquipCaptionWindow ; $5807
 	call CreateEquipListWindow ; $580a
 	ld de, vTiles0 + VRAM_BANK1 ; $580d
-	farcall LoadFixedTileBlockAndPalette ; $5810
+	farcall LoadCornerBracketCursorGfx ; $5810
 	ret ; $5813
 CreateEquipListWindow:
 	rect_cell $00, $04 ; $5814

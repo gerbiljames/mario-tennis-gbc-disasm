@@ -276,7 +276,7 @@ Unused_38_SetupMatchTypeMenuScreen:
 	call Unused_38_DrawMatchTypeOptionLabel ; $464b
 	farcall QueueWram3MapToVRAM ; $464e
 	ld de, vTiles0 + VRAM_BANK1 ; $4651
-	farcall LoadFixedTileBlockAndPalette ; $4654
+	farcall LoadCornerBracketCursorGfx ; $4654
 	ld b, $08 ; $4657
 	ld c, $0d ; $4659
 	farcall LoadIndexedPalette ; $465b

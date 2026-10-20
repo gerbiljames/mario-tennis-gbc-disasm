@@ -51,10 +51,10 @@ TileBlockPtrs_39:
 	tileblock ObjectSceneBGfx0 ; record 3
 	tileblock ObjectSceneBGfx1 ; record 4
 	tileblock ObjectSceneBGfx2 ; record 5
-	tileblock Screen0Gfx ; record 6
-	tileblock Screen1ObjGfx ; record 7
-	tileblock Screen2ObjGfx ; record 8
-	tileblock MatchWinLoseGfx ; record 9
+	tileblock ToBeContinuedGfx ; record 6
+	tileblock ToBeContinuedOutlineGfx ; record 7
+	tileblock TheEndGfx ; record 8
+	tileblock WinLoseArrowGfx ; record 9
 	tileblock Unused_18_JpCourtStatLabelTiles ; record 10
 	tileblock SharedMenuGfx17Alias11 ; record 11
 	tileblock SharedMenuGfx17Alias12 ; record 12
@@ -63,15 +63,15 @@ TileBlockPtrs_39:
 	tileblock SharedMenuGfx17Alias15 ; record 15
 	tileblock SharedMenuGfx17Alias16 ; record 16
 	tileblock SharedMenuGfx17Alias17 ; record 17
-	tileblock NameEntryGfx ; record 18
-	tileblock CharacterSelectGfx ; record 19
-	tileblock NumberSpriteGfxWideGfx ; record 20
+	tileblock NameEntryUnderlineCursorGfx ; record 18
+	tileblock HandednessLRSpriteGfx ; record 19
+	tileblock LargeDigitArrowSpriteGfx ; record 20
 	tileblock StatLabelTiles ; record 21
 	tileblock MugshotTiles ; record 22
-	tileblock MenuArrowGfx0 ; record 23
-	tileblock MenuArrowGfx1 ; record 24
-	tileblock MenuArrowGfx2 ; record 25
-	tileblock MenuArrowGfx3 ; record 26
+	tileblock MenuArrowRightGfx ; record 23
+	tileblock MenuArrowLeftGfx ; record 24
+	tileblock MenuArrowUpGfx ; record 25
+	tileblock MenuArrowDownGfx ; record 26
 	tileblock SharedMenuGfx27 ; record 27
 	tileblock MarioTourLabelGfx ; record 28
 	tileblock ExhibitionLabelGfx ; record 29
@@ -162,19 +162,19 @@ TileBlockPtrs_39:
 	tileblock ChallengeLabelGfx ; record 114
 	tileblock ClearStatusLabelGfx ; record 115
 	tileblock MarioStarGetsLabelGfx ; record 116
-	tileblock CharGridGfx2 ; record 117
+	tileblock CharGridStatLabelSpriteGfx ; record 117
 	tileblock MarioCharactersLabelGfx ; record 118
 	tileblock SelectALevelTitleGfxAlias16 ; record 119
 	tileblock MarioCharactersTitleGfx ; record 120
 	tileblock DigitFontTiles ; record 121
 SharedMenuGfx17:
 	INCBIN "data/engine/menus/common/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes
-NameEntryGfx:
-	INCBIN "data/engine/menus/common/lz_NameEntryGfx.bin" ; $47fa, 15 bytes
-CharacterSelectGfx:
-	INCBIN "data/engine/menus/common/lz_CharacterSelectGfx.bin" ; $4809, 42 bytes
-NumberSpriteGfxWideGfx:
-	INCBIN "data/engine/menus/common/lz_NumberSpriteGfxWideGfx.bin" ; $4833, 240 bytes
+NameEntryUnderlineCursorGfx:
+	INCBIN "data/engine/menus/common/lz_NameEntryUnderlineCursorGfx.bin" ; $47fa, 15 bytes
+HandednessLRSpriteGfx:
+	INCBIN "data/engine/menus/common/lz_HandednessLRSpriteGfx.bin" ; $4809, 42 bytes
+LargeDigitArrowSpriteGfx:
+	INCBIN "data/engine/menus/common/lz_LargeDigitArrowSpriteGfx.bin" ; $4833, 240 bytes
 StatLabelTiles:
 	INCBIN "data/engine/menus/common/lz_StatLabelTiles.bin" ; $4923, 243 bytes
 LoadMenuArrowSpriteTiles:

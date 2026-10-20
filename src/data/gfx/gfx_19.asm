@@ -26,34 +26,34 @@ DataPtr_VictoryCutsceneTilemap6:
 	dw VictoryCutsceneTilemap6 ; $4018
 DataPtr_VictoryCutsceneAttrmap6:
 	dw VictoryCutsceneAttrmap6 ; $401a
-DataPtr_ShopCutsceneTiles:
-	dw ShopCutsceneTiles ; $401c
-DataPtr_ShopCutscenePalettes:
-	dw ShopCutscenePalettes ; $401e
-DataPtr_ShopCutsceneTilemap:
-	dw ShopCutsceneTilemap ; $4020
-DataPtr_ShopCutsceneAttrmap:
-	dw ShopCutsceneAttrmap ; $4022
-DataPtr_ShopCutsceneTilemap2:
-	dw ShopCutsceneTilemap2 ; $4024
-DataPtr_ShopCutsceneAttrmap2:
-	dw ShopCutsceneAttrmap2 ; $4026
-DataPtr_ShopCutsceneTilemap3:
-	dw ShopCutsceneTilemap3 ; $4028
-DataPtr_ShopCutsceneAttrmap3:
-	dw ShopCutsceneAttrmap3 ; $402a
-DataPtr_ShopCutsceneTilemap4:
-	dw ShopCutsceneTilemap4 ; $402c
-DataPtr_ShopCutsceneAttrmap4:
-	dw ShopCutsceneAttrmap4 ; $402e
-DataPtr_ShopCutsceneTilemap5:
-	dw ShopCutsceneTilemap5 ; $4030
-DataPtr_ShopCutsceneAttrmap5:
-	dw ShopCutsceneAttrmap5 ; $4032
-DataPtr_ShopCutsceneTilemap6:
-	dw ShopCutsceneTilemap6 ; $4034
-DataPtr_ShopCutsceneAttrmap6:
-	dw ShopCutsceneAttrmap6 ; $4036
+DataPtr_AwardsCeremonyCutsceneTiles:
+	dw AwardsCeremonyCutsceneTiles ; $401c
+DataPtr_AwardsCeremonyCutscenePalettes:
+	dw AwardsCeremonyCutscenePalettes ; $401e
+DataPtr_AwardsCeremonyCutsceneTilemap:
+	dw AwardsCeremonyCutsceneTilemap ; $4020
+DataPtr_AwardsCeremonyCutsceneAttrmap:
+	dw AwardsCeremonyCutsceneAttrmap ; $4022
+DataPtr_AwardsCeremonyCutsceneTilemap2:
+	dw AwardsCeremonyCutsceneTilemap2 ; $4024
+DataPtr_AwardsCeremonyCutsceneAttrmap2:
+	dw AwardsCeremonyCutsceneAttrmap2 ; $4026
+DataPtr_AwardsCeremonyCutsceneTilemap3:
+	dw AwardsCeremonyCutsceneTilemap3 ; $4028
+DataPtr_AwardsCeremonyCutsceneAttrmap3:
+	dw AwardsCeremonyCutsceneAttrmap3 ; $402a
+DataPtr_AwardsCeremonyCutsceneTilemap4:
+	dw AwardsCeremonyCutsceneTilemap4 ; $402c
+DataPtr_AwardsCeremonyCutsceneAttrmap4:
+	dw AwardsCeremonyCutsceneAttrmap4 ; $402e
+DataPtr_AwardsCeremonyCutsceneTilemap5:
+	dw AwardsCeremonyCutsceneTilemap5 ; $4030
+DataPtr_AwardsCeremonyCutsceneAttrmap5:
+	dw AwardsCeremonyCutsceneAttrmap5 ; $4032
+DataPtr_AwardsCeremonyCutsceneTilemap6:
+	dw AwardsCeremonyCutsceneTilemap6 ; $4034
+DataPtr_AwardsCeremonyCutsceneAttrmap6:
+	dw AwardsCeremonyCutsceneAttrmap6 ; $4036
 DataPtr_ChampionMedalTiles:
 	dw ChampionMedalTiles ; $4038
 DataPtr_ChampionMedalPalettes:
@@ -102,34 +102,34 @@ VictoryCutsceneTilemap6:
 	INCBIN "data/gfx/lz_VictoryCutsceneTilemap6.bin" ; $53d0, 221 bytes
 VictoryCutsceneAttrmap6:
 	INCBIN "data/gfx/lz_VictoryCutsceneAttrmap6.bin" ; $54ad, 114 bytes
-ShopCutsceneTiles:
-	INCBIN "data/gfx/lz_ShopCutsceneTiles.bin" ; $551f, 3077 bytes
-ShopCutscenePalettes:
-	INCLUDE "data/gfx/ShopCutscenePalettes.asm" ; $6124, 64 bytes (palettes)
-ShopCutsceneTilemap:
-	INCBIN "data/gfx/lz_ShopCutsceneTilemap.bin" ; $6164, 257 bytes
-ShopCutsceneAttrmap:
-	INCBIN "data/gfx/lz_ShopCutsceneAttrmap.bin" ; $6265, 129 bytes
-ShopCutsceneTilemap2:
-	INCBIN "data/gfx/lz_ShopCutsceneTilemap2.bin" ; $62e6, 250 bytes
-ShopCutsceneAttrmap2:
-	INCBIN "data/gfx/lz_ShopCutsceneAttrmap2.bin" ; $63e0, 110 bytes
-ShopCutsceneTilemap3:
-	INCBIN "data/gfx/lz_ShopCutsceneTilemap3.bin" ; $644e, 271 bytes
-ShopCutsceneAttrmap3:
-	INCBIN "data/gfx/lz_ShopCutsceneAttrmap3.bin" ; $655d, 132 bytes
-ShopCutsceneTilemap4:
-	INCBIN "data/gfx/lz_ShopCutsceneTilemap4.bin" ; $65e1, 264 bytes
-ShopCutsceneAttrmap4:
-	INCBIN "data/gfx/lz_ShopCutsceneAttrmap4.bin" ; $66e9, 132 bytes
-ShopCutsceneTilemap5:
-	INCBIN "data/gfx/lz_ShopCutsceneTilemap5.bin" ; $676d, 215 bytes
-ShopCutsceneAttrmap5:
-	INCBIN "data/gfx/lz_ShopCutsceneAttrmap5.bin" ; $6844, 109 bytes
-ShopCutsceneTilemap6:
-	INCBIN "data/gfx/lz_ShopCutsceneTilemap6.bin" ; $68b1, 226 bytes
-ShopCutsceneAttrmap6:
-	INCBIN "data/gfx/lz_ShopCutsceneAttrmap6.bin" ; $6993, 125 bytes
+AwardsCeremonyCutsceneTiles:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTiles.bin" ; $551f, 3077 bytes
+AwardsCeremonyCutscenePalettes:
+	INCLUDE "data/gfx/AwardsCeremonyCutscenePalettes.asm" ; $6124, 64 bytes (palettes)
+AwardsCeremonyCutsceneTilemap:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTilemap.bin" ; $6164, 257 bytes
+AwardsCeremonyCutsceneAttrmap:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneAttrmap.bin" ; $6265, 129 bytes
+AwardsCeremonyCutsceneTilemap2:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTilemap2.bin" ; $62e6, 250 bytes
+AwardsCeremonyCutsceneAttrmap2:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneAttrmap2.bin" ; $63e0, 110 bytes
+AwardsCeremonyCutsceneTilemap3:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTilemap3.bin" ; $644e, 271 bytes
+AwardsCeremonyCutsceneAttrmap3:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneAttrmap3.bin" ; $655d, 132 bytes
+AwardsCeremonyCutsceneTilemap4:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTilemap4.bin" ; $65e1, 264 bytes
+AwardsCeremonyCutsceneAttrmap4:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneAttrmap4.bin" ; $66e9, 132 bytes
+AwardsCeremonyCutsceneTilemap5:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTilemap5.bin" ; $676d, 215 bytes
+AwardsCeremonyCutsceneAttrmap5:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneAttrmap5.bin" ; $6844, 109 bytes
+AwardsCeremonyCutsceneTilemap6:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneTilemap6.bin" ; $68b1, 226 bytes
+AwardsCeremonyCutsceneAttrmap6:
+	INCBIN "data/gfx/lz_AwardsCeremonyCutsceneAttrmap6.bin" ; $6993, 125 bytes
 ChampionMedalTiles:
 	INCBIN "data/gfx/lz_ChampionMedalTiles.bin" ; $6a10, 3355 bytes
 ChampionMedalPalettes:

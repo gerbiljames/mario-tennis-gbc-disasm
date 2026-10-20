@@ -378,42 +378,42 @@ CharDataScreen_BuildStats:
 	farcall RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
 CharDataScreen_LoadGfx:
-	ld hl, CharDataScreen_LoadPalette ; $7b85
+	ld hl, StatArrowObjPalettes ; $7b85
 	ld_obj_pals de, 4, 2 ; $7b88
 	call LoadPaletteShadow ; $7b8b
 	wram_bank WRAM_STAGING ; $7b8e
-	ld hl, CharDataScreenGfx0 ; $7b94
+	ld hl, StatArrowDownGfx ; $7b94
 	ld de, wDecompBuffer ; $7b97
 	call DecompressData ; $7b9a
 	ld hl, wDecompBuffer ; $7b9d
 	ld de, vTiles0 tile $78 + VRAM_BANK1 ; $7ba0
-	ld c, CharDataScreenGfx0_SIZE / 16 ; $7ba3
+	ld c, StatArrowDownGfx_SIZE / 16 ; $7ba3
 	call QueueVRAMCopy ; $7ba5
-	ld hl, CharDataScreenGfx1 ; $7ba8
+	ld hl, StatArrowDownDoubleGfx ; $7ba8
 	ld de, wDecompBuffer ; $7bab
 	call DecompressData ; $7bae
 	ld hl, wDecompBuffer ; $7bb1
 	ld de, vTiles0 tile $7a + VRAM_BANK1 ; $7bb4
-	ld c, CharDataScreenGfx1_SIZE / 16 ; $7bb7
+	ld c, StatArrowDownDoubleGfx_SIZE / 16 ; $7bb7
 	call QueueVRAMCopy ; $7bb9
-	ld hl, CharDataScreenGfx2 ; $7bbc
+	ld hl, StatArrowUpGfx ; $7bbc
 	ld de, wDecompBuffer ; $7bbf
 	call DecompressData ; $7bc2
 	ld hl, wDecompBuffer ; $7bc5
 	ld de, vTiles0 tile $7c + VRAM_BANK1 ; $7bc8
-	ld c, CharDataScreenGfx2_SIZE / 16 ; $7bcb
+	ld c, StatArrowUpGfx_SIZE / 16 ; $7bcb
 	call QueueVRAMCopy ; $7bcd
-	ld hl, CharDataScreenGfx3 ; $7bd0
+	ld hl, StatArrowUpDoubleGfx ; $7bd0
 	ld de, wDecompBuffer ; $7bd3
 	call DecompressData ; $7bd6
 	ld hl, wDecompBuffer ; $7bd9
 	ld de, vTiles0 tile $7e + VRAM_BANK1 ; $7bdc
-	ld c, CharDataScreenGfx3_SIZE / 16 ; $7bdf
+	ld c, StatArrowUpDoubleGfx_SIZE / 16 ; $7bdf
 	call QueueVRAMCopy ; $7be1
 	ret ; $7be4
 DrawStatChangeArrows:
 	wram_bank WRAM_SCENE ; $7be5
-	ld a, [wCharDataPageArrowMode] ; $7beb
+	ld a, [wCharDataStatPageView] ; $7beb
 	dec a ; $7bee
 	ret nz ; $7bef
 	ld hl, wCharDataStatsSlideX ; $7bf0
@@ -743,18 +743,18 @@ CharDataConfirmScreenTopTilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenTopTilemap.bin" ; $7e53, 34 bytes
 CharDataConfirmScreenTopAttrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenTopAttrmap.bin" ; $7e75, 9 bytes
-CharDataScreen_LoadPalette:
-	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadPalette.asm" ; $7e7e, 16 bytes (palettes)
-CharDataScreenGfx0:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0.bin" ; $7e8e, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx0.inc" ; DEF CharDataScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx1:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx1.bin" ; $7e99, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx1.inc" ; DEF CharDataScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx2:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx2.bin" ; $7ea4, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx2.inc" ; DEF CharDataScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx3:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx3.bin" ; $7eaf, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx3.inc" ; DEF CharDataScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowObjPalettes:
+	INCLUDE "data/engine/menus/char_data/StatArrowObjPalettes.asm" ; $7e7e, 16 bytes (palettes)
+StatArrowDownGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowDownGfx.bin" ; $7e8e, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowDownGfx.inc" ; DEF StatArrowDownGfx_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowDownDoubleGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowDownDoubleGfx.bin" ; $7e99, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowDownDoubleGfx.inc" ; DEF StatArrowDownDoubleGfx_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowUpGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowUpGfx.bin" ; $7ea4, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowUpGfx.inc" ; DEF StatArrowUpGfx_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowUpDoubleGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowUpDoubleGfx.bin" ; $7eaf, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowUpDoubleGfx.inc" ; DEF StatArrowUpDoubleGfx_SIZE EQU its decoded length, generated from the .bin by make
 	; $7eba, 326 bytes fill to bank end (linker-padded)

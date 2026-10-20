@@ -80,7 +80,7 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_ISLAND_OPEN_LOSE      ; $2a ShowRankingBoard with wRankingBoardMode 2, which SetupRankingBoardArgs sets when wMatchWinLoseFlag != 1
 	const BGM_ISLAND_OPEN_WIN       ; $2b the same board with mode 1 (match won)
 	const BGM_CREDITS               ; $2c RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm
-	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayScreenSequence1/2)
+	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayAwardsCeremonyScene, PlayDreamMatchEpilogueScene)
 def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 
 ; Jingles ($40-$45), through the `sound` macro or PlaySoundManaged. The
