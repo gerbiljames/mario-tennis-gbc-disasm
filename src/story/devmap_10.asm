@@ -321,7 +321,7 @@ RunTitleAndMainMenuLoop:
 	call ResumeBGM ; $4f12
 	ld a, [wStoryModeEntryPoint] ; $4f15
 	cp ENTRY_MAIN_MENU_TITLE ; $4f18
-	jr nz, .newGame ; $4f1a
+	jr nz, .enterMainMenu ; $4f1a
 	call ClearFrameTasks ; $4f1c
 	sound BGM_NONE ; $4f1f
 	call ResumeBGM ; $4f21
@@ -337,7 +337,7 @@ RunTitleAndMainMenuLoop:
 	jr z, .intro ; $4f36
 	cp $01 ; $4f38
 	jr z, .intro ; $4f3a
-.newGame:
+.enterMainMenu:
 	farcall InitDefaultMatchSettings ; $4f3c
 	xor a ; $4f3f
 	ld [wMainMenuCursor], a ; $4f40
@@ -384,33 +384,34 @@ RunTitleAndMainMenuLoop:
 	cp $ff ; $4fb3
 	jp z, .titleScreen ; $4fb5
 	ld e, a ; $4fb8
-	ld hl, MatchSelectHandlersB_10 ; $4fb9
+	ld hl, MainMenuItemHandlers_10 ; $4fb9
 	add a ; $4fbc
 	add_hl_a ; $4fbd
 	ld a, [hl+] ; $4fc2
 	ld h, [hl] ; $4fc3
 	ld l, a ; $4fc4
 	jp hl ; $4fc5
-MatchSelectHandlersB_10:
+MainMenuItemHandlers_10:
 	; $4fc6, 18 bytes (records:2)
-	dw MatchSelectHandlersBHandler0 ; record 0
-	dw MatchSelectHandlersBHandler0 ; record 1
-	dw MatchSelectHandlersBHandler0 ; record 2
-	dw MatchSelectHandlersBHandler3 ; record 3
+	dw RunStoryFileFlow ; record 0
+	dw RunStoryFileFlow ; record 1
+	dw RunStoryFileFlow ; record 2
+	dw RunExhibitionModeFlow ; record 3
 	dw RunMinigameModeFlow ; record 4
-	dw MatchSelectHandlersBHandler5 ; record 5
+	dw RunLinkedPlayFlow ; record 5
 	dw RunStatusMenuFlow ; record 6
-	dw MatchSelectHandlersBHandler7 ; record 7
+	dw RunDictionaryFlow ; record 7
 	dw RunEraseSavedDataFlow ; record 8
-MatchSelectHandlersBHandler0:
+RunStoryFileFlow:
+	; e is the item id 0-2, so this test never branches
 	ld a, e ; $4fd8
 	cp $ff ; $4fd9
-	jr z, .backToTitle ; $4fdb
+	jr z, .newGame ; $4fdb
 	and $7f ; $4fdd
 	ld [wCurrentStorySlot], a ; $4fdf
 	farcall CheckStorySlot ; $4fe2
 	cp $fe ; $4fe5
-	jr z, .backToTitle ; $4fe7
+	jr z, .newGame ; $4fe7
 	farcall ApplyPendingExpAwards ; $4fe9
 	or a ; $4fec
 	jr z, .checkMatchResult ; $4fed
@@ -441,7 +442,7 @@ MatchSelectHandlersBHandler0:
 	ld a, [wMatchSuspendedFlag] ; $5027
 	or a ; $502a
 	jr z, .restoreReturnPoint ; $502b
-	jp MatchSelectRunMatch ; $502d
+	jp ResumeSuspendedStoryMatch ; $502d
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, STORYLOC_DORM_ROOM ; $5033
@@ -450,7 +451,7 @@ MatchSelectHandlersBHandler0:
 	farcall SaveStorySlotWithTimer ; $503a
 	farcall EndCutsceneScriptMode ; $503d
 	ret ; $5040
-.backToTitle:
+.newGame:
 	ld a, $03 ; $5041
 	ld [wAnimatedTilePeriod], a ; $5043
 	script_fade_out 16 ; $5046
@@ -473,12 +474,12 @@ MatchSelectHandlersBHandler0:
 	farcall GenerateUniqueStorySaveSignature ; $5076
 	farcall SaveStorySlotWithTimer ; $5079
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $507c
-	jr nz, .exitToLocation3 ; $507f
+	jr nz, .newGameTestExit ; $507f
 	ld a, EXIT_MAIN_MENU_NEW_GAME ; $5081
 	ld [wUnusedExitTriggerIdMirror], a ; $5083
 	ld [wStoryModeExitTriggerRequest], a ; $5086
 	ret ; $5089
-.exitToLocation3:
+.newGameTestExit:
 	ld a, EXIT_MAIN_MENU_TEST_2 ; $508a
 	ld [wUnusedExitTriggerIdMirror], a ; $508c
 	ld [wStoryModeExitTriggerRequest], a ; $508f
@@ -517,36 +518,36 @@ MatchSelectHandlersBHandler0:
 	farcall SaveStoryReturnPoint ; $50df
 	farcall SaveStorySlotWithTimer ; $50e2
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
-	jr nz, .loadSlot ; $50e8
+	jr nz, .continueTestExit ; $50e8
 	ld a, [wStoryContinueExitId] ; $50ea
 	ld a, a ; $50ed
 	ld [wUnusedExitTriggerIdMirror], a ; $50ee
 	ld [wStoryModeExitTriggerRequest], a ; $50f1
 	ret ; $50f4
-.loadSlot:
+.continueTestExit:
 	ld a, EXIT_MAIN_MENU_TEST_2 ; $50f5
 	ld [wUnusedExitTriggerIdMirror], a ; $50f7
 	ld [wStoryModeExitTriggerRequest], a ; $50fa
 	ret ; $50fd
-MatchSelectHandlersBHandler3:
+RunExhibitionModeFlow:
 	ld a, STORYSLOT_NONE ; $50fe
 	ld [wCurrentStorySlot], a ; $5100
 	farcall ReadExhibitionSaveBlock ; $5103
 	bit 7, a ; $5106
-	jr nz, .noSlot ; $5108
+	jr nz, .freshExhibition ; $5108
 	ld a, [wSaveAndQuitRequest] ; $510a
 	or a ; $510d
-	jr z, .noSlot ; $510e
+	jr z, .freshExhibition ; $510e
 	ld c, $00 ; $5110
 	farcall ShowMatchResultsScreen ; $5112
 	or a ; $5115
-	jr z, .startStory ; $5116
+	jr z, .redrawAfterResults ; $5116
 	cp $ff ; $5118
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $511a
 	ld a, [wMatchSuspendedFlag] ; $511d
 	or a ; $5120
-	jp nz, .optionsFlow ; $5121
-.startStory:
+	jp nz, .startMatch ; $5121
+.redrawAfterResults:
 	call DisableLCDSafely ; $5124
 	farcall ResetScreenAndTextWindows ; $5127
 	call EnableLCD ; $512a
@@ -554,7 +555,7 @@ MatchSelectHandlersBHandler3:
 	script_fade_in 16 ; $512e
 	call WaitFadeEnd ; $5133
 	pop af ; $5136
-.noSlot:
+.freshExhibition:
 	xor a ; $5137
 	ld [wVictoryScoreTableAlt], a ; $5138
 	ld a, STORYSLOT_NONE ; $513b
@@ -562,13 +563,13 @@ MatchSelectHandlersBHandler3:
 	farcall InitStoryModeState ; $5140
 	farcall InitDefaultMatchSettings ; $5143
 	farcall WriteExhibitionSaveBlock ; $5146
-.eraseFlow:
+.formatSelect:
 	farcall RunMatchFormatSelect ; $5149
 	cp $ff ; $514c
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $514e
 	script_fade_out 16 ; $5151
 	call WaitFadeEnd ; $5156
-.savedDataFlow:
+.charSelect:
 	ld a, [wMatchFormatDoubles] ; $5159
 	ld b, a ; $515c
 	farcall RunExhibitionCharSelectScreen ; $515d
@@ -585,43 +586,43 @@ MatchSelectHandlersBHandler3:
 	farcall LoadCourtSelectGraphics ; $517a
 	pop af ; $517d
 	cp $ff ; $517e
-	jr nz, .minigameFlow ; $5180
+	jr nz, .courtSelect ; $5180
 	call EnableLCD ; $5182
 	script_fade_in 16 ; $5185
 	ld a, MENUSLIDE_BACK ; $518a
 	ld [wMenuSlideDirection], a ; $518c
-	jr .eraseFlow ; $518f
-.minigameFlow:
+	jr .formatSelect ; $518f
+.courtSelect:
 	ld a, MENUSLIDE_FORWARD ; $5191
 	ld [wMenuSlideDirection], a ; $5193
 	farcall StubNop_3e ; $5196
 	ld a, [wUnlockedCourtMask] ; $5199
 	or a ; $519c
-	jr z, .exhibitionFlow ; $519d
+	jr z, .courtSelect4 ; $519d
 	call EnableLCD ; $519f
 	script_fade_in 16 ; $51a2
 	farcall RunCourtSelect9Menu ; $51a7
 	cp $ff ; $51aa
-	jr nz, .linkFlow ; $51ac
+	jr nz, .courtChosen ; $51ac
 	ld a, MENUSLIDE_BACK ; $51ae
 	ld [wMenuSlideDirection], a ; $51b0
-	jp z, .savedDataFlow ; $51b3
-.exhibitionFlow:
+	jp z, .charSelect ; $51b3
+.courtSelect4:
 	call EnableLCD ; $51b6
 	script_fade_in 16 ; $51b9
 	farcall RunCourtSelect4Menu ; $51be
 	cp $ff ; $51c1
-	jr nz, .linkFlow ; $51c3
+	jr nz, .courtChosen ; $51c3
 	ld a, MENUSLIDE_BACK ; $51c5
 	ld [wMenuSlideDirection], a ; $51c7
-	jp z, .savedDataFlow ; $51ca
-.linkFlow:
+	jp z, .charSelect ; $51ca
+.courtChosen:
 	ld d, a ; $51cd
 	wram_bank WRAM_ACTORS ; $51ce
 	ld a, d ; $51d4
 	ld [wCurrentlyUsedCourt], a ; $51d5
 	call ApplyMatchTypeSettings ; $51d8
-.optionsFlow:
+.startMatch:
 	ld a, STORYSLOT_NONE ; $51db
 	ld [wCurrentStorySlot], a ; $51dd
 	xor a ; $51e0

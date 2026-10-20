@@ -18,7 +18,7 @@
 	farptr Unused_03_SaveSlotDebugEditor ; $4022
 	farptr ReadExhibitionSaveBlock ; $4024
 	farptr WriteExhibitionSaveBlock ; $4026
-	farptr ClearSaveBlock11 ; $4028
+	farptr ClearN64RecordsSaveBlock ; $4028
 	farptr UpdateMinigameRecord ; $402a
 	farptr ReadMinigameRecord ; $402c
 	farptr ApplyN64RecordsUnlockFlags ; $402e

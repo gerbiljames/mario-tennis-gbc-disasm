@@ -57,7 +57,7 @@ RunMinigameModeFlow:
 	cp WINLOSE_WIN ; $5299
 	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
-MatchSelectHandlersBHandler5:
+RunLinkedPlayFlow:
 	ld a, STORYSLOT_NONE ; $52a0
 	ld [wCurrentStorySlot], a ; $52a2
 	farcall InitStoryModeState ; $52a5
@@ -248,7 +248,7 @@ RunStatusMenuFlow:
 	ld a, MENUSLIDE_BACK ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
 	jp .pickNonFileMenu ; $54ad
-MatchSelectHandlersBHandler7:
+RunDictionaryFlow:
 	script_fade_out 16 ; $54b0
 	call WaitFadeEnd ; $54b5
 	ld a, TENNISDICT_INDEX ; $54b8
@@ -275,12 +275,12 @@ RunEraseSavedDataFlow:
 	jp hl ; $54eb
 EraseSavedDataFlowHandlers_10:
 	; $54ec, 10 bytes (records:2)
-	dw EraseSavedDataFlowHandler0_10 ; record 0
-	dw EraseSavedDataFlowHandler0_10 ; record 1
-	dw EraseSavedDataFlowHandler0_10 ; record 2
-	dw EraseSavedDataFlowHandler3_10 ; record 3
-	dw EraseSavedDataFlowHandler4_10 ; record 4
-EraseSavedDataFlowHandler0_10:
+	dw EraseStoryFileFlow ; record 0
+	dw EraseStoryFileFlow ; record 1
+	dw EraseStoryFileFlow ; record 2
+	dw EraseN64RecordsFlow ; record 3
+	dw EraseAllDataFlow ; record 4
+EraseStoryFileFlow:
 	ld a, b ; $54f6
 	ld [wCurrentStorySlot], a ; $54f7
 	farcall CheckStorySlot ; $54fa
@@ -309,14 +309,14 @@ EraseSavedDataFlowHandler0_10:
 	ld a, MENUSLIDE_BACK ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
-EraseSavedDataFlowHandler3_10:
+EraseN64RecordsFlow:
 	script_fade_out 16 ; $5539
 	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
 	farcall RunEraseDataConfirmMenu ; $5543
 	or a ; $5546
 	jr z, .redrawAfterBlockErase ; $5547
-	farcall ClearSaveBlock11 ; $5549
+	farcall ClearN64RecordsSaveBlock ; $5549
 .redrawAfterBlockErase:
 	call DisableLCDSafely ; $554c
 	farcall LoadMenuFontGfx ; $554f
@@ -326,7 +326,7 @@ EraseSavedDataFlowHandler3_10:
 	ld a, MENUSLIDE_BACK ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
-EraseSavedDataFlowHandler4_10:
+EraseAllDataFlow:
 	script_fade_out 16 ; $5565
 	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
@@ -357,7 +357,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wSelectedMinigame], a ; $55af
 	jp RunEraseSavedDataFlow ; $55b2
 	ret ; $55b5
-MatchSelectRunMatch:
+ResumeSuspendedStoryMatch:
 	farcall RunMatch ; $55b6
 	ld a, [wSaveAndQuitRequest] ; $55b9
 	or a ; $55bc
@@ -383,12 +383,12 @@ MatchSelectRunMatch:
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
-	jr nz, .returnToLocation3 ; $55f0
+	jr nz, .testExit ; $55f0
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $55f2
 	ld [wUnusedExitTriggerIdMirror], a ; $55f4
 	ld [wStoryModeExitTriggerRequest], a ; $55f7
 	ret ; $55fa
-.returnToLocation3:
+.testExit:
 	ld a, EXIT_MAIN_MENU_TEST_2 ; $55fb
 	ld [wUnusedExitTriggerIdMirror], a ; $55fd
 	ld [wStoryModeExitTriggerRequest], a ; $5600

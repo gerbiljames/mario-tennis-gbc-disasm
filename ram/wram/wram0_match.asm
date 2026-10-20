@@ -355,7 +355,7 @@ wCourtViewLocked:: db
 ; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo_08 and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
 wCameraFollowBall:: db
 
-; [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters
+; [8-bit] InitAllChars sets it for a non-link singles match (minigame starts clear it); enables the wide flickering ground shadow under grounded characters
 wStandingShadowsEnabled:: db
 
 ; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of wPrevCourtPos), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set

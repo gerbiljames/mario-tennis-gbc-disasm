@@ -272,7 +272,7 @@ wMinigameSelectUnused:: db
 ; [8-bit] Set to 1 once the cheat code matched and TriggerCheatUnlock ran; UpdateCheatCodeEntry then ignores input. Cleared when the title and main-menu loops re-enter
 wCheatUnlockTriggered:: db
 
-; [8-bit] Frames the link character-select screen waits before it accepts input; WaitLinkSelectStartupFrames counts it down
+; [8-bit] Frames the link character-select screen waits before it accepts input; WaitLinkSelectStartupFrames counts it up to 3
 wLinkSelectStartupFrames:: db
 
 ; [8-bit] Stage of RunMatchWinLoseScreen, set as the screen opens and branched on twice

@@ -156,7 +156,7 @@ text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
 | `$df1b-1d` | the current frame's placement (X offset, Y offset, size flag), copied from its `*FramePlace` record; `DrawCharSprite` ($650a) dispatches on the flag |
 | `$df80-83` | sprite-slot record for the character sprite (see below) |
 | `$df88-8b` | sprite-slot record for the airborne shadow: tiles `$50/$52/$54/$56` shrink with jump height, drawn only while `$df0f` bit 2 is set |
-| `$df8c-8f` | sprite-slot record for the standing shadow: tile `$58` through the 3-sprite-wide `StandingShadowOamTemplate` ($6301), drawn on alternate frames (flicker transparency) while grounded, singles only (`wStandingShadowsEnabled`) |
+| `$df8c-8f` | sprite-slot record for the standing shadow: tile `$58` through the 3-sprite-wide `StandingShadowOamTemplate` ($6301), drawn on alternate frames (flicker transparency) while grounded, non-link singles only (`wStandingShadowsEnabled`) |
 | `$df96` | draw-order depth key: `(depth * 8) >> 8 + $80`; `DrawActorsByDepth` compares teammates' keys to paint back-to-front |
 
 ## Match renderer sprite slots (WRAM bank 4, `$dd00`/`$de00`)

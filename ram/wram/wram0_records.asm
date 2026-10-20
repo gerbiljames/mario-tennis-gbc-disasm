@@ -47,10 +47,10 @@ wSaveAndQuitRequest:: db
 ; See GAMEMODE_* in include/constants/. Bank $38 sets GAMEMODE_LINK_MATCH right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
 wGameMode:: db
 
-; [8-bit] A match was suspended by Save & Quit and can be resumed; saved with the slot image. Set to 1 by MatchQuitMenu_SaveAndQuit and Unused_07_RunDebugTestMatch. While set, ResetMatchState keeps the per-character match stats (then clears it), ProcessMatchRewards gives no rewards, MatchSelectHandlersBHandler0 resumes with MatchSelectRunMatch on continue, MatchSelectHandlersBHandler3 takes the options flow, and UploadGlyphBufferQueued / UploadLastGlyphTiles clamp the glyph upload to columns $60/$5f instead of $80/$7f. Also cleared by InitDefaultMatchSettings, RunMinigameModeFlow, ConfirmDiscardSuspendedExhibMatch and the bank $0a/$10 post-match paths
+; [8-bit] A match was suspended by Save & Quit and can be resumed; saved with the slot image. Set to 1 by MatchQuitMenu_SaveAndQuit and Unused_07_RunDebugTestMatch. While set, ResetMatchState keeps the per-character match stats (then clears it), ProcessMatchRewards gives no rewards, RunStoryFileFlow resumes with ResumeSuspendedStoryMatch on continue, RunExhibitionModeFlow skips the menus and restarts the match, and UploadGlyphBufferQueued / UploadLastGlyphTiles clamp the glyph upload to columns $60/$5f instead of $80/$7f. Also cleared by InitDefaultMatchSettings, RunMinigameModeFlow, ConfirmDiscardSuspendedExhibMatch and the bank $0a/$10 post-match paths
 wMatchSuspendedFlag:: db
 
-; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
+; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; RunExhibitionModeFlow sets it when an exhibition match ends by Save & Quit and clears it when a fresh exhibition starts
 wVictoryScoreTableAlt:: db
 
 ; [8-bit] Location SaveStoryReturnPoint recorded to return to; called with b = $ff it snapshots the live position instead of a door

@@ -308,7 +308,7 @@ ReadExhibitionSaveBlock:
 	pop de ; $4ffb
 	pop bc ; $4ffc
 	ret ; $4ffd
-ClearSaveBlock11:
+ClearN64RecordsSaveBlock:
 	push bc ; $4ffe
 	push de ; $4fff
 	push hl ; $5000
