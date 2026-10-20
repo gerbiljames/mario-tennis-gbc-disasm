@@ -14,6 +14,7 @@ ShowMatchResultsScreen:
 	jr z, .checkExpScreen ; $401a
 	cp GAMEMODE_WALL_PRACTICE ; $401c
 	jr z, .checkExpScreen ; $401e
+	; No branch follows: test_flag overwrites the flags (docs/bugs.md)
 	cp GAMEMODE_MARIO_MINIGAME ; $4020
 	test_flag FLAG_DOUBLES ; $4022
 	jr z, .checkExpScreen ; $4025

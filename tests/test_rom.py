@@ -210,6 +210,8 @@ class Source(unittest.TestCase):
         self.assertIn(f"{vram} `call` sites", gfx)
         self.assertIn(f"`src/home/memory_00.asm`, {vram} call sites", ui)
         self.assertIn(f"({count(r'^\tcall AdvanceFrame\b')} call sites)", ui)
+        self.assertIn(f"`src/` calls `DecompressData` from {count(r'^\tcall DecompressData\b')} sites and "
+                      f"`DecompressDataFromBank` from {count(r'^\tcall DecompressDataFromBank\b')}.", gfx)
         self.assertIn(f"There are {regions['sprite_template']} templates.", gfx)
         rows = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                 if l.strip() and not l.startswith("#")]

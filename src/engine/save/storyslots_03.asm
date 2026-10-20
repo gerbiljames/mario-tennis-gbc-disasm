@@ -3,7 +3,7 @@ Unused_03_InvalidateStorySlot:
 	push de ; $4b00
 	push bc ; $4b01
 	ld a, b ; $4b02
-	cp $03 ; $4b03
+	cp NUM_STORY_SLOTS ; $4b03
 	jr nc, .badSlot ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09

@@ -264,7 +264,7 @@ BuildCharUnlockFlags:
 	ld a, c ; $5b06
 	inc a ; $5b07
 	ld c, a ; $5b08
-	cp $03 ; $5b09
+	cp NUM_STORY_SLOTS ; $5b09
 	jr nz, .slotLoop ; $5b0b
 	pop af ; $5b0d
 	ld [wCurrentStorySlot], a ; $5b0e

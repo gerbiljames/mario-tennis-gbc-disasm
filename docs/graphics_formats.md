@@ -124,7 +124,8 @@ the encoder's distances stop at 2047.
 word at `$40:l` and calls `DecompressData` on it. A **slot word** `bbss` thus
 means "bank `$bb`, entry `ss/2` of its `$4000` directory": the encoding `dslot`
 emits (`include/macros/`) and `CopyDataFromBank` (`$00:$021a`) uses for
-uncompressed payloads. 282 `call` sites in `src/` reach one of the two.
+uncompressed payloads. `src/` calls `DecompressData` from 220 sites and
+`DecompressDataFromBank` from 62.
 
 ### 1.5 The corpus
 

@@ -424,7 +424,7 @@ wMatchSelectNewLevelRequest:: db
 ; [8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled
 wMatchMenuSelection:: db
 
-; [8-bit] Item id of the first entry of the story option submenu to draw ($04 court view, $06 message speed, $09 music, $0b save; $0e for the story pause root). RunStoryTwoOptionMenu and RunStoryThreeOptionMenu draw this id, +1 and +2, and add wMatchMenuSelection to it for the caption text ($0162 + n) and highlighted item graphics
+; [8-bit] Item id of the first entry of the story option submenu to draw (STORYMENUITEM_MESSAGES for the options submenu, _MSG_SLOW message speed, _MUSIC_ON music, _SAVE_GAME save; _CHAR_DATA for the story pause root). RunStoryTwoOptionMenu and RunStoryThreeOptionMenu draw this id, +1 and +2, and add wMatchMenuSelection to it for the caption text ($0162 + n) and highlighted item graphics
 wStoryMenuFirstItem:: db
 
 ; [8-bit] Nonzero means the shadow tilemap needs flushing to VRAM: Unused_06_FlushTilemapToVramIfDirty returns on 0, FlushTilemapToVram clears it, the debug stats editor sets it after redrawing

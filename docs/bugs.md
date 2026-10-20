@@ -766,6 +766,14 @@ The table holds `$0f, $0e ×6, $0d`, apparently a per-streak sprite tile (or
 size) flattened to the middle value. The eight bytes and the lookup have no
 effect.
 
+### `ShowMatchResultsScreen` compares the game mode and never branches
+
+`ShowMatchResultsScreen` (`$1e:$400e`) sends the drill, Tennis Machine and wall
+modes to `.checkExpScreen` with `cp` / `jr z` pairs. The fourth,
+`cp GAMEMODE_MARIO_MINIGAME` (`$4020`), has no `jr`: the `test_flag
+FLAG_DOUBLES` after it replaces the flags, so the Mario minigame takes the
+doubles-layout path like a match.
+
 ### `ObjectArrayBUpdateCallback_18` stores the wrong register
 
 The two per-object movement callbacks in bank `$18` advance an animation nibble
