@@ -153,7 +153,7 @@ DrawHoveredItemStatMods:
 	pop af ; $599c
 	ret ; $599d
 RenderShoesDescText:
-	ld hl, $00f7 ; $599e
+	ld hl, Text_ShoesNormalDesc ; $599e
 	jp RenderRacketDescText.addTextIndex ; $59a1
 RenderRacketDescText:
 	ld hl, Text_RacketNormalDesc ; $59a4
@@ -167,7 +167,7 @@ RenderRacketDescText:
 	pop hl ; $59b6
 	ret ; $59b7
 RenderShoesNameText:
-	ld hl, $00f4 ; $59b8
+	ld hl, Text_ShoesNormal ; $59b8
 	jp RenderRacketNameText.addTextIndex ; $59bb
 RenderRacketNameText:
 	ld hl, Text_RacketNormal ; $59be

@@ -398,7 +398,7 @@ RunChangeoverSequence:
 	ld [wPauseDisabled], a ; $5f8e
 	ld a, [wChangeoverSkipBanner] ; $5f91
 	and a ; $5f94
-	jr nz, .walkLoop ; $5f95
+	jr nz, .walk ; $5f95
 	ld a, [wChangeEndsPending] ; $5f97
 	and a ; $5f9a
 	jr z, .done ; $5f9b
@@ -406,7 +406,7 @@ RunChangeoverSequence:
 	ld a, BANNER_CHANGE_ENDS ; $5fa0
 	farcall ShowCourtBanner ; $5fa2
 	call StepMatchFrame ; $5fa5
-.walkLoop:
+.walk:
 	call StepMatchFrame ; $5fa8
 	call WalkCharsToNewEnds ; $5fab
 	farcall HideCourtBanner ; $5fae

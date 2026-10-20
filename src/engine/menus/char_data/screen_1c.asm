@@ -59,10 +59,10 @@ CharDataScreen_Show:
 	call CharDataScreen_DrawPageColumns ; $409f
 	call FlushCharDataTilemaps ; $40a2
 	frame_task DrawStatArrowIndicators ; $40a5
-	jr .runInputLoop ; $40ad
+	jr .runInput ; $40ad
 .reentry:
 	call SetupCharDataScreen ; $40af
-.runInputLoop:
+.runInput:
 	call CharDataScreen_InputLoop ; $40b2
 	push af ; $40b5
 	script_fade_out 16 ; $40b6

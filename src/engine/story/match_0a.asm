@@ -502,14 +502,14 @@ ApplyClearStatusFlags:
 	call SetTrainingCourtClearFlags ; $4d91
 	ld a, [wClearStatusDoubles] ; $4d94
 	or a ; $4d97
-	jr nz, .setFlags ; $4d98
-.doubles:
+	jr nz, .doubles ; $4d98
+.singles:
 	call SetSinglesRankingClearFlags ; $4d9a
 	jr .done ; $4d9d
-.setFlags:
+.doubles:
 	ld a, [wClearStatusFormat] ; $4d9f
 	or a ; $4da2
-	jr z, .doubles ; $4da3
+	jr z, .singles ; $4da3
 	call SetDoublesRankingClearFlags ; $4da5
 .done:
 	ret ; $4da8

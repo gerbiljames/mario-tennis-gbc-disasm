@@ -249,10 +249,10 @@ MovePlayerToPosition:
 	wram_bank WRAM_ACTORS ; $47d1
 	ld a, d ; $47d7
 	or a ; $47d8
-	jr nz, .waitLoop ; $47d9
+	jr nz, .teleport ; $47d9
 	call SetActorMoveTargetRaw ; $47db
 	jr .done ; $47de
-.waitLoop:
+.teleport:
 	push af ; $47e0
 	push bc ; $47e1
 	push de ; $47e2
@@ -330,10 +330,10 @@ MovePlayerToActor:
 	ldh [hActorPtr + 1], a ; $4854
 	ld a, d ; $4856
 	or a ; $4857
-	jr nz, .waitLoop ; $4858
+	jr nz, .teleport ; $4858
 	call SetActorMoveTargetRaw ; $485a
 	jr .done ; $485d
-.waitLoop:
+.teleport:
 	push af ; $485f
 	push bc ; $4860
 	push de ; $4861
@@ -376,9 +376,9 @@ WaitPlayerMoveDone:
 	ld a, ACTORF_FLAGS ; $48a7
 	add l ; $48a9
 	ld l, a ; $48aa
-	jr nc, .waitLoop ; $48ab
+	jr nc, .teleport ; $48ab
 	inc h ; $48ad
-.waitLoop:
+.teleport:
 	ld a, $01 ; $48ae
 	call WaitScriptFrames ; $48b0
 	bit 7, [hl] ; $48b3
@@ -386,7 +386,7 @@ WaitPlayerMoveDone:
 	dec bc ; $48b7
 	ld a, c ; $48b8
 	or b ; $48b9
-	jr nz, .waitLoop ; $48ba
+	jr nz, .teleport ; $48ba
 .done:
 	pop hl ; $48bc
 	pop bc ; $48bd

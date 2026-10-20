@@ -385,11 +385,21 @@ MinigameCursorPositionsCompact:
 	; $650f, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $14, $60, $44, $60, $44 ; 0x00
 MinigameSelectCursorTileBases:
-	; $651b, 50 bytes (bytes:16)
-	db $00, $30, $50, $40, $20, $20, $40, $10, $30, $10, $08, $00, $00, $10, $10, $02 ; 0x00
-	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
-	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
-	db $00, $80 ; 0x30
+	; $651b, 9 bytes (bytes:9)
+	db $00, $30, $50, $40, $20, $20, $40, $10, $30 ; 0x00
+Unused_3b_MinigameSelectCursorWideTemplate:
+	; $6524, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 OverrideMinigameCursorIfLocked:
 	push bc ; $654d
 	push hl ; $654e

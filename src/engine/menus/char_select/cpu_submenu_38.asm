@@ -2,12 +2,12 @@ RunCpuDifficultySubmenu:
 	push_wram_bank WRAM_SCREEN ; $6216
 	ld a, [wCpuDifficultyPanelOpen] ; $621f
 	or a ; $6222
-	jr nz, .inputLoop ; $6223
+	jr nz, .handleInput ; $6223
 	call OpenCpuDifficultyPanel ; $6225
 	call QueueCpuDifficultyPanelToVram ; $6228
 	ld a, $01 ; $622b
 	ld [wCpuDifficultyPanelOpen], a ; $622d
-.inputLoop:
+.handleInput:
 	call HandleCpuDifficultyInput ; $6230
 	call DrawCpuDifficultyCursorBox ; $6233
 	ld a, [wMenuInputPressed] ; $6236

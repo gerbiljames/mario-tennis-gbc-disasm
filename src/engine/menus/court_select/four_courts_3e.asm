@@ -394,7 +394,7 @@ CourtSelect4CursorSpriteTask:
 	ld b, [hl] ; $5eb6
 	pop af ; $5eb7
 	add a ; $5eb8
-	ld hl, CourtSelect4CursorSpriteTaskPtrs ; $5eb9
+	ld hl, CourtSelect4CursorTemplatePtrs ; $5eb9
 	add_hl_a ; $5ebc
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
@@ -417,26 +417,35 @@ CourtSelect4CursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $5ee2
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
-CourtSelect4CursorSpriteTaskPtrs:
+CourtSelect4CursorTemplatePtrs:
 	; $5eea, 8 bytes (records:2)
-	dw CourtSelect4CursorSpriteTask0 ; record 0
-	dw CourtSelect4CursorSpriteTask0 ; record 1
-	dw CourtSelect4CursorSpriteTask0 ; record 2
-	dw CourtSelect4CursorSpriteTask1 ; record 3
-CourtSelect4CursorSpriteTask0:
-	; $5ef2, 33 bytes (bytes:8)
-	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
-	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
-	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
-	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
-	db $80 ; 0x20
-CourtSelect4CursorSpriteTask1:
-	; $5f13, 37 bytes (bytes:8)
-	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
-	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
-	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
-	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
-	db $10, $48, $10, $00, $80 ; 0x20
+	dw CourtSelect4CursorTemplate0 ; record 0
+	dw CourtSelect4CursorTemplate0 ; record 1
+	dw CourtSelect4CursorTemplate0 ; record 2
+	dw CourtSelect4CursorTemplate1 ; record 3
+CourtSelect4CursorTemplate0:
+	; $5ef2, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+CourtSelect4CursorTemplate1:
+	; $5f13, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite_end
 CourtSelect4CursorSpriteTask_SpriteTemplate:
 	; $5f38, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -594,7 +603,7 @@ Unused_3e_RenderCourtSelectTitleText:
 	ld hl, Unused_3e_CourtSelectTitleTextIndices ; $6070
 	add_hl_a ; $6073
 	ld a, [hl] ; $6078
-	ld hl, $00a9 ; $6079
+	ld hl, Text_CourtSpeedSlow ; $6079
 	add_hl_a ; $607c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 6 ; $6081
 	ld c, $20 ; $6084
@@ -617,7 +626,7 @@ Unused_3e_RenderCourtSelectTitleText2:
 	ld a, c ; $60ac
 	add_hl_a ; $60ad
 	ld a, [hl] ; $60b2
-	ld hl, $00a9 ; $60b3
+	ld hl, Text_CourtSpeedSlow ; $60b3
 	add_hl_a ; $60b6
 	ld c, $20 ; $60bb
 	farcall RenderTextToBuffer64 ; $60bd

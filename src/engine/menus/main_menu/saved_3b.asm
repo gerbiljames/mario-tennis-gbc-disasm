@@ -472,10 +472,21 @@ SavedDataSourceCursorPositions:
 	; $6a43, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $0c, $60, $4d, $60, $3e ; 0x00
 SavedDataSourceCursorTileBases:
-	; $6a4f, 47 bytes (bytes:16)
-	db $00, $10, $20, $40, $30, $40, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
-	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
-	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
+	; $6a4f, 6 bytes (bytes:6)
+	db $00, $10, $20, $40, $30, $40 ; 0x00
+Unused_3b_SavedDataSourceCursorWideTemplate:
+	; $6a55, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 DrawSavedDataSourceGrid:
 	wram_bank WRAM_SCREEN ; $6a7e
 	ld b, $00 ; $6a84

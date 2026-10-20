@@ -368,8 +368,11 @@ DrawBriefingSwingAnim_SpriteTemplate:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 DrawBriefingSwingAnim_SmallSpriteTemplate:
-	; $47e2, 13 bytes (bytes:13)
-	db $10, $08, $00, $00, $10, $10, $02, $00, $10, $18, $04, $00, $80 ; 0x00
+	; $47e2, 13 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite_end
 DrawBriefingPoleSprites:
 	push_wram_bank WRAM_SCREEN ; $47ef
 	ld a, [wBriefingPole1X] ; $47f8

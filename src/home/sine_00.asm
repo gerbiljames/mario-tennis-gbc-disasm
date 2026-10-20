@@ -29,12 +29,12 @@ MulHLByAFracSigned:
 	ld a, d ; $0bcd
 	pop de ; $0bce
 	ret ; $0bcf
-.loop:
+.returnZero:
 	ld hl, $0000 ; $0bd0
 	ret ; $0bd3
 MulHLByAFrac:
 	or a ; $0bd4
-	jr z, MulHLByAFracSigned.loop ; $0bd5
+	jr z, MulHLByAFracSigned.returnZero ; $0bd5
 	push de ; $0bd7
 	ld e, l ; $0bd8
 	ld d, h ; $0bd9

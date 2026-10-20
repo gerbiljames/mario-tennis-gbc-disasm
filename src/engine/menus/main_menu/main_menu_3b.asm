@@ -324,7 +324,7 @@ MainMenuCursorSpriteTask:
 	ld e, a ; $5882
 	farcall ApplySpriteBobOffset ; $5883
 	pop af ; $5886
-	ld hl, MainMenuCursorSpriteTaskPtrs ; $5887
+	ld hl, MainMenuCursorTemplatePtrs ; $5887
 	add_hl_a ; $588a
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
@@ -348,40 +348,40 @@ MainMenuCursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $58b2
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
-MainMenuCursorSpriteTaskPtrs:
+MainMenuCursorTemplatePtrs:
 	; $58ba, 18 bytes (records:2)
-	dw MainMenuCursorSpriteTask0 ; record 0
-	dw MainMenuCursorSpriteTask1 ; record 1
-	dw MainMenuCursorSpriteTask0 ; record 2
-	dw MainMenuCursorSpriteTask0 ; record 3
-	dw MainMenuCursorSpriteTask0 ; record 4
-	dw MainMenuCursorSpriteTask0 ; record 5
-	dw MainMenuCursorSpriteTask0 ; record 6
-	dw MainMenuCursorSpriteTask0 ; record 7
-	dw MainMenuCursorSpriteTask0 ; record 8
-MainMenuCursorSpriteTask0:
-	; $58cc, 33 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $80 ; 0x20
-MainMenuCursorSpriteTask1:
-	; $58ed, 37 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $10, $48, $10, $00 ; 0x20
-	db $80 ; 0x24
+	dw MainMenuCursorTemplate0 ; record 0
+	dw MainMenuCursorTemplate1 ; record 1
+	dw MainMenuCursorTemplate0 ; record 2
+	dw MainMenuCursorTemplate0 ; record 3
+	dw MainMenuCursorTemplate0 ; record 4
+	dw MainMenuCursorTemplate0 ; record 5
+	dw MainMenuCursorTemplate0 ; record 6
+	dw MainMenuCursorTemplate0 ; record 7
+	dw MainMenuCursorTemplate0 ; record 8
+MainMenuCursorTemplate0:
+	; $58cc, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite_end
+MainMenuCursorTemplate1:
+	; $58ed, 37 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite_end
 MainMenuCursorSpriteTask_SpriteTemplate:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -395,11 +395,21 @@ MainMenuCursorTileBases:
 	; $592d, 9 bytes (bytes:9)
 	db $10, $20, $32, $00, $00, $00, $42, $52, $62 ; 0x00
 MainMenuCursorIconXOffsets:
-	; $5936, 50 bytes (bytes:16)
-	db $00, $04, $00, $00, $00, $00, $00, $00, $00, $10, $08, $00, $00, $10, $10, $02 ; 0x00
-	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10
-	db $00, $10, $38, $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12 ; 0x20
-	db $00, $80 ; 0x30
+	; $5936, 9 bytes (bytes:9)
+	db $00, $04, $00, $00, $00, $00, $00, $00, $00 ; 0x00
+Unused_3b_MainMenuCursorWideTemplate:
+	; $593f, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 DrawMainMenuSelection:
 	wram_bank WRAM_SCREEN ; $5968
 	ld b, $00 ; $596e

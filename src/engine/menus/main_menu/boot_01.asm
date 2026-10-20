@@ -567,7 +567,7 @@ Unused_01_RunSoundTest:
 	pop de ; $6b2c
 	ldh a, [hInputPressed] ; $6b2d
 	bit PADB_A, a ; $6b2f
-	jr z, .continueLoop ; $6b31
+	jr z, .continue ; $6b31
 	bit 0, b ; $6b33
 	jr nz, .playSfx ; $6b35
 	push af ; $6b37
@@ -582,7 +582,7 @@ Unused_01_RunSoundTest:
 	pop de ; $6b48
 	pop bc ; $6b49
 	pop af ; $6b4a
-	jr .continueLoop ; $6b4b
+	jr .continue ; $6b4b
 .playSfx:
 	push af ; $6b4d
 	push bc ; $6b4e
@@ -596,7 +596,7 @@ Unused_01_RunSoundTest:
 	pop de ; $6b5e
 	pop bc ; $6b5f
 	pop af ; $6b60
-.continueLoop:
+.continue:
 	jp .loop ; $6b61
 SoundTestMusicString:
 	INCLUDE "data/engine/menus/main_menu/SoundTestMusicString.asm" ; $6b64, 6 bytes (text)

@@ -290,12 +290,12 @@ Unused_38_RunLinkCpuDifficultySubmenu:
 	push_wram_bank WRAM_SCREEN ; $6bd7
 	ld a, [wCpuDifficultyPanelOpen] ; $6be0
 	or a ; $6be3
-	jr nz, .inputLoop ; $6be4
+	jr nz, .handleInput ; $6be4
 	call OpenCpuDifficultyPanel ; $6be6
 	call QueueCpuDifficultyPanelToVram ; $6be9
 	ld a, $01 ; $6bec
 	ld [wCpuDifficultyPanelOpen], a ; $6bee
-.inputLoop:
+.handleInput:
 	call HandleCpuDifficultyInput ; $6bf1
 	call DrawCpuDifficultyCursorBox ; $6bf4
 	ld a, [wMenuInputPressed] ; $6bf7

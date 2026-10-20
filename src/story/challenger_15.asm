@@ -85,12 +85,12 @@ ServiceMatch1ResultScene:
 	ld [hl], d ; $5e96
 	ld hl, wChallengerWinTextId ; $5e97
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5e9a
-	jr z, .celebrateWait ; $5e9d
-	ld de, $2023 ; $5e9f
-	jr .celebrateLoop ; $5ea2
-.celebrateWait:
-	ld de, $2022 ; $5ea4
-.celebrateLoop:
+	jr z, .stillJunior ; $5e9d
+	ld de, Text_ServeRivalPracticeUpRetry ; $5e9f
+	jr .storeWinText ; $5ea2
+.stillJunior:
+	ld de, Text_ServeRivalJuniorClassRetry ; $5ea4
+.storeWinText:
 	ld a, e ; $5ea7
 	ld [hl+], a ; $5ea8
 	ld [hl], d ; $5ea9

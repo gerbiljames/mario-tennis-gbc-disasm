@@ -396,9 +396,10 @@ With base attr bit 5 (X-flip) set, a second loop (`$1ee0`-`$1f05`) uses
 X = `base_x + (8 - dx)` (`cpl` / `add $09`) and combines attr with **`or`**
 (`$1f01`).
 
-There are 173 templates. `StandingShadowOamTemplate` (`$08:$6301`) is reached
-by `jp QueueSpriteTemplate` (`DrawStandingShadowSlot`, `$08:$6534`); all others
-by `call`.
+There are 182 templates. `StandingShadowOamTemplate` (`$08:$6301`) is reached
+by `jp QueueSpriteTemplate` (`DrawStandingShadowSlot`, `$08:$6534`); four
+10-sprite cursor templates in bank `$3b` (`Unused_3b_*CursorWideTemplate`) by
+nothing; all others by `call`.
 
 ### 4.2 The sprite queue
 
@@ -722,7 +723,7 @@ Each structured data region's first line names the spec it was rendered from
 (`kind` or `kind:param`): `; $46ef, 112 bytes (bytes:16)`. The source is now
 edited directly as those macro rows; the retired generator and its
 `data_tables.json` are at git tag `generator-final`. Counts below are the
-2,751 declarations at that tag (today's source differs, e.g. 173
+2,751 declarations at that tag (today's source differs, e.g. 182
 `sprite_template` and 269 `actor_script` regions; `*` counts are today's,
 for kinds added since). `data.manifest` holds the
 extracted regions. `tools/extract.py` renders only the kinds it lists and
@@ -801,7 +802,7 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All twenty-seven
+the source claims is true, not just that the bytes come back. All twenty-nine
 pass:
 
 | check | count | what it asserts |
@@ -811,7 +812,7 @@ pass:
 | `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
 | `regions` | 4275 | manifest regions stay inside their bank and do not overlap |
 | `text` | 28 | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
-| `db-words` | 530 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `db-words` | 525 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
 | `addr-words` | 320 | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
 | `records` | 514 | a `records:N` or word-table region is whole records or ends in a `$ff` terminator (exceptions allow-listed) |
 | `layout` | 4275 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
@@ -819,8 +820,8 @@ pass:
 | `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
 | `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
 | `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13776 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
-| `headers` | 3099 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
+| `labels` | 13780 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `headers` | 3103 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33806 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
@@ -829,10 +830,12 @@ pass:
 | `tilemap` | 241 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4903 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
-| `unnamed` | 8873 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
+| `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 4584 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
+| `raw-ids` | 4579 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`), or an immediate left in a register for a `call`/`farcall`, whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
 | `fields` | 454 | a routine that names a `CHARREC_*`/`ACTORF_*`/`OBJSLOT_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c / ld e, a`) (exceptions allow-listed) |
+| `templates` | 161 | a label handed to `QueueSpriteTemplate` in `hl`, directly or as a row of the pointer table `hl` indexes, is a `sprite_template` region (one stale dead-code operand allow-listed) |
+| `loops` | 909 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted) |
 
 ---
 

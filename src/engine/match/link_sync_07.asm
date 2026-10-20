@@ -324,7 +324,7 @@ UpdateLinkSession:
 	jp z, .done ; $484e
 	ldh a, [hLinkExchangeActive] ; $4851
 	or a ; $4853
-	jp nz, .frameLoop ; $4854
+	jp nz, .syncFrames ; $4854
 	sound BGM_NONE ; $4857
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
@@ -380,7 +380,7 @@ UpdateLinkSession:
 	ld a, $01 ; $48d8
 	ldh [hLinkAckRequired], a ; $48da
 	call EnableLCD ; $48dc
-.frameLoop:
+.syncFrames:
 	xor a ; $48df
 	ldh [hMatchFrameCounter], a ; $48e0
 	push af ; $48e2

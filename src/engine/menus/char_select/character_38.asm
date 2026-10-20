@@ -45,9 +45,9 @@ RunCharacterSelectScreen:
 	ld c, $01 ; $485e
 	call MoveMenuCursorGrid_38 ; $4860
 	or a ; $4863
-	jr z, .inputLoop ; $4864
+	jr z, .pollButtons ; $4864
 	call RefreshCharacterSelectHighlight ; $4866
-.inputLoop:
+.pollButtons:
 	call AdvanceFrame ; $4869
 	ldh a, [hInputPressed] ; $486c
 	bit PADB_A, a ; $486e

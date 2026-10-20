@@ -219,10 +219,10 @@ Unused_18_ForceFlushBgMapToVram:
 Unused_18_RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
 	and PADF_LEFT ; $5423
-	jr z, .inputLoop ; $5425
+	jr z, .checkRight ; $5425
 	ld b, $00 ; $5427
 	sound SFX_MENU_MOVE ; $5429
-.inputLoop:
+.checkRight:
 	ldh a, [hInputRisingEdge] ; $542b
 	and PADF_RIGHT ; $542d
 	jr z, .checkUp ; $542f
@@ -263,10 +263,10 @@ Unused_18_RunTwoOptionSelect:
 Unused_18_RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
 	and PADF_LEFT ; $546b
-	jr z, .inputLoop ; $546d
+	jr z, .checkRight ; $546d
 	ld b, $00 ; $546f
 	sound SFX_MENU_MOVE ; $5471
-.inputLoop:
+.checkRight:
 	ldh a, [hInputRisingEdge] ; $5473
 	and PADF_RIGHT ; $5475
 	jr z, .checkUp ; $5477

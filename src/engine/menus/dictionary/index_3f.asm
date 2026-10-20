@@ -316,7 +316,7 @@ HandleTennisDictionaryListInput:
 .singleEntryCategory:
 	call GetTennisDictionarySelectedIndex ; $5640
 	call GetTennisDictionaryEntryCategory ; $5643
-	ld hl, $14a9 ; $5646
+	ld hl, Text_GymLifterTooMuchMuscleSlows ; $5646
 	add l ; $5649
 	ld l, a ; $564a
 	jr nc, .resetTextWindowsAndRestoreMap ; $564b

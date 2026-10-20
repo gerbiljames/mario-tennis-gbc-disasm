@@ -105,28 +105,28 @@ DrawActorsByDepth:
 	wram_bank WRAM_ACTORS ; $6439
 	ld a, [hl] ; $643f
 	cp b ; $6440
-	jr nc, .drawLoop ; $6441
+	jr nc, .nearFirst ; $6441
 	ld a, [wPointOutcome] ; $6443
 	and a ; $6446
-	jr z, .sortLoop ; $6447
+	jr z, .farBallNear ; $6447
 	call DrawFarTeamChars ; $6449
 	call DrawNearTeamChars ; $644c
 	call DrawBallAndEffects ; $644f
 	ret ; $6452
-.sortLoop:
+.farBallNear:
 	call DrawFarTeamChars ; $6453
 	call DrawBallAndEffects ; $6456
 	call DrawNearTeamChars ; $6459
 	ret ; $645c
-.drawLoop:
+.nearFirst:
 	ld a, [wPointOutcome] ; $645d
 	and a ; $6460
-	jr z, .next ; $6461
+	jr z, .nearBallFar ; $6461
 	call DrawNearTeamChars ; $6463
 	call DrawFarTeamChars ; $6466
 	call DrawBallAndEffects ; $6469
 	ret ; $646c
-.next:
+.nearBallFar:
 	call DrawNearTeamChars ; $646d
 	call DrawBallAndEffects ; $6470
 	call DrawFarTeamChars ; $6473

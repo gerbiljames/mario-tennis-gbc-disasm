@@ -7,6 +7,7 @@
 def Text_30_1 equ $0001
 def Text_30_26 equ $001a
 def Text_30_27 equ $001b
+def Text_30_29 equ $001d
 def Text_30_31 equ $001f
 def Text_30_32 equ $0020
 def Text_30_33 equ $0021
@@ -49,6 +50,7 @@ def Text_30_137 equ $0089
 def Text_30_139 equ $008b
 def Text_30_149 equ $0095
 def Text_30_153 equ $0099
+def Text_30_169 equ $00a9
 def Text_30_178 equ $00b2
 def Text_30_194 equ $00c2
 def Text_30_199 equ $00c7
@@ -73,7 +75,10 @@ def Text_30_224 equ $00e0
 def Text_30_226 equ $00e2
 def Text_30_228 equ $00e4
 def Text_30_229 equ $00e5
+def Text_30_230 equ $00e6
 def Text_30_237 equ $00ed
+def Text_30_244 equ $00f4
+def Text_30_247 equ $00f7
 def Text_30_296 equ $0128
 def Text_30_297 equ $0129
 def Text_30_298 equ $012a
@@ -961,6 +966,8 @@ def Text_6e_18 equ $2012
 def Text_6e_20 equ $2014
 def Text_6e_29 equ $201d
 def Text_6e_32 equ $2020
+def Text_6e_34 equ $2022
+def Text_6e_35 equ $2023
 def Text_6e_36 equ $2024
 def Text_6e_38 equ $2026
 def Text_6e_49 equ $2031
@@ -1432,6 +1439,7 @@ def Text_5e_322 equ $3142
 def Text_DevMapCheckedChest equ Text_30_1
 def Text_MenuYesNo equ Text_30_26
 def Text_NameAlex equ Text_30_27
+def Text_NameHarry equ Text_30_29
 def Text_NameAllie equ Text_30_31
 def Text_NameJoy equ Text_30_32
 def Text_NameBrian equ Text_30_33
@@ -1474,6 +1482,7 @@ def Text_MatchFormatOneSetTwoGames equ Text_30_137
 def Text_MatchFormatOneSetMatch equ Text_30_139
 def Text_CharGridCpuDifficulty equ Text_30_149
 def Text_CharTypePower equ Text_30_153
+def Text_CourtSpeedSlow equ Text_30_169
 def Text_MinigameNameBooBlast equ Text_30_178
 def Text_MinigameLevelClearThisFirst equ Text_30_194
 def Text_SavedDataN64TennisData equ Text_30_199
@@ -1498,7 +1507,10 @@ def Text_EquipChooseRacket equ Text_30_224
 def Text_EquipPlayAlone equ Text_30_226
 def Text_DebugRacketTest equ Text_30_228
 def Text_RacketNormal equ Text_30_229
+def Text_RacketLarge equ Text_30_230
 def Text_RacketNormalDesc equ Text_30_237
+def Text_ShoesNormal equ Text_30_244
+def Text_ShoesNormalDesc equ Text_30_247
 def Text_LinkWaitingForOtherPlayer equ Text_30_296
 def Text_LinkOtherPlayerNotReady equ Text_30_297
 def Text_LinkImproperlyLinked equ Text_30_298
@@ -2386,6 +2398,8 @@ def Text_ReturnCoachCantWaitToSee equ Text_6e_18
 def Text_ServeRivalGoodServeChallenge equ Text_6e_20
 def Text_ServeRivalTiedKeepGoing equ Text_6e_29
 def Text_ServeRivalLetsGetGoing equ Text_6e_32
+def Text_ServeRivalJuniorClassRetry equ Text_6e_34
+def Text_ServeRivalPracticeUpRetry equ Text_6e_35
 def Text_ServeRivalCantLose equ Text_6e_36
 def Text_ServeRivalServeBetterChallenge equ Text_6e_38
 def Text_ServeRivalGotRevenge equ Text_6e_49

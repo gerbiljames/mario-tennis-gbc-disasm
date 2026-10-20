@@ -420,10 +420,21 @@ EraseSavedDataCursorPositions:
 	; $6fc2, 10 bytes (bytes:10)
 	db $3a, $fe, $3a, $2c, $3a, $5c, $60, $0c, $60, $4c ; 0x00
 EraseSavedDataCursorTileBases:
-	; $6fcc, 47 bytes (bytes:16)
-	db $00, $10, $20, $30, $40, $30, $10, $08, $00, $00, $10, $10, $02, $00, $10, $18 ; 0x00
-	db $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a, $00, $10, $38 ; 0x10
-	db $0c, $00, $10, $40, $0e, $00, $10, $48, $10, $00, $10, $50, $12, $00, $80 ; 0x20
+	; $6fcc, 6 bytes (bytes:6)
+	db $00, $10, $20, $30, $40, $30 ; 0x00
+Unused_3b_EraseSavedDataCursorWideTemplate:
+	; $6fd2, 41 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite_end
 DrawEraseSavedDataGrid:
 	wram_bank WRAM_SCREEN ; $6ffb
 	ld b, $00 ; $7001

@@ -13,7 +13,7 @@ PlaySoundCmd:
 	ld [hl], e ; $2fbf
 	inc hl ; $2fc0
 	ld [hl], d ; $2fc1
-.loop:
+.dispatch:
 	cp $50 ; $2fc2
 	jr nc, PlaySoundCmd.playSfx ; $2fc4
 	cp $40 ; $2fc6
@@ -73,7 +73,7 @@ PlaySoundManaged:
 	push bc ; $3025
 	push de ; $3026
 	push hl ; $3027
-	jr PlaySoundCmd.loop ; $3028
+	jr PlaySoundCmd.dispatch ; $3028
 WaitJingleEnd:
 	push af ; $302a
 	push bc ; $302b

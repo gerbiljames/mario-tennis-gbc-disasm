@@ -194,9 +194,9 @@ RunNameEntryScreen:
 	ld c, $06 ; $6e70
 	call MoveMenuCursorGrid_38 ; $6e72
 	or a ; $6e75
-	jr z, .inputLoop ; $6e76
+	jr z, .pollButtons ; $6e76
 	call HandleNameEntryCursorMove ; $6e78
-.inputLoop:
+.pollButtons:
 	call AdvanceFrame ; $6e7b
 	ld a, [wMenuInputPressed] ; $6e7e
 	bit PADB_A, a ; $6e81

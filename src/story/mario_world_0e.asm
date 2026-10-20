@@ -29,7 +29,7 @@ RepairCounterCheckEquipChanged:
 	and a ; $504c
 	jp nz, .noChange ; $504d
 	ld a, [wMapScratch + 10] ; $5050
-	jp RepairCounterServiceMenu.loop ; $5053
+	jp RepairCounterServiceMenu.handleChoice ; $5053
 .equipmentChanged:
 	ld a, [wStoryMainEquipment] ; $5056
 	ld [wMapScratch + 8], a ; $5059
@@ -70,7 +70,7 @@ RepairCounterReopenServiceMenu:
 	xor a ; $50dd
 	ld [wStoryModeShowLocationName], a ; $50de
 	script_set_text Text_RepairCounterPlayerEquipped ; $50e1
-	ld hl, $00e6 ; $50e7
+	ld hl, Text_RacketLarge ; $50e7
 	call PushShortTextArg_0e ; $50ea
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $50f0

@@ -271,7 +271,7 @@ RepairCounterServiceMenu:
 	ld hl, Text_MenuEquipChange ; $4e61
 	ld_cell de, $01, $01 ; $4e64
 	farcall RunMenuFromText ; $4e67
-.loop:
+.handleChoice:
 	ld [wMapScratch + 10], a ; $4e6a
 	cp $ff ; $4e6d
 	jp z, RepairCounterFarewell ; $4e6f
@@ -376,7 +376,7 @@ PushEquipmentNameTextArg:
 	ret ; $4f89
 .shoes:
 	call GetSelectedEquipmentNibble ; $4f8a
-	ld hl, $00f4 ; $4f8d
+	ld hl, Text_ShoesNormal ; $4f8d
 	add_hl_a ; $4f90
 	call PushShortTextArg_0e ; $4f95
 	ret ; $4f98

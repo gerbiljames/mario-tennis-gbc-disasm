@@ -88,7 +88,7 @@ SeniorCourtExit01_12:
 	ld l, a ; $55c4
 	farcall InitDialogueTextCursor ; $55c5
 	ld a, [wStoryMainGender] ; $55c8
-	ld hl, $001d ; $55cb
+	ld hl, Text_NameHarry ; $55cb
 	add_hl_a ; $55ce
 	call PushShortTextArg_12 ; $55d3
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $55d6

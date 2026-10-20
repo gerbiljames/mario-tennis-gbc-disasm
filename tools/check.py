@@ -85,11 +85,19 @@ after a real defect broke it:
             caller saves the result in, a cp after `and X_MASK` tests that
             field, a BASE_ID_ARGS base counts as an argument), a byte read
             through a known text pointer is not compared with a raw TX_*
-            code, and the macro and table rows RAW_ID_* lists name their ids
+            code, the macro and table rows RAW_ID_* lists name their ids, and
+            a routine passed Text_* in hl/de at two or more sites is passed
+            no raw number there
   fields    a routine that names a CHARREC_* / ACTORF_* / OBJSLOT_* field
             adds no raw offset under $100 to a record pointer (`ld hl, n /
             add hl, rr`, `ld a, n / add c|e / ld e|c, a`): 25 once reached
             a record by number beside the names (the record in de, bc named)
+  templates every label handed to QueueSpriteTemplate in hl, directly or as
+            a row of the pointer table hl is indexed into, is a
+            sprite_template region (five were raw db rows)
+  loops     a local named *loop* is the target of a branch or table row on a
+            later line, in its routine or by full name (seven named a
+            straight-line case or a fall-through)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -1513,6 +1521,9 @@ def check_raw_ids(fail):
             names = names_of(_number(op), families)
             if names and (var, op) not in KNOWN_RAW_IDS:
                 fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
+            elif (var.endswith(("(hl)", "(de)")) and (var, op) not in KNOWN_RAW_IDS
+                  and sum(o.startswith("Text_") for o, _ in ops) >= 2):
+                fail("raw-ids", f"{where}: {var} {op} -- a text id with no Text_ name?")
     seen = set()
     for prefix, op, where in _raw_data_ids(seen):
         n += 1
@@ -1582,6 +1593,118 @@ def check_field_offsets(fail):
         fail("fields", f"{name} {op} is no longer added raw -- drop it from KNOWN_RAW_FIELD_OFFSETS")
     return n
 
+_TEMPLATE_HL_RE = re.compile(r"\tld hl, ([A-Za-z_]\w*)(?: ;|$)")
+_HL_READ_RE = re.compile(r"\[hl[+-]?\]|\badd hl\b|\badd_hl_a\b|\bpush hl\b")
+# Dead code whose operand is a stale address: the same number is its LZ
+# source and palette too, so the table that sits there is no template.
+KNOWN_NON_TEMPLATES = {"UnlockDebugNavGridTable"}
+
+
+def check_sprite_templates(fail):
+    """A label handed to QueueSpriteTemplate in hl -- directly, or as a row of
+    the pointer table hl is indexed into -- is a sprite_template region."""
+    n = 0
+    for h in holders():
+        bank = bank_of(h)
+        lines = bank_lines(h)[0]
+        body = {}
+        for i, line in enumerate(lines):
+            m = _GLOBAL_RE.match(line)
+            if m:
+                body[m.group(1)] = i + 1
+
+        def is_template(name):
+            i = body.get(name)
+            if i is None:
+                return True
+            first = lines[i]
+            return "(sprite_template)" in first or first.startswith("\toam_sprite")
+
+        def table_rows(name):
+            out = []
+            for line in lines[body.get(name, len(lines)):]:
+                if line.startswith("\t;"):
+                    continue
+                m = re.match(r"\tdw (.*?)(?: ;|$)", line)
+                if not m:
+                    break
+                out += [w.strip() for w in m.group(1).split(",")]
+            return out
+
+        for i, line in enumerate(lines):
+            if not re.match(r"\tcall QueueSpriteTemplate\b", line):
+                continue
+            for j in range(i - 1, -1, -1):
+                prev = lines[j]
+                if (_GLOBAL_RE.match(prev) or re.match(r"\t(?:ret|jp|jr)\b(?!.*,)", prev)
+                        or re.match(r"\t(?:call|farcall|rst|pop hl)\b", prev)):
+                    break
+                m = _TEMPLATE_HL_RE.match(prev)
+                if not m:
+                    if prev.startswith("\tld hl,"):
+                        break
+                    continue
+                between = [l.split(";")[0] for l in lines[j + 1:i]]
+                ptrs = any("ld a, [hl+]" in a and "ld h, [hl]" in b
+                           for a, b in zip(between, between[1:]))
+                if ptrs:
+                    names = table_rows(m.group(1))
+                elif any(_HL_READ_RE.search(l) for l in between):
+                    break
+                else:
+                    names = [m.group(1)]
+                for name in dict.fromkeys(names):
+                    n += 1
+                    if not is_template(name) and name not in KNOWN_NON_TEMPLATES:
+                        fail("templates", f"${bank:02x}: {name} is queued by QueueSpriteTemplate "
+                                          "but is not a sprite_template region")
+                if ptrs:
+                    break
+    return n
+
+# Routines whose "loop" locals name the domain, not the control flow.
+KNOWN_LOOP_NAMES = {
+    "RunSoundChannelScript": "the sound-script loop opcodes it interprets",
+}
+
+
+def check_loop_labels(fail):
+    """A local named *loop* is the target of a branch or table row from a
+    later line: its own routine's, or by full name from code after it."""
+    n = 0
+    seen = set()
+    for h in holders():
+        bank = bank_of(h)
+        lines = bank_lines(h)[0]
+        scope = None
+        for i, line in enumerate(lines):
+            m = _GLOBAL_RE.match(line)
+            if m:
+                scope = m.group(1)
+                continue
+            m = re.match(r"^(\w+)?(\.\w+):", line)
+            if not m or "loop" not in m.group(2).lower():
+                continue
+            owner = m.group(1) or scope
+            key = (owner, m.group(2))
+            if key in seen or owner in KNOWN_LOOP_NAMES:
+                continue
+            seen.add(key)
+            n += 1
+            full = re.compile(rf"\b{owner}{re.escape(m.group(2))}\b")
+            short = re.compile(rf"(?<![\w.]){re.escape(m.group(2))}\b")
+            inside = True
+            for later in lines[i + 1:]:
+                if _GLOBAL_RE.match(later):
+                    inside = False
+                    continue
+                code = later.split(";")[0]
+                if full.search(code) or inside and short.search(code):
+                    break
+            else:
+                fail("loops", f"${bank:02x}: {owner}{m.group(2)} is never branched back to")
+    return n
+
 
 def main():
     global ROOT
@@ -1623,6 +1746,8 @@ def main():
         "entries": routes.check(fail),
         "raw-ids": check_raw_ids(fail),
         "fields": check_field_offsets(fail),
+        "templates": check_sprite_templates(fail),
+        "loops": check_loop_labels(fail),
     }
     by_check = {}
     for check, msg in failures:
