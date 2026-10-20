@@ -283,25 +283,25 @@ RestoreCharData:
 	push af ; $7365
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $7366
 	pop af ; $7379
-	ld a, [wCharDataNewLevels] ; $737a
+	ld a, [wCharDataNewLevels + TRAINSTAT_SPIN] ; $737a
 	ld [hl], a ; $737d
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $737e
 	push af ; $7381
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $7382
 	pop af ; $7395
-	ld a, [wCharDataNewLevels + 1] ; $7396
+	ld a, [wCharDataNewLevels + TRAINSTAT_POWER] ; $7396
 	ld [hl], a ; $7399
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $739a
 	push af ; $739d
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $739e
 	pop af ; $73b1
-	ld a, [wCharDataNewLevels + 2] ; $73b2
+	ld a, [wCharDataNewLevels + TRAINSTAT_CONTROL] ; $73b2
 	ld [hl], a ; $73b5
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $73b6
 	push af ; $73b9
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $73ba
 	pop af ; $73cd
-	ld a, [wCharDataNewLevels + 3] ; $73ce
+	ld a, [wCharDataNewLevels + TRAINSTAT_SPEED] ; $73ce
 	ld [hl], a ; $73d1
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $73d2
 	xor a ; $73d5
