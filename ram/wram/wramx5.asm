@@ -125,8 +125,8 @@ wWindowTextEmpty:: db
 wDialogueVoice:: db
 ; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, closed by Unused_05_RunFixedTextMenu with the menu window. Neither is called; Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before SetWindowTextId, so the "window id" they pass around is really the WRAM bank number
 wFixedMenuWindowId:: db
-; [16-bit] Current VRAM destination address for glyph tiles (lo/hi)
-wGlyphVramDest:: dw
+; [16-bit] Start of the current text row in the destination (a window shadow-tilemap cell, or RenderTextToBuffer64's buffer); TextCmdNextGlyphStreamRow advances it two row pitches
+wTextRowStartPtr:: dw
 ; [8-bit] Second cursor into wTextArgStringQueue, stepped by MeasureNextArgStringWidth: FitWindowToText measures the whole message before drawing, so each queue has a separate measure cursor. The dialogue entry points reset all six cursors together
 wTextArgStringMeasureIndex:: db
 ; [8-bit] The measure-pass cursor into wTextArgNumberQueue, stepped by MeasureNextArgNumberWidth

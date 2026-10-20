@@ -23,7 +23,7 @@ the soft reset.
   byte (the `sound` macro) and dispatches into the sound engine.
 - The interrupt vectors (`VBlankInterrupt` `$0040`, `LCDStatInterrupt`
   `$0048`, `TimerInterrupt` `$0050`) each `jp` to their handler body. The
-  VBlank handler applies scroll/window changes, runs
+  VBlank handler applies the scroll registers, runs
   `ApplyPendingPaletteUpdates`, flushes queued VRAM DMA, reads the joypad,
   calls the OAM DMA stub at `$ff80`, and jumps to `SoftReset` when the
   buttons read `$0f` (the all-face-buttons combo).
@@ -59,11 +59,11 @@ the soft reset.
 | `FormatHexWord` | `$1935` | Converts `hl` into 4 ASCII hex digit characters (+ null terminator) written to `[de]`; a debug/number-display helper. |
 | `StartVRAMDMATransfer` | `$18d7` | Programs the GBC HDMA registers (`rVDMA_SRC_HIGH` etc.) with `bc`=source, `de`=dest, `a`=length/mode to start a VRAM DMA transfer. |
 | `SoftReset` | `$2582` | Full hardware re-init (stack, LCD off, VRAM/HRAM clear, OAM DMA stub, sound engine, interrupts) triggered by the reset button combo. |
-| `VBlankHandler` | `$2749` | Body of the VBlank interrupt: scroll/window updates, palette flush, VRAM DMA flush, joypad read, soft-reset check. |
-| `TimerHandler` | `$27d7` | Body of the Timer interrupt: services the sound engine when the LCD is off or serial transfer is pending. |
+| `VBlankHandler` | `$2749` | Body of the VBlank interrupt: scroll updates, palette flush, VRAM DMA flush, joypad read, soft-reset check. |
+| `TimerHandler` | `$27d7` | Body of the Timer interrupt: ticks the sound engine while the LCD is off, skipping the tick when a link slave has a serial interrupt pending. |
 | `LCDStatHandler` | `$27f5` | Body of the LCD STAT interrupt: split-scroll effect that changes `rSCX` partway down the screen based on `rLY`. |
 | `UpdateSoundEngine` | `$2f1a` | Gated per-frame sound engine tick (guards against re-entry with a busy flag). |
-| `InitAudioEngine` | `$3078` | One-time sound hardware init: enables `rAUDENA`, clears `rAUDTERM`, sets `rAUDVOL`, clears wave/channel RAM. |
+| `InitAudioEngine` | `$3078` | One-time sound hardware init: enables `rAUDENA`, clears `rAUDTERM`, sets `rAUDVOL`, marks the six channel blocks idle and clears the loop slots; wave RAM is untouched. |
 | `StopMusic` | `$3129` | Silences the four *music* channels (blocks 2-5) by writing `$ff` into their channel state RAM. Effects are unaffected; sound id `$50` stops those. |
 | `PlaySound` | `$3297` | Starts the sound or song whose id is in `a`. One id space split at `$50`: `$01`-`$32` are music (`MusicIndexTable`, `$3151`), `$51`-`$c1` effects (`SfxIndexTable`, `$31b5`); id 0 stops the music via `StopMusic`, id `$50` stops the effects. |
 | `RunSoundEngine` | `$3373` | Per-tick driver: mirrors each channel's state to HRAM `$ffd0`, runs the effect chain, steps the script. See [sound_engine.md](sound_engine.md). |

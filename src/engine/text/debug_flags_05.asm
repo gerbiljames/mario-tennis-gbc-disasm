@@ -11,7 +11,7 @@ DebugDrawHexRowLabel:
 	add_hl_a ; $64a3
 	ld c, [hl] ; $64a8
 	ld a, b ; $64a9
-	ld b, $80 ; $64aa
+	ld b, TILEATTR_PRIORITY ; $64aa
 	call WriteWindowCellTileAttr ; $64ac
 	inc d ; $64af
 	ld c, $3f ; $64b0
@@ -41,7 +41,7 @@ DebugDrawFlagBitRow:
 	ld c, $40 ; $64cf
 .writeCell:
 	ld a, b ; $64d1
-	ld b, $80 ; $64d2
+	ld b, TILEATTR_PRIORITY ; $64d2
 	call WriteWindowCellTileAttr ; $64d4
 	inc hl ; $64d7
 	inc d ; $64d8
@@ -78,7 +78,7 @@ DebugDrawFlagCursor:
 	ld hl, wDebugFlagWindow2Id ; $6505
 .read:
 	ld a, [hl] ; $6508
-	ld bc, $800d ; $6509
+	ld_bg_cell bc, TILEATTR_PRIORITY, $0d ; $6509
 	call WriteWindowCellTileAttr ; $650c
 	pop hl ; $650f
 	pop de ; $6510
@@ -109,7 +109,7 @@ DebugEraseFlagCursor:
 	ld hl, wDebugFlagWindow2Id ; $6536
 .read:
 	ld a, [hl] ; $6539
-	ld b, $80 ; $653a
+	ld b, TILEATTR_PRIORITY ; $653a
 	ld c, $20 ; $653c
 	call WriteWindowCellTileAttr ; $653e
 	pop hl ; $6541
@@ -293,7 +293,7 @@ RunDebugMenu:
 	pop af ; $66c7
 	cp $ff ; $66c8
 	jr z, .restore ; $66ca
-	ld hl, TextSubcmdHandlers_05 ; $66cc
+	ld hl, DebugMenuItemHandlers_05 ; $66cc
 	add a ; $66cf
 	add_hl_a ; $66d0
 	ld a, [hl+] ; $66d5
@@ -306,16 +306,16 @@ RunDebugMenu:
 	pop bc ; $66db
 	pop af ; $66dc
 	ret ; $66dd
-TextSubcmdHandlers_05:
+DebugMenuItemHandlers_05:
 	; $66de, 8 bytes (records:2)
 	dw RunDebugWarpMenuThunk ; record 0
-	dw TextSubcmdHandler1 ; record 1
+	dw DebugMenuShowCharData ; record 1
 	dw StartDebugPaletteEditorThunk ; record 2
 	dw RunDebugFlagEditorThunk ; record 3
 RunDebugWarpMenuThunk:
 	call RunDebugWarpMenu ; $66e6
 	jr RunDebugMenu.loop ; $66e9
-TextSubcmdHandler1:
+DebugMenuShowCharData:
 	script_fade_out 16 ; $66eb
 	call WaitFadeEnd ; $66f0
 	ld hl, wStoryModePlayersXPosition ; $66f3
@@ -391,7 +391,7 @@ DebugDrawWarpMenu:
 	add a ; $67a3
 	add $02 ; $67a4
 	ld e, a ; $67a6
-	ld bc, $800d ; $67a7
+	ld_bg_cell bc, TILEATTR_PRIORITY, $0d ; $67a7
 	ld a, [wDebugWarpWindowId] ; $67aa
 	call WriteWindowCellTileAttr ; $67ad
 	ld a, [wDebugWarpWindowId] ; $67b0

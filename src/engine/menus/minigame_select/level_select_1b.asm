@@ -214,9 +214,9 @@ Unused_1b_CopyMainCharNameWithDiacritics:
 	ld a, [hl+] ; $6ab3
 	and a ; $6ab4
 	jr z, .done ; $6ab5
-	cp $de ; $6ab7
+	cp TX_DAKUTEN ; $6ab7
 	jr z, .dakuten ; $6ab9
-	cp $df ; $6abb
+	cp TX_HANDAKUTEN ; $6abb
 	jr z, .handakuten ; $6abd
 	ld b, a ; $6abf
 	ld a, b ; $6ac0

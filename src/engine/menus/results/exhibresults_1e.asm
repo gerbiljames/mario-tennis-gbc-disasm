@@ -141,9 +141,9 @@ WriteTextToTilemap:
 	ld a, [hl+] ; $45d2
 	or a ; $45d3
 	ret z ; $45d4
-	cp $de ; $45d5
+	cp TX_DAKUTEN ; $45d5
 	jr z, .markChar ; $45d7
-	cp $df ; $45d9
+	cp TX_HANDAKUTEN ; $45d9
 	jr z, .markChar ; $45db
 	ld [de], a ; $45dd
 	wram_bank WRAM_COURT_PLANES ; $45de
@@ -225,9 +225,9 @@ ShiftDestForLongName:
 	ld a, [hl+] ; $4688
 	or a ; $4689
 	jr z, .counted ; $468a
-	cp $de ; $468c
+	cp TX_DAKUTEN ; $468c
 	jr z, .countLoop ; $468e
-	cp $df ; $4690
+	cp TX_HANDAKUTEN ; $4690
 	jr z, .countLoop ; $4692
 	inc c ; $4694
 	jr .countLoop ; $4695

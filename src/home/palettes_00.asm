@@ -149,7 +149,7 @@ JumpTableDispatch:
 	ld l, a ; $06cd
 JumpToHL:
 	jp hl ; $06ce
-Unused_00_FarDispatchIndexed:
+Unused_00_FarDecompressIndexed:
 	push af ; $06cf
 	push bc ; $06d0
 	ld c, a ; $06d1

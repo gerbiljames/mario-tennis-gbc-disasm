@@ -13,9 +13,9 @@ user's `baserom.gbc` per `data.manifest`.
 
 | | |
 |---|---|
-| source-spelled bytes (`tools/stats.py`) | 915,944, 43.7% of the 2 MiB ROM; 976,782 `INCBIN`, 200,809 free |
-| instruction and code-macro lines | 124,740 |
-| labels | 29,567: ROM 14,413 global + 13,418 local, RAM 1,736; none state only an address |
+| source-spelled bytes (`tools/stats.py`) | 915,943, 43.7% of the 2 MiB ROM; 976,782 `INCBIN`, 200,809 free |
+| instruction and code-macro lines | 124,811 |
+| labels | 29,577: ROM 14,416 global + 13,421 local, RAM 1,740; none state only an address |
 | extracted data regions | 4,276 (3,248 `INCBIN`, 1,028 generated `INCLUDE`s), 863 of them LZ streams |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
 
@@ -44,7 +44,7 @@ with a fork's edits under `mods/`.
 | `docs/save_format.md` | the battery save and `tools/savetool.py` |
 | `docs/ram_map.md` | WRAM/HRAM, union overlays, free RAM |
 | `docs/bugs.md` | defects in the game, and the nine `make FIXES=1` fixes |
-| `docs/unused_code.md` | the 789 routines and 157 blobs nothing live reaches |
+| `docs/unused_code.md` | the 792 routines and 158 blobs nothing live reaches |
 | `docs/duplicated_code.md` | the live routines assembled into several banks |
 | `docs/bank0_notes.md` | the ROM0 helpers |
 

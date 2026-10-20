@@ -324,9 +324,9 @@ Unused_05_WriteStringToTilemap:
 	ld [de], a ; $6b88
 	inc hl ; $6b89
 	ld a, [hl] ; $6b8a
-	cp $de ; $6b8b
+	cp TX_DAKUTEN ; $6b8b
 	jr z, .applyDiacritic ; $6b8d
-	cp $df ; $6b8f
+	cp TX_HANDAKUTEN ; $6b8f
 	jr nz, .nextCell ; $6b91
 .applyDiacritic:
 	push hl ; $6b93
@@ -371,9 +371,9 @@ Unused_05_WriteStringToTilemapAlt:
 	ld [de], a ; $6bbf
 	inc hl ; $6bc0
 	ld a, [hl] ; $6bc1
-	cp $de ; $6bc2
+	cp TX_DAKUTEN ; $6bc2
 	jr z, .applyDiacritic ; $6bc4
-	cp $df ; $6bc6
+	cp TX_HANDAKUTEN ; $6bc6
 	jr nz, .nextCell ; $6bc8
 .applyDiacritic:
 	push hl ; $6bca
@@ -467,9 +467,9 @@ Unused_05_WriteStringToTilemapStreamed:
 	ld [de], a ; $6c48
 	inc hl ; $6c49
 	ld a, [hl] ; $6c4a
-	cp $de ; $6c4b
+	cp TX_DAKUTEN ; $6c4b
 	jr z, .applyDiacritic ; $6c4d
-	cp $df ; $6c4f
+	cp TX_HANDAKUTEN ; $6c4f
 	jr nz, .nextCell ; $6c51
 .applyDiacritic:
 	push hl ; $6c53
@@ -521,15 +521,15 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [wTextArgShortTextWriteIndex], a ; $6c97
 	ld [wTextArgShortTextMeasureIndex], a ; $6c9a
 	ld a, e ; $6c9d
-	ld [wGlyphVramDest], a ; $6c9e
+	ld [wTextRowStartPtr], a ; $6c9e
 	ld a, d ; $6ca1
-	ld [wGlyphVramDest + 1], a ; $6ca2
+	ld [wTextRowStartPtr + 1], a ; $6ca2
 	ld b, $ff ; $6ca5
 	ld a, c ; $6ca7
 	cpl ; $6ca8
 	inc a ; $6ca9
 	ld c, a ; $6caa
-	ld [wTextRowIndent], a ; $6cab
+	ld [wTextRowPitchNeg], a ; $6cab
 	call FetchDialogueText ; $6cae
 	ld hl, wTextBuffer ; $6cb1
 	pop_wram_bank ; $6cb4
@@ -556,9 +556,9 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [de], a ; $6cd6
 	inc hl ; $6cd7
 	ld a, [hl] ; $6cd8
-	cp $de ; $6cd9
+	cp TX_DAKUTEN ; $6cd9
 	jr z, .applyDiacritic ; $6cdb
-	cp $df ; $6cdd
+	cp TX_HANDAKUTEN ; $6cdd
 	jr nz, .nextCell ; $6cdf
 .applyDiacritic:
 	push hl ; $6ce1
@@ -592,7 +592,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 .checkWramBank:
 	push_wram_bank WRAM_TEXT ; $6d02
 	xor a ; $6d0b
-	ld [wTextRowIndent], a ; $6d0c
+	ld [wTextRowPitchNeg], a ; $6d0c
 	ld [wTextArgStringWriteIndex], a ; $6d0f
 	ld [wTextArgStringMeasureIndex], a ; $6d12
 	ld [wTextArgNumberWriteIndex], a ; $6d15

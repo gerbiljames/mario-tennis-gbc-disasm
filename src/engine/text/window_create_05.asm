@@ -342,7 +342,7 @@ RunMenuSelection:
 	ld d, $01 ; $485a
 	ld a, [wMenuWindowId] ; $485c
 	ld c, $0d ; $485f
-	ld b, $80 ; $4861
+	ld b, TILEATTR_PRIORITY ; $4861
 	call WriteWindowCellTileAttr ; $4863
 	pop hl ; $4866
 	pop de ; $4867
@@ -409,7 +409,7 @@ RunMenuSelection:
 	ld a, [hl] ; $48d8
 	and $0f ; $48d9
 	ld c, $20 ; $48db
-	ld b, $80 ; $48dd
+	ld b, TILEATTR_PRIORITY ; $48dd
 	call WriteWindowCellTileAttr ; $48df
 .restored:
 	pop hl ; $48e2

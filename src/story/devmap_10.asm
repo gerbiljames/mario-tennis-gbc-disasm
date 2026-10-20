@@ -41,8 +41,8 @@ Unused_10_WaterSpriteHook_PointEnd:
 	ld a, MATCHABORT_MATCH ; $4c0d
 	ld [wMatchAbortFlag], a ; $4c0f
 	ret ; $4c12
-Test2InitScriptMinigamePointTable_10:
-	; $4c13, 184 bytes (court_positions)
+Unused_10_WaterSpriteMinigamePointTable:
+	; $4c13, 64 bytes (court_positions)
 ; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
 	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
 	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 1
@@ -52,21 +52,81 @@ Test2InitScriptMinigamePointTable_10:
 	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 5
 	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 6
 	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 7
-	court_positions $ff, $f0, $94, $e6, $03, $57, $21, $b4 ; point 8
-	court_positions $c2, $7e, $b7, $72, $20, $1d, $7a, $b7 ; point 9
-	court_positions $28, $19, $21, $b2, $c2, $2a, $56, $5f ; point 10
-	court_positions $13, $21, $b2, $c2, $7b, $22, $72, $e5 ; point 11
-	court_positions $d5, $62, $6b, $11, $04, $0f, $cd, $ce ; point 12
-	court_positions $1a, $d1, $e1, $21, $b0, $c2, $2a, $56 ; point 13
-	court_positions $5f, $1b, $7a, $b3, $28, $0c, $21, $b0 ; point 14
-	court_positions $c2, $7b, $22, $72, $3e, $01, $ea, $b5 ; point 15
-	court_positions $c2, $c9, $21, $54, $4c, $cd, $cb, $1b ; point 16
-	court_positions $af, $ea, $b5, $c2, $c9, $cf, $74, $11 ; point 17
-	court_positions $58, $02, $21, $b0, $c2, $7b, $22, $72 ; point 18
-	court_positions $21, $b2, $c2, $af, $22, $22, $22, $22 ; point 19
-	court_positions $3e, $01, $21, $54, $4c, $cd, $6a, $1b ; point 20
-	court_positions $cd, $31, $26, $fa, $b5, $c2, $b7, $20 ; point 21
-	court_positions $f7, $cf, $75, $cd, $25, $27, $78, $c9 ; point 22
+	; $4c53, 1 bytes (fill)
+	ds 1, $ff
+Unused_10_SwingContestCountTask:
+	ldh a, [hInputRisingEdge] ; $4c54
+	and PADF_A | PADF_B ; $4c56
+	ld d, a ; $4c58
+	ld hl, wUnusedSwingProtoPrevInput ; $4c59
+	ld a, [hl] ; $4c5c
+	or a ; $4c5d
+	ld [hl], d ; $4c5e
+	jr nz, .tick ; $4c5f
+	ld a, d ; $4c61
+	or a ; $4c62
+	jr z, .tick ; $4c63
+	ld hl, wUnusedSwingProtoSwings ; $4c65
+	ld a, [hl+] ; $4c68
+	ld d, [hl] ; $4c69
+	ld e, a ; $4c6a
+	inc de ; $4c6b
+	ld hl, wUnusedSwingProtoSwings ; $4c6c
+	ld a, e ; $4c6f
+	ld [hl+], a ; $4c70
+	ld [hl], d ; $4c71
+	push hl ; $4c72
+	push de ; $4c73
+	ld h, d ; $4c74
+	ld l, e ; $4c75
+	ld_cell de, $0f, $04 ; $4c76
+	call PrintHexWord ; $4c79
+	pop de ; $4c7c
+	pop hl ; $4c7d
+.tick:
+	ld hl, wUnusedSwingProtoTimer ; $4c7e
+	ld a, [hl+] ; $4c81
+	ld d, [hl] ; $4c82
+	ld e, a ; $4c83
+	dec de ; $4c84
+	ld a, d ; $4c85
+	or e ; $4c86
+	jr z, .finish ; $4c87
+	ld hl, wUnusedSwingProtoTimer ; $4c89
+	ld a, e ; $4c8c
+	ld [hl+], a ; $4c8d
+	ld [hl], d ; $4c8e
+	ld a, $01 ; $4c8f
+	ld [wUnusedSwingProtoRunning], a ; $4c91
+	ret ; $4c94
+.finish:
+	ld hl, Unused_10_SwingContestCountTask ; $4c95
+	call UnregisterFrameTask ; $4c98
+	xor a ; $4c9b
+	ld [wUnusedSwingProtoRunning], a ; $4c9c
+	ret ; $4c9f
+Unused_10_SwingContestPrototype:
+	sound SFX_COUNTDOWN ; $4ca0
+	ld de, $0258 ; $4ca2
+	ld hl, wUnusedSwingProtoTimer ; $4ca5
+	ld a, e ; $4ca8
+	ld [hl+], a ; $4ca9
+	ld [hl], d ; $4caa
+	ld hl, wUnusedSwingProtoSwings ; $4cab
+	xor a ; $4cae
+	ld [hl+], a ; $4caf
+	ld [hl+], a ; $4cb0
+	ld [hl+], a ; $4cb1
+	ld [hl+], a ; $4cb2
+	frame_task Unused_10_SwingContestCountTask ; $4cb3
+.wait:
+	call AdvanceFrame ; $4cbb
+	ld a, [wUnusedSwingProtoRunning] ; $4cbe
+	or a ; $4cc1
+	jr nz, .wait ; $4cc2
+	sound SFX_COUNTDOWN_GO ; $4cc4
+	wait_frames 120 ; $4cc6
+	ret ; $4cca
 DevelopmentMapScripts_10:
 	; $4ccb, 14 bytes (map_tree)
 	dw DevelopmentEntryPoints_10 ; slot 0 EntryPoints

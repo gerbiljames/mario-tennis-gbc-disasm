@@ -44,25 +44,25 @@ TestPointInBox:
 	dec a ; $535d
 	sub h ; $535e
 	cp d ; $535f
-	jr nc, .inside ; $5360
+	jr nc, .outside ; $5360
 	ld a, b ; $5362
 	dec a ; $5363
 	add h ; $5364
 	cp d ; $5365
-	jr c, .inside ; $5366
+	jr c, .outside ; $5366
 	ld a, c ; $5368
 	dec a ; $5369
 	sub l ; $536a
 	cp e ; $536b
-	jr nc, .inside ; $536c
+	jr nc, .outside ; $536c
 	ld a, c ; $536e
 	dec a ; $536f
 	add l ; $5370
 	cp e ; $5371
-	jr c, .inside ; $5372
+	jr c, .outside ; $5372
 	xor a ; $5374
 	jr .done ; $5375
-.inside:
+.outside:
 	ld a, $ff ; $5377
 .done:
 	ret ; $5379

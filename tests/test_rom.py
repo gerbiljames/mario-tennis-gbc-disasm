@@ -30,7 +30,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tpush_wram_bank "), 353)
         self.assertEqual(count(r"^\tpop_wram_bank"), 455)
         self.assertEqual(count(r"^\tld_hl_indexed "), 441)
-        self.assertEqual(count(r"^\twait_frames "), 79)
+        self.assertEqual(count(r"^\twait_frames "), 80)
         self.assertEqual(count(r"^\tld_story_char_field "), 114)
         self.assertEqual(count(r"^\tneg_(?:hl|de|bc)\b"), 146)
         self.assertEqual(count(r"^\tabs_(?:hl|de|bc)\b"), 85)
@@ -39,17 +39,18 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tpop_rom_bank\b"), 20)
         self.assertEqual(count(r"^\tsram_bank\b"), 49)
         self.assertEqual(count(r"^\tjumptable\b"), 134)
-        self.assertEqual(count(r"^\tframe_task "), 435)
+        self.assertEqual(count(r"^\tframe_task "), 436)
         self.assertEqual(count(r"^\t(?:rst Rst00|call RegisterFrameTask|ldh \[h(?:Rom|Sram)Bank\], a)\b"), 0,
                          "a jump table, frame task or bank switch written out by hand")
         self.assertEqual(count(r"^\tlb (de|bc|hl), "), 0, "a register pair written with lb instead of a named pair macro")
         self.assertEqual(count(r"^\tld_xy de, "), 169)
-        self.assertEqual(count(r"^\tld_cell de, "), 160)
+        self.assertEqual(count(r"^\tld_cell de, "), 161)
         self.assertEqual(count(r"^\tld_bg_pals de, "), 86)
         self.assertEqual(count(r"^\tld_obj_pals de, "), 71)
         self.assertEqual(count(r"^\tld_oam bc, "), 104)
         self.assertEqual(count(r"^\tld_size bc, "), 24)
         self.assertEqual(count(r"^\tld_tile_run bc, "), 63)
+        self.assertEqual(count(r"^\tld_bg_cell bc, "), 2)
         # map positions are tiles with a point (map_pos), never raw 1/256-tile words
         self.assertEqual(count(r"^\t(?:map_entry|map_actor|script_move_target|script_set_position|script_move_player|as_set_target|as_set_pos) [^;\n]*\b\d+\.\d+"), 3078)
         self.assertEqual(count(r"^\t(?:map_entry \S+, \S+,|map_actor \S+, \S+,|script_move_target \S+,|script_set_position \S+,|script_move_player|as_set_target|as_set_pos) \$[0-9a-f]{4}\b"), 0)
@@ -60,7 +61,7 @@ class Source(unittest.TestCase):
         # animation delays, scene-rect copies and relative moves read as numbers
         self.assertEqual(count(r"^\tanim_frame [^,\n]+, \$"), 0)
         self.assertEqual(count(r"^\tscript_copy_scene_rect \$"), 0)
-        self.assertEqual(count(r"^\tas_target_rel \$"), 0)
+        self.assertEqual(count(r"^\tas_move_by \$"), 0)
         self.assertEqual(count(r"^\tscript_(?:set|player)_speed [^;\n]*\$[0-9a-f]{4}"), 0)
         self.assertEqual(count(r"^\tscript_move_angle [^;\n]*\$[0-9a-f]{4}"), 0)
         self.assertEqual(count(r"^\tscript_fade_in \$"), 0)
@@ -78,7 +79,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"\(BANK\([\w.]+\) << 8\) \| LOW\("), 0, "a slot pair not written with ld_slot")
 
     def test_named_ids(self):
-        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 261)
+        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 264)
         self.assertEqual(count(r"^\tdw Text_\w+"), 752)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)

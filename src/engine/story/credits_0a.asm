@@ -150,7 +150,7 @@ FreezeAllActors:
 	jp z, .next ; $6f2c
 	ld hl, ACTORF_FLAGS ; $6f2f
 	add hl, de ; $6f32
-	set 0, [hl] ; $6f33
+	set ACTORFLAGB_PAUSED, [hl] ; $6f33
 	set 1, [hl] ; $6f35
 .next:
 	ld hl, ACTOR_SIZE ; $6f37

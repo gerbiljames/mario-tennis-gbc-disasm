@@ -37,20 +37,20 @@ stops for the frame, *cont* runs the next opcode, *cond* depends on state.
 | `$03` | `as_set_pos x, y` | 5 | cont | `$4556` | Teleport: set the current position → `+$0c/+$0e`, and clear the `+$05` bit7 move flag |
 | `$04` | `as_set_target x, y` | 5 | cont | `$457b` | Set the move target → `+$08/+$0a`, and set the `+$05` bit7 move flag (starts a move) |
 | `$05` | `as_halt5` | 1 | yield* | `$460a` | Inert (handler alias of `$00`) |
-| `$06` | `as_target_rel dx, dy` | 5 | cont | `$45a0` | Offset the move target by (dx, dy), both signed words |
+| `$06` | `as_move_by dx, dy` | 5 | cont | `$45a0` | Move to the current position + (dx, dy), both signed words: sets the target and the `+$05` bit7 move flag |
 | `$07` | `as_move angle, dist` | 4 | cont | `$44df` | Move by angle (byte) + distance (word), absolute angle |
 | `$08` | `as_move_rel angle, dist` | 4 | cont | `$44eb` | Move by angle + distance, angle relative to the heading (`+$14`) |
-| `$09` | `as_rand_box p0, p1` | 3 | cond | `$4886` | Pick a random reachable point in a box (half-width `p0`, half-depth `p1`), gated on `+$30` bit7; yields if four tries all fail |
+| `$09` | `as_rand_box p0, p1` | 3 | cond | `$4886` | Pick a random reachable target within half-width `p0`, half-depth `p1` tiles of the `as_set_wander_home` centre, gated on `+$30` bit7; yields if four tries all fail |
 | `$0a` | `as_step` | 1 | yield | `$46b0` | Trail the `ACTORF_ANCHOR` actor: beyond ~2.8 tiles, head for 2 tiles behind it at its speed; then yield |
 | `$0b` | `as_follow_wp` | 1 | yield | `$4623` | Head for the `ACTORF_ANCHOR` actor's position, then yield |
 | `$0c` | `as_jump target` | 3 | cont | `$44d0` | Jump: signed rel16 added to the operand's own address |
 | `$0d` | `as_set_field sel, val` | 4 | cont | `$477f` | Write a state field (selector byte, word value; type table `$47fd`) |
-| `$0e` | `as_add_field sel, val` | 4 | cont | `$47ba` | Add to / set a state field (selector byte, word value) |
+| `$0e` | `as_add_field sel, val` | 4 | cont | `$47ba` | Add to a state field; unused, and adds `sel \| val_lo << 8` instead of `val` (`docs/bugs.md`) |
 | `$0f` | `as_halt15` | 1 | yield* | `$460a` | Inert (handler alias of `$00`) |
 | `$10` | `as_anim id` | 2 | cont | `$4824` | Set animation id (`SetActorAnimation`) |
 | `$11` | `as_sound id` | 2 | cont | `$483d` | Play sound id (`PlaySoundManaged`) |
 | `$12` | `as_call fn` | 3 | cond | `$44a9` | Call a same-bank function (actor state in `bc`); yield+retry if it reports busy |
-| `$13` | `as_begin_path` | 1 | yield | `$484e` | Seed the path target `ACTORF_ANCHOR` from the current position, set path flags |
+| `$13` | `as_set_wander_home` | 1 | yield | `$484e` | Centre the `as_rand_box` box (`ACTORF_ANCHOR`) on the current tile, set speed 8 and `ACTORFLAGB_YIELD` |
 | `$14` | `as_wait_move2` | 1 | yield | `$4949` | Once the move has finished (`+$05` bit7 clear), set a 40-frame wait and advance; while moving, advance with a 10-frame wait only if `+$05` bit6 is set |
 | `$15` | `as_flag mode, field, bit` | 4 | cont | `$49de` | Set (`mode=$01`) or clear bit `bit` of state field `field`; `bit` indexes the mask table `$4a1f` |
 
@@ -67,16 +67,16 @@ little-endian words in 1/256 tile: `39.0` → `$2700`, `17.5` → `$1180`.
 
 ```
 ActorScript_0f_08:
-	as_flag $01, $05, $02
-	as_set_field $06, $0006
-.L8:
+	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
+	as_set_field ACTORF_SPEED, $0006
+.pace:
 	as_set_target 39.0, 19.0
 	as_wait_move
 	as_wait 75
 	as_set_target 41.0, 19.0
 	as_wait_move
 	as_wait 120
-	as_jump .L8
+	as_jump .pace
 ```
 
 The first two lines run once; the body loops between `(39, 19)` and
@@ -97,7 +97,7 @@ A blob is a pool of fragments, each ending in an `as_jump` back-edge
 that loops forever. Actors and animation states enter one blob at different
 offsets, so a blob may start with `as_halt` (an inert prop) yet hold a live
 loop others jump into. Each entry point gets an `ActorScript_*` label; other
-in-blob jump targets get `.L<off>` locals. Fragments fall through or jump
+in-blob jump targets get descriptive locals (`.pace`). Fragments fall through or jump
 into each other, and a jump to another entry point names its global label
 (`as_jump ActorScript_11_02`).
 

@@ -518,7 +518,7 @@ SeniorCourtNpc0A_12:
 	ld d, h ; $5ae9
 	ld hl, ACTORF_FLAGS ; $5aea
 	add hl, de ; $5aed
-	res 0, [hl] ; $5aee
+	res ACTORFLAGB_PAUSED, [hl] ; $5aee
 	res 1, [hl] ; $5af0
 	script_set_speed ACTOR_PLAYER, 1.0 ; $5af2
 	script_set_speed ACTOR_PARTNER, 1.0 ; $5afa

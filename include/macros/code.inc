@@ -340,6 +340,12 @@ MACRO ld_size
 	lb \1, \2, \3
 ENDM
 
+; ld_bg_cell pair, attr, tile -- WriteWindowCellTileAttr's arguments: the BG
+; attribute byte (TILEATTR_*) in the high register, the tile id in the low.
+MACRO ld_bg_cell
+	lb \1, \2, \3
+ENDM
+
 ; ld_tile_run pair, tile, count -- FillTilemapRun's arguments: the tile id it
 ; writes to each cell in the high register, the number of cells in the low.
 MACRO ld_tile_run

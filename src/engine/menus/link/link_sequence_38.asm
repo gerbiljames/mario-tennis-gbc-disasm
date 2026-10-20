@@ -55,9 +55,9 @@ AppendCharToName:
 	jr z, .queueVram ; $7300
 	dec hl ; $7302
 	ld a, [hl] ; $7303
-	cp $de ; $7304
+	cp TX_DAKUTEN ; $7304
 	jr z, .redraw ; $7306
-	cp $df ; $7308
+	cp TX_HANDAKUTEN ; $7308
 	jr z, .redraw ; $730a
 	jr .queueVram ; $730c
 .redraw:
@@ -101,9 +101,9 @@ DeleteLastNameChar:
 	dec hl ; $7359
 	ld a, [hl] ; $735a
 	ld [hl], $00 ; $735b
-	cp $de ; $735d
+	cp TX_DAKUTEN ; $735d
 	jr z, .deleteChar ; $735f
-	cp $df ; $7361
+	cp TX_HANDAKUTEN ; $7361
 	jr z, .deleteChar ; $7363
 	call DrawEnteredName ; $7365
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7368
@@ -179,9 +179,9 @@ GetEnteredNameLength:
 	ld a, [hl+] ; $73df
 	cp $00 ; $73e0
 	jr z, .done ; $73e2
-	cp $de ; $73e4
+	cp TX_DAKUTEN ; $73e4
 	jr z, .charLoop ; $73e6
-	cp $df ; $73e8
+	cp TX_HANDAKUTEN ; $73e8
 	jr z, .charLoop ; $73ea
 	inc c ; $73ec
 	jr .charLoop ; $73ed

@@ -603,10 +603,10 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$0a` | `TextCmdNop` | `ret` |
 | `$0b` | `TextCmdPrintPartnerName` | `wStoryPartnerName` |
 | `$0c` | `TextCmdDelay150Skippable` | 150 frames, skippable |
-| `$0d` | `TextCmdNextGlyphStreamRow` | glyph write pointer += `$40` (two tilemap rows) |
+| `$0d` | `TextCmdNextGlyphStreamRow` | `wGlyphStampCellPtr` += `$40` and `wTextRowStartPtr` += two row pitches |
 | `$0e` | `TextCmdPrintShortText` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |
 | `$0f`, `$14`-`$1d` | `TextCmdNewline` | eleven aliases |
-| `$10`-`$13` | `ControlCodeHandler16`-`19` | four separate bare `ret`s |
+| `$10`-`$13` | `TextCmdNop10`-`13` | four separate bare `ret`s |
 | `$1e` (`$de`) | `TextCmdApplyDakuten` | adds a voiced-sound mark to the *previous* cell |
 | `$1f` (`$df`) | `TextCmdApplyHandakuten` | same, semi-voiced mark |
 
@@ -657,8 +657,10 @@ Message speed:
    1 → 2, else 4.
 3. `DelayTextCharacter` (`$05:$579b`, per-character delay and blip) waits that
    many frames, aborting on input.
-4. `UploadLastGlyphTiles` and `FlushGlyphRow` also skip the 2-tile upload on
-   fast/instant (`$05:$7621`, `$77af`), making FAST truly instant.
+4. In the dialogue window `UploadLastGlyphTiles` (`$05:$7621`) uploads each
+   character's 2 tiles only on NORMAL and SLOW; `FlushGlyphRow` (`$77af`)
+   does the opposite, uploading the finished row buffer only on FAST/instant,
+   so FAST shows a row at a time.
 
 `wTextRedrawGuard` doubles as a re-entrancy guard for the wait and delay
 commands ("if 0, set to 1, redraw, clear"), so on FAST those commands do an
@@ -988,7 +990,7 @@ overworld. So it is the boot manager, and its debug-harness half is unreachable.
 - `wShadowTilemapReadOffset` (`$dc76`) is read only by the dead
   `Unused_05_RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) and written
   nowhere, so it stays 0.
-- `ControlCodeHandler16`-`19` (codes `$10`-`$13`): four *separate* one-byte
+- `TextCmdNop10`-`13` (codes `$10`-`$13`): four *separate* one-byte
   `ret`s suggest deleted handlers, unproven.
 - Whether `wMessageSpeed` bit 7 can stay set after a cutscene. The `or $80`
   writes at `$1a:$427c`/`$4295` are in the dead

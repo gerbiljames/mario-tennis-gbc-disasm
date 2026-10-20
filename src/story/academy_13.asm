@@ -114,7 +114,7 @@ RunPlayDoublesTodayPrompt:
 	ret ; $585e
 ActorScript_13_00:
 	; $585f, 24 bytes (actor_script)
-	as_begin_path
+	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
 	as_wait_move2
@@ -139,7 +139,7 @@ ActorScript_13_03:
 	; $588b, 51 bytes (actor_script)
 	as_set_pos 3.0, 7.0
 	as_set_field ACTORF_HEADING, FACE_UP
-	as_begin_path
+	as_set_wander_home
 .pace:
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 180

@@ -1,5 +1,5 @@
 QueueSprite32x32:
-	bit 5, b ; $2ced
+	bit B_OAM_XFLIP, b ; $2ced
 	jr nz, .flipped ; $2cef
 	ld a, h ; $2cf1
 	add d ; $2cf2
@@ -63,7 +63,7 @@ QueueSprite32x32:
 	ret ; $2d78
 QueueSpriteBlockPart:
 	ld a, l ; $2d79
-	cp $a0 ; $2d7a
+	cp OAM_SIZE ; $2d7a
 	ret z ; $2d7c
 	ldh a, [hSpriteBlitY] ; $2d7d
 	add e ; $2d7f

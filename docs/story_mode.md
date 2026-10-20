@@ -688,8 +688,8 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$3c | equipment: low nibble racket, high nibble shoes |
 | +$3d-$3f | never written or read |
 
-`ram/wram/` names `+$18` `wSavedMainLevel` at `$c818` but
-`wStoryMainLevel` at `$c918`; for player characters the byte is a
+`+$18` is `wStoryMainLevel` (`$c918`; the save copy is
+`wSavedMainLevel`, `$c818`); for player characters the byte is a
 level, and `LookupExpTierForChar` (`$1e:$693e`,
 `src/engine/menus/exp/award_calc_1e.asm`) derives the coarse 0-6 tier from it.
 

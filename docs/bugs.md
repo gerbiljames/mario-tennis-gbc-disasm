@@ -633,6 +633,22 @@ silent until then. The shipped game never takes the path: `PlaySound` idles
 channels 0-1 (an effect) or 2-5 (`StopMusic`, a song) before starting an id's
 tracks, and every id's tracks stay on that half. Left as is.
 
+### Actor-script `as_add_field` adds the wrong operand
+
+`ActorScriptOp_AddField` (`$04:$47ba`, opcode `$0e`) is `ActorScriptOp_SetField`
+with an add, but drops the `ld l, e / ld h, d` before its `FarReadWord`:
+
+```
+        call FarReadByte         ; a = selector, hl -> selector
+        inc de
+        ...
+        call FarReadWord         ; <- reads from hl, not de
+```
+
+`hl` still points at the selector byte, so the value added is
+`selector | value_lo << 8` rather than the operand word. No script uses the
+opcode; left as is.
+
 ## Dead stores
 
 Values written and never read, and one table written past its end (the menu

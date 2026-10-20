@@ -274,11 +274,11 @@ TextInterpreterLoop:
 	pop bc ; $4e83
 	ret ; $4e84
 .compare:
-	cp $de ; $4e85
+	cp TX_DAKUTEN ; $4e85
 	jr z, .dakuten ; $4e87
-	cp $df ; $4e89
+	cp TX_HANDAKUTEN ; $4e89
 	jr z, .handakuten ; $4e8b
-	cp $0e ; $4e8d
+	cp TX_SHORT_TEXT ; $4e8d
 	jr z, .charNameArg ; $4e8f
 	cp $20 ; $4e91
 	jr nc, .printGlyph ; $4e93
@@ -339,7 +339,7 @@ TextCmdNextGlyphStreamRow:
 	push af ; $4ee9
 	push bc ; $4eea
 	push hl ; $4eeb
-	ld hl, wGlyphTileWritePtr ; $4eec
+	ld hl, wGlyphStampCellPtr ; $4eec
 	ld a, [hl+] ; $4eef
 	ld h, [hl] ; $4ef0
 	ld l, a ; $4ef1
@@ -347,25 +347,25 @@ TextCmdNextGlyphStreamRow:
 	add_hl_a ; $4ef4
 	ld b, h ; $4ef9
 	ld c, l ; $4efa
-	ld hl, wGlyphTileWritePtr ; $4efb
+	ld hl, wGlyphStampCellPtr ; $4efb
 	ld a, c ; $4efe
 	ld [hl+], a ; $4eff
 	ld [hl], b ; $4f00
 	call StartGlyphStreamRow ; $4f01
 	push_wram_bank WRAM_TEXT ; $4f04
-	ld hl, wGlyphVramDest ; $4f0d
+	ld hl, wTextRowStartPtr ; $4f0d
 	ld a, [hl+] ; $4f10
 	ld h, [hl] ; $4f11
 	ld l, a ; $4f12
-	ld a, [wTextRowIndent] ; $4f13
+	ld a, [wTextRowPitchNeg] ; $4f13
 	cpl ; $4f16
 	inc a ; $4f17
 	sla a ; $4f18
 	add_hl_a ; $4f1a
 	ld a, l ; $4f1f
-	ld [wGlyphVramDest], a ; $4f20
+	ld [wTextRowStartPtr], a ; $4f20
 	ld a, h ; $4f23
-	ld [wGlyphVramDest + 1], a ; $4f24
+	ld [wTextRowStartPtr + 1], a ; $4f24
 	ld d, h ; $4f27
 	ld e, l ; $4f28
 	pop_wram_bank ; $4f29

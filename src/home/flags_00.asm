@@ -442,7 +442,7 @@ ClearGameFlagCmd:
 	ret ; $2577
 Start:
 	and a ; $2578
-	cp $11 ; $2579
+	cp BOOTUP_A_CGB ; $2579
 	ld a, $00 ; $257b
 	jr nz, .store ; $257d
 	inc a ; $257f

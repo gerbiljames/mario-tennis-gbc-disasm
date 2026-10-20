@@ -34,10 +34,10 @@ Unused_16_DrawCourtDiagramMarkers:
 	ld [de], a ; $4401
 	inc hl ; $4402
 	ld a, [hl] ; $4403
-	cp $de ; $4404
+	cp TX_DAKUTEN ; $4404
 Unused_16_CourtDiagramBaseTask:
 	jr z, .diacritic ; $4406
-	cp $df ; $4408
+	cp TX_HANDAKUTEN ; $4408
 	jr nz, .nextCell ; $440a
 .diacritic:
 	push hl ; $440c
