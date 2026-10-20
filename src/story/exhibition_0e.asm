@@ -21,7 +21,7 @@ ExhibitionAcceptedSingles:
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_NOD ; $59b6
 	script_set_anim ACTOR_MARIO_WORLD_WARIO, ANIM_NOD ; $59bd
 	script_set_anim ACTOR_MARIO_WORLD_WALUIGI, ANIM_NOD ; $59c4
-	script_set_anim ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, ANIM_NOD ; $59cb
+	script_set_anim ACTOR_MARIO_WORLD_HOSTESS, ANIM_NOD ; $59cb
 	script_set_anim ACTOR_MARIO_WORLD_MARIO, ANIM_NOD ; $59d2
 	script_set_anim ACTOR_MARIO_WORLD_LUIGI, ANIM_NOD ; $59d9
 	script_set_anim ACTOR_MARIO_WORLD_BABY_MARIO, ANIM_NOD ; $59e0
@@ -35,7 +35,7 @@ ExhibitionAcceptedSingles:
 	script_set_speed ACTOR_MARIO_WORLD_BOWSER, 0.625 ; $5a19
 	script_set_speed ACTOR_MARIO_WORLD_WARIO, 0.625 ; $5a21
 	script_set_speed ACTOR_MARIO_WORLD_WALUIGI, 0.625 ; $5a29
-	script_set_speed ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, 0.625 ; $5a31
+	script_set_speed ACTOR_MARIO_WORLD_HOSTESS, 0.625 ; $5a31
 	script_set_speed ACTOR_MARIO_WORLD_MARIO, 0.625 ; $5a39
 	script_set_speed ACTOR_MARIO_WORLD_LUIGI, 0.625 ; $5a41
 	script_set_speed ACTOR_MARIO_WORLD_BABY_MARIO, 0.625 ; $5a49
@@ -44,7 +44,7 @@ ExhibitionAcceptedSingles:
 	script_set_speed ACTOR_MARIO_WORLD_DK, 0.625 ; $5a61
 	script_set_speed ACTOR_MARIO_WORLD_TOAD, 0.625 ; $5a69
 	script_set_speed ACTOR_PLAYER, 0.625 ; $5a71
-	script_set_actor_script ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, ActorScript_0e_06 ; $5a79
+	script_set_actor_script ACTOR_MARIO_WORLD_HOSTESS, ActorScript_0e_06 ; $5a79
 	script_wait_frames 20 ; $5a84
 	script_set_actor_script ACTOR_MARIO_WORLD_PEACH, ActorScript_0e_06 ; $5a8b
 	script_wait_frames 20 ; $5a96
@@ -242,7 +242,7 @@ MarioWorldArrivalDoubles:
 	script_set_speed ACTOR_MARIO_WORLD_PEACH, 1.0 ; $5fac
 	script_move_target ACTOR_MARIO_WORLD_PEACH, 18.0, 11.0 ; $5fb4
 	script_wait_move ACTOR_MARIO_WORLD_PEACH ; $5fbf
-	script_face ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, FACE_DOWN ; $5fc4
+	script_face ACTOR_MARIO_WORLD_HOSTESS, FACE_DOWN ; $5fc4
 	script_face ACTOR_MARIO_WORLD_MARIO, FACE_DOWN ; $5fcb
 	script_speak ACTOR_MARIO_WORLD_PEACH ; $5fd2
 	call MarioWorldExhibitionDemandCutscene ; $5fd7
@@ -291,7 +291,7 @@ ExhibitionAcceptedDoubles:
 	script_set_anim ACTOR_MARIO_WORLD_BOWSER, ANIM_NOD ; $60de
 	script_set_anim ACTOR_MARIO_WORLD_WARIO, ANIM_NOD ; $60e5
 	script_set_anim ACTOR_MARIO_WORLD_WALUIGI, ANIM_NOD ; $60ec
-	script_set_anim ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, ANIM_NOD ; $60f3
+	script_set_anim ACTOR_MARIO_WORLD_HOSTESS, ANIM_NOD ; $60f3
 	script_set_anim ACTOR_MARIO_WORLD_MARIO, ANIM_NOD ; $60fa
 	script_set_anim ACTOR_MARIO_WORLD_LUIGI, ANIM_NOD ; $6101
 	script_set_anim ACTOR_MARIO_WORLD_BABY_MARIO, ANIM_NOD ; $6108
@@ -305,7 +305,7 @@ ExhibitionAcceptedDoubles:
 	script_set_speed ACTOR_MARIO_WORLD_BOWSER, 0.625 ; $6141
 	script_set_speed ACTOR_MARIO_WORLD_WARIO, 0.625 ; $6149
 	script_set_speed ACTOR_MARIO_WORLD_WALUIGI, 0.625 ; $6151
-	script_set_speed ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, 0.625 ; $6159
+	script_set_speed ACTOR_MARIO_WORLD_HOSTESS, 0.625 ; $6159
 	script_set_speed ACTOR_MARIO_WORLD_MARIO, 0.625 ; $6161
 	script_set_speed ACTOR_MARIO_WORLD_LUIGI, 0.625 ; $6169
 	script_set_speed ACTOR_MARIO_WORLD_BABY_MARIO, 0.625 ; $6171
@@ -314,7 +314,7 @@ ExhibitionAcceptedDoubles:
 	script_set_speed ACTOR_MARIO_WORLD_DK, 0.625 ; $6189
 	script_set_speed ACTOR_MARIO_WORLD_TOAD, 0.625 ; $6191
 	script_set_speed ACTOR_PLAYER, 0.625 ; $6199
-	script_set_actor_script ACTOR_MARIO_WORLD_MARIO_WORLD_HOSTESS, ActorScript_0e_06 ; $61a1
+	script_set_actor_script ACTOR_MARIO_WORLD_HOSTESS, ActorScript_0e_06 ; $61a1
 	script_wait_frames 20 ; $61ac
 	script_set_actor_script ACTOR_MARIO_WORLD_PEACH, ActorScript_0e_06 ; $61b3
 	script_wait_frames 20 ; $61be
