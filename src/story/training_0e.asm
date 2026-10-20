@@ -455,20 +455,20 @@ TrainingGymInitScript_0e:
 	call SetupGymActorsForProgress ; $465b
 	ld a, [wStoryModeEntryPoint] ; $465e
 	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $4661
-	jr nz, .entry0c ; $4663
+	jr nz, .checkCounterB ; $4663
 	call RepairCounterReturnA ; $4665
 	ret ; $4668
-.entry0c:
+.checkCounterB:
 	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $4669
-	jr nz, .entry0d ; $466b
+	jr nz, .checkCounterAChanged ; $466b
 	call RepairCounterReturnB ; $466d
 	ret ; $4670
-.entry0d:
+.checkCounterAChanged:
 	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A_CHANGED ; $4671
-	jr nz, .entry0e ; $4673
+	jr nz, .checkCounterBChanged ; $4673
 	call RepairCounterChangedReturnA ; $4675
 	ret ; $4678
-.entry0e:
+.checkCounterBChanged:
 	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B_CHANGED ; $4679
 	jr nz, .done ; $467b
 	call RepairCounterChangedReturnB ; $467d

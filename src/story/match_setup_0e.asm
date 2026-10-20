@@ -49,7 +49,7 @@ ActorScript_0e_21:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_UP
 	as_halt
-PrepareStoryMatch:
+RunExhibitionMatch:
 	ld a, STORYLOC_SPECIAL_COURT ; $7b7f
 	ld [wStoryModeCurrentLocation], a ; $7b81
 	ld a, ENTRY_SPECIAL_COURT_MATCH_RESULT ; $7b84
@@ -60,7 +60,7 @@ PrepareStoryMatch:
 	farcall InitStoryMatchSettings ; $7b91
 	ld a, [wExhibitionMatchEntry] ; $7b94
 	add a ; $7b97
-	ld_hl_indexed PrepareStoryMatchTable ; $7b98
+	ld_hl_indexed ExhibitionMatchSettingsPtrs ; $7b98
 	ld a, [hl+] ; $7b9f
 	ld h, [hl] ; $7ba0
 	ld l, a ; $7ba1
@@ -68,29 +68,29 @@ PrepareStoryMatch:
 	farcall RunStoryMatch ; $7ba5
 	farcall RestoreOverworldAfterMatch ; $7ba8
 	ret ; $7bab
-PrepareStoryMatchTable:
-	dw LoadExhibitionMatchSettings0 ; $7bac
-	dw LoadExhibitionMatchSettings1 ; $7bae
-	dw LoadExhibitionMatchSettings2 ; $7bb0
-	dw LoadExhibitionMatchSettings3 ; $7bb2
-	dw LoadExhibitionMatchSettings4 ; $7bb4
-	dw LoadExhibitionMatchSettings5 ; $7bb6
-LoadExhibitionMatchSettings0:
+ExhibitionMatchSettingsPtrs:
+	dw LoadExhibitionSinglesDreamHard ; $7bac
+	dw LoadExhibitionSinglesDreamIntense ; $7bae
+	dw LoadExhibitionSinglesDreamMax ; $7bb0
+	dw LoadExhibitionDoublesDreamHard ; $7bb2
+	dw LoadExhibitionDoublesDreamIntense ; $7bb4
+	dw LoadExhibitionDoublesDreamMax ; $7bb6
+LoadExhibitionSinglesDreamHard:
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_HARD ; $7bb8
 	ret ; $7bc5
-LoadExhibitionMatchSettings1:
+LoadExhibitionSinglesDreamIntense:
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_INTENSE ; $7bc6
 	ret ; $7bd3
-LoadExhibitionMatchSettings2:
+LoadExhibitionSinglesDreamMax:
 	load_match_settings MATCHLIST_SINGLES, STORYMATCH_DREAM_MAX ; $7bd4
 	ret ; $7be1
-LoadExhibitionMatchSettings3:
+LoadExhibitionDoublesDreamHard:
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_HARD ; $7be2
 	ret ; $7bef
-LoadExhibitionMatchSettings4:
+LoadExhibitionDoublesDreamIntense:
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_INTENSE ; $7bf0
 	ret ; $7bfd
-LoadExhibitionMatchSettings5:
+LoadExhibitionDoublesDreamMax:
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_DREAM_MAX ; $7bfe
 	ret ; $7c0b
 HandleExhibitionMatchResult:
@@ -172,11 +172,11 @@ ActorScript_0e_22:
 	as_jump .wanderSmall
 MapScriptNop_0e:
 	ret ; $7c96
-Unused_0e_MapScriptClearActiveFlag:
+Unused_0e_MapScriptClearScriptRan:
 	xor a ; $7c97
 	ld [wStoryScriptRan], a ; $7c98
 	ret ; $7c9b
-Unused_0e_MapScriptPlaySoundA2:
+Unused_0e_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $7c9c
 	ret ; $7c9e
 Unused_0e_MapScriptHideLocationName:
@@ -368,28 +368,28 @@ Unused_0e_ActorScriptStudentShakeHead:
 Unused_0e_ComputeStoryRankTier:
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3
-	jr z, .storeIsland ; $7ea6
+	jr z, .store ; $7ea6
 	inc a ; $7ea8
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7ea9
-	jr z, .storeIsland ; $7eac
+	jr z, .store ; $7eac
 	inc a ; $7eae
 	test_flag FLAG_DOUBLES ; $7eaf
-	jr nz, .doublesIsland ; $7eb2
+	jr nz, .doubles ; $7eb2
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7eb4
-	jr z, .storeIsland ; $7eb7
+	jr z, .store ; $7eb7
 	inc a ; $7eb9
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7eba
-	jr z, .storeIsland ; $7ebd
+	jr z, .store ; $7ebd
 	inc a ; $7ebf
-.storeIsland:
+.store:
 	ld [wMapSceneStage], a ; $7ec0
 	ret ; $7ec3
-.doublesIsland:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ec4
-	jr z, .storeIsland ; $7ec7
+	jr z, .store ; $7ec7
 	inc a ; $7ec9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7eca
-	jr z, .storeIsland ; $7ecd
+	jr z, .store ; $7ecd
 	inc a ; $7ecf
-	jr .storeIsland ; $7ed0
+	jr .store ; $7ed0
 	; $7ed2, 302 bytes fill to bank end (linker-padded)

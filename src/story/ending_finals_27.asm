@@ -298,7 +298,7 @@ End16BeforeFinalsActorsAlt_27:
 	map_actor $0000, ActorScript_27_27, 17.0, 21.0, FACE_DOWN, OBJ_A_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_A_COZ
 	map_actor $0000, ActorScript_27_27, 33.0, 17.0, FACE_RIGHT, OBJ_EMILY_SWEATS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_EMILY_SWEATS
 	map_actor $0000, ActorScript_27_27, 41.0, 25.0, FACE_LEFT, OBJ_ELDEN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_ELDEN
-	map_actor $0000, ActorScript_27_28, 7.0, 31.0, FACE_DOWN, OBJ_B_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_COZ
+	map_actor $0000, ActorScript_27_28, 7.0, 31.0, FACE_DOWN, OBJ_B_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_COZ
 	map_actor $0000, ActorScript_27_27, 29.0, 19.0, FACE_RIGHT, OBJ_SEAN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_SEAN
 	map_actor $0000, ActorScript_27_27, 5.0, 33.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_FRANK
 	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_ELLIS
@@ -317,7 +317,7 @@ End16BeforeFinalsActorsAltB_27:
 	map_actor $0000, ActorScript_27_27, 29.0, 17.0, FACE_RIGHT, OBJ_SAMMI, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_SAMMI
 	map_actor $0000, ActorScript_27_27, 29.0, 19.0, FACE_RIGHT, OBJ_SEAN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_SEAN
 	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_ELLIS
-	map_actor $0000, ActorScript_27_29, 36.0, 24.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $05, END16_BEFORE_FINALS_ALTB_FRANK
+	map_actor $0000, ActorScript_27_29, 36.0, 24.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $05, END16_BEFORE_FINALS_ALTB_EDGAR
 	map_actor_end
 End16BeforeFinalsScriptBody_27:
 	script_move_target ACTOR_PLAYER, 28.0, 25.0 ; $48a8
@@ -382,7 +382,7 @@ End16BeforeFinalsCutscene_27:
 	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3 ; $49db
 	script_face ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3, FACE_UP ; $49e0
 	test_flag FLAG_DOUBLES ; $49e7
-	jp nz, .face ; $49ea
+	jp nz, .doubles ; $49ea
 	script_set_speed ACTOR_PLAYER, 1.0 ; $49ed
 	script_face_pair ACTOR_END16_BEFORE_FINALS_ALT_A_COZ, ACTOR_PLAYER ; $49f5
 	script_wait_frames 30 ; $49fd
@@ -406,7 +406,7 @@ End16BeforeFinalsCutscene_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $4a81
 	ld [wStoryModeExitTriggerRequest], a ; $4a84
 	ret ; $4a87
-.face:
+.doubles:
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a88
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4a90
 	script_set_speed ACTOR_PARTNER, 1.0 ; $4a98

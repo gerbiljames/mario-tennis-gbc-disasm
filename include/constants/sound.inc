@@ -165,7 +165,7 @@ def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (C
 	const_def $86
 	const SFX_THUD               ; $86 a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
 	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
-	const SFX_PEACH_FANFARE      ; $88 before "Princess Peach!" in Mario World (MarioWorldNpc0C_0e)
+	const SFX_PEACH_FANFARE      ; $88 before "Princess Peach!" in Mario World (MarioWorldNpc0CDonkeyKong_0e)
 	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
 	const SFX_WATER_SPRITE_MAGIC ; $8a the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
 	const_def $8c
@@ -181,7 +181,7 @@ def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTarget
 	const SFX_EMOTE   ; $98 an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
 	const SFX_APPEAR1 ; $99 the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
-def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
+def SFX_STORY_CUE              equ $a2 ; the MapScriptPlayStoryCue handler every story bank carries
 
 ; --- Music flags (hMusicFlags) ---
 def MUSICB_MUTED equ 0 ; PlaySoundCmd drops BGM and jingle requests

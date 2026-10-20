@@ -216,7 +216,7 @@ MarioWorldNpc12Mario_0e:
 	script_set_text Text_MarioWorldMarioMamaMia ; $538e
 	script_speak ACTOR_MARIO_WORLD_MARIO ; $5394
 	ret ; $5399
-MarioWorldNpc11_0e:
+MarioWorldNpc11Hostess_0e:
 	ld hl, Text_MarioWorldHostessAggressivePlayer ; $539a
 	ld a, [wMapSceneStage] ; $539d
 	add_hl_a ; $53a0
@@ -240,12 +240,12 @@ MarioWorldNpc0ABabyMario_0e:
 	sound SFX_VOICE_BABY_MARIO ; $53d6
 	script_speak ACTOR_MARIO_WORLD_BABY_MARIO ; $53d8
 	ret ; $53dd
-MarioWorldNpc0C_0e:
+MarioWorldNpc0CDonkeyKong_0e:
 	script_set_text Text_DonkeyKongOoHoo ; $53de
 	sound SFX_PEACH_FANFARE ; $53e4
 	script_speak ACTOR_MARIO_WORLD_DK ; $53e6
 	ret ; $53eb
-MarioWorldNpc0D_0e:
+MarioWorldNpc0DBoo_0e:
 	script_set_text Text_BooGiggle ; $53ec
 	sound SFX_THUD ; $53f2
 	script_speak ACTOR_MARIO_WORLD_BOO ; $53f4
@@ -271,11 +271,11 @@ MarioWorldNpc0EWaluigi_0e:
 	farcall InitDialogueTextCursor ; $542d
 	script_speak ACTOR_MARIO_WORLD_WALUIGI ; $5430
 	ret ; $5435
-MarioWorldNpc13_0e:
+MarioWorldNpc13Toad_0e:
 	script_set_text Text_ToadMarioWorldLovesTennis ; $5436
 	script_speak ACTOR_MARIO_WORLD_TOAD ; $543c
 	ret ; $5441
-MarioWorldNpc14_0e:
+MarioWorldNpc14BobOmb_0e:
 	script_set_text Text_BobOmbWorldBelowExit ; $5442
 	script_speak ACTOR_MARIO_WORLD_BOB_OMB ; $5448
 	ret ; $544d
@@ -285,17 +285,17 @@ MarioWorldNpcScripts_0e:
 	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_LEFT, $0000, MarioWorldNpc08FaceLeft_0e, $00, $00
 	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_UP, $0000, MarioWorldNpc08FaceUp_0e, $00, $00
 	map_script ACTOR_MARIO_WORLD_PEACH, FACEMASK_DOWN, $0000, MarioWorldNpc08FaceDown_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_MARIO_WORLD_HOSTESS, FACEMASK_ANY, $0000, MarioWorldNpc11_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_HOSTESS, FACEMASK_ANY, $0000, MarioWorldNpc11Hostess_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_LUIGI, FACEMASK_ANY, $0000, MarioWorldNpc0BLuigi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_YOSHI, FACEMASK_ANY, $0000, MarioWorldNpc09Yoshi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_BABY_MARIO, FACEMASK_ANY, $0000, MarioWorldNpc0ABabyMario_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_MARIO_WORLD_DK, FACEMASK_ANY, $0000, MarioWorldNpc0C_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_MARIO_WORLD_BOO, FACEMASK_ANY, $0000, MarioWorldNpc0D_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_DK, FACEMASK_ANY, $0000, MarioWorldNpc0CDonkeyKong_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_BOO, FACEMASK_ANY, $0000, MarioWorldNpc0DBoo_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_BOWSER, FACEMASK_ANY, $0000, MarioWorldNpc0FBowser_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_WARIO, FACEMASK_ANY, $0000, MarioWorldNpc10Wario_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_WALUIGI, FACEMASK_ANY, $0000, MarioWorldNpc0EWaluigi_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_MARIO_WORLD_TOAD, FACEMASK_ANY, $0000, MarioWorldNpc13_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_MARIO_WORLD_BOB_OMB, FACEMASK_ANY, $0000, MarioWorldNpc14_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_TOAD, FACEMASK_ANY, $0000, MarioWorldNpc13Toad_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_MARIO_WORLD_BOB_OMB, FACEMASK_ANY, $0000, MarioWorldNpc14BobOmb_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_MARIO_WORLD_MARIO, FACEMASK_ANY, $0000, MarioWorldNpc12Mario_0e, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 MarioWorldFacingScripts_0e:
@@ -310,7 +310,7 @@ MarioWorldInitScript_0e:
 	cp ENTRY_PEACHS_CASTLE_CREDITS ; $54d8
 	jp z, MarioWorldArrivalSingles ; $54da
 	cp ENTRY_PEACHS_CASTLE_AFTER_EXHIBITION ; $54dd
-	jp z, MarioWorldEntry0eScene ; $54df
+	jp z, MarioWorldAfterExhibitionScene ; $54df
 	cp ENTRY_PEACHS_CASTLE_FIRST_VISIT ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
@@ -323,7 +323,7 @@ MarioWorldInitScript_0e:
 	script_set_speed ACTOR_PLAYER, 0.625 ; $54f6
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $54fe
 .singlesPlaceActors:
-	jp MarioWorldEntry0eScene.placeActors ; $5509
+	jp MarioWorldAfterExhibitionScene.placeActors ; $5509
 .doubles:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $550c
 	ret z ; $550f
@@ -333,7 +333,7 @@ MarioWorldInitScript_0e:
 	script_set_speed ACTOR_PLAYER, 0.625 ; $5516
 	script_move_target ACTOR_PLAYER, 18.0, 29.0 ; $551e
 .doublesPlaceActors:
-	jp MarioWorldEntry0eScene.placeActors ; $5529
+	jp MarioWorldAfterExhibitionScene.placeActors ; $5529
 	ret ; $552c
 ActorScript_0e_06:
 	; $552d, 24 bytes (actor_script)
@@ -378,7 +378,7 @@ MarioWorldArrivalSingles:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $557f
 	jr nz, .arrive ; $5582
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5584
-	jp nz, MarioWorldEntry0eScene.singles ; $5587
+	jp nz, MarioWorldAfterExhibitionScene.singles ; $5587
 .arrive:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $558a
 	script_fade_in 4 ; $5595

@@ -225,11 +225,11 @@ PromptExhibitionMatch:
 	test_flag FLAG_DOUBLES ; $68b9
 	jr nz, .doublesApproach ; $68bc
 	script_move_target ACTOR_PLAYER, 18.0, 11.0 ; $68be
-	jr .coachArrives ; $68c9
+	jr .toadArrives ; $68c9
 .doublesApproach:
 	script_move_target ACTOR_PLAYER, 17.0, 11.0 ; $68cb
 	script_move_target ACTOR_PARTNER, 19.0, 11.0 ; $68d6
-.coachArrives:
+.toadArrives:
 	script_move_target ACTOR_MARIO_WORLD_TOAD, 18.0, 13.0 ; $68e1
 	script_wait_move ACTOR_MARIO_WORLD_TOAD ; $68ec
 	script_face ACTOR_MARIO_WORLD_TOAD, FACE_UP ; $68f1
@@ -282,7 +282,7 @@ MoveDoublesPartnerToPlayer:
 	farcall ScriptSetActorMoveTarget ; $69a4
 	script_wait_move ACTOR_PARTNER ; $69a7
 	ret ; $69ac
-MarioWorldEntry0eScene:
+MarioWorldAfterExhibitionScene:
 	test_flag FLAG_DOUBLES ; $69ad
 	jp nz, .doubles ; $69b0
 .singles:

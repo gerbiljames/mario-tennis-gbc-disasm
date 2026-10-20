@@ -55,10 +55,10 @@ End10VarsityCourtTileTriggers_27:
 End10VarsityCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $561d
 	cp ENTRY_END10_VARSITY_COURT_SCENE ; $5620
-	jp z, End10VarsityCourtEntry01Scene ; $5622
+	jp z, End10VarsityCourtScene_27 ; $5622
 	ret ; $5625
 	twin set_partner_obj_def_by_gender, 27 ; $5626 SetPartnerObjDefByGender_27
-End10VarsityCourtEntry01Scene:
+End10VarsityCourtScene_27:
 	test_flag FLAG_DOUBLES ; $5643
 	jr z, .notDoubles ; $5646
 	jp .scriptRespawnLocationActors ; $5648
@@ -171,7 +171,7 @@ End10VarsityCourtEntry01Scene:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $58e8
 	script_wait_idle ACTOR_PARTNER ; $58ef
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58f4
-	jp z, CeremonyDoublesReaction_27 ; $58f7
+	jp z, End10VarsityCourtDoublesVariantB_27 ; $58f7
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $58fa
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5902
 	script_wait_idle ACTOR_PARTNER ; $5909
@@ -221,8 +221,8 @@ End10VarsityCourtEntry01Scene:
 	script_wait_frames 20 ; $5a0f
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5a16
 	script_wait_idle ACTOR_PLAYER ; $5a1d
-	jp CeremonyDoublesReaction_27.continue ; $5a22
-CeremonyDoublesReaction_27:
+	jp End10VarsityCourtDoublesVariantB_27.continue ; $5a22
+End10VarsityCourtDoublesVariantB_27:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5a25
 	script_wait_idle ACTOR_PARTNER ; $5a2c
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5a31
@@ -446,9 +446,9 @@ End8SrCourtInitScript_27:
 	jp z, .notDoubles ; $5edb
 	script_respawn_actors End8SrCourtActorsAlt_27 ; $5ede
 	farcall BeginCutsceneScriptMode ; $5ee6
-	jr .step ; $5ee9
+	jr .doubles ; $5ee9
 	ret ; $5eeb
-.step:
+.doubles:
 	script_null_script ACTOR_PARTNER ; $5eec
 	script_set_position ACTOR_PLAYER, 37.0, 27.0 ; $5ef1
 	script_face ACTOR_PLAYER, FACE_UP ; $5efc

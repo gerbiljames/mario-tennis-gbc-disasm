@@ -365,11 +365,11 @@ ActorScript_14_3:
 	as_jump .wanderSmall
 MapScriptNop_14:
 	ret ; $78d9
-Unused_14_MapScriptClearActiveFlag:
+Unused_14_MapScriptClearScriptRan:
 	xor a ; $78da
 	ld [wStoryScriptRan], a ; $78db
 	ret ; $78de
-Unused_14_MapScriptPlaySoundA2:
+Unused_14_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $78df
 	ret ; $78e1
 Unused_14_MapScriptHideLocationName:
@@ -556,28 +556,28 @@ Unused_14_ActorScriptStudentSwings:
 Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
-	jr z, .storeIsland ; $7ae9
+	jr z, .store ; $7ae9
 	inc a ; $7aeb
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aec
-	jr z, .storeIsland ; $7aef
+	jr z, .store ; $7aef
 	inc a ; $7af1
 	test_flag FLAG_DOUBLES ; $7af2
-	jr nz, .doublesIsland ; $7af5
+	jr nz, .doubles ; $7af5
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7af7
-	jr z, .storeIsland ; $7afa
+	jr z, .store ; $7afa
 	inc a ; $7afc
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7afd
-	jr z, .storeIsland ; $7b00
+	jr z, .store ; $7b00
 	inc a ; $7b02
-.storeIsland:
+.store:
 	ld [wMapSceneStage], a ; $7b03
 	ret ; $7b06
-.doublesIsland:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7b07
-	jr z, .storeIsland ; $7b0a
+	jr z, .store ; $7b0a
 	inc a ; $7b0c
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7b0d
-	jr z, .storeIsland ; $7b10
+	jr z, .store ; $7b10
 	inc a ; $7b12
-	jr .storeIsland ; $7b13
+	jr .store ; $7b13
 	; $7b15, 1259 bytes fill to bank end (linker-padded)

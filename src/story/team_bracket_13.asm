@@ -184,11 +184,11 @@ ActorScript_13_28:
 	as_jump .wanderSmall
 MapScriptNop_13:
 	ret ; $7b4d
-Unused_13_MapScriptClearActiveFlag:
+Unused_13_MapScriptClearScriptRan:
 	xor a ; $7b4e
 	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
-Unused_13_MapScriptPlaySoundA2:
+Unused_13_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $7b53
 	ret ; $7b55
 Unused_13_MapScriptHideLocationName:

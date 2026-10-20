@@ -125,10 +125,10 @@ HINT_LISTS = {
 # under the lists installed by the routine that writes the cell:
 # LoadIslandOpenRoundNpcs writes trigger $0f for singles, $0e for doubles.
 TILE_LISTS = {
-    "TournamentTile0F_0f": {"TournamentActors_0f", "IslandOpenRound2Actors_0f",
-                            "IslandOpenSemifinalActors_0f", "IslandOpenFinalActors_0f"},
-    "TournamentTile0E_0f": {"IslandOpenRound1ActorsDoubles_0f", "IslandOpenSemifinalActorsDoubles_0f",
-                            "IslandOpenFinalActorsDoubles_0f"},
+    "TournamentRoundCallTileSingles_0f": {"TournamentActors_0f", "IslandOpenRound2Actors_0f",
+                                          "IslandOpenSemifinalActors_0f", "IslandOpenFinalActors_0f"},
+    "TournamentRoundCallTileDoubles_0f": {"IslandOpenRound1ActorsDoubles_0f", "IslandOpenSemifinalActorsDoubles_0f",
+                                          "IslandOpenFinalActorsDoubles_0f"},
 }
 
 

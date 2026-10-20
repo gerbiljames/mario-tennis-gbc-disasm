@@ -212,7 +212,7 @@ RunStatusMenuFlow:
 	cp $ff ; $5440
 	jp z, RunStatusMenuFlow ; $5442
 	or a ; $5445
-	jr nz, .n64RecordOption1 ; $5446
+	jr nz, .n64ExhibData ; $5446
 	script_fade_out 16 ; $5448
 	call WaitFadeEnd ; $544d
 	farcall RunN64TnmtData ; $5450
@@ -224,7 +224,7 @@ RunStatusMenuFlow:
 	ld a, MENUSLIDE_BACK ; $5464
 	ld [wMenuSlideDirection], a ; $5466
 	jp .pickNonFileMenu ; $5469
-.n64RecordOption1:
+.n64ExhibData:
 	cp $01 ; $546c
 	jr nz, .ringShotData ; $546e
 	script_fade_out 16 ; $5470
@@ -461,9 +461,9 @@ ResumeSuspendedStoryMatch:
 	ret ; $568f
 .junior:
 	test_flag FLAG_DOUBLES ; $5690
-	jr nz, .otherRoom ; $5693
+	jr nz, .juniorDoubles ; $5693
 	cp STORYMATCH_JUNIOR_PRACTICE ; $5695
-	jr z, .practiceRoomAlt ; $5697
+	jr z, .juniorSinglesPractice ; $5697
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
 	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN ; $569e
@@ -472,7 +472,7 @@ ResumeSuspendedStoryMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $56a5
 	ld [wStoryModeExitTriggerRequest], a ; $56a8
 	ret ; $56ab
-.practiceRoomAlt:
+.juniorSinglesPractice:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $56ac
 	ld [wStoryModeCurrentLocation], a ; $56ae
 	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_PRACTICE_MATCH_RETURN ; $56b1
@@ -481,9 +481,9 @@ ResumeSuspendedStoryMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $56b8
 	ld [wStoryModeExitTriggerRequest], a ; $56bb
 	ret ; $56be
-.otherRoom:
+.juniorDoubles:
 	cp STORYMATCH_JUNIOR_PRACTICE ; $56bf
-	jr z, .otherRoomAlt ; $56c1
+	jr z, .juniorDoublesPractice ; $56c1
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
 	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN ; $56c8
@@ -492,7 +492,7 @@ ResumeSuspendedStoryMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $56cf
 	ld [wStoryModeExitTriggerRequest], a ; $56d2
 	ret ; $56d5
-.otherRoomAlt:
+.juniorDoublesPractice:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56d6
 	ld [wStoryModeCurrentLocation], a ; $56d8
 	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_PRACTICE_MATCH_RETURN ; $56db

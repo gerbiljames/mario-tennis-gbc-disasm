@@ -35,7 +35,7 @@ TournamentNpc04_0f:
 	farcall InitDialogueTextCursor ; $6f7c
 	script_speak ACTOR_TOURNAMENT_STAFF_2 ; $6f7f
 	ret ; $6f84
-MovePartnerForRoundCall_0f:
+MoveBCozForRoundCall_0f:
 	test_flag FLAG_DOUBLES ; $6f85
 	jr z, .done ; $6f88
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $6f8a
@@ -62,7 +62,7 @@ IslandOpenRoundCallCutscene:
 	script_wait_idle ACTOR_TOURNAMENT_STAFF_3 ; $7004
 	call QueueUpcomingRoundNameText ; $7009
 	script_speak ACTOR_TOURNAMENT_STAFF_3 ; $700c
-	call MovePartnerForRoundCall_0f ; $7011
+	call MoveBCozForRoundCall_0f ; $7011
 	script_face ACTOR_TOURNAMENT_STAFF_2, FACE_UP ; $7014
 	script_set_anim ACTOR_TOURNAMENT_STAFF_2, ANIM_NOD ; $701b
 	script_wait_idle ACTOR_TOURNAMENT_STAFF_2 ; $7022
@@ -438,7 +438,7 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld a, [wMapSceneStage] ; $766c
 	dec a ; $766f
 	add a ; $7670
-	ld_hl_indexed IslandOpenRoundSinglesNpc05_0fTable ; $7671
+	ld_hl_indexed IslandOpenMarkStageTextPtrs_0f ; $7671
 	ld a, [hl+] ; $7678
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
@@ -447,7 +447,7 @@ IslandOpenRoundSinglesNpc05_0f:
 	script_wait_jump ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS ; $7686
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS ; $768b
 	ret ; $7690
-IslandOpenRoundSinglesNpc05_0fTable:
+IslandOpenMarkStageTextPtrs_0f:
 	; $7691, 8 bytes (text_ids)
 	dw Text_MarkFirstTimeMadeRoundTwo ; record 0
 	dw Text_MarkFirstTimeMadeSemifinals ; record 1
