@@ -345,7 +345,7 @@ IslandSkyEntry02Scene:
 	ld [wStoryModeShowLocationName], a ; $62d3
 	script_fade_in 6 ; $62d6
 	call WaitFadeEnd ; $62db
-	sound SFX_FIREWORK_LAUNCH ; $62de
+	sound SFX_PLANE_START ; $62de
 	script_wait_frames 60 ; $62e0
 	script_set_position ACTOR_PLAYER, 12.0, 19.0 ; $62e7
 	ld h, $08 ; $62f2
@@ -456,7 +456,7 @@ IslandSkyEntry02Scene:
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
 	jr nz, .slowestRiseLoop ; $63f6
-	sound SFX_FIREWORK_SPARKLE ; $63f8
+	sound SFX_PLANE_STOP ; $63f8
 	script_wait_frames 50 ; $63fa
 	script_fade_out 4 ; $6401
 	call WaitFadeEnd ; $6406

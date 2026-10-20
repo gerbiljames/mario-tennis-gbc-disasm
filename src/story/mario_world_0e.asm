@@ -133,7 +133,7 @@ ActorScript_0e_03:
 	as_anim ANIM_SWING_BACK
 	as_wait 30
 	as_anim ANIM_SWING_THROUGH
-	as_sound $91
+	as_sound SFX_SWING_THROUGH
 	as_wait 30
 	as_jump ActorScript_0e_03
 ActorScript_0e_04:
@@ -141,7 +141,7 @@ ActorScript_0e_04:
 	as_anim ANIM_SIDESTEP
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_wait 12
-	as_sound $92
+	as_sound SFX_SIDESTEP
 	as_wait 40
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_WALK
@@ -149,7 +149,7 @@ ActorScript_0e_04:
 	as_anim ANIM_SIDESTEP
 	as_set_field ACTORF_HEADING, FACE_LEFT
 	as_wait 12
-	as_sound $92
+	as_sound SFX_SIDESTEP
 	as_wait 40
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_anim ANIM_WALK

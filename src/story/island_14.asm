@@ -296,7 +296,7 @@ IslandSkyEntry0eScene:
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
 	jr nz, .planeDriftLoop ; $784d
-	sound SFX_FIREWORK_SPARKLE ; $784f
+	sound SFX_PLANE_STOP ; $784f
 	script_wait_frames 70 ; $7851
 	script_fade_out 4 ; $7858
 	call WaitFadeEnd ; $785d

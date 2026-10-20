@@ -347,7 +347,7 @@ IslandSkyEntry0fAnd0dScene:
 	ld [wStoryModeShowLocationName], a ; $6fce
 	script_fade_in 6 ; $6fd1
 	call WaitFadeEnd ; $6fd6
-	sound SFX_FIREWORK_LAUNCH ; $6fd9
+	sound SFX_PLANE_START ; $6fd9
 	script_wait_frames 60 ; $6fdb
 	ld h, $08 ; $6fe2
 .planeLoop:

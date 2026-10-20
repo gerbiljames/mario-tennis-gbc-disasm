@@ -281,7 +281,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeShowLocationName], a ; $539d
 	script_fade_in 6 ; $53a0
 	call WaitFadeEnd ; $53a5
-	sound SFX_FIREWORK_LAUNCH ; $53a8
+	sound SFX_PLANE_START ; $53a8
 	script_wait_frames 60 ; $53aa
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $53b1
 	ld h, $08 ; $53bc
@@ -376,7 +376,7 @@ IslandSkyInitScript_14:
 	ld [wCutscenePlaneY], a ; $548d
 	dec h ; $5490
 	jr nz, .touchdownLoop ; $5491
-	sound SFX_FIREWORK_SPARKLE ; $5493
+	sound SFX_PLANE_STOP ; $5493
 	ld h, $04 ; $5495
 .rollLoop:
 	script_wait_frames 8 ; $5497

@@ -676,7 +676,7 @@ CharSwingWindupPhase:
 	ld hl, wCharSwingAnim ; $6c4a
 	ld d, [hl] ; $6c4d
 	call SetCharAnimation ; $6c4e
-	sound SFX_SWING_CHARGE ; $6c51
+	sound SFX_SWING ; $6c51
 	xor a ; $6c53
 	ld [wCharChargeFlashOn], a ; $6c54
 	call EndChargeFlash ; $6c57
