@@ -170,7 +170,7 @@ Unused_07_TargetZonePointStartHook:
 	call Unused_07_StubNop0 ; $5f71
 	ret ; $5f74
 Unused_07_TargetZonePointEndHook:
-	ld hl, $013f ; $5f75
+	ld hl, Text_CheckRules ; $5f75
 	ld_cell de, $00, $0b ; $5f78
 	ld_size bc, $13, $05 ; $5f7b
 	farcall ShowMessageWindow ; $5f7e

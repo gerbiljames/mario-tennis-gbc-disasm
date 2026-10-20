@@ -166,7 +166,7 @@ InitScrollingTextScreen:
 	ld a, $02 ; $5ab2
 	ld [hl+], a ; $5ab4
 	ld [hl+], a ; $5ab5
-	ld de, $1863 ; $5ab6
+	ld de, Text_StaffCreditsLines ; $5ab6
 	ld a, e ; $5ab9
 	ld [hl+], a ; $5aba
 	ld [hl], d ; $5abb

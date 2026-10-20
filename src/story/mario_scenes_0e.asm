@@ -86,7 +86,7 @@ PromptExhibitionMatch:
 	ld a, ENTRY_SPECIAL_COURT_SINGLES_INTENSE ; $65ea
 	ld [wExhibitionMatchEntry], a ; $65ec
 	ld hl, wExhibitionPromptTextId ; $65ef
-	ld de, $3083 ; $65f2
+	ld de, Text_PeachPlayMarioExhibition ; $65f2
 	ld a, e ; $65f5
 	ld [hl+], a ; $65f6
 	ld [hl], d ; $65f7
@@ -95,7 +95,7 @@ PromptExhibitionMatch:
 	ld a, ENTRY_SPECIAL_COURT_DOUBLES_INTENSE ; $65fd
 	ld [wExhibitionMatchEntry], a ; $65ff
 	ld hl, wExhibitionPromptTextId ; $6602
-	ld de, $3089 ; $6605
+	ld de, Text_PeachPlayMarioAndMeDoubles ; $6605
 	ld a, e ; $6608
 	ld [hl+], a ; $6609
 	ld [hl], d ; $660a

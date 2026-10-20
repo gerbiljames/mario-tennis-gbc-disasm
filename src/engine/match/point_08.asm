@@ -192,7 +192,7 @@ DelayAfterPointResolution:
 	call StepMatchFrames ; $4e45
 	ret ; $4e48
 ResolveServeVolleyedPoint:
-	ld hl, $0174 ; $4e49
+	ld hl, Text_RulesReturnServeAfterBounce ; $4e49
 	ld_cell de, $05, $04 ; $4e4c
 	ld_size bc, $0a, $07 ; $4e4f
 	farcall ShowMessageWindow ; $4e52
@@ -200,7 +200,7 @@ ResolveServeVolleyedPoint:
 	call StepMatchFrames ; $4e57
 	ret ; $4e5a
 ResolveWrongReceiverPoint:
-	ld hl, $0175 ; $4e5b
+	ld hl, Text_RulesOnlyReceiverMayReturn ; $4e5b
 	ld_cell de, $02, $04 ; $4e5e
 	ld_size bc, $0f, $07 ; $4e61
 	farcall ShowMessageWindow ; $4e64

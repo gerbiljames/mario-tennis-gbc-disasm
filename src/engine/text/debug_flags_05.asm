@@ -353,7 +353,7 @@ DebugDrawWarpMenu:
 	ld de, $0d02 ; $6739
 	ld a, [wDebugWarpWindowId] ; $673c
 	ld a, [wDebugWarpLocation] ; $673f
-	ld hl, $0179 ; $6742
+	ld hl, Text_DebugWarpLocationNames ; $6742
 	add_hl_a ; $6745
 	ld de, $0102 ; $674a
 	ld a, [wDebugWarpWindowId] ; $674d
