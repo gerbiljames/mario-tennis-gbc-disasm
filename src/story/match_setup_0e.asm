@@ -96,16 +96,16 @@ LoadExhibitionMatchSettings5:
 HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c
 	cp WINLOSE_WIN ; $7c0f
-	jr nz, .lost ; $7c11
+	jr nz, .returnToCastle ; $7c11
 	test_flag FLAG_DOUBLES ; $7c13
-	jr nz, .won ; $7c16
+	jr nz, .doubles ; $7c16
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $7c18
-	jr nz, .aborted ; $7c1b
-	jr .lost ; $7c1d
-.won:
+	jr nz, .dreamMatchWon ; $7c1b
+	jr .returnToCastle ; $7c1d
+.doubles:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $7c1f
-	jr nz, .aborted ; $7c22
-.lost:
+	jr nz, .dreamMatchWon ; $7c22
+.returnToCastle:
 	ld a, STORYLOC_PEACHS_CASTLE ; $7c24
 	ld [wStoryModeCurrentLocation], a ; $7c26
 	ld a, ENTRY_PEACHS_CASTLE_AFTER_EXHIBITION ; $7c29
@@ -114,16 +114,16 @@ HandleExhibitionMatchResult:
 	ld [wUnusedExitTriggerIdMirror], a ; $7c30
 	ld [wStoryModeExitTriggerRequest], a ; $7c33
 	ret ; $7c36
-.aborted:
+.dreamMatchWon:
 	test_flag FLAG_DOUBLES ; $7c37
-	jr nz, .returnToLocation ; $7c3a
+	jr nz, .doublesScene ; $7c3a
 	ld b, $02 ; $7c3c
 	ld a, [wStoryMainGender] ; $7c3e
 	add $04 ; $7c41
 	ld c, a ; $7c43
 	farcall RunStorySceneByMode ; $7c44
 	jr .done ; $7c47
-.returnToLocation:
+.doublesScene:
 	ld b, $02 ; $7c49
 	ld a, [wStoryMainGender] ; $7c4b
 	ld d, a ; $7c4e

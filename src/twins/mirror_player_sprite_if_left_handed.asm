@@ -8,10 +8,10 @@
 	script_get_actor_state ACTOR_PLAYER
 	ld c, l
 	ld b, h
-	ld hl, $0037
+	ld hl, ACTORF_OAM_ATTR
 	add hl, bc
 	ld a, [hl]
-	xor $20
+	xor OAM_XFLIP
 	ld [hl], a
 .done:
 	ret
