@@ -264,8 +264,10 @@ QueueMatchSpriteFrameA:
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
 QueueMatchSpriteFrameATable:
-	; $6080, 6 bytes (bytes:6)
-	db $30, $52, $f0, $52, $b0, $53 ; 0x00
+	; $6080, 6 bytes (records:2)
+	dw MatchVariantTiles2 tile 16 ; record 0
+	dw MatchVariantTiles2 tile 28 ; record 1
+	dw MatchVariantTiles2 tile 40 ; record 2
 QueueMatchSpriteFrameB:
 	add a ; $6086
 	ld_hl_indexed QueueMatchSpriteFrameBTable ; $6087
@@ -277,8 +279,10 @@ QueueMatchSpriteFrameB:
 	call QueueVRAMCopy ; $6096
 	ret ; $6099
 QueueMatchSpriteFrameBTable:
-	; $609a, 6 bytes (bytes:6)
-	db $f0, $5b, $b0, $5c, $70, $5d ; 0x00
+	; $609a, 6 bytes (records:2)
+	dw MatchSharedTiles_28 tile 102 ; record 0
+	dw MatchSharedTiles_28 tile 114 ; record 1
+	dw MatchSharedTiles_28 tile 126 ; record 2
 LoadEffectFrameTiles_28:
 	ld h, $00 ; $60a0
 	ld l, a ; $60a2
@@ -302,8 +306,11 @@ LoadEffectFrameTiles_28:
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
 LoadEffectFrameTiles_28Table:
-	; $60c1, 8 bytes (bytes:8)
-	db $d0, $56, $10, $58, $50, $59, $90, $5a ; 0x00
+	; $60c1, 8 bytes (records:2)
+	dw MatchSharedTiles_28 tile 20 ; record 0
+	dw MatchSharedTiles_28 tile 40 ; record 1
+	dw MatchSharedTiles_28 tile 60 ; record 2
+	dw MatchSharedTiles_28 tile 80 ; record 3
 LoadMatchStoryGfx:
 	wram_bank WRAM_STAGING ; $60c9
 	ld hl, MatchGfxPalettesC_28 ; $60cf
