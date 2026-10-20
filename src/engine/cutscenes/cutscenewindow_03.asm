@@ -403,11 +403,11 @@ ShowFinalCreditsCard:
 	call FillMemoryDE ; $7544
 	ld hl, Text_CreditCamelot ; $7547
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $754a
-	ld bc, $0020 ; $754d
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $754d
 	farcall FetchAndDrawDialogueText ; $7550
 	ld hl, Text_CreditNintendo ; $7553
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $7556
-	ld bc, $0020 ; $7559
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $7559
 	farcall FetchAndDrawDialogueText ; $755c
 	wram_bank WRAM_COURT_PLANES ; $755f
 	ld hl, wScreenAttrmap ; $7565

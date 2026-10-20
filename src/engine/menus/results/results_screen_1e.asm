@@ -281,11 +281,11 @@ BuildResultsScreenPanels:
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 18], a ; $42d7
 	ld hl, Text_ResultsYes ; $42da
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 16 ; $42dd
-	ld bc, $0020 ; $42e0
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $42e0
 	call FetchAndDrawDialogueText ; $42e3
 	ld hl, Text_ResultsNo ; $42e6
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 16 ; $42e9
-	ld bc, $0020 ; $42ec
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
 	wram_bank WRAM_COURT_PLANES ; $42f2
 	xor a ; $42f8
