@@ -72,7 +72,8 @@ after a real defect broke it:
             region named *Gfx*/*Tiles*, and no spec-less LZ stream of whole
             tiles that the source decompresses on to vTiles (192 graphics blobs
             once had no PNG); a gfx-tagged region the source indexes, reads
-            element by element or decompresses into a tilemap row fails
+            element by element or decompresses into a tilemap row or a
+            w*Tilemap / w*Attrmap / wMapBuffer64 plane fails
   tilemap   every tilemap:W blob with a grid beside it encodes back to the
             bytes the grid was decoded from
   reach     a routine is named Unused exactly when nothing reachable from
@@ -934,7 +935,8 @@ def check_gfx_specs(rom, manifest, fail):
 TABLE_READ_GFX = {}
 
 _TABLE_READ_RE = re.compile(r"^\t(add_hl_a\b|add hl, |ld \w, \[hl\+?\]|"
-                            r"ld de, wDecompBuffer \+ .*TILEMAP_WIDTH)")
+                            r"ld de, wDecompBuffer \+ .*TILEMAP_WIDTH|"
+                            r"ld de, (w\w*(Tilemap|Attrmap)|wMapBuffer64)\b)")
 _SCAN_END_RE = re.compile(r"^\t(call|ret|jp|jr|rst)\b|^\tld hl, |^\S")
 
 
@@ -942,8 +944,8 @@ def check_gfx_tables(manifest, fail):
     """A gfx spec is for tiles: a gfx-tagged region the source loads with
     `ld hl, Label` and then indexes or reads element by element (add_hl_a,
     add hl, ld r,[hl]/[hl+]) before the next call, jump or `ld hl` is a
-    table, and one decompressed to wDecompBuffer + n * TILEMAP_WIDTH is a
-    tilemap."""
+    table, and one decompressed to wDecompBuffer + n * TILEMAP_WIDTH or to
+    a w*Tilemap / w*Attrmap / wMapBuffer64 plane is a tilemap."""
     gfx = {}
     for path, off, length, spec in manifest:
         if spec == "gfx" or (spec or "").startswith("gfx:"):

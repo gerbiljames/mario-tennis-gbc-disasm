@@ -224,7 +224,7 @@ LoadTennisDictionaryAssetsDefault:
 	call LoadPalettesMasterOnly ; $428a
 	wram_bank WRAM_COURT_PLANES ; $428d
 	ld hl, TennisDictionaryAttrmapDefault ; $4293
-	ld de, wScreenAttrmap ; $4296
+	ld de, wScreenAttrmap ; $4296 -- 36 rows: rows 32-35 land in wCourtAttrmap, unread
 	call DecompressData ; $4299
 	call ClearTennisDictionaryListAttrs ; $429c
 	ret ; $429f
@@ -246,7 +246,7 @@ LoadTennisDictionaryAssetsChar6:
 	call LoadPalettesMasterOnly ; $42cb
 	wram_bank WRAM_COURT_PLANES ; $42ce
 	ld hl, TennisDictionaryAttrmapChar6 ; $42d4
-	ld de, wScreenAttrmap ; $42d7
+	ld de, wScreenAttrmap ; $42d7 -- 36 rows: rows 32-35 land in wCourtAttrmap, unread
 	call DecompressData ; $42da
 	ret ; $42dd
 ClearTennisDictionaryListAttrs:
@@ -354,7 +354,7 @@ LoadTennisDictionaryScreen:
 .decompressData:
 	wram_bank WRAM_SCREEN ; $43cd
 	ld hl, TennisDictionaryTilemap ; $43d3
-	ld de, wShadowTilemap ; $43d6
+	ld de, wShadowTilemap ; $43d6 -- 36 rows: rows 32-35 land in wShadowAttrmap, unread
 	call DecompressData ; $43d9
 	wram_bank WRAM_SCREEN ; $43dc
 	ld c, $0e ; $43e2

@@ -235,14 +235,16 @@ and destination wrapping independently:
   (`TILEMAP_WIDTH equ 32`).
 
 The tile half repeats this with `rVBK = 0`: a 64×64 map in WRAM, a 32×32
-window into it in VRAM.
+window into it in VRAM. The story scenes and the intro and title cutscenes
+(`CutsceneScene*Tilemap`/`Attrmap`, `TitleSceneTilemap`/`Attrmap`) decompress
+whole 4096-byte planes into it.
 
 Court and menu screens use flat 32×32 planes: `wShadowTilemap` (1024 bytes,
 WRAM bank `$03`) and `wScreenAttrmap` (1024 bytes, WRAM bank `$02`).
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells. The 243 blobs `data.manifest`
+Screen layouts are written as rows of cells. The 249 blobs `data.manifest`
 tags `tilemap:W` (all `lz_*`, decompressed first) get a `.tilemap` text grid
 beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an edited grid
 back and `make check` (`tilemap`) round-trips every one. Character-data screen
@@ -827,9 +829,9 @@ thirty-three pass:
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33946 | no ROM address is written as a number where the source moves, no named WRAM address is split into `add`/`adc` halves, an `ld bc/de/hl` immediate is never a WRAM label's start, nor its negation ahead of an `add hl, rr` (`$10000 - wX`; exceptions allow-listed); no RAM/VRAM address half is a raw byte where it is checkable: a page added to an offset (`ld a, $d0 / add h / ld h, a`), a `cp` on a pointer's high byte, an `ld l/e` re-aiming a pointer loaded from a WRAM label, an `ld h/d` page the next instructions dereference |
 | `dma` | 59 | every label handed to a VRAM DMA routine is 16-byte aligned, including each entry of a `dw` table the source is read from (`Label tile n` / `Label + n` with `n` a multiple of 16 count) |
-| `gfx` | 2903 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
-| `tilemap` | 243 | every tilemap grid encodes back to its blob |
+| `gfx` | 2897 | every PNG encodes back to the blob it was decoded from |
+| `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row or a `w*Tilemap`/`w*Attrmap`/`wMapBuffer64` plane (exceptions allow-listed) |
+| `tilemap` | 249 | every tilemap grid encodes back to its blob |
 | `slots` | 5494 | every `ACTOR_*` slot name names a row of a list that can be active there and holds its actor in every such list, and no `map_actor` row name repeats a word run (`TOURNAMENT_TOURNAMENT_STAFF`) |
 | `reach` | 4902 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
 | `unnamed` | 8886 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
@@ -840,7 +842,7 @@ thirty-three pass:
 | `loops` | 894 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
 | `localnames` | 1329 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump; a `.done`/`.exit`/`.finish` local entered only by a jump runs no dialogue, movement or prompt macro before it leaves; after `RunDialogueYesNoPrompt` (0 = yes) the `z` target is not named `.declined`/`.no`/`.refuse*`, nor the `nz` target `.accepted`/`.yes*`; a local whose straight-line path returns `a` = 0 has no positive name (`busy`, `found`, `reached`, ...), nor one returning 1 a negative one (`none`, `idle`, `no*`, ...); a local named for doubles is not reached only with `FLAG_DOUBLES` clear, nor one named for singles only with it set (`not*` and `check…Won` names exempt); in a run of `bit PADB_X` / `jr`/`jp nz` pairs where one d-pad target names its direction, every d-pad target not shared by several bits names its own (exceptions allow-listed) |
 | `mirrors` | 25 | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
-| `wram-ptrs` | 2679 | a `ld bc/de/hl, wX` on a banked WRAMX symbol is not dereferenced (`[bc]`/`[de]`/`[hl]`, before the register is rewritten) after a `wram_bank` selecting another bank, in straight-line source, nor passed by `call` to a listed tile-plane writer (text, number and bar drawers in `de`/`hl`; the char-data blit and patch-list readers in `bc`) unless it is a WRAM_SCREEN name |
+| `wram-ptrs` | 2667 | a `ld bc/de/hl, wX` on a banked WRAMX symbol is not dereferenced (`[bc]`/`[de]`/`[hl]`, before the register is rewritten) after a `wram_bank` selecting another bank, in straight-line source, nor passed by `call` to a listed tile-plane writer (text, number and bar drawers in `de`/`hl`; the char-data blit and patch-list readers in `bc`) unless it is a WRAM_SCREEN name |
 
 ---
 

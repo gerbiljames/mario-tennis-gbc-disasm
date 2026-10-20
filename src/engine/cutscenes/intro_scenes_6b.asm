@@ -22,12 +22,12 @@ InitCutsceneSceneA:
 	ld c, wTextTileBuffer_SIZE / 16 ; $5425
 	call QueueVRAMCopy ; $5427
 	wram_bank WRAM_COURT_PLANES ; $542a
-	ld hl, CutsceneSceneAGfx1 ; $5430
-	ld de, wScreenAttrmap ; $5433
+	ld hl, CutsceneSceneAAttrmap ; $5430
+	ld de, wMapBuffer64 ; $5433
 	call DecompressData ; $5436
 	wram_bank WRAM_SCREEN ; $5439
-	ld hl, CutsceneSceneAGfx2 ; $543f
-	ld de, wShadowTilemap ; $5442
+	ld hl, CutsceneSceneATilemap ; $543f
+	ld de, wMapBuffer64 ; $5442
 	call DecompressData ; $5445
 	xor a ; $5448
 	ld [wCameraY], a ; $5449
@@ -56,12 +56,12 @@ Unused_6b_InitCutsceneSceneB:
 	ld c, wTextTileBuffer_SIZE / 16 ; $5487
 	call QueueVRAMCopy ; $5489
 	wram_bank WRAM_COURT_PLANES ; $548c
-	ld hl, CutsceneSceneBGfx1 ; $5492
-	ld de, wScreenAttrmap ; $5495
+	ld hl, CutsceneSceneBAttrmap ; $5492
+	ld de, wMapBuffer64 ; $5495
 	call DecompressData ; $5498
 	wram_bank WRAM_SCREEN ; $549b
-	ld hl, CutsceneSceneBGfx0 ; $54a1
-	ld de, wShadowTilemap ; $54a4
+	ld hl, CutsceneSceneBTilemap ; $54a1
+	ld de, wMapBuffer64 ; $54a4
 	call DecompressData ; $54a7
 	xor a ; $54aa
 	ld [wCameraY], a ; $54ab
@@ -87,12 +87,12 @@ InitCutsceneSceneC:
 	ld c, wTextTileBuffer_SIZE / 16 ; $54e2
 	call QueueVRAMCopy ; $54e4
 	wram_bank WRAM_COURT_PLANES ; $54e7
-	ld hl, CutsceneSceneBGfx1 ; $54ed
-	ld de, wScreenAttrmap ; $54f0
+	ld hl, CutsceneSceneBAttrmap ; $54ed
+	ld de, wMapBuffer64 ; $54f0
 	call DecompressData ; $54f3
 	wram_bank WRAM_SCREEN ; $54f6
-	ld hl, CutsceneSceneBGfx0 ; $54fc
-	ld de, wShadowTilemap ; $54ff
+	ld hl, CutsceneSceneBTilemap ; $54fc
+	ld de, wMapBuffer64 ; $54ff
 	call DecompressData ; $5502
 	ld hl, Palette_6b_1 ; $5505
 	ld_bg_pals de, 0, 8 ; $5508
@@ -106,16 +106,16 @@ InitCutsceneSceneC:
 	ret ; $551c
 CutsceneSceneAGfx0:
 	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx0.bin" ; $551d, 1210 bytes
-CutsceneSceneBGfx0:
-	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBGfx0.bin" ; $59d7, 512 bytes
-CutsceneSceneBGfx1:
-	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBGfx1.bin" ; $5bd7, 334 bytes
+CutsceneSceneBTilemap:
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBTilemap.bin" ; $59d7, 512 bytes
+CutsceneSceneBAttrmap:
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneBAttrmap.bin" ; $5bd7, 334 bytes
 Palette_6b_1:
 	INCLUDE "data/engine/cutscenes/Palette_6b_1.asm" ; $5d25, 64 bytes (palettes)
-CutsceneSceneAGfx1:
-	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx1.bin" ; $5d65, 323 bytes
-CutsceneSceneAGfx2:
-	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAGfx2.bin" ; $5ea8, 461 bytes
+CutsceneSceneAAttrmap:
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneAAttrmap.bin" ; $5d65, 323 bytes
+CutsceneSceneATilemap:
+	INCBIN "data/engine/cutscenes/lz_CutsceneSceneATilemap.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
 	ld b, TILEBLOCK_IntroGfx0 ; $6075
 	ld c, IntroGfx0_SIZE / 16 ; $6077
@@ -258,12 +258,12 @@ InitTitleSceneGraphics:
 	ld c, wTextTileBuffer_SIZE / 16 ; $61a5
 	call QueueVRAMCopy ; $61a7
 	wram_bank WRAM_COURT_PLANES ; $61aa
-	ld hl, TitleSceneGraphicsGfx2 ; $61b0
-	ld de, wScreenAttrmap ; $61b3
+	ld hl, TitleSceneAttrmap ; $61b0
+	ld de, wMapBuffer64 ; $61b3
 	call DecompressData ; $61b6
 	wram_bank WRAM_SCREEN ; $61b9
-	ld hl, TitleSceneGraphicsGfx1 ; $61bf
-	ld de, wShadowTilemap ; $61c2
+	ld hl, TitleSceneTilemap ; $61bf
+	ld de, wMapBuffer64 ; $61c2
 	call DecompressData ; $61c5
 	ld hl, TitleScenePalette ; $61c8
 	ld_bg_pals de, 0, 8 ; $61cb
@@ -279,10 +279,10 @@ InitTitleSceneGraphics:
 	ret ; $61e5
 TitleSceneGraphicsGfx0:
 	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx0.bin" ; $61e6, 2774 bytes
-TitleSceneGraphicsGfx1:
-	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx1.bin" ; $6cbc, 595 bytes
-TitleSceneGraphicsGfx2:
-	INCBIN "data/engine/cutscenes/lz_TitleSceneGraphicsGfx2.bin" ; $6f0f, 308 bytes
+TitleSceneTilemap:
+	INCBIN "data/engine/cutscenes/lz_TitleSceneTilemap.bin" ; $6cbc, 595 bytes
+TitleSceneAttrmap:
+	INCBIN "data/engine/cutscenes/lz_TitleSceneAttrmap.bin" ; $6f0f, 308 bytes
 TitleScenePalette:
 	INCLUDE "data/engine/cutscenes/TitleScenePalette.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:

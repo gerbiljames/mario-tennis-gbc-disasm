@@ -18,7 +18,7 @@ def wCharDataScreenCell equ $d000
 ; in WRAM banks $06
 def wCollisionMap equ $d000
 
-; [4096 bytes] 64 rows of 64 cells, one plane in each of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Both axes wrap within the buffer (the `and $3f` on each camera coordinate, `res 5, h / set 4, h` in BlitBGColumnFrom64). Only the top 32 rows carry map data; Unused_00_CopyMapToScrollBuffers clears the bottom half.
+; [4096 bytes] 64 rows of 64 cells, one plane in each of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Both axes wrap within the buffer (the `and $3f` on each camera coordinate, `res 5, h / set 4, h` in BlitBGColumnFrom64). The story scenes and the intro and title cutscenes decompress whole 4096-byte planes here; Unused_00_CopyMapToScrollBuffers fills only the top 32 rows and clears the bottom half.
 ; in WRAM banks $02, $03
 def wMapBuffer64 equ $d000
 

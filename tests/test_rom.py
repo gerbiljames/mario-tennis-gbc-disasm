@@ -144,6 +144,59 @@ class Source(unittest.TestCase):
                             self.assertIn(f"-- {src[1]}'s {tiles} tiles", n, name)
                         break
 
+    # destinations a decompression may run past, the bytes it may fill, why
+    DECOMP_OVERRUNS = {
+        "wDecompBuffer": (4096, "the staging half before wTextTileBuffer: a 4096-byte "
+                                "tile set fills both and is queued to VRAM as two halves"),
+    }
+
+    @needs_rom
+    def test_decompressions_fit_their_ram(self):
+        # a named LZ stream decompressed to a RAM label fits the label's
+        # declared size, unless the `ld de` line carries a `-- note`
+        import lz
+        rom = (ROOT / "baserom.gbc").read_bytes()
+        decoded = {}
+        for line in (ROOT / "data.manifest").read_text().splitlines():
+            f = line.split()
+            if len(f) >= 3 and "/lz_" in f[0]:
+                off = int(f[1], 16)
+                decoded[f[0].rsplit("/lz_", 1)[1][:-4]] = len(lz.decompress(rom, off, off + int(f[2], 16))[0])
+        size = {lab: int(n) for p in (ROOT / "ram").rglob("*.asm")
+                for lab, n in re.findall(r"^(\w+):: ds (\d+)\b", p.read_text(), re.M)}
+        size.update((lab, int(n)) for n, lab in re.findall(
+            r"^; \[(\d+) bytes\].*\n(?:;.*\n)*def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
+        ptr = dict(m for _, text in SRC for m in re.findall(r"^(DataPtr_\w+):\n\tdw (\w+)", text, re.M))
+        checked, over = 0, set()
+        for name, text in SRC:
+            lines = text.split("\n")
+            for i, line in enumerate(lines):
+                if not re.match(r"\t(call|farcall|jp) DecompressData", line):
+                    continue
+                stream = de = None
+                for prev in reversed(lines[max(0, i - 8):i]):
+                    if re.match(r"[A-Za-z.]|\t(call|jp|jr|ret|farcall)\b", prev):
+                        break
+                    if de is None and (m := re.match(r"\tld de, (w\w+)([^;]*?) ;", prev)):
+                        de = m[1], m[2], prev
+                    if stream is None and (m := re.match(r"\tld(?:_slot)? hl, (\w+) ;", prev)):
+                        stream = ptr.get(m[1], m[1])
+                if stream not in decoded or de is None:
+                    continue
+                label, offset, ld = de
+                self.assertIn(label, size, ld)
+                checked += 1
+                end = decoded[stream] + eval(offset.replace("tile", "+ 16 *").replace("TILEMAP_WIDTH", "32")
+                                             .replace("$", "0x") or "0")
+                if end <= size[label] or " -- " in ld:
+                    continue
+                self.assertIn(label, self.DECOMP_OVERRUNS, f"{name}: {stream} ({decoded[stream]} bytes) "
+                              f"overruns {label} ({size[label]}): {ld.strip()}")
+                self.assertLessEqual(end, self.DECOMP_OVERRUNS[label][0], ld)
+                over.add(label)
+        self.assertGreaterEqual(checked, 220)
+        self.assertEqual(over, set(self.DECOMP_OVERRUNS))
+
     def test_copy_lengths_follow_their_ram(self):
         # a copy or clear of one whole RAM object is written as its exported
         # size (ram.asm export_size); the screen, bank and record geometry
@@ -288,12 +341,12 @@ class Manifest(unittest.TestCase):
         self.assertEqual(streams, 863)
         self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2903)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2897)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(s == "gfx:4x4" for s in specs), 4)
-        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 243)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 249)
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)

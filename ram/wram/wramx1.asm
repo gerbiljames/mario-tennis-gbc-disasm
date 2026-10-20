@@ -25,7 +25,7 @@ NEXTU
 wCharRecordBuffer:: ds 128
 NEXTU
 ; VRAM staging (WRAM bank $01)
-; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways: the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16; the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. Unused_00_CopyMapToScrollBuffers expands map planes from it into WRAM bank $02
+; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways: the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16; the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. A stream of over 2048 bytes (most screens' 4096-byte tile sets) runs on through wTextTileBuffer, and the loader queues that half to vTiles1 separately. Unused_00_CopyMapToScrollBuffers expands map planes from it into WRAM bank $02
 wDecompBuffer:: ds 2048
 ; [2048 bytes] The other half: Unused_1a_DrawStringToTileBuffer renders strings here as tile data (the EXP screen's captions and bonus messages), uploaded like any other graphics
 wTextTileBuffer:: ds 2048
