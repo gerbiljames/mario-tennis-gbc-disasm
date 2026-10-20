@@ -158,13 +158,13 @@ Court1EntryWalkIn:
 	cp STORYENTRY_NONE ; $51a7
 	jp z, .done ; $51a9
 	test_flag FLAG_DOUBLES ; $51ac
-	jr z, .walkOff ; $51af
+	jr z, .playerWalkIn ; $51af
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $51b1
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, 2.0 ; $51b9
 	script_wait_move ACTOR_PARTNER ; $51c3
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $51c8
 	script_set_speed ACTOR_PARTNER, 0.5 ; $51cf
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $51d7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $51df
 .done:

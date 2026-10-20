@@ -398,10 +398,10 @@ MachineCourtStartLevelScene:
 	script_wait_move ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $44f4
 	script_face ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, FACE_DOWN ; $44f9
 	test_flag FLAG_DOUBLES ; $4500
-	jr z, .walkOff ; $4503
+	jr z, .playerWalkIn ; $4503
 	script_null_script ACTOR_PARTNER ; $4505
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $450a
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4515
 	script_move_player 56.0, 51.0 ; $451d
 	script_move_target ACTOR_PLAYER, 51.0, 43.0 ; $4527

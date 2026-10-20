@@ -375,7 +375,7 @@ TournamentSiteEntryWalkIn:
 	cp STORYENTRY_NONE ; $46f3
 	jp z, .done ; $46f5
 	test_flag FLAG_DOUBLES ; $46f8
-	jr z, .walkOff ; $46fb
+	jr z, .playerWalkIn ; $46fb
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $46fd
 	ld a, [wStoryModeEntryPoint] ; $4705
 	dec a ; $4708
@@ -389,7 +389,7 @@ TournamentSiteEntryWalkIn:
 	ld b, [hl] ; $472a
 	script_face ACTOR_PARTNER, b ; $472b
 	script_set_speed ACTOR_PARTNER, 0.5 ; $4731
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4739
 	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
@@ -452,13 +452,13 @@ TrainingCourtArrival01_15:
 	jp z, .done ; $4912
 	call ClearTrainingCourtNpcFlags ; $4915
 	test_flag FLAG_DOUBLES ; $4918
-	jr z, .walkOff ; $491b
+	jr z, .playerWalkIn ; $491b
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $491d
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, 2.0 ; $4925
 	script_wait_move ACTOR_PARTNER ; $492f
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4934
 	script_set_speed ACTOR_PARTNER, 0.5 ; $493b
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $4943
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $494b
 .done:

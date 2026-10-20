@@ -202,7 +202,7 @@ Unused_02_DebugStoryStatsScreen:
 	call AdvanceRandomSeed ; $5142
 	ldh a, [hInputPressed] ; $5145
 	bit PADB_UP, a ; $5147
-	jr z, .levelUpPlayer ; $5149
+	jr z, .checkLeft ; $5149
 	push de ; $514b
 	ld a, $00 ; $514c
 	ld d, TRAINSTAT_SPIN ; $514e
@@ -210,7 +210,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5153
 	sound SFX_MENU_MOVE ; $5154
 	jp .redraw ; $5156
-.levelUpPlayer:
+.checkLeft:
 	bit PADB_LEFT, a ; $5159
 	jr z, .checkRight ; $515b
 	push de ; $515d

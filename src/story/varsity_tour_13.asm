@@ -23,7 +23,7 @@ CourtyardEntryWalkIn_13:
 	cp STORYENTRY_NONE ; $6302
 	jp z, .done ; $6304
 	test_flag FLAG_DOUBLES ; $6307
-	jr z, .walkOff ; $630a
+	jr z, .playerWalkIn ; $630a
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $630c
 	ld a, [wStoryModeEntryPoint] ; $6314
 	dec a ; $6317
@@ -37,7 +37,7 @@ CourtyardEntryWalkIn_13:
 	ld b, [hl] ; $6339
 	script_face ACTOR_PARTNER, b ; $633a
 	script_set_speed ACTOR_PARTNER, 0.5 ; $6340
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6348
 	ld a, [wStoryModeEntryPoint] ; $6350
 	dec a ; $6353
