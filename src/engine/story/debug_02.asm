@@ -67,7 +67,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5029
 .redraw:
 	push de ; $502a
-	ld bc, wStoryMainName ; $502b
+	ld bc, wStoryMain ; $502b
 	ld a, [wCurrentStorySlot] ; $502e
 	ld_cell de, $02, $02 ; $5031
 	call PrintDecimalByte ; $5034
@@ -390,8 +390,8 @@ LoadPlayer2MainRecord:
 	jr z, .positive ; $52b0
 	res 7, a ; $52b2
 	call LoadStorySlot ; $52b4
-	ld hl, wPlayer1MainName ; $52b7
-	ld de, wPlayer2MainName ; $52ba
+	ld hl, wPlayer1Main ; $52b7
+	ld de, wPlayer2Main ; $52ba
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $52bd
 	call CopyMemoryFast ; $52bf
 	jr .restore ; $52c2

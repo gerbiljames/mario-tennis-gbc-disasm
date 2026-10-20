@@ -21,22 +21,23 @@ Unused_18_InitPlayerRecordForCharacter:
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
-	ld hl, wStoryMainName ; $465e
+	ASSERT HIGH(wStoryPartner) == HIGH(wStoryMain)
+	ld hl, wStoryMain ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
-	jr z, .partnerSlot ; $4665
-	ld l, $40 ; $4667
-.partnerSlot:
+	jr z, .haveRecord ; $4665
+	ld l, LOW(wStoryPartner) ; $4667
+.haveRecord:
 	pop af ; $4669
 	ld b, h ; $466a
 	ld c, l ; $466b
 	ld a, [de] ; $466c
 	inc de ; $466d
-	ld hl, $000e ; $466e
+	ld hl, CHARREC_LEFT_HANDED ; $466e
 	add hl, bc ; $4671
 	ld [hl], a ; $4672
 	ld a, [de] ; $4673
-	ld hl, $000c ; $4674
+	ld hl, CHARREC_PALETTE ; $4674
 	add hl, bc ; $4677
 	ld [hl], a ; $4678
 	ret ; $4679

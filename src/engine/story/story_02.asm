@@ -188,10 +188,11 @@ GetStoryCharacterRecordPtr:
 	pop af ; $4204
 	ret ; $4205
 GetPlayerRecordPtr:
-	ld bc, wStoryMainName ; $4206
+	ASSERT HIGH(wStoryPartner) == HIGH(wStoryMain)
+	ld bc, wStoryMain ; $4206
 	or a ; $4209
 	ret z ; $420a
-	ld c, $40 ; $420b
+	ld c, LOW(wStoryPartner) ; $420b
 	ret ; $420d
 GetMatchRecordPtr:
 	and $03 ; $420e
@@ -479,7 +480,7 @@ InitPlayerRecordFromTemplate:
 	jr nz, .copyLoop ; $4409
 	pop bc ; $440b
 	call RecomputeCharacterStats ; $440c
-	ld hl, wStoryMainName ; $440f
+	ld hl, wStoryMain ; $440f
 	ld de, wStorySlotData ; $4412
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $4415
 	call CopyMemoryFast ; $4417

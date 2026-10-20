@@ -19,9 +19,9 @@ ShoeStatDeltas_02:
 	equip_stat_deltas 0, 0, 0, 0, 0, 0, 0, -2, -2, -2, -2 ; 1 Iron
 	equip_stat_deltas 0, 0, 0, 0, 0, 0, 0, 2, 2, -2, -2 ; 2 Light
 RefreshMainCharacterStats:
-	ld bc, wStoryMainName ; $478f
+	ld bc, wStoryMain ; $478f
 	call RecomputeCharacterStats ; $4792
-	ld hl, wStoryMainName ; $4795
+	ld hl, wStoryMain ; $4795
 	ld de, wStorySlotData ; $4798
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $479b
 	call CopyMemoryFast ; $479d
@@ -54,7 +54,7 @@ RecomputeStatsWithoutEquipment:
 	push af ; $47ca
 	xor a ; $47cb
 	ld [hl], a ; $47cc
-	ld bc, wStoryMainName ; $47cd
+	ld bc, wStoryMain ; $47cd
 	call RecomputeCharacterStats ; $47d0
 	pop af ; $47d3
 	ld [wStoryMainEquipment], a ; $47d4

@@ -363,7 +363,7 @@ RunNewGameSetup:
 .restore:
 	pop af ; $62df
 	ld [wStoryCharacterSlot], a ; $62e0
-	ld hl, wStoryMainName ; $62e3
+	ld hl, wStoryMain ; $62e3
 	ld de, wStorySlotData ; $62e6
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $62e9
 	call CopyMemoryFast ; $62eb

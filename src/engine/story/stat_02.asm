@@ -9,7 +9,7 @@ Unused_02_StoryCharGenderTableTail:
 	db $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
 Unused_02_LoadMainCharacterFromRoster:
 	push de ; $443b
-	ld hl, wStoryMainName ; $443c
+	ld hl, wStoryMain ; $443c
 	ld c, CHAR_RECORD_SIZE / 16 ; $443f
 	call ClearMemory16 ; $4441
 	pop de ; $4444
@@ -18,7 +18,7 @@ Unused_02_LoadMainCharacterFromRoster:
 	and $3f ; $4447
 	ld b, a ; $4449
 	call GetStoryCharacterRecordPtr ; $444a
-	ld de, wStoryMainName ; $444d
+	ld de, wStoryMain ; $444d
 	call Unused_02_Copy64Bytes ; $4450
 	ld hl, CHARREC_CHAR ; $4453
 	add hl, de ; $4456
