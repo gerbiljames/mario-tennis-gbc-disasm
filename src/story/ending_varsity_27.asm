@@ -103,9 +103,9 @@ End10VarsityCourtEntry01Scene:
 	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_KATE, ACTOR_PLAYER ; $574f
 	jr .markShakes ; $5757
 .variantBBounce:
-	script_set_anim $0d, ANIM_BOUNCE ; $5759
-	script_wait_idle $0d ; $5760
-	script_face_toward $0d, ACTOR_PLAYER ; $5765
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_KATE, ANIM_BOUNCE ; $5759
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_KATE ; $5760
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_KATE, ACTOR_PLAYER ; $5765
 .markShakes:
 	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_MARK, ANIM_SHAKE ; $576d
 	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_MARK ; $5774
@@ -117,7 +117,7 @@ End10VarsityCourtEntry01Scene:
 	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_EMILY ; $579f
 	script_wait_frames 20 ; $57a4
 	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, ACTOR_PLAYER ; $57ab
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, $0d ; $57b3
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, ACTOR_END10_VARSITY_COURT_ALT_KATE ; $57b3
 	script_wait_frames 20 ; $57bb
 	script_wait_frames 20 ; $57c2
 	script_move_target ACTOR_END10_VARSITY_COURT_ALT_KEVIN, 12.0, 31.0 ; $57c9
@@ -125,13 +125,13 @@ End10VarsityCourtEntry01Scene:
 	script_wait_frames 20 ; $57d9
 	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_KEVIN, ANIM_BOUNCE ; $57e0
 	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_KEVIN ; $57e7
-	script_set_anim $0d, ANIM_BOUNCE ; $57ec
-	script_wait_idle $0d ; $57f3
-	script_face_toward ACTOR_PLAYER, $0d ; $57f8
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_KATE, ANIM_BOUNCE ; $57ec
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_KATE ; $57f3
+	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_ALT_KATE ; $57f8
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5800
 	jr z, .face ; $5803
 .face:
-	script_face_toward $0d, ACTOR_PLAYER ; $5805
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_KATE, ACTOR_PLAYER ; $5805
 	script_wait_frames 10 ; $580d
 	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, ACTOR_PLAYER ; $5814
 	script_wait_frames 10 ; $581c
@@ -157,12 +157,12 @@ End10VarsityCourtEntry01Scene:
 	script_move_player 11.0, 23.0 ; $5886
 	farcall WaitPlayerMoveDone ; $5890
 	script_move_target ACTOR_PARTNER, 13.0, 29.0 ; $5893
-	script_move_target $09, 11.0, 23.0 ; $589e
-	script_wait_move $09 ; $58a9
-	script_set_anim $09, ANIM_SHAKE ; $58ae
-	script_wait_idle $09 ; $58b5
-	script_set_anim $04, ANIM_BOUNCE ; $58ba
-	script_wait_idle $04 ; $58c1
+	script_move_target ACTOR_END10_VARSITY_COURT_ALT_B_MARK, 11.0, 23.0 ; $589e
+	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $58a9
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ANIM_SHAKE ; $58ae
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $58b5
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_BOB, ANIM_BOUNCE ; $58ba
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_BOB ; $58c1
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $58c6
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $58cd
 	script_wait_idle ACTOR_PLAYER ; $58d4
@@ -178,9 +178,9 @@ End10VarsityCourtEntry01Scene:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $590e
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5915
 	sound SFX_APPEAR2 ; $591c
-	script_set_position $0a, 12.0, 27.5 ; $591e
+	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 12.0, 27.5 ; $591e
 	script_wait_frames 40 ; $5929
-	script_set_position $0a, 63.0, 63.0 ; $5930
+	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 63.0, 63.0 ; $5930
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $593b
 	script_wait_frames 10 ; $5943
 	script_lock_facing ACTOR_PLAYER ; $594a
@@ -227,9 +227,9 @@ CeremonyDoublesReaction_27:
 	script_wait_idle ACTOR_PARTNER ; $5a2c
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5a31
 	sound SFX_APPEAR2 ; $5a39
-	script_set_position $0a, 12.0, 27.5 ; $5a3b
+	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 12.0, 27.5 ; $5a3b
 	script_wait_frames 40 ; $5a46
-	script_set_position $0a, 63.0, 63.0 ; $5a4d
+	script_set_position ACTOR_END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT, 63.0, 63.0 ; $5a4d
 	script_wait_frames 10 ; $5a58
 	script_lock_facing ACTOR_PLAYER ; $5a5f
 	script_wait_frames 10 ; $5a66
@@ -267,28 +267,28 @@ CeremonyDoublesReaction_27:
 	script_unlock_facing ACTOR_PLAYER ; $5b13
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5b1a
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5b21
-	script_set_actor_script $08, ActorScript_27_07 ; $5b28
-	script_set_actor_script $03, ActorScript_27_08 ; $5b33
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ActorScript_27_07 ; $5b28
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ActorScript_27_08 ; $5b33
 	script_wait_frames 20 ; $5b3e
-	script_set_actor_script $09, ActorScript_27_12 ; $5b45
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ActorScript_27_12 ; $5b45
 	script_move_player 11.0, 29.0 ; $5b50
 	farcall WaitPlayerMoveDone ; $5b5a
-	script_wait_actor_script $09 ; $5b5d
-	script_face_toward ACTOR_PLAYER, $09 ; $5b62
-	script_face_toward $03, ACTOR_PARTNER ; $5b6a
-	script_set_anim $09, ANIM_SHAKE ; $5b72
-	script_wait_idle $09 ; $5b79
-	script_face_toward $09, ACTOR_PLAYER ; $5b7e
-	script_move_target $08, 10.0, 31.0 ; $5b86
-	script_wait_move $08 ; $5b91
-	script_face_toward $08, ACTOR_PLAYER ; $5b96
-	script_face_toward $03, ACTOR_PARTNER ; $5b9e
-	script_set_anim $08, ANIM_NOD ; $5ba6
-	script_wait_idle $08 ; $5bad
-	script_move_target $03, 12.0, 31.0 ; $5bb2
-	script_wait_move $03 ; $5bbd
-	script_set_anim $03, ANIM_BOUNCE ; $5bc2
-	script_wait_idle $03 ; $5bc9
+	script_wait_actor_script ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $5b5d
+	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $5b62
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ACTOR_PARTNER ; $5b6a
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ANIM_SHAKE ; $5b72
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_MARK ; $5b79
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_MARK, ACTOR_PLAYER ; $5b7e
+	script_move_target ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, 10.0, 31.0 ; $5b86
+	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_B_EMILY ; $5b91
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ACTOR_PLAYER ; $5b96
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ACTOR_PARTNER ; $5b9e
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ANIM_NOD ; $5ba6
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_EMILY ; $5bad
+	script_move_target ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, 12.0, 31.0 ; $5bb2
+	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN ; $5bbd
+	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ANIM_BOUNCE ; $5bc2
+	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN ; $5bc9
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $5bce
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5bd6
 	script_wait_idle ACTOR_PARTNER ; $5bdd
@@ -299,8 +299,8 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5bef
 	script_wait_idle ACTOR_PLAYER ; $5bf6
 	script_wait_frames 10 ; $5bfb
-	script_face_toward $08, ACTOR_PLAYER ; $5c02
-	script_face_toward $03, ACTOR_PARTNER ; $5c0a
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_EMILY, ACTOR_PLAYER ; $5c02
+	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_B_KEVIN, ACTOR_PARTNER ; $5c0a
 	script_wait_frames 10 ; $5c12
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5c19
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5c20

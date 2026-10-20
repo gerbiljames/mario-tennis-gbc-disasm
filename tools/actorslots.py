@@ -165,7 +165,8 @@ class Source:
         for n, (b, i, e) in self.funcs.items():
             body = self.banks[b][0][i + 1:e]
             rows = [x for x in body if x.startswith("\tmap_actor ")]
-            if rows and any(x.startswith("\tmap_actor_end") for x in body):
+            if (rows or any("(map_actors)" in x for x in body[:2])) and \
+                    any(x.startswith("\tmap_actor_end") for x in body):
                 args = [[a.strip() for a in x.split(";")[0].replace("map_actor", "", 1).split(",")]
                         for x in rows]
                 self.lists[n] = [(a[1], a[5]) for a in args]

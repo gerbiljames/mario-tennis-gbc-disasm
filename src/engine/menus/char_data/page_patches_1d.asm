@@ -413,7 +413,7 @@ DrawExpPoolGauge:
 .positive:
 	ld b, $58 ; $6b0d
 	call ScaleValueToBar ; $6b0f
-	ld de, wExpScreenCharStats ; $6b12
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $6b12
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
 	wram_bank WRAM_SCREEN ; $6b18
@@ -820,7 +820,7 @@ DrawExpScreenLevelBar:
 	jr c, .scaleMainBar ; $6eb3
 	xor a ; $6eb5
 	ld [wExpScreenCharStats + EXPSTAT_BAR], a ; $6eb6
-	ld de, wCharDataRevealStep ; $6eb9
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 7 ; $6eb9
 	jr .drawBar ; $6ebc
 .scaleMainBar:
 	ld hl, wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL ; $6ebe
@@ -834,7 +834,7 @@ DrawExpScreenLevelBar:
 	ld b, $40 ; $6eca
 	call ScaleValueToBar ; $6ecc
 	ld [wExpScreenCharStats + EXPSTAT_BAR], a ; $6ecf
-	ld de, wCharDataRevealStep ; $6ed2
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 7 ; $6ed2
 	jr .drawBar ; $6ed5
 .partner:
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $6ed7
@@ -842,7 +842,7 @@ DrawExpScreenLevelBar:
 	jr c, .scalePartnerBar ; $6edc
 	xor a ; $6ede
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR], a ; $6edf
-	ld de, wCharDataValuesSlideX ; $6ee2
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 7 ; $6ee2
 	jr .drawBar ; $6ee5
 .scalePartnerBar:
 	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL ; $6ee7
@@ -856,7 +856,7 @@ DrawExpScreenLevelBar:
 	ld b, $40 ; $6ef3
 	call ScaleValueToBar ; $6ef5
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR], a ; $6ef8
-	ld de, wCharDataValuesSlideX ; $6efb
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 7 ; $6efb
 .drawBar:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff

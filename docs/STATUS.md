@@ -52,8 +52,9 @@ with a fork's edits under `mods/`.
 
 * **Banked-WRAM operands:** 32 stay raw numbers, all inside `Unused_`
   routines no trace can reach.
-* **Actor slots:** 13 operands on reached code stay numbers, each a slot that
-  holds different actors in the lists possible there (`docs/story_mode.md`).
+* **Actor slots:** 32 operands on reached code stay numbers, each a slot that
+  holds different actors, or none, in the lists possible there
+  (`docs/story_mode.md`).
 * **Entry and exit ids:** named per location (`ENTRY_*`, `EXIT_*`); two exit
   requests and one exit row's entry stay numbers, having no row to name.
 * **Behaviour:** the event test finds no difference between a shifted build

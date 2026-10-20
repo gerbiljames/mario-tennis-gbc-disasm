@@ -226,7 +226,7 @@ LoadTennisDictionaryAssetsDefault:
 	ld hl, TennisDictionaryAttrmapDefault ; $4293
 	ld de, wScreenAttrmap ; $4296
 	call DecompressData ; $4299
-	call ClearTennisDictionaryTilemap ; $429c
+	call ClearTennisDictionaryListAttrs ; $429c
 	ret ; $429f
 LoadTennisDictionaryAssetsChar6:
 	wram_bank WRAM_STAGING ; $42a0
@@ -249,9 +249,10 @@ LoadTennisDictionaryAssetsChar6:
 	ld de, wScreenAttrmap ; $42d7
 	call DecompressData ; $42da
 	ret ; $42dd
-ClearTennisDictionaryTilemap:
+ClearTennisDictionaryListAttrs:
 	wram_bank WRAM_COURT_PLANES ; $42de
 	ld c, $0e ; $42e4
+	; the spans are wShadowTilemap cells; under this bank they clear wScreenAttrmap's
 	ld hl, TennisDictionaryListClearSpans ; $42e6
 .loop:
 	push bc ; $42e9

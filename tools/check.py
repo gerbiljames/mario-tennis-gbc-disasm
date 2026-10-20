@@ -131,6 +131,10 @@ after a real defect broke it:
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
             wMenuCursorRow under WRAM_TEXT as a char-data page cell)
+  wram-ptrs a `ld de/hl, wX` on a banked WRAMX symbol is not dereferenced
+            (`[de]`, `[hl]`, `[hl+]`, `[hl-]`, before de/hl is rewritten)
+            after a `wram_bank` selecting another bank (char-data bars drew
+            through bank 6 names as wShadowTilemap cursors)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -2017,6 +2021,69 @@ def check_mirrored_operands(fail):
     return len(mirrored)
 
 
+# Instructions and macros that leave de and hl alone.
+_PTR_KEEPS = {"cp", "bit", "push", "nop", "jr", "halt", "di", "ei", "ldh", "cpl", "scf",
+              "ccf", "rlca", "rrca", "rla", "rra", "daa"}
+_PTR_WRITES = {"ld", "pop", "add", "adc", "sub", "sbc", "inc", "dec", "swap", "srl", "rr",
+               "rl", "rrc", "rlc", "sla", "sra", "res", "set", "xor", "or", "and"}
+
+
+def check_wram_pointers(fail):
+    """`ld de/hl, wX` with wX in one WRAMX bank, then `[de]`/`[hl]` in
+    straight-line source after a `wram_bank` selecting another. A global
+    label, a call or an unknown macro forgets the pointers."""
+    wbank = {n: b for b, a, n in read_sym() if 0xd000 <= a < 0xe000 and "." not in n}
+    consts = {name: int(v, 16) for name, v in re.findall(
+        r"^\tconst (WRAM_\w+)\s*; \$([0-9a-f]+)", (ROOT / "include" / "constants" / "memory.inc").read_text(), re.M)}
+    sites = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        cur, ptr = None, {}
+        for i, line in enumerate(lines):
+            code = line.split(";")[0].strip()
+            if re.match(r"[A-Za-z_]\w*:", line):
+                cur, ptr = None, {}
+                continue
+            if not code or code.endswith(":"):
+                continue
+            if re.match(r"pop_wram_bank\b", code):
+                cur = None
+                continue
+            m = re.match(r"(?:push_)?wram_bank\s+(\w+)", code)
+            if m:
+                cur = consts.get(m.group(1))
+                continue
+            m = re.match(r"ld (de|hl), (w\w+)\b", code)
+            if m:
+                ptr.pop(m.group(1), None)
+                if m.group(2) in wbank:
+                    ptr[m.group(1)] = (m.group(2), wbank[m.group(2)], origin[i])
+                    sites += 1
+                continue
+            for rr in ("de", "hl"):
+                if rr in ptr and cur is not None and re.search(r"\[" + rr + r"[+-]?\]", code):
+                    sym, b, (f, ln) = ptr[rr]
+                    if b != cur:
+                        fail("wram-ptrs", f"{Path(f).relative_to(ROOT)}:{ln}: {sym} (WRAM bank {b}) "
+                                          f"dereferenced with bank {cur} selected")
+                        del ptr[rr]
+            op, _, args = code.partition(" ")
+            if op in _PTR_WRITES:
+                dst = args.split(",")[0].strip()
+                for rr in ("de", "hl"):
+                    if dst in (rr[0], rr[1]) or (dst == rr and op not in ("inc", "dec")):
+                        ptr.pop(rr, None)
+            elif op == "ld_hl_indexed":
+                ptr.pop("hl", None)
+            elif op == "ld_de_indexed":
+                ptr.pop("de", None)
+            elif op in ("ret", "reti", "jp") and "," not in args:
+                ptr = {}
+            elif op not in _PTR_KEEPS:
+                ptr = {}
+    return sites
+
+
 # Routines whose "loop" locals name the domain, not the control flow.
 KNOWN_LOOP_NAMES = {
     "RunSoundChannelScript": "the sound-script loop opcodes it interprets",
@@ -2459,6 +2526,7 @@ def main():
         "loops": check_loop_labels(fail),
         "localnames": check_local_names(fail),
         "mirrors": check_mirrored_operands(fail),
+        "wram-ptrs": check_wram_pointers(fail),
     }
     by_check = {}
     for check, msg in failures:

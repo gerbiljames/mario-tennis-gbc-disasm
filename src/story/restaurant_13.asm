@@ -106,7 +106,7 @@ Unused_13_PlayerSpeaksDefineAce:
 	ret ; $428a
 RestaurantPlazaNpcScripts_13:
 	; $428b, 9 bytes (map_scripts)
-	map_script ACTOR_SERVICE_ACE_COACH_INTRO_BALLOON_EXCLAIM, FACEMASK_ANY, $0000, Text_DefineDoublesBackPlayer, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, Text_DefineDoublesBackPlayer, $00, $00
 	db $ff
 RestaurantPlazaFacingScripts_13:
 	; $4294, 33 bytes (map_scripts)

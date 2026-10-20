@@ -828,7 +828,7 @@ pass:
 | `gfx` | 2903 | every PNG encodes back to the blob it was decoded from |
 | `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
 | `tilemap` | 243 | every tilemap grid encodes back to its blob |
-| `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
+| `slots` | 5359 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4904 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
 | `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
@@ -838,6 +838,7 @@ pass:
 | `loops` | 894 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
 | `localnames` | 1197 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump; a `.done`/`.exit`/`.finish` local entered only by a jump runs no dialogue, movement or prompt macro before it leaves; after `RunDialogueYesNoPrompt` (0 = yes) the `z` target is not named `.declined`/`.no`/`.refuse*`, nor the `nz` target `.accepted`/`.yes*`; a local whose straight-line path returns `a` = 0 has no positive name (`busy`, `found`, `reached`, ...), nor one returning 1 a negative one (`none`, `idle`, `no*`, ...) (exceptions allow-listed) |
 | `mirrors` | 21 | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
+| `wram-ptrs` | 2552 | a `ld de/hl, wX` on a banked WRAMX symbol is not dereferenced (`[de]`/`[hl]`, before the register is rewritten) after a `wram_bank` selecting another bank, in straight-line source |
 
 ---
 
