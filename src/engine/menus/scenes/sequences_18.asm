@@ -322,7 +322,7 @@ TaskDrawObjectSprites_18:
 	pop bc ; $7b66
 	inc c ; $7b67
 	ld a, c ; $7b68
-	cp $10 ; $7b69
+	cp NUM_SCENEOBJS ; $7b69
 	jr nz, .objectLoop ; $7b6b
 	ret ; $7b6d
 TaskUpdateObjects_18:
@@ -338,11 +338,11 @@ TaskUpdateObjects_18:
 	add_hl_a ; $7b79
 	ld b, h ; $7b7e
 	ld c, l ; $7b7f
-	ld hl, $0005 ; $7b80
+	ld hl, SCENEOBJ_X_STEP ; $7b80
 	add hl, bc ; $7b83
 	ld a, [hl] ; $7b84
 	ld e, a ; $7b85
-	ld hl, $0001 ; $7b86
+	ld hl, SCENEOBJ_X ; $7b86
 	add hl, bc ; $7b89
 	ld a, [hl+] ; $7b8a
 	ld h, [hl] ; $7b8b
@@ -351,16 +351,16 @@ TaskUpdateObjects_18:
 	add hl, de ; $7b8f
 	ld d, h ; $7b90
 	ld e, l ; $7b91
-	ld hl, $0001 ; $7b92
+	ld hl, SCENEOBJ_X ; $7b92
 	add hl, bc ; $7b95
 	ld [hl], e ; $7b96
 	inc hl ; $7b97
 	ld [hl], d ; $7b98
-	ld hl, $0006 ; $7b99
+	ld hl, SCENEOBJ_Y_STEP ; $7b99
 	add hl, bc ; $7b9c
 	ld a, [hl] ; $7b9d
 	ld e, a ; $7b9e
-	ld hl, $0003 ; $7b9f
+	ld hl, SCENEOBJ_Y ; $7b9f
 	add hl, bc ; $7ba2
 	ld a, [hl+] ; $7ba3
 	ld h, [hl] ; $7ba4
@@ -369,19 +369,19 @@ TaskUpdateObjects_18:
 	add hl, de ; $7ba8
 	ld d, h ; $7ba9
 	ld e, l ; $7baa
-	ld hl, $0003 ; $7bab
+	ld hl, SCENEOBJ_Y ; $7bab
 	add hl, bc ; $7bae
 	ld [hl], e ; $7baf
 	inc hl ; $7bb0
 	ld [hl], d ; $7bb1
-	ld hl, $0009 ; $7bb2
+	ld hl, SCENEOBJ_CALLBACK ; $7bb2
 	add hl, bc ; $7bb5
 	ld a, [hl+] ; $7bb6
 	ld h, [hl] ; $7bb7
 	ld l, a ; $7bb8
 	jp hl ; $7bb9
 ObjectUpdateLoopTail_18:
-	ld hl, $0004 ; $7bba
+	ld hl, SCENEOBJ_Y + 1 ; $7bba
 	add hl, bc ; $7bbd
 	ld a, [hl] ; $7bbe
 	cp $c0 ; $7bbf
@@ -392,13 +392,13 @@ ObjectUpdateLoopTail_18:
 	pop bc ; $7bc6
 	inc c ; $7bc7
 	ld a, c ; $7bc8
-	cp $10 ; $7bc9
+	cp NUM_SCENEOBJS ; $7bc9
 	jr nz, TaskUpdateObjects_18.objectLoop ; $7bcb
 	ret ; $7bcd
 InitObjectSceneA:
 	push_wram_bank WRAM_SCREEN ; $7bce
 	ld hl, wScreenScratch ; $7bd7
-	ld bc, $0100 ; $7bda
+	ld bc, NUM_SCENEOBJS * SCENEOBJ_SIZE ; $7bda
 	call ClearBytes ; $7bdd
 	call PopulateObjectArrayA ; $7be0
 	call LoadObjectSceneATiles ; $7be3

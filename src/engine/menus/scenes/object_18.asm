@@ -7,23 +7,23 @@ PopulateObjectArrayA:
 	push bc ; $7c30
 	push de ; $7c31
 	push hl ; $7c32
-	ld bc, $000b ; $7c33
+	ld bc, SCENEOBJ_SPAWN_SIZE ; $7c33
 	call CopyMemoryBC ; $7c36
 	pop hl ; $7c39
 	pop de ; $7c3a
 	pop bc ; $7c3b
 	pop af ; $7c3c
 	push hl ; $7c3d
-	ld hl, $0010 ; $7c3e
+	ld hl, SCENEOBJ_SIZE ; $7c3e
 	add hl, de ; $7c41
 	ld d, h ; $7c42
 	ld e, l ; $7c43
 	pop hl ; $7c44
-	ld a, $0b ; $7c45
+	ld a, SCENEOBJ_SPAWN_SIZE ; $7c45
 	add_hl_a ; $7c47
 	inc c ; $7c4c
 	ld a, c ; $7c4d
-	cp $10 ; $7c4e
+	cp NUM_SCENEOBJS ; $7c4e
 	jr nz, .spawnLoop ; $7c50
 	ret ; $7c52
 ObjectArrayASpawnTable:
@@ -64,7 +64,7 @@ ObjectArrayASpawnTable:
 InitObjectSceneB:
 	push_wram_bank WRAM_SCREEN ; $7d03
 	ld hl, wScreenScratch ; $7d0c
-	ld bc, $0100 ; $7d0f
+	ld bc, NUM_SCENEOBJS * SCENEOBJ_SIZE ; $7d0f
 	call ClearBytes ; $7d12
 	call PopulateObjectArrayB ; $7d15
 	call LoadObjectSceneBTiles ; $7d18
@@ -97,23 +97,23 @@ PopulateObjectArrayB:
 	push bc ; $7d65
 	push de ; $7d66
 	push hl ; $7d67
-	ld bc, $000b ; $7d68
+	ld bc, SCENEOBJ_SPAWN_SIZE ; $7d68
 	call CopyMemoryBC ; $7d6b
 	pop hl ; $7d6e
 	pop de ; $7d6f
 	pop bc ; $7d70
 	pop af ; $7d71
 	push hl ; $7d72
-	ld hl, $0010 ; $7d73
+	ld hl, SCENEOBJ_SIZE ; $7d73
 	add hl, de ; $7d76
 	ld d, h ; $7d77
 	ld e, l ; $7d78
 	pop hl ; $7d79
-	ld a, $0b ; $7d7a
+	ld a, SCENEOBJ_SPAWN_SIZE ; $7d7a
 	add_hl_a ; $7d7c
 	inc c ; $7d81
 	ld a, c ; $7d82
-	cp $10 ; $7d83
+	cp NUM_SCENEOBJS ; $7d83
 	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
 ObjectArrayBSpawnTable:
@@ -158,17 +158,17 @@ ObjectArrayAUpdateCallback_18:
 	ld hl, ObjectArrayAWaveTable_18 ; $7e3d
 	add_hl_a ; $7e40
 	ld d, [hl] ; $7e45
-	ld hl, $0005 ; $7e46
+	ld hl, SCENEOBJ_X_STEP ; $7e46
 	add hl, bc ; $7e49
 	ld [hl], d ; $7e4a
-	ld hl, $0008 ; $7e4b
+	ld hl, SCENEOBJ_PHASE ; $7e4b
 	add hl, bc ; $7e4e
 	ld d, [hl] ; $7e4f
 	ldh a, [hVBlankCounter] ; $7e50
 	sub d ; $7e52
 	and $07 ; $7e53
 	jr nz, .done ; $7e55
-	ld hl, $0007 ; $7e57
+	ld hl, SCENEOBJ_TILE ; $7e57
 	add hl, bc ; $7e5a
 	ld a, [hl] ; $7e5b
 	add $04 ; $7e5c
@@ -187,7 +187,7 @@ ObjectArrayBUpdateCallback_18:
 	add c ; $7e8b
 	and $03 ; $7e8c
 	ld d, a ; $7e8e
-	ld hl, $0005 ; $7e8f
+	ld hl, SCENEOBJ_X_STEP ; $7e8f
 	add hl, bc ; $7e92
 	ld [hl], d ; $7e93
 	ldh a, [hVBlankCounter] ; $7e94
@@ -196,19 +196,19 @@ ObjectArrayBUpdateCallback_18:
 	ld hl, ObjectArrayBDriftTable_18 ; $7e99
 	add_hl_a ; $7e9c
 	ld d, [hl] ; $7ea1
-	ld hl, $0002 ; $7ea2
+	ld hl, SCENEOBJ_X + 1 ; $7ea2
 	add hl, bc ; $7ea5
 	ld a, [hl] ; $7ea6
 	add d ; $7ea7
 	ld [hl], a ; $7ea8
-	ld hl, $0008 ; $7ea9
+	ld hl, SCENEOBJ_PHASE ; $7ea9
 	add hl, bc ; $7eac
 	ld d, [hl] ; $7ead
 	ldh a, [hVBlankCounter] ; $7eae
 	sub d ; $7eb0
 	and $07 ; $7eb1
 	jr nz, .done ; $7eb3
-	ld hl, $0007 ; $7eb5
+	ld hl, SCENEOBJ_TILE ; $7eb5
 	add hl, bc ; $7eb8
 	ld d, [hl] ; $7eb9
 	ld a, d ; $7eba
@@ -218,6 +218,7 @@ ObjectArrayBUpdateCallback_18:
 	ld a, [hl] ; $7ec0
 	and $f0 ; $7ec1
 	or d ; $7ec3
+	; d, not a: the tile loses its high nibble
 	ld [hl], d ; $7ec4
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7ec5

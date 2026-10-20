@@ -125,7 +125,8 @@ NEXTU
 ; [8-bit] Base of the screen-local scratch block. Screens with no named
 ; variant use it as a working buffer: an object array (bank $18), a
 ; decompression staging area (banks $1b/$39), a cursor or mode byte
-; (banks $3b/$6b).
+; (banks $3b/$6b). The bank $18 ending-sequence array is NUM_SCENEOBJS
+; SCENEOBJ_SIZE-byte records (SCENEOBJ_* fields).
 wScreenScratch:: db
 ENDU
 
