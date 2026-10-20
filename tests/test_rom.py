@@ -106,7 +106,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\t(?:ld (?:de|hl|bc),|dw) \$[ab][0-9a-f]{3}\b"), 0)
 
     def test_copy_lengths_follow_their_blobs(self):
-        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 35)
+        self.assertEqual(count(r"^\tld c, \((?!WRAMX_END|[whs][A-Z])\w+ - \w+\) / 16 ;"), 37)
         n = count(r"^\tld b?c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 299)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
@@ -115,17 +115,29 @@ class Source(unittest.TestCase):
         have = set(re.findall(r'INCLUDE "data/(?:\w+/)+lz_(\w+)\.inc"', whole))
         self.assertEqual(used - have, set())
         self.assertGreaterEqual(count(r"^\tld c, \d+ ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 38)
-        # a VRAM copy's count is a size, a row count or a decimal tile count
+        # a VRAM copy's count is a size, a row count or a decimal tile count;
+        # a decimal count reading past its ROM source is a label span or
+        # carries a note naming the source's own tile count
+        size = {lab: int(n) for _, text in SRC for lab, n in re.findall(
+            r"^(\w+):\n(?:\t;[^\n]*\n)?\t[^\n]*; \$[0-9a-f]{4}, (\d+) bytes", text, re.M)}
         for name, text in SRC:
             lines = text.split("\n")
             for i, line in enumerate(lines):
                 if not re.match(r"\tcall QueueVRAMCopy\b", line):
                     continue
+                n = None
                 for prev in reversed(lines[max(0, i - 12):i]):
                     if re.match(r"[A-Za-z.]|\t(call|jp|jr|ret|farcall)\b", prev):
                         break
-                    if re.match(r"\tld b?c, ", prev):
+                    if n is None and re.match(r"\tld b?c, ", prev):
                         self.assertNotRegex(prev, r"\tld b?c, \$", name)
+                        n = prev
+                    src = re.match(r"\tld hl, (\w+) ;", prev)
+                    if n and src:
+                        c = re.match(r"\tld c, (\d+) ;", n)
+                        tiles = size.get(src[1], 1 << 20) // 16
+                        if c and int(c[1]) > tiles:
+                            self.assertIn(f"-- {src[1]}'s {tiles} tiles", n, name)
                         break
 
     def test_copy_lengths_follow_their_ram(self):

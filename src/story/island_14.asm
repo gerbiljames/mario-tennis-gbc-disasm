@@ -21,11 +21,11 @@ LoadIslandSkyEffectObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
 	ld de, vTiles0 tile $10 ; $73b6
-	ld c, 64 ; $73b9
+	ld c, 64 ; $73b9 -- IslandSkyTilesA_14's 16 tiles; the next copy overwrites the other 48
 	call QueueVRAMCopy ; $73bb
 	ld hl, IslandSkyTilesB_14 ; $73be
 	ld de, vTiles0 tile $20 ; $73c1
-	ld c, 48 ; $73c4
+	ld c, 48 ; $73c4 -- IslandSkyTilesB_14's 12 tiles, then 576 bytes of templates, code and tiles
 	call QueueVRAMCopy ; $73c6
 	ld hl, IslandSkyPalettes_14 ; $73c9
 	ld_obj_pals de, 1, 3 ; $73cc

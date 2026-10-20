@@ -32,7 +32,7 @@ LoadPlaneObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
 	ld de, vTiles0 + VRAM_BANK1 ; $5e85
-	ld c, 96 ; $5e88
+	ld c, (IslandObjTiles_14 - PlaneObjTiles_14) / 16 + 32 ; $5e88
 	call QueueVRAMCopy ; $5e8a
 	ld hl, IslandObjPalette_14 ; $5e8d
 	ld_obj_pals de, 0, 1 ; $5e90
@@ -290,7 +290,7 @@ LoadPlaneObjGfx2_14:
 	push_wram_bank WRAM_STAGING ; $6238
 	ld hl, IslandObjTiles_14 ; $6241
 	ld de, vTiles0 + VRAM_BANK1 ; $6244
-	ld c, 96 ; $6247
+	ld c, 96 ; $6247 -- IslandObjTiles_14's 64 tiles, then 512 bytes of template, palette and code
 	call QueueVRAMCopy ; $6249
 	ld hl, IslandObjPalette_14 ; $624c
 	ld_obj_pals de, 0, 1 ; $624f

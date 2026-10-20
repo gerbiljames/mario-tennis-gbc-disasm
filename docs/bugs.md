@@ -236,6 +236,11 @@ previous screen left. The chunks go to `$9200`, `$9400`, `$9600`, then `$8e00`
 — the last of four slices that would have covered `$8800`-`$8fff`, with the
 first three missing and the survivor's source label wrong.
 
+Bank `$14` over-reads the same way: `LoadPlaneObjGfx2_14` copies 96 tiles from
+the 64-tile `IslandObjTiles_14`, and `LoadIslandSkyEffectObjGfx_14` 48 from the
+12-tile `IslandSkyTilesB_14`, putting templates, palettes, code and other tiles into object
+tiles `$40`-`$5f` (VRAM bank 1) and `$2c`-`$4f`.
+
 ### Fifteen drill messages point past their text bank
 
 `DrillMessageTextIds_0b` (`$0b:$45c4`) maps a drill message id to a text id.

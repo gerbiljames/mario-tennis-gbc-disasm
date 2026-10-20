@@ -290,11 +290,11 @@ LoadMenuTilesB:
 	push hl ; $5079
 	ld hl, MenuFontTiles_01 ; $507a
 	ld de, vTiles2 tile $20 ; $507d
-	ld c, 96 ; $5080
+	ld c, (MenuFontFillTiles_01 - MenuFontTiles_01) / 16 ; $5080
 	call QueueVRAMCopy ; $5082
 	ld hl, MenuFontFillTiles_01 ; $5085
 	ld de, vTiles1 ; $5088
-	ld c, 96 ; $508b
+	ld c, (MenuFontPalettes_01 - MenuFontFillTiles_01) / 16 ; $508b
 	call QueueVRAMCopy ; $508d
 	pop hl ; $5090
 	pop de ; $5091
@@ -323,7 +323,7 @@ LoadMenuTilesBStaged:
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
 	ld de, vTiles1 tile $60 ; $50c6
-	ld c, 32 ; $50c9
+	ld c, 32 ; $50c9 -- MenuFontPalettes_01's 4 tiles, then 448 bytes of code and data
 	call QueueVRAMCopy ; $50cb
 	call AdvanceFrame ; $50ce
 	pop hl ; $50d1
