@@ -169,12 +169,12 @@ DrawMinigameSelectGrid6:
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $679b
 	call QueueVRAMCopy ; $679d
 	ret ; $67a0
-RunSavedDataSourceSelect:
+RunStatusSourceSelect:
 	sound BGM_MENU ; $67a1
 	ld hl, rIE ; $67a3
 	res B_IE_TIMER, [hl] ; $67a6
 	call BuildSaveSlotSummaries ; $67a8
-	call LoadSavedDataSourceGfx ; $67ab
+	call LoadStatusSourceGfx ; $67ab
 	farcall InitMenuBgScroll ; $67ae
 	ld b, $01 ; $67b1
 	ld c, $01 ; $67b3
@@ -184,12 +184,12 @@ RunSavedDataSourceSelect:
 	ld a, [wMenuSlideDirection] ; $67c1
 	ld b, a ; $67c4
 	farcall SavedDataPickerSlideIn ; $67c5
-	ld a, [wSavedDataMenuCursor] ; $67c8
+	ld a, [wStatusMenuCursor] ; $67c8
 	ld c, a ; $67cb
 	ld b, $03 ; $67cc
 	call SetMenuCursorFromIndex_3b ; $67ce
-	frame_task SavedDataSourceCursorSpriteTask ; $67d1
-	call DrawSavedDataSourceGrid ; $67d9
+	frame_task StatusSourceCursorSpriteTask ; $67d1
+	call DrawStatusSourceGrid ; $67d9
 	wram_bank WRAM_SCREEN ; $67dc
 .loop:
 	call AdvanceFrame ; $67e2
@@ -199,7 +199,7 @@ RunSavedDataSourceSelect:
 	or a ; $67ed
 	jr z, .checkMenuInputPressed ; $67ee
 	sound SFX_MENU_MOVE ; $67f0
-	call DrawSavedDataSourceGrid ; $67f2
+	call DrawStatusSourceGrid ; $67f2
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $67f5
 	bit PADB_A, a ; $67f8
@@ -248,7 +248,7 @@ RunSavedDataSourceSelect:
 	ld [wMenuSlideDirection], a ; $684b
 	ld c, $03 ; $684e
 	call GetMenuCursorIndex_3b ; $6850
-	ld [wSavedDataMenuCursor], a ; $6853
+	ld [wStatusMenuCursor], a ; $6853
 	ret ; $6856
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6857
@@ -261,7 +261,7 @@ RunSavedDataSourceSelect:
 	ld [wMenuSlideDirection], a ; $6868
 	ld a, $ff ; $686b
 	ret ; $686d
-LoadSavedDataSourceGfx:
+LoadStatusSourceGfx:
 	push_wram_bank WRAM_STAGING ; $686e
 	ld_slot hl, DataPtr_MarioFaceIconTiles ; $6877
 	ld de, wDecompBuffer ; $687a
@@ -303,28 +303,28 @@ LoadSavedDataSourceGfx:
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
-	ld b, TILEBLOCK_SavedDataSourceGfx0 ; $68f5
-	ld c, SavedDataSourceGfx0_SIZE / 16 ; $68f7
+	ld b, TILEBLOCK_StatusSourceGfx0 ; $68f5
+	ld c, StatusSourceGfx0_SIZE / 16 ; $68f7
 	ld de, vTiles0 + VRAM_BANK1 ; $68f9
 	farcall LoadCompressedTileBlock ; $68fc
 	call AdvanceFrame ; $68ff
-	ld b, TILEBLOCK_SavedDataSourceGfx1 ; $6902
-	ld c, SavedDataSourceGfx1_SIZE / 16 ; $6904
+	ld b, TILEBLOCK_StatusSourceGfx1 ; $6902
+	ld c, StatusSourceGfx1_SIZE / 16 ; $6904
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6906
 	farcall LoadCompressedTileBlock ; $6909
 	call AdvanceFrame ; $690c
-	ld b, TILEBLOCK_SavedDataSourceGfx2 ; $690f
-	ld c, SavedDataSourceGfx2_SIZE / 16 ; $6911
+	ld b, TILEBLOCK_StatusSourceGfx2 ; $690f
+	ld c, StatusSourceGfx2_SIZE / 16 ; $6911
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6913
 	farcall LoadCompressedTileBlock ; $6916
 	call AdvanceFrame ; $6919
-	ld b, TILEBLOCK_SavedDataSourceGfx3 ; $691c
-	ld c, SavedDataSourceGfx3_SIZE / 16 ; $691e
+	ld b, TILEBLOCK_StatusSourceGfx3 ; $691c
+	ld c, StatusSourceGfx3_SIZE / 16 ; $691e
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6920
 	farcall LoadCompressedTileBlock ; $6923
 	call AdvanceFrame ; $6926
-	ld b, TILEBLOCK_SavedDataSourceGfx5 ; $6929
-	ld c, SavedDataSourceGfx5_SIZE / 16 ; $692b
+	ld b, TILEBLOCK_StatusSourceGfx5 ; $6929
+	ld c, StatusSourceGfx5_SIZE / 16 ; $692b
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $692d
 	farcall LoadCompressedTileBlock ; $6930
 	call AdvanceFrame ; $6933
@@ -333,8 +333,8 @@ LoadSavedDataSourceGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $693a
 	farcall LoadCompressedTileBlock ; $693d
 	call AdvanceFrame ; $6940
-	ld b, TILEBLOCK_SavedDataSourceGfx4 ; $6943
-	ld c, SavedDataSourceGfx4_SIZE / 16 ; $6945
+	ld b, TILEBLOCK_StatusSourceGfx4 ; $6943
+	ld c, StatusSourceGfx4_SIZE / 16 ; $6945
 	ld de, vTiles0 ; $6947
 	farcall LoadCompressedTileBlock ; $694a
 	call AdvanceFrame ; $694d
@@ -343,7 +343,7 @@ LoadSavedDataSourceGfx:
 	farcall LoadIndexedPalette ; $6954
 	pop_wram_bank ; $6957
 	ret ; $695c
-Unused_3b_TableAfterLoadSavedDataSourceGfx:
+Unused_3b_TableAfterLoadStatusSourceGfx:
 	; $695d, 28 bytes (bytes:2)
 	db $62, $3c ; 0x00
 	db $64, $3c ; 0x02
@@ -423,16 +423,16 @@ Unused_3b_SlideMenuPanel_2:
 	or a ; $69d8
 	jr nz, .slideBackLoop ; $69d9
 	ret ; $69db
-SavedDataSourceCursorSpriteTask:
+StatusSourceCursorSpriteTask:
 	farcall TickMenuBgScroll ; $69dc
 	ld c, $03 ; $69df
 	call GetMenuCursorIndex_3b ; $69e1
 	push af ; $69e4
-	ld hl, SavedDataSourceCursorTileBases ; $69e5
+	ld hl, StatusSourceCursorTileBases ; $69e5
 	add_hl_a ; $69e8
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
-	ld hl, SavedDataSourceCursorPositions ; $69ef
+	ld hl, StatusSourceCursorPositions ; $69ef
 	add a ; $69f2
 	add_hl_a ; $69f3
 	ld a, [hl+] ; $69f8
@@ -440,7 +440,7 @@ SavedDataSourceCursorSpriteTask:
 	ld e, a ; $69fa
 	farcall ApplySpriteBobOffset ; $69fb
 	ld b, OAM_BANK1 ; $69fe
-	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate0 ; $6a00
+	ld hl, StatusSourceCursorSpriteTask_SpriteTemplate0 ; $6a00
 	push de ; $6a03
 	call QueueSpriteTemplate ; $6a04
 	pop de ; $6a07
@@ -448,11 +448,11 @@ SavedDataSourceCursorSpriteTask:
 	add hl, de ; $6a0b
 	ld d, h ; $6a0c
 	ld e, l ; $6a0d
-	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate1 ; $6a0e
+	ld hl, StatusSourceCursorSpriteTask_SpriteTemplate1 ; $6a0e
 	sprite_attr_tile OAM_BANK1, $70 ; $6a11
 	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18
-SavedDataSourceCursorSpriteTask_SpriteTemplate0:
+StatusSourceCursorSpriteTask_SpriteTemplate0:
 	; $6a19, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -463,18 +463,18 @@ SavedDataSourceCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SavedDataSourceCursorSpriteTask_SpriteTemplate1:
+StatusSourceCursorSpriteTask_SpriteTemplate1:
 	; $6a3a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-SavedDataSourceCursorPositions:
+StatusSourceCursorPositions:
 	; $6a43, 12 bytes (bytes:12)
 	db $38, $fc, $38, $2c, $38, $5c, $60, $0c, $60, $4d, $60, $3e ; 0x00
-SavedDataSourceCursorTileBases:
+StatusSourceCursorTileBases:
 	; $6a4f, 6 bytes (bytes:6)
 	db $00, $10, $20, $40, $30, $40 ; 0x00
-Unused_3b_SavedDataSourceCursorWideTemplate:
+Unused_3b_StatusSourceCursorWideTemplate:
 	; $6a55, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -487,12 +487,12 @@ Unused_3b_SavedDataSourceCursorWideTemplate:
 	oam_sprite $10, $48, $10, $00
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
-DrawSavedDataSourceGrid:
+DrawStatusSourceGrid:
 	wram_bank WRAM_SCREEN ; $6a7e
 	ld b, $00 ; $6a84
 	ld c, $00 ; $6a86
 .loop:
-	call FillSavedDataSourceCell ; $6a88
+	call FillStatusSourceCell ; $6a88
 	ld a, b ; $6a8b
 	inc a ; $6a8c
 	ld b, a ; $6a8d
@@ -502,11 +502,11 @@ DrawSavedDataSourceGrid:
 	call GetMenuCursorIndex_3b ; $6a94
 	ld b, a ; $6a97
 	ld c, $01 ; $6a98
-	call FillSavedDataSourceCell ; $6a9a
+	call FillStatusSourceCell ; $6a9a
 	ld c, $03 ; $6a9d
 	call GetMenuCursorIndex_3b ; $6a9f
 	cp $03 ; $6aa2
-	jr nc, .loadSavedDataSourceCellPalette ; $6aa4
+	jr nc, .loadStatusSourceCellPalette ; $6aa4
 	add a ; $6aa6
 	add a ; $6aa7
 	add a ; $6aa8
@@ -519,8 +519,8 @@ DrawSavedDataSourceGrid:
 	ld d, $04 ; $6ab7
 	farcall LoadIndexedPalette_18 ; $6ab9
 	jr .fillTilemapRect ; $6abc
-.loadSavedDataSourceCellPalette:
-	call LoadSavedDataSourceCellPalette ; $6abe
+.loadStatusSourceCellPalette:
+	call LoadStatusSourceCellPalette ; $6abe
 .fillTilemapRect:
 	wram_bank WRAM_SCREEN ; $6ac1
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6ac7
@@ -535,7 +535,7 @@ DrawSavedDataSourceGrid:
 	rect_size $12, $01 ; $6ae0
 	ld h, $20 ; $6ae4
 	farcall FillTilemapRect ; $6ae6
-	call DrawSavedDataSourceCaption ; $6ae9
+	call DrawStatusSourceCaption ; $6ae9
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $6aec
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $6aef
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $6af2
@@ -549,7 +549,7 @@ DrawSavedDataSourceGrid:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $6b08
 	call QueueVRAMCopy ; $6b0a
 	ret ; $6b0d
-FillSavedDataSourceCell:
+FillStatusSourceCell:
 	push af ; $6b0e
 	push bc ; $6b0f
 	push de ; $6b10
@@ -575,7 +575,7 @@ FillSavedDataSourceCell:
 	ld h, $0d ; $6b2b
 .fill:
 	push hl ; $6b2d
-	ld hl, FillSavedDataSourceCellTable ; $6b2e
+	ld hl, FillStatusSourceCellTable ; $6b2e
 	ld a, e ; $6b31
 	add a ; $6b32
 	add_hl_a ; $6b33
@@ -589,15 +589,15 @@ FillSavedDataSourceCell:
 	pop bc ; $6b41
 	pop af ; $6b42
 	ret ; $6b43
-FillSavedDataSourceCellTable:
+FillStatusSourceCellTable:
 	; $6b44, 10 bytes (ram_ptrs:3)
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; record 0
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 8 ; record 1
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; record 2
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 3 ; record 3
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 4
-LoadSavedDataSourceCellPalette:
-	ld hl, SavedDataSourceCellPalettePtrs ; $6b4e
+LoadStatusSourceCellPalette:
+	ld hl, StatusSourceCellPalettePtrs ; $6b4e
 	add a ; $6b51
 	add_hl_a ; $6b52
 	ld a, [hl+] ; $6b57
@@ -606,22 +606,22 @@ LoadSavedDataSourceCellPalette:
 	ld_bg_pals de, 4, 1 ; $6b5a
 	call LoadPaletteShadow ; $6b5d
 	ret ; $6b60
-SavedDataSourceCellPalettePtrs:
+StatusSourceCellPalettePtrs:
 	; $6b61, 18 bytes (records:2)
-	dw SavedDataSourceCellPalette0 ; record 0
-	dw SavedDataSourceCellPalette0 ; record 1
-	dw SavedDataSourceCellPalette0 ; record 2
-	dw SavedDataSourceCellPalette1 ; record 3
-	dw SavedDataSourceCellPalette0 ; record 4
-	dw SavedDataSourceCellPalette0 ; record 5
-	dw SavedDataSourceCellPalette0 ; record 6
-	dw SavedDataSourceCellPalette0 ; record 7
-	dw SavedDataSourceCellPalette0 ; record 8
-SavedDataSourceCellPalette0:
-	INCLUDE "data/engine/menus/main_menu/SavedDataSourceCellPalette0.asm" ; $6b73, 8 bytes (palettes)
-SavedDataSourceCellPalette1:
-	INCLUDE "data/engine/menus/main_menu/SavedDataSourceCellPalette1.asm" ; $6b7b, 8 bytes (palettes)
-DrawSavedDataSourceCaption:
+	dw StatusSourceCellPalette0 ; record 0
+	dw StatusSourceCellPalette0 ; record 1
+	dw StatusSourceCellPalette0 ; record 2
+	dw StatusSourceCellPalette1 ; record 3
+	dw StatusSourceCellPalette0 ; record 4
+	dw StatusSourceCellPalette0 ; record 5
+	dw StatusSourceCellPalette0 ; record 6
+	dw StatusSourceCellPalette0 ; record 7
+	dw StatusSourceCellPalette0 ; record 8
+StatusSourceCellPalette0:
+	INCLUDE "data/engine/menus/main_menu/StatusSourceCellPalette0.asm" ; $6b73, 8 bytes (palettes)
+StatusSourceCellPalette1:
+	INCLUDE "data/engine/menus/main_menu/StatusSourceCellPalette1.asm" ; $6b7b, 8 bytes (palettes)
+DrawStatusSourceCaption:
 	push_wram_bank WRAM_SCREEN ; $6b83
 	ld c, $03 ; $6b8c
 	call GetMenuCursorIndex_3b ; $6b8e
@@ -692,7 +692,7 @@ DrawSavedDataSourceCaption:
 	pop_wram_bank ; $6c08
 	ret ; $6c0d
 .emptySlot:
-	ld hl, Text_SavedDataNoDataInFile ; $6c0e
+	ld hl, Text_StatusNoDataInFile ; $6c0e
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6c11
 	ld c, $20 ; $6c14
 	farcall RenderTextToBuffer64 ; $6c16
@@ -700,13 +700,13 @@ DrawSavedDataSourceCaption:
 .compare:
 	cp $04 ; $6c1b
 	jr nz, .otherItem ; $6c1d
-	ld hl, Text_SavedDataN64TennisData ; $6c1f
+	ld hl, Text_StatusN64TennisData ; $6c1f
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6c22
 	ld c, $20 ; $6c25
 	farcall RenderTextToBuffer64 ; $6c27
 	jr .restore ; $6c2a
 .otherItem:
-	ld hl, Text_SavedDataMarioCharData ; $6c2c
+	ld hl, Text_StatusMarioCharData ; $6c2c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6c2f
 	ld c, $20 ; $6c32
 	farcall RenderTextToBuffer64 ; $6c34

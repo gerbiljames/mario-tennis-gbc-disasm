@@ -569,10 +569,10 @@ AwardCeremonyTilemap5:
 	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTilemap5.bin" ; $7466, 279 bytes
 AwardCeremonyAttrmap5:
 	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyAttrmap5.bin" ; $757d, 107 bytes
-N64TransferItemGfx4:
-	INCBIN "data/engine/menus/court_select/lz_N64TransferItemGfx4.bin" ; $75e8, 179 bytes
-N64TransferItemGfx5:
-	INCBIN "data/engine/menus/court_select/lz_N64TransferItemGfx5.bin" ; $769b, 183 bytes
-SavedDataSourceGfx5:
-	INCBIN "data/engine/menus/court_select/lz_SavedDataSourceGfx5.bin" ; $7752, 179 bytes
+GbDataItemGfx4:
+	INCBIN "data/engine/menus/court_select/lz_GbDataItemGfx4.bin" ; $75e8, 179 bytes
+GbDataItemGfx5:
+	INCBIN "data/engine/menus/court_select/lz_GbDataItemGfx5.bin" ; $769b, 183 bytes
+StatusSourceGfx5:
+	INCBIN "data/engine/menus/court_select/lz_StatusSourceGfx5.bin" ; $7752, 179 bytes
 	; $7805, 2043 bytes fill to bank end (linker-padded)

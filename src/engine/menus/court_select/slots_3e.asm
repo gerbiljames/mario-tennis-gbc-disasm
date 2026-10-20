@@ -39,9 +39,9 @@ DataPtr_AwardCeremonyTilemap5:
 	dw AwardCeremonyTilemap5 ; $403e
 DataPtr_AwardCeremonyAttrmap5:
 	dw AwardCeremonyAttrmap5 ; $4040
-DataPtr_N64TransferItemGfx4:
-	dw N64TransferItemGfx4 ; $4042
-DataPtr_N64TransferItemGfx5:
-	dw N64TransferItemGfx5 ; $4044
-DataPtr_SavedDataSourceGfx5:
-	dw SavedDataSourceGfx5 ; $4046
+DataPtr_GbDataItemGfx4:
+	dw GbDataItemGfx4 ; $4042
+DataPtr_GbDataItemGfx5:
+	dw GbDataItemGfx5 ; $4044
+DataPtr_StatusSourceGfx5:
+	dw StatusSourceGfx5 ; $4046

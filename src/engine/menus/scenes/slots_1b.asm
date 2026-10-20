@@ -19,7 +19,7 @@
 	farptr Unused_1b_RunDebugSaveDataFlow ; $4024
 	farptr Unused_1b_RunMinigameFlagsDebugScreen ; $4026
 	farptr RunMinigameLevelSelect ; $4028
-	farptr RunSavedDataTypeSelect ; $402a
+	farptr RunMarioCharDataTypeSelect ; $402a
 	farptr ShowMinigameDataScreen ; $402c
 DataPtr_ObjectSceneAGfx0:
 	dw ObjectSceneAGfx0 ; $402e

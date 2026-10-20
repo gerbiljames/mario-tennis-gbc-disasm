@@ -117,5 +117,5 @@ DataPtr_MinigameLevelSelectGfx2Alias15:
 	dw MinigameLevelSelectGfx2 ; $4074
 DataPtr_MinigameLevelSelectGfx2Alias16:
 	dw MinigameLevelSelectGfx2 ; $4076
-DataPtr_SavedDataTypeSelectGfx:
-	dw SavedDataTypeSelectGfx ; $4078
+DataPtr_MarioCharDataTypeSelectGfx:
+	dw MarioCharDataTypeSelectGfx ; $4078

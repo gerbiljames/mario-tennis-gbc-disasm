@@ -597,6 +597,6 @@ BracketExtraIcon2:
 	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon2.bin" ; $7aad, 74 bytes
 MinigameLevelSelectGfx2:
 	INCBIN "data/engine/menus/dictionary/lz_MinigameLevelSelectGfx2.bin" ; $7af7, 153 bytes
-SavedDataTypeSelectGfx:
-	INCBIN "data/engine/menus/dictionary/lz_SavedDataTypeSelectGfx.bin" ; $7b90, 185 bytes
+MarioCharDataTypeSelectGfx:
+	INCBIN "data/engine/menus/dictionary/lz_MarioCharDataTypeSelectGfx.bin" ; $7b90, 185 bytes
 	; $7c49, 951 bytes fill to bank end (linker-padded)

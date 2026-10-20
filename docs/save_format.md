@@ -73,7 +73,7 @@ Two button codes call it (`eventtest` targets `menu-cheat` and
   cleared by `ResetCheatCodeBuffer` when the menu opens) and on A compares
   the buffer with `CheatCodeEntryTable` (`$39:$6fc6`): 29 presses and three
   empty entries. `wCheatUnlockTriggered` stops it matching twice.
-* **Trophies screen** (Saved Data → a story slot → the third item):
+* **Trophies screen** (Status → a file → GB DATA → N64 TOURNAMENTS):
   `RunTrophiesScreen` zeroes `wTrophiesCheatRightPresses` and
   `wTrophiesCheatLeftPresses` (WRAM3 `$d900`), counts the presses, and on A with Select held
   `CheckTrophiesCheatCode` unlocks when they are `$0c` and `$22` -- Right 12

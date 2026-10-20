@@ -87,10 +87,10 @@ TileBlockPtrs_39:
 	tileblock SharedMenuGfx39 ; record 39
 	tileblock SharedMenuGfx40 ; record 40
 	tileblock SharedMenuGfx41 ; record 41
-	tileblock SavedDataSourceGfx0 ; record 42
-	tileblock SavedDataSourceGfx1 ; record 43
-	tileblock SavedDataSourceGfx2 ; record 44
-	tileblock SavedDataSourceGfx3 ; record 45
+	tileblock StatusSourceGfx0 ; record 42
+	tileblock StatusSourceGfx1 ; record 43
+	tileblock StatusSourceGfx2 ; record 44
+	tileblock StatusSourceGfx3 ; record 45
 	tileblock EraseSavedDataGfx0 ; record 46
 	tileblock EraseSavedDataGfx1 ; record 47
 	tileblock EraseSavedDataGfx2 ; record 48
@@ -104,16 +104,16 @@ TileBlockPtrs_39:
 	tileblock MinigameSelectGfx5 ; record 56
 	tileblock N64RecordTypeGfx0 ; record 57
 	tileblock N64RecordTypeGfx1 ; record 58
-	tileblock N64TransferItemGfx0 ; record 59
-	tileblock N64TransferItemGfx1 ; record 60
-	tileblock N64TransferItemGfx2 ; record 61
+	tileblock GbDataItemGfx0 ; record 59
+	tileblock GbDataItemGfx1 ; record 60
+	tileblock GbDataItemGfx2 ; record 61
 	tileblock MainMenuGfx5Alias4 ; record 62
 	tileblock SharedMenuGfx63 ; record 63
 	tileblock CourtSelectGfx0 ; record 64
 	tileblock SharedMenuGfx65 ; record 65
-	tileblock SavedDataSourceGfx4 ; record 66
+	tileblock StatusSourceGfx4 ; record 66
 	tileblock N64RecordTypeGfx2 ; record 67
-	tileblock N64TransferItemGfx3 ; record 68
+	tileblock GbDataItemGfx3 ; record 68
 	tileblock EraseDataConfirmGfx0 ; record 69
 	tileblock EraseDataConfirmGfx1 ; record 70
 	tileblock MinigameSelectGfx6 ; record 71
@@ -160,12 +160,12 @@ TileBlockPtrs_39:
 	tileblock MinigameLevelSelectGfx0 ; record 112
 	tileblock MinigameLevelSelectIconGfx ; record 113
 	tileblock MinigameLevelSelectGfx1 ; record 114
-	tileblock N64TransferItemGfx4 ; record 115
-	tileblock N64TransferItemGfx5 ; record 116
+	tileblock GbDataItemGfx4 ; record 115
+	tileblock GbDataItemGfx5 ; record 116
 	tileblock CharGridGfx2 ; record 117
-	tileblock SavedDataSourceGfx5 ; record 118
+	tileblock StatusSourceGfx5 ; record 118
 	tileblock MinigameLevelSelectGfx2Alias16 ; record 119
-	tileblock SavedDataTypeSelectGfx ; record 120
+	tileblock MarioCharDataTypeSelectGfx ; record 120
 	tileblock DigitFontTiles ; record 121
 SharedMenuGfx17:
 	INCBIN "data/engine/menus/common/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes

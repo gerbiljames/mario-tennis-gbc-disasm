@@ -398,11 +398,11 @@ MinigameLevelSelect3CursorPositions:
 MinigameLevelSelect3CursorTileBases:
 	; $715a, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
-RunSavedDataTypeSelect:
+RunMarioCharDataTypeSelect:
 	sound BGM_MENU ; $715d
 	ld hl, rIE ; $715f
 	res B_IE_TIMER, [hl] ; $7162
-	call LoadSavedDataTypeSelectGfx ; $7164
+	call LoadMarioCharDataTypeSelectGfx ; $7164
 	wram_bank WRAM_SCREEN ; $7167
 	ld a, [wMenuSlideDirection] ; $716d
 	ld b, a ; $7170
@@ -411,13 +411,13 @@ RunSavedDataTypeSelect:
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
 	farcall LoadMenuSpritePalettePair ; $717b
-	ld a, [wSavedDataTypeTabIndex] ; $717e
+	ld a, [wMarioCharDataTypeTabIndex] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
 	frame_task TickMenuBgScrollTask_1b ; $7187
-	frame_task DrawSavedDataTypeSelectCursor ; $718f
-	call RedrawSavedDataTypeSelect ; $7197
+	frame_task DrawMarioCharDataTypeSelectCursor ; $718f
+	call RedrawMarioCharDataTypeSelect ; $7197
 	wram_bank WRAM_SCREEN ; $719a
 .loop:
 	call AdvanceFrame ; $71a0
@@ -429,7 +429,7 @@ RunSavedDataTypeSelect:
 	or a ; $71af
 	jr z, .checkMenuInputPressed ; $71b0
 	sound SFX_MENU_MOVE ; $71b2
-	call RedrawSavedDataTypeSelect ; $71b4
+	call RedrawMarioCharDataTypeSelect ; $71b4
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $71b7
 	bit PADB_A, a ; $71ba
@@ -449,7 +449,7 @@ RunSavedDataTypeSelect:
 	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
 	call GetMenuCursorIndex_1b ; $71e0
-	ld [wSavedDataTypeTabIndex], a ; $71e3
+	ld [wMarioCharDataTypeTabIndex], a ; $71e3
 	ret ; $71e6
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $71e7
@@ -464,13 +464,13 @@ RunSavedDataTypeSelect:
 	wram_bank WRAM_COURT_PLANES ; $7201
 	ld a, $ff ; $7207
 	ret ; $7209
-LoadSavedDataTypeSelectGfx:
+LoadMarioCharDataTypeSelectGfx:
 	push_wram_bank WRAM_STAGING ; $720a
 	ld c, $00 ; $7213
 .loop:
 	ld a, c ; $7215
 	add a ; $7216
-	ld hl, SavedDataTypeLabelTilePtrs ; $7217
+	ld hl, MarioCharDataTypeLabelTilePtrs ; $7217
 	add_hl_a ; $721a
 	ld a, [hl+] ; $721f
 	ld h, [hl] ; $7220
@@ -485,7 +485,7 @@ LoadSavedDataTypeSelectGfx:
 	pop de ; $722d
 	pop bc ; $722e
 	pop af ; $722f
-	ld hl, SavedDataTypeLabelTileVramDests ; $7230
+	ld hl, MarioCharDataTypeLabelTileVramDests ; $7230
 	ld a, c ; $7233
 	add a ; $7234
 	add_hl_a ; $7235
@@ -525,8 +525,8 @@ LoadSavedDataTypeSelectGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $7277
 	farcall LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
-	ld b, TILEBLOCK_SavedDataTypeSelectGfx ; $7280
-	ld c, SavedDataTypeSelectGfx_SIZE / 16 ; $7282
+	ld b, TILEBLOCK_MarioCharDataTypeSelectGfx ; $7280
+	ld c, MarioCharDataTypeSelectGfx_SIZE / 16 ; $7282
 	ld de, vTiles0 ; $7284
 	farcall LoadCompressedTileBlock ; $7287
 	call AdvanceFrame ; $728a
@@ -535,11 +535,11 @@ LoadSavedDataTypeSelectGfx:
 	farcall LoadIndexedPalette ; $7291
 	pop_wram_bank ; $7294
 	ret ; $7299
-SavedDataTypeLabelTilePtrs:
+MarioCharDataTypeLabelTilePtrs:
 	; $729a, 2 slot words
 	dslot DataPtr_ExhibitionIconTiles ; record 0
 	dslot DataPtr_MushroomIconTiles ; record 1
-SavedDataTypeLabelTileVramDests:
+MarioCharDataTypeLabelTileVramDests:
 	; $729e, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1

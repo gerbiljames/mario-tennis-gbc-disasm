@@ -76,18 +76,18 @@ MatchSelectHandlersBHandler5:
 	call EnableLCD ; $52c6
 	script_fade_in 16 ; $52c9
 	jp RunTitleAndMainMenuLoop.menuLoop ; $52ce
-RunSavedDataMenuFlow:
-	farcall RunSavedDataSourceSelect ; $52d1
+RunStatusMenuFlow:
+	farcall RunStatusSourceSelect ; $52d1
 	cp $ff ; $52d4
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52d6
 	cp NUM_STORY_SLOTS ; $52d9
-	jp nc, .checkSavedData ; $52db
+	jp nc, .pickNonFileMenu ; $52db
 	ld [wCurrentStorySlot], a ; $52de
 	farcall CheckStorySlot ; $52e1
-.transferMenu:
-	farcall RunN64TransferItemSelect ; $52e4
+.gbDataMenu:
+	farcall RunGbDataItemSelect ; $52e4
 	cp $ff ; $52e7
-	jp z, RunSavedDataMenuFlow ; $52e9
+	jp z, RunStatusMenuFlow ; $52e9
 	or a ; $52ec
 	jr nz, .progressMenu ; $52ed
 	script_fade_out 16 ; $52ef
@@ -101,7 +101,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5308
 	ld a, MENUSLIDE_BACK ; $530d
 	ld [wMenuSlideDirection], a ; $530f
-	jp .transferMenu ; $5312
+	jp .gbDataMenu ; $5312
 .progressMenu:
 	cp $01 ; $5315
 	jr nz, .trophiesMenu ; $5317
@@ -117,7 +117,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5338
 	ld a, MENUSLIDE_BACK ; $533d
 	ld [wMenuSlideDirection], a ; $533f
-	jp .transferMenu ; $5342
+	jp .gbDataMenu ; $5342
 .trophiesMenu:
 	cp $02 ; $5345
 	jr nz, .equipmentMenu ; $5347
@@ -131,7 +131,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5360
 	ld a, MENUSLIDE_BACK ; $5365
 	ld [wMenuSlideDirection], a ; $5367
-	jp .transferMenu ; $536a
+	jp .gbDataMenu ; $536a
 .equipmentMenu:
 	farcall RunRacketShoesChoiceMenu ; $536d
 	cp $00 ; $5370
@@ -140,7 +140,7 @@ RunSavedDataMenuFlow:
 	jr z, .shoesSelect ; $5376
 	ld a, MENUSLIDE_BACK ; $5378
 	ld [wMenuSlideDirection], a ; $537a
-	jp .transferMenu ; $537d
+	jp .gbDataMenu ; $537d
 .racketSelect:
 	script_fade_out 16 ; $5380
 	call WaitFadeEnd ; $5385
@@ -169,15 +169,15 @@ RunSavedDataMenuFlow:
 	ld a, MENUSLIDE_BACK ; $53cc
 	ld [wMenuSlideDirection], a ; $53ce
 	jp .equipmentMenu ; $53d1
-.checkSavedData:
+.pickNonFileMenu:
 	cp $03 ; $53d4
 	jr nz, .n64RecordMenu ; $53d6
-.savedDataMenu:
-	farcall RunSavedDataTypeSelect ; $53d8
+.marioCharDataMenu:
+	farcall RunMarioCharDataTypeSelect ; $53d8
 	cp $ff ; $53db
-	jr nz, .savedDataOption ; $53dd
-	jp RunSavedDataMenuFlow ; $53df
-.savedDataOption:
+	jr nz, .marioCharDataOption ; $53dd
+	jp RunStatusMenuFlow ; $53df
+.marioCharDataOption:
 	or a ; $53e2
 	jr nz, .minigameData ; $53e3
 	script_fade_out 16 ; $53e5
@@ -192,7 +192,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5404
 	ld a, MENUSLIDE_BACK ; $5409
 	ld [wMenuSlideDirection], a ; $540b
-	jp .savedDataMenu ; $540e
+	jp .marioCharDataMenu ; $540e
 .minigameData:
 	script_fade_out 16 ; $5411
 	call WaitFadeEnd ; $5416
@@ -206,11 +206,11 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5430
 	ld a, MENUSLIDE_BACK ; $5435
 	ld [wMenuSlideDirection], a ; $5437
-	jp .savedDataMenu ; $543a
+	jp .marioCharDataMenu ; $543a
 .n64RecordMenu:
 	farcall RunN64RecordTypeSelect ; $543d
 	cp $ff ; $5440
-	jp z, RunSavedDataMenuFlow ; $5442
+	jp z, RunStatusMenuFlow ; $5442
 	or a ; $5445
 	jr nz, .n64RecordOption1 ; $5446
 	script_fade_out 16 ; $5448
@@ -223,7 +223,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $545f
 	ld a, MENUSLIDE_BACK ; $5464
 	ld [wMenuSlideDirection], a ; $5466
-	jp .checkSavedData ; $5469
+	jp .pickNonFileMenu ; $5469
 .n64RecordOption1:
 	cp $01 ; $546c
 	jr nz, .ringShotData ; $546e
@@ -237,7 +237,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5487
 	ld a, MENUSLIDE_BACK ; $548c
 	ld [wMenuSlideDirection], a ; $548e
-	jp .checkSavedData ; $5491
+	jp .pickNonFileMenu ; $5491
 .ringShotData:
 	farcall RunN64RingShotData ; $5494
 	call DisableLCDSafely ; $5497
@@ -247,7 +247,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $54a3
 	ld a, MENUSLIDE_BACK ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
-	jp .checkSavedData ; $54ad
+	jp .pickNonFileMenu ; $54ad
 MatchSelectHandlersBHandler7:
 	script_fade_out 16 ; $54b0
 	call WaitFadeEnd ; $54b5

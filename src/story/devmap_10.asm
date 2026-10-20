@@ -341,8 +341,8 @@ RunTitleAndMainMenuLoop:
 	farcall InitDefaultMatchSettings ; $4f3c
 	xor a ; $4f3f
 	ld [wMainMenuCursor], a ; $4f40
-	ld [wSavedDataMenuCursor], a ; $4f43
-	ld [wN64TransferMenuCursor], a ; $4f46
+	ld [wStatusMenuCursor], a ; $4f43
+	ld [wGbDataMenuCursor], a ; $4f46
 	ld [wSubMenuCursor], a ; $4f49
 	ld [wMatchFormatDoubles], a ; $4f4c
 	ld [wMatchFormatGames], a ; $4f4f
@@ -363,8 +363,8 @@ RunTitleAndMainMenuLoop:
 .menuLoop:
 	xor a ; $4f7c
 	ld [wUnusedMenuCursor], a ; $4f7d
-	ld [wSavedDataMenuCursor], a ; $4f80
-	ld [wN64TransferMenuCursor], a ; $4f83
+	ld [wStatusMenuCursor], a ; $4f80
+	ld [wGbDataMenuCursor], a ; $4f83
 	ld [wSubMenuCursor], a ; $4f86
 	ld [wMatchFormatDoubles], a ; $4f89
 	ld [wMatchFormatGames], a ; $4f8c
@@ -399,7 +399,7 @@ MatchSelectHandlersB_10:
 	dw MatchSelectHandlersBHandler3 ; record 3
 	dw RunMinigameModeFlow ; record 4
 	dw MatchSelectHandlersBHandler5 ; record 5
-	dw RunSavedDataMenuFlow ; record 6
+	dw RunStatusMenuFlow ; record 6
 	dw MatchSelectHandlersBHandler7 ; record 7
 	dw RunEraseSavedDataFlow ; record 8
 MatchSelectHandlersBHandler0:

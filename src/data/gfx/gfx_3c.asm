@@ -62,14 +62,14 @@ DataPtr_SharedMenuGfx40:
 	dw SharedMenuGfx40 ; $403c
 DataPtr_SharedMenuGfx41:
 	dw SharedMenuGfx41 ; $403e
-DataPtr_SavedDataSourceGfx0:
-	dw SavedDataSourceGfx0 ; $4040
-DataPtr_SavedDataSourceGfx1:
-	dw SavedDataSourceGfx1 ; $4042
-DataPtr_SavedDataSourceGfx2:
-	dw SavedDataSourceGfx2 ; $4044
-DataPtr_SavedDataSourceGfx3:
-	dw SavedDataSourceGfx3 ; $4046
+DataPtr_StatusSourceGfx0:
+	dw StatusSourceGfx0 ; $4040
+DataPtr_StatusSourceGfx1:
+	dw StatusSourceGfx1 ; $4042
+DataPtr_StatusSourceGfx2:
+	dw StatusSourceGfx2 ; $4044
+DataPtr_StatusSourceGfx3:
+	dw StatusSourceGfx3 ; $4046
 DataPtr_EraseSavedDataGfx0:
 	dw EraseSavedDataGfx0 ; $4048
 DataPtr_EraseSavedDataGfx1:
@@ -188,14 +188,14 @@ SharedMenuGfx40:
 	INCBIN "data/gfx/lz_SharedMenuGfx40.bin" ; $62d9, 182 bytes
 SharedMenuGfx41:
 	INCBIN "data/gfx/lz_SharedMenuGfx41.bin" ; $638f, 177 bytes
-SavedDataSourceGfx0:
-	INCBIN "data/gfx/lz_SavedDataSourceGfx0.bin" ; $6440, 143 bytes
-SavedDataSourceGfx1:
-	INCBIN "data/gfx/lz_SavedDataSourceGfx1.bin" ; $64cf, 156 bytes
-SavedDataSourceGfx2:
-	INCBIN "data/gfx/lz_SavedDataSourceGfx2.bin" ; $656b, 157 bytes
-SavedDataSourceGfx3:
-	INCBIN "data/gfx/lz_SavedDataSourceGfx3.bin" ; $6608, 176 bytes
+StatusSourceGfx0:
+	INCBIN "data/gfx/lz_StatusSourceGfx0.bin" ; $6440, 143 bytes
+StatusSourceGfx1:
+	INCBIN "data/gfx/lz_StatusSourceGfx1.bin" ; $64cf, 156 bytes
+StatusSourceGfx2:
+	INCBIN "data/gfx/lz_StatusSourceGfx2.bin" ; $656b, 157 bytes
+StatusSourceGfx3:
+	INCBIN "data/gfx/lz_StatusSourceGfx3.bin" ; $6608, 176 bytes
 EraseSavedDataGfx0:
 	INCBIN "data/gfx/lz_EraseSavedDataGfx0.bin" ; $66b8, 174 bytes
 EraseSavedDataGfx1:

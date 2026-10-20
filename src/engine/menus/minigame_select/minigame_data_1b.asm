@@ -1,45 +1,45 @@
 TickMenuBgScrollTask_1b:
 	farcall TickMenuBgScroll ; $72a4
 	ret ; $72a7
-DrawSavedDataTypeSelectCursor:
+DrawMarioCharDataTypeSelectCursor:
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex_1b ; $72aa
 	or a ; $72ad
-	jr nz, .drawSavedDataCursorOption1 ; $72ae
-	call DrawSavedDataCursorOption0 ; $72b0
+	jr nz, .drawMarioCharDataTypeCursorOption1 ; $72ae
+	call DrawMarioCharDataTypeCursorOption0 ; $72b0
 	ret ; $72b3
-.drawSavedDataCursorOption1:
-	call DrawSavedDataCursorOption1 ; $72b4
+.drawMarioCharDataTypeCursorOption1:
+	call DrawMarioCharDataTypeCursorOption1 ; $72b4
 	ret ; $72b7
-DrawSavedDataCursorOption0:
+DrawMarioCharDataTypeCursorOption0:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
 	ld_xy de, $0c, $50 ; $72bc
 	farcall ApplySpriteBobOffset ; $72bf
-	ld hl, DrawSavedDataCursorOption0_SpriteTemplate ; $72c2
+	ld hl, DrawMarioCharDataTypeCursorOption0_SpriteTemplate ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld_xy de, $24, $48 ; $72cc
 	farcall ApplySpriteBobOffset ; $72cf
-	ld hl, DrawSavedDataCursor_SpriteTemplate ; $72d2
+	ld hl, DrawMarioCharDataTypeCursor_SpriteTemplate ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
-DrawSavedDataCursorOption1:
+DrawMarioCharDataTypeCursorOption1:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
 	ld_xy de, $50, $50 ; $72dd
 	farcall ApplySpriteBobOffset ; $72e0
-	ld hl, DrawSavedDataCursorOption1_SpriteTemplate ; $72e3
+	ld hl, DrawMarioCharDataTypeCursorOption1_SpriteTemplate ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld_xy de, $6c, $48 ; $72ed
 	farcall ApplySpriteBobOffset ; $72f0
-	ld hl, DrawSavedDataCursor_SpriteTemplate ; $72f3
+	ld hl, DrawMarioCharDataTypeCursor_SpriteTemplate ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
-DrawSavedDataCursorOption0_SpriteTemplate:
+DrawMarioCharDataTypeCursorOption0_SpriteTemplate:
 	; $72fa, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -50,7 +50,7 @@ DrawSavedDataCursorOption0_SpriteTemplate:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawSavedDataCursorOption1_SpriteTemplate:
+DrawMarioCharDataTypeCursorOption1_SpriteTemplate:
 	; $731b, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -62,19 +62,19 @@ DrawSavedDataCursorOption1_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-DrawSavedDataCursor_SpriteTemplate:
+DrawMarioCharDataTypeCursor_SpriteTemplate:
 	; $7340, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 ; Three $50/$0c, $50/$54, $50/$5c byte pairs -- one row, three columns
-; -- followed by $00 $10 $20, in front of RedrawSavedDataTypeSelect.
+; -- followed by $00 $10 $20, in front of RedrawMarioCharDataTypeSelect.
 ; Reads as three cursor positions plus three tile ids for that screen's
 ; three options, but nothing references it.
-Unused_1b_SavedDataCursorCells:
+Unused_1b_MarioCharDataTypeCursorCells:
 	; $7349, 9 bytes (bytes:9)
 	db $50, $0c, $50, $54, $50, $5c, $00, $10, $20 ; 0x00
-RedrawSavedDataTypeSelect:
+RedrawMarioCharDataTypeSelect:
 	wram_bank WRAM_SCREEN ; $7352
 	ld b, $00 ; $7358
 	ld c, ATTRRECT_INACTIVE ; $735a
@@ -92,35 +92,35 @@ RedrawSavedDataTypeSelect:
 	call SetSelectPanelAttrRect ; $736e
 	ld c, $03 ; $7371
 	call GetMenuCursorIndex_1b ; $7373
-	call LoadSavedDataTypePalette ; $7376
+	call LoadMarioCharDataTypePalette ; $7376
 	call ClearMinigameLevelDescriptionRow ; $7379
-	call DrawSavedDataTypeDescription ; $737c
+	call DrawMarioCharDataTypeDescription ; $737c
 	call FlushLevelSelectTextRows ; $737f
 	ret ; $7382
-DrawSavedDataTypeDescription:
+DrawMarioCharDataTypeDescription:
 	push_wram_bank WRAM_SCREEN ; $7383
 	ld c, $03 ; $738c
 	call GetMenuCursorIndex_1b ; $738e
 	ld b, a ; $7391
-	ld hl, SavedDataTypeDescriptionTable ; $7392
+	ld hl, MarioCharDataTypeDescriptionTable ; $7392
 	add a ; $7395
 	add_hl_a ; $7396
 	ld a, [hl+] ; $739b
 	ld d, [hl] ; $739c
 	ld e, a ; $739d
 	ld a, b ; $739e
-	ld hl, Text_SavedDataExhibitionData ; $739f
+	ld hl, Text_MarioCharDataExhibitionData ; $739f
 	add_hl_a ; $73a2
 	ld c, $20 ; $73a7
 	farcall RenderTextToBuffer64 ; $73a9
 	pop_wram_bank ; $73ac
 	ret ; $73b1
-SavedDataTypeDescriptionTable:
+MarioCharDataTypeDescriptionTable:
 	; $73b2, 4 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
-LoadSavedDataTypePalette:
-	ld hl, SavedDataTypePalettePtrs ; $73b6
+LoadMarioCharDataTypePalette:
+	ld hl, MarioCharDataTypePalettePtrs ; $73b6
 	add a ; $73b9
 	add_hl_a ; $73ba
 	ld a, [hl+] ; $73bf
@@ -129,14 +129,14 @@ LoadSavedDataTypePalette:
 	ld_bg_pals de, 4, 1 ; $73c2
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
-SavedDataTypePalettePtrs:
+MarioCharDataTypePalettePtrs:
 	; $73c9, 4 bytes (records:2)
-	dw SavedDataTypePalette0 ; record 0
-	dw SavedDataTypePalette1 ; record 1
-SavedDataTypePalette0:
-	INCLUDE "data/engine/menus/minigame_select/SavedDataTypePalette0.asm" ; $73cd, 8 bytes (palettes)
-SavedDataTypePalette1:
-	INCLUDE "data/engine/menus/minigame_select/SavedDataTypePalette1.asm" ; $73d5, 8 bytes (palettes)
+	dw MarioCharDataTypePalette0 ; record 0
+	dw MarioCharDataTypePalette1 ; record 1
+MarioCharDataTypePalette0:
+	INCLUDE "data/engine/menus/minigame_select/MarioCharDataTypePalette0.asm" ; $73cd, 8 bytes (palettes)
+MarioCharDataTypePalette1:
+	INCLUDE "data/engine/menus/minigame_select/MarioCharDataTypePalette1.asm" ; $73d5, 8 bytes (palettes)
 ShowMinigameDataScreen:
 	sound BGM_STATUS_SCREEN ; $73dd
 	call DisableLCDSafely ; $73df

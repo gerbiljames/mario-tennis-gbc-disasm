@@ -7,10 +7,10 @@
 	farptr RunMainMenu ; $400c
 	farptr RunMatchFormatSelect ; $400e
 	farptr RunMinigameSelect ; $4010
-	farptr RunSavedDataSourceSelect ; $4012
+	farptr RunStatusSourceSelect ; $4012
 	farptr RunEraseSavedDataSelect ; $4014
 	farptr RunN64RecordTypeSelect ; $4016
-	farptr RunN64TransferItemSelect ; $4018
+	farptr RunGbDataItemSelect ; $4018
 	farptr PrintNumberRightAligned ; $401a
 	farptr ShowTournamentBracket ; $401c
 	farptr ThreeChoiceSlideIn ; $401e

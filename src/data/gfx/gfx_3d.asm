@@ -6,12 +6,12 @@ DataPtr_SetItemsIconTiles:
 	dw SetItemsIconTiles ; $4004
 DataPtr_ClearStatusIconTiles:
 	dw ClearStatusIconTiles ; $4006
-DataPtr_N64TransferItemGfx0:
-	dw N64TransferItemGfx0 ; $4008
-DataPtr_N64TransferItemGfx1:
-	dw N64TransferItemGfx1 ; $400a
-DataPtr_N64TransferItemGfx2:
-	dw N64TransferItemGfx2 ; $400c
+DataPtr_GbDataItemGfx0:
+	dw GbDataItemGfx0 ; $4008
+DataPtr_GbDataItemGfx1:
+	dw GbDataItemGfx1 ; $400a
+DataPtr_GbDataItemGfx2:
+	dw GbDataItemGfx2 ; $400c
 DataPtr_Erase64IconTiles:
 	dw Erase64IconTiles ; $400e
 DataPtr_EraseAllIconTiles:
@@ -32,12 +32,12 @@ DataPtr_CourtSelectGfx0:
 	dw CourtSelectGfx0 ; $401e
 DataPtr_SharedMenuGfx65:
 	dw SharedMenuGfx65 ; $4020
-DataPtr_SavedDataSourceGfx4:
-	dw SavedDataSourceGfx4 ; $4022
+DataPtr_StatusSourceGfx4:
+	dw StatusSourceGfx4 ; $4022
 DataPtr_N64RecordTypeGfx2:
 	dw N64RecordTypeGfx2 ; $4024
-DataPtr_N64TransferItemGfx3:
-	dw N64TransferItemGfx3 ; $4026
+DataPtr_GbDataItemGfx3:
+	dw GbDataItemGfx3 ; $4026
 DataPtr_EraseDataConfirmGfx0:
 	dw EraseDataConfirmGfx0 ; $4028
 DataPtr_EraseDataConfirmGfx1:
@@ -116,12 +116,12 @@ SetItemsIconTiles:
 	INCBIN "data/gfx/lz_SetItemsIconTiles.bin" ; $4271, 256 bytes
 ClearStatusIconTiles:
 	INCBIN "data/gfx/lz_ClearStatusIconTiles.bin" ; $4371, 246 bytes
-N64TransferItemGfx0:
-	INCBIN "data/gfx/lz_N64TransferItemGfx0.bin" ; $4467, 180 bytes
-N64TransferItemGfx1:
-	INCBIN "data/gfx/lz_N64TransferItemGfx1.bin" ; $451b, 195 bytes
-N64TransferItemGfx2:
-	INCBIN "data/gfx/lz_N64TransferItemGfx2.bin" ; $45de, 164 bytes
+GbDataItemGfx0:
+	INCBIN "data/gfx/lz_GbDataItemGfx0.bin" ; $4467, 180 bytes
+GbDataItemGfx1:
+	INCBIN "data/gfx/lz_GbDataItemGfx1.bin" ; $451b, 195 bytes
+GbDataItemGfx2:
+	INCBIN "data/gfx/lz_GbDataItemGfx2.bin" ; $45de, 164 bytes
 Erase64IconTiles:
 	INCBIN "data/gfx/lz_Erase64IconTiles.bin" ; $4682, 218 bytes
 EraseAllIconTiles:
@@ -134,12 +134,12 @@ CourtSelectGfx0:
 	INCBIN "data/gfx/lz_CourtSelectGfx0.bin" ; $499e, 183 bytes
 SharedMenuGfx65:
 	INCBIN "data/gfx/lz_SharedMenuGfx65.bin" ; $4a55, 167 bytes
-SavedDataSourceGfx4:
-	INCBIN "data/gfx/lz_SavedDataSourceGfx4.bin" ; $4afc, 145 bytes
+StatusSourceGfx4:
+	INCBIN "data/gfx/lz_StatusSourceGfx4.bin" ; $4afc, 145 bytes
 N64RecordTypeGfx2:
 	INCBIN "data/gfx/lz_N64RecordTypeGfx2.bin" ; $4b8d, 176 bytes
-N64TransferItemGfx3:
-	INCBIN "data/gfx/lz_N64TransferItemGfx3.bin" ; $4c3d, 144 bytes
+GbDataItemGfx3:
+	INCBIN "data/gfx/lz_GbDataItemGfx3.bin" ; $4c3d, 144 bytes
 EraseDataConfirmGfx0:
 	INCBIN "data/gfx/lz_EraseDataConfirmGfx0.bin" ; $4ccd, 202 bytes
 EraseDataConfirmGfx1:

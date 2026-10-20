@@ -75,11 +75,11 @@ wCheatCodeLength:: db
 ; [8-bit] Cell the main-menu cursor was last on, so the menu reopens there; RunMainMenu restores it with SetMenuCursorFromIndex_3b and saves it on exit. Cleared with the other saved cursors on a new game
 wMainMenuCursor:: db
 
-; [8-bit] Saved cursor cell for the saved-data source menu (RunSavedDataSourceSelect)
-wSavedDataMenuCursor:: db
+; [8-bit] Saved cursor cell for the Status menu's file/MARIO CHARACTERS/N64 DATA picker (RunStatusSourceSelect)
+wStatusMenuCursor:: db
 
-; [8-bit] Saved cursor cell for the N64 transfer item menu (RunN64TransferItemSelect)
-wN64TransferMenuCursor:: db
+; [8-bit] Saved cursor cell for the Status -> file -> GB DATA submenu (RunGbDataItemSelect)
+wGbDataMenuCursor:: db
 
 ; [8-bit] Saved cursor cell shared by the N64 record-type menu and the two court-select menus in bank $3e
 wSubMenuCursor:: db
@@ -98,8 +98,8 @@ wUnusedMenuCursor:: db
 ; [8-bit] Tab the racket/shoes choice menu was left on, so reopening it puts the cursor back
 wRacketShoesTabIndex:: db
 
-; [8-bit] The same for the saved-data type select
-wSavedDataTypeTabIndex:: db
+; [8-bit] The same for the Status -> MARIO CHARACTERS exhibition/mini-game data choice (RunMarioCharDataTypeSelect)
+wMarioCharDataTypeTabIndex:: db
 
 ; [8-bit] Window handle of bank $1a's menu code, from CreateMenuWindowFromText or CreateWindow; passed to Unused_05_RunMenuSelectionShared, CloseWindow, WriteStringToWindow and GetWindowStructPtr
 wPauseMenuWindowId:: db

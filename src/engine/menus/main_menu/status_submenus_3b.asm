@@ -467,11 +467,11 @@ DrawN64RecordTypeCaption:
 	farcall RenderTextToBuffer64 ; $74b6
 	pop_wram_bank ; $74b9
 	ret ; $74be
-RunN64TransferItemSelect:
+RunGbDataItemSelect:
 	sound BGM_MENU ; $74bf
 	ld hl, rIE ; $74c1
 	res B_IE_TIMER, [hl] ; $74c4
-	call LoadN64TransferItemGfx ; $74c6
+	call LoadGbDataItemGfx ; $74c6
 	wram_bank WRAM_SCREEN ; $74c9
 	ld a, [wMenuSlideDirection] ; $74cf
 	ld b, a ; $74d2
@@ -480,12 +480,12 @@ RunN64TransferItemSelect:
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
 	farcall LoadMenuSpritePalettePair ; $74dd
-	ld a, [wN64TransferMenuCursor] ; $74e0
+	ld a, [wGbDataMenuCursor] ; $74e0
 	ld c, a ; $74e3
 	ld b, $02 ; $74e4
 	call SetMenuCursorFromIndex_3b ; $74e6
-	frame_task N64TransferItemCursorSpriteTask ; $74e9
-	call DrawN64TransferItemGrid ; $74f1
+	frame_task GbDataItemCursorSpriteTask ; $74e9
+	call DrawGbDataItemGrid ; $74f1
 	wram_bank WRAM_SCREEN ; $74f4
 .loop:
 	call AdvanceFrame ; $74fa
@@ -497,7 +497,7 @@ RunN64TransferItemSelect:
 	or a ; $7509
 	jr z, .checkMenuInputPressed ; $750a
 	sound SFX_MENU_MOVE ; $750c
-	call DrawN64TransferItemGrid ; $750e
+	call DrawGbDataItemGrid ; $750e
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7511
 	bit PADB_A, a ; $7514
@@ -516,7 +516,7 @@ RunN64TransferItemSelect:
 	ld [wMenuSlideDirection], a ; $752f
 	ld c, $02 ; $7532
 	call GetMenuCursorIndex_3b ; $7534
-	ld [wN64TransferMenuCursor], a ; $7537
+	ld [wGbDataMenuCursor], a ; $7537
 	ret ; $753a
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $753b
@@ -529,13 +529,13 @@ RunN64TransferItemSelect:
 	ld [wMenuSlideDirection], a ; $754c
 	ld a, $ff ; $754f
 	ret ; $7551
-LoadN64TransferItemGfx:
+LoadGbDataItemGfx:
 	push_wram_bank WRAM_STAGING ; $7552
 	ld c, $00 ; $755b
 .loop:
 	ld a, c ; $755d
 	add a ; $755e
-	ld hl, N64TransferItemLabelTilePtrs ; $755f
+	ld hl, GbDataItemLabelTilePtrs ; $755f
 	add_hl_a ; $7562
 	ld a, [hl+] ; $7567
 	ld h, [hl] ; $7568
@@ -550,7 +550,7 @@ LoadN64TransferItemGfx:
 	pop de ; $7575
 	pop bc ; $7576
 	pop af ; $7577
-	ld hl, N64TransferItemLabelTileVramDests ; $7578
+	ld hl, GbDataItemLabelTileVramDests ; $7578
 	ld a, c ; $757b
 	add a ; $757c
 	add_hl_a ; $757d
@@ -575,23 +575,23 @@ LoadN64TransferItemGfx:
 	ld a, c ; $759c
 	cp $04 ; $759d
 	jr nz, .loop ; $759f
-	ld b, TILEBLOCK_N64TransferItemGfx0 ; $75a1
-	ld c, N64TransferItemGfx0_SIZE / 16 ; $75a3
+	ld b, TILEBLOCK_GbDataItemGfx0 ; $75a1
+	ld c, GbDataItemGfx0_SIZE / 16 ; $75a3
 	ld de, vTiles0 + VRAM_BANK1 ; $75a5
 	farcall LoadCompressedTileBlock ; $75a8
 	call AdvanceFrame ; $75ab
-	ld b, TILEBLOCK_N64TransferItemGfx4 ; $75ae
-	ld c, N64TransferItemGfx4_SIZE / 16 ; $75b0
+	ld b, TILEBLOCK_GbDataItemGfx4 ; $75ae
+	ld c, GbDataItemGfx4_SIZE / 16 ; $75b0
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $75b2
 	farcall LoadCompressedTileBlock ; $75b5
 	call AdvanceFrame ; $75b8
-	ld b, TILEBLOCK_N64TransferItemGfx1 ; $75bb
-	ld c, N64TransferItemGfx1_SIZE / 16 ; $75bd
+	ld b, TILEBLOCK_GbDataItemGfx1 ; $75bb
+	ld c, GbDataItemGfx1_SIZE / 16 ; $75bd
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $75bf
 	farcall LoadCompressedTileBlock ; $75c2
 	call AdvanceFrame ; $75c5
-	ld b, TILEBLOCK_N64TransferItemGfx2 ; $75c8
-	ld c, N64TransferItemGfx2_SIZE / 16 ; $75ca
+	ld b, TILEBLOCK_GbDataItemGfx2 ; $75c8
+	ld c, GbDataItemGfx2_SIZE / 16 ; $75ca
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $75cc
 	farcall LoadCompressedTileBlock ; $75cf
 	call AdvanceFrame ; $75d2
@@ -600,8 +600,8 @@ LoadN64TransferItemGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $75d9
 	farcall LoadCompressedTileBlock ; $75dc
 	call AdvanceFrame ; $75df
-	ld b, TILEBLOCK_N64TransferItemGfx3 ; $75e2
-	ld c, N64TransferItemGfx3_SIZE / 16 ; $75e4
+	ld b, TILEBLOCK_GbDataItemGfx3 ; $75e2
+	ld c, GbDataItemGfx3_SIZE / 16 ; $75e4
 	ld de, vTiles0 ; $75e6
 	farcall LoadCompressedTileBlock ; $75e9
 	call AdvanceFrame ; $75ec
@@ -610,19 +610,19 @@ LoadN64TransferItemGfx:
 	farcall LoadIndexedPalette ; $75f3
 	pop_wram_bank ; $75f6
 	ret ; $75fb
-N64TransferItemLabelTilePtrs:
+GbDataItemLabelTilePtrs:
 	; $75fc, 4 slot words
 	dslot DataPtr_CharacterDataIconTiles ; record 0
 	dslot DataPtr_ClearStatusIconTiles ; record 1
 	dslot DataPtr_N64TournamentsIconTiles ; record 2
 	dslot DataPtr_SetItemsIconTiles ; record 3
-N64TransferItemLabelTileVramDests:
+GbDataItemLabelTileVramDests:
 	; $7604, 8 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
 	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
 	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
-DrawN64TransferItemGrid:
+DrawGbDataItemGrid:
 	wram_bank WRAM_SCREEN ; $760c
 	ld b, $00 ; $7612
 	ld c, ATTRRECT_INACTIVE ; $7614
@@ -640,7 +640,7 @@ DrawN64TransferItemGrid:
 	farcall SetCourtSelect4TabAttrRect ; $7628
 	ld c, $02 ; $762b
 	call GetMenuCursorIndex_3b ; $762d
-	call LoadN64TransferItemCellPalette ; $7630
+	call LoadGbDataItemCellPalette ; $7630
 	wram_bank WRAM_SCREEN ; $7633
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7639
 	rect_size $14, $01 ; $763c
@@ -654,7 +654,7 @@ DrawN64TransferItemGrid:
 	rect_size $12, $01 ; $7652
 	ld h, $20 ; $7656
 	farcall FillTilemapRect ; $7658
-	call DrawN64TransferItemCaption ; $765b
+	call DrawGbDataItemCaption ; $765b
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $765e
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $7661
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $7664
@@ -668,8 +668,8 @@ DrawN64TransferItemGrid:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $767a
 	call QueueVRAMCopy ; $767c
 	ret ; $767f
-LoadN64TransferItemCellPalette:
-	ld hl, N64TransferItemCellPalettePtrs ; $7680
+LoadGbDataItemCellPalette:
+	ld hl, GbDataItemCellPalettePtrs ; $7680
 	add a ; $7683
 	add_hl_a ; $7684
 	ld a, [hl+] ; $7689
@@ -678,47 +678,47 @@ LoadN64TransferItemCellPalette:
 	ld_bg_pals de, 4, 1 ; $768c
 	call LoadPaletteShadow ; $768f
 	ret ; $7692
-N64TransferItemCellPalettePtrs:
+GbDataItemCellPalettePtrs:
 	; $7693, 18 bytes (records:2)
-	dw N64TransferItemCellPalette0 ; record 0
-	dw N64TransferItemCellPalette3 ; record 1
-	dw N64TransferItemCellPalette1 ; record 2
-	dw N64TransferItemCellPalette2 ; record 3
-	dw N64TransferItemCellPalette2 ; record 4
-	dw N64TransferItemCellPalette0 ; record 5
-	dw N64TransferItemCellPalette0 ; record 6
-	dw N64TransferItemCellPalette0 ; record 7
-	dw N64TransferItemCellPalette0 ; record 8
-N64TransferItemCellPalette0:
-	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette0.asm" ; $76a5, 8 bytes (palettes)
-N64TransferItemCellPalette1:
-	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette1.asm" ; $76ad, 8 bytes (palettes)
-N64TransferItemCellPalette2:
-	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette2.asm" ; $76b5, 8 bytes (palettes)
-N64TransferItemCellPalette3:
-	INCLUDE "data/engine/menus/main_menu/N64TransferItemCellPalette3.asm" ; $76bd, 8 bytes (palettes)
-DrawN64TransferItemCaption:
+	dw GbDataItemCellPalette0 ; record 0
+	dw GbDataItemCellPalette3 ; record 1
+	dw GbDataItemCellPalette1 ; record 2
+	dw GbDataItemCellPalette2 ; record 3
+	dw GbDataItemCellPalette2 ; record 4
+	dw GbDataItemCellPalette0 ; record 5
+	dw GbDataItemCellPalette0 ; record 6
+	dw GbDataItemCellPalette0 ; record 7
+	dw GbDataItemCellPalette0 ; record 8
+GbDataItemCellPalette0:
+	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette0.asm" ; $76a5, 8 bytes (palettes)
+GbDataItemCellPalette1:
+	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette1.asm" ; $76ad, 8 bytes (palettes)
+GbDataItemCellPalette2:
+	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette2.asm" ; $76b5, 8 bytes (palettes)
+GbDataItemCellPalette3:
+	INCLUDE "data/engine/menus/main_menu/GbDataItemCellPalette3.asm" ; $76bd, 8 bytes (palettes)
+DrawGbDataItemCaption:
 	push_wram_bank WRAM_SCREEN ; $76c5
 	ld c, $02 ; $76ce
 	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3
-	ld hl, Text_N64CharPartnerData ; $76d4
+	ld hl, Text_GbDataCharPartnerData ; $76d4
 	add_hl_a ; $76d7
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $76dc
 	ld c, $20 ; $76df
 	farcall RenderTextToBuffer64 ; $76e1
 	pop_wram_bank ; $76e4
 	ret ; $76e9
-N64TransferItemCursorSpriteTask:
+GbDataItemCursorSpriteTask:
 	farcall TickMenuBgScroll ; $76ea
 	ld c, $02 ; $76ed
 	call GetMenuCursorIndex_3b ; $76ef
 	push af ; $76f2
-	ld hl, N64TransferItemCursorTileBases ; $76f3
+	ld hl, GbDataItemCursorTileBases ; $76f3
 	add_hl_a ; $76f6
 	ld c, [hl] ; $76fb
 	pop af ; $76fc
-	ld hl, N64TransferItemCursorPositions ; $76fd
+	ld hl, GbDataItemCursorPositions ; $76fd
 	add a ; $7700
 	add_hl_a ; $7701
 	ld a, [hl+] ; $7706
@@ -726,7 +726,7 @@ N64TransferItemCursorSpriteTask:
 	ld e, a ; $7708
 	farcall ApplySpriteBobOffset ; $7709
 	ld b, OAM_BANK1 ; $770c
-	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate0 ; $770e
+	ld hl, GbDataItemCursorSpriteTask_SpriteTemplate0 ; $770e
 	push de ; $7711
 	call QueueSpriteTemplate ; $7712
 	pop de ; $7715
@@ -734,11 +734,11 @@ N64TransferItemCursorSpriteTask:
 	add hl, de ; $7719
 	ld d, h ; $771a
 	ld e, l ; $771b
-	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate1 ; $771c
+	ld hl, GbDataItemCursorSpriteTask_SpriteTemplate1 ; $771c
 	sprite_attr_tile OAM_BANK1, $70 ; $771f
 	call QueueSpriteTemplate ; $7723
 	ret ; $7726
-N64TransferItemCursorSpriteTask_SpriteTemplate0:
+GbDataItemCursorSpriteTask_SpriteTemplate0:
 	; $7727, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -749,14 +749,14 @@ N64TransferItemCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-N64TransferItemCursorSpriteTask_SpriteTemplate1:
+GbDataItemCursorSpriteTask_SpriteTemplate1:
 	; $7748, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-N64TransferItemCursorPositions:
+GbDataItemCursorPositions:
 	; $7751, 8 bytes (bytes:8)
 	db $38, $14, $38, $4c, $60, $14, $60, $4a ; 0x00
-N64TransferItemCursorTileBases:
+GbDataItemCursorTileBases:
 	; $7759, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
