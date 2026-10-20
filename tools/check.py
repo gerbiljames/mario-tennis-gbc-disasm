@@ -46,7 +46,8 @@ after a real defect broke it:
             a branch that decides nothing, which is always either a deleted
             guarded block or an inverted condition (14 exist; the list is
             curated so a new one shows up as a failure)
-  dma       every ROM label handed straight to a VRAM DMA routine is
+  dma       every ROM label handed to a VRAM DMA routine, directly or as an
+            entry of a dw table the code reads the source from, is
             preceded by `ds ALIGN[4]`: the DMA ignores a source's low four
             bits, so an edit that unaligns one garbles what it copies
   literals  no ROM address is written as a number where the source moves:
@@ -1243,13 +1244,16 @@ _DMA_ROUTINES = frozenset({"QueueVRAMCopy", "StartVRAMDMATransfer", "StartVRAMDM
 
 
 def check_dma_alignment(fail):
-    """A label passed as the source of a VRAM DMA must be declared aligned."""
-    aligned, lines_of = set(), []
+    """A label passed as the source of a VRAM DMA must be declared aligned,
+    whether handed over directly (`ld hl, X` / `ld_hl_indexed X`) or read
+    from a dw table (`ld_hl_indexed T` / `ld a, [hl+]` / `ld h, [hl]` /
+    `ld l, a`), where every entry counts."""
+    aligned, lines_of, tables = set(), [], {}
     _drop_unresolved(_DMA_ROUTINES, "_DMA_ROUTINES", "dma", fail)
     for h in holders():
         lines = bank_lines(h)[0]
         lines_of.append((bank_of(h), lines))
-        pending = False
+        pending, words = False, None
         for line in lines:
             if line.strip() == "ds ALIGN[4]":
                 pending = True
@@ -1258,23 +1262,47 @@ def check_dma_alignment(fail):
             if m:
                 if pending:
                     aligned.add(m.group(1))
+                words = tables.setdefault(m.group(1), [])
                 continue
-            if line.strip() and not line.lstrip().startswith(";"):
+            code = line.split(";")[0].strip()
+            if words is not None and code.startswith("dw "):
+                words += [w.strip() for w in code[3:].split(",")]
+            if code:
                 pending = False
+
+    def entry_aligned(word):
+        m = re.fullmatch(r"([A-Z]\w*)(?: tile [$\w]+| \+ (\$[0-9a-fA-F]+|\d+))?", word)
+        if not m or m.group(1) not in aligned:
+            return False
+        return m.group(2) is None or int(m.group(2).replace("$", "0x"), 0) % 16 == 0
+
+    deref = ["ld a, [hl+]", "ld h, [hl]", "ld l, a"]
     n = 0
     for bank, lines in lines_of:
         for i, line in enumerate(lines):
-            m = re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)?(?: ;|$)", line)
+            m = (re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)?(?: ;|$)", line)
+                 or re.match(r"\tld_hl_indexed ([A-Z]\w*)(?: ;|$)", line))
             if not m or m.group(1).startswith(("w", "v", "h")):
                 continue
-            for nxt in lines[i + 1:i + 6]:
-                c = re.match(r"\t(?:call|farcall|jp) (\w+)", nxt)
+            following = [nxt.split(";")[0].strip() for nxt in lines[i + 1:i + 10]]
+            via_table = line.startswith("\tld_hl_indexed") and following[:3] == deref
+            for nxt in following[3:] if via_table else following[:5]:
+                c = re.match(r"(?:call|farcall|jp) (\w+)", nxt)
                 if c:
                     if c.group(1) in _DMA_ROUTINES:
                         n += 1
-                        if m.group(1) not in aligned:
-                            fail("dma", f"${bank:02x}: {m.group(1)} is a DMA source "
-                                        "without ds ALIGN[4] before it")
+                        if not via_table:
+                            if m.group(1) not in aligned:
+                                fail("dma", f"${bank:02x}: {m.group(1)} is a DMA source "
+                                            "without ds ALIGN[4] before it")
+                        elif not tables.get(m.group(1)):
+                            fail("dma", f"${bank:02x}: DMA source table {m.group(1)} has no dw entries")
+                        else:
+                            for word in tables[m.group(1)]:
+                                if not entry_aligned(word):
+                                    fail("dma", f"${bank:02x}: {m.group(1)} entry {word} is a DMA "
+                                                "source without ds ALIGN[4] before it (or a "
+                                                "non-multiple-of-16 offset)")
                     break
     return n
 
