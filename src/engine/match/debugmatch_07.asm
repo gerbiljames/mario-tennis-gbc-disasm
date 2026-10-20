@@ -95,10 +95,10 @@ Unused_07_ResolveTargetModePoint:
 	farcall UpdatePointStats ; $5edc
 	farcall AwardPoint ; $5edf
 	ld a, [wPlayer1PointsWon] ; $5ee2
-	ld b, $01 ; $5ee5
+	ld b, DIGITGFX_NUMERALS ; $5ee5
 	farcall LoadPlayer1PointsDigitGfx ; $5ee7
 	ld a, [wPlayer2PointsWon] ; $5eea
-	ld b, $01 ; $5eed
+	ld b, DIGITGFX_NUMERALS ; $5eed
 	farcall LoadPlayer2PointsDigitGfx ; $5eef
 	farcall StepMatchFrame ; $5ef2
 	farcall StartPointEndReactions ; $5ef5

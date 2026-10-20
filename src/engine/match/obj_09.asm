@@ -8,7 +8,7 @@ UpdatePointDigitsDisplay:
 	jr nz, .loadPlayer1Digit ; $4044
 	ld a, $05 ; $4046
 .loadPlayer1Digit:
-	ld b, $00 ; $4048
+	ld b, DIGITGFX_TENNIS_CALLS ; $4048
 	call LoadPlayer1PointsDigitGfx ; $404a
 	ld a, [wPlayer1PointsWon] ; $404d
 	cp $04 ; $4050
@@ -16,7 +16,7 @@ UpdatePointDigitsDisplay:
 	jr nz, .loadPlayer2Digit ; $4055
 	ld a, $05 ; $4057
 .loadPlayer2Digit:
-	ld b, $00 ; $4059
+	ld b, DIGITGFX_TENNIS_CALLS ; $4059
 	call LoadPlayer2PointsDigitGfx ; $405b
 	ret ; $405e
 .tiebreakDigits:
@@ -26,7 +26,7 @@ UpdatePointDigitsDisplay:
 	jr nz, .loadPlayer1TiebreakDigit ; $4067
 	ld a, $08 ; $4069
 .loadPlayer1TiebreakDigit:
-	ld b, $01 ; $406b
+	ld b, DIGITGFX_NUMERALS ; $406b
 	call LoadPlayer1PointsDigitGfx ; $406d
 	ld a, [wPlayer1PointsWon] ; $4070
 	cp $07 ; $4073
@@ -34,7 +34,7 @@ UpdatePointDigitsDisplay:
 	jr nz, .loadPlayer2TiebreakDigit ; $4078
 	ld a, $08 ; $407a
 .loadPlayer2TiebreakDigit:
-	ld b, $01 ; $407c
+	ld b, DIGITGFX_NUMERALS ; $407c
 	call LoadPlayer2PointsDigitGfx ; $407e
 	ret ; $4081
 GetPointScoreForDisplay:

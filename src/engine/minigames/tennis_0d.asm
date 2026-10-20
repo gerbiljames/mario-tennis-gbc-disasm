@@ -17,7 +17,7 @@ PlayMinigameCountdown:
 	ld a, $03 ; $48e3
 .loop:
 	push af ; $48e5
-	ld b, $01 ; $48e6
+	ld b, DIGITGFX_NUMERALS ; $48e6
 	ld de, vTiles0 tile $20 ; $48e8
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee

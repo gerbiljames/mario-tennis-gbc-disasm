@@ -37,19 +37,19 @@ PrepareScoreboardGfx:
 	cp MATCHCONTEXT_MINIGAME ; $496d
 	jr z, .minigame ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
-	ld b, $01 ; $4974
+	ld b, DIGITGFX_NUMERALS ; $4974
 	ld de, vTiles0 tile $70 ; $4976
 	farcall LoadScoreDigitGfx ; $4979
 	ld a, [wPlayer1SetsWon] ; $497c
-	ld b, $01 ; $497f
+	ld b, DIGITGFX_NUMERALS ; $497f
 	ld de, vTiles0 tile $68 ; $4981
 	farcall LoadScoreDigitGfx ; $4984
 	ld a, [wPlayer2GamesWon] ; $4987
-	ld b, $01 ; $498a
+	ld b, DIGITGFX_NUMERALS ; $498a
 	ld de, vTiles0 tile $74 ; $498c
 	farcall LoadScoreDigitGfx ; $498f
 	ld a, [wPlayer2SetsWon] ; $4992
-	ld b, $01 ; $4995
+	ld b, DIGITGFX_NUMERALS ; $4995
 	ld de, vTiles0 tile $6c ; $4997
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
