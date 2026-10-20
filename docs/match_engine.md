@@ -584,8 +584,8 @@ match-relevant fields:
 | Address | Symbol | Notes |
 |---|---|---|
 | `$df00`/`$df03`/`$df06` | `wCharPosX` / `wCharPosDepth` / `wCharPosHeight` | 24-bit |
-| `$df09` | `wCharServeRole` | 0 server, 1 receiver, 2/3 partners, `$09` slot unused |
-| `$df0a` | `wCharCourtPos` | bit 1 = end, bit 0 = lateral half |
+| `$df09` | `wCharServeRole` | `SERVEROLE_*`: 0 server, 1 receiver, 2/3 their partners, `$09` slot unused |
+| `$df0a` | `wCharCourtPos` | `COURTPOS_*`: bit 1 = far end, bit 0 = left half |
 | `$df0b` | `wCharIndex` | 0-3 |
 | `$df0c`-`$df0e` | `wCharBaseFacing` / `wCharFacingDesired` / `wCharFacingShown` | angle bytes |
 | `$df0f` | `wCharFlags` | below |

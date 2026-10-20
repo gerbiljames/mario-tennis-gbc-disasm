@@ -25,12 +25,12 @@ DebugDrawColorComponents:
 	push de ; $6971
 	ld h, $00 ; $6972
 	ld l, a ; $6974
-	ld de, wDebugMenuWindowId ; $6975
+	ld de, wDebugColorRedDigits ; $6975
 	ld a, $03 ; $6978
 	call FormatDecimalNumber ; $697a
 	ld h, $00 ; $697d
 	ld l, b ; $697f
-	ld de, wDebugWarpCursorRow ; $6980
+	ld de, wDebugColorGreenDigits ; $6980
 	ld a, $03 ; $6983
 	call FormatDecimalNumber ; $6985
 	ld h, $00 ; $6988
@@ -42,11 +42,11 @@ DebugDrawColorComponents:
 	ld a, e ; $6994
 	add a ; $6995
 	add e ; $6996
-	ld_hl_indexed wDebugMenuWindowId ; $6997
+	ld_hl_indexed wDebugColorRedDigits ; $6997
 	ld [hl], $0d ; $699e
 	xor a ; $69a0
 	ld [wDebugColorDigitsEnd], a ; $69a1
-	ld hl, wDebugMenuWindowId ; $69a4
+	ld hl, wDebugColorRedDigits ; $69a4
 	ld_cell de, $01, $02 ; $69a7
 	ld a, [wDebugColorEditorWindowId] ; $69aa
 	call WriteStringToWindow ; $69ad

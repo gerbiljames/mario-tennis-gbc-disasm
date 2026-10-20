@@ -1158,7 +1158,11 @@ KNOWN_RAW_IDS = {
 }
 # Data rows whose values are ids: a macro's argument by position, and tables
 # by label or by the kind their header comment names.
-RAW_ID_MACRO_ARGS = {("story_location", 0): "STORYLOC_"}
+RAW_ID_MACRO_ARGS = {
+    ("story_location", 0): "STORYLOC_",
+    **{("court_positions", k): "COURTPOS_" for k in range(4)},
+    **{("court_positions", k): "SERVEROLE_" for k in range(4, 8)},
+}
 RAW_ID_TABLE_KINDS = {"save_flag_ids": "SAVEFLAG_", "flag numbers": "FLAG_"}
 RAW_ID_TABLES = {
     "MinigameSelectMenuTable": "MINIGAME_",
@@ -1530,7 +1534,7 @@ def _raw_data_ids(seen):
 _PAD_SOURCE_RE = re.compile(r"ldh? ([abcdehl]), \[(?:hInput(?:Pressed|RisingEdge|RepeatButtons)|wCharInputBits)\]")
 _PAD_BRANCH_RE = re.compile(r"(jr|jp) (?:(?:nz|z|nc|c), )?([\w.]+)")
 _PAD_WRITE_RE = re.compile(r"(?:ldh?|inc|dec|swap|rlc?|rrc?|sla|sra|srl) ([abcdehl])\b|"
-                           r"(?:and|or|xor|add|adc|sub|sbc|cpl)\b()|pop (af|bc|de|hl)|(?:push_)?wram_bank \w+()")
+                           r"(?:and|or|xor|add|adc|sub|sbc|cpl|rlca|rrca|rla|rra)\b()|pop (af|bc|de|hl)|(?:push_)?wram_bank \w+()")
 # Raw bit tests on a joypad byte left as numbers: (routine, bit).
 KNOWN_RAW_PAD_BITS = set()
 
@@ -1597,11 +1601,18 @@ def _raw_pad_bits(fail):
 
 # Bit-flag bytes whose bits are a constant family: every bit/set/res on the
 # byte (in a register loaded from it, through hl pointing at it, or on a
-# register stored into it) names its bit.
+# register stored into it) names its bit, and an and/or/xor mask on a loaded
+# value is a name of the family.
 FLAG_BYTES = {
     "wCharBallReachFlags": "BALLREACHB_",
     "wCharFlags": "CHARB_",
     "wExpScreenBusyFlags": "EXPBUSYB_",
+    "wTennisDictFlags": "TDICTFLAGB_",
+    "wMessageSpeed": "MSGSPEEDB_",
+    "wCharCourtPos": "COURTPOSB_",
+    "wServingCharCourtPos": "COURTPOSB_",
+    "wPrevCourtPos": "COURTPOSB_",
+    "wCharServeRole": "SERVEROLEB_",
 }
 _FLAG_NAMES = "|".join(FLAG_BYTES)
 _FLAG_LOAD_RE = re.compile(rf"ldh? ([abcdehl]), \[({_FLAG_NAMES})\]")
@@ -1652,6 +1663,10 @@ def _raw_flag_bits(fail):
                     where = w
                     judge(op, FLAG_BYTES[m.group(1)])
                 continue
+            if (m := re.fullmatch(r"(?:and|or|xor) (.+)", ins)) and "a" in state and m.group(1) not in _REGS8:
+                n += 1
+                if not m.group(1).startswith(state["a"].split("B_")[0]):
+                    fail("raw-ids", f"{where}: {owner} mask {m.group(1)} on a {state['a']}* byte -- a name?")
             if m := _FLAG_BIT_RE.fullmatch(ins):
                 if m.group(3) in state:
                     judge(m.group(2), state[m.group(3)])

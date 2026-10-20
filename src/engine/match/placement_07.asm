@@ -412,7 +412,7 @@ AddPlayerMomentumToShot:
 	sra h ; $5385
 	rr l ; $5387
 	ld a, [wCharCourtPos] ; $5389
-	and $02 ; $538c
+	and COURTPOSF_FAR ; $538c
 	jr nz, .store ; $538e
 	neg_hl ; $5390
 .store:

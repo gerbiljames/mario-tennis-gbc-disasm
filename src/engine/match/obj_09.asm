@@ -123,7 +123,7 @@ SpawnGameScoreDisplayObjs:
 	ld b, a ; $4140
 	wram_bank WRAM_CHAR0 ; $4141
 	ld a, [wCharCourtPos] ; $4147
-	and $02 ; $414a
+	and COURTPOSF_FAR ; $414a
 	or b ; $414c
 	ld b, a ; $414d
 	wram_bank WRAM_ACTORS ; $414e
@@ -217,7 +217,7 @@ SpawnServeIndicatorObjs:
 	ret ; $4273
 .player2Indicator:
 	ld a, [wServingCharCourtPos] ; $4274
-	and $02 ; $4277
+	and COURTPOSF_FAR ; $4277
 	ret nz ; $4279
 	ld hl, wObjSlot0 + 7 ; $427a
 	ld a, [hl] ; $427d

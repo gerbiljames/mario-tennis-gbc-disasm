@@ -342,7 +342,7 @@ CharInputHandler1_08:
 	and a ; $7877
 	jr z, .singlesTable ; $7878
 	ld a, [wCharServeRole] ; $787a
-	and $02 ; $787d
+	and SERVEROLEF_PARTNER ; $787d
 	jp z, .baselinerTable ; $787f
 	jumptable [wCharState] ; $7882
 	dw AiPhaseNoop ; $7886 jumptable

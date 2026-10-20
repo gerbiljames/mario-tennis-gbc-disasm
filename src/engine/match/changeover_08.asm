@@ -98,12 +98,12 @@ GetCharBaseCourtPosition:
 	ld l, c ; $60ab
 	ld h, b ; $60ac
 	ld a, [wCharCourtPos] ; $60ad
-	and $02 ; $60b0
+	and COURTPOSF_FAR ; $60b0
 	jr z, .checkSide ; $60b2
 	neg_de ; $60b4
 .checkSide:
 	ld a, [wCharCourtPos] ; $60ba
-	and $01 ; $60bd
+	and COURTPOSF_LEFT ; $60bd
 	jr z, .done ; $60bf
 	neg_hl ; $60c1
 .done:
@@ -130,7 +130,7 @@ GetCharChangeoverPosition:
 	ld l, c ; $60eb
 	ld h, b ; $60ec
 	ld a, [wCharCourtPos] ; $60ed
-	and $02 ; $60f0
+	and COURTPOSF_FAR ; $60f0
 	jr z, .checkFlip ; $60f2
 	neg_de ; $60f4
 .checkFlip:
@@ -221,7 +221,7 @@ ResetCameraForServe:
 	ret ; $6198
 GetServeCameraTarget:
 	ld a, [wServingCharCourtPos] ; $6199
-	and $02 ; $619c
+	and COURTPOSF_FAR ; $619c
 	ld de, $fe80 ; $619e
 	jr z, .done ; $61a1
 	ld de, $f880 ; $61a3

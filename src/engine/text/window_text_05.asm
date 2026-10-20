@@ -356,7 +356,7 @@ ApplyMessageSpeed:
 	push af ; $57e7
 	push_wram_bank WRAM_TEXT ; $57e8
 	ld a, [wMessageSpeed] ; $57f1
-	bit 7, a ; $57f4
+	bit MSGSPEEDB_INSTANT, a ; $57f4
 	jr z, .checkFast ; $57f6
 	xor a ; $57f8
 	ld [wTextRedrawGuard], a ; $57f9
@@ -368,7 +368,7 @@ ApplyMessageSpeed:
 	ld [wTextRedrawGuard], a ; $5803
 	jr .restoreBank ; $5806
 .checkMedium:
-	cp $01 ; $5808
+	cp MSGSPEED_NORMAL ; $5808
 	jr nz, .slow ; $580a
 	ld a, $02 ; $580c
 	ld [wTextRedrawGuard], a ; $580e

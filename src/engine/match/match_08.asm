@@ -266,7 +266,7 @@ HandleBallHitEvent:
 	ld a, BANNER_POWER_SERVE ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [wServingCharCourtPos] ; $42df
-	and $02 ; $42e2
+	and COURTPOSF_FAR ; $42e2
 	ld de, $f0d8 ; $42e4
 	jr z, .placeEffect ; $42e7
 	ld de, $f000 ; $42e9
@@ -313,7 +313,7 @@ DetectServeAceOutcome:
 	ld b, POINTOUTCOME_WRONG_RECEIVER ; $4333
 	ld c, $ff ; $4335
 	ld a, [wLastShotServeRole] ; $4337
-	cp $01 ; $433a
+	cp SERVEROLE_RECEIVER ; $433a
 	jr nz, .setOutcome ; $433c
 	ld b, POINTOUTCOME_SERVE_VOLLEYED ; $433e
 	ld c, $ff ; $4340

@@ -292,8 +292,8 @@ HandleTennisDictionaryListInput:
 	push af ; $5600
 	wram_bank WRAM_SCENE ; $5601
 	ld a, [wTennisDictFlags] ; $5607
-	res 2, a ; $560a
-	res 3, a ; $560c
+	res TDICTFLAGB_LEFT_ARROW, a ; $560a
+	res TDICTFLAGB_RIGHT_ARROW, a ; $560c
 	ld [wTennisDictFlags], a ; $560e
 	ldh a, [hInputRisingEdge] ; $5611
 	bit PADB_A, a ; $5613
@@ -301,7 +301,7 @@ HandleTennisDictionaryListInput:
 	sound SFX_MENU_SELECT ; $5618
 	call StartTennisDictionaryAnim ; $561a
 	ld a, [wTennisDictFlags] ; $561d
-	set 0, a ; $5620
+	set TDICTFLAGB_WINDOW_OPEN, a ; $5620
 	ld [wTennisDictFlags], a ; $5622
 	ld a, [wTennisDictCategoryMask] ; $5625
 	ld b, a ; $5628
@@ -341,7 +341,7 @@ HandleTennisDictionaryListInput:
 	ld a, [wMessageSpeed] ; $566e
 	push af ; $5671
 	xor a ; $5672
-	ld a, $80 ; $5673
+	ld a, MSGSPEEDF_INSTANT | MSGSPEED_FAST ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a ; $5678
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5679
@@ -355,7 +355,7 @@ HandleTennisDictionaryListInput:
 	farcall CloseWindowAlt ; $568d
 	wram_bank WRAM_SCENE ; $5690
 	ld a, [wTennisDictFlags] ; $5696
-	res 0, a ; $5699
+	res TDICTFLAGB_WINDOW_OPEN, a ; $5699
 	ld [wTennisDictFlags], a ; $569b
 	call EndTennisDictionaryAnim ; $569e
 	jp .restore ; $56a1
@@ -424,7 +424,7 @@ HandleTennisDictionaryListInput:
 	bit PADB_LEFT, a ; $5714
 	jr z, .checkRight ; $5716
 	ld a, [wTennisDictFlags] ; $5718
-	set 2, a ; $571b
+	set TDICTFLAGB_LEFT_ARROW, a ; $571b
 	ld [wTennisDictFlags], a ; $571d
 	sound SFX_MENU_MOVE ; $5720
 	call AdvanceFrame ; $5722
@@ -435,7 +435,7 @@ HandleTennisDictionaryListInput:
 	bit PADB_RIGHT, a ; $572d
 	jr z, .restore ; $572f
 	ld a, [wTennisDictFlags] ; $5731
-	set 3, a ; $5734
+	set TDICTFLAGB_RIGHT_ARROW, a ; $5734
 	ld [wTennisDictFlags], a ; $5736
 	sound SFX_MENU_MOVE ; $5739
 	call AdvanceFrame ; $573b

@@ -24,11 +24,7 @@ wSavedGameTimer:: ds 4
 ; [8-bit] Sound options. Bit 0 mutes the music: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncMusicMuteOption copies it into hMusic bit 0 (1 = off), stopping the BGM when set. Other bits are preserved
 wSoundOptionBits:: db
 
-; [8-bit] Message Speed
-;
-; 0x00 - Fast
-; 0x01 - Normal
-; 0x02 - Slow
+; [8-bit] Message speed: MSGSPEED_FAST/NORMAL/SLOW in bits 0-6 (ApplyMessageSpeed). Bit 7, MSGSPEEDB_INSTANT, draws text at once whatever the speed: set by ShowLocationNamePopup, the Tennis Dictionary redraw, Unused_1a_ForceInstantMessageSpeed and ToggleCutsceneFastForward (as it clears FLAG_CUTSCENE_FAST_FORWARD), tested by ApplyMessageSpeed, FlushGlyphRow and UploadLastGlyphTiles, and cleared before saving
 wMessageSpeed:: db
 
 ; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the results screen and saves the slot, and clears it with wKeepMatchStatsFlag

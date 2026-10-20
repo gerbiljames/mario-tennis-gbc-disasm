@@ -96,7 +96,7 @@ AiServeWalkToSpot:
 	ld d, [hl] ; $7a26
 	ld e, a ; $7a27
 	ld a, [wCharCourtPos] ; $7a28
-	and $01 ; $7a2b
+	and COURTPOSF_LEFT ; $7a2b
 	jr z, .setTarget ; $7a2d
 	neg_bc ; $7a2f
 .setTarget:
@@ -364,7 +364,7 @@ CharIndexToWramBank:
 	ret ; $7c32
 MirrorDepthForFarSide:
 	ld a, [wCharCourtPos] ; $7c33
-	and $02 ; $7c36
+	and COURTPOSF_FAR ; $7c36
 	ret z ; $7c38
 	neg_de ; $7c39
 	ret ; $7c3f

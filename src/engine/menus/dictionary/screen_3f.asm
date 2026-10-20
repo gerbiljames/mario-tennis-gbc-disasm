@@ -80,7 +80,7 @@ TennisDictionaryScreen:
 	jr nz, .checkTennisDictFlags ; $412f
 	wram_bank WRAM_SCENE ; $4131
 	ld a, [wTennisDictFlags] ; $4137
-	res 0, a ; $413a
+	res TDICTFLAGB_WINDOW_OPEN, a ; $413a
 	ld [wTennisDictFlags], a ; $413c
 	call EndTennisDictionaryAnim ; $413f
 	wait_frames 1 ; $4142
@@ -88,7 +88,7 @@ TennisDictionaryScreen:
 	jr .loop ; $4148
 .checkTennisDictFlags:
 	ld a, [wTennisDictFlags] ; $414a
-	set 1, a ; $414d
+	set TDICTFLAGB_LIST_SHOWN, a ; $414d
 	ld [wTennisDictFlags], a ; $414f
 	ld a, $08 ; $4152
 .loop:
@@ -143,7 +143,7 @@ ShowTennisDictionaryPageDefault:
 	call SetTennisDictionaryListFromIndexRow ; $41c7
 	call DrawTennisDictionaryList ; $41ca
 	ld a, [wTennisDictFlags] ; $41cd
-	set 1, a ; $41d0
+	set TDICTFLAGB_LIST_SHOWN, a ; $41d0
 	ld [wTennisDictFlags], a ; $41d2
 	script_fade_in 16 ; $41d5
 	call WaitFadeEnd ; $41da
@@ -170,7 +170,7 @@ ShowTennisDictionaryPageChar6:
 	call EnableLCD ; $420e
 	wram_bank WRAM_SCENE ; $4211
 	ld a, [wTennisDictFlags] ; $4217
-	res 1, a ; $421a
+	res TDICTFLAGB_LIST_SHOWN, a ; $421a
 	ld [wTennisDictFlags], a ; $421c
 	script_fade_in 16 ; $421f
 	call WaitFadeEnd ; $4224
@@ -576,7 +576,7 @@ UpdateTennisDictionarySprites:
 	ld a, [hl+] ; $4f1d
 	ld b, a ; $4f1e
 	ld a, [wTennisDictFlags] ; $4f1f
-	bit 1, a ; $4f22
+	bit TDICTFLAGB_LIST_SHOWN, a ; $4f22
 	jr z, .leftBasePos ; $4f24
 	ld_xy de, $90, $7d ; $4f26
 	jr .queueBase ; $4f29
@@ -592,7 +592,7 @@ UpdateTennisDictionarySprites:
 	ld a, [hl+] ; $4f38
 	ld b, a ; $4f39
 	ld a, [wTennisDictFlags] ; $4f3a
-	bit 1, a ; $4f3d
+	bit TDICTFLAGB_LIST_SHOWN, a ; $4f3d
 	jr z, .leftTopPos ; $4f3f
 	ld_xy de, $88, $6d ; $4f41
 	jr .queueTop ; $4f44
@@ -608,7 +608,7 @@ UpdateTennisDictionarySprites:
 	ld a, [hl+] ; $4f53
 	ld b, a ; $4f54
 	ld a, [wTennisDictFlags] ; $4f55
-	bit 1, a ; $4f58
+	bit TDICTFLAGB_LIST_SHOWN, a ; $4f58
 	jr z, .leftMiddlePos ; $4f5a
 	ld_xy de, $88, $7d ; $4f5c
 	jr .queueMiddle ; $4f5f
@@ -624,7 +624,7 @@ UpdateTennisDictionarySprites:
 	ld a, [hl+] ; $4f6e
 	ld b, a ; $4f6f
 	ld a, [wTennisDictFlags] ; $4f70
-	bit 1, a ; $4f73
+	bit TDICTFLAGB_LIST_SHOWN, a ; $4f73
 	jr z, .leftBottomPos ; $4f75
 	ld_xy de, $88, $8d ; $4f77
 	jr .queueBottom ; $4f7a
@@ -635,10 +635,10 @@ UpdateTennisDictionarySprites:
 	call QueueSpriteTemplate ; $4f82
 .checkScrollAnim:
 	ld a, [wTennisDictFlags] ; $4f85
-	bit 1, a ; $4f88
+	bit TDICTFLAGB_LIST_SHOWN, a ; $4f88
 	jr z, .restore ; $4f8a
 	ld a, [wTennisDictFlags] ; $4f8c
-	bit 0, a ; $4f8f
+	bit TDICTFLAGB_WINDOW_OPEN, a ; $4f8f
 	jr nz, .checkTennisDictCursorRow ; $4f91
 	ld a, [wTennisDictScrollTimer] ; $4f93
 	inc a ; $4f96
@@ -668,7 +668,7 @@ UpdateTennisDictionarySprites:
 	ld_oam bc, OAM_BANK1 | 3, $28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
-	bit 2, a ; $4fc9
+	bit TDICTFLAGB_LEFT_ARROW, a ; $4fc9
 	jr z, .checkRightArrow ; $4fcb
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
 	ld_xy de, $18, $10 ; $4fd0
@@ -676,7 +676,7 @@ UpdateTennisDictionarySprites:
 	call QueueSpriteTemplate ; $4fd6
 .checkRightArrow:
 	ld a, [wTennisDictFlags] ; $4fd9
-	bit 3, a ; $4fdc
+	bit TDICTFLAGB_RIGHT_ARROW, a ; $4fdc
 	jr z, .restore ; $4fde
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
 	ld_xy de, $88, $10 ; $4fe3

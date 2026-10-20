@@ -235,6 +235,33 @@ def NUM_CHARSTATES equ const_value
 	const BALLREACHB_STEER_X     ; $06 ApplyCharMovementInput: left/right held; UpdateCharVelocityFromInput accelerates X
 	const BALLREACHB_STEER_DEPTH ; $07 the same for up/down and depth
 
+; --- Court position (wCharCourtPos, wServingCharCourtPos, wPrevCourtPos) ---
+; Bit 1 is the end, bit 0 the screen half with the near end at the bottom:
+; a near server on the right is in the deuce court. GetCharBaseCourtPosition
+; negates the depth for the far end and the X for the left half.
+def COURTPOSB_LEFT       equ 0
+def COURTPOSB_FAR        equ 1
+def COURTPOSF_LEFT       equ 1 << COURTPOSB_LEFT
+def COURTPOSF_FAR        equ 1 << COURTPOSB_FAR
+def COURTPOS_NEAR_RIGHT  equ 0
+def COURTPOS_NEAR_LEFT   equ COURTPOSF_LEFT
+def COURTPOS_FAR_RIGHT   equ COURTPOSF_FAR
+def COURTPOS_FAR_LEFT    equ COURTPOSF_FAR | COURTPOSF_LEFT
+def COURTPOS_NONE        equ $09 ; no character in this slot
+
+; --- Serve role (wCharServeRole, wLastShotServeRole) ---
+; Bit 0 is the receiving side, bit 1 the doubles partner (the AI's net-player
+; tables); ToggleCharCourtRow swaps a player with its partner.
+def SERVEROLEB_RECEIVING equ 0
+def SERVEROLEB_PARTNER   equ 1
+def SERVEROLEF_RECEIVING equ 1 << SERVEROLEB_RECEIVING
+def SERVEROLEF_PARTNER   equ 1 << SERVEROLEB_PARTNER
+def SERVEROLE_SERVER           equ 0
+def SERVEROLE_RECEIVER         equ SERVEROLEF_RECEIVING
+def SERVEROLE_SERVER_PARTNER   equ SERVEROLEF_PARTNER
+def SERVEROLE_RECEIVER_PARTNER equ SERVEROLEF_PARTNER | SERVEROLEF_RECEIVING
+def SERVEROLE_NONE             equ $09 ; no character in this slot
+
 ; --- Match abort flag (wMatchAbortFlag) ---
 ; Two independent bits rather than a code: every reader is an `and` (or one
 ; `bit 7`), and the two bits break different loops. The quit paths write $ff,
