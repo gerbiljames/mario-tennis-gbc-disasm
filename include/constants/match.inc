@@ -22,6 +22,19 @@ def OBJSLOT_SIZE equ _RS
 def OBJSLOTB_VISIBLE equ 0 ; FinishObjSlotUpdate draws the slot
 def OBJSLOTB_LOADED  equ 7 ; set by LoadObjTemplate_09; StartObjExitAnim clears it and plays the template's exit animation only if it was set
 
+; --- Ball history records ---
+; Offsets into one 6-byte wBallHistory record. UpdateBallVisuals shifts the
+; ring down one record per frame, so record 0 is the oldest.
+	rsreset
+def BALLHIST_X    rw ; $00 projected screen X
+def BALLHIST_Y    rw ; $02 projected screen Y
+def BALLHIST_TILE rb ; $04 trail tile: the ball's tile + 8
+def BALLHIST_ATTR rb ; $05
+def BALLHIST_SIZE equ _RS
+	ASSERT BALLHIST_SIZE == 6
+def NUM_BALLHIST equ 6
+def BALLHIST_NEWEST equ (NUM_BALLHIST - 1) * BALLHIST_SIZE ; BuildBallSlot writes here
+
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
 ; SelectServeShotType, which index wCharShotButton1 x wCharShotButton2 tables.

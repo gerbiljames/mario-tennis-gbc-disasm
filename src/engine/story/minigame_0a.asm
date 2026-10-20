@@ -221,7 +221,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [wBallCrossedNetFlag] ; $672d
 	and a ; $6730
 	ret z ; $6731
-	ld hl, wBallHistory + 30 ; $6732
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $6732
 	ld a, [hl+] ; $6735
 	ld d, [hl] ; $6736
 	ld e, a ; $6737
@@ -236,7 +236,7 @@ CheckBallHitsMinigameTarget:
 	add hl, de ; $674b
 	bit 7, h ; $674c
 	jr nz, .done ; $674e
-	ld hl, wBallHistory + 32 ; $6750
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $6750
 	ld a, [hl+] ; $6753
 	ld d, [hl] ; $6754
 	ld e, a ; $6755
