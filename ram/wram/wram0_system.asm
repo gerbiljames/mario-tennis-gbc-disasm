@@ -509,7 +509,7 @@ wDeferredTilemapPending:: db
 wSpriteBufferPage:: db
 	ds 8
 
-; [8-bit] Character id assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites
+; [8-bit] Write-only: the court slot 0 character id, stored by match setup (InitStoryMatchSettings, RunLinkMatchSequence, RunDoublesDrillMatch, the drill and minigame starters, the debug test modes and character viewer); nothing reads it
 wMatchPlayerChar:: db
 
 ; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup

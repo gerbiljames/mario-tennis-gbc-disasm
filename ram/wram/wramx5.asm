@@ -99,7 +99,7 @@ wTextArgShortTextWriteIndex:: db
 wTextArgStringCount:: db
 ; [8-bit] The same count for wTextArgNumberQueue; TextCmdPrintArgNumber prints nothing once the cursor reaches it
 wTextArgNumberCount:: db
-; [8-bit] The same count for wTextArgShortTextQueue
+; [8-bit] The same count for wTextArgShortTextQueue, stored by Unused_05_PushTextArgShortTextId; nothing reads it
 wTextArgShortTextCount:: db
 	ds 1
 ; [16-bit] Text-stream pointer to resume from instead of the start of wTextBuffer; a nonzero high byte is the "set" flag RenderTextString and FitWindowToText test and clear. Filled by TextInterpreterLoop at a TextCmdWaitButtonPage, and by FindDialogueChoiceMarker with the position of the $02 choice marker so the yes/no prompt measures and renders only the tail

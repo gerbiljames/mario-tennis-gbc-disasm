@@ -238,7 +238,7 @@ wShotRecoilVariant:: db
 ; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's wCharSwingFrames clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and WeakenShotByCharge / BoostShotByCharge; $3f (fully charged) picks the special hit flash over the normal spark
 wShotChargeLevel:: db
 
-; [8-bit] The striker's wCharQuickSwing copied by ExecuteShot, so the shot keeps the value the swing started with
+; [8-bit] The striker's wCharQuickSwing, stored by ExecuteShot. Write-only
 wShotWasQuickSwing:: db
 
 ; [8-bit] The striker's wCharAimOffset at contact, stored by ExecuteShot. Write-only

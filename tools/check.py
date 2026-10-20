@@ -159,6 +159,11 @@ after a real defect broke it:
             `call` to a listed tile-plane writer unless it is a bank-3 name
             (results/award text went to wScreenAttrmap names; char-data
             blit/patch cells to wScreenAttrmap and bank 6 names)
+  write-only a RAM label only ever stored to by name (`ld [wX], a`), whose
+            bytes no load, raw address, pointer walk or block copy from an
+            earlier label of the same UNION branch can reach, says
+            "Write-only" / "nothing reads" / "read by nothing" in its
+            comment (seven claimed a reader)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -2698,6 +2703,200 @@ def check_wram_pointers(fail):
     return sites
 
 
+# Store-only RAM labels whose comment need not say they are unread.
+WRITE_ONLY_EXEMPT = {
+    "wDebugColorDigitsEnd": "the NUL WriteStringToWindow stops at, reading on from wDebugColorRedDigits",
+}
+
+# Callees whose length-shaped register argument is not a byte count.
+_NOT_BLOCK_CALLEES = {"MulMem24ByFrac"}  # b is the multiplier
+
+_RAM_TOKEN = re.compile(r"\b[whs][A-Z]\w*\b")
+_WINDOW_LEN = re.compile(r"ld (?:bc|de|[abcde]), (?!(?:[abcdehl]|bc|de|hl|sp)$)([^\[].*)$")
+
+
+def _pointer_extent(lines, i, rr, ext, names, rom_names):
+    """How far `ld rr, <ram>` at lines[i] can be read through: `ext`, the
+    bytes straight-line `[rr+]` / `inc rr` walk, and any length loaded before
+    the call (or backward jump) that takes the pointer, unless the callee
+    only clears or fills, or the loop only stores through it."""
+    import consts
+    walk, lens, locs, reads = 1, [], set(), False
+    for c in lines[i + 1:i + 12]:
+        if re.match(r"\.\w+:", c):
+            locs.add(c.split(":")[0])
+        if re.match(r"\w+:", c) or c.startswith("ret"):
+            break
+        if re.search(r"\[%s[+-]\]|inc %s\b" % (rr, rr), c):
+            walk += 1
+        if re.search(r"\[%s[+-]?\]" % rr, c) and not re.match(r"ld \[", c):
+            reads = True
+        if (re.match(r"(?:ld|pop|add|adc|sub|sbc|swap|srl|sla|rr|rl|res|set|xor|or|and) (?:%s|%s|%s)\b(?!\])"
+                     % (rr, rr[0], rr[1]), c) or any("_" in t and rr in t.split("_") for t in re.findall(r"\w+", c))):
+            break
+        ml = _WINDOW_LEN.match(c)
+        if ml:
+            n = consts.evaluate(ml.group(1), names)
+            if re.search(r"\bText_", ml.group(1)) or (n is None and any(
+                    t in rom_names for t in re.findall(r"[A-Za-z_][\w.]*", ml.group(1)))):
+                n = 0
+            lens.append(0x100 if n is None else n if n < 0x8000 else 0)
+        mj = re.match(r"(call|farcall|callfar|rst|jr|jp)\b(?:.*, |\s+)(\S+)$", c)
+        if mj:
+            callee = mj.group(2)
+            if mj.group(1) in ("jr", "jp"):
+                if callee in locs and reads:
+                    ext = max([ext] + lens)
+            elif callee not in _NOT_BLOCK_CALLEES and not re.match(r"(?:Unused_\w\w_)?(?:Clear|Fill)", callee):
+                ext = max([ext] + lens)
+            break
+    return max(ext, walk)
+
+
+def check_write_only_ram(fail):
+    """A RAM label whose every reference is a store (`ld [wX], a` /
+    `ldh [hX], a`) says so in its comment ("Write-only" / "nothing reads" /
+    "read by nothing"), unless its bytes can be read without its name: a
+    `[wY + n]` load, a raw `$xxxx`, or a pointer to an earlier label
+    (`ld rr, wY`, `LOW`/`HIGH`, `dw`, a macro argument), which covers that
+    label's size, the bytes `[rr+]` walks, and any length loaded before the
+    call or loop that takes it. A label in another branch of its UNION, or a
+    ram_mirrored.inc plane, is another variable and reads nothing of it."""
+    import consts
+    from banksrc import SYM
+    names = consts.constants()
+    sym, rom_names = {}, {n for b, a, n in read_sym(rom_only=True)}
+    for b, a, n in read_sym():
+        if a >= 0x8000 and "." not in n:
+            sym[n] = ({b}, a)
+    for line in SYM.read_text().splitlines():
+        m = re.match(r"([0-9a-f]+) (\w+)$", line)
+        if m:
+            names.setdefault(m.group(2), int(m.group(1), 16))
+    names.update({n: a for n, (b, a) in sym.items()})
+    starts = {}
+    for (b,), a in sym.values():
+        starts.setdefault(b, set()).add(a)
+    starts = {b: sorted(s) for b, s in starts.items()}
+
+    mirrored, size, banks = {}, 1, None
+    for line in (ROOT / "include" / "ram_mirrored.inc").read_text().split("\n"):
+        m = re.match(r"; \[(\d+) bytes\]", line)
+        if m:
+            size = int(m.group(1))
+        if line.startswith("; in WRAM banks"):
+            banks = {int(b, 16) for b in re.findall(r"\$([0-9a-f]+)", line)}
+        m = re.match(r"def (\w+) equ", line)
+        if m:
+            mirrored[m.group(1)] = (banks, names[m.group(1)], size)
+            size, banks = 1, None
+
+    def coexist(tok, name):
+        """tok and name can be live at once: not a mirrored plane, and in
+        the same branch of every UNION both sit in."""
+        if tok in mirrored:
+            return False
+        p, q = paths.get(tok, {}), paths.get(name, {})
+        return all(q[u] == br for u, br in p.items() if u in q)
+
+    def target(tok, v):
+        """(banks or None for any, extent) of a pointer to v through tok."""
+        if tok in mirrored:
+            banks, a, n = mirrored[tok]
+            return banks, max(1, a + n - v)
+        b = next(iter(sym[tok][0])) if tok in sym else 0
+        s = starts.get(b, [])
+        j = bisect.bisect_right(s, v)
+        return {b}, s[j] - v if j < len(s) else 1
+
+    defs, paths = {}, {}
+    for f in sorted((ROOT / "ram").rglob("*.asm")):
+        lines = f.read_text().split("\n")
+        stack = []
+        for i, line in enumerate(lines):
+            word = line.split(";")[0].strip()
+            if word == "UNION":
+                stack.append([(f, i), 0])
+            elif word == "NEXTU":
+                stack[-1][1] += 1
+            elif word == "ENDU":
+                stack.pop()
+            m = re.match(r"(\w+)::", line)
+            if m:
+                paths[m.group(1)] = {u: br for u, br in stack}
+            if m and m.group(1) in sym:
+                j, com = i - 1, [line.partition(";")[2]]
+                while j >= 0 and lines[j].startswith(";"):
+                    com.append(lines[j])
+                    j -= 1
+                defs[m.group(1)] = (f, i + 1, " ".join(com))
+
+    files = ([ROOT / "main.asm"] + sorted((ROOT / "src").rglob("*.asm"))
+             + sorted((ROOT / "include").rglob("*.inc")))
+    stores, other, raw, cover = {}, set(), set(), []
+    for f in files:
+        lines = [l.split(";")[0].strip() for l in f.read_text().split("\n")]
+        for i, code in enumerate(lines):
+            for m in re.finditer(r"\$([0-9a-f]{4})\b", code, re.I):
+                raw.add(int(m.group(1), 16))
+            if not any(t in names and names[t] >= 0x8000 for t in _RAM_TOKEN.findall(code)):
+                continue
+            op, _, args = code.partition(" ")
+            if op.upper() in ("ASSERT", "STATIC_ASSERT", "DEF", "IF", "ELIF"):
+                continue
+            m = re.fullmatch(r"ldh? \[(\w+)\], (?:a|sp)", code)
+            if m and m.group(1) in sym:
+                stores.setdefault(m.group(1), []).append((f, i + 1))
+                continue
+            for expr in re.split(r",(?![^()]*\))", args):
+                toks = [t for t in _RAM_TOKEN.findall(expr) if t in names and names[t] >= 0x8000]
+                if not toks:
+                    continue
+                other.update(toks)
+                inner = re.fullmatch(r"\s*\[(.*)\]\s*", expr)
+                lohi = re.fullmatch(r"\s*(?:LOW|HIGH)\((.*)\)\s*", expr)
+                v = consts.evaluate((inner or lohi or re.match(r"(.*)", expr)).group(1), names)
+                if v is None:
+                    v, ext = names[toks[0]], 0x100
+                    banks = target(toks[0], v)[0]
+                elif not 0x8000 <= v < 0x10000:
+                    continue
+                else:
+                    banks, ext = target(toks[0], v)
+                if inner:
+                    if not re.match(r"ldh? \[", code):
+                        cover.append((banks, v, v + (ext if ext == 0x100 else 1), toks[0]))
+                    continue
+                rr = re.match(r"(hl|de|bc),", args) if op == "ld" else None
+                if rr:
+                    ext = _pointer_extent(lines, i, rr.group(1), ext, names, rom_names)
+                elif op not in _MNEMONICS:
+                    for a in args.split(","):
+                        n = consts.evaluate(a, names)
+                        if n is not None and 0 < n < 0x8000:
+                            ext = max(ext, n)
+                cover.append((banks, v, v + ext, toks[0]))
+
+    n = 0
+    for name, (f, ln, com) in defs.items():
+        if name not in stores or name in other:
+            continue
+        (b,), a = sym[name]
+        span = range(a, a + target(name, a)[1])
+        if any(x in raw for x in span):
+            continue
+        if any((cb is None or b in cb) and lo < span.stop and hi > a and coexist(tok, name)
+               for cb, lo, hi, tok in cover):
+            continue
+        n += 1
+        if name in WRITE_ONLY_EXEMPT or re.search(r"write-only|nothing reads|read by nothing", com, re.I):
+            continue
+        sf, sl = stores[name][0]
+        fail("write-only", f"{f.relative_to(ROOT)}:{ln}: {name} is only stored "
+                           f"({sf.relative_to(ROOT)}:{sl}) but its comment does not say nothing reads it")
+    return n
+
+
 # Routines whose "loop" locals name the domain, not the control flow.
 KNOWN_LOOP_NAMES = {
     "RunSoundChannelScript": "the sound-script loop opcodes it interprets",
@@ -3290,6 +3489,7 @@ def main():
         "localnames": check_local_names(fail),
         "mirrors": check_mirrored_operands(fail),
         "wram-ptrs": check_wram_pointers(fail),
+        "write-only": check_write_only_ram(fail),
     }
     by_check = {}
     for check, msg in failures:

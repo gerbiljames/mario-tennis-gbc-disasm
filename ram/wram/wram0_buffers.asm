@@ -277,7 +277,7 @@ wCharSelectCursorCol:: db
 wCharSelectCursorRow:: db
 ; [8 bytes] Two bytes per starting character (wCharRecordBuffer + 14 and + 12), collected by RunNewGameSetup before the roster is shown
 wNewGameRosterFields:: ds 8
-; [8-bit] Cleared by Unused_1b_RunStoryDataConfirmMenu as the prompt opens
+; [8-bit] Cleared by Unused_1b_RunStoryDataConfirmMenu as the prompt opens; nothing reads it
 wStoryDataPromptFlag:: db
 ENDU
 
