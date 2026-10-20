@@ -345,7 +345,7 @@ StartSoundChannel:
 	cp $ff ; $331e
 	jr z, .initChannel ; $3320
 	inc hl ; $3322
-	ld a, [hl-] ; $3323
+	ld a, [hl-] ; $3323 the script index's high byte, not the type at +2 (docs/bugs.md)
 	ld b, $ee ; $3324
 	and $03 ; $3326
 	jr z, .checkSndPanShadow ; $3328
@@ -491,11 +491,11 @@ UpdateSoundChannels:
 .storeLengthAccum:
 	ld [hl], a ; $3406
 	call TickVolumeSlide ; $3407
-	ldh a, [hSndNoteLenTimer] ; $340a
+	ldh a, [hSndVibratoTimer] ; $340a
 	and a ; $340c
 	jr z, .tickNoteTimer ; $340d
 	dec a ; $340f
-	ldh [hSndNoteLenTimer], a ; $3410
+	ldh [hSndVibratoTimer], a ; $3410
 .tickNoteTimer:
 	ldh a, [hSndNoteTimer] ; $3412
 	and a ; $3414
@@ -516,8 +516,8 @@ UpdateSoundChannels:
 .markUpdated:
 	call MarkCurrentChannelUpdated ; $342f
 .runScript:
-	ldh a, [hSndNoteLenReload] ; $3432
-	ldh [hSndNoteLenTimer], a ; $3434
+	ldh a, [hSndVibratoDelay] ; $3432
+	ldh [hSndVibratoTimer], a ; $3434
 	call RunSoundChannelScript ; $3436
 	jr .checkSndWaveReloadPending ; $3439
 .countLeft:
@@ -534,11 +534,11 @@ UpdateSoundChannels:
 	dec a ; $344d
 	ldh [hSndNoteTimer], a ; $344e
 	push af ; $3450
-	ldh a, [hSndRestFlag] ; $3451
+	ldh a, [hSndGateTimer] ; $3451
 	or a ; $3453
 	jr z, .restore ; $3454
 	dec a ; $3456
-	ldh [hSndRestFlag], a ; $3457
+	ldh [hSndGateTimer], a ; $3457
 .restore:
 	pop af ; $3459
 	jr nz, .checkSndWaveReloadPending ; $345a
@@ -635,10 +635,10 @@ UpdateSoundChannels:
 	ldh [hSndWaveId], a ; $3505
 .resetChannelState:
 	ld a, $ff ; $3507
-	ldh [hSndNoteOffset], a ; $3509
+	ldh [hSndGateTime], a ; $3509
 	xor a ; $350b
-	ldh [hSndTranspose], a ; $350c
-	ldh [hSndEnvRate], a ; $350e
+	ldh [hSndSwitch], a ; $350c
+	ldh [hSndEnvShape], a ; $350e
 	ldh [hSndVolSlide], a ; $3510
 	ldh [hSndScriptPtr + 1], a ; $3512
 	dec a ; $3514
@@ -784,7 +784,7 @@ RunSoundChannelScript:
 	ldh [hSndEnvLength], a ; $35ee
 	ld a, b ; $35f0
 	swap a ; $35f1
-	ldh [hSndEnvRate], a ; $35f3
+	ldh [hSndEnvShape], a ; $35f3
 .envelopeDone:
 	inc hl ; $35f5
 	jp .nextCommand ; $35f6
@@ -894,7 +894,7 @@ RunSoundChannelScript:
 	jp .nextCommand ; $369b
 .setDuty:
 	cp $a2 ; $369e
-	jr nz, .setNoteLength ; $36a0
+	jr nz, .setVibrato ; $36a0
 	ld a, [wSndChannelType] ; $36a2
 	cp SNDCHANTYPE_WAVE ; $36a5
 	jr z, .setEnvLength ; $36a7
@@ -912,18 +912,18 @@ RunSoundChannelScript:
 	ld a, [hl+] ; $36b9
 	ldh [hSndEnvLength], a ; $36ba
 	jp .nextCommand ; $36bc
-.setNoteLength:
+.setVibrato:
 	cp $a3 ; $36bf
 	cp $a3 ; $36c1
-	jr nz, .setNoteOffset ; $36c3
+	jr nz, .setGate ; $36c3
 	ld a, [hl+] ; $36c5
 	cp $fe ; $36c6
-	jr z, .clearNoteLength ; $36c8
+	jr z, .clearVibrato ; $36c8
 	ld b, a ; $36ca
 	and $0f ; $36cb
 	add a ; $36cd
-	ldh [hSndNoteLenReload], a ; $36ce
-	ldh [hSndNoteLenTimer], a ; $36d0
+	ldh [hSndVibratoDelay], a ; $36ce
+	ldh [hSndVibratoTimer], a ; $36d0
 	ld a, b ; $36d2
 	add $10 ; $36d3
 	and $f0 ; $36d5
@@ -934,15 +934,15 @@ RunSoundChannelScript:
 .storeChannelType:
 	ldh [hSndChannelType], a ; $36dd
 	jp .nextCommand ; $36df
-.clearNoteLength:
+.clearVibrato:
 	ldh a, [hSndChannelType] ; $36e2
 	and $0f ; $36e4
 	jr .storeChannelType ; $36e6
-.setNoteOffset:
+.setGate:
 	cp $a4 ; $36e8
 	jr nz, .setPan ; $36ea
 	ld a, [hl+] ; $36ec
-	ldh [hSndNoteOffset], a ; $36ed
+	ldh [hSndGateTime], a ; $36ed
 	jp .nextCommand ; $36ef
 .setPan:
 	cp $a5 ; $36f2
@@ -957,11 +957,11 @@ RunSoundChannelScript:
 	jp .nextCommand ; $3701
 .setMasterVolume:
 	cp $a6 ; $3704
-	jr nz, .setPortamento ; $3706
+	jr nz, .wait ; $3706
 	ld a, [hl+] ; $3708
 	ldh [rAUDVOL], a ; $3709
 	jp .nextCommand ; $370b
-.setPortamento:
+.wait:
 	cp $a7 ; $370e
 	jr nz, .setInstrument ; $3710
 	ld a, [hl] ; $3712
@@ -969,7 +969,7 @@ RunSoundChannelScript:
 	jp SndTriggerNote.checkSndChannelPanMask ; $3715
 .setInstrument:
 	cp $a8 ; $3718
-	jr nz, .transpose ; $371a
+	jr nz, .switch ; $371a
 	ld a, [hl+] ; $371c
 	ld c, a ; $371d
 	and $0f ; $371e
@@ -979,27 +979,27 @@ RunSoundChannelScript:
 	or b ; $3724
 	ldh [hSndInstrument], a ; $3725
 	jp .nextCommand ; $3727
-.transpose:
+.switch:
 	cp $a9 ; $372a
 	jp nz, .setEcho ; $372c
 	ld a, [hl+] ; $372f
 	cp $f0 ; $3730
-	jr z, .transposeInc ; $3732
+	jr z, .switchInc ; $3732
 	cp $f1 ; $3734
-	jr z, .transposeDec ; $3736
+	jr z, .switchDec ; $3736
 	cp $f2 ; $3738
-	jr z, .globalTransposeInc ; $373a
+	jr z, .globalSwitchInc ; $373a
 	cp $f3 ; $373c
-	jr z, .globalTransposeDec ; $373e
+	jr z, .globalSwitchDec ; $373e
 	cp $fe ; $3740
-	jr z, .transposeFromGlobal ; $3742
+	jr z, .switchFromGlobal ; $3742
 	cp $ff ; $3744
-	jr nz, .setTranspose ; $3746
-	ldh a, [hSndTranspose] ; $3748
-	jr .transposeJumpTable ; $374a
-.transposeFromGlobal:
-	ld a, [wSndTranspose] ; $374c
-.transposeJumpTable:
+	jr nz, .setSwitch ; $3746
+	ldh a, [hSndSwitch] ; $3748
+	jr .switchJumpTable ; $374a
+.switchFromGlobal:
+	ld a, [wSndSwitch] ; $374c
+.switchJumpTable:
 	sla a ; $374f
 	add l ; $3751
 	ld l, a ; $3752
@@ -1011,34 +1011,34 @@ RunSoundChannelScript:
 	ld a, [hl] ; $375a
 	ldh [hSndScriptPtr + 1], a ; $375b
 	jp RunSoundChannelScript ; $375d
-.setTranspose:
+.setSwitch:
 	cp $80 ; $3760
-	jr nc, .setGlobalTranspose ; $3762
-	ldh [hSndTranspose], a ; $3764
+	jr nc, .setGlobalSwitch ; $3762
+	ldh [hSndSwitch], a ; $3764
 	jp .nextCommand ; $3766
-.setGlobalTranspose:
+.setGlobalSwitch:
 	sub $80 ; $3769
-	ld [wSndTranspose], a ; $376b
+	ld [wSndSwitch], a ; $376b
 	jp .nextCommand ; $376e
-.transposeInc:
-	ldh a, [hSndTranspose] ; $3771
+.switchInc:
+	ldh a, [hSndSwitch] ; $3771
 	inc a ; $3773
-	ldh [hSndTranspose], a ; $3774
+	ldh [hSndSwitch], a ; $3774
 	jp .nextCommand ; $3776
-.transposeDec:
-	ldh a, [hSndTranspose] ; $3779
+.switchDec:
+	ldh a, [hSndSwitch] ; $3779
 	dec a ; $377b
-	ldh [hSndTranspose], a ; $377c
+	ldh [hSndSwitch], a ; $377c
 	jp .nextCommand ; $377e
-.globalTransposeInc:
-	ld a, [wSndTranspose] ; $3781
+.globalSwitchInc:
+	ld a, [wSndSwitch] ; $3781
 	inc a ; $3784
-	ld [wSndTranspose], a ; $3785
+	ld [wSndSwitch], a ; $3785
 	jp .nextCommand ; $3788
-.globalTransposeDec:
-	ld a, [wSndTranspose] ; $378b
+.globalSwitchDec:
+	ld a, [wSndSwitch] ; $378b
 	dec a ; $378e
-	ld [wSndTranspose], a ; $378f
+	ld [wSndSwitch], a ; $378f
 	jp .nextCommand ; $3792
 .setEcho:
 	cp $aa ; $3795
@@ -1104,15 +1104,15 @@ RunSoundChannelScript:
 	jp RunSoundChannelScript ; $37fa
 .loopReturn:
 	cp $ad ; $37fd
-	jr nz, .setSweepFlag ; $37ff
+	jr nz, .setQuarterTone ; $37ff
 	ldh a, [hSndLoopReturnPtr] ; $3801
 	ldh [hSndScriptPtr], a ; $3803
 	ldh a, [hSndLoopReturnPtr + 1] ; $3805
 	ldh [hSndScriptPtr + 1], a ; $3807
 	jp RunSoundChannelScript ; $3809
-.setSweepFlag:
+.setQuarterTone:
 	cp $ae ; $380c
-	jr nz, .setToneLength ; $380e
+	jr nz, .setTempo ; $380e
 	ld a, [hl+] ; $3810
 	and $10 ; $3811
 	ld b, a ; $3813
@@ -1121,7 +1121,7 @@ RunSoundChannelScript:
 	or b ; $3818
 	ldh [hSndToneCtrl], a ; $3819
 	jp .nextCommand ; $381b
-.setToneLength:
+.setTempo:
 	cp $af ; $381e
 	jr nz, .skipUnknown ; $3820
 	ld a, [hl+] ; $3822

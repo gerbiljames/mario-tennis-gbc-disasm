@@ -1,7 +1,7 @@
 ; --- Notes (snd_note in a sound channel script: the low nibble of the note byte) ---
-; Index into NotePeriodTable's twelve semitones; snd_tone_flag picks which
-; of the table's two octaves, and the note's octave argument halves the
-; period that many times.
+; Index into NotePeriodTable's twelve semitones; snd_quarter_tone picks the
+; table's second half, the same twelve a quarter tone higher, and the note's
+; octave argument halves the period that many times.
 def C_ equ 0
 def C# equ 1
 def D_ equ 2
@@ -83,10 +83,10 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayScreenSequence1/2)
 def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 
-; Jingles ($40-$45, PlaySoundManaged only). The handler stores the id in
-; hActiveJingle, plays JingleSoundIds[id - $40] (a music id) and leaves
-; ResumeBGMAfterJingle/WaitJingleEnd to restore wCurrentBGM when the music
-; channels fall idle. Only one is used.
+; Jingles ($40-$45), through the `sound` macro or PlaySoundManaged. The
+; handler stores the id in hActiveJingle, plays JingleSoundIds[id - $40] (a
+; music id) and leaves ResumeBGMAfterJingle/WaitJingleEnd to restore
+; wCurrentBGM when the music channels fall idle. These three are the ones used.
 def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
 def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the save-slot debug editor
@@ -182,11 +182,11 @@ def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a
 def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
 
 ; --- Sound channel type (wSndChannelType) ---
-; `hSndChannelType & 3`, latched by RunSoundChannelScript with
-; `wSndRegBase = type * 5` (the stride of the four sound-register blocks), so
-; the type is the hardware channel. The wave channel loads wave RAM and skips
-; duty, volume slide and instrument envelope; the noise channel sends the note
-; through NoiseNoteTable and skips vibrato.
+; `hSndChannelType & 3` (snd_channel's second operand), latched by
+; UpdateSoundChannels with `wSndRegBase = type * 5` (the stride of the four
+; sound-register blocks), so the type is the hardware channel. The wave
+; channel loads wave RAM and skips duty, volume slide and instrument envelope;
+; the noise channel sends the note through NoiseNoteTable and skips vibrato.
 	const_def
 	const SNDCHANTYPE_SQUARE1 ; $00 $ff10 block -- the only one with a sweep unit (NR10)
 	const SNDCHANTYPE_SQUARE2 ; $01 $ff15 block; takes every default path

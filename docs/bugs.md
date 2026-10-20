@@ -610,6 +610,29 @@ point parity, so the message wording changes from point to point while the
 verdict does not. The sibling drills hard-code one table per rally, so whether
 the parity test was dropped on purpose is not known; left as is.
 
+### Restarting a busy sound channel would mute the wrong output
+
+`StartSoundChannel` (`$3314`), when the channel it is about to restart is
+still playing, means to clear that channel's hardware bits from `wSndPanShadow`:
+
+```
+        ld hl, wSndChannels  ; + channel * $20
+        ...
+        inc hl
+        ld a, [hl-]          ; <- block +1: the script index's high byte
+        and $03              ; the type (hSndChannelType) is at +2
+        ...                  ; $ee/$dd/$bb/$77 by that value
+```
+
+The byte read is the high byte of the old track's command index, 0-2 in the
+shipped tracks, so it is square 1's output bits (or square 2's, or the wave
+channel's, past index `$ff`) that are cleared, not the restarted channel's.
+`rAUDTERM` is rewritten from `wSndPanShadow` at the end of every pass and a
+channel's bits come back only at its next note, so a note held there would go
+silent until then. The shipped game never takes the path: `PlaySound` idles
+channels 0-1 (an effect) or 2-5 (`StopMusic`, a song) before starting an id's
+tracks, and every id's tracks stay on that half. Left as is.
+
 ## Dead stores
 
 Values written and never read, and one table written past its end (the menu

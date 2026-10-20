@@ -22,8 +22,7 @@ live or dead code -- is `Unused_<bank>_<Name>`, and `make check`
 its address as a raw word too. The exceptions are listed with how each is
 found (`UNNAMED_OK` in `tools/reach.py`): `DataPtr_` slot rows, read by
 slot number; `Padding_` fill; the `SoundTable_` at `$4000` of each sound
-bank; the header's `NintendoLogo`; `SoundEnvelopes`, whose address
-`SoundEnvelopeTable` holds as raw bytes. Routines are left to `reach`, which
+bank; the header's `NintendoLogo`. Routines are left to `reach`, which
 already exempts the vectors and a twin template's fall-through entries. A
 data label only dead code names (`FontTiles`, read by a routine after a
 `ret`) keeps its name.

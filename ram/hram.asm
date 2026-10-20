@@ -239,28 +239,28 @@ NEXTU
 ; sound driver (bank 0, $3373-$3dd3)
 ; [16-bit] Current channel's script/state pointer, copied from the channel struct each update
 hSndScriptPtr:: dw
-; [8-bit] Channel type in the low 2 bits (0=square1/sweep, 1=square2, 2=wave, 3=noise); high nibble carries the vibrato depth / note-length index
+; [8-bit] SNDCHANTYPE_* in the low 2 bits; high nibble = vibrato depth + 1 (snd_vibrato; 0 = off), the SoundPitchTable row TickVibrato reads
 hSndChannelType:: db
 ; [16-bit] Pointer to the current channel's note/command data
 hSndDataPtr:: dw
 ; [8-bit] ROM bank of the current channel's data (loaded into hRomBank/$2000)
 hSndDataBank:: db
-; [8-bit] Tone control: bits 6-7 duty, bit 4 flag, low nibble = note-length increment paired with hSndLengthAccum
+; [8-bit] Tone control: bits 6-7 duty, bit 4 picks NotePeriodTable's quarter-tone-higher half (snd_quarter_tone), low nibble = tempo (the ticks of every 16 the channel skips, via hSndLengthAccum)
 hSndToneCtrl:: db
-; [8-bit] Fractional note-length accumulator; hSndToneCtrl's low nibble is added each update and carries a step at $10
+; [8-bit] Tempo accumulator: hSndToneCtrl's low nibble is added each update, and an update that carries past $10 skips the channel's timers and script
 hSndLengthAccum:: db
 ; [8-bit] Current channel volume/envelope value (high nibble = level; envelope steps by $10)
 hSndVolume:: db
-; [8-bit] The current note's remaining ticks: SndTriggerNote sets it from the note command's length operand (less the echo count while an echo is armed) and snd_glide ($a7) sets it without a key-on; while non-zero the channel holds or slides instead of advancing the script
+; [8-bit] The current note's remaining ticks: SndTriggerNote sets it from the note command's length operand (less the echo count while an echo is armed) and snd_wait ($a7) sets it without a key-on; while non-zero the channel holds instead of advancing the script
 hSndNoteTimer:: db
 ; [8-bit] Wave-pattern id for the wave channel (compared with wSndLoadedWaveId); reused as a note/instrument byte on the other channels
 hSndWaveId:: db
-; [8-bit] Signed note offset/detune applied when a note is triggered (bit 7 = active); set by cmd $a4
-hSndNoteOffset:: db
-; [8-bit] Per-channel transpose added to note ids (cmd $a9 $f0/$f1/$ff)
-hSndTranspose:: db
-; [8-bit] Instrument-envelope sweep speed (high nibble); set with hSndEnvLength by cmd $c0-$cf and consumed by TickInstrumentEnvelope
-hSndEnvRate:: db
+; [8-bit] Gate time (snd_gate, cmd $a4): with bit 7 set, the signed ticks before each note's end at which hSndGateTimer runs out; else the ticks after its start
+hSndGateTime:: db
+; [8-bit] Channel switch value (snd_switch, cmd $a9): an index into the jump table $a9 $ff reads; never added to notes
+hSndSwitch:: db
+; [8-bit] Instrument-envelope shape (high nibble): the SoundEnvelopes row TickInstrumentEnvelope reads, 0 = off; set with hSndEnvLength by cmd $c0-$cf
+hSndEnvShape:: db
 ; [8-bit] Instrument-envelope sweep length/target; on the wave channel it doubles as a note-length byte
 hSndEnvLength:: db
 ; [8-bit] Current instrument-envelope position, advanced toward hSndEnvLength each update
@@ -275,26 +275,26 @@ hSndVolSlideTimer:: db
 hSndPeriodLo:: db
 ; [8-bit] Shadow of NRx4 (period high + control); bit 5 ($20) is a software note-on marker used to tell whether a note is sounding
 hSndPeriodHi:: db
-; [8-bit] Echo state: low nibble echo depth (ScaleEchoVolume), high nibble saved volume level; set by cmd $aa
+; [8-bit] Echo state: low nibble the volume scale ScaleEchoVolume applies ((scale + 1) / 16), high nibble the level it saves and restores; set by cmd $aa
 hSndEcho:: db
 ; [8-bit] This channel's rAUDTERM left/right output bits, merged into wSndPanShadow; set/swapped by cmd $a5
 hSndPanMask:: db
-; [8-bit] Note-length reload value (cmd $a3)
-hSndNoteLenReload:: db
-; [8-bit] Note-length countdown; suppresses vibrato/effects until it reaches 0
-hSndNoteLenTimer:: db
+; [8-bit] Vibrato delay (snd_vibrato, cmd $a3): hSndVibratoTimer's reload at each script step
+hSndVibratoDelay:: db
+; [8-bit] Vibrato delay countdown; TickVibrato does nothing until it reaches 0
+hSndVibratoTimer:: db
 ; [8-bit] Instrument selector: high nibble picks the wave pattern / envelope-pointer table, low nibble the envelope sequence; set by cmd $a8
 hSndInstrument:: db
-; [8-bit] Echo repeat counter (cmd $aa)
+; [8-bit] Echo countdown: the note's last ticks, played at the scaled volume (cmd $aa)
 hSndEchoTimer:: db
-; [8-bit] Echo control: high nibble enable/count, low nibble note offset
+; [8-bit] Echo control: high nibble $f while an echo is set, low nibble its tick count
 hSndEchoCtrl:: db
 ; [8-bit] Script loop counter (cmd $ac)
 hSndLoopCount:: db
 ; [16-bit] Saved script pointer for the active loop (cmd $ac/$ad)
 hSndLoopReturnPtr:: dw
-; [8-bit] Non-zero when the current step is a rest/tie; suppresses the volume envelope in ApplyChannelEnvelope
-hSndRestFlag:: db
+; [8-bit] Gate countdown, loaded from hSndGateTime at each note and stepped down with the note timer; once 0, ApplyChannelEnvelope writes level / 4 + 1 (the note's release)
+hSndGateTimer:: db
 NEXTU
 ; sprite queue (bank 0, $2ced-$2d9f)
 ; [8-bit] Screen X origin of the multi-sprite block being queued (QueueSprite32x32); QueueSpriteBlockPart adds d to it for the OAM X byte

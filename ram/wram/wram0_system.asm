@@ -347,7 +347,7 @@ wUnusedPrevSceneIndex:: db
 ; 0x04 - Status Screen
 ; 0x05 - Dictionary
 ; 0x06 - Exhibition Match
-; 0x07 - Unused
+; 0x07 - Exhibition Match (link)
 ; 0x08 - Mario Minigame Screen
 ; 0x09 - You Win
 ; 0x0a - You Lose
@@ -382,7 +382,7 @@ wUnusedPrevSceneIndex:: db
 ; 0x27 - Island Open Semifinals
 ; 0x28 - Island Open Finals
 ; 0x29 - Dream Match
-; 0x2a - Unused
+; 0x2a - Island Open Lost
 ; 0x2b - Island Open Congratulations
 ; 0x2c - Credits
 ; 0x2d - The End
