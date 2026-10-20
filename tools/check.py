@@ -1255,6 +1255,12 @@ RAW_ID_FAMILIES = {
     "FillMatchFormatOptionCell(b)": "MATCHFMTOPT",
     "FlushMatchRuleRowAttrs(b)": "MATCHFMTROW",
     "FlushMatchFormatRowToVram(b)": "MATCHFMTROW",
+    "LoadScoreDigitGfx(b)": "DIGITGFX",
+    "LoadPlayer1PointsDigitGfx(b)": "DIGITGFX",
+    "LoadPlayer2PointsDigitGfx(b)": "DIGITGFX",
+    "LoadPlayer1ScoreDigitGfx(b)": "DIGITGFX",
+    "LoadPlayer2ScoreDigitGfx(b)": "DIGITGFX",
+    "wScoreDisplayIsTiebreak": "DIGITGFX",
 }
 # Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
 # or `add <base>` into that register counts as passing the base.

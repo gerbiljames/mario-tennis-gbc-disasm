@@ -303,10 +303,10 @@ StrokePractice2HandlePointEnd:
 	xor a ; $6eec
 	ld [wPlayer2PointsWon], a ; $6eed
 	ld a, [wPlayer1PointsWon] ; $6ef0
-	ld b, $01 ; $6ef3
+	ld b, DIGITGFX_NUMERALS ; $6ef3
 	farcall LoadPlayer1PointsDigitGfx ; $6ef5
 	ld a, [wPlayer2PointsWon] ; $6ef8
-	ld b, $01 ; $6efb
+	ld b, DIGITGFX_NUMERALS ; $6efb
 	farcall LoadPlayer2PointsDigitGfx ; $6efd
 	farcall StepMatchFrame ; $6f00
 	frame_task SyncPointWinLoseFlagTask ; $6f03

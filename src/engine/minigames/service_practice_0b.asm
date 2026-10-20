@@ -103,10 +103,10 @@ ServiceMatch3HandlePointEnd:
 	ld a, [wDrillCounters + DRILLCTR_P2_SUCCESSES] ; $4cce
 	ld [wPlayer2PointsWon], a ; $4cd1
 	ld a, [wPlayer1PointsWon] ; $4cd4
-	ld b, $01 ; $4cd7
+	ld b, DIGITGFX_NUMERALS ; $4cd7
 	farcall LoadPlayer1PointsDigitGfx ; $4cd9
 	ld a, [wPlayer2PointsWon] ; $4cdc
-	ld b, $01 ; $4cdf
+	ld b, DIGITGFX_NUMERALS ; $4cdf
 	farcall LoadPlayer2PointsDigitGfx ; $4ce1
 	farcall StepMatchFrame ; $4ce4
 	farcall StartPointEndReactions ; $4ce7
@@ -360,10 +360,10 @@ ServicePractice1HandlePointEnd:
 	xor a ; $4eed
 	ld [wPlayer2PointsWon], a ; $4eee
 	ld a, [wPlayer1PointsWon] ; $4ef1
-	ld b, $01 ; $4ef4
+	ld b, DIGITGFX_NUMERALS ; $4ef4
 	farcall LoadPlayer1PointsDigitGfx ; $4ef6
 	ld a, [wPlayer2PointsWon] ; $4ef9
-	ld b, $01 ; $4efc
+	ld b, DIGITGFX_NUMERALS ; $4efc
 	farcall LoadPlayer2PointsDigitGfx ; $4efe
 	farcall StepMatchFrame ; $4f01
 	frame_task SyncPointWinLoseFlagTask ; $4f04

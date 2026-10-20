@@ -287,19 +287,19 @@ ShowMatchEndSequence:
 	ret ; $4f0e
 ShowSetEndSequence:
 	ld a, [wPlayer1SetsWon] ; $4f0f
-	ld b, $01 ; $4f12
+	ld b, DIGITGFX_NUMERALS ; $4f12
 	farcall LoadPlayer1ScoreDigitGfx ; $4f14
 	ld a, [wPlayer2SetsWon] ; $4f17
-	ld b, $01 ; $4f1a
+	ld b, DIGITGFX_NUMERALS ; $4f1a
 	farcall LoadPlayer2ScoreDigitGfx ; $4f1c
 	ld d, BANNER_SET ; $4f1f
 	jr ShowGameEndSequence.done ; $4f21
 ShowGameEndSequence:
 	ld a, [wPlayer1GamesWon] ; $4f23
-	ld b, $01 ; $4f26
+	ld b, DIGITGFX_NUMERALS ; $4f26
 	farcall LoadPlayer1ScoreDigitGfx ; $4f28
 	ld a, [wPlayer2GamesWon] ; $4f2b
-	ld b, $01 ; $4f2e
+	ld b, DIGITGFX_NUMERALS ; $4f2e
 	farcall LoadPlayer2ScoreDigitGfx ; $4f30
 	ld d, BANNER_GAME ; $4f33
 	jr .done ; $4f35

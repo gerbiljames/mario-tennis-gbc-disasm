@@ -60,7 +60,7 @@ CheckSetComplete:
 .gameDone:
 	ret ; $4781
 .tiebreak:
-	ld a, $01 ; $4782
+	ld a, DIGITGFX_NUMERALS ; $4782
 	ld [wScoreDisplayIsTiebreak], a ; $4784
 	call InitTiebreakPointCounter ; $4787
 	ld a, $01 ; $478a

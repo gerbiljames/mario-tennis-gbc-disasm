@@ -408,10 +408,10 @@ StrokeMatch1HandlePointEnd:
 	farcall UpdatePointStats ; $64a3
 	call StrokeMatch1AwardPointToSide ; $64a6
 	ld a, [wPlayer1PointsWon] ; $64a9
-	ld b, $01 ; $64ac
+	ld b, DIGITGFX_NUMERALS ; $64ac
 	farcall LoadPlayer1PointsDigitGfx ; $64ae
 	ld a, [wPlayer2PointsWon] ; $64b1
-	ld b, $01 ; $64b4
+	ld b, DIGITGFX_NUMERALS ; $64b4
 	farcall LoadPlayer2PointsDigitGfx ; $64b6
 	farcall StepMatchFrame ; $64b9
 	farcall StartPointEndReactions ; $64bc

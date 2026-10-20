@@ -50,10 +50,10 @@ ServicePractice2HandlePointEnd:
 	xor a ; $50b9
 	ld [wPlayer2PointsWon], a ; $50ba
 	ld a, [wPlayer1PointsWon] ; $50bd
-	ld b, $01 ; $50c0
+	ld b, DIGITGFX_NUMERALS ; $50c0
 	farcall LoadPlayer1PointsDigitGfx ; $50c2
 	ld a, [wPlayer2PointsWon] ; $50c5
-	ld b, $01 ; $50c8
+	ld b, DIGITGFX_NUMERALS ; $50c8
 	farcall LoadPlayer2PointsDigitGfx ; $50ca
 	farcall StepMatchFrame ; $50cd
 	frame_task SyncPointWinLoseFlagTask ; $50d0
@@ -352,10 +352,10 @@ ServicePractice3HandlePointEnd:
 	xor a ; $534f
 	ld [wPlayer2PointsWon], a ; $5350
 	ld a, [wPlayer1PointsWon] ; $5353
-	ld b, $01 ; $5356
+	ld b, DIGITGFX_NUMERALS ; $5356
 	farcall LoadPlayer1PointsDigitGfx ; $5358
 	ld a, [wPlayer2PointsWon] ; $535b
-	ld b, $01 ; $535e
+	ld b, DIGITGFX_NUMERALS ; $535e
 	farcall LoadPlayer2PointsDigitGfx ; $5360
 	farcall StepMatchFrame ; $5363
 	frame_task SyncPointWinLoseFlagTask ; $5366

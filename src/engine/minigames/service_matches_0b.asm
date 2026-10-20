@@ -231,10 +231,10 @@ ServiceMatch1HandlePointEnd:
 	ld a, [wDrillCounters + DRILLCTR_P2_SUCCESSES] ; $48dc
 	ld [wPlayer2PointsWon], a ; $48df
 	ld a, [wPlayer1PointsWon] ; $48e2
-	ld b, $01 ; $48e5
+	ld b, DIGITGFX_NUMERALS ; $48e5
 	farcall LoadPlayer1PointsDigitGfx ; $48e7
 	ld a, [wPlayer2PointsWon] ; $48ea
-	ld b, $01 ; $48ed
+	ld b, DIGITGFX_NUMERALS ; $48ed
 	farcall LoadPlayer2PointsDigitGfx ; $48ef
 	farcall StepMatchFrame ; $48f2
 	farcall StartPointEndReactions ; $48f5
@@ -496,10 +496,10 @@ ServiceMatch2HandlePointEnd:
 .serviceMatch2AwardPointToSide:
 	call ServiceMatch2AwardPointToSide ; $4ae8
 	ld a, [wPlayer1PointsWon] ; $4aeb
-	ld b, $01 ; $4aee
+	ld b, DIGITGFX_NUMERALS ; $4aee
 	farcall LoadPlayer1PointsDigitGfx ; $4af0
 	ld a, [wPlayer2PointsWon] ; $4af3
-	ld b, $01 ; $4af6
+	ld b, DIGITGFX_NUMERALS ; $4af6
 	farcall LoadPlayer2PointsDigitGfx ; $4af8
 	farcall StepMatchFrame ; $4afb
 	farcall StartPointEndReactions ; $4afe

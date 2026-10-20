@@ -80,10 +80,10 @@ NetGameMatch1HandlePointEnd:
 	farcall UpdatePointStats ; $5471
 	call NetGameMatch1AwardPointToSide ; $5474
 	ld a, [wPlayer1PointsWon] ; $5477
-	ld b, $01 ; $547a
+	ld b, DIGITGFX_NUMERALS ; $547a
 	farcall LoadPlayer1PointsDigitGfx ; $547c
 	ld a, [wPlayer2PointsWon] ; $547f
-	ld b, $01 ; $5482
+	ld b, DIGITGFX_NUMERALS ; $5482
 	farcall LoadPlayer2PointsDigitGfx ; $5484
 	farcall StepMatchFrame ; $5487
 	farcall StartPointEndReactions ; $548a
@@ -422,10 +422,10 @@ NetGameMatch2HandlePointEnd:
 	farcall UpdatePointStats ; $5704
 	call NetGameMatch2AwardPointToSide ; $5707
 	ld a, [wPlayer1PointsWon] ; $570a
-	ld b, $01 ; $570d
+	ld b, DIGITGFX_NUMERALS ; $570d
 	farcall LoadPlayer1PointsDigitGfx ; $570f
 	ld a, [wPlayer2PointsWon] ; $5712
-	ld b, $01 ; $5715
+	ld b, DIGITGFX_NUMERALS ; $5715
 	farcall LoadPlayer2PointsDigitGfx ; $5717
 	farcall StepMatchFrame ; $571a
 	farcall StartPointEndReactions ; $571d
@@ -745,10 +745,10 @@ NetGameMatch3HandlePointEnd:
 	farcall UpdatePointStats ; $5974
 	call NetGameMatch3AwardPointToSide ; $5977
 	ld a, [wPlayer1PointsWon] ; $597a
-	ld b, $01 ; $597d
+	ld b, DIGITGFX_NUMERALS ; $597d
 	farcall LoadPlayer1PointsDigitGfx ; $597f
 	ld a, [wPlayer2PointsWon] ; $5982
-	ld b, $01 ; $5985
+	ld b, DIGITGFX_NUMERALS ; $5985
 	farcall LoadPlayer2PointsDigitGfx ; $5987
 	farcall StepMatchFrame ; $598a
 	farcall StartPointEndReactions ; $598d

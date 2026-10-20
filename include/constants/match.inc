@@ -316,6 +316,12 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
 	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
 
+; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDisplayIsTiebreak) ---
+; GetGfxSourcePtr's index into VramGfxPtrTable_09 / Player1ScoreDigitGfxSource /
+; Player2ScoreDigitGfxSource.
+def DIGITGFX_TENNIS_CALLS    equ $00 ; 0/15/30/40/Ad: a normal game's points
+def DIGITGFX_NUMERALS        equ $01 ; plain numbers: tiebreak points, minigame counters, games and sets
+
 ; --- Mode hook slots (CallModeHook's d; rows of a mode_hooks table) ---
 	const_def
 	const MODEHOOK_PER_FRAME      ; $00 UpdateMatchFrame, every simulation frame

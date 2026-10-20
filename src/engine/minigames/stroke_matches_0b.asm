@@ -126,10 +126,10 @@ StrokeMatch2HandlePointEnd:
 	farcall UpdatePointStats ; $67a2
 	call StrokeMatch2AwardPointToSide ; $67a5
 	ld a, [wPlayer1PointsWon] ; $67a8
-	ld b, $01 ; $67ab
+	ld b, DIGITGFX_NUMERALS ; $67ab
 	farcall LoadPlayer1PointsDigitGfx ; $67ad
 	ld a, [wPlayer2PointsWon] ; $67b0
-	ld b, $01 ; $67b3
+	ld b, DIGITGFX_NUMERALS ; $67b3
 	farcall LoadPlayer2PointsDigitGfx ; $67b5
 	farcall StepMatchFrame ; $67b8
 	farcall StartPointEndReactions ; $67bb
@@ -426,10 +426,10 @@ StrokeMatch3HandlePointEnd:
 	farcall UpdatePointStats ; $69ed
 	call StrokeMatch3AwardPointToSide ; $69f0
 	ld a, [wPlayer1PointsWon] ; $69f3
-	ld b, $01 ; $69f6
+	ld b, DIGITGFX_NUMERALS ; $69f6
 	farcall LoadPlayer1PointsDigitGfx ; $69f8
 	ld a, [wPlayer2PointsWon] ; $69fb
-	ld b, $01 ; $69fe
+	ld b, DIGITGFX_NUMERALS ; $69fe
 	farcall LoadPlayer2PointsDigitGfx ; $6a00
 	farcall StepMatchFrame ; $6a03
 	farcall StartPointEndReactions ; $6a06
