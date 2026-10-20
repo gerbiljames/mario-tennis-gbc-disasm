@@ -138,22 +138,22 @@ RunExpDistributionFlow:
 	ld a, [hl+] ; $684c
 	ld d, [hl] ; $684d
 	ld e, a ; $684e
-	ld a, $01 ; $684f
+	ld a, STORYREC_PARTNER ; $684f
 	farcall AddPlayerExp ; $6851
 .showCharData:
-	ld c, $00 ; $6854
+	ld c, STORYREC_MAIN ; $6854
 	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
 	jr z, .commitExp ; $685a
 	inc a ; $685c
 	jr nz, .countLeft ; $685d
 	farcall BackupCharData ; $685f
-	ld c, $01 ; $6862
+	ld c, STORYREC_PARTNER ; $6862
 	farcall CharDataScreen_Show ; $6864
 	dec a ; $6867
 	jr z, .restoreCharData ; $6868
 .countLeft:
-	ld c, $01 ; $686a
+	ld c, STORYREC_PARTNER ; $686a
 	farcall CharDataScreen_Show ; $686c
 	dec a ; $686f
 	jr z, .countDone ; $6870
@@ -270,7 +270,7 @@ BuildExpDistributionScreen:
 	ld [wStoryCharacterSlot], a ; $697e
 	call DrawExpScreenLevelNumber ; $6981
 	call DrawExpScreenLevelBar ; $6984
-	ld a, $01 ; $6987
+	ld a, STORYREC_PARTNER ; $6987
 	ld [wStoryCharacterSlot], a ; $6989
 	call DrawExpScreenLevelNumber ; $698c
 	call DrawExpScreenLevelBar ; $698f
@@ -538,7 +538,7 @@ InitExpScreenCharStats:
 	ld [wExpScreenCharStats + EXPSTAT_EXP + 1], a ; $6c21
 	ld a, [hl] ; $6c24
 	ld [wExpScreenCharStats + EXPSTAT_EXP + 2], a ; $6c25
-	ld a, $01 ; $6c28
+	ld a, STORYREC_PARTNER ; $6c28
 	ld [wStoryCharacterSlot], a ; $6c2a
 	push af ; $6c2d
 	ld_story_char_field CHARREC_NAME ; $6c2e
@@ -570,13 +570,13 @@ InitExpScreenCharStats:
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP], a ; $6c89
 	ld a, h ; $6c8c
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP + 1], a ; $6c8d
-	ld a, $01 ; $6c90
+	ld a, STORYREC_PARTNER ; $6c90
 	farcall GetExpProgressInCurrentLevel ; $6c92
 	ld a, l ; $6c95
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL], a ; $6c96
 	ld a, h ; $6c99
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL + 1], a ; $6c9a
-	ld a, $01 ; $6c9d
+	ld a, STORYREC_PARTNER ; $6c9d
 	farcall GetExpRemainingToNextLevel ; $6c9f
 	ld a, l ; $6ca2
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT], a ; $6ca3
@@ -613,7 +613,7 @@ InitExpScreenCharStats:
 	call FormatDecimalNumberUnsigned ; $6d11
 	ld de, wCharDataScreenCell + 3 * TILEMAP_WIDTH + 11 ; $6d14
 	farcall CharDataScreen_WriteStatNumber ; $6d17
-	ld a, $01 ; $6d1a
+	ld a, STORYREC_PARTNER ; $6d1a
 	ld [wStoryCharacterSlot], a ; $6d1c
 	push af ; $6d1f
 	ld_story_char_field CHARREC_NAME ; $6d20

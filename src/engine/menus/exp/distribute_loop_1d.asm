@@ -83,7 +83,7 @@ RunExpDistributionLoop:
 	or a ; $6ffc
 	jp nz, RunExpDistributionLoop ; $6ffd
 	sound SFX_MENU_MOVE ; $7000
-	ld a, $01 ; $7002
+	ld a, STORYREC_PARTNER ; $7002
 	ld [wStoryCharacterSlot], a ; $7004
 	call UpdateExpScreenSelectionPalettes ; $7007
 	ld hl, SlideExpCursorToMainCharTask ; $700a

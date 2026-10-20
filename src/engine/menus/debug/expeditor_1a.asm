@@ -92,13 +92,13 @@ Unused_1a_RunDebugExpEditor:
 	ld a, [hl+] ; $4456
 	ld d, [hl] ; $4457
 	ld e, a ; $4458
-	ld l, $00 ; $4459
+	ld l, STORYREC_MAIN ; $4459
 	call Unused_1a_ResetCharDataScreenAnim ; $445b
 	ld hl, wStoryPartnerExp ; $445e
 	ld a, [hl+] ; $4461
 	ld d, [hl] ; $4462
 	ld e, a ; $4463
-	ld l, $01 ; $4464
+	ld l, STORYREC_PARTNER ; $4464
 	call Unused_1a_ResetCharDataScreenAnim ; $4466
 	pop_wram_bank ; $4469
 	pop hl ; $446e

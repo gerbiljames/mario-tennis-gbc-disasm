@@ -325,9 +325,9 @@ ProcessMatchRewards:
 	or l ; $6696
 	jr z, .showIslandOpenRankingBoard ; $6697
 	farcall RunExpDistributionFlow ; $6699
-	ld c, $00 ; $669c
+	ld c, STORYREC_MAIN ; $669c
 	farcall CharDataScreen_Show ; $669e
-	ld c, $01 ; $66a1
+	ld c, STORYREC_PARTNER ; $66a1
 	farcall CharDataScreen_Show ; $66a3
 	call ApplyStatGapProgressFlag ; $66a6
 .showIslandOpenRankingBoard:

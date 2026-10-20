@@ -394,7 +394,7 @@ RacketShoesChoiceGfxDests_3e:
 RedrawRacketShoesChoiceMenu:
 	wram_bank WRAM_SCREEN ; $4fcf
 	ld b, $00 ; $4fd5
-	ld c, $00 ; $4fd7
+	ld c, ATTRRECT_INACTIVE ; $4fd7
 .loop:
 	call SetChoiceTabAttrRect ; $4fd9
 	ld a, b ; $4fdc
@@ -405,7 +405,7 @@ RedrawRacketShoesChoiceMenu:
 	ld c, $02 ; $4fe3
 	call GetMenuCursorIndex_3e ; $4fe5
 	ld b, a ; $4fe8
-	ld c, $01 ; $4fe9
+	ld c, ATTRRECT_SELECTED ; $4fe9
 	call SetChoiceTabAttrRect ; $4feb
 	ld c, $02 ; $4fee
 	call GetMenuCursorIndex_3e ; $4ff0

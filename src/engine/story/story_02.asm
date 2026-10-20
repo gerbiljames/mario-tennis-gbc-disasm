@@ -206,10 +206,10 @@ InitStoryModeState:
 	ld hl, wStorySlotData ; $421f
 	ld c, $30 ; $4222
 	call ClearMemory16 ; $4224
-	ld a, $00 ; $4227
+	ld a, STORYREC_MAIN ; $4227
 	ld d, $00 ; $4229
 	call InitPlayerRecordFromTemplate ; $422b
-	ld a, $01 ; $422e
+	ld a, STORYREC_PARTNER ; $422e
 	ld d, $02 ; $4230
 	call InitPlayerRecordFromTemplate ; $4232
 	ld hl, wStoryModeCurrentLocation ; $4235

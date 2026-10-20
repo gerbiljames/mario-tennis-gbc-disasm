@@ -199,6 +199,30 @@ def NUM_PANELANIMS equ const_value
 	const MAPROWS_BANDS_4_9    ; $02
 	const MAPROWS_BAND_7       ; $03
 
+; --- Attribute-rect highlight (c of the option-cell and tab attr fillers) ---
+; SetMatchRuleOptionAttrRect, FillMatchFormatOptionCell, SetChoiceTabAttrRect,
+; SetCourtSelect4/9TabAttrRect, SetSelectPanelAttrRect(3) and
+; FillN64RecordTypeCell test c for zero: any nonzero value fills with the
+; selected attribute, zero with the inactive $0d.
+def ATTRRECT_INACTIVE equ $00
+def ATTRRECT_SELECTED equ $01
+
+; --- Match-format screen rows (cursor row; FlushMatchFormatRowToVram's b) ---
+	const_def
+	const MATCHFMTROW_MODE  ; $00 singles / doubles (wMatchFormatDoubles)
+	const MATCHFMTROW_GAMES ; $01 wMatchFormatGames
+	const MATCHFMTROW_SETS  ; $02 wMatchFormatSets
+def NUM_MATCHFMTROWS equ const_value
+
+; --- Match-format option cells (FillMatchFormatOptionCell's b) ---
+; A row's cells run from its base: the selected cell is the base plus the
+; row's variable (`add MATCHFMTOPT_GAMES`).
+def MATCHFMTOPT_SINGLES equ $00
+def MATCHFMTOPT_DOUBLES equ $01
+def MATCHFMTOPT_GAMES   equ $02 ; + wMatchFormatGames (2 choices)
+def MATCHFMTOPT_SETS    equ $04 ; + wMatchFormatSets (3 choices)
+def NUM_MATCHFMTOPTS    equ MATCHFMTOPT_SETS + 3
+
 ; --- Character select slot (wCharSelectSlot) ---
 def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
 def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingTable): leave the screen

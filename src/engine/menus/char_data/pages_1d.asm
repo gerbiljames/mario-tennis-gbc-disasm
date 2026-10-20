@@ -306,7 +306,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, vTiles2 tile $40 + VRAM_BANK1 ; $43b6
 	ld c, 3 ; $43b9
 	call QueueVRAMCopy ; $43bb
-	ld a, $01 ; $43be
+	ld a, STORYREC_PARTNER ; $43be
 	ld [wStoryCharacterSlot], a ; $43c0
 	push af ; $43c3
 	ld_story_char_field CHARREC_PALETTE ; $43c4
@@ -479,7 +479,7 @@ BuildCharDataSummaryFields:
 	ld [hl+], a ; $45d9
 	ld [hl], a ; $45da
 .storeStoryCharacterSlot:
-	ld a, $01 ; $45db
+	ld a, STORYREC_PARTNER ; $45db
 	ld [wStoryCharacterSlot], a ; $45dd
 	push af ; $45e0
 	ld_story_char_field CHARREC_NAME ; $45e1
@@ -562,7 +562,7 @@ BuildCharDataSummaryFields:
 	ld de, wCharDataPagePlane + 5 * TILEMAP_WIDTH + 31 ; $470e
 	call DrawExpProgressBarTiles ; $4711
 	wram_bank WRAM_SCENE ; $4714
-	ld a, $01 ; $471a
+	ld a, STORYREC_PARTNER ; $471a
 	farcall GetExpRemainingToNextLevel ; $471c
 	ld a, $03 ; $471f
 	ld de, wCharDataNumberBuffer ; $4721

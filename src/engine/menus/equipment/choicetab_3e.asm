@@ -288,7 +288,7 @@ PlayAlonePartnerGfxDests_3e:
 RedrawPlayAlonePartnerMenu:
 	wram_bank WRAM_SCREEN ; $52b7
 	ld b, $00 ; $52bd
-	ld c, $00 ; $52bf
+	ld c, ATTRRECT_INACTIVE ; $52bf
 .loop:
 	call SetChoiceTabAttrRect ; $52c1
 	ld a, b ; $52c4
@@ -299,7 +299,7 @@ RedrawPlayAlonePartnerMenu:
 	ld c, $02 ; $52cb
 	call GetMenuCursorIndex_3e ; $52cd
 	ld b, a ; $52d0
-	ld c, $01 ; $52d1
+	ld c, ATTRRECT_SELECTED ; $52d1
 	call SetChoiceTabAttrRect ; $52d3
 	ld c, $02 ; $52d6
 	call GetMenuCursorIndex_3e ; $52d8

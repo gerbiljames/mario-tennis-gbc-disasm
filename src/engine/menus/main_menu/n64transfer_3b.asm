@@ -352,7 +352,7 @@ N64RecordTypeCursorTileBases:
 DrawN64RecordTypeGrid:
 	wram_bank WRAM_SCREEN ; $73bf
 	ld b, $00 ; $73c5
-	ld c, $00 ; $73c7
+	ld c, ATTRRECT_INACTIVE ; $73c7
 .loop:
 	call FillN64RecordTypeCell ; $73c9
 	ld a, b ; $73cc
@@ -363,7 +363,7 @@ DrawN64RecordTypeGrid:
 	ld c, $03 ; $73d3
 	call GetMenuCursorIndex_3b ; $73d5
 	ld b, a ; $73d8
-	ld c, $01 ; $73d9
+	ld c, ATTRRECT_SELECTED ; $73d9
 	call FillN64RecordTypeCell ; $73db
 	ld c, $03 ; $73de
 	call GetMenuCursorIndex_3b ; $73e0
@@ -625,7 +625,7 @@ N64TransferItemLabelTileVramDests:
 DrawN64TransferItemGrid:
 	wram_bank WRAM_SCREEN ; $760c
 	ld b, $00 ; $7612
-	ld c, $00 ; $7614
+	ld c, ATTRRECT_INACTIVE ; $7614
 .loop:
 	farcall SetCourtSelect4TabAttrRect ; $7616
 	ld a, b ; $7619
@@ -636,7 +636,7 @@ DrawN64TransferItemGrid:
 	ld c, $02 ; $7620
 	call GetMenuCursorIndex_3b ; $7622
 	ld b, a ; $7625
-	ld c, $01 ; $7626
+	ld c, ATTRRECT_SELECTED ; $7626
 	farcall SetCourtSelect4TabAttrRect ; $7628
 	ld c, $02 ; $762b
 	call GetMenuCursorIndex_3b ; $762d

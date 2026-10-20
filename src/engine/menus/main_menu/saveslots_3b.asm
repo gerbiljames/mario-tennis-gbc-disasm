@@ -377,23 +377,23 @@ InitMatchFormatOptions:
 	call SetMenuCursorFromIndex_3b ; $5d84
 	ld a, [wMatchFormatDoubles] ; $5d87
 	ld b, a ; $5d8a
-	ld c, $01 ; $5d8b
+	ld c, ATTRRECT_SELECTED ; $5d8b
 	call FillMatchFormatOptionCell ; $5d8d
-	ld b, $00 ; $5d90
+	ld b, MATCHFMTROW_MODE ; $5d90
 	call FlushMatchFormatRowToVram ; $5d92
 	ld a, [wMatchFormatGames] ; $5d95
-	add $02 ; $5d98
+	add MATCHFMTOPT_GAMES ; $5d98
 	ld b, a ; $5d9a
-	ld c, $01 ; $5d9b
+	ld c, ATTRRECT_SELECTED ; $5d9b
 	call FillMatchFormatOptionCell ; $5d9d
-	ld b, $01 ; $5da0
+	ld b, MATCHFMTROW_GAMES ; $5da0
 	call FlushMatchFormatRowToVram ; $5da2
 	ld a, [wMatchFormatSets] ; $5da5
-	add $04 ; $5da8
+	add MATCHFMTOPT_SETS ; $5da8
 	ld b, a ; $5daa
-	ld c, $01 ; $5dab
+	ld c, ATTRRECT_SELECTED ; $5dab
 	call FillMatchFormatOptionCell ; $5dad
-	ld b, $02 ; $5db0
+	ld b, MATCHFMTROW_SETS ; $5db0
 	call FlushMatchFormatRowToVram ; $5db2
 	ld hl, MatchFormatOptionsPalettes0 ; $5db5
 	ld d, $04 ; $5db8
@@ -576,18 +576,18 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatDoubles] ; $5f52
 	xor $01 ; $5f55
 	ld [wMatchFormatDoubles], a ; $5f57
-	ld b, $00 ; $5f5a
+	ld b, MATCHFMTROW_MODE ; $5f5a
 	call FlushMatchFormatRowToVram ; $5f5c
 	call RedrawMatchFormatModeRow ; $5f5f
 	call DrawMatchFormatCaption ; $5f62
 	ret ; $5f65
 .leftGamesOrSets:
-	cp $01 ; $5f66
+	cp MATCHFMTROW_GAMES ; $5f66
 	jr nz, .decSets ; $5f68
 	ld a, [wMatchFormatGames] ; $5f6a
 	xor $01 ; $5f6d
 	ld [wMatchFormatGames], a ; $5f6f
-	ld b, $01 ; $5f72
+	ld b, MATCHFMTROW_GAMES ; $5f72
 	call FlushMatchFormatRowToVram ; $5f74
 	call RedrawMatchFormatGamesRow ; $5f77
 	call DrawMatchFormatCaption ; $5f7a
@@ -607,7 +607,7 @@ HandleMatchFormatInput:
 	xor a ; $5f8f
 .storeDecSets:
 	ld [wMatchFormatSets], a ; $5f90
-	ld b, $02 ; $5f93
+	ld b, MATCHFMTROW_SETS ; $5f93
 	call FlushMatchFormatRowToVram ; $5f95
 	call RedrawMatchFormatSetsRow ; $5f98
 	call DrawMatchFormatCaption ; $5f9b
@@ -621,18 +621,18 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatDoubles] ; $5fa9
 	xor $01 ; $5fac
 	ld [wMatchFormatDoubles], a ; $5fae
-	ld b, $00 ; $5fb1
+	ld b, MATCHFMTROW_MODE ; $5fb1
 	call FlushMatchFormatRowToVram ; $5fb3
 	call RedrawMatchFormatModeRow ; $5fb6
 	call DrawMatchFormatCaption ; $5fb9
 	ret ; $5fbc
 .rightGamesOrSets:
-	cp $01 ; $5fbd
+	cp MATCHFMTROW_GAMES ; $5fbd
 	jr nz, .incSets ; $5fbf
 	ld a, [wMatchFormatGames] ; $5fc1
 	xor $01 ; $5fc4
 	ld [wMatchFormatGames], a ; $5fc6
-	ld b, $01 ; $5fc9
+	ld b, MATCHFMTROW_GAMES ; $5fc9
 	call FlushMatchFormatRowToVram ; $5fcb
 	call RedrawMatchFormatGamesRow ; $5fce
 	call DrawMatchFormatCaption ; $5fd1
@@ -652,50 +652,50 @@ HandleMatchFormatInput:
 	xor a ; $5fe6
 .storeIncSets:
 	ld [wMatchFormatSets], a ; $5fe7
-	ld b, $02 ; $5fea
+	ld b, MATCHFMTROW_SETS ; $5fea
 	call FlushMatchFormatRowToVram ; $5fec
 	call RedrawMatchFormatSetsRow ; $5fef
 	call DrawMatchFormatCaption ; $5ff2
 	ret ; $5ff5
 RedrawMatchFormatModeRow:
-	ld b, $00 ; $5ff6
-	ld c, $00 ; $5ff8
+	ld b, MATCHFMTOPT_SINGLES ; $5ff6
+	ld c, ATTRRECT_INACTIVE ; $5ff8
 	call FillMatchFormatOptionCell ; $5ffa
-	ld b, $01 ; $5ffd
-	ld c, $00 ; $5fff
+	ld b, MATCHFMTOPT_DOUBLES ; $5ffd
+	ld c, ATTRRECT_INACTIVE ; $5fff
 	call FillMatchFormatOptionCell ; $6001
 	ld a, [wMatchFormatDoubles] ; $6004
 	ld b, a ; $6007
-	ld c, $01 ; $6008
+	ld c, ATTRRECT_SELECTED ; $6008
 	call FillMatchFormatOptionCell ; $600a
 	ret ; $600d
 RedrawMatchFormatGamesRow:
-	ld b, $02 ; $600e
-	ld c, $00 ; $6010
+	ld b, MATCHFMTOPT_GAMES ; $600e
+	ld c, ATTRRECT_INACTIVE ; $6010
 	call FillMatchFormatOptionCell ; $6012
-	ld b, $03 ; $6015
-	ld c, $00 ; $6017
+	ld b, MATCHFMTOPT_GAMES + 1 ; $6015
+	ld c, ATTRRECT_INACTIVE ; $6017
 	call FillMatchFormatOptionCell ; $6019
 	ld a, [wMatchFormatGames] ; $601c
-	add $02 ; $601f
+	add MATCHFMTOPT_GAMES ; $601f
 	ld b, a ; $6021
-	ld c, $01 ; $6022
+	ld c, ATTRRECT_SELECTED ; $6022
 	call FillMatchFormatOptionCell ; $6024
 	ret ; $6027
 RedrawMatchFormatSetsRow:
-	ld b, $04 ; $6028
-	ld c, $00 ; $602a
+	ld b, MATCHFMTOPT_SETS ; $6028
+	ld c, ATTRRECT_INACTIVE ; $602a
 	call FillMatchFormatOptionCell ; $602c
-	ld b, $05 ; $602f
-	ld c, $00 ; $6031
+	ld b, MATCHFMTOPT_SETS + 1 ; $602f
+	ld c, ATTRRECT_INACTIVE ; $6031
 	call FillMatchFormatOptionCell ; $6033
-	ld b, $06 ; $6036
-	ld c, $00 ; $6038
+	ld b, MATCHFMTOPT_SETS + 2 ; $6036
+	ld c, ATTRRECT_INACTIVE ; $6038
 	call FillMatchFormatOptionCell ; $603a
 	ld a, [wMatchFormatSets] ; $603d
-	add $04 ; $6040
+	add MATCHFMTOPT_SETS ; $6040
 	ld b, a ; $6042
-	ld c, $01 ; $6043
+	ld c, ATTRRECT_SELECTED ; $6043
 	call FillMatchFormatOptionCell ; $6045
 	ret ; $6048
 FillMatchFormatOptionCell:
@@ -751,14 +751,14 @@ MatchFormatCursorSpriteTask:
 	ld a, [wMatchFormatDoubles] ; $60db
 	jr .gotRuleValue ; $60de
 .compare:
-	cp $01 ; $60e0
+	cp MATCHFMTROW_GAMES ; $60e0
 	jr nz, .checkMatchFormatSets ; $60e2
 	ld a, [wMatchFormatGames] ; $60e4
-	add $02 ; $60e7
+	add MATCHFMTOPT_GAMES ; $60e7
 	jr .gotRuleValue ; $60e9
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $60eb
-	add $04 ; $60ee
+	add MATCHFMTOPT_SETS ; $60ee
 .gotRuleValue:
 	push af ; $60f0
 	ld hl, MatchFormatCursorTileBases ; $60f1
@@ -841,7 +841,7 @@ RenderMatchFormatOptionText:
 	farcall RenderTextToBuffer64 ; $61b9
 	ret ; $61bc
 .compare:
-	cp $01 ; $61bd
+	cp MATCHFMTROW_GAMES ; $61bd
 	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
 	ld hl, Text_MatchFormatOneSetTwoGames ; $61c4

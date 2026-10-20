@@ -261,3 +261,12 @@ def CHAR_NONE          equ $ff ; empty court slot
 def CHAR_STORY_MAIN    equ $80 ; the story slot's own character ($c900 record)
 def CHAR_STORY_PARTNER equ $81 ; its doubles partner ($c940 record)
 def CHAR_EMPTY_SLOT    equ $3f ; an empty story file's character, shown with palette $03; DecompressCharMugshot adds wCurrentStorySlot to it
+
+; --- Story character record (wStoryCharacterSlot; GetPlayerRecordPtr's a) ---
+; GetPlayerRecordPtr tests a for zero, so any nonzero value selects the
+; partner; InitMatchRecordFromCharId picks the record by bit 0 of a
+; CHAR_STORY_* id.
+def STORYREC_MAIN    equ $00 ; wStoryMain ($c900)
+def STORYREC_PARTNER equ $01 ; wStoryPartner ($c940)
+ASSERT (CHAR_STORY_MAIN & 1) == STORYREC_MAIN
+ASSERT (CHAR_STORY_PARTNER & 1) == STORYREC_PARTNER

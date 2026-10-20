@@ -1,42 +1,42 @@
 DrawSinglesDoublesRow:
-	ld b, $00 ; $4817
-	ld c, $00 ; $4819
+	ld b, MATCHFMTOPT_SINGLES ; $4817
+	ld c, ATTRRECT_INACTIVE ; $4819
 	call SetMatchRuleOptionAttrRect ; $481b
-	ld b, $01 ; $481e
-	ld c, $00 ; $4820
+	ld b, MATCHFMTOPT_DOUBLES ; $481e
+	ld c, ATTRRECT_INACTIVE ; $4820
 	call SetMatchRuleOptionAttrRect ; $4822
 	ld a, [wMatchFormatDoubles] ; $4825
 	ld b, a ; $4828
-	ld c, $01 ; $4829
+	ld c, ATTRRECT_SELECTED ; $4829
 	call SetMatchRuleOptionAttrRect ; $482b
 	ret ; $482e
 DrawGameCountRow:
-	ld b, $02 ; $482f
-	ld c, $00 ; $4831
+	ld b, MATCHFMTOPT_GAMES ; $482f
+	ld c, ATTRRECT_INACTIVE ; $4831
 	call SetMatchRuleOptionAttrRect ; $4833
-	ld b, $03 ; $4836
-	ld c, $00 ; $4838
+	ld b, MATCHFMTOPT_GAMES + 1 ; $4836
+	ld c, ATTRRECT_INACTIVE ; $4838
 	call SetMatchRuleOptionAttrRect ; $483a
 	ld a, [wMatchFormatGames] ; $483d
-	add $02 ; $4840
+	add MATCHFMTOPT_GAMES ; $4840
 	ld b, a ; $4842
-	ld c, $01 ; $4843
+	ld c, ATTRRECT_SELECTED ; $4843
 	call SetMatchRuleOptionAttrRect ; $4845
 	ret ; $4848
 DrawSetCountRow:
-	ld b, $04 ; $4849
-	ld c, $00 ; $484b
+	ld b, MATCHFMTOPT_SETS ; $4849
+	ld c, ATTRRECT_INACTIVE ; $484b
 	call SetMatchRuleOptionAttrRect ; $484d
-	ld b, $05 ; $4850
-	ld c, $00 ; $4852
+	ld b, MATCHFMTOPT_SETS + 1 ; $4850
+	ld c, ATTRRECT_INACTIVE ; $4852
 	call SetMatchRuleOptionAttrRect ; $4854
-	ld b, $06 ; $4857
-	ld c, $00 ; $4859
+	ld b, MATCHFMTOPT_SETS + 2 ; $4857
+	ld c, ATTRRECT_INACTIVE ; $4859
 	call SetMatchRuleOptionAttrRect ; $485b
 	ld a, [wMatchFormatSets] ; $485e
-	add $04 ; $4861
+	add MATCHFMTOPT_SETS ; $4861
 	ld b, a ; $4863
-	ld c, $01 ; $4864
+	ld c, ATTRRECT_SELECTED ; $4864
 	call SetMatchRuleOptionAttrRect ; $4866
 	ret ; $4869
 SetMatchRuleOptionAttrRect:
@@ -91,14 +91,14 @@ MatchRulesCursorSpriteTask:
 	ld a, [wMatchFormatDoubles] ; $48f9
 	jr .gotRuleValue ; $48fc
 .compare:
-	cp $01 ; $48fe
+	cp MATCHFMTROW_GAMES ; $48fe
 	jr nz, .checkMatchFormatSets ; $4900
 	ld a, [wMatchFormatGames] ; $4902
-	add $02 ; $4905
+	add MATCHFMTOPT_GAMES ; $4905
 	jr .gotRuleValue ; $4907
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $4909
-	add $04 ; $490c
+	add MATCHFMTOPT_SETS ; $490c
 .gotRuleValue:
 	push af ; $490e
 	ld hl, MatchRulesCursorTiles_3e ; $490f

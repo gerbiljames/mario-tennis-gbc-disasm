@@ -566,9 +566,9 @@ ApplyPendingExpAwards:
 .runDistribution:
 	pop hl ; $6bc1
 	farcall RunExpDistributionFlow ; $6bc2
-	ld c, $00 ; $6bc5
+	ld c, STORYREC_MAIN ; $6bc5
 	farcall CharDataScreen_Show ; $6bc7
-	ld c, $01 ; $6bca
+	ld c, STORYREC_PARTNER ; $6bca
 	farcall CharDataScreen_Show ; $6bcc
 	call ApplyStatGapProgressFlag ; $6bcf
 	xor a ; $6bd2
