@@ -44,12 +44,12 @@ dialogue-at-position and auto-size paged-menu helpers, the scene viewer, the
 EXP editor hotkey), routines only `Unused` code calls (the helpers of the
 debug save-data, minigame-flags and character-select screens, the
 high-score confirm screen), and everything below them. The largest subtrees
-are the debug save-data flow (22 routines), the minigame-flags debug screen
-(20), the high-score confirm screen (20) and the minigame pause menu (11).
+are the debug save-data flow, the minigame-flags debug screen, the
+high-score confirm screen and the minigame pause menu.
 
 Code after an unconditional `ret` or `jp` with no label on it runs for no
 one. `CheckDebugStatsEditorHotkey` begins with `ret`, so everything after it
--- the in-match debug stats editor, 16 routines down to the ROM0 helpers only
+-- the in-match debug stats editor, down to the ROM0 helpers only
 the editor calls (`Unused_00_CopyTextString`, `_DrawHexWord`,
 `_MoveCursorVertical`) -- is `Unused`.
 
@@ -148,7 +148,7 @@ the menu that would launch them is unreachable (the retail build never sets
 `hDebugStepMode`, see `docs/screens_and_ui.md`). The developer "Test" map
 (`docs/story_mode.md`) is the part of this tooling that *is* reachable.
 
-**5. Text-engine features nobody typed.** Bank `$05` has 52 unused routines,
+**5. Text-engine features nobody typed.** Bank `$05` has many unused routines,
 the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `DecimalByte` (printf-style inline renderers, near twins of the live
 `Print*`), `Unused_05_SetTextVar`, the streamed tilemap writers
@@ -190,15 +190,17 @@ in the other story banks that carry them
 
 ## Where it sits
 
-| bank | unused routines | what |
-|---|---|---|
-| `$1b` | 80 | the debug save-data flow and its screens |
-| `$1a` | 73 | minigame pause menu, EXP screen and editor, character viewer |
-| `$00` | 60 | ROM0 library spares |
-| `$05` | 52 | text engine spares |
-| `$18` | 44 | confirm and two-option screens, box and number drawers |
-| `$10` | 36 | Test 2 NPC templates, story helpers |
-| `$03` | 30 | the save editor and its block helpers |
+Most of it sits in a few banks:
+
+| bank | what |
+|---|---|
+| `$1b` | the debug save-data flow and its screens |
+| `$1a` | minigame pause menu, EXP screen and editor, character viewer |
+| `$00` | ROM0 library spares |
+| `$05` | text engine spares |
+| `$18` | confirm and two-option screens, box and number drawers |
+| `$10` | Test 2 NPC templates, story helpers |
+| `$03` and `$38` | the save editor and its block helpers; link and character-select spares |
 
 The long tail is stubs and one-off helpers; the bulk of the bytes is the
 debug tooling.

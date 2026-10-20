@@ -375,7 +375,7 @@ wMapHeightTiles:: db
 ; [8-bit] Entry count of the list a side-scrolling menu shows; RunMenuSelection and the scene viewer derive a page count from it (four entries a page). InitSceneScroll sets $25
 wScrollListLength:: db
 
-; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16), used by Unused_0a_LoadAndDisplayScene / InitSceneTileAnimations
+; [8-bit] Scene index of the current story location or court (LoadStorySceneGraphics, LoadCourtSceneGraphics); GetSceneSlotPtr indexes SceneGfxSlotTable with it (index*16)
 wCurrentScene:: db
 	ds 1
 
