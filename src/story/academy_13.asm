@@ -2,10 +2,10 @@ RunPlayDoublesTodayPrompt:
 	test_flag FLAG_DOUBLES ; $56bb
 	jp nz, .alreadyDoubles ; $56be
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $56c1
-	jr nz, .altText ; $56c4
+	jr nz, .harry ; $56c4
 	script_set_text Text_RoommatePlayDoublesToday ; $56c6
 	jr .prompt ; $56cc
-.altText:
+.harry:
 	script_set_text Text_RoommateWannaPlayDoubles ; $56ce
 .prompt:
 	script_speak_restore ACTOR_DORM_ROOM_ROOMMATE ; $56d4
@@ -157,11 +157,11 @@ ActorScript_13_03:
 	as_jump .pace
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
-	jr z, .variantB ; $58c1
+	jr z, .kate ; $58c1
 	ld hl, wRoommateTextIdBase ; $58c3
 	ld de, Text_RoommateAnythingElse ; $58c6
 	jr .menuLoop ; $58c9
-.variantB:
+.kate:
 	ld hl, wRoommateTextIdBase ; $58cb
 	ld de, Text_RoommateIsThereAnythingElse ; $58ce
 .menuLoop:
@@ -395,10 +395,10 @@ GetDormRoomStoryStage_13:
 	jr .stage0 ; $5aec
 DormRoomArrivalCutscene_13:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5aee
-	jr z, .variantB ; $5af1
+	jr z, .kate ; $5af1
 	script_set_text Text_RoommateForgotLuckySocksAlt ; $5af3
 	jr .placeActors ; $5af9
-.variantB:
+.kate:
 	script_set_text Text_RoommateForgotLuckySocks ; $5afb
 .placeActors:
 	script_null_script ACTOR_PARTNER ; $5b01

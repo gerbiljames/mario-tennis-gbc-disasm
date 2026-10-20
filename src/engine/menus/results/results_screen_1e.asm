@@ -434,8 +434,8 @@ FillMemoryC:
 	jr nz, FillMemoryC ; $4463
 	ret ; $4465
 DrawStoryResultsHeader:
-	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
-	jr nz, .skyScene ; $4469
+	test_flag FLAG_AT_ISLAND_OPEN ; $4466
+	jr nz, .islandOpen ; $4469
 	ld a, [wStoryReturnLocation] ; $446b
 	cp STORYLOC_PEACHS_CASTLE ; $446e
 	jr z, .peachsCastle ; $4470
@@ -444,7 +444,7 @@ DrawStoryResultsHeader:
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
 	jr .drawLocationName ; $447e
-.skyScene:
+.islandOpen:
 	ld hl, Text_ResultsIslandOpen ; $4480
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486

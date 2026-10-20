@@ -1,4 +1,4 @@
-; Shared by MirrorPlayerSpriteIfLeftHanded, TogglePlayerSpriteXFlip (banks
+; Shared by MirrorPlayerSpriteIfLeftHanded, MirrorPlayerSpriteIfLeftHanded_15 (banks
 ; $0e, $15).
 
 {TWIN_LABEL}:

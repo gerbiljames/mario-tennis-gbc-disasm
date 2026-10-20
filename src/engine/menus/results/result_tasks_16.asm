@@ -1,4 +1,4 @@
-	twin_in get_cell_index_from_cursor_ptr, Unused_16_GetCellIndexFromCursorPtr, 16 ; $4399 Unused_16_GetCellIndexFromCursorPtr
+	twin_in get_menu_cursor_index_from_ptr, Unused_16_GetMenuCursorIndexFromPtr, 16 ; $4399 Unused_16_GetMenuCursorIndexFromPtr
 	twin_in set_menu_cursor_from_index, Unused_16_SetMenuCursorFromIndex, 16 ; $43a9 Unused_16_SetMenuCursorFromIndex
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_16_SetMenuCursorFromIndexToPtr, 16 ; $43bb Unused_16_SetMenuCursorFromIndexToPtr
 Unused_16_ClearWram3Row64:

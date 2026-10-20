@@ -2,12 +2,12 @@ SetPartnerObjDefByGender_12:
 	ld a, [wStoryPartnerGender] ; $5e91
 	or a ; $5e94
 	jr nz, .done ; $5e95
-	script_get_actor_state ACTOR_SENIOR_COURT_KATE ; $5e97
+	script_get_actor_state ACTOR_SENIOR_COURT_ROOMMATE ; $5e97
 	ld c, l ; $5e9c
 	ld b, h ; $5e9d
 	ld d, OBJ_HARRY ; $5e9e
 	farcall LoadActorObjectDefIfValid ; $5ea0
-	script_set_anim ACTOR_SENIOR_COURT_KATE, ANIM_WALK ; $5ea3
+	script_set_anim ACTOR_SENIOR_COURT_ROOMMATE, ANIM_WALK ; $5ea3
 .done:
 	ret ; $5eaa
 SeniorCourtWalkPlayersOntoCourt:

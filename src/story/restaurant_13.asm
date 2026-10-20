@@ -259,9 +259,9 @@ AcademyCourtsTourCutscene:
 	script_move_player 54.0, 13.0 ; $4587
 	farcall WaitPlayerMoveDone ; $4591
 	ld a, $50 ; $4594
-	ld [wMapSceneStage], a ; $4596
+	ld [wTourPointerX], a ; $4596
 	ld a, $48 ; $4599
-	ld [wMapSceneStage2], a ; $459b
+	ld [wTourPointerY], a ; $459b
 	frame_task AnimateTourPointerSprite_13 ; $459e
 	script_set_text Text_EmilyJuniorCourtThatWay ; $45a6
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $45ac
@@ -283,9 +283,9 @@ AcademyCourtsTourCutscene:
 	script_move_player 42.0, 13.0 ; $460e
 	farcall WaitPlayerMoveDone ; $4618
 	ld a, $20 ; $461b
-	ld [wMapSceneStage], a ; $461d
+	ld [wTourPointerX], a ; $461d
 	ld a, $48 ; $4620
-	ld [wMapSceneStage2], a ; $4622
+	ld [wTourPointerY], a ; $4622
 	frame_task AnimateTourPointerSprite_13 ; $4625
 	script_speak ACTOR_ACADEMY_COURTS_TOUR_EMILY ; $462d
 	ld hl, AnimateTourPointerSprite_13 ; $4632

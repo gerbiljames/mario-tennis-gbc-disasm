@@ -1,5 +1,5 @@
-; Shared by Unused_1b_GetMenuCursorIndexFromPtr,
-; Unused_38_GetMenuCursorIndexFromPtr (banks $1b, $38).
+; Unused_<bank>_GetMenuCursorIndexFromPtr, one copy in each of banks $16, $1b,
+; $38, $3b, $3e.
 
 {TWIN_LABEL}:
 	push bc

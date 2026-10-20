@@ -34,7 +34,7 @@ NetGameMatch1ResultScene:
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
-	jr z, .netResultTextAlt ; $62d4
+	jr z, .juniorText ; $62d4
 	ld hl, wChallengerRivalWonTextId ; $62d6
 	ld de, Text_BrianBetterAtVolleying ; $62d9
 	ld a, e ; $62dc
@@ -46,7 +46,7 @@ NetGameMatch1ResultScene:
 	ld [hl+], a ; $62e6
 	ld [hl], d ; $62e7
 	jr .netResult ; $62e8
-.netResultTextAlt:
+.juniorText:
 	ld hl, wChallengerRivalWonTextId ; $62ea
 	ld de, Text_BrianCantLoseToJunior ; $62ed
 	ld a, e ; $62f0

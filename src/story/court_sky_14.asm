@@ -29,11 +29,11 @@ Court1ExitTriggers_14:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_COURT_1, COURT_1_TO_TOURNAMENT
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, ENTRY_TOURNAMENT_COURTYARD_FROM_COURT_1, COURT_1_TO_TOURNAMENT_COURTYARD
 	db $ff
-Court1Npc03_14:
+Court1Npc03TournamentStaff_14:
 	script_set_text Text_Court1StaffCourtNumberOne ; $5064
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_1 ; $506a
 	ret ; $506f
-Court1Npc04_14:
+Court1Npc04TournamentStaff_14:
 	script_set_text Text_Court1StaffGalleryEntrance ; $5070
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_2 ; $5076
 	ret ; $507b
@@ -81,8 +81,8 @@ Court1Npc06TextIds:
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
-	map_script ACTOR_COURT1_TOURNAMENT_STAFF_1, FACEMASK_ANY, $0000, Court1Npc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURT1_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, Court1Npc04_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURT1_TOURNAMENT_STAFF_1, FACEMASK_ANY, $0000, Court1Npc03TournamentStaff_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURT1_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, Court1Npc04TournamentStaff_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_COURT1_STUDENT_SIDE_PART_BOY_1, FACEMASK_ANY, $0000, Court1Npc05_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_COURT1_STUDENT_PONYTAIL_GIRL, FACEMASK_ANY, $0000, Court1Npc06_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
@@ -138,11 +138,11 @@ InitCourt1SceneVariant:
 	ret ; $5150
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
-	jr z, .done ; $5154
+	jr z, .doublesRound1 ; $5154
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $5156
 	ld [wMapSceneStage], a ; $5158
 	ret ; $515b
-.done:
+.doublesRound1:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $515c
 	ld [wMapSceneStage], a ; $515e
 	ret ; $5161
@@ -229,7 +229,7 @@ IslandSkyInitScript_14:
 	jp .loadScene ; $52ff
 	ret ; $5302
 .loadScene:
-	set_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $5303
+	set_flag FLAG_AT_ISLAND_OPEN ; $5303
 	call DisableLCDSafely ; $5306
 	call LoadPlaneFrontObjGfx_14 ; $5309
 	call LoadWaterSplashObjGfx_14 ; $530c

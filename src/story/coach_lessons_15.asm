@@ -41,12 +41,12 @@ ActorScript_15_12:
 NetCoachVolleyLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_BETH, ACTOR_PARTNER ; $6fcf
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6fd7
-	jr nz, .setText ; $6fda
+	jr nz, .notJunior ; $6fda
 	script_set_text Text_BethJuniorNetPractice ; $6fdc
-	jr .scriptShowSpeakerDialogueRestoreBG ; $6fe2
-.setText:
+	jr .prompt ; $6fe2
+.notJunior:
 	script_set_text Text_BethHerePracticeNetGame ; $6fe4
-.scriptShowSpeakerDialogueRestoreBG:
+.prompt:
 	script_speak_restore ACTOR_TRAINING_COURT_BETH ; $6fea
 	farcall RunDialogueYesNoPrompt ; $6fef
 	farcall ScriptCloseDialogueWindow ; $6ff2
@@ -178,10 +178,10 @@ NetCoachDropShotLessonScene:
 	ret ; $71bd
 HideServeChallengerActor:
 	test_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $71be
-	jr nz, .placeActors ; $71c1
+	jr nz, .hide ; $71c1
 	call TestServeChallengerGameFlag ; $71c3
 	jr z, .done ; $71c6
-.placeActors:
+.hide:
 	script_set_position ACTOR_TRAINING_COURT_BOB_1, 63.0, 63.0 ; $71c8
 .done:
 	ret ; $71d3
@@ -214,10 +214,10 @@ TestServeChallengerGameFlagTable:
 	dw FLAG_CLEARED_SERVICE_MATCH_3 ; record 5
 HideNetChallengerActor:
 	test_flag FLAG_NET_CHALLENGER_DEFEATED ; $7204
-	jr nz, .placeActors ; $7207
+	jr nz, .hide ; $7207
 	call TestNetChallengerGameFlag ; $7209
 	jr z, .done ; $720c
-.placeActors:
+.hide:
 	script_set_position ACTOR_TRAINING_COURT_BRIAN, 63.0, 63.0 ; $720e
 .done:
 	ret ; $7219
@@ -250,10 +250,10 @@ TestNetChallengerGameFlagTable:
 	dw FLAG_CLEARED_NET_GAME_MATCH_3 ; record 5
 HideStrokeChallengerActor:
 	test_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $724a
-	jr nz, .placeActors ; $724d
+	jr nz, .hide ; $724d
 	call TestStrokeChallengerGameFlag ; $724f
 	jr z, .done ; $7252
-.placeActors:
+.hide:
 	script_set_position ACTOR_TRAINING_COURT_ALLIE, 63.0, 63.0 ; $7254
 .done:
 	ret ; $725f
@@ -287,40 +287,40 @@ TestStrokeChallengerGameFlagTable:
 ServicePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7290
 	jumptable a ; $7293
-	dw ServicePractice1Result0 ; $7295 jumptable
-	dw ServicePractice1Result1 ; $7297 jumptable
-	dw ServicePractice1Result2 ; $7299 jumptable
-	dw ServicePractice1Result3 ; $729b jumptable
-	dw ServicePractice1Result1 ; $729d jumptable
+	dw ServeLessonPassedScene ; $7295 jumptable
+	dw ServeLessonNoPointsScene ; $7297 jumptable
+	dw ServeLessonDoubleFaultScene ; $7299 jumptable
+	dw ServeLessonMissedBigTargetScene ; $729b jumptable
+	dw ServeLessonNoPointsScene ; $729d jumptable
 ServicePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $729f
 	jumptable a ; $72a2
-	dw ServicePractice2Result0 ; $72a4 jumptable
-	dw ServicePractice1Result1 ; $72a6 jumptable
-	dw ServicePractice1Result2 ; $72a8 jumptable
-	dw ServicePractice2Result3 ; $72aa jumptable
-	dw ServicePractice2Result4 ; $72ac jumptable
-	dw ServicePractice2Result5 ; $72ae jumptable
-	dw ServicePractice2Result6 ; $72b0 jumptable
-	dw ServicePractice1Result1 ; $72b2 jumptable
+	dw SpinServeLessonPassedScene ; $72a4 jumptable
+	dw ServeLessonNoPointsScene ; $72a6 jumptable
+	dw ServeLessonDoubleFaultScene ; $72a8 jumptable
+	dw ServeLessonMissedTargetScene ; $72aa jumptable
+	dw SpinServeLessonNoSpinScene ; $72ac jumptable
+	dw SpinServeLessonLeftOnlyScene ; $72ae jumptable
+	dw SpinServeLessonRightOnlyScene ; $72b0 jumptable
+	dw ServeLessonNoPointsScene ; $72b2 jumptable
 ServicePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $72b4
 	jumptable a ; $72b7
-	dw ServicePractice3Result0 ; $72b9 jumptable
-	dw ServicePractice1Result1 ; $72bb jumptable
-	dw ServicePractice1Result2 ; $72bd jumptable
-	dw ServicePractice2Result3 ; $72bf jumptable
-	dw ServicePractice3Result4 ; $72c1 jumptable
-	dw ServicePractice3Result5 ; $72c3 jumptable
-	dw ServicePractice1Result1 ; $72c5 jumptable
-ServicePractice1Result0:
+	dw ServeLineLessonPassedScene ; $72b9 jumptable
+	dw ServeLessonNoPointsScene ; $72bb jumptable
+	dw ServeLessonDoubleFaultScene ; $72bd jumptable
+	dw ServeLessonMissedTargetScene ; $72bf jumptable
+	dw ServeLineLessonTimingScene ; $72c1 jumptable
+	dw ServeLineLessonNotCenterScene ; $72c3 jumptable
+	dw ServeLessonNoPointsScene ; $72c5 jumptable
+ServeLessonPassedScene:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_CurtClearedAllFourTargets ; $72ca
 	script_speak ACTOR_TRAINING_COURT_CURT ; $72d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72d5
-	jr z, .greet ; $72d8
+	jr z, .speakLevelPassed ; $72d8
 	farcall AdvanceDialogueTextCursor ; $72da
-.greet:
+.speakLevelPassed:
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $72dd
 	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $72e5
 	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $72ec
@@ -333,14 +333,14 @@ ServicePractice1Result0:
 	script_wait_idle ACTOR_TRAINING_COURT_CURT ; $7314
 	script_speak ACTOR_TRAINING_COURT_CURT ; $7319
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731e
-	jr z, .speakGreeting ; $7321
+	jr z, .speakComeBackLine ; $7321
 	farcall AdvanceDialogueTextCursor ; $7323
-.speakGreeting:
+.speakComeBackLine:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $7326
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $732b
 	set_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $7332
 	ret ; $7335
-ServicePractice2Result0:
+SpinServeLessonPassedScene:
 	call InitServeCoachScene ; $7336
 	script_set_text Text_CurtClearedAllSpinServes ; $7339
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $733f
@@ -362,7 +362,7 @@ ServicePractice2Result0:
 	script_wait_frames 5 ; $7391
 	set_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $7398
 	ret ; $739b
-ServicePractice3Result0:
+ServeLineLessonPassedScene:
 	call InitServeCoachScene ; $739c
 	script_set_text Text_CurtClearedAllDownLine ; $739f
 	script_speak ACTOR_TRAINING_COURT_CURT ; $73a5
@@ -379,47 +379,47 @@ ServicePractice3Result0:
 	script_face ACTOR_TRAINING_COURT_CURT, FACE_LEFT ; $73e5
 	set_flag FLAG_SERVE_COACH_LESSON_PASSED_THIS_VISIT ; $73ec
 	ret ; $73ef
-ServicePractice1Result1:
+ServeLessonNoPointsScene:
 	call InitServeCoachScene ; $73f0
 	script_set_text Text_CurtMissedEveryTarget ; $73f3
 	call ServeCoachChainedRetryPrompt ; $73f9
 	ret ; $73fc
-ServicePractice1Result2:
+ServeLessonDoubleFaultScene:
 	call InitServeCoachScene ; $73fd
 	script_set_text Text_CurtDoubleFaults ; $7400
 	call ServeCoachTwoStageRetryPrompt ; $7406
 	ret ; $7409
-ServicePractice1Result3:
+ServeLessonMissedBigTargetScene:
 	call InitServeCoachScene ; $740a
 	script_set_text Text_CurtMissedBigTarget ; $740d
 	call ServeCoachRetryPrompt ; $7413
 	ret ; $7416
-ServicePractice2Result3:
+ServeLessonMissedTargetScene:
 	call InitServeCoachScene ; $7417
 	script_set_text Text_CurtHitTargetAtYourLevel ; $741a
 	call ServeCoachRetryPrompt ; $7420
 	ret ; $7423
-ServicePractice2Result4:
+SpinServeLessonNoSpinScene:
 	call InitServeCoachScene ; $7424
 	script_set_text Text_CurtNotPuttingSpin ; $7427
 	call ServeCoachRetryPrompt ; $742d
 	ret ; $7430
-ServicePractice2Result5:
+SpinServeLessonLeftOnlyScene:
 	call InitServeCoachScene ; $7431
 	script_set_text Text_CurtClearedLeftNotRight ; $7434
 	call ServeCoachRetryPrompt ; $743a
 	ret ; $743d
-ServicePractice2Result6:
+SpinServeLessonRightOnlyScene:
 	call InitServeCoachScene ; $743e
 	script_set_text Text_CurtClearedRightNotLeft ; $7441
 	call ServeCoachRetryPrompt ; $7447
 	ret ; $744a
-ServicePractice3Result4:
+ServeLineLessonTimingScene:
 	call InitServeCoachScene ; $744b
 	script_set_text Text_CurtServeLineFastTiming ; $744e
 	call ServeCoachRetryPrompt ; $7454
 	ret ; $7457
-ServicePractice3Result5:
+ServeLineLessonNotCenterScene:
 	call InitServeCoachScene ; $7458
 	script_set_text Text_CurtServeLineFromCenter ; $745b
 	call ServeCoachRetryPrompt ; $7461
@@ -438,7 +438,7 @@ ServeCoachRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $7486
 	script_wait_frames 5 ; $7489
 	and a ; $7490
-	jp z, ServeCoachTwoStageRetryPrompt.setText ; $7491
+	jp z, ServeCoachTwoStageRetryPrompt.retry ; $7491
 	farcall AdvanceDialogueTextCursor ; $7494
 	jp InitServeCoachScene.speak ; $7497
 ServeCoachTwoStageRetryPrompt:
@@ -455,10 +455,10 @@ ServeCoachTwoStageRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $74bb
 	script_wait_frames 5 ; $74be
 	and a ; $74c5
-	jp z, .setText ; $74c6
+	jp z, .retry ; $74c6
 	script_set_text Text_CurtPracticeFirstTryLater ; $74c9
 	jp InitServeCoachScene.speak ; $74cf
-.setText:
+.retry:
 	script_set_text Text_CurtOkLetsDoIt ; $74d2
 	script_speak ACTOR_TRAINING_COURT_CURT ; $74d8
 	call ServeCoachWalkToCourtAndStartLesson ; $74dd
@@ -484,34 +484,34 @@ InitServeCoachScene:
 NetGamePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7539
 	jumptable a ; $753c
-	dw NetGamePractice1Result0 ; $753e jumptable
-	dw NetGamePractice1Result1 ; $7540 jumptable
-	dw NetGamePractice1Result2 ; $7542 jumptable
-	dw NetGamePractice1Result3 ; $7544 jumptable
-	dw NetGamePractice1Result4 ; $7546 jumptable
-	dw NetGamePractice1Result5 ; $7548 jumptable
-	dw NetGamePractice1Result1 ; $754a jumptable
-	dw NetGamePractice1Result1 ; $754c jumptable
+	dw VolleyLessonPassedScene ; $753e jumptable
+	dw NetLessonAllFaultsScene ; $7540 jumptable
+	dw NetLessonDoubleFaultScene ; $7542 jumptable
+	dw VolleyLessonMissedScene ; $7544 jumptable
+	dw VolleyLessonWrongSideScene ; $7546 jumptable
+	dw NetLessonAlmostScene ; $7548 jumptable
+	dw NetLessonAllFaultsScene ; $754a jumptable
+	dw NetLessonAllFaultsScene ; $754c jumptable
 NetGamePractice2ResultScene:
 	ld a, [wDrillLessonResult] ; $754e
 	jumptable a ; $7551
-	dw NetGamePractice2Result0 ; $7553 jumptable
-	dw NetGamePractice1Result1 ; $7555 jumptable
-	dw NetGamePractice1Result2 ; $7557 jumptable
-	dw NetGamePractice2Result3 ; $7559 jumptable
-	dw NetGamePractice2Result4 ; $755b jumptable
-	dw NetGamePractice2Result5 ; $755d jumptable
-	dw NetGamePractice1Result5 ; $755f jumptable
-	dw NetGamePractice1Result1 ; $7561 jumptable
+	dw SmashLessonPassedScene ; $7553 jumptable
+	dw NetLessonAllFaultsScene ; $7555 jumptable
+	dw NetLessonDoubleFaultScene ; $7557 jumptable
+	dw SmashLessonNotAllSidesScene ; $7559 jumptable
+	dw SmashLessonJudgePositionScene ; $755b jumptable
+	dw SmashLessonMissedScene ; $755d jumptable
+	dw NetLessonAlmostScene ; $755f jumptable
+	dw NetLessonAllFaultsScene ; $7561 jumptable
 NetGamePractice3ResultScene:
 	ld a, [wDrillLessonResult] ; $7563
 	jumptable a ; $7566
-	dw NetGamePractice3Result0 ; $7568 jumptable
-	dw NetGamePractice1Result1 ; $756a jumptable
-	dw NetGamePractice1Result2 ; $756c jumptable
-	dw NetGamePractice3Result3 ; $756e jumptable
-	dw NetGamePractice3Result4 ; $7570 jumptable
-	dw NetGamePractice3Result5 ; $7572 jumptable
-	dw NetGamePractice3Result6 ; $7574 jumptable
-	dw NetGamePractice1Result5 ; $7576 jumptable
-	dw NetGamePractice1Result1 ; $7578 jumptable
+	dw DropShotLessonPassedScene ; $7568 jumptable
+	dw NetLessonAllFaultsScene ; $756a jumptable
+	dw NetLessonDoubleFaultScene ; $756c jumptable
+	dw DropShotLessonServeShallowScene ; $756e jumptable
+	dw DropShotLessonNotAllSidesScene ; $7570 jumptable
+	dw DropShotLessonTimingScene ; $7572 jumptable
+	dw DropShotLessonMissedScene ; $7574 jumptable
+	dw NetLessonAlmostScene ; $7576 jumptable
+	dw NetLessonAllFaultsScene ; $7578 jumptable

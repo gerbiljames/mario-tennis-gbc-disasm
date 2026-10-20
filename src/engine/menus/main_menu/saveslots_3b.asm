@@ -354,7 +354,7 @@ RunMatchFormatSelect:
 	set B_IE_TIMER, [hl] ; $5d54
 	call ClearFrameTasks ; $5d56
 	ld b, MENUSLIDE_FORWARD ; $5d59
-	call MatchFormatSlideOut ; $5d5b
+	call SlideMatchFormatPanel ; $5d5b
 	ld a, MENUSLIDE_FORWARD ; $5d5e
 	ld [wMenuSlideDirection], a ; $5d60
 	ld c, $03 ; $5d63
@@ -366,7 +366,7 @@ RunMatchFormatSelect:
 	set B_IE_TIMER, [hl] ; $5d6e
 	call ClearFrameTasks ; $5d70
 	ld b, MENUSLIDE_BACK ; $5d73
-	call MatchFormatSlideOut ; $5d75
+	call SlideMatchFormatPanel ; $5d75
 	ld a, MENUSLIDE_BACK ; $5d78
 	ld [wMenuSlideDirection], a ; $5d7a
 	ld a, $ff ; $5d7d
@@ -559,7 +559,7 @@ MatchFormatSlideIn:
 	cp $ff ; $5f06
 	jr nz, .slideBackLoop ; $5f08
 	ret ; $5f0a
-	twin_named match_format_slide_out, MatchFormatSlideOut ; $5f0b
+	twin_named slide_match_format_panel, SlideMatchFormatPanel ; $5f0b
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f

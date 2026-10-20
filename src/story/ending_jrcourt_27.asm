@@ -253,7 +253,7 @@ End4JrCourtActors_27:
 	map_actor $0000, ActorScript_27_33, 56.0, 23.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, END4_JR_COURT_RACKET_STUDENT_6
 	map_actor $0000, ActorScript_27_27, 64.0, 64.0, FACE_UP, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END4_JR_COURT_BALLOON_SWEAT
 	map_actor_end
-End4JrCourtActorsAlt_27:
+End4JrCourtActorsDoubles_27:
 	; $671a, 192 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 19.0, 19.0, FACE_DOWN, OBJ_JUNIOR_COACH, ANIM_WALK, $00, END4_JR_COURT_ALT_JUNIOR_COACH
 	map_actor $0000, ActorScript_27_27, 35.0, 23.0, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, END4_JR_COURT_ALT_BOB
@@ -287,7 +287,7 @@ End4JrCourtTileTriggers_27:
 End4JrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $67f8
 	jr z, .checkStoryModeEntryPoint ; $67fb
-	script_respawn_actors End4JrCourtActorsAlt_27 ; $67fd
+	script_respawn_actors End4JrCourtActorsDoubles_27 ; $67fd
 	farcall BeginCutsceneScriptMode ; $6805
 .checkStoryModeEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6808
