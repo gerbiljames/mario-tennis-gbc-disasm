@@ -399,9 +399,9 @@ Unused_1a_SetupCharViewerScene:
 	farcall SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
 	ld [wActors + ACTORF_OAM_ATTR], a ; $6f8f
-	ld [wActors + 1 * ACTOR_SIZE + 55], a ; $6f92
-	ld [wActors + 2 * ACTOR_SIZE + 55], a ; $6f95
-	ld [wActors + 3 * ACTOR_SIZE + 55], a ; $6f98
+	ld [wActors + 1 * ACTOR_SIZE + ACTORF_OAM_ATTR], a ; $6f92
+	ld [wActors + 2 * ACTOR_SIZE + ACTORF_OAM_ATTR], a ; $6f95
+	ld [wActors + 3 * ACTOR_SIZE + ACTORF_OAM_ATTR], a ; $6f98
 	wram_bank WRAM_CHAR2 ; $6f9b
 	ld a, [wCharViewerCharId] ; $6fa1
 	ld [wMatchPlayerChar], a ; $6fa4

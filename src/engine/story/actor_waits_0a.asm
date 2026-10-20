@@ -216,7 +216,7 @@ SetPlayerMoveSpeed:
 	push af ; $47a3
 	push hl ; $47a4
 	wram_bank WRAM_ACTORS ; $47a5
-	ld hl, wActors + 1 * ACTOR_SIZE + 6 ; $47ab
+	ld hl, wActors + 1 * ACTOR_SIZE + ACTORF_SPEED ; $47ab
 	ld a, c ; $47ae
 	ld [hl+], a ; $47af
 	ld [hl], b ; $47b0
