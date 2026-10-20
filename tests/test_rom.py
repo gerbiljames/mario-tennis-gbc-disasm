@@ -213,6 +213,8 @@ class Source(unittest.TestCase):
         self.assertIn(f"`src/` calls `DecompressData` from {count(r'^\tcall DecompressData\b')} sites and "
                       f"`DecompressDataFromBank` from {count(r'^\tcall DecompressDataFromBank\b')}.", gfx)
         self.assertIn(f"There are {regions['sprite_template']} templates.", gfx)
+        coords = len(re.findall(r"^def Text_[0-9a-f]{2}_\d+\b", (ROOT / "include" / "text_ids.inc").read_text(), re.M))
+        self.assertIn(f"hand-maintained: {coords:,} `def Text_<bank>_<index>", gfx)
         rows = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
                 if l.strip() and not l.startswith("#")]
         tilemaps = sum(1 for f in rows if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin"))

@@ -2114,7 +2114,7 @@ INDEXED_ARRAYS = {
     "wActorObjDef": "OBJDEF_",
     "wBallHistory": "BALLHIST_",
     "wBGPalettes": ("PAL_SIZE", "COLOR_SIZE"),
-    "wOBPalettes": ("PAL_SIZE", "COLOR_SIZE"),
+    "wOBJPalettes": ("PAL_SIZE", "COLOR_SIZE"),
     "wMasterPalettes": ("PAL_SIZE", "COLOR_SIZE"),
 }
 _INDEXED_ARRAY_RE = re.compile(rf"\b({'|'.join(INDEXED_ARRAYS)}) \+ ([^\],;]+)")
