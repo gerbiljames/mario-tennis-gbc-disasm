@@ -102,7 +102,7 @@ after a real defect broke it:
             offset under $100 to a record pointer (`ld hl, n / add hl, rr`,
             `ld a, n / add_hl_a`, `ld a, n / add c|e / ld e|c, a`): 25 once reached a record by number beside the
             names (the record in de, bc named), as the created-character
-            routines all did
+            routines all did; `wActorObjDef + n` is an OBJDEF_* field
   templates every label handed to QueueSpriteTemplate in hl, directly or as
             a row of the pointer table hl is indexed into, is a
             sprite_template region (five were raw db rows)
@@ -1868,6 +1868,7 @@ _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 INDEXED_ARRAYS = {
     "CHARREC_TRAIN_LEVELS": "TRAINSTAT_",
     "wCharDataLevels": "TRAINSTAT_",
+    "wActorObjDef": "OBJDEF_",
 }
 _INDEXED_ARRAY_RE = re.compile(rf"\b({'|'.join(INDEXED_ARRAYS)}) \+ ([^\],;]+)")
 _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
@@ -1878,8 +1879,8 @@ def check_field_offsets(fail):
     ACTORF_* / OBJSLOT_* / SCENEOBJ_* / WINDOW_* field, an offset added to a
     record pointer (`ld hl, off / add hl, bc|de`, `ld a, off / add_hl_a`, or
     `ld a, off / add c|e / ld e|c, a`) is not a raw number under $100: the same record reached through another register is still
-    that record. An offset into an INDEXED_ARRAYS array is a member of its
-    family."""
+    that record. An offset into an INDEXED_ARRAYS array (or record buffer)
+    is a member of its family."""
     n, seen = 0, set()
     for holder in holders():
         lines, origin = bank_lines(holder)
