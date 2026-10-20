@@ -20,18 +20,18 @@ Unused_02_LoadMainCharacterFromRoster:
 	call GetStoryCharacterRecordPtr ; $444a
 	ld de, wStoryMainName ; $444d
 	call Unused_02_Copy64Bytes ; $4450
-	ld hl, $000b ; $4453
+	ld hl, CHARREC_CHAR ; $4453
 	add hl, de ; $4456
 	ld [hl], b ; $4457
 	ld a, b ; $4458
 	call GetCharPaletteIndex ; $4459
-	ld hl, $000c ; $445c
+	ld hl, CHARREC_PALETTE ; $445c
 	add hl, de ; $445f
 	ld [hl], a ; $4460
 	ld hl, CHARREC_BUILD_KIND ; $4461
 	add hl, de ; $4464
 	ld [hl], $00 ; $4465
-	ld hl, $000b ; $4467
+	ld hl, CHARREC_CHAR ; $4467
 	add hl, de ; $446a
 	ld a, [hl] ; $446b
 	add_hl_a ; $446c
@@ -41,7 +41,7 @@ Unused_02_LoadMainCharacterFromRoster:
 	ret ; $4479
 Unused_02_Copy64Bytes:
 	push de ; $447a
-	ld c, $40 ; $447b
+	ld c, CHAR_RECORD_SIZE ; $447b
 .loop:
 	ld a, [hl+] ; $447d
 	ld [de], a ; $447e
@@ -133,7 +133,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $4503
 	call ScaleStatForBarLevel ; $4505
 	pop de ; $4508
-	ld hl, $000d ; $4509
+	ld hl, STATARCH_TOP ; $4509
 	add hl, de ; $450c
 	call LookupStatBarLevel ; $450d
 	pop bc ; $4510
@@ -149,7 +149,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $451e
 	call ScaleStatForBarLevel ; $4520
 	pop de ; $4523
-	ld hl, $0016 ; $4524
+	ld hl, STATARCH_SLICE ; $4524
 	add hl, de ; $4527
 	call LookupStatBarLevel ; $4528
 	pop bc ; $452b
@@ -165,7 +165,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $4539
 	call ScaleStatForBarLevel ; $453b
 	pop de ; $453e
-	ld hl, $001f ; $453f
+	ld hl, STATARCH_SERVE ; $453f
 	add hl, de ; $4542
 	call LookupStatBarLevel ; $4543
 	pop bc ; $4546
@@ -181,7 +181,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $4554
 	call ScaleStatForBarLevel ; $4556
 	pop de ; $4559
-	ld hl, $0028 ; $455a
+	ld hl, STATARCH_STROKE ; $455a
 	add hl, de ; $455d
 	call LookupStatBarLevel ; $455e
 	pop bc ; $4561
@@ -197,7 +197,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $456f
 	call ScaleStatForBarLevel ; $4571
 	pop de ; $4574
-	ld hl, $0031 ; $4575
+	ld hl, STATARCH_VOLLEY ; $4575
 	add hl, de ; $4578
 	call LookupStatBarLevel ; $4579
 	pop bc ; $457c
@@ -213,7 +213,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $458a
 	call ScaleStatForBarLevel ; $458c
 	pop de ; $458f
-	ld hl, $003a ; $4590
+	ld hl, STATARCH_ANGLE ; $4590
 	add hl, de ; $4593
 	call LookupStatBarLevel ; $4594
 	pop bc ; $4597
@@ -229,7 +229,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $45a5
 	call ScaleStatForBarLevel ; $45a7
 	pop de ; $45aa
-	ld hl, $0043 ; $45ab
+	ld hl, STATARCH_PLACEMENT ; $45ab
 	add hl, de ; $45ae
 	call LookupStatBarLevel ; $45af
 	pop bc ; $45b2
@@ -245,7 +245,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $45c0
 	call ScaleStatForBarLevel ; $45c2
 	pop de ; $45c5
-	ld hl, $004c ; $45c6
+	ld hl, STATARCH_SPEED ; $45c6
 	add hl, de ; $45c9
 	call LookupStatBarLevel ; $45ca
 	pop bc ; $45cd
@@ -261,7 +261,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $45db
 	call ScaleStatForBarLevel ; $45dd
 	pop de ; $45e0
-	ld hl, $0055 ; $45e1
+	ld hl, STATARCH_DASH ; $45e1
 	add hl, de ; $45e4
 	call LookupStatBarLevel ; $45e5
 	pop bc ; $45e8
@@ -277,7 +277,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $45f6
 	call ScaleStatForBarLevel ; $45f8
 	pop de ; $45fb
-	ld hl, $005e ; $45fc
+	ld hl, STATARCH_REACTION ; $45fc
 	add hl, de ; $45ff
 	call LookupStatBarLevel ; $4600
 	pop bc ; $4603
@@ -293,7 +293,7 @@ RecomputeCharacterStats:
 	ld a, $05 ; $4611
 	call ScaleStatForBarLevel ; $4613
 	pop de ; $4616
-	ld hl, $0067 ; $4617
+	ld hl, STATARCH_STOP ; $4617
 	add hl, de ; $461a
 	call LookupStatBarLevel ; $461b
 	pop bc ; $461e
@@ -304,7 +304,7 @@ RecomputeCharacterStats:
 	ld hl, CHARREC_LEVEL ; $4625
 	add hl, bc ; $4628
 	ld a, [hl] ; $4629
-	ld hl, $0070 ; $462a
+	ld hl, STATARCH_MODIFIERS ; $462a
 	add hl, de ; $462d
 	ld d, a ; $462e
 .modifierLoop:
@@ -318,7 +318,7 @@ RecomputeCharacterStats:
 	and $0f ; $4639
 	add a ; $463b
 	ld_hl_indexed CharIconMasks_02 ; $463c
-	ld a, $19 ; $4643
+	ld a, CHARREC_SWING ; $4643
 	add c ; $4645
 	ld e, a ; $4646
 	ld d, b ; $4647
@@ -337,11 +337,11 @@ RecomputeCharacterStats:
 .copyStats:
 	ld hl, CHARREC_PHYSICS_TEMPLATE ; $4654
 	add hl, bc ; $4657
-	ld a, $10 ; $4658
+	ld a, CHARREC_REACH ; $4658
 	add c ; $465a
 	ld e, a ; $465b
 	ld d, b ; $465c
-	ld c, $08 ; $465d
+	ld c, CHARREC_LEVEL - CHARREC_REACH ; $465d
 .copyLoop:
 	ld a, [hl+] ; $465f
 	ld [de], a ; $4660
@@ -418,11 +418,11 @@ ApplyStatModifierRow:
 	add hl, hl ; $46ca
 	add hl, de ; $46cb
 	pop bc ; $46cc
-	ld a, $20 ; $46cd
+	ld a, CHARREC_STAT_TOP ; $46cd
 	add c ; $46cf
 	ld e, a ; $46d0
 	ld d, b ; $46d1
-	ld c, $0b ; $46d2
+	ld c, NUM_CHAR_STATS ; $46d2
 .loop:
 	ld b, [hl] ; $46d4
 	ld a, [de] ; $46d5

@@ -194,7 +194,7 @@ HasReachedNextLevelExp:
 	ld l, a ; $4db9
 	pop de ; $4dba
 	add hl, de ; $4dbb
-	ld a, $2c ; $4dbc
+	ld a, CHARREC_EXP ; $4dbc
 	add c ; $4dbe
 	ld e, a ; $4dbf
 	ld d, b ; $4dc0

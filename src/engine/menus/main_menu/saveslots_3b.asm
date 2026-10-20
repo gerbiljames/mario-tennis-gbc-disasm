@@ -15,7 +15,7 @@ BuildSaveSlotSummaries:
 	ld hl, $0000 ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank WRAM_COURT_PLANES ; $5ad6
-	ld a, [wCharRecordScratch + 11] ; $5adc
+	ld a, [wCharRecordScratchChar] ; $5adc
 	push af ; $5adf
 	wram_bank WRAM_SCREEN ; $5ae0
 	pop af ; $5ae6

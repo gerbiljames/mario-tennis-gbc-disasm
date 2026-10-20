@@ -91,7 +91,7 @@ Unused_1b_DrawCharSelectMugshots:
 	farcall LoadCharacterRecordToBuffer ; $6076
 	farcall CheckCharacterUnlocked ; $6079
 	jr z, .step ; $607c
-	ld a, [wCharRecordScratch + 11] ; $607e
+	ld a, [wCharRecordScratchChar] ; $607e
 	farcall LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
@@ -100,7 +100,7 @@ Unused_1b_DrawCharSelectMugshots:
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
 	call Unused_1b_GetCharSelectRosterField ; $6092
-	ld a, [wCharRecordScratch + 11] ; $6095
+	ld a, [wCharRecordScratchChar] ; $6095
 	add a ; $6098
 	ld_bc_indexed wNewGameRosterFields + 1 ; $6099
 	ld a, [bc] ; $60a0
@@ -113,7 +113,7 @@ Unused_1b_DrawCharSelectMugshots:
 	jr nz, .loop ; $60ae
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
-	ld a, [wCharRecordScratch + 11] ; $60b6
+	ld a, [wCharRecordScratchChar] ; $60b6
 	farcall Unused_1b_StubNop0 ; $60b9
 	ret ; $60bc
 Unused_1b_RunCharSelectLoop:

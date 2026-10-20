@@ -29,7 +29,7 @@ class Source(unittest.TestCase):
     def test_idiom_macro_sites(self):
         self.assertEqual(count(r"^\tpush_wram_bank "), 353)
         self.assertEqual(count(r"^\tpop_wram_bank"), 455)
-        self.assertEqual(count(r"^\tld_hl_indexed "), 441)
+        self.assertEqual(count(r"^\tld_hl_indexed "), 442)
         self.assertEqual(count(r"^\twait_frames "), 80)
         self.assertEqual(count(r"^\tld_story_char_field "), 114)
         self.assertEqual(count(r"^\tneg_(?:hl|de|bc)\b"), 146)
@@ -295,7 +295,8 @@ class Tools(unittest.TestCase):
         checked = {k: int(n) for k, n in re.findall(r"^(\S+)\s+(\d+) checked", r.stdout, re.M)}
         skipped = set(re.findall(r"^(\S+)\s+skipped:", r.stdout, re.M))
         floors = {"scopes": 260, "labels": 13500, "branches": 12, "literals": 33000, "dma": 50,
-                  "reach": 4800, "unnamed": 8700, "raw-ids": 4500, "macros": 210, "slots": 5124}
+                  "reach": 4800, "unnamed": 8700, "raw-ids": 4500, "macros": 210, "slots": 5124,
+                  "fields": 440}
         self.assertLessEqual(set(floors) - skipped, set(checked), r.stdout)
         for name, n in checked.items():
             self.assertGreaterEqual(n, floors.get(name, 1), f"{name} checks fewer sites")

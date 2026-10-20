@@ -86,6 +86,10 @@ after a real defect broke it:
             field, a BASE_ID_ARGS base counts as an argument), a byte read
             through a known text pointer is not compared with a raw TX_*
             code, and the macro and table rows RAW_ID_* lists name their ids
+  fields    a routine that names a CHARREC_* / ACTORF_* / OBJSLOT_* field
+            adds no raw offset under $100 to a record pointer (`ld hl, n /
+            add hl, rr`, `ld a, n / add c|e / ld e|c, a`): 25 once reached
+            a record by number beside the names (the record in de, bc named)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -1530,6 +1534,55 @@ def check_raw_ids(fail):
     return n
 
 
+# Raw offsets a field-naming routine adds to a pointer that are not fields of
+# a record: (routine, operand) -> what the number is.
+KNOWN_RAW_FIELD_OFFSETS = {
+    ("UpdateActorJumpPhysics", "$0010"): "gravity added to the vertical velocity",
+}
+_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
+_FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
+_FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
+
+
+def check_field_offsets(fail):
+    """In a routine that names a CHARREC_* / ACTORF_* / OBJSLOT_* field, an
+    offset added to a record pointer (`ld hl, off / add hl, bc|de`, or
+    `ld a, off / add c|e / ld e|c, a`) is not a raw number under $100: the
+    same record reached through another register is still that record."""
+    n, seen = 0, set()
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        routines, cur = [], None
+        for i, line in enumerate(lines):
+            if m := re.match(r"^([A-Za-z_]\w*)::?$", line):
+                cur = (m.group(1), [])
+                routines.append(cur)
+            elif cur and (ins := line.split(";")[0].strip()) and not ins.endswith(":"):
+                cur[1].append((i, ins))
+        for name, ins in routines:
+            if not any(_FIELD_FAMILY_RE.search(t) for _, t in ins):
+                continue
+            for k, (i, t) in enumerate(ins):
+                nxt = [u for _, u in ins[k + 1:k + 3]] + ["", ""]
+                m = _FIELD_HL_RE.fullmatch(t)
+                if not (m and re.fullmatch(r"add hl, (bc|de)", nxt[0])):
+                    m = _FIELD_A_RE.fullmatch(t)
+                    if not (m and re.fullmatch(r"add [ce]", nxt[0]) and re.fullmatch(r"ld [ce], a", nxt[1])):
+                        continue
+                op = m.group(1).strip()
+                n += 1
+                if not _NUMBER_RE.fullmatch(op) or _number(op) >= 0x100:
+                    continue
+                if (name, op) in KNOWN_RAW_FIELD_OFFSETS:
+                    seen.add((name, op))
+                    continue
+                where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                fail("fields", f"{where}: {name} adds raw {op} to a record -- a field name?")
+    for name, op in sorted(set(KNOWN_RAW_FIELD_OFFSETS) - seen):
+        fail("fields", f"{name} {op} is no longer added raw -- drop it from KNOWN_RAW_FIELD_OFFSETS")
+    return n
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -1569,6 +1622,7 @@ def main():
         "unnamed": reach.check_unnamed(fail),
         "entries": routes.check(fail),
         "raw-ids": check_raw_ids(fail),
+        "fields": check_field_offsets(fail),
     }
     by_check = {}
     for check, msg in failures:

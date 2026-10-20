@@ -712,9 +712,10 @@ bar  = count of thresholds raw clears (0-9)     ; LookupStatBarLevel, 9-entry si
 ```
 
 `record[+$0b] & 3` picks one of four 113-byte archetype tables via
-`StatArchetypePtrs_02` (`StatArchetype0_02`-`3_02`): a tier byte, the
-12-byte template copied to `+$30`-`+$3b` at build time, eleven
-`stat_thresholds` rows, a `$ff` end byte.
+`StatArchetypePtrs_02` (`StatArchetype0_02`-`3_02`, laid out as `STATARCH_*`):
+a tier byte, the 12-byte template copied to `+$30`-`+$3b` at build time,
+eleven `stat_thresholds` rows, then (level, icon) modifier pairs to a `$ff`
+(every archetype has none).
 
 | trainable level | feeds |
 | --- | --- |

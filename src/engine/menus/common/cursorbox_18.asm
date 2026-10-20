@@ -302,13 +302,13 @@ LoadCharacterRecordToBuffer:
 .fixedRecord:
 	push af ; $4522
 	ld a, $3e ; $4523
-	ld [wCharRecordScratch + 11], a ; $4525
+	ld [wCharRecordScratchChar], a ; $4525
 	pop af ; $4528
 	ret ; $4529
 CheckCharacterUnlocked:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
-	ld a, [wCharRecordScratch + 11] ; $452e
+	ld a, [wCharRecordScratchChar] ; $452e
 	cp $ff ; $4531
 	ret ; $4533
 .checkRange:

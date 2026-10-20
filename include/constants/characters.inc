@@ -37,6 +37,26 @@ def CHARREC_EQUIPMENT        rb   ; $3c racket (low nibble) and shoes (high)
 def CHAR_RECORD_SIZE equ _RS
 	ASSERT CHAR_RECORD_SIZE == $40
 def MAX_LEVEL equ 99 ; CHARREC_LEVEL stops here
+def NUM_CHAR_STATS equ CHARREC_SPEED_BONUS - CHARREC_STAT_TOP ; the eleven 0-9 stat bars
+
+; --- Stat archetype layout (StatArchetype*_02, picked by CHARREC_CHAR & 3) ---
+	rsreset
+def STATARCH_LEVEL          rb      ; $00 -> CHARREC_LEVEL
+def STATARCH_TEMPLATE       rb CHARREC_EQUIPMENT - CHARREC_PHYSICS_TEMPLATE ; $01 -> CHARREC_PHYSICS_TEMPLATE onwards
+def STATARCH_THRESHOLDS     equ _RS ; $0d one stat_thresholds row per stat, CHARREC_STAT_* order
+def STATARCH_TOP            rb 9
+def STATARCH_SLICE          rb 9
+def STATARCH_SERVE          rb 9
+def STATARCH_STROKE         rb 9
+def STATARCH_VOLLEY         rb 9
+def STATARCH_ANGLE          rb 9
+def STATARCH_PLACEMENT      rb 9
+def STATARCH_SPEED          rb 9
+def STATARCH_DASH           rb 9
+def STATARCH_REACTION       rb 9
+def STATARCH_STOP           rb 9
+def STATARCH_MODIFIERS      equ _RS ; $70 (level, icon) pairs for CHARREC_SWING, to $ff
+	ASSERT STATARCH_MODIFIERS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
 
 ; --- Match record slots (GetMatchRecordPtr's a, InitMatchRecordFromCharId's c) ---
 	const_def
