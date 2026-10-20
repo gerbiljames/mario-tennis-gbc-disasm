@@ -457,7 +457,7 @@ BuildMarioCastExhibScreen:
 ScrollMarioCastChartCursorFull:
 	ld a, [wMenuInputPressed] ; $7b4f
 	bit PADB_LEFT, a ; $7b52
-	jr z, .checkMenuCursorX ; $7b54
+	jr z, .checkRight ; $7b54
 	ld a, [wMenuCursorX] ; $7b56
 	or a ; $7b59
 	jr z, .done ; $7b5a
@@ -467,7 +467,7 @@ ScrollMarioCastChartCursorFull:
 	call RedrawMarioCastChartWindow ; $7b62
 	call FlushMarioCastChartWindowToVram ; $7b65
 	jr .done ; $7b68
-.checkMenuCursorX:
+.checkRight:
 	bit PADB_RIGHT, a ; $7b6a
 	jr z, .checkUp ; $7b6c
 	ld a, [wMenuCursorX] ; $7b6e
@@ -508,7 +508,7 @@ ScrollMarioCastChartCursorFull:
 ScrollMarioCastChartCursorSmall:
 	ld a, [wMenuInputPressed] ; $7bb5
 	bit PADB_UP, a ; $7bb8
-	jr z, .checkMenuCursorY ; $7bba
+	jr z, .checkDown ; $7bba
 	ld a, [wMenuCursorY] ; $7bbc
 	or a ; $7bbf
 	jr z, .done ; $7bc0
@@ -518,7 +518,7 @@ ScrollMarioCastChartCursorSmall:
 	call RedrawMarioCastChartWindow ; $7bc8
 	call FlushMarioCastChartWindowToVram ; $7bcb
 	jr .done ; $7bce
-.checkMenuCursorY:
+.checkDown:
 	bit PADB_DOWN, a ; $7bd0
 	jr z, .done ; $7bd2
 	ld a, [wMenuCursorY] ; $7bd4

@@ -146,14 +146,14 @@ MarioWorldArrivalDoubles:
 	script_move_target ACTOR_MARIO_WORLD_TOAD, 13.0, 19.0 ; $5d1d
 	script_wait_move ACTOR_MARIO_WORLD_PEACH ; $5d28
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5d2d
-	jr z, .done ; $5d30
+	jr z, .welcome ; $5d30
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $5d32
 	script_wait_frames 20 ; $5d39
 	ld a, EXIT_PEACHS_CASTLE_FLY_HOME ; $5d40
 	ld [wUnusedExitTriggerIdMirror], a ; $5d42
 	ld [wStoryModeExitTriggerRequest], a ; $5d45
 	ret ; $5d48
-.done:
+.welcome:
 	call MarioWorldWelcomeCutscene ; $5d49
 	script_set_position ACTOR_MARIO_WORLD_BALLOON_ANGRY, 63.0, 63.0 ; $5d4c
 	script_face ACTOR_MARIO_WORLD_BOWSER, FACE_LEFT ; $5d57

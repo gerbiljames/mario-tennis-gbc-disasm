@@ -56,7 +56,7 @@ SeniorSinglesMatchConfirm:
 	farcall ScriptCloseDialogueWindow ; $6afe
 	script_wait_frames 5 ; $6b01
 	and a ; $6b08
-	jp nz, .done ; $6b09
+	jp nz, .callItOff ; $6b09
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b0c
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6b13
 .declined:
@@ -78,7 +78,7 @@ SeniorSinglesMatchConfirm:
 	script_wait_frames 30 ; $6b4c
 	farcall EndCutsceneScriptMode ; $6b53
 	ret ; $6b56
-.done:
+.callItOff:
 	script_set_text Text_SeniorSinglesCallItOff ; $6b57
 	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6b5d
 	farcall RunDialogueYesNoPrompt ; $6b62
@@ -99,7 +99,7 @@ SeniorDoublesMatchConfirm:
 	farcall ScriptCloseDialogueWindow ; $6b8c
 	script_wait_frames 5 ; $6b8f
 	and a ; $6b96
-	jp nz, .done ; $6b97
+	jp nz, .callItOff ; $6b97
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6b9a
 	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $6ba1
 	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $6ba6
@@ -117,7 +117,7 @@ SeniorDoublesMatchConfirm:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6bd3
 	farcall EndCutsceneScriptMode ; $6be0
 	ret ; $6be3
-.done:
+.callItOff:
 	script_set_text Text_SeniorDoublesCallItOff ; $6be4
 	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $6bea
 	farcall RunDialogueYesNoPrompt ; $6bef

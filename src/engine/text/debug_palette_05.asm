@@ -536,9 +536,9 @@ Unused_05_WriteDialogueToTilemapStreamed:
 .charLoop:
 	ld a, [hl] ; $6cb9
 	or a ; $6cba
-	jr z, .checkWramBank ; $6cbb
+	jr z, .resetTextArgs ; $6cbb
 	cp $03 ; $6cbd
-	jr z, .checkWramBank ; $6cbf
+	jr z, .resetTextArgs ; $6cbf
 	inc hl ; $6cc1
 	push af ; $6cc2
 	ld a, [hl] ; $6cc3
@@ -589,7 +589,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld e, l ; $6cfe
 	pop hl ; $6cff
 	jr .charLoop ; $6d00
-.checkWramBank:
+.resetTextArgs:
 	push_wram_bank WRAM_TEXT ; $6d02
 	xor a ; $6d0b
 	ld [wTextRowPitchNeg], a ; $6d0c

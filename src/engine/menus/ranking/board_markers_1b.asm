@@ -290,12 +290,12 @@ UpdateScriptedOffsetChannel0:
 	ld a, [hl] ; $5af4
 	add c ; $5af5
 	ld [hl], a ; $5af6
-	jr .checkTextPageBreakRequest ; $5af7
+	jr .nextStep ; $5af7
 .scriptEnd:
 	ld hl, UpdateScriptedOffsetChannel0 ; $5af9
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
-.checkTextPageBreakRequest:
+.nextStep:
 	ld a, [wRankingAnimStepIndex] ; $5b00
 	inc a ; $5b03
 	ld [wRankingAnimStepIndex], a ; $5b04

@@ -617,10 +617,10 @@ InitCourt2SceneVariant:
 	jr .storeStage ; $4ea4
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4ea6
-	jr z, .done ; $4ea9
+	jr z, .doublesRound1 ; $4ea9
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4eab
 	jr .storeStage ; $4ead
-.done:
+.doublesRound1:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $4eaf
 	jr .storeStage ; $4eb1
 	ret ; $4eb3

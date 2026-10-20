@@ -123,11 +123,11 @@ RunMatchWinLoseScreen:
 	jr z, .versusMatch ; $448e
 	cp GAMEMODE_LINK_MATCH ; $4490
 	jr z, .versusMatch ; $4492
-	jr .checkMatchWinLoseFlag ; $4494
+	jr .storyMatch ; $4494
 .versusMatch:
 	ld a, $01 ; $4496
 	jr .store ; $4498
-.checkMatchWinLoseFlag:
+.storyMatch:
 	xor a ; $449a
 .store:
 	ld [wResultScreenWon], a ; $449b

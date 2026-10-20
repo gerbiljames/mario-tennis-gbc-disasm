@@ -1,9 +1,9 @@
 BuildSaveSlotSummaries:
 	push_wram_bank WRAM_SCREEN ; $5aac
-	ld hl, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5ab5
-	ld bc, $0003 ; $5ab8
+	ld hl, wSaveSlotSummaries ; $5ab5
+	ld bc, wSaveSlotSummaries_SIZE / 16 ; $5ab8
 	call ClearMemory16 ; $5abb
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5abe
+	ld bc, wSaveSlotSummaries ; $5abe
 	ld a, $80 ; $5ac1
 .loop:
 	push af ; $5ac3
@@ -12,7 +12,7 @@ BuildSaveSlotSummaries:
 	pop af ; $5acb
 	farcall LoadCharacterRecordToBuffer ; $5acc
 	farcall CheckCharacterUnlocked ; $5acf
-	ld hl, $0000 ; $5ad2
+	ld hl, SLOTSUM_CHAR ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank WRAM_COURT_PLANES ; $5ad6
 	ld a, [wCharRecordScratchChar] ; $5adc
@@ -20,45 +20,45 @@ BuildSaveSlotSummaries:
 	wram_bank WRAM_SCREEN ; $5ae0
 	pop af ; $5ae6
 	cp $04 ; $5ae7
-	jr c, .checkStoryModeMainCharacterOverworldSprite ; $5ae9
+	jr c, .occupied ; $5ae9
 	ld [hl], a ; $5aeb
 	inc hl ; $5aec
 	ld a, $03 ; $5aed
 	ld [hl-], a ; $5aef
-	ld hl, $0010 ; $5af0
+	ld hl, SLOTSUM_SIZE ; $5af0
 	add hl, bc ; $5af3
 	ld b, h ; $5af4
 	ld c, l ; $5af5
 	jr .restore ; $5af6
-.checkStoryModeMainCharacterOverworldSprite:
+.occupied:
 	ld a, [wStoryMainChar] ; $5af8
 	ld [hl], a ; $5afb
-	ld hl, $0001 ; $5afc
+	ld hl, SLOTSUM_PALETTE ; $5afc
 	add hl, bc ; $5aff
 	ld a, [wStoryMainPalette] ; $5b00
 	ld [hl], a ; $5b03
-	ld hl, $0002 ; $5b04
+	ld hl, SLOTSUM_LEVEL ; $5b04
 	add hl, bc ; $5b07
 	ld a, [wStoryMainLevel] ; $5b08
 	ld [hl], a ; $5b0b
 	push bc ; $5b0c
-	ld a, $03 ; $5b0d
+	ld a, SLOTSUM_NAME ; $5b0d
 	add c ; $5b0f
 	ld e, a ; $5b10
 	ld d, b ; $5b11
 	ld hl, wStoryMainName ; $5b12
-	ld bc, $000b ; $5b15
+	ld bc, SLOTSUM_MINUTES - SLOTSUM_NAME ; $5b15
 	call CopyMemoryBC ; $5b18
 	pop bc ; $5b1b
-	ld hl, $000f ; $5b1c
+	ld hl, SLOTSUM_HOURS ; $5b1c
 	add hl, bc ; $5b1f
 	ld a, [wSavedGameTimer + 3] ; $5b20
 	ld [hl], a ; $5b23
-	ld hl, $000e ; $5b24
+	ld hl, SLOTSUM_MINUTES ; $5b24
 	add hl, bc ; $5b27
 	ld a, [wSavedGameTimer + 2] ; $5b28
 	ld [hl], a ; $5b2b
-	ld hl, $0010 ; $5b2c
+	ld hl, SLOTSUM_SIZE ; $5b2c
 	add hl, bc ; $5b2f
 	ld b, h ; $5b30
 	ld c, l ; $5b31
@@ -83,14 +83,14 @@ DrawMainMenuCaption:
 	add a ; $5b5a
 	add a ; $5b5b
 	add a ; $5b5c
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5b5d
+	ld bc, wSaveSlotSummaries ; $5b5d
 	add_bc_a ; $5b60
-	ld hl, $0000 ; $5b65
+	ld hl, SLOTSUM_CHAR ; $5b65
 	add hl, bc ; $5b68
 	ld a, [hl] ; $5b69
-	cp $3f ; $5b6a
+	cp CHAR_EMPTY_SLOT ; $5b6a
 	jr z, .emptySlot ; $5b6c
-	ld hl, $0003 ; $5b6e
+	ld hl, SLOTSUM_NAME ; $5b6e
 	add hl, bc ; $5b71
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5b72
 	call DrawNameWithDiacritics_3b ; $5b75
@@ -102,7 +102,7 @@ DrawMainMenuCaption:
 	push bc ; $5b83
 	push de ; $5b84
 	push hl ; $5b85
-	ld hl, $0002 ; $5b86
+	ld hl, SLOTSUM_LEVEL ; $5b86
 	add hl, bc ; $5b89
 	ld a, [hl] ; $5b8a
 	ld h, $00 ; $5b8b
@@ -118,7 +118,7 @@ DrawMainMenuCaption:
 	push bc ; $5b9c
 	push de ; $5b9d
 	push hl ; $5b9e
-	ld hl, $000f ; $5b9f
+	ld hl, SLOTSUM_HOURS ; $5b9f
 	add hl, bc ; $5ba2
 	ld a, [hl] ; $5ba3
 	ld h, $00 ; $5ba4
@@ -130,7 +130,7 @@ DrawMainMenuCaption:
 	pop de ; $5bb1
 	pop bc ; $5bb2
 	pop af ; $5bb3
-	ld hl, $000e ; $5bb4
+	ld hl, SLOTSUM_MINUTES ; $5bb4
 	add hl, bc ; $5bb7
 	ld a, [hl] ; $5bb8
 	ld h, $00 ; $5bb9

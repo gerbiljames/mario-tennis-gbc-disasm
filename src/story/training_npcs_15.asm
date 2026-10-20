@@ -142,7 +142,7 @@ WaterSpriteRacketRewardScene:
 	script_wait_frames 50 ; $4f94
 	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
-.done:
+.flickerLoop:
 	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4f9f
 	script_wait_frames 4 ; $4fa6
 	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $02 ; $4fad
@@ -153,7 +153,7 @@ WaterSpriteRacketRewardScene:
 	ld a, d ; $4fba
 	sub $02 ; $4fbb
 	ld d, a ; $4fbd
-	jp nz, .done ; $4fbe
+	jp nz, .flickerLoop ; $4fbe
 	script_set_active ACTOR_TRAINING_COURT_WATER_SPRITE, $00 ; $4fc1
 	script_wait_frames 30 ; $4fc8
 	script_set_position ACTOR_TRAINING_COURT_WATER_SPRITE, 51.0, 11.0 ; $4fcf

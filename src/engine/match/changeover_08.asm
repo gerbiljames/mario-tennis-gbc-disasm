@@ -364,10 +364,10 @@ UpdateMatchCamera:
 .clampY:
 	sub $0c ; $629b
 	bit 7, a ; $629d
-	jr nz, .done ; $629f
+	jr nz, .applyScroll ; $629f
 	ld h, $0c ; $62a1
 	ld l, $00 ; $62a3
-.done:
+.applyScroll:
 	ld a, l ; $62a5
 	and $e0 ; $62a6
 	ld e, a ; $62a8

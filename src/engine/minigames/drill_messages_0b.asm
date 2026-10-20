@@ -157,7 +157,7 @@ Unused_0b_QueueDrillOutcomeMessage:
 	cp POINTOUTCOME_LET ; $448b
 	jr z, .hideMessage ; $448d
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $448f
-	ld a, $01 ; $4491
+	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $4491
 	jr z, .checkCurrentServingPlayer ; $4493
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
 	cp MINIGAME_SERVICE_MATCH_2 ; $4498
@@ -168,7 +168,7 @@ Unused_0b_QueueDrillOutcomeMessage:
 	ld a, [hl] ; $44a7
 	or a ; $44a8
 	jr nz, .checkRallyLength ; $44a9
-	ld a, $03 ; $44ab
+	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED ; $44ab
 	jr .checkCurrentServingPlayer ; $44ad
 .checkRallyLength:
 	ld a, [wRallyLength] ; $44af
@@ -177,32 +177,32 @@ Unused_0b_QueueDrillOutcomeMessage:
 	ld a, [wServiceAceFlag] ; $44b6
 	or a ; $44b9
 	jr z, .notAce ; $44ba
-	ld a, $01 ; $44bc
+	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $44bc
 	jr .checkCurrentServingPlayer ; $44be
 .notAce:
-	ld a, $02 ; $44c0
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED ; $44c0
 	jr .checkCurrentServingPlayer ; $44c2
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $44c4
 	or a ; $44c7
 	jr nz, .compare ; $44c8
-	ld a, $04 ; $44ca
+	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $44ca
 	jr .checkCurrentServingPlayer ; $44cc
 .compare:
 	cp POINTOUTCOME_SERVE_VOLLEYED ; $44ce
-	ld a, $06 ; $44d0
+	ld a, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET ; $44d0
 	jr z, .checkCurrentServingPlayer ; $44d2
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $44d4
-	ld a, $01 ; $44d6
+	ld a, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $44d6
 	jr z, .checkCurrentServingPlayer ; $44d8
-	ld a, $05 ; $44da
+	ld a, DRILLMSG_I_TOUCHED_IT_SO_YOU_FAILED ; $44da
 	jr .checkCurrentServingPlayer ; $44dc
 .checkCurrentServingPlayer:
 	ld b, a ; $44de
 	ld a, [wCurrentServingPlayer] ; $44df
 	or a ; $44e2
 	jr z, .storeMessage ; $44e3
-	ld a, $06 ; $44e5
+	ld a, DRILLWORDING_SERVICE ; $44e5
 .storeMessage:
 	add b ; $44e7
 	ld [wDrillMessageId], a ; $44e8
@@ -220,7 +220,7 @@ QueueDrillOutcomeMessage:
 	call CheckDrillTargetZoneHit ; $44fd
 	or a ; $4500
 	jr nz, .checkRallyLength ; $4501
-	ld a, $10 ; $4503
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4503
 	jr .store ; $4505
 .checkRallyLength:
 	ld a, [wRallyLength] ; $4507
@@ -229,19 +229,19 @@ QueueDrillOutcomeMessage:
 	ld a, [wServiceAceFlag] ; $450e
 	or a ; $4511
 	jr z, .notAce ; $4512
-	ld a, $0d ; $4514
+	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4514
 	jr .store ; $4516
 .notAce:
-	ld a, $0e ; $4518
+	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4518
 	jr .store ; $451a
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $451c
 	or a ; $451f
 	jr nz, .otherOutcome ; $4520
-	ld a, $10 ; $4522
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4522
 	jr .store ; $4524
 .otherOutcome:
-	ld a, $10 ; $4526
+	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4526
 	jr .store ; $4528
 .store:
 	ld [wDrillMessageId], a ; $452a

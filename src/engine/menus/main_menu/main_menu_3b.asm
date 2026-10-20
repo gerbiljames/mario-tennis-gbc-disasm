@@ -154,7 +154,7 @@ LoadMainMenuGfx:
 	wram_bank WRAM_SCREEN ; $5713
 	ld a, $00 ; $5719
 	ld [wCurrentStorySlot], a ; $571b
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $571e
+	ld a, [wSaveSlotSummaries + SLOTSUM_CHAR] ; $571e
 	farcall LoadCharMugshotToBuffer ; $5721
 	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
@@ -162,7 +162,7 @@ LoadMainMenuGfx:
 	wram_bank WRAM_SCREEN ; $572d
 	ld a, $01 ; $5733
 	ld [wCurrentStorySlot], a ; $5735
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $5738
+	ld a, [wSaveSlotSummaries + SLOTSUM_SIZE + SLOTSUM_CHAR] ; $5738
 	farcall LoadCharMugshotToBuffer ; $573b
 	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
@@ -170,7 +170,7 @@ LoadMainMenuGfx:
 	wram_bank WRAM_SCREEN ; $5747
 	ld a, $02 ; $574d
 	ld [wCurrentStorySlot], a ; $574f
-	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $5752
+	ld a, [wSaveSlotSummaries + 2 * SLOTSUM_SIZE + SLOTSUM_CHAR] ; $5752
 	farcall LoadCharMugshotToBuffer ; $5755
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
@@ -437,9 +437,9 @@ DrawMainMenuSelection:
 	add a ; $5997
 	add a ; $5998
 	add a ; $5999
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $599a
+	ld bc, wSaveSlotSummaries ; $599a
 	add_bc_a ; $599d
-	ld hl, $0001 ; $59a2
+	ld hl, SLOTSUM_PALETTE ; $59a2
 	add hl, bc ; $59a5
 	ld a, [hl] ; $59a6
 	ld d, $04 ; $59a7

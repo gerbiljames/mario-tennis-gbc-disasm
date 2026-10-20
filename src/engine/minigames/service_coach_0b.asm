@@ -93,7 +93,7 @@ ServicePractice2SetupShotTarget:
 .checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5125
 	and $01 ; $5128
-	add $11 ; $512a
+	add DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $512a
 	ld [wDrillMessageId], a ; $512c
 	ret ; $512f
 ServicePractice2ExpectedServes:

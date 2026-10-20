@@ -226,12 +226,12 @@ RunSavedDataSourceSelect:
 	add a ; $6820
 	add a ; $6821
 	add a ; $6822
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6823
+	ld bc, wSaveSlotSummaries ; $6823
 	add_bc_a ; $6826
-	ld hl, $0000 ; $682b
+	ld hl, SLOTSUM_CHAR ; $682b
 	add hl, bc ; $682e
 	ld a, [hl] ; $682f
-	cp $3f ; $6830
+	cp CHAR_EMPTY_SLOT ; $6830
 	jr z, .rejectEmptySlot ; $6832
 	jr .playSelectSfx ; $6834
 .rejectEmptySlot:
@@ -282,7 +282,7 @@ LoadSavedDataSourceGfx:
 	wram_bank WRAM_SCREEN ; $68a7
 	ld a, $00 ; $68ad
 	ld [wCurrentStorySlot], a ; $68af
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $68b2
+	ld a, [wSaveSlotSummaries + SLOTSUM_CHAR] ; $68b2
 	farcall LoadCharMugshotToBuffer ; $68b5
 	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
@@ -290,7 +290,7 @@ LoadSavedDataSourceGfx:
 	wram_bank WRAM_SCREEN ; $68c1
 	ld a, $01 ; $68c7
 	ld [wCurrentStorySlot], a ; $68c9
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $68cc
+	ld a, [wSaveSlotSummaries + SLOTSUM_SIZE + SLOTSUM_CHAR] ; $68cc
 	farcall LoadCharMugshotToBuffer ; $68cf
 	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
@@ -298,7 +298,7 @@ LoadSavedDataSourceGfx:
 	wram_bank WRAM_SCREEN ; $68db
 	ld a, $02 ; $68e1
 	ld [wCurrentStorySlot], a ; $68e3
-	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $68e6
+	ld a, [wSaveSlotSummaries + 2 * SLOTSUM_SIZE + SLOTSUM_CHAR] ; $68e6
 	farcall LoadCharMugshotToBuffer ; $68e9
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
@@ -511,9 +511,9 @@ DrawSavedDataSourceGrid:
 	add a ; $6aa7
 	add a ; $6aa8
 	add a ; $6aa9
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6aaa
+	ld bc, wSaveSlotSummaries ; $6aaa
 	add_bc_a ; $6aad
-	ld hl, $0001 ; $6ab2
+	ld hl, SLOTSUM_PALETTE ; $6ab2
 	add hl, bc ; $6ab5
 	ld a, [hl] ; $6ab6
 	ld d, $04 ; $6ab7
@@ -632,14 +632,14 @@ DrawSavedDataSourceCaption:
 	add a ; $6b98
 	add a ; $6b99
 	add a ; $6b9a
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6b9b
+	ld bc, wSaveSlotSummaries ; $6b9b
 	add_bc_a ; $6b9e
-	ld hl, $0000 ; $6ba3
+	ld hl, SLOTSUM_CHAR ; $6ba3
 	add hl, bc ; $6ba6
 	ld a, [hl] ; $6ba7
-	cp $3f ; $6ba8
+	cp CHAR_EMPTY_SLOT ; $6ba8
 	jr z, .emptySlot ; $6baa
-	ld hl, $0003 ; $6bac
+	ld hl, SLOTSUM_NAME ; $6bac
 	add hl, bc ; $6baf
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6bb0
 	call DrawNameWithDiacritics_3b ; $6bb3
@@ -651,7 +651,7 @@ DrawSavedDataSourceCaption:
 	push bc ; $6bc1
 	push de ; $6bc2
 	push hl ; $6bc3
-	ld hl, $0002 ; $6bc4
+	ld hl, SLOTSUM_LEVEL ; $6bc4
 	add hl, bc ; $6bc7
 	ld a, [hl] ; $6bc8
 	ld h, $00 ; $6bc9
@@ -667,7 +667,7 @@ DrawSavedDataSourceCaption:
 	push bc ; $6bda
 	push de ; $6bdb
 	push hl ; $6bdc
-	ld hl, $000f ; $6bdd
+	ld hl, SLOTSUM_HOURS ; $6bdd
 	add hl, bc ; $6be0
 	ld a, [hl] ; $6be1
 	ld h, $00 ; $6be2
@@ -679,7 +679,7 @@ DrawSavedDataSourceCaption:
 	pop de ; $6bef
 	pop bc ; $6bf0
 	pop af ; $6bf1
-	ld hl, $000e ; $6bf2
+	ld hl, SLOTSUM_MINUTES ; $6bf2
 	add hl, bc ; $6bf5
 	ld a, [hl] ; $6bf6
 	ld h, $00 ; $6bf7

@@ -413,11 +413,11 @@ PlayScreenSequence0:
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
 	frame_task QueueScreen0Sprites ; $770e
-.done:
+.waitDismiss:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
 	and PADF_A | PADF_B ; $771b
-	jr z, .done ; $771d
+	jr z, .waitDismiss ; $771d
 	ret ; $771f
 SetupScreen0Assets:
 	call ResetScrollAndCamera ; $7720

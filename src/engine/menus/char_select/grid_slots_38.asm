@@ -332,7 +332,7 @@ ResolveSelectedCharIds:
 .slotLoop:
 	ld a, [hl] ; $5e7c
 	cp $ff ; $5e7d
-	jr z, .done ; $5e7f
+	jr z, .storeId ; $5e7f
 	push hl ; $5e81
 	ld hl, wCharGridEntries ; $5e82
 	add a ; $5e85
@@ -340,15 +340,15 @@ ResolveSelectedCharIds:
 	add_hl_a ; $5e87
 	ld a, [hl] ; $5e8c
 	cp $04 ; $5e8d
-	jr nc, .nextSlot ; $5e8f
+	jr nc, .gotId ; $5e8f
 	inc hl ; $5e91
 	inc hl ; $5e92
 	inc hl ; $5e93
 	ld a, [hl] ; $5e94
 	or $80 ; $5e95
-.nextSlot:
+.gotId:
 	pop hl ; $5e97
-.done:
+.storeId:
 	ld [hl+], a ; $5e98
 	ld a, c ; $5e99
 	inc a ; $5e9a

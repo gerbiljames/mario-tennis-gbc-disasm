@@ -29,7 +29,7 @@ RunMinigameModeFlow:
 	add c ; $524e
 	farcall ShowRulesScreen ; $524f
 	cp $ff ; $5252
-	jr nz, .done ; $5254
+	jr nz, .runDrill ; $5254
 	call DisableLCDSafely ; $5256
 	farcall LoadMenuFontGfx ; $5259
 	farcall ResetScreenAndTextWindows ; $525c
@@ -38,7 +38,7 @@ RunMinigameModeFlow:
 	ld a, MENUSLIDE_BACK ; $5267
 	ld [wMenuSlideDirection], a ; $5269
 	jr .levelMenu ; $526c
-.done:
+.runDrill:
 	ld a, [wSelectedMinigame] ; $526e
 	call GetMinigameDrillId ; $5271
 	farcall RunTrainingDrillByID ; $5274
@@ -226,7 +226,7 @@ RunSavedDataMenuFlow:
 	jp .checkSavedData ; $5469
 .n64RecordOption1:
 	cp $01 ; $546c
-	jr nz, .done ; $546e
+	jr nz, .ringShotData ; $546e
 	script_fade_out 16 ; $5470
 	call WaitFadeEnd ; $5475
 	farcall RunN64ExhibDataAlias1 ; $5478
@@ -238,7 +238,7 @@ RunSavedDataMenuFlow:
 	ld a, MENUSLIDE_BACK ; $548c
 	ld [wMenuSlideDirection], a ; $548e
 	jp .checkSavedData ; $5491
-.done:
+.ringShotData:
 	farcall RunN64RingShotData ; $5494
 	call DisableLCDSafely ; $5497
 	farcall LoadMenuFontGfx ; $549a

@@ -206,15 +206,15 @@ BuildNearbyActorList:
 	ld a, [bc] ; $5465
 	dec c ; $5466
 	or a ; $5467
-	jr z, .done ; $5468
+	jr z, .nextActor ; $5468
 	ld hl, ACTORF_STATUS ; $546a
 	add hl, bc ; $546d
 	bit ACTORSTATUSB_LIVE, [hl] ; $546e
-	jr z, .done ; $5470
+	jr z, .nextActor ; $5470
 	ld hl, ACTORF_FLAGS ; $5472
 	add hl, bc ; $5475
 	bit ACTORFLAGB_SOLID, [hl] ; $5476
-	jr z, .done ; $5478
+	jr z, .nextActor ; $5478
 	ld hl, wActors + ACTORF_Y ; $547a
 	ld a, [hl+] ; $547d
 	ld d, [hl] ; $547e
@@ -228,7 +228,7 @@ BuildNearbyActorList:
 	abs_hl ; $548d
 	ld a, h ; $5497
 	and $fe ; $5498
-	jr nz, .done ; $549a
+	jr nz, .nextActor ; $549a
 	ld hl, wActors + ACTORF_X ; $549c
 	ld a, [hl+] ; $549f
 	ld d, [hl] ; $54a0
@@ -242,14 +242,14 @@ BuildNearbyActorList:
 	abs_hl ; $54af
 	ld a, h ; $54b9
 	and $fe ; $54ba
-	jr nz, .done ; $54bc
+	jr nz, .nextActor ; $54bc
 	pop hl ; $54be
 	ld a, c ; $54bf
 	ld [hl+], a ; $54c0
 	ld a, b ; $54c1
 	ld [hl+], a ; $54c2
 	push hl ; $54c3
-.done:
+.nextActor:
 	ld hl, ACTOR_SIZE ; $54c4
 	add hl, bc ; $54c7
 	ld c, l ; $54c8
@@ -281,22 +281,22 @@ BuildActorQueryList:
 	ld a, [bc] ; $54e6
 	dec c ; $54e7
 	or a ; $54e8
-	jr z, .done ; $54e9
+	jr z, .nextActor ; $54e9
 	ld hl, ACTORF_STATUS ; $54eb
 	add hl, bc ; $54ee
 	bit ACTORSTATUSB_LIVE, [hl] ; $54ef
-	jr z, .done ; $54f1
+	jr z, .nextActor ; $54f1
 	ld hl, ACTORF_FLAGS ; $54f3
 	add hl, bc ; $54f6
 	bit ACTORFLAGB_TALKABLE, [hl] ; $54f7
-	jr z, .done ; $54f9
+	jr z, .nextActor ; $54f9
 	pop hl ; $54fb
 	ld a, c ; $54fc
 	ld [hl+], a ; $54fd
 	ld a, b ; $54fe
 	ld [hl+], a ; $54ff
 	push hl ; $5500
-.done:
+.nextActor:
 	ld hl, ACTOR_SIZE ; $5501
 	add hl, bc ; $5504
 	ld c, l ; $5505

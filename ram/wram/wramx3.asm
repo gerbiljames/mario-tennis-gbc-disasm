@@ -34,9 +34,18 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ; jump table; rows 9-11 and markers 5/6 are not selected by any
 ; ShowRankingBoard argument.
 ; screen tilemap
+UNION
 ; [1024 bytes] BG tile map the screen is assembled into, 32 x 32 cells
 ; with rows TILEMAP_WIDTH apart; CopyTilemapRect steps rows by $0020
 wShadowTilemap:: ds 1024
+NEXTU
+	ds 24 * 32
+; [48 bytes] Off-screen rows of the bank $3b menus: three SLOTSUM_SIZE
+; summaries of the story files (SLOTSUM_* fields), built by
+; BuildSaveSlotSummaries and read by the slot captions and mugshot loaders
+wSaveSlotSummaries:: ds 3 * SLOTSUM_SIZE
+	export_size wSaveSlotSummaries
+ENDU
 ; [1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400
 ; higher (the attribute of cell $d08b is $d48b)
 wShadowAttrmap:: ds 1024

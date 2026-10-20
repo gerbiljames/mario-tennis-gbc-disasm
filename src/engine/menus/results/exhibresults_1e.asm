@@ -326,7 +326,7 @@ DrawRankMatchLabel:
 	ld a, $34 ; $4751
 	ld [hl], a ; $4753
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4754
-	jr nz, .checkWramBank ; $4757
+	jr nz, .blankLabel ; $4757
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4759
 	jr nz, .seniorSinglesRank ; $475c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $475e
@@ -358,7 +358,7 @@ DrawRankMatchLabel:
 	ld a, $33 ; $4790
 	ld [hl], a ; $4792
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4793
-	jr nz, .checkWramBank ; $4796
+	jr nz, .blankLabel ; $4796
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $4798
 	jr nz, .seniorDoublesRank ; $479b
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $479d
@@ -392,7 +392,7 @@ DrawRankMatchLabel:
 	ld bc, $0020 ; $47d0
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
-.checkWramBank:
+.blankLabel:
 	push_wram_bank WRAM_SCREEN ; $47d7
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $47e0
 	ld a, $20 ; $47e3

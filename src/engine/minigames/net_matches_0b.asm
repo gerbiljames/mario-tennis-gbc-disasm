@@ -757,9 +757,9 @@ NetGameMatch3HandlePointEnd:
 Unused_0b_NetGameMatch3JudgePoint:
 	ld a, [wPointOutcome] ; $5994
 	cp POINTOUTCOME_FAULT ; $5997
-	jp z, Unused_0b_NetGameMatch3JudgePoint.checkPointWinLoseFlag ; $5999
+	jp z, Unused_0b_NetGameMatch3JudgePoint.noPoint ; $5999
 	cp POINTOUTCOME_LET ; $599c
-	jp z, Unused_0b_NetGameMatch3JudgePoint.checkPointWinLoseFlag ; $599e
+	jp z, Unused_0b_NetGameMatch3JudgePoint.noPoint ; $599e
 	ld a, [wRallyLength] ; $59a1
 	dec a ; $59a4
 	and $03 ; $59a5
@@ -850,7 +850,7 @@ Unused_0b_NetGameMatch3JudgePoint.player2Point:
 	add a ; $5a45
 	dec a ; $5a46
 	ret ; $5a47
-Unused_0b_NetGameMatch3JudgePoint.checkPointWinLoseFlag:
+Unused_0b_NetGameMatch3JudgePoint.noPoint:
 	ld a, DRILLMSG_HIDE ; $5a48
 	ld [wDrillMessageId], a ; $5a4a
 	xor a ; $5a4d

@@ -335,7 +335,7 @@ LoadStorySlot:
 	or a ; $525c
 	ld a, h ; $525d
 	jr nz, .storePlayer1CurrentMainCharacter ; $525e
-	ld a, $3f ; $5260
+	ld a, CHAR_EMPTY_SLOT ; $5260
 	ld [wPlayer1MainChar], a ; $5262
 	ld a, $03 ; $5265
 	ld [wPlayer1MainPalette], a ; $5267

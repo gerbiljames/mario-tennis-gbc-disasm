@@ -663,10 +663,10 @@ UnpackUnlockFlagsFromLink:
 	ld hl, wLinkUnlockFlagsSend + 3 ; $7751
 	ld b, $01 ; $7754
 	ld c, $00 ; $7756
-.itemFlags:
+.itemBitLoop:
 	ld a, [hl] ; $7758
 	and b ; $7759
-	jr z, .done ; $775a
+	jr z, .nextItemBit ; $775a
 	push hl ; $775c
 	ld hl, wCharUnlockFlags + 23 ; $775d
 	ld a, c ; $7760
@@ -674,12 +674,12 @@ UnpackUnlockFlagsFromLink:
 	ld a, $01 ; $7766
 	ld [hl], a ; $7768
 	pop hl ; $7769
-.done:
+.nextItemBit:
 	sla b ; $776a
 	inc c ; $776c
 	ld a, c ; $776d
 	cp $08 ; $776e
-	jr nz, .itemFlags ; $7770
+	jr nz, .itemBitLoop ; $7770
 	ret ; $7772
 MergeLinkUnlockFlags:
 	ld hl, wLinkUnlockFlagsSend ; $7773

@@ -205,7 +205,7 @@ DecompressCharMugshot:
 	push de ; $4e5d
 	push hl ; $4e5e
 	call StubNop_1b_0 ; $4e5f
-	cp $3f ; $4e62
+	cp CHAR_EMPTY_SLOT ; $4e62
 	jr nz, .gotIndex ; $4e64
 	ld b, a ; $4e66
 	ld a, [wCurrentStorySlot] ; $4e67

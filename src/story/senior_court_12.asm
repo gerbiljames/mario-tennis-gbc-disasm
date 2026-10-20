@@ -724,7 +724,7 @@ SeniorCourtInitScript_12:
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_PAM ; $5d73
 .fromMatch:
 	test_flag FLAG_DOUBLES ; $5d7b
-	jr nz, .done ; $5d7e
+	jr nz, .doubles ; $5d7e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5d80
 	jr z, .placeActors ; $5d83
 	script_respawn_actors SeniorCourtActorsA_12 ; $5d85
@@ -742,7 +742,7 @@ SeniorCourtInitScript_12:
 	farcall EndCutsceneScriptMode ; $5da8
 	call SeniorCourtWalkPlayersOntoCourt ; $5dab
 	ret ; $5dae
-.done:
+.doubles:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5daf
 	jr z, .placeActors ; $5db2
 	script_respawn_actors SeniorCourtActorsB_12 ; $5db4

@@ -81,20 +81,22 @@ after a real defect broke it:
             warp only` mark, and only those do (tools/routes.py)
   raw-ids   a raw cp/store operand on a variable whose other values are
             named from a constant family is not a member of that family
-            (a routine's `ld a, <imm> / ret` stores into the variable its
-            caller saves the result in, a cp after `and X_MASK` tests that
-            field, a BASE_ID_ARGS base counts as an argument), a byte read
-            through a known text pointer is not compared with a raw TX_*
-            code, the macro and table rows RAW_ID_* lists name their ids, and
-            a routine passed Text_* in hl/de at two or more sites is passed
-            no raw number there, and no `bit n, r` on a joypad byte (loaded
+            (immediates every jump into a label loads into a reach the
+            store or call after it, a routine's `ld a, <imm> / ret` stores
+            into the variable its caller saves the result in, a cp after
+            `and X_MASK` tests that field, a BASE_ID_ARGS base counts as an
+            argument), a byte read through a known text pointer is not
+            compared with a raw TX_* code, the macro and table rows RAW_ID_*
+            lists name their ids, and a routine passed Text_* in hl/de at
+            two or more sites is passed no raw number there, and no `bit n, r` on a joypad byte (loaded
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
             leaves n raw
-  fields    a routine that names a CHARREC_* / CREATEDCHAR_* / ACTORF_* /
-            OBJSLOT_* field adds no raw offset under $100 to a record pointer
-            (`ld hl, n / add hl, rr`, `ld a, n / add c|e / ld e|c, a`): 25
-            once reached a record by number beside the names (the record in
-            de, bc named), as the created-character routines all did
+  fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
+            ACTORF_* / OBJSLOT_* field adds no raw offset under $100 to a
+            record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c|e /
+            ld e|c, a`): 25 once reached a record by number beside the
+            names (the record in de, bc named), as the created-character
+            routines all did
   templates every label handed to QueueSpriteTemplate in hl, directly or as
             a row of the pointer table hl is indexed into, is a
             sprite_template region (five were raw db rows)
@@ -103,6 +105,11 @@ after a real defect broke it:
             (following branches, stopping at ret / jp out / as_halt) reaches
             that branch or a computed jump (18 named shared exits, store and
             speak tails, or another path's entry)
+  localnames a .done / .exit / .finish local reaches no branch back to an
+            earlier local of its routine (18 were next-item steps or the
+            next prompt), and a .check<Var> local whose w<Var> / h<Var> is a
+            RAM symbol names it in its first three instructions, before any
+            branch (13 were pad tests or other paths)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
@@ -1135,7 +1142,6 @@ _PER_LOCATION_VARS = {"wMapSceneStage", "wMapSceneStage2"}
 # variable also uses, but mean something else.
 KNOWN_RAW_IDS = {
     ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
-    ("wPlayer1MainChar", "$3f"),   # debug_02's placeholder record id, not a drill opponent
     ("QueueSprite(b)", "0"),       # no attribute bits; OAM_PAL0 is the DMG palette bit, unused on CGB
 }
 # Data rows whose values are ids: a macro's argument by position, and tables
@@ -1237,6 +1243,16 @@ def _clobber(regs, spent, r):
         spent.discard(k)
 
 
+def _imms(v):
+    """The immediates a register value stands for: several when it was
+    carried to a label by jumps loading different ones ("|v1|v2")."""
+    return v[1:].split("|") if v.startswith("|") else [v]
+
+
+def _is_imm(v):
+    return bool(v) and v[0] not in "=@+" and v not in _REGS8
+
+
 def _var(operand):
     name = operand.split(" + ")[0]
     return operand if name in _FIELD_VARS else name
@@ -1288,9 +1304,15 @@ def _raw_id_uses():
             if t.startswith("."):
                 label = owner + t.rstrip(":")
                 js = jumps.get(label, [])
-                if after_jump and js and js[0] and js.count(js[0]) == len(js) == refs.get(label):
+                into = js + ([] if after_jump else [regs.get("a")])
+                if (after_jump and js and js[0] and js[0][0] == "="
+                        and js.count(js[0]) == len(js) == refs.get(label)):
                     # reached only by jumps that all agree on a
                     regs, spent = {"a": js[0]}, set()
+                elif js and len(js) == refs.get(label) and all(_is_imm(v) for v in into):
+                    # every way in loads an immediate into a
+                    imms = list(dict.fromkeys(x for v in into for x in _imms(v)))
+                    regs, spent = {"a": imms[0] if len(imms) == 1 else "|" + "|".join(imms)}, set()
                 else:
                     # keep what a was loaded from and text pointers, drop immediates
                     regs = {r: v for r, v in regs.items() if v[0] in "=@"}
@@ -1304,7 +1326,7 @@ def _raw_id_uses():
             after_jump = bool(_NO_FALLTHROUGH_RE.match(t))
             if m := re.match(r"(?:jr|jp) (?:(?:n?z|n?c), )?(\.\w+)$", t):
                 a = regs.get("a", "")
-                jumps.setdefault(owner + m.group(1), []).append(a if a.startswith("=") else None)
+                jumps.setdefault(owner + m.group(1), []).append(a if a.startswith("=") or _is_imm(a) else None)
             if m := re.match(r"ld a, \[(hl[+-]?|de)\]$", t):
                 ptr = regs.get(m.group(1)[:2], "")
                 _clobber(regs, spent, "a")
@@ -1329,7 +1351,7 @@ def _raw_id_uses():
                 if regs.get("a", "=")[0] == "+":
                     del regs["a"]
                 if "a" in regs and not regs["a"].startswith("="):
-                    uses.setdefault(_var(m.group(1)), []).append((regs["a"], where))
+                    uses.setdefault(_var(m.group(1)), []).extend((v, where) for v in _imms(regs["a"]))
                     spent.add("a")
                 elif "a" not in regs:
                     regs["a"] = "=" + _var(m.group(1))
@@ -1338,7 +1360,7 @@ def _raw_id_uses():
                 if regs.get("hl", "").startswith("="):
                     v = regs.get("a") if m.group(1) == "a" else m.group(1)
                     if v and v[0] not in "=+" and v not in _REGS8:
-                        uses.setdefault(regs["hl"][1:], []).append((v, where))
+                        uses.setdefault(regs["hl"][1:], []).extend((x, where) for x in _imms(v))
                         if m.group(1) == "a":
                             spent.add("a")
                 continue
@@ -1351,7 +1373,7 @@ def _raw_id_uses():
             if m := re.match(r"add ([^\[\],]+)$", t):
                 v = regs.get("a", "") if m.group(1) in _REGS8 else m.group(1)
                 _clobber(regs, spent, "a")
-                if v and v[0] not in "=@+" and v not in _REGS8:
+                if _is_imm(v) and v[0] != "|":
                     regs["a"] = "+" + v
                 continue
             if t == "add_hl_a" or re.match(r"add hl, (bc|de)$", t):
@@ -1364,7 +1386,7 @@ def _raw_id_uses():
                     if v[0] == "+" and BASE_ID_ARGS.get(callee) == r and r not in spent:
                         uses.setdefault(f"{callee}({r})", []).append((v[1:], where))
                     elif v[0] not in "=@+" and r not in spent:
-                        uses.setdefault(f"{callee}({r})", []).append((v, where))
+                        uses.setdefault(f"{callee}({r})", []).extend((x, where) for x in _imms(v))
                 # the text engine's callees keep the text pointer
                 regs, spent = {r: v for r, v in regs.items() if v[0] == "@"}, set()
                 continue
@@ -1627,14 +1649,14 @@ def check_raw_ids(fail):
 KNOWN_RAW_FIELD_OFFSETS = {
     ("UpdateActorJumpPhysics", "$0010"): "gravity added to the vertical velocity",
 }
-_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
+_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
 _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
 
 
 def check_field_offsets(fail):
-    """In a routine that names a CHARREC_* / CREATEDCHAR_* / ACTORF_* /
-    OBJSLOT_* field, an offset added to a record pointer (`ld hl, off /
+    """In a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
+    ACTORF_* / OBJSLOT_* field, an offset added to a record pointer (`ld hl, off /
     add hl, bc|de`, or `ld a, off / add c|e / ld e|c, a`) is not a raw number
     under $100: the same record reached through another register is still
     that record."""
@@ -1870,6 +1892,107 @@ def _loops_back(lines, start, owner, local):
     return False
 
 
+# Locals whose names hold despite the checks: (routine, local) -> why.
+KNOWN_LOCAL_NAMES = {
+}
+_END_LOCAL_RE = re.compile(r"\.(?:done|exit|finish)\d*$")
+_CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
+
+
+def check_local_names(fail):
+    """A `.done` / `.exit` / `.finish` local reaches no branch back to an
+    earlier local of its routine (it is a next-item step, not the end), and a
+    `.check<Var>` local, where w<Var> or h<Var> is a RAM symbol, names that
+    symbol within its first three instructions, before any branch."""
+    ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
+    ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
+    n, seen = 0, set()
+    for h in holders():
+        bank = bank_of(h)
+        lines = bank_lines(h)[0]
+        labels, scope = {}, None
+        for k, line in enumerate(lines):
+            g = _GLOBAL_RE.match(line)
+            if g:
+                scope = g.group(1)
+                labels[scope] = k
+                continue
+            lm = re.match(r"^(\w+)?(\.\w+):", line)
+            if lm:
+                labels[(lm.group(1) or scope) + lm.group(2)] = k
+        scope = None
+        for i, line in enumerate(lines):
+            g = _GLOBAL_RE.match(line)
+            if g:
+                scope = g.group(1)
+                continue
+            m = re.match(r"^(\w+)?(\.\w+):", line)
+            if not m:
+                continue
+            owner, local = m.group(1) or scope, m.group(2)
+            key = (owner, local)
+            if (bank, key) in seen:
+                continue
+            if _END_LOCAL_RE.match(local):
+                seen.add((bank, key))
+                n += 1
+                back = _branches_back(lines, i, owner, labels)
+                if back and key not in KNOWN_LOCAL_NAMES:
+                    fail("localnames", f"${bank:02x}: {owner}{local} branches back to {back}")
+                elif not back and key in KNOWN_LOCAL_NAMES:
+                    fail("localnames", f"{owner}{local} no longer branches back -- drop it from KNOWN_LOCAL_NAMES")
+                continue
+            c = _CHECK_LOCAL_RE.match(local)
+            if not c:
+                continue
+            syms = [p + c.group(1) for p in "wh" if p + c.group(1) in ram]
+            if not syms:
+                continue
+            seen.add((bank, key))
+            n += 1
+            body = []
+            for later in lines[i + 1:]:
+                code = later.split(";")[0].strip()
+                if not code or code.endswith(":"):
+                    continue
+                body.append(code)
+                if len(body) == 3 or re.match(r"(jr|jp|call|ret)\b", code):
+                    break
+            named = any(re.search(rf"\b{s}\b", b) for s in syms for b in body)
+            if not named and key not in KNOWN_LOCAL_NAMES:
+                fail("localnames", f"${bank:02x}: {owner}{local} does not read {syms[0]}")
+            elif named and key in KNOWN_LOCAL_NAMES:
+                fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
+    return n
+
+
+def _branches_back(lines, start, owner, labels):
+    """The first earlier local of `owner` that some path from `start`
+    branches to, following branches within the routine."""
+    todo, seen = [start + 1], set()
+    while todo:
+        k = todo.pop()
+        while k < len(lines) and k not in seen:
+            seen.add(k)
+            if _GLOBAL_RE.match(lines[k]):
+                break
+            code = lines[k].split(";")[0]
+            b = _LOOP_BRANCH_RE.match(code)
+            refs = [b.group(3)] if b else re.findall(r"(?<![\w.])(\.\w+)\b", code)
+            for name in refs:
+                full = owner + name if name.startswith(".") else name
+                if not full.startswith(owner + ".") or full not in labels:
+                    continue
+                dest = labels[full]
+                if dest <= start:
+                    return full[len(owner):]
+                todo.append(dest)
+            if b and not b.group(2) or _LOOP_EXIT_RE.match(code):
+                break
+            k += 1
+    return None
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -1912,6 +2035,7 @@ def main():
         "fields": check_field_offsets(fail),
         "templates": check_sprite_templates(fail),
         "loops": check_loop_labels(fail),
+        "localnames": check_local_names(fail),
         "mirrors": check_mirrored_operands(fail),
     }
     by_check = {}

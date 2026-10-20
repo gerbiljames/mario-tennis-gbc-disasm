@@ -424,14 +424,14 @@ MarioWorldArrivalSingles:
 	script_move_target ACTOR_MARIO_WORLD_TOAD, 13.0, 19.0 ; $5694
 	script_wait_move ACTOR_MARIO_WORLD_PEACH ; $569f
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $56a4
-	jr z, .done ; $56a7
+	jr z, .welcome ; $56a7
 	script_face ACTOR_MARIO_WORLD_PEACH, FACE_DOWN ; $56a9
 	script_wait_frames 20 ; $56b0
 	ld a, EXIT_PEACHS_CASTLE_FLY_HOME ; $56b7
 	ld [wUnusedExitTriggerIdMirror], a ; $56b9
 	ld [wStoryModeExitTriggerRequest], a ; $56bc
 	ret ; $56bf
-.done:
+.welcome:
 	call MarioWorldWelcomeCutscene ; $56c0
 	script_set_speed ACTOR_MARIO_WORLD_BOWSER, 1.0 ; $56c3
 	script_set_speed ACTOR_MARIO_WORLD_BALLOON_ANGRY, 1.0 ; $56cb

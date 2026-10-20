@@ -90,6 +90,18 @@ def CREATEDCHAR_NAME    rb CHARREC_CHAR - CHARREC_NAME ; $07
 def CREATED_CHAR_RECORD_SIZE equ _RS
 	ASSERT CREATED_CHAR_RECORD_SIZE == $20
 
+; --- Save-slot summary (wSaveSlotSummaries: one per story file, filled by
+; BuildSaveSlotSummaries for the main-menu, saved-data and erase captions) ---
+	rsreset
+def SLOTSUM_CHAR    rb   ; $00 CHAR_* id, CHAR_EMPTY_SLOT for an empty file
+def SLOTSUM_PALETTE rb   ; $01
+def SLOTSUM_LEVEL   rb   ; $02
+def SLOTSUM_NAME    rb CHARREC_CHAR - CHARREC_NAME ; $03
+def SLOTSUM_MINUTES rb   ; $0e the saved play time
+def SLOTSUM_HOURS   rb   ; $0f
+def SLOTSUM_SIZE equ _RS
+	ASSERT SLOTSUM_SIZE == $10
+
 ; --- Character ids (character record byte +$0b, wMatchPlayerChar/OpponentChar) ---
 ; The 32-entry roster, in the order every character-indexed table takes:
 ; CharSpriteSetTable, CharPaletteIndexTable, CharacterPortraitTable_16 and the
@@ -222,3 +234,4 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 def CHAR_NONE          equ $ff ; empty court slot
 def CHAR_STORY_MAIN    equ $80 ; the story slot's own character ($c900 record)
 def CHAR_STORY_PARTNER equ $81 ; its doubles partner ($c940 record)
+def CHAR_EMPTY_SLOT    equ $3f ; an empty story file's character, shown with palette $03; DecompressCharMugshot adds wCurrentStorySlot to it

@@ -212,7 +212,7 @@ CompactRosterGridEntries:
 .scanLoop:
 	ld a, [hl] ; $60f1
 	cp $ff ; $60f2
-	jr nz, .next ; $60f4
+	jr nz, .skipEntry ; $60f4
 	push hl ; $60f6
 	ld a, $16 ; $60f7
 	sub c ; $60f9
@@ -261,13 +261,13 @@ CompactRosterGridEntries:
 	inc hl ; $6127
 	ld h, d ; $6128
 	ld l, e ; $6129
-	jr .done ; $612a
-.next:
+	jr .nextEntry ; $612a
+.skipEntry:
 	inc hl ; $612c
 	inc hl ; $612d
 	inc hl ; $612e
 	inc hl ; $612f
-.done:
+.nextEntry:
 	ld a, c ; $6130
 	inc a ; $6131
 	ld c, a ; $6132
@@ -293,7 +293,7 @@ CompactMarioCastGridEntries:
 .scanLoop:
 	ld a, [hl] ; $614b
 	cp $ff ; $614c
-	jr nz, .next ; $614e
+	jr nz, .skipEntry ; $614e
 	push hl ; $6150
 	ld a, $08 ; $6151
 	sub c ; $6153
@@ -342,13 +342,13 @@ CompactMarioCastGridEntries:
 	inc hl ; $6181
 	ld h, d ; $6182
 	ld l, e ; $6183
-	jr .done ; $6184
-.next:
+	jr .nextEntry ; $6184
+.skipEntry:
 	inc hl ; $6186
 	inc hl ; $6187
 	inc hl ; $6188
 	inc hl ; $6189
-.done:
+.nextEntry:
 	ld a, c ; $618a
 	inc a ; $618b
 	ld c, a ; $618c

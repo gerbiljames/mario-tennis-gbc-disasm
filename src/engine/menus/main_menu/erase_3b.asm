@@ -67,12 +67,12 @@ RunEraseSavedDataSelect:
 	add a ; $6ce6
 	add a ; $6ce7
 	add a ; $6ce8
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $6ce9
+	ld bc, wSaveSlotSummaries ; $6ce9
 	add_bc_a ; $6cec
-	ld hl, $0000 ; $6cf1
+	ld hl, SLOTSUM_CHAR ; $6cf1
 	add hl, bc ; $6cf4
 	ld a, [hl] ; $6cf5
-	cp $3f ; $6cf6
+	cp CHAR_EMPTY_SLOT ; $6cf6
 	jr z, .rejectEmptySlot ; $6cf8
 	jr .playSelectSfx ; $6cfa
 .rejectEmptySlot:
@@ -106,7 +106,7 @@ LoadEraseSavedDataGfx:
 	wram_bank WRAM_SCREEN ; $6d3a
 	ld a, $00 ; $6d40
 	ld [wCurrentStorySlot], a ; $6d42
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $6d45
+	ld a, [wSaveSlotSummaries + SLOTSUM_CHAR] ; $6d45
 	farcall LoadCharMugshotToBuffer ; $6d48
 	ld de, vTiles2 tile $68 + VRAM_BANK1 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
@@ -114,7 +114,7 @@ LoadEraseSavedDataGfx:
 	wram_bank WRAM_SCREEN ; $6d54
 	ld a, $01 ; $6d5a
 	ld [wCurrentStorySlot], a ; $6d5c
-	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $6d5f
+	ld a, [wSaveSlotSummaries + SLOTSUM_SIZE + SLOTSUM_CHAR] ; $6d5f
 	farcall LoadCharMugshotToBuffer ; $6d62
 	ld de, vTiles2 tile $71 + VRAM_BANK1 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
@@ -122,7 +122,7 @@ LoadEraseSavedDataGfx:
 	wram_bank WRAM_SCREEN ; $6d6e
 	ld a, $02 ; $6d74
 	ld [wCurrentStorySlot], a ; $6d76
-	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $6d79
+	ld a, [wSaveSlotSummaries + 2 * SLOTSUM_SIZE + SLOTSUM_CHAR] ; $6d79
 	farcall LoadCharMugshotToBuffer ; $6d7c
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
@@ -459,9 +459,9 @@ DrawEraseSavedDataGrid:
 	add a ; $7024
 	add a ; $7025
 	add a ; $7026
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $7027
+	ld bc, wSaveSlotSummaries ; $7027
 	add_bc_a ; $702a
-	ld hl, $0001 ; $702f
+	ld hl, SLOTSUM_PALETTE ; $702f
 	add hl, bc ; $7032
 	ld a, [hl] ; $7033
 	ld d, $04 ; $7034

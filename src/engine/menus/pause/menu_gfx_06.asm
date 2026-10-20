@@ -86,12 +86,12 @@ LoadScoreboardModeGfx:
 	jr z, .trainingDrill ; $5c8f
 	add a ; $5c91
 	ld_hl_indexed ScoreboardModeGfxPointers ; $5c92
-	jr .checkWramBank ; $5c99
+	jr .loadGfx ; $5c99
 .trainingDrill:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
 	add a ; $5c9e
 	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f
-.checkWramBank:
+.loadGfx:
 	push_wram_bank WRAM_STAGING ; $5ca6
 	ld a, [hl+] ; $5caf
 	ld h, [hl] ; $5cb0

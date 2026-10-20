@@ -13,14 +13,14 @@ DrawEraseSavedDataCaption:
 	add a ; $7115
 	add a ; $7116
 	add a ; $7117
-	ld bc, wShadowTilemap + 24 * TILEMAP_WIDTH ; $7118
+	ld bc, wSaveSlotSummaries ; $7118
 	add_bc_a ; $711b
-	ld hl, $0000 ; $7120
+	ld hl, SLOTSUM_CHAR ; $7120
 	add hl, bc ; $7123
 	ld a, [hl] ; $7124
-	cp $3f ; $7125
+	cp CHAR_EMPTY_SLOT ; $7125
 	jr z, .emptySlot ; $7127
-	ld hl, $0003 ; $7129
+	ld hl, SLOTSUM_NAME ; $7129
 	add hl, bc ; $712c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $712d
 	call DrawNameWithDiacritics_3b ; $7130
@@ -32,7 +32,7 @@ DrawEraseSavedDataCaption:
 	push bc ; $713e
 	push de ; $713f
 	push hl ; $7140
-	ld hl, $0002 ; $7141
+	ld hl, SLOTSUM_LEVEL ; $7141
 	add hl, bc ; $7144
 	ld a, [hl] ; $7145
 	ld h, $00 ; $7146
@@ -48,7 +48,7 @@ DrawEraseSavedDataCaption:
 	push bc ; $7157
 	push de ; $7158
 	push hl ; $7159
-	ld hl, $000f ; $715a
+	ld hl, SLOTSUM_HOURS ; $715a
 	add hl, bc ; $715d
 	ld a, [hl] ; $715e
 	ld h, $00 ; $715f
@@ -60,7 +60,7 @@ DrawEraseSavedDataCaption:
 	pop de ; $716c
 	pop bc ; $716d
 	pop af ; $716e
-	ld hl, $000e ; $716f
+	ld hl, SLOTSUM_MINUTES ; $716f
 	add hl, bc ; $7172
 	ld a, [hl] ; $7173
 	ld h, $00 ; $7174

@@ -377,7 +377,7 @@ AddCreatedCharsToCharGrid:
 .slotLoop:
 	ld a, [hl] ; $5be9
 	cp $ff ; $5bea
-	jr z, .storeCount ; $5bec
+	jr z, .emptySlot ; $5bec
 	push hl ; $5bee
 	ld hl, wCharGridEntries + 36 ; $5bef
 	ld a, b ; $5bf2
@@ -431,11 +431,11 @@ AddCreatedCharsToCharGrid:
 	ld de, CREATED_CHAR_RECORD_SIZE ; $5c2f
 	add hl, de ; $5c32
 	inc b ; $5c33
-	jr .done ; $5c34
-.storeCount:
+	jr .nextSlot ; $5c34
+.emptySlot:
 	ld de, 2 * CREATED_CHAR_RECORD_SIZE ; $5c36
 	add hl, de ; $5c39
-.done:
+.nextSlot:
 	ld a, c ; $5c3a
 	inc a ; $5c3b
 	ld c, a ; $5c3c

@@ -190,7 +190,7 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	xor a ; $6b3b
 	ld [wLinkCpuDifficulty], a ; $6b3c
 	ld [wCpuDifficultyCursor], a ; $6b3f
-.doubles:
+.loop:
 	push af ; $6b42
 	farcall RunLinkInputFrame ; $6b43
 	pop af ; $6b46
@@ -198,9 +198,9 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	ld [wMenuInputPressed], a ; $6b49
 	ld a, [wMenuInputPressed] ; $6b4c
 	xor PADF_BUTTONS ; $6b4f
-	jr nz, .done ; $6b51
+	jr nz, .drawValues ; $6b51
 	call JumpSoftReset ; $6b53
-.done:
+.drawValues:
 	push de ; $6b56
 	push af ; $6b57
 	ld a, [wLinkCpuDifficulty] ; $6b58
@@ -217,7 +217,7 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	pop de ; $6b6f
 	call Unused_38_RunLinkCpuDifficultySubmenu ; $6b70
 	call Unused_38_HandleLinkCpuDifficultyInput ; $6b73
-	jr .doubles ; $6b76
+	jr .loop ; $6b76
 	ret ; $6b78
 Unused_38_HandleLinkCpuDifficultyInput:
 	ldh a, [hLinkRemoteInput] ; $6b79

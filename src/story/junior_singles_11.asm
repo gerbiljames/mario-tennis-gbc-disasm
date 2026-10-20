@@ -121,11 +121,11 @@ JuniorClassCourtSinglesNpc08_11:
 	farcall ScriptCloseDialogueWindow ; $6a2e
 	script_wait_frames 5 ; $6a31
 	and a ; $6a38
-	jr z, .done ; $6a39
+	jr z, .offerAccepted ; $6a39
 .speak:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a3b
 	ret ; $6a40
-.done:
+.offerAccepted:
 	farcall AdvanceDialogueTextCursor ; $6a41
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_SINGLES_BRIAN ; $6a44
 	farcall RunDialogueYesNoPrompt ; $6a49
