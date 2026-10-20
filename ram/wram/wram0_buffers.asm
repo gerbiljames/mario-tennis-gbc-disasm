@@ -96,7 +96,7 @@ wDebugColorBlueDigits:: ds 3
 wDebugColorDigitsEnd:: db
 NEXTU
 ; debug stats editor (bank $06)
-; [128 bytes] Unused_06_RunDebugStatsEditor copies character 0's $df00-$df7f (from wCharPosX) here on entry and back on exit, over every debug variable above; wDebugStatWords to wDebugStatWords2 sit on its +$60-$77
+; [128 bytes] Unused_06_RunDebugStatsEditor copies character 0's $df00-$df7f (from wCharStruct) here on entry and back on exit, over every debug variable above; wDebugStatWords to wDebugStatWords2 sit on its +$60-$77
 wDebugStatsBackup:: ds 128
 	export_size wDebugStatsBackup
 ENDU

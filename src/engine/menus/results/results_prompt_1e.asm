@@ -127,7 +127,7 @@ InitResultsScreenCharacters:
 	srl a ; $4992
 	add $04 ; $4994
 	wram_bank a ; $4996
-	ld bc, wCharPosX ; $499b
+	ld bc, wCharStruct ; $499b
 	ld a, [wGameMode] ; $499e
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $49a1
@@ -166,7 +166,7 @@ InitResultsScreenCharacters:
 	ld [hl], d ; $49dc
 	ld hl, wCharTileBase ; $49dd
 	ld [hl], $00 ; $49e0
-	ld bc, wCharPosX ; $49e2
+	ld bc, wCharStruct ; $49e2
 	ld d, CHARANIM_CELEBRATE ; $49e5
 	farcall SetCharAnimation ; $49e7
 	pop af ; $49ea
@@ -185,7 +185,7 @@ InitResultsScreenCharacters:
 	srl a ; $4a0d
 	add $06 ; $4a0f
 	wram_bank a ; $4a11
-	ld bc, wCharPosX ; $4a16
+	ld bc, wCharStruct ; $4a16
 	ld a, [wGameMode] ; $4a19
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $4a1c
@@ -224,7 +224,7 @@ InitResultsScreenCharacters:
 	ld [hl], d ; $4a57
 	ld hl, wCharTileBase ; $4a58
 	ld [hl], $10 ; $4a5b
-	ld bc, wCharPosX ; $4a5d
+	ld bc, wCharStruct ; $4a5d
 	ld d, CHARANIM_CELEBRATE ; $4a60
 	farcall SetCharAnimation ; $4a62
 	pop af ; $4a65
@@ -251,7 +251,7 @@ DrawResultsCharSprites:
 	ret ; $4aa7
 UpdateResultsCharSprite:
 	push af ; $4aa8
-	ld hl, wCharPosX ; $4aa9
+	ld hl, wCharStruct ; $4aa9
 	ld b, h ; $4aac
 	ld c, l ; $4aad
 	farcall StepCharAnimation ; $4aae

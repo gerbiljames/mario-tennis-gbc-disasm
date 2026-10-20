@@ -120,22 +120,22 @@ DrawProgressEntryTrophyIcon:
 	ret ; $7a8c
 DrawProgressScreenSprites:
 	xor a ; $7a8d
-	ld [wCharPosHeight + 1], a ; $7a8e
-	ld [wCharPosHeight + 2], a ; $7a91
+	ld [wProgressUpArrow], a ; $7a8e
+	ld [wProgressDownArrow], a ; $7a91
 	ld a, [wProgressVisibleCount] ; $7a94
 	sub $07 ; $7a97
 	ld b, a ; $7a99
 	ld a, [wProgressListIndex] ; $7a9a
 	or a ; $7a9d
 	jr z, .compare ; $7a9e
-	ld [wCharPosHeight + 1], a ; $7aa0
+	ld [wProgressUpArrow], a ; $7aa0
 .compare:
 	cp b ; $7aa3
 	jr nc, .drawUpArrow ; $7aa4
 	ld a, $01 ; $7aa6
-	ld [wCharPosHeight + 2], a ; $7aa8
+	ld [wProgressDownArrow], a ; $7aa8
 .drawUpArrow:
-	ld a, [wCharPosHeight + 1] ; $7aab
+	ld a, [wProgressUpArrow] ; $7aab
 	or a ; $7aae
 	jr z, .drawDownArrow ; $7aaf
 	ld d, $0a ; $7ab1
@@ -147,7 +147,7 @@ DrawProgressScreenSprites:
 	ld h, $02 ; $7abe
 	farcall QueueStackedSpritePair ; $7ac0
 .drawDownArrow:
-	ld a, [wCharPosHeight + 2] ; $7ac3
+	ld a, [wProgressDownArrow] ; $7ac3
 	or a ; $7ac6
 	jr z, .drawIcons ; $7ac7
 	ld d, $0a ; $7ac9

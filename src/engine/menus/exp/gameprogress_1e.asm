@@ -84,8 +84,8 @@ BuildGameProgressScreen:
 	call BuildProgressEntryEarnedTable ; $730a
 	call BuildVisibleProgressEntryList ; $730d
 	call CreateProgressListWindow ; $7310
-	ld [wCharPosX + 1], a ; $7313
-	ld a, [wCharPosX + 1] ; $7316
+	ld [wProgressWindowId], a ; $7313
+	ld a, [wProgressWindowId] ; $7316
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $7319
 	farcall DrawTextWindowFrame ; $731c
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $731f
@@ -141,7 +141,7 @@ ScrollProgressListDown:
 	jr nc, .restore ; $739a
 	ld [hl], a ; $739c
 	sound SFX_MENU_MOVE ; $739d
-	ld a, [wCharPosX + 1] ; $739f
+	ld a, [wProgressWindowId] ; $739f
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73a8
@@ -160,7 +160,7 @@ ScrollProgressListUp:
 	jr nz, .restore ; $73c1
 	ld [hl], a ; $73c3
 	sound SFX_MENU_MOVE ; $73c4
-	ld a, [wCharPosX + 1] ; $73c6
+	ld a, [wProgressWindowId] ; $73c6
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73c9
 	farcall DrawTextWindowFrame ; $73cc
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73cf

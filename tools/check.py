@@ -102,7 +102,9 @@ after a real defect broke it:
             offset under $100 to a record pointer (`ld hl, n / add hl, rr`,
             `ld a, n / add_hl_a`, `ld a, n / add c|e / ld e|c, a`): 25 once reached a record by number beside the
             names (the record in de, bc named), as the created-character
-            routines all did; `wActorObjDef + n` is an OBJDEF_* field
+            routines all did; `wActorObjDef + n` is an OBJDEF_* field;
+            a wCharPosX operand that copies, clears, is passed or offset
+            as the whole $df00 struct is wCharStruct
   templates every label handed to QueueSpriteTemplate in hl, directly or as
             a row of the pointer table hl is indexed into, is a
             sprite_template region (five were raw db rows)
@@ -1930,7 +1932,7 @@ def check_field_offsets(fail):
                 fail("fields", f"{where}: {name} adds raw {op} to a record -- a field name?")
     for name, op in sorted(set(KNOWN_RAW_FIELD_OFFSETS) - seen):
         fail("fields", f"{name} {op} is no longer added raw -- drop it from KNOWN_RAW_FIELD_OFFSETS")
-    return n + _char_record_bases(fail)
+    return n + _char_record_bases(fail) + _char_struct_bases(fail)
 
 
 _CHARREC_NAME_RE = re.compile(r"ld (bc|de|hl), ((?:wStory|wPlayer[12])(?:Main|Partner))Name")
@@ -1979,6 +1981,55 @@ def _char_record_bases(fail):
             if why:
                 fail("fields", f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}: "
                                f"{m.group(2)}Name {why} -- {m.group(2)}?")
+    return n
+
+# Routines handed the whole $df00 char struct in a register.
+_CHARSTRUCT_ARG_ROUTINES = {"SetCharAnimation": "bc", "StepCharAnimation": "bc",
+                            "UpdateCharSelectCharSprite": "hl"}
+
+
+def _char_struct_bases(fail):
+    """`wCharPosX` is the first field only: an operand that copies or clears
+    the struct, is passed to a _CHARSTRUCT_ARG_ROUTINES routine, has an offset
+    added to it, or is subtracted from a field (`wX - wCharPosX`) means the
+    whole struct, wCharStruct."""
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        code = [(i, c) for i, c in ((i, l.split(";")[0].strip()) for i, l in enumerate(lines))
+                if c and not c.endswith(":")]
+        for k, (i, t) in enumerate(code):
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if re.search(r"-\s*wCharPosX\b", t):
+                n += 1
+                fail("fields", f"{where}: offset from wCharPosX -- wCharStruct?")
+                continue
+            m = re.fullmatch(r"ld (bc|de|hl), wCharPosX", t)
+            if not m:
+                continue
+            n += 1
+            regs, why = {m.group(1)}, None
+            window = [u for _, u in code[k + 1:k + 13]]
+            for j, u in enumerate(window):
+                nxt = window[j + 1] if j + 1 < len(window) else ""
+                if j < 3 and re.fullmatch(r"call (CopyMemoryFast|ClearMemory16)", u):
+                    why = "is copied or cleared as a whole struct"
+                    break
+                if src_dst := _REG_COPIES.get((u, nxt)):
+                    if src_dst[0] in regs:
+                        regs.add(src_dst[1])
+                    continue
+                if (f := re.fullmatch(r"(?:far)?call (\w+)", u)) and _CHARSTRUCT_ARG_ROUTINES.get(f.group(1)) in regs:
+                    why = f"is passed to {f.group(1)}"
+                    break
+                if j == 0 and u in {f"add hl, {r}" for r in regs - {"hl"}}:
+                    why = "has an offset added"
+                    break
+                if re.fullmatch(r"ld hl, w\w+ - w\w+", u) and nxt in {f"add hl, {r}" for r in regs - {"hl"}}:
+                    why = "has a field offset added"
+                    break
+            if why:
+                fail("fields", f"{where}: wCharPosX {why} -- wCharStruct?")
     return n
 
 _TEMPLATE_HL_RE = re.compile(r"\tld hl, ([A-Za-z_]\w*)(?: ;|$)")
