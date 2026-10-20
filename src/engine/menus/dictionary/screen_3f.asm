@@ -44,7 +44,7 @@ TennisDictionaryScreen:
 	ld [wTennisDictFlags], a ; $40c5
 	ld [wTennisDictScrollTop], a ; $40c8
 	ld [wTennisDictCursorRow], a ; $40cb
-	ld [wTennisDictScrollTimer], a ; $40ce
+	ld [wTennisDictCursorBobTick], a ; $40ce
 	ld a, $08 ; $40d1
 	ld [wTennisDictSpriteTimer], a ; $40d3
 	ld a, $00 ; $40d6
@@ -641,9 +641,9 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4f8c
 	bit TDICTFLAGB_WINDOW_OPEN, a ; $4f8f
 	jr nz, .checkTennisDictCursorRow ; $4f91
-	ld a, [wTennisDictScrollTimer] ; $4f93
+	ld a, [wTennisDictCursorBobTick] ; $4f93
 	inc a ; $4f96
-	ld [wTennisDictScrollTimer], a ; $4f97
+	ld [wTennisDictCursorBobTick], a ; $4f97
 .checkTennisDictCursorRow:
 	ld a, [wTennisDictCursorRow] ; $4f9a
 	ld b, a ; $4f9d
@@ -659,7 +659,7 @@ UpdateTennisDictionarySprites:
 	add $14 ; $4fa9
 	ld e, a ; $4fab
 	ld hl, TennisDictionarySprites0 ; $4fac
-	ld a, [wTennisDictScrollTimer] ; $4faf
+	ld a, [wTennisDictCursorBobTick] ; $4faf
 	and $0f ; $4fb2
 	add_hl_a ; $4fb4
 	ld a, [hl] ; $4fb9

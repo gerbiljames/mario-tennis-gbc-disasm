@@ -113,13 +113,13 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40dc
 	dw Sfx85_Trk0 ; $40de
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40e0
-	dw SfxThud_Trk0 ; $40e2
+	dw SfxVoiceBoo_Trk0 ; $40e2
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40e4
 	dw SfxVoiceYoshi_Trk0 ; $40e6
 	snd_channel 1, SNDCHANTYPE_NOISE ; $40e8
 	dw SfxVoiceYoshi_Trk1 ; $40ea
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40ec
-	dw SfxPeachFanfare_Trk0 ; $40ee
+	dw SfxVoiceDK_Trk0 ; $40ee
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40f0
 	dw SfxVoiceBabyMario_Trk0 ; $40f2
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40f4
@@ -127,7 +127,7 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40f8
 	dw Sfx8b_Trk0 ; $40fa
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40fc
-	dw SfxContestWin_Trk0 ; $40fe
+	dw SfxContestCountdown_Trk0 ; $40fe
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4100
 	dw SfxContestFinish_Trk0 ; $4102
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4104
@@ -258,22 +258,22 @@ SfxTwinkle_Trk1:
 	INCLUDE "data/audio/SfxTwinkle_Trk1.asm" ; $78d6, 50 bytes (snd_script:pulse)
 Sfx85_Trk0:
 	INCLUDE "data/audio/Sfx85_Trk0.asm" ; $7908, 42 bytes (snd_script:noise)
-SfxThud_Trk0:
-	INCLUDE "data/audio/SfxThud_Trk0.asm" ; $7932, 122 bytes (snd_script:pulse)
+SfxVoiceBoo_Trk0:
+	INCLUDE "data/audio/SfxVoiceBoo_Trk0.asm" ; $7932, 122 bytes (snd_script:pulse)
 SfxVoiceYoshi_Trk0:
 	INCLUDE "data/audio/SfxVoiceYoshi_Trk0.asm" ; $79ac, 30 bytes (snd_script:pulse)
 SfxVoiceYoshi_Trk1:
 	INCLUDE "data/audio/SfxVoiceYoshi_Trk1.asm" ; $79ca, 14 bytes (snd_script:noise)
-SfxPeachFanfare_Trk0:
-	INCLUDE "data/audio/SfxPeachFanfare_Trk0.asm" ; $79d8, 50 bytes (snd_script:noise)
+SfxVoiceDK_Trk0:
+	INCLUDE "data/audio/SfxVoiceDK_Trk0.asm" ; $79d8, 50 bytes (snd_script:noise)
 SfxVoiceBabyMario_Trk0:
 	INCLUDE "data/audio/SfxVoiceBabyMario_Trk0.asm" ; $7a0a, 196 bytes (snd_script:pulse)
 SfxWaterSpriteMagic_Trk0:
 	INCLUDE "data/audio/SfxWaterSpriteMagic_Trk0.asm" ; $7ace, 240 bytes (snd_script:pulse)
 Sfx8b_Trk0:
 	INCLUDE "data/audio/Sfx8b_Trk0.asm" ; $7bbe, 52 bytes (snd_script:noise)
-SfxContestWin_Trk0:
-	INCLUDE "data/audio/SfxContestWin_Trk0.asm" ; $7bf2, 22 bytes (snd_script:pulse)
+SfxContestCountdown_Trk0:
+	INCLUDE "data/audio/SfxContestCountdown_Trk0.asm" ; $7bf2, 22 bytes (snd_script:pulse)
 SfxContestFinish_Trk0:
 	INCLUDE "data/audio/SfxContestFinish_Trk0.asm" ; $7c08, 144 bytes (snd_script:pulse)
 SfxWaterSpriteAppear_Trk0:

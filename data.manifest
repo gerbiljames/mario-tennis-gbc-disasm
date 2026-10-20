@@ -4215,14 +4215,14 @@ audio/SfxStomp_Trk0.asm 1fb890 1c snd_script:noise
 audio/SfxTwinkle_Trk0.asm 1fb8ac 2a snd_script:pulse
 audio/SfxTwinkle_Trk1.asm 1fb8d6 32 snd_script:pulse
 audio/Sfx85_Trk0.asm 1fb908 2a snd_script:noise
-audio/SfxThud_Trk0.asm 1fb932 7a snd_script:pulse
+audio/SfxVoiceBoo_Trk0.asm 1fb932 7a snd_script:pulse
 audio/SfxVoiceYoshi_Trk0.asm 1fb9ac 1e snd_script:pulse
 audio/SfxVoiceYoshi_Trk1.asm 1fb9ca e snd_script:noise
-audio/SfxPeachFanfare_Trk0.asm 1fb9d8 32 snd_script:noise
+audio/SfxVoiceDK_Trk0.asm 1fb9d8 32 snd_script:noise
 audio/SfxVoiceBabyMario_Trk0.asm 1fba0a c4 snd_script:pulse
 audio/SfxWaterSpriteMagic_Trk0.asm 1fbace f0 snd_script:pulse
 audio/Sfx8b_Trk0.asm 1fbbbe 34 snd_script:noise
-audio/SfxContestWin_Trk0.asm 1fbbf2 16 snd_script:pulse
+audio/SfxContestCountdown_Trk0.asm 1fbbf2 16 snd_script:pulse
 audio/SfxContestFinish_Trk0.asm 1fbc08 90 snd_script:pulse
 audio/SfxWaterSpriteAppear_Trk0.asm 1fbc98 40 snd_script:pulse
 audio/SfxWaterSpriteFly_Trk0.asm 1fbcd8 108 snd_script:pulse

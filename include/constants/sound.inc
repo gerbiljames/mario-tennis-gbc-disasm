@@ -163,7 +163,7 @@ def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingB
 def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
 	const_def $86
-	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0D_0e, the welcome cutscene) and a Boo Blast hit (ScoreBallHit $0d)
+	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0DBoo_0e, the welcome cutscene) and a Boo Blast hit (ScoreBallHit $0d)
 	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
 	const SFX_VOICE_DK           ; $88 Donkey Kong speaking in Mario World (MarioWorldNpc0CDonkeyKong_0e)
 	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
@@ -183,7 +183,7 @@ def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTarget
 	const SFX_EMOTE   ; $98 an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
 	const SFX_APPEAR1 ; $99 the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
 def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
-def SFX_STORY_CUE              equ $a2 ; the MapScriptPlayStoryCue handler every story bank carries
+def SFX_STORY_CUE              equ $a2 ; only the Unused_<bank>_MapScriptPlayStoryCue copies play it
 
 ; --- Music flags (hMusicFlags) ---
 def MUSICB_MUTED equ 0 ; PlaySoundCmd drops BGM and jingle requests

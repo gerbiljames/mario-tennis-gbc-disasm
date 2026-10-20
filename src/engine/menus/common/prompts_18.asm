@@ -135,7 +135,7 @@ Unused_18_DrawConfirmScreenBox:
 	ret ; $5371
 Unused_18_LoadScorePanelValue:
 	ld a, [wStoryMainLevel] ; $5372
-	ld [wScorePanelExpTier], a ; $5375
+	ld [wScorePanelLevel], a ; $5375
 	ret ; $5378
 Unused_18_StubNop1:
 	ret ; $5379
@@ -160,7 +160,7 @@ Unused_18_SetupScoreboardDisplay:
 	frame_task Unused_18_DrawScoreNumbersTask, $0a ; $53aa
 	ret ; $53b2
 Unused_18_DrawScoreNumbersTask:
-	ld a, [wScorePanelExpTier] ; $53b3
+	ld a, [wScorePanelLevel] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
 	ld de, $4404 ; $53b9

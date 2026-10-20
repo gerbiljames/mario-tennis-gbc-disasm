@@ -176,7 +176,7 @@ QueueScrollingSprite:
 	ld a, [hl+] ; $60fb
 	ld d, [hl] ; $60fc
 	ld e, a ; $60fd
-	ld hl, wCutsceneScrollAccum ; $60fe
+	ld hl, wIntroScrollingSpriteY ; $60fe
 	ld a, [hl+] ; $6101
 	ld h, [hl] ; $6102
 	ld l, a ; $6103

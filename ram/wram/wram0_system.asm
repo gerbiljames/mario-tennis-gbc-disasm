@@ -472,7 +472,7 @@ wScreenShakeOffsetX:: db
 wScreenShakeOffsetY:: db
 	ds 2
 
-; [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on
+; [8-bit] Active story save-slot index (0-2, or STORYSLOT_NONE outside story mode); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on
 wCurrentStorySlot:: db
 	ds 2
 

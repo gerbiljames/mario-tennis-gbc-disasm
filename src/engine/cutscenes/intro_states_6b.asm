@@ -249,7 +249,7 @@ IntroCutsceneState00Init_6b:
 	ld a, $24 ; $41ae
 	ld [wCameraY + 1], a ; $41b0
 	ld de, $015c ; $41b3
-	ld hl, wCutsceneScrollAccum ; $41b6
+	ld hl, wIntroScrollingSpriteY ; $41b6
 	ld a, e ; $41b9
 	ld [hl+], a ; $41ba
 	ld [hl], d ; $41bb
@@ -804,7 +804,7 @@ Unused_6b_IntroCutsceneStateBInit:
 	ld [wCutsceneSpriteAnimTick], a ; $4904
 	ld [wCutsceneSpriteAnimFrame], a ; $4907
 	ld de, $015c ; $490a
-	ld hl, wCutsceneScrollAccum ; $490d
+	ld hl, wIntroScrollingSpriteY ; $490d
 	ld a, e ; $4910
 	ld [hl+], a ; $4911
 	ld [hl], d ; $4912

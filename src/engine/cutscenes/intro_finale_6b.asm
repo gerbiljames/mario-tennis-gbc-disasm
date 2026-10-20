@@ -149,7 +149,7 @@ IntroCutsceneState16Init_6b:
 	ld [wCutsceneSpriteAnimTick], a ; $4c53
 	ld [wCutsceneSpriteAnimFrame], a ; $4c56
 	ld de, $015c ; $4c59
-	ld hl, wCutsceneScrollAccum ; $4c5c
+	ld hl, wIntroScrollingSpriteY ; $4c5c
 	ld a, e ; $4c5f
 	ld [hl+], a ; $4c60
 	ld [hl], d ; $4c61
@@ -187,16 +187,16 @@ UpdateCutsceneScrollY:
 	ld hl, CutsceneScrollYTable ; $4d64
 	add_hl_a ; $4d67
 	ld e, [hl] ; $4d6c
-	ld hl, wCutsceneScrollAccum ; $4d6d
+	ld hl, wIntroScrollingSpriteY ; $4d6d
 	ld a, [hl+] ; $4d70
 	ld h, [hl] ; $4d71
 	ld l, a ; $4d72
 	ld d, $00 ; $4d73
 	sub_hl_de ; $4d75
 	ld a, h ; $4d7b
-	ld [wCutsceneScrollAccum + 1], a ; $4d7c
+	ld [wIntroScrollingSpriteY + 1], a ; $4d7c
 	ld a, l ; $4d7f
-	ld [wCutsceneScrollAccum], a ; $4d80
+	ld [wIntroScrollingSpriteY], a ; $4d80
 	ret ; $4d83
 CutsceneScrollYTable:
 	INCLUDE "data/engine/cutscenes/CutsceneScrollYTable.asm" ; $4d84, 169 bytes (bytes:16)

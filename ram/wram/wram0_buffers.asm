@@ -142,7 +142,7 @@ wTreasureBoxAnimTimer:: db
 NEXTU
 ; training drills (bank $0b)
 	ds 11
-; [8-bit] Set while the serve gate stands: RecordGateCrossOnServe clears it when the serve passes through (recording the bit in wDrillGateCrossBits); QueueDrillMarker1/2 draw the gate markers only while set
+; [8-bit] Set while the serve gate stands: RecordGateCrossOnServe clears it when the serve passes through (recording the bit in wDrillGateCrossBits); QueueDrillGate1Pole/QueueDrillGate2Pole draw the gate markers only while set
 wDrillGateActive:: db
 NEXTU
 ; scoreboard (bank $18)
@@ -153,8 +153,8 @@ wScorePanelBobStep:: db
 wScorePanelBobActive:: db
 	ds 6
 ; [8-bit] Snapshot of wStoryMainLevel taken by Unused_18_LoadScorePanelValue, drawn by Unused_18_DrawScoreNumbersTask
-wScorePanelExpTier:: db
-; [8-bit named; read as a 16-bit word] Unused_18_DrawScoreNumbersTask draws $c78b-$c78c as a 3-digit sprite number beside wScorePanelExpTier. Nothing in bank $18 writes it and the high byte is wTargetZoneEnabled, so it reads whatever the mode-page clear left (0)
+wScorePanelLevel:: db
+; [8-bit named; read as a 16-bit word] Unused_18_DrawScoreNumbersTask draws $c78b-$c78c as a 3-digit sprite number beside wScorePanelLevel. Nothing in bank $18 writes it and the high byte is wTargetZoneEnabled, so it reads whatever the mode-page clear left (0)
 wScorePanelScore:: db
 ENDU
 

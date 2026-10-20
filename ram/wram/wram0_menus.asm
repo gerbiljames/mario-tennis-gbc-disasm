@@ -161,7 +161,7 @@ wTennisDictSpritePhase:: db
 wTennisDictAnimTimer:: db
 
 ; [8-bit] Second Tennis Dictionary animation counter, stepped only while wTennisDictFlags bit 1 is set and bit 0 clear; seeded by TennisDictionaryScreen
-wTennisDictScrollTimer:: db
+wTennisDictCursorBobTick:: db
 
 ; [8-bit] Bank $6b intro cutscene driver (RunIntroCutscene): current step index, dispatched through IntroCutsceneStateTable_6b
 wCutsceneStep:: db
@@ -191,7 +191,7 @@ wCutsceneSpriteBX:: db
 wCutsceneSpriteBY:: db
 
 ; [16-bit] Intro cutscene scroll position: UpdateCutsceneScrollY subtracts the frame's CutsceneScrollYTable entry from it; QueueScrollingSprite places sprites against it
-wCutsceneScrollAccum:: dw
+wIntroScrollingSpriteY:: dw
 
 ; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 at the start of scenes 00/12/19 and decremented each frame by UpdateIntroScrollY from IntroScrollYDeltaTable indexed by wCutsceneStepTimer. ApplyIntroScrollToSpriteY subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpriteBlock's object
 wIntroCutsceneScrollY:: dw
