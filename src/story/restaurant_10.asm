@@ -232,12 +232,12 @@ CafeteriaNpc04_10:
 	farcall ScriptCloseDialogueWindow ; $58fc
 	script_wait_frames 5 ; $58ff
 	and a ; $5906
-	jr z, .declined ; $5907
-	script_set_text Text_CafeteriaZoneAnswerYesPlaceholder ; $5909
+	jr z, .accepted ; $5907
+	script_set_text Text_CafeteriaZoneAnswerNoPlaceholder ; $5909
 	script_speak ACTOR_CAFETERIA_STUDENT_LONG_HAIR_2 ; $590f
 	ret ; $5914
-.declined:
-	script_set_text Text_CafeteriaZoneAnswerNoPlaceholder ; $5915
+.accepted:
+	script_set_text Text_CafeteriaZoneAnswerYesPlaceholder ; $5915
 	script_speak ACTOR_CAFETERIA_STUDENT_LONG_HAIR_2 ; $591b
 	ret ; $5920
 CafeteriaNpc04TextIds:

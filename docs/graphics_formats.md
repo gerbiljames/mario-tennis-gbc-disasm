@@ -241,7 +241,7 @@ WRAM bank `$03`) and `wScreenAttrmap` (1024 bytes, WRAM bank `$02`).
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells. The 241 blobs `data.manifest`
+Screen layouts are written as rows of cells. The 243 blobs `data.manifest`
 tags `tilemap:W` (all `lz_*`, decompressed first) get a `.tilemap` text grid
 beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an edited grid
 back and `make check` (`tilemap`) round-trips every one. Character-data screen
@@ -825,18 +825,18 @@ pass:
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33806 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2905 | every PNG encodes back to the blob it was decoded from |
+| `gfx` | 2903 | every PNG encodes back to the blob it was decoded from |
 | `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
-| `tilemap` | 241 | every tilemap grid encodes back to its blob |
+| `tilemap` | 243 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4904 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
 | `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
 | `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 5151 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`, `wVar + FIELD` is its own), or an immediate left in a register for a `call`/`farcall` (also one every jump into a label loads into `a`), whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; a `bit` test on a joypad byte (loaded from `hInput*`/`wCharInputBits`, or already tested with a `PADB_` bit) names its bit, and a `bit`/`set`/`res` on `wCharFlags` or `wCharBallReachFlags` names a `CHARB_`/`BALLREACHB_` bit; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
+| `raw-ids` | 5187 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`, `wVar + FIELD` is its own), or an immediate left in a register for a `call`/`farcall` (also one every jump into a label loads into `a`), whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; a `bit` test on a joypad byte (loaded from `hInput*`/`wCharInputBits`, or already tested with a `PADB_` bit) names its bit, and a `bit`/`set`/`res` on `wCharFlags`, `wCharBallReachFlags` or `wExpScreenBusyFlags` names a `CHARB_`/`BALLREACHB_`/`EXPBUSYB_` bit; no `Text_*` id is the `X` of `ld hl, X / add hl, rr / ld e, l / ld d, h`; listed id tables and `story_location` rows name their ids (exceptions allow-listed) |
 | `fields` | 615 | a routine that names a `CHARREC_*`/`CREATEDCHAR_*`/`SLOTSUM_*`/`ACTORF_*`/`OBJSLOT_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c / ld e, a`) (exceptions allow-listed); an offset into `CHARREC_TRAIN_LEVELS` or `wCharDataLevels` is a `TRAINSTAT_*` |
 | `templates` | 161 | a label handed to `QueueSpriteTemplate` in `hl`, directly or as a row of the pointer table `hl` indexes, is a `sprite_template` region (one stale dead-code operand allow-listed) |
 | `loops` | 894 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
-| `localnames` | 1038 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump; a `.done`/`.exit`/`.finish` local entered only by a jump runs no dialogue, movement or prompt macro before it leaves (exceptions allow-listed) |
+| `localnames` | 1175 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump; a `.done`/`.exit`/`.finish` local entered only by a jump runs no dialogue, movement or prompt macro before it leaves; after `RunDialogueYesNoPrompt` (0 = yes) the `z` target is not named `.declined`/`.no`/`.refuse*`, nor the `nz` target `.accepted`/`.yes*` (exceptions allow-listed) |
 | `mirrors` | 21 | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
 
 ---

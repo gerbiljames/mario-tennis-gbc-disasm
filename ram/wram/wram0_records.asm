@@ -21,7 +21,7 @@ wStorySlotBlockTag:: ds 3
 wSavedGameTimer:: ds 4
 	ds 17
 
-; [8-bit] Sound options. Bit 0 is music on/off: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when clear. Other bits are preserved
+; [8-bit] Sound options. Bit 0 mutes the music: Unused_1a_ToggleMusicSetting flips it and Unused_00_SyncMusicMuteOption copies it into hMusic bit 0 (1 = off), stopping the BGM when set. Other bits are preserved
 wSoundOptionBits:: db
 
 ; [8-bit] Message Speed

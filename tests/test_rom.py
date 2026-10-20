@@ -79,7 +79,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"\(BANK\([\w.]+\) << 8\) \| LOW\("), 0, "a slot pair not written with ld_slot")
 
     def test_named_ids(self):
-        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 272)
+        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 267)
         self.assertEqual(count(r"^\tdw Text_\w+"), 779)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)
@@ -268,12 +268,12 @@ class Manifest(unittest.TestCase):
         self.assertEqual(streams, 863)
         self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2905)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2903)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(s == "gfx:4x4" for s in specs), 4)
-        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 241)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 243)
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)

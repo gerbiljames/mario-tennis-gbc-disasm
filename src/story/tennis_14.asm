@@ -360,18 +360,18 @@ TennisMachineRoomNpc05_14:
 	farcall ScriptCloseDialogueWindow ; $447d
 	script_wait_frames 5 ; $4480
 	and a ; $4487
-	jr nz, .accepted ; $4488
+	jr nz, .declined ; $4488
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
 	farcall AdvanceDialogueTextCursor ; $448d
 	ld a, [wMapSceneStage] ; $4490
 	and a ; $4493
-	jr nz, .declined ; $4494
+	jr nz, .nodAndStart ; $4494
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $4496
-.declined:
+.nodAndStart:
 	script_set_anim ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, ANIM_NOD ; $449b
 	script_wait_idle ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $44a2
 	jr nz, MachineCourtStartLevelScene ; $44a7
-.accepted:
+.declined:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
 	jr z, .done ; $44ac
 	script_set_text Text_MachineAttendantPracticeCleared ; $44ae

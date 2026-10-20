@@ -339,7 +339,7 @@ Unused_00_UnmuteToSilence:
 .done:
 	pop hl ; $2f5e
 	ret ; $2f5f
-Unused_00_SyncBGMEnableFlag:
+Unused_00_SyncMusicMuteOption:
 	push af ; $2f60
 	push bc ; $2f61
 	push de ; $2f62

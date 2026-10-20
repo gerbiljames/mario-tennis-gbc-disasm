@@ -229,6 +229,12 @@ def EXPSTAT_EXP          rb 3 ; $0c CHARREC_EXP, copied back to wStory*Exp
 def EXPSTAT_SIZE equ _RS
 	ASSERT EXPSTAT_SIZE == 15
 
+; --- EXP screen busy flags (wExpScreenBusyFlags), cleared when the screen opens ---
+	const_def
+	const EXPBUSYB_CURSOR_SLIDING ; $00 the cursor slide task is running: blocks point changes and DrawExpToNextLevelTask
+	const EXPBUSYB_POINT_MOVED    ; $01 the last press moved a point. Never read
+	const EXPBUSYB_CONFIRM_OPEN   ; $02 the confirm prompt is open: blocks DrawExpToNextLevelTask
+
 ; --- Scoreboard layout (wScoreboardLayout) ---
 ; Chosen by SelectScoreboardLayout: wOnCourtCharCount - 2 outside minigame
 ; context, else by the drill/minigame flags. Indexes the caption and drawer

@@ -257,7 +257,7 @@ InitLevelUpScreenState:
 	ld [wExpRepeatDelay], a ; $6964
 .resetCursor:
 	xor a ; $6967
-	ld [wExpCursorChar], a ; $6968
+	ld [wExpScreenBusyFlags], a ; $6968
 	ld [wExpCursorSlide], a ; $696b
 	ld [wExpRedrawPending], a ; $696e
 	ld a, $a8 ; $6971

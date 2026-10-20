@@ -3296,8 +3296,8 @@ engine/cutscenes/BgPalette1TaskPalettes.asm 1af0af 80 palettes
 engine/cutscenes/BgPalettes2And3TaskPalettes0.asm 1af12f 80 palettes
 engine/cutscenes/BgPalettes2And3TaskPalettes1.asm 1af1af 80 palettes
 engine/cutscenes/BgPalettes4To7TaskPalettes.asm 1af22f 80 palettes
-engine/cutscenes/lz_DecompressIntroTitleTiles1.bin 1af438 dd gfx
-engine/cutscenes/lz_DecompressIntroTitleTiles2.bin 1af515 4c gfx
+engine/cutscenes/lz_IntroTitleTilemap.bin 1af438 dd tilemap:32
+engine/cutscenes/lz_IntroTitleAttrmap.bin 1af515 4c tilemap:32
 engine/cutscenes/IntroCutsceneState18InitPalettes_6b.asm 1af56f 40 palettes
 engine/cutscenes/lz_TitleScreenTilemap.bin 1af74e 124 tilemap:32
 engine/cutscenes/lz_TitleScreenAttrmap.bin 1af872 9d tilemap:32

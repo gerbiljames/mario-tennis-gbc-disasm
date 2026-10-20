@@ -240,8 +240,8 @@ wExpPoolRemaining:: dw
 ; [16-bit] Starting pool, the gauge's denominator. Both are seeded from hl by InitLevelUpScreenState
 wExpPoolTotal:: dw
 	ds 45
-; [8-bit] Which character the distribution cursor is on; cleared when the screen opens
-wExpCursorChar:: db
+; [8-bit] EXPBUSYB_* bits; the cursor's character is wStoryCharacterSlot
+wExpScreenBusyFlags:: db
 ; [8-bit] Slide progress for the cursor moving between characters, stepped by SlideExpCursorToMainCharTask
 wExpCursorSlide:: db
 ; [8-bit] X of the marker sweeping along the EXP bar: home $a8; SweepExpBarMarkerLeft subtracts the per-frame step and snaps back to $a8 past $18

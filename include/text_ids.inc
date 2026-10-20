@@ -168,7 +168,6 @@ def Text_30_544 equ $0220
 def Text_30_548 equ $0224
 def Text_30_554 equ $022a
 def Text_31_3 equ $0403
-def Text_31_4 equ $0404
 def Text_31_6 equ $0406
 def Text_31_7 equ $0407
 def Text_31_10 equ $040a
@@ -262,7 +261,6 @@ def Text_31_255 equ $04ff
 def Text_31_256 equ $0500
 def Text_31_257 equ $0501
 def Text_31_258 equ $0502
-def Text_31_261 equ $0505
 def Text_31_263 equ $0507
 def Text_31_268 equ $050c
 def Text_31_270 equ $050e
@@ -1600,7 +1598,6 @@ def Text_KevinChallengeTravelingTeam equ Text_30_544
 def Text_KevinSinglesLetsGetStarted equ Text_30_548
 def Text_BobYouRepresentAcademy equ Text_30_554
 def Text_MarkTryingForDoublesTeam equ Text_31_3
-def Text_MarkDoublesPairsBeatUs equ Text_31_4
 def Text_BobGiveUpDoublesTeam equ Text_31_6
 def Text_FayDoublesPracticeMatchOffer equ Text_31_7
 def Text_CurtNeverMakeDoublesTeam equ Text_31_10
@@ -1694,7 +1691,6 @@ def Text_RoommateAnyQuestions equ Text_31_255
 def Text_RoommateReadyForCourts equ Text_31_256
 def Text_RoommateReadyForFirstDay equ Text_31_257
 def Text_RoommateGoodDayOfPractice equ Text_31_258
-def Text_RoommateHeadForSeniorCourt equ Text_31_261
 def Text_RoommateGoodDayOfPracticeAlt equ Text_31_263
 def Text_RoommateForgotLuckySocks equ Text_31_268
 def Text_RoommateDoublesHurryGetThem equ Text_31_270
@@ -1951,8 +1947,8 @@ def Text_RestaurantJustMomentum equ Text_33_215
 def Text_RestaurantWinningOpenDream equ Text_33_217
 def Text_CafeteriaBoldRefinedGame equ Text_33_218
 def Text_CafeteriaWonByZone equ Text_33_219
-def Text_CafeteriaZoneAnswerNoPlaceholder equ Text_33_221
-def Text_CafeteriaZoneAnswerYesPlaceholder equ Text_33_222
+def Text_CafeteriaZoneAnswerYesPlaceholder equ Text_33_221
+def Text_CafeteriaZoneAnswerNoPlaceholder equ Text_33_222
 def Text_CafeteriaPigtailsChampPlaceholder equ Text_33_223
 def Text_CafeteriaHeadbandChampPlaceholder equ Text_33_224
 def Text_EmilyUsedToAcademyLife equ Text_34_4

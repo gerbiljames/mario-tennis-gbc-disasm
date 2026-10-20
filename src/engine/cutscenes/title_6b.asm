@@ -12,18 +12,18 @@ DecompressIntroTitleTiles:
 	ld c, wTextTileBuffer_SIZE / 16 ; $7415
 	call QueueVRAMCopy ; $7417
 	wram_bank WRAM_TEXT ; $741a
-	ld hl, DecompressIntroTitleTiles1 ; $7420
+	ld hl, IntroTitleTilemap ; $7420
 	ld de, wWindowShadowTilemap ; $7423
 	call DecompressData ; $7426
-	ld hl, DecompressIntroTitleTiles2 ; $7429
+	ld hl, IntroTitleAttrmap ; $7429
 	ld de, wWindowShadowAttrmap ; $742c
 	call DecompressData ; $742f
 	pop_wram_bank ; $7432
 	ret ; $7437
-DecompressIntroTitleTiles1:
-	INCBIN "data/engine/cutscenes/lz_DecompressIntroTitleTiles1.bin" ; $7438, 221 bytes
-DecompressIntroTitleTiles2:
-	INCBIN "data/engine/cutscenes/lz_DecompressIntroTitleTiles2.bin" ; $7515, 76 bytes
+IntroTitleTilemap:
+	INCBIN "data/engine/cutscenes/lz_IntroTitleTilemap.bin" ; $7438, 221 bytes
+IntroTitleAttrmap:
+	INCBIN "data/engine/cutscenes/lz_IntroTitleAttrmap.bin" ; $7515, 76 bytes
 Unused_6b_IncrementCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $7561
 	inc a ; $7564

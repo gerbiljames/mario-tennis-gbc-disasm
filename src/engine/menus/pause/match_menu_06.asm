@@ -349,7 +349,7 @@ ScoreboardCaption_SetGamePoint:
 	ld a, [hl+] ; $4791
 	ld b, [hl] ; $4792
 	ld c, a ; $4793
-	ld hl, $0701 ; $4794
+	ld_cell hl, $07, $01 ; $4794
 	add hl, bc ; $4797
 	ld e, l ; $4798
 	ld d, h ; $4799
@@ -361,7 +361,7 @@ ScoreboardCaption_Total:
 	ld a, [hl+] ; $47a4
 	ld b, [hl] ; $47a5
 	ld c, a ; $47a6
-	ld hl, $0e01 ; $47a7
+	ld_cell hl, $0e, $01 ; $47a7
 	add hl, bc ; $47aa
 	ld e, l ; $47ab
 	ld d, h ; $47ac
@@ -373,19 +373,19 @@ ScoreboardCaption_ScoreTarget:
 	ld a, [hl+] ; $47b7
 	ld b, [hl] ; $47b8
 	ld c, a ; $47b9
-	ld hl, Text_RoommateGoodDayOfPractice ; $47ba
+	ld_cell hl, $05, $02 ; $47ba
 	add hl, bc ; $47bd
 	ld e, l ; $47be
 	ld d, h ; $47bf
 	ld hl, Text_ScoreboardScore ; $47c0
 	call DrawMenuTextLine ; $47c3
-	ld hl, $0304 ; $47c6
+	ld_cell hl, $03, $04 ; $47c6
 	add hl, bc ; $47c9
 	ld e, l ; $47ca
 	ld d, h ; $47cb
 	ld hl, Text_ScoreboardTarget ; $47cc
 	call DrawMenuTextLine ; $47cf
-	ld hl, Text_RoommateHeadForSeniorCourt ; $47d2
+	ld_cell hl, $05, $05 ; $47d2
 	add hl, bc ; $47d5
 	ld e, l ; $47d6
 	ld d, h ; $47d7
@@ -397,19 +397,19 @@ ScoreboardCaption_ScoreHigh:
 	ld a, [hl+] ; $47e2
 	ld b, [hl] ; $47e3
 	ld c, a ; $47e4
-	ld hl, Text_RoommateGoodDayOfPractice ; $47e5
+	ld_cell hl, $05, $02 ; $47e5
 	add hl, bc ; $47e8
 	ld e, l ; $47e9
 	ld d, h ; $47ea
 	ld hl, Text_ScoreboardScore ; $47eb
 	call DrawMenuTextLine ; $47ee
-	ld hl, Text_MarkDoublesPairsBeatUs ; $47f1
+	ld_cell hl, $04, $04 ; $47f1
 	add hl, bc ; $47f4
 	ld e, l ; $47f5
 	ld d, h ; $47f6
 	ld hl, Text_ScoreboardHigh ; $47f7
 	call DrawMenuTextLine ; $47fa
-	ld hl, Text_RoommateHeadForSeniorCourt ; $47fd
+	ld_cell hl, $05, $05 ; $47fd
 	add hl, bc ; $4800
 	ld e, l ; $4801
 	ld d, h ; $4802

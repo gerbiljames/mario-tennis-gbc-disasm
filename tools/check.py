@@ -91,7 +91,10 @@ after a real defect broke it:
             two or more sites is passed no raw number there, and no `bit n, r` on a joypad byte (loaded
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
             leaves n raw, nor does a bit/set/res on a FLAG_BYTES byte
-            (wCharFlags, wCharBallReachFlags) use anything but its family
+            (wCharFlags, wCharBallReachFlags, wExpScreenBusyFlags) use
+            anything but its family, and no Text_* id is the X of
+            `ld hl, X / add hl, rr / ld e, l / ld d, h` (five scoreboard
+            caption cells were)
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
             ACTORF_* / OBJSLOT_* field adds no raw offset under $100 to a
             record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c|e /
@@ -115,7 +118,10 @@ after a real defect broke it:
             ret or jump (18 were register results, shared ret tails, or
             prompt redraws), and a .done / .exit / .finish local entered
             only by a jump runs no dialogue, movement or prompt macro before
-            it leaves (22 were alternate branches or placement cases)
+            it leaves (22 were alternate branches or placement cases), and
+            the z target after RunDialogueYesNoPrompt (0 = yes) is not named
+            .declined / .no / .refuse*, nor the nz one .accepted / .yes* (two
+            were swapped; one confirms a decline)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
@@ -1595,6 +1601,7 @@ def _raw_pad_bits(fail):
 FLAG_BYTES = {
     "wCharBallReachFlags": "BALLREACHB_",
     "wCharFlags": "CHARB_",
+    "wExpScreenBusyFlags": "EXPBUSYB_",
 }
 _FLAG_NAMES = "|".join(FLAG_BYTES)
 _FLAG_LOAD_RE = re.compile(rf"ldh? ([abcdehl]), \[({_FLAG_NAMES})\]")
@@ -1736,7 +1743,29 @@ def check_raw_ids(fail):
             fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
-    return n + _raw_pad_bits(fail) + _raw_flag_bits(fail)
+    return n + _raw_pad_bits(fail) + _raw_flag_bits(fail) + _text_cell_offsets(fail)
+
+
+def _text_cell_offsets(fail):
+    """`ld hl, X / add hl, rr / ld e, l / ld d, h` builds a cell or offset in
+    de from X; a text id is never X."""
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        code = [(i, c) for i, c in ((i, l.split(";")[0].strip()) for i, l in enumerate(lines)) if c]
+        for k in range(len(code) - 3):
+            if not (re.fullmatch(r"add hl, (bc|de)", code[k + 1][1]) and code[k + 2][1] == "ld e, l"
+                    and code[k + 3][1] == "ld d, h"):
+                continue
+            m = re.fullmatch(r"ld hl, (\S+)", code[k][1])
+            if not m:
+                continue
+            n += 1
+            if m.group(1).startswith("Text_"):
+                i = code[k][0]
+                fail("raw-ids", f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}: {m.group(1)}"
+                                " is added to a pointer as a cell or offset -- ld_cell?")
+    return n
 
 
 # Raw offsets a field-naming routine adds to a pointer that are not fields of
@@ -2016,6 +2045,12 @@ KNOWN_END_SCENES = {
 _END_SCENE_RE = re.compile(r"(?:script_(?:set_text|speak\w*|move\w*|set_position|face\w*|follow|set_anim)"
                            r"|farcall (?:RunDialogueYesNoPrompt|WaitPlayerMoveDone))\b")
 _UNCOND_EXIT_RE = re.compile(r"(?:ret|reti|as_end|as_halt|jumptable\b.*|(?:jr|jp) (?!(?:nz|z|nc|c),).*|d[bw] .*)")
+# Yes/no branches whose target names hold anyway: (routine, target) -> why.
+KNOWN_YES_NO_NAMES = {
+    ("PromptChallengeRankingOpponent", ".declined"): "yes confirms the decline",
+}
+_YES_NAME_RE = re.compile(r"\.(?:accepted|yes)")
+_NO_NAME_RE = re.compile(r"\.(?:declined|no(?![a-z])|refuse)")
 _STORE_LOCAL_RE = re.compile(r"\.store(?![a-z])")
 _STORE_RE = re.compile(r"^\s*(?:ldh?\s+\[|ld\s+\[|(?:inc|dec)\s+\[hl\]|(?:set|res)\s+\w+\s*,\s*\[hl\])")
 _CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
@@ -2028,13 +2063,16 @@ def check_local_names(fail):
     symbol within its first three instructions, before any branch, and a
     `.store*` local writes memory before another label, ret or jump. A
     `.done` / `.exit` / `.finish` local the line above does not fall into
-    runs no dialogue, movement or prompt macro before it leaves."""
+    runs no dialogue, movement or prompt macro before it leaves. The `jr z`
+    target after a yes/no prompt is not named as a no, nor the `jr nz` one
+    as a yes."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
-    n, seen = 0, set()
+    n, seen, yes_no_used = 0, set(), set()
     for h in holders():
         bank = bank_of(h)
         lines = bank_lines(h)[0]
+        n += _yes_no_branch_names(fail, bank, lines, yes_no_used)
         labels, scope = {}, None
         for k, line in enumerate(lines):
             g = _GLOBAL_RE.match(line)
@@ -2103,6 +2141,36 @@ def check_local_names(fail):
                 fail("localnames", f"${bank:02x}: {owner}{local} does not read {syms[0]}")
             elif named and key in KNOWN_LOCAL_NAMES:
                 fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
+    for key in KNOWN_YES_NO_NAMES.keys() - yes_no_used:
+        fail("localnames", f"{key[0]}{key[1]} is no longer a misnamed yes/no branch -- drop it from KNOWN_YES_NO_NAMES")
+    return n
+
+
+def _yes_no_branch_names(fail, bank, lines, used):
+    """RunDialogueYesNoPrompt returns 0 for yes: the `and a` / `jr z` target
+    after it is not a no name, nor the `jr nz` target a yes name."""
+    n, scope = 0, None
+    for i, line in enumerate(lines):
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+            continue
+        if "farcall RunDialogueYesNoPrompt" not in line:
+            continue
+        for later in lines[i + 1:]:
+            code = later.split(";")[0].strip()
+            if not code or code == "and a" or not re.match(r"(?:j[rp]|ret)\b|[\w.]+:", code):
+                continue
+            m = re.fullmatch(r"j[rp] (n?z), (\w*)(\.\w+)", code)
+            if m:
+                n += 1
+                key = (m.group(2) or scope, m.group(3))
+                wrong = _NO_NAME_RE if m.group(1) == "z" else _YES_NAME_RE
+                if wrong.match(key[1]):
+                    used.add(key)
+                    if key not in KNOWN_YES_NO_NAMES:
+                        fail("localnames", f"${bank:02x}: {key[0]}{key[1]} is the {'yes' if m.group(1) == 'z' else 'no'}"
+                                           " branch of a yes/no prompt")
+            break
     return n
 
 

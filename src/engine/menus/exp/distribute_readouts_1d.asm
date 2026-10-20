@@ -218,8 +218,8 @@ CheckExpLevelDown:
 	ret ; $7452
 .openConfirmPrompt:
 	wram_bank WRAM_SCENE ; $7453
-	ld hl, wExpCursorChar ; $7459
-	set 2, [hl] ; $745c
+	ld hl, wExpScreenBusyFlags ; $7459
+	set EXPBUSYB_CONFIRM_OPEN, [hl] ; $745c
 	wram_bank WRAM_SCENE ; $745e
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR] ; $7464
 	ld [wBGPalettes + 58], a ; $7467
@@ -372,8 +372,8 @@ DrawExpPromptCursor:
 	call UploadExpPromptWindowRowsClosing ; $75f8
 	wait_frames 2 ; $75fb
 	wram_bank WRAM_SCENE ; $75ff
-	ld hl, wExpCursorChar ; $7605
-	res 2, [hl] ; $7608
+	ld hl, wExpScreenBusyFlags ; $7605
+	res EXPBUSYB_CONFIRM_OPEN, [hl] ; $7608
 	call UpdateExpScreenSelectionPalettes ; $760a
 	jp RunExpDistributionLoop ; $760d
 ApplyTilemapPatchListExpScreen:
@@ -428,10 +428,10 @@ ApplyTilemapPatchListExpScreen:
 	jr ApplyTilemapPatchListExpScreen ; $765c
 DrawExpToNextLevelTask:
 	wram_bank WRAM_SCENE ; $765e
-	ld a, [wExpCursorChar] ; $7664
-	bit 0, a ; $7667
+	ld a, [wExpScreenBusyFlags] ; $7664
+	bit EXPBUSYB_CURSOR_SLIDING, a ; $7667
 	ret nz ; $7669
-	bit 2, a ; $766a
+	bit EXPBUSYB_CONFIRM_OPEN, a ; $766a
 	ret nz ; $766c
 	ld a, [wCharDataViewOnly] ; $766d
 	or a ; $7670
