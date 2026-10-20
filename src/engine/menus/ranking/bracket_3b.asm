@@ -366,7 +366,7 @@ MarioCastChartScrollArrowsTask:
 	cp $02 ; $7a7f
 	jr z, .checkLeftArrow ; $7a81
 	ld_xy de, $93, $2f ; $7a83
-	ld c, $01 ; $7a86
+	ld c, BOBDIR_POS ; $7a86
 	call ApplyCursorBounceX ; $7a88
 	ld b, $08 ; $7a8b
 	ld c, $00 ; $7a8d
@@ -377,7 +377,7 @@ MarioCastChartScrollArrowsTask:
 	or a ; $7a97
 	jr z, .checkUpArrow ; $7a98
 	ld_xy de, $08, $2f ; $7a9a
-	ld c, $00 ; $7a9d
+	ld c, BOBDIR_NEG ; $7a9d
 	call ApplyCursorBounceX ; $7a9f
 	ld b, $08 ; $7aa2
 	ld c, $00 ; $7aa4
@@ -388,7 +388,7 @@ MarioCastChartScrollArrowsTask:
 	or a ; $7aae
 	jr z, .checkDownArrow ; $7aaf
 	ld_xy de, $0a, $20 ; $7ab1
-	ld c, $01 ; $7ab4
+	ld c, BOBDIR_POS ; $7ab4
 	call ApplyCursorBounceY ; $7ab6
 	ld b, $08 ; $7ab9
 	ld c, $00 ; $7abb
@@ -399,7 +399,7 @@ MarioCastChartScrollArrowsTask:
 	cp $05 ; $7ac5
 	jr z, .atBottomRow ; $7ac7
 	ld_xy de, $0a, $78 ; $7ac9
-	ld c, $00 ; $7acc
+	ld c, BOBDIR_NEG ; $7acc
 	call ApplyCursorBounceY ; $7ace
 	ld b, $08 ; $7ad1
 	ld c, $00 ; $7ad3
@@ -412,7 +412,7 @@ MarioCastChartScrollArrowsTask:
 	or a ; $7adf
 	jr z, .collapsedDownArrow ; $7ae0
 	ld_xy de, $1a, $20 ; $7ae2
-	ld c, $01 ; $7ae5
+	ld c, BOBDIR_POS ; $7ae5
 	call ApplyCursorBounceY ; $7ae7
 	ld b, $08 ; $7aea
 	ld c, $00 ; $7aec
@@ -423,7 +423,7 @@ MarioCastChartScrollArrowsTask:
 	cp $01 ; $7af6
 	jr z, .restore ; $7af8
 	ld_xy de, $1a, $78 ; $7afa
-	ld c, $00 ; $7afd
+	ld c, BOBDIR_NEG ; $7afd
 	call ApplyCursorBounceY ; $7aff
 	ld b, $08 ; $7b02
 	ld c, $00 ; $7b04

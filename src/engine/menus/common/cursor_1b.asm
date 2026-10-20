@@ -1,9 +1,9 @@
 Unused_1b_DrawMenuCursorCorners:
 	push de ; $4040
 	push bc ; $4041
-	ld c, $00 ; $4042
+	ld c, BOBDIR_NEG ; $4042
 	call Unused_1b_ApplyCursorBobOffsetX ; $4044
-	ld c, $00 ; $4047
+	ld c, BOBDIR_NEG ; $4047
 	call ApplyArrowBobOffset ; $4049
 	sprite_tile_attr $00, OAM_BANK1 ; $404c
 	call QueueSprite ; $4050
@@ -15,9 +15,9 @@ Unused_1b_DrawMenuCursorCorners:
 	add d ; $4058
 	ld d, a ; $4059
 	push de ; $405a
-	ld c, $01 ; $405b
+	ld c, BOBDIR_POS ; $405b
 	call Unused_1b_ApplyCursorBobOffsetX ; $405d
-	ld c, $00 ; $4060
+	ld c, BOBDIR_NEG ; $4060
 	call ApplyArrowBobOffset ; $4062
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $4065
 	call QueueSprite ; $4069
@@ -33,9 +33,9 @@ Unused_1b_DrawMenuCursorCorners:
 	add d ; $4075
 	ld d, a ; $4076
 	push de ; $4077
-	ld c, $01 ; $4078
+	ld c, BOBDIR_POS ; $4078
 	call Unused_1b_ApplyCursorBobOffsetX ; $407a
-	ld c, $01 ; $407d
+	ld c, BOBDIR_POS ; $407d
 	call ApplyArrowBobOffset ; $407f
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $4082
 	call QueueSprite ; $4086
@@ -46,9 +46,9 @@ Unused_1b_DrawMenuCursorCorners:
 	add c ; $408d
 	ld e, a ; $408e
 	push de ; $408f
-	ld c, $00 ; $4090
+	ld c, BOBDIR_NEG ; $4090
 	call Unused_1b_ApplyCursorBobOffsetX ; $4092
-	ld c, $01 ; $4095
+	ld c, BOBDIR_POS ; $4095
 	call ApplyArrowBobOffset ; $4097
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $409a
 	call QueueSprite ; $409e

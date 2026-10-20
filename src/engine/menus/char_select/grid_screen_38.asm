@@ -760,12 +760,12 @@ DrawCharGridScrollArrows:
 	cp CHARSELECTSLOT_DONE ; $54d8
 	jr z, .done ; $54da
 	ld de, $0245 ; $54dc
-	ld c, $01 ; $54df
+	ld c, BOBDIR_POS ; $54df
 	call ApplySpriteBobOffsetX ; $54e1
 	sprite_tile_attr $10, OAM_BANK1 | 7 ; $54e4
 	call QueueSprite ; $54e8
 	ld de, $5045 ; $54eb
-	ld c, $00 ; $54ee
+	ld c, BOBDIR_NEG ; $54ee
 	call ApplySpriteBobOffsetX ; $54f0
 	sprite_tile_attr $12, OAM_BANK1 | 7 ; $54f3
 	call QueueSprite ; $54f7
@@ -775,7 +775,7 @@ DrawCharGridScrollArrows:
 	cp $03 ; $5500
 	jr z, .checkUpArrow ; $5502
 	ld de, $2a25 ; $5504
-	ld c, $01 ; $5507
+	ld c, BOBDIR_POS ; $5507
 	call ApplySpriteBobOffsetY ; $5509
 	sprite_tile_attr $14, OAM_BANK1 | 7 ; $550c
 	call QueueSprite ; $5510
@@ -797,7 +797,7 @@ DrawCharGridScrollArrows:
 	cp b ; $552d
 	jr z, .done ; $552e
 	ld de, $2a63 ; $5530
-	ld c, $00 ; $5533
+	ld c, BOBDIR_NEG ; $5533
 	call ApplySpriteBobOffsetY ; $5535
 	sprite_tile_attr $16, OAM_BANK1 | 7 ; $5538
 	call QueueSprite ; $553c

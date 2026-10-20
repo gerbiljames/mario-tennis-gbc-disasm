@@ -211,7 +211,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $64ac
 	ld [wBriefingRotMarkerY], a ; $64ad
 .waitInput:
-	ld c, $01 ; $64b0
+	ld c, BRIEFPROMPT_NONE ; $64b0
 	call AdvanceFrameCheckInput ; $64b2
 	and a ; $64b5
 	jp z, .loop ; $64b6
@@ -450,7 +450,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $67b5
 	ld [wBriefingRotMarkerY], a ; $67b6
 .waitInput:
-	ld c, $01 ; $67b9
+	ld c, BRIEFPROMPT_NONE ; $67b9
 	call AdvanceFrameCheckInput ; $67bb
 	and a ; $67be
 	jp z, .loop ; $67bf
@@ -542,7 +542,7 @@ DrillBriefing_ReturnToTarget:
 	ld [wBriefingAnimStep], a ; $6945
 .loop:
 	call ReturnToTargetBriefing_TickAnim ; $6948
-	ld c, $01 ; $694b
+	ld c, BRIEFPROMPT_NONE ; $694b
 	call AdvanceFrameCheckInput ; $694d
 	and a ; $6950
 	jp z, .loop ; $6951

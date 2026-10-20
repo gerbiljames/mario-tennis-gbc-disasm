@@ -175,7 +175,7 @@ DrillBriefing_ReturnLob:
 	ld [wBriefingAnimStep], a ; $6b86
 .loop:
 	call ReturnLobBriefing_TickAnim ; $6b89
-	ld c, $01 ; $6b8c
+	ld c, BRIEFPROMPT_NONE ; $6b8c
 	call AdvanceFrameCheckInput ; $6b8e
 	and a ; $6b91
 	jp z, .loop ; $6b92
@@ -374,7 +374,7 @@ DrillBriefing_ReturnDownLine:
 	ld [wBriefingAnimStep], a ; $6ded
 .loop:
 	call ReturnDownLineBriefing_TickAnim ; $6df0
-	ld c, $01 ; $6df3
+	ld c, BRIEFPROMPT_NONE ; $6df3
 	call AdvanceFrameCheckInput ; $6df5
 	and a ; $6df8
 	jp z, .loop ; $6df9

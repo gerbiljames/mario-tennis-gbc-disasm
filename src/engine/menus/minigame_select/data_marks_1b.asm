@@ -33,7 +33,7 @@ DrawMinigameDataScrollArrows:
 	or a ; $76c1
 	jr z, .checkMenuCursorY ; $76c2
 	ld de, $1128 ; $76c4
-	ld c, $01 ; $76c7
+	ld c, BOBDIR_POS ; $76c7
 	call ApplyArrowBobOffset ; $76c9
 	ld b, $08 ; $76cc
 	ld c, $00 ; $76ce
@@ -44,7 +44,7 @@ DrawMinigameDataScrollArrows:
 	cp $04 ; $76d8
 	jr z, .done ; $76da
 	ld de, $1184 ; $76dc
-	ld c, $00 ; $76df
+	ld c, BOBDIR_NEG ; $76df
 	call ApplyArrowBobOffset ; $76e1
 	ld b, $08 ; $76e4
 	ld c, $00 ; $76e6

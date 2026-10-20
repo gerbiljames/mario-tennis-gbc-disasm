@@ -117,7 +117,7 @@ DrillBriefing_SpinServe:
 	ld [wBriefingAnimStep], a ; $5851
 .animFirstCaption:
 	call SpinServeBriefing_TickAnim ; $5854
-	ld c, $00 ; $5857
+	ld c, BRIEFPROMPT_SHOW ; $5857
 	call AdvanceFrameCheckInput ; $5859
 	and a ; $585c
 	jp z, .animFirstCaption ; $585d
@@ -141,7 +141,7 @@ DrillBriefing_SpinServe:
 	ld [wBriefingAnimStep], a ; $58a7
 .animSecondCaption:
 	call SpinServeBriefing_TickAnim ; $58aa
-	ld c, $00 ; $58ad
+	ld c, BRIEFPROMPT_SHOW ; $58ad
 	call AdvanceFrameCheckInput ; $58af
 	and a ; $58b2
 	jp z, .animSecondCaption ; $58b3
@@ -241,7 +241,7 @@ DrillBriefing_SpinServe:
 	ld [wBriefingAnimStep], a ; $5a0e
 .animSwingCaption:
 	call SpinServeBriefing_TickAnim2 ; $5a11
-	ld c, $00 ; $5a14
+	ld c, BRIEFPROMPT_SHOW ; $5a14
 	call AdvanceFrameCheckInput ; $5a16
 	and a ; $5a19
 	jp z, .animSwingCaption ; $5a1a
@@ -262,7 +262,7 @@ DrillBriefing_SpinServe:
 	ld [wBriefingAnimStep], a ; $5a62
 .animLastCaption:
 	call SpinServeBriefing_TickAnim ; $5a65
-	ld c, $01 ; $5a68
+	ld c, BRIEFPROMPT_NONE ; $5a68
 	call AdvanceFrameCheckInput ; $5a6a
 	and a ; $5a6d
 	jp z, .animLastCaption ; $5a6e

@@ -4,9 +4,9 @@
 Unused_16_DrawWobblingCornerBrackets:
 	push de ; $4006
 	push bc ; $4007
-	ld c, $00 ; $4008
+	ld c, BOBDIR_NEG ; $4008
 	call Unused_16_ApplySpriteWobbleX ; $400a
-	ld c, $00 ; $400d
+	ld c, BOBDIR_NEG ; $400d
 	call Unused_16_ApplySpriteWobbleY ; $400f
 	sprite_tile_attr $00, OAM_BANK1 ; $4012
 	call QueueSprite ; $4016
@@ -18,9 +18,9 @@ Unused_16_DrawWobblingCornerBrackets:
 	add d ; $401e
 	ld d, a ; $401f
 	push de ; $4020
-	ld c, $01 ; $4021
+	ld c, BOBDIR_POS ; $4021
 	call Unused_16_ApplySpriteWobbleX ; $4023
-	ld c, $00 ; $4026
+	ld c, BOBDIR_NEG ; $4026
 	call Unused_16_ApplySpriteWobbleY ; $4028
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $402b
 	call QueueSprite ; $402f
@@ -36,9 +36,9 @@ Unused_16_DrawWobblingCornerBrackets:
 	add d ; $403b
 	ld d, a ; $403c
 	push de ; $403d
-	ld c, $01 ; $403e
+	ld c, BOBDIR_POS ; $403e
 	call Unused_16_ApplySpriteWobbleX ; $4040
-	ld c, $01 ; $4043
+	ld c, BOBDIR_POS ; $4043
 	call Unused_16_ApplySpriteWobbleY ; $4045
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $4048
 	call QueueSprite ; $404c
@@ -49,9 +49,9 @@ Unused_16_DrawWobblingCornerBrackets:
 	add c ; $4053
 	ld e, a ; $4054
 	push de ; $4055
-	ld c, $00 ; $4056
+	ld c, BOBDIR_NEG ; $4056
 	call Unused_16_ApplySpriteWobbleX ; $4058
-	ld c, $01 ; $405b
+	ld c, BOBDIR_POS ; $405b
 	call Unused_16_ApplySpriteWobbleY ; $405d
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $4060
 	call QueueSprite ; $4064

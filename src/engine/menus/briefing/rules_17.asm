@@ -713,7 +713,7 @@ RulesScreenCharOverlayAttrTable:
 	db $02, $02, $02, $0a, $0a, $0a ; 0x00
 DrawRulesNextPageArrow:
 	ld de, $7888 ; $755e
-	ld c, $00 ; $7561
+	ld c, BOBDIR_NEG ; $7561
 	call ApplySpriteWobbleY_17 ; $7563
 	ld b, $08 ; $7566
 	ld c, $00 ; $7568

@@ -165,6 +165,16 @@ def MSGSPEED_MASK     equ $7f
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
+; --- Sprite bob/bounce/wobble direction (c of ApplyCursorBounceX/Y,
+; ApplySpriteBobOffsetX/Y, ApplySelectionBoxWobbleX/Y and kin) ---
+; The routines add the hVBlankCounter-driven offset to d (X) or e (Y).
+def BOBDIR_NEG equ $00 ; subtract: up/left
+def BOBDIR_POS equ $01 ; add: down/right
+
+; --- Briefing caption prompt (AdvanceFrameCheckInput's c) ---
+def BRIEFPROMPT_SHOW equ $00 ; draw the blinking prompt
+def BRIEFPROMPT_NONE equ $01 ; last caption: no prompt
+
 ; --- Menu panel slide animations (RestoreMenuBgAndDrawPanel's b) ---
 ; Rows of TilemapAssemblyDispatch_39; c picks the frame within the row.
 	const_def

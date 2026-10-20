@@ -1,9 +1,9 @@
 Unused_3b_QueueBouncingCursorCorners:
 	push de ; $4038
 	push bc ; $4039
-	ld c, $00 ; $403a
+	ld c, BOBDIR_NEG ; $403a
 	call ApplyCursorBounceX ; $403c
-	ld c, $00 ; $403f
+	ld c, BOBDIR_NEG ; $403f
 	call ApplyCursorBounceY ; $4041
 	sprite_tile_attr $00, OAM_BANK1 ; $4044
 	call QueueSprite ; $4048
@@ -15,9 +15,9 @@ Unused_3b_QueueBouncingCursorCorners:
 	add d ; $4050
 	ld d, a ; $4051
 	push de ; $4052
-	ld c, $01 ; $4053
+	ld c, BOBDIR_POS ; $4053
 	call ApplyCursorBounceX ; $4055
-	ld c, $00 ; $4058
+	ld c, BOBDIR_NEG ; $4058
 	call ApplyCursorBounceY ; $405a
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $405d
 	call QueueSprite ; $4061
@@ -33,9 +33,9 @@ Unused_3b_QueueBouncingCursorCorners:
 	add d ; $406d
 	ld d, a ; $406e
 	push de ; $406f
-	ld c, $01 ; $4070
+	ld c, BOBDIR_POS ; $4070
 	call ApplyCursorBounceX ; $4072
-	ld c, $01 ; $4075
+	ld c, BOBDIR_POS ; $4075
 	call ApplyCursorBounceY ; $4077
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $407a
 	call QueueSprite ; $407e
@@ -46,9 +46,9 @@ Unused_3b_QueueBouncingCursorCorners:
 	add c ; $4085
 	ld e, a ; $4086
 	push de ; $4087
-	ld c, $00 ; $4088
+	ld c, BOBDIR_NEG ; $4088
 	call ApplyCursorBounceX ; $408a
-	ld c, $01 ; $408d
+	ld c, BOBDIR_POS ; $408d
 	call ApplyCursorBounceY ; $408f
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $4092
 	call QueueSprite ; $4096

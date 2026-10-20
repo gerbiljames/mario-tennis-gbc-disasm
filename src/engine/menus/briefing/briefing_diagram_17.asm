@@ -409,7 +409,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $55b9
 .animFirstCaption:
 	call ServeToTargetsBriefing_TickAnim ; $55bc
-	ld c, $00 ; $55bf
+	ld c, BRIEFPROMPT_SHOW ; $55bf
 	call AdvanceFrameCheckInput ; $55c1
 	and a ; $55c4
 	jp z, .animFirstCaption ; $55c5
@@ -433,7 +433,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $560f
 .animSecondCaption:
 	call ServeToTargetsBriefing_TickAnim ; $5612
-	ld c, $00 ; $5615
+	ld c, BRIEFPROMPT_SHOW ; $5615
 	call AdvanceFrameCheckInput ; $5617
 	and a ; $561a
 	jp z, .animSecondCaption ; $561b
@@ -499,7 +499,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $56fc
 .animLastCaption:
 	call ServeToTargetsBriefing_TickAnim ; $56ff
-	ld c, $01 ; $5702
+	ld c, BRIEFPROMPT_NONE ; $5702
 	call AdvanceFrameCheckInput ; $5704
 	and a ; $5707
 	jp z, .animLastCaption ; $5708

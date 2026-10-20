@@ -13,9 +13,9 @@
 DrawSelectedOptionBox:
 	push de ; $4018
 	push bc ; $4019
-	ld c, $00 ; $401a
+	ld c, BOBDIR_NEG ; $401a
 	call ApplySpriteBobOffsetX ; $401c
-	ld c, $00 ; $401f
+	ld c, BOBDIR_NEG ; $401f
 	call ApplySpriteBobOffsetY ; $4021
 	sprite_tile_attr $00, OAM_BANK1 ; $4024
 	call QueueSprite ; $4028
@@ -27,9 +27,9 @@ DrawSelectedOptionBox:
 	add d ; $4030
 	ld d, a ; $4031
 	push de ; $4032
-	ld c, $01 ; $4033
+	ld c, BOBDIR_POS ; $4033
 	call ApplySpriteBobOffsetX ; $4035
-	ld c, $00 ; $4038
+	ld c, BOBDIR_NEG ; $4038
 	call ApplySpriteBobOffsetY ; $403a
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $403d
 	call QueueSprite ; $4041
@@ -45,9 +45,9 @@ DrawSelectedOptionBox:
 	add d ; $404d
 	ld d, a ; $404e
 	push de ; $404f
-	ld c, $01 ; $4050
+	ld c, BOBDIR_POS ; $4050
 	call ApplySpriteBobOffsetX ; $4052
-	ld c, $01 ; $4055
+	ld c, BOBDIR_POS ; $4055
 	call ApplySpriteBobOffsetY ; $4057
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $405a
 	call QueueSprite ; $405e
@@ -58,9 +58,9 @@ DrawSelectedOptionBox:
 	add c ; $4065
 	ld e, a ; $4066
 	push de ; $4067
-	ld c, $00 ; $4068
+	ld c, BOBDIR_NEG ; $4068
 	call ApplySpriteBobOffsetX ; $406a
-	ld c, $01 ; $406d
+	ld c, BOBDIR_POS ; $406d
 	call ApplySpriteBobOffsetY ; $406f
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $4072
 	call QueueSprite ; $4076

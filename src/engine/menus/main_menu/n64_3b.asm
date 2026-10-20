@@ -139,7 +139,7 @@ N64ExhibScrollArrowsTask:
 	cp $09 ; $4573
 	jr z, .checkLeftArrow ; $4575
 	ld_xy de, $93, $2f ; $4577
-	ld c, $01 ; $457a
+	ld c, BOBDIR_POS ; $457a
 	call ApplyCursorBounceX ; $457c
 	ld b, $08 ; $457f
 	ld c, $00 ; $4581
@@ -150,7 +150,7 @@ N64ExhibScrollArrowsTask:
 	or a ; $458b
 	jr z, .checkUpArrow ; $458c
 	ld_xy de, $08, $2f ; $458e
-	ld c, $00 ; $4591
+	ld c, BOBDIR_NEG ; $4591
 	call ApplyCursorBounceX ; $4593
 	ld b, $08 ; $4596
 	ld c, $00 ; $4598
@@ -161,7 +161,7 @@ N64ExhibScrollArrowsTask:
 	or a ; $45a2
 	jr z, .checkDownArrow ; $45a3
 	ld_xy de, $0a, $20 ; $45a5
-	ld c, $01 ; $45a8
+	ld c, BOBDIR_POS ; $45a8
 	call ApplyCursorBounceY ; $45aa
 	ld b, $08 ; $45ad
 	ld c, $00 ; $45af
@@ -172,7 +172,7 @@ N64ExhibScrollArrowsTask:
 	cp $0c ; $45b9
 	jr z, .restore ; $45bb
 	ld_xy de, $0a, $78 ; $45bd
-	ld c, $00 ; $45c0
+	ld c, BOBDIR_NEG ; $45c0
 	call ApplyCursorBounceY ; $45c2
 	ld b, $08 ; $45c5
 	ld c, $00 ; $45c7

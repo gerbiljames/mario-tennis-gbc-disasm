@@ -330,7 +330,7 @@ N64TnmtScrollArrowsTask:
 	or a ; $50e8
 	jr nz, .applyCursorBounceX ; $50e9
 	ld_xy de, $93, $2f ; $50eb
-	ld c, $01 ; $50ee
+	ld c, BOBDIR_POS ; $50ee
 	call ApplyCursorBounceX ; $50f0
 	ld b, $08 ; $50f3
 	ld c, $00 ; $50f5
@@ -341,7 +341,7 @@ N64TnmtScrollArrowsTask:
 	or a ; $50ff
 	jr z, .checkUpArrow ; $5100
 	ld_xy de, $20, $2f ; $5102
-	ld c, $00 ; $5105
+	ld c, BOBDIR_NEG ; $5105
 	call ApplyCursorBounceX ; $5107
 	ld b, $08 ; $510a
 	ld c, $00 ; $510c
@@ -352,7 +352,7 @@ N64TnmtScrollArrowsTask:
 	or a ; $5116
 	jr z, .checkDownArrow ; $5117
 	ld_xy de, $0c, $32 ; $5119
-	ld c, $01 ; $511c
+	ld c, BOBDIR_POS ; $511c
 	call ApplyCursorBounceY ; $511e
 	ld b, $08 ; $5121
 	ld c, $00 ; $5123
@@ -363,7 +363,7 @@ N64TnmtScrollArrowsTask:
 	cp $0b ; $512d
 	jr z, .restore ; $512f
 	ld_xy de, $0c, $88 ; $5131
-	ld c, $00 ; $5134
+	ld c, BOBDIR_NEG ; $5134
 	call ApplyCursorBounceY ; $5136
 	ld b, $08 ; $5139
 	ld c, $00 ; $513b

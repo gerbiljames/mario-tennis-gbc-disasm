@@ -140,7 +140,7 @@ DrawProgressScreenSprites:
 	jr z, .drawDownArrow ; $7aaf
 	ld d, $0a ; $7ab1
 	ld e, $18 ; $7ab3
-	ld c, $00 ; $7ab5
+	ld c, BOBDIR_NEG ; $7ab5
 	farcall ApplySpriteBobOffsetY ; $7ab7
 	ld c, $20 ; $7aba
 	ld b, $00 ; $7abc
@@ -152,7 +152,7 @@ DrawProgressScreenSprites:
 	jr z, .drawIcons ; $7ac7
 	ld d, $0a ; $7ac9
 	ld e, $86 ; $7acb
-	ld c, $01 ; $7acd
+	ld c, BOBDIR_POS ; $7acd
 	farcall ApplySpriteBobOffsetY ; $7acf
 	ld c, $20 ; $7ad2
 	ld b, $00 ; $7ad4

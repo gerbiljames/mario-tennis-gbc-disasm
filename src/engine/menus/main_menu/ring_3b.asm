@@ -315,7 +315,7 @@ RingShotScrollArrowsTask:
 	cp $03 ; $549d
 	jr z, .checkLeftArrow ; $549f
 	ld_xy de, $78, $12 ; $54a1
-	ld c, $01 ; $54a4
+	ld c, BOBDIR_POS ; $54a4
 	call ApplyCursorBounceX ; $54a6
 	ld b, $08 ; $54a9
 	ld c, $00 ; $54ab
@@ -326,7 +326,7 @@ RingShotScrollArrowsTask:
 	or a ; $54b5
 	jr z, .checkUpArrow ; $54b6
 	ld_xy de, $23, $12 ; $54b8
-	ld c, $00 ; $54bb
+	ld c, BOBDIR_NEG ; $54bb
 	call ApplyCursorBounceX ; $54bd
 	ld b, $08 ; $54c0
 	ld c, $00 ; $54c2
@@ -337,7 +337,7 @@ RingShotScrollArrowsTask:
 	or a ; $54cc
 	jr z, .checkDownArrow ; $54cd
 	ld_xy de, $0c, $26 ; $54cf
-	ld c, $01 ; $54d2
+	ld c, BOBDIR_POS ; $54d2
 	call ApplyCursorBounceY ; $54d4
 	ld b, $08 ; $54d7
 	ld c, $00 ; $54d9
@@ -348,7 +348,7 @@ RingShotScrollArrowsTask:
 	cp $0b ; $54e3
 	jr z, .restore ; $54e5
 	ld_xy de, $0c, $82 ; $54e7
-	ld c, $00 ; $54ea
+	ld c, BOBDIR_NEG ; $54ea
 	call ApplyCursorBounceY ; $54ec
 	ld b, $08 ; $54ef
 	ld c, $00 ; $54f1

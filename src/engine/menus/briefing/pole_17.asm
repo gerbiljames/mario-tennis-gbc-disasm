@@ -14,7 +14,7 @@ DrillBriefing_ServeThroughPoles:
 	ld [wBriefingAnimStep], a ; $5ca1
 .animFirstCaption:
 	call PoleServeBriefing_TickAnim ; $5ca4
-	ld c, $00 ; $5ca7
+	ld c, BRIEFPROMPT_SHOW ; $5ca7
 	call AdvanceFrameCheckInput ; $5ca9
 	and a ; $5cac
 	jp z, .animFirstCaption ; $5cad
@@ -50,7 +50,7 @@ DrillBriefing_ServeThroughPoles:
 	ld [wBriefingPlayerX], a ; $5d10
 	ld a, b ; $5d13
 	ld [wBriefingPlayerY], a ; $5d14
-	ld c, $00 ; $5d17
+	ld c, BRIEFPROMPT_SHOW ; $5d17
 	call AdvanceFrameCheckInput ; $5d19
 	and a ; $5d1c
 	jp z, .animSecondCaption ; $5d1d
@@ -94,7 +94,7 @@ DrillBriefing_ServeThroughPoles:
 	call DrawBriefingCaption ; $5dbd
 .animLastCaption:
 	call PoleServeBriefing_TickAnim2 ; $5dc0
-	ld c, $01 ; $5dc3
+	ld c, BRIEFPROMPT_NONE ; $5dc3
 	call AdvanceFrameCheckInput ; $5dc5
 	and a ; $5dc8
 	jp z, .animLastCaption ; $5dc9
@@ -350,7 +350,7 @@ DrillBriefing_ServeAndVolley:
 	ld [wBriefingAnimStep], a ; $60cc
 .loop:
 	call ServeAndVolleyBriefing_TickAnim ; $60cf
-	ld c, $01 ; $60d2
+	ld c, BRIEFPROMPT_NONE ; $60d2
 	call AdvanceFrameCheckInput ; $60d4
 	and a ; $60d7
 	jp z, .loop ; $60d8
