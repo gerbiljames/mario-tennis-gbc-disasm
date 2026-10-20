@@ -290,7 +290,7 @@ name, `ACTOR_ROLE_<location>_<role>`, declared with its lists in
 `include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Twelve roles cover 55 operands and 7
 `NpcScripts` ids.
 
-The sites the tool reaches carry 5,359 slot names (row and role names,
+The sites the tool reaches carry 5,494 slot names (row and role names,
 script operands, `NpcScripts` ids); 32 keep a number, and unreached code
 keeps more. A PyBoy sweep that hooks each numbered site and records the
 installed list and the slot's object agrees with the analysis wherever it

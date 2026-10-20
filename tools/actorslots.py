@@ -289,7 +289,7 @@ class Flow:
     def stage_compare(self, L, i):
         """(cond, stage, variable) when line i branches on a compare of a loaded stage."""
         code = L[i].split(";")[0].strip()
-        m = re.match(r"(?:jr|jp|ret) (nz|z|nc|c)\b", code)
+        m = re.match(r"(?:jr|jp|ret|call) (nz|z|nc|c)\b", code)
         if not m:
             return None
         k = i - 1
@@ -311,7 +311,7 @@ class Flow:
             elif re.match(r"ld a, \[(\w+)\]$", c) and c[7:-1] in STAGE_VARS:
                 var = c[7:-1]
                 break
-            elif not (mm or re.match(r"(jr|jp) (nz|z|nc|c),", c)):
+            elif not (mm or re.match(r"(jr|jp|call) (nz|z|nc|c),", c)):
                 return None
             k -= 1
         if k < 0 or cmp is None:
@@ -350,9 +350,17 @@ class Flow:
         m = re.match(r"script_respawn_actors (\w+)$", code)
         if m:
             return ("install", m.group(1) if m.group(1) in s.lists else ANY)
-        m = re.match(r"(call|farcall) (\w+(?:\.\w+)?)$", code)
+        m = re.match(r"(call|farcall) (?:(nz|z|nc|c), )?(\w+(?:\.\w+)?)$", code)
+        if m and m.group(2):
+            t = m.group(3)
+            if "RespawnLocationActors" in t or t in ("WriteStoryStateWord", "JumpToHL", "CallHLInBankA"):
+                return ("unknown_call", None)
+            r = self.resolve(b, i, t)
+            if r and r[1] is not None and s.is_story(t.split(".")[0]):
+                return ("ccall", r)
+            return ("nop", None)
         if m:
-            t = m.group(2)
+            t = m.group(3)
             if "RespawnLocationActors" in t:
                 lm = re.findall(r"ld hl, (\w+)", " ".join(prev[-3:]))
                 return ("install", lm[-1] if lm and lm[-1] in s.lists else ANY)
@@ -425,7 +433,7 @@ class Flow:
                 kind, info = self.step(b, i)
                 if kind == "data":
                     break
-                cmp = self.stage_compare(L, i) if kind in ("cjump", "ctail", "cret", "cjump_out") else None
+                cmp = self.stage_compare(L, i) if kind in ("cjump", "ctail", "ccall", "cret", "cjump_out") else None
                 if cmp:
                     cond, v, var = cmp
                     test = {"z": lambda x: x == v, "nz": lambda x: x != v,
@@ -438,6 +446,10 @@ class Flow:
                         if calls is not None:
                             calls.append((info, taken))
                         out |= self.apply(info, taken)
+                    elif kind == "ccall":
+                        if calls is not None:
+                            calls.append((info, taken))
+                        st = frozenset(set(st) | self.apply(info, taken))
                     elif kind == "cret":
                         out |= taken
                     else:
@@ -458,6 +470,10 @@ class Flow:
                             calls.append((ce, cs))
                         res |= self.apply(ce, cs)
                     st = frozenset(res)
+                elif kind == "ccall":
+                    if calls is not None:
+                        calls.append((info, st))
+                    st = frozenset(set(st) | self.apply(info, st))
                 elif kind == "unknown_call":
                     st = frozenset(set(st) | self.poison(st))
                 elif kind == "multitail":
@@ -606,7 +622,7 @@ class Flow:
                 if not code.strip() or re.match(r"^\.?\w+:", code):
                     continue
                 k, _ = self.step(b, i)
-                if (b, i) in walked and k in ("call", "multicall", "multitail", "tail", "ctail", "jump", "cjump"):
+                if (b, i) in walked and k in ("call", "ccall", "multicall", "multitail", "tail", "ctail", "jump", "cjump"):
                     continue
                 if re.match(r"\s*(map_|as_call|as_jump)", code) or s.owner[(b, i)] in s.trees:
                     continue
@@ -622,7 +638,7 @@ class Flow:
         for (b, i) in walked:
             k, info = self.step(b, i)
             for t in ([entry_of_target(x) for x in info] if k in ("multicall", "multitail")
-                      else [info] if k in ("call", "tail", "ctail") else []):
+                      else [info] if k in ("call", "ccall", "tail", "ctail") else []):
                 callees[s.owner[(b, i)]].add(s.owner[t])
         self.tainted, stack = set(), list(ext)
         while stack:
