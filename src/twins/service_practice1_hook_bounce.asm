@@ -4,5 +4,5 @@
 	ld a, [wRallyLength]
 	cp $01
 	ret nz
-	call RecordDrillTargetZoneHitIfInPlay
+	call RecordDrillTargetZoneMissIfInPlay
 	ret

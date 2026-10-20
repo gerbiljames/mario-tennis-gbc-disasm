@@ -29,7 +29,7 @@
 	farptr SetupSceneAnimationPalettes ; $4038
 	farptr UpdateSceneAnimation ; $403a
 	farptr PlayScrollingStoryCutscene ; $403c
-	farptr ShowStoryResultScreen ; $403e
+	farptr ShowFinalCreditsCard ; $403e
 	farptr InitGrayscalePaletteFade ; $4040
 	farptr SetupPaletteFadeMask ; $4042
 	farptr AnimatePaletteFadeToTarget ; $4044

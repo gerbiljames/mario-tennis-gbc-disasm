@@ -229,7 +229,7 @@ UpdateDrillAbortCountdown:
 	ld a, MATCHABORT_POINT ; $41d4
 	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
-RecordDrillTargetZoneHitIfInPlay:
+RecordDrillTargetZoneMissIfInPlay:
 	ld a, [wPointOutcome] ; $41da
 	cp POINTOUTCOME_NET ; $41dd
 	ret z ; $41df
@@ -237,7 +237,7 @@ RecordDrillTargetZoneHitIfInPlay:
 	ret z ; $41e2
 	cp POINTOUTCOME_LET ; $41e3
 	ret z ; $41e5
-RecordDrillTargetZoneHit:
+RecordDrillTargetZoneMiss:
 	ld a, [wBallBounceCount] ; $41e6
 	cp $02 ; $41e9
 	ret nc ; $41eb
@@ -256,16 +256,16 @@ RecordDrillTargetZoneHit:
 	rla ; $41fd
 	dec b ; $41fe
 	jr nz, .shiftLoop ; $41ff
-	ld hl, wDrillTargetZoneHitBits ; $4201
+	ld hl, wDrillTargetZoneMissBits ; $4201
 	or [hl] ; $4204
 	ld [hl], a ; $4205
 	ret ; $4206
 Unused_0b_Table:
 	; $4207, 4 bytes (bytes:4)
 	db $03, $02, $00, $01 ; 0x00
-CountDrillResultBitsSet:
+CountDrillTargetZoneMisses:
 	push bc ; $420b
-	ld a, [wDrillTargetZoneHitBits] ; $420c
+	ld a, [wDrillTargetZoneMissBits] ; $420c
 	ld b, a ; $420f
 	xor a ; $4210
 	ld c, $08 ; $4211
@@ -276,12 +276,12 @@ CountDrillResultBitsSet:
 	jr nz, .shiftLoop ; $4218
 	pop bc ; $421a
 	ret ; $421b
-CheckDrillTargetZoneMissed:
+CheckDrillTargetZoneHit:
 	push bc ; $421c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $421d
 	ld c, a ; $4220
 	inc c ; $4221
-	ld a, [wDrillTargetZoneHitBits] ; $4222
+	ld a, [wDrillTargetZoneMissBits] ; $4222
 	ld b, a ; $4225
 .shiftLoop:
 	ld a, $00 ; $4226
@@ -316,7 +316,7 @@ RecordGateCrossOnServe:
 	or [hl] ; $4254
 	ld [hl], a ; $4255
 	ret ; $4256
-CountDrillResultBitsSetAlt:
+CountDrillGateCrosses:
 	push bc ; $4257
 	ld a, [wDrillGateCrossBits] ; $4258
 	ld b, a ; $425b

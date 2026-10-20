@@ -1,5 +1,5 @@
 UnpackBytesToNibbles:
-	ld hl, wLinkNibbleBuffer ; $4656
+	ld hl, wLinkTxNibbles ; $4656
 	ld a, c ; $4659
 	add a ; $465a
 	cp $5f ; $465b
@@ -55,9 +55,9 @@ ExchangeLinkFrameByteMaster:
 	cp $ff ; $46a1
 	jr z, .resetLink ; $46a3
 	and LINKTAG_MASK ; $46a5
-	cp $80 ; $46a7
+	cp LINKTAG_SLAVE ; $46a7
 	jr z, .checkDuplicate ; $46a9
-	cp $40 ; $46ab
+	cp LINKTAG_MASTER ; $46ab
 	jr z, .checkDuplicate ; $46ad
 .badReply:
 	call LinkErrorReset ; $46af
@@ -107,9 +107,9 @@ ExchangeLinkFrameByteSlave:
 	cp $ff ; $46fe
 	jr z, .resetLinkAgain ; $4700
 	and LINKTAG_MASK ; $4702
-	cp $40 ; $4704
+	cp LINKTAG_MASTER ; $4704
 	jr z, .checkDuplicate ; $4706
-	cp $80 ; $4708
+	cp LINKTAG_SLAVE ; $4708
 	jr z, .checkDuplicate ; $470a
 .resetLink:
 	call LinkErrorReset ; $470c
@@ -490,10 +490,10 @@ ExchangeLinkDataBlock:
 	call LinkErrorReset ; $4998
 .asMaster:
 	call ExchangeNibbleBlockMaster ; $499b
-	jr .unpack ; $499e
+	jr .pack ; $499e
 .asSlave:
 	call ExchangeNibbleBlockSlave ; $49a0
-.unpack:
+.pack:
 	call PackNibblesToBytes ; $49a3
 	di ; $49a6
 	ld a, IF_SERIAL | IF_VBLANK ; $49a7

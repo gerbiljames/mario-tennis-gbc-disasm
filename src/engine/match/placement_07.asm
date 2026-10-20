@@ -11,11 +11,11 @@ Unused_07_AdvanceLinkPlayerCount:
 	jr .checkJoin ; $4cc1
 .maskHigh:
 	ld c, a ; $4cc3
-	and $f0 ; $4cc4
+	and PADF_DPAD ; $4cc4
 	jr nz, .done ; $4cc6
 	ld a, c ; $4cc8
 .checkJoin:
-	bit 0, a ; $4cc9
+	bit PADB_A, a ; $4cc9
 	jr z, .checkLeave ; $4ccb
 	ldh a, [hLinkPlayerCount] ; $4ccd
 	cp b ; $4ccf
@@ -24,7 +24,7 @@ Unused_07_AdvanceLinkPlayerCount:
 	ldh [hLinkPlayerCount], a ; $4cd3
 	jr .done ; $4cd5
 .checkLeave:
-	bit 1, a ; $4cd7
+	bit PADB_B, a ; $4cd7
 	jr z, .done ; $4cd9
 	ldh a, [hLinkPlayerCount] ; $4cdb
 	or a ; $4cdd

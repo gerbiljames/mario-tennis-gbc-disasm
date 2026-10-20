@@ -128,7 +128,7 @@ RunEndingCreditsSequence:
 .nextScene:
 	jr .sceneLoop ; $6f01
 .done:
-	farcall ShowStoryResultScreen ; $6f03
+	farcall ShowFinalCreditsCard ; $6f03
 	script_fade_out 8 ; $6f06
 	call WaitFadeEnd ; $6f0b
 	xor a ; $6f0e

@@ -211,7 +211,7 @@ Unused_02_DebugStoryStatsScreen:
 	sound SFX_MENU_MOVE ; $5154
 	jp .redraw ; $5156
 .levelUpPlayer:
-	bit 5, a ; $5159
+	bit PADB_LEFT, a ; $5159
 	jr z, .checkRight ; $515b
 	push de ; $515d
 	ld a, $00 ; $515e
@@ -221,7 +221,7 @@ Unused_02_DebugStoryStatsScreen:
 	sound SFX_MENU_MOVE ; $5166
 	jp .redraw ; $5168
 .checkRight:
-	bit 4, a ; $516b
+	bit PADB_RIGHT, a ; $516b
 	jr z, .checkDown ; $516d
 	push de ; $516f
 	ld a, $00 ; $5170
@@ -231,7 +231,7 @@ Unused_02_DebugStoryStatsScreen:
 	sound SFX_MENU_MOVE ; $5178
 	jp .redraw ; $517a
 .checkDown:
-	bit 7, a ; $517d
+	bit PADB_DOWN, a ; $517d
 	jr z, .positive ; $517f
 	push de ; $5181
 	ld a, $00 ; $5182
@@ -241,7 +241,7 @@ Unused_02_DebugStoryStatsScreen:
 	sound SFX_MENU_MOVE ; $518a
 	jp .redraw ; $518c
 .positive:
-	bit 1, a ; $518f
+	bit PADB_B, a ; $518f
 	jr z, .checkA ; $5191
 	push de ; $5193
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $5194
@@ -252,7 +252,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $519e
 	jp .redraw ; $519f
 .checkA:
-	bit 0, a ; $51a2
+	bit PADB_A, a ; $51a2
 	jr z, .checkSelect ; $51a4
 	push af ; $51a6
 	push bc ; $51a7
@@ -278,7 +278,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld [wStoryMainLeftHanded], a ; $51c5
 	jp .redraw ; $51c8
 .checkSelect:
-	bit 2, a ; $51cb
+	bit PADB_SELECT, a ; $51cb
 	jr z, .checkStart ; $51cd
 	sound SFX_MENU_SELECT ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
@@ -290,7 +290,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld [wCurrentStorySlot], a ; $51da
 	jp .reloadSlot ; $51dd
 .checkStart:
-	bit 3, a ; $51e0
+	bit PADB_START, a ; $51e0
 	jr z, .skipSave ; $51e2
 	sound SFX_MENU_SELECT ; $51e4
 	push de ; $51e6

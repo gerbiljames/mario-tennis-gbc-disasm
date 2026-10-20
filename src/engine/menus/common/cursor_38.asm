@@ -136,7 +136,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	and $02 ; $42ef
 	ld a, h ; $42f1
 	jr nz, .checkLock ; $42f2
-	bit 4, a ; $42f4
+	bit PADB_RIGHT, a ; $42f4
 	jr z, .checkLeft ; $42f6
 	ld a, [wMenuCursor2X] ; $42f8
 	inc a ; $42fb
@@ -154,7 +154,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld [wMenuCursor2X], a ; $4308
 	jr .compare ; $430b
 .checkLeft:
-	bit 5, a ; $430d
+	bit PADB_LEFT, a ; $430d
 	jr z, .checkUp ; $430f
 	ld a, [wMenuCursor2X] ; $4311
 	dec a ; $4314
@@ -172,7 +172,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld [wMenuCursor2X], a ; $4321
 	jr .compare ; $4324
 .checkUp:
-	bit 6, a ; $4326
+	bit PADB_UP, a ; $4326
 	jr z, .checkDown ; $4328
 	ld a, [wMenuCursor2Y] ; $432a
 	dec a ; $432d
@@ -190,7 +190,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld [wMenuCursor2Y], a ; $433a
 	jr .compare ; $433d
 .checkDown:
-	bit 7, a ; $433f
+	bit PADB_DOWN, a ; $433f
 	jr z, .checkLock ; $4341
 	ld a, [wMenuCursor2Y] ; $4343
 	inc a ; $4346
@@ -208,7 +208,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld [wMenuCursor2Y], a ; $4353
 	jr .compare ; $4356
 .checkLock:
-	bit 0, a ; $4358
+	bit PADB_A, a ; $4358
 	jr z, .checkB ; $435a
 	ld a, [wMenuCursorLockFlags] ; $435c
 	ld b, a ; $435f
@@ -220,7 +220,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ld [wMenuCursorLockFlags], a ; $4369
 	jr .compare ; $436c
 .checkB:
-	bit 1, a ; $436e
+	bit PADB_B, a ; $436e
 	jr z, .compare ; $4370
 	sound SFX_MENU_CANCEL ; $4372
 	ld a, [wMenuCursorLockFlags] ; $4374

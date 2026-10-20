@@ -729,9 +729,9 @@ The two surviving expansions land at `$d000` in WRAM banks `$02` and `$03` at a
 nothing reads them either: the four 64-wide scroll planes the name describes
 have no consumer.
 
-### `ProjectBallSprite` reads the hit-streak table and throws the value away
+### `ProjectBooSprite` reads the hit-streak table and throws the value away
 
-`ProjectBallSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
+`ProjectBooSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
 `wMinigameHitStreak` (deliberately, via the split-base `ld_hl_indexed`), loads
 the entry into `b`, and overwrites it:
 

@@ -341,7 +341,7 @@ BooBlastStreakPoints:
 	; $57f5, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawBooBlastTargetSprite:
-	call ProjectBallSprite ; $57fd
+	call ProjectBooSprite ; $57fd
 	ld c, $30 ; $5800
 	ld h, $fc ; $5802
 	ld l, $f1 ; $5804
@@ -361,12 +361,12 @@ BooBlastTargetAnimFrames:
 	db $02, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
 	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x18
 DrawBooBlastHitBurst:
-	call ProjectBallSprite ; $583c
+	call ProjectBooSprite ; $583c
 	ld c, $3c ; $583f
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5841
 	call QueueMinigameHitBurst ; $5844
 	ret ; $5847
-ProjectBallSprite:
+ProjectBooSprite:
 	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $5848
 	ld a, [hl+] ; $584b
 	ld e, a ; $584c

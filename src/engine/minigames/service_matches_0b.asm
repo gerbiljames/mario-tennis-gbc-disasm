@@ -357,12 +357,12 @@ ServiceMatch1Cases2:
 Unused_0b_StoreMatchAbortFlag_1:
 	ld a, MATCHABORT_POINT ; $49b7
 	ld [wMatchAbortFlag], a ; $49b9
-	ld a, $01 ; $49bc
+	ld a, WINLOSE_WIN ; $49bc
 	ret ; $49be
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $49bf
 	ld [wMatchAbortFlag], a ; $49c1
-	ld a, $ff ; $49c4
+	ld a, WINLOSE_LOSE ; $49c4
 	ret ; $49c6
 ServiceMatch2Drill:
 	; $49c7, 16 bytes

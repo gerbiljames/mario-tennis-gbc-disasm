@@ -410,7 +410,7 @@ DrawMinigameGridCell:
 	pop hl ; $433e
 	push de ; $433f
 	ld a, d ; $4340
-	add $d8 ; $4341
+	add HIGH(wCourtTilemapSaved) ; $4341
 	ld d, a ; $4343
 	ld_size bc, $02, $02 ; $4344
 	call CopyTextRect ; $4347
@@ -418,7 +418,7 @@ DrawMinigameGridCell:
 	pop hl ; $434b
 	push de ; $434c
 	ld a, d ; $434d
-	add $d0 ; $434e
+	add HIGH(wCourtTilemap) ; $434e
 	ld d, a ; $4350
 	ld_size bc, $02, $02 ; $4351
 	call CopyTextRect ; $4354
@@ -426,7 +426,7 @@ DrawMinigameGridCell:
 	pop hl ; $4358
 	push de ; $4359
 	ld a, d ; $435a
-	add $dc ; $435b
+	add HIGH(wCourtAttrmapSaved) ; $435b
 	ld d, a ; $435d
 	ld_size bc, $02, $02 ; $435e
 	call CopyTextRect ; $4361
@@ -434,7 +434,7 @@ DrawMinigameGridCell:
 	pop hl ; $4365
 	push de ; $4366
 	ld a, d ; $4367
-	add $d4 ; $4368
+	add HIGH(wCourtAttrmap) ; $4368
 	ld d, a ; $436a
 	ld_size bc, $02, $02 ; $436b
 	call CopyTextRect ; $436e

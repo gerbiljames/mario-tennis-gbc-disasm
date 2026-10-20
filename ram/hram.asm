@@ -163,11 +163,11 @@ hLinkErrorFlags:: db
 hUnusedLinkByte:: db
 	ds 1
 
-; [8-bit] Nibble-block transfer: the received nibble pair being assembled into a byte by ExchangeNibbleBlockMaster/Slave
-hLinkNibbleAccum:: db
+; [8-bit] Nibble-block transfer: index into wLinkRxNibbles where ExchangeNibbleBlockMaster/Slave store the next received nibble
+hLinkRxNibbleIndex:: db
 
-; [8-bit] Nibble-block transfer: byte offset into the $ce40 block buffer, stepped once per byte exchanged
-hLinkBlockOffset:: db
+; [8-bit] Nibble-block transfer: index into wLinkTxNibbles of the next nibble to send, stepped once per byte exchanged
+hLinkTxNibbleIndex:: db
 
 ; [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8
 hLinkCounter:: db

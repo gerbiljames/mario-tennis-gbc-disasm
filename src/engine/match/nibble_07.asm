@@ -127,7 +127,7 @@ ComputeNibbleBufferChecksum:
 	push bc ; $440d
 	push de ; $440e
 	push hl ; $440f
-	ld hl, wLinkNibbleBuffer ; $4410
+	ld hl, wLinkTxNibbles ; $4410
 	ld de, $0000 ; $4413
 .sumLoop:
 	ld a, [hl+] ; $4416
@@ -159,7 +159,7 @@ Unused_07_SendNibbleBlockSlave:
 	ld b, LINKMSG_SYNC_SLAVE ; $443a
 	call Unused_07_SendByteAwaitEchoSlave ; $443c
 	jr c, .startBlock ; $443f
-	ld hl, wLinkNibbleBuffer ; $4441
+	ld hl, wLinkTxNibbles ; $4441
 	ld de, $0000 ; $4444
 	ld b, c ; $4447
 .sendLoop:
@@ -249,7 +249,7 @@ Unused_07_ReceiveNibbleBlockMaster:
 	ld b, LINKMSG_SYNC_MASTER ; $44ca
 	call SendByteAwaitEchoMaster ; $44cc
 	jr c, .startBlock ; $44cf
-	ld hl, wLinkByteBuffer ; $44d1
+	ld hl, wLinkRxNibbles ; $44d1
 	ld de, $0000 ; $44d4
 	ld b, $00 ; $44d7
 .nibbleLoop:

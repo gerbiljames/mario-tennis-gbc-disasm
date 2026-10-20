@@ -127,14 +127,14 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $5555
 	call DecompressData ; $5558
 	ld hl, wDecompBuffer ; $555b
-	ld bc, $0240 ; $555e
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $555e
 	call ExpScreenCopyToTilemap ; $5561
 	wram_bank WRAM_STAGING ; $5564
 	ld hl, ExpAwardScreenAttrmap_1e ; $556a
 	ld de, wDecompBuffer ; $556d
 	call DecompressData ; $5570
 	ld hl, wDecompBuffer ; $5573
-	ld bc, $0240 ; $5576
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $5576
 	call ExpScreenCopyToAttrmap ; $5579
 	wram_bank WRAM_STAGING ; $557c
 	ld hl, PanelFrameGfx_1e ; $5582

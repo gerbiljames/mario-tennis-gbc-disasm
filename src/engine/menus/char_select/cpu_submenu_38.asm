@@ -264,7 +264,7 @@ RunLinkCharSelectScreen:
 	ldh a, [hLinkRemoteInputBuf] ; $6473
 	ld [wMenuInputPressed], a ; $6475
 	ld a, [wMenuInputPressed] ; $6478
-	xor $0f ; $647b
+	xor PADF_BUTTONS ; $647b
 	jr nz, .afterStartup ; $647d
 	call JumpSoftReset ; $647f
 .afterStartup:

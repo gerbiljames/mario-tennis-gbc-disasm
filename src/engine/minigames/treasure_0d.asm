@@ -270,7 +270,7 @@ AdvanceTreasureBoxActorState:
 	ret ; $5ade
 TreasureBoxTargetState0:
 	xor a ; $5adf
-	ld [wTreasureBoxState], a ; $5ae0
+	ld [wTreasureBoxAnimTimer], a ; $5ae0
 	ld hl, wMinigameServeCount ; $5ae3
 	ld a, [hl+] ; $5ae6
 	ld h, [hl] ; $5ae7

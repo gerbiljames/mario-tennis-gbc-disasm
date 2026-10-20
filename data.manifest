@@ -3275,7 +3275,7 @@ engine/cutscenes/IntroCutsceneState04InitPalettes.asm 1ac4d0 40 palettes
 engine/cutscenes/IntroCutsceneState13InitPalettes_6b.asm 1ac75a 40 palettes
 engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm 1aca58 40 palettes
 engine/cutscenes/Palettes_6b_03.asm 1acc00 38 palettes
-engine/cutscenes/CutsceneScrollXTable.asm 1accc1 a0 bytes:16
+engine/cutscenes/IntroScrollYDeltaTable.asm 1accc1 a0 bytes:16
 engine/cutscenes/CutsceneScrollYTable.asm 1acd84 a9 bytes:16
 engine/cutscenes/CutsceneSpritePath0.asm 1acea5 f0 words:8
 engine/cutscenes/CutsceneSpritePath1.asm 1acf95 d8 words:8

@@ -329,7 +329,7 @@ ScrollN64TnmtDataCursor:
 	call RedrawN64TnmtDataWindow ; $4d70
 	jr .done ; $4d73
 .checkRight:
-	bit 4, a ; $4d75
+	bit PADB_RIGHT, a ; $4d75
 	jr z, .checkUp ; $4d77
 	ld a, [wScreenScratch] ; $4d79
 	or a ; $4d7c
@@ -343,7 +343,7 @@ ScrollN64TnmtDataCursor:
 	call RedrawN64TnmtDataWindow ; $4d8c
 	jr .done ; $4d8f
 .checkUp:
-	bit 6, a ; $4d91
+	bit PADB_UP, a ; $4d91
 	jr z, .checkDown ; $4d93
 	ld a, [wDataScreenCursorRow] ; $4d95
 	or a ; $4d98
@@ -354,7 +354,7 @@ ScrollN64TnmtDataCursor:
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .checkDown:
-	bit 7, a ; $4da6
+	bit PADB_DOWN, a ; $4da6
 	jr z, .done ; $4da8
 	ld a, [wDataScreenCursorRow] ; $4daa
 	cp $0b ; $4dad

@@ -73,10 +73,12 @@ after a real defect broke it:
   entries   every story entry point with no way in carries a `; debug
             warp only` mark, and only those do (tools/routes.py)
   raw-ids   a raw cp/store operand on a variable whose other values are
-            named from a constant family is not a member of that family, a
-            byte read through a known text pointer is not compared with a raw
-            TX_* code, and the macro and table rows RAW_ID_* lists name their
-            ids
+            named from a constant family is not a member of that family
+            (a routine's `ld a, <imm> / ret` stores into the variable its
+            caller saves the result in, a cp after `and X_MASK` tests that
+            field, a BASE_ID_ARGS base counts as an argument), a byte read
+            through a known text pointer is not compared with a raw TX_*
+            code, and the macro and table rows RAW_ID_* lists name their ids
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -1041,10 +1043,22 @@ RAW_ID_TABLES = {
     "StorySlotBlockIds_03": "SAVEBLOCK_",
 }
 # Families of variables and arguments with too few named sites to infer them.
+# `and X_MASK` counts as a variable, so the cp after it names the field's values.
 RAW_ID_FAMILIES = {
     "wStoryLocationBGM": "BGM",
     "TennisDictionaryScreen(a)": "TENNISDICT",
     "ShowRankingBoard(d)": "RANKINGBOARD",
+    "LINKTAG_MASK": "LINKTAG",
+    "wDrillPointJudgement": "WINLOSE",
+}
+# Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
+# or `add <base>` into that register counts as passing the base.
+BASE_ID_ARGS = {
+    "ReadSaveBlock": "b",
+    "WriteSaveBlock": "b",
+    "VerifySaveBlock": "b",
+    "ClearSaveBlock": "b",
+    "RestoreStoryBlockFromBackup": "b",
 }
 # Text pointers: a byte read through one is a text byte, so its compares name
 # TX_* codes. Buffers by address loaded into hl; labels (Routine or
@@ -1165,6 +1179,8 @@ def _raw_id_uses():
                     uses.setdefault(regs["a"][1:], []).append((m.group(1), where))
                 continue
             if m := re.match(rf"ldh? \[{_VAR_RE}\], a$", t):
+                if regs.get("a", "=")[0] == "+":
+                    del regs["a"]
                 if "a" in regs and not regs["a"].startswith("="):
                     uses.setdefault(_var(m.group(1)), []).append((regs["a"], where))
                     spent.add("a")
@@ -1174,21 +1190,34 @@ def _raw_id_uses():
             if m := re.match(r"ld \[hl\], (.+)$", t):
                 if regs.get("hl", "").startswith("="):
                     v = regs.get("a") if m.group(1) == "a" else m.group(1)
-                    if v and not v.startswith("=") and v not in _REGS8:
+                    if v and v[0] not in "=+" and v not in _REGS8:
                         uses.setdefault(regs["hl"][1:], []).append((v, where))
                         if m.group(1) == "a":
                             spent.add("a")
                 continue
             if _KEEPS_ALL_RE.match(t):
                 continue
+            if m := re.match(r"and (\w+_MASK)$", t):
+                _clobber(regs, spent, "a")
+                regs["a"] = "=" + m.group(1)
+                continue
+            if m := re.match(r"add ([^\[\],]+)$", t):
+                v = regs.get("a", "") if m.group(1) in _REGS8 else m.group(1)
+                _clobber(regs, spent, "a")
+                if v and v[0] not in "=@+" and v not in _REGS8:
+                    regs["a"] = "+" + v
+                continue
             if t == "add_hl_a" or re.match(r"add hl, (bc|de)$", t):
                 if t == "add_hl_a":
                     _clobber(regs, spent, "a")
                 continue
             if m := re.match(r"(call|farcall) (\w+)$", t):
+                callee = _twin_base(m.group(2))
                 for r, v in regs.items():
-                    if v[0] not in "=@" and r not in spent:
-                        uses.setdefault(f"{_twin_base(m.group(2))}({r})", []).append((v, where))
+                    if v[0] == "+" and BASE_ID_ARGS.get(callee) == r and r not in spent:
+                        uses.setdefault(f"{callee}({r})", []).append((v[1:], where))
+                    elif v[0] not in "=@+" and r not in spent:
+                        uses.setdefault(f"{callee}({r})", []).append((v, where))
                 # the text engine's callees keep the text pointer
                 regs, spent = {r: v for r, v in regs.items() if v[0] == "@"}, set()
                 continue
@@ -1225,6 +1254,61 @@ def _raw_id_uses():
                 _clobber(regs, spent, "a" if m.group(5) else r)
                 continue
             regs, spent = {}, set()
+    return uses
+
+
+_TAIL_JUMP_RE = re.compile(r"(?:jp|jr) (?:(?:n?z|n?c), )?([A-Za-z_]\w*)(?:\.\w+)?$")
+_NO_FALLTHROUGH_RE = re.compile(r"(ret|reti|jp [^,]+|jr [^,]+|jumptable\b.*|rst Rst00|"
+                                r"(db|dw|ds|INCBIN|INCLUDE)\b.*)$")
+
+
+def _return_uses():
+    """{variable: [(operand, where)]} for `call R` / `farcall R` whose result
+    is stored straight into a variable: every `ld a, <imm> / ret` in R, or in
+    a routine R reaches by jumps, a jumptable row or falling through, is a
+    store of that immediate."""
+    rets, tails, links = {}, {}, []
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        owner = prev = pending = called = None
+        in_table = False
+        for i, line in enumerate(lines):
+            if m := _GLOBAL_RE.match(line):
+                if owner and prev and not _NO_FALLTHROUGH_RE.match(prev):
+                    tails[owner].add(m.group(1))
+                owner = m.group(1)
+                rets.setdefault(owner, [])
+                tails.setdefault(owner, set())
+                prev = pending = called = None
+                in_table = False
+                continue
+            t = line.split(";")[0].strip()
+            if not t or t.startswith(".") or owner is None:
+                continue
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if t == "ret" and pending:
+                rets[owner].append(pending)
+            if called and (m := re.match(rf"ldh? \[{_VAR_RE}\], a$", t)):
+                links.append((_var(m.group(1)), called))
+            pending = (m.group(1), where) if (m := re.match(r"ld a, ([^\[\],]+)$", t)) else None
+            called = m.group(2) if (m := re.match(r"(call|farcall) (\w+)$", t)) else None
+            if in_table and (m := re.match(r"dw ([A-Za-z_]\w*)(?:\.\w+)?$", t)):
+                tails[owner].add(m.group(1))
+            else:
+                in_table = t.startswith("jumptable")
+            if m := _TAIL_JUMP_RE.match(t):
+                tails[owner].add(m.group(1))
+            prev = t
+    uses = {}
+    for var, routine in links:
+        seen, todo = set(), [routine]
+        while todo:
+            r = todo.pop()
+            if r not in seen:
+                seen.add(r)
+                todo += tails.get(r, ())
+        ops = uses.setdefault(var, [])
+        ops += [op for r in sorted(seen) for op in rets.get(r, ()) if op not in ops]
     return uses
 
 
@@ -1267,13 +1351,16 @@ def check_raw_ids(fail):
     """A raw cp/store operand on a variable (wVar + n counts as wVar) that
     names its other values from a constant family must not equal a member of
     that family. The immediates in a routine's argument registers at a call
-    count as variables `Routine(reg)`, and a byte read through a
+    count as variables `Routine(reg)`, the immediates a routine returns as
+    stores into the variable its caller saves the result in, and a byte read through a
     TEXT_BUFFERS / TEXT_POINTER_LABELS pointer as `text@source` in the TX
     family. Data rows of the macros and tables RAW_ID_* list must name their
     ids."""
     import consts
     values = consts.constants()
     uses = _raw_id_uses()
+    for var, ops in _return_uses().items():
+        uses.setdefault(var, []).extend(ops)
     n = 0
 
     def names_of(v, families):
@@ -1305,6 +1392,9 @@ def check_raw_ids(fail):
         fail("raw-ids", f"{key}: matches no table -- drop it from RAW_ID_TABLES/_KINDS")
     for var in sorted(set(RAW_ID_FAMILIES) - set(uses)):
         fail("raw-ids", f"{var} is no longer used -- drop it from RAW_ID_FAMILIES")
+    for routine, r in sorted(BASE_ID_ARGS.items()):
+        if f"{routine}({r})" not in uses:
+            fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
     return n

@@ -193,7 +193,7 @@ wCutsceneSpriteBY:: db
 ; [16-bit] Intro cutscene scroll position: UpdateCutsceneScrollY subtracts the frame's CutsceneScrollYTable entry from it; QueueScrollingSprite places sprites against it
 wCutsceneScrollAccum:: dw
 
-; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 at the start of scenes 00/12/19 and decremented each frame from the delta table at $6b:$4cc1 indexed by wCutsceneStepTimer. ApplyCutsceneScrollToSpriteX subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot, despite the routine's name); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpriteBlock's object
+; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 at the start of scenes 00/12/19 and decremented each frame by UpdateIntroScrollY from IntroScrollYDeltaTable indexed by wCutsceneStepTimer. ApplyIntroScrollToSpriteY subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpriteBlock's object
 wIntroCutsceneScrollY:: dw
 
 ; [8-bit] Frame the intro cutscene's scrolling sprites draw with: bits 4-5 of wCutsceneSpriteAnimTick, so it steps every 16 ticks
@@ -306,11 +306,10 @@ wDebugTextBuffer:: ds 576
 ; character-select roster, which never run together.
 UNION
 ; serial link nibble staging (bank $07)
-; [96 bytes] The block being exchanged, one nibble per byte (at most $5f nibbles). UnpackBytesToNibbles fills it from wLinkByteBuffer and PackNibblesToBytes folds it back
-wLinkNibbleBuffer:: ds 96
-; [48 bytes] The packed form of the same block, two nibbles per byte, which the caller reads and writes
-wLinkByteBuffer:: ds 48
-	ds 48
+; [96 bytes] The outgoing block, one nibble per byte (at most $5f nibbles): UnpackBytesToNibbles fills it from the caller's bytes and the Exchange/Send routines transmit it, tagged, by hLinkTxNibbleIndex
+wLinkTxNibbles:: ds 96
+; [96 bytes] The incoming block, one received nibble per byte, stored at hLinkRxNibbleIndex as each tagged byte arrives; PackNibblesToBytes folds it back into the caller's bytes
+wLinkRxNibbles:: ds 96
 NEXTU
 ; character select roster (bank $1b)
 ; [128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through; searched by Unused_1b_FindCharSelectRosterEntry, walked by Unused_1b_DrawCharSelectMugshots

@@ -206,13 +206,13 @@ RunLinkMatchSequence:
 	push bc ; $7408
 	push de ; $7409
 	push hl ; $740a
-.waitReady:
+.rulesMenu:
 	farcall RunLinkMatchRulesMenu ; $740b
 	cp $ff ; $740e
 	jp z, .done ; $7410
 	script_fade_out 16 ; $7413
 	call WaitFadeEnd ; $7418
-.startMatch:
+.charSelect:
 	push_wram_bank WRAM_SCREEN ; $741b
 	ld hl, wCharGridEntries ; $7424
 	ld bc, wCharGridEntries_SIZE ; $7427
@@ -231,12 +231,12 @@ RunLinkMatchSequence:
 	call StoreLinkMatchCharInfo ; $744d
 	pop af ; $7450
 	cp $ff ; $7451
-	jr nz, .afterMatch ; $7453
+	jr nz, .charsChosen ; $7453
 	farcall RestoreMenuScreenAndFadeIn ; $7455
 	ld a, MENUSLIDE_BACK ; $7458
 	ld [wMenuSlideDirection], a ; $745a
-	jr .waitReady ; $745d
-.afterMatch:
+	jr .rulesMenu ; $745d
+.charsChosen:
 	farcall ComputeUnlockedCourtFlags ; $745f
 	ld c, $00 ; $7462
 	call ExchangeLinkCharSelection ; $7464
@@ -256,16 +256,16 @@ RunLinkMatchSequence:
 	ld d, a ; $748c
 	ld a, [wLinkPartnerCourtMask] ; $748d
 	or d ; $7490
-	jr nz, .rematch ; $7491
+	jr nz, .courtSelect9 ; $7491
 	farcall RunLinkCourtSelect4Menu ; $7493
 	cp $ff ; $7496
-	jr z, .startMatch ; $7498
-	jr .exchangeResult ; $749a
-.rematch:
+	jr z, .charSelect ; $7498
+	jr .courtChosen ; $749a
+.courtSelect9:
 	farcall RunLinkCourtSelect9Menu ; $749c
 	cp $ff ; $749f
-	jp z, .startMatch ; $74a1
-.exchangeResult:
+	jp z, .charSelect ; $74a1
+.courtChosen:
 	ld d, a ; $74a4
 	ld a, d ; $74a5
 	ld [wCurrentlyUsedCourt], a ; $74a6
@@ -276,10 +276,10 @@ RunLinkMatchSequence:
 	ld [wMatchOpponentChar], a ; $74b6
 	ld a, [wMatchIsDoubles] ; $74b9
 	or a ; $74bc
-	jr z, .cleanup ; $74bd
+	jr z, .startMatch ; $74bd
 	ld c, $40 ; $74bf
 	call ExchangeLinkCharSelection ; $74c1
-.cleanup:
+.startMatch:
 	call ClearFrameTasks ; $74c4
 	xor a ; $74c7
 	ldh [hLinkExchangeActive], a ; $74c8
@@ -348,9 +348,9 @@ ExchangeLinkCharSelection:
 	call ResetSerialState ; $7540
 	ldh a, [hLinkState] ; $7543
 	cp LINKSTATE_MASTER ; $7545
-	jr nz, .checkTag ; $7547
+	jr nz, .checkBlockOffset ; $7547
 	call WaitVBlank ; $7549
-.checkTag:
+.checkBlockOffset:
 	pop bc ; $754c
 	push bc ; $754d
 	ld a, c ; $754e
@@ -369,14 +369,14 @@ ExchangeLinkCharSelection:
 .asMaster:
 	ld hl, wPlayer2MainChar ; $7566
 	ld de, wPlayer1MainChar ; $7569
-	jr .checkCancel ; $756c
+	jr .pickBlock ; $756c
 .asSlave:
 	ld hl, wPlayer1MainChar ; $756e
 	ld de, wPlayer2MainChar ; $7571
-.checkCancel:
+.pickBlock:
 	ld a, c ; $7574
 	or a ; $7575
-	jr nz, .sendSelection ; $7576
+	jr nz, .partnerBlock ; $7576
 	dec hl ; $7578
 	dec de ; $7579
 	push af ; $757a
@@ -404,8 +404,8 @@ ExchangeLinkCharSelection:
 	ld a, [wUnlockedCourtMask] ; $759c
 	ld [de], a ; $759f
 	ld b, $26 ; $75a0
-	jr .storeCommand ; $75a2
-.sendSelection:
+	jr .exchange ; $75a2
+.partnerBlock:
 	push af ; $75a4
 	push bc ; $75a5
 	push de ; $75a6
@@ -429,7 +429,7 @@ ExchangeLinkCharSelection:
 	pop bc ; $75c4
 	pop af ; $75c5
 	ld b, $25 ; $75c6
-.storeCommand:
+.exchange:
 	ld a, c ; $75c8
 	add_hl_a ; $75c9
 	ld a, c ; $75ce
@@ -443,18 +443,18 @@ ExchangeLinkCharSelection:
 	jr nz, .done ; $75dd
 	ldh a, [hLinkState] ; $75df
 	cp LINKSTATE_SLAVE ; $75e1
-	jr z, .replyOk ; $75e3
+	jr z, .asSlaveCourtMask ; $75e3
 	cp LINKSTATE_MASTER ; $75e5
-	jr z, .checkReply ; $75e7
+	jr z, .asMasterCourtMask ; $75e7
 	call LinkErrorReset ; $75e9
-.checkReply:
+.asMasterCourtMask:
 	ld a, [wPlayer2MainLinkCourtMask] ; $75ec
 	ld [wLinkPartnerCourtMask], a ; $75ef
-	jr .retry ; $75f2
-.replyOk:
+	jr .clearCourtMasks ; $75f2
+.asSlaveCourtMask:
 	ld a, [wPlayer1MainLinkCourtMask] ; $75f4
 	ld [wLinkPartnerCourtMask], a ; $75f7
-.retry:
+.clearCourtMasks:
 	xor a ; $75fa
 	ld [wPlayer1MainLinkCourtMask], a ; $75fb
 	ld [wPlayer2MainLinkCourtMask], a ; $75fe

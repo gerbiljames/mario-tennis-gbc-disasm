@@ -99,7 +99,7 @@ ScrollN64ExhibDataCursor:
 	call RedrawN64ExhibDataWindow ; $4520
 	jr .done ; $4523
 .checkRight:
-	bit 4, a ; $4525
+	bit PADB_RIGHT, a ; $4525
 	jr z, .checkUp ; $4527
 	ld a, [wN64ExhibPage] ; $4529
 	cp $09 ; $452c
@@ -110,7 +110,7 @@ ScrollN64ExhibDataCursor:
 	call RedrawN64ExhibDataWindow ; $4536
 	jr .done ; $4539
 .checkUp:
-	bit 6, a ; $453b
+	bit PADB_UP, a ; $453b
 	jr z, .checkDown ; $453d
 	ld a, [wN64ExhibCursorRow] ; $453f
 	or a ; $4542
@@ -121,7 +121,7 @@ ScrollN64ExhibDataCursor:
 	call RedrawN64ExhibDataWindow ; $454b
 	jr .done ; $454e
 .checkDown:
-	bit 7, a ; $4550
+	bit PADB_DOWN, a ; $4550
 	jr z, .done ; $4552
 	ld a, [wN64ExhibCursorRow] ; $4554
 	cp $0c ; $4557

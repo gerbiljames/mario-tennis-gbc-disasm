@@ -231,7 +231,7 @@ HandleTennisDictionaryIndexInput:
 	push af ; $559b
 	jr .restore ; $559c
 .checkB:
-	bit 1, a ; $559e
+	bit PADB_B, a ; $559e
 	jr z, .checkUp ; $55a0
 	pop af ; $55a2
 	sound SFX_MENU_CANCEL ; $55a3
@@ -260,7 +260,7 @@ HandleTennisDictionaryIndexInput:
 	ld a, $01 ; $55cd
 	jr .restore ; $55cf
 .checkTennisDictCursorRow:
-	bit 7, a ; $55d1
+	bit PADB_DOWN, a ; $55d1
 	jr z, .checkLeft ; $55d3
 	ld a, [wTennisDictCursorRow] ; $55d5
 	ld b, a ; $55d8
@@ -280,7 +280,7 @@ HandleTennisDictionaryIndexInput:
 	ld a, $01 ; $55f2
 	jr .restore ; $55f4
 .checkLeft:
-	bit 5, a ; $55f6
+	bit PADB_LEFT, a ; $55f6
 	jr z, .restore ; $55f8
 	jr .restore ; $55fa
 .restore:
@@ -360,7 +360,7 @@ HandleTennisDictionaryListInput:
 	call EndTennisDictionaryAnim ; $569e
 	jp .restore ; $56a1
 .checkTennisDictMode:
-	bit 1, a ; $56a4
+	bit PADB_B, a ; $56a4
 	jr z, .checkUp ; $56a6
 	pop af ; $56a8
 	sound SFX_MENU_CANCEL ; $56a9
@@ -398,7 +398,7 @@ HandleTennisDictionaryListInput:
 	call DrawTennisDictionaryList ; $56e5
 	jr .restore ; $56e8
 .checkTennisDictCursorRow:
-	bit 7, a ; $56ea
+	bit PADB_DOWN, a ; $56ea
 	jr z, .checkLeft ; $56ec
 	sound SFX_MENU_MOVE ; $56ee
 	ld a, [wTennisDictCursorRow] ; $56f0
@@ -421,7 +421,7 @@ HandleTennisDictionaryListInput:
 	call DrawTennisDictionaryList ; $570f
 	jr .restore ; $5712
 .checkLeft:
-	bit 5, a ; $5714
+	bit PADB_LEFT, a ; $5714
 	jr z, .checkRight ; $5716
 	ld a, [wTennisDictFlags] ; $5718
 	set 2, a ; $571b
@@ -432,7 +432,7 @@ HandleTennisDictionaryListInput:
 	call DrawTennisDictionaryList ; $5728
 	jr .restore ; $572b
 .checkRight:
-	bit 4, a ; $572d
+	bit PADB_RIGHT, a ; $572d
 	jr z, .restore ; $572f
 	ld a, [wTennisDictFlags] ; $5731
 	set 3, a ; $5734

@@ -123,7 +123,7 @@ Unused_0b_SetAiReactionDelayFar:
 	ld hl, $007a ; $4440
 	call Unused_0b_WriteCharStructByte ; $4443
 	ret ; $4446
-TestCharStateBit4:
+IsCharBallInNormalReach:
 	ld b, a ; $4447
 	ldh a, [hWramBank] ; $4448
 	push af ; $444a
@@ -131,7 +131,7 @@ TestCharStateBit4:
 	add b ; $444d
 	wram_bank a ; $444e
 	ld de, wCharPosX ; $4453
-	ld hl, $0050 ; $4456
+	ld hl, wCharBallReachFlags - wCharPosX ; $4456
 	add hl, de ; $4459
 	ld a, [hl] ; $445a
 	bit 4, a ; $445b
@@ -217,7 +217,7 @@ QueueDrillOutcomeMessage:
 	jr z, .hide ; $44f7
 	cp POINTOUTCOME_LET ; $44f9
 	jr z, .hide ; $44fb
-	call CheckDrillTargetZoneMissed ; $44fd
+	call CheckDrillTargetZoneHit ; $44fd
 	or a ; $4500
 	jr nz, .checkRallyLength ; $4501
 	ld a, $10 ; $4503

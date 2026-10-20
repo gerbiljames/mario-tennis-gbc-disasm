@@ -24,7 +24,7 @@ MoveMenuCursorGrid_{TWIN}:
 	ld [wMenuCursorX], a
 	jr .compare
 .checkLeft:
-	bit 5, a
+	bit PADB_LEFT, a
 	jr z, .checkUp
 	ld a, [wMenuCursorX]
 	dec a
@@ -42,7 +42,7 @@ MoveMenuCursorGrid_{TWIN}:
 	ld [wMenuCursorX], a
 	jr .compare
 .checkUp:
-	bit 6, a
+	bit PADB_UP, a
 	jr z, .checkDown
 	ld a, [wMenuCursorY]
 	dec a
@@ -60,7 +60,7 @@ MoveMenuCursorGrid_{TWIN}:
 	ld [wMenuCursorY], a
 	jr .compare
 .checkDown:
-	bit 7, a
+	bit PADB_DOWN, a
 	jr z, .compare
 	ld a, [wMenuCursorY]
 	inc a

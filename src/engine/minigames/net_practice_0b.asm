@@ -126,7 +126,7 @@ NetGameMatch3Cases3:
 	call QueueDrillResultMessage ; $5b60
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5b63
 	and $01 ; $5b66
-	call TestCharStateBit4 ; $5b68
+	call IsCharBallInNormalReach ; $5b68
 	or a ; $5b6b
 	jp z, Unused_0b_StoreMatchAbortFlag_5.storeMatchAbortFlag ; $5b6c
 	xor a ; $5b6f
@@ -193,12 +193,12 @@ NetGameMatch3Cases4:
 Unused_0b_StoreMatchAbortFlag_5:
 	ld a, MATCHABORT_POINT ; $5bca
 	ld [wMatchAbortFlag], a ; $5bcc
-	ld a, $01 ; $5bcf
+	ld a, WINLOSE_WIN ; $5bcf
 	ret ; $5bd1
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $5bd2
 	ld [wMatchAbortFlag], a ; $5bd4
-	ld a, $ff ; $5bd7
+	ld a, WINLOSE_LOSE ; $5bd7
 	ret ; $5bd9
 NetGamePractice1Drill:
 	; $5bda, 16 bytes
@@ -285,7 +285,7 @@ NetGamePractice1EvaluateResult:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $5c7d
 	ld [wDrillLessonResult], a ; $5c7e
-	ld a, $01 ; $5c81
+	ld a, WINLOSE_WIN ; $5c81
 	ret ; $5c83
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5c84
@@ -293,33 +293,33 @@ NetGamePractice1EvaluateResult:
 	jr nz, .compare ; $5c89
 	ld a, LESSON_NET_ALL_FAULTS ; $5c8b
 	ld [wDrillLessonResult], a ; $5c8d
-	jr .notFound ; $5c90
+	jr .lessonFailed ; $5c90
 .compare:
 	or a ; $5c92
 	jr z, .noDoubleFaults ; $5c93
 	ld a, LESSON_NET_DOUBLE_FAULT ; $5c95
 	ld [wDrillLessonResult], a ; $5c97
-	jr .notFound ; $5c9a
+	jr .lessonFailed ; $5c9a
 .noDoubleFaults:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5c9c
 	cp DRILL_LESSON_POINTS - 1 ; $5c9f
 	jr nz, .checkCounter5 ; $5ca1
 	ld a, LESSON_VOLLEY_ALMOST ; $5ca3
 	ld [wDrillLessonResult], a ; $5ca5
-	jr .notFound ; $5ca8
+	jr .lessonFailed ; $5ca8
 .checkCounter5:
 	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $5caa
 	or a ; $5cad
 	jr nz, .result3 ; $5cae
 	ld a, LESSON_VOLLEY_WRONG_SIDE ; $5cb0
 	ld [wDrillLessonResult], a ; $5cb2
-	jr .notFound ; $5cb5
+	jr .lessonFailed ; $5cb5
 .result3:
 	ld a, LESSON_VOLLEY_MISSED ; $5cb7
 	ld [wDrillLessonResult], a ; $5cb9
-	jr .notFound ; $5cbc
-.notFound:
-	ld a, $ff ; $5cbe
+	jr .lessonFailed ; $5cbc
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $5cbe
 	ret ; $5cc0
 NetGamePractice1Hook_RallyTick:
 	call NetGamePractice1JudgeOnRallyTick ; $5cc1
@@ -485,7 +485,7 @@ NetGamePractice1Cases3:
 	ld b, DRILLWORDING_SAME ; $5e33
 	call QueueDrillResultMessage ; $5e35
 	xor a ; $5e38
-	call TestCharStateBit4 ; $5e39
+	call IsCharBallInNormalReach ; $5e39
 	or a ; $5e3c
 	jp z, .storeMatchAbortFlag ; $5e3d
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL ; $5e40
@@ -509,8 +509,8 @@ NetGamePractice1Cases3:
 	ld a, DRILLMSG_NICE_VOLLEY_YOU_DID_IT ; $5e64
 	ld b, DRILLWORDING_SAME ; $5e66
 	call QueueDrillResultMessage ; $5e68
-	call RecordDrillTargetZoneHit ; $5e6b
-	call CheckDrillTargetZoneMissed ; $5e6e
+	call RecordDrillTargetZoneMiss ; $5e6b
+	call CheckDrillTargetZoneHit ; $5e6e
 	or a ; $5e71
 	jp nz, .hitTarget ; $5e72
 .missedTarget:
@@ -526,12 +526,12 @@ NetGamePractice1Cases3:
 .hitTarget:
 	ld a, MATCHABORT_POINT ; $5e85
 	ld [wMatchAbortFlag], a ; $5e87
-	ld a, $01 ; $5e8a
+	ld a, WINLOSE_WIN ; $5e8a
 	ret ; $5e8c
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $5e8d
 	ld [wMatchAbortFlag], a ; $5e8f
-	ld a, $ff ; $5e92
+	ld a, WINLOSE_LOSE ; $5e92
 	ret ; $5e94
 NetGamePractice2Drill:
 	; $5e95, 16 bytes
@@ -602,7 +602,7 @@ NetGamePractice2EvaluateResult:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $5f25
 	ld [wDrillLessonResult], a ; $5f26
-	ld a, $01 ; $5f29
+	ld a, WINLOSE_WIN ; $5f29
 	ret ; $5f2b
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5f2c
@@ -610,27 +610,27 @@ NetGamePractice2EvaluateResult:
 	jr nz, .compare ; $5f31
 	ld a, LESSON_NET_ALL_FAULTS ; $5f33
 	ld [wDrillLessonResult], a ; $5f35
-	jr .notFound ; $5f38
+	jr .lessonFailed ; $5f38
 .compare:
 	or a ; $5f3a
 	jr z, .noDoubleFaults ; $5f3b
 	ld a, LESSON_NET_DOUBLE_FAULT ; $5f3d
 	ld [wDrillLessonResult], a ; $5f3f
-	jr .notFound ; $5f42
+	jr .lessonFailed ; $5f42
 .noDoubleFaults:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f44
 	cp DRILL_LESSON_POINTS - 1 ; $5f47
 	jr nz, .checkCounter5 ; $5f49
 	ld a, LESSON_SMASH_ALMOST ; $5f4b
 	ld [wDrillLessonResult], a ; $5f4d
-	jr .notFound ; $5f50
+	jr .lessonFailed ; $5f50
 .checkCounter5:
 	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $5f52
 	or a ; $5f55
 	jr nz, .checkCounter4Range ; $5f56
 	ld a, LESSON_SMASH_MISSED ; $5f58
 	ld [wDrillLessonResult], a ; $5f5a
-	jr .notFound ; $5f5d
+	jr .lessonFailed ; $5f5d
 .checkCounter4Range:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $5f5f
 	cp $01 ; $5f62
@@ -639,13 +639,13 @@ NetGamePractice2EvaluateResult:
 	jr nc, .result3 ; $5f68
 	ld a, LESSON_SMASH_JUDGE_POSITION ; $5f6a
 	ld [wDrillLessonResult], a ; $5f6c
-	jr .notFound ; $5f6f
+	jr .lessonFailed ; $5f6f
 .result3:
 	ld a, LESSON_SMASH_NOT_ALL_SIDES ; $5f71
 	ld [wDrillLessonResult], a ; $5f73
-	jr .notFound ; $5f76
-.notFound:
-	ld a, $ff ; $5f78
+	jr .lessonFailed ; $5f76
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $5f78
 	ret ; $5f7a
 NetGamePractice2Hook_RallyTick:
 	call NetGamePractice2JudgeOnRallyTick ; $5f7b
@@ -748,8 +748,8 @@ NetGamePractice2Cases1:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL ; $608e
 	ld b, DRILLWORDING_SAME ; $6090
 	call QueueDrillResultMessage ; $6092
-	call RecordDrillTargetZoneHit ; $6095
-	call CheckDrillTargetZoneMissed ; $6098
+	call RecordDrillTargetZoneMiss ; $6095
+	call CheckDrillTargetZoneHit ; $6098
 	or a ; $609b
 	jp z, NetGamePractice2Cases3.notSmash ; $609c
 	xor a ; $609f
@@ -841,10 +841,10 @@ NetGamePractice2Cases3:
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $613e
 	ld [wMatchAbortFlag], a ; $6140
-	ld a, $01 ; $6143
+	ld a, WINLOSE_WIN ; $6143
 	ret ; $6145
 .notSmash:
 	ld a, MATCHABORT_POINT ; $6146
 	ld [wMatchAbortFlag], a ; $6148
-	ld a, $ff ; $614b
+	ld a, WINLOSE_LOSE ; $614b
 	ret ; $614d

@@ -86,9 +86,9 @@ Unused_1a_RunCharViewerInputLoop:
 	jp nz, .confirm ; $6cc1
 	bit PADB_B, a ; $6cc4
 	jp nz, .exit ; $6cc6
-	bit 3, a ; $6cc9
+	bit PADB_START, a ; $6cc9
 	jp nz, .prevPose ; $6ccb
-	bit 2, a ; $6cce
+	bit PADB_SELECT, a ; $6cce
 	jp nz, .nextPose ; $6cd0
 	jr Unused_1a_RunCharViewerInputLoop ; $6cd3
 .up:

@@ -24,7 +24,7 @@
 	and $01
 	ld a, h
 	jr nz, .checkLock
-	bit 4, a
+	bit PADB_RIGHT, a
 	jr z, .checkLeft
 	ld a, [wMenuCursorX]
 	inc a
@@ -42,7 +42,7 @@
 	ld [wMenuCursorX], a
 	jr .compare
 .checkLeft:
-	bit 5, a
+	bit PADB_LEFT, a
 	jr z, .checkUp
 	ld a, [wMenuCursorX]
 	dec a
@@ -60,7 +60,7 @@
 	ld [wMenuCursorX], a
 	jr .compare
 .checkUp:
-	bit 6, a
+	bit PADB_UP, a
 	jr z, .checkDown
 	ld a, [wMenuCursorY]
 	dec a
@@ -78,7 +78,7 @@
 	ld [wMenuCursorY], a
 	jr .compare
 .checkDown:
-	bit 7, a
+	bit PADB_DOWN, a
 	jr z, .checkLock
 	ld a, [wMenuCursorY]
 	inc a
@@ -96,7 +96,7 @@
 	ld [wMenuCursorY], a
 	jr .compare
 .checkLock:
-	bit 0, a
+	bit PADB_A, a
 	jr z, .checkUnlock
 	sound SFX_MENU_SELECT
 	ld a, [wMenuCursorLockFlags]
@@ -109,7 +109,7 @@
 	ld [wMenuCursorLockFlags], a
 	jr .compare
 .checkUnlock:
-	bit 1, a
+	bit PADB_B, a
 	jr z, .compare
 	sound SFX_MENU_CANCEL
 	ld a, [wMenuCursorLockFlags]

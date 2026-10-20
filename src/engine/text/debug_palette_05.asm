@@ -83,17 +83,17 @@ RunDebugColorEditor:
 	dec e ; $69f4
 	jr .wrapComponent ; $69f5
 .checkRight:
-	bit 4, a ; $69f7
+	bit PADB_RIGHT, a ; $69f7
 	jr z, .checkUp ; $69f9
 	inc e ; $69fb
 	jr .wrapComponent ; $69fc
 .checkUp:
-	bit 6, a ; $69fe
+	bit PADB_UP, a ; $69fe
 	jr z, .checkDown ; $6a00
 	ld d, $01 ; $6a02
 	jr .getSelectedBGPaletteColorPtr ; $6a04
 .checkDown:
-	bit 7, a ; $6a06
+	bit PADB_DOWN, a ; $6a06
 	jr z, .advanceFrame ; $6a08
 	ld d, $ff ; $6a0a
 	jr .getSelectedBGPaletteColorPtr ; $6a0c
@@ -203,17 +203,17 @@ RunDebugPaletteViewer:
 	dec d ; $6acd
 	jr .wrapCursor ; $6ace
 .checkRight:
-	bit 4, a ; $6ad0
+	bit PADB_RIGHT, a ; $6ad0
 	jr z, .checkUp ; $6ad2
 	inc d ; $6ad4
 	jr .wrapCursor ; $6ad5
 .checkUp:
-	bit 6, a ; $6ad7
+	bit PADB_UP, a ; $6ad7
 	jr z, .checkDown ; $6ad9
 	dec e ; $6adb
 	jr .wrapCursor ; $6adc
 .checkDown:
-	bit 7, a ; $6ade
+	bit PADB_DOWN, a ; $6ade
 	jr z, .wrapCursor ; $6ae0
 	inc e ; $6ae2
 	jr .wrapCursor ; $6ae3

@@ -197,7 +197,7 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	ldh a, [hLinkRemoteInputBuf] ; $6b47
 	ld [wMenuInputPressed], a ; $6b49
 	ld a, [wMenuInputPressed] ; $6b4c
-	xor $0f ; $6b4f
+	xor PADF_BUTTONS ; $6b4f
 	jr nz, .done ; $6b51
 	call JumpSoftReset ; $6b53
 .done:

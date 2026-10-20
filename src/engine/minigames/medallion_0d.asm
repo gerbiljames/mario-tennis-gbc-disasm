@@ -45,7 +45,7 @@ DrawTreasureBoxSprite:
 	call QueueSprite16 ; $5c8e
 	ld a, [wMinigameSceneActor + MGACTOR_SUBTYPE] ; $5c91
 	ld b, a ; $5c94
-	ld hl, wTreasureBoxState ; $5c95
+	ld hl, wTreasureBoxAnimTimer ; $5c95
 	ld a, [hl] ; $5c98
 	inc [hl] ; $5c99
 	and $1f ; $5c9a
