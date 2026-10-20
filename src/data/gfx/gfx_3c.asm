@@ -96,10 +96,10 @@ DataPtr_N64RecordTypeGfx0:
 	dw N64RecordTypeGfx0 ; $405e
 DataPtr_N64RecordTypeGfx1:
 	dw N64RecordTypeGfx1 ; $4060
-DataPtr_N64RecordTypeLabelTiles0:
-	dw N64RecordTypeLabelTiles0 ; $4062
-DataPtr_N64RecordTypeLabelTiles1:
-	dw N64RecordTypeLabelTiles1 ; $4064
+DataPtr_SinglesIconTiles:
+	dw SinglesIconTiles ; $4062
+DataPtr_DoublesIconTiles:
+	dw DoublesIconTiles ; $4064
 DataPtr_GamesLabelTiles:
 	dw GamesLabelTiles ; $4066
 DataPtr_GamesLabelTiles2:
@@ -118,12 +118,12 @@ DataPtr_CharacterSelectAttrmap:
 	dw CharacterSelectAttrmap ; $4074
 DataPtr_CharacterSelectPalettes:
 	dw CharacterSelectPalettes ; $4076
-DataPtr_CharacterSelectLabelTiles0:
-	dw CharacterSelectLabelTiles0 ; $4078
-DataPtr_CharacterSelectLabelTiles1:
-	dw CharacterSelectLabelTiles1 ; $407a
-DataPtr_CharacterSelectLabelTiles2:
-	dw CharacterSelectLabelTiles2 ; $407c
+DataPtr_TournamentIconTiles:
+	dw TournamentIconTiles ; $4078
+DataPtr_ExhibitionIconTiles:
+	dw ExhibitionIconTiles ; $407a
+DataPtr_RingShotIconTiles:
+	dw RingShotIconTiles ; $407c
 ModeSelectTiles:
 	INCBIN "data/gfx/lz_ModeSelectTiles.bin" ; $407e, 1283 bytes
 ModeSelectTilemap:
@@ -222,10 +222,10 @@ N64RecordTypeGfx0:
 	INCBIN "data/gfx/lz_N64RecordTypeGfx0.bin" ; $6d5c, 177 bytes
 N64RecordTypeGfx1:
 	INCBIN "data/gfx/lz_N64RecordTypeGfx1.bin" ; $6e0d, 172 bytes
-N64RecordTypeLabelTiles0:
-	INCBIN "data/gfx/lz_N64RecordTypeLabelTiles0.bin" ; $6eb9, 175 bytes
-N64RecordTypeLabelTiles1:
-	INCBIN "data/gfx/lz_N64RecordTypeLabelTiles1.bin" ; $6f68, 233 bytes
+SinglesIconTiles:
+	INCBIN "data/gfx/lz_SinglesIconTiles.bin" ; $6eb9, 175 bytes
+DoublesIconTiles:
+	INCBIN "data/gfx/lz_DoublesIconTiles.bin" ; $6f68, 233 bytes
 GamesLabelTiles:
 	INCBIN "data/gfx/lz_GamesLabelTiles.bin" ; $7051, 178 bytes
 GamesLabelTiles2:
@@ -244,10 +244,10 @@ CharacterSelectAttrmap:
 	INCBIN "data/gfx/lz_CharacterSelectAttrmap.bin" ; $766c, 89 bytes
 CharacterSelectPalettes:
 	INCLUDE "data/gfx/CharacterSelectPalettes.asm" ; $76c5, 64 bytes (palettes)
-CharacterSelectLabelTiles0:
-	INCBIN "data/gfx/lz_CharacterSelectLabelTiles0.bin" ; $7705, 231 bytes
-CharacterSelectLabelTiles1:
-	INCBIN "data/gfx/lz_CharacterSelectLabelTiles1.bin" ; $77ec, 227 bytes
-CharacterSelectLabelTiles2:
-	INCBIN "data/gfx/lz_CharacterSelectLabelTiles2.bin" ; $78cf, 253 bytes
+TournamentIconTiles:
+	INCBIN "data/gfx/lz_TournamentIconTiles.bin" ; $7705, 231 bytes
+ExhibitionIconTiles:
+	INCBIN "data/gfx/lz_ExhibitionIconTiles.bin" ; $77ec, 227 bytes
+RingShotIconTiles:
+	INCBIN "data/gfx/lz_RingShotIconTiles.bin" ; $78cf, 253 bytes
 	; $79cc, 1588 bytes fill to bank end (linker-padded)

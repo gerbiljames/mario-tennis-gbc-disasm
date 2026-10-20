@@ -383,8 +383,8 @@ LoadRacketShoesChoiceGraphics:
 	ret ; $4fc2
 RacketShoesChoiceGfxParams_3e:
 	; $4fc3, 3 slot words
-	dslot DataPtr_MatchStatsLabelTiles0 ; record 0
-	dslot DataPtr_MatchStatsLabelTiles1 ; record 1
+	dslot DataPtr_RacketIconTiles ; record 0
+	dslot DataPtr_ShoesIconTiles ; record 1
 	dslot DataPtr_N64ItemLabelTiles2 ; record 2
 RacketShoesChoiceGfxDests_3e:
 	; $4fc9, 6 bytes (records:2)

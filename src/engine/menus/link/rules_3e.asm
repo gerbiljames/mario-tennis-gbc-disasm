@@ -276,8 +276,8 @@ LoadMatchRulesMenuGraphics:
 	ret ; $46d7
 MatchRulesMenuGraphicsTable:
 	; $46d8, 14 bytes (7 records x 1 slot words)
-	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
-	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
+	dslot DataPtr_SinglesIconTiles ; record 0
+	dslot DataPtr_DoublesIconTiles ; record 1
 	dslot DataPtr_GamesLabelTiles ; record 2
 	dslot DataPtr_GamesLabelTiles2 ; record 3
 	dslot DataPtr_OneSetLabelTiles ; record 4

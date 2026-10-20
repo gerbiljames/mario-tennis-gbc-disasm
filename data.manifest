@@ -1041,7 +1041,7 @@ gfx/lz_LinkErrorTiles.bin 0eb70f 560 gfx
 gfx/lz_LinkErrorTilemap.bin 0ebc6f ef tilemap:32
 gfx/lz_LinkErrorAttrmap.bin 0ebd5e 5c tilemap:32
 gfx/LinkErrorPalettes.asm 0ebdba 40 palettes
-gfx/lz_LinkErrorLabelTiles.bin 0ebdfa e3 gfx
+gfx/lz_MushroomIconTiles.bin 0ebdfa e3 gfx
 engine/menus/main_menu/MainMenuItemPalette0.asm 0eda7c 8 palettes
 engine/menus/main_menu/MainMenuItemPalette1.asm 0eda84 8 palettes
 engine/menus/main_menu/MainMenuItemPalette2.asm 0eda8c 8 palettes
@@ -1113,8 +1113,8 @@ gfx/lz_MinigameSelectGfx4.bin 0f2c51 7c gfx
 gfx/lz_MinigameSelectGfx5.bin 0f2ccd 8f gfx
 gfx/lz_N64RecordTypeGfx0.bin 0f2d5c b1 gfx
 gfx/lz_N64RecordTypeGfx1.bin 0f2e0d ac gfx
-gfx/lz_N64RecordTypeLabelTiles0.bin 0f2eb9 af gfx
-gfx/lz_N64RecordTypeLabelTiles1.bin 0f2f68 e9 gfx
+gfx/lz_SinglesIconTiles.bin 0f2eb9 af gfx
+gfx/lz_DoublesIconTiles.bin 0f2f68 e9 gfx
 gfx/lz_GamesLabelTiles.bin 0f3051 b2 gfx
 gfx/lz_GamesLabelTiles2.bin 0f3103 aa gfx
 gfx/lz_OneSetLabelTiles.bin 0f31ad bd gfx
@@ -1124,9 +1124,9 @@ gfx/lz_CharacterSelectTiles.bin 0f341b 1c5 gfx
 gfx/lz_CharacterSelectTilemap.bin 0f35e0 8c tilemap:32
 gfx/lz_CharacterSelectAttrmap.bin 0f366c 59 tilemap:32
 gfx/CharacterSelectPalettes.asm 0f36c5 40 palettes
-gfx/lz_CharacterSelectLabelTiles0.bin 0f3705 e7 gfx
-gfx/lz_CharacterSelectLabelTiles1.bin 0f37ec e3 gfx
-gfx/lz_CharacterSelectLabelTiles2.bin 0f38cf fd gfx
+gfx/lz_TournamentIconTiles.bin 0f3705 e7 gfx
+gfx/lz_ExhibitionIconTiles.bin 0f37ec e3 gfx
+gfx/lz_RingShotIconTiles.bin 0f38cf fd gfx
 gfx/lz_N64ItemLabelTiles0.bin 0f406e 101 gfx
 gfx/lz_N64ItemLabelTiles1.bin 0f416f 102 gfx
 gfx/lz_N64ItemLabelTiles2.bin 0f4271 100 gfx
@@ -1134,8 +1134,8 @@ gfx/lz_N64ItemLabelTiles3.bin 0f4371 f6 gfx
 gfx/lz_N64TransferItemGfx0.bin 0f4467 b4 gfx
 gfx/lz_N64TransferItemGfx1.bin 0f451b c3 gfx
 gfx/lz_N64TransferItemGfx2.bin 0f45de a4 gfx
-gfx/lz_N64TransferLabelTiles0.bin 0f4682 da gfx
-gfx/lz_N64TransferLabelTiles1.bin 0f475c d4 gfx
+gfx/lz_Erase64IconTiles.bin 0f4682 da gfx
+gfx/lz_EraseAllIconTiles.bin 0f475c d4 gfx
 gfx/lz_MainMenuGfx5.bin 0f4830 b3 gfx
 gfx/lz_SharedMenuGfx63.bin 0f48e3 bb gfx
 gfx/lz_CourtSelectGfx0.bin 0f499e b7 gfx
@@ -1166,8 +1166,8 @@ gfx/lz_MatchStatsTilemap3.bin 0f6a08 121 tilemap:32
 gfx/lz_MatchStatsAttrmap3.bin 0f6b29 69 tilemap:32
 gfx/lz_MatchStatsTilemap2.bin 0f6b92 14c tilemap:32
 gfx/lz_MatchStatsAttrmap2.bin 0f6cde 5b tilemap:32
-gfx/lz_MatchStatsLabelTiles0.bin 0f6d39 f5 gfx
-gfx/lz_MatchStatsLabelTiles1.bin 0f6e2e fa gfx
+gfx/lz_RacketIconTiles.bin 0f6d39 f5 gfx
+gfx/lz_ShoesIconTiles.bin 0f6e2e fa gfx
 gfx/lz_EquipmentSelectTiles.bin 0f6f28 7fd gfx
 gfx/lz_EquipmentSelectTilemap.bin 0f7725 a1 tilemap:32
 gfx/lz_EquipmentSelectAttrmap.bin 0f77c6 6a tilemap:32
