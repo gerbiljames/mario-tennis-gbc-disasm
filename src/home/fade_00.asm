@@ -105,7 +105,7 @@ ClearBothSpriteBuffers:
 	ld a, [wSpriteBufferPage] ; $1e40
 	push af ; $1e43
 	and $cf ; $1e44
-	xor $05 ; $1e46
+	xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2) ; $1e46
 	ld [wSpriteBufferPage], a ; $1e48
 	call ClearSpriteQueue ; $1e4b
 	pop af ; $1e4e

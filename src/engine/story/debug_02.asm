@@ -351,7 +351,7 @@ LoadStorySlot:
 	push de ; $5276
 	xor a ; $5277
 	ld [wCurrentStorySlot], a ; $5278
-	ld bc, $8000 ; $527b
+	ld_char_rec bc, CHAR_STORY_MAIN, MATCHREC_P1_MAIN ; $527b
 	call InitMatchRecordFromCharId ; $527e
 	pop de ; $5281
 	pop bc ; $5282
@@ -375,7 +375,7 @@ Unused_02_StorySlotVariant:
 .slotOk:
 	push bc ; $529e
 	push de ; $529f
-	ld bc, $8000 ; $52a0
+	ld_char_rec bc, CHAR_STORY_MAIN, MATCHREC_P1_MAIN ; $52a0
 	call InitMatchRecordFromCharId ; $52a3
 	pop de ; $52a6
 	pop bc ; $52a7
@@ -397,7 +397,7 @@ LoadPlayer2MainRecord:
 	jr .restore ; $52c2
 .positive:
 	ld b, a ; $52c4
-	ld c, $02 ; $52c5
+	ld c, MATCHREC_P2_MAIN ; $52c5
 	call InitMatchRecordFromCharId ; $52c7
 .restore:
 	pop hl ; $52ca

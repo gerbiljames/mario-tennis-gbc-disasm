@@ -416,10 +416,10 @@ tileset.
 
 ### 5.1 Double-buffered shadow OAM
 
-Two 160-byte shadow OAM pages: `$c000` (`wShadowOAM`) and `$c500` (unnamed).
-`wSpriteBufferPage` (`$c3a7`) is the high byte of the page being built;
-`AdvanceFrame` flips it (`$00:$264b`) and VBlank DMAs the other page
-(`ld a,[wSpriteBufferPage] / xor $05 / ldh [hOAMDMARoutine + 1], a`,
+Two 160-byte shadow OAM pages: `$c000` (`wShadowOAM`) and `$c500`
+(`wShadowOAM2`). `wSpriteBufferPage` (`$c3a7`) is the high byte of the page
+being built; `AdvanceFrame` flips it (`$00:$264b`) and VBlank DMAs the other
+page (`xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2)` into `hOAMDMARoutine + 1`,
 `$00:$278e`). `hOAMDMARoutine` is the 10-byte stub copied to HRAM `$ff80` by
 `CopyOAMDMARoutineToHRAM` (`$00:$06ac`); `+1` is the source page.
 

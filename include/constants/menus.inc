@@ -131,6 +131,40 @@ def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
+; --- Menu panel slide animations (RestoreMenuBgAndDrawPanel's b) ---
+; Rows of TilemapAssemblyDispatch_39; c picks the frame within the row.
+	const_def
+	const PANELANIM_MAIN_MENU_IN          ; $00
+	const PANELANIM_MAIN_MENU_OUT         ; $01
+	const PANELANIM_MATCH_FORMAT_IN       ; $02
+	const PANELANIM_MATCH_FORMAT_OUT      ; $03
+	const PANELANIM_MINIGAME_GRID9_IN     ; $04
+	const PANELANIM_MINIGAME_GRID9_OUT    ; $05
+	const PANELANIM_UNUSED_PANEL_IN       ; $06 only Unused_3b_SlideMenuPanel_1
+	const PANELANIM_UNUSED_PANEL_OUT      ; $07
+	const PANELANIM_SAVED_DATA_PICKER_IN  ; $08
+	const PANELANIM_SAVED_DATA_PICKER_OUT ; $09
+	const PANELANIM_N64_RECORD_TYPE_IN    ; $0a
+	const PANELANIM_N64_RECORD_TYPE_OUT   ; $0b
+	const_skip 4                          ; $0c-$0f never passed: copies of CHOICE_TAB_IN
+	const PANELANIM_CHOICE_TAB_IN         ; $10
+	const PANELANIM_CHOICE_TAB_OUT        ; $11
+	const PANELANIM_COURT_SELECT4_IN      ; $12
+	const PANELANIM_COURT_SELECT4_OUT     ; $13
+	const PANELANIM_COURT_SELECT9_IN      ; $14
+	const PANELANIM_COURT_SELECT9_OUT     ; $15
+	const PANELANIM_MINIGAME_GRID6_IN     ; $16
+	const PANELANIM_MINIGAME_GRID6_OUT    ; $17
+def NUM_PANELANIMS equ const_value
+
+; --- Panel row flush layouts (FlushWram3MapRows' b) ---
+; Rows 0-1 plus 3-row bands starting at the rows named, tilemap and attrmap.
+	const_def
+	const MAPROWS_BANDS_3_7_11 ; $00
+	const MAPROWS_BANDS_4_10   ; $01 never passed
+	const MAPROWS_BANDS_4_9    ; $02
+	const MAPROWS_BAND_7       ; $03
+
 ; --- Character select slot (wCharSelectSlot) ---
 def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
 def CHARSELECTSLOT_BACKED_OUT equ $ff ; B on the first slot (CharSelectSlotRingTable): leave the screen
@@ -170,6 +204,15 @@ def TDICTCAT_ALL       equ $1f
 	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
 	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation
 	const RANKINGBOARD_SILENT    ; $03 ShowRankingBoard argument only: stored as PLAIN with wRankingBoardSilent set
+
+; --- EXP award lines (SetPendingExpAward's b; wPendingExpAwardAmounts words) ---
+	const_def
+	const EXPAWARD_N64        ; $00 "Mario Tennis for N64."
+	const EXPAWARD_EXHIBITION ; $01 "Exhibition Mode."
+	const EXPAWARD_LINKED     ; $02 "Linked Play."
+	const EXPAWARD_MATCH      ; $03 a story match or minigame; c picks the wording
+	const EXPAWARD_TROPHY     ; $04 "winning the trophy."
+def NUM_EXPAWARDS equ const_value
 
 ; --- EXP award screen record (wExpScreenCharStats) ---
 ; One per story character, slot 1 at + EXPSTAT_SIZE; filled by

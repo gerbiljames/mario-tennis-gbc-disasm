@@ -5,9 +5,9 @@ OpenChoiceTabPanel:
 	ld c, $00 ; $5096
 .openLoop:
 	call AdvanceFrame ; $5098
-	ld b, $10 ; $509b
+	ld b, PANELANIM_CHOICE_TAB_IN ; $509b
 	farcall RestoreMenuBgAndDrawPanel ; $509d
-	ld b, $03 ; $50a0
+	ld b, MAPROWS_BAND_7 ; $50a0
 	farcall FlushWram3MapRows ; $50a2
 	ld a, c ; $50a5
 	inc a ; $50a6
@@ -19,9 +19,9 @@ OpenChoiceTabPanel:
 	ld c, $08 ; $50ad
 .closeLoop:
 	call AdvanceFrame ; $50af
-	ld b, $11 ; $50b2
+	ld b, PANELANIM_CHOICE_TAB_OUT ; $50b2
 	farcall RestoreMenuBgAndDrawPanel ; $50b4
-	ld b, $03 ; $50b7
+	ld b, MAPROWS_BAND_7 ; $50b7
 	farcall FlushWram3MapRows ; $50b9
 	ld a, c ; $50bc
 	dec a ; $50bd
@@ -36,9 +36,9 @@ CloseChoiceTabPanel:
 	ld c, $00 ; $50c8
 .openLoop:
 	call AdvanceFrame ; $50ca
-	ld b, $11 ; $50cd
+	ld b, PANELANIM_CHOICE_TAB_OUT ; $50cd
 	farcall RestoreMenuBgAndDrawPanel ; $50cf
-	ld b, $03 ; $50d2
+	ld b, MAPROWS_BAND_7 ; $50d2
 	farcall FlushWram3MapRows ; $50d4
 	ld a, c ; $50d7
 	inc a ; $50d8
@@ -50,9 +50,9 @@ CloseChoiceTabPanel:
 	ld c, $0c ; $50df
 .closeLoop:
 	call AdvanceFrame ; $50e1
-	ld b, $10 ; $50e4
+	ld b, PANELANIM_CHOICE_TAB_IN ; $50e4
 	farcall RestoreMenuBgAndDrawPanel ; $50e6
-	ld b, $03 ; $50e9
+	ld b, MAPROWS_BAND_7 ; $50e9
 	farcall FlushWram3MapRows ; $50eb
 	ld a, c ; $50ee
 	dec a ; $50ef
@@ -282,8 +282,9 @@ PlayAlonePartnerGfxParams_3e:
 	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
 	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
 PlayAlonePartnerGfxDests_3e:
-	; $52b3, 4 bytes (bytes:4)
-	db $00, $a8, $00, $a9 ; 0x00
+	; $52b3, 4 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
 RedrawPlayAlonePartnerMenu:
 	wram_bank WRAM_SCREEN ; $52b7
 	ld b, $00 ; $52bd

@@ -234,12 +234,12 @@ MainMenuLabelTilePtrs:
 	dslot DataPtr_ModeSelectLabelTiles5 ; record 5
 MainMenuLabelTileVramDests:
 	; $57ec, 20 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
-	db $00, $ab ; 0x06
-	db $00, $ac ; 0x08
-	db $00, $ad ; 0x0a
+	dw vTiles1 + VRAM_BANK1 ; 0x00
+	dw vTiles1 tile $10 + VRAM_BANK1 ; 0x02
+	dw vTiles1 tile $20 + VRAM_BANK1 ; 0x04
+	dw vTiles1 tile $30 + VRAM_BANK1 ; 0x06
+	dw vTiles1 tile $40 + VRAM_BANK1 ; 0x08
+	dw vTiles1 tile $50 + VRAM_BANK1 ; 0x0a
 	db $00, $00 ; 0x0c
 	db $8f, $01 ; 0x0e
 	db $1f, $03 ; 0x10
@@ -251,9 +251,9 @@ MainMenuSlideIn:
 	ld c, $00 ; $5804
 .slideForwardLoop:
 	call AdvanceFrame ; $5806
-	ld b, $00 ; $5809
+	ld b, PANELANIM_MAIN_MENU_IN ; $5809
 	farcall RestoreMenuBgAndDrawPanel ; $580b
-	ld b, $00 ; $580e
+	ld b, MAPROWS_BANDS_3_7_11 ; $580e
 	farcall FlushWram3MapRows ; $5810
 	ld a, c ; $5813
 	inc a ; $5814
@@ -265,9 +265,9 @@ MainMenuSlideIn:
 	ld c, $09 ; $581b
 .slideBackLoop:
 	call AdvanceFrame ; $581d
-	ld b, $01 ; $5820
+	ld b, PANELANIM_MAIN_MENU_OUT ; $5820
 	farcall RestoreMenuBgAndDrawPanel ; $5822
-	ld b, $00 ; $5825
+	ld b, MAPROWS_BANDS_3_7_11 ; $5825
 	farcall FlushWram3MapRows ; $5827
 	ld a, c ; $582a
 	dec a ; $582b
@@ -282,9 +282,9 @@ MainMenuSlideOut:
 	ld c, $00 ; $5836
 .slideForwardLoop:
 	call AdvanceFrame ; $5838
-	ld b, $01 ; $583b
+	ld b, PANELANIM_MAIN_MENU_OUT ; $583b
 	farcall RestoreMenuBgAndDrawPanel ; $583d
-	ld b, $00 ; $5840
+	ld b, MAPROWS_BANDS_3_7_11 ; $5840
 	farcall FlushWram3MapRows ; $5842
 	ld a, c ; $5845
 	inc a ; $5846
@@ -296,9 +296,9 @@ MainMenuSlideOut:
 	ld c, $0f ; $584d
 .slideBackLoop:
 	call AdvanceFrame ; $584f
-	ld b, $00 ; $5852
+	ld b, PANELANIM_MAIN_MENU_IN ; $5852
 	farcall RestoreMenuBgAndDrawPanel ; $5854
-	ld b, $00 ; $5857
+	ld b, MAPROWS_BANDS_3_7_11 ; $5857
 	farcall FlushWram3MapRows ; $5859
 	ld a, c ; $585c
 	dec a ; $585d

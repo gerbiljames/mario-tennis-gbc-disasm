@@ -178,7 +178,7 @@ InitScrollingTextScreen:
 	ld hl, wScreenAttrmap ; $5acb
 	call FillMemoryBC ; $5ace
 	ld hl, wScreenAttrmap ; $5ad1
-	ld de, $b800 ; $5ad4
+	ld de, vBGMap0 + VRAM_BANK1 ; $5ad4
 	ld c, TILEMAP_AREA / 16 ; $5ad7
 	call QueueVRAMCopy ; $5ad9
 	wram_bank WRAM_SCREEN ; $5adc

@@ -31,7 +31,7 @@
 	ld hl, DRILLDEF_PLAYER
 	add hl, bc
 	ld b, [hl]
-	ld c, $00
+	ld c, MATCHREC_P1_MAIN
 	farcall InitMatchRecordFromCharId
 	ld a, [wStoryMainChar]
 	ld [wMatchPlayerChar], a
@@ -39,7 +39,7 @@
 	cp CHAR_NONE
 	jr z, .restore
 	ld b, a
-	ld c, $02
+	ld c, MATCHREC_P2_MAIN
 	farcall InitMatchRecordFromCharId
 .restore:
 	pop bc

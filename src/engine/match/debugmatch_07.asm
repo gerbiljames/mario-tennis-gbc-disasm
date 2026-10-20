@@ -43,20 +43,20 @@ Unused_07_RunDebugTestMatch:
 	ld a, CHAR_MARIO ; $5e68
 	ld [wMatchPlayerChar], a ; $5e6a
 	ld b, a ; $5e6d
-	ld c, $00 ; $5e6e
+	ld c, MATCHREC_P1_MAIN ; $5e6e
 	farcall InitMatchRecordFromCharId ; $5e70
 	ld a, CHAR_BOWSER ; $5e73
 	ld [wMatchOpponentChar], a ; $5e75
 	ld b, a ; $5e78
-	ld c, $02 ; $5e79
+	ld c, MATCHREC_P2_MAIN ; $5e79
 	farcall InitMatchRecordFromCharId ; $5e7b
 	ld a, CHAR_PEACH ; $5e7e
 	ld b, a ; $5e80
-	ld c, $01 ; $5e81
+	ld c, MATCHREC_P1_PARTNER ; $5e81
 	farcall InitMatchRecordFromCharId ; $5e83
 	ld a, CHAR_YOSHI ; $5e86
 	ld b, a ; $5e88
-	ld c, $03 ; $5e89
+	ld c, MATCHREC_P2_PARTNER ; $5e89
 	farcall InitMatchRecordFromCharId ; $5e8b
 	ld a, $00 ; $5e8e
 	farcall SetStorySlotFlagB ; $5e90

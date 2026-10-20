@@ -314,7 +314,7 @@ LoadMinigameStarFlags:
 	jr nz, .loop ; $754a
 	ret ; $754c
 MinigameStarFlagsTable:
-	; $754d, 19 bytes (save_flag_ids)
+	; $754d, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; record 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; record 1
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; record 2
@@ -324,7 +324,8 @@ MinigameStarFlagsTable:
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_2 ; record 6
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; record 7
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; record 8
-	db $c9
+Unused_1b_StubRet3:
+	ret ; $755f
 LoadMinigameHighScores:
 	ldh a, [hWramBank] ; $7560
 	push af ; $7562

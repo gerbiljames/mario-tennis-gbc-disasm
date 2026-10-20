@@ -98,7 +98,7 @@ PlayDrillPointEndSequence:
 	ret ; $4403
 LoadDrillOpponentChar:
 	ld b, a ; $4404
-	ld c, $02 ; $4405
+	ld c, MATCHREC_P2_MAIN ; $4405
 	farcall InitMatchRecordFromCharId ; $4407
 	push_wram_bank WRAM_TEXT ; $440a
 	farcall LoadCharacterAttributes ; $4413

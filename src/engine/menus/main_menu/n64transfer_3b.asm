@@ -232,10 +232,10 @@ N64RecordTypeLabelTilePtrs:
 	dslot DataPtr_CharacterSelectLabelTiles1 ; record 1
 	dslot DataPtr_CharacterSelectLabelTiles2 ; record 2
 N64RecordTypeLabelTileVramDests:
-	; $72e6, 6 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
+	; $72e6, 6 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
 N64RecordTypeSlideIn:
 	ld a, b ; $72ec
 	or a ; $72ed
@@ -243,9 +243,9 @@ N64RecordTypeSlideIn:
 	ld c, $00 ; $72f0
 .slideForwardLoop:
 	call AdvanceFrame ; $72f2
-	ld b, $0a ; $72f5
+	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $72f5
 	farcall RestoreMenuBgAndDrawPanel ; $72f7
-	ld b, $03 ; $72fa
+	ld b, MAPROWS_BAND_7 ; $72fa
 	farcall FlushWram3MapRows ; $72fc
 	ld a, c ; $72ff
 	inc a ; $7300
@@ -257,9 +257,9 @@ N64RecordTypeSlideIn:
 	ld c, $0a ; $7307
 .slideBackLoop:
 	call AdvanceFrame ; $7309
-	ld b, $0b ; $730c
+	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $730c
 	farcall RestoreMenuBgAndDrawPanel ; $730e
-	ld b, $03 ; $7311
+	ld b, MAPROWS_BAND_7 ; $7311
 	farcall FlushWram3MapRows ; $7313
 	ld a, c ; $7316
 	dec a ; $7317
@@ -274,9 +274,9 @@ N64RecordTypeSlideOut:
 	ld c, $00 ; $7322
 .outLoop:
 	call AdvanceFrame ; $7324
-	ld b, $0b ; $7327
+	ld b, PANELANIM_N64_RECORD_TYPE_OUT ; $7327
 	farcall RestoreMenuBgAndDrawPanel ; $7329
-	ld b, $03 ; $732c
+	ld b, MAPROWS_BAND_7 ; $732c
 	farcall FlushWram3MapRows ; $732e
 	ld a, c ; $7331
 	inc a ; $7332
@@ -288,9 +288,9 @@ N64RecordTypeSlideOut:
 	ld c, $0c ; $7339
 .inLoop:
 	call AdvanceFrame ; $733b
-	ld b, $0a ; $733e
+	ld b, PANELANIM_N64_RECORD_TYPE_IN ; $733e
 	farcall RestoreMenuBgAndDrawPanel ; $7340
-	ld b, $03 ; $7343
+	ld b, MAPROWS_BAND_7 ; $7343
 	farcall FlushWram3MapRows ; $7345
 	ld a, c ; $7348
 	dec a ; $7349
@@ -617,11 +617,11 @@ N64TransferItemLabelTilePtrs:
 	dslot DataPtr_N64ItemLabelTiles0 ; record 2
 	dslot DataPtr_N64ItemLabelTiles2 ; record 3
 N64TransferItemLabelTileVramDests:
-	; $7604, 8 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
-	db $00, $ab ; 0x06
+	; $7604, 8 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
 DrawN64TransferItemGrid:
 	wram_bank WRAM_SCREEN ; $760c
 	ld b, $00 ; $7612

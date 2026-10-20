@@ -198,9 +198,9 @@ OpenCourtSelect9Panel:
 	ld c, $00 ; $66af
 .slideForwardLoop:
 	call AdvanceFrame ; $66b1
-	ld b, $14 ; $66b4
+	ld b, PANELANIM_COURT_SELECT9_IN ; $66b4
 	farcall RestoreMenuBgAndDrawPanel ; $66b6
-	ld b, $00 ; $66b9
+	ld b, MAPROWS_BANDS_3_7_11 ; $66b9
 	farcall FlushWram3MapRows ; $66bb
 	ld a, c ; $66be
 	inc a ; $66bf
@@ -213,9 +213,9 @@ OpenCourtSelect9Panel:
 	ld c, $09 ; $66c9
 .slideBackLoop:
 	call AdvanceFrame ; $66cb
-	ld b, $15 ; $66ce
+	ld b, PANELANIM_COURT_SELECT9_OUT ; $66ce
 	farcall RestoreMenuBgAndDrawPanel ; $66d0
-	ld b, $00 ; $66d3
+	ld b, MAPROWS_BANDS_3_7_11 ; $66d3
 	farcall FlushWram3MapRows ; $66d5
 	ld a, c ; $66d8
 	dec a ; $66d9
@@ -231,9 +231,9 @@ CloseCourtSelect9Panel:
 	ld c, $00 ; $66e7
 .slideForwardLoop:
 	call AdvanceFrame ; $66e9
-	ld b, $15 ; $66ec
+	ld b, PANELANIM_COURT_SELECT9_OUT ; $66ec
 	farcall RestoreMenuBgAndDrawPanel ; $66ee
-	ld b, $00 ; $66f1
+	ld b, MAPROWS_BANDS_3_7_11 ; $66f1
 	farcall FlushWram3MapRows ; $66f3
 	ld a, c ; $66f6
 	inc a ; $66f7
@@ -245,9 +245,9 @@ CloseCourtSelect9Panel:
 	ld c, $0e ; $66fe
 .slideBackLoop:
 	call AdvanceFrame ; $6700
-	ld b, $14 ; $6703
+	ld b, PANELANIM_COURT_SELECT9_IN ; $6703
 	farcall RestoreMenuBgAndDrawPanel ; $6705
-	ld b, $00 ; $6708
+	ld b, MAPROWS_BANDS_3_7_11 ; $6708
 	farcall FlushWram3MapRows ; $670a
 	ld a, c ; $670d
 	dec a ; $670e

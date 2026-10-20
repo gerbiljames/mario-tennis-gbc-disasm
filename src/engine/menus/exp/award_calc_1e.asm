@@ -303,7 +303,7 @@ ShowExpAwardForMinigame:
 	ldh a, [hWramBank] ; $6a1a
 	push af ; $6a1c
 	farcall ClearPendingExpAwards ; $6a1d
-	ld b, $03 ; $6a20
+	ld b, EXPAWARD_MATCH ; $6a20
 	ld c, $01 ; $6a22
 	farcall SetPendingExpAward ; $6a24
 	ld c, $01 ; $6a27
@@ -360,7 +360,7 @@ ShowExpAwardForExhibition:
 	ldh a, [hWramBank] ; $6a75
 	push af ; $6a77
 	farcall ClearPendingExpAwards ; $6a78
-	ld b, $01 ; $6a7b
+	ld b, EXPAWARD_EXHIBITION ; $6a7b
 	ld c, $00 ; $6a7d
 	farcall SetPendingExpAward ; $6a7f
 	xor a ; $6a82
@@ -394,7 +394,7 @@ ShowExpAwardForLinkedPlay:
 	ldh a, [hWramBank] ; $6aab
 	push af ; $6aad
 	farcall ClearPendingExpAwards ; $6aae
-	ld b, $02 ; $6ab1
+	ld b, EXPAWARD_LINKED ; $6ab1
 	ld c, $00 ; $6ab3
 	farcall SetPendingExpAward ; $6ab5
 	xor a ; $6ab8
@@ -429,7 +429,7 @@ Unused_1e_ShowExpAwardForN64:
 	ldh a, [hWramBank] ; $6ae1
 	push af ; $6ae3
 	farcall ClearPendingExpAwards ; $6ae4
-	ld b, $00 ; $6ae7
+	ld b, EXPAWARD_N64 ; $6ae7
 	ld c, $00 ; $6ae9
 	farcall SetPendingExpAward ; $6aeb
 	ld c, $01 ; $6aee
@@ -512,7 +512,7 @@ ApplyPendingExpAwards:
 	ld a, d ; $6b65
 	or e ; $6b66
 	jr z, .exhibitionAward ; $6b67
-	ld b, $00 ; $6b69
+	ld b, EXPAWARD_N64 ; $6b69
 	ld c, $00 ; $6b6b
 	farcall SetPendingExpAward ; $6b6d
 .exhibitionAward:
@@ -523,7 +523,7 @@ ApplyPendingExpAwards:
 	ld a, d ; $6b76
 	or e ; $6b77
 	jr z, .linkedAward ; $6b78
-	ld b, $01 ; $6b7a
+	ld b, EXPAWARD_EXHIBITION ; $6b7a
 	ld c, $00 ; $6b7c
 	farcall SetPendingExpAward ; $6b7e
 .linkedAward:
@@ -534,7 +534,7 @@ ApplyPendingExpAwards:
 	ld a, d ; $6b87
 	or e ; $6b88
 	jr z, .applyToRecord ; $6b89
-	ld b, $02 ; $6b8b
+	ld b, EXPAWARD_LINKED ; $6b8b
 	ld c, $00 ; $6b8d
 	farcall SetPendingExpAward ; $6b8f
 .applyToRecord:
@@ -546,7 +546,7 @@ ApplyPendingExpAwards:
 	ld a, d ; $6b9e
 	or e ; $6b9f
 	jr z, .checkDoubles ; $6ba0
-	ld b, $04 ; $6ba2
+	ld b, EXPAWARD_TROPHY ; $6ba2
 	ld c, $00 ; $6ba4
 	farcall SetPendingExpAward ; $6ba6
 .checkDoubles:

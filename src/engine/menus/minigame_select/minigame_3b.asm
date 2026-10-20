@@ -235,17 +235,17 @@ Unused_3b_TableAfterLoadMinigameSelectGfx:
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
 MinigameSelectTable:
-	; $63f6, 20 bytes (bytes:2)
-	db $80, $b6 ; 0x00
-	db $10, $b7 ; 0x02
-	db $00, $af ; 0x04
-	db $00, $a8 ; 0x06
-	db $00, $a9 ; 0x08
-	db $00, $aa ; 0x0a
-	db $00, $ab ; 0x0c
-	db $00, $ac ; 0x0e
-	db $00, $ad ; 0x10
-	db $00, $ae ; 0x12
+	; $63f6, 20 bytes (records:2)
+	dw vTiles2 tile $68 + VRAM_BANK1 ; record 0
+	dw vTiles2 tile $71 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $70 + VRAM_BANK1 ; record 2
+	dw vTiles1 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 6
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 7
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 8
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 9
 MinigameSelectSlideIn9:
 	ld a, b ; $640a
 	or a ; $640b
@@ -253,9 +253,9 @@ MinigameSelectSlideIn9:
 	ld c, $00 ; $640e
 .slideForwardLoop:
 	call AdvanceFrame ; $6410
-	ld b, $04 ; $6413
+	ld b, PANELANIM_MINIGAME_GRID9_IN ; $6413
 	farcall RestoreMenuBgAndDrawPanel ; $6415
-	ld b, $00 ; $6418
+	ld b, MAPROWS_BANDS_3_7_11 ; $6418
 	farcall FlushWram3MapRows ; $641a
 	ld a, c ; $641d
 	inc a ; $641e
@@ -267,9 +267,9 @@ MinigameSelectSlideIn9:
 	ld c, $0c ; $6425
 .slideBackLoop:
 	call AdvanceFrame ; $6427
-	ld b, $05 ; $642a
+	ld b, PANELANIM_MINIGAME_GRID9_OUT ; $642a
 	farcall RestoreMenuBgAndDrawPanel ; $642c
-	ld b, $00 ; $642f
+	ld b, MAPROWS_BANDS_3_7_11 ; $642f
 	farcall FlushWram3MapRows ; $6431
 	ld a, c ; $6434
 	dec a ; $6435
@@ -284,9 +284,9 @@ MinigameSelectSlideOut9:
 	ld c, $00 ; $6440
 .slideForwardLoop:
 	call AdvanceFrame ; $6442
-	ld b, $05 ; $6445
+	ld b, PANELANIM_MINIGAME_GRID9_OUT ; $6445
 	farcall RestoreMenuBgAndDrawPanel ; $6447
-	ld b, $00 ; $644a
+	ld b, MAPROWS_BANDS_3_7_11 ; $644a
 	farcall FlushWram3MapRows ; $644c
 	ld a, c ; $644f
 	inc a ; $6450
@@ -298,9 +298,9 @@ MinigameSelectSlideOut9:
 	ld c, $0d ; $6457
 .slideBackLoop:
 	call AdvanceFrame ; $6459
-	ld b, $04 ; $645c
+	ld b, PANELANIM_MINIGAME_GRID9_IN ; $645c
 	farcall RestoreMenuBgAndDrawPanel ; $645e
-	ld b, $00 ; $6461
+	ld b, MAPROWS_BANDS_3_7_11 ; $6461
 	farcall FlushWram3MapRows ; $6463
 	ld a, c ; $6466
 	dec a ; $6467

@@ -7,9 +7,9 @@
 	ld c, $00
 .slideForwardLoop:
 	call AdvanceFrame
-	ld b, $03
+	ld b, PANELANIM_MATCH_FORMAT_OUT
 	farcall RestoreMenuBgAndDrawPanel
-	ld b, $00
+	ld b, MAPROWS_BANDS_3_7_11
 	farcall FlushWram3MapRows
 	ld a, c
 	inc a
@@ -21,9 +21,9 @@
 	ld c, $0d
 .slideBackLoop:
 	call AdvanceFrame
-	ld b, $02
+	ld b, PANELANIM_MATCH_FORMAT_IN
 	farcall RestoreMenuBgAndDrawPanel
-	ld b, $00
+	ld b, MAPROWS_BANDS_3_7_11
 	farcall FlushWram3MapRows
 	ld a, c
 	dec a

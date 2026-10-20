@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-954 labels carry an `Unused` prefix: 796 routines and 158 data blobs.
+957 labels carry an `Unused` prefix: 799 routines and 158 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -159,7 +159,8 @@ whole-plane queue helpers. Same shape as pattern 3, one bank up.
 **6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven
 drill-launcher handlers for the "Test 2" debug map, the template of its live
 NPCs `0B`-`0D` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
-(`Unused_11_NullScriptA`-`C`); `Unused_17_StubRet`, `Unused_18_StubRet3`
+(`Unused_11_NullScriptA`-`C`) and three more after the last row of a table
+(`Unused_16_StubRet`, `Unused_1b_StubRet3`, `Unused_38_StubRet`); `Unused_17_StubRet`, `Unused_18_StubRet3`
 and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
 `Unused_38_WramBank3Nop`, routines that do nothing but preserve registers — script slots that were filled and never wired.
 

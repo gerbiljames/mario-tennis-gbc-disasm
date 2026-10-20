@@ -520,14 +520,14 @@ MatchFormatLabelTilePtrs:
 	dslot DataPtr_ThreeSetsLabelTiles ; record 5
 	dslot DataPtr_FiveSetsLabelTiles ; record 6
 MatchFormatLabelTileVramDests:
-	; $5ecb, 14 bytes (bytes:2)
-	db $00, $a8 ; 0x00
-	db $00, $a9 ; 0x02
-	db $00, $aa ; 0x04
-	db $00, $ab ; 0x06
-	db $00, $ac ; 0x08
-	db $00, $ad ; 0x0a
-	db $00, $ae ; 0x0c
+	; $5ecb, 14 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
 MatchFormatSlideIn:
 	ld a, b ; $5ed9
 	or a ; $5eda
@@ -535,9 +535,9 @@ MatchFormatSlideIn:
 	ld c, $00 ; $5edd
 .slideForwardLoop:
 	call AdvanceFrame ; $5edf
-	ld b, $02 ; $5ee2
+	ld b, PANELANIM_MATCH_FORMAT_IN ; $5ee2
 	farcall RestoreMenuBgAndDrawPanel ; $5ee4
-	ld b, $00 ; $5ee7
+	ld b, MAPROWS_BANDS_3_7_11 ; $5ee7
 	farcall FlushWram3MapRows ; $5ee9
 	ld a, c ; $5eec
 	inc a ; $5eed
@@ -549,9 +549,9 @@ MatchFormatSlideIn:
 	ld c, $0a ; $5ef4
 .slideBackLoop:
 	call AdvanceFrame ; $5ef6
-	ld b, $03 ; $5ef9
+	ld b, PANELANIM_MATCH_FORMAT_OUT ; $5ef9
 	farcall RestoreMenuBgAndDrawPanel ; $5efb
-	ld b, $00 ; $5efe
+	ld b, MAPROWS_BANDS_3_7_11 ; $5efe
 	farcall FlushWram3MapRows ; $5f00
 	ld a, c ; $5f03
 	dec a ; $5f04

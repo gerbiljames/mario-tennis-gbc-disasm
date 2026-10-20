@@ -53,11 +53,11 @@ tilemaps and text.
 
 | | |
 |---|---|
-| instructions | 124,811 source lines of instructions and code macros (`tools/stats.py`) |
+| instructions | 124,814 source lines of instructions and code macros (`tools/stats.py`) |
 | source-spelled bytes | 915,943 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,579: 14,434 routines and tables and 13,403 locals in ROM, 1,742 RAM names |
+| labels | 29,582: 14,437 routines and tables and 13,403 locals in ROM, 1,742 RAM names |
 | compressed graphics | 863 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 796 routines and 158 blobs nothing live reaches (`docs/unused_code.md`) |
+| `Unused_` routines | 799 routines and 158 blobs nothing live reaches (`docs/unused_code.md`) |
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
@@ -121,7 +121,7 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   and the `rom_bank` and `sram_bank` counterparts, `frame_task`,
   `ld_hl_indexed` (`hl = Table + a`), `add_hl_a` (`hl += a`), `neg_hl`,
   `abs_hl`, `sub_hl_de`, `ld_story_char_field`, `wait_frames`, the register-pair
-  macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`, `ld_bg_cell`,
+  macros (`ld_xy`, `ld_cell`, `ld_size`, `ld_oam`, `ld_tile_run`, `ld_bg_cell`, `ld_char_rec`,
   `ld_bg_pals` / `ld_obj_pals`), map positions in tiles with a point
   (`map_entry $03, FACE_DOWN, 18.0, 13.0`: the game's 1/256-tile words,
   checked by `map_pos`), `set_flag` / `test_flag` / `clear_flag` /
@@ -250,7 +250,7 @@ nothing.
 
 ## Tools
 
-- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no RAM or VRAM address table spelled as `db` bytes, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG and no table or tilemap is tagged as graphics, actor-slot names hold, `Unused` names match `reach.py` and every data label nothing names is `Unused`, `; debug warp only` entries match `routes.py`, no raw value where the variable's or the routine argument's constant family has a name for it.
+- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no RAM or VRAM address table spelled as `db` bytes, no stray byte past a table's last record, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG and no table or tilemap is tagged as graphics, actor-slot names hold, `Unused` names match `reach.py` and every data label nothing names is `Unused`, `; debug warp only` entries match `routes.py`, no raw value where the variable's or the routine argument's constant family has a name for it.
 - `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.

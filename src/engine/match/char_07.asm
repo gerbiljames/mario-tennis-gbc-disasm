@@ -87,10 +87,10 @@ SetupCharacterSprite:
 	ret ; $5aa6
 CharFrameGfxDest_07:
 	; $5aa7, 8 bytes (records:2)
-	dw $a000 ; record 0
-	dw $a100 ; record 1
-	dw $a200 ; record 2
-	dw $a300 ; record 3
+	dw vTiles0 + VRAM_BANK1 ; record 0
+	dw vTiles0 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles0 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles0 tile $30 + VRAM_BANK1 ; record 3
 SetupCharacterSprite_CharTileBaseTable:
 	INCLUDE "data/engine/match/SetupCharacterSprite_CharTileBaseTable.asm" ; $5aaf, 4 bytes (bytes:4)
 ; Copies one character's attribute record into the per-character struct: the

@@ -540,5 +540,7 @@ SavedDataTypeSelectGfx0:
 	dslot DataPtr_CharacterSelectLabelTiles1 ; record 0
 	dslot DataPtr_LinkErrorLabelTiles ; record 1
 SavedDataTypeSelectGfx1:
-	; $729e, 6 bytes (bytes:6)
-	db $00, $a8, $00, $a9, $00, $aa ; 0x00
+	; $729e, 6 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2

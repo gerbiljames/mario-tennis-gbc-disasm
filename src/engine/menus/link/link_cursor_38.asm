@@ -106,12 +106,12 @@ InitLinkMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $6aa8
 	and $81 ; $6aab
 	ld b, a ; $6aad
-	ld c, $00 ; $6aae
+	ld c, MATCHREC_P1_MAIN ; $6aae
 	farcall InitMatchRecordFromCharId ; $6ab0
 	jr .slot2 ; $6ab3
 .slot1Created:
 	ld b, a ; $6ab5
-	ld c, $00 ; $6ab6
+	ld c, MATCHREC_P1_MAIN ; $6ab6
 	farcall InitMatchRecordFromCharId ; $6ab8
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $6abb
@@ -127,12 +127,12 @@ InitLinkMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $6acd
 	and $81 ; $6ad0
 	ld b, a ; $6ad2
-	ld c, $01 ; $6ad3
+	ld c, MATCHREC_P1_PARTNER ; $6ad3
 	farcall InitMatchRecordFromCharId ; $6ad5
 	jr .slot3 ; $6ad8
 .slot2Created:
 	ld b, a ; $6ada
-	ld c, $01 ; $6adb
+	ld c, MATCHREC_P1_PARTNER ; $6adb
 	farcall InitMatchRecordFromCharId ; $6add
 .slot3:
 	jr .applySettings ; $6ae0
@@ -150,12 +150,12 @@ InitLinkMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $6af4
 	and $81 ; $6af7
 	ld b, a ; $6af9
-	ld c, $02 ; $6afa
+	ld c, MATCHREC_P2_MAIN ; $6afa
 	farcall InitMatchRecordFromCharId ; $6afc
 	jr .slot4 ; $6aff
 .slot3Created:
 	ld b, a ; $6b01
-	ld c, $02 ; $6b02
+	ld c, MATCHREC_P2_MAIN ; $6b02
 	farcall InitMatchRecordFromCharId ; $6b04
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $6b07
@@ -171,12 +171,12 @@ InitLinkMatchCharsFromSelection:
 	call LoadCachedStorySlotName ; $6b19
 	and $81 ; $6b1c
 	ld b, a ; $6b1e
-	ld c, $03 ; $6b1f
+	ld c, MATCHREC_P2_PARTNER ; $6b1f
 	farcall InitMatchRecordFromCharId ; $6b21
 	jr .applySettings ; $6b24
 .slot4Created:
 	ld b, a ; $6b26
-	ld c, $03 ; $6b27
+	ld c, MATCHREC_P2_PARTNER ; $6b27
 	farcall InitMatchRecordFromCharId ; $6b29
 .applySettings:
 	pop_wram_bank ; $6b2c

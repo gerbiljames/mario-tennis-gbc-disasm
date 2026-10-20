@@ -191,9 +191,9 @@ SavedDataPickerSlideIn:
 	ld c, $00 ; $6e28
 .slideForwardLoop:
 	call AdvanceFrame ; $6e2a
-	ld b, $08 ; $6e2d
+	ld b, PANELANIM_SAVED_DATA_PICKER_IN ; $6e2d
 	farcall RestoreMenuBgAndDrawPanel ; $6e2f
-	ld b, $02 ; $6e32
+	ld b, MAPROWS_BANDS_4_9 ; $6e32
 	farcall FlushWram3MapRows ; $6e34
 	ld a, c ; $6e37
 	inc a ; $6e38
@@ -205,9 +205,9 @@ SavedDataPickerSlideIn:
 	ld c, $0b ; $6e3f
 .slideBackLoop:
 	call AdvanceFrame ; $6e41
-	ld b, $09 ; $6e44
+	ld b, PANELANIM_SAVED_DATA_PICKER_OUT ; $6e44
 	farcall RestoreMenuBgAndDrawPanel ; $6e46
-	ld b, $02 ; $6e49
+	ld b, MAPROWS_BANDS_4_9 ; $6e49
 	farcall FlushWram3MapRows ; $6e4b
 	ld a, c ; $6e4e
 	dec a ; $6e4f
@@ -222,9 +222,9 @@ SavedDataPickerSlideOut:
 	ld c, $00 ; $6e5a
 .outLoop:
 	call AdvanceFrame ; $6e5c
-	ld b, $09 ; $6e5f
+	ld b, PANELANIM_SAVED_DATA_PICKER_OUT ; $6e5f
 	farcall RestoreMenuBgAndDrawPanel ; $6e61
-	ld b, $02 ; $6e64
+	ld b, MAPROWS_BANDS_4_9 ; $6e64
 	farcall FlushWram3MapRows ; $6e66
 	ld a, c ; $6e69
 	inc a ; $6e6a
@@ -236,9 +236,9 @@ SavedDataPickerSlideOut:
 	ld c, $0e ; $6e71
 .inLoop:
 	call AdvanceFrame ; $6e73
-	ld b, $08 ; $6e76
+	ld b, PANELANIM_SAVED_DATA_PICKER_IN ; $6e76
 	farcall RestoreMenuBgAndDrawPanel ; $6e78
-	ld b, $02 ; $6e7b
+	ld b, MAPROWS_BANDS_4_9 ; $6e7b
 	farcall FlushWram3MapRows ; $6e7d
 	ld a, c ; $6e80
 	dec a ; $6e81

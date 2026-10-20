@@ -41,7 +41,7 @@ VBlankHandler:
 	ldh [rSCY], a ; $278c
 .checkSpriteBufferPage:
 	ld a, [wSpriteBufferPage] ; $278e
-	xor $05 ; $2791
+	xor HIGH(wShadowOAM) ^ HIGH(wShadowOAM2) ; $2791
 	ldh [hOAMDMARoutine + 1], a ; $2793
 	call hOAMDMARoutine ; $2795
 	call ProcessBGBlitQueue ; $2798

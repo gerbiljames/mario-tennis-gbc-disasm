@@ -86,9 +86,9 @@ MinigameSelectSlideIn6:
 	ld c, $00 ; $6704
 .slideForwardLoop:
 	call AdvanceFrame ; $6706
-	ld b, $16 ; $6709
+	ld b, PANELANIM_MINIGAME_GRID6_IN ; $6709
 	farcall RestoreMenuBgAndDrawPanel ; $670b
-	ld b, $02 ; $670e
+	ld b, MAPROWS_BANDS_4_9 ; $670e
 	farcall FlushWram3MapRows ; $6710
 	ld a, c ; $6713
 	inc a ; $6714
@@ -100,9 +100,9 @@ MinigameSelectSlideIn6:
 	ld c, $0c ; $671b
 .slideBackLoop:
 	call AdvanceFrame ; $671d
-	ld b, $17 ; $6720
+	ld b, PANELANIM_MINIGAME_GRID6_OUT ; $6720
 	farcall RestoreMenuBgAndDrawPanel ; $6722
-	ld b, $02 ; $6725
+	ld b, MAPROWS_BANDS_4_9 ; $6725
 	farcall FlushWram3MapRows ; $6727
 	ld a, c ; $672a
 	dec a ; $672b
@@ -117,9 +117,9 @@ MinigameSelectSlideOut6:
 	ld c, $00 ; $6736
 .slideForwardLoop:
 	call AdvanceFrame ; $6738
-	ld b, $17 ; $673b
+	ld b, PANELANIM_MINIGAME_GRID6_OUT ; $673b
 	farcall RestoreMenuBgAndDrawPanel ; $673d
-	ld b, $02 ; $6740
+	ld b, MAPROWS_BANDS_4_9 ; $6740
 	farcall FlushWram3MapRows ; $6742
 	ld a, c ; $6745
 	inc a ; $6746
@@ -131,9 +131,9 @@ MinigameSelectSlideOut6:
 	ld c, $0d ; $674d
 .slideBackLoop:
 	call AdvanceFrame ; $674f
-	ld b, $16 ; $6752
+	ld b, PANELANIM_MINIGAME_GRID6_IN ; $6752
 	farcall RestoreMenuBgAndDrawPanel ; $6754
-	ld b, $02 ; $6757
+	ld b, MAPROWS_BANDS_4_9 ; $6757
 	farcall FlushWram3MapRows ; $6759
 	ld a, c ; $675c
 	dec a ; $675d
@@ -352,13 +352,13 @@ Unused_3b_TableAfterLoadSavedDataSourceGfx:
 	db $6a, $3c ; 0x08
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
-	db $00, $a8 ; 0x0e
-	db $00, $a9 ; 0x10
-	db $00, $aa ; 0x12
-	db $00, $ab ; 0x14
-	db $00, $ac ; 0x16
-	db $00, $ad ; 0x18
-	db $00, $ae ; 0x1a
+	dw vTiles1 + VRAM_BANK1 ; 0x0e
+	dw vTiles1 tile $10 + VRAM_BANK1 ; 0x10
+	dw vTiles1 tile $20 + VRAM_BANK1 ; 0x12
+	dw vTiles1 tile $30 + VRAM_BANK1 ; 0x14
+	dw vTiles1 tile $40 + VRAM_BANK1 ; 0x16
+	dw vTiles1 tile $50 + VRAM_BANK1 ; 0x18
+	dw vTiles1 tile $60 + VRAM_BANK1 ; 0x1a
 ; MainMenuSlideIn with different start columns, end test (`cp $0c`) and row count: the same panel slide-in for a panel the bank never shows. Nothing calls it.
 Unused_3b_SlideMenuPanel_1:
 	ld a, b ; $6979
@@ -367,9 +367,9 @@ Unused_3b_SlideMenuPanel_1:
 	ld c, $00 ; $697d
 .slideForwardLoop:
 	call AdvanceFrame ; $697f
-	ld b, $06 ; $6982
+	ld b, PANELANIM_UNUSED_PANEL_IN ; $6982
 	farcall RestoreMenuBgAndDrawPanel ; $6984
-	ld b, $02 ; $6987
+	ld b, MAPROWS_BANDS_4_9 ; $6987
 	farcall FlushWram3MapRows ; $6989
 	ld a, c ; $698c
 	inc a ; $698d
@@ -381,9 +381,9 @@ Unused_3b_SlideMenuPanel_1:
 	ld c, $0a ; $6994
 .slideBackLoop:
 	call AdvanceFrame ; $6996
-	ld b, $07 ; $6999
+	ld b, PANELANIM_UNUSED_PANEL_OUT ; $6999
 	farcall RestoreMenuBgAndDrawPanel ; $699b
-	ld b, $02 ; $699e
+	ld b, MAPROWS_BANDS_4_9 ; $699e
 	farcall FlushWram3MapRows ; $69a0
 	ld a, c ; $69a3
 	dec a ; $69a4
@@ -399,9 +399,9 @@ Unused_3b_SlideMenuPanel_2:
 	ld c, $00 ; $69af
 .slideForwardLoop:
 	call AdvanceFrame ; $69b1
-	ld b, $07 ; $69b4
+	ld b, PANELANIM_UNUSED_PANEL_OUT ; $69b4
 	farcall RestoreMenuBgAndDrawPanel ; $69b6
-	ld b, $02 ; $69b9
+	ld b, MAPROWS_BANDS_4_9 ; $69b9
 	farcall FlushWram3MapRows ; $69bb
 	ld a, c ; $69be
 	inc a ; $69bf
@@ -413,9 +413,9 @@ Unused_3b_SlideMenuPanel_2:
 	ld c, $0c ; $69c6
 .slideBackLoop:
 	call AdvanceFrame ; $69c8
-	ld b, $06 ; $69cb
+	ld b, PANELANIM_UNUSED_PANEL_IN ; $69cb
 	farcall RestoreMenuBgAndDrawPanel ; $69cd
-	ld b, $02 ; $69d0
+	ld b, MAPROWS_BANDS_4_9 ; $69d0
 	farcall FlushWram3MapRows ; $69d2
 	ld a, c ; $69d5
 	dec a ; $69d6

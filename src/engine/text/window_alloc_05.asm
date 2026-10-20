@@ -22,7 +22,7 @@ FetchSRAMText:
 	ld e, [hl] ; $6d46
 	inc hl ; $6d47
 	ld d, [hl] ; $6d48
-	ld hl, $a800 ; $6d49
+	ld hl, sSaveHeader + SAVE_HEADER_SIZE ; $6d49
 	add hl, de ; $6d4c
 	or a ; $6d4d
 	jr nz, .shortText ; $6d4e

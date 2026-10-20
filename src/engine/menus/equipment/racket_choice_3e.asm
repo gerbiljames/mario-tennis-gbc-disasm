@@ -387,8 +387,10 @@ RacketShoesChoiceGfxParams_3e:
 	dslot DataPtr_MatchStatsLabelTiles1 ; record 1
 	dslot DataPtr_N64ItemLabelTiles2 ; record 2
 RacketShoesChoiceGfxDests_3e:
-	; $4fc9, 6 bytes (bytes:6)
-	db $00, $a8, $00, $a9, $00, $aa ; 0x00
+	; $4fc9, 6 bytes (records:2)
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
 RedrawRacketShoesChoiceMenu:
 	wram_bank WRAM_SCREEN ; $4fcf
 	ld b, $00 ; $4fd5

@@ -285,15 +285,15 @@ CourtSelectGraphicsTable:
 	dslot DataPtr_CourtNameLabelTiles5 ; record 9
 CourtSelectTable:
 	; $5e05, 18 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $ab00 ; record 3
-	dw $ac00 ; record 4
-	dw $ad00 ; record 5
-	dw $ae00 ; record 6
-	dw $af00 ; record 7
-	dw $b700 ; record 8
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $30 + VRAM_BANK1 ; record 3
+	dw vTiles1 tile $40 + VRAM_BANK1 ; record 4
+	dw vTiles1 tile $50 + VRAM_BANK1 ; record 5
+	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
+	dw vTiles1 tile $70 + VRAM_BANK1 ; record 7
+	dw vTiles2 tile $70 + VRAM_BANK1 ; record 8
 GetCourtThumbnailPtr:
 	push af ; $5e17
 	push bc ; $5e18
@@ -317,9 +317,9 @@ OpenCourtSelect4Panel:
 	ld c, $00 ; $5e2e
 .slideForwardLoop:
 	call AdvanceFrame ; $5e30
-	ld b, $12 ; $5e33
+	ld b, PANELANIM_COURT_SELECT4_IN ; $5e33
 	farcall RestoreMenuBgAndDrawPanel ; $5e35
-	ld b, $02 ; $5e38
+	ld b, MAPROWS_BANDS_4_9 ; $5e38
 	farcall FlushWram3MapRows ; $5e3a
 	ld a, c ; $5e3d
 	inc a ; $5e3e
@@ -332,9 +332,9 @@ OpenCourtSelect4Panel:
 	ld c, $0a ; $5e48
 .slideBackLoop:
 	call AdvanceFrame ; $5e4a
-	ld b, $13 ; $5e4d
+	ld b, PANELANIM_COURT_SELECT4_OUT ; $5e4d
 	farcall RestoreMenuBgAndDrawPanel ; $5e4f
-	ld b, $02 ; $5e52
+	ld b, MAPROWS_BANDS_4_9 ; $5e52
 	farcall FlushWram3MapRows ; $5e54
 	ld a, c ; $5e57
 	dec a ; $5e58
@@ -350,9 +350,9 @@ CloseCourtSelect4Panel:
 	ld c, $00 ; $5e66
 .openLoop:
 	call AdvanceFrame ; $5e68
-	ld b, $13 ; $5e6b
+	ld b, PANELANIM_COURT_SELECT4_OUT ; $5e6b
 	farcall RestoreMenuBgAndDrawPanel ; $5e6d
-	ld b, $02 ; $5e70
+	ld b, MAPROWS_BANDS_4_9 ; $5e70
 	farcall FlushWram3MapRows ; $5e72
 	ld a, c ; $5e75
 	inc a ; $5e76
@@ -364,9 +364,9 @@ CloseCourtSelect4Panel:
 	ld c, $0c ; $5e7d
 .closeLoop:
 	call AdvanceFrame ; $5e7f
-	ld b, $12 ; $5e82
+	ld b, PANELANIM_COURT_SELECT4_IN ; $5e82
 	farcall RestoreMenuBgAndDrawPanel ; $5e84
-	ld b, $02 ; $5e87
+	ld b, MAPROWS_BANDS_4_9 ; $5e87
 	farcall FlushWram3MapRows ; $5e89
 	ld a, c ; $5e8c
 	dec a ; $5e8d

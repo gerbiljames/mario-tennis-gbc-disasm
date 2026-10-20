@@ -589,7 +589,7 @@ UpdateExpScreenCharSpriteTable:
 DrawNextExpAwardMessage:
 	wram_bank WRAM_SCENE ; $59bb
 	ld a, [wExpAwardIndex] ; $59c1
-	cp $05 ; $59c4
+	cp NUM_EXPAWARDS ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
 	ld_hl_indexed wPendingExpAwardAmounts ; $59c9

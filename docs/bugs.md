@@ -687,6 +687,7 @@ shot-placement row (`CHARREC_SPEED_BONUS`).
 | `wShotAimRow` | every shot bank | the aim row is computed, stored, and used from `a`; the store is a leftover |
 | `wUnusedDrillPointStartByte` | bank `$0b` | cleared by `ServiceMatch2Hook_PointStart` |
 | `wUnusedExitTriggerIdMirror` | story engine | write-only mirror of `wStoryModeExitTriggerRequest` |
+| `wUnusedScrollTextDelayReload` | bank `$03` | seeded with 2 beside `wScrollTextDelay`; the reload uses the literal `$02` |
 | `wCharObjectDefId` | bank `$04` | the object-def id `SetupCharSpriteFromObjectDef` was handed |
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
 | `hLinkLastRxMirror` | serial init, bank `$07` | written beside `hLinkLastRxByte`, never compared |

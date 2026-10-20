@@ -259,7 +259,7 @@ wExpLevelUpFanfare:: db
 NEXTU
 ; pending EXP award list (banks $1d/$1e)
 	ds 296
-; [10 bytes] Five 16-bit EXP amounts, one per line of the results award list: 0 story, 1 exhibition, 2 linked, 3 match/minigame, 4 trophy. SetPendingExpAward takes the line in b and dispatches through PendingExpAwardSetters_1d, each storing de at base + 2 * line; ClearPendingExpAwards zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads it split-base (`add $52 / adc $d1`) and skips zero lines; HasPendingExpAwards ORs the five words to decide whether to show the screen
+; [10 bytes] Five 16-bit EXP amounts, one per line of the results award list (EXPAWARD_*). SetPendingExpAward takes the line in b and dispatches through PendingExpAwardSetters_1d, each storing de at base + 2 * line; ClearPendingExpAwards zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads it split-base (`add $52 / adc $d1`) and skips zero lines; HasPendingExpAwards ORs the five words to decide whether to show the screen
 wPendingExpAwardAmounts:: ds 10
 ; [5 bytes] One byte per award line, the c argument of SetPendingExpAward, added by DrawNextExpAwardMessage to the line's base text id from DrawNextExpAwardMessageTable to pick a wording. ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match; the trophy pass numbers the six trophy groups
 wPendingExpAwardVariants:: ds 5
@@ -280,8 +280,8 @@ UNION
 ; scrolling text screen (bank $03)
 ; [8-bit] Frames until the crawl scrolls one line; reloaded with 2 each time it hits 0
 wScrollTextDelay:: db
-; [8-bit] The value it reloads with, seeded alongside it
-wScrollTextDelayReload:: db
+; [8-bit] Write-only: seeded with 2 beside wScrollTextDelay, but the reload at $03:$5a0e uses the literal $02
+wUnusedScrollTextDelayReload:: db
 ; [16-bit] Text id the crawl is rendering, seeded with $1863
 wScrollTextId:: dw
 ; [8-bit] Set once the last line has scrolled off; stops the scroll without leaving the loop

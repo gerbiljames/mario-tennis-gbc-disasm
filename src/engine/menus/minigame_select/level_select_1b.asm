@@ -550,10 +550,10 @@ MinigameLevelSelectGfxTable:
 	dslot DataPtr_MinigameLabelTiles3 ; record 3
 MinigameLevelSelectTable:
 	; $6d35, 8 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $a900 ; record 3
+	dw vTiles1 + VRAM_BANK1 ; record 0
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
+	dw vTiles1 tile $20 + VRAM_BANK1 ; record 2
+	dw vTiles1 tile $10 + VRAM_BANK1 ; record 3
 DrawMinigameLevelDescription:
 	push_wram_bank WRAM_COURT_PLANES ; $6d3d
 	ld a, [wScreenAttrmap + 1] ; $6d46

@@ -5,6 +5,7 @@ FlushWram3MapRows:
 	push hl ; $4cae
 	push_wram_bank WRAM_SCREEN ; $4caf
 	ld a, b ; $4cb8
+	ASSERT MAPROWS_BANDS_3_7_11 == 0
 	or a ; $4cb9
 	jr nz, .mode1 ; $4cba
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4cbc
@@ -42,7 +43,7 @@ FlushWram3MapRows:
 	call QueueVRAMCopy ; $4d14
 	jp .done ; $4d17
 .mode1:
-	cp $01 ; $4d1a
+	cp MAPROWS_BANDS_4_10 ; $4d1a
 	jr nz, .mode2 ; $4d1c
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d1e
 	ld hl, wShadowTilemap ; $4d20
@@ -71,7 +72,7 @@ FlushWram3MapRows:
 	call QueueVRAMCopy ; $4d60
 	jr .done ; $4d63
 .mode2:
-	cp $02 ; $4d65
+	cp MAPROWS_BANDS_4_9 ; $4d65
 	jr nz, .mode3 ; $4d67
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d69
 	ld hl, wShadowTilemap ; $4d6b
@@ -204,30 +205,32 @@ RestoreMenuBgAndDrawPanel:
 	ret ; $4e5f
 TilemapAssemblyDispatch_39:
 	; $4e60, 8034 bytes (tilemap_dispatch)
-	dw .mainMenuSlideIn ; 0
-	dw .mainMenuSlideOut ; 1
-	dw .matchFormatSlideIn ; 2
-	dw .matchFormatSlideOut ; 3
-	dw .minigameGrid9SlideIn ; 4
-	dw .minigameGrid9SlideOut ; 5
-	dw .unusedPanelSlideIn ; 6
-	dw .unusedPanelSlideOut ; 7
-	dw .savedDataPickerSlideIn ; 8
-	dw .savedDataPickerSlideOut ; 9
-	dw .n64RecordTypeSlideIn ; 10
-	dw .n64RecordTypeSlideOut ; 11
-	dw .choiceTabSlideIn ; 12
-	dw .choiceTabSlideIn ; 13
-	dw .choiceTabSlideIn ; 14
-	dw .choiceTabSlideIn ; 15
-	dw .choiceTabSlideIn ; 16
-	dw .choiceTabSlideOut ; 17
-	dw .courtSelect4SlideIn ; 18
-	dw .courtSelect4SlideOut ; 19
-	dw .courtSelect9SlideIn ; 20
-	dw .courtSelect9SlideOut ; 21
-	dw .minigameGrid6SlideIn ; 22
-	dw .minigameGrid6SlideOut ; 23
+	table_width 2
+	dw .mainMenuSlideIn ; PANELANIM_MAIN_MENU_IN
+	dw .mainMenuSlideOut ; PANELANIM_MAIN_MENU_OUT
+	dw .matchFormatSlideIn ; PANELANIM_MATCH_FORMAT_IN
+	dw .matchFormatSlideOut ; PANELANIM_MATCH_FORMAT_OUT
+	dw .minigameGrid9SlideIn ; PANELANIM_MINIGAME_GRID9_IN
+	dw .minigameGrid9SlideOut ; PANELANIM_MINIGAME_GRID9_OUT
+	dw .unusedPanelSlideIn ; PANELANIM_UNUSED_PANEL_IN
+	dw .unusedPanelSlideOut ; PANELANIM_UNUSED_PANEL_OUT
+	dw .savedDataPickerSlideIn ; PANELANIM_SAVED_DATA_PICKER_IN
+	dw .savedDataPickerSlideOut ; PANELANIM_SAVED_DATA_PICKER_OUT
+	dw .n64RecordTypeSlideIn ; PANELANIM_N64_RECORD_TYPE_IN
+	dw .n64RecordTypeSlideOut ; PANELANIM_N64_RECORD_TYPE_OUT
+	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
+	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
+	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
+	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
+	dw .choiceTabSlideIn ; PANELANIM_CHOICE_TAB_IN
+	dw .choiceTabSlideOut ; PANELANIM_CHOICE_TAB_OUT
+	dw .courtSelect4SlideIn ; PANELANIM_COURT_SELECT4_IN
+	dw .courtSelect4SlideOut ; PANELANIM_COURT_SELECT4_OUT
+	dw .courtSelect9SlideIn ; PANELANIM_COURT_SELECT9_IN
+	dw .courtSelect9SlideOut ; PANELANIM_COURT_SELECT9_OUT
+	dw .minigameGrid6SlideIn ; PANELANIM_MINIGAME_GRID6_IN
+	dw .minigameGrid6SlideOut ; PANELANIM_MINIGAME_GRID6_OUT
+	assert_table_length NUM_PANELANIMS
 .mainMenuSlideIn:
 	dw .noRects
 	dw .noRects

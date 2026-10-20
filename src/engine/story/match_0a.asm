@@ -53,23 +53,23 @@ RestoreOverworldAfterMatch:
 	ret ; $49a9
 AssignStoryMatchCharacters:
 	ld b, CHAR_STORY_MAIN ; $49aa
-	ld c, $00 ; $49ac
+	ld c, MATCHREC_P1_MAIN ; $49ac
 	farcall InitMatchRecordFromCharId ; $49ae
 	ld a, [wMatchOpponentChar] ; $49b1
 	ld b, a ; $49b4
-	ld c, $02 ; $49b5
+	ld c, MATCHREC_P2_MAIN ; $49b5
 	farcall InitMatchRecordFromCharId ; $49b7
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a ; $49bd
 	jr z, .done ; $49be
 	ld b, CHAR_STORY_PARTNER ; $49c0
-	ld c, $01 ; $49c2
+	ld c, MATCHREC_P1_PARTNER ; $49c2
 	farcall InitMatchRecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
 	ld hl, DoublesPartnerTable_0a ; $49ca
 	add_hl_a ; $49cd
 	ld b, [hl] ; $49d2
-	ld c, $03 ; $49d3
+	ld c, MATCHREC_P2_PARTNER ; $49d3
 	farcall InitMatchRecordFromCharId ; $49d5
 .done:
 	ret ; $49d8

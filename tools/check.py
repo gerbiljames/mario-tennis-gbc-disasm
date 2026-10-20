@@ -20,8 +20,12 @@ after a real defect broke it:
   db-words  a label holding only db rows has no little-endian word equal to
             a label of its bank: a pointer the assembler cannot move
   addr-words a label holding only raw db bytes does not hold words that are
-            all VRAM- or WRAM-shaped ($80-$9f / $c0-$df high bytes): such a
-            table is addresses, written `dw wShadowAttrmap + ...`
+            all VRAM- or WRAM-shaped ($80-$bf / $c0-$df high bytes, $a0-$bf
+            being VRAM bank 1): such a table is addresses, written
+            `dw wShadowAttrmap + ...` or `dw vTiles1 + VRAM_BANK1`
+  records   a (records:N) region, or a word table (words, text_ids,
+            ram_ptrs, save_flag_ids, mode_hooks), is whole records or ends in
+            a $ff terminator (three stray `ret`s once sat after word tables)
   layout    data/ mirrors src/: a manifest file sits in the folder of the
             source file that INCBINs or INCLUDEs it
   sound     every snd_script track decodes to a header and whole commands
@@ -509,9 +513,10 @@ def _db_bytes(body, specs, rom, offsets):
 
 def check_addr_shaped(rom, manifest, fail):
     """A table of raw bytes (inline `db` rows or a `bytes` region) whose
-    words all look like VRAM ($80-$9f high byte) or WRAM ($c0-$df)
-    addresses is a word table written as bytes: it wants `dw` rows of the
-    RAM/VRAM symbols it addresses. $0000 words (unused slots) are skipped."""
+    words all look like VRAM ($80-$9f high byte, or $a0-$bf for a VRAM
+    bank 1 destination) or WRAM ($c0-$df) addresses is a word table written
+    as bytes: it wants `dw` rows of the RAM/VRAM symbols it addresses. $0000
+    words (unused slots) are skipped."""
     specs = {p: s for p, _o, _n, s in manifest}
     offsets = {p: (o, n) for p, o, n, _s in manifest}
     found, n = set(), 0
@@ -529,7 +534,7 @@ def check_addr_shaped(rom, manifest, fail):
                 n += 1
                 words = [w for w in (data[k] | data[k + 1] << 8 for k in range(0, len(data), 2)) if w]
                 his = {w >> 8 for w in words}
-                if len(words) >= 2 and (his <= set(range(0x80, 0xa0)) or his <= set(range(0xc0, 0xe0))):
+                if len(words) >= 2 and (his <= set(range(0x80, 0xc0)) or his <= set(range(0xc0, 0xe0))):
                     found.add(name)
                     if name not in KNOWN_ADDR_SHAPED:
                         fail("addr-words", f"{name}: words " + " ".join(f"${w:04x}" for w in words[:6])
@@ -537,6 +542,47 @@ def check_addr_shaped(rom, manifest, fail):
             name, body = m.group(1), []
     for name in sorted(set(KNOWN_ADDR_SHAPED) - found):
         fail("addr-words", f"{name} is no longer address-shaped -- drop it from KNOWN_ADDR_SHAPED")
+    return n
+
+
+# (records:N) regions whose size is not whole records, with what the tail is.
+# A tail of $ff bytes is a terminator and needs no entry.
+KNOWN_RECORD_TAILS = {
+    "VramTileset_09": "two $00 bytes of padding before the ALIGN[4] tile blob",
+}
+_RECORDS_HEADER_RE = re.compile(r"^\t(?:\w+ \".*\" )?; \$([0-9a-f]{4}), (\d+) bytes "
+                                r"\((?:records:(\d+)|(?:words|text_ids|ram_ptrs|save_flag_ids|mode_hooks)\b)[^)]*\)$")
+
+
+def check_record_tails(rom, fail):
+    """A `(records:N)` region, or a region of a word-table kind, is whole
+    records (N bytes, or 2), or ends in a $ff terminator: any other tail is a
+    byte that belongs to what follows (three stray `ret`s once sat at the
+    ends of word tables)."""
+    found, n = set(), 0
+    for h in holders():
+        bank = bank_of(h)
+        lines, origin = bank_lines(h)
+        for i, line in enumerate(lines[1:], 1):
+            m = _RECORDS_HEADER_RE.match(line)
+            if not m:
+                continue
+            n += 1
+            name = _GLOBAL_RE.match(lines[i - 1])
+            name = name.group(1) if name else f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            addr, size, width = int(m.group(1), 16), int(m.group(2)), int(m.group(3) or 2)
+            tail = size % width
+            if not tail:
+                continue
+            off = addr if bank == 0 else bank * BANK_SIZE + addr - BANK_SIZE
+            if all(b == 0xff for b in rom[off + size - tail:off + size]):
+                continue
+            found.add(name)
+            if name not in KNOWN_RECORD_TAILS:
+                fail("records", f"{name}: {size} bytes is not whole {width}-byte records and "
+                                f"does not end in $ff -- a stray byte to carve off?")
+    for name in sorted(set(KNOWN_RECORD_TAILS) - found):
+        fail("records", f"{name} is whole records now -- drop it from KNOWN_RECORD_TAILS")
     return n
 
 
@@ -1066,6 +1112,10 @@ RAW_ID_FAMILIES = {
     "UpdateMinigameRecord(a)": "MGRECORD",
     "GetDefaultMinigameRecordValue(a)": "MGRECORD",
     "CheckUnlockCondition(a)": "MGRECORD",
+    "RestoreMenuBgAndDrawPanel(b)": "PANELANIM",
+    "FlushWram3MapRows(b)": "MAPROWS",
+    "InitMatchRecordFromCharId(c)": "MATCHREC",
+    "SetPendingExpAward(b)": "EXPAWARD",
 }
 # Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
 # or `add <base>` into that register counts as passing the base.
@@ -1262,7 +1312,7 @@ def _raw_id_uses():
                 if val:
                     regs[r] = val
                 continue
-            if m := re.match(r"lb (bc|de|hl), ([^,]+), (.+)$", t):
+            if m := re.match(r"(?:lb|ld_char_rec) (bc|de|hl), ([^,]+), (.+)$", t):
                 _clobber(regs, spent, m.group(1))
                 regs[m.group(1)[0]], regs[m.group(1)[1]] = m.group(2), m.group(3)
                 continue
@@ -1440,6 +1490,7 @@ def main():
         "text": check_text_regions(rom, manifest, fail),
         "db-words": check_db_pointers(manifest, fail),
         "addr-words": check_addr_shaped(rom, manifest, fail),
+        "records": check_record_tails(rom, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
         "traj": check_traj(rom, manifest, fail),

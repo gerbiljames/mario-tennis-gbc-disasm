@@ -202,13 +202,14 @@ PlayerSlotBoxAddrs4:
 	dw NO_BOX ; record 3
 	dw NO_BOX ; record 4
 PlayerSlotBoxAddrs5:
-	; $5707, 11 bytes (ram_ptrs:3:NO_BOX)
+	; $5707, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw NO_BOX ; record 1
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 13 ; record 2
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 17 ; record 3
 	dw NO_BOX ; record 4
-	db $c9
+Unused_38_StubRet:
+	ret ; $5711
 WriteCharPortraitTiles:
 	ld a, b ; $5712
 	add a ; $5713

@@ -312,7 +312,8 @@ ENDM
 
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
 ; immediate. Sites whose callee reads the halves separately use the named
-; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_*_pals).
+; forms below (ld_xy, ld_cell, ld_oam, ld_size, ld_tile_run, ld_*_pals,
+; ld_char_rec).
 MACRO lb
 	ld \1, ((\2) << 8) | (\3)
 ENDM
@@ -409,6 +410,12 @@ ENDM
 ; take it, on the background map or inside a window: the column in the high
 ; register, the row in the low.
 MACRO ld_cell
+	lb \1, \2, \3
+ENDM
+
+; ld_char_rec pair, char, slot -- InitMatchRecordFromCharId's arguments: the
+; character id (CHAR_*) in the high register, the MATCHREC_* slot in the low.
+MACRO ld_char_rec
 	lb \1, \2, \3
 ENDM
 

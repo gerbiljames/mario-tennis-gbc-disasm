@@ -38,6 +38,14 @@ def CHAR_RECORD_SIZE equ _RS
 	ASSERT CHAR_RECORD_SIZE == $40
 def MAX_LEVEL equ 99 ; CHARREC_LEVEL stops here
 
+; --- Match record slots (GetMatchRecordPtr's a, InitMatchRecordFromCharId's c) ---
+	const_def
+	const MATCHREC_P1_MAIN    ; $00 wPlayer1Main
+	const MATCHREC_P1_PARTNER ; $01 wPlayer1Partner
+	const MATCHREC_P2_MAIN    ; $02 wPlayer2Main
+	const MATCHREC_P2_PARTNER ; $03 wPlayer2Partner
+def NUM_MATCHRECS equ const_value
+
 ; --- Training stat (LevelUpPlayer's d; CHARREC_TRAIN_LEVELS + n) ---
 	const_def
 	const TRAINSTAT_SPIN    ; $00
