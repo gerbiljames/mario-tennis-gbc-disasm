@@ -37,7 +37,7 @@ map-script helpers no bank calls, menu-cursor variants, 19 `ret`-only stubs,
 and dead copies in `src/twins` groups (the trajectory helpers in banks
 `$20`-`$2c`, the menu-cursor and decimal-number copies).
 
-330 more are referenced, but only from dead code. They hang from 86 dead
+The rest are referenced, but only from dead code. They hang from dead
 roots: routines only a slot row
 names (the minigame pause menu, the link match-type menu, the
 dialogue-at-position and auto-size paged-menu helpers, the scene viewer, the
