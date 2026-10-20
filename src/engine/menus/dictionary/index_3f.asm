@@ -511,34 +511,34 @@ QueueTennisDictionaryListRows:
 	pop af ; $57e4
 	pop_wram_bank ; $57e5
 	ret ; $57ea
-HardCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_HardCourtLabelTiles.bin" ; $57eb, 193 bytes
-ClayCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_ClayCourtLabelTiles.bin" ; $58ac, 200 bytes
-GrassCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_GrassCourtLabelTiles.bin" ; $5974, 195 bytes
-CompositionCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtLabelTiles.bin" ; $5a37, 190 bytes
-CourtNameLabelTiles0:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles0.bin" ; $5af5, 210 bytes
-CourtNameLabelTiles1:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles1.bin" ; $5bc7, 222 bytes
-CourtNameLabelTiles2:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles2.bin" ; $5ca5, 251 bytes
-CourtNameLabelTiles3:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles3.bin" ; $5da0, 242 bytes
-CourtNameLabelTiles4:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles4.bin" ; $5e92, 235 bytes
-CourtNameLabelTiles5:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles5.bin" ; $5f7d, 183 bytes
-CourtSelectGfx1:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx1.bin" ; $6034, 151 bytes
-CourtSelectGfx2:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx2.bin" ; $60cb, 164 bytes
-CourtSelectGfx3:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx3.bin" ; $616f, 170 bytes
-CourtSelectGfx4:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx4.bin" ; $6219, 196 bytes
+HardCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_HardCourtIconTiles.bin" ; $57eb, 193 bytes
+ClayCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_ClayCourtIconTiles.bin" ; $58ac, 200 bytes
+GrassCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_GrassCourtIconTiles.bin" ; $5974, 195 bytes
+CompositionCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtIconTiles.bin" ; $5a37, 190 bytes
+StarCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_StarCourtIconTiles.bin" ; $5af5, 210 bytes
+CastleCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_CastleCourtIconTiles.bin" ; $5bc7, 222 bytes
+TropicsCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_TropicsCourtIconTiles.bin" ; $5ca5, 251 bytes
+JungleCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_JungleCourtIconTiles.bin" ; $5da0, 242 bytes
+WarehouseCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_WarehouseCourtIconTiles.bin" ; $5e92, 235 bytes
+LockedCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_LockedCourtIconTiles.bin" ; $5f7d, 183 bytes
+HardCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_HardCourtNameGfx.bin" ; $6034, 151 bytes
+ClayCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_ClayCourtNameGfx.bin" ; $60cb, 164 bytes
+GrassCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_GrassCourtNameGfx.bin" ; $616f, 170 bytes
+CompositionCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtNameGfx.bin" ; $6219, 196 bytes
 VarsityTeamChartTiles:
 	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTiles.bin" ; $62dd, 1314 bytes
 VarsityTeamChartTilemap:

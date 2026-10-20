@@ -109,7 +109,7 @@ TileBlockPtrs_39:
 	tileblock GbDataItemGfx2 ; record 61
 	tileblock MainMenuGfx5Alias4 ; record 62
 	tileblock SharedMenuGfx63 ; record 63
-	tileblock CourtSelectGfx0 ; record 64
+	tileblock SelectACourtHeadingGfx ; record 64
 	tileblock SharedMenuGfx65 ; record 65
 	tileblock StatusSourceGfx4 ; record 66
 	tileblock N64RecordTypeGfx2 ; record 67
@@ -146,16 +146,16 @@ TileBlockPtrs_39:
 	tileblock TitleGfx7 ; record 98
 	tileblock SharedMenuGfx99 ; record 99
 	tileblock CharGridGfx1 ; record 100
-	tileblock CourtSelectGfx1 ; record 101
-	tileblock CourtSelectGfx2 ; record 102
-	tileblock CourtSelectGfx3 ; record 103
-	tileblock CourtSelectGfx4 ; record 104
+	tileblock HardCourtNameGfx ; record 101
+	tileblock ClayCourtNameGfx ; record 102
+	tileblock GrassCourtNameGfx ; record 103
+	tileblock CompositionCourtNameGfx ; record 104
 	tileblock TournamentBracketGfx ; record 105
-	tileblock CourtSelectGfx5Alias16 ; record 106
-	tileblock CourtSelectGfx6 ; record 107
-	tileblock CourtSelectGfx7 ; record 108
-	tileblock CourtSelectGfx8 ; record 109
-	tileblock CourtSelectGfx9 ; record 110
+	tileblock StarCourtNameGfxAlias16 ; record 106
+	tileblock CastleCourtNameGfx ; record 107
+	tileblock TropicsCourtNameGfx ; record 108
+	tileblock JungleCourtNameGfx ; record 109
+	tileblock WarehouseCourtNameGfx ; record 110
 	tileblock SharedMenuGfx111 ; record 111
 	tileblock MinigameLevelSelectGfx0 ; record 112
 	tileblock MinigameLevelSelectIconGfx ; record 113

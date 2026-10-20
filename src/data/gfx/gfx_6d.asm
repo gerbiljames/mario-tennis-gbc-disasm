@@ -79,48 +79,48 @@ DataPtr_IntroCharacterIcon14:
 	dw IntroCharacterIcon14 ; $404e
 DataPtr_IntroCharacterIcon15:
 	dw IntroCharacterIcon15 ; $4050
-DataPtr_CourtSelectGfx5:
-	dw CourtSelectGfx5 ; $4052
-DataPtr_CourtSelectGfx5Alias1:
-	dw CourtSelectGfx5 ; $4054
-DataPtr_CourtSelectGfx5Alias2:
-	dw CourtSelectGfx5 ; $4056
-DataPtr_CourtSelectGfx5Alias3:
-	dw CourtSelectGfx5 ; $4058
-DataPtr_CourtSelectGfx5Alias4:
-	dw CourtSelectGfx5 ; $405a
-DataPtr_CourtSelectGfx5Alias5:
-	dw CourtSelectGfx5 ; $405c
-DataPtr_CourtSelectGfx5Alias6:
-	dw CourtSelectGfx5 ; $405e
-DataPtr_CourtSelectGfx5Alias7:
-	dw CourtSelectGfx5 ; $4060
-DataPtr_CourtSelectGfx5Alias8:
-	dw CourtSelectGfx5 ; $4062
-DataPtr_CourtSelectGfx5Alias9:
-	dw CourtSelectGfx5 ; $4064
-DataPtr_CourtSelectGfx5Alias10:
-	dw CourtSelectGfx5 ; $4066
-DataPtr_CourtSelectGfx5Alias11:
-	dw CourtSelectGfx5 ; $4068
-DataPtr_CourtSelectGfx5Alias12:
-	dw CourtSelectGfx5 ; $406a
-DataPtr_CourtSelectGfx5Alias13:
-	dw CourtSelectGfx5 ; $406c
-DataPtr_CourtSelectGfx5Alias14:
-	dw CourtSelectGfx5 ; $406e
-DataPtr_CourtSelectGfx5Alias15:
-	dw CourtSelectGfx5 ; $4070
-DataPtr_CourtSelectGfx5Alias16:
-	dw CourtSelectGfx5 ; $4072
-DataPtr_CourtSelectGfx6:
-	dw CourtSelectGfx6 ; $4074
-DataPtr_CourtSelectGfx7:
-	dw CourtSelectGfx7 ; $4076
-DataPtr_CourtSelectGfx8:
-	dw CourtSelectGfx8 ; $4078
-DataPtr_CourtSelectGfx9:
-	dw CourtSelectGfx9 ; $407a
+DataPtr_StarCourtNameGfx:
+	dw StarCourtNameGfx ; $4052
+DataPtr_StarCourtNameGfxAlias1:
+	dw StarCourtNameGfx ; $4054
+DataPtr_StarCourtNameGfxAlias2:
+	dw StarCourtNameGfx ; $4056
+DataPtr_StarCourtNameGfxAlias3:
+	dw StarCourtNameGfx ; $4058
+DataPtr_StarCourtNameGfxAlias4:
+	dw StarCourtNameGfx ; $405a
+DataPtr_StarCourtNameGfxAlias5:
+	dw StarCourtNameGfx ; $405c
+DataPtr_StarCourtNameGfxAlias6:
+	dw StarCourtNameGfx ; $405e
+DataPtr_StarCourtNameGfxAlias7:
+	dw StarCourtNameGfx ; $4060
+DataPtr_StarCourtNameGfxAlias8:
+	dw StarCourtNameGfx ; $4062
+DataPtr_StarCourtNameGfxAlias9:
+	dw StarCourtNameGfx ; $4064
+DataPtr_StarCourtNameGfxAlias10:
+	dw StarCourtNameGfx ; $4066
+DataPtr_StarCourtNameGfxAlias11:
+	dw StarCourtNameGfx ; $4068
+DataPtr_StarCourtNameGfxAlias12:
+	dw StarCourtNameGfx ; $406a
+DataPtr_StarCourtNameGfxAlias13:
+	dw StarCourtNameGfx ; $406c
+DataPtr_StarCourtNameGfxAlias14:
+	dw StarCourtNameGfx ; $406e
+DataPtr_StarCourtNameGfxAlias15:
+	dw StarCourtNameGfx ; $4070
+DataPtr_StarCourtNameGfxAlias16:
+	dw StarCourtNameGfx ; $4072
+DataPtr_CastleCourtNameGfx:
+	dw CastleCourtNameGfx ; $4074
+DataPtr_TropicsCourtNameGfx:
+	dw TropicsCourtNameGfx ; $4076
+DataPtr_JungleCourtNameGfx:
+	dw JungleCourtNameGfx ; $4078
+DataPtr_WarehouseCourtNameGfx:
+	dw WarehouseCourtNameGfx ; $407a
 DataPtr_SharedMenuGfx111:
 	dw SharedMenuGfx111 ; $407c
 DataPtr_MinigameSelectIconGfx0:
@@ -246,16 +246,16 @@ IntroCharacterIcon14:
 	INCBIN "data/gfx/lz_IntroCharacterIcon14.bin" ; $6e9e, 72 bytes
 IntroCharacterIcon15:
 	INCBIN "data/gfx/lz_IntroCharacterIcon15.bin" ; $6ee6, 72 bytes
-CourtSelectGfx5:
-	INCBIN "data/gfx/lz_CourtSelectGfx5.bin" ; $6f2e, 165 bytes
-CourtSelectGfx6:
-	INCBIN "data/gfx/lz_CourtSelectGfx6.bin" ; $6fd3, 180 bytes
-CourtSelectGfx7:
-	INCBIN "data/gfx/lz_CourtSelectGfx7.bin" ; $7087, 171 bytes
-CourtSelectGfx8:
-	INCBIN "data/gfx/lz_CourtSelectGfx8.bin" ; $7132, 174 bytes
-CourtSelectGfx9:
-	INCBIN "data/gfx/lz_CourtSelectGfx9.bin" ; $71e0, 175 bytes
+StarCourtNameGfx:
+	INCBIN "data/gfx/lz_StarCourtNameGfx.bin" ; $6f2e, 165 bytes
+CastleCourtNameGfx:
+	INCBIN "data/gfx/lz_CastleCourtNameGfx.bin" ; $6fd3, 180 bytes
+TropicsCourtNameGfx:
+	INCBIN "data/gfx/lz_TropicsCourtNameGfx.bin" ; $7087, 171 bytes
+JungleCourtNameGfx:
+	INCBIN "data/gfx/lz_JungleCourtNameGfx.bin" ; $7132, 174 bytes
+WarehouseCourtNameGfx:
+	INCBIN "data/gfx/lz_WarehouseCourtNameGfx.bin" ; $71e0, 175 bytes
 SharedMenuGfx111:
 	INCBIN "data/gfx/lz_SharedMenuGfx111.bin" ; $728f, 144 bytes
 MinigameSelectIconGfx0:

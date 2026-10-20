@@ -1,32 +1,32 @@
 	farptr TennisDictionaryScreen ; $4000
-DataPtr_HardCourtLabelTiles:
-	dw HardCourtLabelTiles ; $4002
-DataPtr_ClayCourtLabelTiles:
-	dw ClayCourtLabelTiles ; $4004
-DataPtr_GrassCourtLabelTiles:
-	dw GrassCourtLabelTiles ; $4006
-DataPtr_CompositionCourtLabelTiles:
-	dw CompositionCourtLabelTiles ; $4008
-DataPtr_CourtNameLabelTiles0:
-	dw CourtNameLabelTiles0 ; $400a
-DataPtr_CourtNameLabelTiles1:
-	dw CourtNameLabelTiles1 ; $400c
-DataPtr_CourtNameLabelTiles2:
-	dw CourtNameLabelTiles2 ; $400e
-DataPtr_CourtNameLabelTiles3:
-	dw CourtNameLabelTiles3 ; $4010
-DataPtr_CourtNameLabelTiles4:
-	dw CourtNameLabelTiles4 ; $4012
-DataPtr_CourtNameLabelTiles5:
-	dw CourtNameLabelTiles5 ; $4014
-DataPtr_CourtSelectGfx1:
-	dw CourtSelectGfx1 ; $4016
-DataPtr_CourtSelectGfx2:
-	dw CourtSelectGfx2 ; $4018
-DataPtr_CourtSelectGfx3:
-	dw CourtSelectGfx3 ; $401a
-DataPtr_CourtSelectGfx4:
-	dw CourtSelectGfx4 ; $401c
+DataPtr_HardCourtIconTiles:
+	dw HardCourtIconTiles ; $4002
+DataPtr_ClayCourtIconTiles:
+	dw ClayCourtIconTiles ; $4004
+DataPtr_GrassCourtIconTiles:
+	dw GrassCourtIconTiles ; $4006
+DataPtr_CompositionCourtIconTiles:
+	dw CompositionCourtIconTiles ; $4008
+DataPtr_StarCourtIconTiles:
+	dw StarCourtIconTiles ; $400a
+DataPtr_CastleCourtIconTiles:
+	dw CastleCourtIconTiles ; $400c
+DataPtr_TropicsCourtIconTiles:
+	dw TropicsCourtIconTiles ; $400e
+DataPtr_JungleCourtIconTiles:
+	dw JungleCourtIconTiles ; $4010
+DataPtr_WarehouseCourtIconTiles:
+	dw WarehouseCourtIconTiles ; $4012
+DataPtr_LockedCourtIconTiles:
+	dw LockedCourtIconTiles ; $4014
+DataPtr_HardCourtNameGfx:
+	dw HardCourtNameGfx ; $4016
+DataPtr_ClayCourtNameGfx:
+	dw ClayCourtNameGfx ; $4018
+DataPtr_GrassCourtNameGfx:
+	dw GrassCourtNameGfx ; $401a
+DataPtr_CompositionCourtNameGfx:
+	dw CompositionCourtNameGfx ; $401c
 DataPtr_VarsityTeamChartTiles:
 	dw VarsityTeamChartTiles ; $401e
 DataPtr_VarsityTeamChartTilemap:

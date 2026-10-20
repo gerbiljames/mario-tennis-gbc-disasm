@@ -205,7 +205,7 @@ as `vTiles0`/`vTiles1`/`vTiles2 tile $NN` (`tile` is `+ TILE_SIZE *`), or `vBGMa
 plus `row * TILEMAP_WIDTH + col`: copy and loader arguments, destinations
 other routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`,
 `ResultPortraitSlotTable`), `dw` tables of label-tile destinations
-(`CourtSelectTable`, `MainMenuLabelTileVramDests`), and bases added to an offset (`ld de, vBGMap0` /
+(`CourtIconTileVramDests`, `MainMenuLabelTileVramDests`), and bases added to an offset (`ld de, vBGMap0` /
 `add hl, de` at `$00:$223a`).
 
 A word in `$8000`-`$9fff` is named by what consumes it, not its range. Sprite

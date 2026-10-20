@@ -28,8 +28,8 @@ DataPtr_MainMenuGfx5Alias4:
 	dw MainMenuGfx5 ; $401a
 DataPtr_SharedMenuGfx63:
 	dw SharedMenuGfx63 ; $401c
-DataPtr_CourtSelectGfx0:
-	dw CourtSelectGfx0 ; $401e
+DataPtr_SelectACourtHeadingGfx:
+	dw SelectACourtHeadingGfx ; $401e
 DataPtr_SharedMenuGfx65:
 	dw SharedMenuGfx65 ; $4020
 DataPtr_StatusSourceGfx4:
@@ -130,8 +130,8 @@ MainMenuGfx5:
 	INCBIN "data/gfx/lz_MainMenuGfx5.bin" ; $4830, 179 bytes
 SharedMenuGfx63:
 	INCBIN "data/gfx/lz_SharedMenuGfx63.bin" ; $48e3, 187 bytes
-CourtSelectGfx0:
-	INCBIN "data/gfx/lz_CourtSelectGfx0.bin" ; $499e, 183 bytes
+SelectACourtHeadingGfx:
+	INCBIN "data/gfx/lz_SelectACourtHeadingGfx.bin" ; $499e, 183 bytes
 SharedMenuGfx65:
 	INCBIN "data/gfx/lz_SharedMenuGfx65.bin" ; $4a55, 167 bytes
 StatusSourceGfx4:

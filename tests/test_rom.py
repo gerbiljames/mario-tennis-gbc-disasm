@@ -75,7 +75,7 @@ class Source(unittest.TestCase):
         self.assertGreaterEqual(count(r"^\tld b, (?:OAM_\w+ \| )*(?:OAM_\w+|[0-7])(?: ;|$)"), 42)
         self.assertEqual(count(r"^\tadd LOW\((?!ActorFieldTypeTable_04\)|rAUD)"), 0, "no split-base index left raw")
         self.assertEqual(count(r"inline arg$"), 0)
-        self.assertEqual(count(r"^\tld_slot hl, "), 37)
+        self.assertEqual(count(r"^\tld_slot hl, "), 38)
         self.assertEqual(count(r"^\tobject_id "), 117)
         self.assertEqual(count(r"\(BANK\([\w.]+\) << 8\) \| LOW\("), 0, "a slot pair not written with ld_slot")
 

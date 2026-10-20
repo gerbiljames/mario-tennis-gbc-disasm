@@ -270,22 +270,22 @@ AnimatedTilesSet0Frames:
 	dslot DataPtr_IntroCharacterIcon13 ; record 13
 	dslot DataPtr_IntroCharacterIcon14 ; record 14
 	dslot DataPtr_IntroCharacterIcon15 ; record 15
-	dslot DataPtr_CourtSelectGfx5 ; record 16
-	dslot DataPtr_CourtSelectGfx5Alias1 ; record 17
-	dslot DataPtr_CourtSelectGfx5Alias2 ; record 18
-	dslot DataPtr_CourtSelectGfx5Alias3 ; record 19
-	dslot DataPtr_CourtSelectGfx5Alias4 ; record 20
-	dslot DataPtr_CourtSelectGfx5Alias5 ; record 21
-	dslot DataPtr_CourtSelectGfx5Alias6 ; record 22
-	dslot DataPtr_CourtSelectGfx5Alias7 ; record 23
-	dslot DataPtr_CourtSelectGfx5Alias8 ; record 24
-	dslot DataPtr_CourtSelectGfx5Alias9 ; record 25
-	dslot DataPtr_CourtSelectGfx5Alias10 ; record 26
-	dslot DataPtr_CourtSelectGfx5Alias11 ; record 27
-	dslot DataPtr_CourtSelectGfx5Alias12 ; record 28
-	dslot DataPtr_CourtSelectGfx5Alias13 ; record 29
-	dslot DataPtr_CourtSelectGfx5Alias14 ; record 30
-	dslot DataPtr_CourtSelectGfx5Alias15 ; record 31
+	dslot DataPtr_StarCourtNameGfx ; record 16
+	dslot DataPtr_StarCourtNameGfxAlias1 ; record 17
+	dslot DataPtr_StarCourtNameGfxAlias2 ; record 18
+	dslot DataPtr_StarCourtNameGfxAlias3 ; record 19
+	dslot DataPtr_StarCourtNameGfxAlias4 ; record 20
+	dslot DataPtr_StarCourtNameGfxAlias5 ; record 21
+	dslot DataPtr_StarCourtNameGfxAlias6 ; record 22
+	dslot DataPtr_StarCourtNameGfxAlias7 ; record 23
+	dslot DataPtr_StarCourtNameGfxAlias8 ; record 24
+	dslot DataPtr_StarCourtNameGfxAlias9 ; record 25
+	dslot DataPtr_StarCourtNameGfxAlias10 ; record 26
+	dslot DataPtr_StarCourtNameGfxAlias11 ; record 27
+	dslot DataPtr_StarCourtNameGfxAlias12 ; record 28
+	dslot DataPtr_StarCourtNameGfxAlias13 ; record 29
+	dslot DataPtr_StarCourtNameGfxAlias14 ; record 30
+	dslot DataPtr_StarCourtNameGfxAlias15 ; record 31
 AnimatedTilesSet1Frames:
 	; $4453, 64 bytes (32 records x 1 slot words)
 	dslot DataPtr_BracketCharIcon03 ; record 0
