@@ -248,7 +248,7 @@ AwardsCeremonyTile01_0f:
 	script_set_text Text_AwardsSpikeCantAccept ; $44c8
 	script_speak ACTOR_AWARDS_CEREMONY_SPIKE ; $44ce
 	test_flag FLAG_DOUBLES ; $44d3
-	jp z, .doubles ; $44d6
+	jp z, .singlesIntro ; $44d6
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $44d9
 	script_set_text Text_AwardsSpikeSureOfFinals ; $44dc
 	script_null_script ACTOR_PARTNER ; $44e2
@@ -286,7 +286,7 @@ AwardsCeremonyTile01_0f:
 	script_delay 120 ; $45a3
 	script_set_position ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 63.0, 63.0 ; $45a8
 	jp .ceremony ; $45b3
-.doubles:
+.singlesIntro:
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $45b6
 	script_null_script ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $45b9
 	script_move_target ACTOR_PLAYER, 11.5, 27.0 ; $45be
