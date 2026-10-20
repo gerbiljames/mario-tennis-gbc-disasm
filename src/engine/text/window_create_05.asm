@@ -131,7 +131,7 @@ CreateMenuWindowFromText:
 	ld b, a ; $46f4
 	call SetWindowTextId ; $46f5
 	ld a, [wWindowId] ; $46f8
-	ld b, $02 ; $46fb
+	ld b, WINDOWSTATE_MENU ; $46fb
 	call SetWindowState ; $46fd
 	ld a, [wMenuDepth] ; $4700
 	cp $ff ; $4703
@@ -178,7 +178,7 @@ CreateMenuWindowPaged:
 	push af ; $474a
 	push bc ; $474b
 	ld a, [wWindowId] ; $474c
-	ld b, $03 ; $474f
+	ld b, WINDOWSTATE_PAGED_MENU ; $474f
 	call SetWindowState ; $4751
 	pop bc ; $4754
 	pop af ; $4755
@@ -186,22 +186,22 @@ CreateMenuWindowPaged:
 ResetWindowState:
 	push af ; $4757
 	call GetWindowStructPtr ; $4758
-	ld a, $04 ; $475b
+	ld a, WINDOW_STATE ; $475b
 	add_hl_a ; $475d
-	ld [hl], $ff ; $4762
+	ld [hl], WINDOWSTATE_HIDDEN ; $4762
 	pop af ; $4764
 	ret ; $4765
 Unused_05_StubNop1:
 	ret ; $4766
 SetWindowState:
 	call GetWindowStructPtr ; $4767
-	ld a, $04 ; $476a
+	ld a, WINDOW_STATE ; $476a
 	add_hl_a ; $476c
 	ld [hl], b ; $4771
 	ret ; $4772
 GetWindowState:
 	call GetWindowStructPtr ; $4773
-	ld a, $04 ; $4776
+	ld a, WINDOW_STATE ; $4776
 	add_hl_a ; $4778
 	ld a, [hl] ; $477d
 	ret ; $477e
@@ -365,7 +365,7 @@ RunMenuSelection:
 	jr .cancel ; $4886
 .checkSideScroll:
 	call GetWindowState ; $4888
-	cp $03 ; $488b
+	cp WINDOWSTATE_PAGED_MENU ; $488b
 	jp nz, .inputLoop ; $488d
 	ld a, [wScrollListLength] ; $4890
 	dec a ; $4893

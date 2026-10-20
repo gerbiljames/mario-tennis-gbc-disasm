@@ -127,6 +127,28 @@ def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
 ; (FitWindowToText substitutes window 0) and store it after CloseWindow.
 def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 
+; --- Window struct fields (wWindowStructs, WRAM bank $05) ---
+; NUM_WINDOWS records, reached through GetWindowStructPtr (id & 7, << 3).
+	rsreset
+def WINDOW_COL     rb ; $00 wrapped to $1f by SetWindowRect
+def WINDOW_ROW     rb ; $01 wrapped to $1f by SetWindowRect
+def WINDOW_WIDTH   rb ; $02 cells
+def WINDOW_HEIGHT  rb ; $03 cells
+def WINDOW_STATE   rb ; $04 a WINDOWSTATE_* (GetWindowState / SetWindowState)
+	rb_skip 1         ; $05
+def WINDOW_TEXT_ID rw ; $06 SetWindowTextId
+def WINDOW_SIZE equ _RS
+	ASSERT WINDOW_SIZE == 8
+def NUM_WINDOWS equ 8
+
+; --- Window state (WINDOW_STATE) ---
+; Zero from FreeWindow for a plain window. Both menu states have bit 1 set,
+; which the redraw paths test (and WINDOWSTATE_MENU) to indent the text one
+; column past the cursor arrow.
+def WINDOWSTATE_MENU       equ $02 ; CreateMenuWindowFromText
+def WINDOWSTATE_PAGED_MENU equ $03 ; CreateMenuWindowPaged: Left/Right page a long list
+def WINDOWSTATE_HIDDEN     equ $ff ; DrawTextWindowFrame skips it; ResetWindowState sets it before FreeWindow
+
 ; --- Message speed (wMessageSpeed) ---
 ; Bits 0-6 hold the speed; bit 7 draws text instantly whatever the speed
 ; (ApplyMessageSpeed, FlushGlyphRow) and is cleared before saving.

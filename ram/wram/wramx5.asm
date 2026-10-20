@@ -193,11 +193,11 @@ wSceneTileAnimSrcPtr:: dw
 ; and $03.
 ; window system (bank $05)
 ; [64 bytes] Eight 8-byte window records, indexed by window id (GetWindowStructPtr: id & 7, << 3):
-;   +$00 column, +$01 row (both wrapped to $1f by SetWindowRect)
-;   +$02 width in cells, +$03 height in cells
-;   +$04 state, read and written through GetWindowState / SetWindowState
-;   +$06 text id (lo/hi), stored by SetWindowTextId; $03 in the high byte
-;        is the "no text" sentinel RenderWindowText bails on
+;   WINDOW_* fields (column, row, width, height, WINDOWSTATE_* state, text id)
+;   Two text-id sentinels: RenderWindowText draws nothing (and sets
+;   wWindowTextEmpty) when the high byte & $3f is $03, while the redraw
+;   paths (RedrawWindowText, Unused_05_RenderWindowTextToCompletion) skip
+;   the text when the high byte is $ff
 ; AllocWindowStruct fills a free slot from de/bc, FreeWindow zeroes all
 ; eight bytes and releases the wWindowSlotMask bit
 wWindowStructs:: ds 64
