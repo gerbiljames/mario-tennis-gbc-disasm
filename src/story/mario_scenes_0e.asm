@@ -84,8 +84,8 @@ PromptExhibitionMatch:
 	script_move_player 18.0, 13.0 ; $65dd
 	farcall WaitPlayerMoveDone ; $65e7
 	ld a, ENTRY_SPECIAL_COURT_SINGLES_INTENSE ; $65ea
-	ld [wMapScratch + 2], a ; $65ec
-	ld hl, wMapScratch ; $65ef
+	ld [wExhibitionMatchEntry], a ; $65ec
+	ld hl, wExhibitionPromptTextId ; $65ef
 	ld de, $3083 ; $65f2
 	ld a, e ; $65f5
 	ld [hl+], a ; $65f6
@@ -93,14 +93,14 @@ PromptExhibitionMatch:
 	test_flag FLAG_DOUBLES ; $65f8
 	jr z, .prompt ; $65fb
 	ld a, ENTRY_SPECIAL_COURT_DOUBLES_INTENSE ; $65fd
-	ld [wMapScratch + 2], a ; $65ff
-	ld hl, wMapScratch ; $6602
+	ld [wExhibitionMatchEntry], a ; $65ff
+	ld hl, wExhibitionPromptTextId ; $6602
 	ld de, $3089 ; $6605
 	ld a, e ; $6608
 	ld [hl+], a ; $6609
 	ld [hl], d ; $660a
 .prompt:
-	ld hl, wMapScratch ; $660b
+	ld hl, wExhibitionPromptTextId ; $660b
 	ld a, [hl+] ; $660e
 	ld h, [hl] ; $660f
 	ld l, a ; $6610
@@ -135,9 +135,9 @@ PromptExhibitionMatch:
 	jr z, .storeSelection ; $6667
 	add $03 ; $6669
 .storeSelection:
-	ld [wMapScratch + 2], a ; $666b
+	ld [wExhibitionMatchEntry], a ; $666b
 .startMatchScene:
-	ld hl, wMapScratch ; $666e
+	ld hl, wExhibitionPromptTextId ; $666e
 	ld a, [hl+] ; $6671
 	ld h, [hl] ; $6672
 	ld l, a ; $6673
@@ -256,7 +256,7 @@ PromptExhibitionMatch:
 	call PlayStarWarpTransition ; $696d
 	ld a, STORYLOC_SPECIAL_COURT ; $6970
 	ld [wStoryModeCurrentLocation], a ; $6972
-	ld a, [wMapScratch + 2] ; $6975
+	ld a, [wExhibitionMatchEntry] ; $6975
 	ld [wStoryModeEntryPoint], a ; $6978
 	ld a, EXITTRIGGER_DIRECT ; $697b
 	ld [wUnusedExitTriggerIdMirror], a ; $697d

@@ -158,11 +158,11 @@ ActorScript_13_03:
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
 	jr z, .variantB ; $58c1
-	ld hl, wMapScratch ; $58c3
+	ld hl, wRoommateTextIdBase ; $58c3
 	ld de, $054f ; $58c6
 	jr .menuLoop ; $58c9
 .variantB:
-	ld hl, wMapScratch ; $58cb
+	ld hl, wRoommateTextIdBase ; $58cb
 	ld de, $0808 ; $58ce
 .menuLoop:
 	ld a, e ; $58d1
@@ -188,7 +188,7 @@ RunAcademyQuestionsMenu:
 	ld l, a ; $58fe
 	call JumpToHL ; $58ff
 	script_speak ACTOR_DORM_ROOM_KATE ; $5902
-	ld hl, wMapScratch ; $5907
+	ld hl, wRoommateTextIdBase ; $5907
 	ld a, [hl+] ; $590a
 	ld h, [hl] ; $590b
 	ld l, a ; $590c
@@ -213,7 +213,7 @@ AcademyTopicHandlerTable:
 	dw AcademyTopicTopRanked ; record 6
 AcademyTopicSinglesRank:
 	ld de, $0001 ; $5936
-	ld hl, wMapScratch ; $5939
+	ld hl, wRoommateTextIdBase ; $5939
 	ld a, [hl+] ; $593c
 	ld h, [hl] ; $593d
 	ld l, a ; $593e
@@ -238,7 +238,7 @@ AcademyTopicSinglesRank:
 	ret ; $5967
 AcademyTopicDoublesRank:
 	ld de, $0005 ; $5968
-	ld hl, wMapScratch ; $596b
+	ld hl, wRoommateTextIdBase ; $596b
 	ld a, [hl+] ; $596e
 	ld h, [hl] ; $596f
 	ld l, a ; $5970
@@ -267,7 +267,7 @@ AcademyTopicDoublesRank:
 	ret ; $59a5
 AcademyTopicRules:
 	ld de, $000a ; $59a6
-	ld hl, wMapScratch ; $59a9
+	ld hl, wRoommateTextIdBase ; $59a9
 	ld a, [hl+] ; $59ac
 	ld h, [hl] ; $59ad
 	ld l, a ; $59ae
@@ -284,7 +284,7 @@ AcademyTopicRules:
 	ret ; $59bf
 AcademyTopicClassRank:
 	ld de, $000c ; $59c0
-	ld hl, wMapScratch ; $59c3
+	ld hl, wRoommateTextIdBase ; $59c3
 	ld a, [hl+] ; $59c6
 	ld h, [hl] ; $59c7
 	ld l, a ; $59c8
@@ -305,7 +305,7 @@ AcademyTopicClassRank:
 	ret ; $59e5
 AcademyTopicVarsity:
 	ld de, $000f ; $59e6
-	ld hl, wMapScratch ; $59e9
+	ld hl, wRoommateTextIdBase ; $59e9
 	ld a, [hl+] ; $59ec
 	ld h, [hl] ; $59ed
 	ld l, a ; $59ee
@@ -322,7 +322,7 @@ AcademyTopicVarsity:
 	ret ; $59ff
 AcademyTopicIslandOpen:
 	ld de, $0011 ; $5a00
-	ld hl, wMapScratch ; $5a03
+	ld hl, wRoommateTextIdBase ; $5a03
 	ld a, [hl+] ; $5a06
 	ld h, [hl] ; $5a07
 	ld l, a ; $5a08
@@ -339,7 +339,7 @@ AcademyTopicIslandOpen:
 	ret ; $5a19
 AcademyTopicTopRanked:
 	ld de, $0013 ; $5a1a
-	ld hl, wMapScratch ; $5a1d
+	ld hl, wRoommateTextIdBase ; $5a1d
 	ld a, [hl+] ; $5a20
 	ld h, [hl] ; $5a21
 	ld l, a ; $5a22

@@ -569,20 +569,20 @@ DormRoomEntry0fScene:
 DormRoomEntry02Scene:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5593
 	jr z, .morningAlt ; $5596
-	ld hl, wMapScratch ; $5598
+	ld hl, wRoommateTextIdBase ; $5598
 	ld de, $052a ; $559b
 	ld a, e ; $559e
 	ld [hl+], a ; $559f
 	ld [hl], d ; $55a0
 	jr .morningEnd ; $55a1
 .morningAlt:
-	ld hl, wMapScratch ; $55a3
+	ld hl, wRoommateTextIdBase ; $55a3
 	ld de, $0524 ; $55a6
 	ld a, e ; $55a9
 	ld [hl+], a ; $55aa
 	ld [hl], d ; $55ab
 .morningEnd:
-	ld hl, wMapScratch ; $55ac
+	ld hl, wRoommateTextIdBase ; $55ac
 	ld a, [hl+] ; $55af
 	ld h, [hl] ; $55b0
 	ld l, a ; $55b1
@@ -604,14 +604,14 @@ DormRoomEntry02Scene:
 	call GetDormRoomStoryStage_13 ; $55fc
 	and a ; $55ff
 	jp z, .dayText ; $5600
-	ld hl, wMapScratch ; $5603
+	ld hl, wRoommateTextIdBase ; $5603
 	ld a, [hl+] ; $5606
 	ld h, [hl] ; $5607
 	ld l, a ; $5608
 	ld a, $05 ; $5609
 	jr .daySpeak ; $560b
 .dayText:
-	ld hl, wMapScratch ; $560d
+	ld hl, wRoommateTextIdBase ; $560d
 	ld a, [hl+] ; $5610
 	ld h, [hl] ; $5611
 	ld l, a ; $5612
@@ -627,7 +627,7 @@ DormRoomEntry02Scene:
 	script_wait_frames 5 ; $5634
 	and a ; $563b
 	jr nz, .finalText ; $563c
-	ld hl, wMapScratch ; $563e
+	ld hl, wRoommateTextIdBase ; $563e
 	ld a, [hl+] ; $5641
 	ld h, [hl] ; $5642
 	ld l, a ; $5643
@@ -653,7 +653,7 @@ DormRoomEntry02Scene:
 	farcall SaveStorySlotWithTimer ; $568b
 	ret ; $568e
 .finalText:
-	ld hl, wMapScratch ; $568f
+	ld hl, wRoommateTextIdBase ; $568f
 	ld a, [hl+] ; $5692
 	ld h, [hl] ; $5693
 	ld l, a ; $5694

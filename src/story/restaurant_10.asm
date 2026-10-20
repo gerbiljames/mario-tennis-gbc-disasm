@@ -999,7 +999,7 @@ RestaurantShowActor11NearPlayer_10:
 	add hl, de ; $6171
 	ld e, l ; $6172
 	ld d, h ; $6173
-	ld hl, wMapScratch + 6 ; $6174
+	ld hl, wPlaceActorX ; $6174
 	ld a, e ; $6177
 	ld [hl+], a ; $6178
 	ld [hl], d ; $6179
@@ -1012,15 +1012,15 @@ RestaurantShowActor11NearPlayer_10:
 	add hl, de ; $6184
 	ld e, l ; $6185
 	ld d, h ; $6186
-	ld hl, wMapScratch + 8 ; $6187
+	ld hl, wPlaceActorY ; $6187
 	ld a, e ; $618a
 	ld [hl+], a ; $618b
 	ld [hl], d ; $618c
-	ld hl, wMapScratch + 6 ; $618d
+	ld hl, wPlaceActorX ; $618d
 	ld a, [hl+] ; $6190
 	ld b, [hl] ; $6191
 	ld c, a ; $6192
-	ld hl, wMapScratch + 8 ; $6193
+	ld hl, wPlaceActorY ; $6193
 	ld a, [hl+] ; $6196
 	ld d, [hl] ; $6197
 	ld e, a ; $6198
