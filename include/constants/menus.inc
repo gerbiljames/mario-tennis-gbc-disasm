@@ -296,8 +296,8 @@ def TDICTSTATE_OPEN_INDEX equ $10 ; switch back to the index page (ShowTennisDic
 ; --- Ranking board presentation (wRankingBoardMode) ---
 	const_def
 	const RANKINGBOARD_PLAIN     ; $00
-	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
-	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation
+	const RANKINGBOARD_WIN       ; $01 won: BGM_ISLAND_OPEN_WIN, the marker climb and the CONGRATULATIONS banner
+	const RANKINGBOARD_LOSE      ; $02 lost: BGM_ISLAND_OPEN_LOSE and the bobbing GAME OVER banner (RankingGameOverBobTask); no marker animation
 	const RANKINGBOARD_SILENT    ; $03 ShowRankingBoard argument only: stored as PLAIN with wRankingBoardSilent set
 
 ; --- EXP award lines (SetPendingExpAward's b; wPendingExpAwardAmounts words) ---

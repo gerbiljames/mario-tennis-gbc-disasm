@@ -98,26 +98,26 @@ DrawCharDataPageArrowsTask:
 	jr z, .mainPageArrow ; $4c1b
 	ld de, $0103 ; $4c1d
 	call BobArrowSpriteLeft ; $4c20
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate2 ; $4c23
+	ld hl, CharDataBackLeftArrowTemplate ; $4c23
 	sprite_attr_tile OAM_BANK1 | 6, $28 ; $4c26
 	call QueueSpriteTemplate ; $4c2a
 	ret ; $4c2d
 .mainPageArrow:
 	ld_xy de, $7f, $03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate3 ; $4c34
+	ld hl, CharDataBackRightArrowTemplate ; $4c34
 	sprite_attr_tile OAM_BANK1 | 6, $30 ; $4c37
 	call QueueSpriteTemplate ; $4c3b
 	ret ; $4c3e
 .bothArrows:
 	ld de, $1010 ; $4c3f
 	call BobArrowSpriteLeft ; $4c42
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate0 ; $4c45
+	ld hl, CharDataMoreLeftArrowTemplate ; $4c45
 	sprite_attr_tile OAM_BANK1 | 6, $14 ; $4c48
 	call QueueSpriteTemplate ; $4c4c
 	ld_xy de, $68, $10 ; $4c4f
 	call BobArrowSpriteRight ; $4c52
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate1 ; $4c55
+	ld hl, CharDataMoreRightArrowTemplate ; $4c55
 	sprite_attr_tile OAM_BANK1 | 6, $1e ; $4c58
 	call QueueSpriteTemplate ; $4c5c
 	ret ; $4c5f

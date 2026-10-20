@@ -1010,7 +1010,7 @@ START, ending in `jp .buildStampLoop`. After it sits a **complete debug dispatch
 | 2 | SELECT | `Unused_01_RunSoundTest` |
 | 0 | A | `Unused_07_RunDebugTestMatch`, looping |
 | 1 | B | `RunMatch`, looping |
-| 6 | UP | two `ShowTournamentBracket` calls, then `RunMatchWinLoseScreen` looping over result ids |
+| 6 | UP | two `ShowVarsityTeamChart` calls, then `RunMatchWinLoseScreen` looping over result ids |
 | 7 | DOWN | `RunIntroCutscene` then `RunTitleScreen`, looping |
 | 4 | RIGHT | the overworld at `STORYLOC_TEST` |
 | 5 | LEFT | `Unused_1a_RunDebugCharViewer` |

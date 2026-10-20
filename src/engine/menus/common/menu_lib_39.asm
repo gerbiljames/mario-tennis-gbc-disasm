@@ -45,12 +45,12 @@ LoadCompressedTileBlock:
 	ret ; $46b6
 TileBlockPtrs_39:
 	; $46b7, 244 bytes (122 records x 1 slot words)
-	tileblock ObjectSceneAGfx0 ; record 0
-	tileblock ObjectSceneAGfx1 ; record 1
-	tileblock ObjectSceneAGfx2 ; record 2
-	tileblock ObjectSceneBGfx0 ; record 3
-	tileblock ObjectSceneBGfx1 ; record 4
-	tileblock ObjectSceneBGfx2 ; record 5
+	tileblock AwardsCeremonyConfettiGfx0 ; record 0
+	tileblock AwardsCeremonyConfettiGfx1 ; record 1
+	tileblock AwardsCeremonyConfettiGfx2 ; record 2
+	tileblock DreamMatchEpilogueConfettiGfx0 ; record 3
+	tileblock DreamMatchEpilogueConfettiGfx1 ; record 4
+	tileblock DreamMatchEpilogueConfettiGfx2 ; record 5
 	tileblock ToBeContinuedGfx ; record 6
 	tileblock ToBeContinuedOutlineGfx ; record 7
 	tileblock TheEndGfx ; record 8
@@ -145,12 +145,12 @@ TileBlockPtrs_39:
 	tileblock TitleGfx6 ; record 97
 	tileblock TitleGfx7 ; record 98
 	tileblock SharedMenuGfx99 ; record 99
-	tileblock CharGridGfx1 ; record 100
+	tileblock SelectACharacterTitleGfx ; record 100
 	tileblock HardCourtNameGfx ; record 101
 	tileblock ClayCourtNameGfx ; record 102
 	tileblock GrassCourtNameGfx ; record 103
 	tileblock CompositionCourtNameGfx ; record 104
-	tileblock TournamentBracketGfx ; record 105
+	tileblock VarsityTeamChartNameBoxTiles ; record 105
 	tileblock StarCourtNameGfxAlias16 ; record 106
 	tileblock CastleCourtNameGfx ; record 107
 	tileblock TropicsCourtNameGfx ; record 108
@@ -179,7 +179,7 @@ StatLabelTiles:
 	INCBIN "data/engine/menus/common/lz_StatLabelTiles.bin" ; $4923, 243 bytes
 LoadMenuArrowSpriteTiles:
 	ld c, $04 ; $4a16
-	ld b, $17 ; $4a18
+	ld b, TILEBLOCK_MenuArrowRightGfx ; $4a18
 	push de ; $4a1a
 	call LoadCompressedTileBlock ; $4a1b
 	pop hl ; $4a1e
@@ -188,7 +188,7 @@ LoadMenuArrowSpriteTiles:
 	ld d, h ; $4a23
 	ld e, l ; $4a24
 	ld c, $04 ; $4a25
-	ld b, $18 ; $4a27
+	ld b, TILEBLOCK_MenuArrowLeftGfx ; $4a27
 	push de ; $4a29
 	call LoadCompressedTileBlock ; $4a2a
 	pop hl ; $4a2d
@@ -197,7 +197,7 @@ LoadMenuArrowSpriteTiles:
 	ld d, h ; $4a32
 	ld e, l ; $4a33
 	ld c, $04 ; $4a34
-	ld b, $19 ; $4a36
+	ld b, TILEBLOCK_MenuArrowUpGfx ; $4a36
 	push de ; $4a38
 	call LoadCompressedTileBlock ; $4a39
 	pop hl ; $4a3c
@@ -206,7 +206,7 @@ LoadMenuArrowSpriteTiles:
 	ld d, h ; $4a41
 	ld e, l ; $4a42
 	ld c, $04 ; $4a43
-	ld b, $1a ; $4a45
+	ld b, TILEBLOCK_MenuArrowDownGfx ; $4a45
 	push de ; $4a47
 	call LoadCompressedTileBlock ; $4a48
 	pop hl ; $4a4b

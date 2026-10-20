@@ -89,10 +89,10 @@ Unused_1a_ApplyCharViewerPalette:
 	ld_obj_pals de, 7, 1 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
-Palette_1a_0:
-	INCLUDE "data/engine/menus/char_data/Palette_1a_0.asm" ; $70d9, 64 bytes (palettes)
-CharViewerScreenGfx0:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx0.bin" ; $7119, 1636 bytes
+CharViewerPalettes:
+	INCLUDE "data/engine/menus/char_data/CharViewerPalettes.asm" ; $70d9, 64 bytes (palettes)
+CharViewerScreenTiles:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenTiles.bin" ; $7119, 1636 bytes
 CharViewerScreenTilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenTilemap.bin" ; $777d, 180 bytes
 CharViewerScreenAttrmap:

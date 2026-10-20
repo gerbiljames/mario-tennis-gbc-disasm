@@ -147,10 +147,10 @@ Unused_01_DebugBootMenu:
 	farcall CheckStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
-	farcall ShowTournamentBracket ; $414d
+	farcall ShowVarsityTeamChart ; $414d
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
-	farcall ShowTournamentBracket ; $4154
+	farcall ShowVarsityTeamChart ; $4154
 	ld a, MATCHLIST_DOUBLES ; $4157
 	ld [wCurrentMatchList], a ; $4159
 	ld a, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $415c

@@ -70,24 +70,24 @@ InitObjectSceneB:
 	call LoadObjectSceneBTiles ; $7d18
 	ret ; $7d1b
 LoadObjectSceneBTiles:
-	ld b, TILEBLOCK_ObjectSceneBGfx0 ; $7d1c
-	ld c, ObjectSceneBGfx0_SIZE / 16 ; $7d1e
+	ld b, TILEBLOCK_DreamMatchEpilogueConfettiGfx0 ; $7d1c
+	ld c, DreamMatchEpilogueConfettiGfx0_SIZE / 16 ; $7d1e
 	ld de, vTiles0 ; $7d20
 	farcall LoadCompressedTileBlock ; $7d23
-	ld b, TILEBLOCK_ObjectSceneBGfx1 ; $7d26
-	ld c, ObjectSceneBGfx1_SIZE / 16 ; $7d28
+	ld b, TILEBLOCK_DreamMatchEpilogueConfettiGfx1 ; $7d26
+	ld c, DreamMatchEpilogueConfettiGfx1_SIZE / 16 ; $7d28
 	ld de, vTiles0 tile $10 ; $7d2a
 	farcall LoadCompressedTileBlock ; $7d2d
-	ld b, TILEBLOCK_ObjectSceneBGfx2 ; $7d30
-	ld c, ObjectSceneBGfx2_SIZE / 16 ; $7d32
+	ld b, TILEBLOCK_DreamMatchEpilogueConfettiGfx2 ; $7d30
+	ld c, DreamMatchEpilogueConfettiGfx2_SIZE / 16 ; $7d32
 	ld de, vTiles0 tile $20 ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
-	ld hl, ObjectSceneBPalette ; $7d3a
+	ld hl, DreamMatchEpilogueConfettiPalettes ; $7d3a
 	ld_obj_pals de, 1, 3 ; $7d3d
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
-ObjectSceneBPalette:
-	INCLUDE "data/engine/menus/scenes/ObjectSceneBPalette.asm" ; $7d44, 24 bytes (palettes)
+DreamMatchEpilogueConfettiPalettes:
+	INCLUDE "data/engine/menus/scenes/DreamMatchEpilogueConfettiPalettes.asm" ; $7d44, 24 bytes (palettes)
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectArrayBSpawnTable ; $7d5e

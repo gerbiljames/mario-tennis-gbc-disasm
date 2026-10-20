@@ -404,21 +404,21 @@ InitObjectSceneA:
 	call LoadObjectSceneATiles ; $7be3
 	ret ; $7be6
 LoadObjectSceneATiles:
-	ld b, TILEBLOCK_ObjectSceneAGfx0 ; $7be7
-	ld c, ObjectSceneAGfx0_SIZE / 16 ; $7be9
+	ld b, TILEBLOCK_AwardsCeremonyConfettiGfx0 ; $7be7
+	ld c, AwardsCeremonyConfettiGfx0_SIZE / 16 ; $7be9
 	ld de, vTiles0 ; $7beb
 	farcall LoadCompressedTileBlock ; $7bee
-	ld b, TILEBLOCK_ObjectSceneAGfx1 ; $7bf1
-	ld c, ObjectSceneAGfx1_SIZE / 16 ; $7bf3
+	ld b, TILEBLOCK_AwardsCeremonyConfettiGfx1 ; $7bf1
+	ld c, AwardsCeremonyConfettiGfx1_SIZE / 16 ; $7bf3
 	ld de, vTiles0 tile $10 ; $7bf5
 	farcall LoadCompressedTileBlock ; $7bf8
-	ld b, TILEBLOCK_ObjectSceneAGfx2 ; $7bfb
-	ld c, ObjectSceneAGfx2_SIZE / 16 ; $7bfd
+	ld b, TILEBLOCK_AwardsCeremonyConfettiGfx2 ; $7bfb
+	ld c, AwardsCeremonyConfettiGfx2_SIZE / 16 ; $7bfd
 	ld de, vTiles0 tile $20 ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
-	ld hl, ObjectSceneATilesPalettes ; $7c05
+	ld hl, AwardsCeremonyConfettiPalettes ; $7c05
 	ld_obj_pals de, 1, 3 ; $7c08
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
-ObjectSceneATilesPalettes:
-	INCLUDE "data/engine/menus/scenes/ObjectSceneATilesPalettes.asm" ; $7c0f, 24 bytes (palettes)
+AwardsCeremonyConfettiPalettes:
+	INCLUDE "data/engine/menus/scenes/AwardsCeremonyConfettiPalettes.asm" ; $7c0f, 24 bytes (palettes)

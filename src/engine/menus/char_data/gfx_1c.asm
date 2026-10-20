@@ -114,12 +114,12 @@ CharDataScreen_LoadScreen:
 	call QueueVRAMCopy ; $713f
 	farcall CharDataScreen_LoadGfx ; $7142
 	wram_bank WRAM_STAGING ; $7145
-	ld hl, CharDataScreenGfx0_1c ; $714b
+	ld hl, CharDataScreenTiles ; $714b
 	ld de, wDecompBuffer ; $714e
 	call DecompressData ; $7151
 	ld hl, wDecompBuffer ; $7154
 	ld de, vTiles2 + VRAM_BANK1 ; $7157
-	ld c, 128 ; $715a -- 128 of CharDataScreenGfx0_1c's 256 tiles
+	ld c, 128 ; $715a -- 128 of CharDataScreenTiles's 256 tiles
 	call QueueVRAMCopy ; $715c
 	ld hl, wDecompBufferHigh ; $715f
 	ld de, vTiles1 + VRAM_BANK1 ; $7162

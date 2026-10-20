@@ -90,7 +90,7 @@ NEXTU
 wRankingBoardDoubles:: db
 ; [8-bit] The player's ranking row, from c; the highlight and the marker animation use it
 wRankingBoardPlayerRow:: db
-; [8-bit] Board presentation, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. 3 becomes 0 with wRankingBoardSilent set
+; [8-bit] Board presentation, from d: 0 plain, 1 (won) plays BGM_ISLAND_OPEN_WIN, 2 (lost) plays BGM_ISLAND_OPEN_LOSE and registers RankingGameOverBobTask. 3 becomes 0 with wRankingBoardSilent set
 wRankingBoardMode:: db
 ; [8-bit] Base of the ranking marker slots: twelve 4-byte records [tile, X, Y, -], $d803-$d832, running into the $d810 block. GetRankingMarkerSlot returns base + index * 4; DrawRankingMarkersTask queues each as a sprite, skipping those whose +0 is $ff. ClearRankingMarkerSlots clears the $30 bytes, LoadRankingMarkerCoords copies $30 bytes of coordinates over them; BuildRankingBoardScreen's $53-byte clear wipes the whole screen state from here up to wRankingBannerAnimFrame
 wRankingMarkerSlots:: db
@@ -158,10 +158,10 @@ wBriefingPlayerY:: db
 wBriefingOpponentX:: db
 ; [8-bit] Drill-briefing diagram: opponent sprite Y
 wBriefingOpponentY:: db
-; [8-bit] Drill-briefing diagram: swing-animation sprite X, queued by DrawBriefingSwingAnim
-wBriefingSwingX:: db
-; [8-bit] Drill-briefing diagram: swing-animation sprite Y
-wBriefingSwingY:: db
+; [8-bit] Drill-briefing diagram: button-command prompt sprite X, queued by DrawBriefingCmdPrompt
+wBriefingCmdPromptX:: db
+; [8-bit] Drill-briefing diagram: button-command prompt sprite Y
+wBriefingCmdPromptY:: db
 ; [8-bit] Drill-briefing diagram: spin-serve marker X, queued by DrawSpinServeBriefingMarker
 wBriefingSpinMarkerX:: db
 ; [8-bit] Drill-briefing diagram: spin-serve marker Y
@@ -186,8 +186,8 @@ wBriefingBallY:: db
 wBriefingPole2X:: db
 ; [8-bit] Drill-briefing diagram: second pole sprite Y
 wBriefingPole2Y:: db
-; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingFrameTileTable for the base tile, and < 6 selects the 5-sprite racket template
-wBriefingSwingFrame:: db
+; [8-bit] Drill-briefing diagram: button-command prompt shown (0-9); indexes BriefingCmdPromptTileTable for the base tile, and < 6 (the two-button combos) selects the 5-sprite template
+wBriefingCmdPrompt:: db
 ; [8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip
 wBriefingVMarkerX:: db
 ; [8-bit] Drill-briefing diagram: vertical marker Y
@@ -317,7 +317,7 @@ wRankingAnimScriptPtrs:: ds 8
 ; [4 bytes] Each channel's offset into its script: zeroed by StartRankingMarkerAnim<N>, incremented by UpdateScriptedOffsetChannel<N> after each non-terminator byte (so also the frame counter)
 wRankingAnimStepIndex:: ds 4
 	ds 1
-; [8-bit] Frame counter of the sliding banner sprite: RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for the frame's X delta and unregisters at $87
+; [8-bit] Frame counter of the sliding CONGRATULATIONS banner: RankingCongratsSlideTask indexes RankingCongratsSlideXDeltas with it for the frame's X delta and unregisters at $87
 wRankingBannerAnimFrame:: db
 ; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
 wRankingBannerX:: db
@@ -406,7 +406,7 @@ wN64ExhibPage:: db
 wN64ExhibCursorRow:: db
 NEXTU
 ; rules screen (bank $17)
-; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharFrameTileTable-2 with it
+; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenToad indexes RulesToadFrameTileTable-2 with it
 wRulesScreenAnimFrame:: db
 ENDU
 

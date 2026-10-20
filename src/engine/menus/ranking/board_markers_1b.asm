@@ -102,7 +102,7 @@ PushRankingBoardTilemapRows:
 	call AdvanceFrame ; $590d
 	ret ; $5910
 	ret ; $5911
-RankingBoardAnimTask_1b:
+RankingCongratsSlideTask:
 	ld a, [wRankingBannerAnimFrame] ; $5912
 	or a ; $5915
 	jr nz, .advance ; $5916
@@ -110,13 +110,13 @@ RankingBoardAnimTask_1b:
 	ld [wRankingBannerX], a ; $591a
 .advance:
 	ld a, [wRankingBannerAnimFrame] ; $591d
-	ld hl, RankingBoardAnimTaskTable ; $5920
+	ld hl, RankingCongratsSlideXDeltas ; $5920
 	add_hl_a ; $5923
 	ld b, [hl] ; $5928
 	ld a, [wRankingBannerX] ; $5929
 	add b ; $592c
 	ld [wRankingBannerX], a ; $592d
-	ld hl, RankingBoardAnimTask_1b_SpriteTemplate ; $5930
+	ld hl, RankingCongratsTemplate ; $5930
 	ld e, $40 ; $5933
 	ld a, [wRankingBoardDoubles] ; $5935
 	or a ; $5938
@@ -132,11 +132,11 @@ RankingBoardAnimTask_1b:
 	ld [wRankingBannerAnimFrame], a ; $594c
 	cp $87 ; $594f
 	jr nz, .done ; $5951
-	ld hl, RankingBoardAnimTask_1b ; $5953
+	ld hl, RankingCongratsSlideTask ; $5953
 	call UnregisterFrameTask ; $5956
 .done:
 	ret ; $5959
-RankingBoardAnimTask_1b_SpriteTemplate:
+RankingCongratsTemplate:
 	; $595a, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -147,9 +147,9 @@ RankingBoardAnimTask_1b_SpriteTemplate:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-RankingBoardAnimTaskTable:
-	INCLUDE "data/engine/menus/ranking/RankingBoardAnimTaskTable.asm" ; $597b, 137 bytes (bytes:16)
-RankingCursorBobTask:
+RankingCongratsSlideXDeltas:
+	INCLUDE "data/engine/menus/ranking/RankingCongratsSlideXDeltas.asm" ; $597b, 137 bytes (bytes:16)
+RankingGameOverBobTask:
 	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07
 	jr nz, .setBobOffset ; $5a08
@@ -161,11 +161,11 @@ RankingCursorBobTask:
 	ld_xy de, $30, $50 ; $5a13
 .applySpriteBobOffset:
 	farcall ApplySpriteBobOffset ; $5a16
-	ld hl, RankingCursorBobTask_SpriteTemplate ; $5a19
+	ld hl, RankingGameOverTemplate ; $5a19
 	sprite_tile_attr $20, OAM_BANK1 | 5 ; $5a1c
 	call QueueSpriteTemplate ; $5a20
 	ret ; $5a23
-RankingCursorBobTask_SpriteTemplate:
+RankingGameOverTemplate:
 	; $5a24, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

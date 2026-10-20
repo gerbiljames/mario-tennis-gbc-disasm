@@ -16,26 +16,26 @@ ExpScreenTilemap2:
 	ds ALIGN[4]
 ExpScreenAttrmap2:
 	INCBIN "data/engine/menus/debug/ExpScreenAttrmap2.bin" ; $62a0, 576 bytes
-ExpScreenGfxPalettes0:
-	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes0.asm" ; $64e0, 80 bytes (palettes)
+ExpScreenBgPalettes:
+	INCLUDE "data/engine/menus/debug/ExpScreenBgPalettes.asm" ; $64e0, 80 bytes (palettes)
 Unused_1a_ExpScreenGfx9:
 	INCBIN "data/engine/menus/debug/lz_Unused_1a_ExpScreenGfx9.bin" ; $6530, 280 bytes
 	ds 8, $00 ; $6648
 ExpScreenCursorGfx:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenCursorGfx.bin" ; $6650, 24 bytes
 	INCLUDE "data/engine/menus/debug/lz_ExpScreenCursorGfx.inc" ; DEF ExpScreenCursorGfx_SIZE EQU its decoded length, generated from the .bin by make
-ExpScreenGfxPalettes1:
-	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes1.asm" ; $6668, 24 bytes (palettes)
-ExpScreenGfx6:
-	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx6.bin" ; $6680, 72 bytes
-	INCLUDE "data/engine/menus/debug/lz_ExpScreenGfx6.inc" ; DEF ExpScreenGfx6_SIZE EQU its decoded length, generated from the .bin by make
-ExpScreenGfx7:
-	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx7.bin" ; $66c8, 73 bytes
-	INCLUDE "data/engine/menus/debug/lz_ExpScreenGfx7.inc" ; DEF ExpScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
-ExpScreenGfxPalettes2:
-	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes2.asm" ; $6711, 16 bytes (palettes)
-ExpScreenGfxPalettes3:
-	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes3.asm" ; $6721, 8 bytes (palettes)
+ExpScreenCursorPalette:
+	INCLUDE "data/engine/menus/debug/ExpScreenCursorPalette.asm" ; $6668, 24 bytes (palettes)
+ExpScreenGolfBagTopGfx:
+	INCBIN "data/engine/menus/debug/lz_ExpScreenGolfBagTopGfx.bin" ; $6680, 72 bytes
+	INCLUDE "data/engine/menus/debug/lz_ExpScreenGolfBagTopGfx.inc" ; DEF ExpScreenGolfBagTopGfx_SIZE EQU its decoded length, generated from the .bin by make
+ExpScreenGolfBagBottomGfx:
+	INCBIN "data/engine/menus/debug/lz_ExpScreenGolfBagBottomGfx.bin" ; $66c8, 73 bytes
+	INCLUDE "data/engine/menus/debug/lz_ExpScreenGolfBagBottomGfx.inc" ; DEF ExpScreenGolfBagBottomGfx_SIZE EQU its decoded length, generated from the .bin by make
+ExpScreenGolfBagPalette:
+	INCLUDE "data/engine/menus/debug/ExpScreenGolfBagPalette.asm" ; $6711, 16 bytes (palettes)
+ExpScreenDigitPalette:
+	INCLUDE "data/engine/menus/debug/ExpScreenDigitPalette.asm" ; $6721, 8 bytes (palettes)
 ExpScreenDigitGfx:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenDigitGfx.bin" ; $6729, 171 bytes
 Unused_1a_RunDebugCharViewer:
@@ -94,19 +94,19 @@ Unused_1a_RunDebugCharViewer:
 Unused_1a_RunCharViewerSelectGrid:
 	wram_bank WRAM_SCENE ; $686c
 	xor a ; $6872
-	ld hl, Palette_1a_0 ; $6873
+	ld hl, CharViewerPalettes ; $6873
 	ld_bg_pals de, 0, 8 ; $6876
 	call LoadPaletteShadow ; $6879
-	ld hl, Palette_1a_0 ; $687c
+	ld hl, CharViewerPalettes ; $687c
 	ld_obj_pals de, 0, 8 ; $687f
 	call LoadPaletteShadow ; $6882
 	wram_bank WRAM_STAGING ; $6885
-	ld hl, CharViewerScreenGfx0 ; $688b
+	ld hl, CharViewerScreenTiles ; $688b
 	ld de, wDecompBuffer ; $688e
 	call DecompressData ; $6891
 	ld hl, wDecompBuffer ; $6894
 	ld de, vTiles2 + VRAM_BANK1 ; $6897
-	ld c, 128 ; $689a -- 128 of CharViewerScreenGfx0's 256 tiles
+	ld c, 128 ; $689a -- 128 of CharViewerScreenTiles's 256 tiles
 	call QueueVRAMCopy ; $689c
 	ld hl, wDecompBufferHigh ; $689f
 	ld de, vTiles1 + VRAM_BANK1 ; $68a2
@@ -409,16 +409,16 @@ Unused_1a_LoadCharViewerScreen:
 	call QueueVRAMCopy ; $6b51
 	ret ; $6b54
 Unused_1a_LoadCharViewerScreenGfx:
-	ld hl, Palette_1a_0 ; $6b55
+	ld hl, CharViewerPalettes ; $6b55
 	ld_bg_pals de, 0, 8 ; $6b58
 	call LoadPaletteShadow ; $6b5b
 	wram_bank WRAM_STAGING ; $6b5e
-	ld hl, CharViewerScreenGfx0 ; $6b64
+	ld hl, CharViewerScreenTiles ; $6b64
 	ld de, wDecompBuffer ; $6b67
 	call DecompressData ; $6b6a
 	ld hl, wDecompBuffer ; $6b6d
 	ld de, vTiles2 + VRAM_BANK1 ; $6b70
-	ld c, 128 ; $6b73 -- 128 of CharViewerScreenGfx0's 256 tiles
+	ld c, 128 ; $6b73 -- 128 of CharViewerScreenTiles's 256 tiles
 	call QueueVRAMCopy ; $6b75
 	ld hl, wDecompBufferHigh ; $6b78
 	ld de, vTiles1 + VRAM_BANK1 ; $6b7b

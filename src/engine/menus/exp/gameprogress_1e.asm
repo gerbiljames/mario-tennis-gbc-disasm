@@ -385,7 +385,7 @@ LoadGameProgressScreenTiles:
 	ld de, vBGMap0 + VRAM_BANK1 ; $755b
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $755e
 	call QueueVRAMCopy ; $7560
-	ld hl, GameProgressScreenPalettes0 ; $7563
+	ld hl, GameProgressHeaderPalettes ; $7563
 	ld d, $00 ; $7566
 	ld e, $02 ; $7568
 	call LoadPaletteShadow ; $756a
@@ -419,8 +419,8 @@ GameProgressHeaderAttrmap_1e:
 	INCBIN "data/engine/menus/exp/lz_GameProgressHeaderAttrmap_1e.bin" ; $76e2, 24 bytes
 	; $76fa, 6 bytes (fill)
 	ds 6, $00
-GameProgressScreenPalettes0:
-	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
+GameProgressHeaderPalettes:
+	INCLUDE "data/engine/menus/exp/GameProgressHeaderPalettes.asm" ; $7700, 16 bytes (palettes)
 	ds ALIGN[4]
 GameProgressStarBadgeTiles:
 	INCBIN "data/engine/menus/exp/GameProgressStarBadgeTiles.bin" ; $7710, 256 bytes

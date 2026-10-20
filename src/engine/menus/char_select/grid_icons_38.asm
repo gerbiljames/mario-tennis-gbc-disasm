@@ -240,7 +240,7 @@ BuildCharUnlockFlags:
 .charLoop:
 	ld a, b ; $5ade
 	add a ; $5adf
-	ld hl, CharUnlockCheatFlags ; $5ae0
+	ld hl, CharUnlockStoryFlags ; $5ae0
 	add_hl_a ; $5ae3
 	ld a, [hl+] ; $5ae8
 	ld d, [hl] ; $5ae9
@@ -281,7 +281,7 @@ CharUnlockSaveFlags:
 	dw SAVEFLAG_UNLOCKED_WARIO
 	dw SAVEFLAG_UNLOCKED_WALUIGI
 	dw SAVEFLAG_UNLOCKED_BOWSER
-CharUnlockCheatFlags:
+CharUnlockStoryFlags:
 	; $5b29, 26 bytes (flag_ids)
 	flag_id FLAG_UNLOCKED_PAM
 	flag_id FLAG_UNLOCKED_BOB

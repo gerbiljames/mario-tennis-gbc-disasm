@@ -44,8 +44,8 @@ MatchMenuItemGfxPointers:
 	; $5274, 12 bytes (fill)
 	ds 12, $00
 	ds ALIGN[4]
-ScoreboardModeGfxTail:
-	INCBIN "data/engine/menus/pause/ScoreboardModeGfxTail.bin" ; $5280, 64 bytes
+MatchMenuCursorArrowTiles:
+	INCBIN "data/engine/menus/pause/MatchMenuCursorArrowTiles.bin" ; $5280, 64 bytes
 MatchMenuItemGfx_Rules:
 	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Rules.bin" ; $52c0, 130 bytes
 MatchMenuItemGfx_Controls:

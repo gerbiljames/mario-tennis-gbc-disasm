@@ -56,10 +56,10 @@ SetupRankingBoardArgs:
 	ld a, [wMatchWinLoseFlag] ; $6fde
 	cp WINLOSE_WIN ; $6fe1
 	jr nz, .lost ; $6fe3
-	ld d, RANKINGBOARD_FANFARE ; $6fe5
+	ld d, RANKINGBOARD_WIN ; $6fe5
 	ret ; $6fe7
 .lost:
-	ld d, RANKINGBOARD_CURSOR ; $6fe8
+	ld d, RANKINGBOARD_LOSE ; $6fe8
 	ret ; $6fea
 GetTrophyExpValue:
 	add a ; $6feb

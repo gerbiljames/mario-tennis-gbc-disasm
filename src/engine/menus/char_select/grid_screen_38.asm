@@ -351,8 +351,8 @@ SetupCharGridScreen:
 	ld a, $09 ; $5069
 	ld [wMenuBgScrollAttr], a ; $506b
 	ld [wMenuBgScrollAttr + 1], a ; $506e
-	ld b, TILEBLOCK_CharGridGfx1 ; $5071
-	ld c, CharGridGfx1_SIZE / 16 ; $5073
+	ld b, TILEBLOCK_SelectACharacterTitleGfx ; $5071
+	ld c, SelectACharacterTitleGfx_SIZE / 16 ; $5073
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5075
 	farcall LoadCompressedTileBlock ; $5078
 	farcall InitDefaultMatchSettings ; $507b

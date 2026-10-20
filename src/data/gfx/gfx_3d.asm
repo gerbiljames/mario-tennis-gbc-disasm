@@ -46,8 +46,8 @@ DataPtr_MarioMiniGamesTitleGfx:
 	dw MarioMiniGamesTitleGfx ; $402c
 DataPtr_CreateACharacterTitleGfx:
 	dw CreateACharacterTitleGfx ; $402e
-DataPtr_CharGridGfx1:
-	dw CharGridGfx1 ; $4030
+DataPtr_SelectACharacterTitleGfx:
+	dw SelectACharacterTitleGfx ; $4030
 DataPtr_LinkingScreenTiles:
 	dw LinkingScreenTiles ; $4032
 DataPtr_LinkingScreenTilemap:
@@ -150,8 +150,8 @@ CreateACharacterTitleGfx:
 	INCBIN "data/gfx/lz_CreateACharacterTitleGfx.bin" ; $4ef4, 226 bytes
 SetItemsTitleGfx:
 	INCBIN "data/gfx/lz_SetItemsTitleGfx.bin" ; $4fd6, 157 bytes
-CharGridGfx1:
-	INCBIN "data/gfx/lz_CharGridGfx1.bin" ; $5073, 213 bytes
+SelectACharacterTitleGfx:
+	INCBIN "data/gfx/lz_SelectACharacterTitleGfx.bin" ; $5073, 213 bytes
 LinkingScreenTiles:
 	INCBIN "data/gfx/lz_LinkingScreenTiles.bin" ; $5148, 1333 bytes
 LinkingScreenTilemap:

@@ -241,19 +241,19 @@ ShowRankingBoard:
 	ld a, d ; $4e93
 	ld [wRankingBoardMode], a ; $4e94
 	cp RANKINGBOARD_SILENT ; $4e97
-	jr nz, .checkFanfare ; $4e99
+	jr nz, .checkWin ; $4e99
 	xor a ; $4e9b
 	ld [wRankingBoardMode], a ; $4e9c
 	ld a, $01 ; $4e9f
 	ld [wRankingBoardSilent], a ; $4ea1
-.checkFanfare:
+.checkWin:
 	ld a, [wRankingBoardMode] ; $4ea4
-	cp RANKINGBOARD_FANFARE ; $4ea7
-	jr nz, .checkSecondFanfare ; $4ea9
+	cp RANKINGBOARD_WIN ; $4ea7
+	jr nz, .checkLose ; $4ea9
 	sound BGM_ISLAND_OPEN_WIN ; $4eab
 	jr .draw ; $4ead
-.checkSecondFanfare:
-	cp RANKINGBOARD_CURSOR ; $4eaf
+.checkLose:
+	cp RANKINGBOARD_LOSE ; $4eaf
 	jr nz, .draw ; $4eb1
 	sound BGM_ISLAND_OPEN_LOSE ; $4eb3
 .draw:
@@ -321,9 +321,9 @@ BuildRankingBoardScreen:
 	call LoadPaletteShadow ; $4f58
 	frame_task DrawRankingMarkersTask ; $4f5b
 	ld a, [wRankingBoardMode] ; $4f63
-	cp RANKINGBOARD_CURSOR ; $4f66
+	cp RANKINGBOARD_LOSE ; $4f66
 	jr nz, .queueWram3MapToVRAM ; $4f68
-	frame_task RankingCursorBobTask ; $4f6a
+	frame_task RankingGameOverBobTask ; $4f6a
 .queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
@@ -359,7 +359,7 @@ DispatchRankingBoardAnim:
 	or a ; $4ff4
 	ret nz ; $4ff5
 	ld a, [wRankingBoardMode] ; $4ff6
-	cp RANKINGBOARD_CURSOR ; $4ff9
+	cp RANKINGBOARD_LOSE ; $4ff9
 	ret z ; $4ffb
 	ld a, [wRankingBoardDoubles] ; $4ffc
 	or a ; $4fff
@@ -436,7 +436,7 @@ RankingBoardAnimHandlers4_1b:
 	dw RankingAnimDoublesMarkRow3 ; record 3
 	dw RankingAnimDoublesMarkRow4 ; record 4
 RankingAnimSinglesClimbRow01:
-	frame_task RankingBoardAnimTask_1b ; $5077
+	frame_task RankingCongratsSlideTask ; $5077
 	wait_frames 140 ; $507f
 	sound SFX_MARKER ; $5083
 	ld c, $00 ; $5085
@@ -524,7 +524,7 @@ RankingAnimSinglesClimbRow01:
 	ld [wRankingAnimStateDone], a ; $5169
 	jp RankingBoardAnimNop_1b ; $516c
 RankingAnimSinglesClimbRow2:
-	frame_task RankingBoardAnimTask_1b ; $516f
+	frame_task RankingCongratsSlideTask ; $516f
 	wait_frames 140 ; $5177
 	sound SFX_MARKER ; $517b
 	ld c, $00 ; $517d
@@ -615,7 +615,7 @@ RankingAnimSinglesClimbRow2:
 	ld [wRankingAnimStateDone], a ; $526d
 	jp RankingBoardAnimNop_1b ; $5270
 RankingAnimSinglesClimbRow3:
-	frame_task RankingBoardAnimTask_1b ; $5273
+	frame_task RankingCongratsSlideTask ; $5273
 	wait_frames 140 ; $527b
 	sound SFX_MARKER ; $527f
 	ld c, $00 ; $5281
@@ -657,7 +657,7 @@ RankingAnimSinglesClimbRow3:
 	ld [wRankingAnimStateDone], a ; $52e5
 	jp RankingBoardAnimNop_1b ; $52e8
 RankingAnimSinglesClimbRow4:
-	frame_task RankingBoardAnimTask_1b ; $52eb
+	frame_task RankingCongratsSlideTask ; $52eb
 	wait_frames 140 ; $52f3
 	ld a, $01 ; $52f7
 	ld [wRankingAnimStateDone], a ; $52f9
@@ -714,7 +714,7 @@ RankingAnimSinglesMarkRow4:
 	call StartRankingMarkerAnim1 ; $5381
 	jp RankingBoardAnimNop_1b ; $5384
 RankingAnimDoublesClimbRow01:
-	frame_task RankingBoardAnimTask_1b ; $5387
+	frame_task RankingCongratsSlideTask ; $5387
 	wait_frames 140 ; $538f
 	sound SFX_MARKER ; $5393
 	ld c, $00 ; $5395
@@ -754,7 +754,7 @@ RankingAnimDoublesClimbRow01:
 	wait_frames 90 ; $53f3
 	jp RankingBoardAnimNop_1b ; $53f7
 RankingAnimDoublesClimbRow2:
-	frame_task RankingBoardAnimTask_1b ; $53fa
+	frame_task RankingCongratsSlideTask ; $53fa
 	wait_frames 140 ; $5402
 	sound SFX_MARKER ; $5406
 	ld c, $00 ; $5408
@@ -794,7 +794,7 @@ RankingAnimDoublesClimbRow2:
 	wait_frames 30 ; $5466
 	jp RankingBoardAnimNop_1b ; $546a
 RankingAnimDoublesClimbRow3:
-	frame_task RankingBoardAnimTask_1b ; $546d
+	frame_task RankingCongratsSlideTask ; $546d
 	wait_frames 140 ; $5475
 	sound SFX_MARKER ; $5479
 	ld c, $00 ; $547b

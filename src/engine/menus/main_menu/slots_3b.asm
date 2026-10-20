@@ -12,7 +12,7 @@
 	farptr RunN64RecordTypeSelect ; $4016
 	farptr RunGbDataItemSelect ; $4018
 	farptr PrintNumberRightAligned ; $401a
-	farptr ShowTournamentBracket ; $401c
+	farptr ShowVarsityTeamChart ; $401c
 	farptr ThreeChoiceSlideIn ; $401e
 	farptr ThreeChoiceSlideOut ; $4020
 	farptr SavedDataPickerSlideIn ; $4022

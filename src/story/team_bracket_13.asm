@@ -6,7 +6,7 @@ RunTravelingTeamVictoryCutscene_13:
 .notDoubles:
 	call SinglesTravelingTeamVictoryCutscene ; $7991
 	ret ; $7994
-RunTravelingTeamBracketIfWon_13:
+RunTravelingTeamChartIfWon_13:
 	wram_bank WRAM_ACTORS ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp WINLOSE_WIN ; $799e
@@ -29,7 +29,7 @@ RunTravelingTeamBracketIfWon_13:
 	script_player_speed 0.75 ; $79ce
 	script_move_player 9.0, 19.0 ; $79d4
 	farcall WaitPlayerMoveDone ; $79de
-	call ShowStoryTournamentBracket_13 ; $79e1
+	call ShowStoryVarsityTeamChart_13 ; $79e1
 	ret ; $79e4
 .isDoubles:
 	script_respawn_actors DoublesTravelingTeamActors_13 ; $79e5
@@ -46,7 +46,7 @@ RunTravelingTeamBracketIfWon_13:
 	call WaitFadeEnd ; $7a2c
 	script_move_player 9.0, 19.0 ; $7a2f
 	farcall WaitPlayerMoveDone ; $7a39
-	call ShowStoryTournamentBracket_13 ; $7a3c
+	call ShowStoryVarsityTeamChart_13 ; $7a3c
 	ret ; $7a3f
 ActorScript_13_20:
 	; $7a40, 3 bytes (actor_script)
@@ -118,7 +118,7 @@ ActorScript_13_26:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-ShowStoryTournamentBracket_13:
+ShowStoryVarsityTeamChart_13:
 	script_fade_out 8 ; $7ae0
 	call WaitFadeEnd ; $7ae5
 	xor a ; $7ae8
@@ -130,7 +130,7 @@ ShowStoryTournamentBracket_13:
 	ld [wCameraY + 1], a ; $7af4
 	call ClearFrameTasks ; $7af7
 	test_flag FLAG_DOUBLES ; $7afa
-	jr nz, .doublesBracket ; $7afd
+	jr nz, .doublesChart ; $7afd
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7aff
 	jr nz, .singlesFinalWon ; $7b02
 	ld b, $00 ; $7b04
@@ -140,14 +140,14 @@ ShowStoryTournamentBracket_13:
 	ld b, $00 ; $7b0a
 	ld c, $01 ; $7b0c
 	jr .show ; $7b0e
-.doublesBracket:
+.doublesChart:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7b10
 	jr nz, .doublesFinalWon ; $7b13
 	ld b, $01 ; $7b15
 	ld c, $02 ; $7b17
 	jr .show ; $7b19
 .show:
-	farcall ShowTournamentBracket ; $7b1b
+	farcall ShowVarsityTeamChart ; $7b1b
 	ret ; $7b1e
 .doublesFinalWon:
 	ld b, $01 ; $7b1f
