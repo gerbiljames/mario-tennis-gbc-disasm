@@ -73,8 +73,10 @@ CharDataShiftGfx23:
 	ds ALIGN[4]
 CharDataShiftGfx24:
 	INCBIN "data/engine/menus/char_data/CharDataShiftGfx24.bin" ; $6e80, 64 bytes
+	ds ALIGN[4]
 CharDataShiftGfx25:
 	INCBIN "data/engine/menus/char_data/CharDataShiftGfx25.bin" ; $6ec0, 64 bytes
+	ds ALIGN[4]
 CharDataShiftGfx26:
 	INCBIN "data/engine/menus/char_data/CharDataShiftGfx26.bin" ; $6f00, 64 bytes
 	ds ALIGN[4]
