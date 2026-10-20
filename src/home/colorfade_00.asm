@@ -363,7 +363,7 @@ Unused_00_ForceFadeOut:
 ForceFadeIn:
 	push af ; $1d0c
 	jr BeginFadeIn.start ; $1d0d
-Unused_00_BeginWhiteFadeOut:
+Unused_00_BeginPackedFadeOut:
 	di ; $1d0f
 	call BeginFadeOut ; $1d10
 	push af ; $1d13
@@ -452,7 +452,7 @@ UpdateFadeOut:
 	jr nc, .adjustBrightness ; $1d7a
 	ld a, c ; $1d7c
 	and $04 ; $1d7d
-	call z, Unused_00_ApplyWhiteFade ; $1d7f
+	call z, Unused_00_ApplyPackedFade ; $1d7f
 	jr .updateCounter ; $1d82
 .adjustBrightness:
 	ld hl, wMasterPalettes ; $1d84

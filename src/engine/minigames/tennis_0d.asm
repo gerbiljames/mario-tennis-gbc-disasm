@@ -85,7 +85,7 @@ MinigameHooks_TennisMachine2:
 	dw TennisMachine2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine2Hook_MinigameStart ; $4984
@@ -108,7 +108,7 @@ TennisMachine2Hook_PointStart:
 TennisMachine2Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $49a6
 	ret ; $49a9
-TennisMachine2Hook_RallyTick:
+TennisMachine2Hook_NetCross:
 	call KeepMinigameCameraFixed ; $49aa
 	ret ; $49ad
 TennisMachine2Hook_Bounce:
@@ -135,7 +135,7 @@ MinigameHooks_TennisMachine3:
 	dw TennisMachine3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachine3Hook_MinigameStart ; $49e1
@@ -158,7 +158,7 @@ TennisMachine3Hook_PointStart:
 TennisMachine3Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a03
 	ret ; $4a06
-TennisMachine3Hook_RallyTick:
+TennisMachine3Hook_NetCross:
 	call KeepMinigameCameraFixed ; $4a07
 	ret ; $4a0a
 TennisMachine3Hook_Bounce:
@@ -185,7 +185,7 @@ MinigameHooks_TennisMachine4:
 	dw TennisMachine4Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine4Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine4Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine4Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine4Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachine4Hook_MinigameStart ; $4a3e
@@ -196,7 +196,7 @@ TennisMachine4Hook_PerFrame:
 TennisMachine4Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a60
 	ret ; $4a63
-TennisMachine4Hook_RallyTick:
+TennisMachine4Hook_NetCross:
 	call KeepMinigameCameraFixed ; $4a64
 	ret ; $4a67
 TennisMachine4Hook_Bounce:
@@ -226,7 +226,7 @@ MinigameHooks_WallPractice1:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw WallPractice1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw WallPractice1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw WallPractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw WallPractice1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 WallPractice1Hook_PerFrame:
@@ -238,7 +238,7 @@ WallPractice1Hook_PointStart:
 WallPractice1Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4aab
 	ret ; $4aae
-WallPractice1Hook_RallyTick:
+WallPractice1Hook_NetCross:
 	call AwardMinigamePointAndReflectBall ; $4aaf
 	ret ; $4ab2
 WallPractice1Hook_Bounce:

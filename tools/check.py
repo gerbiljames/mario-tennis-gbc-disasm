@@ -1138,8 +1138,8 @@ _NOT_WRAM_ADDRESSES = {
 }
 # The ROM0 routines that take a (bank << 8) | slot pair in hl.
 _SLOT_CONSUMERS = frozenset(
-    "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarCallIndexed1 "
-    "Unused_00_FarCallIndexed2 Unused_00_FarCallIndexed3 Unused_00_FarCopyIndexed Unused_00_FarDecompressIndexed "
+    "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarQueueVRAMCopyIndexed "
+    "Unused_00_FarVRAMDMAIndexed Unused_00_FarCopyMemoryFastIndexed Unused_00_FarCopyIndexed Unused_00_FarDecompressIndexed "
     "Unused_00_FarReadPtrIndexed".split())
 
 
@@ -1583,7 +1583,7 @@ RAW_ID_FAMILIES = {
     "LoadPlayer2PointsDigitGfx(b)": "DIGITGFX",
     "LoadPlayer1ScoreDigitGfx(b)": "DIGITGFX",
     "LoadPlayer2ScoreDigitGfx(b)": "DIGITGFX",
-    "wScoreDisplayIsTiebreak": "DIGITGFX",
+    "wScoreDigitGfxStyle": "DIGITGFX",
 }
 # Text-id arguments with too few named sites to infer them: no raw number.
 TEXT_ID_ARGS = {"ShowMessageWindow(hl)"}
@@ -2013,7 +2013,7 @@ FLAG_BYTES = {
     "wMessageSpeed": "MSGSPEEDB_",
     "wCharCourtPos": "COURTPOSB_",
     "wServingCharCourtPos": "COURTPOSB_",
-    "wPrevCourtPos": "COURTPOSB_",
+    "wPlayer1PrevCourtPos": "COURTPOSB_",
     "wCharServeRole": "SERVEROLEB_",
     "hMusicFlags": "MUSICB_",
     "wSoundOptionBits": "SOUNDOPTB_",

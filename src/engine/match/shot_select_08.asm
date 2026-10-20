@@ -188,7 +188,7 @@ BufferShotButtonPress:
 	ret z ; $7117
 	ld b, a ; $7118
 	cp PADF_A | PADF_B ; $7119
-	jr z, .done ; $711b
+	jr z, .storeFirstButton ; $711b
 	ld a, [wCharShotComboTimer] ; $711d
 	and a ; $7120
 	jr z, .startSwing ; $7121
@@ -196,7 +196,7 @@ BufferShotButtonPress:
 	cp b ; $7126
 	jr z, .startSwing ; $7127
 	ld b, $03 ; $7129
-	jr .done ; $712b
+	jr .storeFirstButton ; $712b
 .startSwing:
 	ld a, b ; $712d
 	ld [wCharLastShotButton], a ; $712e
@@ -204,18 +204,18 @@ BufferShotButtonPress:
 	ld [wCharShotComboTimer], a ; $7133
 	ld a, [wCharShotButton1] ; $7136
 	and a ; $7139
-	jr z, .done ; $713a
+	jr z, .storeFirstButton ; $713a
 	ld a, [wCharShotButton2] ; $713c
 	and a ; $713f
-	jr z, .storeShot ; $7140
+	jr z, .storeSecondButton ; $7140
 	ret ; $7142
-.storeShot:
+.storeSecondButton:
 	ld a, b ; $7143
 	ld [wCharShotButton2], a ; $7144
 	xor a ; $7147
 	ld [wCharShotComboTimer], a ; $7148
 	ret ; $714b
-.done:
+.storeFirstButton:
 	ld a, b ; $714c
 	ld [wCharShotButton1], a ; $714d
 	ret ; $7150
@@ -366,7 +366,7 @@ HandleServePositioning:
 	ld [hl+], a ; $7265
 .wallMinigameDone:
 	ret ; $7266
-CheckSwingRelease:
+CheckSwingCancel:
 	ld a, [wCharInputBits] ; $7267
 	and PADF_SELECT ; $726a
 	jr z, TickSwingHoldFrames ; $726c

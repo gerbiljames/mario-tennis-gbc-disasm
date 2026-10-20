@@ -89,8 +89,8 @@ wStoryRandomBytes:: ds 4
 	ds 1
 	match_stats wCharacter2
 
-; [8-bit] wCharCourtPos as of last frame. CheckServerEndChanged swaps the new value in and raises wChangeEndsPending when bit 1 differs; UpdateViewFlipState reads it for the flipped view
-wPrevCourtPos:: db
+; [8-bit] Character 0's wCharCourtPos, stored once per AssignCourtPositions by CheckPlayer1EndChanged, which first raises wChangeEndsPending when bit 1 differs from the stored value; UpdateViewFlipState reads it for the flipped view
+wPlayer1PrevCourtPos:: db
 	match_stats wCharacter3
 	ds 1
 	match_stats wCharacter4
@@ -192,7 +192,7 @@ wOnCourtCharCount:: db
 ; 0x18 - Training Court (Match)
 wCurrentlyUsedCourt:: db
 
-; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). At 2, SelectScoreboardLayout forces the doubles scoreboard and InitViewFlipPreference the fixed court view
+; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). At 2, SelectScoreboardLayout picks SCOREBOARD_LESSON/HIGH_SCORE/SCORE/DRILL from the drill flags instead of the player count, and InitViewFlipPreference the fixed court view
 wMatchContext:: db
 
 UNION
@@ -444,12 +444,12 @@ ENDU
 
 ; The four on-court records: player 1's main character and partner, then
 ; player 2's. The results screen prints the names; LoadCharacterAttributes
-; copies each record's physics and AI attributes into that character's
+; copies each record's shot and AI attributes into that character's
 ; banked struct. ExchangeLinkUnlockFlags borrows the main records'
 ; LinkCourtMask for the peer's bonus-court unlock mask: the one matching
 ; the link role goes to wLinkPartnerCourtMask, then both are cleared. The
 ; CPU menus set Difficulty on the three records the player does not pick
-; for. Boo Blast's setup writes wPlayer2MainPhysics, which nothing reads.
+; for. Boo Blast's setup writes wPlayer2MainAiPosition, which nothing reads.
 	char_record wPlayer1Main
 	char_record wPlayer1Partner
 	char_record wPlayer2Main

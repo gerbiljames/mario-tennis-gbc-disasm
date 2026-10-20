@@ -191,8 +191,8 @@ off-screen character edge arrows (`DrawOffscreenCharArrow`, gated by
 `wOffscreenArrowsEnabled`).
 
 Frame flow: `DrawActorsByDepth` (`$6429`) draws the two team pairs and the
-ball group in painter's order by the `$df96` keys (`DrawNearTeamChars`,
-`DrawFarTeamChars`, `DrawBallAndEffects`), then `DrawMarkersAndShadows`
+ball group in painter's order by the `$df96` keys (`DrawPlayer1TeamChars`,
+`DrawPlayer2TeamChars`, `DrawBallAndEffects`), then `DrawMarkersAndShadows`
 (`$6481`) flushes markers, trail and shadow slots. Modes hook extra draws
 via `SetModeHookTable`/`CallModeHook` (`wModeHookBank`/`wModeHookTable`).
 

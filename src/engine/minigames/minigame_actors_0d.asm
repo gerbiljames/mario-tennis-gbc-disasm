@@ -206,7 +206,7 @@ MinigameHooks_TennisMachine1:
 	dw TennisMachine1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine1Hook_MinigameStart ; $4525
@@ -219,7 +219,7 @@ TennisMachine1Hook_PointStart:
 TennisMachine1Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4536
 	ret ; $4539
-TennisMachine1Hook_RallyTick:
+TennisMachine1Hook_NetCross:
 	call KeepMinigameCameraFixed ; $453a
 	ret ; $453d
 TennisMachine1Hook_Bounce:

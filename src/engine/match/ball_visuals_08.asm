@@ -404,13 +404,13 @@ DrawLandingMarker:
 	call QueueSprite16 ; $535d
 	ldh a, [hMatchFrameCounter] ; $5360
 	and $0f ; $5362
-	ld_hl_indexed DrawLandingMarkerTable ; $5364
+	ld_hl_indexed LandingMarkerFrameByTick ; $5364
 	ld a, [hl] ; $536b
 	cp $ff ; $536c
 	ret z ; $536e
-	farcall LoadBallTouchCharEffectTilesB ; $536f
+	farcall LoadLandingMarkerTiles ; $536f
 	ret ; $5372
-DrawLandingMarkerTable:
+LandingMarkerFrameByTick:
 	; $5373, 16 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08

@@ -422,7 +422,7 @@ routine re-checks the cap and silently drops the sprite on overflow.
 | `QueueSprite24x32` | `$00:$2c2b` | 6 8×16 objects |
 | `QueueSprite32x32` | `$00:$2ced` | 8 8×16 objects via `QueueSpriteBlockPart` |
 | `QueueSpriteBlockPart` | `$00:$2d79` | one part; advances `c` by 2 |
-| `Unused_00_PositionSpriteWorld` | `$00:$1f6b` | world coords, subtracts `wCameraX/Y`, culls, ×8 → `QueueSprite16` |
+| `Unused_00_QueueSprite16AtWorldPos` | `$00:$1f6b` | world coords, subtracts `wCameraX/Y`, culls, ×8 → `QueueSprite16` |
 
 ### 4.3 Object headers
 
@@ -630,7 +630,7 @@ rising during a fade-out, so the bank `$00` fade goes to **white** and a
 fade-in comes back from white. The clamp-to-zero branch is unreachable from
 this caller.
 
-The `hFadeState` bit-7 path, `Unused_00_ApplyWhiteFade` (`$00:$1dcc`), is
+The `hFadeState` bit-7 path, `Unused_00_ApplyPackedFade` (`$00:$1dcc`), is
 unreachable (`docs/bugs.md`). It also adds toward `$1f`, with one 16-bit add
 per colour, saturating at `$1e` because it pre-clears each field's low bit.
 
@@ -858,7 +858,7 @@ Open:
   data. It would load the object's own palette from that pointer: a
   per-object-palette feature no shipped object uses.
 * The intended difference between `AdjustColorsBrightness` and
-  `Unused_00_ApplyWhiteFade`, given both add toward `$1f`. The cheaper 16-bit
+  `Unused_00_ApplyPackedFade`, given both add toward `$1f`. The cheaper 16-bit
   form is the one left unreachable.
 
 Settled:

@@ -95,9 +95,9 @@ InitMatchRecordFromCharId:
 	call GetStoryCharacterRecordPtr ; $40cf
 	ld b, a ; $40d2
 	push de ; $40d3
-	ld a, CHARREC_PHYSICS ; $40d4
+	ld a, CHARREC_AI_POSITION ; $40d4
 	add_de_a ; $40d6
-	ld c, CHARREC_EXP - CHARREC_PHYSICS ; $40db
+	ld c, CHARREC_EXP - CHARREC_AI_POSITION ; $40db
 .copyLoop:
 	ld a, [hl+] ; $40dd
 	ld [de], a ; $40de

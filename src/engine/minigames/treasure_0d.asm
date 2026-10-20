@@ -10,7 +10,7 @@ MinigameHooks_PerfectShot:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw PerfectShotHook_BallHit ; MODEHOOK_BALL_HIT
 	dw PerfectShotHook_Bounce ; MODEHOOK_BOUNCE
-	dw PerfectShotHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw PerfectShotHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 PerfectShotHook_PerFrame:
@@ -23,7 +23,7 @@ PerfectShotHook_PointStart:
 PerfectShotHook_PointEnd:
 	call HandleMinigamePointEnd ; $58c1
 	ret ; $58c4
-PerfectShotHook_RallyTick:
+PerfectShotHook_NetCross:
 	call ProcessTargetTileHit ; $58c5
 	ret ; $58c8
 PerfectShotHook_Bounce:
@@ -154,7 +154,7 @@ MinigameHooks_TreasureBox:
 	dw TreasureBoxHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TreasureBoxHook_BallHit ; MODEHOOK_BALL_HIT
 	dw TreasureBoxHook_Bounce ; MODEHOOK_BOUNCE
-	dw TreasureBoxHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TreasureBoxHook_NetCross ; MODEHOOK_NET_CROSS
 	dw TreasureBoxHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 TreasureBoxHook_MinigameStart:
@@ -193,7 +193,7 @@ TreasureBoxHook_PointEnd:
 	call StubNop_0d_3 ; $5a3a
 	call EndMinigamePoint ; $5a3d
 	ret ; $5a40
-TreasureBoxHook_RallyTick:
+TreasureBoxHook_NetCross:
 	call KeepMinigameCameraFixed ; $5a41
 	ret ; $5a44
 TreasureBoxHook_Bounce:

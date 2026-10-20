@@ -45,7 +45,7 @@ the soft reset.
 | `ReadJoypad` | `$02eb` | Polls `rJOYP` with the `$20`/`$10` nibble selects, combines D-pad/buttons, and updates held/pressed/repeat state bytes. |
 | `DisableLCDSafely` | `$0346` | Waits for `rLY == $91`, then clears `rLCDC` bit 7, following the documented safe-LCD-off procedure. |
 | `EnableLCD` | `$0376` | Sets `rLCDC` bit 7, hides the unused OAM slots (`ClearUnusedSprites`) and clears `hVBlankOccurred`. |
-| `ClearVRAMBank` | `$0383` | Clears the 8 KB of VRAM; on CGB (`hIsCGB`) it clears both banks via `ClearBothVRAMBanks`. |
+| `ClearVRAM` | `$0383` | Clears the 8 KB of VRAM; on CGB (`hIsCGB`) it clears both banks via `ClearBothVRAMBanks`. |
 | `ClearBytes` | `$03a7` | Simple `bc`-counted byte-at-a-time zero-fill loop. |
 | `ClearMemory16` | `$03af` | Zero-fill loop, unrolled 16x per iteration, counted by `c` (chunks of 16 bytes). |
 | `ClearMemoryBC16` | `$03c4` | Same unrolled zero-fill body but counted by 16-bit `bc`; used to clear a full VRAM bank. |

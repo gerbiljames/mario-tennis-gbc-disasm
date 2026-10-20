@@ -16,10 +16,10 @@ MACRO char_record
 \1Palette::       db
 \1Gender::        db
 \1LeftHanded::    db
-\1Physics::       db
+\1AiPosition::    db
 \1Reach::         ds 8
 \1Level::         db
-\1Swing::         dw
+\1SkillIcons::    dw
 \1AiParams::      ds 4
 \1Difficulty::    db
 \1Stats::
@@ -51,10 +51,10 @@ MACRO char_record
 	ASSERT \1Palette - \1 == CHARREC_PALETTE
 	ASSERT \1Gender - \1 == CHARREC_GENDER
 	ASSERT \1LeftHanded - \1 == CHARREC_LEFT_HANDED
-	ASSERT \1Physics - \1 == CHARREC_PHYSICS
+	ASSERT \1AiPosition - \1 == CHARREC_AI_POSITION
 	ASSERT \1Reach - \1 == CHARREC_REACH
 	ASSERT \1Level - \1 == CHARREC_LEVEL
-	ASSERT \1Swing - \1 == CHARREC_SWING
+	ASSERT \1SkillIcons - \1 == CHARREC_SKILL_ICONS
 	ASSERT \1AiParams - \1 == CHARREC_AI_PARAMS
 	ASSERT \1Difficulty - \1 == CHARREC_DIFFICULTY
 	ASSERT \1TopStat - \1 == CHARREC_STAT_TOP
@@ -160,7 +160,7 @@ NEXTU
 \1CharSpriteFrame:: ds 3
 ; [8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)
 \1CharInputSource:: db
-; [8-bit] Input ReadCharInput produces: held buttons in the high nibble, newly pressed in the low (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); test with PADB_*
+; [8-bit] Input ReadCharInput produces: held d-pad in the high nibble, newly pressed buttons in the low (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); test with PADB_*
 \1CharInputBits:: db
 	ds 1
 ; [8-bit] Object-definition id passed to SetupCharSpriteFromObjectDef; write-only
@@ -209,15 +209,15 @@ NEXTU
 \1CharWalkTargetX:: dw
 ; [16-bit] Walk-target depth; MoveCharTowardTarget walks toward the target, snapping when both deltas are < $18 (CheckCharNearTarget)
 \1CharWalkTargetDepth:: dw
-; [8-bit] Left/right aim held at the moment of the shot, captured by CaptureServeAim / CaptureShotAim; GetShotAimOffsetForSide and ComputeShotTargetX turn it into the target's lateral offset
+; [8-bit] Left/right aim held at the moment of the shot, captured by CaptureServeAim / CaptureShotAim; GetServeTargetX and ComputeShotTargetX turn it into the target's lateral offset
 \1CharAimOffset:: db
 ; [8-bit] Frames in the current swing phase, reset at windup start, incremented by the windup and contact phases
 \1CharSwingFrames:: db
 ; [8-bit] Set when the swing was quick (uncharged): written by StartCharSwing; its only reader copies it into the write-only wShotWasQuickSwing (ExecuteShot), so it has no effect
 \1CharQuickSwing:: db
-; [8-bit] Shot button latched while the swing is held, from b in CheckSwingRelease; cleared there when SELECT is down and by CharRallyReadyPhase. Write-only
+; [8-bit] Shot button latched while the swing is held, from b in CheckSwingCancel; cleared there when SELECT is down and by CharRallyReadyPhase. Write-only
 \1CharSwingHoldButton:: db
-; [8-bit] Frames the swing has been held: CheckSwingRelease increments it per frame and zeroes it on release or with SELECT down. Write-only
+; [8-bit] Frames the swing has been held: CheckSwingCancel increments it per frame and zeroes it on release or with SELECT down. Write-only
 \1CharSwingHoldFrames:: db
 ; [8-bit] Shot button already recorded, so BufferShotButtonPress ignores it while held
 \1CharLastShotButton:: db
@@ -268,9 +268,9 @@ NEXTU
 \1TopspinPlacementIndex:: db
 ; [8-bit] Placement-row index (d) into ShotPlacementData for slice and serve-slice
 \1SlicePlacementIndex:: db
-; [16-bit] How far above or below the character the ball can be hit; CheckCharBallContact compares |wBallRelCharHeight| with it. Attribute record +$10, minus $10
+; [16-bit] How far above or below the character the ball can be hit; CheckBallHitsCharBody compares |wBallRelCharHeight| with it. Attribute record +$10, minus $10
 \1CharReachHeight:: dw
-; [16-bit] Lateral reach; CheckCharBallContact compares |wBallRelCharX| * 2 with it. Attribute record +$12
+; [16-bit] Lateral reach; CheckBallHitsCharBody compares |wBallRelCharX| * 2 with it. Attribute record +$12
 \1CharReachX:: dw
 ; [16-bit] Upward speed of a jump smash, negated into wCharVelHeight by StartCharSwing. Attribute record +$14, plus $0200
 \1CharSmashJumpSpeed:: dw
@@ -286,8 +286,8 @@ NEXTU
 \1AiTrackingParam:: db
 ; [8-bit] RNG threshold in AiRollAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
 \1AiAimAwayChance:: db
-; [8-bit] AI serve/shot habit: low nibble indexes ServePressTossPtrs for toss timing; AiPickShotButtons reads it too. Attribute record +$1f
-\1AiServeStyle:: db
+; [8-bit] AI play style: low nibble indexes AiServeQuickStrikeChancePtrs for the serve strike timing; AiPickShotButtons picks its AiShotMixTable_02 row with it. Attribute record +$1f
+\1AiPlayStyle:: db
 ; [8-bit] Character id after RemapExtendedCharId; LookupCharSpriteSet and bank $09's LoadOnCourtCharacterGfx find the sprite bank with it
 \1CharSpriteSetId:: db
 ; [8-bit] Where the AI stands between shots (0/5 baseline, 1 net, others mid-court); RST00 index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
@@ -300,11 +300,11 @@ NEXTU
 \1CharAirShadowSlot:: ds 4
 ; [4 bytes] Sprite-slot record for the standing shadow (tile $58, flickered while grounded)
 \1CharGroundShadowSlot:: ds 4
-; [16-bit] Attribute word from character record +$19; StartCharSwing tests bit 7 of the low byte; bits 0 and 1 of the high byte select the lob and drop placement rows
-\1CharSwingAttrWord:: dw
-; [8-bit] Placement-row index (d) into ShotPlacementDataLob (from wCharSwingAttrWord + 1 bit 0)
+; [16-bit] Skill-icon bits from character record +$19 (CHARREC_SKILL_ICONS); StartCharSwing tests bit 7 of the low byte; bits 0 and 1 of the high byte select the lob and drop placement rows
+\1CharSkillIcons:: dw
+; [8-bit] Placement-row index (d) into ShotPlacementDataLob (from wCharSkillIcons + 1 bit 0)
 \1LobPlacementIndex:: db
-; [8-bit] Placement-row index (d) into ShotPlacementDataDrop (from wCharSwingAttrWord + 1 bit 1)
+; [8-bit] Placement-row index (d) into ShotPlacementDataDrop (from wCharSkillIcons + 1 bit 1)
 \1DropPlacementIndex:: db
 ; [8-bit] Attribute bits XORed into wCharSpriteAttr for facing octants 2 and 6 (sprite drawn mirrored)
 \1CharMirrorAttrMask:: db

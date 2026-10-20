@@ -87,7 +87,7 @@ hPeakLY:: db
 ; [8-bit] Frames until hPeakLY decays
 hPeakLYFrames:: db
 
-; [8-bit] Bit 0 = fading out, bit 1 = fading in, bit 7 = fade to white
+; [8-bit] Bit 0 = fading out, bit 1 = fading in, bit 7 = use the packed-word fade curve (Unused_00_ApplyPackedFade)
 hFadeState:: db
 
 ; [8-bit] Fade step per frame
@@ -156,7 +156,7 @@ hLinkTxByte:: db
 ; [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths
 hLinkState:: db
 
-; [8-bit] Link error flags. AdvanceFrame jumps to LinkErrorReset if any of the top three bits is set while hLinkCounter is nonzero, but nothing sets them, so the check never fires; InitSerialLink and ResetSerialState clear it
+; [8-bit] Link error flags. AdvanceFrame jumps to LinkErrorReset if any of the top three bits is set while hLinkRetryCount is nonzero, but nothing sets them, so the check never fires; InitSerialLink and ResetSerialState clear it
 hLinkErrorFlags:: db
 
 ; [8-bit] Cleared by InitSerialLink and ResetSerialState; read by nothing
@@ -169,8 +169,8 @@ hLinkRxNibbleIndex:: db
 ; [8-bit] Nibble-block transfer: index into wLinkTxNibbles of the next nibble to send, stepped once per byte exchanged
 hLinkTxNibbleIndex:: db
 
-; [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8
-hLinkCounter:: db
+; [8-bit] Serial link retry count: bumped on each failed, unanswered or repeated exchange and zeroed on a good reply; AdvanceFrame checks link errors only while it is nonzero
+hLinkRetryCount:: db
 	ds 4
 
 ; [8-bit] Jingle sound id currently overriding BGM (0 = none)
@@ -190,7 +190,7 @@ UNION
 	ds 2
 ; [8-bit] Re-entrancy guard: UpdateSoundEngine returns if set, else sets it around RunSoundEngine. Inside the engine this byte is hSndChannelType (the pool is saved and restored)
 hSoundEngineBusy:: db
-; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters
+; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role)
 hLinkInput:: db
 ; [8-bit] Input byte decoded from the last received link frame
 hLinkRemoteInput:: db
@@ -206,7 +206,7 @@ hLinkExchangeActive:: db
 hUnusedLinkSlot:: db
 ; [8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing
 hLinkLastRxMirror:: db
-; [8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkCounter and re-inits the link on the second repeat
+; [8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkRetryCount and re-inits the link on the second repeat
 hLinkLastRxByte:: db
 ; [8-bit] Sequence bits: top two bits of the last transmitted byte, inverted by PrepareLinkStatePayload/PrepareLinkInputPayload and OR'd into every byte SerialEncodeInput sends, so the peer can tell a fresh frame from a repeat
 hLinkTxSeqBits:: db

@@ -171,7 +171,7 @@ def DRILL_ABORT_FRAMES equ 10 ; frames, once armed, before a drill point is give
 	const JUDGEEVENT_POINT_END  ; $00
 	const JUDGEEVENT_BALL_HIT   ; $01
 	const JUDGEEVENT_BOUNCE     ; $02
-	const JUDGEEVENT_RALLY_TICK ; $03
+	const JUDGEEVENT_NET_CROSS ; $03
 
 ; --- Lesson result (wDrillLessonResult) ---
 ; Set by each lesson's *EvaluateResult; the coach's *ResultScene in bank $15

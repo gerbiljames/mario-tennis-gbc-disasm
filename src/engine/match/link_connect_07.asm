@@ -144,7 +144,7 @@ ExchangeNibbleBlockMaster:
 	ld [hl], a ; $4145
 	add_de_a ; $4146
 	xor a ; $414b
-	ldh [hLinkCounter], a ; $414c
+	ldh [hLinkRetryCount], a ; $414c
 	ld hl, hLinkTxNibbleIndex ; $414e
 	inc [hl] ; $4151
 	ld hl, hLinkRxNibbleIndex ; $4152
@@ -154,9 +154,9 @@ ExchangeNibbleBlockMaster:
 	ld a, LINKMSG_BLOCK_END ; $4159
 	ld b, LINKMSG_BLOCK_END_ACK ; $415b
 	call SendByteAwaitEchoMaster ; $415d
-	jr nc, .sendBlockEnd ; $4160
+	jr nc, .sendChecksumCue ; $4160
 	call LinkErrorReset ; $4162
-.sendBlockEnd:
+.sendChecksumCue:
 	ld a, LINKMSG_CHECKSUM ; $4165
 	call SendByteGetReplyMaster ; $4167
 	cp LINKMSG_CHECKSUM ; $416a
@@ -328,7 +328,7 @@ ExchangeNibbleBlockSlave:
 	ld [hl], a ; $427c
 	add_de_a ; $427d
 	xor a ; $4282
-	ldh [hLinkCounter], a ; $4283
+	ldh [hLinkRetryCount], a ; $4283
 	ld hl, hLinkTxNibbleIndex ; $4285
 	inc [hl] ; $4288
 	ld hl, hLinkRxNibbleIndex ; $4289

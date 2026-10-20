@@ -1,12 +1,12 @@
 RunMatchPlayLoop:
 	ld a, [wGameMode] ; $4714
 	cp GAMEMODE_ISLAND_OPEN ; $4717
-	jr z, .markChangeEnds ; $4719
+	jr z, .skipFirstBanner ; $4719
 	ld a, [wMatchContext] ; $471b
 	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $471e
 	jr nz, .setLoop ; $471f
-.markChangeEnds:
+.skipFirstBanner:
 	ld hl, wChangeoverSkipBanner ; $4721
 	ld [hl], $01 ; $4724
 .setLoop:
@@ -25,8 +25,8 @@ PlaySet:
 	push hl ; $473a
 	ld a, [wTiebreakerIndicator] ; $473b
 	and a ; $473e
-	jp z, CheckSetComplete.playGame ; $473f
-	jp CheckSetComplete.tiebreak ; $4742
+	jp z, PlayGame ; $473f
+	jp PlayTiebreakGame ; $4742
 CheckSetComplete:
 	ld a, [wMatchAbortFlag] ; $4745
 	and MATCHABORT_MATCH ; $4748
@@ -38,9 +38,9 @@ CheckSetComplete:
 	ld [wChangeoverSkipBanner], a ; $4754
 .done:
 	ret ; $4757
-.playGame:
+PlayGame:
 	xor a ; $4758
-	ld [wScoreDisplayIsTiebreak], a ; $4759
+	ld [wScoreDigitGfxStyle], a ; $4759
 	call AssignCourtPositions ; $475c
 	call RefreshCourtAfterEndChange ; $475f
 	call RunChangeoverSequence ; $4762
@@ -59,9 +59,9 @@ CheckSetComplete:
 	call WalkCharsOffCourt ; $477e
 .gameDone:
 	ret ; $4781
-.tiebreak:
+PlayTiebreakGame:
 	ld a, DIGITGFX_NUMERALS ; $4782
-	ld [wScoreDisplayIsTiebreak], a ; $4784
+	ld [wScoreDigitGfxStyle], a ; $4784
 	call InitTiebreakPointCounter ; $4787
 	ld a, $01 ; $478a
 	ld [wChangeoverSkipBanner], a ; $478c
@@ -112,7 +112,7 @@ AssignCourtPositions:
 	jp nz, LoadTiebreakCourtPositions ; $47ea
 	jr LoadGameCourtPositions ; $47ed
 FinalizeServeSideOrientation:
-	call CheckServerEndChanged ; $47ef
+	call CheckPlayer1EndChanged ; $47ef
 	call UpdateViewFlipState ; $47f2
 	call FlipAllCharPositions ; $47f5
 	call IdentifyServingPlayer ; $47f8
@@ -133,31 +133,31 @@ LoadGameCourtPositions:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $481e
 	rrca ; $4821
 	ret nc ; $4822
-	ld hl, FlipFarTeamCourtPositions ; $4823
+	ld hl, FlipPlayer2TeamCourtPositions ; $4823
 	push hl ; $4826
 	jumptable [wOnCourtCharCountMinus1] ; $4827
-	dw FlipNearCharPosition ; $482b jumptable
-	dw FlipNearCharPosition ; $482d jumptable
-	dw FlipNearCharPosition ; $482f jumptable
-	dw FlipBothCharPositions ; $4831 jumptable
-FlipFarTeamCourtPositions:
+	dw FlipPlayer1CharPosition ; $482b jumptable
+	dw FlipPlayer1CharPosition ; $482d jumptable
+	dw FlipPlayer1CharPosition ; $482f jumptable
+	dw FlipPlayer1TeamPositions ; $4831 jumptable
+FlipPlayer2TeamCourtPositions:
 	jumptable [wOnCourtCharCountMinus1] ; $4833
-	dw FlipFarCharPosition ; $4837 jumptable
-	dw FlipFarCharPosition ; $4839 jumptable
-	dw FlipFarBothCharPositions ; $483b jumptable
-	dw FlipFarBothCharPositions ; $483d jumptable
+	dw FlipPlayer2CharPosition ; $4837 jumptable
+	dw FlipPlayer2CharPosition ; $4839 jumptable
+	dw FlipPlayer2TeamPositions ; $483b jumptable
+	dw FlipPlayer2TeamPositions ; $483d jumptable
 GamePositionPtrs:
 	; $483f, 8 bytes (records:2)
 	dw GamePositionsSingles ; record 0
 	dw GamePositionsSingles ; record 1
 	dw GamePositions3Chars ; record 2
 	dw GamePositionsDoubles ; record 3
-FlipNearCharPosition:
+FlipPlayer1CharPosition:
 	ld b, COURTPOSF_LEFT ; $4847
 	wram_bank WRAM_CHAR0 ; $4849
 	call FlipCharPositionCode ; $484f
 	ret ; $4852
-FlipBothCharPositions:
+FlipPlayer1TeamPositions:
 	wram_bank WRAM_CHAR0 ; $4853
 	ld a, [wCharServeRole] ; $4859
 	and SERVEROLEF_RECEIVING ; $485c
@@ -174,12 +174,12 @@ FlipBothCharPositions:
 	wram_bank WRAM_CHAR2 ; $487e
 	call ToggleCharCourtRow ; $4884
 	ret ; $4887
-FlipFarCharPosition:
+FlipPlayer2CharPosition:
 	ld b, COURTPOSF_LEFT ; $4888
 	wram_bank WRAM_CHAR1 ; $488a
 	call FlipCharPositionCode ; $4890
 	ret ; $4893
-FlipFarBothCharPositions:
+FlipPlayer2TeamPositions:
 	wram_bank WRAM_CHAR0 ; $4894
 	ld a, [wCharServeRole] ; $489a
 	and SERVEROLEF_RECEIVING ; $489d
@@ -378,11 +378,11 @@ TiebreakPositions3Chars:
 	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NEAR_LEFT, SERVEROLE_RECEIVER, SERVEROLE_SERVER_PARTNER, SERVEROLE_NONE, SERVEROLE_SERVER ; record 21
 	court_positions COURTPOS_FAR_LEFT, COURTPOS_NEAR_LEFT, COURTPOS_NONE, COURTPOS_NEAR_RIGHT, SERVEROLE_RECEIVER, SERVEROLE_SERVER_PARTNER, SERVEROLE_NONE, SERVEROLE_SERVER ; record 22
 	court_positions COURTPOS_FAR_RIGHT, COURTPOS_NEAR_RIGHT, COURTPOS_NONE, COURTPOS_NEAR_LEFT, SERVEROLE_SERVER, SERVEROLE_RECEIVER_PARTNER, SERVEROLE_NONE, SERVEROLE_RECEIVER ; record 23
-CheckServerEndChanged:
+CheckPlayer1EndChanged:
 	wram_bank WRAM_CHAR0 ; $4c19
 	ld a, [wCharCourtPos] ; $4c1f
 	ld b, a ; $4c22
-	ld hl, wPrevCourtPos ; $4c23
+	ld hl, wPlayer1PrevCourtPos ; $4c23
 	ld a, [hl] ; $4c26
 	ld [hl], b ; $4c27
 	xor b ; $4c28
@@ -397,7 +397,7 @@ UpdateViewFlipState:
 	ld a, [wCourtViewOption] ; $4c35
 	and a ; $4c38
 	jr z, .store ; $4c39
-	ld a, [wPrevCourtPos] ; $4c3b
+	ld a, [wPlayer1PrevCourtPos] ; $4c3b
 	and COURTPOSF_FAR ; $4c3e
 	jr z, .store ; $4c40
 	ld c, $01 ; $4c42

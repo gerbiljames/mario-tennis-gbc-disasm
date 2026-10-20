@@ -410,21 +410,21 @@ ExecuteShotServeTopspin:
 	call ApplyShotTypePresets ; $59c5
 	call ComputeShotTrajectory ; $59c8
 	farcall ShotBallPathServeTopspin ; $59cb
-	call SetSpecialShotFlagFromBallHeight ; $59ce
+	call SetPowerServeFlagFromTossHeight ; $59ce
 	ret ; $59d1
 ExecuteShotServeSlice:
 	call ApplyShotTypePresets ; $59d2
 	call ComputeShotTrajectory ; $59d5
 	farcall ShotBallPathServeSlice ; $59d8
-	call SetSpecialShotFlagFromBallHeight ; $59db
+	call SetPowerServeFlagFromTossHeight ; $59db
 	ret ; $59de
 ExecuteShotServeFlat:
 	call ApplyShotTypePresets ; $59df
 	call ComputeShotTrajectory ; $59e2
 	farcall ShotBallPathServeFlat ; $59e5
-	call SetSpecialShotFlagFromBallHeight ; $59e8
+	call SetPowerServeFlagFromTossHeight ; $59e8
 	ret ; $59eb
-Unused_07_SetSpecialShotFlagThreshold:
+Unused_07_SetPowerServeFlagAboveHeight:
 	ld hl, wBallHeight ; $59ec
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
@@ -433,7 +433,7 @@ Unused_07_SetSpecialShotFlagThreshold:
 	add hl, de ; $59f5
 	jr c, .done ; $59f6
 	ld a, $01 ; $59f8
-	ld [wSpecialShotFlag], a ; $59fa
+	ld [wPowerServeFlag], a ; $59fa
 	ld [wLastShotWasPowerShot], a ; $59fd
 .done:
 	ret ; $5a00

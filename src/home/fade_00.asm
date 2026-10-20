@@ -11,7 +11,7 @@ Unused_00_WaitFadeEndLinked:
 .done:
 	pop af ; $1dca
 	ret ; $1dcb
-Unused_00_ApplyWhiteFade:
+Unused_00_ApplyPackedFade:
 	push af ; $1dcc
 	ld a, c ; $1dcd
 	and $78 ; $1dce
@@ -346,7 +346,7 @@ QueueSprite:
 	ld a, l ; $1f67
 	ldh [hSpriteQueueIndex], a ; $1f68
 	ret ; $1f6a
-Unused_00_PositionSpriteWorld:
+Unused_00_QueueSprite16AtWorldPos:
 	push af ; $1f6b
 	push bc ; $1f6c
 	push de ; $1f6d
@@ -394,7 +394,7 @@ Unused_00_PositionSpriteWorld:
 	pop bc ; $1fae
 	pop af ; $1faf
 	ret ; $1fb0
-Unused_00_PositionSpriteWorld2:
+Unused_00_QueueSpriteAtWorldPos:
 	push af ; $1fb1
 	push bc ; $1fb2
 	push de ; $1fb3

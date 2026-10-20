@@ -10,12 +10,12 @@ def CHARREC_CHAR             rb   ; $0b CHAR_* id
 def CHARREC_PALETTE          rb   ; $0c
 def CHARREC_GENDER           rb   ; $0d 0 male, 1 female
 def CHARREC_LEFT_HANDED      rb   ; $0e becomes the OAM X-flip on court
-def CHARREC_PHYSICS          rb   ; $0f
+def CHARREC_AI_POSITION      rb   ; $0f home-position strategy, copied to wAiPositionStrategy
 def CHARREC_REACH            rb 8 ; $10 the reach box
 def CHARREC_LEVEL            rb   ; $18 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
-def CHARREC_SWING            rw   ; $19
+def CHARREC_SKILL_ICONS      rw   ; $19 bitmask of the icons earned at STATARCH_MODIFIERS levels
 def CHARREC_AI_PARAMS        rb 4 ; $1b reaction delays near and far, tracking, aim-away chance
-def CHARREC_DIFFICULTY       rb   ; $1f CPU difficulty 0 easy - 3 intense, the AI's serve style on court
+def CHARREC_DIFFICULTY       rb   ; $1f CPU difficulty 0 easy - 3 intense, the AI's play style on court
 def CHARREC_STAT_TOP         rb   ; $20 the eleven 0-9 stats, in this order
 def CHARREC_STAT_SLICE       rb   ; $21
 def CHARREC_STAT_SERVE       rb   ; $22
@@ -81,7 +81,7 @@ def STATARCH_SPEED          rb 9
 def STATARCH_DASH           rb 9
 def STATARCH_REACTION       rb 9
 def STATARCH_STOP           rb 9
-def STATARCH_MODIFIERS      equ _RS ; $70 (level, icon) pairs for CHARREC_SWING, to $ff
+def STATARCH_MODIFIERS      equ _RS ; $70 (level, icon) pairs for CHARREC_SKILL_ICONS, to $ff
 	ASSERT STATARCH_MODIFIERS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
 
 ; --- Match record slots (GetMatchRecordPtr's a, InitMatchRecordFromCharId's c) ---

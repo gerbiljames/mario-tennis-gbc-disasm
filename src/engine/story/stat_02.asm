@@ -318,7 +318,7 @@ RecomputeCharacterStats:
 	and $0f ; $4639
 	add a ; $463b
 	ld_hl_indexed CharIconMasks_02 ; $463c
-	ld a, CHARREC_SWING ; $4643
+	ld a, CHARREC_SKILL_ICONS ; $4643
 	add c ; $4645
 	ld e, a ; $4646
 	ld d, b ; $4647

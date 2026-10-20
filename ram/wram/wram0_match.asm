@@ -244,10 +244,10 @@ wShotWasQuickSwing:: db
 ; [8-bit] The striker's wCharAimOffset at contact, stored by ExecuteShot. Write-only
 wLastShotAimOffset:: db
 
-; [8-bit] Nonzero when the shot just struck is a special/power hit. Cleared at the top of ExecuteShot; set to 1 when the ball is struck above height $0140, and from the 32-entry toss-height table on serves. Forces the special-shot flash (wSpecialHitTimer) over the normal spark, and on the rally's first shot shows court banner $0e
-wSpecialShotFlag:: db
+; [8-bit] Nonzero when the serve just struck is a power serve. Cleared at the top of ExecuteShot; the serve executors set it from the 32-entry toss-height table (Unused_07_SetPowerServeFlagAboveHeight would set it for any contact above height $0140). Forces the special-shot flash (wSpecialHitTimer) over the normal spark, and on the rally's first shot shows BANNER_POWER_SERVE
+wPowerServeFlag:: db
 
-; [8-bit] Cleared by ExecuteShot at every swing; set to 1 by ExecuteShotPowerTopspin/PowerSlice/Smash, and given wSpecialShotFlag's value by SetSpecialShotFlagFromBallHeight. Write-only
+; [8-bit] Cleared by ExecuteShot at every swing; set to 1 by ExecuteShotPowerTopspin/PowerSlice/Smash, and given wPowerServeFlag's value by SetPowerServeFlagFromTossHeight. Write-only
 wLastShotWasPowerShot:: db
 
 ; [8-bit] When 1, the shot's lateral aim offsets are negated. ExecuteShot sets it to the parity of four conditions (hitter wCharSwingAnim == 6, == $0a, wCharMirrorAttrMask nonzero, wRallyLength == 0). LoadShotPlacementEntry negates the placement angle offset with it, and every court bank's SetBallVelocityFromEntry6 negates the entry's angle delta before adding it to wShotAimAngle
@@ -289,11 +289,11 @@ wBallBounceCount:: db
 ; [8-bit] Per-frame bounce event, cleared at the top of StepBallPhysics: 1 = ball reached the ground, 2 = ball bounced off a court fence/wall (BounceBallOffCourtFences). HandleBallBounceEvent returns at once on 0
 wBallBounceEvent:: db
 
-; [8-bit] 1 for the single frame the ball crosses the net plane; set and cleared by HandleBallNetCrossing. Read by TickRallyTimers, AiTrackBallPhase and CheckBallHitsMinigameTarget / CheckBallHitsMinigameTargetAlt
+; [8-bit] 1 for the single frame the ball crosses the net plane; set and cleared by HandleBallNetCrossing. Read by HandleBallNetCrossEvent, AiTrackBallPhase and CheckBallHitsMinigameTarget / CheckBallHitsMinigameTargetAlt
 wBallCrossedNetFlag:: db
 
-; [8-bit] Frames the ball has spent past the net this point: TickRallyTimers increments it while wBallCrossedNetFlag is set, capped at $64; ResetPointState clears it. Read only by its own cap test
-wRallyNetFrames:: db
+; [8-bit] Net crossings this point: HandleBallNetCrossEvent increments it on each frame wBallCrossedNetFlag is set (once per crossing), capped at $64; ResetPointState clears it. Read only by its own cap test
+wRallyNetCrossings:: db
 
 ; [8-bit] Rally Length; number of times the ball was hit in the span of a point
 wRallyLength:: db
@@ -322,7 +322,7 @@ wBallTrailColor:: db
 ; [8-bit] wBallCourtQuadrant when the shot was struck. EvaluateBounceOutcome XORs it with the live quadrant: bit 1 = reached the other side of the net, bit 0 = changed lateral half (the serve's diagonal-box rule). The bank $0d wall-practice bounce flips bit 1 by hand
 wBallQuadrantAtHit:: db
 
-; [8-bit] Ball touched the net since the last strike: set to 1 only by HandleBallNetCrossing when the ball crosses depth 0 at or below net height (with SFX_NET_CORD and StartBounceEffect); cleared by HandleBallHitEvent and ResetPointState. Read by EvaluateBounceOutcome (a serve in the right box becomes a let), TickRallyTimers, AiTrackBallPhase and the drill hooks NetGamePractice2Cases1, NetGamePractice3Cases1, ServiceMatch2Cases1 and ServicePractice2Hook_Bounce
+; [8-bit] Ball touched the net since the last strike: set to 1 only by HandleBallNetCrossing when the ball crosses depth 0 at or below net height (with SFX_NET_CORD and StartBounceEffect); cleared by HandleBallHitEvent and ResetPointState. Read by EvaluateBounceOutcome (a serve in the right box becomes a let), HandleBallNetCrossEvent, AiTrackBallPhase and the drill hooks NetGamePractice2Cases1, NetGamePractice3Cases1, ServiceMatch2Cases1 and ServicePractice2Hook_Bounce
 wBallTouchedNetFlag:: db
 
 ; [8-bit] Nonzero freezes the match simulation: UpdateMatchFrame skips ClearSpriteSlots, UpdateMatchCamera, UpdateAllChars, ball events, UpdateBallVisuals, timers and the mode hook. $ff during match setup and while the pause menu is open
@@ -349,7 +349,7 @@ wFallbackTrajectoryFlag:: db
 ; [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it
 wMatchExitRequest:: db
 
-; [8-bit] Set by InitViewFlipPreference when the court view is fixed instead of following the saved preference (link matches, game modes $08/$09, any minigame); the pause menus then lock the view row
+; [8-bit] Bit 0 is set by InitViewFlipPreference when the court view is fixed instead of following the saved preference (link matches, game modes $08/$09, any minigame); bit 1 is set by CharServeSwingWindowPhase when the serve swing starts and cleared by PlayPoint. Either bit stops ReinitPointAfterPause and locks the pause menus' view row; RefreshCourtScoreboard tests bit 0 only
 wCourtViewLocked:: db
 
 ; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo_08 and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
@@ -358,13 +358,13 @@ wCameraFollowBall:: db
 ; [8-bit] InitAllChars sets it for a non-link singles match (minigame starts clear it); enables the wide flickering ground shadow under grounded characters
 wStandingShadowsEnabled:: db
 
-; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of wPrevCourtPos), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set
+; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of wPlayer1PrevCourtPos), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set
 wCourtViewFlipped:: db
 
 ; [8-bit] Nonzero makes RunChangeoverSequence walk the characters to their new ends without the CHANGE ENDS banner. Set at the start of a set, at set end and when a tiebreak begins; cleared by the sequence
 wChangeoverSkipBanner:: db
 
-; [8-bit] Set to 1 by CheckServerEndChanged when bit 1 of wPrevCourtPos toggles (players change ends). RunChangeoverSequence then shows court banner $00, walks the characters over and clears it; also cleared at match setup
+; [8-bit] Set to 1 by CheckPlayer1EndChanged when bit 1 of wPlayer1PrevCourtPos toggles (players change ends). RunChangeoverSequence then shows court banner $00, walks the characters over and clears it; also cleared at match setup
 wChangeEndsPending:: db
 
 ; [8-bit] Nonzero when wCourtViewFlipped changed on the last UpdateViewFlipState (old minus new). RefreshCourtAfterEndChange returns at once on 0; ReinitPointAfterPause uses it to decide whether to redraw the court
@@ -451,6 +451,6 @@ wRulesTitleTextId:: dw
 ; [16-bit] Saved best score for the current minigame, copied from the record ReadMinigameRecord returns (WRAM bank 7, $de00). Drawn instead of wMinigamesTargetScore when wMinigameHighScoreMode marks a high-score attempt; bank $0d compares the current score against it
 wMinigameHighScore:: dw
 
-; [8-bit] Flags for the built-in debug test match; $fe from Unused_07_RunDebugTestMatch. Bit 1 makes character setup call OverrideCharStatsForDebug; bit 0 makes the frame-stepping loop skip the input wait
+; [8-bit] Flags for the built-in debug test match; $fe from Unused_07_RunDebugTestMatch. Bit 1 makes character setup call OverrideCharStatsForDebug; bit 0 stops StepMatchFramesSkippable counting down, so it waits for A or B indefinitely
 wDebugMatchFlags:: db
 	ds 17

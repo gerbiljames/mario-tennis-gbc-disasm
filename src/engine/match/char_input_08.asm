@@ -59,7 +59,7 @@ BuildCharSpriteSlots:
 	add $80 ; $76a8
 	ld [wCharDepthKey], a ; $76aa
 	ld a, [wCharFacingOctant] ; $76ad
-	ld_hl_indexed BuildCharSpriteSlotsTable ; $76b0
+	ld_hl_indexed CharFacingOctantFlipAttrs ; $76b0
 	ld a, [wCharSpriteAttr] ; $76b7
 	or OAM_BANK1 ; $76ba
 	xor [hl] ; $76bc
@@ -104,7 +104,7 @@ BuildCharSpriteSlots:
 	ld [hl+], a ; $76f9
 	ld [hl], d ; $76fa
 	ret ; $76fb
-BuildCharSpriteSlotsTable:
+CharFacingOctantFlipAttrs:
 	; $76fc, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawOffscreenCharArrow:
@@ -191,10 +191,11 @@ BuildAirborneShadowSlot:
 	ld [hl], d ; $778f
 	ret ; $7790
 ; Interprets the animation script at wCharAnimScriptPtr, one command per frame
-; once wCharAnimDelay expires. Commands are words: below $f0 is [delay, frame],
-; $ff rewinds to wCharAnimScriptBase + d, $fe switches animation, $fb toggles
-; the flip bits of wCharSpriteAttr. A frame change sets CHARSPRITEB_RELOAD_TILES in
-; wCharSpriteDirty so ReloadCharFacingTiles uploads new tiles.
+; once wCharAnimDelay expires. Commands are words: below $f0 is [frame, delay],
+; $ff rewinds to wCharAnimScriptBase + d, $fe switches animation, $fb sets the
+; flip bits of wCharSpriteAttr from its operand. A frame change sets
+; CHARSPRITEB_RELOAD_TILES in wCharSpriteDirty so ReloadCharFacingTiles uploads
+; new tiles.
 StepCharAnimation:
 	ld a, [wCharAnimDelay] ; $7791
 	and a ; $7794

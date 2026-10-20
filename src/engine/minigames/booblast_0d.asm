@@ -37,7 +37,7 @@ BananaBunchGridLayout2:
 BananaBunchHook_PointEnd:
 	call HandleMinigamePointEnd ; $5596
 	ret ; $5599
-BananaBunchHook_RallyTick:
+BananaBunchHook_NetCross:
 	call BananaBunchReflectBallAndRecordCell ; $559a
 	ret ; $559d
 BananaBunchHook_Bounce:
@@ -119,7 +119,7 @@ InitMinigame_BooBlast:
 	ld a, [hl+] ; $5649
 	ld [wPlayer2MainDifficulty], a ; $564a
 	ld a, [hl+] ; $564d
-	ld [wPlayer2MainPhysics], a ; $564e
+	ld [wPlayer2MainAiPosition], a ; $564e
 	ret ; $5651
 BooBlastInitParams:
 	; $5652, 6 bytes (bytes:6)
@@ -133,7 +133,7 @@ MinigameHooks_BooBlast:
 	dw BooBlastHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw BooBlastHook_BallHit ; MODEHOOK_BALL_HIT
 	dw BooBlastHook_Bounce ; MODEHOOK_BOUNCE
-	dw BooBlastHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw BooBlastHook_NetCross ; MODEHOOK_NET_CROSS
 	dw BooBlastHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 BooBlastHook_MinigameStart:
@@ -154,7 +154,7 @@ BooBlastHook_PointEnd:
 	call DisableBooBlastTargetActor ; $567e
 	call ResolveAndShowMinigamePoint ; $5681
 	ret ; $5684
-BooBlastHook_RallyTick:
+BooBlastHook_NetCross:
 	call StubNop_0d_1 ; $5685
 	ret ; $5688
 BooBlastHook_Bounce:
@@ -352,7 +352,7 @@ DrawBooBlastTargetSprite:
 	ld a, [hl] ; $5814
 	cp $ff ; $5815
 	ret z ; $5817
-	farcall QueueMatchSpriteFrameB ; $5818
+	farcall LoadBooFrameTiles ; $5818
 	ret ; $581b
 BooBlastTargetAnimFrames:
 	; $581c, 32 bytes (bytes:8)

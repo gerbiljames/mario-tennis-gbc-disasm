@@ -152,7 +152,7 @@ ServiceMatch1Hooks:
 	dw ServiceMatch1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ServiceMatch1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServiceMatch1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServiceMatch1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServiceMatch1Hook_MinigameStart:
@@ -195,8 +195,8 @@ ServiceMatch1Hook_PointEnd:
 	ld a, WINLOSE_LOSE ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
-ServiceMatch1Hook_RallyTick:
-	call ServiceMatch1JudgeOnRallyTick ; $489a
+ServiceMatch1Hook_NetCross:
+	call ServiceMatch1JudgeOnNetCross ; $489a
 	ret ; $489d
 ServiceMatch1Hook_Bounce:
 	call ServiceMatch1JudgeOnBounce ; $489e
@@ -254,10 +254,10 @@ ServiceMatch1JudgeOnBallHit:
 ; means the body never runs, so this drill does not judge on a bounce.
 ;
 ; Each drill has four of these, one per hook: PointEnd, BallHit, Bounce and
-; RallyTick, passing 0-3 to its JudgePoint as the event code. 20 of the 60 in
+; NetCross, passing 0-3 to its JudgePoint as the event code. 20 of the 60 in
 ; this bank start with `ret`, and which ones varies by drill -- most disable
-; only RallyTick, the serve and net drills also disable Bounce, and
-; ServiceMatch2 disables Bounce while leaving RallyTick live, so each drill
+; only NetCross, the serve and net drills also disable Bounce, and
+; ServiceMatch2 disables Bounce while leaving NetCross live, so each drill
 ; scores on its own subset of events. See docs/bugs.md.
 ServiceMatch1JudgeOnBounce:
 	ret ; $490e
@@ -265,9 +265,9 @@ ServiceMatch1JudgeOnBounce:
 	call ServiceMatch1JudgePoint ; $4911
 	ld [wDrillPointJudgement], a ; $4914
 	ret ; $4917
-ServiceMatch1JudgeOnRallyTick:
+ServiceMatch1JudgeOnNetCross:
 	ret ; $4918
-	ld a, JUDGEEVENT_RALLY_TICK ; $4919
+	ld a, JUDGEEVENT_NET_CROSS ; $4919
 	call ServiceMatch1JudgePoint ; $491b
 	ld [wDrillPointJudgement], a ; $491e
 	ret ; $4921
@@ -287,7 +287,7 @@ ServiceMatch1JudgePoint:
 	dw ServiceMatch1JudgePoint.result0 ; $4935 jumptable
 	dw ServiceMatch1Cases1 ; $4937 jumptable
 	dw ServiceMatch1Cases1.ignoreBounce ; $4939 jumptable
-	dw ServiceMatch1Cases1.ignoreRallyTick ; $493b jumptable
+	dw ServiceMatch1Cases1.ignoreNetCross ; $493b jumptable
 .result0:
 	ld a, [wPointOutcome] ; $493d
 	ld hl, ServiceMatch1JudgePointMessages ; $4940
@@ -310,7 +310,7 @@ ServiceMatch1Cases1:
 .ignoreBounce:
 	xor a ; $4968
 	ret ; $4969
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $496a
 	ret ; $496b
 .dispatchResult:
@@ -319,7 +319,7 @@ ServiceMatch1Cases1:
 	dw ServiceMatch1Cases1.checkPointOutcome ; $496f jumptable
 	dw ServiceMatch1Cases2 ; $4971 jumptable
 	dw ServiceMatch1Cases2.ignoreBounce ; $4973 jumptable
-	dw ServiceMatch1Cases2.ignoreRallyTick ; $4975 jumptable
+	dw ServiceMatch1Cases2.ignoreNetCross ; $4975 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4977
 	ld hl, ServiceMatch1Cases1Messages ; $497a
@@ -351,7 +351,7 @@ ServiceMatch1Cases2:
 .ignoreBounce:
 	xor a ; $49b3
 	ret ; $49b4
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $49b5
 	ret ; $49b6
 Unused_0b_DrillPointWon_1:
@@ -376,7 +376,7 @@ ServiceMatch2Hooks:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw ServiceMatch2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServiceMatch2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServiceMatch2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw ServiceMatch2Hook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServiceMatch2Hook_PerFrame:
@@ -445,8 +445,8 @@ ServiceMatch2Hook_PointEnd:
 	ld a, WINLOSE_LOSE ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
-ServiceMatch2Hook_RallyTick:
-	call ServiceMatch2JudgeOnRallyTick ; $4a5e
+ServiceMatch2Hook_NetCross:
+	call ServiceMatch2JudgeOnNetCross ; $4a5e
 	ret ; $4a61
 ServiceMatch2Hook_Bounce:
 	call ServiceMatch2JudgeOnBounce ; $4a62
@@ -522,8 +522,8 @@ ServiceMatch2JudgeOnBounce:
 	call ServiceMatch2JudgePoint ; $4b43
 	ld [wDrillPointJudgement], a ; $4b46
 	ret ; $4b49
-ServiceMatch2JudgeOnRallyTick:
-	ld a, JUDGEEVENT_RALLY_TICK ; $4b4a
+ServiceMatch2JudgeOnNetCross:
+	ld a, JUDGEEVENT_NET_CROSS ; $4b4a
 	call ServiceMatch2JudgePoint ; $4b4c
 	ld [wDrillPointJudgement], a ; $4b4f
 	ret ; $4b52
@@ -588,7 +588,7 @@ ServiceMatch2Cases1:
 	dw ServiceMatch2Cases1.checkPointOutcome ; $4bbb jumptable
 	dw ServiceMatch2Cases2 ; $4bbd jumptable
 	dw ServiceMatch2Cases2.ignoreBounce ; $4bbf jumptable
-	dw ServiceMatch2Cases2.ignoreRallyTick ; $4bc1 jumptable
+	dw ServiceMatch2Cases2.ignoreNetCross ; $4bc1 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4bc3
 	ld hl, ServiceMatch2Cases1Messages ; $4bc6
@@ -620,6 +620,6 @@ ServiceMatch2Cases2:
 .ignoreBounce:
 	xor a ; $4bff
 	ret ; $4c00
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $4c01
 	ret ; $4c02

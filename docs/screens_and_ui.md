@@ -322,8 +322,8 @@ and `$03` (tiles) and pushes one row and one column per frame through §2.4. The
 |---|---|---|
 | `BlitBGRowFrom64` | `$00:$222c` | 64-wide, one 32-cell row |
 | `BlitBGColumnFrom64` | `$00:$2299` | 64-wide, one 32-cell column |
-| `Unused_00_BlitBGStrip` | `$00:$2313` | 32-wide row |
-| `Unused_00_BlitBGStrip2` | `$00:$2380` | 32-wide column |
+| `Unused_00_BlitBGRowStrip` | `$00:$2313` | 32-wide row |
+| `Unused_00_BlitBGColumnStrip` | `$00:$2380` | 32-wide column |
 
 Each gathers into the §2.4 staging buffers indexed by destination column, so the
 strip lands rotated correctly on the VRAM torus (`inc e / res 5, e` wraps at 32),
@@ -450,7 +450,7 @@ animation-script pointer arrays (e.g. `JuniorCoachWalkSprite`,
 `src/data/sprites/walk_72.asm:19`-`23`); see
 [graphics_formats.md](graphics_formats.md) §4.4.
 
-`Unused_00_PositionSpriteWorld` (`$00:$1f6b`) and `Unused_00_PositionSpriteWorld2`
+`Unused_00_QueueSprite16AtWorldPos` (`$00:$1f6b`) and `Unused_00_QueueSpriteAtWorldPos`
 (`$00:$1fb1`) are world-space wrappers: subtract `wCameraX`/`wCameraY`, cull on
 the difference's high byte (`cp $16` for X, `cp $14`/`$13` for Y), multiply by 8
 and take the high byte (one high-byte unit = 8 pixels, a world unit = 1/32
@@ -514,11 +514,11 @@ when `hLinkExchangeActive`, through `SyncLinkFrame`.
 `Unused_00_WaitFadeEndLinked` (`$00:$1dbd`) is the same loop hard-wired to
 `SyncLinkFrame`.
 
-`Unused_00_ApplyWhiteFade` (`$00:$1dcc`) is a cheaper second curve: adds a
+`Unused_00_ApplyPackedFade` (`$00:$1dcc`) is a cheaper second curve: adds a
 per-channel increment to the packed BGR555 word with `add`/`adc` and repairs
 carries across channel boundaries. It is reached only from the bit-7 branch at
 `$1d7a`, and the only write setting bit 7 is at `$00:$1d19`, inside the uncalled
-`Unused_00_BeginWhiteFadeOut` (`$1d0f`) — so it never runs.
+`Unused_00_BeginPackedFadeOut` (`$1d0f`) — so it never runs.
 `Unused_00_ForceFadeOut` (`$1d09`) is also unreferenced.
 
 `ConvertColorToGrayscale` (`$1d:$7210`):
@@ -1013,12 +1013,12 @@ overworld. So it is the boot manager, and its debug-harness half is unreachable.
 
 ### Dead framework code
 
-Not defects. Described in place: `Unused_00_ApplyWhiteFade` and
+Not defects. Described in place: `Unused_00_ApplyPackedFade` and
 `Unused_00_ForceFadeOut` (§6.3), `Unused_00_SetSpriteQueueBase` (§5.1),
 `Unused_05_AllocWindowSlotBit` and `Unused_05_DrawWindowGlyphRun` (§7.5),
 `Unused_05_RunPagedTextMenuAutoSize` / `Unused_05_PagedMenuFrameTask` (§7.7),
 `Unused_05_PushTextArgShortTextId` (§7.4), `Unused_00_CopyMapToScrollBuffers`
-(§3.5). The white fade, `Unused_00_CopyMapToScrollBuffers` and
+(§3.5). The packed fade curve, `Unused_00_CopyMapToScrollBuffers` and
 `Unused_05_PagedMenuFrameTask` also have [bugs.md](bugs.md) entries.
 
 The queue-compaction tail at `$00:$0595`-`$05ae`, after the `ret` at `$0594`,

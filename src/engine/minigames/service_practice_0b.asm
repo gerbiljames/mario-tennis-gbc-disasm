@@ -20,7 +20,7 @@ ServiceMatch3Hooks:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw ServiceMatch3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServiceMatch3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServiceMatch3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServiceMatch3Hook_PerFrame:
@@ -67,8 +67,8 @@ ServiceMatch3Hook_PointEnd:
 	ld a, WINLOSE_NONE ; $4c86
 	ld [wPointWinLoseFlag], a ; $4c88
 	ret ; $4c8b
-ServiceMatch3Hook_RallyTick:
-	call ServiceMatch3JudgeOnRallyTick ; $4c8c
+ServiceMatch3Hook_NetCross:
+	call ServiceMatch3JudgeOnNetCross ; $4c8c
 	ret ; $4c8f
 ServiceMatch3Hook_Bounce:
 	call ServiceMatch3JudgeOnBounce ; $4c90
@@ -129,9 +129,9 @@ ServiceMatch3JudgeOnBounce:
 	call ServiceMatch3JudgePoint ; $4d2c
 	ld [wDrillPointJudgement], a ; $4d2f
 	ret ; $4d32
-ServiceMatch3JudgeOnRallyTick:
+ServiceMatch3JudgeOnNetCross:
 	ret ; $4d33
-	ld a, JUDGEEVENT_RALLY_TICK ; $4d34
+	ld a, JUDGEEVENT_NET_CROSS ; $4d34
 	call ServiceMatch3JudgePoint ; $4d36
 	ld [wDrillPointJudgement], a ; $4d39
 	ret ; $4d3c
@@ -151,7 +151,7 @@ ServiceMatch3JudgePoint:
 	dw ServiceMatch3JudgePoint.result0 ; $4d50 jumptable
 	dw ServiceMatch3Cases1 ; $4d52 jumptable
 	dw ServiceMatch3Cases1.ignoreBounce ; $4d54 jumptable
-	dw ServiceMatch3Cases1.ignoreRallyTick ; $4d56 jumptable
+	dw ServiceMatch3Cases1.ignoreNetCross ; $4d56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4d58
 	ld hl, ServiceMatch3JudgePointMessages ; $4d5b
@@ -174,7 +174,7 @@ ServiceMatch3Cases1:
 .ignoreBounce:
 	xor a ; $4d83
 	ret ; $4d84
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $4d85
 	ret ; $4d86
 .dispatchResult:
@@ -183,7 +183,7 @@ ServiceMatch3Cases1:
 	dw ServiceMatch3Cases1.checkPointOutcome ; $4d8a jumptable
 	dw ServiceMatch3Cases2 ; $4d8c jumptable
 	dw ServiceMatch3Cases2.ignoreBounce ; $4d8e jumptable
-	dw ServiceMatch3Cases2.ignoreRallyTick ; $4d90 jumptable
+	dw ServiceMatch3Cases2.ignoreNetCross ; $4d90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4d92
 	ld hl, ServiceMatch3Cases1Messages ; $4d95
@@ -215,7 +215,7 @@ ServiceMatch3Cases2:
 .ignoreBounce:
 	xor a ; $4dce
 	ret ; $4dcf
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $4dd0
 	ret ; $4dd1
 Unused_0b_DrillPointWon_3:
@@ -244,7 +244,7 @@ ServicePractice1Hooks:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw ServicePractice1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServicePractice1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServicePractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServicePractice1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServicePractice1Hook_PerFrame:
@@ -311,7 +311,7 @@ ServicePractice1EvaluateResult:
 	ld [wDrillLessonResult], a ; $4e6e
 	ld a, WINLOSE_WIN ; $4e71
 	ret ; $4e73
-ServicePractice1Hook_RallyTick:
+ServicePractice1Hook_NetCross:
 	ret ; $4e74
 	twin_named service_practice1_hook_bounce, ServicePractice1Hook_Bounce ; $4e75
 Unused_0b_ServeSecondBounceSound_1:
@@ -434,7 +434,7 @@ ServicePractice2Hooks:
 	dw ServicePractice2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ServicePractice2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServicePractice2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServicePractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServicePractice2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServicePractice2Hook_MinigameStart:
@@ -529,7 +529,7 @@ ServicePractice2EvaluateResult:
 	ld [wDrillLessonResult], a ; $502b
 	ld a, WINLOSE_WIN ; $502e
 	ret ; $5030
-ServicePractice2Hook_RallyTick:
+ServicePractice2Hook_NetCross:
 	ret ; $5031
 ServicePractice2Hook_Bounce:
 	ld a, [wBallTouchedNetFlag] ; $5032

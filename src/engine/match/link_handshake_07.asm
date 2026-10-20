@@ -280,13 +280,13 @@ TryLinkHandshakeMaster:
 	call AwaitSerialByte ; $4b6f
 	farcall AnimateLinkStatusPalette ; $4b72
 	farcall UpdateAnimatedTiles ; $4b75
-	jr c, .sendReady ; $4b78
+	jr c, .giveUp ; $4b78
 	cp LINKMSG_PROBE ; $4b7a
-	jr z, .sendReady ; $4b7c
+	jr z, .giveUp ; $4b7c
 	cp $ff ; $4b7e
-	jr z, .sendReady ; $4b80
+	jr z, .giveUp ; $4b80
 	cp LINKMSG_PROBE_REPLY ; $4b82
-	jr z, .failed ; $4b84
+	jr z, .success ; $4b84
 	ld a, d ; $4b86
 	cp $03 ; $4b87
 	jr nz, .retry ; $4b89
@@ -306,8 +306,8 @@ TryLinkHandshakeMaster:
 	ld a, d ; $4b9c
 	or e ; $4b9d
 	jr nz, .pollLoop ; $4b9e
-	jr .sendReady ; $4ba0
-.sendReady:
+	jr .giveUp ; $4ba0
+.giveUp:
 	di ; $4ba2
 	ld a, LINKMSG_NONE ; $4ba3
 	ldh [rSB], a ; $4ba5
@@ -324,7 +324,7 @@ TryLinkHandshakeMaster:
 	ld a, e ; $4bb8
 	scf ; $4bb9
 	jr .done ; $4bba
-.failed:
+.success:
 	scf ; $4bbc
 	ccf ; $4bbd
 .done:

@@ -305,7 +305,7 @@ LoadShotPlacementEntry:
 	ret ; $52d6
 FinalizeShotSpeed:
 	call AddPlayerMomentumToShot ; $52d7
-	call ApplyCharFlagShotSpeedPenalty ; $52da
+	call ApplyDiveShotSpeedPenalty ; $52da
 	ld hl, -256 ; $52dd
 	add hl, bc ; $52e0
 	bit 7, h ; $52e1

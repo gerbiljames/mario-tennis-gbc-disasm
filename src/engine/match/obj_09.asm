@@ -56,12 +56,12 @@ UpdateScorePanelDisplay:
 	and a ; $409b
 	jr nz, .deuce ; $409c
 	push de ; $409e
-	ld a, [wScoreDisplayIsTiebreak] ; $409f
+	ld a, [wScoreDigitGfxStyle] ; $409f
 	ld b, a ; $40a2
 	ld a, d ; $40a3
 	call LoadPlayer1ScoreDigitGfx ; $40a4
 	pop de ; $40a7
-	ld a, [wScoreDisplayIsTiebreak] ; $40a8
+	ld a, [wScoreDigitGfxStyle] ; $40a8
 	ld b, a ; $40ab
 	ld a, e ; $40ac
 	call LoadPlayer2ScoreDigitGfx ; $40ad
@@ -75,7 +75,7 @@ LoadOnCourtCharacterGfx:
 	farcall LoadOnCourtCharTilesB ; $40ba
 	jumptable [wOnCourtCharCountMinus1] ; $40bd
 	dw LoadOnCourtCharacterGfx.done ; $40c1 jumptable
-	dw LoadOnCourtCharacterGfx.char4 ; $40c3 jumptable
+	dw LoadOnCourtCharacterGfx.char1 ; $40c3 jumptable
 	dw LoadOnCourtCharacterGfx.char3 ; $40c5 jumptable
 	dw LoadOnCourtCharacterGfx.char2 ; $40c7 jumptable
 .char2:
@@ -94,7 +94,7 @@ LoadOnCourtCharacterGfx:
 	ld a, [wCharSpriteSetId] ; $40f0
 	ld de, vTiles0 tile $1c ; $40f3
 	farcall LoadOnCourtCharTilesB ; $40f6
-.char4:
+.char1:
 	wram_bank WRAM_CHAR1 ; $40f9
 	ld a, [wCharSpriteSetId] ; $40ff
 	ld de, vTiles0 tile $08 ; $4102
@@ -129,7 +129,7 @@ SpawnGameScoreDisplayObjs:
 	wram_bank WRAM_ACTORS ; $414e
 	push bc ; $4154
 	ld a, b ; $4155
-	ld hl, ObjTemplates_09 ; $4156
+	ld hl, ScorePanelCharIconObjTemplates_09 ; $4156
 	ld bc, wObjSlot0 ; $4159
 	call LoadObjTemplate_09 ; $415c
 	call GetPlayer1CharIconSprites ; $415f
@@ -137,19 +137,19 @@ SpawnGameScoreDisplayObjs:
 	pop bc ; $4165
 	ld a, b ; $4166
 	xor $03 ; $4167
-	ld hl, ObjTemplates_09 ; $4169
+	ld hl, ScorePanelCharIconObjTemplates_09 ; $4169
 	ld bc, wObjSlot1 ; $416c
 	call LoadObjTemplate_09 ; $416f
 	call GetPlayer2CharIconSprites ; $4172
 	call SetObjSpriteTemplate ; $4175
 	ld a, $00 ; $4178
-	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $417a
+	ld hl, ScoreDigitsObjTemplates_09 ; $417a
 	ld bc, wObjSlot2 ; $417d
 	call LoadObjTemplate_09 ; $4180
 	ret ; $4183
 .lessonPanel:
 	ld a, $00 ; $4184
-	ld hl, GameScoreDisplayObjsObjTemplate ; $4186
+	ld hl, LessonScorePanelObjTemplate_09 ; $4186
 	ld bc, wObjSlot0 ; $4189
 	call LoadObjTemplate_09 ; $418c
 	ret ; $418f
@@ -157,42 +157,42 @@ DismissGameScoreDisplayObjs:
 	ld a, [wDrillIsPracticeLesson] ; $4190
 	and a ; $4193
 	jr nz, .lessonPanel ; $4194
-	ld hl, ObjTemplates_09 ; $4196
+	ld hl, ScorePanelCharIconObjTemplates_09 ; $4196
 	ld bc, wObjSlot0 ; $4199
 	call StartObjExitAnim ; $419c
-	ld hl, ObjTemplates_09 ; $419f
+	ld hl, ScorePanelCharIconObjTemplates_09 ; $419f
 	ld bc, wObjSlot1 ; $41a2
 	call StartObjExitAnim ; $41a5
-	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $41a8
+	ld hl, ScoreDigitsObjTemplates_09 ; $41a8
 	ld bc, wObjSlot2 ; $41ab
 	call StartObjExitAnim ; $41ae
 	ret ; $41b1
 .lessonPanel:
-	ld hl, GameScoreDisplayObjsObjTemplate ; $41b2
+	ld hl, LessonScorePanelObjTemplate_09 ; $41b2
 	ld bc, wObjSlot0 ; $41b5
 	call StartObjExitAnim ; $41b8
 	ret ; $41bb
-ObjTemplates_09:
+ScorePanelCharIconObjTemplates_09:
 	; $41bc, 64 bytes (obj_template)
 	obj_template $50, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
 	obj_template $50, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 1
 	obj_template $30, $4c, 0, ObjUpdateRunCurve, 1, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 2
 	obj_template $30, $34, 0, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 3
-GameScoreDisplayObjsObjTemplate:
+LessonScorePanelObjTemplate_09:
 	; $41fc, 16 bytes (obj_template)
-	obj_template $40, $40, GameScoreDisplaySpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
-SpawnGameScoreDisplayObjsObjTemplate:
+	obj_template $40, $40, LessonScorePanelSpriteTemplate_09, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 3, SFX_SCORE_DISPLAY, 0 ; record 0
+ScoreDigitsObjTemplates_09:
 	; $420c, 32 bytes (obj_template)
 	obj_template $40, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateShow, 0, ObjUpdateHide, 0, SFX_SCORE_DISPLAY, 0 ; record 0
 	obj_template $50, $40, ObjColumn8SpriteTemplate_09.rows4, ObjUpdateRunCurve, 0, ObjUpdateRunCurve, 2, SFX_SCORE_DISPLAY, 0 ; record 1
 SpawnGameResultObj:
 	ld a, $01 ; $422c
-	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $422e
+	ld hl, ScoreDigitsObjTemplates_09 ; $422e
 	ld bc, wObjSlot2 ; $4231
 	call LoadObjTemplate_09 ; $4234
 	ret ; $4237
 DismissGameResultObj:
-	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $4238
+	ld hl, ScoreDigitsObjTemplates_09 ; $4238
 	ld bc, wObjSlot2 ; $423b
 	call StartObjExitAnim ; $423e
 	ret ; $4241

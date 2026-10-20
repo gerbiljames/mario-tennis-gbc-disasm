@@ -53,7 +53,7 @@ DrawTreasureBoxSprite:
 	ld a, [hl] ; $5ca3
 	cp $ff ; $5ca4
 	ret z ; $5ca6
-	farcall LoadEffectFrameTiles_28 ; $5ca7
+	farcall LoadTreasureBoxFrameTiles ; $5ca7
 	ret ; $5caa
 TreasureBoxSpriteAnimFrames:
 	; $5cab, 32 bytes (bytes:8)
@@ -81,7 +81,7 @@ MinigameHooks_MedallionMatch:
 	dw MedallionMatchHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw MedallionMatchHook_BallHit ; MODEHOOK_BALL_HIT
 	dw MedallionMatchHook_Bounce ; MODEHOOK_BOUNCE
-	dw MedallionMatchHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw MedallionMatchHook_NetCross ; MODEHOOK_NET_CROSS
 	dw MedallionMatchHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 MedallionMatchHook_MinigameStart:
@@ -119,7 +119,7 @@ MedallionMatchHook_PointStart:
 MedallionMatchHook_PointEnd:
 	call EndMinigamePoint ; $5d55
 	ret ; $5d58
-MedallionMatchHook_RallyTick:
+MedallionMatchHook_NetCross:
 	call KeepMinigameCameraFixed ; $5d59
 	ret ; $5d5c
 MedallionMatchHook_Bounce:
@@ -319,7 +319,7 @@ MinigameHooks_FruitFantasy:
 	dw FruitFantasyHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw FruitFantasyHook_BallHit ; MODEHOOK_BALL_HIT
 	dw FruitFantasyHook_Bounce ; MODEHOOK_BOUNCE
-	dw FruitFantasyHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw FruitFantasyHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 FruitFantasyHook_MinigameStart:
@@ -361,7 +361,7 @@ FruitFantasyGridLayout2:
 FruitFantasyHook_PointEnd:
 	call HandleMinigamePointEnd ; $5fdc
 	ret ; $5fdf
-FruitFantasyHook_RallyTick:
+FruitFantasyHook_NetCross:
 	call FruitFantasyReflectBallAndRecordCell ; $5fe0
 	ret ; $5fe3
 FruitFantasyHook_Bounce:
