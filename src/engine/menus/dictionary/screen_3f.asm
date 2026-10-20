@@ -341,7 +341,7 @@ LoadTennisDictionaryScreen:
 	ld c, TennisDictionaryTilesA400_SIZE / 16 ; $43aa
 	call QueueVRAMCopy ; $43ac
 	ld hl, TennisDictionaryPalettes ; $43af
-	ld_obj_pals de, 0, 8 ; $43b2
+	ld_obj_pals de, 0, 8 ; $43b2 -- 64 bytes from the 48-byte block: OBJ palettes 6-7 are EndTennisDictionaryAnim's code
 	call LoadPalettesMasterOnly ; $43b5
 	wram_bank WRAM_SCENE ; $43b8
 	ld a, [wTennisDictMode] ; $43be

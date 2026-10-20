@@ -616,10 +616,10 @@ gfx/lz_ChampionMedalAttrmap3.bin 067ba1 93 tilemap:32
 gfx/lz_ChampionMedalTilemap4.bin 067c34 113 tilemap:32
 gfx/lz_ChampionMedalAttrmap4.bin 067d47 90 tilemap:32
 engine/menus/debug/lz_ExpScreenGfx0.bin 069530 6af gfx
-engine/menus/debug/ExpScreenGfx1.bin 069be0 240 gfx
-engine/menus/debug/ExpScreenGfx2.bin 069e20 240 gfx
-engine/menus/debug/ExpScreenGfx3.bin 06a060 240 gfx
-engine/menus/debug/ExpScreenGfx4.bin 06a2a0 240 gfx
+engine/menus/debug/ExpScreenTilemap1.bin 069be0 240 tilemap:32
+engine/menus/debug/ExpScreenAttrmap1.bin 069e20 240 tilemap:32
+engine/menus/debug/ExpScreenTilemap2.bin 06a060 240 tilemap:32
+engine/menus/debug/ExpScreenAttrmap2.bin 06a2a0 240 tilemap:32
 engine/menus/debug/ExpScreenGfxPalettes0.asm 06a4e0 50 palettes
 engine/menus/debug/lz_Unused_1a_ExpScreenGfx9.bin 06a530 118 gfx
 engine/menus/debug/lz_ExpScreenGfx5.bin 06a650 18 gfx
@@ -632,8 +632,8 @@ engine/menus/debug/lz_ExpScreenGfx8.bin 06a729 ab gfx
 engine/menus/debug/CharViewerLowerRowCursorCoords.asm 06ac95 a bytes:2
 engine/menus/char_data/Palette_1a_0.asm 06b0d9 40 palettes
 engine/menus/char_data/lz_CharViewerScreenGfx0.bin 06b119 664 gfx
-engine/menus/char_data/lz_CharViewerScreenGfx1.bin 06b77d b4 gfx
-engine/menus/char_data/lz_CharViewerScreenGfx2.bin 06b831 81 gfx
+engine/menus/char_data/lz_CharViewerScreenTilemap.bin 06b77d b4 tilemap:32
+engine/menus/char_data/lz_CharViewerScreenAttrmap.bin 06b831 81 tilemap:32
 engine/menus/char_data/lz_CharViewerGridTilemap0.bin 06b8b2 3a tilemap:32
 engine/menus/char_data/lz_CharViewerGridTilemap1.bin 06b8ec 43 tilemap:32
 engine/menus/char_data/lz_CharDataConfirmScreenTopTilemap.bin 06be53 22 tilemap:14
@@ -899,8 +899,8 @@ engine/menus/exp/lz_ResultsScreenAttrmap_1e.bin 0792ec 57 tilemap:32
 engine/menus/exp/lz_PanelFrameGfx_1e.bin 079343 9c gfx
 engine/menus/exp/lz_ResultsSinglesLabelTilemap_1e.bin 0793df 13 tilemap:14
 engine/menus/exp/lz_ResultsDoublesLabelTilemap_1e.bin 0793f2 13 tilemap:14
-engine/menus/exp/lz_ResultsPlayerPanelTilemap_1e.bin 079405 1c tilemap:20
-engine/menus/exp/lz_ResultsPlayerPanelAttrmap_1e.bin 079421 17 tilemap:20
+engine/menus/exp/lz_ResultsPlayerPanelTilemap_1e.bin 079405 1c tilemap:8
+engine/menus/exp/lz_ResultsPlayerPanelAttrmap_1e.bin 079421 17 tilemap:8
 engine/menus/exp/ExpAwardScreenBgPalettes.asm 079be1 18 palettes
 engine/menus/exp/lz_ExpAwardScreenGfx_1e.bin 079bf9 6d1 gfx
 engine/menus/exp/lz_ExpAwardScreenTilemap_1e.bin 07a2ca 185 tilemap:32
@@ -3091,153 +3091,153 @@ scenes/StarPatternBgPalettes.asm 18dd9f 40 palettes
 scenes/lz_StarPatternBgTiles.bin 18dddf 2ad gfx
 scenes/lz_StarPatternBgTilemap.bin 18e08c 112 tilemap:64
 scenes/lz_StarPatternBgAttrmap.bin 18e19e 107 tilemap:64
-scenes/lz_StarPatternBgCollisionMap.bin 18e2a5 46
-scenes/lz_StarPatternBgBehaviorMap.bin 18e2eb 46
+scenes/lz_StarPatternBgCollisionMap.bin 18e2a5 46 tilemap:32
+scenes/lz_StarPatternBgBehaviorMap.bin 18e2eb 46 tilemap:32
 scenes/AcademyMainBldgSceneConfig.asm 18e331 2a scene_config
 scenes/AcademyMainBldgPalettes.asm 18e35b 40 palettes
 scenes/lz_AcademyMainBldgTiles.bin 18e39b db6 gfx
 scenes/lz_AcademyMainBldgTilemap.bin 18f151 5be tilemap:64
 scenes/lz_AcademyMainBldgAttrmap.bin 18f70f 301 tilemap:64
-scenes/lz_AcademyMainBldgCollisionMap.bin 18fa10 93
-scenes/lz_AcademyMainBldgBehaviorMap.bin 18faa3 5e
+scenes/lz_AcademyMainBldgCollisionMap.bin 18fa10 93 tilemap:32
+scenes/lz_AcademyMainBldgBehaviorMap.bin 18faa3 5e tilemap:32
 scenes/DormRoomSceneConfig.asm 190030 2a scene_config
 scenes/DormRoomPalettes.asm 19005a 40 palettes
 scenes/lz_DormRoomTiles.bin 19009a 903 gfx
 scenes/lz_DormRoomTilemap.bin 19099d 2c2 tilemap:64
 scenes/lz_DormRoomAttrmap.bin 190c5f 1ff tilemap:64
-scenes/lz_DormRoomCollisionMap.bin 190e5e 76
-scenes/lz_DormRoomBehaviorMap.bin 190ed4 48
+scenes/lz_DormRoomCollisionMap.bin 190e5e 76 tilemap:32
+scenes/lz_DormRoomBehaviorMap.bin 190ed4 48 tilemap:32
 scenes/RestaurantPlazaSceneConfig.asm 190f1c 2a scene_config
 scenes/RestaurantPlazaPalettes.asm 190f46 40 palettes
 scenes/lz_RestaurantPlazaTiles.bin 190f86 ca6 gfx
 scenes/lz_RestaurantPlazaTilemap.bin 191c2c 322 tilemap:64
 scenes/lz_RestaurantPlazaAttrmap.bin 191f4e 19b tilemap:64
-scenes/lz_RestaurantPlazaCollisionMap.bin 1920e9 50
-scenes/lz_RestaurantPlazaBehaviorMap.bin 192139 5a
+scenes/lz_RestaurantPlazaCollisionMap.bin 1920e9 50 tilemap:32
+scenes/lz_RestaurantPlazaBehaviorMap.bin 192139 5a tilemap:32
 scenes/CourtyardSceneConfig.asm 192193 1b scene_config
 scenes/CourtyardPalettes.asm 1921ae 40 palettes
 scenes/lz_CourtyardTiles.bin 1921ee c1c gfx
 scenes/lz_CourtyardTilemap.bin 192e0a 595 tilemap:64
 scenes/lz_CourtyardAttrmap.bin 19339f 2a7 tilemap:64
-scenes/lz_CourtyardCollisionMap.bin 193646 93
-scenes/lz_CourtyardBehaviorMap.bin 1936d9 4f
+scenes/lz_CourtyardCollisionMap.bin 193646 93 tilemap:32
+scenes/lz_CourtyardBehaviorMap.bin 1936d9 4f tilemap:32
 scenes/CourtyardSceneAnimTiles.bin 193730 600 gfx
 scenes/IslandSkySceneConfig.asm 194030 1b scene_config
 scenes/IslandSkyPalettes.asm 19404b 40 palettes
 scenes/lz_IslandSkyTiles.bin 19408b bab gfx
 scenes/lz_IslandSkyTilemap.bin 194c36 2ac tilemap:64
 scenes/lz_IslandSkyAttrmap.bin 194ee2 1a0 tilemap:64
-scenes/lz_IslandSkyCollisionMap.bin 195082 46
-scenes/lz_IslandSkyBehaviorMap.bin 1950c8 49
+scenes/lz_IslandSkyCollisionMap.bin 195082 46 tilemap:32
+scenes/lz_IslandSkyBehaviorMap.bin 1950c8 49 tilemap:32
 scenes/IslandSkySceneAnimTiles.bin 195120 600 gfx
 scenes/SpecialCourtSceneConfig.asm 195720 17 scene_config
 scenes/SpecialCourtPalettes.asm 195737 40 palettes
 scenes/lz_SpecialCourtTiles.bin 195777 769 gfx
 scenes/lz_SpecialCourtTilemap.bin 195ee0 389 tilemap:64
 scenes/lz_SpecialCourtAttrmap.bin 196269 205 tilemap:64
-scenes/lz_SpecialCourtCollisionMap.bin 19646e 46
-scenes/lz_SpecialCourtBehaviorMap.bin 1964b4 46
+scenes/lz_SpecialCourtCollisionMap.bin 19646e 46 tilemap:32
+scenes/lz_SpecialCourtBehaviorMap.bin 1964b4 46 tilemap:32
 scenes/SpecialCourtSceneAnimTiles.bin 196500 600 gfx
 scenes/SeniorClassCourtSceneConfig.asm 196b00 2a scene_config
 scenes/SeniorClassCourtPalettes.asm 196b2a 40 palettes
 scenes/lz_SeniorClassCourtTiles.bin 196b6a 8ee gfx
 scenes/lz_SeniorClassCourtTilemap.bin 197458 49a tilemap:64
 scenes/lz_SeniorClassCourtAttrmap.bin 1978f2 3a5 tilemap:64
-scenes/lz_SeniorClassCourtCollisionMap.bin 197c97 6e
-scenes/lz_SeniorClassCourtBehaviorMap.bin 197d05 51
+scenes/lz_SeniorClassCourtCollisionMap.bin 197c97 6e tilemap:32
+scenes/lz_SeniorClassCourtBehaviorMap.bin 197d05 51 tilemap:32
 scenes/JuniorClassCourtSceneConfig.asm 198040 2a scene_config
 scenes/JuniorClassCourtPalettes.asm 19806a 40 palettes
 scenes/lz_JuniorClassCourtTiles.bin 1980aa 50c gfx
 scenes/lz_JuniorClassCourtTilemap.bin 1985b6 3f4 tilemap:64
 scenes/lz_JuniorClassCourtAttrmap.bin 1989aa 2f8 tilemap:64
-scenes/lz_JuniorClassCourtCollisionMap.bin 198ca2 65
-scenes/lz_JuniorClassCourtBehaviorMap.bin 198d07 48
+scenes/lz_JuniorClassCourtCollisionMap.bin 198ca2 65 tilemap:32
+scenes/lz_JuniorClassCourtBehaviorMap.bin 198d07 48 tilemap:32
 scenes/RestaurantSceneConfig.asm 198d4f 2a scene_config
 scenes/RestaurantPalettes.asm 198d79 40 palettes
 scenes/lz_RestaurantTiles.bin 198db9 7f2 gfx
 scenes/lz_RestaurantTilemap.bin 1995ab 43e tilemap:64
 scenes/lz_RestaurantAttrmap.bin 1999e9 2a3 tilemap:64
-scenes/lz_RestaurantCollisionMap.bin 199c8c 76
-scenes/lz_RestaurantBehaviorMap.bin 199d02 80
+scenes/lz_RestaurantCollisionMap.bin 199c8c 76 tilemap:32
+scenes/lz_RestaurantBehaviorMap.bin 199d02 80 tilemap:32
 scenes/AcademyEntranceSceneConfig.asm 199d82 9 scene_config
 scenes/AcademyEntrancePalettes.asm 199d8b 40 palettes
 scenes/lz_AcademyEntranceTiles.bin 199dcb 8fd gfx
 scenes/lz_AcademyEntranceTilemap.bin 19a6c8 448 tilemap:64
 scenes/lz_AcademyEntranceAttrmap.bin 19ab10 23c tilemap:64
-scenes/lz_AcademyEntranceCollisionMap.bin 19ad4c 61
-scenes/lz_AcademyEntranceBehaviorMap.bin 19adad 4b
+scenes/lz_AcademyEntranceCollisionMap.bin 19ad4c 61 tilemap:32
+scenes/lz_AcademyEntranceBehaviorMap.bin 19adad 4b tilemap:32
 scenes/DormEntranceSceneConfig.asm 19adf8 2a scene_config
 scenes/DormEntrancePalettes.asm 19ae22 40 palettes
 scenes/lz_DormEntranceTiles.bin 19ae62 77c gfx
 scenes/lz_DormEntranceTilemap.bin 19b5de 3cb tilemap:64
 scenes/lz_DormEntranceAttrmap.bin 19b9a9 1da tilemap:64
-scenes/lz_DormEntranceCollisionMap.bin 19bb83 5f
-scenes/lz_DormEntranceBehaviorMap.bin 19bbe2 4b
+scenes/lz_DormEntranceCollisionMap.bin 19bb83 5f tilemap:32
+scenes/lz_DormEntranceBehaviorMap.bin 19bbe2 4b tilemap:32
 scenes/TournamentCourtyardSceneConfig.asm 19c030 1b scene_config
 scenes/TournamentCourtyardPalettes.asm 19c04b 40 palettes
 scenes/lz_TournamentCourtyardTiles.bin 19c08b bec gfx
 scenes/lz_TournamentCourtyardTilemap.bin 19cc77 44d tilemap:64
 scenes/lz_TournamentCourtyardAttrmap.bin 19d0c4 2b1 tilemap:64
-scenes/lz_TournamentCourtyardCollisionMap.bin 19d375 6a
-scenes/lz_TournamentCourtyardBehaviorMap.bin 19d3df 53
+scenes/lz_TournamentCourtyardCollisionMap.bin 19d375 6a tilemap:32
+scenes/lz_TournamentCourtyardBehaviorMap.bin 19d3df 53 tilemap:32
 scenes/TournamentCourtyardSceneAnimTiles.bin 19d440 600 gfx
 scenes/Court1SceneConfig.asm 19da40 2a scene_config
 scenes/Court1Palettes.asm 19da6a 40 palettes
 scenes/lz_Court1Tiles.bin 19daaa 935 gfx
 scenes/lz_Court1Tilemap.bin 19e3df 39a tilemap:64
 scenes/lz_Court1Attrmap.bin 19e779 239 tilemap:64
-scenes/lz_Court1CollisionMap.bin 19e9b2 67
-scenes/lz_Court1BehaviorMap.bin 19ea19 4b
+scenes/lz_Court1CollisionMap.bin 19e9b2 67 tilemap:32
+scenes/lz_Court1BehaviorMap.bin 19ea19 4b tilemap:32
 scenes/TrainingCourtMapSceneConfig.asm 19ea64 2a scene_config
 scenes/TrainingCourtMapPalettes.asm 19ea8e 40 palettes
 scenes/lz_TrainingCourtMapTiles.bin 19eace 90c gfx
 scenes/lz_TrainingCourtMapTilemap.bin 19f3da 532 tilemap:64
 scenes/lz_TrainingCourtMapAttrmap.bin 19f90c 2c6 tilemap:64
-scenes/lz_TrainingCourtMapCollisionMap.bin 19fbd2 80
-scenes/lz_TrainingCourtMapBehaviorMap.bin 19fc52 4c
+scenes/lz_TrainingCourtMapCollisionMap.bin 19fbd2 80 tilemap:32
+scenes/lz_TrainingCourtMapBehaviorMap.bin 19fc52 4c tilemap:32
 scenes/Court2SceneConfig.asm 1a0030 2a scene_config
 scenes/Court2Palettes.asm 1a005a 40 palettes
 scenes/lz_Court2Tiles.bin 1a009a bd8 gfx
 scenes/lz_Court2Tilemap.bin 1a0c72 495 tilemap:64
 scenes/lz_Court2Attrmap.bin 1a1107 2be tilemap:64
-scenes/lz_Court2CollisionMap.bin 1a13c5 6c
-scenes/lz_Court2BehaviorMap.bin 1a1431 4a
+scenes/lz_Court2CollisionMap.bin 1a13c5 6c tilemap:32
+scenes/lz_Court2BehaviorMap.bin 1a1431 4a tilemap:32
 scenes/CenterCourtMapSceneConfig.asm 1a147b 2a scene_config
 scenes/CenterCourtMapPalettes.asm 1a14a5 40 palettes
 scenes/lz_CenterCourtMapTiles.bin 1a14e5 83c gfx
 scenes/lz_CenterCourtMapTilemap.bin 1a1d21 443 tilemap:64
 scenes/lz_CenterCourtMapAttrmap.bin 1a2164 26c tilemap:64
-scenes/lz_CenterCourtMapCollisionMap.bin 1a23d0 65
-scenes/lz_CenterCourtMapBehaviorMap.bin 1a2435 4b
+scenes/lz_CenterCourtMapCollisionMap.bin 1a23d0 65 tilemap:32
+scenes/lz_CenterCourtMapBehaviorMap.bin 1a2435 4b tilemap:32
 scenes/PeachsCastleSceneConfig.asm 1a2480 17 scene_config
 scenes/PeachsCastlePalettes.asm 1a2497 40 palettes
 scenes/lz_PeachsCastleTiles.bin 1a24d7 915 gfx
 scenes/lz_PeachsCastleTilemap.bin 1a2dec 351 tilemap:64
 scenes/lz_PeachsCastleAttrmap.bin 1a313d 253 tilemap:64
-scenes/lz_PeachsCastleCollisionMap.bin 1a3390 67
-scenes/lz_PeachsCastleBehaviorMap.bin 1a33f7 4a
+scenes/lz_PeachsCastleCollisionMap.bin 1a3390 67 tilemap:32
+scenes/lz_PeachsCastleBehaviorMap.bin 1a33f7 4a tilemap:32
 scenes/PeachsCastleSceneAnimTiles.bin 1a3450 600 gfx
 scenes/TrainingCenterSceneConfig.asm 1a4030 2a scene_config
 scenes/TrainingCenterPalettes.asm 1a405a 40 palettes
 scenes/lz_TrainingCenterTiles.bin 1a409a bc3 gfx
 scenes/lz_TrainingCenterTilemap.bin 1a4c5d 4be tilemap:64
 scenes/lz_TrainingCenterAttrmap.bin 1a511b 2f7 tilemap:64
-scenes/lz_TrainingCenterCollisionMap.bin 1a5412 81
-scenes/lz_TrainingCenterBehaviorMap.bin 1a5493 81
+scenes/lz_TrainingCenterCollisionMap.bin 1a5412 81 tilemap:32
+scenes/lz_TrainingCenterBehaviorMap.bin 1a5493 81 tilemap:32
 scenes/TournamentSceneConfig.asm 1a5514 2a scene_config
 scenes/TournamentPalettes.asm 1a553e 40 palettes
 scenes/lz_TournamentTiles.bin 1a557e 822 gfx
 scenes/lz_TournamentTilemap.bin 1a5da0 3df tilemap:64
 scenes/lz_TournamentAttrmap.bin 1a617f 2ef tilemap:64
-scenes/lz_TournamentCollisionMap.bin 1a646e 7d
-scenes/lz_TournamentBehaviorMap.bin 1a64eb 57
+scenes/lz_TournamentCollisionMap.bin 1a646e 7d tilemap:32
+scenes/lz_TournamentBehaviorMap.bin 1a64eb 57 tilemap:32
 scenes/AwardsCeremonySceneConfig.asm 1a6542 1b scene_config
 scenes/AwardsCeremonyPalettes.asm 1a655d 40 palettes
 scenes/lz_AwardsCeremonyTiles.bin 1a659d 9b6 gfx
 scenes/lz_AwardsCeremonyTilemap.bin 1a6f53 3e7 tilemap:64
 scenes/lz_AwardsCeremonyAttrmap.bin 1a733a 287 tilemap:64
-scenes/lz_AwardsCeremonyCollisionMap.bin 1a75c1 54
-scenes/lz_AwardsCeremonyBehaviorMap.bin 1a7615 4b
+scenes/lz_AwardsCeremonyCollisionMap.bin 1a75c1 54 tilemap:32
+scenes/lz_AwardsCeremonyBehaviorMap.bin 1a7615 4b tilemap:32
 scenes/AwardsCeremonySceneAnimTiles.bin 1a7660 600 gfx
 sprites/WalkSprite_6a_00_Gfx00.bin 1a8030 100 gfx:2x2
 sprites/WalkSprite_6a_00_Gfx01.bin 1a8130 100 gfx:2x2

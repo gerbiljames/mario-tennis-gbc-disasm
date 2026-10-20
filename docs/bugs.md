@@ -310,6 +310,15 @@ reads are zero, and the five palettes in `wOBJPalettes` and `wMasterPalettes`
 are already zero. Story screens load the real ones with `LoadStoryObjPalettes`
 (`$0a:$5337`, from `StoryObjPalettes`).
 
+### Two object-palette loads read past their block
+
+`LoadTennisDictionaryScreen` (`$3f:$43af`) loads eight object palettes from
+the 48-byte `TennisDictionaryPalettes`, so palettes 6-7 are the first 16 bytes
+of `EndTennisDictionaryAnim`'s code. `LoadWaterSpriteMinigameHudGfx`
+(`$15:$58ac`) loads two from the 8-byte `WaterSpriteHudPalette_15`, palette 1
+being its own first 8 bytes of code. `test_palette_loads_fit_their_block`
+pins both.
+
 ### The debug console's SELECT test has no branch
 
 `UpdateDebugOverlay` (`$00:$1893`) decides each frame whether the debug console

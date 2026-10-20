@@ -866,13 +866,13 @@ IntroCutsceneState16Init_6b:
 	ld de, wDecompBuffer ; $499a
 	call DecompressDataFromBank ; $499d
 	ld_slot hl, DataPtr_IntroGreatestPlayerAttrmap ; $49a0
-	ld de, wDecompBuffer tile 64 ; $49a3
+	ld de, wDecompBuffer + TILEMAP_AREA ; $49a3
 	call DecompressDataFromBank ; $49a6
 	ld hl, wDecompBuffer ; $49a9
 	ld de, vBGMap1 ; $49ac
 	ld c, TILEMAP_AREA / 16 ; $49af
 	call QueueVRAMCopy ; $49b1
-	ld hl, wDecompBuffer tile 64 ; $49b4
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $49b4
 	ld de, vBGMap1 + VRAM_BANK1 ; $49b7
 	ld c, TILEMAP_AREA / 16 ; $49ba
 	call QueueVRAMCopy ; $49bc

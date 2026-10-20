@@ -5,17 +5,17 @@ ExpScreenGfx0:
 	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx0.bin" ; $5530, 1711 bytes
 	db $00 ; $5bdf
 	ds ALIGN[4]
-ExpScreenGfx1:
-	INCBIN "data/engine/menus/debug/ExpScreenGfx1.bin" ; $5be0, 576 bytes
+ExpScreenTilemap1:
+	INCBIN "data/engine/menus/debug/ExpScreenTilemap1.bin" ; $5be0, 576 bytes
 	ds ALIGN[4]
-ExpScreenGfx2:
-	INCBIN "data/engine/menus/debug/ExpScreenGfx2.bin" ; $5e20, 576 bytes
+ExpScreenAttrmap1:
+	INCBIN "data/engine/menus/debug/ExpScreenAttrmap1.bin" ; $5e20, 576 bytes
 	ds ALIGN[4]
-ExpScreenGfx3:
-	INCBIN "data/engine/menus/debug/ExpScreenGfx3.bin" ; $6060, 576 bytes
+ExpScreenTilemap2:
+	INCBIN "data/engine/menus/debug/ExpScreenTilemap2.bin" ; $6060, 576 bytes
 	ds ALIGN[4]
-ExpScreenGfx4:
-	INCBIN "data/engine/menus/debug/ExpScreenGfx4.bin" ; $62a0, 576 bytes
+ExpScreenAttrmap2:
+	INCBIN "data/engine/menus/debug/ExpScreenAttrmap2.bin" ; $62a0, 576 bytes
 ExpScreenGfxPalettes0:
 	INCLUDE "data/engine/menus/debug/ExpScreenGfxPalettes0.asm" ; $64e0, 80 bytes (palettes)
 Unused_1a_ExpScreenGfx9:
@@ -425,14 +425,14 @@ Unused_1a_LoadCharViewerScreenGfx:
 	ld c, wTextTileBuffer_SIZE / 16 ; $6b7e
 	call QueueVRAMCopy ; $6b80
 	wram_bank WRAM_STAGING ; $6b83
-	ld hl, CharViewerScreenGfx1 ; $6b89
+	ld hl, CharViewerScreenTilemap ; $6b89
 	ld de, wDecompBuffer ; $6b8c
 	call DecompressData ; $6b8f
 	ld hl, wDecompBuffer ; $6b92
 	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $6b95
 	call Unused_1a_CopyBank1ToBank3Buffer ; $6b98
 	wram_bank WRAM_STAGING ; $6b9b
-	ld hl, CharViewerScreenGfx2 ; $6ba1
+	ld hl, CharViewerScreenAttrmap ; $6ba1
 	ld de, wDecompBuffer ; $6ba4
 	call DecompressData ; $6ba7
 	ld hl, wDecompBuffer ; $6baa
