@@ -196,18 +196,18 @@ LoadN64RecordTypeGfx:
 	ld a, c ; $728d
 	cp $03 ; $728e
 	jr nz, .loop ; $7290
-	ld b, TILEBLOCK_N64RecordTypeGfx0 ; $7292
-	ld c, N64RecordTypeGfx0_SIZE / 16 ; $7294
+	ld b, TILEBLOCK_TournamentLabelGfx ; $7292
+	ld c, TournamentLabelGfx_SIZE / 16 ; $7294
 	ld de, vTiles0 + VRAM_BANK1 ; $7296
 	farcall LoadCompressedTileBlock ; $7299
 	call AdvanceFrame ; $729c
-	ld b, TILEBLOCK_SharedMenuGfx29 ; $729f
-	ld c, SharedMenuGfx29_SIZE / 16 ; $72a1
+	ld b, TILEBLOCK_ExhibitionLabelGfx ; $729f
+	ld c, ExhibitionLabelGfx_SIZE / 16 ; $72a1
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $72a3
 	farcall LoadCompressedTileBlock ; $72a6
 	call AdvanceFrame ; $72a9
-	ld b, TILEBLOCK_N64RecordTypeGfx1 ; $72ac
-	ld c, N64RecordTypeGfx1_SIZE / 16 ; $72ae
+	ld b, TILEBLOCK_RingShotLabelGfx ; $72ac
+	ld c, RingShotLabelGfx_SIZE / 16 ; $72ae
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $72b0
 	farcall LoadCompressedTileBlock ; $72b3
 	call AdvanceFrame ; $72b6
@@ -216,8 +216,8 @@ LoadN64RecordTypeGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $72bd
 	farcall LoadCompressedTileBlock ; $72c0
 	call AdvanceFrame ; $72c3
-	ld b, TILEBLOCK_N64RecordTypeGfx2 ; $72c6
-	ld c, N64RecordTypeGfx2_SIZE / 16 ; $72c8
+	ld b, TILEBLOCK_N64DataTitleGfx ; $72c6
+	ld c, N64DataTitleGfx_SIZE / 16 ; $72c8
 	ld de, vTiles0 ; $72ca
 	farcall LoadCompressedTileBlock ; $72cd
 	call AdvanceFrame ; $72d0
@@ -575,23 +575,23 @@ LoadGbDataItemGfx:
 	ld a, c ; $759c
 	cp $04 ; $759d
 	jr nz, .loop ; $759f
-	ld b, TILEBLOCK_GbDataItemGfx0 ; $75a1
-	ld c, GbDataItemGfx0_SIZE / 16 ; $75a3
+	ld b, TILEBLOCK_CharacterDataLabelGfx ; $75a1
+	ld c, CharacterDataLabelGfx_SIZE / 16 ; $75a3
 	ld de, vTiles0 + VRAM_BANK1 ; $75a5
 	farcall LoadCompressedTileBlock ; $75a8
 	call AdvanceFrame ; $75ab
-	ld b, TILEBLOCK_GbDataItemGfx4 ; $75ae
-	ld c, GbDataItemGfx4_SIZE / 16 ; $75b0
+	ld b, TILEBLOCK_ClearStatusLabelGfx ; $75ae
+	ld c, ClearStatusLabelGfx_SIZE / 16 ; $75b0
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $75b2
 	farcall LoadCompressedTileBlock ; $75b5
 	call AdvanceFrame ; $75b8
-	ld b, TILEBLOCK_GbDataItemGfx1 ; $75bb
-	ld c, GbDataItemGfx1_SIZE / 16 ; $75bd
+	ld b, TILEBLOCK_N64TournamentsLabelGfx ; $75bb
+	ld c, N64TournamentsLabelGfx_SIZE / 16 ; $75bd
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $75bf
 	farcall LoadCompressedTileBlock ; $75c2
 	call AdvanceFrame ; $75c5
-	ld b, TILEBLOCK_GbDataItemGfx2 ; $75c8
-	ld c, GbDataItemGfx2_SIZE / 16 ; $75ca
+	ld b, TILEBLOCK_SetItemsLabelGfx ; $75c8
+	ld c, SetItemsLabelGfx_SIZE / 16 ; $75ca
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $75cc
 	farcall LoadCompressedTileBlock ; $75cf
 	call AdvanceFrame ; $75d2
@@ -600,8 +600,8 @@ LoadGbDataItemGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $75d9
 	farcall LoadCompressedTileBlock ; $75dc
 	call AdvanceFrame ; $75df
-	ld b, TILEBLOCK_GbDataItemGfx3 ; $75e2
-	ld c, GbDataItemGfx3_SIZE / 16 ; $75e4
+	ld b, TILEBLOCK_GbDataTitleGfx ; $75e2
+	ld c, GbDataTitleGfx_SIZE / 16 ; $75e4
 	ld de, vTiles0 ; $75e6
 	farcall LoadCompressedTileBlock ; $75e9
 	call AdvanceFrame ; $75ec

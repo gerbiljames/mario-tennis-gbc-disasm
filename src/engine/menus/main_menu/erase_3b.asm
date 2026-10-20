@@ -144,28 +144,28 @@ LoadEraseSavedDataGfx:
 	ld c, 16 ; $6db4
 	call QueueVRAMCopy ; $6db6
 	call AdvanceFrame ; $6db9
-	ld b, TILEBLOCK_EraseSavedDataGfx0 ; $6dbc
-	ld c, EraseSavedDataGfx0_SIZE / 16 ; $6dbe
+	ld b, TILEBLOCK_EraseFile1LabelGfx ; $6dbc
+	ld c, EraseFile1LabelGfx_SIZE / 16 ; $6dbe
 	ld de, vTiles0 + VRAM_BANK1 ; $6dc0
 	farcall LoadCompressedTileBlock ; $6dc3
 	call AdvanceFrame ; $6dc6
-	ld b, TILEBLOCK_EraseSavedDataGfx1 ; $6dc9
-	ld c, EraseSavedDataGfx1_SIZE / 16 ; $6dcb
+	ld b, TILEBLOCK_EraseFile2LabelGfx ; $6dc9
+	ld c, EraseFile2LabelGfx_SIZE / 16 ; $6dcb
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6dcd
 	farcall LoadCompressedTileBlock ; $6dd0
 	call AdvanceFrame ; $6dd3
-	ld b, TILEBLOCK_EraseSavedDataGfx2 ; $6dd6
-	ld c, EraseSavedDataGfx2_SIZE / 16 ; $6dd8
+	ld b, TILEBLOCK_EraseFile3LabelGfx ; $6dd6
+	ld c, EraseFile3LabelGfx_SIZE / 16 ; $6dd8
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6dda
 	farcall LoadCompressedTileBlock ; $6ddd
 	call AdvanceFrame ; $6de0
-	ld b, TILEBLOCK_EraseSavedDataGfx3 ; $6de3
-	ld c, EraseSavedDataGfx3_SIZE / 16 ; $6de5
+	ld b, TILEBLOCK_EraseN64DataLabelGfx ; $6de3
+	ld c, EraseN64DataLabelGfx_SIZE / 16 ; $6de5
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6de7
 	farcall LoadCompressedTileBlock ; $6dea
 	call AdvanceFrame ; $6ded
-	ld b, TILEBLOCK_EraseSavedDataGfx4 ; $6df0
-	ld c, EraseSavedDataGfx4_SIZE / 16 ; $6df2
+	ld b, TILEBLOCK_EraseAllDataLabelGfx ; $6df0
+	ld c, EraseAllDataLabelGfx_SIZE / 16 ; $6df2
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $6df4
 	farcall LoadCompressedTileBlock ; $6df7
 	call AdvanceFrame ; $6dfa
@@ -174,8 +174,8 @@ LoadEraseSavedDataGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6e01
 	farcall LoadCompressedTileBlock ; $6e04
 	call AdvanceFrame ; $6e07
-	ld b, TILEBLOCK_SharedMenuGfx65 ; $6e0a
-	ld c, SharedMenuGfx65_SIZE / 16 ; $6e0c
+	ld b, TILEBLOCK_SavedDataTitleGfx ; $6e0a
+	ld c, SavedDataTitleGfx_SIZE / 16 ; $6e0c
 	ld de, vTiles0 ; $6e0e
 	farcall LoadCompressedTileBlock ; $6e11
 	call AdvanceFrame ; $6e14

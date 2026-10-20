@@ -121,20 +121,20 @@ DataPtr_CourtSelectGfx8:
 	dw CourtSelectGfx8 ; $4078
 DataPtr_CourtSelectGfx9:
 	dw CourtSelectGfx9 ; $407a
-DataPtr_SharedMenuGfx111:
-	dw SharedMenuGfx111 ; $407c
-DataPtr_MinigameSelectIconGfx0:
-	dw MinigameSelectIconGfx0 ; $407e
-DataPtr_MinigameSelectIconGfx1:
-	dw MinigameSelectIconGfx1 ; $4080
-DataPtr_MinigameSelectIconGfx2:
-	dw MinigameSelectIconGfx2 ; $4082
-DataPtr_MinigameLevelSelectGfx0:
-	dw MinigameLevelSelectGfx0 ; $4084
-DataPtr_MinigameLevelSelectIconGfx:
-	dw MinigameLevelSelectIconGfx ; $4086
-DataPtr_MinigameLevelSelectGfx1:
-	dw MinigameLevelSelectGfx1 ; $4088
+DataPtr_QuestionMarksLabelGfx:
+	dw QuestionMarksLabelGfx ; $407c
+DataPtr_DonkeyKongNameGfx:
+	dw DonkeyKongNameGfx ; $407e
+DataPtr_LuigiNameGfx:
+	dw LuigiNameGfx ; $4080
+DataPtr_BabyMarioNameGfx:
+	dw BabyMarioNameGfx ; $4082
+DataPtr_Level1LabelGfx:
+	dw Level1LabelGfx ; $4084
+DataPtr_Level2LabelGfx:
+	dw Level2LabelGfx ; $4086
+DataPtr_ChallengeLabelGfx:
+	dw ChallengeLabelGfx ; $4088
 DataPtr_Level1FlagIconTiles:
 	dw Level1FlagIconTiles ; $408a
 DataPtr_Level2FlagIconTiles:
@@ -256,20 +256,20 @@ CourtSelectGfx8:
 	INCBIN "data/gfx/lz_CourtSelectGfx8.bin" ; $7132, 174 bytes
 CourtSelectGfx9:
 	INCBIN "data/gfx/lz_CourtSelectGfx9.bin" ; $71e0, 175 bytes
-SharedMenuGfx111:
-	INCBIN "data/gfx/lz_SharedMenuGfx111.bin" ; $728f, 144 bytes
-MinigameSelectIconGfx0:
-	INCBIN "data/gfx/lz_MinigameSelectIconGfx0.bin" ; $731f, 186 bytes
-MinigameSelectIconGfx1:
-	INCBIN "data/gfx/lz_MinigameSelectIconGfx1.bin" ; $73d9, 130 bytes
-MinigameSelectIconGfx2:
-	INCBIN "data/gfx/lz_MinigameSelectIconGfx2.bin" ; $745b, 172 bytes
-MinigameLevelSelectGfx0:
-	INCBIN "data/gfx/lz_MinigameLevelSelectGfx0.bin" ; $7507, 131 bytes
-MinigameLevelSelectIconGfx:
-	INCBIN "data/gfx/lz_MinigameLevelSelectIconGfx.bin" ; $758a, 144 bytes
-MinigameLevelSelectGfx1:
-	INCBIN "data/gfx/lz_MinigameLevelSelectGfx1.bin" ; $761a, 152 bytes
+QuestionMarksLabelGfx:
+	INCBIN "data/gfx/lz_QuestionMarksLabelGfx.bin" ; $728f, 144 bytes
+DonkeyKongNameGfx:
+	INCBIN "data/gfx/lz_DonkeyKongNameGfx.bin" ; $731f, 186 bytes
+LuigiNameGfx:
+	INCBIN "data/gfx/lz_LuigiNameGfx.bin" ; $73d9, 130 bytes
+BabyMarioNameGfx:
+	INCBIN "data/gfx/lz_BabyMarioNameGfx.bin" ; $745b, 172 bytes
+Level1LabelGfx:
+	INCBIN "data/gfx/lz_Level1LabelGfx.bin" ; $7507, 131 bytes
+Level2LabelGfx:
+	INCBIN "data/gfx/lz_Level2LabelGfx.bin" ; $758a, 144 bytes
+ChallengeLabelGfx:
+	INCBIN "data/gfx/lz_ChallengeLabelGfx.bin" ; $761a, 152 bytes
 Level1FlagIconTiles:
 	INCBIN "data/gfx/lz_Level1FlagIconTiles.bin" ; $76b2, 231 bytes
 Level2FlagIconTiles:

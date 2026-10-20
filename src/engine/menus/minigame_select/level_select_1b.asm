@@ -501,8 +501,8 @@ LoadMinigameLevelSelectGfx:
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
 .loadGfx0:
-	ld b, TILEBLOCK_MinigameLevelSelectGfx0 ; $6cc5
-	ld c, MinigameLevelSelectGfx0_SIZE / 16 ; $6cc7
+	ld b, TILEBLOCK_Level1LabelGfx ; $6cc5
+	ld c, Level1LabelGfx_SIZE / 16 ; $6cc7
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
 	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
@@ -513,17 +513,17 @@ LoadMinigameLevelSelectGfx:
 	ld a, b ; $6ce4
 	or a ; $6ce5
 	jr z, .noneClearedIcons ; $6ce6
-	ld b, TILEBLOCK_MinigameLevelSelectIconGfx ; $6ce8
+	ld b, TILEBLOCK_Level2LabelGfx ; $6ce8
 	jr .loadIconBlock ; $6cea
 .noneClearedIcons:
-	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
+	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $6cec
 .loadIconBlock:
-	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
+	ld c, QuestionMarksLabelGfx_SIZE / 16 ; $6cee
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
 	call AdvanceFrame ; $6cf6
-	ld b, TILEBLOCK_MinigameLevelSelectGfx1 ; $6cf9
-	ld c, MinigameLevelSelectGfx1_SIZE / 16 ; $6cfb
+	ld b, TILEBLOCK_ChallengeLabelGfx ; $6cf9
+	ld c, ChallengeLabelGfx_SIZE / 16 ; $6cfb
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6cfd
 	farcall LoadCompressedTileBlock ; $6d00
 	call AdvanceFrame ; $6d03
@@ -532,8 +532,8 @@ LoadMinigameLevelSelectGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6d0a
 	farcall LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
-	ld b, TILEBLOCK_MinigameLevelSelectGfx2Alias16 ; $6d13
-	ld c, MinigameLevelSelectGfx2_SIZE / 16 ; $6d15
+	ld b, TILEBLOCK_SelectALevelTitleGfxAlias16 ; $6d13
+	ld c, SelectALevelTitleGfx_SIZE / 16 ; $6d15
 	ld de, vTiles0 ; $6d17
 	farcall LoadCompressedTileBlock ; $6d1a
 	call AdvanceFrame ; $6d1d

@@ -273,8 +273,8 @@ SetupCharacterSelectScreen:
 	ld a, $10 ; $4a8f
 	ld [wMenuBgScrollTile], a ; $4a91
 	ld [wMenuBgScrollTile + 1], a ; $4a94
-	ld b, TILEBLOCK_SharedMenuGfx72 ; $4a97
-	ld c, SharedMenuGfx72_SIZE / 16 ; $4a99
+	ld b, TILEBLOCK_CreateACharacterTitleGfx ; $4a97
+	ld c, CreateACharacterTitleGfx_SIZE / 16 ; $4a99
 	ld de, vTiles0 tile $10 ; $4a9b
 	farcall LoadCompressedTileBlock ; $4a9e
 	call LoadCharSelectCharPalettes ; $4aa1

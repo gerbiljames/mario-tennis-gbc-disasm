@@ -74,10 +74,10 @@ DataPtr_StatLabelTiles:
 	farptr DrawDecimalNumberSprites_39 ; $4066
 	farptr ResetCheatCodeBuffer ; $4068
 	farptr UpdateCheatCodeEntry ; $406a
-DataPtr_RacketShoesChoiceGfx0:
-	dw RacketShoesChoiceGfx0 ; $406c
-DataPtr_RacketShoesChoiceGfx1:
-	dw RacketShoesChoiceGfx1 ; $406e
+DataPtr_SelectRacketLabelGfx:
+	dw SelectRacketLabelGfx ; $406c
+DataPtr_SelectShoesLabelGfx:
+	dw SelectShoesLabelGfx ; $406e
 DataPtr_MenuArrowGfx0:
 	dw MenuArrowGfx0 ; $4070
 DataPtr_MenuArrowGfx1:

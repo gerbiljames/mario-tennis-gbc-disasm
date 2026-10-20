@@ -83,39 +83,39 @@ DataPtr_BracketExtraIcon1:
 	dw BracketExtraIcon1 ; $4052
 DataPtr_BracketExtraIcon2:
 	dw BracketExtraIcon2 ; $4054
-DataPtr_MinigameLevelSelectGfx2:
-	dw MinigameLevelSelectGfx2 ; $4056
-DataPtr_MinigameLevelSelectGfx2Alias1:
-	dw MinigameLevelSelectGfx2 ; $4058
-DataPtr_MinigameLevelSelectGfx2Alias2:
-	dw MinigameLevelSelectGfx2 ; $405a
-DataPtr_MinigameLevelSelectGfx2Alias3:
-	dw MinigameLevelSelectGfx2 ; $405c
-DataPtr_MinigameLevelSelectGfx2Alias4:
-	dw MinigameLevelSelectGfx2 ; $405e
-DataPtr_MinigameLevelSelectGfx2Alias5:
-	dw MinigameLevelSelectGfx2 ; $4060
-DataPtr_MinigameLevelSelectGfx2Alias6:
-	dw MinigameLevelSelectGfx2 ; $4062
-DataPtr_MinigameLevelSelectGfx2Alias7:
-	dw MinigameLevelSelectGfx2 ; $4064
-DataPtr_MinigameLevelSelectGfx2Alias8:
-	dw MinigameLevelSelectGfx2 ; $4066
-DataPtr_MinigameLevelSelectGfx2Alias9:
-	dw MinigameLevelSelectGfx2 ; $4068
-DataPtr_MinigameLevelSelectGfx2Alias10:
-	dw MinigameLevelSelectGfx2 ; $406a
-DataPtr_MinigameLevelSelectGfx2Alias11:
-	dw MinigameLevelSelectGfx2 ; $406c
-DataPtr_MinigameLevelSelectGfx2Alias12:
-	dw MinigameLevelSelectGfx2 ; $406e
-DataPtr_MinigameLevelSelectGfx2Alias13:
-	dw MinigameLevelSelectGfx2 ; $4070
-DataPtr_MinigameLevelSelectGfx2Alias14:
-	dw MinigameLevelSelectGfx2 ; $4072
-DataPtr_MinigameLevelSelectGfx2Alias15:
-	dw MinigameLevelSelectGfx2 ; $4074
-DataPtr_MinigameLevelSelectGfx2Alias16:
-	dw MinigameLevelSelectGfx2 ; $4076
-DataPtr_MarioCharDataTypeSelectGfx:
-	dw MarioCharDataTypeSelectGfx ; $4078
+DataPtr_SelectALevelTitleGfx:
+	dw SelectALevelTitleGfx ; $4056
+DataPtr_SelectALevelTitleGfxAlias1:
+	dw SelectALevelTitleGfx ; $4058
+DataPtr_SelectALevelTitleGfxAlias2:
+	dw SelectALevelTitleGfx ; $405a
+DataPtr_SelectALevelTitleGfxAlias3:
+	dw SelectALevelTitleGfx ; $405c
+DataPtr_SelectALevelTitleGfxAlias4:
+	dw SelectALevelTitleGfx ; $405e
+DataPtr_SelectALevelTitleGfxAlias5:
+	dw SelectALevelTitleGfx ; $4060
+DataPtr_SelectALevelTitleGfxAlias6:
+	dw SelectALevelTitleGfx ; $4062
+DataPtr_SelectALevelTitleGfxAlias7:
+	dw SelectALevelTitleGfx ; $4064
+DataPtr_SelectALevelTitleGfxAlias8:
+	dw SelectALevelTitleGfx ; $4066
+DataPtr_SelectALevelTitleGfxAlias9:
+	dw SelectALevelTitleGfx ; $4068
+DataPtr_SelectALevelTitleGfxAlias10:
+	dw SelectALevelTitleGfx ; $406a
+DataPtr_SelectALevelTitleGfxAlias11:
+	dw SelectALevelTitleGfx ; $406c
+DataPtr_SelectALevelTitleGfxAlias12:
+	dw SelectALevelTitleGfx ; $406e
+DataPtr_SelectALevelTitleGfxAlias13:
+	dw SelectALevelTitleGfx ; $4070
+DataPtr_SelectALevelTitleGfxAlias14:
+	dw SelectALevelTitleGfx ; $4072
+DataPtr_SelectALevelTitleGfxAlias15:
+	dw SelectALevelTitleGfx ; $4074
+DataPtr_SelectALevelTitleGfxAlias16:
+	dw SelectALevelTitleGfx ; $4076
+DataPtr_MarioCharactersTitleGfx:
+	dw MarioCharactersTitleGfx ; $4078

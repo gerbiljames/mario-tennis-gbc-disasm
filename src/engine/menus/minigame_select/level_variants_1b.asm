@@ -510,13 +510,13 @@ LoadMarioCharDataTypeSelectGfx:
 	ld a, c ; $7254
 	cp $02 ; $7255
 	jr nz, .loop ; $7257
-	ld b, TILEBLOCK_SharedMenuGfx29 ; $7259
-	ld c, SharedMenuGfx29_SIZE / 16 ; $725b
+	ld b, TILEBLOCK_ExhibitionLabelGfx ; $7259
+	ld c, ExhibitionLabelGfx_SIZE / 16 ; $725b
 	ld de, vTiles0 + VRAM_BANK1 ; $725d
 	farcall LoadCompressedTileBlock ; $7260
 	call AdvanceFrame ; $7263
-	ld b, TILEBLOCK_SharedMenuGfx30 ; $7266
-	ld c, SharedMenuGfx30_SIZE / 16 ; $7268
+	ld b, TILEBLOCK_MarioMiniGamesLabelGfx ; $7266
+	ld c, MarioMiniGamesLabelGfx_SIZE / 16 ; $7268
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $726a
 	farcall LoadCompressedTileBlock ; $726d
 	call AdvanceFrame ; $7270
@@ -525,8 +525,8 @@ LoadMarioCharDataTypeSelectGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $7277
 	farcall LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
-	ld b, TILEBLOCK_MarioCharDataTypeSelectGfx ; $7280
-	ld c, MarioCharDataTypeSelectGfx_SIZE / 16 ; $7282
+	ld b, TILEBLOCK_MarioCharactersTitleGfx ; $7280
+	ld c, MarioCharactersTitleGfx_SIZE / 16 ; $7282
 	ld de, vTiles0 ; $7284
 	farcall LoadCompressedTileBlock ; $7287
 	call AdvanceFrame ; $728a

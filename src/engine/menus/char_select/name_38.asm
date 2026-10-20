@@ -361,8 +361,8 @@ SetupNameEntryScreen:
 	ld a, $10 ; $7024
 	ld [wMenuBgScrollTile], a ; $7026
 	ld [wMenuBgScrollTile + 1], a ; $7029
-	ld b, TILEBLOCK_SharedMenuGfx72 ; $702c
-	ld c, SharedMenuGfx72_SIZE / 16 ; $702e
+	ld b, TILEBLOCK_CreateACharacterTitleGfx ; $702c
+	ld c, CreateACharacterTitleGfx_SIZE / 16 ; $702e
 	ld de, vTiles0 tile $10 ; $7030
 	farcall LoadCompressedTileBlock ; $7033
 	push_wram_bank WRAM_COURT_PLANES ; $7036

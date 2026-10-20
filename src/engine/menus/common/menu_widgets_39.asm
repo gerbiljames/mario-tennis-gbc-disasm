@@ -317,10 +317,10 @@ TriggerCheatUnlock:
 	sound SFX_LOGO_JINGLE ; $7003
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
-RacketShoesChoiceGfx0:
-	INCBIN "data/engine/menus/common/lz_RacketShoesChoiceGfx0.bin" ; $7009, 178 bytes
-RacketShoesChoiceGfx1:
-	INCBIN "data/engine/menus/common/lz_RacketShoesChoiceGfx1.bin" ; $70bb, 194 bytes
+SelectRacketLabelGfx:
+	INCBIN "data/engine/menus/common/lz_SelectRacketLabelGfx.bin" ; $7009, 178 bytes
+SelectShoesLabelGfx:
+	INCBIN "data/engine/menus/common/lz_SelectShoesLabelGfx.bin" ; $70bb, 194 bytes
 MenuArrowGfx0:
 	INCBIN "data/engine/menus/common/lz_MenuArrowGfx0.bin" ; $717d, 57 bytes
 MenuArrowGfx1:
