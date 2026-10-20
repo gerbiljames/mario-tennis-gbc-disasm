@@ -382,9 +382,9 @@ LoadMatchStoryGfx:
 	push af ; $6165
 	ldh a, [rLCDC] ; $6166
 	bit B_LCDC_ENABLE, a ; $6168
-	jr z, .queuedTextTiles ; $616a
+	jr z, .lcdOff ; $616a
 	call AdvanceFrame ; $616c
-.queuedTextTiles:
+.lcdOff:
 	pop af ; $616f
 	ret ; $6170
 Padding_28_1:
