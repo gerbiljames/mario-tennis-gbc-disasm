@@ -86,10 +86,12 @@ def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 ; Jingles ($40-$45), through the `sound` macro or PlaySoundManaged. The
 ; handler stores the id in hActiveJingle, plays JingleSoundIds[id - $40] (a
 ; music id) and leaves ResumeBGMAfterJingle/WaitJingleEnd to restore
-; wCurrentBGM when the music channels fall idle. These three are the ones used.
+; wCurrentBGM when the music channels fall idle. $40 maps to music $00.
 def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
 def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomEntry0fScene, DormRoomEntry02Scene) and the save-slot debug editor
+def JINGLE_COURT_INTRO_EXHIBITION equ $44 ; PlayCourtIntro, exhibition matches
+def JINGLE_COURT_INTRO       equ $45 ; PlayCourtIntro, story and minigame matches
 
 ; Sound effects, named for the event they play for.
 def SFX_STOP                 equ $50 ; silences the two effect channels

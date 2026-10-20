@@ -254,7 +254,7 @@ wExpRepeatDelay:: db
 wExpRedrawPending:: db
 ; [8-bit] Set once a held direction is repeating, so the delay applies only to the first step
 wExpInputRepeating:: db
-; [8-bit] $ff when a level-up has just happened; TickLevelUpJingle plays the jingle off it and clears it
+; [8-bit] Level-up fanfare countdown (0 = idle). $ff requests it: TickLevelUpJingle plays BGM_LEVEL_UP and reloads $a0, then restarts BGM_EXP_DISTRIBUTION when it ticks down to 0
 wExpLevelUpFanfare:: db
 NEXTU
 ; pending EXP award list (banks $1d/$1e)

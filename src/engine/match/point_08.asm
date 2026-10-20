@@ -74,19 +74,19 @@ PlayPoint:
 	ld [hl], a ; $4d61
 	ret ; $4d62
 SetPointSituationBgm:
-	ld d, $0f ; $4d63
+	ld d, BGM_SET_POINT ; $4d63
 	ld a, [wMatchPointFlag] ; $4d65
 	and a ; $4d68
 	jr nz, .play ; $4d69
-	ld d, $0f ; $4d6b
+	ld d, BGM_SET_POINT ; $4d6b
 	ld a, [wSetPointFlag] ; $4d6d
 	and a ; $4d70
 	jr nz, .play ; $4d71
-	ld d, $10 ; $4d73
+	ld d, BGM_GAME_POINT ; $4d73
 	ld a, [wGamePointFlag] ; $4d75
 	and a ; $4d78
 	jr nz, .play ; $4d79
-	ld d, $0e ; $4d7b
+	ld d, BGM_TIEBREAK ; $4d7b
 	ld a, [wTiebreakerIndicator] ; $4d7d
 	and a ; $4d80
 	jr nz, .play ; $4d81

@@ -326,7 +326,7 @@ AddBallSpeedQuarter:
 	rr l ; $52f9
 	sra h ; $52fb
 	rr l ; $52fd
-	jr AddBallSpeedEighth.absSpeed ; $52ff
+	jr AddBallSpeedEighth.forceNegative ; $52ff
 AddBallSpeed3Sixteenths:
 	ld hl, wBallVelocityDepth ; $5301
 	ld a, [hl+] ; $5304
@@ -344,7 +344,7 @@ AddBallSpeed3Sixteenths:
 	ld d, h ; $5318
 	add hl, de ; $5319
 	add hl, de ; $531a
-	jr AddBallSpeedEighth.absSpeed ; $531b
+	jr AddBallSpeedEighth.forceNegative ; $531b
 AddBallSpeedEighth:
 	ld hl, wBallVelocityDepth ; $531d
 	ld a, [hl+] ; $5320
@@ -356,7 +356,7 @@ AddBallSpeedEighth:
 	rr l ; $5329
 	sra h ; $532b
 	rr l ; $532d
-.absSpeed:
+.forceNegative:
 	bit 7, h ; $532f
 	jr nz, .store ; $5331
 	neg_hl ; $5333

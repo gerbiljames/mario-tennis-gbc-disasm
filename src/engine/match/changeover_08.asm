@@ -148,12 +148,12 @@ GetCharChangeoverPositionTable:
 	dw $0300, $0180 ; record 2
 	dw $0300, $0180 ; record 3
 PlayCourtIntro:
-	ld b, $44 ; $6117
+	ld b, JINGLE_COURT_INTRO_EXHIBITION ; $6117
 	ld a, [wMatchContext] ; $6119
 	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $611c
 	jr z, .playFanfare ; $611d
-	ld b, $45 ; $611f
+	ld b, JINGLE_COURT_INTRO ; $611f
 .playFanfare:
 	ld a, b ; $6121
 	call PlaySoundManaged ; $6122

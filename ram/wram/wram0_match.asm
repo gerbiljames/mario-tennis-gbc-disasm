@@ -133,13 +133,13 @@ wShotRecoilVelocityDepth:: dw
 ; [16-bit] Shot speed as FinalizeShotSpeed leaves it, after momentum and the character-flag penalty and clamped up to $0100. Write-only, like the three term traces above it
 wShotSpeedFinal:: dw
 
-; [16-bit] The incoming ball's contribution to the shot speed, as AddBallSpeedEighth computed it (signed, then made positive). Write-only
+; [16-bit] The incoming ball's contribution to the shot speed, as AddBallSpeedEighth computed it, forced negative. Write-only
 wShotSpeedBallTerm:: dw
 
 ; [16-bit] The striker's own depth velocity contribution, halved and signed by which end of the court the character is on (AddPlayerMomentumToShot). Write-only
 wShotSpeedMomentumTerm:: dw
 
-; [16-bit] The charge bonus AddChargeSpeedBonusHalf added, scaled $40 or $20 by sign. Write-only; with the three above it, the shot-speed sum broken into terms, none read back
+; [16-bit] The charge bonus AddChargeSpeedBonus (scaled $80/$40 by sign) or AddChargeSpeedBonusHalf ($40/$20) added. Write-only; with the three above it, the shot-speed sum broken into terms, none read back
 wShotSpeedChargeTerm:: dw
 
 ; [16-bit] Projected X of the ball-bounce dust effect (cached at bounce time)
