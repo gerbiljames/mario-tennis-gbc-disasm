@@ -760,7 +760,7 @@ rejects any other spec; the rest exist as inline declarations only.
 | `menu_def` | 2 | menu definitions |
 | `blit_runs` | 84* | `blit_run col, row, src, length` runs and the `$ff` end (`screens_and_ui.md` §3.2) |
 | `target_script` | 57* | `tgt_*` commands (`include/macros/minigame_targets.inc`) |
-| `scoreboard_columns` | 32* | a court's `SceneConfig` (tiles) or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
+| `scoreboard_columns` | 32* | a court's `ScoreboardColumnTiles` or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
 | `frame_place` | 30* | `*FramePlace` rows (§4.5) |
 | `scene_config` | 21* | a story `SceneConfig`: `scene_bounds` and the unread bytes |
 | `move_curve` | 16* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
