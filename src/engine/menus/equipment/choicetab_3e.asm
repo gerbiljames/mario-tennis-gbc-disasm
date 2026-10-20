@@ -256,13 +256,13 @@ LoadPlayAlonePartnerGraphics:
 	ld a, c ; $5273
 	cp $02 ; $5274
 	jr nz, .loop ; $5276
-	ld b, TILEBLOCK_SharedMenuGfx35 ; $5278
-	ld c, SharedMenuGfx35_SIZE / 16 ; $527a
+	ld b, TILEBLOCK_SinglesLabelGfx ; $5278
+	ld c, SinglesLabelGfx_SIZE / 16 ; $527a
 	ld de, vTiles0 + VRAM_BANK1 ; $527c
 	farcall LoadCompressedTileBlock ; $527f
 	call AdvanceFrame ; $5282
-	ld b, TILEBLOCK_SharedMenuGfx36 ; $5285
-	ld c, SharedMenuGfx36_SIZE / 16 ; $5287
+	ld b, TILEBLOCK_DoublesLabelGfx ; $5285
+	ld c, DoublesLabelGfx_SIZE / 16 ; $5287
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5289
 	farcall LoadCompressedTileBlock ; $528c
 	call AdvanceFrame ; $528f

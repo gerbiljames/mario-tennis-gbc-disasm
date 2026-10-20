@@ -124,8 +124,8 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4d69
 	ld c, $0e ; $4d6c
 	farcall RenderProportionalTextAt ; $4d6e
-	ld b, TILEBLOCK_SharedMenuGfx65 ; $4d71
-	ld c, SharedMenuGfx65_SIZE / 16 ; $4d73
+	ld b, TILEBLOCK_SavedDataTitleGfx ; $4d71
+	ld c, SavedDataTitleGfx_SIZE / 16 ; $4d73
 	ld de, vTiles0 ; $4d75
 	farcall LoadCompressedTileBlock ; $4d78
 	jp .renderProportionalTextAt ; $4d7b
@@ -148,8 +148,8 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4da5
 	ld c, $0e ; $4da8
 	farcall RenderProportionalTextAt ; $4daa
-	ld b, TILEBLOCK_EraseDataConfirmGfx0 ; $4dad
-	ld c, EraseDataConfirmGfx0_SIZE / 16 ; $4daf
+	ld b, TILEBLOCK_EraseN64DataTitleGfx ; $4dad
+	ld c, EraseN64DataTitleGfx_SIZE / 16 ; $4daf
 	ld de, vTiles0 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
 	jr .renderProportionalTextAt ; $4db7
@@ -170,8 +170,8 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4ddd
 	ld c, $0e ; $4de0
 	farcall RenderProportionalTextAt ; $4de2
-	ld b, TILEBLOCK_EraseDataConfirmGfx1 ; $4de5
-	ld c, EraseDataConfirmGfx1_SIZE / 16 ; $4de7
+	ld b, TILEBLOCK_EraseAllTitleGfx ; $4de5
+	ld c, EraseAllTitleGfx_SIZE / 16 ; $4de7
 	ld de, vTiles0 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
 .renderProportionalTextAt:
@@ -356,13 +356,13 @@ LoadRacketShoesChoiceGraphics:
 	ld a, c ; $4f7d
 	cp $02 ; $4f7e
 	jr nz, .loop ; $4f80
-	ld b, TILEBLOCK_RacketShoesChoiceGfx0 ; $4f82
-	ld c, RacketShoesChoiceGfx0_SIZE / 16 ; $4f84
+	ld b, TILEBLOCK_SelectRacketLabelGfx ; $4f82
+	ld c, SelectRacketLabelGfx_SIZE / 16 ; $4f84
 	ld de, vTiles0 + VRAM_BANK1 ; $4f86
 	farcall LoadCompressedTileBlock ; $4f89
 	call AdvanceFrame ; $4f8c
-	ld b, TILEBLOCK_RacketShoesChoiceGfx1 ; $4f8f
-	ld c, RacketShoesChoiceGfx1_SIZE / 16 ; $4f91
+	ld b, TILEBLOCK_SelectShoesLabelGfx ; $4f8f
+	ld c, SelectShoesLabelGfx_SIZE / 16 ; $4f91
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f93
 	farcall LoadCompressedTileBlock ; $4f96
 	call AdvanceFrame ; $4f99
@@ -371,8 +371,8 @@ LoadRacketShoesChoiceGraphics:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $4fa0
 	farcall LoadCompressedTileBlock ; $4fa3
 	call AdvanceFrame ; $4fa6
-	ld b, TILEBLOCK_RacketShoesChoiceGfx2 ; $4fa9
-	ld c, RacketShoesChoiceGfx2_SIZE / 16 ; $4fab
+	ld b, TILEBLOCK_SetItemsTitleGfx ; $4fa9
+	ld c, SetItemsTitleGfx_SIZE / 16 ; $4fab
 	ld de, vTiles0 ; $4fad
 	farcall LoadCompressedTileBlock ; $4fb0
 	call AdvanceFrame ; $4fb3

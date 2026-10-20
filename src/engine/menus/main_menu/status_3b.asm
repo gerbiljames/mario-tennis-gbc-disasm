@@ -303,28 +303,28 @@ LoadStatusSourceGfx:
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
-	ld b, TILEBLOCK_StatusSourceGfx0 ; $68f5
-	ld c, StatusSourceGfx0_SIZE / 16 ; $68f7
+	ld b, TILEBLOCK_File1LabelGfx ; $68f5
+	ld c, File1LabelGfx_SIZE / 16 ; $68f7
 	ld de, vTiles0 + VRAM_BANK1 ; $68f9
 	farcall LoadCompressedTileBlock ; $68fc
 	call AdvanceFrame ; $68ff
-	ld b, TILEBLOCK_StatusSourceGfx1 ; $6902
-	ld c, StatusSourceGfx1_SIZE / 16 ; $6904
+	ld b, TILEBLOCK_File2LabelGfx ; $6902
+	ld c, File2LabelGfx_SIZE / 16 ; $6904
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6906
 	farcall LoadCompressedTileBlock ; $6909
 	call AdvanceFrame ; $690c
-	ld b, TILEBLOCK_StatusSourceGfx2 ; $690f
-	ld c, StatusSourceGfx2_SIZE / 16 ; $6911
+	ld b, TILEBLOCK_File3LabelGfx ; $690f
+	ld c, File3LabelGfx_SIZE / 16 ; $6911
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6913
 	farcall LoadCompressedTileBlock ; $6916
 	call AdvanceFrame ; $6919
-	ld b, TILEBLOCK_StatusSourceGfx3 ; $691c
-	ld c, StatusSourceGfx3_SIZE / 16 ; $691e
+	ld b, TILEBLOCK_N64DataLabelGfx ; $691c
+	ld c, N64DataLabelGfx_SIZE / 16 ; $691e
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6920
 	farcall LoadCompressedTileBlock ; $6923
 	call AdvanceFrame ; $6926
-	ld b, TILEBLOCK_StatusSourceGfx5 ; $6929
-	ld c, StatusSourceGfx5_SIZE / 16 ; $692b
+	ld b, TILEBLOCK_MarioCharactersLabelGfx ; $6929
+	ld c, MarioCharactersLabelGfx_SIZE / 16 ; $692b
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $692d
 	farcall LoadCompressedTileBlock ; $6930
 	call AdvanceFrame ; $6933
@@ -333,8 +333,8 @@ LoadStatusSourceGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $693a
 	farcall LoadCompressedTileBlock ; $693d
 	call AdvanceFrame ; $6940
-	ld b, TILEBLOCK_StatusSourceGfx4 ; $6943
-	ld c, StatusSourceGfx4_SIZE / 16 ; $6945
+	ld b, TILEBLOCK_StatusTitleGfx ; $6943
+	ld c, StatusTitleGfx_SIZE / 16 ; $6945
 	ld de, vTiles0 ; $6947
 	farcall LoadCompressedTileBlock ; $694a
 	call AdvanceFrame ; $694d

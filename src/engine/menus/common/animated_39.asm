@@ -60,7 +60,7 @@ ScreenAssetRecordTable:
 	; $40f5, 560 bytes (70 records x 4 slot words)
 	screen_asset MatchTypeMenu, DataPtr_NameEntryTilemapAlias9, DataPtr_NameEntryTilemapAlias10, DataPtr_NameEntryTilemapAlias11, DataPtr_NameEntryTilemapAlias12 ; record 0
 	screen_asset ExhibitionSetup, DataPtr_ExhibitionSetupTiles, DataPtr_ExhibitionSetupTilemap, DataPtr_ExhibitionSetupAttrmap, DataPtr_ExhibitionSetupPalettes ; record 1
-	screen_asset MainMenu, DataPtr_MainMenuGfx5, DataPtr_MainMenuGfx5Alias1, DataPtr_MainMenuGfx5Alias2, DataPtr_MainMenuGfx5Alias3 ; record 2
+	screen_asset MainMenu, DataPtr_MainMenuTitleGfx, DataPtr_MainMenuTitleGfxAlias1, DataPtr_MainMenuTitleGfxAlias2, DataPtr_MainMenuTitleGfxAlias3 ; record 2
 	screen_asset MatchTypeMenuAlt, DataPtr_NameEntryTilemapAlias9, DataPtr_NameEntryTilemapAlias10, DataPtr_NameEntryTilemapAlias11, DataPtr_NameEntryTilemapAlias12 ; record 3
 	screen_asset JapanesePlayMode, DataPtr_JapanesePlayModeTiles, DataPtr_JapanesePlayModeTilemap, DataPtr_JapanesePlayModeAttrmap, DataPtr_JapanesePlayModePalettes ; record 4
 	screen_asset CharacterSelect, DataPtr_CharacterSelectTiles, DataPtr_CharacterSelectTilemap, DataPtr_CharacterSelectAttrmap, DataPtr_CharacterSelectPalettes ; record 5
@@ -304,22 +304,22 @@ AnimatedTilesSet1Frames:
 	dslot DataPtr_BracketExtraIcon0 ; record 13
 	dslot DataPtr_BracketExtraIcon1 ; record 14
 	dslot DataPtr_BracketExtraIcon2 ; record 15
-	dslot DataPtr_MinigameLevelSelectGfx2 ; record 16
-	dslot DataPtr_MinigameLevelSelectGfx2Alias1 ; record 17
-	dslot DataPtr_MinigameLevelSelectGfx2Alias2 ; record 18
-	dslot DataPtr_MinigameLevelSelectGfx2Alias3 ; record 19
-	dslot DataPtr_MinigameLevelSelectGfx2Alias4 ; record 20
-	dslot DataPtr_MinigameLevelSelectGfx2Alias5 ; record 21
-	dslot DataPtr_MinigameLevelSelectGfx2Alias6 ; record 22
-	dslot DataPtr_MinigameLevelSelectGfx2Alias7 ; record 23
-	dslot DataPtr_MinigameLevelSelectGfx2Alias8 ; record 24
-	dslot DataPtr_MinigameLevelSelectGfx2Alias9 ; record 25
-	dslot DataPtr_MinigameLevelSelectGfx2Alias10 ; record 26
-	dslot DataPtr_MinigameLevelSelectGfx2Alias11 ; record 27
-	dslot DataPtr_MinigameLevelSelectGfx2Alias12 ; record 28
-	dslot DataPtr_MinigameLevelSelectGfx2Alias13 ; record 29
-	dslot DataPtr_MinigameLevelSelectGfx2Alias14 ; record 30
-	dslot DataPtr_MinigameLevelSelectGfx2Alias15 ; record 31
+	dslot DataPtr_SelectALevelTitleGfx ; record 16
+	dslot DataPtr_SelectALevelTitleGfxAlias1 ; record 17
+	dslot DataPtr_SelectALevelTitleGfxAlias2 ; record 18
+	dslot DataPtr_SelectALevelTitleGfxAlias3 ; record 19
+	dslot DataPtr_SelectALevelTitleGfxAlias4 ; record 20
+	dslot DataPtr_SelectALevelTitleGfxAlias5 ; record 21
+	dslot DataPtr_SelectALevelTitleGfxAlias6 ; record 22
+	dslot DataPtr_SelectALevelTitleGfxAlias7 ; record 23
+	dslot DataPtr_SelectALevelTitleGfxAlias8 ; record 24
+	dslot DataPtr_SelectALevelTitleGfxAlias9 ; record 25
+	dslot DataPtr_SelectALevelTitleGfxAlias10 ; record 26
+	dslot DataPtr_SelectALevelTitleGfxAlias11 ; record 27
+	dslot DataPtr_SelectALevelTitleGfxAlias12 ; record 28
+	dslot DataPtr_SelectALevelTitleGfxAlias13 ; record 29
+	dslot DataPtr_SelectALevelTitleGfxAlias14 ; record 30
+	dslot DataPtr_SelectALevelTitleGfxAlias15 ; record 31
 AnimatedTilesSet2Frames:
 	; $4493, 32 bytes (16 records x 1 slot words)
 	dslot DataPtr_CharRosterIcon00 ; record 0

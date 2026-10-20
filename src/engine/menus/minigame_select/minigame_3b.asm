@@ -154,44 +154,44 @@ LoadMinigameSelectGfx:
 	ld c, a ; $6322
 	cp $09 ; $6323
 	jr nz, .loop ; $6325
-	ld b, TILEBLOCK_MinigameSelectGfx0 ; $6327
-	ld c, MinigameSelectGfx0_SIZE / 16 ; $6329
+	ld b, TILEBLOCK_MarioNameGfx ; $6327
+	ld c, MarioNameGfx_SIZE / 16 ; $6329
 	ld de, vTiles0 + VRAM_BANK1 ; $632b
 	farcall LoadCompressedTileBlock ; $632e
 	call AdvanceFrame ; $6331
-	ld b, TILEBLOCK_MinigameSelectGfx1 ; $6334
-	ld c, MinigameSelectGfx1_SIZE / 16 ; $6336
+	ld b, TILEBLOCK_WaluigiNameGfx ; $6334
+	ld c, WaluigiNameGfx_SIZE / 16 ; $6336
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6338
 	farcall LoadCompressedTileBlock ; $633b
 	call AdvanceFrame ; $633e
-	ld b, TILEBLOCK_MinigameSelectGfx2 ; $6341
-	ld c, MinigameSelectGfx2_SIZE / 16 ; $6343
+	ld b, TILEBLOCK_YoshiNameGfx ; $6341
+	ld c, YoshiNameGfx_SIZE / 16 ; $6343
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6345
 	farcall LoadCompressedTileBlock ; $6348
 	call AdvanceFrame ; $634b
-	ld b, TILEBLOCK_MinigameSelectGfx3 ; $634e
-	ld c, MinigameSelectGfx3_SIZE / 16 ; $6350
+	ld b, TILEBLOCK_BowserNameGfx ; $634e
+	ld c, BowserNameGfx_SIZE / 16 ; $6350
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6352
 	farcall LoadCompressedTileBlock ; $6355
 	call AdvanceFrame ; $6358
-	ld b, TILEBLOCK_MinigameSelectGfx4 ; $635b
-	ld c, MinigameSelectGfx4_SIZE / 16 ; $635d
+	ld b, TILEBLOCK_WarioNameGfx ; $635b
+	ld c, WarioNameGfx_SIZE / 16 ; $635d
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $635f
 	farcall LoadCompressedTileBlock ; $6362
 	call AdvanceFrame ; $6365
-	ld b, TILEBLOCK_MinigameSelectGfx5 ; $6368
-	ld c, MinigameSelectGfx5_SIZE / 16 ; $636a
+	ld b, TILEBLOCK_PeachNameGfx ; $6368
+	ld c, PeachNameGfx_SIZE / 16 ; $636a
 	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
-	ld_slot hl, DataPtr_MinigameSelectIconGfx0 ; $6375
+	ld_slot hl, DataPtr_DonkeyKongNameGfx ; $6375
 	ld de, wDecompBuffer ; $6378
 	call DecompressDataFromBank ; $637b
 	ld hl, wDecompBuffer ; $637e
 	ld de, vTiles0 tile $20 ; $6381
 	ld c, 16 ; $6384
 	call QueueVRAMCopy ; $6386
-	ld_slot hl, DataPtr_MinigameSelectIconGfx1 ; $6389
+	ld_slot hl, DataPtr_LuigiNameGfx ; $6389
 	ld de, wDecompBuffer tile 64 ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, wDecompBuffer tile 64 ; $6392
@@ -199,7 +199,7 @@ LoadMinigameSelectGfx:
 	ld c, 16 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
-	ld_slot hl, DataPtr_MinigameSelectIconGfx2 ; $63a0
+	ld_slot hl, DataPtr_BabyMarioNameGfx ; $63a0
 	ld de, wDecompBuffer ; $63a3
 	call DecompressDataFromBank ; $63a6
 	ld hl, wDecompBuffer ; $63a9
@@ -207,13 +207,13 @@ LoadMinigameSelectGfx:
 	ld c, 16 ; $63af
 	call QueueVRAMCopy ; $63b1
 	call AdvanceFrame ; $63b4
-	ld b, TILEBLOCK_SharedMenuGfx111 ; $63b7
-	ld c, 18 ; $63b9 -- 18 of SharedMenuGfx111's 16 tiles
+	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $63b7
+	ld c, 18 ; $63b9 -- 18 of QuestionMarksLabelGfx's 16 tiles
 	ld de, vTiles0 tile $50 ; $63bb
 	farcall LoadCompressedTileBlock ; $63be
 	call AdvanceFrame ; $63c1
-	ld b, TILEBLOCK_MinigameSelectGfx6 ; $63c4
-	ld c, MinigameSelectGfx6_SIZE / 16 ; $63c6
+	ld b, TILEBLOCK_MarioMiniGamesTitleGfx ; $63c4
+	ld c, MarioMiniGamesTitleGfx_SIZE / 16 ; $63c6
 	ld de, vTiles0 ; $63c8
 	farcall LoadCompressedTileBlock ; $63cb
 	call AdvanceFrame ; $63ce

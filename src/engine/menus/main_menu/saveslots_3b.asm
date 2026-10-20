@@ -460,38 +460,38 @@ LoadMatchFormatGfx:
 	ld a, c ; $5e36
 	cp $07 ; $5e37
 	jr nz, .loop ; $5e39
-	ld b, TILEBLOCK_SharedMenuGfx35 ; $5e3b
-	ld c, SharedMenuGfx35_SIZE / 16 ; $5e3d
+	ld b, TILEBLOCK_SinglesLabelGfx ; $5e3b
+	ld c, SinglesLabelGfx_SIZE / 16 ; $5e3d
 	ld de, vTiles0 + VRAM_BANK1 ; $5e3f
 	farcall LoadCompressedTileBlock ; $5e42
 	call AdvanceFrame ; $5e45
-	ld b, TILEBLOCK_SharedMenuGfx36 ; $5e48
-	ld c, SharedMenuGfx36_SIZE / 16 ; $5e4a
+	ld b, TILEBLOCK_DoublesLabelGfx ; $5e48
+	ld c, DoublesLabelGfx_SIZE / 16 ; $5e4a
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5e4c
 	farcall LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
-	ld b, TILEBLOCK_SharedMenuGfx37 ; $5e55
-	ld c, SharedMenuGfx37_SIZE / 16 ; $5e57
+	ld b, TILEBLOCK_TwoGamesLabelGfx ; $5e55
+	ld c, TwoGamesLabelGfx_SIZE / 16 ; $5e57
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5e59
 	farcall LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
-	ld b, TILEBLOCK_SharedMenuGfx38 ; $5e62
-	ld c, SharedMenuGfx38_SIZE / 16 ; $5e64
+	ld b, TILEBLOCK_SixGamesLabelGfx ; $5e62
+	ld c, SixGamesLabelGfx_SIZE / 16 ; $5e64
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5e66
 	farcall LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
-	ld b, TILEBLOCK_SharedMenuGfx39 ; $5e6f
-	ld c, SharedMenuGfx39_SIZE / 16 ; $5e71
+	ld b, TILEBLOCK_OneSetLabelGfx ; $5e6f
+	ld c, OneSetLabelGfx_SIZE / 16 ; $5e71
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $5e73
 	farcall LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
-	ld b, TILEBLOCK_SharedMenuGfx40 ; $5e7c
-	ld c, SharedMenuGfx40_SIZE / 16 ; $5e7e
+	ld b, TILEBLOCK_ThreeSetsLabelGfx ; $5e7c
+	ld c, ThreeSetsLabelGfx_SIZE / 16 ; $5e7e
 	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $5e80
 	farcall LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
-	ld b, TILEBLOCK_SharedMenuGfx41 ; $5e89
-	ld c, SharedMenuGfx41_SIZE / 16 ; $5e8b
+	ld b, TILEBLOCK_FiveSetsLabelGfx ; $5e89
+	ld c, FiveSetsLabelGfx_SIZE / 16 ; $5e8b
 	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $5e8d
 	farcall LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
@@ -500,8 +500,8 @@ LoadMatchFormatGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $5e9a
 	farcall LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
-	ld b, TILEBLOCK_SharedMenuGfx63 ; $5ea3
-	ld c, SharedMenuGfx63_SIZE / 16 ; $5ea5
+	ld b, TILEBLOCK_PlayMenuTitleGfx ; $5ea3
+	ld c, PlayMenuTitleGfx_SIZE / 16 ; $5ea5
 	ld de, vTiles0 ; $5ea7
 	farcall LoadCompressedTileBlock ; $5eaa
 	call AdvanceFrame ; $5ead

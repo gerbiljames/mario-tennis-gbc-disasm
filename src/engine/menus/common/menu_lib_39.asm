@@ -73,55 +73,55 @@ TileBlockPtrs_39:
 	tileblock MenuArrowGfx2 ; record 25
 	tileblock MenuArrowGfx3 ; record 26
 	tileblock SharedMenuGfx27 ; record 27
-	tileblock MainMenuGfx0 ; record 28
-	tileblock SharedMenuGfx29 ; record 29
-	tileblock SharedMenuGfx30 ; record 30
-	tileblock MainMenuGfx1 ; record 31
-	tileblock MainMenuGfx2 ; record 32
-	tileblock MainMenuGfx3 ; record 33
-	tileblock MainMenuGfx4 ; record 34
-	tileblock SharedMenuGfx35 ; record 35
-	tileblock SharedMenuGfx36 ; record 36
-	tileblock SharedMenuGfx37 ; record 37
-	tileblock SharedMenuGfx38 ; record 38
-	tileblock SharedMenuGfx39 ; record 39
-	tileblock SharedMenuGfx40 ; record 40
-	tileblock SharedMenuGfx41 ; record 41
-	tileblock StatusSourceGfx0 ; record 42
-	tileblock StatusSourceGfx1 ; record 43
-	tileblock StatusSourceGfx2 ; record 44
-	tileblock StatusSourceGfx3 ; record 45
-	tileblock EraseSavedDataGfx0 ; record 46
-	tileblock EraseSavedDataGfx1 ; record 47
-	tileblock EraseSavedDataGfx2 ; record 48
-	tileblock EraseSavedDataGfx3 ; record 49
-	tileblock EraseSavedDataGfx4 ; record 50
-	tileblock MinigameSelectGfx0 ; record 51
-	tileblock MinigameSelectGfx1 ; record 52
-	tileblock MinigameSelectGfx2 ; record 53
-	tileblock MinigameSelectGfx3 ; record 54
-	tileblock MinigameSelectGfx4 ; record 55
-	tileblock MinigameSelectGfx5 ; record 56
-	tileblock N64RecordTypeGfx0 ; record 57
-	tileblock N64RecordTypeGfx1 ; record 58
-	tileblock GbDataItemGfx0 ; record 59
-	tileblock GbDataItemGfx1 ; record 60
-	tileblock GbDataItemGfx2 ; record 61
-	tileblock MainMenuGfx5Alias4 ; record 62
-	tileblock SharedMenuGfx63 ; record 63
+	tileblock MarioTourLabelGfx ; record 28
+	tileblock ExhibitionLabelGfx ; record 29
+	tileblock MarioMiniGamesLabelGfx ; record 30
+	tileblock LinkedPlayLabelGfx ; record 31
+	tileblock StatusLabelGfx ; record 32
+	tileblock DictionaryLabelGfx ; record 33
+	tileblock SavedDataLabelGfx ; record 34
+	tileblock SinglesLabelGfx ; record 35
+	tileblock DoublesLabelGfx ; record 36
+	tileblock TwoGamesLabelGfx ; record 37
+	tileblock SixGamesLabelGfx ; record 38
+	tileblock OneSetLabelGfx ; record 39
+	tileblock ThreeSetsLabelGfx ; record 40
+	tileblock FiveSetsLabelGfx ; record 41
+	tileblock File1LabelGfx ; record 42
+	tileblock File2LabelGfx ; record 43
+	tileblock File3LabelGfx ; record 44
+	tileblock N64DataLabelGfx ; record 45
+	tileblock EraseFile1LabelGfx ; record 46
+	tileblock EraseFile2LabelGfx ; record 47
+	tileblock EraseFile3LabelGfx ; record 48
+	tileblock EraseN64DataLabelGfx ; record 49
+	tileblock EraseAllDataLabelGfx ; record 50
+	tileblock MarioNameGfx ; record 51
+	tileblock WaluigiNameGfx ; record 52
+	tileblock YoshiNameGfx ; record 53
+	tileblock BowserNameGfx ; record 54
+	tileblock WarioNameGfx ; record 55
+	tileblock PeachNameGfx ; record 56
+	tileblock TournamentLabelGfx ; record 57
+	tileblock RingShotLabelGfx ; record 58
+	tileblock CharacterDataLabelGfx ; record 59
+	tileblock N64TournamentsLabelGfx ; record 60
+	tileblock SetItemsLabelGfx ; record 61
+	tileblock MainMenuTitleGfxAlias4 ; record 62
+	tileblock PlayMenuTitleGfx ; record 63
 	tileblock CourtSelectGfx0 ; record 64
-	tileblock SharedMenuGfx65 ; record 65
-	tileblock StatusSourceGfx4 ; record 66
-	tileblock N64RecordTypeGfx2 ; record 67
-	tileblock GbDataItemGfx3 ; record 68
-	tileblock EraseDataConfirmGfx0 ; record 69
-	tileblock EraseDataConfirmGfx1 ; record 70
-	tileblock MinigameSelectGfx6 ; record 71
-	tileblock SharedMenuGfx72 ; record 72
+	tileblock SavedDataTitleGfx ; record 65
+	tileblock StatusTitleGfx ; record 66
+	tileblock N64DataTitleGfx ; record 67
+	tileblock GbDataTitleGfx ; record 68
+	tileblock EraseN64DataTitleGfx ; record 69
+	tileblock EraseAllTitleGfx ; record 70
+	tileblock MarioMiniGamesTitleGfx ; record 71
+	tileblock CreateACharacterTitleGfx ; record 72
 	tileblock NumberSpriteGfx ; record 73
-	tileblock RacketShoesChoiceGfx0 ; record 74
-	tileblock RacketShoesChoiceGfx1 ; record 75
-	tileblock RacketShoesChoiceGfx2 ; record 76
+	tileblock SelectRacketLabelGfx ; record 74
+	tileblock SelectShoesLabelGfx ; record 75
+	tileblock SetItemsTitleGfx ; record 76
 	tileblock CutsceneGfx0 ; record 77
 	tileblock CutsceneGfx1 ; record 78
 	tileblock CutsceneGfx2 ; record 79
@@ -156,16 +156,16 @@ TileBlockPtrs_39:
 	tileblock CourtSelectGfx7 ; record 108
 	tileblock CourtSelectGfx8 ; record 109
 	tileblock CourtSelectGfx9 ; record 110
-	tileblock SharedMenuGfx111 ; record 111
-	tileblock MinigameLevelSelectGfx0 ; record 112
-	tileblock MinigameLevelSelectIconGfx ; record 113
-	tileblock MinigameLevelSelectGfx1 ; record 114
-	tileblock GbDataItemGfx4 ; record 115
-	tileblock GbDataItemGfx5 ; record 116
+	tileblock QuestionMarksLabelGfx ; record 111
+	tileblock Level1LabelGfx ; record 112
+	tileblock Level2LabelGfx ; record 113
+	tileblock ChallengeLabelGfx ; record 114
+	tileblock ClearStatusLabelGfx ; record 115
+	tileblock MarioStarGetsLabelGfx ; record 116
 	tileblock CharGridGfx2 ; record 117
-	tileblock StatusSourceGfx5 ; record 118
-	tileblock MinigameLevelSelectGfx2Alias16 ; record 119
-	tileblock MarioCharDataTypeSelectGfx ; record 120
+	tileblock MarioCharactersLabelGfx ; record 118
+	tileblock SelectALevelTitleGfxAlias16 ; record 119
+	tileblock MarioCharactersTitleGfx ; record 120
 	tileblock DigitFontTiles ; record 121
 SharedMenuGfx17:
 	INCBIN "data/engine/menus/common/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes

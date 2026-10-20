@@ -175,38 +175,38 @@ LoadMainMenuGfx:
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
-	ld b, TILEBLOCK_MainMenuGfx0 ; $5761
-	ld c, MainMenuGfx0_SIZE / 16 ; $5763
+	ld b, TILEBLOCK_MarioTourLabelGfx ; $5761
+	ld c, MarioTourLabelGfx_SIZE / 16 ; $5763
 	ld de, vTiles0 + VRAM_BANK1 ; $5765
 	farcall LoadCompressedTileBlock ; $5768
 	call AdvanceFrame ; $576b
-	ld b, TILEBLOCK_SharedMenuGfx29 ; $576e
-	ld c, SharedMenuGfx29_SIZE / 16 ; $5770
+	ld b, TILEBLOCK_ExhibitionLabelGfx ; $576e
+	ld c, ExhibitionLabelGfx_SIZE / 16 ; $5770
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5772
 	farcall LoadCompressedTileBlock ; $5775
 	call AdvanceFrame ; $5778
-	ld b, TILEBLOCK_SharedMenuGfx30 ; $577b
-	ld c, SharedMenuGfx30_SIZE / 16 ; $577d
+	ld b, TILEBLOCK_MarioMiniGamesLabelGfx ; $577b
+	ld c, MarioMiniGamesLabelGfx_SIZE / 16 ; $577d
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $577f
 	farcall LoadCompressedTileBlock ; $5782
 	call AdvanceFrame ; $5785
-	ld b, TILEBLOCK_MainMenuGfx1 ; $5788
-	ld c, MainMenuGfx1_SIZE / 16 ; $578a
+	ld b, TILEBLOCK_LinkedPlayLabelGfx ; $5788
+	ld c, LinkedPlayLabelGfx_SIZE / 16 ; $578a
 	ld de, vTiles0 tile $32 + VRAM_BANK1 ; $578c
 	farcall LoadCompressedTileBlock ; $578f
 	call AdvanceFrame ; $5792
-	ld b, TILEBLOCK_MainMenuGfx2 ; $5795
-	ld c, MainMenuGfx2_SIZE / 16 ; $5797
+	ld b, TILEBLOCK_StatusLabelGfx ; $5795
+	ld c, StatusLabelGfx_SIZE / 16 ; $5797
 	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5799
 	farcall LoadCompressedTileBlock ; $579c
 	call AdvanceFrame ; $579f
-	ld b, TILEBLOCK_MainMenuGfx3 ; $57a2
-	ld c, MainMenuGfx3_SIZE / 16 ; $57a4
+	ld b, TILEBLOCK_DictionaryLabelGfx ; $57a2
+	ld c, DictionaryLabelGfx_SIZE / 16 ; $57a4
 	ld de, vTiles0 tile $52 + VRAM_BANK1 ; $57a6
 	farcall LoadCompressedTileBlock ; $57a9
 	call AdvanceFrame ; $57ac
-	ld b, TILEBLOCK_MainMenuGfx4 ; $57af
-	ld c, MainMenuGfx4_SIZE / 16 ; $57b1
+	ld b, TILEBLOCK_SavedDataLabelGfx ; $57af
+	ld c, SavedDataLabelGfx_SIZE / 16 ; $57b1
 	ld de, vTiles0 tile $62 + VRAM_BANK1 ; $57b3
 	farcall LoadCompressedTileBlock ; $57b6
 	call AdvanceFrame ; $57b9
@@ -218,8 +218,8 @@ LoadMainMenuGfx:
 	ld c, $10 ; $57c8
 	farcall LoadIndexedPalette ; $57ca
 	call AdvanceFrame ; $57cd
-	ld b, TILEBLOCK_MainMenuGfx5Alias4 ; $57d0
-	ld c, MainMenuGfx5_SIZE / 16 ; $57d2
+	ld b, TILEBLOCK_MainMenuTitleGfxAlias4 ; $57d0
+	ld c, MainMenuTitleGfx_SIZE / 16 ; $57d2
 	ld de, vTiles0 ; $57d4
 	farcall LoadCompressedTileBlock ; $57d7
 	pop_wram_bank ; $57da

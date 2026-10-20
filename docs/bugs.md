@@ -274,7 +274,7 @@ routine ends in an endless `AdvanceFrame` loop without touching the scroll.
 `LoadCompressedTileBlock` decompresses a stream and copies `c` tiles of the
 buffer to VRAM. The court-select screen (`$3e:$5d6e`-`$5dc8`) asks for 18 tiles
 of 16-tile streams (20 of Gfx4's 18), the minigame menu (`$3b:$63b9`) 18 of
-`SharedMenuGfx111`'s 16, and the intro (`$6b:$60b3`) 4 of `IntroGfx6`'s 2, so
+`QuestionMarksLabelGfx`'s 16, and the intro (`$6b:$60b3`) 4 of `IntroGfx6`'s 2, so
 each copy brings two stale tiles from the buffer. In the court-select chain
 later loads overwrite them except at `$50`-`$51`; the minigame menu leaves them
 at `$60`-`$61`, the intro at `$4a`-`$4b` (VRAM bank 1). Nothing draws those

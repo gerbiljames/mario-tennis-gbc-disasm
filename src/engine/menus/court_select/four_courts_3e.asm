@@ -254,8 +254,8 @@ LoadCourtSelectGraphics:
 	ld c, 18 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
 	ld de, vTiles0 tile $30 ; $5dc0
 	farcall LoadCompressedTileBlock ; $5dc3
-	ld b, TILEBLOCK_SharedMenuGfx111 ; $5dc6
-	ld c, 18 ; $5dc8 -- 18 of SharedMenuGfx111's 16 tiles
+	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $5dc6
+	ld c, 18 ; $5dc8 -- 18 of QuestionMarksLabelGfx's 16 tiles
 	ld de, vTiles0 tile $40 ; $5dca
 	farcall LoadCompressedTileBlock ; $5dcd
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5dd0
