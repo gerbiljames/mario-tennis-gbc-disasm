@@ -97,7 +97,7 @@ SetupCharacterSprite_CharTileBaseTable:
 ; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position
 ; strategy, the two reaction delays, ball tracking, aim-away chance and serve
-; style. OverrideCharStatsForDebug rewrites the same six.
+; style. OverrideCharStatsForDebug rewrites those six and wCharAimJitterScale.
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a ; $5ab6

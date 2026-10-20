@@ -107,7 +107,7 @@ BuildExpAwardScreenTilemap:
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
 LoadExpAwardScreenGraphics:
-	ld hl, ExpAwardScreenPalettes0 ; $551e
+	ld hl, ExpAwardScreenBgPalettes ; $551e
 	ld_bg_pals de, 0, 3 ; $5521
 	call LoadPaletteShadow ; $5524
 	wram_bank WRAM_STAGING ; $5527
@@ -144,7 +144,7 @@ LoadExpAwardScreenGraphics:
 	ld de, vTiles2 ; $558e
 	ld c, PanelFrameGfx_1e_SIZE / 16 ; $5591
 	call QueueVRAMCopy ; $5593
-	ld hl, ExpAwardScreenPalettes1 ; $5596
+	ld hl, ExpAwardScreenObjPalette ; $5596
 	ld_obj_pals de, 0, 1 ; $5599
 	call LoadPaletteShadow ; $559c
 	wram_bank WRAM_STAGING ; $559f

@@ -219,7 +219,7 @@ CharDataValuesSyncTask:
 	ld a, [wCharDataSyncSource] ; $48cd
 	or a ; $48d0
 	jr nz, .fromGameTimer ; $48d1
-	ld hl, wCharDataSyncValues ; $48d3
+	ld hl, wSavedGameTimer + 2 ; $48d3
 	jr .copyPair ; $48d6
 .fromGameTimer:
 	ld hl, wGameTimer + 2 ; $48d8

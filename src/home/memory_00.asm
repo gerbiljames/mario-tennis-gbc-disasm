@@ -190,7 +190,8 @@ QueueVRAMCopyFromBank:
 	call QueueVRAMCopy ; $0476
 	pop_rom_bank ; $0479
 	ret ; $047f
-; The game's only path to VRAM (no code writes $8xxx directly). hl = source,
+; The game's usual path to VRAM (ClearBothVRAMBanks clears it directly and a
+; few loaders call StartVRAMDMAFromHL themselves). hl = source,
 ; de = destination, c = length in 16-byte blocks.
 ;
 ; The VRAM bank rides in bit 13 of the destination, so $9800 + VRAM_BANK1 is

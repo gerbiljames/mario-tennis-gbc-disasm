@@ -4,7 +4,7 @@ RunIntroCutscene:
 	ld [wCutsceneStepTimer], a ; $402e
 	ld [wIntroCutsceneCheck], a ; $4031
 	ld [wCutsceneScrollX], a ; $4034
-	ld [wIntroCutsceneSubState], a ; $4037
+	ld [wCutsceneReverseScrollX], a ; $4037
 	ldh [hShowDebugConsole], a ; $403a
 	ld hl, rLCDC ; $403c
 	res B_LCDC_BG_MAP, [hl] ; $403f
@@ -420,7 +420,7 @@ IntroCutsceneState03Init_6b:
 	ld a, $28 ; $443e
 	ld [wCutsceneSpriteBY], a ; $4440
 	xor a ; $4443
-	ld [wIntroCutsceneSubState], a ; $4444
+	ld [wCutsceneReverseScrollX], a ; $4444
 	call EnableLCD ; $4447
 	script_fade_in 127 ; $444a
 	call WaitFadeEnd ; $444f
@@ -430,7 +430,7 @@ IntroCutsceneState03Exit_6b:
 	call UnregisterFrameTask ; $4458
 	xor a ; $445b
 	ld [wCutsceneStepTimer], a ; $445c
-	ld [wIntroCutsceneSubState], a ; $445f
+	ld [wCutsceneReverseScrollX], a ; $445f
 	ldh [hScrollX], a ; $4462
 	jp DispatchCutsceneStateInit.nextState ; $4464
 IntroCutsceneState03Update_6b:
@@ -439,9 +439,9 @@ IntroCutsceneState03Update_6b:
 	ld [wCutsceneStepTimer], a ; $446b
 	cp $7d ; $446e
 	jp z, DispatchCutsceneStateInit.runExit ; $4470
-	ld a, [wIntroCutsceneSubState] ; $4473
+	ld a, [wCutsceneReverseScrollX] ; $4473
 	sub $03 ; $4476
-	ld [wIntroCutsceneSubState], a ; $4478
+	ld [wCutsceneReverseScrollX], a ; $4478
 	ldh [hScrollX], a ; $447b
 	ld a, [wCutsceneSpriteBX] ; $447d
 	dec a ; $4480

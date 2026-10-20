@@ -339,10 +339,10 @@ DrawBriefingMarkerHFlip_SpriteTemplate:
 DrawBriefingSwingAnim:
 	push_wram_bank WRAM_SCREEN ; $478e
 	ld a, [wBriefingSwingFrame] ; $4797
-	ld hl, BriefingSwingAnimTable0 ; $479a
+	ld hl, BriefingSwingFrameTileTable ; $479a
 	add_hl_a ; $479d
 	ld c, [hl] ; $47a2
-	ld hl, BriefingSwingAnimTable1 ; $47a3
+	ld hl, DrawBriefingSwingAnim_SmallSpriteTemplate ; $47a3
 	ld a, [wBriefingSwingFrame] ; $47a6
 	cp $06 ; $47a9
 	jr nc, .gotTemplate ; $47ab
@@ -356,7 +356,7 @@ DrawBriefingSwingAnim:
 	call QueueSpriteTemplate ; $47ba
 	pop_wram_bank ; $47bd
 	ret ; $47c2
-BriefingSwingAnimTable0:
+BriefingSwingFrameTileTable:
 	; $47c3, 10 bytes (bytes:10)
 	db $08, $12, $1c, $36, $40, $4a, $26, $2c, $54, $5a ; 0x00
 DrawBriefingSwingAnim_SpriteTemplate:
@@ -367,7 +367,7 @@ DrawBriefingSwingAnim_SpriteTemplate:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-BriefingSwingAnimTable1:
+DrawBriefingSwingAnim_SmallSpriteTemplate:
 	; $47e2, 13 bytes (bytes:13)
 	db $10, $08, $00, $00, $10, $10, $02, $00, $10, $18, $04, $00, $80 ; 0x00
 DrawBriefingPoleSprites:

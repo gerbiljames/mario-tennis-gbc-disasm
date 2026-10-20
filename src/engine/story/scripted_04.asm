@@ -290,11 +290,11 @@ Unused_04_SpawnScriptedActorScene:
 	ld de, $d000 ; $4d48
 	call AttachActorWaypointFollower ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
-	ld hl, ScriptedActorSceneActorList0 ; $4d50
+	ld hl, ScriptedSceneMarioActorList ; $4d50
 	call SpawnActorFromTemplate ; $4d53
 	ld de, $d000 ; $4d56
 	call AttachActorStepMover ; $4d59
-	ld hl, ScriptedActorSceneActorList1 ; $4d5c
+	ld hl, ScriptedSceneMarioColumnActorList ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
 Unused_04_MatchNinaAlexActorList:
@@ -308,23 +308,23 @@ ActorList_04_1:
 	; $4da5, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorList0_04:
+MainCharNinaActorList_04:
 	; $4dbd, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_NINA, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorList1_04:
+MainCharHarryActorList_04:
 	; $4dd5, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_HARRY, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorList2_04:
+MainCharKateActorList_04:
 	; $4ded, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorSceneActorList0:
+ScriptedSceneMarioActorList:
 	; $4e05, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 29.0, 41.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorSceneActorList1:
+ScriptedSceneMarioColumnActorList:
 	; $4e1d, 66 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 23.0, 21.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor $0000, ActorScript_Idle, 23.0, 25.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
@@ -334,9 +334,9 @@ ScriptedActorSceneActorList1:
 ScriptedActorListPtrs_04:
 	; $4e5f, 8 bytes (records:2)
 	dw ActorList_04_1 ; record 0
-	dw ScriptedActorList0_04 ; record 1
-	dw ScriptedActorList1_04 ; record 2
-	dw ScriptedActorList2_04 ; record 3
+	dw MainCharNinaActorList_04 ; record 1
+	dw MainCharHarryActorList_04 ; record 2
+	dw MainCharKateActorList_04 ; record 3
 	; $4e67, 4 bytes (bytes:4)
 	db $0b, $0c, $fe, $ff ; 0x00
 SpawnMainCharacterActor:
@@ -387,15 +387,15 @@ SpawnMainCharacterActor:
 	pop bc ; $4ec5
 	pop af ; $4ec6
 	ret ; $4ec7
-CompanionActorPartnerActorList0:
+CompanionHarryActorList:
 	; $4ec8, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 1.0, 1.0, FACE_DOWN, OBJ_HARRY, ANIM_WALK, $00
 	map_actor_end
-CompanionActorPartnerActorList1:
+CompanionKateActorList:
 	; $4ee0, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 1.0, 1.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00
 	map_actor_end
-CompanionActorPartnerActorList2:
+CompanionSinglesDummyActorList:
 	; $4ef8, 24 bytes (actor_list)
 	map_actor $01e0, ActorScript_Deactivate, 1.0, 1.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00
 	map_actor_end
@@ -408,18 +408,18 @@ SpawnCompanionActor:
 	ld a, [wStoryPartnerGender] ; $4f1a
 	or a ; $4f1d
 	jr nz, .partnerSlot ; $4f1e
-	ld hl, CompanionActorPartnerActorList0 ; $4f20
+	ld hl, CompanionHarryActorList ; $4f20
 	ld a, $02 ; $4f23
 	test_flag FLAG_DOUBLES ; $4f25
 	jr nz, .spawn ; $4f28
 	jr .singlesList ; $4f2a
 .partnerSlot:
-	ld hl, CompanionActorPartnerActorList1 ; $4f2c
+	ld hl, CompanionKateActorList ; $4f2c
 	ld a, $03 ; $4f2f
 	test_flag FLAG_DOUBLES ; $4f31
 	jr nz, .spawn ; $4f34
 .singlesList:
-	ld hl, CompanionActorPartnerActorList2 ; $4f36
+	ld hl, CompanionSinglesDummyActorList ; $4f36
 	ld a, $ff ; $4f39
 .spawn:
 	ld [wCompanionActorSlot], a ; $4f3b

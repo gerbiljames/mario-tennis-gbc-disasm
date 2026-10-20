@@ -819,9 +819,9 @@ pass:
 | `branches` | 14 | no *new* conditional branch targets the instruction after it |
 | `literals` | 33797 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
 | `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2907 | every PNG encodes back to the blob it was decoded from |
+| `gfx` | 2905 | every PNG encodes back to the blob it was decoded from |
 | `gfx-specs` | 121 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
-| `tilemap` | 239 | every tilemap grid encodes back to its blob |
+| `tilemap` | 241 | every tilemap grid encodes back to its blob |
 | `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
 | `reach` | 4879 | a routine is named `Unused` exactly when nothing reachable reaches it |
 | `unnamed` | 8869 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |

@@ -299,18 +299,18 @@ IslandSkyInitScript_14:
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
 	and $01 ; $53df
-	jr z, .advanceStage ; $53e1
+	jr z, .shallowFlightStep ; $53e1
 	ld a, [wCutscenePlaneX] ; $53e3
 	dec a ; $53e6
 	ld [wCutscenePlaneX], a ; $53e7
-.advanceStage:
+.shallowFlightStep:
 	ld a, [wCutscenePlaneY] ; $53ea
 	inc a ; $53ed
 	ld [wCutscenePlaneY], a ; $53ee
 	dec h ; $53f1
 	jr nz, .shallowFlightLoop ; $53f2
 	ld h, $08 ; $53f4
-.checkStage:
+.steepFlightLoop:
 	script_wait_frames 4 ; $53f6
 	call PlayPlaneMoveSfx_14 ; $53fd
 	ld a, [wCutscenePlaneX] ; $5400
@@ -320,28 +320,28 @@ IslandSkyInitScript_14:
 	inc a ; $540a
 	ld [wCutscenePlaneY], a ; $540b
 	dec h ; $540e
-	jr nz, .checkStage ; $540f
+	jr nz, .steepFlightLoop ; $540f
 	script_player_speed 0.5625 ; $5411
 	script_move_player_to_actor ACTOR_PLAYER ; $5417
 	ld h, $1c ; $541e
-.descend:
+.boardFlightLoop:
 	script_wait_frames 3 ; $5420
 	call PlayPlaneMoveSfx_14 ; $5427
 	ld a, h ; $542a
 	and $01 ; $542b
-	jr z, .landed ; $542d
+	jr z, .boardFlightStep ; $542d
 	ld a, [wCutscenePlaneX] ; $542f
 	dec a ; $5432
 	ld [wCutscenePlaneX], a ; $5433
-.landed:
+.boardFlightStep:
 	ld a, [wCutscenePlaneY] ; $5436
 	inc a ; $5439
 	ld [wCutscenePlaneY], a ; $543a
 	dec h ; $543d
-	jr nz, .descend ; $543e
+	jr nz, .boardFlightLoop ; $543e
 .afterFlight:
 	ld h, $00 ; $5440
-.placeActors:
+.approachLoop:
 	script_wait_frames 3 ; $5442
 	inc h ; $5449
 	call PlayPlaneMoveSfx_14 ; $544a
@@ -350,53 +350,53 @@ IslandSkyInitScript_14:
 	ld [wCutscenePlaneY], a ; $5451
 	and $03 ; $5454
 	cp $03 ; $5456
-	jr nz, .placeDoubles ; $5458
+	jr nz, .approachStep ; $5458
 	ld a, [wCutscenePlaneX] ; $545a
 	dec a ; $545d
 	ld [wCutscenePlaneX], a ; $545e
-.placeDoubles:
+.approachStep:
 	ld a, [wCutscenePlaneX] ; $5461
 	cp $20 ; $5464
-	jr nz, .placeActors ; $5466
+	jr nz, .approachLoop ; $5466
 	ld h, $08 ; $5468
-.walkOff:
+.landLoop:
 	script_wait_frames 4 ; $546a
 	call PlayPlaneMoveSfx_14 ; $5471
 	ld a, [wCutscenePlaneY] ; $5474
 	inc a ; $5477
 	ld [wCutscenePlaneY], a ; $5478
 	dec h ; $547b
-	jr nz, .walkOff ; $547c
+	jr nz, .landLoop ; $547c
 	sound SFX_PLANE ; $547e
 	ld h, $08 ; $5480
-.speak:
+.touchdownLoop:
 	script_wait_frames 6 ; $5482
 	ld a, [wCutscenePlaneY] ; $5489
 	inc a ; $548c
 	ld [wCutscenePlaneY], a ; $548d
 	dec h ; $5490
-	jr nz, .speak ; $5491
+	jr nz, .touchdownLoop ; $5491
 	sound SFX_FIREWORK_SPARKLE ; $5493
 	ld h, $04 ; $5495
-.speakDoubles:
+.rollLoop:
 	script_wait_frames 8 ; $5497
 	ld a, [wCutscenePlaneY] ; $549e
 	inc a ; $54a1
 	ld [wCutscenePlaneY], a ; $54a2
 	dec h ; $54a5
-	jr nz, .speakDoubles ; $54a6
+	jr nz, .rollLoop ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $54ab
-	jr z, .setLocation ; $54ad
+	jr z, .landingScene ; $54ad
 	test_flag FLAG_DOUBLES ; $54af
-	jr z, .fadeOut ; $54b2
+	jr z, .singlesArrivalCheck ; $54b2
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $54b4
-	jp z, .setLocation ; $54b7
-	jr .transition ; $54ba
-.fadeOut:
+	jp z, .landingScene ; $54b7
+	jr .toCourtyard ; $54ba
+.singlesArrivalCheck:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $54bc
-	jr z, .setLocation ; $54bf
-.transition:
+	jr z, .landingScene ; $54bf
+.toCourtyard:
 	script_fade_out 4 ; $54c1
 	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
@@ -408,7 +408,7 @@ IslandSkyInitScript_14:
 	ld [wUnusedExitTriggerIdMirror], a ; $54d8
 	ld [wStoryModeExitTriggerRequest], a ; $54db
 	ret ; $54de
-.setLocation:
+.landingScene:
 	ld a, $40 ; $54df
 	ld [wCutsceneObjX], a ; $54e1
 	ld a, $00 ; $54e4
@@ -457,7 +457,7 @@ IslandSkyInitScript_14:
 	script_wait_idle ACTOR_PLAYER ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $55ee
-	jr nz, .done ; $55f0
+	jr nz, .toDormRoom ; $55f0
 	ld a, $01 ; $55f2
 	ld [wCutsceneObjActive], a ; $55f4
 	ld [wCutsceneObjActive + 1], a ; $55f7
@@ -465,7 +465,7 @@ IslandSkyInitScript_14:
 	ld [wUnusedExitTriggerIdMirror], a ; $55fc
 	ld [wStoryModeExitTriggerRequest], a ; $55ff
 	ret ; $5602
-.done:
+.toDormRoom:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
 	script_set_active ACTOR_PLAYER, $00 ; $5613

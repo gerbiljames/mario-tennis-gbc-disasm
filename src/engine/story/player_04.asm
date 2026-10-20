@@ -166,7 +166,7 @@ GetPointAheadOfActorFixed:
 	and $1c ; $50d5
 	ld d, a ; $50d7
 	ld a, $40 ; $50d8
-	jr IndexPlayerControlTable ; $50da
+	jr IndexActorMoveVector ; $50da
 GetPointAheadOfActorRanged:
 	rrca ; $50dc
 	rrca ; $50dd
@@ -179,7 +179,7 @@ GetPointAheadOfActorRanged:
 	add a ; $50e7
 	add a ; $50e8
 	add a ; $50e9
-IndexPlayerControlTable:
+IndexActorMoveVector:
 	add d ; $50ea
 	ld_hl_indexed ActorMoveVectors_04 ; $50eb
 	ld a, [hl+] ; $50f2
@@ -329,7 +329,7 @@ UpdatePlayerControl:
 	jr nz, .dpadToAngle ; $51c3
 	xor a ; $51c5
 	ld [wPlayerMoving], a ; $51c6
-	jp .done ; $51c9
+	jp .stopAndSnap ; $51c9
 .dpadToAngle:
 	ld hl, DpadMaskToAngleTable_04 ; $51cc
 	swap a ; $51cf
@@ -339,7 +339,7 @@ UpdatePlayerControl:
 	ld a, [hl] ; $51d5
 	cp $ff ; $51d6
 	jr nz, .haveAngle ; $51d8
-	jp .done ; $51da
+	jp .stopAndSnap ; $51da
 .haveAngle:
 	push bc ; $51dd
 	ld [wPlayerMoveAngle], a ; $51de
@@ -355,7 +355,7 @@ UpdatePlayerControl:
 	add hl, bc ; $51f2
 	ld [hl], $40 ; $51f3
 	test_flag FLAG_PLAYER_RUNNING ; $51f5
-	jr z, .checkBlocked ; $51f8
+	jr z, .checkSlowTile ; $51f8
 	ld a, $01 ; $51fa
 	ld [wActorProbeRange], a ; $51fc
 	ld de, $0040 ; $51ff
@@ -364,8 +364,8 @@ UpdatePlayerControl:
 	ld a, e ; $5206
 	ld [hl+], a ; $5207
 	ld [hl], d ; $5208
-	jr .slideDepth ; $5209
-.checkBlocked:
+	jr .probeAhead ; $5209
+.checkSlowTile:
 	ld hl, ACTORF_X + 1 ; $520b
 	add hl, bc ; $520e
 	ld d, [hl] ; $520f
@@ -378,7 +378,7 @@ IF !DEF(FIXES)
 ENDC
 	and $0f ; $521a
 	cp $0b ; $521c
-	jr nz, .slideX ; $521e
+	jr nz, .walkSpeed ; $521e
 	ld a, $02 ; $5220
 	ld [wActorProbeRange], a ; $5222
 	ld de, $0010 ; $5225
@@ -387,8 +387,8 @@ ENDC
 	ld a, e ; $522c
 	ld [hl+], a ; $522d
 	ld [hl], d ; $522e
-	jr .slideDepth ; $522f
-.slideX:
+	jr .probeAhead ; $522f
+.walkSpeed:
 	xor a ; $5231
 	ld [wActorProbeRange], a ; $5232
 	ld de, $0020 ; $5235
@@ -397,52 +397,52 @@ ENDC
 	ld a, e ; $523c
 	ld [hl+], a ; $523d
 	ld [hl], d ; $523e
-.slideDepth:
+.probeAhead:
 	test_flag FLAG_DEBUG_NOCLIP ; $523f
 	ld d, $00 ; $5242
-	jp nz, .stopMoving ; $5244
+	jp nz, .startMove ; $5244
 	ld a, [wPlayerMoveAngle] ; $5247
 	call GetPointAheadOfActorFixed ; $524a
 	call IsPointBlocked ; $524d
 	and a ; $5250
-	jr nz, .checkFacing ; $5251
+	jr nz, .blocked ; $5251
 	ld a, [wPlayerMoveAngle] ; $5253
 	add $20 ; $5256
 	call GetPointAheadOfActorRanged ; $5258
 	call IsPointBlocked ; $525b
 	and a ; $525e
-	jr nz, .applyMove ; $525f
+	jr nz, .trySlideOtherWay ; $525f
 	ld a, [wPlayerMoveAngle] ; $5261
 	add $e0 ; $5264
 	call GetPointAheadOfActorRanged ; $5266
 	call IsPointBlocked ; $5269
 	and a ; $526c
 	ld d, $00 ; $526d
-	jr z, .stopMoving ; $526f
+	jr z, .startMove ; $526f
 	ld a, [wPlayerMoveAngle] ; $5271
 	add $40 ; $5274
 	call GetPointAheadOfActorFixed ; $5276
 	call IsPointBlocked ; $5279
 	and a ; $527c
 	ld d, $20 ; $527d
-	jr z, .stopMoving ; $527f
+	jr z, .startMove ; $527f
 	jr .setFacing ; $5281
-.applyMove:
+.trySlideOtherWay:
 	ld a, [wPlayerMoveAngle] ; $5283
 	add $e0 ; $5286
 	call GetPointAheadOfActorRanged ; $5288
 	call IsPointBlocked ; $528b
 	and a ; $528e
-	jr nz, .checkFacing ; $528f
+	jr nz, .blocked ; $528f
 	ld a, [wPlayerMoveAngle] ; $5291
 	add $c0 ; $5294
 	call GetPointAheadOfActorFixed ; $5296
 	call IsPointBlocked ; $5299
 	and a ; $529c
 	ld d, $e0 ; $529d
-	jr z, .stopMoving ; $529f
+	jr z, .startMove ; $529f
 	jr .setFacing ; $52a1
-.checkFacing:
+.blocked:
 	ld [wPlayerMoveAngleApplied], a ; $52a3
 	ld hl, wStoryAutoInteractArmed ; $52a6
 	ld [hl], $01 ; $52a9
@@ -451,8 +451,8 @@ ENDC
 	add hl, bc ; $52ae
 	ld a, [wPlayerMoveAngle] ; $52af
 	ld [hl], a ; $52b2
-	jr .idle ; $52b3
-.stopMoving:
+	jr .countMoving ; $52b3
+.startMove:
 	ld hl, ACTORF_SPEED ; $52b5
 	add hl, bc ; $52b8
 	ld a, [hl+] ; $52b9
@@ -469,19 +469,19 @@ ENDC
 	ld hl, ACTORF_ANIM_RATE ; $52cf
 	add hl, bc ; $52d2
 	ld [hl], $02 ; $52d3
-.idle:
+.countMoving:
 	ld hl, wPlayerMoving ; $52d5
 	inc [hl] ; $52d8
 	ld a, [wPlayerMoveAngleApplied] ; $52d9
 	and a ; $52dc
-	jr nz, .clearMove ; $52dd
+	jr nz, .clearRunning ; $52dd
 	ld [hl], $00 ; $52df
-.clearMove:
+.clearRunning:
 	clear_flag FLAG_PLAYER_RUNNING ; $52e1
 	pop bc ; $52e4
 	xor a ; $52e5
 	ret ; $52e6
-.done:
+.stopAndSnap:
 	push bc ; $52e7
 	ld hl, hActorPtr ; $52e8
 	ld a, [hl+] ; $52eb

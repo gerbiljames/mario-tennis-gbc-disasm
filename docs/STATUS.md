@@ -13,10 +13,10 @@ user's `baserom.gbc` per `data.manifest`.
 
 | | |
 |---|---|
-| source-spelled bytes (`tools/stats.py`) | 915,823, 43.7% of the 2 MiB ROM; 976,903 `INCBIN`, 200,809 free |
+| source-spelled bytes (`tools/stats.py`) | 915,944, 43.7% of the 2 MiB ROM; 976,782 `INCBIN`, 200,809 free |
 | instruction and code-macro lines | 124,740 |
-| labels | 29,568: ROM 14,413 global + 13,418 local, RAM 1,737; none state only an address |
-| extracted data regions | 4,276 (3,249 `INCBIN`, 1,027 generated `INCLUDE`s), 863 of them LZ streams |
+| labels | 29,567: ROM 14,413 global + 13,418 local, RAM 1,736; none state only an address |
+| extracted data regions | 4,276 (3,248 `INCBIN`, 1,028 generated `INCLUDE`s), 863 of them LZ streams |
 | source of truth | `src/`, `ram/`, `include/`, edited directly; the generator is retired at tag `generator-final` |
 
 Ids, records and layouts are checked at build time: id-indexed tables assert

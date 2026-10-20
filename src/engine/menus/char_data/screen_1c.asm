@@ -2,8 +2,8 @@
 	farptr CharDataScreen_LoadScreen ; $4002
 	farptr CharDataScreen_WriteStatNumber ; $4004
 	farptr CharDataScreen_DrawStats ; $4006
-	farptr BackupCharDataScreenRow ; $4008
-	farptr RestoreCharDataScreenRow ; $400a
+	farptr BackupCharDataScreen ; $4008
+	farptr RestoreCharDataScreen ; $400a
 	farptr BackupCharData ; $400c
 	farptr RestoreCharData ; $400e
 	farptr LoadCharDataScreenTilemaps ; $4010
@@ -110,7 +110,7 @@ CharDataScreen_InitState:
 	ld a, CHARDATAPAGE_CONFIRM ; $411e
 	ld [wCharDataPage], a ; $4120
 	ld a, $0a ; $4123
-	ld [wCharDataRevealTimer], a ; $4125
+	ld [wCharDataDigitFlyInStep], a ; $4125
 	ld a, $03 ; $4128
 	ld [wCharDataRevealStep], a ; $412a
 	ld [wCharDataLevelPreview], a ; $412d
@@ -489,7 +489,7 @@ CharDataScreen_DrawStatBar:
 .altTable:
 	ld a, b ; $4515
 	rlca ; $4516
-	ld_hl_indexed CharDataScreen_DrawStatBarTable0 ; $4517
+	ld_hl_indexed CharDataScreen_StatBarAltTilePtrs ; $4517
 	ld a, [hl+] ; $451e
 	ld h, [hl] ; $451f
 	ld l, a ; $4520
@@ -513,7 +513,7 @@ CharDataScreen_DrawStatBar:
 	wram_bank WRAM_COURT_PLANES ; $4536
 	ld a, b ; $453c
 	rlca ; $453d
-	ld_hl_indexed CharDataScreen_DrawStatBarTable1 ; $453e
+	ld_hl_indexed CharDataScreen_StatBarAttrPtrs ; $453e
 	ld a, [hl+] ; $4545
 	ld h, [hl] ; $4546
 	ld l, a ; $4547
@@ -546,7 +546,7 @@ CharDataScreen_DrawStatBarPtrs:
 	dw CharDataScreenStatBar08 ; record 8
 	dw CharDataScreenStatBar09 ; record 9
 	dw CharDataScreenStatBar10 ; record 10
-CharDataScreen_DrawStatBarTable0:
+CharDataScreen_StatBarAltTilePtrs:
 	; $456e, 22 bytes (records:2)
 	dw CharDataScreenStatBar11 ; record 0
 	dw CharDataScreenStatBar12 ; record 1
@@ -559,7 +559,7 @@ CharDataScreen_DrawStatBarTable0:
 	dw CharDataScreenStatBar19 ; record 8
 	dw CharDataScreenStatBar20 ; record 9
 	dw CharDataScreenStatBar21 ; record 10
-CharDataScreen_DrawStatBarTable1:
+CharDataScreen_StatBarAttrPtrs:
 	; $4584, 22 bytes (records:2)
 	dw CharDataScreenStatBar22 ; record 0
 	dw CharDataScreenStatBar23 ; record 1

@@ -54,8 +54,8 @@ tilemaps and text.
 | | |
 |---|---|
 | instructions | 124,740 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 915,823 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,568: 14,413 routines and tables and 13,418 locals in ROM, 1,737 RAM names |
+| source-spelled bytes | 915,944 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
+| labels | 29,567: 14,413 routines and tables and 13,418 locals in ROM, 1,736 RAM names |
 | compressed graphics | 863 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 789 routines and 157 blobs nothing live reaches (`docs/unused_code.md`) |
 
@@ -174,14 +174,14 @@ because the layout is recomputed rather than restated:
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
   stream).
-- **Graphics are PNGs.** Each of the 2,907 tile-graphics blobs is also
+- **Graphics are PNGs.** Each of the 2,905 tile-graphics blobs is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
   with its standing shadow, walk sprites as four facings side by side
   (`docs/graphics_formats.md` §0), everything else as tiles in blob order,
   sixteen per row. Edit the PNG and `make` re-encodes (and recompresses an
   `lz_*`) blob; an untouched PNG rebuilds nothing, and enlarging a plain
   image's canvas grows its blob.
-- **Screen layouts are text.** The 239 tile and attribute planes (all LZ
+- **Screen layouts are text.** The 241 tile and attribute planes (all LZ
   streams) are also `.tilemap` grids, one `tilemap_row` of hex cells per
   row at the width the loader uses; `make` re-encodes an edited grid. The 37 scenes get a view-only
   `<Tilemap>.preview.png` (`make previews` redraws them).

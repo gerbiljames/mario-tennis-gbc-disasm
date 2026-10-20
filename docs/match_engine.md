@@ -710,8 +710,8 @@ So the 5-frame window is a **simultaneity filter**: a genuine A→B needs the
 second press after it expires.
 
 `SelectRallyShotType` (`$08:$707e`) indexes `button1 + 4*button2` into
-`RallyShotTypeTable0` (reach flags bit 4 set, at the net) or
-`RallyShotTypeTable1`:
+`RallyReachShotTypeTable` (reach flags bit 4 set, at the net) or
+`RallyStandardShotTypeTable`:
 
 | button 1 ↓ / button 2 → | none | A | B |
 |---|---|---|---|

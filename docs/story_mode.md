@@ -533,7 +533,7 @@ player in place.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), in the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global |
 | accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 137 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants/` |
+| names | 166 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants/` |
 
 Both use one encoding: flag number = `byte * 8 + bit`; the inline operand is
 `bit << 5` then the byte index; the mask is `$80 >> bit`. `test_flag` leaves
@@ -601,7 +601,7 @@ FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`src/story/doubles_11.asm` lines 41,
 every rewarded match) walks 36 game flags — `AllProgressFlagList_1e` (both
 Dream Matches, every class's rank-1 win in both arcs, both Island Open
 finals) and, running past its end, the 26 drill/machine/wall clears of
-`RewardFlagListMode2_1e` — and when all are set grants
+`RewardFlagListTraining_1e` — and when all are set grants
 `SAVEFLAG_COURT_STAR`. The Star Court is the exhibition unlock for finishing
 everything in both arcs, granted on the completing match;
 `FLAG_STORY_COMPLETE_*` itself grants nothing permanent.

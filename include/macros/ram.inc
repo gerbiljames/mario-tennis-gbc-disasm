@@ -144,7 +144,7 @@ NEXTU
 \1CharShotType:: db
 ; [8-bit] Swing animation id SelectForehandBackhand picked; the windup plays it + $08, the contact phase plays it as is
 \1CharSwingAnim:: db
-; [8-bit] First shot button of the swing (1 = A, 2 = B), 0 = none. With wCharShotButton2 it indexes RallyShotTypeTable0/1, turning A+B combinations into lobs, drops and power shots
+; [8-bit] First shot button of the swing (1 = A, 2 = B), 0 = none. With wCharShotButton2 it indexes RallyReachShotTypeTable/RallyStandardShotTypeTable, turning A+B combinations into lobs, drops and power shots
 \1CharShotButton1:: db
 ; [8-bit] Second shot button, captured while wCharShotComboTimer runs
 \1CharShotButton2:: db

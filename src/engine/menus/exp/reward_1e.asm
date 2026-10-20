@@ -110,11 +110,11 @@ GetRewardTableIndex:
 	ret ; $6d13
 RewardFlagListPtrs_1e:
 	; $6d14, 8 bytes (records:2)
-	dw RewardFlagListMode0_1e ; record 0
-	dw RewardFlagListMode1_1e ; record 1
-	dw RewardFlagListMode2_1e ; record 2
+	dw RewardFlagListSingles_1e ; record 0
+	dw RewardFlagListDoubles_1e ; record 1
+	dw RewardFlagListTraining_1e ; record 2
 	dw $0000 ; record 3
-RewardFlagListMode0_1e:
+RewardFlagListSingles_1e:
 	; $6d1c, 50 bytes (flag_ids)
 	dw $0000 ; 0: none
 	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_4 ; 1
@@ -141,7 +141,7 @@ RewardFlagListMode0_1e:
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 22
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 23
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 24
-RewardFlagListMode1_1e:
+RewardFlagListDoubles_1e:
 	; $6d4e, 50 bytes (flag_ids)
 	dw $0000 ; 0: none
 	dw $0000 ; 1: none
@@ -171,7 +171,7 @@ RewardFlagListMode1_1e:
 ProgressEntryFlagList_1e:
 	; $6d80, 2 bytes (flag_ids)
 	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
-; Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListMode2_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR.
+; Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListTraining_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR.
 AllProgressFlagList_1e:
 	; $6d82, 20 bytes (flag_ids)
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 0
@@ -184,7 +184,7 @@ AllProgressFlagList_1e:
 	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2 ; 7
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 8
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 9
-RewardFlagListMode2_1e:
+RewardFlagListTraining_1e:
 	; $6d96, 60 bytes (flag_ids)
 	flag_id FLAG_CLEARED_SERVICE_MATCH_1 ; 0
 	flag_id FLAG_CLEARED_SERVICE_MATCH_2 ; 1

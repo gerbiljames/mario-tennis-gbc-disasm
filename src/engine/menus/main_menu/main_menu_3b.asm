@@ -111,7 +111,7 @@ LoadMainMenuGfx:
 .loop:
 	ld a, c ; $56cf
 	add a ; $56d0
-	ld hl, MainMenuTable0 ; $56d1
+	ld hl, MainMenuLabelTilePtrs ; $56d1
 	add_hl_a ; $56d4
 	ld a, [hl+] ; $56d9
 	ld h, [hl] ; $56da
@@ -126,7 +126,7 @@ LoadMainMenuGfx:
 	pop de ; $56e7
 	pop bc ; $56e8
 	pop af ; $56e9
-	ld hl, MainMenuTable1 ; $56ea
+	ld hl, MainMenuLabelTileVramDests ; $56ea
 	ld a, c ; $56ed
 	add a ; $56ee
 	add_hl_a ; $56ef
@@ -224,7 +224,7 @@ LoadMainMenuGfx:
 	farcall LoadCompressedTileBlock ; $57d7
 	pop_wram_bank ; $57da
 	ret ; $57df
-MainMenuTable0:
+MainMenuLabelTilePtrs:
 	; $57e0, 6 slot words
 	dslot DataPtr_ModeSelectLabelTiles0 ; record 0
 	dslot DataPtr_ModeSelectLabelTiles1 ; record 1
@@ -232,7 +232,7 @@ MainMenuTable0:
 	dslot DataPtr_ModeSelectLabelTiles3 ; record 3
 	dslot DataPtr_ModeSelectLabelTiles4 ; record 4
 	dslot DataPtr_ModeSelectLabelTiles5 ; record 5
-MainMenuTable1:
+MainMenuLabelTileVramDests:
 	; $57ec, 20 bytes (bytes:2)
 	db $00, $a8 ; 0x00
 	db $00, $a9 ; 0x02
@@ -311,10 +311,10 @@ MainMenuCursorSpriteTask:
 	ld c, $03 ; $5866
 	call GetMenuCursorIndex_3b ; $5868
 	push af ; $586b
-	ld hl, MainMenuCursorSpriteTaskTable1 ; $586c
+	ld hl, MainMenuCursorTileBases ; $586c
 	add_hl_a ; $586f
 	ld c, [hl] ; $5874
-	ld hl, MainMenuCursorSpriteTaskTable0 ; $5875
+	ld hl, MainMenuCursorPositions ; $5875
 	pop af ; $5878
 	add a ; $5879
 	push af ; $587a
@@ -334,7 +334,7 @@ MainMenuCursorSpriteTask:
 	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
 	call GetMenuCursorIndex_3b ; $589a
-	ld hl, MainMenuCursorSpriteTaskTable2 ; $589d
+	ld hl, MainMenuCursorIconXOffsets ; $589d
 	add_hl_a ; $58a0
 	ld a, [hl] ; $58a5
 	pop de ; $58a6
@@ -387,14 +387,14 @@ MainMenuCursorSpriteTask_SpriteTemplate:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-MainMenuCursorSpriteTaskTable0:
+MainMenuCursorPositions:
 	; $591b, 18 bytes (bytes:16)
 	db $2e, $fc, $2e, $26, $2e, $5c, $52, $fe, $52, $2c, $52, $5e, $68, $fc, $68, $2c ; 0x00
 	db $68, $5e ; 0x10
-MainMenuCursorSpriteTaskTable1:
+MainMenuCursorTileBases:
 	; $592d, 9 bytes (bytes:9)
 	db $10, $20, $32, $00, $00, $00, $42, $52, $62 ; 0x00
-MainMenuCursorSpriteTaskTable2:
+MainMenuCursorIconXOffsets:
 	; $5936, 50 bytes (bytes:16)
 	db $00, $04, $00, $00, $00, $00, $00, $00, $00, $10, $08, $00, $00, $10, $10, $02 ; 0x00
 	db $00, $10, $18, $04, $00, $10, $20, $06, $00, $10, $28, $08, $00, $10, $30, $0a ; 0x10

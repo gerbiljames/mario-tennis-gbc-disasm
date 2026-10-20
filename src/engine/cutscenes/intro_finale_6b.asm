@@ -522,8 +522,8 @@ UpdateCutsceneScroll:
 	add $03 ; $53de
 	ld [wCutsceneScrollX], a ; $53e0
 	ldh [hScrollX], a ; $53e3
-	ld a, [wIntroCutsceneSubState] ; $53e5
+	ld a, [wCutsceneReverseScrollX] ; $53e5
 	sub $03 ; $53e8
-	ld [wIntroCutsceneSubState], a ; $53ea
+	ld [wCutsceneReverseScrollX], a ; $53ea
 	ld [wRasterScrollX], a ; $53ed
 	ret ; $53f0

@@ -89,7 +89,7 @@ MoveMinigameGridCursor:
 	jr .done ; $6e47
 .topVertical:
 	ld a, [wMenuCursorX] ; $6e49
-	ld hl, MoveMinigameGridCursorTable0 ; $6e4c
+	ld hl, MinigameGridTopToBottomColumnMap ; $6e4c
 	add_hl_a ; $6e4f
 	ld a, [hl] ; $6e54
 	ld [wMenuCursorX], a ; $6e55
@@ -136,7 +136,7 @@ MoveMinigameGridCursor:
 	jr .done ; $6e9c
 .bottomVertical:
 	ld a, [wMenuCursorX] ; $6e9e
-	ld hl, MoveMinigameGridCursorTable1 ; $6ea1
+	ld hl, MinigameGridBottomToTopColumnMap ; $6ea1
 	add_hl_a ; $6ea4
 	ld a, [hl] ; $6ea9
 	ld [wMenuCursorX], a ; $6eaa
@@ -147,10 +147,10 @@ MoveMinigameGridCursor:
 	jr .done ; $6eb7
 .done:
 	ret ; $6eb9
-MoveMinigameGridCursorTable0:
+MinigameGridTopToBottomColumnMap:
 	; $6eba, 3 bytes (bytes:3)
 	db $00, $02, $02 ; 0x00
-MoveMinigameGridCursorTable1:
+MinigameGridBottomToTopColumnMap:
 	; $6ebd, 3 bytes (bytes:3)
 	db $00, $02, $02 ; 0x00
 InitNumberSpriteGfx:

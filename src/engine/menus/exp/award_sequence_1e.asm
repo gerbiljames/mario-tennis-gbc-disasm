@@ -25,7 +25,7 @@ BeginNextExpAward:
 	inc a ; $5b2d
 	ld [wExpAwardIndex], a ; $5b2e
 	xor a ; $5b31
-	ld [wExpAwardMessageTimer], a ; $5b32
+	ld [wUnusedExpAwardByte], a ; $5b32
 	ld hl, wExpAwardAmount ; $5b35
 	ld a, c ; $5b38
 	ld [hl+], a ; $5b39
@@ -135,16 +135,16 @@ HasPendingExpAwards:
 .returnOne:
 	ld a, $01 ; $5bde
 	ret ; $5be0
-ExpAwardScreenPalettes0:
-	INCLUDE "data/engine/menus/exp/ExpAwardScreenPalettes0.asm" ; $5be1, 24 bytes (palettes)
+ExpAwardScreenBgPalettes:
+	INCLUDE "data/engine/menus/exp/ExpAwardScreenBgPalettes.asm" ; $5be1, 24 bytes (palettes)
 ExpAwardScreenGfx_1e:
 	INCBIN "data/engine/menus/exp/lz_ExpAwardScreenGfx_1e.bin" ; $5bf9, 1745 bytes
 ExpAwardScreenTilemap_1e:
 	INCBIN "data/engine/menus/exp/lz_ExpAwardScreenTilemap_1e.bin" ; $62ca, 389 bytes
 ExpAwardScreenAttrmap_1e:
 	INCBIN "data/engine/menus/exp/lz_ExpAwardScreenAttrmap_1e.bin" ; $644f, 70 bytes
-ExpAwardScreenPalettes1:
-	INCLUDE "data/engine/menus/exp/ExpAwardScreenPalettes1.asm" ; $6495, 8 bytes (palettes)
+ExpAwardScreenObjPalette:
+	INCLUDE "data/engine/menus/exp/ExpAwardScreenObjPalette.asm" ; $6495, 8 bytes (palettes)
 ExpDigitSpriteGfx_1e:
 	INCBIN "data/engine/menus/exp/lz_ExpDigitSpriteGfx_1e.bin" ; $649d, 150 bytes
 	INCLUDE "data/engine/menus/exp/lz_ExpDigitSpriteGfx_1e.inc" ; DEF ExpDigitSpriteGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
@@ -373,15 +373,15 @@ GetFirstClearRewardExp:
 	ret ; $66f6
 FirstClearExpTablePtrs_1e:
 	; $66f7, 16 bytes (records:2)
-	dw FirstClearExpTableMode0_1e ; record 0
-	dw FirstClearExpTableMode1_1e ; record 1
-	dw FirstClearExpTableMode2_1e ; record 2
+	dw FirstClearExpTableSingles_1e ; record 0
+	dw FirstClearExpTableDoubles_1e ; record 1
+	dw FirstClearExpTableTraining_1e ; record 2
 	dw $0000 ; record 3
 	dw $0000 ; record 4
 	dw $0000 ; record 5
 	dw $0000 ; record 6
 	dw $0000 ; record 7
-FirstClearExpTableMode0_1e:
+FirstClearExpTableSingles_1e:
 	; $6707, 50 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0046 ; record 1
@@ -408,7 +408,7 @@ FirstClearExpTableMode0_1e:
 	dw $0320 ; record 22
 	dw $0320 ; record 23
 	dw $0320 ; record 24
-FirstClearExpTableMode1_1e:
+FirstClearExpTableDoubles_1e:
 	; $6739, 50 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -435,7 +435,7 @@ FirstClearExpTableMode1_1e:
 	dw $03e8 ; record 22
 	dw $03e8 ; record 23
 	dw $03e8 ; record 24
-FirstClearExpTableMode2_1e:
+FirstClearExpTableTraining_1e:
 	; $676b, 60 bytes (records:2)
 	dw $0032 ; record 0
 	dw $0064 ; record 1

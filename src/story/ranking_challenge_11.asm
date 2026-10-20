@@ -9,10 +9,10 @@ PromptChallengeRankingOpponent:
 	farcall ScriptCloseDialogueWindow ; $729e
 	script_wait_frames 5 ; $72a1
 	and a ; $72a8
-	jp nz, .done ; $72a9
+	jp nz, .confirmDecline ; $72a9
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, ANIM_NOD ; $72ac
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72b3
-.declined:
+.accepted:
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, ANIM_NOD ; $72b8
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72bf
 	script_set_text Text_JuniorRankingMatchLetsGo ; $72c4
@@ -21,22 +21,22 @@ PromptChallengeRankingOpponent:
 	script_set_speed ACTOR_PLAYER, 0.75 ; $72d2
 	script_set_speed ACTOR_PARTNER, 0.75 ; $72da
 	ret ; $72e2
-.accepted:
+.declined:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72e3
-	call LoadRankingOpponentGraphics ; $72e8
+	call RunRankingOpponentWalkScript ; $72e8
 	ret ; $72eb
-.done:
+.confirmDecline:
 	script_set_text Text_JuniorRankingMatchDeclined ; $72ec
 	script_speak_restore ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $72f2
 	farcall RunDialogueYesNoPrompt ; $72f7
 	farcall ScriptCloseDialogueWindow ; $72fa
 	script_wait_frames 5 ; $72fd
 	and a ; $7304
-	jr z, .accepted ; $7305
-	jp .declined ; $7307
-LoadRankingOpponentGraphics:
+	jr z, .declined ; $7305
+	jp .accepted ; $7307
+RunRankingOpponentWalkScript:
 	test_flag FLAG_DOUBLES ; $730a
-	jp nz, LoadDoublesRankingOpponentGraphics ; $730d
+	jp nz, RunDoublesRankingOpponentWalkScripts ; $730d
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $7310
 	jr z, .vsRank4 ; $7313
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $7315

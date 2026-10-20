@@ -91,8 +91,8 @@ wCharDataStatDeltas:: ds 11
 wCharDataPage:: db
 ; [8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawConfirmSelectionCursor_1a draws the cursor from it
 wCharDataConfirmState:: db
-; [8-bit] AnimateCharDataStatsReveal countdown between stat rows; CharDataScreen_InitState seeds it with $0a
-wCharDataRevealTimer:: db
+; [8-bit] Stat-digit fly-in step: GetStatDigitSpritePos indexes the RadialOffsetRamps_1c ramps with it. CharDataScreen_InitState seeds $0a and AnimateCharDataStatsReveal stores $09, $07, $05, $03, $02, $01, $00 as the reveal advances; nothing decrements it
+wCharDataDigitFlyInStep:: db
 ; [8-bit] AnimateCharDataStatsReveal step; CharDataScreen_InitState seeds it with $03
 wCharDataRevealStep:: db
 ; [8-bit] 0 while the allocation page is live: DrawStatValueSprites then draws the level one higher, in palette $0f, as a preview. CharDataScreen_InitState sets $03 on re-entry, CharDataScreen_Show clears it
@@ -102,7 +102,7 @@ wCharDataChoiceCount:: db
 NEXTU
 ; EXP award screen (bank $1e)
 	ds 4
-; [8-bit] First byte of the EXP award screen's working set: InitExpAwardScreenState clears $d004-$d027 from here (covering wExpAwardRunningTotal, wExpAwardAmount, wExpAwardIndex, wExpAwardMessageTimer) and seeds $d009-$d00c / $d019-$d01c to $20 and $d00d/$d01d to $30. The byte itself is never read
+; [8-bit] First byte of the EXP award screen's working set: InitExpAwardScreenState clears $d004-$d027 from here (covering wExpAwardRunningTotal, wExpAwardAmount, wExpAwardIndex, wUnusedExpAwardByte) and seeds $d009-$d00c / $d019-$d01c to $20 and $d00d/$d01d to $30. The byte itself is never read
 wExpAwardScreenState:: db
 ; [16-bit] EXP total counting up on screen: CountUpExpTotal adds one point (and a sound) per pass while decrementing the amount left; DrawExpTotalDigits redraws it
 wExpAwardRunningTotal:: dw
@@ -112,8 +112,8 @@ wExpAwardAmount:: dw
 ; [8-bit] Award message being shown; BeginNextExpAward steps it, DrawNextExpAwardMessage returns zero past the end
 wExpAwardIndex:: db
 	ds 1
-; [8-bit] Cleared as each award begins, so the message holds for its full time
-wExpAwardMessageTimer:: db
+; [8-bit] Cleared as each award begins; nothing reads it
+wUnusedExpAwardByte:: db
 NEXTU
 ; cutscene text window (bank $03)
 	ds 1
@@ -165,10 +165,10 @@ wCharDataNumberBuffer:: ds 6
 	ds 11
 ; [8-bit] Cleared by CharDataScreen_InitState with the rest of the screen state; nothing reads it
 wCharDataRevealDone:: db
-; [11 bytes] The eleven stats recomputed without the racket, to show what the equipment is worth. Filled by CharDataScreen_BuildStats from wStoryMainStats after RecomputeStatsWithoutRacket; untouched when nothing is equipped
-wCharDataStatsNoRacket:: ds 11
-; [11 bytes] Per-stat difference the equipped racket makes, zeroed first so an unequipped character shows no arrows; read by DrawStatChangeArrows with wCharDataStatsNoRacket
-wCharDataRacketDeltas:: ds 11
+; [11 bytes] The eleven stats recomputed with racket and shoes unequipped, to show what the equipment is worth. Filled by CharDataScreen_BuildStats from wStoryMainStats after RecomputeStatsWithoutEquipment; untouched when nothing is equipped
+wCharDataStatsNoEquipment:: ds 11
+; [11 bytes] Per-stat difference the equipped racket and shoes make, zeroed first so an unequipped character shows no arrows; read by DrawStatChangeArrows with wCharDataStatsNoEquipment
+wCharDataEquipmentDeltas:: ds 11
 ; [8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas computes no deltas, the input loop spends no points. Set by RunExpDistributionFlow and RestoreCharData
 wCharDataViewOnly:: db
 ; [6 bytes] Copy of wCharDataPointsWorking onward taken as the screen opens; RestoreCharData copies it back and sets wCharDataViewOnly when a level-up is cancelled
@@ -230,7 +230,7 @@ wCharStatPagePartner:: ds 13
 wCharStatPageShown:: ds 6
 	export_size wCharStatPageShown
 	ds 7
-; [8-bit] Source of the pair CharDataValuesSyncTask pushes into the screen: zero = wCharDataSyncValues, nonzero = wGameTimer + 2
+; [8-bit] Source of the pair CharDataValuesSyncTask pushes into the screen: zero = wSavedGameTimer + 2, nonzero = wGameTimer + 2 (minutes, hours)
 wCharDataSyncSource:: db
 	ds 2
 ; [2 bytes] The two bytes it copied, drawn as the screen's live readout

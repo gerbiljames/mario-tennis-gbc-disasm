@@ -194,6 +194,11 @@ class Source(unittest.TestCase):
         dead = sorted(f for f, names in twins.items() if all(n.startswith("Unused") for n in names))
         m = re.search(r"included too\. (.*?) have no live copy at all", text("docs/duplicated_code.md"))
         self.assertEqual(sorted(re.findall(r"`(\w+)`", m.group(1))), dead)
+        flags = len(re.findall(r"^def FLAG_\w+\s+equ", (ROOT / "include" / "flag_constants.inc").read_text(), re.M))
+        saveflags = sum(len(re.findall(r"^def SAVEFLAG_\w+\s+equ", f.read_text(), re.M))
+                        for f in (ROOT / "include" / "constants").glob("*.inc"))
+        self.assertIn(f"| names | {flags} `FLAG_*` in `include/flag_constants.inc` | {saveflags} `SAVEFLAG_*` ",
+                      (ROOT / "docs" / "story_mode.md").read_text())
 
     def test_mirrored_char_struct(self):
         """ram_mirrored.inc's untagged $df00 names sit where match_char_struct
@@ -228,16 +233,16 @@ class Manifest(unittest.TestCase):
         self.assertEqual(streams, 863)
         self.assertIn(f"round-tripping all {streams} streams", (ROOT / "tools" / "lz.py").read_text())
         specs = [f[3] for f in lines if len(f) > 3]
-        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2907)
+        self.assertEqual(sum(s.startswith("gfx") for s in specs), 2905)
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1620)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
         self.assertEqual(sum(s == "gfx:4x4" for s in specs), 4)
-        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 239)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 241)
         for spec, n in (("target_script", 57), ("move_curve", 16), ("frame_place", 30),
                         ("scoreboard_columns", 32), ("scene_config", 21), ("blit_runs", 84)):
             self.assertEqual(specs.count(spec), n, spec)
-        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1027)
+        self.assertEqual(sum(1 for f in lines if f[0].endswith(".asm")), 1028)
 
 
 @needs_rom

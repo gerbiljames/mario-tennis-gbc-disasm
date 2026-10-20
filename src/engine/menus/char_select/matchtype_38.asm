@@ -189,7 +189,7 @@ Unused_38_RunMatchTypeMenuLink:
 Unused_38_DrawMatchTypeOptionBoxes:
 	ld a, [wMatchFormatDoubles] ; $458d
 	add a ; $4590
-	ld hl, MatchTypeOptionBoxesTable0 ; $4591
+	ld hl, MatchFormatDoublesBoxPositions ; $4591
 	add_hl_a ; $4594
 	ld a, [hl+] ; $4599
 	ld d, [hl] ; $459a
@@ -207,7 +207,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 .gamesBox:
 	ld a, [wMatchFormatGames] ; $45b2
 	add a ; $45b5
-	ld hl, MatchTypeOptionBoxesTable1 ; $45b6
+	ld hl, MatchFormatGamesBoxPositions ; $45b6
 	add_hl_a ; $45b9
 	ld a, [hl+] ; $45be
 	ld d, [hl] ; $45bf
@@ -225,7 +225,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 .setsBox:
 	ld a, [wMatchFormatSets] ; $45d8
 	add a ; $45db
-	ld hl, MatchTypeOptionBoxesTable2 ; $45dc
+	ld hl, MatchFormatSetsBoxPositions ; $45dc
 	add_hl_a ; $45df
 	ld a, [hl+] ; $45e4
 	ld d, [hl] ; $45e5
@@ -242,13 +242,13 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	call DrawSelectedOptionBox ; $45fb
 .done:
 	ret ; $45fe
-MatchTypeOptionBoxesTable0:
+MatchFormatDoublesBoxPositions:
 	; $45ff, 4 bytes (bytes:4)
 	db $18, $10, $18, $58 ; 0x00
-MatchTypeOptionBoxesTable1:
+MatchFormatGamesBoxPositions:
 	; $4603, 4 bytes (bytes:4)
 	db $38, $10, $38, $58 ; 0x00
-MatchTypeOptionBoxesTable2:
+MatchFormatSetsBoxPositions:
 	; $4607, 8 bytes (bytes:8)
 	db $58, $08, $58, $38, $58, $68, $c9, $c9 ; 0x00
 Unused_38_SetupMatchTypeMenuScreen:
