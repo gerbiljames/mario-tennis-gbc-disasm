@@ -271,8 +271,9 @@ A slot is named only where the active list is certain at that line.
   `wMapSceneStage` round `LoadIslandOpenRoundNpcs` sets (`STAGE_LISTS`); a
   stage-indexed table dispatches each entry under its own stage's lists;
 * lists a script installs on a flag (the singles and doubles ending lists,
-  the traveling teams, the Island Open round lists, which also hang on the
-  semifinal flags) are bound to its value (`FLAG_LISTS`), and a
+  the traveling teams, the doubles award ceremony, the Senior Court's
+  singles list A and doubles list B, the Island Open round lists, which also
+  hang on the semifinal flags) are bound to its value (`FLAG_LISTS`), and a
   `test_flag` branch keeps, on each side, the lists that agree; a
   location's default list is never bound, since it is active before any
   test;
@@ -281,8 +282,15 @@ A slot is named only where the active list is certain at that line.
   its round lists — singles for trigger `$0f`, doubles for `$0e`
   (`TILE_LISTS`).
 
-With several candidate lists, a row name fits only if every candidate holds
-the same actor there. A slot that means one thing across candidates anyway —
+With several candidate lists, a row name fits only if its own list is one of
+them and every candidate holds the same actor there. Among agreeing
+candidates the name spells, in order of preference: one a second pass still
+allows with the junior court's default lists bound to `FLAG_DOUBLES` (the
+game picks that location by the flag; a debug warp need not, so the bound
+only steers spelling, `HINT_LISTS`); one whose mode the nearest local label,
+else the routine's name, says (`Singles`/`Doubles`); one the routine
+installs; the location's default list; the one already named; the one most
+of the routine's sites can be under; the shortest. A slot that means one thing across candidates anyway —
 the same character under different scripts (the five seniors in all three
 Senior Court lists) or whoever plays a part (Island Open slot `$0a` is this
 round's opponent, Spike in one round and A. Coz in another) — gets a *role*
@@ -309,8 +317,9 @@ reached one. The numbered ones are:
 
 A routine also entered from somewhere the flow does not follow keeps a
 number unless it installs its own list first. `actorslots.py` lists what is
-left and renames what it can (`--apply`). `make check` fails on a row name
-whose slot holds a different actor in a possible list, and on a role name
+left and renames what it can (`--apply`, which also respells names to the
+preferred candidate). `make check` fails on a row name whose list cannot be
+active there or whose slot holds a different actor in a possible list, and on a role name
 used where an undeclared list is possible. `make slot-audit` checks every
 name at run time over 36 story states and every location, comparing the
 list `InitLocationActors` last installed.
