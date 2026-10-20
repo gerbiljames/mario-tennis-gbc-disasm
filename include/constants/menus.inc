@@ -223,8 +223,8 @@ def NUM_PANELANIMS equ const_value
 	const MAPROWS_BAND_7       ; $03
 
 ; --- Attribute-rect highlight (c of the option-cell and tab attr fillers) ---
-; SetMatchRuleOptionAttrRect, FillMatchFormatOptionCell, SetChoiceTabAttrRect,
-; SetCourtSelect4/9TabAttrRect, SetSelectPanelAttrRect(3) and
+; SetLinkMatchFormatOptionAttrRect, FillMatchFormatOptionCell,
+; SetChoiceTabAttrRect, SetCourtSelect4/9TabAttrRect, SetSelectPanelAttrRect(3) and
 ; FillN64RecordTypeCell test c for zero: any nonzero value fills with the
 ; selected attribute, zero with the inactive $0d.
 def ATTRRECT_INACTIVE equ $00
@@ -285,6 +285,13 @@ def TDICTCAT_ALL       equ $1f
 	const TDICTFLAGB_LIST_SHOWN  ; $01 the term list is on screen
 	const TDICTFLAGB_LEFT_ARROW  ; $02 flash the left page arrow this frame
 	const TDICTFLAGB_RIGHT_ARROW ; $03 flash the right page arrow this frame
+
+; --- Tennis Dictionary screen loop state (TennisDictionaryScreen's a) ---
+def TDICTSTATE_EXIT       equ $01 ; leave the dictionary
+def TDICTSTATE_INDEX      equ $02 ; index page input (HandleTennisDictionaryIndexInput)
+def TDICTSTATE_OPEN_LIST  equ $04 ; switch to the list page (ShowTennisDictionaryPageList)
+def TDICTSTATE_LIST       equ $08 ; list page input (HandleTennisDictionaryListInput)
+def TDICTSTATE_OPEN_INDEX equ $10 ; switch back to the index page (ShowTennisDictionaryPageIndex)
 
 ; --- Ranking board presentation (wRankingBoardMode) ---
 	const_def

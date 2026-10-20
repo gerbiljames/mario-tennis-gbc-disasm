@@ -77,7 +77,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/draw_name_with_diacritics_38.asm` | `DrawNameWithDiacritics_<bank>` | $38, $3b |
 | `src/twins/extract_decimal_digit.asm` | `ExtractDecimalDigit`, `ExtractDecimalDigitUnsigned` | $00 |
 | `src/twins/fetch_text.asm` | `FetchText_<bank>` | the thirteen text banks |
-| `src/twins/flush_match_format_row_to_vram.asm` | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` | $3b, $3e |
+| `src/twins/flush_match_format_row_to_vram.asm` | `FlushMatchFormatRowToVram`, `FlushLinkMatchFormatRowAttrs` | $3b, $3e |
 | `src/twins/get_cell_index_from_cursor_ptr.asm` | `Unused_<bank>_GetCellIndexFromCursorPtr` | $16, $3b, $3e |
 | `src/twins/get_menu_cursor_index.asm` | `GetMenuCursorIndex_<bank>` | $16, $1b, $38, $3b, $3e |
 | `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $1b, $38 |
@@ -95,7 +95,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/lookup_ball_pos_by_aim_24.asm` | `LookupBallPosByAim_<bank>` | $24, $2c |
 | `src/twins/lookup_ball_pos_by_height.asm` | `LookupBallPosByHeight_<bank>` | $20-$24, $29-$2c |
 | `src/twins/lookup_ball_pos_by_shot_index.asm` | `LookupBallPosByShotIndex_<bank>` | $20-$24, $29-$2b |
-| `src/twins/match_format_slide_out.asm` | `MatchFormatSlideOut`, `CloseMatchRulesPanel` | $3b, $3e |
+| `src/twins/match_format_slide_out.asm` | `MatchFormatSlideOut`, `CloseLinkMatchFormatPanel` | $3b, $3e |
 | `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` | $0e, $15 |
 | `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3e |
 | `src/twins/move_menu_cursor_grid.asm` | `MoveMenuCursorGrid_<bank>` | $38, $3b, $3e |
@@ -188,13 +188,13 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 12 | $24, $2c | `BallTrajEntryPtr4_*` |
 | 2 | 24 | $13, $15 | `ComputeStoryRankTier_*` |
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
-| 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` |
+| 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushLinkMatchFormatRowAttrs` |
 | 2 | 10 | $13 | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` |
 | 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
 | 3 | 21 | $11, $14, $15 | `LoadPlayerPartnerObjDefs_11`, `LoadPlayerPartnerObjDefs_14`, `LoadPlayerPartnerObjDefs_15` |
-| 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseMatchRulesPanel` |
+| 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseLinkMatchFormatPanel` |
 | 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |
 | 2 | 14 | $0d | `ProjectMedallionMatchWorldPosition`, `ProjectTreasureBoxWorldPosition` |
 | 2 | 19 | $0f, $10 | `ReadSceneTilemapTile_*` |

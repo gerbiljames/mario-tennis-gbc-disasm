@@ -1270,8 +1270,8 @@ the slave path; its `$c2` reaches the master a probe later. It fails if both
 choose at once (each hears the other's `$c1`) or if the second chooses while the
 master's message is still drawing (the slave's `AwaitSerialByte` counts loop
 passes, not frames, once a VBlank goes unanswered, and gives up within a few
-frames). Then come the rules screen (per-frame exchange), the unlock-flag nibble
-block, character select, and the match loop.
+frames). Then come the match-format screen (per-frame exchange), the unlock-flag
+nibble block, character select, and the match loop.
 
 ## Character stats into the engine
 
