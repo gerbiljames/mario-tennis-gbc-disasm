@@ -4,9 +4,9 @@ IslandSkyTilesA_14:
 	ds ALIGN[4]
 IslandSkyTilesB_14:
 	INCBIN "data/story/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
-IslandSkySpriteData_14:
-	INCLUDE "data/story/IslandSkySpriteData_14.asm" ; $7350, 33 bytes (sprite_template)
-AnimateIslandSkyEffectSprites_14_SpriteTemplate:
+IslandSkyEffectSpriteTemplateA_14:
+	INCLUDE "data/story/IslandSkyEffectSpriteTemplateA_14.asm" ; $7350, 33 bytes (sprite_template)
+IslandSkyEffectSpriteTemplateB_14:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -44,7 +44,7 @@ AnimateIslandSkyEffectSprites_14:
 	sub b ; $73e4
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
-	ld hl, IslandSkySpriteData_14 ; $73e8
+	ld hl, IslandSkyEffectSpriteTemplateA_14 ; $73e8
 	ld a, [wCutsceneObjHalt] ; $73eb
 	and a ; $73ee
 	jr nz, .noTick ; $73ef
@@ -74,7 +74,7 @@ AnimateIslandSkyEffectSprites_14:
 	sub b ; $7419
 	ld e, a ; $741a
 	ld c, $20 ; $741b
-	ld hl, AnimateIslandSkyEffectSprites_14_SpriteTemplate ; $741d
+	ld hl, IslandSkyEffectSpriteTemplateB_14 ; $741d
 	ld a, [wCutsceneObjLimit] ; $7420
 	swap a ; $7423
 	and $03 ; $7425
@@ -98,7 +98,7 @@ LoadDistantPlaneObjGfx_14:
 	ld de, vTiles0 + VRAM_BANK1 ; $7545
 	ld c, (DistantPlaneSpriteTemplate_14 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
-	ld hl, IslandObjPalette_14 ; $754d
+	ld hl, PlaneObjPalette_14 ; $754d
 	ld_obj_pals de, 0, 1 ; $7550
 	call LoadPaletteShadow ; $7553
 	pop_wram_bank ; $7556
@@ -159,7 +159,7 @@ QueueTwinkleSprite_14:
 	ld b, OAM_BANK1 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5
-IslandSkyEntry0eScene:
+IslandSkyHomeFromPeachsCastleScene:
 	call DisableLCDSafely ; $76c6
 	call LoadIslandSkyEffectObjGfx_14 ; $76c9
 	call LoadTwinkleObjGfx_14 ; $76cc
@@ -217,7 +217,7 @@ IslandSkyEntry0eScene:
 	call PlayPlaneMoveSfx_14 ; $7780
 	dec h ; $7783
 	jr nz, .planeOffscreenLoop ; $7784
-	call LoadPlaneObjGfx2_14 ; $7786
+	call LoadPlaneRearObjGfx_14 ; $7786
 	ld a, $a4 ; $7789
 	ld [wCutscenePlaneX], a ; $778b
 	ld a, $c6 ; $778e

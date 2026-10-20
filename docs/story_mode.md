@@ -190,10 +190,11 @@ The matched record goes to `wStoryMapRecord`, then is split into
 are written in tiles with a point (`map_pos` checks the form).
 
 An entry id is local to its location (`$0f` returns from a match at the
-Junior courts and runs a firework scene at Island Sky). A scene an init
-script runs for an entry is named `<Location>Entry<id>Scene`
-(`DormRoomEntry0fScene`; `IslandSkyEntry0fAnd0dScene` serves two ids,
-`TennisMachineRoomNoEntryScene` none).
+Junior courts and flies to Peach's Castle from Island Sky). A scene an init
+script runs for an entry is named `<Location><what it shows>Scene`
+(`IslandSkyToPeachsCastleScene` serves two ids,
+`TennisMachineRoomNoEntryScene` none); one whose role is still unknown keeps
+`<Location>Entry<id>Scene`.
 
 A row's optional last argument names it: `ENTRY_<location>_<name>` (the
 `STORYLOC_*` suffix, then what reaches it or the scene it runs:

@@ -411,27 +411,27 @@ TrainingCourtInitScript_15:
 	call ComputeStoryRankTier_15 ; $532e
 	ld a, [wMapSceneStage] ; $5331
 	cp $05 ; $5334
-	jr c, .fromLesson ; $5336
+	jr c, .checkTour ; $5336
 	ld a, [wMapSceneStage] ; $5338
 	sub $06 ; $533b
 	ld [wMapSceneStage], a ; $533d
-.fromLesson:
+.checkTour:
 	ld a, [wStoryModeEntryPoint] ; $5340
 	cp ENTRY_TRAINING_COURT_TOUR ; $5343
-	jr nz, .fromMatch ; $5345
+	jr nz, .notTour ; $5345
 	call TrainingCourtIntroTourScene ; $5347
 	ret ; $534a
-.fromMatch:
+.notTour:
 	call HideServeChallengerActor ; $534b
 	call HideStrokeChallengerActor ; $534e
 	call HideNetChallengerActor ; $5351
 	call PlaceSwingPracticeKidActor ; $5354
 	ld a, [wStoryModeEntryPoint] ; $5357
 	cp ENTRY_TRAINING_COURT_DRILL_RESULT ; $535a
-	jr nz, .placeActors ; $535c
+	jr nz, .checkPendingLesson ; $535c
 	call TrainingCourtResultDispatch ; $535e
 	ret ; $5361
-.placeActors:
+.checkPendingLesson:
 	ld a, [wStoryModeEntryPoint] ; $5362
 	cp ENTRY_TRAINING_COURT_PENDING_LESSON ; $5365
 	jr nz, .done ; $5367
@@ -473,25 +473,25 @@ TrainingCourtResultDispatch:
 TrainingCourtReentryDispatch:
 	ld a, [wCurrentMatchIndex] ; $53a9
 	jumptable a ; $53ac
-	dw TrainingCourtReentryDispatch.serveCourt ; $53ae jumptable
-	dw TrainingCourtReentryDispatch.serveCourt ; $53b0 jumptable
-	dw TrainingCourtReentryDispatch.serveCourt ; $53b2 jumptable
-	dw TrainingCourtReentryDispatch.netCourt ; $53b4 jumptable
-	dw TrainingCourtReentryDispatch.netCourt ; $53b6 jumptable
-	dw TrainingCourtReentryDispatch.netCourt ; $53b8 jumptable
-	dw TrainingCourtReentryDispatch.strokeCourt ; $53ba jumptable
-	dw TrainingCourtReentryDispatch.strokeCourt ; $53bc jumptable
-	dw TrainingCourtReentryDispatch.strokeCourt ; $53be jumptable
-	dw TrainingCourtReentryDispatch.serveCourtDoubles ; $53c0 jumptable
-	dw TrainingCourtReentryDispatch.serveCourtDoubles ; $53c2 jumptable
-	dw TrainingCourtReentryDispatch.serveCourtDoubles ; $53c4 jumptable
-	dw TrainingCourtReentryDispatch.netCourtDoubles ; $53c6 jumptable
-	dw TrainingCourtReentryDispatch.netCourtDoubles ; $53c8 jumptable
-	dw TrainingCourtReentryDispatch.netCourtDoubles ; $53ca jumptable
-	dw TrainingCourtReentryDispatch.strokeCourtDoubles ; $53cc jumptable
-	dw TrainingCourtReentryDispatch.strokeCourtDoubles ; $53ce jumptable
-	dw TrainingCourtReentryDispatch.strokeCourtDoubles ; $53d0 jumptable
-.serveCourt:
+	dw TrainingCourtReentryDispatch.serveMatch ; $53ae jumptable
+	dw TrainingCourtReentryDispatch.serveMatch ; $53b0 jumptable
+	dw TrainingCourtReentryDispatch.serveMatch ; $53b2 jumptable
+	dw TrainingCourtReentryDispatch.servePractice ; $53b4 jumptable
+	dw TrainingCourtReentryDispatch.servePractice ; $53b6 jumptable
+	dw TrainingCourtReentryDispatch.servePractice ; $53b8 jumptable
+	dw TrainingCourtReentryDispatch.netMatch ; $53ba jumptable
+	dw TrainingCourtReentryDispatch.netMatch ; $53bc jumptable
+	dw TrainingCourtReentryDispatch.netMatch ; $53be jumptable
+	dw TrainingCourtReentryDispatch.netPractice ; $53c0 jumptable
+	dw TrainingCourtReentryDispatch.netPractice ; $53c2 jumptable
+	dw TrainingCourtReentryDispatch.netPractice ; $53c4 jumptable
+	dw TrainingCourtReentryDispatch.strokeMatch ; $53c6 jumptable
+	dw TrainingCourtReentryDispatch.strokeMatch ; $53c8 jumptable
+	dw TrainingCourtReentryDispatch.strokeMatch ; $53ca jumptable
+	dw TrainingCourtReentryDispatch.strokePractice ; $53cc jumptable
+	dw TrainingCourtReentryDispatch.strokePractice ; $53ce jumptable
+	dw TrainingCourtReentryDispatch.strokePractice ; $53d0 jumptable
+.serveMatch:
 	xor a ; $53d2
 	ld [wStoryModeShowLocationName], a ; $53d3
 	ld a, $06 ; $53d6
@@ -510,7 +510,7 @@ TrainingCourtReentryDispatch:
 	call WaitFadeEnd ; $5430
 	call WalkChallengerOntoCourt ; $5433
 	ret ; $5436
-.netCourt:
+.servePractice:
 	xor a ; $5437
 	ld [wStoryModeShowLocationName], a ; $5438
 	script_player_speed 7.5 ; $543b
@@ -524,7 +524,7 @@ TrainingCourtReentryDispatch:
 	script_fade_in 4 ; $5479
 	call WaitFadeEnd ; $547e
 	ret ; $5481
-.strokeCourt:
+.netMatch:
 	xor a ; $5482
 	ld [wStoryModeShowLocationName], a ; $5483
 	ld a, $11 ; $5486
@@ -543,7 +543,7 @@ TrainingCourtReentryDispatch:
 	call WaitFadeEnd ; $54e0
 	call WalkChallengerOntoCourt ; $54e3
 	ret ; $54e6
-.serveCourtDoubles:
+.netPractice:
 	xor a ; $54e7
 	ld [wStoryModeShowLocationName], a ; $54e8
 	script_player_speed 7.5 ; $54eb
@@ -557,7 +557,7 @@ TrainingCourtReentryDispatch:
 	script_fade_in 4 ; $5529
 	call WaitFadeEnd ; $552e
 	ret ; $5531
-.netCourtDoubles:
+.strokeMatch:
 	xor a ; $5532
 	ld [wStoryModeShowLocationName], a ; $5533
 	ld a, $0c ; $5536
@@ -576,7 +576,7 @@ TrainingCourtReentryDispatch:
 	call WaitFadeEnd ; $5590
 	call WalkChallengerOntoCourt ; $5593
 	ret ; $5596
-.strokeCourtDoubles:
+.strokePractice:
 	xor a ; $5597
 	ld [wStoryModeShowLocationName], a ; $5598
 	script_player_speed 7.5 ; $559b

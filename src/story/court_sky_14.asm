@@ -217,21 +217,21 @@ IslandSkyInitScript_14:
 	script_set_position ACTOR_ISLAND_SKY_EMILY_SWEATS, 63.0, 63.0 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
 	cp ENTRY_ISLAND_SKY_HOME_FROM_ISLAND_OPEN ; $52e6
-	jp z, IslandSkyEntry02Scene ; $52e8
+	jp z, IslandSkyHomeFromIslandOpenScene ; $52e8
 	cp ENTRY_ISLAND_SKY_VICTORY_FIREWORKS ; $52eb
-	jp z, IslandSkyInitScript_14.scriptRespawnLocationActors ; $52ed
+	jp z, IslandSkyVictoryFireworksScene ; $52ed
 	cp ENTRY_ISLAND_SKY_HOME_FROM_PEACHS_CASTLE ; $52f0
-	jp z, IslandSkyEntry0eScene ; $52f2
+	jp z, IslandSkyHomeFromPeachsCastleScene ; $52f2
 	cp ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE ; $52f5
-	jp z, IslandSkyEntry0fAnd0dScene ; $52f7
+	jp z, IslandSkyToPeachsCastleScene ; $52f7
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $52fa
-	jp z, IslandSkyEntry0fAnd0dScene ; $52fc
+	jp z, IslandSkyToPeachsCastleScene ; $52fc
 	jp .loadScene ; $52ff
 	ret ; $5302
 .loadScene:
 	set_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $5303
 	call DisableLCDSafely ; $5306
-	call LoadPlaneObjGfx_14 ; $5309
+	call LoadPlaneFrontObjGfx_14 ; $5309
 	call LoadWaterSplashObjGfx_14 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312

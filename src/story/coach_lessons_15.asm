@@ -287,7 +287,7 @@ TestStrokeChallengerGameFlagTable:
 ServicePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7290
 	jumptable a ; $7293
-	dw ServeCoachIntroDialogue_15 ; $7295 jumptable
+	dw ServicePractice1Result0 ; $7295 jumptable
 	dw ServicePractice1Result1 ; $7297 jumptable
 	dw ServicePractice1Result2 ; $7299 jumptable
 	dw ServicePractice1Result3 ; $729b jumptable
@@ -313,7 +313,7 @@ ServicePractice3ResultScene:
 	dw ServicePractice3Result4 ; $72c1 jumptable
 	dw ServicePractice3Result5 ; $72c3 jumptable
 	dw ServicePractice1Result1 ; $72c5 jumptable
-ServeCoachIntroDialogue_15:
+ServicePractice1Result0:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_CurtClearedAllFourTargets ; $72ca
 	script_speak ACTOR_TRAINING_COURT_CURT ; $72d0
@@ -344,9 +344,9 @@ ServicePractice2Result0:
 	call InitServeCoachScene ; $7336
 	script_set_text Text_CurtClearedAllSpinServes ; $7339
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $733f
-	jr z, .lesson1Speak ; $7342
+	jr z, .speak ; $7342
 	script_set_text Text_CurtClearedAllSpinServesRanked ; $7344
-.lesson1Speak:
+.speak:
 	script_speak ACTOR_TRAINING_COURT_CURT ; $734a
 	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_COURT_CURT ; $734f
 	script_set_anim ACTOR_TRAINING_COURT_CURT, ANIM_NOD ; $7357
@@ -484,7 +484,7 @@ InitServeCoachScene:
 NetGamePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $7539
 	jumptable a ; $753c
-	dw NetCoachIntroDialogue_15 ; $753e jumptable
+	dw NetGamePractice1Result0 ; $753e jumptable
 	dw NetGamePractice1Result1 ; $7540 jumptable
 	dw NetGamePractice1Result2 ; $7542 jumptable
 	dw NetGamePractice1Result3 ; $7544 jumptable

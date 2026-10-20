@@ -308,7 +308,7 @@ ReturnMatchChallengeScene:
 	ld a, MINIGAME_STROKE_MATCH_3 ; $6da8
 	farcall RunTrainingDrillByID ; $6daa
 	ret ; $6dad
-.declined:
+SpeakReturnCoachDeclineLine:
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6dae
 	ret ; $6db3
 ReturnCoachReturnLessonScene:
@@ -324,14 +324,14 @@ ReturnCoachReturnLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6dd8
 	script_wait_frames 5 ; $6ddb
 	and a ; $6de2
-	jp nz, ReturnMatchChallengeScene.declined ; $6de3
+	jp nz, SpeakReturnCoachDeclineLine ; $6de3
 	farcall AdvanceDialogueTextCursor ; $6de6
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6de9
 	farcall RunDialogueYesNoPrompt ; $6dee
 	farcall ScriptCloseDialogueWindow ; $6df1
 	script_wait_frames 5 ; $6df4
 	and a ; $6dfb
-	jp nz, ReturnMatchChallengeScene.declined ; $6dfc
+	jp nz, SpeakReturnCoachDeclineLine ; $6dfc
 	farcall AdvanceDialogueTextCursor ; $6dff
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6e02
 	call MovePartyToReturnCoachSpot ; $6e07
@@ -361,14 +361,14 @@ ReturnCoachLobLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6e61
 	script_wait_frames 5 ; $6e64
 	and a ; $6e6b
-	jp nz, ReturnMatchChallengeScene.declined ; $6e6c
+	jp nz, SpeakReturnCoachDeclineLine ; $6e6c
 	farcall AdvanceDialogueTextCursor ; $6e6f
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6e72
 	farcall RunDialogueYesNoPrompt ; $6e77
 	farcall ScriptCloseDialogueWindow ; $6e7a
 	script_wait_frames 5 ; $6e7d
 	and a ; $6e84
-	jp nz, ReturnMatchChallengeScene.declined ; $6e85
+	jp nz, SpeakReturnCoachDeclineLine ; $6e85
 	farcall AdvanceDialogueTextCursor ; $6e88
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6e8b
 	call MovePartyToReturnCoachSpot ; $6e90
@@ -397,14 +397,14 @@ ReturnCoachPassingShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6ee4
 	script_wait_frames 5 ; $6ee7
 	and a ; $6eee
-	jp nz, ReturnMatchChallengeScene.declined ; $6eef
+	jp nz, SpeakReturnCoachDeclineLine ; $6eef
 	farcall AdvanceDialogueTextCursor ; $6ef2
 	script_speak_restore ACTOR_TRAINING_COURT_BOB_2 ; $6ef5
 	farcall RunDialogueYesNoPrompt ; $6efa
 	farcall ScriptCloseDialogueWindow ; $6efd
 	script_wait_frames 5 ; $6f00
 	and a ; $6f07
-	jp nz, ReturnMatchChallengeScene.declined ; $6f08
+	jp nz, SpeakReturnCoachDeclineLine ; $6f08
 	farcall AdvanceDialogueTextCursor ; $6f0b
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $6f0e
 	call MovePartyToReturnCoachSpot ; $6f13

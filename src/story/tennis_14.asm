@@ -296,19 +296,19 @@ MachineCourtGameOverExitScene:
 ComputeMachineCourtProgress:
 	ld a, MACHINECOURTSTAGE_LEVEL1 ; $43a4
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $43a6
-	jp z, .machineCourtStartLevelScene ; $43a9
+	jp z, .storeStage ; $43a9
 	script_copy_scene_rect 30, 44, 48, 44, 2, 2 ; $43ac
 	ld a, MACHINECOURTSTAGE_LEVEL2 ; $43bb
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $43bd
-	jp z, .machineCourtStartLevelScene ; $43c0
+	jp z, .storeStage ; $43c0
 	script_copy_scene_rect 30, 48, 48, 48, 2, 2 ; $43c3
 	ld a, MACHINECOURTSTAGE_LEVEL3 ; $43d2
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $43d4
-	jr z, .machineCourtStartLevelScene ; $43d7
+	jr z, .storeStage ; $43d7
 	script_copy_scene_rect 30, 52, 48, 52, 2, 2 ; $43d9
 	ld a, MACHINECOURTSTAGE_LEVEL4 ; $43e8
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $43ea
-	jr z, .machineCourtStartLevelScene ; $43ed
+	jr z, .storeStage ; $43ed
 	script_copy_scene_rect 30, 56, 48, 56, 2, 2 ; $43ef
 	ld a, MACHINECOURTSTAGE_MASTER ; $43fe
 	ld b, a ; $4400
@@ -322,12 +322,12 @@ ComputeMachineCourtProgress:
 	pop_wram_bank ; $4415
 	ld a, b ; $441a
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $441b
-	jr z, .machineCourtStartLevelScene ; $441e
+	jr z, .storeStage ; $441e
 	ld a, MACHINECOURTSTAGE_EXPERT ; $4420
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4422
-	jr z, .machineCourtStartLevelScene ; $4425
+	jr z, .storeStage ; $4425
 	ld a, MACHINECOURTSTAGE_COMPLETE ; $4427
-.machineCourtStartLevelScene:
+.storeStage:
 	ld [wMapSceneStage], a ; $4429
 	ret ; $442c
 TennisMachineRoomNpc05_14:
@@ -380,7 +380,7 @@ TennisMachineRoomNpc05_14:
 	farcall ScriptCloseDialogueWindow ; $44bc
 	script_wait_frames 5 ; $44bf
 	and a ; $44c6
-	jp z, MachineCourtStartLevelScene.speak ; $44c7
+	jp z, MachineCourtStartLevelScene.startPracticeSession ; $44c7
 .done:
 	ld a, [wMapSceneStage] ; $44ca
 	add a ; $44cd
@@ -429,12 +429,12 @@ MachineCourtStartLevelScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $458e
 	ld [wStoryModeExitTriggerRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594
-	ld_hl_indexed MachineCourtStartLevelSceneTable ; $4597
+	ld_hl_indexed MachineStageDrillIds ; $4597
 	ld a, [hl] ; $459e
 	farcall RunTrainingDrillByID ; $459f
 	farcall EndCutsceneScriptMode ; $45a2
 	ret ; $45a5
-.speak:
+.startPracticeSession:
 	script_speak ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT ; $45a6
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $45ab
 	script_move_target ACTOR_TENNIS_MACHINE_ROOM_MACHINE_ATTENDANT, 45.0, 41.0 ; $45ae
@@ -448,7 +448,7 @@ MachineCourtStartLevelScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45ed
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4
 	ret ; $45f7
-MachineCourtStartLevelSceneTable:
+MachineStageDrillIds:
 	; $45f8, 7 bytes (bytes:7)
 	table_width 1
 	db MINIGAME_TENNIS_MACHINE_1, MINIGAME_TENNIS_MACHINE_2, MINIGAME_TENNIS_MACHINE_3, MINIGAME_TENNIS_MACHINE_4, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE

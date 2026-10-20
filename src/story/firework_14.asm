@@ -51,7 +51,7 @@ UpdateFirework0_14:
 	sound SFX_FIREWORK ; $649e
 .burstSprite:
 	ld a, [wCutsceneObjPhase] ; $64a0
-	ld_hl_indexed UpdateFirework0_14Table ; $64a3
+	ld_hl_indexed FireworkPhaseTileBases0_14 ; $64a3
 	ld a, [hl] ; $64aa
 	add $10 ; $64ab
 	ld c, a ; $64ad
@@ -81,21 +81,21 @@ AdvanceFirework0Ascent_14:
 FireworkPhaseDurations_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
-UpdateFirework0_14Table:
-	INCLUDE "data/story/UpdateFirework0_14Table.asm" ; $64d9, 4 bytes (bytes:4)
-UpdateFirework1_14Table:
-	INCLUDE "data/story/UpdateFirework1_14Table.asm" ; $64dd, 4 bytes (bytes:4)
-IslandSkyInitScript_14.scriptRespawnLocationActors:
+FireworkPhaseTileBases0_14:
+	INCLUDE "data/story/FireworkPhaseTileBases0_14.asm" ; $64d9, 4 bytes (bytes:4)
+FireworkPhaseTileBases1_14:
+	INCLUDE "data/story/FireworkPhaseTileBases1_14.asm" ; $64dd, 4 bytes (bytes:4)
+IslandSkyVictoryFireworksScene:
 	script_respawn_actors FireworkMapActors_14 ; $64e1
 	farcall BeginCutsceneScriptMode ; $64e9
 	call DisableLCDSafely ; $64ec
 	call LoadFireworkObjGfx_14 ; $64ef
 	call EnableLCD ; $64f2
 	test_flag FLAG_DOUBLES ; $64f5
-	jp z, IslandSkyInitScript_14.placeActors2 ; $64f8
+	jp z, .hidePlayer ; $64f8
 	script_null_script ACTOR_PARTNER ; $64fb
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $6500
-IslandSkyInitScript_14.placeActors2:
+.hidePlayer:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $650b
 	xor a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
@@ -192,7 +192,7 @@ IslandSkyInitScript_14.placeActors2:
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
 	test_flag FLAG_DOUBLES ; $664a
-	jr z, IslandSkyInitScript_14.notDoubles ; $664d
+	jr z, .notDoubles ; $664d
 	ld a, STORYLOC_AWARDS_CEREMONY ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, ENTRY_AWARDS_CEREMONY_DOUBLES ; $6654
@@ -201,7 +201,7 @@ IslandSkyInitScript_14.placeActors2:
 	ld [wUnusedExitTriggerIdMirror], a ; $665b
 	ld [wStoryModeExitTriggerRequest], a ; $665e
 	ret ; $6661
-IslandSkyInitScript_14.notDoubles:
+.notDoubles:
 	ld a, STORYLOC_AWARDS_CEREMONY ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, ENTRY_AWARDS_CEREMONY_SINGLES ; $6667
@@ -295,7 +295,7 @@ UpdateFirework1_14:
 	sound SFX_FIREWORK ; $6f44
 .burstSprite:
 	ld a, [wCutsceneObjPhase + 1] ; $6f46
-	ld_hl_indexed UpdateFirework1_14Table ; $6f49
+	ld_hl_indexed FireworkPhaseTileBases1_14 ; $6f49
 	ld a, [hl] ; $6f50
 	add $10 ; $6f51
 	ld c, a ; $6f53
@@ -322,9 +322,9 @@ AdvanceFirework1Ascent_14:
 	sub b ; $6f76
 	ld [wCutsceneObjY + 1], a ; $6f77
 	ret ; $6f7a
-IslandSkyEntry0fAnd0dScene:
+IslandSkyToPeachsCastleScene:
 	call DisableLCDSafely ; $6f7b
-	call LoadPlaneObjGfx_14 ; $6f7e
+	call LoadPlaneFrontObjGfx_14 ; $6f7e
 	call LoadIslandSkyEffectObjGfx_14 ; $6f81
 	call EnableLCD ; $6f84
 	ld a, $50 ; $6f87

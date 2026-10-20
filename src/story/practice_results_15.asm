@@ -1,4 +1,4 @@
-NetCoachIntroDialogue_15:
+NetGamePractice1Result0:
 	script_set_text Text_BethClearedAllVolleys ; $757a
 	call InitNetCoachScene ; $7580
 	script_speak ACTOR_TRAINING_COURT_BETH ; $7583
@@ -153,7 +153,7 @@ InitNetCoachScene:
 StrokePractice1ResultScene:
 	ld a, [wDrillLessonResult] ; $77aa
 	jumptable a ; $77ad
-	dw ReturnCoachIntroDialogue_15 ; $77af jumptable
+	dw StrokePractice1Result0 ; $77af jumptable
 	dw StrokePractice1Result1 ; $77b1 jumptable
 	dw StrokePractice1Result2 ; $77b3 jumptable
 	dw StrokePractice1Result3 ; $77b5 jumptable
@@ -180,7 +180,7 @@ StrokePractice3ResultScene:
 	dw StrokePractice3Result4 ; $77dd jumptable
 	dw StrokePractice1Result5 ; $77df jumptable
 	dw StrokePractice1Result1 ; $77e1 jumptable
-ReturnCoachIntroDialogue_15:
+StrokePractice1Result0:
 	call InitReturnCoachScene ; $77e3
 	script_set_text Text_ReturnCoachReturnedAllFour ; $77e6
 	script_speak ACTOR_TRAINING_COURT_BOB_2 ; $77ec

@@ -314,13 +314,13 @@ WalkChallengerAwayDefeated:
 WalkChallengerOntoCourt:
 	ld a, [wCurrentMatchIndex] ; $6179
 	sub $0a ; $617c
-	jr nc, .northCourt ; $617e
+	jr nc, .strokeCourt ; $617e
 	ld a, [wCurrentMatchIndex] ; $6180
 	sub $04 ; $6183
-	jr c, .southCourt ; $6185
-	jp .eastCourt ; $6187
+	jr c, .serveCourt ; $6185
+	jp .netCourt ; $6187
 	ret ; $618a
-.northCourt:
+.strokeCourt:
 	script_move_target [wChallengerActor], 19.0, 37.0 ; $618b
 	script_wait_move [wChallengerActor] ; $6197
 	script_move_target [wChallengerActor], 19.0, 39.0 ; $619d
@@ -330,7 +330,7 @@ WalkChallengerOntoCourt:
 	script_wait_move [wChallengerActor] ; $61c6
 	script_face [wChallengerActor], FACE_DOWN ; $61cc
 	ret ; $61d4
-.southCourt:
+.serveCourt:
 	script_move_target [wChallengerActor], 19.0, 11.0 ; $61d5
 	script_wait_frames 30 ; $61e1
 	script_move_target ACTOR_PLAYER, 19.0, 19.0 ; $61e8
@@ -339,7 +339,7 @@ WalkChallengerOntoCourt:
 	script_wait_move [wChallengerActor] ; $6205
 	script_face [wChallengerActor], FACE_RIGHT ; $620b
 	ret ; $6213
-.eastCourt:
+.netCourt:
 	script_move_target [wChallengerActor], 45.0, 33.0 ; $6214
 	script_wait_frames 30 ; $6220
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $6227

@@ -626,7 +626,10 @@ def check_addr_shaped(rom, manifest, fail):
     return n
 
 
-KNOWN_DB_PTR_TABLES = {}
+# db tables whose words land inside labelled blobs but are not pointers.
+KNOWN_DB_PTR_TABLES = {
+    "FireworkPhaseTileBases1_14": "per-phase tile offsets, read a byte at a time",
+}
 _HL_TABLE_RE = re.compile(r"^\s*(?:ld_hl_indexed|ld hl,)\s+([A-Za-z_]\w*)\s*(?:;|$)")
 
 

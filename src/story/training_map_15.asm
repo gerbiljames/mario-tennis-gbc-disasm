@@ -49,12 +49,12 @@ TournamentCourtyardNpc05_15:
 	ld l, a ; $410d
 	farcall InitDialogueTextCursor ; $410e
 	test_flag FLAG_DOUBLES ; $4111
-	jr z, .altText ; $4114
+	jr z, .singles ; $4114
 	test_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $4116
 	jr nz, .alreadyTalked ; $4119
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $411b
 	jr .speak ; $411e
-.altText:
+.singles:
 	test_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4120
 	jr nz, .alreadyTalked ; $4123
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4125
@@ -102,9 +102,9 @@ TournamentCourtyardTile01_15:
 TournamentCourtyardInitScript_15:
 	ld a, [wStoryModeEntryPoint] ; $41a6
 	cp ENTRY_TOURNAMENT_COURTYARD_SITE_ARRIVAL ; $41a9
-	jr nz, .ne0f ; $41ab
+	jr nz, .notSiteArrival ; $41ab
 	jp TournamentSiteArrivalScene ; $41ad
-.ne0f:
+.notSiteArrival:
 	call LoadPlayerPartnerObjDefs_15 ; $41b0
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
@@ -715,13 +715,13 @@ TrainingCourtNpc13_15:
 	farcall ScriptCloseDialogueWindow ; $4b47
 	script_wait_frames 5 ; $4b4a
 	and a ; $4b51
-	jp nz, .setFlag ; $4b52
+	jp nz, .declined ; $4b52
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4b55
 	script_wait_idle ACTOR_PLAYER ; $4b5c
 	script_speak ACTOR_TRAINING_COURT_STUDENT_CAP_BOY_3 ; $4b61
 	script_wait_frames 10 ; $4b66
 	ret ; $4b6d
-.setFlag:
+.declined:
 	set_flag FLAG_SWING_PRACTICE_KID_PLACED ; $4b6e
 	script_set_anim ACTOR_PLAYER, ANIM_SHAKE ; $4b71
 	script_wait_idle ACTOR_PLAYER ; $4b78

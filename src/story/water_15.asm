@@ -41,11 +41,11 @@ WaterSpriteSwingCountTask:
 	pop hl ; $5619
 	ld a, [wSwingContestSwingState] ; $561a
 	cp $02 ; $561d
-	jr z, .firstSwing ; $561f
+	jr z, .setRecoverPose ; $561f
 	ld a, $02 ; $5621
 	ld [wSwingContestSwingState], a ; $5623
 	jr .tick ; $5626
-.firstSwing:
+.setRecoverPose:
 	ld a, $01 ; $5628
 	ld [wSwingContestSwingState], a ; $562a
 .tick:

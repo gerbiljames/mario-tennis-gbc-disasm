@@ -157,7 +157,7 @@ NEXTU
 ; [8-bit] Training Court (bank $15): the actor slot of the challenger a result scene walks on, from TrainingCourtReentryDispatch or the scene itself: $06 Bob (serve), $0c Allie (stroke), $11 Brian (net)
 wChallengerActor:: db
 NEXTU
-; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyEntry02Scene, IslandSkyEntry0eScene, IslandSkyEntry0fAnd0dScene and the plane sprite drawers)
+; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyHomeFromIslandOpenScene, IslandSkyHomeFromPeachsCastleScene, IslandSkyToPeachsCastleScene and the plane sprite drawers)
 ; [8-bit] World X of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollX
 wCutscenePlaneX:: db
 ; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
@@ -196,7 +196,7 @@ wSwingContestTimer:: dw
 wSwingContestSwings:: dw
 ; [8-bit] Previous frame's A/B state, so one press counts once
 wSwingContestPrevInput:: db
-; [8-bit] 2 when a swing registers, 1 the frame after; triggers the swing animation once
+; [8-bit] Player pose: starts 1 (recover), each counted swing flips 1 <-> 2 (swing); 0 when the timer runs out ends the contest
 wSwingContestSwingState:: db
 ; [8-bit] Screen X of the timer panel QueueWaterSpriteMinigameHudPanels draws; slid on and off by the scene
 wSwingContestTimerPanelX:: db
