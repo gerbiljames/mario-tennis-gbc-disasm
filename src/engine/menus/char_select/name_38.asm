@@ -303,7 +303,7 @@ SetupNameEntryScreen:
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, vTiles0 + VRAM_BANK1 ; $6f78
-	ld de, $0801 ; $6f7b
+	ld_obj_pals de, 0, 1 ; $6f7b
 	farcall LoadMenuHandCursorGfx ; $6f7e
 	ld b, $0f ; $6f81
 	ld c, $00 ; $6f83

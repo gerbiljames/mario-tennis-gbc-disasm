@@ -46,9 +46,9 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\tld_xy de, "), 169)
         self.assertEqual(count(r"^\tld_cell de, "), 161)
         self.assertEqual(count(r"^\tld_bg_pals de, "), 86)
-        self.assertEqual(count(r"^\tld_obj_pals de, "), 71)
+        self.assertEqual(count(r"^\tld_obj_pals de, "), 74)
         self.assertEqual(count(r"^\tld_oam bc, "), 104)
-        self.assertEqual(count(r"^\tld_size bc, "), 24)
+        self.assertEqual(count(r"^\tld_size bc, "), 28)
         self.assertEqual(count(r"^\tld_tile_run bc, "), 63)
         self.assertEqual(count(r"^\tld_bg_cell bc, "), 2)
         # map positions are tiles with a point (map_pos), never raw 1/256-tile words

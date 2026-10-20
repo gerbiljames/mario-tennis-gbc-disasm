@@ -9,10 +9,10 @@ ClearSpriteSlots:
 	ld [wNetBallSlot], a ; $6310
 	ld [wBallSlot], a ; $6313
 	ld [wBallTrailSlots], a ; $6316
-	ld [wBallTrailSlots + 4], a ; $6319
-	ld [wBallTrailSlots + 8], a ; $631c
-	ld [wBallTrailSlots + 12], a ; $631f
-	ld [wBallTrailSlots + 16], a ; $6322
+	ld [wBallTrailSlots + 1 * SPRSLOT_SIZE], a ; $6319
+	ld [wBallTrailSlots + 2 * SPRSLOT_SIZE], a ; $631c
+	ld [wBallTrailSlots + 3 * SPRSLOT_SIZE], a ; $631f
+	ld [wBallTrailSlots + 4 * SPRSLOT_SIZE], a ; $6322
 	ld [wBallShadowSlot], a ; $6325
 	wram_bank WRAM_CHAR3 ; $6328
 	ld a, $ff ; $632e
@@ -141,13 +141,13 @@ DrawMarkersAndShadows:
 	call DrawLandingMarker ; $6484
 	ld hl, wBallTrailSlots ; $6487
 	call DrawSlotSprite ; $648a
-	ld hl, wBallTrailSlots + 4 ; $648d
+	ld hl, wBallTrailSlots + 1 * SPRSLOT_SIZE ; $648d
 	call DrawSlotSprite ; $6490
-	ld hl, wBallTrailSlots + 8 ; $6493
+	ld hl, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $6493
 	call DrawSlotSprite ; $6496
-	ld hl, wBallTrailSlots + 12 ; $6499
+	ld hl, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $6499
 	call DrawSlotSprite ; $649c
-	ld hl, wBallTrailSlots + 16 ; $649f
+	ld hl, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $649f
 	call DrawSlotSprite ; $64a2
 	call DrawBounceEffect ; $64a5
 	ld hl, wCharAirShadowSlot ; $64a8

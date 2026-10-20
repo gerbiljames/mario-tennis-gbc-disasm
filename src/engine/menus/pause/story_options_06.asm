@@ -304,12 +304,12 @@ DrawStoryMenuItem:
 	push hl ; $77b2
 	call GetShadowTilemapAddr ; $77b3
 	pop hl ; $77b6
-	ld bc, $0302 ; $77b7
+	ld_size bc, 3, 2 ; $77b7
 	call CopyTileRectToShadowTilemap ; $77ba
 	pop de ; $77bd
 	call GetShadowAttrmapAddr ; $77be
 	ld hl, MenuItemAttrRect3x2 ; $77c1
-	ld bc, $0302 ; $77c4
+	ld_size bc, 3, 2 ; $77c4
 	call CopyTileRectToShadowAttrmap ; $77c7
 	ret ; $77ca
 StoryMenuItemRectPointers:
@@ -438,12 +438,12 @@ Unused_06_DrawStoryMenuItemRow:
 	ld_cell de, $03, $0a ; $7863
 	call GetShadowTilemapAddr ; $7866
 	ld hl, StoryMenuItemRowTextRect ; $7869
-	ld bc, $0c02 ; $786c
+	ld_size bc, 12, 2 ; $786c
 	call CopyTileRectToShadowTilemap ; $786f
 	ld_cell de, $03, $0a ; $7872
 	call GetShadowAttrmapAddr ; $7875
 	ld hl, TextRectAttrs_06 ; $7878
-	ld bc, $0c02 ; $787b
+	ld_size bc, 12, 2 ; $787b
 	call CopyTileRectToShadowAttrmap ; $787e
 	ret ; $7881
 CopyTileRectToShadowTilemap:

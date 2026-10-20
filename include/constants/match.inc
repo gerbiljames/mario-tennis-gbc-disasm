@@ -35,6 +35,18 @@ def BALLHIST_SIZE equ _RS
 def NUM_BALLHIST equ 6
 def BALLHIST_NEWEST equ (NUM_BALLHIST - 1) * BALLHIST_SIZE ; BuildBallSlot writes here
 
+; --- Sprite-slot records ---
+; Offsets into one 4-byte sprite-slot record (wCharSpriteSlot and the
+; character shadow slots, the bank $08 ball slots, wBallTrailSlots), the
+; argument DrawCharSprite and the ball drawers read through hl.
+	rsreset
+def SPRSLOT_TILE rb ; $00 $ff = not drawn
+def SPRSLOT_ATTR rb ; $01 OAM attribute byte
+def SPRSLOT_Y    rb ; $02 screen Y
+def SPRSLOT_X    rb ; $03 screen X
+def SPRSLOT_SIZE equ _RS
+	ASSERT SPRSLOT_SIZE == 4
+
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
 ; SelectServeShotType, which index wCharShotButton1 x wCharShotButton2 tables.

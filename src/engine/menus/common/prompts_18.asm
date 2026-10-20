@@ -119,7 +119,7 @@ Unused_18_InitConfirmScreen:
 	ld_obj_pals de, 1, 3 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, vTiles0 tile $50 ; $534e
-	ld de, $0e01 ; $5351
+	ld_obj_pals de, 6, 1 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
 	call Unused_18_LoadConfirmScreenSpriteGfx ; $5357
 	call Unused_18_SetupScoreboardDisplay ; $535a

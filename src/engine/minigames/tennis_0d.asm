@@ -257,13 +257,13 @@ UpdateMinigameHudAndBallTrail:
 .trail:
 	push_wram_bank WRAM_ACTORS ; $4ac7
 	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $4ad0
-	ld de, wBallTrailSlots + 8 ; $4ad3
+	ld de, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $4ad3
 	call MarkMinigameObjectOffscreen ; $4ad6
 	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $4ad9
-	ld de, wBallTrailSlots + 12 ; $4adc
+	ld de, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $4adc
 	call MarkMinigameObjectOffscreen ; $4adf
 	ld hl, wBallHistory ; $4ae2
-	ld de, wBallTrailSlots + 16 ; $4ae5
+	ld de, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $4ae5
 	call MarkMinigameObjectOffscreen ; $4ae8
 	pop_wram_bank ; $4aeb
 	ret ; $4af0
