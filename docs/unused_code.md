@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-965 labels carry an `Unused` prefix: 799 routines and 166 data blobs.
+963 labels carry an `Unused` prefix: 797 routines and 166 data blobs.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A

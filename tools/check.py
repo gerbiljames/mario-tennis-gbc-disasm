@@ -59,8 +59,9 @@ after a real defect broke it:
             data-named label's scope does not run on into code (a routine's
             tail after a table is `Routine.local:`), a dw table does not
             dispatch to another routine's local that starts after a ret/jp
-            (a case is a routine of its own), and no unreferenced label sits
-            where code falls into it (it would split a routine in two)
+            (a case is a routine of its own), and no label referenced only
+            through its locals, or not at all, sits where code falls into it
+            (it would split a routine in two)
   headers   every non-fill region header (`; $xxxx, N bytes (...)`) sits
             right under a label: a region after a ret or a table's end is
             data under another label's name (seven such once hid there)
@@ -316,7 +317,7 @@ _CODE_PREFIXES = ("script_", "farcall", "push_wram_bank", "pop_wram_bank", "wram
 _DATA_PREFIXES = ("db", "dw", "INCBIN", "map_actor", "map_actor_end", "map_entry",
                   "map_script", "map_tree", "as_", "anim_", "tilemap_", "oam_",
                   "palette", "snd_", "drill_", "court_", "story_location")
-_UNCOND_RE = re.compile(r"^	(ret|reti|jp hl|jp [A-Za-z_$][\w.$+ ]*|jr [A-Za-z_.][\w.]*)\s*(;.*)?$")
+_UNCOND_RE = re.compile(r"^	(ret|reti|jp hl|jp [A-Za-z_.$][\w.$+ ]*|jr [A-Za-z_.][\w.]*)\s*(;.*)?$")
 _QUAL_DEF_RE = re.compile(r"^([A-Za-z_]\w*)\.(\w+):")
 _LOCAL_DEF_RE = re.compile(r"^\.(\w+):")
 
@@ -342,9 +343,9 @@ def check_label_scopes(fail):
         for line in lines:
             if _GLOBAL_RE.match(line):
                 continue
-            words.update(re.findall(r"\b([A-Za-z_]\w*)\b", line.split(";")[0]))
+            words.update(re.findall(r"\b([A-Za-z_]\w*)\b(?!\.)", line.split(";")[0]))
     for inc in (ROOT / "include").rglob("*.inc"):
-        words.update(re.findall(r"\b([A-Za-z_]\w*)\b", inc.read_text()))
+        words.update(re.findall(r"\b([A-Za-z_]\w*)\b(?!\.)", inc.read_text()))
     n = 0
     for h, lines in texts.items():
         bank = bank_of(h)
@@ -356,7 +357,7 @@ def check_label_scopes(fail):
             if m:
                 name = m.group(1)
                 if (last and _line_kind(last) == "code" and not _UNCOND_RE.match(last)
-                        and name not in words and not name.startswith("Unused")):
+                        and name not in words):
                     fail("labels", f"bank ${bank:02x}: {name} is referenced nowhere and code "
                                    "falls into it -- it splits a routine")
                 glob_, first, owner_shift, last = name, None, False, ""

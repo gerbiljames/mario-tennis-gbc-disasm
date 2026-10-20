@@ -242,7 +242,7 @@ Unused_05_RunMenuSelectionShared:
 	call AdvanceFrame ; $4afd
 	ldh a, [hInputPressed] ; $4b00
 	bit PADB_A, a ; $4b02
-	jp nz, Unused_05_LoadOverworldSpriteDef.aPressed ; $4b04
+	jp nz, .aPressed ; $4b04
 	bit PADB_UP, a ; $4b07
 	jr z, .checkDown ; $4b09
 	dec b ; $4b0b
@@ -255,7 +255,7 @@ Unused_05_RunMenuSelectionShared:
 .checkDown:
 	ldh a, [hInputPressed] ; $4b17
 	and PADF_DOWN ; $4b19
-	jp z, Unused_05_LoadOverworldSpriteDef.checkInputRisingEdge ; $4b1b
+	jp z, .checkInputRisingEdge ; $4b1b
 	ld a, [wMenuRowCount] ; $4b1e
 	ld c, a ; $4b21
 	inc b ; $4b22
@@ -307,7 +307,6 @@ Unused_05_RunMenuSelectionShared:
 	call GetTilemapCellAddress ; $4b61
 	ld hl, wTextArrowCell ; $4b64
 	ld [hl], e ; $4b67
-Unused_05_LoadOverworldSpriteDef:
 	inc hl ; $4b68
 	ld [hl], d ; $4b69
 	pop hl ; $4b6a

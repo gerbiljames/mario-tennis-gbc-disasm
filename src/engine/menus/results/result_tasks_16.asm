@@ -30,12 +30,11 @@ Unused_16_DrawCourtDiagramMarkers:
 .loop:
 	ld a, [hl] ; $43fc
 	cp $00 ; $43fd
-	jr z, Unused_16_CourtDiagramBaseTask.restore ; $43ff
+	jr z, .restore ; $43ff
 	ld [de], a ; $4401
 	inc hl ; $4402
 	ld a, [hl] ; $4403
 	cp TX_DAKUTEN ; $4404
-Unused_16_CourtDiagramBaseTask:
 	jr z, .diacritic ; $4406
 	cp TX_HANDAKUTEN ; $4408
 	jr nz, .nextCell ; $440a
