@@ -470,7 +470,7 @@ LoadSavedDataTypeSelectGfx:
 .loop:
 	ld a, c ; $7215
 	add a ; $7216
-	ld hl, SavedDataTypeSelectGfx0 ; $7217
+	ld hl, SavedDataTypeLabelTilePtrs ; $7217
 	add_hl_a ; $721a
 	ld a, [hl+] ; $721f
 	ld h, [hl] ; $7220
@@ -485,7 +485,7 @@ LoadSavedDataTypeSelectGfx:
 	pop de ; $722d
 	pop bc ; $722e
 	pop af ; $722f
-	ld hl, SavedDataTypeSelectGfx1 ; $7230
+	ld hl, SavedDataTypeLabelTileVramDests ; $7230
 	ld a, c ; $7233
 	add a ; $7234
 	add_hl_a ; $7235
@@ -535,11 +535,11 @@ LoadSavedDataTypeSelectGfx:
 	farcall LoadIndexedPalette ; $7291
 	pop_wram_bank ; $7294
 	ret ; $7299
-SavedDataTypeSelectGfx0:
+SavedDataTypeLabelTilePtrs:
 	; $729a, 2 slot words
-	dslot DataPtr_CharacterSelectLabelTiles1 ; record 0
-	dslot DataPtr_LinkErrorLabelTiles ; record 1
-SavedDataTypeSelectGfx1:
+	dslot DataPtr_ExhibitionIconTiles ; record 0
+	dslot DataPtr_MushroomIconTiles ; record 1
+SavedDataTypeLabelTileVramDests:
 	; $729e, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1

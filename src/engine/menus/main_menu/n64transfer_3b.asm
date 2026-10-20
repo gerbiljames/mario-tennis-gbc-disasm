@@ -228,9 +228,9 @@ LoadN64RecordTypeGfx:
 	ret ; $72df
 N64RecordTypeLabelTilePtrs:
 	; $72e0, 3 slot words
-	dslot DataPtr_CharacterSelectLabelTiles0 ; record 0
-	dslot DataPtr_CharacterSelectLabelTiles1 ; record 1
-	dslot DataPtr_CharacterSelectLabelTiles2 ; record 2
+	dslot DataPtr_TournamentIconTiles ; record 0
+	dslot DataPtr_ExhibitionIconTiles ; record 1
+	dslot DataPtr_RingShotIconTiles ; record 2
 N64RecordTypeLabelTileVramDests:
 	; $72e6, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0

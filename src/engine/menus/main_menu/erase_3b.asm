@@ -128,7 +128,7 @@ LoadEraseSavedDataGfx:
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank WRAM_STAGING ; $6d88
-	ld_slot hl, DataPtr_N64TransferLabelTiles0 ; $6d8e
+	ld_slot hl, DataPtr_Erase64IconTiles ; $6d8e
 	ld de, wDecompBuffer ; $6d91
 	call DecompressDataFromBank ; $6d94
 	ld hl, wDecompBuffer ; $6d97
@@ -136,7 +136,7 @@ LoadEraseSavedDataGfx:
 	ld c, 16 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
-	ld_slot hl, DataPtr_N64TransferLabelTiles1 ; $6da5
+	ld_slot hl, DataPtr_EraseAllIconTiles ; $6da5
 	ld de, wDecompBuffer ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, wDecompBuffer ; $6dae

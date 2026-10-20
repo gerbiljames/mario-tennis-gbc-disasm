@@ -12,10 +12,10 @@ DataPtr_N64TransferItemGfx1:
 	dw N64TransferItemGfx1 ; $400a
 DataPtr_N64TransferItemGfx2:
 	dw N64TransferItemGfx2 ; $400c
-DataPtr_N64TransferLabelTiles0:
-	dw N64TransferLabelTiles0 ; $400e
-DataPtr_N64TransferLabelTiles1:
-	dw N64TransferLabelTiles1 ; $4010
+DataPtr_Erase64IconTiles:
+	dw Erase64IconTiles ; $400e
+DataPtr_EraseAllIconTiles:
+	dw EraseAllIconTiles ; $4010
 DataPtr_MainMenuGfx5:
 	dw MainMenuGfx5 ; $4012
 DataPtr_MainMenuGfx5Alias1:
@@ -82,10 +82,10 @@ DataPtr_MatchStatsTilemap3:
 	dw MatchStatsTilemap3 ; $4050
 DataPtr_MatchStatsAttrmap3:
 	dw MatchStatsAttrmap3 ; $4052
-DataPtr_MatchStatsLabelTiles0:
-	dw MatchStatsLabelTiles0 ; $4054
-DataPtr_MatchStatsLabelTiles1:
-	dw MatchStatsLabelTiles1 ; $4056
+DataPtr_RacketIconTiles:
+	dw RacketIconTiles ; $4054
+DataPtr_ShoesIconTiles:
+	dw ShoesIconTiles ; $4056
 DataPtr_RacketShoesChoiceGfx2:
 	dw RacketShoesChoiceGfx2 ; $4058
 DataPtr_EquipmentSelectTiles:
@@ -122,10 +122,10 @@ N64TransferItemGfx1:
 	INCBIN "data/gfx/lz_N64TransferItemGfx1.bin" ; $451b, 195 bytes
 N64TransferItemGfx2:
 	INCBIN "data/gfx/lz_N64TransferItemGfx2.bin" ; $45de, 164 bytes
-N64TransferLabelTiles0:
-	INCBIN "data/gfx/lz_N64TransferLabelTiles0.bin" ; $4682, 218 bytes
-N64TransferLabelTiles1:
-	INCBIN "data/gfx/lz_N64TransferLabelTiles1.bin" ; $475c, 212 bytes
+Erase64IconTiles:
+	INCBIN "data/gfx/lz_Erase64IconTiles.bin" ; $4682, 218 bytes
+EraseAllIconTiles:
+	INCBIN "data/gfx/lz_EraseAllIconTiles.bin" ; $475c, 212 bytes
 MainMenuGfx5:
 	INCBIN "data/gfx/lz_MainMenuGfx5.bin" ; $4830, 179 bytes
 SharedMenuGfx63:
@@ -186,10 +186,10 @@ MatchStatsTilemap2:
 	INCBIN "data/gfx/lz_MatchStatsTilemap2.bin" ; $6b92, 332 bytes
 MatchStatsAttrmap2:
 	INCBIN "data/gfx/lz_MatchStatsAttrmap2.bin" ; $6cde, 91 bytes
-MatchStatsLabelTiles0:
-	INCBIN "data/gfx/lz_MatchStatsLabelTiles0.bin" ; $6d39, 245 bytes
-MatchStatsLabelTiles1:
-	INCBIN "data/gfx/lz_MatchStatsLabelTiles1.bin" ; $6e2e, 250 bytes
+RacketIconTiles:
+	INCBIN "data/gfx/lz_RacketIconTiles.bin" ; $6d39, 245 bytes
+ShoesIconTiles:
+	INCBIN "data/gfx/lz_ShoesIconTiles.bin" ; $6e2e, 250 bytes
 EquipmentSelectTiles:
 	INCBIN "data/gfx/lz_EquipmentSelectTiles.bin" ; $6f28, 2045 bytes
 EquipmentSelectTilemap:

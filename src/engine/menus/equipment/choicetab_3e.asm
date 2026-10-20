@@ -279,8 +279,8 @@ LoadPlayAlonePartnerGraphics:
 	ret ; $52ae
 PlayAlonePartnerGfxParams_3e:
 	; $52af, 2 slot words
-	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
-	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
+	dslot DataPtr_SinglesIconTiles ; record 0
+	dslot DataPtr_DoublesIconTiles ; record 1
 PlayAlonePartnerGfxDests_3e:
 	; $52b3, 4 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0

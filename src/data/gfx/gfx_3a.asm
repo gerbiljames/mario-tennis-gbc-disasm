@@ -86,8 +86,8 @@ DataPtr_LinkErrorAttrmap:
 	dw LinkErrorAttrmap ; $4054
 DataPtr_LinkErrorPalettes:
 	dw LinkErrorPalettes ; $4056
-DataPtr_LinkErrorLabelTiles:
-	dw LinkErrorLabelTiles ; $4058
+DataPtr_MushroomIconTiles:
+	dw MushroomIconTiles ; $4058
 TennisDictionaryTiles:
 	INCBIN "data/gfx/lz_TennisDictionaryTiles.bin" ; $405a, 2621 bytes
 TennisDictionaryListTiles:
@@ -152,6 +152,6 @@ LinkErrorAttrmap:
 	INCBIN "data/gfx/lz_LinkErrorAttrmap.bin" ; $7d5e, 92 bytes
 LinkErrorPalettes:
 	INCLUDE "data/gfx/LinkErrorPalettes.asm" ; $7dba, 64 bytes (palettes)
-LinkErrorLabelTiles:
-	INCBIN "data/gfx/lz_LinkErrorLabelTiles.bin" ; $7dfa, 227 bytes
+MushroomIconTiles:
+	INCBIN "data/gfx/lz_MushroomIconTiles.bin" ; $7dfa, 227 bytes
 	; $7edd, 291 bytes fill to bank end (linker-padded)
