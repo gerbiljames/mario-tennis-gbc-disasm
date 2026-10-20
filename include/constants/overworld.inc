@@ -60,7 +60,7 @@ def ACTORF_FACING           rb ; $34 angle byte: follows ACTORF_HEADING unless l
 def ACTORF_FACING_COUNT     rb ; $35 object header byte 1; 1 = one facing only
 def ACTORF_TILE             rb ; $36 OAM tile of the slot's tiles; read as a word with ACTORF_OAM_ATTR
 def ACTORF_OAM_ATTR         rb ; $37 object header byte 0, or the map_actor palette override
-def ACTORF_SHADOW_TABLE     rw ; $38 per-frame placement records
+def ACTORF_FRAME_PLACE_TABLE rw ; $38 OBJDEF_FRAME_PLACE_TABLE; written, never read
 	rb_skip 6                     ; $3a
 ; wActors is 24 records of this size in WRAM bank $04. The engine walks them
 ; with `ld de, $0040 / add hl, de`, and SpawnActor turns an actor id into a
@@ -84,6 +84,23 @@ def ACTORSTATUSB_LIVE          equ 7
 	const ACTORMODE_HIDDEN  ; $00 not drawn (SpawnActor)
 	const ACTORMODE_CAMERA  ; $01 not drawn; the camera follows it (the hidden player slot)
 	const ACTORMODE_VISIBLE ; $02 DrawActors draws only this mode
+
+; --- Object definition header (ObjectIdList_04 rows, docs/graphics_formats.md) ---
+; LoadActorObjectDef and SetupCharSpriteFromObjectDef copy it to wActorObjDef.
+	rsreset
+def OBJDEF_ATTR              rb ; $00 OAM attribute / OBJ palette, or OBJDEF_ATTR_PALETTE_PTR
+def OBJDEF_FACING_COUNT      rb ; $01 1 = one facing only
+	rb_skip 2                      ; $02 not read
+def OBJDEF_FRAME_TABLE       rw ; $04
+def OBJDEF_ANIM_TABLE        rw ; $06
+def OBJDEF_PALETTE           rw ; $08 8-byte OBJ palette, read only under OBJDEF_ATTR_PALETTE_PTR
+; The character banks' per-frame placement records. Walk-sprite headers are
+; 10 bytes, so there this is the first frame pointer.
+def OBJDEF_FRAME_PLACE_TABLE rw ; $0a
+def OBJDEF_SIZE equ _RS
+; OBJDEF_ATTR sentinel: attr $02, OBJDEF_PALETTE loaded into OBJ palette 2
+; (LoadActorObjectDef only; no object uses it)
+def OBJDEF_ATTR_PALETTE_PTR equ $63
 
 ; --- Overworld actor facing (map_actor `facing`, map_entry `sprite`) ---
 ; The facing byte stored in an actor's state ($daXX). Its top 2 bits are a

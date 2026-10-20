@@ -194,7 +194,7 @@ NEXTU
 \1CharSpriteAttr:: db
 ; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
 \1CharFramePlaceTablePtr:: dw
-; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from wActorObjDef+0); LoadCharChargeFlashPalette loads entry + 8, the flash variant
+; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from OBJDEF_ATTR); LoadCharChargeFlashPalette loads entry + 8, the flash variant
 \1CharPaletteId:: db
 	ds 5
 ; [16-bit] X velocity (zeroed on placement and at point end)
