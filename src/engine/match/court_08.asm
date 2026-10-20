@@ -56,13 +56,13 @@ CheckMatchWon:
 	ld a, [wPlayer1SetsWon] ; $5cd5
 	cp b ; $5cd8
 	jr c, .undecided ; $5cd9
-	ld a, $01 ; $5cdb
+	ld a, WINLOSE_WIN ; $5cdb
 	ret ; $5cdd
 .checkPlayer2:
 	ld a, [wPlayer2SetsWon] ; $5cde
 	cp b ; $5ce1
 	jr c, .undecided ; $5ce2
-	ld a, $ff ; $5ce4
+	ld a, WINLOSE_LOSE ; $5ce4
 	ret ; $5ce6
 .undecided:
 	xor a ; $5ce7
@@ -70,7 +70,7 @@ CheckMatchWon:
 CheckSetWon:
 	ld a, [wMatchTypeNumberOfGames] ; $5ce9
 	cp $02 ; $5cec
-	jp z, .checkTiebreak ; $5cee
+	jp z, .shortSet ; $5cee
 	ld a, [wPlayer1GamesWon] ; $5cf1
 	ld d, a ; $5cf4
 	cp $07 ; $5cf5
@@ -92,19 +92,19 @@ CheckSetWon:
 	ld [wTiebreakerIndicator], a ; $5d0f
 	xor a ; $5d12
 	ret ; $5d13
-.checkTiebreak:
+.shortSet:
 	ld a, [wPlayer1GamesWon] ; $5d14
 	ld d, a ; $5d17
 	cp $03 ; $5d18
-	jr nz, .setWon ; $5d1a
+	jr nz, .shortSetPlayer2 ; $5d1a
 	inc d ; $5d1c
-.setWon:
+.shortSetPlayer2:
 	ld a, [wPlayer2GamesWon] ; $5d1d
 	ld e, a ; $5d20
 	cp $03 ; $5d21
-	jr nz, .done ; $5d23
+	jr nz, .shortSetWinByTwo ; $5d23
 	inc e ; $5d25
-.done:
+.shortSetWinByTwo:
 	ld b, $02 ; $5d26
 	ld c, $02 ; $5d28
 	call EvalWinByTwo ; $5d2a

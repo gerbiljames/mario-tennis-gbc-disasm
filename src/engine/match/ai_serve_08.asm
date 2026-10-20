@@ -126,7 +126,7 @@ AiServeSteerToSpot:
 	ret ; $7a5e
 AiServePressToss:
 	ld hl, wCharInputBits ; $7a5f
-	set 0, [hl] ; $7a62
+	set PADB_A, [hl] ; $7a62
 	ld a, [wAiServeSkipToss] ; $7a64
 	and a ; $7a67
 	jr nz, .release ; $7a68
@@ -206,7 +206,7 @@ AiApplyServeAim:
 .applyAim:
 	ld hl, wCharInputBits ; $7b02
 	ld a, [hl] ; $7b05
-	and $0f ; $7b06
+	and PADF_BUTTONS ; $7b06
 	or b ; $7b08
 	ld [hl], a ; $7b09
 	ret ; $7b0a
@@ -251,13 +251,13 @@ AiAimAwayFromChar:
 	ld h, d ; $7b50
 .pickDirection:
 	bit 7, h ; $7b51
-	ld b, $20 ; $7b53
+	ld b, PADF_LEFT ; $7b53
 	jr z, .applyAim ; $7b55
-	ld b, $10 ; $7b57
+	ld b, PADF_RIGHT ; $7b57
 .applyAim:
 	ld hl, wCharInputBits ; $7b59
 	ld a, [hl] ; $7b5c
-	and $0f ; $7b5d
+	and PADF_BUTTONS ; $7b5d
 	or b ; $7b5f
 	ld [hl], a ; $7b60
 	ret ; $7b61
@@ -270,23 +270,23 @@ AiPickServeButtons:
 	ret ; $7b72
 AiPickServeButtons_AiShotButtonsTable:
 	; $7b73, 8 bytes (bytes:8)
-	db $10, $10, $10, $20, $20, $30, $30, $30 ; 0x00
+	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_SLICE, AISHOT_SLICE, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL
 AiPickShotButtons:
 	ld a, [wLandingMarkerActive] ; $7b7b
 	and a ; $7b7e
-	jr z, .maybeCharge ; $7b7f
-	ld b, $30 ; $7b81
+	jr z, .tryLob ; $7b7f
+	ld b, AISHOT_NEUTRAL ; $7b81
 	ld a, [wAiServeStyle] ; $7b83
 	farcall DoesCharGroupRowContain ; $7b86
 	and a ; $7b89
-	jr z, .maybeCharge ; $7b8a
-	ld a, $30 ; $7b8c
+	jr z, .tryLob ; $7b8a
+	ld a, AISHOT_NEUTRAL ; $7b8c
 	ld [wAiShotButtons], a ; $7b8e
 	ret ; $7b91
-.maybeCharge:
+.tryLob:
 	call AdvanceMatchRng ; $7b92
 	and $01 ; $7b95
-	jr nz, .done ; $7b97
+	jr nz, .randomStyleShot ; $7b97
 	ld hl, wBallRelCharDepth ; $7b99
 	ld a, [hl+] ; $7b9c
 	ld h, [hl] ; $7b9d
@@ -295,20 +295,20 @@ AiPickShotButtons:
 	ld de, $fec0 ; $7ba9
 	add hl, de ; $7bac
 	bit 7, h ; $7bad
-	jr nz, .done ; $7baf
-	ld b, $12 ; $7bb1
+	jr nz, .randomStyleShot ; $7baf
+	ld b, AISHOT_LOB ; $7bb1
 	ld a, [wAiServeStyle] ; $7bb3
 	farcall DoesCharGroupRowContain ; $7bb6
 	and a ; $7bb9
-	jr z, .done ; $7bba
+	jr z, .randomStyleShot ; $7bba
 	ld a, [wMatchIsDoubles] ; $7bbc
 	and a ; $7bbf
-	jr z, .checkPartner ; $7bc0
+	jr z, .checkOpponentDepth ; $7bc0
 	call AdvanceMatchRng ; $7bc2
 	and $03 ; $7bc5
-	jr nz, .done ; $7bc7
-	jr .pressShot ; $7bc9
-.checkPartner:
+	jr nz, .randomStyleShot ; $7bc7
+	jr .lob ; $7bc9
+.checkOpponentDepth:
 	ldh a, [hWramBank] ; $7bcb
 	push af ; $7bcd
 	ld a, [wCharIndex] ; $7bce
@@ -325,12 +325,12 @@ AiPickShotButtons:
 	ld de, $fe20 ; $7bf2
 	add hl, de ; $7bf5
 	bit 7, h ; $7bf6
-	jr z, .done ; $7bf8
-.pressShot:
-	ld a, $12 ; $7bfa
+	jr z, .randomStyleShot ; $7bf8
+.lob:
+	ld a, AISHOT_LOB ; $7bfa
 	ld [wAiShotButtons], a ; $7bfc
 	ret ; $7bff
-.done:
+.randomStyleShot:
 	call AdvanceMatchRng ; $7c00
 	and $0f ; $7c03
 	ld b, a ; $7c05
@@ -345,7 +345,7 @@ AiPressFirstShotButton:
 	ld b, a ; $7c17
 	ld hl, wCharInputBits ; $7c18
 	ld a, [hl] ; $7c1b
-	and $f0 ; $7c1c
+	and PADF_DPAD ; $7c1c
 	or b ; $7c1e
 	ld [hl], a ; $7c1f
 	ret ; $7c20
@@ -355,7 +355,7 @@ AiPressSecondShotButton:
 	ld b, a ; $7c26
 	ld hl, wCharInputBits ; $7c27
 	ld a, [hl] ; $7c2a
-	and $f0 ; $7c2b
+	and PADF_DPAD ; $7c2b
 	or b ; $7c2d
 	ld [hl], a ; $7c2e
 	ret ; $7c2f

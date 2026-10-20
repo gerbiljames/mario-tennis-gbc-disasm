@@ -11,13 +11,13 @@ EraseStorySlotSaveData:
 	jp nc, .badSlot ; $4e24
 	add a ; $4e27
 	ld c, a ; $4e28
-	ld a, $00 ; $4e29
+	ld a, SAVEBLOCK_SLOT0 ; $4e29
 	add c ; $4e2b
 	ld b, a ; $4e2c
 	call ClearSaveBlock ; $4e2d
 	inc b ; $4e30
 	call ClearSaveBlock ; $4e31
-	ld a, $1b ; $4e34
+	ld a, SAVEBLOCK_BACKUP ; $4e34
 	add c ; $4e36
 	ld b, a ; $4e37
 	call ClearSaveBlock ; $4e38
@@ -358,7 +358,7 @@ ReadMinigameRecord:
 .notStory:
 	xor a ; $504a
 .gotBlockId:
-	add $38 ; $504b
+	add SAVEBLOCK_MINIGAME_RECORDS ; $504b
 	push bc ; $504d
 	ld b, a ; $504e
 	ld hl, wMinigameRecordBlock ; $504f
@@ -413,7 +413,7 @@ UpdateMinigameRecord:
 	pop de ; $509e
 	pop bc ; $509f
 	pop af ; $50a0
-	add $38 ; $50a1
+	add SAVEBLOCK_MINIGAME_RECORDS ; $50a1
 	push bc ; $50a3
 	ld b, a ; $50a4
 	ld hl, wMinigameRecordBlock ; $50a5
@@ -444,7 +444,7 @@ UpdateMinigameRecord:
 	xor a ; $50ca
 .write:
 	push bc ; $50cb
-	add $38 ; $50cc
+	add SAVEBLOCK_MINIGAME_RECORDS ; $50cc
 	ld b, a ; $50ce
 	ld hl, wMinigameRecordBlock ; $50cf
 	ld de, $0000 ; $50d2
@@ -461,7 +461,7 @@ UpdateMinigameRecord:
 	xor a ; $50e6
 .verify:
 	push bc ; $50e7
-	add $38 ; $50e8
+	add SAVEBLOCK_MINIGAME_RECORDS ; $50e8
 	ld b, a ; $50ea
 	ld hl, wMinigameRecordBlock ; $50eb
 	call VerifySaveBlock ; $50ee
@@ -477,7 +477,7 @@ UpdateMinigameRecord:
 	xor a ; $50ff
 .writeBackup:
 	push bc ; $5100
-	add $3b ; $5101
+	add SAVEBLOCK_MINIGAME_RECORDS + 3 ; $5101
 	ld b, a ; $5103
 	ld hl, wMinigameRecordBlock ; $5104
 	ld de, $0000 ; $5107
@@ -494,7 +494,7 @@ UpdateMinigameRecord:
 	xor a ; $511b
 .verifyBackup:
 	push bc ; $511c
-	add $3b ; $511d
+	add SAVEBLOCK_MINIGAME_RECORDS + 3 ; $511d
 	ld b, a ; $511f
 	ld hl, wMinigameRecordBlock ; $5120
 	call VerifySaveBlock ; $5123
@@ -523,7 +523,7 @@ InitCurrentSlotMinigameRecords:
 	push hl ; $5144
 	push_wram_bank WRAM_SOUND ; $5145
 	ld a, [wCurrentStorySlot] ; $514e
-	add $38 ; $5151
+	add SAVEBLOCK_MINIGAME_RECORDS ; $5151
 	ld b, a ; $5153
 	ld hl, wMinigameRecordBlock ; $5154
 	call ReadSaveBlock ; $5157
@@ -540,7 +540,7 @@ InitCurrentSlotMinigameRecords:
 	ld [hl+], a ; $516d
 	ld [hl], d ; $516e
 	ld a, [wCurrentStorySlot] ; $516f
-	add $38 ; $5172
+	add SAVEBLOCK_MINIGAME_RECORDS ; $5172
 	ld b, a ; $5174
 	ld hl, wMinigameRecordBlock ; $5175
 	ld de, $0000 ; $5178
@@ -548,7 +548,7 @@ InitCurrentSlotMinigameRecords:
 	or a ; $517e
 	jr nz, .restore ; $517f
 	ld a, [wCurrentStorySlot] ; $5181
-	add $3b ; $5184
+	add SAVEBLOCK_MINIGAME_RECORDS + 3 ; $5184
 	ld b, a ; $5186
 	ld hl, wMinigameRecordBlock ; $5187
 	ld de, $0000 ; $518a

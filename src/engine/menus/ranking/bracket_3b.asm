@@ -468,7 +468,7 @@ ScrollMarioCastChartCursorFull:
 	call FlushMarioCastChartWindowToVram ; $7b65
 	jr .done ; $7b68
 .checkMenuCursorX:
-	bit 4, a ; $7b6a
+	bit PADB_RIGHT, a ; $7b6a
 	jr z, .checkUp ; $7b6c
 	ld a, [wMenuCursorX] ; $7b6e
 	cp $02 ; $7b71
@@ -480,7 +480,7 @@ ScrollMarioCastChartCursorFull:
 	call FlushMarioCastChartWindowToVram ; $7b7e
 	jr .done ; $7b81
 .checkUp:
-	bit 6, a ; $7b83
+	bit PADB_UP, a ; $7b83
 	jr z, .checkDown ; $7b85
 	ld a, [wMenuCursorY] ; $7b87
 	or a ; $7b8a
@@ -492,7 +492,7 @@ ScrollMarioCastChartCursorFull:
 	call FlushMarioCastChartWindowToVram ; $7b96
 	jr .done ; $7b99
 .checkDown:
-	bit 7, a ; $7b9b
+	bit PADB_DOWN, a ; $7b9b
 	jr z, .done ; $7b9d
 	ld a, [wMenuCursorY] ; $7b9f
 	cp $05 ; $7ba2
@@ -519,7 +519,7 @@ ScrollMarioCastChartCursorSmall:
 	call FlushMarioCastChartWindowToVram ; $7bcb
 	jr .done ; $7bce
 .checkMenuCursorY:
-	bit 7, a ; $7bd0
+	bit PADB_DOWN, a ; $7bd0
 	jr z, .done ; $7bd2
 	ld a, [wMenuCursorY] ; $7bd4
 	cp $01 ; $7bd7

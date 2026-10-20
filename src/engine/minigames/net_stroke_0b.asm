@@ -64,7 +64,7 @@ NetGamePractice3EvaluateResult:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $61d7
 	ld [wDrillLessonResult], a ; $61d8
-	ld a, $01 ; $61db
+	ld a, WINLOSE_WIN ; $61db
 	ret ; $61dd
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $61de
@@ -72,34 +72,34 @@ NetGamePractice3EvaluateResult:
 	jr nz, .compare ; $61e3
 	ld a, LESSON_NET_ALL_FAULTS ; $61e5
 	ld [wDrillLessonResult], a ; $61e7
-	jr .notFound ; $61ea
+	jr .lessonFailed ; $61ea
 .compare:
 	or a ; $61ec
 	jr z, .noDoubleFaults ; $61ed
 	ld a, LESSON_NET_DOUBLE_FAULT ; $61ef
 	ld [wDrillLessonResult], a ; $61f1
-	jr .notFound ; $61f4
+	jr .lessonFailed ; $61f4
 .noDoubleFaults:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $61f6
 	cp DRILL_LESSON_POINTS - 1 ; $61f9
-	jr nz, .countDrillResultBitsSet ; $61fb
+	jr nz, .countTargetZoneMisses ; $61fb
 	ld a, LESSON_DROP_ALMOST ; $61fd
 	ld [wDrillLessonResult], a ; $61ff
-	jr .notFound ; $6202
-.countDrillResultBitsSet:
-	call CountDrillResultBitsSet ; $6204
+	jr .lessonFailed ; $6202
+.countTargetZoneMisses:
+	call CountDrillTargetZoneMisses ; $6204
 	or a ; $6207
 	jr z, .checkCounter5 ; $6208
 	ld a, LESSON_DROP_SERVE_SHALLOW ; $620a
 	ld [wDrillLessonResult], a ; $620c
-	jr .notFound ; $620f
+	jr .lessonFailed ; $620f
 .checkCounter5:
 	ld a, [wDrillCounters + DRILLCTR_SHOTS_LEFT] ; $6211
 	or a ; $6214
 	jr nz, .checkCounter4Range ; $6215
 	ld a, LESSON_DROP_MISSED ; $6217
 	ld [wDrillLessonResult], a ; $6219
-	jr .notFound ; $621c
+	jr .lessonFailed ; $621c
 .checkCounter4Range:
 	ld a, [wDrillCounters + DRILLCTR_PASSES] ; $621e
 	cp $01 ; $6221
@@ -108,13 +108,13 @@ NetGamePractice3EvaluateResult:
 	jr nc, .result4 ; $6227
 	ld a, LESSON_DROP_TIMING ; $6229
 	ld [wDrillLessonResult], a ; $622b
-	jr .notFound ; $622e
+	jr .lessonFailed ; $622e
 .result4:
 	ld a, LESSON_DROP_NOT_ALL_SIDES ; $6230
 	ld [wDrillLessonResult], a ; $6232
-	jr .notFound ; $6235
-.notFound:
-	ld a, $ff ; $6237
+	jr .lessonFailed ; $6235
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $6237
 	ret ; $6239
 NetGamePractice3Hook_RallyTick:
 	call NetGamePractice3JudgeOnRallyTick ; $623a
@@ -213,8 +213,8 @@ NetGamePractice3Cases1:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_LONG_DEEP_SERVE_SO_YOU_FAIL ; $6345
 	ld b, DRILLWORDING_SAME ; $6347
 	call QueueDrillResultMessage ; $6349
-	call RecordDrillTargetZoneHit ; $634c
-	call CheckDrillTargetZoneMissed ; $634f
+	call RecordDrillTargetZoneMiss ; $634c
+	call CheckDrillTargetZoneHit ; $634f
 	or a ; $6352
 	jp z, Unused_0b_StoreMatchAbortFlag_6.storeMatchAbortFlag ; $6353
 	xor a ; $6356
@@ -282,7 +282,7 @@ NetGamePractice3Cases3:
 	ld b, DRILLWORDING_SAME ; $63ca
 	call QueueDrillResultMessage ; $63cc
 	xor a ; $63cf
-	call TestCharStateBit4 ; $63d0
+	call IsCharBallInNormalReach ; $63d0
 	or a ; $63d3
 	jp z, Unused_0b_StoreMatchAbortFlag_6.storeMatchAbortFlag ; $63d4
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_DROP_SHOT_SO_YOU_FAIL ; $63d7
@@ -304,12 +304,12 @@ NetGamePractice3Cases3:
 Unused_0b_StoreMatchAbortFlag_6:
 	ld a, MATCHABORT_POINT ; $63f0
 	ld [wMatchAbortFlag], a ; $63f2
-	ld a, $01 ; $63f5
+	ld a, WINLOSE_WIN ; $63f5
 	ret ; $63f7
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $63f8
 	ld [wMatchAbortFlag], a ; $63fa
-	ld a, $ff ; $63fd
+	ld a, WINLOSE_LOSE ; $63fd
 	ret ; $63ff
 StrokeMatch1Drill:
 	; $6400, 16 bytes
@@ -534,7 +534,7 @@ StrokeMatch1Cases2:
 	ld b, DRILLWORDING_STROKE ; $6595
 	call SetDrillMessageByRallyParity ; $6597
 	ld a, [wLastShotCharIndex] ; $659a
-	call TestCharStateBit4 ; $659d
+	call IsCharBallInNormalReach ; $659d
 	jp nz, StrokeMatch1Cases4.abortLose ; $65a0
 	xor a ; $65a3
 	ret ; $65a4
@@ -582,7 +582,7 @@ StrokeMatch1Cases3:
 	ld b, DRILLWORDING_STROKE ; $65f5
 	call SetDrillMessageByRallyParity ; $65f7
 	ld a, [wLastShotCharIndex] ; $65fa
-	call TestCharStateBit4 ; $65fd
+	call IsCharBallInNormalReach ; $65fd
 	jp nz, StrokeMatch1Cases4.abortWin ; $6600
 	xor a ; $6603
 	ret ; $6604
@@ -630,7 +630,7 @@ StrokeMatch1Cases4:
 	ld b, DRILLWORDING_STROKE ; $6655
 	call SetDrillMessageByRallyParity ; $6657
 	ld a, [wLastShotCharIndex] ; $665a
-	call TestCharStateBit4 ; $665d
+	call IsCharBallInNormalReach ; $665d
 	jp nz, .abortLose ; $6660
 	xor a ; $6663
 	ret ; $6664
@@ -653,12 +653,12 @@ StrokeMatch1Cases4:
 .abortWin:
 	ld a, MATCHABORT_POINT ; $667f
 	ld [wMatchAbortFlag], a ; $6681
-	ld a, $01 ; $6684
+	ld a, WINLOSE_WIN ; $6684
 	ret ; $6686
 .abortLose:
 	ld a, MATCHABORT_POINT ; $6687
 	ld [wMatchAbortFlag], a ; $6689
-	ld a, $ff ; $668c
+	ld a, WINLOSE_LOSE ; $668c
 	ret ; $668e
 SelectRallyVerdictsByPointParity:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $668f

@@ -9,6 +9,7 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ;   $d430-$d66f  wCharDataScreenBackup  [mirrored with bank 2]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
+;   $d800-$dfff  wIntroSwingTilemap / wIntroSwingAttrmap (intro)
 ;   $d800-$d80f  10 overlays: link error flash palette / equipment select / name entry / +7 more
 ;   $d810-$d83e  8 overlays: N64 tournament data screen / erase-confirm flash palette / drill briefings / +5 more
 ;   $d840-$d867  character unlock flags / ranking board
@@ -39,6 +40,9 @@ wShadowTilemap:: ds 1024
 ; [1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400
 ; higher (the attribute of cell $d08b is $d48b)
 wShadowAttrmap:: ds 1024
+
+; $d800 on: the screen-local blocks below, or the intro's swing planes.
+UNION
 
 ; Screen-local scratch, low half. Each full-screen UI reuses these bytes,
 ; so variants belong to the owning ROM bank (or screen code range). The
@@ -419,3 +423,10 @@ wCharGridScrollCount:: db
 ; character select (bank $38)
 ; [8-bit] Handedness the exhibition and link character grids offer for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it (`xor $01`, 2 becomes 1) only when IsMarioCastCharacter passes. DrawCharSelectSlotLabel picks label 30:150/151/152 ("START: Right-Handed" / "START: Left-Handed" / "START: Change Hands") from it. The story screen uses wCharSelectHandedness instead
 wCharGridHandedness:: db
+NEXTU
+; intro swing scene (bank $6b)
+; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroSwingTilemap. IntroCutsceneState02Init and State04Init queue rows 4-13 of it to $9880 in VRAM bank 0
+wIntroSwingTilemap:: ds 1024
+; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroSwingAttrmap; copied to the same VRAM addresses in bank 1
+wIntroSwingAttrmap:: ds 1024
+ENDU

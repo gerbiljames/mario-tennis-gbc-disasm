@@ -25,7 +25,7 @@
 	ld [wMenuCursorX], a
 	jr .checkMoved
 .checkLeft:
-	bit 5, a
+	bit PADB_LEFT, a
 	jr z, .checkUp
 	ld a, [wMenuCursorX]
 	dec a
@@ -43,7 +43,7 @@
 	ld [wMenuCursorX], a
 	jr .checkMoved
 .checkUp:
-	bit 6, a
+	bit PADB_UP, a
 	jr z, .checkDown
 	ld a, [wMenuCursorY]
 	dec a
@@ -61,7 +61,7 @@
 	ld [wMenuCursorY], a
 	jr .checkMoved
 .checkDown:
-	bit 7, a
+	bit PADB_DOWN, a
 	jr z, .checkMoved
 	ld a, [wMenuCursorY]
 	inc a

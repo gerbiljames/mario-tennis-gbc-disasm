@@ -1,10 +1,10 @@
 RepairAllSaveSlots:
 	wram_bank WRAM_STAGING ; $5669
-	ld b, $00 ; $566f
+	ld b, SAVEBLOCK_SLOT0 ; $566f
 	call RestoreStoryBlockFromBackup ; $5671
-	ld b, $02 ; $5674
+	ld b, SAVEBLOCK_SLOT1 ; $5674
 	call RestoreStoryBlockFromBackup ; $5676
-	ld b, $04 ; $5679
+	ld b, SAVEBLOCK_SLOT2 ; $5679
 	call RestoreStoryBlockFromBackup ; $567b
 	call RestoreBlock36FromBackup ; $567e
 	ret ; $5681

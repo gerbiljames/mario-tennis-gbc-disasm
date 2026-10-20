@@ -119,7 +119,7 @@ Unused_16_MoveMenuCursorGrid:
 	ld [wMenuCursorX], a ; $4117
 	jr .compare ; $411a
 .checkLeft:
-	bit 5, a ; $411c
+	bit PADB_LEFT, a ; $411c
 	jr z, .checkUp ; $411e
 	ld a, [wMenuCursorX] ; $4120
 	dec a ; $4123
@@ -137,7 +137,7 @@ Unused_16_MoveMenuCursorGrid:
 	ld [wMenuCursorX], a ; $4130
 	jr .compare ; $4133
 .checkUp:
-	bit 6, a ; $4135
+	bit PADB_UP, a ; $4135
 	jr z, .checkDown ; $4137
 	ld a, [wMenuCursorY] ; $4139
 	dec a ; $413c
@@ -155,7 +155,7 @@ Unused_16_MoveMenuCursorGrid:
 	ld [wMenuCursorY], a ; $4149
 	jr .compare ; $414c
 .checkDown:
-	bit 7, a ; $414e
+	bit PADB_DOWN, a ; $414e
 	jr z, .compare ; $4150
 	ld a, [wMenuCursorY] ; $4152
 	inc a ; $4155

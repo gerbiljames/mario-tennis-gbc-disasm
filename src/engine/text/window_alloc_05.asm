@@ -99,17 +99,17 @@ Unused_05_RunDebugWindowDemo:
 	inc [hl] ; $6dec
 	jr .scrollY ; $6ded
 .checkLeft:
-	bit 5, a ; $6def
+	bit PADB_LEFT, a ; $6def
 	jr z, .scrollY ; $6df1
 	dec [hl] ; $6df3
 .scrollY:
 	ld hl, hScrollY ; $6df4
-	bit 6, a ; $6df7
+	bit PADB_UP, a ; $6df7
 	jr z, .checkDown ; $6df9
 	dec [hl] ; $6dfb
 	jr .advanceFrame ; $6dfc
 .checkDown:
-	bit 7, a ; $6dfe
+	bit PADB_DOWN, a ; $6dfe
 	jr z, .advanceFrame ; $6e00
 	inc [hl] ; $6e02
 .advanceFrame:

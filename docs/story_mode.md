@@ -642,7 +642,7 @@ pairs: the twelve `$27` "End*" rooms plus Island Sky, Center Court, Peach's
 Castle and Special Court. After each `RunStoryLocation`, unless
 `FLAG_ENDING_CREDITS_PENDING` was raised, it freezes the actors, fades to
 grayscale and plays `PlayScrollingStoryCutscene` (bank `$03`).
-`ShowStoryResultScreen` closes the sequence. The index is read with `ld a,
+`ShowFinalCreditsCard` closes the sequence. The index is read with `ld a,
 [wStoryCharacterSlot]`; the `byte0 == 0` branch at `$0a:$6ea4`-`$6eab`
 computes `sprite * 2` and discards it, and no record has a zero first byte.
 

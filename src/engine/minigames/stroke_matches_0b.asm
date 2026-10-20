@@ -272,7 +272,7 @@ StrokeMatch2Cases3:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $68e7
 	and $01 ; $68ea
 	xor $01 ; $68ec
-	call TestCharStateBit4 ; $68ee
+	call IsCharBallInNormalReach ; $68ee
 	or a ; $68f1
 	jp z, .pointWon ; $68f2
 	xor a ; $68f5
@@ -307,12 +307,12 @@ StrokeMatch2Cases3:
 .pointWon:
 	ld a, MATCHABORT_POINT ; $6916
 	ld [wMatchAbortFlag], a ; $6918
-	ld a, $01 ; $691b
+	ld a, WINLOSE_WIN ; $691b
 	ret ; $691d
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $691e
 	ld [wMatchAbortFlag], a ; $6920
-	ld a, $ff ; $6923
+	ld a, WINLOSE_LOSE ; $6923
 	ret ; $6925
 StrokeMatch3Drill:
 	; $6926, 16 bytes
@@ -563,7 +563,7 @@ StrokeMatch3Cases3:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6b1e
 	and $01 ; $6b21
 	xor $01 ; $6b23
-	call TestCharStateBit4 ; $6b25
+	call IsCharBallInNormalReach ; $6b25
 	or a ; $6b28
 	jp z, .pointWon ; $6b29
 	xor a ; $6b2c
@@ -598,12 +598,12 @@ StrokeMatch3Cases3:
 .pointWon:
 	ld a, MATCHABORT_POINT ; $6b4d
 	ld [wMatchAbortFlag], a ; $6b4f
-	ld a, $01 ; $6b52
+	ld a, WINLOSE_WIN ; $6b52
 	ret ; $6b54
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $6b55
 	ld [wMatchAbortFlag], a ; $6b57
-	ld a, $ff ; $6b5a
+	ld a, WINLOSE_LOSE ; $6b5a
 	ret ; $6b5c
 StrokePractice1Drill:
 	; $6b5d, 16 bytes

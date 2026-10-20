@@ -231,7 +231,9 @@ TennisMachine1Hook_BallHit:
 MinigameShotDifficultyRamp:
 	; $4546, 1 bytes (bytes:4)
 	db $01 ; 0x00
-EndMinigamePoint_PointOutcomeTable:
+; Byte 1 of each 4-byte wMinigameServeSpeed record (byte 0 is
+; MinigameShotDifficultyRamp, byte 2 LaunchBallTable): a MinigameShotIntervalByTempo index.
+LaunchBallTableTempoColumn:
 	db $01 ; $4547
 LaunchBallTable:
 	INCBIN "data/engine/minigames/LaunchBallTable.bin" ; $4548, 102 bytes
@@ -386,7 +388,7 @@ EndMinigamePoint:
 	ld a, [wMinigameServeSpeed] ; $4779
 	add a ; $477c
 	add a ; $477d
-	ld_hl_indexed EndMinigamePoint_PointOutcomeTable ; $477e
+	ld_hl_indexed LaunchBallTableTempoColumn ; $477e
 	ld a, [hl] ; $4785
 	ld_hl_indexed MinigameShotIntervalByTempo ; $4786
 	ld a, [hl] ; $478d

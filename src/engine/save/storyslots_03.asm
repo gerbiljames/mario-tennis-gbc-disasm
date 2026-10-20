@@ -358,7 +358,7 @@ SaveStorySlotWithTimer:
 	ret nz ; $4d35
 	ld a, [wCurrentStorySlot] ; $4d36
 	add a ; $4d39
-	add $1b ; $4d3a
+	add SAVEBLOCK_BACKUP ; $4d3a
 	ld b, a ; $4d3c
 	ld hl, wStorySlotData ; $4d3d
 	ld de, wTextBuffer ; $4d40
@@ -367,7 +367,7 @@ SaveStorySlotWithTimer:
 	ret nz ; $4d47
 	ld a, [wCurrentStorySlot] ; $4d48
 	add a ; $4d4b
-	add $1b ; $4d4c
+	add SAVEBLOCK_BACKUP ; $4d4c
 	ld b, a ; $4d4e
 	ld hl, wStorySlotData ; $4d4f
 	call VerifySaveBlock ; $4d52

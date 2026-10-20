@@ -226,7 +226,7 @@ StrokePractice2EvaluateResult:
 	ASSERT LESSON_PASSED == 0
 	xor a ; $6e47
 	ld [wDrillLessonResult], a ; $6e48
-	ld a, $01 ; $6e4b
+	ld a, WINLOSE_WIN ; $6e4b
 	ret ; $6e4d
 .checkCounter7:
 	ld a, [wDrillCounters + DRILLCTR_LOB_PASSES] ; $6e4e
@@ -234,14 +234,14 @@ StrokePractice2EvaluateResult:
 	jr c, .checkCounter2 ; $6e53
 	ld a, LESSON_LOB_ALMOST ; $6e55
 	ld [wDrillLessonResult], a ; $6e57
-	jr .notFound ; $6e5a
+	jr .lessonFailed ; $6e5a
 .checkCounter2:
 	ld a, [wDrillCounters + DRILLCTR_LOBS] ; $6e5c
 	cp DRILL_LESSON_POINTS ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
 	ld a, LESSON_LOB_TOO_FEW ; $6e63
 	ld [wDrillLessonResult], a ; $6e65
-	jr .notFound ; $6e68
+	jr .lessonFailed ; $6e68
 .checkRallyLength:
 	ld a, [wRallyLength] ; $6e6a
 	cp $03 ; $6e6d
@@ -251,18 +251,18 @@ StrokePractice2EvaluateResult:
 	jr nz, .compare ; $6e76
 	ld a, LESSON_LOB_VOLLEYED ; $6e78
 	ld [wDrillLessonResult], a ; $6e7a
-	jr .notFound ; $6e7d
+	jr .lessonFailed ; $6e7d
 .compare:
 	cp $02 ; $6e7f
 	jr nz, .result4 ; $6e81
 	ld a, LESSON_LOB_SMASHED ; $6e83
 	ld [wDrillLessonResult], a ; $6e85
-	jr .notFound ; $6e88
+	jr .lessonFailed ; $6e88
 .result4:
 	ld a, LESSON_LOB_NO_CONTROL ; $6e8a
 	ld [wDrillLessonResult], a ; $6e8c
-.notFound:
-	ld a, $ff ; $6e8f
+.lessonFailed:
+	ld a, WINLOSE_LOSE ; $6e8f
 	ret ; $6e91
 StrokePractice2Hook_RallyTick:
 	call StrokePractice2JudgeOnRallyTick ; $6e92
@@ -289,7 +289,7 @@ StrokePractice2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6ec9
 	ld a, [wDrillPointJudgement] ; $6ecc
 	ld [wPointWinLoseFlag], a ; $6ecf
-	cp $01 ; $6ed2
+	cp WINLOSE_WIN ; $6ed2
 	jr nz, .recordDrillPointResultBits ; $6ed4
 	ld hl, wDrillCounters + DRILLCTR_LOB_PASSES ; $6ed6
 	inc [hl] ; $6ed9
@@ -423,8 +423,8 @@ StrokePractice2Cases2:
 	ld a, DRILLMSG_NICE_LOB_YOU_DID_IT ; $6fdd
 	ld b, DRILLWORDING_SAME ; $6fdf
 	call QueueDrillResultMessage ; $6fe1
-	call RecordDrillTargetZoneHit ; $6fe4
-	call CheckDrillTargetZoneMissed ; $6fe7
+	call RecordDrillTargetZoneMiss ; $6fe4
+	call CheckDrillTargetZoneHit ; $6fe7
 	or a ; $6fea
 	jp nz, .hitTarget ; $6feb
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL_3 ; $6fee
@@ -439,12 +439,12 @@ StrokePractice2Cases2:
 .hitTarget:
 	ld a, MATCHABORT_POINT ; $6ffe
 	ld [wMatchAbortFlag], a ; $7000
-	ld a, $01 ; $7003
+	ld a, WINLOSE_WIN ; $7003
 	ret ; $7005
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $7006
 	ld [wMatchAbortFlag], a ; $7008
-	ld a, $ff ; $700b
+	ld a, WINLOSE_LOSE ; $700b
 	ret ; $700d
 StrokePractice3Drill:
 	; $700e, 16 bytes

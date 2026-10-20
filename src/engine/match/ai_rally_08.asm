@@ -180,10 +180,10 @@ AiSwingControlSingles:
 .checkSwing:
 	ld hl, wCharBallReachFlags ; $7dda
 	bit 1, [hl] ; $7ddd
-	jr nz, .partnerCheck ; $7ddf
+	jr nz, .aimAwayFromOpponent ; $7ddf
 	call AiSteerTowardBall ; $7de1
 	ret ; $7de4
-.partnerCheck:
+.aimAwayFromOpponent:
 	ld a, [wCharIndex] ; $7de5
 	add $01 ; $7de8
 	and $01 ; $7dea
@@ -375,12 +375,12 @@ AiNetPlayerPoachCheck:
 AiSwingControlDoubles:
 	ld a, [wAiSecondButtonDelay] ; $7f8a
 	and a ; $7f8d
-	jr nz, .checkPartner ; $7f8e
+	jr nz, .checkContact ; $7f8e
 	ld a, [wCharShotButton2] ; $7f90
 	and a ; $7f93
-	jr nz, .checkPartner ; $7f94
+	jr nz, .checkContact ; $7f94
 	call AiPressSecondShotButton ; $7f96
-.checkPartner:
+.checkContact:
 	ld hl, wCharBallReachFlags ; $7f99
 	bit 1, [hl] ; $7f9c
 	jr nz, .swing ; $7f9e

@@ -85,7 +85,7 @@ ENDC
 	pop de ; $40cc
 	jr .setDebugStepMode ; $40cd
 .advanceFrame:
-	bit 3, a ; $40cf
+	bit PADB_START, a ; $40cf
 	jr nz, .setDebugStepMode ; $40d1
 	call AdvanceFrame ; $40d3
 	jr .waitStartLoop ; $40d6
@@ -117,11 +117,11 @@ Unused_01_DebugBootMenu:
 	farcall RunStoryModeOverworld ; $410d
 	jp InitAndRunGame.runMainMenu ; $4110
 .checkSelect:
-	bit 2, a ; $4113
+	bit PADB_SELECT, a ; $4113
 	jr z, .checkA ; $4115
 	farcall Unused_01_RunSoundTest ; $4117
 .checkA:
-	bit 0, a ; $411a
+	bit PADB_A, a ; $411a
 	jr z, .checkB ; $411c
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $411e
 	ldh [hDebugStepMode], a ; $4120
@@ -129,7 +129,7 @@ Unused_01_DebugBootMenu:
 	farcall Unused_07_RunDebugTestMatch ; $4122
 	jr .debugMatchLoop ; $4125
 .checkB:
-	bit 1, a ; $4127
+	bit PADB_B, a ; $4127
 	jr z, .checkUp ; $4129
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $412b
 	ldh [hDebugStepMode], a ; $412d
@@ -138,7 +138,7 @@ Unused_01_DebugBootMenu:
 	farcall RunMatch ; $4132
 	jp .matchLoop ; $4135
 .checkUp:
-	bit 6, a ; $4138
+	bit PADB_UP, a ; $4138
 	jp z, Unused_01_DebugBootMenu.checkDown ; $413a
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $413d
 	ldh [hDebugStepMode], a ; $413f
@@ -478,7 +478,7 @@ Unused_01_RunSoundTest:
 	inc d ; $6aa1
 	jr .clampBank ; $6aa2
 .checkTrackLeft:
-	bit 5, a ; $6aa4
+	bit PADB_LEFT, a ; $6aa4
 	jr z, .clampTrackDown ; $6aa6
 	dec d ; $6aa8
 .clampBank:
@@ -501,7 +501,7 @@ Unused_01_RunSoundTest:
 	inc e ; $6ac3
 	jr .clampSfx ; $6ac4
 .checkLeft:
-	bit 5, a ; $6ac6
+	bit PADB_LEFT, a ; $6ac6
 	jr z, .clampTrackDown ; $6ac8
 	dec e ; $6aca
 .clampSfx:

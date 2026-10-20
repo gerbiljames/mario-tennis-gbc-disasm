@@ -123,14 +123,14 @@ LoadResultsScreenGraphics:
 	ld de, wDecompBuffer ; $4145
 	call DecompressData ; $4148
 	ld hl, wDecompBuffer ; $414b
-	ld bc, $0240 ; $414e
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $414e
 	call ResultsCopyToTilemap ; $4151
 	wram_bank WRAM_STAGING ; $4154
 	ld hl, ResultsScreenAttrmap_1e ; $415a
 	ld de, wDecompBuffer ; $415d
 	call DecompressData ; $4160
 	ld hl, wDecompBuffer ; $4163
-	ld bc, $0240 ; $4166
+	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $4166
 	call ResultsCopyToAttrmap ; $4169
 	wram_bank WRAM_STAGING ; $416c
 	ld hl, PanelFrameGfx_1e ; $4172

@@ -234,7 +234,7 @@ NetGameMatch1Cases3:
 	call QueueDrillResultMessage ; $55bb
 	ld a, [wTotalPointsScoredInCurrentGame] ; $55be
 	and $01 ; $55c1
-	call TestCharStateBit4 ; $55c3
+	call IsCharBallInNormalReach ; $55c3
 	or a ; $55c6
 	jp z, Unused_0b_StoreMatchAbortFlag_4.storeMatchAbortFlag ; $55c7
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_THE_BALL_SO_YOU_FAIL ; $55ca
@@ -307,12 +307,12 @@ NetGameMatch1Cases4:
 Unused_0b_StoreMatchAbortFlag_4:
 	ld a, MATCHABORT_POINT ; $5634
 	ld [wMatchAbortFlag], a ; $5636
-	ld a, $01 ; $5639
+	ld a, WINLOSE_WIN ; $5639
 	ret ; $563b
 .storeMatchAbortFlag:
 	ld a, MATCHABORT_POINT ; $563c
 	ld [wMatchAbortFlag], a ; $563e
-	ld a, $ff ; $5641
+	ld a, WINLOSE_LOSE ; $5641
 	ret ; $5643
 NetGameMatch2Drill:
 	; $5644, 16 bytes
@@ -634,12 +634,12 @@ NetGameMatch2Cases4:
 .abortWin:
 	ld a, MATCHABORT_POINT ; $58af
 	ld [wMatchAbortFlag], a ; $58b1
-	ld a, $01 ; $58b4
+	ld a, WINLOSE_WIN ; $58b4
 	ret ; $58b6
 .abortLose:
 	ld a, MATCHABORT_POINT ; $58b7
 	ld [wMatchAbortFlag], a ; $58b9
-	ld a, $ff ; $58bc
+	ld a, WINLOSE_LOSE ; $58bc
 	ret ; $58be
 NetGameMatch3Drill:
 	; $58bf, 16 bytes

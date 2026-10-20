@@ -122,8 +122,8 @@ wScorePopupTimer:: db
 wMinigameHitScored:: db
 ; [8-bit] Consecutive scoring hits, stepped by IncrementCappedCounter (cap in b). AwardHitScore indexes a sound table and a score table with it
 wMinigameHitStreak:: db
-; [8-bit] Treasure Box actor state, stepped by AdvanceTreasureBoxActorState and used by DrawTreasureBoxSprite to pick the frame
-wTreasureBoxState:: db
+; [8-bit] Treasure Box animation timer: zeroed by TreasureBoxTargetState0, incremented on every DrawTreasureBoxSprite, whose low 5 bits index TreasureBoxSpriteAnimFrames
+wTreasureBoxAnimTimer:: db
 NEXTU
 ; training drills (bank $0b)
 	ds 11

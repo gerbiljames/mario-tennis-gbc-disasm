@@ -164,9 +164,9 @@ IntroCutsceneState19Exit_6b:
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.nextState ; $4c76
 	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
-UpdateCutsceneScrollX:
+UpdateIntroScrollY:
 	ld a, [wCutsceneStepTimer] ; $4c9e
-	ld hl, CutsceneScrollXTable ; $4ca1
+	ld hl, IntroScrollYDeltaTable ; $4ca1
 	add_hl_a ; $4ca4
 	ld e, [hl] ; $4ca9
 	ld hl, wIntroCutsceneScrollY ; $4caa
@@ -180,8 +180,8 @@ UpdateCutsceneScrollX:
 	ld a, l ; $4cbc
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
-CutsceneScrollXTable:
-	INCLUDE "data/engine/cutscenes/CutsceneScrollXTable.asm" ; $4cc1, 160 bytes (bytes:16)
+IntroScrollYDeltaTable:
+	INCLUDE "data/engine/cutscenes/IntroScrollYDeltaTable.asm" ; $4cc1, 160 bytes (bytes:16)
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
@@ -212,7 +212,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
-	call ApplyCutsceneScrollToSpriteX ; $4e44
+	call ApplyIntroScrollToSpriteY ; $4e44
 	sprite_tile_attr $40, OAM_BANK1 | 1 ; $4e47
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate0 ; $4e4b
 	call QueueSpriteTemplate ; $4e4e
@@ -224,7 +224,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
-	call ApplyCutsceneScrollToSpriteX ; $4e62
+	call ApplyIntroScrollToSpriteY ; $4e62
 	sprite_tile_attr $44, OAM_BANK1 | 1 ; $4e65
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate1 ; $4e69
 	call QueueSpriteTemplate ; $4e6c
@@ -236,7 +236,7 @@ QueueCutsceneAnimatedSprites:
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f
-	call ApplyCutsceneScrollToSpriteX ; $4e80
+	call ApplyIntroScrollToSpriteY ; $4e80
 	sprite_tile_attr $48, OAM_BANK1 | 1 ; $4e83
 	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate2 ; $4e87
 	call QueueSpriteTemplate ; $4e8a
@@ -261,7 +261,7 @@ CutsceneSpritePath1:
 	INCLUDE "data/engine/cutscenes/CutsceneSpritePath1.asm" ; $4f95, 216 bytes (words:8)
 CutsceneSpritePath2:
 	INCLUDE "data/engine/cutscenes/CutsceneSpritePath2.asm" ; $506d, 288 bytes (words:8)
-ApplyCutsceneScrollToSpriteX:
+ApplyIntroScrollToSpriteY:
 	push bc ; $518d
 	push hl ; $518e
 	ld c, d ; $518f

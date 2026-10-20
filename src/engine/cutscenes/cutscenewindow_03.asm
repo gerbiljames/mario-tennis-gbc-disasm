@@ -386,19 +386,19 @@ DrawDialogueLineToBuffer:
 	pop bc ; $751b
 	pop af ; $751c
 	ret ; $751d
-ShowStoryResultScreen:
+ShowFinalCreditsCard:
 	push af ; $751e
 	push bc ; $751f
 	push de ; $7520
 	push hl ; $7521
 	push_wram_bank WRAM_COURT_PLANES ; $7522
 	ld hl, wScreenAttrmap ; $752b
-	ld de, $0240 ; $752e
+	ld de, SCREEN_HEIGHT * TILEMAP_WIDTH ; $752e
 	ld b, $00 ; $7531
 	call FillMemoryDE ; $7533
 	wram_bank WRAM_SCREEN ; $7536
 	ld hl, wShadowTilemap ; $753c
-	ld de, $0240 ; $753f
+	ld de, SCREEN_HEIGHT * TILEMAP_WIDTH ; $753f
 	ld b, $20 ; $7542
 	call FillMemoryDE ; $7544
 	ld hl, Text_CreditCamelot ; $7547
@@ -411,7 +411,7 @@ ShowStoryResultScreen:
 	farcall FetchAndDrawDialogueText ; $755c
 	wram_bank WRAM_COURT_PLANES ; $755f
 	ld hl, wScreenAttrmap ; $7565
-	ld de, $b800 ; $7568
+	ld de, vBGMap0 + VRAM_BANK1 ; $7568
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $756b
 	call QueueVRAMCopy ; $756d
 	wram_bank WRAM_SCREEN ; $7570

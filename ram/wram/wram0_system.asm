@@ -273,10 +273,10 @@ wUnusedDrillPointStartByte:: db
 ; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
-; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back
-wDrillTargetZoneHitBits:: db
+; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneMiss when the ball's first bounce landed outside the target zone (IsBallInTargetZone returned z); CountDrillTargetZoneMisses and CheckDrillTargetZoneHit read it back
+wDrillTargetZoneMissBits:: db
 
-; [8-bit] One bit per point of the drill, set by RecordGateCrossOnServe when the serve passed through the gate; counted by CountDrillResultBitsSetAlt, this point's bit tested by TestDrillGateCrossThisPoint
+; [8-bit] One bit per point of the drill, set by RecordGateCrossOnServe when the serve passed through the gate; counted by CountDrillGateCrosses, this point's bit tested by TestDrillGateCrossThisPoint
 wDrillGateCrossBits:: db
 
 ; [8-bit] Queued drill message: index into DrillMessageTextIds_0b, $ff = none. Set by the Queue*/Set*Message helpers from the point outcome and server; ShowQueuedDrillMessage defaults it to $6c and shows it
@@ -286,7 +286,7 @@ wDrillMessageId:: db
 wDrillCounters:: ds 9
 	ds 8
 
-; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1/-1 from CheckDrillTargetZoneMissed
+; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1 (target hit) / -1 (missed) from CheckDrillTargetZoneHit
 wDrillServeTargetResult:: dw
 	ds 2
 
@@ -294,7 +294,7 @@ wDrillServeTargetResult:: dw
 wDrillShotResultBits:: dw
 	ds 1
 
-; [8-bit] Judgement of the current drill point, 0 until judged. *JudgeOn* hooks store their JudgePoint result; JudgePoint returns early while it is nonzero, so the first judgement wins
+; [8-bit] Judgement of the current drill point in WINLOSE_* terms for the drilling player: WINLOSE_NONE until judged, then WINLOSE_WIN or WINLOSE_LOSE. *JudgeOn* hooks store their JudgePoint result; JudgePoint returns early while it is nonzero, so the first judgement wins. The HandlePointEnd routines copy it into wPointWinLoseFlag, negated on odd points
 wDrillPointJudgement:: db
 
 ; [32 bytes] One tilemap row of CGB attributes, sent to VRAM bank 1 at wBGRowBlitDest by ProcessBGBlitQueue (VRAM DMA) when hBGRowBlitPending is set

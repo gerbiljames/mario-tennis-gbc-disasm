@@ -338,7 +338,7 @@ RunTrophiesScreen:
 	ld [wN64RecordsBlock], a ; $49ba
 	jr .loop ; $49bd
 .checkTrophiesCheatCode:
-	bit 2, a ; $49bf
+	bit PADB_SELECT, a ; $49bf
 	jr z, .playSelectSfx ; $49c1
 	call CheckTrophiesCheatCode ; $49c3
 .playSelectSfx:
