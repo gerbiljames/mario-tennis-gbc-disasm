@@ -215,7 +215,7 @@ InitStoryModeState:
 	ld [hl], STORYLOC_MAIN_MENU ; $4238
 	ld hl, wStoryModeEntryPoint ; $423a
 	ld [hl], ENTRY_MAIN_MENU_INIT ; $423d
-	ld a, $01 ; $423f
+	ld a, MSGSPEED_NORMAL ; $423f
 	ld [wMessageSpeed], a ; $4241
 	farcall InitDefaultMatchSettings ; $4244
 	clear_flag FLAG_NEW_GAME_CLEARED_BIT ; $4247

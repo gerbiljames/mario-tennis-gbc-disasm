@@ -59,7 +59,7 @@ GetRandomAimJitter:
 	ret ; $571d
 ComputeShotTrajectory:
 	ld a, [wCharCourtPos] ; $571e
-	and $02 ; $5721
+	and COURTPOSF_FAR ; $5721
 	jr nz, .aimReady ; $5723
 	neg_bc ; $5725
 .aimReady:

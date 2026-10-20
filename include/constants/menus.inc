@@ -127,6 +127,18 @@ def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
 ; (FitWindowToText substitutes window 0) and store it after CloseWindow.
 def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 
+; --- Message speed (wMessageSpeed) ---
+; Bits 0-6 hold the speed; bit 7 draws text instantly whatever the speed
+; (ApplyMessageSpeed, FlushGlyphRow) and is cleared before saving.
+	const_def
+	const MSGSPEED_FAST   ; $00
+	const MSGSPEED_NORMAL ; $01 the new-game default
+	const MSGSPEED_SLOW   ; $02
+def NUM_MSGSPEEDS equ const_value
+def MSGSPEEDB_INSTANT equ 7
+def MSGSPEEDF_INSTANT equ 1 << MSGSPEEDB_INSTANT
+def MSGSPEED_MASK     equ $7f
+
 ; --- Menu transition direction (wMenuSlideDirection) ---
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
@@ -197,6 +209,13 @@ def TDICTCAT_2         equ 1 << TENNISDICT_CATEGORY2
 def TDICTCAT_TECHNIQUE equ 1 << TENNISDICT_TECHNIQUE ; strokes, spin, grip, footwork
 def TDICTCAT_COURT     equ 1 << TENNISDICT_COURT     ; lines, areas, surfaces
 def TDICTCAT_ALL       equ $1f
+
+; --- Tennis Dictionary display flags (wTennisDictFlags) ---
+	const_def
+	const TDICTFLAGB_WINDOW_OPEN ; $00 a description window is open
+	const TDICTFLAGB_LIST_SHOWN  ; $01 the term list is on screen
+	const TDICTFLAGB_LEFT_ARROW  ; $02 flash the left page arrow this frame
+	const TDICTFLAGB_RIGHT_ARROW ; $03 flash the right page arrow this frame
 
 ; --- Ranking board presentation (wRankingBoardMode) ---
 	const_def

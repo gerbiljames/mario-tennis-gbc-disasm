@@ -235,8 +235,8 @@ Unused_06_RunDebugStatsEditor:
 	farcall Unused_01_LoadMenuTilesBChunk2 ; $6b8a
 	wram_bank WRAM_CHAR0 ; $6b8d
 	ld hl, wCharPosX ; $6b93
-	ld de, wDebugMenuWindowId ; $6b96
-	ld c, $08 ; $6b99
+	ld de, wDebugStatsBackup ; $6b96
+	ld c, wDebugStatsBackup_SIZE / 16 ; $6b99
 	call CopyMemoryFast ; $6b9b
 	wram_bank WRAM_COURT_PLANES ; $6b9e
 	farcall StepMatchFrame ; $6ba4
@@ -267,9 +267,9 @@ Unused_06_RunDebugStatsEditor:
 	call FlushTilemapToVram ; $6bd9
 	farcall StepMatchFrame ; $6bdc
 	wram_bank WRAM_CHAR0 ; $6bdf
-	ld hl, wDebugMenuWindowId ; $6be5
+	ld hl, wDebugStatsBackup ; $6be5
 	ld de, wCharPosX ; $6be8
-	ld c, $08 ; $6beb
+	ld c, wDebugStatsBackup_SIZE / 16 ; $6beb
 	call CopyMemoryFast ; $6bed
 	pop_wram_bank ; $6bf0
 	ret ; $6bf5
@@ -801,7 +801,7 @@ Unused_06_RunStoryPlayerDataMenu:
 StoryPauseMenu_MessageSpeed:
 	ld a, [wMessageSpeed] ; $6ff7
 	ld b, a ; $6ffa
-	ld a, $02 ; $6ffb
+	ld a, MSGSPEED_SLOW ; $6ffb
 	sub b ; $6ffd
 	ld [wMatchMenuSelection], a ; $6ffe
 	call RunMessageSpeedMenu ; $7001
@@ -809,7 +809,7 @@ StoryPauseMenu_MessageSpeed:
 	cp MATCHMENUSEL_CANCELLED ; $7007
 	jr z, .done ; $7009
 	ld b, a ; $700b
-	ld a, $02 ; $700c
+	ld a, MSGSPEED_SLOW ; $700c
 	sub b ; $700e
 	ld [wMessageSpeed], a ; $700f
 .done:
@@ -849,7 +849,7 @@ StoryPauseMenu_SaveQuit:
 	ld a, $01 ; $705a
 	ld [wSaveAndQuitRequest], a ; $705c
 	ld a, [wMessageSpeed] ; $705f
-	res 7, a ; $7062
+	res MSGSPEEDB_INSTANT, a ; $7062
 	ld [wMessageSpeed], a ; $7064
 	ld bc, $ffff ; $7067
 	farcall SaveStoryReturnPoint ; $706a

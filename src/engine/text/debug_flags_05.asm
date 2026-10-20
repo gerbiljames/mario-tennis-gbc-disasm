@@ -347,12 +347,12 @@ RunDebugFlagEditorThunk:
 DebugDrawWarpMenu:
 	ld a, [wDebugWarpWindowId] ; $672d
 	call DrawTextWindowFrameSaveRegs ; $6730
-	ld a, [wDebugMenuWindowId] ; $6733
+	ld a, [wDebugWarpLocation] ; $6733
 	ld h, $00 ; $6736
 	ld l, a ; $6738
 	ld de, $0d02 ; $6739
 	ld a, [wDebugWarpWindowId] ; $673c
-	ld a, [wDebugMenuWindowId] ; $673f
+	ld a, [wDebugWarpLocation] ; $673f
 	ld hl, $0179 ; $6742
 	add_hl_a ; $6745
 	ld de, $0102 ; $674a
@@ -367,7 +367,7 @@ DebugDrawWarpMenu:
 	ld a, [wDebugWarpWindowId] ; $6764
 	call WriteStringToWindow ; $6767
 	ld de, wDebugNumberEntryText ; $676a
-	ld a, [wDebugMenuWindowId] ; $676d
+	ld a, [wDebugWarpLocation] ; $676d
 	ld h, $00 ; $6770
 	ld l, a ; $6772
 	ld a, $02 ; $6773
@@ -410,7 +410,7 @@ RunDebugWarpMenu:
 	ld [wDebugWarpCursorRow], a ; $67cf
 	ld [wDebugWarpEntryPoint], a ; $67d2
 	ld a, [wStoryModeCurrentLocation] ; $67d5
-	ld [wDebugMenuWindowId], a ; $67d8
+	ld [wDebugWarpLocation], a ; $67d8
 	farcall GetStoryLocationCount ; $67db
 	ld [wDebugWarpLocationCount], a ; $67de
 	ld_cell de, $00, $00 ; $67e1
@@ -426,7 +426,7 @@ RunDebugWarpMenu:
 	ldh a, [hInputRisingEdge] ; $67f9
 	and PADF_A ; $67fb
 	jr z, .checkInputPressed ; $67fd
-	ld a, [wDebugMenuWindowId] ; $67ff
+	ld a, [wDebugWarpLocation] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [wDebugWarpEntryPoint] ; $6805
 	ld [wStoryModeEntryPoint], a ; $6808
@@ -449,7 +449,7 @@ RunDebugWarpMenu:
 	jr z, .adjustEntryPoint ; $682a
 	ld a, [wDebugWarpLocationCount] ; $682c
 	ld d, a ; $682f
-	ld hl, wDebugMenuWindowId ; $6830
+	ld hl, wDebugWarpLocation ; $6830
 	ld a, [hl] ; $6833
 	call DebugStepValueWithDpad ; $6834
 	cp [hl] ; $6837

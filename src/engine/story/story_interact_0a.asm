@@ -177,7 +177,7 @@ ShowLocationNamePopup:
 	call WaitPlayerMoveDone ; $52fc
 	wram_bank WRAM_TEXT ; $52ff
 	ld a, [wMessageSpeed] ; $5305
-	set 7, a ; $5308
+	set MSGSPEEDB_INSTANT, a ; $5308
 	ld [wMessageSpeed], a ; $530a
 	ld a, $83 ; $530d
 	farcall ShowSpeakerDialogueRestoreBG ; $530f
@@ -193,7 +193,7 @@ ShowLocationNamePopup:
 	farcall CloseActiveDialogueWindow ; $531f
 	wram_bank WRAM_TEXT ; $5322
 	ld hl, wMessageSpeed ; $5328
-	res 7, [hl] ; $532b
+	res MSGSPEEDB_INSTANT, [hl] ; $532b
 	pop_wram_bank ; $532d
 	pop hl ; $5332
 	pop de ; $5333

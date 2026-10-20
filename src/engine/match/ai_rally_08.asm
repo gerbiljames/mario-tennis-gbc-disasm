@@ -323,7 +323,7 @@ AiDoublesTrackBallPhase:
 	jr AiNetPlayerPoachCheck ; $7f0f
 AiNetPlayerPoachCheck:
 	ld a, [wCharServeRole] ; $7f11
-	and $02 ; $7f14
+	and SERVEROLEF_PARTNER ; $7f14
 	jr z, .checkSide ; $7f16
 	ld a, [wCharIndex] ; $7f18
 	and $01 ; $7f1b

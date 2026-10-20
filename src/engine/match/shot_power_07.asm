@@ -211,7 +211,7 @@ NudgeShotByPlayerMomentum:
 	sra h ; $5510
 	rr l ; $5512
 	ld a, [wCharCourtPos] ; $5514
-	and $02 ; $5517
+	and COURTPOSF_FAR ; $5517
 	jr nz, .addMomentum ; $5519
 	neg_hl ; $551b
 .addMomentum:
@@ -309,7 +309,7 @@ GetShotAimOffsetForSide:
 	and a ; $55ef
 	jr nz, .readAim ; $55f0
 	ld a, [wCharCourtPos] ; $55f2
-	and $01 ; $55f5
+	and COURTPOSF_LEFT ; $55f5
 	add a ; $55f7
 	add a ; $55f8
 	add a ; $55f9

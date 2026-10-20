@@ -54,7 +54,7 @@
 	farcall SetBallVelocityPolar
 	ld de, $fd40
 	ld a, [wCharCourtPos]
-	and $02
+	and COURTPOSF_FAR
 	jr z, .maskClear
 	neg_de
 .maskClear:

@@ -224,7 +224,7 @@ LoadServeGfx:
 	and $01 ; $6c51
 	ld b, a ; $6c53
 	ld a, [wServingCharCourtPos] ; $6c54
-	and $02 ; $6c57
+	and COURTPOSF_FAR ; $6c57
 	or b ; $6c59
 	add a ; $6c5a
 	add a ; $6c5b

@@ -111,10 +111,9 @@ ENDM
 
 ; One court-position record (GamePosition*, TiebreakPosition*; LoadPositionRecord),
 ; and one point of a minigame point table (*PointTable; LoadMinigamePointLayout
-; installs it, stopping at a first byte of $ff): the
-; court-position code (wCharCourtPos: bit 1 = which end, bit 0 = which
-; lateral half) for characters 0-3, then their serve/side role codes
-; (wCharServeRole: 0 server, 1 receiver, 2/3 partners, $09 unused slot).
+; installs it, stopping at a first byte of $ff): the COURTPOS_* code
+; (wCharCourtPos) for characters 0-3, then their SERVEROLE_* codes
+; (wCharServeRole).
 ;   court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
 MACRO court_positions
 	db \1, \2, \3, \4, \5, \6, \7, \8

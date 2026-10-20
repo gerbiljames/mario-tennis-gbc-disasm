@@ -217,7 +217,7 @@ minigames, link sessions, the N64 Transfer Pak record screens, both unlock
 codes and every `NpcScripts` handler (237 flows; runs that crash, such as
 impossible warps, are left out).
 
-**Totals: 4,475 free bytes in 110 ranges, 27 of them HRAM bytes in 9
+**Totals: 4,406 free bytes in 105 ranges, 27 of them HRAM bytes in 9
 ranges (`ram_free.py`).** The last audit split the bytes listed then into
 untouched, cleared only and holding data, all explained; ranges freed since
 are not yet in the tables below. No flow reads a free byte; the only poison
@@ -285,7 +285,6 @@ screen or match init. Eight bytes or longer:
 | bank | range | bytes | cleared by |
 |---|---|---|---|
 | WRAM0 | `$c495-$c49f` | 11 | boot / screen init |
-| WRAM0 | `$c778-$c77f` | 8 | boot / screen init |
 | WRAM0 | `$c7d8-$c7ff` | 40 | boot / screen init; `$c7d8-$c7f7` holds data (save staging) |
 | WRAM0 | `$c892-$c8a2` | 17 | boot / screen init |
 | WRAM0 | `$c97d-$c9af` | 51 | boot / screen init |
@@ -310,7 +309,7 @@ screen or match init. Eight bytes or longer:
 
 Free bytes that are written with real values, each explained:
 
-* `$c6e0-$c6ff`, `$c705`, `$c730-$c75f` and `$c7d8-$c7f7`: leftovers of the
+* `$c6e0-$c6ff` and `$c7d8-$c7f7`: leftovers of the
   save engine's staging copy. `MirrorSaveHeaderToBank1` runs each 512-byte
   SRAM header region through `$c600-$c7ff` on its way to SRAM bank 1, so the
   tail of the block directory stays behind under the debug-menu variables
@@ -328,5 +327,7 @@ bonus, which `LoadCharacterAttributes` adds to the Speed stat), `+$0d`
 (gender, in the match records too) and `+$2f` (write-only build tag) in all
 eight `$40`-byte records; the game progress screen's five lists in bank
 `$05`'s `$df00` page (`wProgressEntryUnlocked`, `wProgressVisibleEntries`,
-...); and `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
-single-character screens park the frame descriptor after the sprite slot.
+...); `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
+single-character screens park the frame descriptor after the sprite slot;
+and the rest of `$c700-$c77f`, `wDebugStatsBackup`, where the debug stats
+editor saves character 0's `$df00-$df7f`.

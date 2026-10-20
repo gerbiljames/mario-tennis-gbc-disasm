@@ -17,6 +17,8 @@ wInlineTextBuffer:: ds 32
 	export_size wInlineTextBuffer
 	ds 32
 
+UNION
+; debug menus (banks $05/$06)
 ; [8-bit] Window struct index of the debug menu's own window, from CreateMenuWindowFromText; RunDebugMenu passes it to RunMenuSelection and CloseWindow
 wDebugMenuWindowId:: db
 
@@ -26,19 +28,12 @@ wDebugWarpWindowId:: db
 ; [8-bit] Story location count from GetStoryLocationCount; RunDebugWarpMenu's location stepper wraps at it
 wDebugWarpLocationCount:: db
 
-; [8-bit] Debug warp menu field under the cursor: 0 = location number, 1 = entry point (toggled with xor 1, row drawn at *2+2). The location number is held in $c700 during this menu. The colour editor formats its G digits over these bytes
+; [8-bit] Debug warp menu field under the cursor: 0 = location number, 1 = entry point (toggled with xor 1, row drawn at *2+2)
 wDebugWarpCursorRow:: db
 
-; [8-bit] Entry point the debug warp menu is editing, written to wStoryModeEntryPoint when A confirms. $c700-$c709 is shared debug scratch: the window ids here in one submenu, the "RRRGGGBBB" decimal buffer in the colour editor, eight bytes of wCharPosX in the stats editor
+; [8-bit] Entry point the debug warp menu is editing, written to wStoryModeEntryPoint when A confirms
 wDebugWarpEntryPoint:: db
-	ds 1
-
-; [3 bytes] Last third of the colour editor's $c700-$c709 digit string: DebugDrawColorComponents formats R/G/B as 3-digit groups at $c700/$c703/$c706, puts the $0d cursor glyph over the selected component's first digit, and WriteStringToWindow draws the run. R and G overlap the warp-menu names
-wDebugColorBlueDigits:: ds 3
-
-; [8-bit] NUL terminator after the nine RGB digits; last byte of the $c700-$c709 debug scratch
-wDebugColorDigitsEnd:: db
-	ds 6
+	ds 11
 
 ; [8-bit] Window handle of the debug palette viewer's grid window (RunDebugPaletteViewer)
 wDebugPaletteViewerWindowId:: db
@@ -85,6 +80,26 @@ wDebugStatBytes:: ds 8
 ; [8 bytes] Four more 16-bit values on the same page, drawn after wDebugStatBytes
 wDebugStatWords2:: ds 8
 	ds 8
+NEXTU
+; debug warp menu (bank $05)
+; [8-bit] Story location RunDebugWarpMenu is editing: seeded from wStoryModeCurrentLocation, stepped with the d-pad up to wDebugWarpLocationCount, drawn by DebugDrawWarpMenu and written back when A confirms
+wDebugWarpLocation:: db
+NEXTU
+; debug colour editor (bank $05)
+; [3 bytes] DebugDrawColorComponents formats R, G and B as 3-digit decimal groups here, puts the $0d cursor glyph over the selected component's first digit, and WriteStringToWindow draws the "RRRGGGBBB" run from wDebugColorRedDigits
+wDebugColorRedDigits:: ds 3
+; [3 bytes] The G digits
+wDebugColorGreenDigits:: ds 3
+; [3 bytes] The B digits
+wDebugColorBlueDigits:: ds 3
+; [8-bit] NUL terminator after the nine digits
+wDebugColorDigitsEnd:: db
+NEXTU
+; debug stats editor (bank $06)
+; [128 bytes] Unused_06_RunDebugStatsEditor copies character 0's $df00-$df7f (from wCharPosX) here on entry and back on exit, over every debug variable above; wDebugStatWords to wDebugStatWords2 sit on its +$60-$77
+wDebugStatsBackup:: ds 128
+	export_size wDebugStatsBackup
+ENDU
 
 ; Mode-local scratch: $c780-$c78f is reused by each game mode. The match
 ; engine's two `ld hl, $c780 / ld c, $08 / call ClearMemory16` sites zero

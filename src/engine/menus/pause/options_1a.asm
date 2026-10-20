@@ -93,7 +93,7 @@ Unused_1a_DrawPauseMenuSettingValues:
 	ret ; $40af
 .checkMessageSpeed:
 	ld a, [wMessageSpeed] ; $40b0
-	and $7f ; $40b3
+	and MSGSPEED_MASK ; $40b3
 	jr z, .maskClear ; $40b5
 	dec a ; $40b7
 	jr z, .countDone ; $40b8
@@ -322,32 +322,32 @@ Unused_1a_AdjustMessageSpeedSetting:
 	sound SFX_MENU_MOVE ; $427a
 	ld hl, wMessageSpeed ; $427c
 	ld a, [hl] ; $427f
-	and $7f ; $4280
+	and MSGSPEED_MASK ; $4280
 	inc a ; $4282
 	ld b, a ; $4283
-	sub $03 ; $4284
+	sub NUM_MSGSPEEDS ; $4284
 	jr z, .wrapToZero ; $4286
 	ld a, b ; $4288
-	or $80 ; $4289
+	or MSGSPEEDF_INSTANT ; $4289
 	ld [hl], a ; $428b
 	jr .done ; $428c
 .wrapToZero:
-	ld a, $80 ; $428e
+	ld a, MSGSPEEDF_INSTANT | MSGSPEED_FAST ; $428e
 	ld [hl], a ; $4290
 	jr .done ; $4291
 .decreaseSpeed:
 	sound SFX_MENU_MOVE ; $4293
 	ld hl, wMessageSpeed ; $4295
 	ld a, [hl] ; $4298
-	and $7f ; $4299
+	and MSGSPEED_MASK ; $4299
 	dec a ; $429b
 	bit 7, a ; $429c
 	jr nz, .negative ; $429e
-	or $80 ; $42a0
+	or MSGSPEEDF_INSTANT ; $42a0
 	ld [hl], a ; $42a2
 	jr .done ; $42a3
 .negative:
-	ld a, $82 ; $42a5
+	ld a, MSGSPEEDF_INSTANT | MSGSPEED_SLOW ; $42a5
 	ld [hl], a ; $42a7
 .done:
 	ret ; $42a8
@@ -365,12 +365,12 @@ Unused_1a_ToggleMusicSetting:
 	ret ; $42bb
 Unused_1a_ForceInstantMessageSpeed:
 	ld a, [wMessageSpeed] ; $42bc
-	set 7, a ; $42bf
+	set MSGSPEEDB_INSTANT, a ; $42bf
 	ld [wMessageSpeed], a ; $42c1
 	ret ; $42c4
 Unused_1a_RestoreMessageSpeed:
 	ld a, [wMessageSpeed] ; $42c5
-	res 7, a ; $42c8
+	res MSGSPEEDB_INSTANT, a ; $42c8
 	ld [wMessageSpeed], a ; $42ca
 	ret ; $42cd
 .scriptShowSpeakerDialogueRestoreBG:
@@ -385,7 +385,7 @@ Unused_1a_RestoreMessageSpeed:
 	ld a, $01 ; $42ec
 	ld [wSaveAndQuitRequest], a ; $42ee
 	ld a, [wMessageSpeed] ; $42f1
-	res 7, a ; $42f4
+	res MSGSPEEDB_INSTANT, a ; $42f4
 	ld [wMessageSpeed], a ; $42f6
 	ld bc, $ffff ; $42f9
 	farcall SaveStoryReturnPoint ; $42fc

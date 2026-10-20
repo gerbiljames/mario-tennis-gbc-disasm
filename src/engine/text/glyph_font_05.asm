@@ -216,9 +216,9 @@ FlushGlyphRow:
 	cp b ; $77ac
 	jr nz, .uploadGlyphBufferQueued ; $77ad
 	ld a, [wMessageSpeed] ; $77af
-	bit 7, a ; $77b2
+	bit MSGSPEEDB_INSTANT, a ; $77b2
 	jr nz, .uploadGlyphBufferQueued ; $77b4
-	and $7f ; $77b6
+	and MSGSPEED_MASK ; $77b6
 	jr nz, .advanceRow ; $77b8
 .uploadGlyphBufferQueued:
 	ldh a, [rLCDC] ; $77ba
