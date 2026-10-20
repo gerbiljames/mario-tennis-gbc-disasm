@@ -681,7 +681,7 @@ SeniorCourtNpcScripts_12:
 	map_script ACTOR_SENIOR_COURT_KATE, FACEMASK_ANY, $0000, SeniorCourtNpc0C_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 SeniorCourtFacingScripts_12:
-	ds 1, $ff ; $5cc6, fill
+	db $ff ; $5cc6
 SeniorCourtTileTriggers_12:
 	; $5cc7, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, FLAG_SENIOR_COURT_TILE01_TRIGGERED, SeniorCourtTile01_12, $00, $00

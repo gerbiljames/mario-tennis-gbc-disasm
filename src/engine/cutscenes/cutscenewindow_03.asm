@@ -75,7 +75,8 @@ PlayScrollingStoryCutscene:
 	ds 2, $00
 	ds ALIGN[4]
 WindowSolidTile_03:
-	ds 16, $ff ; $7090, fill
+	; $7090, 16 bytes (pattern)
+	ds 16, $ff
 	ds ALIGN[4]
 WindowAttrMap_03:
 	; $70a0, 256 bytes (pattern)

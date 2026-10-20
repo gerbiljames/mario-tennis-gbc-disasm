@@ -401,7 +401,7 @@ RankingAnimSinglesClimbRow01Right8:
 RankingAnimSinglesClimbRow01Right7:
 	; $5b95, 3 bytes (bytes:3)
 	db $01, $01, $01 ; 0x00
-RankingAnimDoublesClimbRow3Table:
+RankingAnimDoublesClimbRow3Right4:
 	; $5b98, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
 RankingAnimSinglesClimbRow01Left7:
@@ -426,9 +426,11 @@ RankingAnimDoublesClimbRow01Right6:
 	; $5bc5, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $40 ; 0x00
 RankingAnimSinglesClimbRow2Left16:
-	ds 1, $ff ; $5bcc, fill
+	; $5bcc, 1 bytes (bytes:1)
+	db $ff ; 0x00
 RankingAnimSinglesClimbRow2Left15:
-	ds 7, $ff ; $5bcd, fill
+	; $5bcd, 7 bytes (bytes:7)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
 RankingAnimSinglesClimbRow2Left8:
 	; $5bd4, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
@@ -441,7 +443,7 @@ RankingAnimSinglesMarkRow4Left4:
 RankingAnimSinglesClimbRow3Right36:
 	; $5be7, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingAnimDoublesClimbRow2Table:
+RankingAnimDoublesClimbRow2Right28:
 	; $5bef, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 RankingAnimDoublesClimbRow01Right20:

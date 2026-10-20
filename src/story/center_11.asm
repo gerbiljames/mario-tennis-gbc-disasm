@@ -424,7 +424,7 @@ AcademyArrivalNpcScripts_11:
 	map_script ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2, FACEMASK_ANY, $0000, AcademyArrivalNpc14_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 AcademyArrivalFacingScripts_11:
-	ds 1, $ff ; $46a3, fill
+	db $ff ; $46a3
 AcademyArrivalTileTriggers_11:
 	; $46a4, 9 bytes (map_scripts)
 	map_script $0f, FACEMASK_ANY, $0000, AcademyArrivalTile0F_11, $00, $00

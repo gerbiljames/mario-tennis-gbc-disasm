@@ -278,9 +278,9 @@ JuniorClassCourtSinglesDNpc0A_11:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_SINGLES_ALLIE ; $6cf6
 	ret ; $6cfb
 JuniorClassCourtSinglesFacingScripts_11:
-	ds 1, $ff ; $6cfc, fill
+	db $ff ; $6cfc
 JuniorClassCourtSinglesTileTriggers_11:
-	ds 1, $ff ; $6cfd, fill
+	db $ff ; $6cfd
 JuniorClassCourtSinglesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6cfe
 	jr z, .byEntryPoint ; $6d01

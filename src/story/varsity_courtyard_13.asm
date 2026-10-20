@@ -362,7 +362,7 @@ CourtyardFacing01_13:
 	ld [wStoryModeExitTriggerRequest], a ; $6184
 	ret ; $6187
 CourtyardTileTriggers_13:
-	ds 1, $ff ; $6188, fill
+	db $ff ; $6188
 CourtyardInitScript_13:
 	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [wStoryModeEntryPoint] ; $618c

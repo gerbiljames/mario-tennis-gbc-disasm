@@ -273,11 +273,11 @@ MainMenuExitTriggers_10:
 	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_PEACHS_CASTLE, ENTRY_PEACHS_CASTLE_FIRST_VISIT, MAIN_MENU_CONTINUE_TO_PEACHS_CASTLE
 	db $ff
 MainMenuNpcScripts_10:
-	ds 1, $ff ; $4eb6, fill
+	db $ff ; $4eb6
 MainMenuFacingScripts_10:
-	ds 1, $ff ; $4eb7, fill
+	db $ff ; $4eb7
 MainMenuTileTriggers_10:
-	ds 1, $ff ; $4eb8, fill
+	db $ff ; $4eb8
 MainMenuInitScript_10:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $4eb9
 	call RunTitleAndMainMenuLoop ; $4ec4

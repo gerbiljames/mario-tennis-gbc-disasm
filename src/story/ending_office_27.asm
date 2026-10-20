@@ -62,11 +62,11 @@ End12PrincipalsOfficeExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_ENTRANCE, ENTRY_ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG, END12_PRINCIPALS_OFFICE_DONE
 	db $ff
 End12PrincipalsOfficeNpcScripts_27:
-	ds 1, $ff ; $4c5e, fill
+	db $ff ; $4c5e
 End12PrincipalsOfficeFacingScripts_27:
-	ds 1, $ff ; $4c5f, fill
+	db $ff ; $4c5f
 End12PrincipalsOfficeTileTriggers_27:
-	ds 1, $ff ; $4c60, fill
+	db $ff ; $4c60
 End12PrincipalsOfficeInitScript_27:
 	ld a, $16 ; $4c61
 	ld [wMapScrollMinX], a ; $4c63
@@ -333,11 +333,11 @@ End11TrainingCourtExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $00, END11_TRAINING_COURT_DONE
 	db $ff
 End11TrainingCourtNpcScripts_27:
-	ds 1, $ff ; $526d, fill
+	db $ff ; $526d
 End11TrainingCourtFacingScripts_27:
-	ds 1, $ff ; $526e, fill
+	db $ff ; $526e
 End11TrainingCourtTileTriggers_27:
-	ds 1, $ff ; $526f, fill
+	db $ff ; $526f
 End11TrainingCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $5270
 	cp ENTRY_END11_TRAINING_COURT_SCENE_A ; $5273

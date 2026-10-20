@@ -245,9 +245,9 @@ AcademyMainBldgNpcScripts_10:
 	map_script ACTOR_ACADEMY_MAIN_BLDG_OLD_MAN, FACEMASK_ANY, $0000, AcademyMainBldgNpc06_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 AcademyMainBldgFacingScripts_10:
-	ds 1, $ff ; $7715, fill
+	db $ff ; $7715
 AcademyMainBldgTileTriggers_10:
-	ds 1, $ff ; $7716, fill
+	db $ff ; $7716
 AcademyMainBldgInitScript_10:
 	call SetStoryDialogueStage_10 ; $7717
 	ld a, [wMapSceneStage] ; $771a

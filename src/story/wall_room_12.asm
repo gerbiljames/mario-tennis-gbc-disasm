@@ -35,9 +35,9 @@ DormEntranceExitTriggers_12:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, ENTRY_DORM_ROOM_TOUR_END, DORM_ENTRANCE_TOUR
 	db $ff
 DormEntranceNpcScripts_12:
-	ds 1, $ff ; $4114, fill
+	db $ff ; $4114
 DormEntranceFacingScripts_12:
-	ds 1, $ff ; $4115, fill
+	db $ff ; $4115
 DormEntranceTileTriggers_12:
 	; $4116, 9 bytes (map_scripts)
 	map_script $01, FACEMASK_ANY, $0000, DormEntranceTile01_12, $00, $00

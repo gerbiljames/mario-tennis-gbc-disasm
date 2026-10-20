@@ -207,9 +207,9 @@ IslandSkyNpcScripts_14:
 	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_DefineAce, $00, $00
 	db $ff
 IslandSkyFacingScripts_14:
-	ds 1, $ff ; $52b5, fill
+	db $ff ; $52b5
 IslandSkyTileTriggers_14:
-	ds 1, $ff ; $52b6, fill
+	db $ff ; $52b6
 IslandSkyInitScript_14:
 	script_set_position ACTOR_ISLAND_SKY_HEADMASTER, 63.0, 63.0 ; $52b7
 	script_set_position ACTOR_ISLAND_SKY_KEVIN_SWEATS, 63.0, 63.0 ; $52c2
