@@ -390,10 +390,10 @@ SeniorCourtNpc08_12:
 	farcall ScriptCloseDialogueWindow ; $5981
 	script_wait_frames 5 ; $5984
 	and a ; $598b
-	jr z, .doublesLine ; $598c
+	jr z, .confirmPractice ; $598c
 	script_speak ACTOR_SENIOR_COURT_BETH ; $598e
 	ret ; $5993
-.doublesLine:
+.confirmPractice:
 	farcall AdvanceDialogueTextCursor ; $5994
 	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_BOUNCE ; $5997
 	script_wait_idle ACTOR_SENIOR_COURT_BETH ; $599e

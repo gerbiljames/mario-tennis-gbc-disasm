@@ -494,7 +494,7 @@ WallPracticeRoomNpc07_12:
 	farcall ScriptCloseDialogueWindow ; $5119
 	script_wait_frames 5 ; $511c
 	and a ; $5123
-	jp z, .doublesDeclined ; $5124
+	jp z, .accepted ; $5124
 	ld a, [wMapSceneStage] ; $5127
 	add a ; $512a
 	ld_hl_indexed WallPracticeRoomNpc07TextIds2 ; $512b
@@ -533,7 +533,7 @@ WallPracticeRoomNpc07_12:
 .speakDeclined:
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51b4
 	ret ; $51b9
-.doublesDeclined:
+.accepted:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_NOD ; $51ba
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51c1
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51c6
