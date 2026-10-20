@@ -33,31 +33,31 @@ EraseStorySlotSaveData:
 	cp $01 ; $4e4f
 	jr z, .slot1 ; $4e51
 	push de ; $4e53
-	ld de, SAVEFLAG_STORY_SLOT2_A ; $4e54
+	ld de, SAVEFLAG_STORY_SLOT2_MUSIC_MUTED ; $4e54
 	farcall ClearSaveFlag ; $4e57
 	pop de ; $4e5a
 	push de ; $4e5b
-	ld de, SAVEFLAG_STORY_SLOT2_B ; $4e5c
+	ld de, SAVEFLAG_STORY_SLOT2_COURT_VIEW ; $4e5c
 	farcall ClearSaveFlag ; $4e5f
 	pop de ; $4e62
 	jr .ok ; $4e63
 .slot0:
 	push de ; $4e65
-	ld de, SAVEFLAG_STORY_SLOT0_A ; $4e66
+	ld de, SAVEFLAG_STORY_SLOT0_MUSIC_MUTED ; $4e66
 	farcall ClearSaveFlag ; $4e69
 	pop de ; $4e6c
 	push de ; $4e6d
-	ld de, SAVEFLAG_STORY_SLOT0_B ; $4e6e
+	ld de, SAVEFLAG_STORY_SLOT0_COURT_VIEW ; $4e6e
 	farcall ClearSaveFlag ; $4e71
 	pop de ; $4e74
 	jr .ok ; $4e75
 .slot1:
 	push de ; $4e77
-	ld de, SAVEFLAG_STORY_SLOT1_A ; $4e78
+	ld de, SAVEFLAG_STORY_SLOT1_MUSIC_MUTED ; $4e78
 	farcall ClearSaveFlag ; $4e7b
 	pop de ; $4e7e
 	push de ; $4e7f
-	ld de, SAVEFLAG_STORY_SLOT1_B ; $4e80
+	ld de, SAVEFLAG_STORY_SLOT1_COURT_VIEW ; $4e80
 	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
 .ok:

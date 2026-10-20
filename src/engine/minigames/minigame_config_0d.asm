@@ -225,7 +225,7 @@ IsMinigameTargetReached:
 .notReached:
 	xor a ; $41ec
 	ret ; $41ed
-; nz when the current score beats wMinigameHighScore or has hit the 9999 cap
+; a = 1 when the current score beats wMinigameHighScore or has hit the 9999 cap
 IsNewMinigameHighScore:
 	ld hl, wMinigamesCurrentScore ; $41ee
 	ld a, [hl+] ; $41f1
@@ -414,7 +414,7 @@ DrawMinigameGridCell:
 	pop hl ; $433e
 	push de ; $433f
 	ld a, d ; $4340
-	add HIGH(wCourtTilemapSaved) ; $4341
+	add HIGH(wCourtTilemapBase) ; $4341
 	ld d, a ; $4343
 	ld_size bc, $02, $02 ; $4344
 	call CopyTextRect ; $4347
@@ -430,7 +430,7 @@ DrawMinigameGridCell:
 	pop hl ; $4358
 	push de ; $4359
 	ld a, d ; $435a
-	add HIGH(wCourtAttrmapSaved) ; $435b
+	add HIGH(wCourtAttrmapBase) ; $435b
 	ld d, a ; $435d
 	ld_size bc, $02, $02 ; $435e
 	call CopyTextRect ; $4361

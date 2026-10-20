@@ -281,7 +281,7 @@ MainMenuTileTriggers_10:
 MainMenuInitScript_10:
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $4eb9
 	call RunTitleAndMainMenuLoop ; $4ec4
-	farcall TestStorySlotFlagA ; $4ec7
+	farcall TestStorySlotMusicMuted ; $4ec7
 	call SetMusicMuted ; $4eca
 	ret ; $4ecd
 ApplyMatchTypeSettings:

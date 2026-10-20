@@ -200,10 +200,10 @@ LoadCourtSceneGraphics:
 	call CopyDataFromBank ; $6363
 	wram_bank WRAM_COURT_PLANES ; $6366
 	pop hl ; $636c
-	ld de, wCourtAttrmapSaved ; $636d
+	ld de, wCourtAttrmapBase ; $636d
 	call DecompressDataFromBank ; $6370
 	pop hl ; $6373
-	ld de, wCourtTilemapSaved ; $6374
+	ld de, wCourtTilemapBase ; $6374
 	call DecompressDataFromBank ; $6377
 	pop hl ; $637a
 	ld de, wScreenAttrmap ; $637b

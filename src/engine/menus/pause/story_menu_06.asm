@@ -825,7 +825,7 @@ StoryPauseMenu_MusicToggle:
 	call SetMusicMuted ; $7024
 	ldh a, [hMusicFlags] ; $7027
 	and MUSICF_MUTED ; $7029
-	farcall SetStorySlotFlagA ; $702b
+	farcall SetStorySlotMusicMuted ; $702b
 .done:
 	ret ; $702e
 StoryPauseMenu_SaveQuit:

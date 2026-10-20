@@ -956,7 +956,7 @@ its notes and `include/ram_mirrored.inc`):
 | bank | `$d000` | `$d400` | `$d800`+ |
 |---|---|---|---|
 | `$01` | `wDecompBuffer` (2048 bytes — everything decompresses here) | | |
-| `$02` | `wScreenAttrmap` / `wCourtTilemap` / `wMapScrollPlane0` | `wCourtAttrmap` | `wMapScrollPlane1`, `wCourtTilemapSaved` |
+| `$02` | `wScreenAttrmap` / `wCourtTilemap` / `wMapScrollPlane0` | `wCourtAttrmap` | `wMapScrollPlane1`, `wCourtTilemapBase` |
 | `$03` | `wShadowTilemap` | `wShadowAttrmap` | `wScreenScratch` |
 | `$05` | `wWindowShadowTilemap` | `wWindowShadowAttrmap` | text/window state, `wWindowStructs` `$dc00`, `wTilemapRowDirty` `$dc40`, `wTilemapRowRuns` `$dc60`, `wWindowSlotMask` `$dc70` |
 | `$07` | `wGlyphTileBuffer` at `$d300` (to `$daff`) | | |

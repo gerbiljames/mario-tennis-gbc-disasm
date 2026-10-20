@@ -41,10 +41,10 @@ wCourtTilemap:: ds 1024
 ; [1024 bytes] Its CGB attribute plane, cell for cell, uploaded to $9800 in VRAM bank 1 by UploadCourtAttrmap
 wCourtAttrmap:: ds 1024
 	export_size wCourtAttrmap
-; [1024 bytes] Copy of the court tilemap taken when the players change ends; SnapshotCourtTilemaps copies it back over wCourtTilemap to restore the unflipped view
-wCourtTilemapSaved:: ds 1024
-; [1024 bytes] The attribute half of the same snapshot
-wCourtAttrmapSaved:: ds 1024
+; [1024 bytes] The court's base tilemap, decompressed by LoadCourtSceneGraphics and patched by the scoreboard and minigame-target code; ResetCourtTilemapsFromBase and RestoreBgTilemap copy it over wCourtTilemap
+wCourtTilemapBase:: ds 1024
+; [1024 bytes] The attribute half of the base planes
+wCourtAttrmapBase:: ds 1024
 NEXTU
 ; overworld scroll buffers (bank 0)
 ; [1024 bytes] One of the four 64-wide planes Unused_00_CopyMapToScrollBuffers expands the map into, 16 rows of 64 cells, from wDecompBuffer (WRAM bank $01) via wTextBuffer a row block at a time

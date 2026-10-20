@@ -332,8 +332,8 @@ and slot 6 (`$6325`), pushing 1-5 and reading 7 inline:
 | slot | destination | how | addr |
 |---|---|---|---|
 | 1 | `wScreenAttrmap` (as scratch) → palettes | raw copy, `bc = $0040` | `$6381` |
-| 2 | `wCourtTilemapSaved` | LZ | `$6377` |
-| 3 | `wCourtAttrmapSaved` | LZ | `$6370` |
+| 2 | `wCourtTilemapBase` | LZ | `$6377` |
+| 3 | `wCourtAttrmapBase` | LZ | `$6370` |
 | 4 | `wScoreboardColumnTiles` | raw copy, `bc = wScoreboardColumnTiles_SIZE` (40 bytes) | `$6363` |
 | 5 | `wScoreboardColumnAttrs` | raw copy, `bc = wScoreboardColumnAttrs_SIZE` | `$6359` |
 | 6 | — | skipped | `$6325` |

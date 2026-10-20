@@ -25,14 +25,14 @@ def SAVEFLAG_CLEARED_PERFECT_SHOT_3      equ $0380 ; #28 = char id $1c, so clear
 def SAVEFLAG_CLEARED_TARGET_SHOT_1       equ $03a0 ; #29 = char id $1d, so clearing it unlocks Bowser
 def SAVEFLAG_CLEARED_TARGET_SHOT_2       equ $03c0 ; #30 = char id $1e, so clearing it unlocks Wario
 def SAVEFLAG_CLEARED_TARGET_SHOT_3       equ $03e0 ; #31 = char id $1f, so clearing it unlocks Peach
-def SAVEFLAG_STORY_SLOT0_A               equ $0400 ; #32; SetStorySlotFlagA, cleared when the slot is erased
-def SAVEFLAG_STORY_SLOT1_A               equ $0420 ; #33; SetStorySlotFlagA, cleared when the slot is erased
-def SAVEFLAG_STORY_SLOT2_A               equ $0440 ; #34; SetStorySlotFlagA, cleared when the slot is erased
-def SAVEFLAG_STORY_SLOT3_A               equ $0460 ; #35; SetStorySlotFlagA for slot 3 (exhibition)
-def SAVEFLAG_STORY_SLOT0_B               equ $0480 ; #36; SetStorySlotFlagB, cleared when the slot is erased
-def SAVEFLAG_STORY_SLOT1_B               equ $04a0 ; #37; SetStorySlotFlagB, cleared when the slot is erased
-def SAVEFLAG_STORY_SLOT2_B               equ $04c0 ; #38; SetStorySlotFlagB, cleared when the slot is erased
-def SAVEFLAG_STORY_SLOT3_B               equ $04e0 ; #39; SetStorySlotFlagB for slot 3 (exhibition)
+def SAVEFLAG_STORY_SLOT0_MUSIC_MUTED               equ $0400 ; #32; SetStorySlotMusicMuted, cleared when the slot is erased
+def SAVEFLAG_STORY_SLOT1_MUSIC_MUTED               equ $0420 ; #33; SetStorySlotMusicMuted, cleared when the slot is erased
+def SAVEFLAG_STORY_SLOT2_MUSIC_MUTED               equ $0440 ; #34; SetStorySlotMusicMuted, cleared when the slot is erased
+def SAVEFLAG_STORY_SLOT3_MUSIC_MUTED               equ $0460 ; #35; SetStorySlotMusicMuted for slot 3 (exhibition)
+def SAVEFLAG_STORY_SLOT0_COURT_VIEW               equ $0480 ; #36; SetStorySlotCourtView, cleared when the slot is erased
+def SAVEFLAG_STORY_SLOT1_COURT_VIEW               equ $04a0 ; #37; SetStorySlotCourtView, cleared when the slot is erased
+def SAVEFLAG_STORY_SLOT2_COURT_VIEW               equ $04c0 ; #38; SetStorySlotCourtView, cleared when the slot is erased
+def SAVEFLAG_STORY_SLOT3_COURT_VIEW               equ $04e0 ; #39; SetStorySlotCourtView for slot 3 (exhibition)
 def SAVEFLAG_CLEARED_FRUIT_FANTASY_1     equ $0500 ; #40
 def SAVEFLAG_CLEARED_FRUIT_FANTASY_2     equ $0520 ; #41
 def SAVEFLAG_CLEARED_FRUIT_FANTASY_3     equ $0540 ; #42

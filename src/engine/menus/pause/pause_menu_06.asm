@@ -412,7 +412,7 @@ MatchPauseMenu_CameraSelect:
 	cp MATCHMENUSEL_CANCELLED ; $442f
 	jr z, .done ; $4431
 	ld [wCourtViewOption], a ; $4433
-	farcall SetStorySlotFlagB ; $4436
+	farcall SetStorySlotCourtView ; $4436
 .done:
 	ret ; $4439
 MatchPauseMenu_MusicToggle:
@@ -431,7 +431,7 @@ MatchPauseMenu_MusicToggle:
 	jr z, .done ; $4458
 	ldh a, [hMusicFlags] ; $445a
 	and MUSICF_MUTED ; $445c
-	farcall SetStorySlotFlagA ; $445e
+	farcall SetStorySlotMusicMuted ; $445e
 .done:
 	ret ; $4461
 MatchPauseMenu_SaveQuit:

@@ -520,7 +520,7 @@ player in place.
   unrelated to the developer `RunClearStatusSetupMenu` (see
   [Oddities](#oddities)).
 * **OPTIONS** — `wMessageSpeed` and music on/off (persisted with
-  `SetStorySlotFlagA`).
+  `SetStorySlotMusicMuted`).
 * **SAVE** — `SaveStoryReturnPoint` + `SaveStorySlotWithTimer`, then loc
   `$00` entry `$01`. "TO MAIN MENU" does the same without saving.
 
@@ -557,8 +557,8 @@ screen-mode bits that cannot outlive a map transition.
 `SAVEFLAG_*` covers what survives a slot erase: character unlocks
 (`SAVEFLAG_UNLOCKED_FAY` … `_ELDEN`, plus flags 20-31 whose number equals the
 character id they unlock), arcade-minigame clears, court unlocks, the
-per-slot option bits (A = music on/off, `SetStorySlotFlagA` from
-`StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotFlagB` from
+per-slot option bits (A = music on/off, `SetStorySlotMusicMuted` from
+`StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotCourtView` from
 `MatchPauseMenu_CameraSelect`), `SAVEFLAG_OPENING_SEEN`, and
 `SAVEFLAG_DEBUG_TEST_MENU`.
 

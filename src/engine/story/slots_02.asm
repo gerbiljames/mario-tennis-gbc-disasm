@@ -28,7 +28,7 @@
 	farptr RemapExtendedCharId ; $4036
 	farptr GetCharGroupEntry ; $4038
 	farptr DoesCharGroupRowContain ; $403a
-	farptr SetStorySlotFlagB ; $403c
-	farptr TestStorySlotFlagB ; $403e
-	farptr SetStorySlotFlagA ; $4040
-	farptr TestStorySlotFlagA ; $4042
+	farptr SetStorySlotCourtView ; $403c
+	farptr TestStorySlotCourtView ; $403e
+	farptr SetStorySlotMusicMuted ; $4040
+	farptr TestStorySlotMusicMuted ; $4042

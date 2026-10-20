@@ -765,7 +765,7 @@ character loses the point.
 `StepCharMovement` (`$08:$72de`) **refuses** out-of-box moves rather than
 clamping:
 
-1. While charging (`wCharFlags` bit 5) both velocities `>> 3`
+1. While charging (`CHARB_CHARGING`) both velocities `>> 3`
    (`$08:$72ea-$7307`).
 2. `res 6, [wCharFlags]`.
 3. `AddDEToMem24IntoBC` (`$08:$5ac7`) returns the candidate integer part without
@@ -1385,7 +1385,7 @@ set, less addresses already given in the text:
 
 - **World scale** (105 units/m) is inferred; the fixed-point layouts are proven,
   the metric reading is not.
-- **`wCharFlags` bit 6** is written by `StepCharMovement` and read nowhere.
+- **`CHARB_MOVE_BLOCKED`** is written by `StepCharMovement` and read nowhere.
 - **Placement-record bytes `+6`/`+7`** are zero in all fifteen tables, with no
   reader.
 - **Court record byte 4** in `CourtSceneDataTable` has no reader.

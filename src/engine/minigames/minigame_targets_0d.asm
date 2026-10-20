@@ -13,7 +13,7 @@ LoadMatchUiCourtTilemap:
 	push hl ; $510f
 	push hl ; $5110
 	pop hl ; $5111
-	ld de, wCourtTilemapSaved + 9 * TILEMAP_WIDTH + 11 ; $5112
+	ld de, wCourtTilemapBase + 9 * TILEMAP_WIDTH + 11 ; $5112
 	ld_size bc, $0a, $05 ; $5115
 	call CopyTextRect ; $5118
 	pop hl ; $511b
@@ -21,7 +21,7 @@ LoadMatchUiCourtTilemap:
 	ld_size bc, $0a, $05 ; $511f
 	call CopyTextRect ; $5122
 	pop hl ; $5125
-	ld de, wCourtAttrmapSaved + 9 * TILEMAP_WIDTH + 11 ; $5126
+	ld de, wCourtAttrmapBase + 9 * TILEMAP_WIDTH + 11 ; $5126
 	ld_size bc, $0a, $05 ; $5129
 	call CopyTextRect ; $512c
 	pop hl ; $512f

@@ -59,9 +59,9 @@ Unused_07_RunDebugTestMatch:
 	ld c, MATCHREC_P2_PARTNER ; $5e89
 	farcall InitMatchRecordFromCharId ; $5e8b
 	ld a, $00 ; $5e8e
-	farcall SetStorySlotFlagB ; $5e90
+	farcall SetStorySlotCourtView ; $5e90
 	ld a, $01 ; $5e93
-	farcall SetStorySlotFlagA ; $5e95
+	farcall SetStorySlotMusicMuted ; $5e95
 	ld a, $fe ; $5e98
 	ld [wDebugMatchFlags], a ; $5e9a
 	farcall RunMatch ; $5e9d

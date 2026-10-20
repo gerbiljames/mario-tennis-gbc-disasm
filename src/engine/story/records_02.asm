@@ -15,11 +15,11 @@ NameTextRemap_02:
 	db $09, $09, $09, $04, $04, $04, $08, $08, $08, $0c, $0c, $0c, $0c, $0c, $0c, $0c ; 0x20
 	db $0c, $1a, $1a, $1f, $0c, $0c, $0c, $0c, $0c, $0c, $0c, $1a, $1a, $1a, $1a, $1a ; 0x30
 	db $1a, $1f, $1f, $1f, $1a, $1a, $1a ; 0x40
-SetStorySlotFlagB:
+SetStorySlotCourtView:
 	push af ; $4cb1
 	ld a, [wCurrentStorySlot] ; $4cb2
 	add a ; $4cb5
-	ld_hl_indexed StorySlotFlagBIds_02 ; $4cb6
+	ld_hl_indexed StorySlotCourtViewIds_02 ; $4cb6
 	ld a, [hl+] ; $4cbd
 	ld d, [hl] ; $4cbe
 	ld e, a ; $4cbf
@@ -31,16 +31,16 @@ SetStorySlotFlagB:
 .setSaveFlag:
 	farcall SetSaveFlag ; $4cc8
 	ret ; $4ccb
-StorySlotFlagBIds_02:
+StorySlotCourtViewIds_02:
 	; $4ccc, 8 bytes (save_flag_ids)
-	dw SAVEFLAG_STORY_SLOT0_B ; 0
-	dw SAVEFLAG_STORY_SLOT1_B ; 1
-	dw SAVEFLAG_STORY_SLOT2_B ; 2
-	dw SAVEFLAG_STORY_SLOT3_B ; 3
-TestStorySlotFlagB:
+	dw SAVEFLAG_STORY_SLOT0_COURT_VIEW ; 0
+	dw SAVEFLAG_STORY_SLOT1_COURT_VIEW ; 1
+	dw SAVEFLAG_STORY_SLOT2_COURT_VIEW ; 2
+	dw SAVEFLAG_STORY_SLOT3_COURT_VIEW ; 3
+TestStorySlotCourtView:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a ; $4cd7
-	ld_hl_indexed StorySlotFlagBIds_02 ; $4cd8
+	ld_hl_indexed StorySlotCourtViewIds_02 ; $4cd8
 	ld a, [hl+] ; $4cdf
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
@@ -51,11 +51,11 @@ TestStorySlotFlagB:
 .notSet:
 	ld a, $00 ; $4cea
 	ret ; $4cec
-SetStorySlotFlagA:
+SetStorySlotMusicMuted:
 	push af ; $4ced
 	ld a, [wCurrentStorySlot] ; $4cee
 	add a ; $4cf1
-	ld_hl_indexed StorySlotFlagAIds_02 ; $4cf2
+	ld_hl_indexed StorySlotMusicMutedIds_02 ; $4cf2
 	ld a, [hl+] ; $4cf9
 	ld d, [hl] ; $4cfa
 	ld e, a ; $4cfb
@@ -67,16 +67,16 @@ SetStorySlotFlagA:
 .setSaveFlag:
 	farcall SetSaveFlag ; $4d04
 	ret ; $4d07
-StorySlotFlagAIds_02:
+StorySlotMusicMutedIds_02:
 	; $4d08, 8 bytes (save_flag_ids)
-	dw SAVEFLAG_STORY_SLOT0_A ; 0
-	dw SAVEFLAG_STORY_SLOT1_A ; 1
-	dw SAVEFLAG_STORY_SLOT2_A ; 2
-	dw SAVEFLAG_STORY_SLOT3_A ; 3
-TestStorySlotFlagA:
+	dw SAVEFLAG_STORY_SLOT0_MUSIC_MUTED ; 0
+	dw SAVEFLAG_STORY_SLOT1_MUSIC_MUTED ; 1
+	dw SAVEFLAG_STORY_SLOT2_MUSIC_MUTED ; 2
+	dw SAVEFLAG_STORY_SLOT3_MUSIC_MUTED ; 3
+TestStorySlotMusicMuted:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a ; $4d13
-	ld_hl_indexed StorySlotFlagAIds_02 ; $4d14
+	ld_hl_indexed StorySlotMusicMutedIds_02 ; $4d14
 	ld a, [hl+] ; $4d1b
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d

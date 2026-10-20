@@ -188,10 +188,10 @@ wBallTrailSlots:: ds 20
 ; RefreshCourtScoreboardFlipped feeds them to CopyScoreboardTileColumn, which
 ; reads under WRAM bank $04 and writes under bank $02.
 ; court scoreboard columns (banks $08/$0a)
-; [40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it (and the row at $de9e) into wCourtTilemapSaved; $de94 is the second column
+; [40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it (and the row at $de9e) into wCourtTilemapBase; $de94 is the second column
 wScoreboardColumnTiles:: ds 40
 	export_size wScoreboardColumnTiles
-; [40 bytes] Attribute half of the same columns, cell for cell with wScoreboardColumnTiles, copied into wCourtAttrmapSaved
+; [40 bytes] Attribute half of the same columns, cell for cell with wScoreboardColumnTiles, copied into wCourtAttrmapBase
 wScoreboardColumnAttrs:: ds 40
 	export_size wScoreboardColumnAttrs
 

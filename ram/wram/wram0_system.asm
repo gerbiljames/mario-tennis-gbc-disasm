@@ -181,7 +181,7 @@ wCutsceneObjY:: dw
 wCutsceneObjPhase:: dw
 ; [2 bytes] Per-slot frame timer: the splash's hit counter (0-8), the firework's countdown to the next burst frame
 wCutsceneObjTimer:: dw
-; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns
+; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns; AnimateIslandSkyEffectSprites_14 instead counts frames in byte 0 (sprite frame 1-3, wraps at 3)
 wCutsceneObjLimit:: dw
 ; [2 bytes] Frames left in the rise, counted down by AdvanceWaterSplash0Rise_14 / AdvanceWaterSplash1Rise_14, which also lift wCutsceneObjY by 2 per frame
 wCutsceneObjRiseTimer:: dw

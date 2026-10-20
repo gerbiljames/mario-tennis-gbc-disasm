@@ -412,7 +412,7 @@ wRulesSetsIndex:: db
 ; [8-bit] Bit 2 of wMatchTypeNumberOfGames, set at match setup; low term of wRulesPageListIndex
 wRulesGamesIndex:: db
 
-; [8-bit] Saved camera / court view option, loaded from story save-slot flag B (forced to 0 for minigames and game mode 8); edited by MatchPauseMenu_CameraSelect, which writes it back with SetStorySlotFlagB. UpdateViewFlipState mirrors the court only when nonzero
+; [8-bit] Saved camera / court view option, loaded from story save-slot flag B (forced to 0 for minigames and game mode 8); edited by MatchPauseMenu_CameraSelect, which writes it back with SetStorySlotCourtView. UpdateViewFlipState mirrors the court only when nonzero
 wCourtViewOption:: db
 
 ; [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID)

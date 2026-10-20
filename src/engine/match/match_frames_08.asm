@@ -136,7 +136,7 @@ InitViewFlipPreference:
 	ld a, [wGameMode] ; $451c
 	cp GAMEMODE_MARIO_MINIGAME ; $451f
 	jr z, .storeFlip ; $4521
-	farcall TestStorySlotFlagB ; $4523
+	farcall TestStorySlotCourtView ; $4523
 	ld [wCourtViewOption], a ; $4526
 	xor a ; $4529
 	ld [wCourtViewLocked], a ; $452a
@@ -151,7 +151,7 @@ ApplyMatchBgmPreference:
 	ld a, [wGameMode] ; $4539
 	cp GAMEMODE_LINK_MATCH ; $453c
 	jr z, .resume ; $453e
-	farcall TestStorySlotFlagA ; $4540
+	farcall TestStorySlotMusicMuted ; $4540
 	call SetMusicMuted ; $4543
 	ret ; $4546
 .resume:
