@@ -277,7 +277,7 @@ triples by `wCourtSurfaceFriction` and the height triple by
 frame, and `wBallCrossedNetFlag` is raised for that frame. Unless the
 wall-practice flag is set it then adds `wNetHeight` to `wBallHeight`; a
 non-negative sum means the ball is **at or below the net top**
-(`$08:$5836-$583f`), so it plays sound `$5a`, starts the bounce effect, sets
+(`$08:$5836-$583f`), so it plays `SFX_NET_CORD`, starts the bounce effect, sets
 `wBallHasBouncedFlag`, quarters X velocity and reflects the depth position. Three
 bands then apply (`$08:$5874-$5882`):
 
@@ -734,12 +734,12 @@ setting `wCharQuickSwing`.
 `StartCharSwing` (`$08:$6d5a`) picks the swing by geometry:
 
 - predicted lateral offset beyond `wCharReachX` and that direction held →
-  **dive** (animation `$12`, `wCharFlags` bit 1, lunge from `wCharDiveSpeed`,
-  sound `$5c`);
+  **dive** (`CHARANIM_DIVE`, `CHARB_DIVING`, lunge from `wCharDiveSpeed`,
+  `SFX_SWING`);
 - else ball high enough relative to `wCharReachHeight` → **jump smash**
-  (airborne, `wCharVelHeight = -wCharSmashJumpSpeed`, animation `$08`);
-- else a slightly lower band → overhead animation `$07`;
-- else forehand/backhand from `SelectForehandBackhand` (`$05`/`$06`).
+  (airborne, `wCharVelHeight = -wCharSmashJumpSpeed`, `CHARANIM_SMASH`);
+- else a slightly lower band → `CHARANIM_OVERHEAD`;
+- else forehand/backhand from `SelectForehandBackhand` (`CHARANIM_FOREHAND`/`_BACKHAND`).
 
 ### Contact geometry
 
@@ -1066,7 +1066,7 @@ restores. Level point counts zero all three, **so deuce is never a situation**.
 point → `$10`, tiebreak → `$0e`, else `wMatchBGM`) and banner (match point
 `$0a`, set point `$09`, game point `$07` or `$08` by whether server or receiver
 holds it — `wCurrentServingPlayer` XOR the flag's sign). Deuce surfaces only as
-sound `$69` in the point-end sequence and `LoadDeuceAdvantageGfx` on the score
+`SFX_DEUCE` in the point-end sequence and `LoadDeuceAdvantageGfx` on the score
 panel; at advantage the leader's digit stays 4 and the other side's is drawn as
 digit 5 (`$09:$403f`).
 

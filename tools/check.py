@@ -1431,7 +1431,7 @@ _VAR_RE = r"([wh][A-Z]\w*(?: \+ (?:\$[0-9a-fA-F]+|\d+|[A-Z][A-Z0-9_]*))?)"
 _REGS8 = frozenset("abcdehl")
 _PAIRS = {"bc": "bc", "de": "de", "hl": "hl", "af": "a"}
 # Instructions that leave every register as it was.
-_KEEPS_ALL_RE = re.compile(r"(cp |test_flag |set_flag |clear_flag |bit |push |nop$|ei$|di$|"
+_KEEPS_ALL_RE = re.compile(r"(cp |sound |test_flag |set_flag |clear_flag |bit |push |nop$|ei$|di$|"
                            r"scf$|ccf$|halt$|and a$|or a$|"
                            r"(jr|jp) (n?z|n?c),|ret (n?z|n?c)$|ldh? \[[^\]]+\], [a-l]$|ld \[(bc|de)\], a$)")
 

@@ -131,7 +131,7 @@ In `AdvanceFrame`, when `hDebugStepMode` is nonzero and no link exchange is
 active, holding SELECT+START sets `hDebugStepPaused` and enters a second wait
 loop (`$268f`-`$26f1`): SELECT cycles `hDebugStepMode` through 1-3, START
 releases. While paused, `UpdateDebugOverlay` runs each VBlank. Step mode also
-makes two overflows audible: a full VRAM copy queue plays sound `$6f`
+makes two overflows audible: a full VRAM copy queue plays `SFX_DEBUG_ALARM`
 (`$00:$04e1`), a truncated text fetch `$2c` (`$30:$7dc7`).
 
 The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.buildStampLoop`

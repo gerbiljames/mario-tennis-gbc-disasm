@@ -8,7 +8,7 @@ MoveCharDataScreenSelection:
 	ret z ; $53d4
 	ld [wCharDataPage], a ; $53d5
 	sound SFX_MENU_MOVE ; $53d8
-	cp $04 ; $53da
+	cp CHARDATAPAGE_CONFIRM ; $53da
 	jr z, .redraw ; $53dc
 	call RestoreCharDataScreen ; $53de
 	call LoadCharStatsWithLevelUpDeltas ; $53e1
