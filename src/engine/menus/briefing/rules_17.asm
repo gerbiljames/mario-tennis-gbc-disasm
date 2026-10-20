@@ -55,33 +55,33 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e6a
 	ld [wBriefingBallY], a ; $6e6b
 	ld a, [wBriefingAnimStep] ; $6e6e
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6e71
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HandUnflippedTable ; $6e71
 	ld a, [hl] ; $6e78
-	ld [wBriefingHMarkerUnflipped], a ; $6e79
+	ld [wBriefingHandUnflipped], a ; $6e79
 	ld a, c ; $6e7c
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable ; $6e7d
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HandPosTable ; $6e7d
 	ld a, [hl] ; $6e84
 	inc hl ; $6e85
 	inc hl ; $6e86
 	ld b, [hl] ; $6e87
 	ld a, a ; $6e88
-	ld [wBriefingHMarkerX], a ; $6e89
+	ld [wBriefingHandX], a ; $6e89
 	ld a, b ; $6e8c
-	ld [wBriefingHMarkerY], a ; $6e8d
+	ld [wBriefingHandY], a ; $6e8d
 	ld a, [wBriefingAnimStep] ; $6e90
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable ; $6e93
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_DownArrowUnflippedTable ; $6e93
 	ld a, [hl] ; $6e9a
-	ld [wBriefingVMarkerUpright], a ; $6e9b
+	ld [wBriefingDownArrowUnflipped], a ; $6e9b
 	ld a, c ; $6e9e
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable ; $6e9f
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_DownArrowPosTable ; $6e9f
 	ld a, [hl] ; $6ea6
 	inc hl ; $6ea7
 	inc hl ; $6ea8
 	ld b, [hl] ; $6ea9
 	ld a, a ; $6eaa
-	ld [wBriefingVMarkerX], a ; $6eab
+	ld [wBriefingDownArrowX], a ; $6eab
 	ld a, b ; $6eae
-	ld [wBriefingVMarkerY], a ; $6eaf
+	ld [wBriefingDownArrowY], a ; $6eaf
 	ret ; $6eb2
 ReturnDownLineBriefing_AdvanceAnimTable:
 	; $6eb3, 16 bytes (records:2)
@@ -97,14 +97,14 @@ ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes (words:2)
-ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $6ee3, 4 bytes (bytes:4)
-ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $6ee7, 16 bytes (words:2)
-ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.asm" ; $6ef7, 4 bytes (bytes:4)
-ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6efb, 16 bytes (words:2)
+ReturnDownLineBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $6ee3, 4 bytes (bytes:4)
+ReturnDownLineBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HandPosTable.asm" ; $6ee7, 16 bytes (words:2)
+ReturnDownLineBriefing_AdvanceAnim_DownArrowUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_DownArrowUnflippedTable.asm" ; $6ef7, 4 bytes (bytes:4)
+ReturnDownLineBriefing_AdvanceAnim_DownArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_DownArrowPosTable.asm" ; $6efb, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.asm" ; $6f0b, 16 bytes (words:2)
 ShowRulesScreen:
@@ -116,7 +116,7 @@ ShowRulesScreen:
 	ld [wRulesMinigameLevel], a ; $6f29
 	xor a ; $6f2c
 	ld [wRulesExitCode], a ; $6f2d
-	ld [wRulesAnimEnabled], a ; $6f30
+	ld [wRulesToadTalking], a ; $6f30
 	ld [wRulesAnimCounter], a ; $6f33
 	ld [wRulesPastFirstPage], a ; $6f36
 	ld [wRulesScreenAnimFrame], a ; $6f39
@@ -133,9 +133,9 @@ ShowRulesScreen:
 	script_fade_in 32 ; $6f5f
 	call WaitFadeEnd ; $6f64
 	wram_bank WRAM_SCREEN ; $6f67
-	frame_task AdvanceRulesScreenAnimFrame ; $6f6d
+	frame_task AnimateRulesToad ; $6f6d
 	ld a, $01 ; $6f75
-	ld [wRulesAnimEnabled], a ; $6f77
+	ld [wRulesToadTalking], a ; $6f77
 	xor a ; $6f7a
 	ld [wRulesAnimCounter], a ; $6f7b
 	call RunMinigameRulesPages ; $6f7e
@@ -295,10 +295,10 @@ MinigameRulesPageLoop:
 	sound SFX_MENU_SELECT ; $711e
 	ld hl, DrawRulesNextPageArrow ; $7120
 	call UnregisterFrameTask ; $7123
-	ld hl, RulesScreenTiles ; $7126
+	ld hl, RulesScreenTiles ; $7126 -- no task: a stale address, never registered
 	call UnregisterFrameTask ; $7129
 	ld a, $01 ; $712c
-	ld [wRulesAnimEnabled], a ; $712e
+	ld [wRulesToadTalking], a ; $712e
 	ld [wRulesPastFirstPage], a ; $7131
 	xor a ; $7134
 	ld [wRulesAnimCounter], a ; $7135
@@ -308,7 +308,7 @@ MinigameRulesPageLoop:
 	sound SFX_MENU_CANCEL ; $713c
 	ld hl, DrawRulesNextPageArrow ; $713e
 	call UnregisterFrameTask ; $7141
-	ld hl, RulesScreenTiles ; $7144
+	ld hl, RulesScreenTiles ; $7144 -- no task: a stale address, never registered
 	call UnregisterFrameTask ; $7147
 	ld a, $ff ; $714a
 	ld [wRulesExitCode], a ; $714c
@@ -570,49 +570,49 @@ LoadRulesToadTiles:
 	ld bc, 1 ; $7419
 	call QueueVRAMCopy ; $741c
 	ret ; $741f
-AdvanceRulesScreenAnimFrame:
+AnimateRulesToad:
 	push_wram_bank WRAM_SCREEN ; $7420
 	ld a, [wRulesAnimCounter] ; $7429
 	inc a ; $742c
 	ld [wRulesAnimCounter], a ; $742d
-	ld a, [wRulesAnimEnabled] ; $7430
+	ld a, [wRulesToadTalking] ; $7430
 	or a ; $7433
-	jr z, .slowAnim ; $7434
+	jr z, .idle ; $7434
 	ldh a, [hVBlankCounter] ; $7436
 	srl a ; $7438
 	srl a ; $743a
 	srl a ; $743c
 	and $3f ; $743e
-	ld hl, RulesScreenNewPageAnimFrameTable ; $7440
+	ld hl, RulesToadTalkFrames ; $7440
 	add_hl_a ; $7443
 	ld a, [hl] ; $7448
 	ld [wRulesScreenAnimFrame], a ; $7449
 	jr .checkAnimEnd ; $744c
-.slowAnim:
+.idle:
 	ldh a, [hVBlankCounter] ; $744e
 	srl a ; $7450
 	srl a ; $7452
 	srl a ; $7454
 	srl a ; $7456
 	and $1f ; $7458
-	ld hl, RulesScreenAnimFrameTable ; $745a
+	ld hl, RulesToadIdleFrames ; $745a
 	add_hl_a ; $745d
 	ld a, [hl] ; $7462
 	ld [wRulesScreenAnimFrame], a ; $7463
 	jr .checkAnimEnd ; $7466
 .checkAnimEnd:
-	ld a, [wRulesAnimEnabled] ; $7468
+	ld a, [wRulesToadTalking] ; $7468
 	or a ; $746b
 	jr z, .restore ; $746c
 	ld a, [wRulesAnimCounter] ; $746e
 	cp $ff ; $7471
 	jr nz, .restore ; $7473
 	xor a ; $7475
-	ld [wRulesAnimEnabled], a ; $7476
+	ld [wRulesToadTalking], a ; $7476
 .restore:
 	pop_wram_bank ; $7479
 	ret ; $747e
-RulesScreenAnimFrameTable:
+RulesToadIdleFrames:
 	; $747f, 32 bytes (records:2)
 	dw $0100 ; record 0
 	dw $0000 ; record 1
@@ -630,7 +630,7 @@ RulesScreenAnimFrameTable:
 	dw $0000 ; record 13
 	dw $0001 ; record 14
 	dw $0000 ; record 15
-RulesScreenNewPageAnimFrameTable:
+RulesToadTalkFrames:
 	; $749f, 60 bytes (records:2)
 	dw $0402 ; record 0
 	dw $0404 ; record 1

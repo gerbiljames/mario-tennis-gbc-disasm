@@ -161,7 +161,7 @@ LoadCharacterAttributes:
 	ld hl, CHARREC_LEVEL ; $5b0e
 	add hl, de ; $5b11
 	ld a, [hl] ; $5b12
-	ld [wCharExpTier], a ; $5b13
+	ld [wCharLevel], a ; $5b13
 	ld b, $00 ; $5b16
 	ld hl, CHARREC_LEFT_HANDED ; $5b18
 	add hl, de ; $5b1b

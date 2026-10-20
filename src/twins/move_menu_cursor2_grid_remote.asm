@@ -1,5 +1,6 @@
 ; Shared by Unused_16_MoveMenuCursor2GridRemote,
-; Unused_3e_MoveMenuCursor2GridRemote (banks $16, $3e).
+; Unused_3b_MoveMenuCursor2GridRemote, Unused_3e_MoveMenuCursor2GridRemote
+; (banks $16, $3b, $3e).
 
 {TWIN_LABEL}:
 	ld a, [wMenuCursor2X]

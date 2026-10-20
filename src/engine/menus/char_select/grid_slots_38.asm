@@ -214,7 +214,7 @@ BuildCreatedCharRecords:
 .charLoop:
 	push af ; $5d9e
 	farcall LoadCharacterRecordToBuffer ; $5d9f
-	farcall CheckCharacterUnlocked ; $5da2
+	farcall CheckCharRecordPresent ; $5da2
 	ld hl, CREATEDCHAR_CHAR ; $5da5
 	add hl, bc ; $5da8
 	ld a, [wCharRecordScratchChar] ; $5da9

@@ -449,7 +449,7 @@ MenuItemAttrRect3x2:
 	tilemap_row $00, $00, $00 ; row 0
 	tilemap_row $00, $00, $00 ; row 1
 	tilemap_end
-Unused_06_DrawMusicMenuRowTextRect:
+Unused_06_PauseMenuItemRowTextRect:
 	; $695b, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $49, $4a, $4b, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c ; row 0

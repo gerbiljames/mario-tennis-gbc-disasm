@@ -171,7 +171,7 @@ def wCharSwingAttrWord equ $df90
 def wLobPlacementIndex equ $df92
 def wDropPlacementIndex equ $df93
 def wCharMirrorAttrMask equ $df94
-def wCharExpTier equ $df95
+def wCharLevel equ $df95
 def wCharDepthKey equ $df96
 
 ; The game progress screen (bank $1e) keeps its lists in WRAM bank $05's

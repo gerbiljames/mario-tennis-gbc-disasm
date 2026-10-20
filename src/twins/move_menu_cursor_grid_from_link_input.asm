@@ -1,6 +1,7 @@
 ; Shared by Unused_16_MoveMenuCursorGridFromLinkInput,
 ; Unused_38_MoveMenuCursorGridFromLinkInput,
-; Unused_3e_MoveMenuCursorGridFromLinkInput (banks $16, $38, $3e).
+; Unused_3b_MoveMenuCursorGridFromLinkInput,
+; Unused_3e_MoveMenuCursorGridFromLinkInput (banks $16, $38, $3b, $3e).
 
 {TWIN_LABEL}:
 	ld a, [wMenuCursorX]

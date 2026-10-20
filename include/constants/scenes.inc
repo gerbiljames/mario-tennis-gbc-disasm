@@ -51,7 +51,7 @@ def SCENECOPY_FROM_CAMERA equ $01 ; any nonzero: copy around wCameraX/wCameraY a
 
 ; --- Ending-sequence object fields (bank $18, wScreenScratch) ---
 ; NUM_SCENEOBJS 16-byte records, each spawned from an 11-byte
-; ObjectArrayASpawnTable / ObjectArrayBSpawnTable row. TaskUpdateObjects_18
+; AwardsCeremonyConfettiSpawnTable / DreamMatchEpilogueConfettiSpawnTable row. TaskUpdateObjects_18
 ; adds the steps to the positions and jumps to the callback with the object
 ; in bc; TaskDrawObjectSprites_18 draws it as two 8x16 sprites side by side.
 	rsreset

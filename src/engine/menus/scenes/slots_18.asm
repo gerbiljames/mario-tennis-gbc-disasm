@@ -17,7 +17,7 @@
 	farptr Unused_18_LoadCharSelectCursorGfx ; $4020
 	farptr Unused_18_DrawCharSelectCursor ; $4022
 	farptr LoadCharacterRecordToBuffer ; $4024
-	farptr CheckCharacterUnlocked ; $4026
+	farptr CheckCharRecordPresent ; $4026
 	farptr Unused_18_CheckUnlockFlag ; $4028
 	farptr Unused_18_MoveGridCursor ; $402a
 	farptr Unused_18_InitPlayerRecordForCharacter ; $402c

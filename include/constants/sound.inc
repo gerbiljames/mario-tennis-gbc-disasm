@@ -182,7 +182,7 @@ def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTarget
 	const SFX_CHIME   ; $97 a minigame target hit / score popup, and a success cue in cutscenes
 	const SFX_EMOTE   ; $98 an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
 	const SFX_APPEAR1 ; $99 the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
-def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
+def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_ToggleMusicOnRow/Unused_1a_Toggle3DScreenRow $1a)
 def SFX_STORY_CUE              equ $a2 ; only the Unused_<bank>_MapScriptPlayStoryCue copies play it
 
 ; --- Music flags (hMusicFlags) ---

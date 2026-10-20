@@ -8,7 +8,7 @@ RunExpDistributionLoop:
 	jr z, .tick ; $6f48
 	xor a ; $6f4a
 	ld [wCharDataViewOnly], a ; $6f4b
-	jp CheckExpLevelDown.openConfirmPrompt ; $6f4e
+	jp RunExpConfirmPrompt ; $6f4e
 .tick:
 	wram_bank WRAM_SCENE ; $6f51
 	ld a, [wExpInputRepeating] ; $6f57
@@ -160,7 +160,7 @@ RunExpDistributionLoop:
 	res EXPBUSYB_POINT_MOVED, [hl] ; $70bc
 	ld a, $a8 ; $70be
 	ld [wExpBarMarkerX], a ; $70c0
-	jp CheckExpLevelDown.openConfirmPrompt ; $70c3
+	jp RunExpConfirmPrompt ; $70c3
 .increaseRepeat:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
@@ -277,7 +277,7 @@ UpdateExpScreenSelectionPalettes:
 	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $71b6
 	ld a, [wStoryCharacterSlot] ; $71b9
 	or a ; $71bc
-	jr nz, .grayOut ; $71bd
+	jr nz, .grayMainChar ; $71bd
 	ld hl, wBGPalettes + 2 * PAL_SIZE + 0 * COLOR_SIZE ; $71bf
 	call GrayscalePaletteColorInPlace ; $71c2
 	ld hl, wBGPalettes + 2 * PAL_SIZE + 1 * COLOR_SIZE ; $71c5
@@ -291,7 +291,7 @@ UpdateExpScreenSelectionPalettes:
 	ld a, $21 ; $71dc
 	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $71de
 	ret ; $71e1
-.grayOut:
+.grayMainChar:
 	ld hl, wBGPalettes + 1 * PAL_SIZE + 0 * COLOR_SIZE ; $71e2
 	call GrayscalePaletteColorInPlace ; $71e5
 	ld hl, wBGPalettes + 1 * PAL_SIZE + 1 * COLOR_SIZE ; $71e8

@@ -101,7 +101,7 @@ CharViewerGridTilemap0:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
 CharViewerGridTilemap1:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
-CharViewerInputLoopTable:
+CharViewerCursorAnimIds:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 	db $10, $11, $12, $0b, $0c, $0d ; 0x10

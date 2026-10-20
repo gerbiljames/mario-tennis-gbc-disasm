@@ -305,7 +305,7 @@ LoadCharacterRecordToBuffer:
 	ld [wCharRecordScratchChar], a ; $4525
 	pop af ; $4528
 	ret ; $4529
-CheckCharacterUnlocked:
+CheckCharRecordPresent:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
 	ld a, [wCharRecordScratchChar] ; $452e

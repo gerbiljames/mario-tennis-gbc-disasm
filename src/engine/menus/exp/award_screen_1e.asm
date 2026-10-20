@@ -1,22 +1,22 @@
-ResultsScreenPalettes:
-	INCLUDE "data/engine/menus/exp/ResultsScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
-ResultsScreenGfx_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsScreenGfx_1e.bin" ; $4c70, 1455 bytes
-ResultsScreenTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsScreenTilemap_1e.bin" ; $521f, 205 bytes
-ResultsScreenAttrmap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsScreenAttrmap_1e.bin" ; $52ec, 87 bytes
+ContinueGameScreenPalettes:
+	INCLUDE "data/engine/menus/exp/ContinueGameScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
+ContinueGameScreenGfx_1e:
+	INCBIN "data/engine/menus/exp/lz_ContinueGameScreenGfx_1e.bin" ; $4c70, 1455 bytes
+ContinueGameScreenTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_ContinueGameScreenTilemap_1e.bin" ; $521f, 205 bytes
+ContinueGameScreenAttrmap_1e:
+	INCBIN "data/engine/menus/exp/lz_ContinueGameScreenAttrmap_1e.bin" ; $52ec, 87 bytes
 PanelFrameGfx_1e:
 	INCBIN "data/engine/menus/exp/lz_PanelFrameGfx_1e.bin" ; $5343, 156 bytes
 	INCLUDE "data/engine/menus/exp/lz_PanelFrameGfx_1e.inc" ; DEF PanelFrameGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
-ResultsSinglesLabelTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
-ResultsDoublesLabelTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
-ResultsPlayerPanelTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
-ResultsPlayerPanelAttrmap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
+SuspendedMatchSinglesLabelTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
+SuspendedMatchDoublesLabelTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
+SuspendedMatchPlayerPanelTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
+SuspendedMatchPlayerPanelAttrmap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
 	or a ; $543b
@@ -536,7 +536,7 @@ UpdateExpScreenCharSprite:
 	ld [wCharFacingOctant], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
 	ld a, [wCharFacingOctant] ; $5966
-	ld_hl_indexed UpdateExpScreenCharSpriteTable ; $5969
+	ld_hl_indexed ExpScreenFacingFlipAttrs ; $5969
 	ld a, [wCharSpriteAttr] ; $5970
 	or OAM_BANK1 ; $5973
 	xor [hl] ; $5975
@@ -544,10 +544,10 @@ UpdateExpScreenCharSprite:
 	pop af ; $5977
 	push af ; $5978
 	or a ; $5979
-	jr nz, .player2Hand ; $597a
+	jr nz, .partnerHand ; $597a
 	ld a, [wPlayer1MainLeftHanded] ; $597c
 	jr .compare ; $597f
-.player2Hand:
+.partnerHand:
 	ld a, [wPlayer2MainLeftHanded] ; $5981
 .compare:
 	or a ; $5984
@@ -560,7 +560,7 @@ UpdateExpScreenCharSprite:
 	ld c, a ; $598e
 	pop af ; $598f
 	or a ; $5990
-	jr nz, .secondSprite ; $5991
+	jr nz, .partnerPos ; $5991
 	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $5993
 	jr z, .singlesLayout ; $5996
 	ld d, $44 ; $5998
@@ -570,7 +570,7 @@ UpdateExpScreenCharSprite:
 	ld d, $50 ; $599e
 	ld e, $66 ; $59a0
 	jr .writeSlot ; $59a2
-.secondSprite:
+.partnerPos:
 	ld d, $5c ; $59a4
 	ld e, $66 ; $59a6
 .writeSlot:
@@ -583,7 +583,7 @@ UpdateExpScreenCharSprite:
 	ld [hl+], a ; $59b0
 	ld [hl], d ; $59b1
 	ret ; $59b2
-UpdateExpScreenCharSpriteTable:
+ExpScreenFacingFlipAttrs:
 	; $59b3, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:

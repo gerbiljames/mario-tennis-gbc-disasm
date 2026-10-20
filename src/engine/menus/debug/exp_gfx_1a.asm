@@ -1,21 +1,21 @@
 Padding_1a:
 	; $5523, 13 bytes (fill)
 	ds 13, $00
-ExpScreenGfx0:
-	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx0.bin" ; $5530, 1711 bytes
+ExpScreenGfx:
+	INCBIN "data/engine/menus/debug/lz_ExpScreenGfx.bin" ; $5530, 1711 bytes
 	db $00 ; $5bdf
 	ds ALIGN[4]
-ExpScreenTilemap1:
-	INCBIN "data/engine/menus/debug/ExpScreenTilemap1.bin" ; $5be0, 576 bytes
+ExpScreenGainTilemap:
+	INCBIN "data/engine/menus/debug/ExpScreenGainTilemap.bin" ; $5be0, 576 bytes
 	ds ALIGN[4]
-ExpScreenAttrmap1:
-	INCBIN "data/engine/menus/debug/ExpScreenAttrmap1.bin" ; $5e20, 576 bytes
+ExpScreenGainAttrmap:
+	INCBIN "data/engine/menus/debug/ExpScreenGainAttrmap.bin" ; $5e20, 576 bytes
 	ds ALIGN[4]
-ExpScreenTilemap2:
-	INCBIN "data/engine/menus/debug/ExpScreenTilemap2.bin" ; $6060, 576 bytes
+ExpScreenYesNoTilemap:
+	INCBIN "data/engine/menus/debug/ExpScreenYesNoTilemap.bin" ; $6060, 576 bytes
 	ds ALIGN[4]
-ExpScreenAttrmap2:
-	INCBIN "data/engine/menus/debug/ExpScreenAttrmap2.bin" ; $62a0, 576 bytes
+ExpScreenYesNoAttrmap:
+	INCBIN "data/engine/menus/debug/ExpScreenYesNoAttrmap.bin" ; $62a0, 576 bytes
 ExpScreenBgPalettes:
 	INCLUDE "data/engine/menus/debug/ExpScreenBgPalettes.asm" ; $64e0, 80 bytes (palettes)
 Unused_1a_ExpScreenGfx9:

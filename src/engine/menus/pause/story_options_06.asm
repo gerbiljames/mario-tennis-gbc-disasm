@@ -442,7 +442,7 @@ Unused_06_DrawStoryMenuItemRow:
 	call CopyTileRectToShadowTilemap ; $786f
 	ld_cell de, $03, $0a ; $7872
 	call GetShadowAttrmapAddr ; $7875
-	ld hl, TextRectAttrs_06 ; $7878
+	ld hl, StoryMenuItemRowAttrs ; $7878
 	ld_size bc, 12, 2 ; $787b
 	call CopyTileRectToShadowAttrmap ; $787e
 	ret ; $7881

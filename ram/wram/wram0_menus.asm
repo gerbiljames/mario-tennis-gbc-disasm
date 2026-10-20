@@ -33,7 +33,7 @@ wAnimatedTileFrame:: db
 ; [8-bit] UpdateAnimatedTiles' frame counter: counts 0..wAnimatedTilePeriod-1, tiles step when it wraps to 0
 wAnimatedTileTimer:: db
 
-; [8-bit] Animated-tile set the UpdateAnimatedTiles frame task cycles ($00-$03, index into the pointer tables UpdateAnimatedTilesTable / AnimatedTilesSecondStripFrameLists). Set by the screens that install the task: 0 for the main menu, court diagram, bank $3b screens and link screens; 1 for the star-chart results and a few others; 2/3 on the match result screen for win/lose
+; [8-bit] Animated-tile set the UpdateAnimatedTiles frame task cycles ($00-$03, index into the pointer tables AnimatedTileFrameLists / AnimatedTilesSecondStripFrameLists). Set by the screens that install the task: 0 for the main menu, court diagram, bank $3b screens and link screens; 1 for the star-chart results and a few others; 2/3 on the match result screen for win/lose
 wAnimatedTileSet:: db
 
 ; [8-bit] Frame period of the animated-tile task; usually $03 ($05 on a link screen, $06 on the match result screen)

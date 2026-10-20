@@ -1,6 +1,6 @@
-PopulateObjectArrayA:
+SpawnAwardsCeremonyConfetti:
 	ld c, $00 ; $7c27
-	ld hl, ObjectArrayASpawnTable ; $7c29
+	ld hl, AwardsCeremonyConfettiSpawnTable ; $7c29
 	ld de, wScreenScratch ; $7c2c
 .spawnLoop:
 	push af ; $7c2f
@@ -26,50 +26,50 @@ PopulateObjectArrayA:
 	cp NUM_SCENEOBJS ; $7c4e
 	jr nz, .spawnLoop ; $7c50
 	ret ; $7c52
-ObjectArrayASpawnTable:
+AwardsCeremonyConfettiSpawnTable:
 	; $7c53, 176 bytes (records:11:ptr9)
 ; 16 records x 11 bytes (dw callback at +$9)
 	db $01, $00, $14, $00, $00, $40, $a0, $00, $00 ; record 0
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $02, $00, $24, $00, $18, $50, $c3, $04, $01 ; record 1
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $03, $00, $a3, $00, $3c, $45, $85, $08, $02 ; record 2
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $01, $00, $d0, $00, $00, $70, $ff, $0c, $01 ; record 3
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $02, $00, $54, $00, $24, $40, $b3, $10, $03 ; record 4
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $03, $00, $48, $00, $48, $80, $c5, $14, $01 ; record 5
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $01, $00, $9c, $00, $24, $30, $d2, $18, $00 ; record 6
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $02, $00, $66, $00, $10, $45, $82, $1c, $01 ; record 7
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $03, $00, $44, $00, $14, $61, $90, $20, $03 ; record 8
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $01, $00, $c2, $00, $28, $4f, $a4, $24, $00 ; record 9
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $02, $00, $5a, $00, $4c, $43, $55, $28, $01 ; record 10
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $03, $00, $30, $00, $60, $42, $b4, $2c, $02 ; record 11
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $01, $00, $63, $00, $44, $64, $f0, $00, $01 ; record 12
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $02, $00, $18, $00, $98, $34, $52, $00, $02 ; record 13
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $03, $00, $8c, $00, $0c, $45, $c0, $00, $01 ; record 14
-	dw ObjectArrayAUpdateCallback_18
+	dw UpdateAwardsCeremonyConfettiPiece
 	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00 ; record 15
-	dw ObjectArrayAUpdateCallback_18
-InitObjectSceneB:
+	dw UpdateAwardsCeremonyConfettiPiece
+InitDreamMatchEpilogueConfetti:
 	push_wram_bank WRAM_SCREEN ; $7d03
 	ld hl, wScreenScratch ; $7d0c
 	ld bc, NUM_SCENEOBJS * SCENEOBJ_SIZE ; $7d0f
 	call ClearBytes ; $7d12
-	call PopulateObjectArrayB ; $7d15
-	call LoadObjectSceneBTiles ; $7d18
+	call SpawnDreamMatchEpilogueConfetti ; $7d15
+	call LoadDreamMatchEpilogueConfettiGfx ; $7d18
 	ret ; $7d1b
-LoadObjectSceneBTiles:
+LoadDreamMatchEpilogueConfettiGfx:
 	ld b, TILEBLOCK_DreamMatchEpilogueConfettiGfx0 ; $7d1c
 	ld c, DreamMatchEpilogueConfettiGfx0_SIZE / 16 ; $7d1e
 	ld de, vTiles0 ; $7d20
@@ -88,9 +88,9 @@ LoadObjectSceneBTiles:
 	ret ; $7d43
 DreamMatchEpilogueConfettiPalettes:
 	INCLUDE "data/engine/menus/scenes/DreamMatchEpilogueConfettiPalettes.asm" ; $7d44, 24 bytes (palettes)
-PopulateObjectArrayB:
+SpawnDreamMatchEpilogueConfetti:
 	ld c, $00 ; $7d5c
-	ld hl, ObjectArrayBSpawnTable ; $7d5e
+	ld hl, DreamMatchEpilogueConfettiSpawnTable ; $7d5e
 	ld de, wScreenScratch ; $7d61
 .spawnLoop:
 	push af ; $7d64
@@ -116,46 +116,46 @@ PopulateObjectArrayB:
 	cp NUM_SCENEOBJS ; $7d83
 	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
-ObjectArrayBSpawnTable:
+DreamMatchEpilogueConfettiSpawnTable:
 	; $7d88, 176 bytes (records:11:ptr9)
 ; 16 records x 11 bytes (dw callback at +$9)
 	db $01, $00, $44, $00, $00, $40, $a0, $00, $00 ; record 0
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $02, $00, $34, $00, $18, $50, $63, $04, $01 ; record 1
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $03, $00, $43, $00, $3c, $45, $95, $08, $02 ; record 2
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $01, $00, $60, $00, $00, $70, $ff, $0c, $01 ; record 3
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $02, $00, $44, $00, $84, $40, $b3, $10, $03 ; record 4
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $03, $00, $38, $00, $1a, $80, $ca, $14, $01 ; record 5
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $01, $00, $2c, $00, $84, $30, $d2, $18, $00 ; record 6
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $02, $00, $56, $00, $10, $45, $52, $1c, $01 ; record 7
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $03, $00, $44, $00, $14, $61, $c4, $20, $03 ; record 8
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $01, $00, $1f, $00, $88, $4f, $b4, $24, $00 ; record 9
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $02, $00, $2a, $00, $4c, $43, $55, $28, $01 ; record 10
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $03, $00, $80, $00, $23, $42, $b4, $2c, $02 ; record 11
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $01, $00, $73, $00, $14, $64, $f0, $00, $01 ; record 12
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $02, $00, $3a, $00, $28, $34, $82, $00, $02 ; record 13
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $03, $00, $8c, $00, $9c, $45, $d0, $00, $01 ; record 14
-	dw ObjectArrayBUpdateCallback_18
+	dw UpdateDreamMatchEpilogueConfettiPiece
 	db $01, $00, $33, $00, $30, $55, $b0, $00, $00 ; record 15
-	dw ObjectArrayBUpdateCallback_18
-ObjectArrayAUpdateCallback_18:
+	dw UpdateDreamMatchEpilogueConfettiPiece
+UpdateAwardsCeremonyConfettiPiece:
 	ldh a, [hVBlankCounter] ; $7e38
 	add c ; $7e3a
 	and $1f ; $7e3b
-	ld hl, ObjectArrayAWaveTable_18 ; $7e3d
+	ld hl, AwardsCeremonyConfettiSwayTable ; $7e3d
 	add_hl_a ; $7e40
 	ld d, [hl] ; $7e45
 	ld hl, SCENEOBJ_X_STEP ; $7e46
@@ -180,9 +180,9 @@ ObjectArrayAUpdateCallback_18:
 	ld [hl], a ; $7e65
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7e66
-ObjectArrayAWaveTable_18:
-	INCLUDE "data/engine/menus/scenes/ObjectArrayAWaveTable_18.asm" ; $7e69, 32 bytes (bytes:16)
-ObjectArrayBUpdateCallback_18:
+AwardsCeremonyConfettiSwayTable:
+	INCLUDE "data/engine/menus/scenes/AwardsCeremonyConfettiSwayTable.asm" ; $7e69, 32 bytes (bytes:16)
+UpdateDreamMatchEpilogueConfettiPiece:
 	ldh a, [hVBlankCounter] ; $7e89
 	add c ; $7e8b
 	and $03 ; $7e8c
@@ -193,7 +193,7 @@ ObjectArrayBUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e94
 	add c ; $7e96
 	and $1f ; $7e97
-	ld hl, ObjectArrayBDriftTable_18 ; $7e99
+	ld hl, DreamMatchEpilogueConfettiDriftTable ; $7e99
 	add_hl_a ; $7e9c
 	ld d, [hl] ; $7ea1
 	ld hl, SCENEOBJ_X + 1 ; $7ea2
@@ -222,6 +222,6 @@ ObjectArrayBUpdateCallback_18:
 	ld [hl], d ; $7ec4
 .done:
 	jp ObjectUpdateLoopTail_18 ; $7ec5
-ObjectArrayBDriftTable_18:
-	INCLUDE "data/engine/menus/scenes/ObjectArrayBDriftTable_18.asm" ; $7ec8, 45 bytes (bytes:16)
+DreamMatchEpilogueConfettiDriftTable:
+	INCLUDE "data/engine/menus/scenes/DreamMatchEpilogueConfettiDriftTable.asm" ; $7ec8, 45 bytes (bytes:16)
 	; $7ef5, 267 bytes fill to bank end (linker-padded)

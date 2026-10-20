@@ -21,7 +21,7 @@ wCutsceneTextScrollBuffer:: ds 640
 NEXTU
 ; character record copy (bank $1b)
 	ds 1408
-; [128 bytes] Copy of a character record LoadCharacterRecordToBuffer takes from wPlayer2MainName, so one character's fields can be read without disturbing the live records. CheckCharacterUnlocked tests CHARREC_CHAR against $ff; RunNewGameSetup reads CHARREC_PALETTE and CHARREC_LEFT_HANDED of each starting character
+; [128 bytes] Copy of a character record LoadCharacterRecordToBuffer takes from wPlayer2MainName, so one character's fields can be read without disturbing the live records. CheckCharRecordPresent tests CHARREC_CHAR against $ff; RunNewGameSetup reads CHARREC_PALETTE and CHARREC_LEFT_HANDED of each starting character
 wCharRecordBuffer:: ds 128
 NEXTU
 ; VRAM staging (WRAM bank $01)

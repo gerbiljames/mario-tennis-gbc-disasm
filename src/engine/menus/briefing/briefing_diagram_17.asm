@@ -1,40 +1,40 @@
-DrawSpinServeBriefingMarker:
+DrawBriefingLeftArrow:
 	push_wram_bank WRAM_SCREEN ; $4843
 	ld c, $64 ; $484c
 	ld b, $09 ; $484e
-	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
+	ld a, [wBriefingLeftArrowUnflipped] ; $4850
 	cp $01 ; $4853
 	jr z, .gotAttr ; $4855
 	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $4857
 .gotAttr:
-	ld a, [wBriefingSpinMarkerX] ; $4859
+	ld a, [wBriefingLeftArrowX] ; $4859
 	ld d, a ; $485c
-	ld a, [wBriefingSpinMarkerY] ; $485d
+	ld a, [wBriefingLeftArrowY] ; $485d
 	ld e, a ; $4860
-	ld hl, DrawSpinServeBriefingMarker_SpriteTemplate ; $4861
+	ld hl, BriefingLeftArrowSpriteTemplate ; $4861
 	call QueueSpriteTemplate ; $4864
 	pop_wram_bank ; $4867
 	ret ; $486c
-DrawSpinServeBriefingMarker_SpriteTemplate:
+BriefingLeftArrowSpriteTemplate:
 	; $486d, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-DrawBriefingMarkerRotated:
+DrawBriefingDiagonalArrow:
 	push_wram_bank WRAM_SCREEN ; $4876
-	ld hl, BriefingMarkerRotatedTable ; $487f
-	ld a, [wBriefingRotMarkerDir] ; $4882
+	ld hl, BriefingDiagonalArrowAttrs ; $487f
+	ld a, [wBriefingDiagArrowDir] ; $4882
 	add_hl_a ; $4885
 	ld b, [hl] ; $488a
 	ld c, $68 ; $488b
-	ld a, [wBriefingRotMarkerX] ; $488d
+	ld a, [wBriefingDiagArrowX] ; $488d
 	ld d, a ; $4890
-	ld a, [wBriefingRotMarkerY] ; $4891
+	ld a, [wBriefingDiagArrowY] ; $4891
 	ld e, a ; $4894
 	call QueueSprite ; $4895
 	pop_wram_bank ; $4898
 	ret ; $489d
-BriefingMarkerRotatedTable:
+BriefingDiagonalArrowAttrs:
 	; $489e, 4 bytes (bytes:4)
 	db $49, $09, $29, $69 ; 0x00
 DrawBlinkingPrompt:
@@ -215,18 +215,15 @@ Unused_17_DrawSecondCaptionRow:
 	ld c, 6 * TILEMAP_WIDTH / 16 ; $4a15
 	call QueueVRAMCopy ; $4a17
 	ret ; $4a1a
-; Queues the two-sprite template at $4a29 through QueueSpriteTemplate at
-; screen position de = $2020, with c = $04 (tile base) and b = $09
-; (flags; bit 5 would mirror it).
-; Nothing calls it, so what it draws is unknown.
-Unused_17_QueueSpritePair:
+; The court-diagram opponent (tile $04) at a fixed $20,$20, OBJ palette 1.
+Unused_17_DrawBriefingOpponentFixed:
 	ld c, $04 ; $4a1b
 	ld b, OAM_BANK1 | 1 ; $4a1d
-	ld hl, QueueSpritePair_17_SpriteTemplate ; $4a1f
+	ld hl, BriefingOpponentFixedSpriteTemplate ; $4a1f
 	ld_xy de, $20, $20 ; $4a22
 	call QueueSpriteTemplate ; $4a25
 	ret ; $4a28
-QueueSpritePair_17_SpriteTemplate:
+BriefingOpponentFixedSpriteTemplate:
 	; $4a29, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -399,8 +396,8 @@ DrillBriefing_ServeToTargets:
 	call ServeToTargetsBriefing_AdvanceAnim ; $5584
 	frame_task DrawBriefingPlayerSprite ; $5587
 	frame_task DrawBriefingBallSprite ; $558f
-	frame_task DrawBriefingMarkerHFlip ; $5597
-	frame_task DrawBriefingMarkerRotated ; $559f
+	frame_task DrawBriefingPointingHand ; $5597
+	frame_task DrawBriefingDiagonalArrow ; $559f
 	frame_task CycleDiagramTargetPalette ; $55a7
 	ld hl, Text_BriefTargetServeFourCourts ; $55af
 	call DrawBriefingCaption ; $55b2
@@ -419,7 +416,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $55d5
 	call ServeToTargetsBriefing_AdvanceAnim ; $55d8
 	frame_task DrawBriefingPlayerSprite ; $55db
-	frame_task DrawBriefingMarkerHFlip ; $55e3
+	frame_task DrawBriefingPointingHand ; $55e3
 	frame_task CycleDiagramTargetPalette ; $55eb
 	ld a, $00 ; $55f3
 	ld [wBriefingBracketWidth], a ; $55f5
@@ -450,19 +447,19 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingBallY], a ; $5642
 	frame_task DrawBriefingBallSprite ; $5645
 	ld a, $00 ; $564d
-	ld [wBriefingHMarkerUnflipped], a ; $564f
+	ld [wBriefingHandUnflipped], a ; $564f
 	ld a, $3a ; $5652
-	ld [wBriefingHMarkerX], a ; $5654
+	ld [wBriefingHandX], a ; $5654
 	ld a, $24 ; $5657
-	ld [wBriefingHMarkerY], a ; $5659
-	frame_task DrawBriefingMarkerHFlip ; $565c
+	ld [wBriefingHandY], a ; $5659
+	frame_task DrawBriefingPointingHand ; $565c
 	ld a, $03 ; $5664
-	ld [wBriefingRotMarkerDir], a ; $5666
+	ld [wBriefingDiagArrowDir], a ; $5666
 	ld a, $52 ; $5669
-	ld [wBriefingRotMarkerX], a ; $566b
+	ld [wBriefingDiagArrowX], a ; $566b
 	ld a, $40 ; $566e
-	ld [wBriefingRotMarkerY], a ; $5670
-	frame_task DrawBriefingMarkerRotated ; $5673
+	ld [wBriefingDiagArrowY], a ; $5670
+	frame_task DrawBriefingDiagonalArrow ; $5673
 	ld b, $04 ; $567b
 	call DrawDiagramTargetOverlay ; $567d
 	frame_task CycleDiagramTargetPalette ; $5680
@@ -485,7 +482,7 @@ DrillBriefing_ServeToTargets:
 	call ServeToTargetsBriefing_AdvanceAnim ; $56bd
 	frame_task DrawBriefingPlayerSprite ; $56c0
 	frame_task DrawBriefingBallSprite ; $56c8
-	frame_task DrawBriefingMarkerRotated ; $56d0
+	frame_task DrawBriefingDiagonalArrow ; $56d0
 	frame_task CycleDiagramTargetPalette ; $56d8
 	ld a, $00 ; $56e0
 	ld [wBriefingBracketWidth], a ; $56e2

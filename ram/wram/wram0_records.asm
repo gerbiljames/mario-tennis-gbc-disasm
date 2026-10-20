@@ -27,7 +27,7 @@ wSoundOptionBits:: db
 ; [8-bit] Message speed: MSGSPEED_FAST/NORMAL/SLOW in bits 0-6 (ApplyMessageSpeed). Bit 7, MSGSPEEDB_INSTANT, draws text at once whatever the speed: set by ShowLocationNamePopup, the Tennis Dictionary redraw, Unused_1a_ForceInstantMessageSpeed and ToggleCutsceneFastForward (as it clears FLAG_CUTSCENE_FAST_FORWARD), tested by ApplyMessageSpeed, FlushGlyphRow and UploadLastGlyphTiles, and cleared before saving
 wMessageSpeed:: db
 
-; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the results screen and saves the slot, and clears it with wMatchSuspendedFlag
+; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the continue-game screen (ShowExpAwardOrContinueGameScreen, c = 0) and saves the slot, and clears it with wMatchSuspendedFlag
 wSaveAndQuitRequest:: db
 
 ; [8-bit] Game Mode
@@ -385,7 +385,7 @@ wStoryModeNpcEventFlags:: ds 3
 ; [3 bytes] wGameFlags bytes $11-$13 (flags 136-159): FLAG_TROPHY_EXP_GROUP_*_TIER_*, the once-only N64 trophy-EXP tiers ComputeTrophyExpForGroup awards (TrophyExpTierFlags)
 wTrophyExpTierFlags:: ds 3
 
-; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): the FLAG_UNLOCKED_<char> story-cast grid unlocks (set by story wins via RewardUnlockFlagTable and by the unlock-everything cheat; read by BuildCharUnlockFlags), then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES
+; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): the FLAG_UNLOCKED_<char> story-cast grid unlocks (set by story wins via RewardUnlockCharFlags and by the unlock-everything cheat; read by BuildCharUnlockFlags), then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES
 wStoryCastUnlockFlags:: dw
 
 ; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_LESSON_PASSED_THIS_VISIT bits
@@ -443,7 +443,7 @@ ENDU
 	ds 32
 
 ; The four on-court records: player 1's main character and partner, then
-; player 2's. The results screen prints the names; LoadCharacterAttributes
+; player 2's. The continue-game screen prints the names; LoadCharacterAttributes
 ; copies each record's physics and AI attributes into that character's
 ; banked struct. ExchangeLinkUnlockFlags borrows the main records'
 ; LinkCourtMask for the peer's bonus-court unlock mask: the one matching

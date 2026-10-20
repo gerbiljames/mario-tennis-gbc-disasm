@@ -57,7 +57,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"^\t(?:map_entry \S+, \S+,|map_actor \S+, \S+,|script_move_target \S+,|script_set_position \S+,|script_move_player|as_set_target|as_set_pos) \$[0-9a-f]{4}\b"), 0)
         # register pairs loaded with two instructions, named by the split-pair macros
         for mac, n in (("rect_size", 198), ("rect_cell", 24), ("map_cell", 38), ("sprite_xy", 60),
-                       ("sprite_attr_tile", 27), ("sprite_tile_attr", 82)):
+                       ("sprite_attr_tile", 27), ("sprite_tile_attr", 83)):
             self.assertEqual(count(rf"^\t{mac} "), n, mac)
         # animation delays, scene-rect copies and relative moves read as numbers
         self.assertEqual(count(r"^\tanim_frame [^,\n]+, \$"), 0)

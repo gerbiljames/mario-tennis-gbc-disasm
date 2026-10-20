@@ -135,8 +135,8 @@ the same bytes.
 * **318,679 compressed bytes → 808,508 decompressed** (39.4%).
 * **Nearly all decompress to a multiple of 16 bytes** (whole tiles or map planes). Those
   that do not are small tilemap/attrmap rect streams in banks `$1a`-`$1e`
-  (`CharDataScreen*`, `CharDataConfirmScreen*`, `Results*Tilemap_1e`,
-  `ResultsPlayerPanelAttrmap_1e`), 9 to 130 bytes.
+  (`CharDataScreen*`, `CharDataConfirmScreen*`, `SuspendedMatch*Tilemap_1e`,
+  `SuspendedMatchPlayerPanelAttrmap_1e`), 9 to 130 bytes.
 * Sizes: min 9, max 4096; commonest 1024, 256, 64, 4096, 320 and 144.
 * Example: `MinigameCourtTiles` (`$5f:$4060`) is 2037 → 3024 bytes,
   `MinigameCourtTilemap` (`$5f:$4855`) 625 → 1024

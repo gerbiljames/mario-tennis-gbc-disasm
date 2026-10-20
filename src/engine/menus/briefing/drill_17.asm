@@ -15,19 +15,19 @@ DrillBriefing_ServeAndSmash:
 	ld [wBriefingBallY], a ; $625b
 	frame_task DrawBriefingBallSprite ; $625e
 	ld a, $00 ; $6266
-	ld [wBriefingHMarkerUnflipped], a ; $6268
+	ld [wBriefingHandUnflipped], a ; $6268
 	ld a, $3a ; $626b
-	ld [wBriefingHMarkerX], a ; $626d
+	ld [wBriefingHandX], a ; $626d
 	ld a, $20 ; $6270
-	ld [wBriefingHMarkerY], a ; $6272
-	frame_task DrawBriefingMarkerHFlip ; $6275
+	ld [wBriefingHandY], a ; $6272
+	frame_task DrawBriefingPointingHand ; $6275
 	ld a, $03 ; $627d
-	ld [wBriefingRotMarkerDir], a ; $627f
+	ld [wBriefingDiagArrowDir], a ; $627f
 	ld a, $52 ; $6282
-	ld [wBriefingRotMarkerX], a ; $6284
+	ld [wBriefingDiagArrowX], a ; $6284
 	ld a, $40 ; $6287
-	ld [wBriefingRotMarkerY], a ; $6289
-	frame_task DrawBriefingMarkerRotated ; $628c
+	ld [wBriefingDiagArrowY], a ; $6289
+	frame_task DrawBriefingDiagonalArrow ; $628c
 	ld a, $0d ; $6294
 	ld [wBriefingBracketWidth], a ; $6296
 	ld a, $00 ; $6299
@@ -53,12 +53,12 @@ DrillBriefing_ServeAndSmash:
 	ld [wBriefingOpponentY], a ; $62dd
 	frame_task DrawBriefingOpponentSprite ; $62e0
 	ld a, $00 ; $62e8
-	ld [wBriefingHMarkerUnflipped], a ; $62ea
+	ld [wBriefingHandUnflipped], a ; $62ea
 	ld a, $3a ; $62ed
-	ld [wBriefingHMarkerX], a ; $62ef
+	ld [wBriefingHandX], a ; $62ef
 	ld a, $3c ; $62f2
-	ld [wBriefingHMarkerY], a ; $62f4
-	frame_task DrawBriefingMarkerHFlip ; $62f7
+	ld [wBriefingHandY], a ; $62f4
+	frame_task DrawBriefingPointingHand ; $62f7
 	ld b, $06 ; $62ff
 	call DrawDiagramTargetOverlay ; $6301
 	frame_task CycleDiagramTargetPalette ; $6304
@@ -84,19 +84,19 @@ DrillBriefing_ServeAndSmash:
 	ld [wBriefingBallY], a ; $634e
 	frame_task DrawBriefingBallSprite ; $6351
 	ld a, $01 ; $6359
-	ld [wBriefingRotMarkerDir], a ; $635b
+	ld [wBriefingDiagArrowDir], a ; $635b
 	ld a, $46 ; $635e
-	ld [wBriefingRotMarkerX], a ; $6360
+	ld [wBriefingDiagArrowX], a ; $6360
 	ld a, $16 ; $6363
-	ld [wBriefingRotMarkerY], a ; $6365
-	frame_task DrawBriefingMarkerRotated ; $6368
+	ld [wBriefingDiagArrowY], a ; $6365
+	frame_task DrawBriefingDiagonalArrow ; $6368
 	ld a, $00 ; $6370
-	ld [wBriefingVMarkerUpright], a ; $6372
+	ld [wBriefingDownArrowUnflipped], a ; $6372
 	ld a, $5b ; $6375
-	ld [wBriefingVMarkerX], a ; $6377
+	ld [wBriefingDownArrowX], a ; $6377
 	ld a, $21 ; $637a
-	ld [wBriefingVMarkerY], a ; $637c
-	frame_task DrawBriefingMarkerVFlip ; $637f
+	ld [wBriefingDownArrowY], a ; $637c
+	frame_task DrawBriefingDownArrow ; $637f
 	ld a, $04 ; $6387
 	ld [wBriefingCmdPrompt], a ; $6389
 	ld a, $2d ; $638c
@@ -125,12 +125,12 @@ DrillBriefing_ServeAndSmash:
 	ld [wBriefingBallY], a ; $63dd
 	frame_task DrawBriefingBallSprite ; $63e0
 	ld a, $03 ; $63e8
-	ld [wBriefingRotMarkerDir], a ; $63ea
+	ld [wBriefingDiagArrowDir], a ; $63ea
 	ld a, $54 ; $63ed
-	ld [wBriefingRotMarkerX], a ; $63ef
+	ld [wBriefingDiagArrowX], a ; $63ef
 	ld a, $3d ; $63f2
-	ld [wBriefingRotMarkerY], a ; $63f4
-	frame_task DrawBriefingMarkerRotated ; $63f7
+	ld [wBriefingDiagArrowY], a ; $63f4
+	frame_task DrawBriefingDiagonalArrow ; $63f7
 	ld a, $0d ; $63ff
 	ld [wBriefingBracketWidth], a ; $6401
 	ld a, $00 ; $6404
@@ -197,19 +197,19 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $648a
 	ld [wBriefingBallY], a ; $648b
 	ld a, [wBriefingAnimStep] ; $648e
-	ld_hl_indexed DrillBriefing_ServeAndSmash_RotMarkerDirTable ; $6491
+	ld_hl_indexed DrillBriefing_ServeAndSmash_DiagArrowDirTable ; $6491
 	ld a, [hl] ; $6498
-	ld [wBriefingRotMarkerDir], a ; $6499
+	ld [wBriefingDiagArrowDir], a ; $6499
 	ld a, c ; $649c
-	ld_hl_indexed DrillBriefing_ServeAndSmash_RotMarkerPosTable ; $649d
+	ld_hl_indexed DrillBriefing_ServeAndSmash_DiagArrowPosTable ; $649d
 	ld a, [hl] ; $64a4
 	inc hl ; $64a5
 	inc hl ; $64a6
 	ld b, [hl] ; $64a7
 	ld a, a ; $64a8
-	ld [wBriefingRotMarkerX], a ; $64a9
+	ld [wBriefingDiagArrowX], a ; $64a9
 	ld a, b ; $64ac
-	ld [wBriefingRotMarkerY], a ; $64ad
+	ld [wBriefingDiagArrowY], a ; $64ad
 .waitInput:
 	ld c, BRIEFPROMPT_NONE ; $64b0
 	call AdvanceFrameCheckInput ; $64b2
@@ -223,18 +223,18 @@ DrillBriefing_ServeAndSmash_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_OpponentPosTable.asm" ; $64cd, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BallPosTable.asm" ; $64dd, 16 bytes (words:2)
-Unused_17_ServeAndSmash_RotMarkerDirTable0:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerDirTable0.asm" ; $64ed, 4 bytes (bytes:4)
-Unused_17_ServeAndSmash_RotMarkerPosTable0:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerPosTable0.asm" ; $64f1, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerDirTable.asm" ; $6501, 4 bytes (bytes:4)
-DrillBriefing_ServeAndSmash_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_RotMarkerPosTable.asm" ; $6505, 16 bytes (words:2)
-Unused_17_ServeAndSmash_RotMarkerDirTable1:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerDirTable1.asm" ; $6515, 4 bytes (bytes:4)
-Unused_17_ServeAndSmash_RotMarkerPosTable1:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_RotMarkerPosTable1.asm" ; $6519, 16 bytes (words:2)
+Unused_17_ServeAndSmash_DiagArrowDirTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_DiagArrowDirTable0.asm" ; $64ed, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash_DiagArrowPosTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_DiagArrowPosTable0.asm" ; $64f1, 16 bytes (words:2)
+DrillBriefing_ServeAndSmash_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_DiagArrowDirTable.asm" ; $6501, 4 bytes (bytes:4)
+DrillBriefing_ServeAndSmash_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_DiagArrowPosTable.asm" ; $6505, 16 bytes (words:2)
+Unused_17_ServeAndSmash_DiagArrowDirTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_DiagArrowDirTable1.asm" ; $6515, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash_DiagArrowPosTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_DiagArrowPosTable1.asm" ; $6519, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm" ; $6529, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2:
@@ -254,19 +254,19 @@ DrillBriefing_ServeAndSmash2:
 	ld [wBriefingBallY], a ; $6564
 	frame_task DrawBriefingBallSprite ; $6567
 	ld a, $00 ; $656f
-	ld [wBriefingHMarkerUnflipped], a ; $6571
+	ld [wBriefingHandUnflipped], a ; $6571
 	ld a, $3a ; $6574
-	ld [wBriefingHMarkerX], a ; $6576
+	ld [wBriefingHandX], a ; $6576
 	ld a, $20 ; $6579
-	ld [wBriefingHMarkerY], a ; $657b
-	frame_task DrawBriefingMarkerHFlip ; $657e
+	ld [wBriefingHandY], a ; $657b
+	frame_task DrawBriefingPointingHand ; $657e
 	ld a, $03 ; $6586
-	ld [wBriefingRotMarkerDir], a ; $6588
+	ld [wBriefingDiagArrowDir], a ; $6588
 	ld a, $52 ; $658b
-	ld [wBriefingRotMarkerX], a ; $658d
+	ld [wBriefingDiagArrowX], a ; $658d
 	ld a, $40 ; $6590
-	ld [wBriefingRotMarkerY], a ; $6592
-	frame_task DrawBriefingMarkerRotated ; $6595
+	ld [wBriefingDiagArrowY], a ; $6592
+	frame_task DrawBriefingDiagonalArrow ; $6595
 	ld a, $0d ; $659d
 	ld [wBriefingBracketWidth], a ; $659f
 	ld a, $00 ; $65a2
@@ -292,12 +292,12 @@ DrillBriefing_ServeAndSmash2:
 	ld [wBriefingOpponentY], a ; $65e6
 	frame_task DrawBriefingOpponentSprite ; $65e9
 	ld a, $00 ; $65f1
-	ld [wBriefingHMarkerUnflipped], a ; $65f3
+	ld [wBriefingHandUnflipped], a ; $65f3
 	ld a, $3a ; $65f6
-	ld [wBriefingHMarkerX], a ; $65f8
+	ld [wBriefingHandX], a ; $65f8
 	ld a, $3c ; $65fb
-	ld [wBriefingHMarkerY], a ; $65fd
-	frame_task DrawBriefingMarkerHFlip ; $6600
+	ld [wBriefingHandY], a ; $65fd
+	frame_task DrawBriefingPointingHand ; $6600
 	ld b, $06 ; $6608
 	call DrawDiagramTargetOverlay ; $660a
 	frame_task CycleDiagramTargetPalette ; $660d
@@ -323,19 +323,19 @@ DrillBriefing_ServeAndSmash2:
 	ld [wBriefingBallY], a ; $6657
 	frame_task DrawBriefingBallSprite ; $665a
 	ld a, $01 ; $6662
-	ld [wBriefingRotMarkerDir], a ; $6664
+	ld [wBriefingDiagArrowDir], a ; $6664
 	ld a, $46 ; $6667
-	ld [wBriefingRotMarkerX], a ; $6669
+	ld [wBriefingDiagArrowX], a ; $6669
 	ld a, $16 ; $666c
-	ld [wBriefingRotMarkerY], a ; $666e
-	frame_task DrawBriefingMarkerRotated ; $6671
+	ld [wBriefingDiagArrowY], a ; $666e
+	frame_task DrawBriefingDiagonalArrow ; $6671
 	ld a, $00 ; $6679
-	ld [wBriefingVMarkerUpright], a ; $667b
+	ld [wBriefingDownArrowUnflipped], a ; $667b
 	ld a, $5b ; $667e
-	ld [wBriefingVMarkerX], a ; $6680
+	ld [wBriefingDownArrowX], a ; $6680
 	ld a, $21 ; $6683
-	ld [wBriefingVMarkerY], a ; $6685
-	frame_task DrawBriefingMarkerVFlip ; $6688
+	ld [wBriefingDownArrowY], a ; $6685
+	frame_task DrawBriefingDownArrow ; $6688
 	ld a, $05 ; $6690
 	ld [wBriefingCmdPrompt], a ; $6692
 	ld a, $2d ; $6695
@@ -364,12 +364,12 @@ DrillBriefing_ServeAndSmash2:
 	ld [wBriefingBallY], a ; $66e6
 	frame_task DrawBriefingBallSprite ; $66e9
 	ld a, $03 ; $66f1
-	ld [wBriefingRotMarkerDir], a ; $66f3
+	ld [wBriefingDiagArrowDir], a ; $66f3
 	ld a, $54 ; $66f6
-	ld [wBriefingRotMarkerX], a ; $66f8
+	ld [wBriefingDiagArrowX], a ; $66f8
 	ld a, $3d ; $66fb
-	ld [wBriefingRotMarkerY], a ; $66fd
-	frame_task DrawBriefingMarkerRotated ; $6700
+	ld [wBriefingDiagArrowY], a ; $66fd
+	frame_task DrawBriefingDiagonalArrow ; $6700
 	ld a, $0d ; $6708
 	ld [wBriefingBracketWidth], a ; $670a
 	ld a, $00 ; $670d
@@ -436,19 +436,19 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6793
 	ld [wBriefingBallY], a ; $6794
 	ld a, [wBriefingAnimStep] ; $6797
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_RotMarkerDirTable ; $679a
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_DiagArrowDirTable ; $679a
 	ld a, [hl] ; $67a1
-	ld [wBriefingRotMarkerDir], a ; $67a2
+	ld [wBriefingDiagArrowDir], a ; $67a2
 	ld a, c ; $67a5
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_RotMarkerPosTable ; $67a6
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_DiagArrowPosTable ; $67a6
 	ld a, [hl] ; $67ad
 	inc hl ; $67ae
 	inc hl ; $67af
 	ld b, [hl] ; $67b0
 	ld a, a ; $67b1
-	ld [wBriefingRotMarkerX], a ; $67b2
+	ld [wBriefingDiagArrowX], a ; $67b2
 	ld a, b ; $67b5
-	ld [wBriefingRotMarkerY], a ; $67b6
+	ld [wBriefingDiagArrowY], a ; $67b6
 .waitInput:
 	ld c, BRIEFPROMPT_NONE ; $67b9
 	call AdvanceFrameCheckInput ; $67bb
@@ -462,18 +462,18 @@ DrillBriefing_ServeAndSmash2_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.asm" ; $67d6, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm" ; $67e6, 16 bytes (words:2)
-Unused_17_ServeAndSmash2_RotMarkerDirTable0:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerDirTable0.asm" ; $67f6, 4 bytes (bytes:4)
-Unused_17_ServeAndSmash2_RotMarkerPosTable0:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerPosTable0.asm" ; $67fa, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash2_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.asm" ; $680a, 4 bytes (bytes:4)
-DrillBriefing_ServeAndSmash2_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.asm" ; $680e, 16 bytes (words:2)
-Unused_17_ServeAndSmash2_RotMarkerDirTable1:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerDirTable1.asm" ; $681e, 4 bytes (bytes:4)
-Unused_17_ServeAndSmash2_RotMarkerPosTable1:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_RotMarkerPosTable1.asm" ; $6822, 16 bytes (words:2)
+Unused_17_ServeAndSmash2_DiagArrowDirTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowDirTable0.asm" ; $67f6, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash2_DiagArrowPosTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowPosTable0.asm" ; $67fa, 16 bytes (words:2)
+DrillBriefing_ServeAndSmash2_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_DiagArrowDirTable.asm" ; $680a, 4 bytes (bytes:4)
+DrillBriefing_ServeAndSmash2_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_DiagArrowPosTable.asm" ; $680e, 16 bytes (words:2)
+Unused_17_ServeAndSmash2_DiagArrowDirTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowDirTable1.asm" ; $681e, 4 bytes (bytes:4)
+Unused_17_ServeAndSmash2_DiagArrowPosTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowPosTable1.asm" ; $6822, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash2_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm" ; $6832, 16 bytes (words:2)
 DrillBriefing_ReturnToTarget:
@@ -493,12 +493,12 @@ DrillBriefing_ReturnToTarget:
 	ld [wBriefingBallY], a ; $686d
 	frame_task DrawBriefingBallSprite ; $6870
 	ld a, $01 ; $6878
-	ld [wBriefingRotMarkerDir], a ; $687a
+	ld [wBriefingDiagArrowDir], a ; $687a
 	ld a, $4c ; $687d
-	ld [wBriefingRotMarkerX], a ; $687f
+	ld [wBriefingDiagArrowX], a ; $687f
 	ld a, $16 ; $6882
-	ld [wBriefingRotMarkerY], a ; $6884
-	frame_task DrawBriefingMarkerRotated ; $6887
+	ld [wBriefingDiagArrowY], a ; $6884
+	frame_task DrawBriefingDiagonalArrow ; $6887
 	ld hl, Text_BriefReturnTargetReturnServe ; $688f
 	call DrawBriefingCaption ; $6892
 	call WaitForInputBlinking ; $6895
@@ -510,8 +510,8 @@ DrillBriefing_ReturnToTarget:
 	frame_task DrawBriefingPlayerSprite ; $68ab
 	frame_task DrawBriefingOpponentSprite ; $68b3
 	frame_task DrawBriefingBallSprite ; $68bb
-	frame_task DrawBriefingMarkerHFlip ; $68c3
-	frame_task DrawBriefingMarkerRotated ; $68cb
+	frame_task DrawBriefingPointingHand ; $68c3
+	frame_task DrawBriefingDiagonalArrow ; $68cb
 	ld a, $0d ; $68d3
 	ld [wBriefingBracketWidth], a ; $68d5
 	ld a, $09 ; $68d8
@@ -528,8 +528,8 @@ DrillBriefing_ReturnToTarget:
 	frame_task DrawBriefingPlayerSprite ; $6901
 	frame_task DrawBriefingOpponentSprite ; $6909
 	frame_task DrawBriefingBallSprite ; $6911
-	frame_task DrawBriefingMarkerHFlip ; $6919
-	frame_task DrawBriefingMarkerRotated ; $6921
+	frame_task DrawBriefingPointingHand ; $6919
+	frame_task DrawBriefingDiagonalArrow ; $6921
 	ld a, $0d ; $6929
 	ld [wBriefingBracketWidth], a ; $692b
 	ld a, $09 ; $692e

@@ -54,7 +54,7 @@ wCharViewerPalette:: db
 wCharViewerPose:: db
 NEXTU
 ; results continue prompt (bank $1e)
-; [8-bit] Nonzero shows the partner on the results screen even without FLAG_TEMP_RESULTS_DOUBLES_LAYOUT; stored from c by InitResultsPromptState, set by the award screen
+; [8-bit] Nonzero shows the partner on the results screen even without FLAG_TEMP_RESULTS_DOUBLES_LAYOUT; stored from c by InitContinueGameScreenState, set by the award screen
 wResultsAlwaysShowPartner:: db
 ; [8-bit] Cursor row, toggled 0/1 by up and down; picks which of the two cursor sprites DrawContinuePromptCursor queues
 wContinuePromptRow:: db

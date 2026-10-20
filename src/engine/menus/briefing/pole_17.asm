@@ -4,8 +4,8 @@ DrillBriefing_ServeThroughPoles:
 	call PoleServeBriefing_AdvanceAnim ; $5c6c
 	frame_task DrawBriefingPlayerSprite ; $5c6f
 	frame_task DrawBriefingBallSprite ; $5c77
-	frame_task DrawBriefingMarkerHFlip ; $5c7f
-	frame_task DrawBriefingMarkerRotated ; $5c87
+	frame_task DrawBriefingPointingHand ; $5c7f
+	frame_task DrawBriefingDiagonalArrow ; $5c87
 	frame_task CycleDiagramTargetPalette ; $5c8f
 	ld hl, Text_BriefPoleServeFourCourts ; $5c97
 	call DrawBriefingCaption ; $5c9a
@@ -24,7 +24,7 @@ DrillBriefing_ServeThroughPoles:
 	ld [wBriefingAnimStep], a ; $5cbd
 	call PoleServeBriefing_AdvanceAnim2 ; $5cc0
 	frame_task DrawBriefingPlayerSprite ; $5cc3
-	frame_task DrawBriefingMarkerHFlip ; $5ccb
+	frame_task DrawBriefingPointingHand ; $5ccb
 	frame_task CycleDiagramTargetPalette ; $5cd3
 	ld a, $00 ; $5cdb
 	ld [wBriefingBracketWidth], a ; $5cdd
@@ -61,12 +61,12 @@ DrillBriefing_ServeThroughPoles:
 	call PoleServeBriefing_AdvanceAnim2 ; $5d30
 	frame_task DrawBriefingPlayerSprite ; $5d33
 	ld a, $00 ; $5d3b
-	ld [wBriefingHMarkerUnflipped], a ; $5d3d
+	ld [wBriefingHandUnflipped], a ; $5d3d
 	ld a, $4b ; $5d40
-	ld [wBriefingHMarkerX], a ; $5d42
+	ld [wBriefingHandX], a ; $5d42
 	ld a, $36 ; $5d45
-	ld [wBriefingHMarkerY], a ; $5d47
-	frame_task DrawBriefingMarkerHFlip ; $5d4a
+	ld [wBriefingHandY], a ; $5d47
+	frame_task DrawBriefingPointingHand ; $5d4a
 	frame_task DrawBriefingPoleSprites ; $5d52
 	frame_task CycleDiagramTargetPalette ; $5d5a
 	ld a, $00 ; $5d62
@@ -137,33 +137,33 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e11
 	ld [wBriefingBallY], a ; $5e12
 	ld a, [wBriefingAnimStep] ; $5e15
-	ld_hl_indexed PoleServeBriefing_HMarkerUnflippedTable ; $5e18
+	ld_hl_indexed PoleServeBriefing_HandUnflippedTable ; $5e18
 	ld a, [hl] ; $5e1f
-	ld [wBriefingHMarkerUnflipped], a ; $5e20
+	ld [wBriefingHandUnflipped], a ; $5e20
 	ld a, c ; $5e23
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim_HMarkerPosTable ; $5e24
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_HandPosTable ; $5e24
 	ld a, [hl] ; $5e2b
 	inc hl ; $5e2c
 	inc hl ; $5e2d
 	ld b, [hl] ; $5e2e
 	ld a, a ; $5e2f
-	ld [wBriefingHMarkerX], a ; $5e30
+	ld [wBriefingHandX], a ; $5e30
 	ld a, b ; $5e33
-	ld [wBriefingHMarkerY], a ; $5e34
+	ld [wBriefingHandY], a ; $5e34
 	ld a, [wBriefingAnimStep] ; $5e37
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim_RotMarkerDirTable ; $5e3a
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_DiagArrowDirTable ; $5e3a
 	ld a, [hl] ; $5e41
-	ld [wBriefingRotMarkerDir], a ; $5e42
+	ld [wBriefingDiagArrowDir], a ; $5e42
 	ld a, c ; $5e45
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim_RotMarkerPosTable ; $5e46
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_DiagArrowPosTable ; $5e46
 	ld a, [hl] ; $5e4d
 	inc hl ; $5e4e
 	inc hl ; $5e4f
 	ld b, [hl] ; $5e50
 	ld a, a ; $5e51
-	ld [wBriefingRotMarkerX], a ; $5e52
+	ld [wBriefingDiagArrowX], a ; $5e52
 	ld a, b ; $5e55
-	ld [wBriefingRotMarkerY], a ; $5e56
+	ld [wBriefingDiagArrowY], a ; $5e56
 	ld a, [wBriefingAnimStep] ; $5e59
 	ld_hl_indexed PoleServeBriefing_TargetOverlayTable ; $5e5c
 	ld b, [hl] ; $5e63
@@ -223,19 +223,19 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, [wBriefingPole1Y] ; $5ecf
 	ld [wBriefingPole2Y], a ; $5ed2
 	ld a, [wBriefingAnimStep] ; $5ed5
-	ld_hl_indexed PoleServeBriefing_HMarkerUnflippedTable ; $5ed8
+	ld_hl_indexed PoleServeBriefing_HandUnflippedTable ; $5ed8
 	ld a, [hl] ; $5edf
-	ld [wBriefingHMarkerUnflipped], a ; $5ee0
+	ld [wBriefingHandUnflipped], a ; $5ee0
 	ld a, c ; $5ee3
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_HMarkerPosTable ; $5ee4
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_HandPosTable ; $5ee4
 	ld a, [hl] ; $5eeb
 	inc hl ; $5eec
 	inc hl ; $5eed
 	ld b, [hl] ; $5eee
 	ld a, a ; $5eef
-	ld [wBriefingHMarkerX], a ; $5ef0
+	ld [wBriefingHandX], a ; $5ef0
 	ld a, b ; $5ef3
-	ld [wBriefingHMarkerY], a ; $5ef4
+	ld [wBriefingHandY], a ; $5ef4
 	ld a, [wBriefingAnimStep] ; $5ef7
 	ld_hl_indexed PoleServeBriefing_TargetOverlayTable ; $5efa
 	ld b, [hl] ; $5f01
@@ -255,16 +255,16 @@ PoleServeBriefing_AdvanceAnim2_PlayerPosTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm" ; $5f16, 16 bytes (words:2)
 PoleServeBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5f26, 16 bytes (words:2)
-PoleServeBriefing_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_HMarkerUnflippedTable.asm" ; $5f36, 4 bytes (bytes:4)
-PoleServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5f3a, 16 bytes (words:2)
-PoleServeBriefing_AdvanceAnim2_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_HMarkerPosTable.asm" ; $5f4a, 16 bytes (words:2)
-PoleServeBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $5f5a, 4 bytes (bytes:4)
-PoleServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $5f5e, 16 bytes (words:2)
+PoleServeBriefing_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_HandUnflippedTable.asm" ; $5f36, 4 bytes (bytes:4)
+PoleServeBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_HandPosTable.asm" ; $5f3a, 16 bytes (words:2)
+PoleServeBriefing_AdvanceAnim2_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_HandPosTable.asm" ; $5f4a, 16 bytes (words:2)
+PoleServeBriefing_AdvanceAnim_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_DiagArrowDirTable.asm" ; $5f5a, 4 bytes (bytes:4)
+PoleServeBriefing_AdvanceAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $5f5e, 16 bytes (words:2)
 PoleServeBriefing_TargetOverlayTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_TargetOverlayTable.asm" ; $5f6e, 4 bytes (bytes:4)
 PoleServeBriefing_AdvanceAnim2_BracketPosTable:
@@ -288,19 +288,19 @@ DrillBriefing_ServeAndVolley:
 	ld [wBriefingBallY], a ; $5fbd
 	frame_task DrawBriefingBallSprite ; $5fc0
 	ld a, $00 ; $5fc8
-	ld [wBriefingHMarkerUnflipped], a ; $5fca
+	ld [wBriefingHandUnflipped], a ; $5fca
 	ld a, $3a ; $5fcd
-	ld [wBriefingHMarkerX], a ; $5fcf
+	ld [wBriefingHandX], a ; $5fcf
 	ld a, $3c ; $5fd2
-	ld [wBriefingHMarkerY], a ; $5fd4
-	frame_task DrawBriefingMarkerHFlip ; $5fd7
+	ld [wBriefingHandY], a ; $5fd4
+	frame_task DrawBriefingPointingHand ; $5fd7
 	ld a, $03 ; $5fdf
-	ld [wBriefingRotMarkerDir], a ; $5fe1
+	ld [wBriefingDiagArrowDir], a ; $5fe1
 	ld a, $52 ; $5fe4
-	ld [wBriefingRotMarkerX], a ; $5fe6
+	ld [wBriefingDiagArrowX], a ; $5fe6
 	ld a, $40 ; $5fe9
-	ld [wBriefingRotMarkerY], a ; $5feb
-	frame_task DrawBriefingMarkerRotated ; $5fee
+	ld [wBriefingDiagArrowY], a ; $5feb
+	frame_task DrawBriefingDiagonalArrow ; $5fee
 	ld b, $06 ; $5ff6
 	call DrawDiagramTargetOverlay ; $5ff8
 	frame_task CycleDiagramTargetPalette ; $5ffb
@@ -316,9 +316,9 @@ DrillBriefing_ServeAndVolley:
 	frame_task DrawBriefingPlayerSprite ; $6022
 	frame_task DrawBriefingOpponentSprite ; $602a
 	frame_task DrawBriefingBallSprite ; $6032
-	frame_task DrawBriefingMarkerHFlip ; $603a
-	frame_task DrawBriefingMarkerRotated ; $6042
-	frame_task DrawBriefingMarkerVFlip ; $604a
+	frame_task DrawBriefingPointingHand ; $603a
+	frame_task DrawBriefingDiagonalArrow ; $6042
+	frame_task DrawBriefingDownArrow ; $604a
 	ld a, $0d ; $6052
 	ld [wBriefingBracketWidth], a ; $6054
 	ld a, $0f ; $6057
@@ -335,9 +335,9 @@ DrillBriefing_ServeAndVolley:
 	frame_task DrawBriefingPlayerSprite ; $6080
 	frame_task DrawBriefingOpponentSprite ; $6088
 	frame_task DrawBriefingBallSprite ; $6090
-	frame_task DrawBriefingMarkerHFlip ; $6098
-	frame_task DrawBriefingMarkerRotated ; $60a0
-	frame_task DrawBriefingMarkerVFlip ; $60a8
+	frame_task DrawBriefingPointingHand ; $6098
+	frame_task DrawBriefingDiagonalArrow ; $60a0
+	frame_task DrawBriefingDownArrow ; $60a8
 	ld a, $0d ; $60b0
 	ld [wBriefingBracketWidth], a ; $60b2
 	ld a, $0f ; $60b5
@@ -413,47 +413,47 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6149
 	ld [wBriefingBallY], a ; $614a
 	ld a, [wBriefingAnimStep] ; $614d
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6150
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_HandUnflippedTable ; $6150
 	ld a, [hl] ; $6157
-	ld [wBriefingHMarkerUnflipped], a ; $6158
+	ld [wBriefingHandUnflipped], a ; $6158
 	ld a, c ; $615b
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable ; $615c
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_HandPosTable ; $615c
 	ld a, [hl] ; $6163
 	inc hl ; $6164
 	inc hl ; $6165
 	ld b, [hl] ; $6166
 	ld a, a ; $6167
-	ld [wBriefingHMarkerX], a ; $6168
+	ld [wBriefingHandX], a ; $6168
 	ld a, b ; $616b
-	ld [wBriefingHMarkerY], a ; $616c
+	ld [wBriefingHandY], a ; $616c
 	ld a, [wBriefingAnimStep] ; $616f
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable ; $6172
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_DiagArrowDirTable ; $6172
 	ld a, [hl] ; $6179
-	ld [wBriefingRotMarkerDir], a ; $617a
+	ld [wBriefingDiagArrowDir], a ; $617a
 	ld a, c ; $617d
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable ; $617e
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_DiagArrowPosTable ; $617e
 	ld a, [hl] ; $6185
 	inc hl ; $6186
 	inc hl ; $6187
 	ld b, [hl] ; $6188
 	ld a, a ; $6189
-	ld [wBriefingRotMarkerX], a ; $618a
+	ld [wBriefingDiagArrowX], a ; $618a
 	ld a, b ; $618d
-	ld [wBriefingRotMarkerY], a ; $618e
+	ld [wBriefingDiagArrowY], a ; $618e
 	ld a, [wBriefingAnimStep] ; $6191
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable ; $6194
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_DownArrowUnflippedTable ; $6194
 	ld a, [hl] ; $619b
-	ld [wBriefingVMarkerUpright], a ; $619c
+	ld [wBriefingDownArrowUnflipped], a ; $619c
 	ld a, c ; $619f
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable ; $61a0
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_DownArrowPosTable ; $61a0
 	ld a, [hl] ; $61a7
 	inc hl ; $61a8
 	inc hl ; $61a9
 	ld b, [hl] ; $61aa
 	ld a, a ; $61ab
-	ld [wBriefingVMarkerX], a ; $61ac
+	ld [wBriefingDownArrowX], a ; $61ac
 	ld a, b ; $61af
-	ld [wBriefingVMarkerY], a ; $61b0
+	ld [wBriefingDownArrowY], a ; $61b0
 	ret ; $61b3
 ServeAndVolleyBriefing_AdvanceAnimTable:
 	; $61b4, 16 bytes (records:2)
@@ -469,17 +469,17 @@ ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable.asm" ; $61c4, 16 bytes (words:2)
 ServeAndVolleyBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BallPosTable.asm" ; $61d4, 16 bytes (words:2)
-ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $61e4, 4 bytes (bytes:4)
-ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $61e8, 16 bytes (words:2)
-ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable.asm" ; $61f8, 4 bytes (bytes:4)
-ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.asm" ; $61fc, 16 bytes (words:2)
-ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.asm" ; $620c, 4 bytes (bytes:4)
-ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6210, 16 bytes (words:2)
+ServeAndVolleyBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $61e4, 4 bytes (bytes:4)
+ServeAndVolleyBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_HandPosTable.asm" ; $61e8, 16 bytes (words:2)
+ServeAndVolleyBriefing_AdvanceAnim_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_DiagArrowDirTable.asm" ; $61f8, 4 bytes (bytes:4)
+ServeAndVolleyBriefing_AdvanceAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $61fc, 16 bytes (words:2)
+ServeAndVolleyBriefing_AdvanceAnim_DownArrowUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_DownArrowUnflippedTable.asm" ; $620c, 4 bytes (bytes:4)
+ServeAndVolleyBriefing_AdvanceAnim_DownArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_DownArrowPosTable.asm" ; $6210, 16 bytes (words:2)
 ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.asm" ; $6220, 16 bytes (words:2)

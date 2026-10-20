@@ -1,18 +1,18 @@
-TextRectAttrs_06:
+StoryMenuItemRowAttrs:
 	; $6973, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 1
 	tilemap_end
-Unused_06_DrawMusicMenuRow:
+Unused_06_DrawPauseMenuItemRow:
 	ld_cell de, $03, $0a ; $698b
 	call GetShadowTilemapAddr ; $698e
-	ld hl, Unused_06_DrawMusicMenuRowTextRect ; $6991
+	ld hl, Unused_06_PauseMenuItemRowTextRect ; $6991
 	ld_size bc, $0c, $02 ; $6994
 	call CopyTextRect ; $6997
 	ld_cell de, $03, $0a ; $699a
 	call GetShadowAttrmapAddr ; $699d
-	ld hl, TextRectAttrs_06 ; $69a0
+	ld hl, StoryMenuItemRowAttrs ; $69a0
 	ld_size bc, $0c, $02 ; $69a3
 	call CopyTextRect ; $69a6
 	ld a, [wCourtViewLocked] ; $69a9
@@ -27,7 +27,7 @@ QueueMatchMenuCursorSprite:
 	add $fc ; $69b8
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
-	ld hl, QueueMatchMenuCursorSprite_SpriteTemplate ; $69be
+	ld hl, MatchMenuCursorAndCaptionSpriteTemplate ; $69be
 	ld_oam bc, 0, $00 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
@@ -48,7 +48,7 @@ DrawScoreboardModeTitle:
 	ld_oam bc, 0, $00 ; $69e0
 	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
-QueueMatchMenuCursorSprite_SpriteTemplate:
+MatchMenuCursorAndCaptionSpriteTemplate:
 	; $69e7, 41 bytes (sprite_template)
 	oam_sprite $00, $20, $64, $02
 	oam_sprite $00, $28, $66, $02

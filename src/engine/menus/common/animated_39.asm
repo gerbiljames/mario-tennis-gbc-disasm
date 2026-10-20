@@ -176,7 +176,7 @@ UpdateAnimatedTiles:
 	ld a, [wAnimatedTileSet] ; $4377
 	and $03 ; $437a
 	add a ; $437c
-	ld hl, UpdateAnimatedTilesTable ; $437d
+	ld hl, AnimatedTileFrameLists ; $437d
 	add_hl_a ; $4380
 	ld a, [hl+] ; $4385
 	ld h, [hl] ; $4386
@@ -240,21 +240,21 @@ UpdateAnimatedTiles:
 	pop bc ; $4400
 	pop af ; $4401
 	ret ; $4402
-UpdateAnimatedTilesTable:
+AnimatedTileFrameLists:
 	; $4403, 8 bytes (records:2)
-	dw AnimatedTilesSet0Frames ; record 0
-	dw AnimatedTilesSet1Frames ; record 1
-	dw AnimatedTilesSet2Frames ; record 2
-	dw AnimatedTilesSet3Frames ; record 3
+	dw TennisBallAnimFrames ; record 0
+	dw StarAnimFrames ; record 1
+	dw MushroomAnimFrames ; record 2
+	dw InvertedStarAnimFrames ; record 3
 AnimatedTilesSecondStripFrameLists:
 	; $440b, 8 bytes (records:2)
 	dw $ffff ; record 0
 	dw $ffff ; record 1
-	dw AnimatedTilesSet3Frames ; record 2
-	dw AnimatedTilesSet2Frames ; record 3
+	dw InvertedStarAnimFrames ; record 2
+	dw MushroomAnimFrames ; record 3
 ; UpdateAnimatedTiles masks the frame with `and $0f`, so records 16-31 here and in
-; AnimatedTilesSet1Frames are never read; they point at filler slots.
-AnimatedTilesSet0Frames:
+; StarAnimFrames are never read; they point at filler slots.
+TennisBallAnimFrames:
 	; $4413, 64 bytes (32 records x 1 slot words)
 	dslot DataPtr_TennisBallAnimFrame00 ; record 0
 	dslot DataPtr_TennisBallAnimFrame01 ; record 1
@@ -288,7 +288,7 @@ AnimatedTilesSet0Frames:
 	dslot DataPtr_Unused_6d_FillerSlot_406c ; record 29
 	dslot DataPtr_Unused_6d_FillerSlot_406e ; record 30
 	dslot DataPtr_Unused_6d_FillerSlot_4070 ; record 31
-AnimatedTilesSet1Frames:
+StarAnimFrames:
 	; $4453, 64 bytes (32 records x 1 slot words)
 	dslot DataPtr_StarAnimFrame00 ; record 0
 	dslot DataPtr_StarAnimFrame01 ; record 1
@@ -322,7 +322,7 @@ AnimatedTilesSet1Frames:
 	dslot DataPtr_Unused_3f_FillerSlot_4070 ; record 29
 	dslot DataPtr_Unused_3f_FillerSlot_4072 ; record 30
 	dslot DataPtr_Unused_3f_FillerSlot_4074 ; record 31
-AnimatedTilesSet2Frames:
+MushroomAnimFrames:
 	; $4493, 32 bytes (16 records x 1 slot words)
 	dslot DataPtr_MushroomAnimFrame00 ; record 0
 	dslot DataPtr_MushroomAnimFrame01 ; record 1
@@ -340,7 +340,7 @@ AnimatedTilesSet2Frames:
 	dslot DataPtr_MushroomAnimFrame13 ; record 13
 	dslot DataPtr_MushroomAnimFrame14 ; record 14
 	dslot DataPtr_MushroomAnimFrame15 ; record 15
-AnimatedTilesSet3Frames:
+InvertedStarAnimFrames:
 	; $44b3, 32 bytes (16 records x 1 slot words)
 	dslot DataPtr_InvertedStarAnimFrame00 ; record 0
 	dslot DataPtr_InvertedStarAnimFrame01 ; record 1

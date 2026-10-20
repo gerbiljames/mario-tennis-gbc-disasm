@@ -308,8 +308,8 @@ NEXTU
 \1DropPlacementIndex:: db
 ; [8-bit] Attribute bits XORed into wCharSpriteAttr for facing octants 2 and 6 (sprite drawn mirrored)
 \1CharMirrorAttrMask:: db
-; [8-bit] Character class/tier from attribute record +$18; LookupExpTierForChar reads it on the EXP screen
-\1CharExpTier:: db
+; [8-bit] Character level, copied from the match record (CHARREC_LEVEL); LookupExpTierForChar turns it into an EXP tier
+\1CharLevel:: db
 ; [8-bit] Draw-order depth key ((depth * 8) >> 8 + $80); DrawActorsByDepth draws back to front
 \1CharDepthKey:: db
 ENDU

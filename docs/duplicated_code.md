@@ -71,7 +71,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/dorm_room_departure_morning_scene.asm` | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` | $13 |
 | `src/twins/draw_ascii_digit_char.asm` | `Unused_<bank>_DrawAsciiDigitChar` | $16, $17, $1b, $3b, $3e |
 | `src/twins/draw_confirm_selection_cursor.asm` | `DrawConfirmSelectionCursor_<bank>` | $1a, $1c, $1d |
-| `src/twins/draw_corner_brackets.asm` | `Unused_<bank>_DrawCornerBrackets` | $1b, $38, $3b, $3e |
+| `src/twins/draw_corner_brackets.asm` | `Unused_<bank>_DrawCornerBrackets` | $16, $1b, $38, $3b, $3e |
 | `src/twins/draw_decimal_number.asm` | `Unused_<bank>_DrawDecimalNumber` | $17, $1b, $3b, $3e |
 | `src/twins/draw_name_with_diacritics.asm` | `DrawNameWithDiacritics_<bank>` | $17, $1b, $3e |
 | `src/twins/draw_name_with_diacritics_38.asm` | `DrawNameWithDiacritics_<bank>` | $38, $3b |
@@ -95,12 +95,12 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/lookup_ball_pos_by_height.asm` | `LookupBallPosByHeight_<bank>` | $20-$24, $29-$2c |
 | `src/twins/lookup_ball_pos_by_shot_index.asm` | `LookupBallPosByShotIndex_<bank>` | $20-$24, $29-$2b |
 | `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `MirrorPlayerSpriteIfLeftHanded_15` | $0e, $15 |
-| `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3e |
+| `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3b, $3e |
 | `src/twins/move_menu_cursor_grid.asm` | `MoveMenuCursorGrid_<bank>` | $38, $3b, $3e |
 | `src/twins/move_menu_cursor_grid_17.asm` | `MoveMenuCursorGrid_<bank>` | $17, $1b |
-| `src/twins/move_menu_cursor_grid_from_link_input.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $16, $38, $3e |
+| `src/twins/move_menu_cursor_grid_from_link_input.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $16, $38, $3b, $3e |
 | `src/twins/move_menu_cursor_grid_from_link_input_17.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $17, $1b |
-| `src/twins/move_menu_cursor_grid_remote.asm` | `Unused_<bank>_MoveMenuCursorGridRemote` | $16, $38, $3e |
+| `src/twins/move_menu_cursor_grid_remote.asm` | `Unused_<bank>_MoveMenuCursorGridRemote` | $16, $38, $3b, $3e |
 | `src/twins/net_game_match1_award_point_to_side.asm` | the seven `*AwardPointToSide` minigame handlers | $0b |
 | `src/twins/net_game_practice1_handle_point_end.asm` | `NetGamePractice1/2/3HandlePointEnd` | $0b |
 | `src/twins/net_game_practice2_hook_minigame_start.asm` | `NetGamePractice2/3Hook_MinigameStart` | $0b |
