@@ -541,11 +541,11 @@ UpdateCharFacingOctant:
 	ld hl, wCharFacingOctant ; $7613
 	ld a, [hl] ; $7616
 	cp d ; $7617
-	jr z, .store ; $7618
+	jr z, .unchanged ; $7618
 	ld [hl], d ; $761a
 	ld hl, wCharSpriteDirty ; $761b
 	set 6, [hl] ; $761e
-.store:
+.unchanged:
 	ret ; $7620
 ReloadCharFacingTiles:
 	ld hl, wCharSpriteDirty ; $7621

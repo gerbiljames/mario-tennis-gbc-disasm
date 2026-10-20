@@ -76,10 +76,10 @@ SetGridEntryTakenByCharId:
 	jr nz, .done ; $6a71
 	ld a, $01 ; $6a73
 	ld [hl], a ; $6a75
-	jr .store ; $6a76
+	jr .updated ; $6a76
 .clear:
 	ld [hl], e ; $6a78
-.store:
+.updated:
 	ld a, $01 ; $6a79
 	ret ; $6a7b
 .done:
@@ -310,13 +310,13 @@ Unused_38_RunLinkCpuDifficultySubmenu:
 	wram_bank WRAM_SCREEN ; $6c09
 	call ClearPlayerSlotPortrait ; $6c0f
 	call BuildVisiblePageSpriteList ; $6c12
-	jr .storeDifficulty ; $6c15
+	jr .redrawPrompt ; $6c15
 .confirm:
 	ld hl, wCharSelectSlotDifficulty ; $6c17
 	ld a, [wCpuDifficultyCursor] ; $6c1a
 	call GetGridSlotFromCursor ; $6c1d
 	call DrawPlayerSlotPortrait ; $6c20
-.storeDifficulty:
+.redrawPrompt:
 	call DrawCharGridSlotPrompt ; $6c23
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $6c26
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $6c29
@@ -391,7 +391,7 @@ UpdateMenuCursorFromLinkInput:
 	xor PADF_BUTTONS ; $6c9d
 	jr nz, .checkButtons ; $6c9f
 	ld b, LINKSEL_RESET ; $6ca1
-	jr .storeCommand ; $6ca3
+	jr .notMoved ; $6ca3
 .checkButtons:
 	ld a, b ; $6ca5
 	and PADF_DPAD ; $6ca6
@@ -404,15 +404,15 @@ UpdateMenuCursorFromLinkInput:
 	cp HAND_LEFT ; $6cb3
 	jr nz, .sendSelect ; $6cb5
 	ld b, LINKSEL_PICK_LEFT_HANDED ; $6cb7
-	jr .storeCommand ; $6cb9
+	jr .notMoved ; $6cb9
 .sendSelect:
 	ld b, LINKSEL_PICK ; $6cbb
-	jr .storeCommand ; $6cbd
+	jr .notMoved ; $6cbd
 .checkB:
 	bit PADB_B, a ; $6cbf
 	jr z, .checkRight ; $6cc1
 	ld b, LINKSEL_CANCEL ; $6cc3
-	jr .storeCommand ; $6cc5
+	jr .notMoved ; $6cc5
 .checkRight:
 	bit PADB_RIGHT, a ; $6cc7
 	jr z, .checkLeft ; $6cc9
@@ -442,7 +442,7 @@ UpdateMenuCursorFromLinkInput:
 	ld a, [wMenuCursor2Y] ; $6cf6
 	cp e ; $6cf9
 	jr nz, .moved ; $6cfa
-.storeCommand:
+.notMoved:
 	pop_wram_bank ; $6cfc
 	xor a ; $6d01
 	ret ; $6d02

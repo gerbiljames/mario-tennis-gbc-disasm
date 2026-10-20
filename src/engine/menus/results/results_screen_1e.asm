@@ -6,7 +6,7 @@
 	farptr FetchAndDrawDialogueText ; $400a
 	farptr WriteTextToTilemap ; $400c
 ShowMatchResultsScreen:
-	clear_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $400e
+	clear_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $400e
 	ld a, [wGameMode] ; $4011
 	cp GAMEMODE_TRAINING_DRILL ; $4014
 	jr z, .checkExpScreen ; $4016
@@ -17,7 +17,7 @@ ShowMatchResultsScreen:
 	cp GAMEMODE_MARIO_MINIGAME ; $4020
 	test_flag FLAG_DOUBLES ; $4022
 	jr z, .checkExpScreen ; $4025
-	set_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4027
+	set_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4027
 .checkExpScreen:
 	ld a, c ; $402a
 	or a ; $402b

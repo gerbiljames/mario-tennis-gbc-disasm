@@ -37,9 +37,9 @@ ExecuteShot:
 	ld b, $00 ; $53ef
 	ld a, [wCharSwingAnim] ; $53f1
 	cp CHARANIM_BACKHAND ; $53f4
-	jr nz, .checkShot0a ; $53f6
+	jr nz, .checkBackhandQuick ; $53f6
 	inc b ; $53f8
-.checkShot0a:
+.checkBackhandQuick:
 	cp CHARANIM_BACKHAND_QUICK ; $53f9
 	jr nz, .checkLeftHanded ; $53fb
 	inc b ; $53fd

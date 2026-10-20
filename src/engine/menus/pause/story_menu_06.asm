@@ -840,9 +840,9 @@ StoryPauseMenu_SaveQuit:
 	call RunStoryMenu ; $7045
 	ld a, [wMatchMenuSelection] ; $7048
 	cp MATCHMENUSEL_CANCELLED ; $704b
-	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $704d
+	jr z, StoryPauseMenu_ReturnToMainMenu.returnZero ; $704d
 	cp $02 ; $704f
-	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $7051
+	jr z, StoryPauseMenu_ReturnToMainMenu.returnZero ; $7051
 	ld a, [wMatchMenuSelection] ; $7053
 	cp $01 ; $7056
 	jr z, StoryPauseMenu_ReturnToMainMenu ; $7058
@@ -879,6 +879,6 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld a, $01 ; $70a6
 .done:
 	ret ; $70a8
-.storeStoryMenuFirstItem:
+.returnZero:
 	ld a, $00 ; $70a9
 	ret ; $70ab

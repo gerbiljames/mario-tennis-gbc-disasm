@@ -4,7 +4,7 @@ ShowGameProgressScreen:
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
 	jr z, .setFlag ; $726b
-	set_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $726d
+	set_flag FLAG_TEMP_COURT_STAR_EARNED ; $726d
 .setFlag:
 	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
 	call BuildGameProgressScreen ; $7273
@@ -44,10 +44,10 @@ BuildGameProgressScreen:
 	call DisableLCDSafely ; $72c0
 	call InitGameProgressScreen ; $72c3
 	call LoadGameProgressScreenAssets ; $72c6
-	test_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $72c9
-	jr nz, .isTempProgressScreenOpen ; $72cc
+	test_flag FLAG_TEMP_COURT_STAR_EARNED ; $72c9
+	jr nz, .courtStarEarned ; $72cc
 	jr .runRewardCategoryList ; $72ce
-.isTempProgressScreenOpen:
+.courtStarEarned:
 	ld a, $05 ; $72d0
 	call RunRewardCategoryList ; $72d2
 .runRewardCategoryList:

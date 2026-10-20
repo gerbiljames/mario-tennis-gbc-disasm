@@ -212,14 +212,14 @@ wUnusedSwingProtoPrevInput:: db
 wUnusedSwingProtoRunning:: db
 NEXTU
 ; Training Court challenger dialogue ids (bank $15, $5d00-$6400)
-; [16-bit] Each challenger result scene writes its court's lose-dialogue text id here ($201d serve, $204a net, $2078 stroke) on a lost point, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerLoseTextId
-wUnusedChallengerLoseTextId:: dw
-; [16-bit] Lose-dialogue text id seeded per court by the challenger setup scenes; the result handler's .lose arm passes it to InitDialogueTextCursor
-wChallengerLoseTextId:: dw
-; [16-bit] Win-dialogue text id, read by the result handler's finish arm
-wChallengerWinTextId:: dw
-; [16-bit] Draw-dialogue text id, read by the result handler's draw arm
-wChallengerDrawTextId:: dw
+; [16-bit] Each challenger result scene writes its court's tied-point text id here ($201d serve, $204a net, $2078 stroke) when wPointWinLoseFlag is WINLOSE_NONE, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerTiedTextId
+wUnusedChallengerTiedTextId:: dw
+; [16-bit] Tied-point text id (Text_*TiedKeepGoing) seeded per court by the challenger setup scenes; ChallengerResultTied (WINLOSE_NONE) speaks it
+wChallengerTiedTextId:: dw
+; [16-bit] Rival-won text id, spoken by ChallengerResultRivalWon (WINLOSE_LOSE, the player lost)
+wChallengerRivalWonTextId:: dw
+; [16-bit] Rival-lost text id, spoken by ChallengerResultRivalLost (WINLOSE_WIN, the player won)
+wChallengerRivalLostTextId:: dw
 ; [16-bit] Follow-up dialogue text id spoken after the verdict line; overlaps the swing contest's two HUD bytes
 wChallengerFollowupTextId:: dw
 NEXTU

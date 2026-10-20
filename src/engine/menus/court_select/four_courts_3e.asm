@@ -346,9 +346,9 @@ OpenCourtSelect4Panel:
 CloseCourtSelect4Panel:
 	ld a, b ; $5e62
 	or a ; $5e63
-	jr z, .close ; $5e64
+	jr z, .rewindIn ; $5e64
 	ld c, $00 ; $5e66
-.openLoop:
+.slideOutLoop:
 	call AdvanceFrame ; $5e68
 	ld b, PANELANIM_COURT_SELECT4_OUT ; $5e6b
 	farcall RestoreMenuBgAndDrawPanel ; $5e6d
@@ -358,11 +358,11 @@ CloseCourtSelect4Panel:
 	inc a ; $5e76
 	ld c, a ; $5e77
 	cp $0b ; $5e78
-	jr nz, .openLoop ; $5e7a
+	jr nz, .slideOutLoop ; $5e7a
 	ret ; $5e7c
-.close:
+.rewindIn:
 	ld c, $0c ; $5e7d
-.closeLoop:
+.rewindInLoop:
 	call AdvanceFrame ; $5e7f
 	ld b, PANELANIM_COURT_SELECT4_IN ; $5e82
 	farcall RestoreMenuBgAndDrawPanel ; $5e84
@@ -372,7 +372,7 @@ CloseCourtSelect4Panel:
 	dec a ; $5e8d
 	ld c, a ; $5e8e
 	or a ; $5e8f
-	jr nz, .closeLoop ; $5e90
+	jr nz, .rewindInLoop ; $5e90
 	ret ; $5e92
 CourtSelect4CursorSpriteTask:
 	farcall TickMenuBgScroll ; $5e93

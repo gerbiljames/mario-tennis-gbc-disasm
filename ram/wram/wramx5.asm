@@ -129,7 +129,7 @@ wFixedMenuWindowId:: db
 wTextRowStartPtr:: dw
 ; [8-bit] Second cursor into wTextArgStringQueue, stepped by MeasureNextArgStringWidth: FitWindowToText measures the whole message before drawing, so each queue has a separate measure cursor. The dialogue entry points reset all six cursors together
 wTextArgStringMeasureIndex:: db
-; [8-bit] The measure-pass cursor into wTextArgNumberQueue, stepped by MeasureNextArgNumberWidth
+; [8-bit] The measure-pass cursor into wTextArgNumberQueue, stepped by MeasureNextArgNumberWidth. FitWindowToText leaves the window row (a & $1f from SetWindowRect) here, so later pages measure numbers from the wrong entry (docs/bugs.md)
 wTextArgNumberMeasureIndex:: db
 ; [8-bit] The measure-pass cursor into wTextArgShortTextQueue, stepped by GetNextArgShortTextLength
 wTextArgShortTextMeasureIndex:: db

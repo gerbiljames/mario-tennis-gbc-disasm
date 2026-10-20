@@ -649,6 +649,26 @@ with an add, but drops the `ld l, e / ld h, d` before its `FarReadWord`:
 `selector | value_lo << 8` rather than the operand word. No script uses the
 opcode; left as is.
 
+### `FitWindowToText` leaves the window row in the number-measure cursor
+
+`FitWindowToText` (`$05:$5654`) ends with
+
+```
+        call SetWindowRect                     ; a = window row & $1f
+        ld [wTextArgNumberMeasureIndex], a     ; $573d
+```
+
+so the cursor `MeasureNextArgNumberWidth` reads the number queue at becomes the
+window's top row. `OpenSpeechBubble` zeroes the string and short-text measure
+cursors after its fit but not this one, and on a page break
+`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueRestoreBG` (`$598f`)
+fit the next page without resetting it, so a `TX_ARG_NUMBER` on page 2 or later
+is measured from queue entry `row` (past the 16-entry queue for rows 16-31), not
+the next unread one, and the window is sized for the wrong digit count. Drawing
+uses the write cursor, so the printed number is right. One shipped message puts
+a number after a page break (`TextStrings_35.s412`, the game-over "Your
+score is N consecutive hits."). Left as is.
+
 ## Dead stores
 
 Values written and never read, and one table written past its end (the menu

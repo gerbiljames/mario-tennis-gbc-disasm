@@ -161,9 +161,9 @@ GetOpponentExpTier:
 .clampTier:
 	ld a, c ; $6924
 	cp $06 ; $6925
-	jr c, .storeTier ; $6927
+	jr c, .gotTier ; $6927
 	ld a, $06 ; $6929
-.storeTier:
+.gotTier:
 	ld c, a ; $692b
 	pop_wram_bank ; $692c
 	ret ; $6931
@@ -171,9 +171,9 @@ GetPlayerExpTier:
 	call LookupExpTierForChar ; $6932
 	ld a, c ; $6935
 	cp $06 ; $6936
-	jr c, .storeTier ; $6938
+	jr c, .gotTier ; $6938
 	ld a, $06 ; $693a
-.storeTier:
+.gotTier:
 	ld c, a ; $693c
 	ret ; $693d
 LookupExpTierForChar:

@@ -1,5 +1,5 @@
 DrawExhibitionResultsHeader:
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44b1
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $44b1
 	jr nz, .doubles ; $44b4
 	call LoadSinglesLabelTiles ; $44b6
 	xor a ; $44b9
@@ -15,7 +15,7 @@ DrawExhibitionResultsHeader:
 	call DrawSetsGamesScore ; $44cf
 	ret ; $44d2
 DrawMarioExhibitionResultsHeader:
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44d3
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $44d3
 	jr nz, .doubles ; $44d6
 	call LoadSinglesLabelTiles ; $44d8
 	xor a ; $44db
@@ -31,7 +31,7 @@ DrawMarioExhibitionResultsHeader:
 	call DrawSetsGamesScore ; $44f0
 	ret ; $44f3
 DrawRankMatchResultsHeader:
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44f4
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $44f4
 	jr nz, .doubles ; $44f7
 	call LoadSinglesLabelTiles ; $44f9
 	xor a ; $44fc
@@ -49,7 +49,7 @@ DrawRankMatchResultsHeader:
 	call DrawSetsGamesScore ; $4517
 	ret ; $451a
 DrawTournamentResultsHeader:
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $451b
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $451b
 	jr nz, .doubles ; $451e
 	call LoadSinglesLabelTiles ; $4520
 	xor a ; $4523
@@ -65,7 +65,7 @@ DrawTournamentResultsHeader:
 	call DrawSetsGamesScore ; $4538
 	ret ; $453b
 DrawPracticeResultsHeader:
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $453c
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $453c
 	jr nz, .doubles ; $453f
 	call LoadSinglesLabelTiles ; $4541
 	xor a ; $4544
@@ -294,7 +294,7 @@ CopyStringToTextBuffer:
 	inc de ; $4714
 	jr .copyLoop ; $4715
 DrawClassNameLabel:
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4717
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4717
 	jr nz, .doubles ; $471a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $471c
 	jr nz, .varsity ; $471f
@@ -321,8 +321,8 @@ DrawClassNameLabel:
 	ret ; $4748
 DrawRankMatchLabel:
 	ld hl, wTextBuffer ; $4749
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $474c
-	jr nz, .isTempResultsScreenOpen ; $474f
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $474c
+	jr nz, .doublesLayout ; $474f
 	ld a, $34 ; $4751
 	ld [hl], a ; $4753
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4754
@@ -354,7 +354,7 @@ DrawRankMatchLabel:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $478a
 	jr z, .read ; $478d
 	ret ; $478f
-.isTempResultsScreenOpen:
+.doublesLayout:
 	ld a, $33 ; $4790
 	ld [hl], a ; $4792
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4793
@@ -415,7 +415,7 @@ DrawTournamentRoundLabel:
 	ld hl, wTextBuffer ; $4800
 	ld a, $31 ; $4803
 	ld [hl], a ; $4805
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4806
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4806
 	jr nz, .doubles ; $4809
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $480b
 	jr z, .read ; $480e

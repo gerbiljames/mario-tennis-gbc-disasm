@@ -109,7 +109,10 @@ after a real defect broke it:
             earlier local of its routine (18 were next-item steps or the
             next prompt), and a .check<Var> local whose w<Var> / h<Var> is a
             RAM symbol names it in its first three instructions, before any
-            branch (13 were pad tests or other paths)
+            branch (13 were pad tests or other paths), and a .store* local
+            writes memory before it falls into another label or leaves by
+            ret or jump (18 were register results, shared ret tails, or
+            prompt redraws)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
@@ -1894,8 +1897,12 @@ def _loops_back(lines, start, owner, local):
 
 # Locals whose names hold despite the checks: (routine, local) -> why.
 KNOWN_LOCAL_NAMES = {
+    ("RecordDrillPointResultBits", ".storeBits"): "the store follows .rotateLoop",
+    ("Unused_18_InitPlayerRecordForCharacter", ".storeRecord"): "the stores follow .partnerSlot",
 }
 _END_LOCAL_RE = re.compile(r"\.(?:done|exit|finish)\d*$")
+_STORE_LOCAL_RE = re.compile(r"\.store(?![a-z])")
+_STORE_RE = re.compile(r"^\s*(?:ldh?\s+\[|ld\s+\[|(?:inc|dec)\s+\[hl\]|(?:set|res)\s+\w+\s*,\s*\[hl\])")
 _CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
 
 
@@ -1903,7 +1910,8 @@ def check_local_names(fail):
     """A `.done` / `.exit` / `.finish` local reaches no branch back to an
     earlier local of its routine (it is a next-item step, not the end), and a
     `.check<Var>` local, where w<Var> or h<Var> is a RAM symbol, names that
-    symbol within its first three instructions, before any branch."""
+    symbol within its first three instructions, before any branch, and a
+    `.store*` local writes memory before another label, ret or jump."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
     n, seen = 0, set()
@@ -1942,6 +1950,15 @@ def check_local_names(fail):
                 elif not back and key in KNOWN_LOCAL_NAMES:
                     fail("localnames", f"{owner}{local} no longer branches back -- drop it from KNOWN_LOCAL_NAMES")
                 continue
+            if _STORE_LOCAL_RE.match(local):
+                seen.add((bank, key))
+                n += 1
+                stores = _reaches_store(lines, i, owner, labels)
+                if not stores and key not in KNOWN_LOCAL_NAMES:
+                    fail("localnames", f"${bank:02x}: {owner}{local} reaches no store")
+                elif stores and key in KNOWN_LOCAL_NAMES:
+                    fail("localnames", f"{owner}{local} now stores -- drop it from KNOWN_LOCAL_NAMES")
+                continue
             c = _CHECK_LOCAL_RE.match(local)
             if not c:
                 continue
@@ -1964,6 +1981,32 @@ def check_local_names(fail):
             elif named and key in KNOWN_LOCAL_NAMES:
                 fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
     return n
+
+
+def _reaches_store(lines, start, owner, labels):
+    """Flow from `start` writes memory before it falls into another label or
+    leaves by ret or jump; conditional branches are stepped over and
+    unconditional jumps to the routine's locals followed."""
+    k, seen = start + 1, set()
+    while k < len(lines) and k not in seen:
+        seen.add(k)
+        if re.match(r"^[\w.]+:", lines[k]):
+            return False
+        code = lines[k].split(";")[0]
+        if _STORE_RE.match(code):
+            return True
+        b = _LOOP_BRANCH_RE.match(code)
+        if b and not b.group(2):
+            name = b.group(3)
+            full = owner + name if name.startswith(".") else name
+            if not full.startswith(owner + ".") or full not in labels:
+                return False
+            k = labels[full] + 1
+            continue
+        if _LOOP_EXIT_RE.match(code) or re.match(r"\s*(jp\s+hl|rst|jumptable)\b", code):
+            return False
+        k += 1
+    return False
 
 
 def _branches_back(lines, start, owner, labels):

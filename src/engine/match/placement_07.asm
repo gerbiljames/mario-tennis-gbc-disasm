@@ -37,20 +37,20 @@ DecodeLinkCommandCode:
 	cp $14 ; $4ce4
 	jr nz, .code15 ; $4ce6
 	ld a, $0f ; $4ce8
-	jr .store ; $4cea
+	jr .return ; $4cea
 .code15:
 	cp $15 ; $4cec
 	jr nz, .code19 ; $4cee
 	ld a, $01 ; $4cf0
-	jr .store ; $4cf2
+	jr .return ; $4cf2
 .code19:
 	cp $19 ; $4cf4
 	jr nz, .passthrough ; $4cf6
 	ld a, $02 ; $4cf8
-	jr .store ; $4cfa
+	jr .return ; $4cfa
 .passthrough:
 	xor a ; $4cfc
-.store:
+.return:
 	ret ; $4cfd
 ComposeLinkStateByte:
 	push bc ; $4cfe

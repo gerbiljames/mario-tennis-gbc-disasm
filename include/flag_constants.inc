@@ -196,5 +196,5 @@ def FLAG_TEMP_SCENE_VARIANT_A equ 224 ; wGameFlags byte $1c bit 0
 def FLAG_TEMP_SCENE_VARIANT_B equ 225 ; wGameFlags byte $1c bit 1
 
 def FLAG_TEMP_WIDE_GLYPH_STREAM equ 253 ; wGameFlags byte $1f bit 5
-def FLAG_TEMP_PROGRESS_SCREEN_OPEN equ 254 ; wGameFlags byte $1f bit 6
-def FLAG_TEMP_RESULTS_SCREEN_OPEN equ 255 ; wGameFlags byte $1f bit 7
+def FLAG_TEMP_COURT_STAR_EARNED equ 254 ; wGameFlags byte $1f bit 6
+def FLAG_TEMP_RESULTS_DOUBLES_LAYOUT equ 255 ; wGameFlags byte $1f bit 7

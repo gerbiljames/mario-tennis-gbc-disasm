@@ -328,22 +328,22 @@ CharInputHandler1_08:
 	ld hl, wAiActionTimer ; $7863
 	ld a, [hl] ; $7866
 	and a ; $7867
-	jr z, .player2 ; $7868
+	jr z, .timerExpired ; $7868
 	dec [hl] ; $786a
 	ret ; $786b
-.player2:
+.timerExpired:
 	ld hl, wAiSecondButtonDelay ; $786c
 	ld a, [hl] ; $786f
 	and a ; $7870
-	jr z, .maskInput ; $7871
+	jr z, .pickAiTable ; $7871
 	dec [hl] ; $7873
-.maskInput:
+.pickAiTable:
 	ld a, [wMatchIsDoubles] ; $7874
 	and a ; $7877
-	jr z, .store ; $7878
+	jr z, .singlesTable ; $7878
 	ld a, [wCharServeRole] ; $787a
 	and $02 ; $787d
-	jp z, .checkCpu ; $787f
+	jp z, .baselinerTable ; $787f
 	jumptable [wCharState] ; $7882
 	dw AiPhaseNoop ; $7886 jumptable
 	dw AiRallyStateNetPlayer ; $7888 jumptable
@@ -353,7 +353,7 @@ CharInputHandler1_08:
 	dw AiPhaseNoop ; $7890 jumptable
 	dw AiPhaseNoop ; $7892 jumptable
 	dw AiPhaseNoop ; $7894 jumptable
-.checkCpu:
+.baselinerTable:
 	jumptable [wCharState] ; $7896
 	dw AiPhaseNoop ; $789a jumptable
 	dw AiRallyStateBaseliner ; $789c jumptable
@@ -363,7 +363,7 @@ CharInputHandler1_08:
 	dw AiPhaseNoop ; $78a4 jumptable
 	dw AiPhaseNoop ; $78a6 jumptable
 	dw AiPhaseNoop ; $78a8 jumptable
-.store:
+.singlesTable:
 	jumptable [wCharState] ; $78aa
 	dw AiPhaseNoop ; $78ae jumptable
 	dw AiRallyStateSingles ; $78b0 jumptable

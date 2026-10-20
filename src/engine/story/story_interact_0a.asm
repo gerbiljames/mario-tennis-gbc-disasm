@@ -434,7 +434,7 @@ RunNpcInteraction:
 	call FindStoryScriptEntry ; $54c8
 	ld a, h ; $54cb
 	or l ; $54cc
-	jp z, .checkRespawn ; $54cd
+	jp z, .popRegs ; $54cd
 	ld a, [wStoryLocationBank] ; $54d0
 	ld de, wStoryMapRecord ; $54d3
 	ld bc, wStoryMapRecord_SIZE ; $54d6
@@ -526,7 +526,7 @@ RunNpcInteraction:
 	add hl, de ; $5569
 	ld a, [wStoryScriptSavedActorAnimRate] ; $556a
 	ld [hl], a ; $556d
-.checkRespawn:
+.popRegs:
 	pop hl ; $556e
 	pop de ; $556f
 	pop bc ; $5570

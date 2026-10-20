@@ -836,7 +836,7 @@ pass:
 | `fields` | 508 | a routine that names a `CHARREC_*`/`CREATEDCHAR_*`/`SLOTSUM_*`/`ACTORF_*`/`OBJSLOT_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c / ld e, a`) (exceptions allow-listed) |
 | `templates` | 161 | a label handed to `QueueSpriteTemplate` in `hl`, directly or as a row of the pointer table `hl` indexes, is a `sprite_template` region (one stale dead-code operand allow-listed) |
 | `loops` | 894 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
-| `localnames` | 688 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, and a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch |
+| `localnames` | 1064 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump |
 | `mirrors` | 21 | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
 
 ---

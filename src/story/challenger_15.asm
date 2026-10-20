@@ -19,7 +19,7 @@ NetChallengerResultScene:
 	inc a ; $5dd8
 	cp WINLOSE_NONE + 1 ; $5dd9
 	jr nz, .dispatch ; $5ddb
-	ld hl, wUnusedChallengerLoseTextId ; $5ddd
+	ld hl, wUnusedChallengerTiedTextId ; $5ddd
 	ld de, Text_BrianTiedKeepGoing ; $5de0
 	ld a, e ; $5de3
 	ld [hl+], a ; $5de4
@@ -28,9 +28,9 @@ NetChallengerResultScene:
 	inc a ; $5de9
 .dispatch:
 	jumptable a ; $5dea
-	dw ChallengerResultFinish ; $5dec jumptable
-	dw ChallengerResultLose ; $5dee jumptable
-	dw ChallengerResultDraw ; $5df0 jumptable
+	dw ChallengerResultRivalWon ; $5dec jumptable
+	dw ChallengerResultTied ; $5dee jumptable
+	dw ChallengerResultRivalLost ; $5df0 jumptable
 	ret ; $5df2
 StrokeChallengerResultScene:
 	xor a ; $5df3
@@ -53,7 +53,7 @@ StrokeChallengerResultScene:
 	inc a ; $5e57
 	cp WINLOSE_NONE + 1 ; $5e58
 	jr nz, .dispatch ; $5e5a
-	ld hl, wUnusedChallengerLoseTextId ; $5e5c
+	ld hl, wUnusedChallengerTiedTextId ; $5e5c
 	ld de, Text_AllieEvenKeepGoing ; $5e5f
 	ld a, e ; $5e62
 	ld [hl+], a ; $5e63
@@ -62,15 +62,15 @@ StrokeChallengerResultScene:
 	inc a ; $5e68
 .dispatch:
 	jumptable a ; $5e69
-	dw ChallengerResultFinish ; $5e6b jumptable
-	dw ChallengerResultLose ; $5e6d jumptable
-	dw ChallengerResultDraw ; $5e6f jumptable
+	dw ChallengerResultRivalWon ; $5e6b jumptable
+	dw ChallengerResultTied ; $5e6d jumptable
+	dw ChallengerResultRivalLost ; $5e6f jumptable
 	dw ChallengerResultJumpForJoy ; $5e71 jumptable
 	ret ; $5e73
 ChallengerResultJumpForJoy:
 	script_jump_velocity ACTOR_PLAYER, -3.0 ; $5e74
 	script_wait_jump ACTOR_PLAYER ; $5e7c
-	jp ChallengerResultFinish ; $5e81
+	jp ChallengerResultRivalWon ; $5e81
 	ret ; $5e84
 ServiceMatch1ResultScene:
 	ld hl, wChallengerFollowupTextId ; $5e85
@@ -78,12 +78,12 @@ ServiceMatch1ResultScene:
 	ld a, e ; $5e8b
 	ld [hl+], a ; $5e8c
 	ld [hl], d ; $5e8d
-	ld hl, wChallengerLoseTextId ; $5e8e
+	ld hl, wChallengerTiedTextId ; $5e8e
 	ld de, Text_ServeRivalTiedKeepGoing ; $5e91
 	ld a, e ; $5e94
 	ld [hl+], a ; $5e95
 	ld [hl], d ; $5e96
-	ld hl, wChallengerWinTextId ; $5e97
+	ld hl, wChallengerRivalWonTextId ; $5e97
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5e9a
 	jr z, .stillJunior ; $5e9d
 	ld de, Text_ServeRivalPracticeUpRetry ; $5e9f
@@ -94,7 +94,7 @@ ServiceMatch1ResultScene:
 	ld a, e ; $5ea7
 	ld [hl+], a ; $5ea8
 	ld [hl], d ; $5ea9
-	ld hl, wChallengerDrawTextId ; $5eaa
+	ld hl, wChallengerRivalLostTextId ; $5eaa
 	ld de, Text_ServeRivalCantLose ; $5ead
 	ld a, e ; $5eb0
 	ld [hl+], a ; $5eb1
@@ -107,17 +107,17 @@ ServiceMatch2ResultScene:
 	ld a, e ; $5ebd
 	ld [hl+], a ; $5ebe
 	ld [hl], d ; $5ebf
-	ld hl, wChallengerLoseTextId ; $5ec0
+	ld hl, wChallengerTiedTextId ; $5ec0
 	ld de, Text_ServeRivalTiedKeepGoing ; $5ec3
 	ld a, e ; $5ec6
 	ld [hl+], a ; $5ec7
 	ld [hl], d ; $5ec8
-	ld hl, wChallengerWinTextId ; $5ec9
+	ld hl, wChallengerRivalWonTextId ; $5ec9
 	ld de, Text_ServeRivalGotRevenge ; $5ecc
 	ld a, e ; $5ecf
 	ld [hl+], a ; $5ed0
 	ld [hl], d ; $5ed1
-	ld hl, wChallengerDrawTextId ; $5ed2
+	ld hl, wChallengerRivalLostTextId ; $5ed2
 	ld de, Text_ServeRivalLostAgain ; $5ed5
 	ld a, e ; $5ed8
 	ld [hl+], a ; $5ed9
@@ -130,25 +130,25 @@ ServiceMatch3ResultScene:
 	ld a, e ; $5ee5
 	ld [hl+], a ; $5ee6
 	ld [hl], d ; $5ee7
-	ld hl, wChallengerLoseTextId ; $5ee8
+	ld hl, wChallengerTiedTextId ; $5ee8
 	ld de, Text_ServeRivalTiedKeepGoing ; $5eeb
 	ld a, e ; $5eee
 	ld [hl+], a ; $5eef
 	ld [hl], d ; $5ef0
-	ld hl, wChallengerWinTextId ; $5ef1
+	ld hl, wChallengerRivalWonTextId ; $5ef1
 	ld de, Text_ServeRivalBeatYouThisTime ; $5ef4
 	ld a, e ; $5ef7
 	ld [hl+], a ; $5ef8
 	ld [hl], d ; $5ef9
-	ld hl, wChallengerDrawTextId ; $5efa
+	ld hl, wChallengerRivalLostTextId ; $5efa
 	ld de, Text_ServeRivalFinalLoss ; $5efd
 	ld a, e ; $5f00
 	ld [hl+], a ; $5f01
 	ld [hl], d ; $5f02
 	call ServeChallengerResultScene ; $5f03
 	ret ; $5f06
-ChallengerResultLose:
-	ld hl, wChallengerLoseTextId ; $5f07
+ChallengerResultTied:
+	ld hl, wChallengerTiedTextId ; $5f07
 	ld a, [hl+] ; $5f0a
 	ld h, [hl] ; $5f0b
 	ld l, a ; $5f0c
@@ -158,7 +158,7 @@ ChallengerResultLose:
 	farcall ScriptCloseDialogueWindow ; $5f19
 	script_wait_frames 5 ; $5f1c
 	and a ; $5f23
-	jr nz, .loseSpeak ; $5f24
+	jr nz, .declined ; $5f24
 	script_speak [wChallengerActor] ; $5f26
 	ld a, STORYLOC_TRAINING_COURT ; $5f2c
 	ld [wStoryModeCurrentLocation], a ; $5f2e
@@ -171,14 +171,14 @@ ChallengerResultLose:
 	farcall RunTrainingDrillByID ; $5f41
 	farcall EndCutsceneScriptMode ; $5f44
 	ret ; $5f47
-.loseSpeak:
+.declined:
 	farcall AdvanceDialogueTextCursor ; $5f48
 	script_speak [wChallengerActor] ; $5f4b
 	call WalkChallengerOntoCourt ; $5f51
 	farcall EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
-ChallengerResultFinish:
-	ld hl, wChallengerWinTextId ; $5f58
+ChallengerResultRivalWon:
+	ld hl, wChallengerRivalWonTextId ; $5f58
 	ld a, [hl+] ; $5f5b
 	ld h, [hl] ; $5f5c
 	ld l, a ; $5f5d
@@ -188,7 +188,7 @@ ChallengerResultFinish:
 	farcall ScriptCloseDialogueWindow ; $5f6a
 	script_wait_frames 5 ; $5f6d
 	and a ; $5f74
-	jr nz, .finishDoubles ; $5f75
+	jr nz, .declined ; $5f75
 	ld hl, wChallengerFollowupTextId ; $5f77
 	ld a, [hl+] ; $5f7a
 	ld h, [hl] ; $5f7b
@@ -206,7 +206,7 @@ ChallengerResultFinish:
 	farcall RunTrainingDrillByID ; $5f9b
 	farcall EndCutsceneScriptMode ; $5f9e
 	ret ; $5fa1
-.finishDoubles:
+.declined:
 	ld hl, wChallengerFollowupTextId ; $5fa2
 	ld a, [hl+] ; $5fa5
 	ld h, [hl] ; $5fa6
@@ -220,10 +220,10 @@ ChallengerResultFinish:
 	call WalkChallengerOntoCourt ; $5fbb
 	farcall EndCutsceneScriptMode ; $5fbe
 	ret ; $5fc1
-ChallengerResultDraw:
+ChallengerResultRivalLost:
 	script_set_anim [wChallengerActor], ANIM_BOUNCE ; $5fc2
 	script_wait_idle [wChallengerActor] ; $5fca
-	ld hl, wChallengerDrawTextId ; $5fd0
+	ld hl, wChallengerRivalLostTextId ; $5fd0
 	ld a, [hl+] ; $5fd3
 	ld h, [hl] ; $5fd4
 	ld l, a ; $5fd5

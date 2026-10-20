@@ -178,7 +178,7 @@ InitResultsScreenCharacters:
 	or a ; $49fd
 	jr nz, .initPartner ; $49fe
 	wram_bank WRAM_ACTORS ; $4a00
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4a06
 	ret z ; $4a09
 .initPartner:
 	ld a, [wLinkMatchRole] ; $4a0a
@@ -240,7 +240,7 @@ DrawResultsCharSprites:
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
 	wram_bank WRAM_CHAR0 ; $4a86
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a8c
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4a8c
 	ret z ; $4a8f
 	wram_bank WRAM_CHAR2 ; $4a90
 	ld a, $01 ; $4a96
@@ -289,12 +289,12 @@ UpdateResultsCharSprite:
 	push de ; $4ae0
 	or a ; $4ae1
 	jr nz, .player2Pos ; $4ae2
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4ae4
-	jr z, .notTempResultsScreenOpen ; $4ae7
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4ae4
+	jr z, .singlesLayout ; $4ae7
 	ld d, $48 ; $4ae9
 	ld e, $56 ; $4aeb
 	jr .setPos ; $4aed
-.notTempResultsScreenOpen:
+.singlesLayout:
 	ld d, $54 ; $4aef
 	ld e, $56 ; $4af1
 	jr .setPos ; $4af3

@@ -440,22 +440,22 @@ Unused_18_MoveGridCursor:
 	cp $ff ; $4611
 	jr z, Unused_18_MoveGridCursor ; $4613
 	cp $fe ; $4615
-	jr nz, .occupied ; $4617
+	jr nz, .notCellFe ; $4617
 	inc d ; $4619
 	inc e ; $461a
 	jr Unused_18_MoveGridCursor ; $461b
-.occupied:
+.notCellFe:
 	cp $fd ; $461d
-	jr nz, .store ; $461f
+	jr nz, .notCellFd ; $461f
 	dec d ; $4621
 	dec e ; $4622
 	jr Unused_18_MoveGridCursor ; $4623
-.store:
+.notCellFd:
 	cp $fc ; $4625
-	jr nz, .retry ; $4627
+	jr nz, .notCellFc ; $4627
 	dec d ; $4629
 	jr Unused_18_MoveGridCursor ; $462a
-.retry:
+.notCellFc:
 	cp $fb ; $462c
 	jr nz, .done ; $462e
 	ld a, b ; $4630

@@ -182,7 +182,7 @@ DrawExpAwardScreenPanels:
 	call DrawExpMessageWindow ; $55e4
 	call DrawNextExpAwardMessage ; $55e7
 	call DrawExpTotalPanel ; $55ea
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $55ed
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $55ed
 	jr nz, .drawExpDoublesPlayerPanel ; $55f0
 	call DrawExpSinglesPlayerPanel ; $55f2
 	ret ; $55f5
@@ -514,7 +514,7 @@ DrawExpScreenCharSprites:
 	farcall DrawCharSprite ; $592d
 	wram_bank WRAM_ACTORS ; $5930
 	pop bc ; $5936
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5937
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $5937
 	ret z ; $593a
 	inc b ; $593b
 	inc b ; $593c
@@ -561,12 +561,12 @@ UpdateExpScreenCharSprite:
 	pop af ; $598f
 	or a ; $5990
 	jr nz, .secondSprite ; $5991
-	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5993
-	jr z, .notTempResultsScreenOpen ; $5996
+	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $5993
+	jr z, .singlesLayout ; $5996
 	ld d, $44 ; $5998
 	ld e, $66 ; $599a
 	jr .writeSlot ; $599c
-.notTempResultsScreenOpen:
+.singlesLayout:
 	ld d, $50 ; $599e
 	ld e, $66 ; $59a0
 	jr .writeSlot ; $59a2

@@ -360,23 +360,23 @@ ApplyMessageSpeed:
 	jr z, .checkFast ; $57f6
 	xor a ; $57f8
 	ld [wTextRedrawGuard], a ; $57f9
-	jr .store ; $57fc
+	jr .restoreBank ; $57fc
 .checkFast:
 	or a ; $57fe
 	jr nz, .checkMedium ; $57ff
 	ld a, $00 ; $5801
 	ld [wTextRedrawGuard], a ; $5803
-	jr .store ; $5806
+	jr .restoreBank ; $5806
 .checkMedium:
 	cp $01 ; $5808
 	jr nz, .slow ; $580a
 	ld a, $02 ; $580c
 	ld [wTextRedrawGuard], a ; $580e
-	jr .store ; $5811
+	jr .restoreBank ; $5811
 .slow:
 	ld a, $04 ; $5813
 	ld [wTextRedrawGuard], a ; $5815
-.store:
+.restoreBank:
 	pop_wram_bank ; $5818
 	pop af ; $581d
 	ret ; $581e

@@ -40,10 +40,10 @@ RunMinigameSelect:
 	or a ; $623e
 	jr nz, .drawMinigameSelectGrid9 ; $623f
 	call DrawMinigameSelectGrid6 ; $6241
-	jr .storeMenuInputPressed ; $6244
+	jr .startInput ; $6244
 .drawMinigameSelectGrid9:
 	call DrawMinigameSelectGrid9 ; $6246
-.storeMenuInputPressed:
+.startInput:
 	wram_bank WRAM_SCREEN ; $6249
 .loop:
 	ldh a, [hInputPressed] ; $624f

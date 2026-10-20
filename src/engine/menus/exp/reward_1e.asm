@@ -170,7 +170,7 @@ RewardFlagListDoubles_1e:
 	flag_id FLAG_WON_DREAM_MATCH_DOUBLES ; 24
 ProgressEntryFlagList_1e:
 	; $6d80, 2 bytes (flag_ids)
-	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
+	flag_id FLAG_TEMP_COURT_STAR_EARNED ; 0
 ; Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListTraining_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR.
 AllProgressFlagList_1e:
 	; $6d82, 20 bytes (flag_ids)
@@ -218,7 +218,7 @@ RewardFlagListTraining_1e:
 	flag_id FLAG_CLEARED_WALL_EXPERT ; 29
 RewardCategoryFlagTable_1e:
 	; $6dd2, 74 bytes (flag_ids)
-	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
+	flag_id FLAG_TEMP_COURT_STAR_EARNED ; 0
 	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 1
 	flag_id FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; 2
 	dw $0000 ; 3: none

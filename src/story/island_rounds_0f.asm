@@ -281,9 +281,9 @@ GetIslandOpenRoundParams:
 	ld a, [wMapSceneStage] ; $7427
 	inc a ; $742a
 	cp $03 ; $742b
-	jr c, .store ; $742d
+	jr c, .gotRound ; $742d
 	dec a ; $742f
-.store:
+.gotRound:
 	ld c, a ; $7430
 	ld d, RANKINGBOARD_PLAIN ; $7431
 	ret ; $7433

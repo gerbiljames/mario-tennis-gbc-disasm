@@ -413,7 +413,7 @@ ServeChallengerResultScene:
 	inc a ; $5d57
 	cp WINLOSE_NONE + 1 ; $5d58
 	jr nz, .dispatch ; $5d5a
-	ld hl, wUnusedChallengerLoseTextId ; $5d5c
+	ld hl, wUnusedChallengerTiedTextId ; $5d5c
 	ld de, Text_ServeRivalTiedKeepGoing ; $5d5f
 	ld a, e ; $5d62
 	ld [hl+], a ; $5d63
@@ -422,8 +422,8 @@ ServeChallengerResultScene:
 	inc a ; $5d68
 .dispatch:
 	jumptable a ; $5d69
-	dw ChallengerResultFinish ; $5d6b jumptable
-	dw ChallengerResultLose ; $5d6d jumptable
-	dw ChallengerResultDraw ; $5d6f jumptable
+	dw ChallengerResultRivalWon ; $5d6b jumptable
+	dw ChallengerResultTied ; $5d6d jumptable
+	dw ChallengerResultRivalLost ; $5d6f jumptable
 	dw ChallengerResultJumpForJoy ; $5d71 jumptable
 	ret ; $5d73

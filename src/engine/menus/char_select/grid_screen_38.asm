@@ -454,7 +454,7 @@ MoveCharGridCursorDown:
 	jr c, .refresh ; $523a
 	ld a, $01 ; $523c
 	ld [wCharGridPage], a ; $523e
-	jr .storePage ; $5241
+	jr .playMoveSound ; $5241
 .checkLastPage:
 	inc a ; $5243
 	ld e, a ; $5244
@@ -463,13 +463,13 @@ MoveCharGridCursorDown:
 	ld b, a ; $5249
 	ld a, e ; $524a
 	cp b ; $524b
-	jr nz, .storePage ; $524c
+	jr nz, .playMoveSound ; $524c
 	ld a, b ; $524e
 	dec a ; $524f
-	jr .beep ; $5250
-.storePage:
+	jr .storePage ; $5250
+.playMoveSound:
 	sound SFX_MENU_MOVE ; $5252
-.beep:
+.storePage:
 	ld [wCharGridPage], a ; $5254
 	call BuildVisiblePageSpriteList ; $5257
 .refresh:

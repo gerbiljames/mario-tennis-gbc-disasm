@@ -84,9 +84,9 @@ CheckSetComplete:
 	ld hl, wTotalPointsScoredInCurrentGame ; $47b6
 	ld a, [hl] ; $47b9
 	cp $18 ; $47ba
-	jr c, .storeCounter ; $47bc
+	jr c, .checkGameWinLoseFlag ; $47bc
 	ld [hl], $00 ; $47be
-.storeCounter:
+.checkGameWinLoseFlag:
 	ld a, [wGameWinLoseFlag] ; $47c0
 	and a ; $47c3
 	jr z, .tiebreakChangeover ; $47c4

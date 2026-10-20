@@ -28,31 +28,31 @@ NetGameMatch1ResultScene:
 	ld a, e ; $62c5
 	ld [hl+], a ; $62c6
 	ld [hl], d ; $62c7
-	ld hl, wChallengerLoseTextId ; $62c8
+	ld hl, wChallengerTiedTextId ; $62c8
 	ld de, Text_BrianTiedKeepGoing ; $62cb
 	ld a, e ; $62ce
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
 	jr z, .netResultTextAlt ; $62d4
-	ld hl, wChallengerWinTextId ; $62d6
+	ld hl, wChallengerRivalWonTextId ; $62d6
 	ld de, Text_BrianBetterAtVolleying ; $62d9
 	ld a, e ; $62dc
 	ld [hl+], a ; $62dd
 	ld [hl], d ; $62de
-	ld hl, wChallengerDrawTextId ; $62df
+	ld hl, wChallengerRivalLostTextId ; $62df
 	ld de, Text_BrianLostVolleyMatch ; $62e2
 	ld a, e ; $62e5
 	ld [hl+], a ; $62e6
 	ld [hl], d ; $62e7
 	jr .netResult ; $62e8
 .netResultTextAlt:
-	ld hl, wChallengerWinTextId ; $62ea
+	ld hl, wChallengerRivalWonTextId ; $62ea
 	ld de, Text_BrianCantLoseToJunior ; $62ed
 	ld a, e ; $62f0
 	ld [hl+], a ; $62f1
 	ld [hl], d ; $62f2
-	ld hl, wChallengerDrawTextId ; $62f3
+	ld hl, wChallengerRivalLostTextId ; $62f3
 	ld de, Text_BrianLostToJunior ; $62f6
 	ld a, e ; $62f9
 	ld [hl+], a ; $62fa
@@ -66,17 +66,17 @@ NetGameMatch2ResultScene:
 	ld a, e ; $6306
 	ld [hl+], a ; $6307
 	ld [hl], d ; $6308
-	ld hl, wChallengerLoseTextId ; $6309
+	ld hl, wChallengerTiedTextId ; $6309
 	ld de, Text_BrianTiedKeepGoing ; $630c
 	ld a, e ; $630f
 	ld [hl+], a ; $6310
 	ld [hl], d ; $6311
-	ld hl, wChallengerWinTextId ; $6312
+	ld hl, wChallengerRivalWonTextId ; $6312
 	ld de, Text_BrianBetterAtSmash ; $6315
 	ld a, e ; $6318
 	ld [hl+], a ; $6319
 	ld [hl], d ; $631a
-	ld hl, wChallengerDrawTextId ; $631b
+	ld hl, wChallengerRivalLostTextId ; $631b
 	ld de, Text_BrianLostSmashMatch ; $631e
 	ld a, e ; $6321
 	ld [hl+], a ; $6322
@@ -89,17 +89,17 @@ NetGameMatch3ResultScene:
 	ld a, e ; $632e
 	ld [hl+], a ; $632f
 	ld [hl], d ; $6330
-	ld hl, wChallengerLoseTextId ; $6331
+	ld hl, wChallengerTiedTextId ; $6331
 	ld de, Text_BrianTiedKeepGoing ; $6334
 	ld a, e ; $6337
 	ld [hl+], a ; $6338
 	ld [hl], d ; $6339
-	ld hl, wChallengerWinTextId ; $633a
+	ld hl, wChallengerRivalWonTextId ; $633a
 	ld de, Text_BrianNetGameBetter ; $633d
 	ld a, e ; $6340
 	ld [hl+], a ; $6341
 	ld [hl], d ; $6342
-	ld hl, wChallengerDrawTextId ; $6343
+	ld hl, wChallengerRivalLostTextId ; $6343
 	ld de, Text_BrianLostNetGameAgain ; $6346
 	ld a, e ; $6349
 	ld [hl+], a ; $634a
@@ -112,31 +112,31 @@ StrokeMatch1ResultScene:
 	ld a, e ; $6356
 	ld [hl+], a ; $6357
 	ld [hl], d ; $6358
-	ld hl, wChallengerLoseTextId ; $6359
+	ld hl, wChallengerTiedTextId ; $6359
 	ld de, Text_AllieEvenKeepGoing ; $635c
 	ld a, e ; $635f
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6362
 	jr z, .serveResult ; $6365
-	ld hl, wChallengerWinTextId ; $6367
+	ld hl, wChallengerRivalWonTextId ; $6367
 	ld de, Text_AllieBetterAtStroke ; $636a
 	ld a, e ; $636d
 	ld [hl+], a ; $636e
 	ld [hl], d ; $636f
-	ld hl, wChallengerDrawTextId ; $6370
+	ld hl, wChallengerRivalLostTextId ; $6370
 	ld de, Text_AllieLostStrokeMatch ; $6373
 	ld a, e ; $6376
 	ld [hl+], a ; $6377
 	ld [hl], d ; $6378
 	jr .serveResultDoubles ; $6379
 .serveResult:
-	ld hl, wChallengerWinTextId ; $637b
+	ld hl, wChallengerRivalWonTextId ; $637b
 	ld de, Text_AllieWontLoseToJunior ; $637e
 	ld a, e ; $6381
 	ld [hl+], a ; $6382
 	ld [hl], d ; $6383
-	ld hl, wChallengerDrawTextId ; $6384
+	ld hl, wChallengerRivalLostTextId ; $6384
 	ld de, Text_AllieLostToJunior ; $6387
 	ld a, e ; $638a
 	ld [hl+], a ; $638b
@@ -150,17 +150,17 @@ StrokeMatch2ResultScene:
 	ld a, e ; $6397
 	ld [hl+], a ; $6398
 	ld [hl], d ; $6399
-	ld hl, wChallengerLoseTextId ; $639a
+	ld hl, wChallengerTiedTextId ; $639a
 	ld de, Text_AllieEvenKeepGoing ; $639d
 	ld a, e ; $63a0
 	ld [hl+], a ; $63a1
 	ld [hl], d ; $63a2
-	ld hl, wChallengerWinTextId ; $63a3
+	ld hl, wChallengerRivalWonTextId ; $63a3
 	ld de, Text_AllieBetterAtLob ; $63a6
 	ld a, e ; $63a9
 	ld [hl+], a ; $63aa
 	ld [hl], d ; $63ab
-	ld hl, wChallengerDrawTextId ; $63ac
+	ld hl, wChallengerRivalLostTextId ; $63ac
 	ld de, Text_AllieLostLobMatch ; $63af
 	ld a, e ; $63b2
 	ld [hl+], a ; $63b3
@@ -173,17 +173,17 @@ StrokeMatch3ResultScene:
 	ld a, e ; $63bf
 	ld [hl+], a ; $63c0
 	ld [hl], d ; $63c1
-	ld hl, wChallengerLoseTextId ; $63c2
+	ld hl, wChallengerTiedTextId ; $63c2
 	ld de, Text_AllieEvenKeepGoing ; $63c5
 	ld a, e ; $63c8
 	ld [hl+], a ; $63c9
 	ld [hl], d ; $63ca
-	ld hl, wChallengerWinTextId ; $63cb
+	ld hl, wChallengerRivalWonTextId ; $63cb
 	ld de, Text_AllieWonReturnMatch ; $63ce
 	ld a, e ; $63d1
 	ld [hl+], a ; $63d2
 	ld [hl], d ; $63d3
-	ld hl, wChallengerDrawTextId ; $63d4
+	ld hl, wChallengerRivalLostTextId ; $63d4
 	ld de, Text_AllieCantBeatYou ; $63d7
 	ld a, e ; $63da
 	ld [hl+], a ; $63db
