@@ -624,7 +624,7 @@ AdvanceFrame:
 	ldh [hDebugStepPaused], a ; $26c0
 	jr .waitFrame ; $26c2
 .stepWaitFrame:
-	ldh a, [hInputPressed] ; $26c4
+	ldh a, [hInputRepeat] ; $26c4
 	and ~(PADF_SELECT | PADF_START) ; $26c6
 	jr nz, .waitFrame ; $26c8
 	ldh a, [hLinkExchangeActive] ; $26ca

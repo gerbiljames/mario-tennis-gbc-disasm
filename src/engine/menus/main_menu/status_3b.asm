@@ -193,7 +193,7 @@ RunStatusSourceSelect:
 	wram_bank WRAM_SCREEN ; $67dc
 .loop:
 	call AdvanceFrame ; $67e2
-	ldh a, [hInputPressed] ; $67e5
+	ldh a, [hInputRepeat] ; $67e5
 	ld [wMenuInputPressed], a ; $67e7
 	farcall MoveSavedDataPickerCursor ; $67ea
 	or a ; $67ed

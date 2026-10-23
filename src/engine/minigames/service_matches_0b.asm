@@ -34,7 +34,7 @@ RunTrainingDrillByID:
 	ld hl, wAiServeTargetX ; $4734
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
-	ld [wAiServeSkipToss], a ; $4739
+	ld [wAiServeNoQuickStrike], a ; $4739
 	farcall RunMinigameMatch ; $473c
 .afterMatch:
 	xor a ; $473f
@@ -46,7 +46,7 @@ RunTrainingDrillByID:
 	ld hl, wAiServeTargetX ; $474a
 	ld [hl+], a ; $474d
 	ld [hl], a ; $474e
-	ld [wAiServeSkipToss], a ; $474f
+	ld [wAiServeNoQuickStrike], a ; $474f
 	ld a, [wMatchRetryRequest] ; $4752
 	or a ; $4755
 	ld a, [wCurrentMatchIndex] ; $4756
@@ -383,8 +383,8 @@ ServiceMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $49e7
 	ret ; $49ea
 ServiceMatch2Hook_Draw:
-	call QueueDrillGate1Pole ; $49eb
-	call QueueDrillGate2Pole ; $49ee
+	call QueueDrillGateLeftPole ; $49eb
+	call QueueDrillGateRightPole ; $49ee
 	ret ; $49f1
 ServiceMatch2Hook_PointStart:
 	xor a ; $49f2

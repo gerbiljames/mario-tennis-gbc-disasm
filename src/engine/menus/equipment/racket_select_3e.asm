@@ -154,7 +154,7 @@ DrawItemIcon2x2:
 	pop af ; $55ad
 	ret ; $55ae
 HandleEquipSelectInput:
-	ldh a, [hInputPressed] ; $55af
+	ldh a, [hInputRepeat] ; $55af
 	ld [wMenuInputPressed], a ; $55b1
 	bit PADB_A, a ; $55b4
 	jr nz, .pressedA ; $55b6

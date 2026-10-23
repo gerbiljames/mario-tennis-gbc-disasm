@@ -37,7 +37,7 @@ hFrameTasksReady:: db
 hPlayerInputFlags:: db
 
 ; [8-bit] Auto-repeat pulse from ReadJoypad: the held buttons on the frame the held set changes, again every hInputRepeatDelay frames after an initial $12, 0 on other frames (hPlayerInputFlags layout)
-hInputPressed:: db
+hInputRepeat:: db
 
 ; [8-bit] Buttons held for key-repeat tracking
 hInputRepeatButtons:: db
@@ -196,7 +196,7 @@ hLinkInput:: db
 hLinkRemoteInput:: db
 ; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
 hLinkRemoteInputBuf:: db
-; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputPressed) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back
+; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputRepeat) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back
 hLinkTxInput:: db
 ; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
 hLinkTransferDone:: db

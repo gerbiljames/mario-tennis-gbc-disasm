@@ -159,7 +159,7 @@ RunMatchStatsScreen:
 	call WaitFadeEnd ; $5c5c
 .loop:
 	call PrintMatchSetScores ; $5c5f
-	ldh a, [hInputPressed] ; $5c62
+	ldh a, [hInputRepeat] ; $5c62
 	bit PADB_LEFT, a ; $5c64
 	jr nz, .pressedLeft ; $5c66
 	bit PADB_A, a ; $5c68

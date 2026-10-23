@@ -46,7 +46,7 @@ RunMinigameSelect:
 .startInput:
 	wram_bank WRAM_SCREEN ; $6249
 .loop:
-	ldh a, [hInputPressed] ; $624f
+	ldh a, [hInputRepeat] ; $624f
 	ld [wMenuInputPressed], a ; $6251
 	call CheckMinigameGridExpanded ; $6254
 	or a ; $6257

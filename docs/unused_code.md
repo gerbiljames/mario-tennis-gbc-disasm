@@ -173,7 +173,7 @@ and `Unused_07_ApplyCharStatPreset` (168 instructions of stat presets
 nothing loads) are the largest bodies with no live twin at all.
 `Unused_10_SwingContestPrototype` is an early cut of bank `$15`'s swing
 contest (count task, then the GO sound), its counters two bytes lower.
-`Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
+`Unused_08_DrawSlotSprite16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
 **8. Data that came along.** By bytes the unused blobs are mostly

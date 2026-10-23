@@ -70,7 +70,7 @@ SetupCharacterSprite:
 	add $04 ; $5a7c
 	ld [wCharSpriteAttr], a ; $5a7e
 	ld a, [wCharIndex] ; $5a81
-	ld_hl_indexed SetupCharacterSprite_CharTileBaseTable ; $5a84
+	ld_hl_indexed CharTileBaseByIndex ; $5a84
 	ld a, [hl] ; $5a8b
 	ld [wCharTileBase], a ; $5a8c
 	ld a, [wCharIndex] ; $5a8f
@@ -91,13 +91,13 @@ CharFrameGfxDest_07:
 	dw vTiles0 tile $10 + VRAM_BANK1 ; record 1
 	dw vTiles0 tile $20 + VRAM_BANK1 ; record 2
 	dw vTiles0 tile $30 + VRAM_BANK1 ; record 3
-SetupCharacterSprite_CharTileBaseTable:
-	INCLUDE "data/engine/match/SetupCharacterSprite_CharTileBaseTable.asm" ; $5aaf, 4 bytes (bytes:4)
+CharTileBaseByIndex:
+	INCLUDE "data/engine/match/CharTileBaseByIndex.asm" ; $5aaf, 4 bytes (bytes:4)
 ; Copies one character's attribute record into the per-character struct: the
 ; reach box CheckBallHitsCharBody tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position
-; strategy, the two reaction delays, ball tracking, aim-away chance and serve
-; style. OverrideCharStatsForDebug rewrites those six and wCharAimJitterScale.
+; strategy, the two reaction delays, ball tracking, aim-away chance and
+; difficulty. OverrideCharStatsForDebug rewrites those six and wCharAimJitterScale.
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a ; $5ab6
@@ -295,7 +295,7 @@ LoadCharacterAttributes:
 	ld hl, CHARREC_DIFFICULTY ; $5c11
 	add hl, de ; $5c14
 	ld a, [hl] ; $5c15
-	ld [wAiPlayStyle], a ; $5c16
+	ld [wAiDifficulty], a ; $5c16
 	ld a, $00 ; $5c19
 	ld hl, wCharSkillIcons + 1 ; $5c1b
 	bit 0, [hl] ; $5c1e
@@ -385,7 +385,7 @@ OverrideCharStatsForDebug:
 	ld a, $ff ; $5d04
 	ld [wAiAimAwayChance], a ; $5d06
 	ld a, $02 ; $5d09
-	ld [wAiPlayStyle], a ; $5d0b
+	ld [wAiDifficulty], a ; $5d0b
 	ld a, $00 ; $5d0e
 	ld [wCharAimJitterScale], a ; $5d10
 	ld a, $01 ; $5d13

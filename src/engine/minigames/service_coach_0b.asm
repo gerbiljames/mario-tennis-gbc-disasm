@@ -205,8 +205,8 @@ ServicePractice3Hook_PerFrame:
 .done:
 	ret ; $520b
 ServicePractice3Hook_Draw:
-	call QueueDrillGate1Pole ; $520c
-	call QueueDrillGate2Pole ; $520f
+	call QueueDrillGateLeftPole ; $520c
+	call QueueDrillGateRightPole ; $520f
 	ret ; $5212
 ServicePractice3Hook_PointStart:
 	xor a ; $5213

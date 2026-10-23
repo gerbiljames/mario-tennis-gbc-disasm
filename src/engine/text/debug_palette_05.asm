@@ -197,7 +197,7 @@ RunDebugPaletteViewer:
 	ld d, a ; $6ac2
 	ld a, [wDebugPaletteIndex] ; $6ac3
 	ld e, a ; $6ac6
-	ldh a, [hInputPressed] ; $6ac7
+	ldh a, [hInputRepeat] ; $6ac7
 	bit PADB_LEFT, a ; $6ac9
 	jr z, .checkRight ; $6acb
 	dec d ; $6acd

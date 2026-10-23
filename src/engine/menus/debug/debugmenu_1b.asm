@@ -358,7 +358,7 @@ Unused_1b_UpdateUnlockDebugSelection:
 	ld [wCharSelectChar], a ; $67f0
 	ret ; $67f3
 Unused_1b_MoveUnlockDebugCursor:
-	ldh a, [hInputPressed] ; $67f4
+	ldh a, [hInputRepeat] ; $67f4
 	ld b, a ; $67f6
 	and PADF_DPAD ; $67f7
 	jr z, .done ; $67f9

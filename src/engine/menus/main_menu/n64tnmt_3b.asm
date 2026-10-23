@@ -386,7 +386,7 @@ RunN64RingShotData:
 	call WaitFadeEnd ; $5174
 	wram_bank WRAM_SCREEN ; $5177
 .loop:
-	ldh a, [hInputPressed] ; $517d
+	ldh a, [hInputRepeat] ; $517d
 	ld [wMenuInputPressed], a ; $517f
 	call ScrollRingShotCursor ; $5182
 	call AdvanceFrame ; $5185

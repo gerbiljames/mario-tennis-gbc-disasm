@@ -296,7 +296,7 @@ ExecuteShotTopspin:
 	ld [wCurrentShotType], a ; $58c0
 	call NormalizeBallHeightForShot ; $58c3
 	call ApplyShotTypePresets ; $58c6
-	call WeakenShotByCharge ; $58c9
+	call ShortenShotDepthByCharge ; $58c9
 	call ComputeShotTrajectory ; $58cc
 	farcall ShotBallPathTopspin ; $58cf
 	ret ; $58d2
@@ -316,7 +316,7 @@ ExecuteShotSlice:
 	ld [wCurrentShotType], a ; $58ee
 	call NormalizeBallHeightForShot ; $58f1
 	call ApplyShotTypePresets ; $58f4
-	call WeakenShotByCharge ; $58f7
+	call ShortenShotDepthByCharge ; $58f7
 	call ComputeShotTrajectory ; $58fa
 	farcall ShotBallPathSlice ; $58fd
 	ret ; $5900
@@ -334,7 +334,7 @@ ExecuteShotPowerSlice:
 ExecuteShotLob:
 	call RaiseBallHeightForLob ; $591a
 	call ApplyShotTypePresets ; $591d
-	call BoostShotByCharge ; $5920
+	call LengthenShotDepthByCharge ; $5920
 	call NudgeShotByPlayerMomentum ; $5923
 	farcall ComputeShotTrajectory ; $5926
 	farcall ShotBallPathLob ; $5929
@@ -342,7 +342,7 @@ ExecuteShotLob:
 ExecuteShotDrop:
 	call RaiseBallHeightForLob ; $592d
 	call ApplyShotTypePresets ; $5930
-	call WeakenShotByCharge ; $5933
+	call ShortenShotDepthByCharge ; $5933
 	call ComputeShotTrajectory ; $5936
 	farcall ShotBallPathDrop ; $5939
 	ret ; $593c
@@ -351,7 +351,7 @@ ExecuteShotReachBasic:
 	jr z, ExecuteShotReach ; $5940
 	call NormalizeBallHeightForShot ; $5942
 	call ApplyShotTypePresets ; $5945
-	call WeakenShotByCharge ; $5948
+	call ShortenShotDepthByCharge ; $5948
 	call ComputeShotTrajectory ; $594b
 	farcall ShotBallPathReachBasic ; $594e
 	ret ; $5951
@@ -360,7 +360,7 @@ ExecuteShotReachPowerTopspin:
 	jr z, ExecuteShotReach ; $5955
 	call NormalizeBallHeightForShot ; $5957
 	call ApplyShotTypePresets ; $595a
-	call WeakenShotByCharge ; $595d
+	call ShortenShotDepthByCharge ; $595d
 	call ComputeShotTrajectory ; $5960
 	farcall ShotBallPathReachPowerTopspin ; $5963
 	ret ; $5966
@@ -369,7 +369,7 @@ ExecuteShotReachPowerSlice:
 	jr z, ExecuteShotReach ; $596a
 	call NormalizeBallHeightForShot ; $596c
 	call ApplyShotTypePresets ; $596f
-	call WeakenShotByCharge ; $5972
+	call ShortenShotDepthByCharge ; $5972
 	call ComputeShotTrajectory ; $5975
 	farcall ShotBallPathReachPowerSlice ; $5978
 	ret ; $597b
@@ -378,7 +378,7 @@ ExecuteShotReach:
 	ld [wCurrentShotType], a ; $597e
 	call NormalizeBallHeightForShot ; $5981
 	call ApplyShotTypePresets ; $5984
-	call WeakenShotByCharge ; $5987
+	call ShortenShotDepthByCharge ; $5987
 	call ComputeShotTrajectory ; $598a
 	farcall ShotBallPathReach ; $598d
 	ret ; $5990

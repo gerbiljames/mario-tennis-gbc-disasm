@@ -73,7 +73,7 @@ Unused_1a_RunCharViewerInputLoop:
 	call Unused_1a_DrawCharViewerCharSprite ; $6c9f
 	wram_bank WRAM_SCENE ; $6ca2
 	call AdvanceFrame ; $6ca8
-	ldh a, [hInputPressed] ; $6cab
+	ldh a, [hInputRepeat] ; $6cab
 	bit PADB_UP, a ; $6cad
 	jr nz, .up ; $6caf
 	bit PADB_DOWN, a ; $6cb1

@@ -1,6 +1,6 @@
 WaitForAOrBPress:
 	call AdvanceFrame ; $5507
-	ldh a, [hInputPressed] ; $550a
+	ldh a, [hInputRepeat] ; $550a
 	and PADF_A | PADF_B ; $550c
 	jr z, WaitForAOrBPress ; $550e
 	ret ; $5510

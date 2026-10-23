@@ -13,7 +13,7 @@ ShowVarsityTeamChart:
 	sound SFX_MARKER ; $7784
 	wait_frames 120 ; $7786
 .loop:
-	ldh a, [hInputPressed] ; $778a
+	ldh a, [hInputRepeat] ; $778a
 	bit PADB_A, a ; $778c
 	jr nz, .playSfx ; $778e
 	bit PADB_B, a ; $7790
@@ -328,7 +328,7 @@ RunMarioCastExhibResults:
 	wram_bank WRAM_SCREEN ; $7a26
 .loop:
 	call AdvanceFrame ; $7a2c
-	ldh a, [hInputPressed] ; $7a2f
+	ldh a, [hInputRepeat] ; $7a2f
 	ld [wMenuInputPressed], a ; $7a31
 	call CheckMarioCastChartExpanded ; $7a34
 	or a ; $7a37

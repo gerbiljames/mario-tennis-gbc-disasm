@@ -39,7 +39,7 @@ RunCharacterSelectScreen:
 	res B_IE_TIMER, [hl] ; $484d
 	frame_task TickMenuBgScrollTask_38 ; $484f
 .redraw:
-	ldh a, [hInputPressed] ; $4857
+	ldh a, [hInputRepeat] ; $4857
 	ld [wMenuInputPressed], a ; $4859
 	ld b, $02 ; $485c
 	ld c, $01 ; $485e
@@ -49,7 +49,7 @@ RunCharacterSelectScreen:
 	call RefreshCharacterSelectHighlight ; $4866
 .pollButtons:
 	call AdvanceFrame ; $4869
-	ldh a, [hInputPressed] ; $486c
+	ldh a, [hInputRepeat] ; $486c
 	bit PADB_A, a ; $486e
 	jr nz, .confirm ; $4870
 	bit PADB_B, a ; $4872

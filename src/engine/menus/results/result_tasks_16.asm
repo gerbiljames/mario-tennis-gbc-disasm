@@ -171,7 +171,7 @@ RunMatchWinLoseScreen:
 	call PrintDecimalByte ; $4505
 	pop af ; $4508
 	pop de ; $4509
-	ldh a, [hInputPressed] ; $450a
+	ldh a, [hInputRepeat] ; $450a
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
 	jr nz, .playSelectSfx ; $4511

@@ -58,7 +58,7 @@ RunMinigameLevelSelect2:
 	wram_bank WRAM_SCREEN ; $6e72
 .loop:
 	call AdvanceFrame ; $6e78
-	ldh a, [hInputPressed] ; $6e7b
+	ldh a, [hInputRepeat] ; $6e7b
 	ld [wMenuInputPressed], a ; $6e7d
 	call GetMinigameLevelColumnCount ; $6e80
 	ld c, $01 ; $6e83
@@ -245,7 +245,7 @@ RunMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $7013
 .loop:
 	call AdvanceFrame ; $7019
-	ldh a, [hInputPressed] ; $701c
+	ldh a, [hInputRepeat] ; $701c
 	ld [wMenuInputPressed], a ; $701e
 	call GetMinigameLevelColumnCount ; $7021
 	ld c, $01 ; $7024
@@ -421,7 +421,7 @@ RunMarioCharDataTypeSelect:
 	wram_bank WRAM_SCREEN ; $719a
 .loop:
 	call AdvanceFrame ; $71a0
-	ldh a, [hInputPressed] ; $71a3
+	ldh a, [hInputRepeat] ; $71a3
 	ld [wMenuInputPressed], a ; $71a5
 	ld b, $02 ; $71a8
 	ld c, $01 ; $71aa

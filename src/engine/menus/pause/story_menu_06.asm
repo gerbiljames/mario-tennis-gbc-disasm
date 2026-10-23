@@ -274,7 +274,7 @@ Unused_06_RunDebugStatsEditor:
 	pop_wram_bank ; $6bf0
 	ret ; $6bf5
 Unused_06_HandleDebugStatsInput:
-	ldh a, [hInputPressed] ; $6bf6
+	ldh a, [hInputRepeat] ; $6bf6
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
 	ld a, [wMatchMenuSelection] ; $6bfb
@@ -356,7 +356,7 @@ Unused_06_AdjustSelectedDebugStat:
 	ld hl, wDebugStatBytes + 7 ; $6c97
 	jp Unused_06_AdjustDebugStatDigit ; $6c9a
 Unused_06_AdjustDebugStatDigit:
-	ldh a, [hInputPressed] ; $6c9d
+	ldh a, [hInputRepeat] ; $6c9d
 	ld b, a ; $6c9f
 	ld c, $0a ; $6ca0
 	ld a, [hl] ; $6ca2
@@ -364,7 +364,7 @@ Unused_06_AdjustDebugStatDigit:
 	ld [hl], a ; $6ca6
 	ret ; $6ca7
 Unused_06_AdjustDebugStatByte:
-	ldh a, [hInputPressed] ; $6ca8
+	ldh a, [hInputRepeat] ; $6ca8
 	bit PADB_LEFT, a ; $6caa
 	jr nz, .decrease ; $6cac
 	bit PADB_RIGHT, a ; $6cae
@@ -381,7 +381,7 @@ Unused_06_AdjustDebugStatByte:
 	ld [hl], a ; $6cb9
 	ret ; $6cba
 Unused_06_AdjustDebugStatWord:
-	ldh a, [hInputPressed] ; $6cbb
+	ldh a, [hInputRepeat] ; $6cbb
 	bit PADB_LEFT, a ; $6cbd
 	jr nz, .decrease ; $6cbf
 	bit PADB_RIGHT, a ; $6cc1

@@ -210,7 +210,7 @@ Unused_1b_UpdateCharSelectSelection:
 	ld [wCharSelectChar], a ; $618e
 	ret ; $6191
 Unused_1b_MoveCharSelectCursor:
-	ldh a, [hInputPressed] ; $6192
+	ldh a, [hInputRepeat] ; $6192
 	ld b, a ; $6194
 	and PADF_DPAD ; $6195
 	jr z, .done ; $6197

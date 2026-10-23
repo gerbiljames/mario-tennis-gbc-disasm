@@ -14,7 +14,7 @@ Unused_05_IsCursorOnAdjustRow:
 	rlc b ; $4c8a
 	bit 0, b ; $4c8c
 	jr z, .restore ; $4c8e
-	ldh a, [hInputPressed] ; $4c90
+	ldh a, [hInputRepeat] ; $4c90
 	and PADF_UP | PADF_DOWN ; $4c92
 	jr nz, .restore ; $4c94
 	pop bc ; $4c96
@@ -406,7 +406,7 @@ TextCmdDelay15Skippable:
 	ld b, $0f ; $4f63
 .loop:
 	call AdvanceFrame ; $4f65
-	ldh a, [hInputPressed] ; $4f68
+	ldh a, [hInputRepeat] ; $4f68
 	and ~(PADF_SELECT | PADF_START) ; $4f6a
 	jr nz, .restore ; $4f6c
 	dec b ; $4f6e

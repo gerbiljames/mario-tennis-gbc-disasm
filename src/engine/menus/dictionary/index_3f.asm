@@ -239,7 +239,7 @@ HandleTennisDictionaryIndexInput:
 	push af ; $55a7
 	jr .restore ; $55a8
 .checkUp:
-	ldh a, [hInputPressed] ; $55aa
+	ldh a, [hInputRepeat] ; $55aa
 	bit PADB_UP, a ; $55ac
 	jr z, .checkDown ; $55ae
 	ld a, [wTennisDictCursorRow] ; $55b0
@@ -375,7 +375,7 @@ HandleTennisDictionaryListInput:
 	push af ; $56ba
 	jp .restore ; $56bb
 .checkUp:
-	ldh a, [hInputPressed] ; $56be
+	ldh a, [hInputRepeat] ; $56be
 	bit PADB_UP, a ; $56c0
 	jr z, .checkDown ; $56c2
 	sound SFX_MENU_MOVE ; $56c4

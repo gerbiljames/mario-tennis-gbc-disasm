@@ -4,7 +4,7 @@
 	farptr LoadBallTouchCharEffectTiles ; $4006
 	farptr LoadLandingMarkerTiles ; $4008
 	farptr LoadStoryPauseMenuGfx ; $400a
-	farptr LoadTargetStarFrameTiles ; $400c
+	farptr LoadShootingStarFrameTiles ; $400c
 	farptr LoadTreasureBoxFrameTiles ; $400e
 	farptr LoadBooFrameTiles ; $4010
 Padding_28_0:
@@ -41,8 +41,8 @@ FruitObjTiles:
 BananaBunchObjTiles:
 	INCBIN "data/engine/match/BananaBunchObjTiles.bin" ; $5130, 256 bytes
 	ds ALIGN[4]
-TargetStarObjTiles:
-	INCBIN "data/engine/match/TargetStarObjTiles.bin" ; $5230, 576 bytes
+ShootingStarObjTiles:
+	INCBIN "data/engine/match/ShootingStarObjTiles.bin" ; $5230, 576 bytes
 	ds ALIGN[4]
 BonusStarObjTiles:
 	INCBIN "data/engine/match/BonusStarObjTiles.bin" ; $5470, 32 bytes
@@ -209,7 +209,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5ffa
 	ld hl, BananaBunchObjTiles ; $5ffd
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6000
-	ld c, (TargetStarObjTiles - BananaBunchObjTiles) / 16 ; $6003
+	ld c, (ShootingStarObjTiles - BananaBunchObjTiles) / 16 ; $6003
 	call QueueVRAMCopy ; $6005
 	call LoadMinigameScoreDigitTiles ; $6008
 	ret ; $600b
@@ -256,9 +256,9 @@ LoadLandingMarkerTiles:
 	ld c, 4 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
-LoadTargetStarFrameTiles:
+LoadShootingStarFrameTiles:
 	add a ; $606c
-	ld_hl_indexed TargetStarFrameTilePtrs ; $606d
+	ld_hl_indexed ShootingStarFrameTilePtrs ; $606d
 	ld a, [hl+] ; $6074
 	ld h, [hl] ; $6075
 	ld l, a ; $6076
@@ -266,11 +266,11 @@ LoadTargetStarFrameTiles:
 	ld c, 12 ; $607a
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
-TargetStarFrameTilePtrs:
+ShootingStarFrameTilePtrs:
 	; $6080, 6 bytes (records:2)
-	dw TargetStarObjTiles tile 0 ; record 0
-	dw TargetStarObjTiles tile 12 ; record 1
-	dw TargetStarObjTiles tile 24 ; record 2
+	dw ShootingStarObjTiles tile 0 ; record 0
+	dw ShootingStarObjTiles tile 12 ; record 1
+	dw ShootingStarObjTiles tile 24 ; record 2
 LoadBooFrameTiles:
 	add a ; $6086
 	ld_hl_indexed BooFrameTilePtrs ; $6087

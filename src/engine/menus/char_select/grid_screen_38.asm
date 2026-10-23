@@ -178,7 +178,7 @@ RunExhibitionCharSelectScreen:
 	call RefreshCharInfoPanel ; $4ea7
 .frameLoop:
 	call AdvanceFrame ; $4eaa
-	ldh a, [hInputPressed] ; $4ead
+	ldh a, [hInputRepeat] ; $4ead
 	ld [wMenuInputPressed], a ; $4eaf
 	wram_bank WRAM_SCREEN ; $4eb2
 	ld a, [wCharGridRightPressCount] ; $4eb8
@@ -202,7 +202,7 @@ RunExhibitionCharSelectScreen:
 	call HandleCharGridButtons ; $4eda
 	xor a ; $4edd
 	ld [wMenuInputPressed], a ; $4ede
-	ldh [hInputPressed], a ; $4ee1
+	ldh [hInputRepeat], a ; $4ee1
 	push_wram_bank WRAM_SCREEN ; $4ee3
 	ld a, [wCharSelectSlot] ; $4eec
 	cp CHARSELECTSLOT_DONE ; $4eef
@@ -373,7 +373,7 @@ HandleCharGridDpad:
 	cp CHARSELECTSLOT_DONE ; $51a1
 	jr z, .done ; $51a3
 	ld a, [wMenuInputPressed] ; $51a5
-	ldh a, [hInputPressed] ; $51a8
+	ldh a, [hInputRepeat] ; $51a8
 	bit PADB_RIGHT, a ; $51aa
 	jr nz, .moveRight ; $51ac
 	bit PADB_LEFT, a ; $51ae

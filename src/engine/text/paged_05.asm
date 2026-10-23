@@ -240,7 +240,7 @@ Unused_05_RunOptionsMenuSelection:
 	ld b, a ; $4afc
 .loop:
 	call AdvanceFrame ; $4afd
-	ldh a, [hInputPressed] ; $4b00
+	ldh a, [hInputRepeat] ; $4b00
 	bit PADB_A, a ; $4b02
 	jp nz, .aPressed ; $4b04
 	bit PADB_UP, a ; $4b07
@@ -253,7 +253,7 @@ Unused_05_RunOptionsMenuSelection:
 	ld b, a ; $4b14
 	jr .playSfx ; $4b15
 .checkDown:
-	ldh a, [hInputPressed] ; $4b17
+	ldh a, [hInputRepeat] ; $4b17
 	and PADF_DOWN ; $4b19
 	jp z, .checkStart ; $4b1b
 	ld a, [wMenuRowCount] ; $4b1e
@@ -353,7 +353,7 @@ Unused_05_RunOptionsMenuSelection:
 	ld a, $ff ; $4bb6
 	jp .store ; $4bb8
 .checkB:
-	ldh a, [hInputPressed] ; $4bbb
+	ldh a, [hInputRepeat] ; $4bbb
 	and PADF_B ; $4bbd
 	jp z, .checkAdjustRow ; $4bbf
 	sound SFX_MENU_CANCEL ; $4bc2
@@ -370,7 +370,7 @@ Unused_05_RunOptionsMenuSelection:
 	call Unused_05_IsCursorOnAdjustRow ; $4bd5
 	or a ; $4bd8
 	jr z, .notAdjusting ; $4bd9
-	ldh a, [hInputPressed] ; $4bdb
+	ldh a, [hInputRepeat] ; $4bdb
 	and PADF_LEFT ; $4bdd
 	jp z, .checkRight ; $4bdf
 	ld a, [wPauseMenuOptionBits] ; $4be2
@@ -379,7 +379,7 @@ Unused_05_RunOptionsMenuSelection:
 	ld [wPauseMenuOptionBits], a ; $4be9
 	jr .adjusted ; $4bec
 .checkRight:
-	ldh a, [hInputPressed] ; $4bee
+	ldh a, [hInputRepeat] ; $4bee
 	and PADF_RIGHT ; $4bf0
 	jr z, .notAdjusting ; $4bf2
 	ld a, [wPauseMenuOptionBits] ; $4bf4
@@ -400,13 +400,13 @@ Unused_05_RunOptionsMenuSelection:
 	sra a ; $4c10
 	sra a ; $4c12
 	jp z, Unused_05_RunOptionsMenuSelection.loop ; $4c14
-	ldh a, [hInputPressed] ; $4c17
+	ldh a, [hInputRepeat] ; $4c17
 	and PADF_LEFT ; $4c19
 	jp z, .checkPageRight ; $4c1b
 	ld a, $fe ; $4c1e
 	jr .store ; $4c20
 .checkPageRight:
-	ldh a, [hInputPressed] ; $4c22
+	ldh a, [hInputRepeat] ; $4c22
 	and PADF_RIGHT ; $4c24
 	jp z, Unused_05_RunOptionsMenuSelection.loop ; $4c26
 	ld a, $fd ; $4c29

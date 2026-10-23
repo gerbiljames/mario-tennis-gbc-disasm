@@ -22,13 +22,13 @@ ResetSwingAnimation:
 CharStandbyState:
 	jumptable [wCharStatePhase] ; $6cbe
 	dw CharFinishSwingPhase ; $6cc2 jumptable
-	dw CharAwaitServeState.moveFreely ; $6cc4 jumptable
+	dw CharServerPartnerState.moveFreely ; $6cc4 jumptable
 	dw AdvanceCharStatePhase.done ; $6cc6 jumptable
-CharAwaitServeState:
+CharServerPartnerState:
 	jumptable [wCharStatePhase] ; $6cc8
 	dw CharFinishSwingPhase ; $6ccc jumptable
-	dw CharAwaitServeState.waitToLeaveNet ; $6cce jumptable
-	dw CharAwaitServeState.moveFreely ; $6cd0 jumptable
+	dw CharServerPartnerState.waitToLeaveNet ; $6cce jumptable
+	dw CharServerPartnerState.moveFreely ; $6cd0 jumptable
 	dw AdvanceCharStatePhase.done ; $6cd2 jumptable
 .moveFreely:
 	call ApplyCharMovementInput ; $6cd4

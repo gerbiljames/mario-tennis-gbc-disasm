@@ -63,7 +63,7 @@ RunN64ExhibData:
 	call WaitFadeEnd ; $44ce
 	wram_bank WRAM_SCREEN ; $44d1
 .loop:
-	ldh a, [hInputPressed] ; $44d7
+	ldh a, [hInputRepeat] ; $44d7
 	ld [wMenuInputPressed], a ; $44d9
 	call ScrollN64ExhibChart ; $44dc
 	call AdvanceFrame ; $44df

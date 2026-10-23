@@ -132,7 +132,7 @@ Unused_1a_RunCharViewerSelectGrid:
 .loop:
 	wram_bank WRAM_SCENE ; $68e8
 	call AdvanceFrame ; $68ee
-	ldh a, [hInputPressed] ; $68f1
+	ldh a, [hInputRepeat] ; $68f1
 	bit PADB_UP, a ; $68f3
 	jr nz, .moveUp ; $68f5
 	bit PADB_DOWN, a ; $68f7

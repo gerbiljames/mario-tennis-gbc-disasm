@@ -96,7 +96,7 @@ WaitTextAdvanceInput:
 	jr nz, .restore ; $5053
 	call AdvanceRandomSeed ; $5055
 	call AdvanceFrame ; $5058
-	ldh a, [hInputPressed] ; $505b
+	ldh a, [hInputRepeat] ; $505b
 	and ~(PADF_SELECT | PADF_START) ; $505d
 	jr z, .waitPressLoop ; $505f
 .restore:
@@ -118,7 +118,7 @@ TextCmdDelay150Skippable:
 	ld b, $96 ; $5078
 .loop:
 	call AdvanceFrame ; $507a
-	ldh a, [hInputPressed] ; $507d
+	ldh a, [hInputRepeat] ; $507d
 	and ~(PADF_SELECT | PADF_START) ; $507f
 	jr nz, .restore ; $5081
 	dec b ; $5083

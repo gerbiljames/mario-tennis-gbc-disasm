@@ -518,16 +518,16 @@ ENDC
 Unused_0b_DrillMessageTableTail:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
-QueueDrillGate1Pole:
+QueueDrillGateLeftPole:
 	ld a, [wDrillGateActive] ; $46a0
 	and a ; $46a3
 	ret z ; $46a4
 	ld bc, $0000 ; $46a5
-	ld hl, wDrillGate1 + 2 ; $46a8
+	ld hl, wDrillGateLeftPost + 2 ; $46a8
 	ld a, [hl+] ; $46ab
 	ld d, [hl] ; $46ac
 	ld e, a ; $46ad
-	ld hl, wDrillGate1 ; $46ae
+	ld hl, wDrillGateLeftPost ; $46ae
 	ld a, [hl+] ; $46b1
 	ld h, [hl] ; $46b2
 	ld l, a ; $46b3
@@ -537,16 +537,16 @@ QueueDrillGate1Pole:
 	ld_oam bc, OAM_BANK1 | 1, $30 ; $46bd
 	call QueueSpriteTemplate ; $46c0
 	ret ; $46c3
-QueueDrillGate2Pole:
+QueueDrillGateRightPole:
 	ld a, [wDrillGateActive] ; $46c4
 	and a ; $46c7
 	ret z ; $46c8
 	ld bc, $0000 ; $46c9
-	ld hl, wDrillGate2 + 2 ; $46cc
+	ld hl, wDrillGateRightPost + 2 ; $46cc
 	ld a, [hl+] ; $46cf
 	ld d, [hl] ; $46d0
 	ld e, a ; $46d1
-	ld hl, wDrillGate2 ; $46d2
+	ld hl, wDrillGateRightPost ; $46d2
 	ld a, [hl+] ; $46d5
 	ld h, [hl] ; $46d6
 	ld l, a ; $46d7

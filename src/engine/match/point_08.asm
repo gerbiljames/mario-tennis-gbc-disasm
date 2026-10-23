@@ -288,19 +288,19 @@ ShowMatchEndSequence:
 ShowSetEndSequence:
 	ld a, [wPlayer1SetsWon] ; $4f0f
 	ld b, DIGITGFX_NUMERALS ; $4f12
-	farcall LoadPlayer1ScoreDigitGfx ; $4f14
+	farcall LoadFirstScoreDigitGfx ; $4f14
 	ld a, [wPlayer2SetsWon] ; $4f17
 	ld b, DIGITGFX_NUMERALS ; $4f1a
-	farcall LoadPlayer2ScoreDigitGfx ; $4f1c
+	farcall LoadSecondScoreDigitGfx ; $4f1c
 	ld d, BANNER_SET ; $4f1f
 	jr ShowGameEndSequence.done ; $4f21
 ShowGameEndSequence:
 	ld a, [wPlayer1GamesWon] ; $4f23
 	ld b, DIGITGFX_NUMERALS ; $4f26
-	farcall LoadPlayer1ScoreDigitGfx ; $4f28
+	farcall LoadFirstScoreDigitGfx ; $4f28
 	ld a, [wPlayer2GamesWon] ; $4f2b
 	ld b, DIGITGFX_NUMERALS ; $4f2e
-	farcall LoadPlayer2ScoreDigitGfx ; $4f30
+	farcall LoadSecondScoreDigitGfx ; $4f30
 	ld d, BANNER_GAME ; $4f33
 	jr .done ; $4f35
 .done:
@@ -353,7 +353,7 @@ SetCharStateFromServeRole:
 	ret ; $4f9f
 ServeRoleCharStateTable_08:
 	; $4fa0, 4 bytes (bytes:4)
-	db CHARSTATE_SERVE, CHARSTATE_STANDBY, CHARSTATE_AWAIT_SERVE, CHARSTATE_STANDBY
+	db CHARSTATE_SERVE, CHARSTATE_STANDBY, CHARSTATE_SERVER_PARTNER, CHARSTATE_STANDBY
 EndPointBallEffects:
 	xor a ; $4fa4
 	ld [wBallTrailEnabled], a ; $4fa5

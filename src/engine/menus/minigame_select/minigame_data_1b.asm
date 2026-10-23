@@ -151,7 +151,7 @@ ShowMinigameDataScreen:
 	call WaitFadeEnd ; $740a
 	wram_bank WRAM_SCREEN ; $740d
 .loop:
-	ldh a, [hInputPressed] ; $7413
+	ldh a, [hInputRepeat] ; $7413
 	ld [wMenuInputPressed], a ; $7415
 	call ScrollMinigameDataList ; $7418
 	call AdvanceFrame ; $741b

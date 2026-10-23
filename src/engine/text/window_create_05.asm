@@ -252,7 +252,7 @@ RunMenuSelection:
 	ldh a, [hInputRisingEdge] ; $47cd
 	bit PADB_A, a ; $47cf
 	jr nz, .confirm ; $47d1
-	ldh a, [hInputPressed] ; $47d3
+	ldh a, [hInputRepeat] ; $47d3
 	bit PADB_UP, a ; $47d5
 	jr z, .checkDown ; $47d7
 	dec b ; $47d9
@@ -263,7 +263,7 @@ RunMenuSelection:
 	ld b, a ; $47e2
 	jr .moveCursor ; $47e3
 .checkDown:
-	ldh a, [hInputPressed] ; $47e5
+	ldh a, [hInputRepeat] ; $47e5
 	and PADF_DOWN ; $47e7
 	jp z, .checkStart ; $47e9
 	ld a, [wMenuRowCount] ; $47ec
@@ -357,7 +357,7 @@ RunMenuSelection:
 	ld a, $ff ; $4876
 	jp .exitMenu ; $4878
 .checkB:
-	ldh a, [hInputPressed] ; $487b
+	ldh a, [hInputRepeat] ; $487b
 	and PADF_B ; $487d
 	jp z, .checkSideScroll ; $487f
 	sound SFX_MENU_CANCEL ; $4882
@@ -372,13 +372,13 @@ RunMenuSelection:
 	srl a ; $4894
 	srl a ; $4896
 	jp z, .inputLoop ; $4898
-	ldh a, [hInputPressed] ; $489b
+	ldh a, [hInputRepeat] ; $489b
 	and PADF_LEFT ; $489d
 	jp z, .checkRight ; $489f
 	ld a, $fe ; $48a2
 	jr .exitMenu ; $48a4
 .checkRight:
-	ldh a, [hInputPressed] ; $48a6
+	ldh a, [hInputRepeat] ; $48a6
 	and PADF_RIGHT ; $48a8
 	jp z, .inputLoop ; $48aa
 	ld a, $fd ; $48ad

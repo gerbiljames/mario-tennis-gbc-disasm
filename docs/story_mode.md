@@ -702,7 +702,7 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$0d | gender (0 male, 1 female) |
 | +$0e | left-handed flag |
 | +$0f-$1e | AI / physics attributes (home-position strategy, reach windows, smash and dive speeds, skill-icon bits, reaction delays) |
-| +$1f | CPU difficulty (0 easy - 3 intense), the AI's play style on court |
+| +$1f | AI difficulty (0 easy - 3 intense; 4-8 drill-feeder rows) |
 | +$18 | level for player characters (1-99, capped `$63`), class tier for roster NPCs |
 | +$20-$2a | eleven stat bars, 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
 | +$2b | speed bonus, added to Speed by `LoadCharacterAttributes` |

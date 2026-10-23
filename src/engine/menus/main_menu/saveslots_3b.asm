@@ -280,7 +280,7 @@ TryMainMenuLinkHandshake:
 	farcall AnimateLinkStatusPalette ; $5ca3
 	farcall UpdateAnimatedTiles ; $5ca6
 	call AdvanceFrame ; $5ca9
-	ldh a, [hInputPressed] ; $5cac
+	ldh a, [hInputRepeat] ; $5cac
 	bit PADB_A, a ; $5cae
 	jr nz, .beginFadeOut ; $5cb0
 	bit PADB_B, a ; $5cb2
@@ -331,7 +331,7 @@ RunMatchFormatSelect:
 	wram_bank WRAM_SCREEN ; $5d22
 .loop:
 	call AdvanceFrame ; $5d28
-	ldh a, [hInputPressed] ; $5d2b
+	ldh a, [hInputRepeat] ; $5d2b
 	ld [wMenuInputPressed], a ; $5d2d
 	call HandleMatchFormatInput ; $5d30
 	ld b, $01 ; $5d33

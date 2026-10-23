@@ -21,7 +21,7 @@ RunCourtSelect4Menu:
 	wram_bank WRAM_SCREEN ; $5bd1
 .loop:
 	call AdvanceFrame ; $5bd7
-	ldh a, [hInputPressed] ; $5bda
+	ldh a, [hInputRepeat] ; $5bda
 	ld [wMenuInputPressed], a ; $5bdc
 	ld b, $02 ; $5bdf
 	ld c, $02 ; $5be1

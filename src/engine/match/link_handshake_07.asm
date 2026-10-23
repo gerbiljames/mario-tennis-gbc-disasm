@@ -76,7 +76,7 @@ PrepareLinkInputPayload:
 	ldh a, [hLinkTxInput] ; $4a1c
 	ldh [hLinkRemoteInputBuf], a ; $4a1e
 	call ReadJoypadThunk ; $4a20
-	ldh a, [hInputPressed] ; $4a23
+	ldh a, [hInputRepeat] ; $4a23
 	ldh [hLinkTxInput], a ; $4a25
 	pop af ; $4a27
 	ret ; $4a28

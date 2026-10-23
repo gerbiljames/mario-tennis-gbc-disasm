@@ -293,7 +293,7 @@ RunN64TnmtData:
 	call WaitFadeEnd ; $4d1e
 	wram_bank WRAM_SCREEN ; $4d21
 .loop:
-	ldh a, [hInputPressed] ; $4d27
+	ldh a, [hInputRepeat] ; $4d27
 	ld [wMenuInputPressed], a ; $4d29
 	call ScrollN64TnmtDataCursor ; $4d2c
 	call AdvanceFrame ; $4d2f

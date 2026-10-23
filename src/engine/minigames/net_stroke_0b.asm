@@ -344,7 +344,7 @@ StrokeMatch1Hook_PointStart:
 	xor a ; $6437
 	ld [wDrillPointJudgement], a ; $6438
 	ld a, $01 ; $643b
-	ld [wAiServeSkipToss], a ; $643d
+	ld [wAiServeNoQuickStrike], a ; $643d
 	ret ; $6440
 StrokeMatch1Hook_PointEnd:
 	call StrokeMatch1JudgeOnPointEnd ; $6441

@@ -248,18 +248,18 @@ HandleBallHitEvent:
 	call SetCharStateOnBallHit ; $42b0
 	wram_bank WRAM_CHAR0 ; $42b3
 	call SetCharStateOnBallHit ; $42b9
-	call DetectServeAceOutcome ; $42bc
+	call DetectServeReturnFault ; $42bc
 	ld d, MODEHOOK_BALL_HIT ; $42bf
 	call CallModeHook ; $42c1
 	xor a ; $42c4
 	ld [wBallBounceCount], a ; $42c5
 	ld a, [wRallyLength] ; $42c8
 	cp $01 ; $42cb
-	jr z, .specialShot ; $42cd
+	jr z, .serveHit ; $42cd
 	cp $02 ; $42cf
 	jr z, .resetCourtLimits ; $42d1
 	ret ; $42d3
-.specialShot:
+.serveHit:
 	ld a, [wPowerServeFlag] ; $42d4
 	and a ; $42d7
 	jr z, .done ; $42d8
@@ -303,7 +303,7 @@ SetCharStateOnBallHitTable:
 	table_width 1
 	db CHARSTATE_INERT, CHARSTATE_RECOVER, CHARSTATE_RALLY, CHARSTATE_RECOVER, CHARSTATE_RECOVER, CHARSTATE_RALLY, CHARSTATE_WALK, CHARSTATE_POINT_END
 	assert_table_length NUM_CHARSTATES
-DetectServeAceOutcome:
+DetectServeReturnFault:
 	ld a, [wRallyLength] ; $4326
 	cp $02 ; $4329
 	jr nz, .done ; $432b
@@ -446,5 +446,5 @@ ReadMatchInputRepeat:
 	ldh a, [hLinkExchangeActive] ; $441d
 	and a ; $441f
 	jr nz, ReadLinkMatchInput ; $4420
-	ldh a, [hInputPressed] ; $4422
+	ldh a, [hInputRepeat] ; $4422
 	ret ; $4424

@@ -188,7 +188,7 @@ RunNameEntryScreen:
 	call PrintDecimalByte ; $6e64
 	pop af ; $6e67
 	pop de ; $6e68
-	ldh a, [hInputPressed] ; $6e69
+	ldh a, [hInputRepeat] ; $6e69
 	ld [wMenuInputPressed], a ; $6e6b
 	ld b, $0f ; $6e6e
 	ld c, $06 ; $6e70
@@ -393,7 +393,7 @@ HandleNameEntryCursorMove:
 	ld a, [wMenuCursorY] ; $7074
 	cp $05 ; $7077
 	jr nz, .done ; $7079
-	ldh a, [hInputPressed] ; $707b
+	ldh a, [hInputRepeat] ; $707b
 	bit PADB_RIGHT, a ; $707d
 	jr nz, .snapRight ; $707f
 	bit PADB_LEFT, a ; $7081

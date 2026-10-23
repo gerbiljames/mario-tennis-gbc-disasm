@@ -157,10 +157,10 @@ Unused_07_TargetZoneBallHitHook:
 Unused_07_TargetZonePointStartHook:
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50
-	farcall SetBallGatePoint1 ; $5f53
+	farcall SetDrillGateLeftPost ; $5f53
 	ld hl, $0240 ; $5f56
 	ld de, $fd80 ; $5f59
-	farcall SetBallGatePoint2 ; $5f5c
+	farcall SetDrillGateRightPost ; $5f5c
 	ld hl, $ff60 ; $5f5f
 	ld de, $fd60 ; $5f62
 	farcall SetTargetZoneCorner1 ; $5f65
