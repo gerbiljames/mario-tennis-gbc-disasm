@@ -192,7 +192,7 @@ PlayDreamMatchEpilogueScene:
 	ldh a, [hInputRepeat] ; $79e1
 	and PADF_A | PADF_B ; $79e3
 	jr z, .waitTheEndInput ; $79e5
-	ld de, SAVEFLAG_OPENING_SEEN ; $79e7
+	ld de, SAVEFLAG_GAME_BEATEN ; $79e7
 	farcall SetSaveFlag ; $79ea
 	ld_flag_id de, FLAG_DOUBLES ; $79ed
 	call TestGameFlag ; $79f0

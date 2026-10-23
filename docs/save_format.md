@@ -39,7 +39,7 @@ computed callers are bounded (character ids stop at `$1f`,
 | byte | flags | contents |
 |---|---|---|
 | `$00`-`$03` | 0-31 | `CheckCharRecordPresent` (18:452a) has a flag number = char id lookup, reached only from unused code |
-| `$01` | 9-15 | within that: #9 opening seen, #10-13 Waluigi/Yoshi/Bowser/Wario (granted by N64 transfer records), #14/#15 Mario/Peach (singles/doubles Dream Match), read by the character grid (`CharUnlockSaveFlags`) |
+| `$01` | 9-15 | within that: #9 game beaten (Dream Match epilogue; enables partner choice), #10-13 Waluigi/Yoshi/Bowser/Wario (granted by N64 transfer records), #14/#15 Mario/Peach (singles/doubles Dream Match), read by the character grid (`CharUnlockSaveFlags`) |
 | `$02`-`$03` | 20-31 | also the first 12 **minigame-clear** flags (Boo Blast → Target Shot, 3 levels each) |
 | `$04` | 32-39 | per-story-slot: `SetStorySlotMusicMuted` (music on/off) #32-35, `SetStorySlotCourtView` (camera view) #36-39, indexed by `wCurrentStorySlot` (3 = exhibition); `EraseStorySlotSaveData` clears the erased story slot's pair |
 | `$05`-`$06` | 40-54 | the remaining minigame clears (Fruit Fantasy → Two-On-One) |

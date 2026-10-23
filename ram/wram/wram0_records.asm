@@ -332,7 +332,7 @@ wVarsitySinglesWinFlags:: db
 ; [8-bit] wGameFlags byte $0c: FLAG_HAVE_* for every racket and the Iron Shoes
 wEquipmentOwnedFlags:: db
 
-; [8-bit] wGameFlags byte $0d: FLAG_HAVE_LIGHT_SHOES, FLAG_ENDING_CREDITS_PENDING/RUNNING, FLAG_ACTORS_FROZEN
+; [8-bit] wGameFlags byte $0d: FLAG_HAVE_LIGHT_SHOES, FLAG_ENDING_SKIP_STAFF_PAGE, FLAG_ENDING_CREDITS_RUNNING, FLAG_ACTORS_FROZEN
 wLightShoesAndCreditsFlags:: db
 
 ; [3 bytes] wGameFlags bytes $0e-$10 (flags 112-135): NPC talked/moved/turned and scene-seen flags (FLAG_*_TALKED_*, FLAG_*_MOVED, FLAG_REPAIR_COUNTER_*, FLAG_AWARDS_CEREMONY_SEEN_*, ...; include/flag_constants.inc)

@@ -6,7 +6,7 @@
 ; through CharUnlockSaveFlags by Mario-cast grid slot. CheckCharRecordPresent's
 ; flag number = character id lookup is reached only from unused code.
 
-def SAVEFLAG_OPENING_SEEN                equ $0120 ; #9; set when the title/opening sequence finishes
+def SAVEFLAG_GAME_BEATEN                equ $0120 ; #9; set after the Dream Match epilogue's "The End"; lets a new story pick its partner
 def SAVEFLAG_UNLOCKED_WALUIGI            equ $0140 ; #10; granted by N64 transfer records
 def SAVEFLAG_UNLOCKED_YOSHI              equ $0160 ; #11; granted by N64 transfer records
 def SAVEFLAG_UNLOCKED_BOWSER             equ $0180 ; #12; granted by N64 transfer records

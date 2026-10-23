@@ -305,7 +305,7 @@ RunNewGameSetup:
 	push af ; $6255
 	ld a, STORYREC_PARTNER ; $6256
 	ld [wStoryCharacterSlot], a ; $6258
-	ld de, SAVEFLAG_OPENING_SEEN ; $625b
+	ld de, SAVEFLAG_GAME_BEATEN ; $625b
 	farcall TestSaveFlag ; $625e
 	jr nz, .selectPartner ; $6261
 	push af ; $6263

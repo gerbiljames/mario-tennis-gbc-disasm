@@ -580,7 +580,7 @@ screen-mode bits that cannot outlive a map transition.
 (the six Mario-cast `SAVEFLAG_UNLOCKED_*`), arcade-minigame clears, court unlocks, the
 per-slot option bits (A = music on/off, `SetStorySlotMusicMuted` from
 `StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotCourtView` from
-`MatchPauseMenu_CameraSelect`), `SAVEFLAG_OPENING_SEEN`, and
+`MatchPauseMenu_CameraSelect`), `SAVEFLAG_GAME_BEATEN`, and
 `SAVEFLAG_DEBUG_TEST_MENU`.
 
 ### The ranking ladder and the tournament arc
@@ -674,7 +674,7 @@ computes `sprite * 2` and discards it, and no record has a zero first byte.
 `PlayAwardsCeremonyScene` (from `$0f:$4e91`/`$556b`, gender-derived key) runs
 the credits caption scroll and its own TO BE CONTINUED; `PlayDreamMatchEpilogueScene`
 (from bank `$0e`) runs the ending credits on the first clear, then the
-champion-medal screen with "The End", and sets `SAVEFLAG_OPENING_SEEN`. Bank
+champion-medal screen with "The End", and sets `SAVEFLAG_GAME_BEATEN`. Bank
 `$03` owns the scrolling staff roll (`RunStaffCreditsRoll`,
 `$03:$59c5`) and the credits montage's staff pages (`ShowEndingCreditsStaffPage`).
 
