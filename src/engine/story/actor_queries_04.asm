@@ -266,7 +266,7 @@ BuildNearbyActorList:
 	pop bc ; $54d4
 	pop af ; $54d5
 	ret ; $54d6
-BuildActorQueryList:
+BuildTalkableActorList:
 	push af ; $54d7
 	push bc ; $54d8
 	push de ; $54d9

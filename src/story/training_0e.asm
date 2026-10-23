@@ -26,7 +26,7 @@ TrainingGymActors_0e:
 	map_actor $0000, ActorScript_0e_01, 44.0, 11.0, FACE_LEFT, OBJ_STUDENT_HEADBAND_BOY, ANIM_WALK, $00, TRAINING_GYM_STUDENT_HEADBAND_BOY
 	map_actor $0000, ActorScript_0e_02, 45.375, 23.0, FACE_RIGHT, OBJ_STUDENT_BLACK_HAIR_BOY, ANIM_WALK, $06, TRAINING_GYM_STUDENT_BLACK_HAIR_BOY_2
 	map_actor $0000, ActorScript_0e_05, 25.0, 17.0, FACE_UP, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, TRAINING_GYM_STUDENT_SIDE_PART_BOY_1
-	map_actor $0000, ActorScript_0e_22, 13.0, 19.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, TRAINING_GYM_STUDENT_SIDE_PART_BOY_2
+	map_actor $0000, ActorScript_0e_22, 13.0, 19.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, TRAINING_GYM_REPAIR_CLERK
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
@@ -35,8 +35,8 @@ TrainingGymEntryPoints_0e:
 	map_entry $03, FACE_DOWN, 21.0, 12.0, TrainingGymArrival03_0e, TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM
 	map_entry $0b, FACE_DOWN, 13.0, 15.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_A
 	map_entry $0c, FACE_LEFT, 17.0, 19.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_B
-	map_entry $0d, FACE_DOWN, 13.0, 15.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_A_CHANGED
-	map_entry $0e, FACE_LEFT, 17.0, 19.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_B_CHANGED
+	map_entry $0d, FACE_DOWN, 13.0, 15.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_A_CANCELLED
+	map_entry $0e, FACE_LEFT, 17.0, 19.0, $0000, TRAINING_CENTER_REPAIR_COUNTER_B_CANCELLED
 	db $ff
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
@@ -460,17 +460,17 @@ TrainingGymInitScript_0e:
 	ret ; $4668
 .checkCounterB:
 	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $4669
-	jr nz, .checkCounterAChanged ; $466b
+	jr nz, .checkCounterACancelled ; $466b
 	call RepairCounterReturnB ; $466d
 	ret ; $4670
-.checkCounterAChanged:
-	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A_CHANGED ; $4671
-	jr nz, .checkCounterBChanged ; $4673
-	call RepairCounterChangedReturnA ; $4675
+.checkCounterACancelled:
+	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A_CANCELLED ; $4671
+	jr nz, .checkCounterBCancelled ; $4673
+	call RepairCounterCancelledReturnA ; $4675
 	ret ; $4678
-.checkCounterBChanged:
-	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B_CHANGED ; $4679
+.checkCounterBCancelled:
+	cp ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B_CANCELLED ; $4679
 	jr nz, .done ; $467b
-	call RepairCounterChangedReturnB ; $467d
+	call RepairCounterCancelledReturnB ; $467d
 .done:
 	ret ; $4680

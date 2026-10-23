@@ -3,7 +3,7 @@ CheckBallHitsScoringMinigameTarget:
 	and a ; $6df7
 	ret z ; $6df8
 	ld a, $01 ; $6df9
-	ld [wMinigameHitPending], a ; $6dfb
+	ld [wMinigameNetCrossPending], a ; $6dfb
 	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $6dfe
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
@@ -98,7 +98,7 @@ RunEndingCreditsSequence:
 	ld [wRasterScrollStartLY], a ; $6eba
 	ld [wRasterScrollEndLY], a ; $6ebd
 	call RunStoryLocation ; $6ec0
-	test_flag FLAG_ENDING_CREDITS_PENDING ; $6ec3
+	test_flag FLAG_ENDING_SKIP_STAFF_PAGE ; $6ec3
 	jr nz, .fadeOut ; $6ec6
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $6ec8
 	call FreezeAllActors ; $6ecb
@@ -111,7 +111,7 @@ RunEndingCreditsSequence:
 	ld a, [wStoryCharacterSlot] ; $6edd
 	farcall ShowEndingCreditsStaffPage ; $6ee0
 .fadeOut:
-	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
+	clear_flag FLAG_ENDING_SKIP_STAFF_PAGE ; $6ee3
 	script_fade_out 4 ; $6ee6
 	call WaitFadeEnd ; $6eeb
 	ld a, SCREEN_HEIGHT_PX ; $6eee

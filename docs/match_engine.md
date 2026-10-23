@@ -1313,7 +1313,7 @@ four); clamps it signed (`ScaleStatForBarLevel`, `$02:$44b7`); and looks it up i
 a **9-entry ascending signed threshold table** for a 0-9 bar
 (`LookupStatBarLevel`, `$02:$4494`). A bar measures how *unevenly* level-ups
 were spent. Equipment then adds signed per-stat deltas clamped to 0-9
-(`ApplyStatModifiers`, `$02:$468e`) — e.g. the Large Racket trades spin for angle
+(`ApplyEquipmentStatDeltas`, `$02:$468e`) — e.g. the Large Racket trades spin for angle
 and placement, Light Shoes stopping for speed. Results live in the saved record
 (`$c920`-`$c92a` bars, `$c938`-`$c93b` levels).
 
@@ -1337,7 +1337,7 @@ and placement, Light Shoes stopping for speed. Results live in the saved record
 | `+$12` | — | `wCharReachX` `$df72` | lateral reach; dive threshold |
 | `+$14` | — | `wCharSmashJumpSpeed` `$df74` (`+$200`) | jump-smash launch speed |
 | `+$16` | — | `wCharDiveSpeed` `$df76` | dive lunge speed |
-| `+$19` | — | `wCharSkillIcons` `$df90` | high byte bits 0/1 pick the lob and drop placement rows |
+| `+$19` | — | `wCharShotTraits` `$df90` | high byte bits 0/1 pick the lob and drop placement rows |
 | `+$0e` | handedness | `wCharMirrorAttrMask` `$df94` | counts into `wShotAimMirror` |
 | `+$0f`, `+$1b`-`+$1f` | — | the `wAi*` block | AI behaviour ([The AI](#the-ai)) |
 

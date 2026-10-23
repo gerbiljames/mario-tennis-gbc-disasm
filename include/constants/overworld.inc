@@ -37,7 +37,7 @@ def ACTORF_HEIGHT           rw ; $10 height above the ground, negative = up (64 
 def ACTORF_JUMP_VEL         rw ; $12 added to ACTORF_HEIGHT each update; gravity adds $10
 def ACTORF_HEADING          rb ; $14 movement direction, a full angle byte
 def ACTORF_TURN_RATE        rb ; $15 largest heading change per step toward the target
-def ACTORF_ANCHOR           rw ; $16 record this actor follows (as_follow_wp, as_step); as_set_wander_home's box centre (tile y, x) for as_rand_box
+def ACTORF_ANCHOR           rw ; $16 record this actor follows (as_chase, as_step); as_set_wander_home's box centre (tile y, x) for as_rand_box
 def ACTORF_ANIM_RATE        rb ; $18 subtracted from ACTORF_ANIM_DELAY each frame while standing
 def ACTORF_ANIM_RATE_MOVING rb ; $19 the same while ACTORFLAGB_MOVING is set
 	rb_skip 6                     ; $1a
@@ -52,7 +52,7 @@ def ACTORF_ANIM_SCRIPT      rw ; $2a start of the current animation script
 def ACTORF_ANIM_PTR         rw ; $2c its next command
 def ACTORF_ANIM             rb ; $2e ANIM_* id playing
 def ACTORF_ANIM_DELAY       rb ; $2f ticks left on the frame shown; $ff = held
-def ACTORF_STATUS           rb ; $30 bit 0 facing locked, bit 6 frame dirty, bit 7 live
+def ACTORF_STATUS           rb ; $30 bit 0 facing locked, bit 6 frame dirty, bit 7 on screen
 def ACTORF_DRAW_DELAY       rb ; $31 frames DrawActors waits before the first draw: spawn staggers slots
 def ACTORF_DRAWN_FACING     rb ; $32 FACE_*: ACTORF_FACING quantised by DirectionToFacing_04
 def ACTORF_ANIM_FRAME       rb ; $33 frame the animation script shows
@@ -72,7 +72,7 @@ def ACTORFLAGB_PAUSED   equ 0 ; StepActorScript yields without running the scrip
 	const_def $02
 	const ACTORFLAGB_YIELD    ; $02 a move stops short when it would step next to the player
 	const ACTORFLAGB_SOLID    ; $03 BuildNearbyActorList: blocks the player (IsPointBlocked)
-	const ACTORFLAGB_TALKABLE ; $04 BuildActorQueryList: FindActorFacingPlayer can pick it
+	const ACTORFLAGB_TALKABLE ; $04 BuildTalkableActorList: FindActorFacingPlayer can pick it
 def ACTORFLAGB_BLOCKED  equ 6 ; set the frame a move yielded to the player
 def ACTORFLAGB_MOVING   equ 7
 ; ACTORF_STATUS bits
@@ -120,10 +120,10 @@ def FACE_UP      equ $c0
 ; location's `map_actor` list (SpawnActor takes the first free slot, so list
 ; entry i -> slot 3+i). Only the three system slots have a stable name; the
 ; rest are scene-local. ACTOR_PLAYER_SHADOW and ACTOR_PARTNER both trail
-; slot 0: ActorScript_FollowWaypoints and ActorScript_StepToTarget.
+; slot 0: ActorScript_ChaseAnchor and ActorScript_TrailAnchor.
 	const_def
 	const ACTOR_PLAYER        ; $00 the main character sprite
-	const ACTOR_PLAYER_SHADOW ; $01 player's paired follower actor (AttachActorWaypointFollower)
+	const ACTOR_PLAYER_SHADOW ; $01 player's paired follower actor (AttachActorChaser)
 	const ACTOR_PARTNER       ; $02 companion/doubles partner (SpawnCompanionActor)
 
 ; --- map_entry / map_script record fields (include/macros/story_maps.inc) ---

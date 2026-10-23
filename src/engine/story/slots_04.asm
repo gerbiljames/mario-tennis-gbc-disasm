@@ -13,11 +13,11 @@
 	farptr SpawnMainCharacterActor ; $4018
 	farptr SpawnCompanionActor ; $401a
 	farptr AttachActorControllerScript ; $401c
-	farptr AttachActorWaypointFollower ; $401e
-	farptr AttachActorStepMover ; $4020
+	farptr AttachActorChaser ; $401e
+	farptr AttachActorTrailer ; $4020
 	farptr IsTerrainBlockedAtPoint ; $4022
 	farptr FindActorAtPoint ; $4024
-	farptr BuildActorQueryList ; $4026
+	farptr BuildTalkableActorList ; $4026
 	farptr WaitActorMoveDone ; $4028
 	farptr WaitActorJumpDone ; $402a
 	farptr LoadActorObjectDefIfValid ; $402c

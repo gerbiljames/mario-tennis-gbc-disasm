@@ -291,8 +291,8 @@ wGlyphStampCellPtr:: dw
 wGlyphStampEnabled:: db
 	ds 119
 
-; [8-bit] Court-scene graphics still to queue; the loader decrements it each pass and stops once it hits zero
-wCourtSceneGfxStepsLeft:: db
+; [8-bit] Frames Unused_0a_StepCourtSceneGfxStream waits before queuing the next stream record; decremented each call, reloaded from the record's fourth byte
+wCourtSceneGfxStreamDelay:: db
 
 ; [8-bit] Byte offset into Unused_0a_CourtSceneGfxStreamList, advanced 4 (one record) at a time and wrapped to 0 at a $ff record
 wCourtSceneGfxCursor:: db

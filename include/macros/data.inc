@@ -33,7 +33,7 @@ ENDM
 ; copies into a character record at +$0f-+$2b and LoadCharacterAttributes
 ; turns into the wChar*/wAi* fields (docs/match_engine.md "Character stats
 ; into the engine").
-;   char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
+;   char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, shot_traits,
 ;                  delay_near, delay_far, tracking, aim_away, difficulty,
 ;                  Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
 ;                  Dash, Reaction, Stop, speed_bonus
@@ -66,7 +66,7 @@ MACRO cpu_difficulty
 ENDM
 
 ; One equipment row (RacketStatDeltas_02 / ShoeStatDeltas_02): the signed
-; delta ApplyStatModifierRow adds to each of the eleven stat bars, padded to
+; delta ApplyEquipmentStatDeltaRow adds to each of the eleven stat bars, padded to
 ; the 16-byte stride.
 ;   equip_stat_deltas Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 MACRO equip_stat_deltas

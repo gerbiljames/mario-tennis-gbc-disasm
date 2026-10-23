@@ -84,11 +84,11 @@ IslandOpenRoundCallCutscene:
 	script_move_target ACTOR_TOURNAMENT_STAFF_3, 16.0, 23.0 ; $7092
 	ld a, [wMapSceneStage] ; $709d
 	cp ISLANDOPENROUND_FINAL ; $70a0
-	jr z, .partnerReady ; $70a2
+	jr z, .waitStaff3 ; $70a2
 	script_move_target ACTOR_TOURNAMENT_STAFF_2, 24.0, 23.0 ; $70a4
 	script_wait_move ACTOR_TOURNAMENT_STAFF_2 ; $70af
 	script_face ACTOR_TOURNAMENT_STAFF_2, FACE_UP ; $70b4
-.partnerReady:
+.waitStaff3:
 	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $70bb
 	script_face ACTOR_TOURNAMENT_STAFF_3, FACE_UP ; $70c0
 	script_speak ACTOR_TOURNAMENT_STAFF_2 ; $70c7

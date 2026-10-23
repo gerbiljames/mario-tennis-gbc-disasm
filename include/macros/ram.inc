@@ -19,7 +19,7 @@ MACRO char_record
 \1AiPosition::    db
 \1Reach::         ds 8
 \1Level::         db
-\1SkillIcons::    dw
+\1ShotTraits::    dw
 \1AiParams::      ds 4
 \1Difficulty::    db
 \1Stats::
@@ -54,7 +54,7 @@ MACRO char_record
 	ASSERT \1AiPosition - \1 == CHARREC_AI_POSITION
 	ASSERT \1Reach - \1 == CHARREC_REACH
 	ASSERT \1Level - \1 == CHARREC_LEVEL
-	ASSERT \1SkillIcons - \1 == CHARREC_SKILL_ICONS
+	ASSERT \1ShotTraits - \1 == CHARREC_SHOT_TRAITS
 	ASSERT \1AiParams - \1 == CHARREC_AI_PARAMS
 	ASSERT \1Difficulty - \1 == CHARREC_DIFFICULTY
 	ASSERT \1TopStat - \1 == CHARREC_STAT_TOP
@@ -300,11 +300,11 @@ NEXTU
 \1CharAirShadowSlot:: ds 4
 ; [4 bytes] Sprite-slot record for the standing shadow (tile $58, flickered while grounded)
 \1CharGroundShadowSlot:: ds 4
-; [16-bit] Skill-icon bits from character record +$19 (CHARREC_SKILL_ICONS); StartCharSwing tests bit 7 of the low byte; bits 0 and 1 of the high byte select the lob and drop placement rows
-\1CharSkillIcons:: dw
-; [8-bit] Placement-row index (d) into ShotPlacementDataLob (from wCharSkillIcons + 1 bit 0)
+; [16-bit] Shot-trait bits from character record +$19 (CHARREC_SHOT_TRAITS); StartCharSwing tests bit 7 of the low byte; bits 0 and 1 of the high byte select the lob and drop placement rows
+\1CharShotTraits:: dw
+; [8-bit] Placement-row index (d) into ShotPlacementDataLob (from wCharShotTraits + 1 bit 0)
 \1LobPlacementIndex:: db
-; [8-bit] Placement-row index (d) into ShotPlacementDataDrop (from wCharSkillIcons + 1 bit 1)
+; [8-bit] Placement-row index (d) into ShotPlacementDataDrop (from wCharShotTraits + 1 bit 1)
 \1DropPlacementIndex:: db
 ; [8-bit] Attribute bits XORed into wCharSpriteAttr for facing octants 2 and 6 (sprite drawn mirrored)
 \1CharMirrorAttrMask:: db

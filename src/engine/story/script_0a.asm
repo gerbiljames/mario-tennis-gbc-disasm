@@ -59,7 +59,7 @@ EndCutsceneScriptMode:
 	ld [wScreenShakeOffsetY], a ; $410d
 	ld bc, wActors + 1 * ACTOR_SIZE ; $4110
 	ld de, wActors ; $4113
-	farcall AttachActorWaypointFollower ; $4116
+	farcall AttachActorChaser ; $4116
 	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $411f
@@ -72,10 +72,10 @@ EndCutsceneScriptMode:
 	pop bc ; $4138
 	pop af ; $4139
 	ret ; $413a
-Unused_0a_ActorScriptFollowWaypoints:
+Unused_0a_ActorScriptChaseAnchor:
 	; $413b, 4 bytes (actor_script)
-	as_follow_wp
-	as_jump Unused_0a_ActorScriptFollowWaypoints
+	as_chase
+	as_jump Unused_0a_ActorScriptChaseAnchor
 WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140

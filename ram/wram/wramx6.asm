@@ -314,7 +314,7 @@ ENDU
 ; shadow-tilemap cells in WRAM bank $03).
 UNION
 ; story slot signatures (bank $02)
-; [12 bytes] One wStorySaveSignature per story slot, four bytes apart, cached by CacheStorySlotSummaries so CheckStorySignatureCollision can check a new signature without reading SRAM again
+; [12 bytes] One wStorySaveSignature per story slot, four bytes apart, cached by CacheStorySlotSignatures so CheckStorySignatureCollision can check a new signature without reading SRAM again
 wStorySlotSignatures:: ds 12
 	ds 500
 NEXTU

@@ -13,7 +13,7 @@ def CHARREC_LEFT_HANDED      rb   ; $0e becomes the OAM X-flip on court
 def CHARREC_AI_POSITION      rb   ; $0f home-position strategy, copied to wAiPositionStrategy
 def CHARREC_REACH            rb 8 ; $10 the reach box
 def CHARREC_LEVEL            rb   ; $18 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
-def CHARREC_SKILL_ICONS      rw   ; $19 bitmask of the icons earned at STATARCH_MODIFIERS levels
+def CHARREC_SHOT_TRAITS      rw   ; $19 shot-trait bits: bit 7 of the low byte for StartCharSwing, high bits 0/1 pick the lob and drop placement rows; STATARCH_TRAIT_UNLOCKS can OR more in
 def CHARREC_AI_PARAMS        rb 4 ; $1b reaction delays near and far, tracking, aim-away chance
 def CHARREC_DIFFICULTY       rb   ; $1f AI difficulty: 0 easy - 3 intense from the CPU menus, 4-8 drill-feeder shot rows (wAiDifficulty)
 def CHARREC_STAT_TOP         rb   ; $20 the eleven 0-9 stats, in this order
@@ -81,8 +81,8 @@ def STATARCH_SPEED          rb 9
 def STATARCH_DASH           rb 9
 def STATARCH_REACTION       rb 9
 def STATARCH_STOP           rb 9
-def STATARCH_MODIFIERS      equ _RS ; $70 (level, icon) pairs for CHARREC_SKILL_ICONS, to $ff
-	ASSERT STATARCH_MODIFIERS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
+def STATARCH_TRAIT_UNLOCKS  equ _RS ; $70 (level, ShotTraitMasks_02 index) pairs OR'd into CHARREC_SHOT_TRAITS, to $ff
+	ASSERT STATARCH_TRAIT_UNLOCKS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
 
 ; --- Match record slots (GetMatchRecordPtr's a, InitMatchRecordFromCharId's c) ---
 	const_def
@@ -172,7 +172,7 @@ def NUM_STORY_HEROES equ const_value ; the four story heroes, always unlocked
 ; Records $20-$35 of StoryCharacterRecords_02 continue the roster's name pool
 ; (bank $30 string id + 27): "Ranker 32" to "Ranker 47", then six named
 ; opponents. On screen RemapExtendedCharId shows each as a roster character
-; (NameTextRemap_02). Records $36 and up have no name in the pool. $36,
+; (ExtendedCharIdRemap_02). Records $36 and up have no name in the pool. $36,
 ; $49-$53, $57 and $5a are unnamed because nothing loads them; their stats are
 ; all zero.
 	const_def $20

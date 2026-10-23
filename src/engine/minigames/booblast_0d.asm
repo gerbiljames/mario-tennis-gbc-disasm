@@ -59,7 +59,7 @@ LoadMinigameTargetGrid:
 	farcall FlushTilemapToVram ; $55c6
 	ret ; $55c9
 ScoreMinigameTargetHitOrDeflectBall:
-	ld hl, wMinigameHitPending ; $55ca
+	ld hl, wMinigameNetCrossPending ; $55ca
 	ld a, [hl] ; $55cd
 	and a ; $55ce
 	ret z ; $55cf

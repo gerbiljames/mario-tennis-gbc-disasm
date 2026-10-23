@@ -13,10 +13,10 @@
 ; init code.
 
 ; Actor spawn template (14 bytes, list ended by map_actor_end).
-; SpawnActorFromTemplate spawns `objdef` unless `cond` (a flag_cond) is met,
+; SpawnActorFromTemplate spawns actor script `script` unless `cond` (a flag_cond) is met,
 ; then seeds the actor's position, facing, object id, animation, and (if
 ; nonzero) a palette override. `facing` is a FACE_* constant (include/constants/).
-; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette[, NAME]
+; Usage: map_actor cond, script, x, y, facing, obj_id, anim, palette[, NAME]
 ; InitLocationActors fills slots 0-2 with the player, its shadow and the
 ; companion, then the list in order (a row whose cond fails still takes its
 ; slot), so row n is actor slot 3 + n. NAME defines ACTOR_NAME as that slot;

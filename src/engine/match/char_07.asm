@@ -149,12 +149,12 @@ LoadCharacterAttributes:
 	ld a, c ; $5afe
 	ld [hl+], a ; $5aff
 	ld [hl], b ; $5b00
-	ld hl, CHARREC_SKILL_ICONS ; $5b01
+	ld hl, CHARREC_SHOT_TRAITS ; $5b01
 	add hl, de ; $5b04
 	ld a, [hl+] ; $5b05
 	ld b, [hl] ; $5b06
 	ld c, a ; $5b07
-	ld hl, wCharSkillIcons ; $5b08
+	ld hl, wCharShotTraits ; $5b08
 	ld a, c ; $5b0b
 	ld [hl+], a ; $5b0c
 	ld [hl], b ; $5b0d
@@ -297,14 +297,14 @@ LoadCharacterAttributes:
 	ld a, [hl] ; $5c15
 	ld [wAiDifficulty], a ; $5c16
 	ld a, $00 ; $5c19
-	ld hl, wCharSkillIcons + 1 ; $5c1b
+	ld hl, wCharShotTraits + 1 ; $5c1b
 	bit 0, [hl] ; $5c1e
 	jr z, .storeLobIndex ; $5c20
 	ld a, $01 ; $5c22
 .storeLobIndex:
 	ld [wLobPlacementIndex], a ; $5c24
 	ld a, $00 ; $5c27
-	ld hl, wCharSkillIcons + 1 ; $5c29
+	ld hl, wCharShotTraits + 1 ; $5c29
 	bit 1, [hl] ; $5c2c
 	jr z, .storeDropIndex ; $5c2e
 	ld a, $01 ; $5c30

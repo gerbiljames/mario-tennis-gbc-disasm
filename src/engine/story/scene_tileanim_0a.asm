@@ -70,7 +70,7 @@ UpdateCameraFromPlayer:
 	ld [hl], a ; $6299
 	ret ; $629a
 Unused_0a_StepCourtSceneGfxStream:
-	ld a, [wCourtSceneGfxStepsLeft] ; $629b
+	ld a, [wCourtSceneGfxStreamDelay] ; $629b
 	or a ; $629e
 	jr nz, .done ; $629f
 .readEntry:
@@ -123,7 +123,7 @@ Unused_0a_StepCourtSceneGfxStream:
 	pop af ; $62e5
 .done:
 	dec a ; $62e6
-	ld [wCourtSceneGfxStepsLeft], a ; $62e7
+	ld [wCourtSceneGfxStreamDelay], a ; $62e7
 	ret ; $62ea
 Unused_0a_CourtSceneGfxStreamList:
 	; $62eb, 13 bytes (records:4)
@@ -209,10 +209,10 @@ LoadCourtSceneGraphics:
 	ld de, wScreenAttrmap ; $637b
 	ld bc, $0040 ; $637e
 	call CopyDataFromBank ; $6381
-	ld hl, wScreenAttrmap + 16 ; $6384
+	ld hl, wScreenAttrmap + 2 * PAL_SIZE ; $6384
 	ld_bg_pals de, 2, 6 ; $6387
 	call LoadPaletteShadow ; $638a
-	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 8 ; $638d
+	ld hl, wScreenAttrmap + 5 * PAL_SIZE ; $638d
 	ld_obj_pals de, 3, 1 ; $6390
 	call LoadPaletteShadow ; $6393
 	pop hl ; $6396

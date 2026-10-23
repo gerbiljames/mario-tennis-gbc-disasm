@@ -385,7 +385,7 @@ wScrollListLength:: db
 wCurrentScene:: db
 	ds 1
 
-; [8 bytes] Four scene tile-animation slots, 2 bytes each: current offset into the animation script at wSceneTileAnimEntries, then frame countdown. The scroll task calls AdvanceSceneTileAnimation on a slot whose countdown reaches zero
+; [8 bytes] Four scene tile-animation slots, 2 bytes each: current offset into the animation script at wSceneTileAnimEntries, then frame countdown. The UpdateSceneTileAnimations frame task calls AdvanceSceneTileAnimation on a slot whose countdown reaches zero
 wSceneTileAnimState:: ds 8
 
 ; [4 bytes] Script start offset of each tile-animation slot; AdvanceSceneTileAnimation rewinds here at the $ff terminator. $ff marks an unbuilt slot

@@ -289,12 +289,12 @@ Unused_04_SpawnScriptedActorScene:
 	ld de, $1d00 ; $4d42
 	call SetActorPosition ; $4d45
 	ld de, wActors ; $4d48
-	call AttachActorWaypointFollower ; $4d4b
+	call AttachActorChaser ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
 	ld hl, ScriptedSceneMarioActorList ; $4d50
 	call SpawnActorFromTemplate ; $4d53
 	ld de, wActors ; $4d56
-	call AttachActorStepMover ; $4d59
+	call AttachActorTrailer ; $4d59
 	ld hl, ScriptedSceneMarioColumnActorList ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
@@ -370,11 +370,11 @@ SpawnMainCharacterActor:
 	ldh a, [hRomBank] ; $4e9d
 	ld de, ActorScript_Idle ; $4e9f
 	call SpawnActor ; $4ea2
-	; ignored: SetActorMode stores d; AttachActorWaypointFollower sets ACTORMODE_CAMERA
+	; ignored: SetActorMode stores d; AttachActorChaser sets ACTORMODE_CAMERA
 	ld a, $01 ; $4ea5
 	call SetActorMode ; $4ea7
 	ld de, wActors ; $4eaa
-	call AttachActorWaypointFollower ; $4ead
+	call AttachActorChaser ; $4ead
 	pop hl ; $4eb0
 	pop de ; $4eb1
 	call SetActorPosition ; $4eb2
@@ -432,7 +432,7 @@ SpawnCompanionActor:
 	cp $ff ; $4f46
 	jr z, .done ; $4f48
 	ld de, wActors ; $4f4a
-	call AttachActorStepMover ; $4f4d
+	call AttachActorTrailer ; $4f4d
 	ld de, wActors ; $4f50
 	ld hl, ACTORF_HEADING ; $4f53
 	add hl, de ; $4f56

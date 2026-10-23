@@ -22,7 +22,7 @@ RepairCounterCheckEquipChanged:
 	add_hl_a ; $502f
 	farcall InitDialogueTextCursor ; $5034
 	call PushEquipmentNameTextArg ; $5037
-	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $503a
+	script_speak_restore ACTOR_TRAINING_GYM_REPAIR_CLERK ; $503a
 	farcall RunDialogueYesNoPrompt ; $503f
 	farcall ScriptCloseDialogueWindow ; $5042
 	script_wait_frames 5 ; $5045
@@ -34,29 +34,29 @@ RepairCounterCheckEquipChanged:
 	ld a, [wStoryMainEquipment] ; $5056
 	ld [wRepairCounterEquipSnapshot], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $505f
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $505f
 	call ShowEquipChangeConfirmation ; $5064
-	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $5067
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $506a
+	set_flag FLAG_REPAIR_COUNTER_SKIP_SENIOR_WELCOME ; $5067
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_REPAIR_CLERK ; $506a
 	script_set_text Text_RepairCounterHopeItHelps ; $5072
 	call PushEquipmentNameTextArg ; $5078
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $507b
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $507b
 .noChange:
 	script_set_text Text_RepairCounterPastTextTable ; $5080
-	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5086
+	script_speak_restore ACTOR_TRAINING_GYM_REPAIR_CLERK ; $5086
 	farcall RunDialogueYesNoPrompt ; $508b
 	farcall ScriptCloseDialogueWindow ; $508e
 	script_wait_frames 5 ; $5091
 	and a ; $5098
 	jp z, RepairCounterServiceMenu ; $5099
 	jp RepairCounterFarewell ; $509c
-RepairCounterChangedReturnA:
+RepairCounterCancelledReturnA:
 	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $509f
 	ld [wMapSceneStage2], a ; $50a1
 	script_set_position ACTOR_PARTNER, 15.0, 15.0 ; $50a4
 	jp RepairCounterReopenServiceMenu ; $50af
 	ret ; $50b2
-RepairCounterChangedReturnB:
+RepairCounterCancelledReturnB:
 	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_B ; $50b3
 	ld [wMapSceneStage2], a ; $50b5
 	farcall WaitPlayerMoveDone ; $50b8
@@ -72,8 +72,8 @@ RepairCounterReopenServiceMenu:
 	script_set_text Text_RepairCounterPlayerEquipped ; $50e1
 	ld hl, Text_RacketLarge ; $50e7
 	call PushShortTextArg_0e ; $50ea
-	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $50ed
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $50f0
+	set_flag FLAG_REPAIR_COUNTER_SKIP_SENIOR_WELCOME ; $50ed
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_REPAIR_CLERK ; $50f0
 	script_fade_in 8 ; $50f8
 	call WaitFadeEnd ; $50fd
 	ld hl, Text_MenuEquipChange ; $5100
@@ -89,16 +89,16 @@ RepairCounterReopenServiceMenu:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $511b
 	jp nz, RepairCounterChangeShoes ; $511e
 	script_set_text Text_RepairCounterNormalShoesOnly ; $5121
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5127
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $5127
 	script_set_text Text_RepairCounterPastTextTable ; $512c
-	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $5132
+	script_speak_restore ACTOR_TRAINING_GYM_REPAIR_CLERK ; $5132
 	farcall RunDialogueYesNoPrompt ; $5137
 	farcall ScriptCloseDialogueWindow ; $513a
 	script_wait_frames 5 ; $513d
 	and a ; $5144
 	jp z, RepairCounterServiceMenu ; $5145
 	jp RepairCounterFarewell ; $5148
-	script_face ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, FACE_RIGHT ; $514b
+	script_face ACTOR_TRAINING_GYM_REPAIR_CLERK, FACE_RIGHT ; $514b
 	ret ; $5152
 ShowEquipChangeConfirmation:
 	ld a, [wRepairCounterChoice] ; $5153
@@ -116,7 +116,7 @@ ShowEquipChangeConfirmation:
 	script_speak SPEAKER_NONE | 12 ; $5186
 	script_null_script ACTOR_PLAYER ; $518b
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $5190
-	script_face_toward ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $5197
+	script_face_toward ACTOR_TRAINING_GYM_REPAIR_CLERK, ACTOR_PLAYER ; $5197
 	call MirrorPlayerSpriteIfLeftHanded ; $519f
 	ret ; $51a2
 .shoes:
@@ -126,7 +126,7 @@ ShowEquipChangeConfirmation:
 	script_null_script ACTOR_PLAYER ; $51ba
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $51bf
 	script_set_speed ACTOR_PLAYER, 1.0 ; $51c6
-	script_face_toward ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, ACTOR_PLAYER ; $51ce
+	script_face_toward ACTOR_TRAINING_GYM_REPAIR_CLERK, ACTOR_PLAYER ; $51ce
 	ret ; $51d6
 ActorScript_0e_03:
 	; $51d7, 13 bytes (actor_script)
