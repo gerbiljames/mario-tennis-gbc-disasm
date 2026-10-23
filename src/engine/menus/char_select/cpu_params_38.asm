@@ -426,8 +426,8 @@ NeedsCpuDifficultyPrompt:
 ;
 ; What it gates is handedness. Both character grids reach their .toggleHandedness
 ; branch on `bit 3` (START) and refuse the toggle unless this returns 1, so only
-; the Mario cast may be flipped; created characters set handedness at name entry
-; instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
+; the Mario cast may be flipped; created characters set handedness with the START
+; toggle on the story character-select screen instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
 ; "START: Change Hands", and DrawCharGridHandednessLabel swaps the word in it for one
 ; of three pre-rendered labels on wCharGridHandedness's three values -- 30:150/151/152 are
 ; "START: Right-Handed", "START: Left-Handed" and "START: Change Hands".
