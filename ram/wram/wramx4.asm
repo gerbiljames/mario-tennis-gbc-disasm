@@ -85,7 +85,7 @@ wActorProbeAngle:: db
 wActorRandBoxHalfWidth:: db
 ; [8-bit] Half-depth of the same box (operand high byte); passed to TestPointInBox as l. The centre is the word at actor + $16
 wActorRandBoxHalfDepth:: db
-; [8-bit] ROM bank of the executing actor script, from ACTORF_OBJECT_BANK; every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA
+; [8-bit] ROM bank the actor VM reads from: ACTORF_SCRIPT_BANK while StepActorScript runs (every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA); DrawActors reloads it from ACTORF_OBJECT_BANK for the frame-table read
 wActorScriptBank:: db
 
 	ds 264

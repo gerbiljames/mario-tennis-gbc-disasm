@@ -128,7 +128,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	ld b, $02 ; $57d7
 	farcall RunEraseDataConfirmMenu ; $57d9
 	or a ; $57dc
-	jr z, .discarded ; $57dd
+	jr z, .cancelled ; $57dd
 	xor a ; $57df
 	ld [wSaveAndQuitRequest], a ; $57e0
 	ld [wMatchSuspendedFlag], a ; $57e3
@@ -137,7 +137,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	pop af ; $57ea
 	ld a, $00 ; $57eb
 	ret ; $57ed
-.discarded:
+.cancelled:
 	pop bc ; $57ee
 	pop af ; $57ef
 	ld a, $01 ; $57f0
