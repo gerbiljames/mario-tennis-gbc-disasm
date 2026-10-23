@@ -85,7 +85,7 @@ wMenuDepth:: db
 wTextArrowBlinkCounter:: db
 ; [16-bit] Shadow-tilemap address of the cell the cursor arrow is in. AnimateTextArrowTask converts it to a VRAM address (+ $3000 + $9800) and blinks the arrow there; RunMenuSelection primes it to $ffff and rewrites it whenever the cursor moves
 wTextArrowCell:: dw
-; [16-bit] VRAM address of the cell the arrow just left, overwritten with tile $20 by the blink task, which then clears it; zero means nothing pending (AnimateTextArrowTask tests the low byte, Unused_05_AnimateMenuScrollArrowsTask the high)
+; [16-bit] VRAM address of the cell the arrow just left, overwritten with tile $20 by the blink task, which then clears it; zero means nothing pending (AnimateTextArrowTask tests the low byte, Unused_05_AnimateMenuAdjustArrowsTask the high)
 wTextArrowEraseAddr:: dw
 ; [8-bit] Page RunPagedTextMenu shows; left/right step and wrap it. The returned entry is wMenuPage * 4 + row (four rows a page)
 wMenuPage:: db
@@ -123,7 +123,7 @@ wWindowTextEmpty:: db
 	ds 2
 ; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) per glyph. Set from GetSpeakerVoice; $08 = silent, also forced by a speaker id with bit 7 set
 wDialogueVoice:: db
-; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, closed by Unused_05_RunFixedTextMenu with the menu window. Neither is called; Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before SetWindowTextId, so the "window id" they pass around is really the WRAM bank number
+; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, closed by Unused_05_RunYesNoMenu with the menu window. Neither is called; Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before SetWindowTextId, so the "window id" they pass around is really the WRAM bank number
 wFixedMenuWindowId:: db
 ; [16-bit] Start of the current text row in the destination (a window shadow-tilemap cell, or RenderTextToBuffer64's buffer); TextCmdNextGlyphStreamRow advances it two row pitches
 wTextRowStartPtr:: dw
@@ -159,7 +159,7 @@ wShortTextBuffer:: ds 16
 wTextArgStringQueue:: ds 32
 ; 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
-; 16 x 1-byte short-text ids queued by Unused_05_PushTextArgShortTextId; GetNextArgShortTextLength measures them, but the $08 control code that would print one is a bare ret (TextCmdNop2)
+; 16 x 1-byte short-text ids queued by Unused_05_PushTextArgShortTextId; GetNextArgShortTextLength measures them, but the $08 control code that would print one is a bare ret (TextCmdNop08)
 wTextArgShortTextQueue:: ds 16
 
 ; Staging buffer UpdateSceneTileAnimations assembles the scene's animated

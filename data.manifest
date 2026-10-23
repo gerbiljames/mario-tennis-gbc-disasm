@@ -3281,7 +3281,7 @@ engine/cutscenes/IntroBallYStepTable.asm 1acd84 a9 bytes:16
 engine/cutscenes/CutsceneSpritePath0.asm 1acea5 f0 words:8
 engine/cutscenes/CutsceneSpritePath1.asm 1acf95 d8 words:8
 engine/cutscenes/CutsceneSpritePath2.asm 1ad06d 120 words:8
-engine/cutscenes/CutsceneTilesetPalettes.asm 1ad25a 10 palettes
+engine/cutscenes/IntroRallySpritePalettes.asm 1ad25a 10 palettes
 engine/cutscenes/lz_IntroBallTossTiles.bin 1ad51d 4ba gfx
 engine/cutscenes/lz_IntroOpeningTossTilemap.bin 1ad9d7 200 tilemap:64
 engine/cutscenes/lz_IntroOpeningTossAttrmap.bin 1adbd7 14e tilemap:64

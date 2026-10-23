@@ -30,17 +30,17 @@ Unused_10_CheckAnyStorySlot:
 	push af ; $5721
 	xor a ; $5722
 	ld [wCurrentStorySlot], a ; $5723
-	farcall CheckStorySlot ; $5726
+	farcall ReadCurrentStorySlot ; $5726
 	cp $fe ; $5729
 	jr nz, .restore ; $572b
 	ld a, $01 ; $572d
 	ld [wCurrentStorySlot], a ; $572f
-	farcall CheckStorySlot ; $5732
+	farcall ReadCurrentStorySlot ; $5732
 	cp $fe ; $5735
 	jr nz, .restore ; $5737
 	ld a, $02 ; $5739
 	ld [wCurrentStorySlot], a ; $573b
-	farcall CheckStorySlot ; $573e
+	farcall ReadCurrentStorySlot ; $573e
 	cp $fe ; $5741
 	jr nz, .restore ; $5743
 	pop af ; $5745

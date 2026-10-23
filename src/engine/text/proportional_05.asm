@@ -85,9 +85,9 @@ ProportionalTextCodeHandlers_05:
 	dw ProportionalTextCodeDispatch_05 ; record 11
 	dw ProportionalTextCodeGlyph_05 ; record 12
 	dw ProportionalTextCodeGlyph_05 ; record 13
-	dw ProportionalTextCodeShortText_05 ; record 14
+	dw ProportionalTextCodeCharName_05 ; record 14
 	dw ProportionalTextCodeGlyph_05 ; record 15
-ProportionalTextCodeShortText_05:
+ProportionalTextCodeCharName_05:
 	pop hl ; $5e59
 	inc hl ; $5e5a
 	push af ; $5e5b

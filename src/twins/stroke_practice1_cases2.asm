@@ -3,7 +3,7 @@
 {TWIN_LABEL}:
 	xor a
 	ret
-.checkBallBounceCount:
+.judgeBounce:
 	ld a, [wBallBounceCount]
 	cp $01
 	ld a, $00

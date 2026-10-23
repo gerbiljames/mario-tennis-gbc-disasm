@@ -436,7 +436,7 @@ UpdateMinigameRecord:
 	ld [hl+], a ; $50be
 	ld [hl], d ; $50bf
 	ld a, b ; $50c0
-	sub $02 ; $50c1
+	sub MGRECORD_BOO_BLAST ; $50c1
 	jr nc, .writeSlot0 ; $50c3
 	ld a, [wCurrentStorySlot] ; $50c5
 	jr .write ; $50c8
@@ -453,7 +453,7 @@ UpdateMinigameRecord:
 	or a ; $50d9
 	jr nz, .failed ; $50da
 	ld a, b ; $50dc
-	sub $02 ; $50dd
+	sub MGRECORD_BOO_BLAST ; $50dd
 	jr nc, .verifySlot0 ; $50df
 	ld a, [wCurrentStorySlot] ; $50e1
 	jr .verify ; $50e4
@@ -469,7 +469,7 @@ UpdateMinigameRecord:
 	or a ; $50f2
 	jr nz, .failed ; $50f3
 	ld a, b ; $50f5
-	sub $02 ; $50f6
+	sub MGRECORD_BOO_BLAST ; $50f6
 	jr nc, .backupSlot0 ; $50f8
 	ld a, [wCurrentStorySlot] ; $50fa
 	jr .writeBackup ; $50fd
@@ -486,7 +486,7 @@ UpdateMinigameRecord:
 	or a ; $510e
 	jr nz, .failed ; $510f
 	ld a, b ; $5111
-	sub $02 ; $5112
+	sub MGRECORD_BOO_BLAST ; $5112
 	jr nc, .backupVerifySlot0 ; $5114
 	ld a, [wCurrentStorySlot] ; $5116
 	jr .verifyBackup ; $5119

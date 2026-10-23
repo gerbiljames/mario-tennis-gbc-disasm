@@ -218,7 +218,7 @@ AwardExhibitionMatchExp:
 	srl a ; $6986
 	and $03 ; $6988
 	ld [wCurrentStorySlot], a ; $698a
-	farcall CheckStorySlot ; $698d
+	farcall ReadCurrentStorySlot ; $698d
 	ld d, h ; $6990
 	ld e, l ; $6991
 	ld hl, wPendingExpExhibition ; $6992
@@ -272,7 +272,7 @@ AwardLinkedPlayMatchExp:
 	srl a ; $69ed
 	and $03 ; $69ef
 	ld [wCurrentStorySlot], a ; $69f1
-	farcall CheckStorySlot ; $69f4
+	farcall ReadCurrentStorySlot ; $69f4
 	ld hl, wPendingExpLinked ; $69f7
 	ld a, [hl+] ; $69fa
 	ld h, [hl] ; $69fb

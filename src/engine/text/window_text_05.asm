@@ -320,10 +320,10 @@ DelayTextCharacter:
 	jr z, .restore ; $57ae
 	ld a, c ; $57b0
 	cp $20 ; $57b1
-	jr nz, .checkSpeed ; $57b3
+	jr nz, .checkVoice ; $57b3
 	ld b, $04 ; $57b5
 	jr .waitFrame ; $57b7
-.checkSpeed:
+.checkVoice:
 	ld a, [wDialogueVoice] ; $57b9
 	cp $08 ; $57bc
 	jr z, .waitFrame ; $57be
@@ -432,9 +432,9 @@ ShowSpeakerDialogue:
 	pop_wram_bank ; $589e
 	call SetActiveWindowTextId ; $58a3
 	ld a, [wDialogueWindowId] ; $58a6
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $58a9
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $58a9
 	call DrawTextWindowFrame ; $58ac
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $58af
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $58af
 	call RedrawWindowRowsPadded ; $58b2
 	call RenderActiveWindowText ; $58b5
 	ld a, [wTextPageBreakRequest] ; $58b8
@@ -513,9 +513,9 @@ ShowSpeakerDialogueKeepOpen:
 	call SetActiveWindowTextId ; $5971
 	call RestoreShadowTilemap ; $5974
 	ld a, [wDialogueWindowId] ; $5977
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $597a
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $597a
 	call DrawTextWindowFrame ; $597d
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5980
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5980
 	call RedrawWindowRowsPadded ; $5983
 	call RenderActiveWindowText ; $5986
 	ld a, [wTextPageBreakRequest] ; $5989

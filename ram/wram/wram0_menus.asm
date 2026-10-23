@@ -107,7 +107,7 @@ wPauseMenuWindowId:: db
 ; [8-bit] Preset cursor row for the next Unused_05_RunOptionsMenuSelection: copied into the live row ($d830, WRAM bank $05) at menu open, then cleared so the default is row 0. Bank $1a stores the last selected row here before rebuilding the pause menu, and clears it when the menu closes for good
 wMenuInitialRow:: db
 
-; [8-bit] Menu rows on which LEFT/RIGHT adjust a value: bit 7 = mask present, bits 0-6 = one bit per row. Gates the menu driver's LEFT/RIGHT branch (Unused_05_IsCursorOnAdjustRow) and makes Unused_05_AnimateMenuScrollArrowsTask draw the arrows on that row. Bank $1a sets $83 (rows 0-1) for the pause menu and $8c (rows 2-3) for the minigame pause menu
+; [8-bit] Menu rows on which LEFT/RIGHT adjust a value: bit 7 = mask present, bits 0-6 = one bit per row. Gates the menu driver's LEFT/RIGHT branch (Unused_05_IsCursorOnAdjustRow) and makes Unused_05_AnimateMenuAdjustArrowsTask draw the arrows on that row. Bank $1a sets $83 (rows 0-1) for the pause menu and $8c (rows 2-3) for the minigame pause menu
 wMenuAdjustRowMask:: db
 
 ; [8-bit] Menu rows that do not close the window when chosen (encoding as wMenuAdjustRowMask): bank $1a skips CloseWindow after Unused_05_RunOptionsMenuSelection when the chosen row's bit is set. Same values as wMenuAdjustRowMask
@@ -178,16 +178,16 @@ wCutsceneScrollX:: db
 ; [8-bit] Second pan position, stepped 3 px the opposite way to wCutsceneScrollX: hScrollX in IntroCutsceneNinaRallyUpdate_6b, wRasterScrollX in UpdateCutsceneScroll
 wCutsceneReverseScrollX:: db
 
-; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueIntroAlexSprite. IntroCutsceneMarioCloseupScroll reuses it as the BG scroll Y (ApplyScrollYFromWram copies it to hScrollY)
+; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueIntroAlexSprite. IntroCutsceneMarioCloseupScroll reuses it as the BG scroll Y (ApplyScrollYFromWram copies it to hScrollY). In the opponents pan it is IntroSequenceTimerTask's frame tick, which starts AnimateBgPalettes2And3Task at $01, CycleBgPalettes4To7Task at $5a and AnimateBgPalette1Task at $aa
 wCutsceneSpriteAX:: db
 
-; [8-bit] Y of the intro cutscene's first sprite group
+; [8-bit] Y of the intro cutscene's first sprite group. In the opponents pan it is AnimateBgPalette1Task's step
 wCutsceneSpriteAY:: db
 
-; [8-bit] X of the intro cutscene's second sprite group (QueueIntroNinaSprite)
+; [8-bit] X of the intro cutscene's second sprite group (QueueIntroNinaSprite). In the opponents pan it is AnimateBgPalettes2And3Task's step
 wCutsceneSpriteBX:: db
 
-; [8-bit] Y of the intro cutscene's second sprite group
+; [8-bit] Y of the intro cutscene's second sprite group. In the opponents pan it is CycleBgPalettes4To7Task's step
 wCutsceneSpriteBY:: db
 
 ; [16-bit] World Y of the intro's spinning ball: UpdateIntroBallY subtracts the frame's IntroBallYStepTable entry from it; QueueIntroSpinningBall draws the ball at it minus wIntroCutsceneScrollY

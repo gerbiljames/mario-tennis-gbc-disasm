@@ -574,7 +574,7 @@ named for the text, which operands use;
 
 Per byte (`$4e75`-`$4ecd`):
 
-- `$00` → flush the glyph row (unless `FLAG_TEXT_RENDER_ACTIVE`) and return.
+- `$00` → flush the glyph row (unless `FLAG_TEXT_REDRAW_IN_PLACE`) and return.
 - `$de` / `$df` → remapped to codes `$1e` / `$1f`.
 - `$0e` → latch **one inline operand byte** into `wTextCharNameArg`, then
   dispatch as `$0e`. The only code with an operand.
@@ -601,7 +601,7 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$05` | `TextCmdDelay30` | 30 frames, not skippable |
 | `$06` | `TextCmdDelay15Skippable` | 15 frames, aborts on input |
 | `$07` | `TextCmdPrintPlayerName` | `wStoryMainName` |
-| `$08` | `TextCmdNop2` | `ret`, but the measuring pass treats `$08` as a short-text argument (§7.4) |
+| `$08` | `TextCmdNop08` | `ret`, but the measuring pass treats `$08` as a short-text argument (§7.4) |
 | `$09` | `TextCmdPrintArgNumber` | pop the number queue → `RenderInlineNumber` |
 | `$0a` | `TextCmdNop` | `ret` |
 | `$0b` | `TextCmdPrintPartnerName` | `wStoryPartnerName` |
@@ -964,7 +964,7 @@ its notes and `include/ram_mirrored.inc`):
 
 Framework flags (bits of `wGameFlags`, `$c9c0`; `include/flag_constants.inc`):
 `FLAG_CUTSCENE_FAST_FORWARD` (22), `FLAG_VRAM_UPDATE_BUSY` (24),
-`FLAG_TEXT_PAGE_ADVANCED` (25), `FLAG_TEXT_RENDER_ACTIVE` (35),
+`FLAG_TEXT_PAGE_ADVANCED` (25), `FLAG_TEXT_REDRAW_IN_PLACE` (35),
 `FLAG_PROPORTIONAL_TEXT_MODE` (36), `FLAG_PAUSE_OPTIONS_MENU_OPEN` (48),
 `FLAG_MINIGAME_PAUSE_MENU_OPEN` (49); debug: `FLAG_DEBUG_FREEZE_TILE_ANIM` (26),
 `FLAG_DEBUG_STATIC_TEXT_WINDOW` (27), `FLAG_DEBUG_SHORT_GLYPH_UPLOAD` (34).

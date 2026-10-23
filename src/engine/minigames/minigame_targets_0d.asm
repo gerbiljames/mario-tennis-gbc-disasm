@@ -106,10 +106,10 @@ ShootingStarHook_NetCross:
 	call KeepMinigameCameraFixed ; $51f9
 	ret ; $51fc
 ShootingStarHook_Bounce:
-	call AwardWinnerOnFourthShotBounce ; $51fd
+	call AwardWinnerOnReturnBounce ; $51fd
 	ret ; $5200
 ShootingStarHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $5201
+	call FreezeFeederAfterLaunch ; $5201
 	ret ; $5204
 InitShootingStarTarget:
 	call ClearMinigameActors ; $5205
@@ -243,11 +243,11 @@ AwardShootingStarHitScore:
 	ld a, $01 ; $5310
 	ld [wMinigameHitScored], a ; $5312
 	ld a, [wMinigameHitStreak] ; $5315
-	ld_de_indexed MinigameHitStreakSounds ; $5318
+	ld_de_indexed ShootingStarHitStreakSounds ; $5318
 	ld a, [de] ; $531f
 	call PlaySoundManaged ; $5320
 	ld a, [wMinigameHitStreak] ; $5323
-	ld_de_indexed MinigameHitStreakMultipliers ; $5326
+	ld_de_indexed ShootingStarHitStreakMultipliers ; $5326
 	ld a, [de] ; $532d
 	call MulHLByA ; $532e
 	ld e, l ; $5331
@@ -265,14 +265,14 @@ AwardShootingStarHitScore:
 	ld a, $01 ; $5349
 	ld [wPointOutcomeSide], a ; $534b
 	ret ; $534e
-MinigameHitStreakSounds:
+ShootingStarHitStreakSounds:
 	; $534f, 8 bytes (bytes:8)
 	db SFX_SCORE_STEP1, SFX_SCORE_STEP2, SFX_SCORE_STEP3, SFX_SCORE_STEP4, SFX_SCORE_STEP5, SFX_SCORE_STEP6, SFX_SCORE_STEP7, SFX_SCORE_STEP7
-MinigameHitStreakMultipliers:
+ShootingStarHitStreakMultipliers:
 	; $5357, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawShootingStarSprite:
-	call ProjectMinigameWorldPosition ; $535f
+	call ProjectShootingStarSprite ; $535f
 	ld c, $30 ; $5362
 	ld h, $fc ; $5364
 	ld l, $f1 ; $5366
@@ -292,12 +292,12 @@ ShootingStarAnimFrames:
 	db $02, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
 	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x18
 DrawShootingStarHitBurst:
-	call ProjectMinigameWorldPosition ; $539e
+	call ProjectShootingStarSprite ; $539e
 	ld c, $3c ; $53a1
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $53a3
 	call QueueMinigameHitBurst ; $53a6
 	ret ; $53a9
-ProjectMinigameWorldPosition:
+ProjectShootingStarSprite:
 	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $53aa
 	ld a, [hl+] ; $53ad
 	ld e, a ; $53ae
@@ -311,10 +311,10 @@ ProjectMinigameWorldPosition:
 	ld h, d ; $53b6
 	farcall ApplyCameraProjection ; $53b7
 	ld a, [wMinigameHitStreak] ; $53ba
-	ld_hl_indexed MinigameTargetSpriteOamAttrByHitStreak ; $53bd
+	ld_hl_indexed ShootingStarSpriteOamAttrByHitStreak ; $53bd
 	ld b, [hl] ; $53c4
 	ret ; $53c5
-MinigameTargetSpriteOamAttrByHitStreak:
+ShootingStarSpriteOamAttrByHitStreak:
 	; $53c6, 8 bytes (bytes:8)
 	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 QueueMinigameHitBurst:

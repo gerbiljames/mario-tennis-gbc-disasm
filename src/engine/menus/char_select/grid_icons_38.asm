@@ -233,7 +233,7 @@ BuildCharUnlockFlags:
 .slotLoop:
 	ld a, c ; $5ad1
 	ld [wCurrentStorySlot], a ; $5ad2
-	farcall CheckStorySlot ; $5ad5
+	farcall ReadCurrentStorySlot ; $5ad5
 	push bc ; $5ad8
 	ld hl, wCharUnlockFlags + 18 ; $5ad9
 	ld b, $00 ; $5adc

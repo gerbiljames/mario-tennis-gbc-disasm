@@ -332,7 +332,7 @@ RunDrillMatchListMenu:
 	ld [wStoryModeExitTriggerRequest], a ; $4472
 	ld a, $00 ; $4475
 	ld [wCurrentStorySlot], a ; $4477
-	farcall CheckStorySlot ; $447a
+	farcall ReadCurrentStorySlot ; $447a
 	pop af ; $447d
 	set_flag FLAG_DRILL_FROM_MENU ; $447e
 	farcall RunTrainingDrillByID ; $4481
@@ -355,7 +355,7 @@ Unused_10_RunCharDataScreen:
 	ld [wStoryModeExitTriggerRequest], a ; $44ad
 	ld a, $00 ; $44b0
 	ld [wCurrentStorySlot], a ; $44b2
-	farcall CheckStorySlot ; $44b5
+	farcall ReadCurrentStorySlot ; $44b5
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $44b8
 	ld c, STORYREC_MAIN ; $44bb
 	farcall CharDataScreen_Show ; $44bd

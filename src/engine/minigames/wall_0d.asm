@@ -168,10 +168,10 @@ TennisMachineHighScoreHook_NetCross:
 	call KeepMinigameCameraFixed ; $4d2f
 	ret ; $4d32
 TennisMachineHighScoreHook_Bounce:
-	call AwardWinnerOnFourthShotBounce ; $4d33
+	call AwardWinnerOnReturnBounce ; $4d33
 	ret ; $4d36
 TennisMachineHighScoreHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4d37
+	call FreezeFeederAfterLaunch ; $4d37
 	ret ; $4d3a
 MinigameConfig_WallPracticeHighScore:
 	; $4d3b, 16 bytes
@@ -268,7 +268,7 @@ TargetShotHook_Bounce:
 	ld a, [wPointOutcome] ; $4df2
 	and a ; $4df5
 	ret nz ; $4df6
-	call AwardWinnerOnFourthShotBounce ; $4df7
+	call AwardWinnerOnReturnBounce ; $4df7
 	call CheckBallMissedTargetZone ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
 	cp POINTOUTCOME_WINNER ; $4e00
@@ -285,7 +285,7 @@ TargetShotHook_Bounce:
 	sound SFX_CHIME ; $4e15
 	ret ; $4e17
 TargetShotHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4e18
+	call FreezeFeederAfterLaunch ; $4e18
 	ret ; $4e1b
 UpdateTargetShotScorePopup:
 	call UpdateScorePopup ; $4e1c

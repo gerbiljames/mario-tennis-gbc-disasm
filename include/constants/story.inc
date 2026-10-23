@@ -58,7 +58,7 @@
 ; the exhibition block. It equals the slot count, the bound in the same
 ; `cp $03` guard, so both names exist.
 def STORYSLOT_NONE           equ $03 ; not a story file: set by exhibition, link, mini-game and debug setup, and mapped to the exhibition save block
-def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $03 / ret nc` in SaveStorySlot/CheckStorySlot, and the debug stats screen's page wrap
+def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $03 / ret nc` in SaveStorySlot/ReadCurrentStorySlot, and the debug stats screen's page wrap
 
 ; --- Story entry point sentinel (wStoryModeEntryPoint) ---
 ; Entry point ids are location-scoped: each location's map_tree carries its

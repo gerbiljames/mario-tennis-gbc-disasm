@@ -11,7 +11,7 @@
 	farptr ReinitSaveRamKeepingPreservedBlock ; $4014
 	farptr EraseStorySlotSaveData ; $4016
 	farptr SaveStorySlotWithTimer ; $4018
-	farptr CheckStorySlot ; $401a
+	farptr ReadCurrentStorySlot ; $401a
 	farptr TestSaveFlag ; $401c
 	farptr SetSaveFlag ; $401e
 	farptr ClearSaveFlag ; $4020

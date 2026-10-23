@@ -127,7 +127,7 @@ hStatDeltaOutPtr:: dw
 hStatDeltaRecordCopy:: dw
 NEXTU
 ; save-slot debug editor (bank $03)
-; [16-bit] Unused_03_SaveSlotDebugEditor: edit-cursor offset into the $d300 save-block buffer, wrapped at $400; moved by Unused_03_MoveSaveEditorCursor (c = signed cursor step, b = value step applied on A)
+; [16-bit] Unused_03_SaveSlotDebugEditor: edit-cursor offset into the $d300 save-block buffer, wrapped at $400; moved by Unused_03_MoveSaveEditorCursorOrAdjustByte (c = signed cursor step, b = value step applied on A)
 hSaveEditorCursor:: dw
 ENDU
 

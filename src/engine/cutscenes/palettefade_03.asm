@@ -348,13 +348,13 @@ StepColorComponentTowardTarget:
 	ld b, [hl] ; $77d1
 	sub b ; $77d2
 	ret z ; $77d3
-	jr c, .read ; $77d4
+	jr c, .decrement ; $77d4
 	ld a, [hl] ; $77d6
 	inc a ; $77d7
 	and $1f ; $77d8
 	ld [hl], a ; $77da
 	ret ; $77db
-.read:
+.decrement:
 	ld a, [hl] ; $77dc
 	dec a ; $77dd
 	and $1f ; $77de

@@ -437,7 +437,7 @@ DrawTextWindowFrame:
 	jr z, .fillBlank ; $6ff5
 	ld a, [wTextRowNextTile] ; $6ff7
 .textCellLoop:
-	test_flag FLAG_TEXT_RENDER_ACTIVE ; $6ffa
+	test_flag FLAG_TEXT_REDRAW_IN_PLACE ; $6ffa
 	jr z, .blankCell ; $6ffd
 	ld [hl+], a ; $6fff
 	jr .nextTextCell ; $7000

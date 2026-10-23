@@ -134,7 +134,7 @@ NEXTU
 \1CharFacingShown:: db
 ; [8-bit] State flags; bit 2 = airborne (set on a jump, cleared on landing; selects the shadow slot drawn)
 \1CharFlags:: db
-; [8-bit] Frames the character is frozen: UpdateCharStateMachine decrements it and skips the state. SetCharState clears it; FreezeMinigameOpponentOnReturn sets it to hold the minigame opponent still
+; [8-bit] Frames the character is frozen: UpdateCharStateMachine decrements it and skips the state. SetCharState clears it; FreezeFeederAfterLaunch sets it to hold the minigame opponent still
 \1CharFreezeTimer:: db
 ; [8-bit] Frames left to press a second shot button; BufferShotButtonPress seeds 5 on the first press, the state-machine dispatch counts it down
 \1CharShotComboTimer:: db

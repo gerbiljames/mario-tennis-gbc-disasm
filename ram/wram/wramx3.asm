@@ -120,8 +120,8 @@ NEXTU
 	ds 1
 ; [8-bit] Frame of the title screen's animated sprite; read by QueueTitleSprite, advanced by StepTitleSpriteAnimation
 wTitleSpriteFrame:: db
-; [8-bit] Frames left on the current title sprite frame
-wTitleSpriteTimer:: db
+; [8-bit] Hold on the title sprite's last frame: 0 while StepTitleSpriteAnimation advances the frame every 8 vblanks; set to 1 when the frame wraps to 7, then counted up and cleared at $10, holding that frame 15 frames
+wTitleSpriteHoldTimer:: db
 NEXTU
 ; screen scratch (any other screen)
 ; [8-bit] Base of the screen-local scratch block. Screens with no named

@@ -409,7 +409,7 @@ RunStoryFileFlow:
 	jr z, .newGame ; $4fdb
 	and $7f ; $4fdd
 	ld [wCurrentStorySlot], a ; $4fdf
-	farcall CheckStorySlot ; $4fe2
+	farcall ReadCurrentStorySlot ; $4fe2
 	cp $fe ; $4fe5
 	jr z, .newGame ; $4fe7
 	farcall ApplyPendingExpAwards ; $4fe9

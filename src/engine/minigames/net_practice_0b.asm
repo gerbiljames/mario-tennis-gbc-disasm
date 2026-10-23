@@ -370,7 +370,7 @@ NetGamePractice1JudgeOnBounce:
 	call NetGamePractice1JudgePoint ; $5d5c
 	ld [wDrillPointJudgement], a ; $5d5f
 	ret ; $5d62
-; Judges the point on the rally-tick event -- except that the leading `ret`
+; Judges the point on the net-cross event -- except that the leading `ret`
 ; means the body never runs. Called from NetGamePractice1Hook_NetCross, the
 ; fourth of this drill's four judges; see docs/bugs.md.
 NetGamePractice1JudgeOnNetCross:
