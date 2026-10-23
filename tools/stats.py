@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headline counts for the README and STATUS, from the built tree.
+"""Headline counts from the built tree.
 
     python3 tools/stats.py
 

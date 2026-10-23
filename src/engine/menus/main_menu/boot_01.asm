@@ -1,13 +1,13 @@
 	farptr InitAndRunGame ; $4000
 	farptr ShowDmgLockoutScreen ; $4002
-	farptr LoadMenuTilesA ; $4004
-	farptr LoadMenuTilesB ; $4006
+	farptr LoadMenuWindowTiles ; $4004
+	farptr LoadMenuFontTiles_01 ; $4006
 	farptr LoadMenuFontPalette ; $4008
 	farptr LoadMenuFontGfx ; $400a
 	farptr Unused_01_LoadMenuBgPalettes3To7 ; $400c
 	farptr LoadMenuObjPalettes3To7 ; $400e
 	farptr LoadCharObjPalette ; $4010
-	farptr Unused_01_LoadMenuTilesBChunk2 ; $4012
+	farptr Unused_01_LoadMenuFontUppercaseTiles ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
 	farptr Unused_01_RunSoundTest ; $4016
 InitAndRunGame:
@@ -77,20 +77,20 @@ ENDC
 	ld a, DEBUGSTEP_CONSOLE_ON ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
 .waitStartLoop:
-	ldh a, [hInputPressed] ; $40bf
+	ldh a, [hInputRepeat] ; $40bf
 	bit PADB_A, a ; $40c1
-	jr z, .advanceFrame ; $40c3
+	jr z, .checkStart ; $40c3
 	push de ; $40c5
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $40c6
 	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
-	jr .setDebugStepMode ; $40cd
-.advanceFrame:
+	jr .enterMainMenu ; $40cd
+.checkStart:
 	bit PADB_START, a ; $40cf
-	jr nz, .setDebugStepMode ; $40d1
+	jr nz, .enterMainMenu ; $40d1
 	call AdvanceFrame ; $40d3
 	jr .waitStartLoop ; $40d6
-.setDebugStepMode:
+.enterMainMenu:
 	ld a, DEBUGSTEP_OFF ; $40d8
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
@@ -106,7 +106,7 @@ Unused_01_DebugBootMenu:
 	ld a, DEBUGSTEP_CONSOLE_ON ; $40f5
 	ldh [hDebugStepMode], a ; $40f7
 .loop:
-	ldh a, [hInputPressed] ; $40f9
+	ldh a, [hInputRepeat] ; $40f9
 	bit PADB_START, a ; $40fb
 	jr z, .checkSelect ; $40fd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $40ff
@@ -145,13 +145,13 @@ Unused_01_DebugBootMenu:
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
 	ld [wCurrentStorySlot], a ; $4143
-	farcall CheckStorySlot ; $4146
+	farcall ReadCurrentStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
-	farcall ShowTournamentBracket ; $414d
+	farcall ShowVarsityTeamChart ; $414d
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
-	farcall ShowTournamentBracket ; $4154
+	farcall ShowVarsityTeamChart ; $4154
 	ld a, MATCHLIST_DOUBLES ; $4157
 	ld [wCurrentMatchList], a ; $4159
 	ld a, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $415c
@@ -160,7 +160,7 @@ Unused_01_DebugBootMenu:
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
 	ld [wCurrentStorySlot], a ; $4168
-	farcall CheckStorySlot ; $416b
+	farcall ReadCurrentStorySlot ; $416b
 	ld a, CHAR_LUIGI ; $416e
 	ld [wPlayer1MainChar], a ; $4170
 	ld a, CHAR_DK ; $4173
@@ -245,11 +245,11 @@ MenuWindowTiles_01:
 MenuFontTiles_01:
 	INCBIN "data/engine/menus/main_menu/MenuFontTiles_01.bin" ; $4410, 512 bytes
 	ds ALIGN[4]
-MenuTilesBStagedTiles0:
-	INCBIN "data/engine/menus/main_menu/MenuTilesBStagedTiles0.bin" ; $4610, 512 bytes
+MenuFontUppercaseTiles_01:
+	INCBIN "data/engine/menus/main_menu/MenuFontUppercaseTiles_01.bin" ; $4610, 512 bytes
 	ds ALIGN[4]
-MenuTilesBStagedTiles1:
-	INCBIN "data/engine/menus/main_menu/MenuTilesBStagedTiles1.bin" ; $4810, 512 bytes
+MenuFontLowercaseTiles_01:
+	INCBIN "data/engine/menus/main_menu/MenuFontLowercaseTiles_01.bin" ; $4810, 512 bytes
 	ds ALIGN[4]
 MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
@@ -270,7 +270,7 @@ LoadMenuFontPalette:
 	pop bc ; $505f
 	pop af ; $5060
 	ret ; $5061
-LoadMenuTilesA:
+LoadMenuWindowTiles:
 	push af ; $5062
 	push bc ; $5063
 	push de ; $5064
@@ -284,47 +284,47 @@ LoadMenuTilesA:
 	pop bc ; $5073
 	pop af ; $5074
 	ret ; $5075
-LoadMenuTilesB:
+LoadMenuFontTiles_01:
 	push af ; $5076
 	push bc ; $5077
 	push de ; $5078
 	push hl ; $5079
 	ld hl, MenuFontTiles_01 ; $507a
 	ld de, vTiles2 tile $20 ; $507d
-	ld c, 96 ; $5080
+	ld c, (MenuFontFillTiles_01 - MenuFontTiles_01) / 16 ; $5080
 	call QueueVRAMCopy ; $5082
 	ld hl, MenuFontFillTiles_01 ; $5085
 	ld de, vTiles1 ; $5088
-	ld c, 96 ; $508b
+	ld c, (MenuFontPalettes_01 - MenuFontFillTiles_01) / 16 ; $508b
 	call QueueVRAMCopy ; $508d
 	pop hl ; $5090
 	pop de ; $5091
 	pop bc ; $5092
 	pop af ; $5093
 	ret ; $5094
-LoadMenuTilesBStaged:
+LoadMenuFontTilesStaged:
 	push af ; $5095
 	push bc ; $5096
 	push de ; $5097
 	push hl ; $5098
 	ld hl, MenuFontTiles_01 ; $5099
 	ld de, vTiles2 tile $20 ; $509c
-	ld c, (MenuTilesBStagedTiles0 - MenuFontTiles_01) / 16 ; $509f
+	ld c, (MenuFontUppercaseTiles_01 - MenuFontTiles_01) / 16 ; $509f
 	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
-	ld hl, MenuTilesBStagedTiles0 ; $50a7
+	ld hl, MenuFontUppercaseTiles_01 ; $50a7
 	ld de, vTiles2 tile $40 ; $50aa
-	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50ad
+	ld c, (MenuFontLowercaseTiles_01 - MenuFontUppercaseTiles_01) / 16 ; $50ad
 	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
-	ld hl, MenuTilesBStagedTiles1 ; $50b5
+	ld hl, MenuFontLowercaseTiles_01 ; $50b5
 	ld de, vTiles2 tile $60 ; $50b8
-	ld c, (MenuFontFillTiles_01 - MenuTilesBStagedTiles1) / 16 ; $50bb
+	ld c, (MenuFontFillTiles_01 - MenuFontLowercaseTiles_01) / 16 ; $50bb
 	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
 	ld de, vTiles1 tile $60 ; $50c6
-	ld c, 32 ; $50c9
+	ld c, 32 ; $50c9 -- MenuFontPalettes_01's 4 tiles, then 448 bytes of code and data
 	call QueueVRAMCopy ; $50cb
 	call AdvanceFrame ; $50ce
 	pop hl ; $50d1
@@ -332,21 +332,21 @@ LoadMenuTilesBStaged:
 	pop bc ; $50d3
 	pop af ; $50d4
 	ret ; $50d5
-Unused_01_LoadMenuTilesBChunk2:
-	ld hl, MenuTilesBStagedTiles0 ; $50d6
+Unused_01_LoadMenuFontUppercaseTiles:
+	ld hl, MenuFontUppercaseTiles_01 ; $50d6
 	ld de, vTiles2 tile $40 ; $50d9
-	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50dc
+	ld c, (MenuFontLowercaseTiles_01 - MenuFontUppercaseTiles_01) / 16 ; $50dc
 	call QueueVRAMCopy ; $50de
 	ret ; $50e1
 LoadMenuFontGfx:
 	call LoadMenuFontPalette ; $50e2
-	call LoadMenuTilesA ; $50e5
-	call LoadMenuTilesB ; $50e8
+	call LoadMenuWindowTiles ; $50e5
+	call LoadMenuFontTiles_01 ; $50e8
 	ret ; $50eb
 LoadMenuFontGfxStaged:
 	call LoadMenuFontPalette ; $50ec
-	call LoadMenuTilesA ; $50ef
-	call LoadMenuTilesBStaged ; $50f2
+	call LoadMenuWindowTiles ; $50ef
+	call LoadMenuFontTilesStaged ; $50f2
 	ret ; $50f5
 CharObjPalettes_01:
 	INCLUDE "data/engine/menus/main_menu/CharObjPalettes_01.asm" ; $50f6, 128 bytes (palettes)
@@ -406,9 +406,9 @@ ShowDmgLockoutScreen:
 	ld de, vTiles2 ; $6040
 	ld c, 128 ; $6043 -- 128 of DmgLockoutTilesLZ_01's 256 tiles
 	call CopyMemoryFast ; $6045
-	ld hl, wTextTileBuffer ; $6048
+	ld hl, wDecompBufferHigh ; $6048
 	ld de, vTiles1 ; $604b
-	ld c, wTextTileBuffer_SIZE / 16 ; $604e
+	ld c, wDecompBufferHigh_SIZE / 16 ; $604e
 	call CopyMemoryFast ; $6050
 	ld hl, DmgLockoutTilemapLZ_01 ; $6053
 	ld de, wDecompBuffer ; $6056
@@ -463,61 +463,61 @@ Unused_01_RunSoundTest:
 	pop hl ; $6a89
 .loop:
 	call AdvanceFrame ; $6a8a
-	ldh a, [hInputPressed] ; $6a8d
+	ldh a, [hInputRepeat] ; $6a8d
 	and PADF_UP | PADF_DOWN ; $6a8f
-	jr z, .clampTrack ; $6a91
+	jr z, .checkRow ; $6a91
 	ld a, b ; $6a93
 	xor $01 ; $6a94
 	ld b, a ; $6a96
-.clampTrack:
+.checkRow:
 	ld a, b ; $6a97
 	or a ; $6a98
 	jr nz, .editSfx ; $6a99
-	ldh a, [hInputPressed] ; $6a9b
+	ldh a, [hInputRepeat] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
 	jr z, .checkTrackLeft ; $6a9f
 	inc d ; $6aa1
-	jr .clampBank ; $6aa2
+	jr .clampMusicIndex ; $6aa2
 .checkTrackLeft:
 	bit PADB_LEFT, a ; $6aa4
-	jr z, .clampTrackDown ; $6aa6
+	jr z, .drawCursor ; $6aa6
 	dec d ; $6aa8
-.clampBank:
+.clampMusicIndex:
 	ld a, d ; $6aa9
 	cp $ff ; $6aaa
 	jr nz, .noTrackUnderflow ; $6aac
 	ld d, $3e ; $6aae
-	jr .clampTrackDown ; $6ab0
+	jr .drawCursor ; $6ab0
 .noTrackUnderflow:
 	ld a, d ; $6ab2
 	cp $3e ; $6ab3
-	jr c, .clampTrackDown ; $6ab5
-	jr z, .clampTrackDown ; $6ab7
+	jr c, .drawCursor ; $6ab5
+	jr z, .drawCursor ; $6ab7
 	ld d, $00 ; $6ab9
-	jr .clampTrackDown ; $6abb
+	jr .drawCursor ; $6abb
 .editSfx:
-	ldh a, [hInputPressed] ; $6abd
+	ldh a, [hInputRepeat] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
-	jr z, .checkLeft ; $6ac1
+	jr z, .checkSfxLeft ; $6ac1
 	inc e ; $6ac3
 	jr .clampSfx ; $6ac4
-.checkLeft:
+.checkSfxLeft:
 	bit PADB_LEFT, a ; $6ac6
-	jr z, .clampTrackDown ; $6ac8
+	jr z, .drawCursor ; $6ac8
 	dec e ; $6aca
 .clampSfx:
 	ld a, e ; $6acb
 	cp $ff ; $6acc
 	jr nz, .noSfxUnderflow ; $6ace
 	ld e, $71 ; $6ad0
-	jr .clampTrackDown ; $6ad2
+	jr .drawCursor ; $6ad2
 .noSfxUnderflow:
 	ld a, e ; $6ad4
 	cp $71 ; $6ad5
-	jr c, .clampTrackDown ; $6ad7
-	jr z, .clampTrackDown ; $6ad9
+	jr c, .drawCursor ; $6ad7
+	jr z, .drawCursor ; $6ad9
 	ld e, $00 ; $6adb
-.clampTrackDown:
+.drawCursor:
 	ld a, b ; $6add
 	or a ; $6ade
 	jr nz, .sfxRowSelected ; $6adf
@@ -566,7 +566,7 @@ Unused_01_RunSoundTest:
 	call PrintDecimalByte ; $6b28
 	pop af ; $6b2b
 	pop de ; $6b2c
-	ldh a, [hInputPressed] ; $6b2d
+	ldh a, [hInputRepeat] ; $6b2d
 	bit PADB_A, a ; $6b2f
 	jr z, .continue ; $6b31
 	bit 0, b ; $6b33
@@ -576,7 +576,7 @@ Unused_01_RunSoundTest:
 	push de ; $6b39
 	push hl ; $6b3a
 	ld a, d ; $6b3b
-	ld_hl_indexed SoundTestSoundsA_01 ; $6b3c
+	ld_hl_indexed SoundTestMusicIds_01 ; $6b3c
 	ld a, [hl] ; $6b43
 	call PlaySoundManaged ; $6b44
 	pop hl ; $6b47
@@ -590,7 +590,7 @@ Unused_01_RunSoundTest:
 	push de ; $6b4f
 	push hl ; $6b50
 	ld a, e ; $6b51
-	ld_hl_indexed SoundTestSoundsB_01 ; $6b52
+	ld_hl_indexed SoundTestSfxIds_01 ; $6b52
 	ld a, [hl] ; $6b59
 	call PlaySoundManaged ; $6b5a
 	pop hl ; $6b5d
@@ -607,8 +607,8 @@ SoundTestCursorString:
 	INCLUDE "data/engine/menus/main_menu/SoundTestCursorString.asm" ; $6b71, 2 bytes (text)
 SoundTestCursorBlankString:
 	INCLUDE "data/engine/menus/main_menu/SoundTestCursorBlankString.asm" ; $6b73, 2 bytes (text)
-SoundTestSoundsA_01:
-	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsA_01.asm" ; $6b75, 63 bytes (sound_data)
-SoundTestSoundsB_01:
-	INCLUDE "data/engine/menus/main_menu/SoundTestSoundsB_01.asm" ; $6bb4, 114 bytes (sound_data)
+SoundTestMusicIds_01:
+	INCLUDE "data/engine/menus/main_menu/SoundTestMusicIds_01.asm" ; $6b75, 63 bytes (sound_data)
+SoundTestSfxIds_01:
+	INCLUDE "data/engine/menus/main_menu/SoundTestSfxIds_01.asm" ; $6bb4, 114 bytes (sound_data)
 	; $6c26, 5082 bytes fill to bank end (linker-padded)

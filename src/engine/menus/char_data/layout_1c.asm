@@ -8,7 +8,7 @@ MoveCharDataScreenSelection:
 	ret z ; $53d4
 	ld [wCharDataPage], a ; $53d5
 	sound SFX_MENU_MOVE ; $53d8
-	cp $04 ; $53da
+	cp CHARDATAPAGE_CONFIRM ; $53da
 	jr z, .redraw ; $53dc
 	call RestoreCharDataScreen ; $53de
 	call LoadCharStatsWithLevelUpDeltas ; $53e1
@@ -25,7 +25,7 @@ MoveCharDataScreenSelection:
 	call CharDataScreen_DrawPageColumns ; $53fd
 	call FlushCharDataTilemaps ; $5400
 	ret ; $5403
-ApplyCharStatLevelUp:
+UndoLastCharStatPoint:
 	wram_bank WRAM_SCENE ; $5404
 	ld a, [wCharDataChoiceCount] ; $540a
 	or a ; $540d
@@ -36,30 +36,30 @@ ApplyCharStatLevelUp:
 	push af ; $5415
 	ld_story_char_field CHARREC_LEVEL ; $5416
 	pop af ; $5429
-	ld a, [wCharDataLevel] ; $542a
+	ld a, [wCharDataStartLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $542f
 	pop af ; $5442
-	ld a, [wCharDataNewLevels] ; $5443
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $5443
 	ld [hl], a ; $5446
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $5447
 	push af ; $544a
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $544b
 	pop af ; $545e
-	ld a, [wCharDataNewLevels + 1] ; $545f
+	ld a, [wCharDataStartLevels + TRAINSTAT_POWER] ; $545f
 	ld [hl], a ; $5462
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $5463
 	push af ; $5466
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $5467
 	pop af ; $547a
-	ld a, [wCharDataNewLevels + 2] ; $547b
+	ld a, [wCharDataStartLevels + TRAINSTAT_CONTROL] ; $547b
 	ld [hl], a ; $547e
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $547f
 	push af ; $5482
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $5483
 	pop af ; $5496
-	ld a, [wCharDataNewLevels + 3] ; $5497
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPEED] ; $5497
 	ld [hl], a ; $549a
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $549b
 	ld a, [wStoryCharacterSlot] ; $549e
@@ -69,7 +69,7 @@ ApplyCharStatLevelUp:
 	ld b, $00 ; $54a8
 .loop:
 	dec c ; $54aa
-	jr z, .countDone ; $54ab
+	jr z, .replayDone ; $54ab
 	push bc ; $54ad
 	ld a, b ; $54ae
 	ld_hl_indexed wCharDataChoiceLog ; $54af
@@ -80,7 +80,7 @@ ApplyCharStatLevelUp:
 	pop bc ; $54be
 	inc b ; $54bf
 	jr .loop ; $54c0
-.countDone:
+.replayDone:
 	ld a, [wCharDataChoiceCount] ; $54c2
 	dec a ; $54c5
 	ld [wCharDataChoiceCount], a ; $54c6
@@ -94,45 +94,45 @@ ApplyCharStatLevelUp:
 	call FlushCharDataTilemaps ; $54dd
 	ld a, $01 ; $54e0
 	ret ; $54e2
-SelectCharDataConfirmSlot:
+ResetCharDataChoices:
 	wram_bank WRAM_SCENE ; $54e3
 	ld a, CHARDATAPAGE_CONFIRM ; $54e9
 	ld [wCharDataPage], a ; $54eb
-	call WriteCharStatsToDisplayBuffer ; $54ee
+	call RevertCharDataToStart ; $54ee
 	ret ; $54f1
 DrawStatArrowIndicators:
 	wram_bank WRAM_SCENE ; $54f2
-	ld a, [wCharDataStatDeltas] ; $54f8
+	ld a, [wCharDataStatDeltas + CHARSTAT_TOP] ; $54f8
 	ld_xy de, $4c, $24 ; $54fb
 	call QueueStatChangeArrow ; $54fe
-	ld a, [wCharDataStatDeltas + 1] ; $5501
+	ld a, [wCharDataStatDeltas + CHARSTAT_SLICE] ; $5501
 	ld_xy de, $4c, $34 ; $5504
 	call QueueStatChangeArrow ; $5507
-	ld a, [wCharDataStatDeltas + 2] ; $550a
+	ld a, [wCharDataStatDeltas + CHARSTAT_SERVE] ; $550a
 	ld_xy de, $4c, $4c ; $550d
 	call QueueStatChangeArrow ; $5510
-	ld a, [wCharDataStatDeltas + 3] ; $5513
+	ld a, [wCharDataStatDeltas + CHARSTAT_STROKE] ; $5513
 	ld_xy de, $4c, $5c ; $5516
 	call QueueStatChangeArrow ; $5519
-	ld a, [wCharDataStatDeltas + 4] ; $551c
+	ld a, [wCharDataStatDeltas + CHARSTAT_VOLLEY] ; $551c
 	ld_xy de, $4c, $6c ; $551f
 	call QueueStatChangeArrow ; $5522
-	ld a, [wCharDataStatDeltas + 5] ; $5525
+	ld a, [wCharDataStatDeltas + CHARSTAT_ANGLE] ; $5525
 	ld_xy de, $9c, $24 ; $5528
 	call QueueStatChangeArrow ; $552b
-	ld a, [wCharDataStatDeltas + 6] ; $552e
+	ld a, [wCharDataStatDeltas + CHARSTAT_PLACEMENT] ; $552e
 	ld_xy de, $9c, $34 ; $5531
 	call QueueStatChangeArrow ; $5534
-	ld a, [wCharDataStatDeltas + 7] ; $5537
+	ld a, [wCharDataStatDeltas + CHARSTAT_SPEED] ; $5537
 	ld_xy de, $9c, $4c ; $553a
 	call QueueStatChangeArrow ; $553d
-	ld a, [wCharDataStatDeltas + 8] ; $5540
+	ld a, [wCharDataStatDeltas + CHARSTAT_DASH] ; $5540
 	ld_xy de, $9c, $5c ; $5543
 	call QueueStatChangeArrow ; $5546
-	ld a, [wCharDataStatDeltas + 9] ; $5549
+	ld a, [wCharDataStatDeltas + CHARSTAT_REACTION] ; $5549
 	ld_xy de, $9c, $6c ; $554c
 	call QueueStatChangeArrow ; $554f
-	ld a, [wCharDataStatDeltas + 10] ; $5552
+	ld a, [wCharDataStatDeltas + CHARSTAT_STOP] ; $5552
 	ld_xy de, $9c, $7c ; $5555
 	call QueueStatChangeArrow ; $5558
 	ret ; $555b
@@ -183,8 +183,8 @@ SetupCharDataScreen:
 	ld a, $03 ; $55d6
 	ld [wCharDataRevealStep], a ; $55d8
 	ld a, $01 ; $55db
-	ld [wCharDataConfirmState], a ; $55dd
-	ld [wCharDataLevelPreview], a ; $55e0
+	ld [wCharDataConfirmCursor], a ; $55dd
+	ld [wCharDataHideLevelPreview], a ; $55e0
 	call EnableLCD ; $55e3
 	call AdvanceFrame ; $55e6
 	frame_task DrawStatValueSprites ; $55e9
@@ -237,42 +237,42 @@ CharDataPageLeftTargets_1c:
 CharDataPageRightTargets_1c:
 	; $5674, 5 bytes (bytes:5)
 	db $02, $03, $ff, $ff, $03 ; 0x00
-CharDataShiftGfxFramesA:
+CharDataBallAnimFramesA:
 	; $5679, 32 bytes (records:2)
-	dw CharDataShiftGfx00 ; record 0
-	dw CharDataShiftGfx01 ; record 1
-	dw CharDataShiftGfx02 ; record 2
-	dw CharDataShiftGfx03 ; record 3
-	dw CharDataShiftGfx04 ; record 4
-	dw CharDataShiftGfx05 ; record 5
-	dw CharDataShiftGfx06 ; record 6
-	dw CharDataShiftGfx07 ; record 7
-	dw CharDataShiftGfx08 ; record 8
-	dw CharDataShiftGfx09 ; record 9
-	dw CharDataShiftGfx10 ; record 10
-	dw CharDataShiftGfx11 ; record 11
-	dw CharDataShiftGfx12 ; record 12
-	dw CharDataShiftGfx13 ; record 13
-	dw CharDataShiftGfx14 ; record 14
-	dw CharDataShiftGfx15 ; record 15
-CharDataShiftGfxFramesB:
+	dw CharDataBallAnimFrame00 ; record 0
+	dw CharDataBallAnimFrame01 ; record 1
+	dw CharDataBallAnimFrame02 ; record 2
+	dw CharDataBallAnimFrame03 ; record 3
+	dw CharDataBallAnimFrame04 ; record 4
+	dw CharDataBallAnimFrame05 ; record 5
+	dw CharDataBallAnimFrame06 ; record 6
+	dw CharDataBallAnimFrame07 ; record 7
+	dw CharDataBallAnimFrame08 ; record 8
+	dw CharDataBallAnimFrame09 ; record 9
+	dw CharDataBallAnimFrame10 ; record 10
+	dw CharDataBallAnimFrame11 ; record 11
+	dw CharDataBallAnimFrame12 ; record 12
+	dw CharDataBallAnimFrame13 ; record 13
+	dw CharDataBallAnimFrame14 ; record 14
+	dw CharDataBallAnimFrame15 ; record 15
+CharDataBallAnimFramesB:
 	; $5699, 32 bytes (records:2)
-	dw CharDataShiftGfx16 ; record 0
-	dw CharDataShiftGfx17 ; record 1
-	dw CharDataShiftGfx18 ; record 2
-	dw CharDataShiftGfx19 ; record 3
-	dw CharDataShiftGfx20 ; record 4
-	dw CharDataShiftGfx21 ; record 5
-	dw CharDataShiftGfx22 ; record 6
-	dw CharDataShiftGfx23 ; record 7
-	dw CharDataShiftGfx24 ; record 8
-	dw CharDataShiftGfx25 ; record 9
-	dw CharDataShiftGfx26 ; record 10
-	dw CharDataShiftGfx27 ; record 11
-	dw CharDataShiftGfx28 ; record 12
-	dw CharDataShiftGfx29 ; record 13
-	dw CharDataShiftGfx30 ; record 14
-	dw CharDataShiftGfx31 ; record 15
+	dw CharDataBallAnimFrame16 ; record 0
+	dw CharDataBallAnimFrame17 ; record 1
+	dw CharDataBallAnimFrame18 ; record 2
+	dw CharDataBallAnimFrame19 ; record 3
+	dw CharDataBallAnimFrame20 ; record 4
+	dw CharDataBallAnimFrame21 ; record 5
+	dw CharDataBallAnimFrame22 ; record 6
+	dw CharDataBallAnimFrame23 ; record 7
+	dw CharDataBallAnimFrame24 ; record 8
+	dw CharDataBallAnimFrame25 ; record 9
+	dw CharDataBallAnimFrame26 ; record 10
+	dw CharDataBallAnimFrame27 ; record 11
+	dw CharDataBallAnimFrame28 ; record 12
+	dw CharDataBallAnimFrame29 ; record 13
+	dw CharDataBallAnimFrame30 ; record 14
+	dw CharDataBallAnimFrame31 ; record 15
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (blit_runs)
 	blit_run 0, 3, 0, 10
@@ -569,10 +569,10 @@ CharDataBand8RunsStep1_1c:
 	blit_run 20, 2, 12, 1
 	blit_run 20, 3, 18, 1
 	db $ff
-CharDataScreen_LoadScreenPalette:
-	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
-CharDataScreenGfx0_1c:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
+CharDataScreenBasePalettes:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenBasePalettes.asm" ; $598c, 64 bytes (palettes)
+CharDataScreenTiles:
+	INCBIN "data/engine/menus/char_data/lz_CharDataScreenTiles.bin" ; $59cc, 2618 bytes
 CharDataScreenTilemap_1c:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenTilemap_1c.bin" ; $6406, 99 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenTilemap_1c.inc" ; DEF CharDataScreenTilemap_1c_SIZE EQU its decoded length, generated from the .bin by make
@@ -651,34 +651,34 @@ CharDataScreenBand1Tilemap:
 CharDataScreenBand1Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.bin" ; $657f, 23 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand1Attrmap.inc" ; DEF CharDataScreenBand1Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage0Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage0Columns.asm" ; $6596, 50 bytes (bytes:10)
+CharDataScreenSpinPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenSpinPageAttrs.asm" ; $6596, 50 bytes (bytes:10)
 CharDataScreenBand2Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.bin" ; $65c8, 67 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Tilemap.inc" ; DEF CharDataScreenBand2Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand2Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.bin" ; $660b, 23 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand2Attrmap.inc" ; DEF CharDataScreenBand2Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage1Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage1Columns.asm" ; $6622, 70 bytes (bytes:10)
+CharDataScreenPowerPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenPowerPageAttrs.asm" ; $6622, 70 bytes (bytes:10)
 CharDataScreenBand3Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.bin" ; $6668, 58 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Tilemap.inc" ; DEF CharDataScreenBand3Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand3Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.bin" ; $66a2, 24 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand3Attrmap.inc" ; DEF CharDataScreenBand3Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage2Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage2Columns.asm" ; $66ba, 50 bytes (bytes:10)
+CharDataScreenControlPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenControlPageAttrs.asm" ; $66ba, 50 bytes (bytes:10)
 CharDataScreenBand4Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.bin" ; $66ec, 72 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Tilemap.inc" ; DEF CharDataScreenBand4Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenBand4Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.bin" ; $6734, 25 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand4Attrmap.inc" ; DEF CharDataScreenBand4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPage3Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage3Columns.asm" ; $674d, 90 bytes (bytes:10)
-CharDataScreenPage4Columns:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenPage4Columns.asm" ; $67a7, 30 bytes (bytes:10)
+CharDataScreenSpeedPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenSpeedPageAttrs.asm" ; $674d, 90 bytes (bytes:10)
+CharDataScreenConfirmPageAttrs:
+	INCLUDE "data/engine/menus/char_data/CharDataScreenConfirmPageAttrs.asm" ; $67a7, 30 bytes (bytes:10)
 CharDataScreenBand5Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.bin" ; $67c5, 14 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBand5Tilemap.inc" ; DEF CharDataScreenBand5Tilemap_SIZE EQU its decoded length, generated from the .bin by make

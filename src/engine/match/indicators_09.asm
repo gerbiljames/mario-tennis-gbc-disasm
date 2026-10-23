@@ -79,10 +79,10 @@ MoveCurve13_09:
 	ASSERT @ == MoveCurve12_09, "MoveCurve13_09 has no terminator and runs on into MoveCurve12_09"
 MoveCurve12_09:
 	INCLUDE "data/engine/match/MoveCurve12_09.asm" ; $4868, 11 bytes (move_curve)
-LoadTilesetGfx:
+LoadCourtBannerGfx:
 	add a ; $4873
 	add a ; $4874
-	ld_hl_indexed VramTileset_09 ; $4875
+	ld_hl_indexed CourtBannerTileRanges_09 ; $4875
 	ld a, [hl+] ; $487c
 	ld e, a ; $487d
 	ld a, [hl+] ; $487e
@@ -93,80 +93,80 @@ LoadTilesetGfx:
 	ld de, vTiles0 tile $20 ; $4883
 	call QueueVRAMCopy ; $4886
 	ret ; $4889
-VramTileset_09:
+CourtBannerTileRanges_09:
 	; $488a, 118 bytes (records:4)
 ; 29 records x 4 bytes
-	dw TilesetTiles_09, $0020 ; record 0
-	dw TilesetTiles_09 + $200, $0008 ; record 1
-	dw TilesetTiles_09 + $280, $0010 ; record 2
-	dw TilesetTiles_09 + $380, $0008 ; record 3
-	dw TilesetTiles_09 + $3e0, $0008 ; record 4
-	dw TilesetTiles_09 + $440, $0008 ; record 5
-	dw TilesetTiles_09 + $4a0, $000a ; record 6
-	dw TilesetTiles_09 + $540, $0010 ; record 7
-	dw TilesetTiles_09 + $640, $0010 ; record 8
-	dw TilesetTiles_09 + $740, $0010 ; record 9
-	dw TilesetTiles_09 + $840, $0010 ; record 10
-	dw TilesetTiles_09 + $940, $0010 ; record 11
-	dw TilesetTiles_09 + $9c0, $0010 ; record 12
-	dw TilesetTiles_09 + $a40, $0010 ; record 13
-	dw TilesetTiles_09 + $ac0, $0008 ; record 14
-	dw TilesetTiles_09 + $b20, $0020 ; record 15
-	dw TilesetTiles_09 + $d20, $0010 ; record 16
-	dw TilesetTiles_09, $0001 ; record 17
-	dw TilesetTiles_09 + $e80, $000e ; record 18
-	dw TilesetTiles_09 + $f60, $000e ; record 19
-	dw TilesetTiles_09 + $1040, $000e ; record 20
-	dw TilesetTiles_09 + $1120, $000e ; record 21
-	dw TilesetTiles_09 + $1200, $000e ; record 22
-	dw TilesetTiles_09 + $12e0, $000e ; record 23
-	dw TilesetTiles_09 + $13c0, $0010 ; record 24
-	dw TilesetTiles_09 + $14c0, $0010 ; record 25
-	dw TilesetTiles_09 + $15c0, $0010 ; record 26
-	dw TilesetTiles_09 + $16c0, $0004 ; record 27
-	dw TilesetTiles_09 + $1700, $0010 ; record 28
+	dw CourtBannerTiles_09, $0020 ; record 0
+	dw CourtBannerTiles_09 + $200, $0008 ; record 1
+	dw CourtBannerTiles_09 + $280, $0010 ; record 2
+	dw CourtBannerTiles_09 + $380, $0008 ; record 3
+	dw CourtBannerTiles_09 + $3e0, $0008 ; record 4
+	dw CourtBannerTiles_09 + $440, $0008 ; record 5
+	dw CourtBannerTiles_09 + $4a0, $000a ; record 6
+	dw CourtBannerTiles_09 + $540, $0010 ; record 7
+	dw CourtBannerTiles_09 + $640, $0010 ; record 8
+	dw CourtBannerTiles_09 + $740, $0010 ; record 9
+	dw CourtBannerTiles_09 + $840, $0010 ; record 10
+	dw CourtBannerTiles_09 + $940, $0010 ; record 11
+	dw CourtBannerTiles_09 + $9c0, $0010 ; record 12
+	dw CourtBannerTiles_09 + $a40, $0010 ; record 13
+	dw CourtBannerTiles_09 + $ac0, $0008 ; record 14
+	dw CourtBannerTiles_09 + $b20, $0020 ; record 15
+	dw CourtBannerTiles_09 + $d20, $0010 ; record 16
+	dw CourtBannerTiles_09, $0001 ; record 17
+	dw CourtBannerTiles_09 + $e80, $000e ; record 18
+	dw CourtBannerTiles_09 + $f60, $000e ; record 19
+	dw CourtBannerTiles_09 + $1040, $000e ; record 20
+	dw CourtBannerTiles_09 + $1120, $000e ; record 21
+	dw CourtBannerTiles_09 + $1200, $000e ; record 22
+	dw CourtBannerTiles_09 + $12e0, $000e ; record 23
+	dw CourtBannerTiles_09 + $13c0, $0010 ; record 24
+	dw CourtBannerTiles_09 + $14c0, $0010 ; record 25
+	dw CourtBannerTiles_09 + $15c0, $0010 ; record 26
+	dw CourtBannerTiles_09 + $16c0, $0004 ; record 27
+	dw CourtBannerTiles_09 + $1700, $0010 ; record 28
 	db $00, $00
 	ds ALIGN[4]
-TilesetTiles_09:
-	INCBIN "data/engine/match/TilesetTiles_09.bin" ; $4900, 6144 bytes
+CourtBannerTiles_09:
+	INCBIN "data/engine/match/CourtBannerTiles_09.bin" ; $4900, 6144 bytes
 LoadScoreDigitGfx:
-	ld hl, VramGfxPtrTable_09 ; $6100
+	ld hl, ScoreDigitGfxPtrs_09 ; $6100
 	call GetGfxSourcePtr ; $6103
 	ld c, 4 ; $6106
 	call QueueVRAMCopy ; $6108
 	ret ; $610b
 LoadPlayer1PointsDigitGfx:
-	ld hl, VramGfxPtrTable_09 ; $610c
+	ld hl, ScoreDigitGfxPtrs_09 ; $610c
 	call GetGfxSourcePtr ; $610f
 	ld de, vTiles0 tile $78 ; $6112
 	ld c, 4 ; $6115
 	call QueueVRAMCopy ; $6117
 	ret ; $611a
 LoadPlayer2PointsDigitGfx:
-	ld hl, VramGfxPtrTable_09 ; $611b
+	ld hl, ScoreDigitGfxPtrs_09 ; $611b
 	call GetGfxSourcePtr ; $611e
 	ld de, vTiles0 tile $7c ; $6121
 	ld c, 4 ; $6124
 	call QueueVRAMCopy ; $6126
 	ret ; $6129
-LoadPlayer1ScoreDigitGfx:
-	ld hl, Player1ScoreDigitGfxSource ; $612a
+LoadFirstScoreDigitGfx:
+	ld hl, FirstScoreDigitGfxSource ; $612a
 	call GetGfxSourcePtr ; $612d
 	ld de, vTiles0 tile $30 ; $6130
 	ld c, 4 ; $6133
 	call QueueVRAMCopy ; $6135
 	ret ; $6138
-LoadPlayer2ScoreDigitGfx:
-	ld hl, Player2ScoreDigitGfxSource ; $6139
+LoadSecondScoreDigitGfx:
+	ld hl, SecondScoreDigitGfxSource ; $6139
 	call GetGfxSourcePtr ; $613c
 	ld de, vTiles0 tile $34 ; $613f
 	ld c, 4 ; $6142
 	call QueueVRAMCopy ; $6144
 	ret ; $6147
-LoadDeuceAdvantageGfx:
-	ld hl, DeuceAdvantageTiles ; $6148
+LoadDeuceGfx:
+	ld hl, DeuceTiles ; $6148
 	ld de, vTiles0 tile $30 ; $614b
-	ld c, (LoadServeGfx - DeuceAdvantageTiles) / 16 ; $614e
+	ld c, (LoadServeGfx - DeuceTiles) / 16 ; $614e
 	call QueueVRAMCopy ; $6150
 	ret ; $6153
 GetGfxSourcePtr:
@@ -186,37 +186,37 @@ GetGfxSourcePtr:
 	rr c ; $6169
 	add hl, bc ; $616b
 	ret ; $616c
-VramGfxPtrTable_09:
-	dw PointsDigitGfx0_09, PointsDigitGfx1_09 ; $616d
-Player1ScoreDigitGfxSource:
-	dw Player1ScoreDigitGfx0_09, Player1ScoreDigitGfx1_09 ; $6171
-Player2ScoreDigitGfxSource:
-	dw Player2ScoreDigitGfx0_09, Player2ScoreDigitGfx1_09 ; $6175
+ScoreDigitGfxPtrs_09:
+	dw TennisCallDigitGfx_09, NumeralDigitGfx_09 ; $616d
+FirstScoreDigitGfxSource:
+	dw FirstScoreTennisCallDigitGfx_09, FirstScoreNumeralDigitGfx_09 ; $6171
+SecondScoreDigitGfxSource:
+	dw SecondScoreTennisCallDigitGfx_09, SecondScoreNumeralDigitGfx_09 ; $6175
 	ds ALIGN[4]
-PointsDigitGfx0_09:
-	INCBIN "data/engine/match/PointsDigitGfx0_09.bin" ; $6180, 384 bytes
+TennisCallDigitGfx_09:
+	INCBIN "data/engine/match/TennisCallDigitGfx_09.bin" ; $6180, 384 bytes
 	ds ALIGN[4]
-PointsDigitGfx1_09:
-	INCBIN "data/engine/match/PointsDigitGfx1_09.bin" ; $6300, 576 bytes
+NumeralDigitGfx_09:
+	INCBIN "data/engine/match/NumeralDigitGfx_09.bin" ; $6300, 576 bytes
 	ds ALIGN[4]
-Player1ScoreDigitGfx0_09:
-	INCBIN "data/engine/match/Player1ScoreDigitGfx0_09.bin" ; $6540, 320 bytes
+FirstScoreTennisCallDigitGfx_09:
+	INCBIN "data/engine/match/FirstScoreTennisCallDigitGfx_09.bin" ; $6540, 320 bytes
 	ds ALIGN[4]
-Player1ScoreDigitGfx1_09:
-	INCBIN "data/engine/match/Player1ScoreDigitGfx1_09.bin" ; $6680, 512 bytes
+FirstScoreNumeralDigitGfx_09:
+	INCBIN "data/engine/match/FirstScoreNumeralDigitGfx_09.bin" ; $6680, 512 bytes
 	ds ALIGN[4]
-Player2ScoreDigitGfx0_09:
-	INCBIN "data/engine/match/Player2ScoreDigitGfx0_09.bin" ; $6880, 320 bytes
+SecondScoreTennisCallDigitGfx_09:
+	INCBIN "data/engine/match/SecondScoreTennisCallDigitGfx_09.bin" ; $6880, 320 bytes
 	ds ALIGN[4]
-Player2ScoreDigitGfx1_09:
-	INCBIN "data/engine/match/Player2ScoreDigitGfx1_09.bin" ; $69c0, 512 bytes
+SecondScoreNumeralDigitGfx_09:
+	INCBIN "data/engine/match/SecondScoreNumeralDigitGfx_09.bin" ; $69c0, 512 bytes
 	ds ALIGN[4]
-DeuceAdvantageTiles:
-	INCBIN "data/engine/match/DeuceAdvantageTiles.bin" ; $6bc0, 128 bytes
+DeuceTiles:
+	INCBIN "data/engine/match/DeuceTiles.bin" ; $6bc0, 128 bytes
 LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a ; $6c43
-	ld_hl_indexed ServeGfxPtrTable_09 ; $6c44
+	ld_hl_indexed ServeIndicatorGfxPtrs_09 ; $6c44
 	ld a, [hl+] ; $6c4b
 	ld h, [hl] ; $6c4c
 	ld l, a ; $6c4d
@@ -237,20 +237,20 @@ LoadServeGfx:
 	ld c, 4 ; $6c68
 	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d
-ServeGfxPtrTable_09:
-	dw ServeGfx0_09, ServeGfx1_09, ServeGfx2_09, ServeGfx3_09 ; $6c6e
+ServeIndicatorGfxPtrs_09:
+	dw ServeIndicatorP1Gfx_09, ServeIndicatorP2Gfx_09, ServeIndicatorP3Gfx_09, ServeIndicatorP4Gfx_09 ; $6c6e
 	ds ALIGN[4]
-ServeGfx0_09:
-	INCBIN "data/engine/match/ServeGfx0_09.bin" ; $6c80, 256 bytes
+ServeIndicatorP1Gfx_09:
+	INCBIN "data/engine/match/ServeIndicatorP1Gfx_09.bin" ; $6c80, 256 bytes
 	ds ALIGN[4]
-ServeGfx1_09:
-	INCBIN "data/engine/match/ServeGfx1_09.bin" ; $6d80, 256 bytes
+ServeIndicatorP2Gfx_09:
+	INCBIN "data/engine/match/ServeIndicatorP2Gfx_09.bin" ; $6d80, 256 bytes
 	ds ALIGN[4]
-ServeGfx2_09:
-	INCBIN "data/engine/match/ServeGfx2_09.bin" ; $6e80, 256 bytes
+ServeIndicatorP3Gfx_09:
+	INCBIN "data/engine/match/ServeIndicatorP3Gfx_09.bin" ; $6e80, 256 bytes
 	ds ALIGN[4]
-ServeGfx3_09:
-	INCBIN "data/engine/match/ServeGfx3_09.bin" ; $6f80, 256 bytes
+ServeIndicatorP4Gfx_09:
+	INCBIN "data/engine/match/ServeIndicatorP4Gfx_09.bin" ; $6f80, 256 bytes
 ; A column of up to eight 8x16 objects one tile apart, tiles $0e down to $00;
 ; an object template enters it part-way to draw fewer (the entry labels
 ; say how many rows remain).
@@ -310,10 +310,10 @@ GetPlayer1ServeIndicatorSprites:
 	ret ; $7111
 Player1ServeIndicatorSpritePtrs_09:
 	; $7112, 8 bytes (records:2)
-	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 0
-	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 1
-	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 2
-	dw Player1ServeIndicatorSpriteTemplate1_09 ; record 3
+	dw Player1ServeIndicatorSoloSpriteTemplate_09 ; record 0
+	dw Player1ServeIndicatorSoloSpriteTemplate_09 ; record 1
+	dw Player1ServeIndicatorSoloSpriteTemplate_09 ; record 2
+	dw Player1ServeIndicatorDuoSpriteTemplate_09 ; record 3
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a ; $711d
@@ -324,11 +324,11 @@ GetPlayer2ServeIndicatorSprites:
 	ret ; $7128
 Player2ServeIndicatorSpritePtrs_09:
 	; $7129, 8 bytes (records:2)
-	dw Player2ServeIndicatorSpriteTemplate0_09 ; record 0
-	dw Player2ServeIndicatorSpriteTemplate0_09 ; record 1
-	dw Player2ServeIndicatorSpriteTemplate1_09 ; record 2
-	dw Player2ServeIndicatorSpriteTemplate1_09 ; record 3
-Player1ServeIndicatorSpriteTemplate0_09:
+	dw Player2ServeIndicatorSoloSpriteTemplate_09 ; record 0
+	dw Player2ServeIndicatorSoloSpriteTemplate_09 ; record 1
+	dw Player2ServeIndicatorDuoSpriteTemplate_09 ; record 2
+	dw Player2ServeIndicatorDuoSpriteTemplate_09 ; record 3
+Player1ServeIndicatorSoloSpriteTemplate_09:
 	; $7131, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $14, $00
 	oam_sprite $10, $10, $04, $04
@@ -337,7 +337,7 @@ Player1ServeIndicatorSpriteTemplate0_09:
 	oam_sprite $10, $28, $78, $01
 	oam_sprite $10, $30, $7a, $01
 	oam_sprite_end
-Player1ServeIndicatorSpriteTemplate1_09:
+Player1ServeIndicatorDuoSpriteTemplate_09:
 	; $714a, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $04, $04
 	oam_sprite $10, $10, $06, $04
@@ -346,7 +346,7 @@ Player1ServeIndicatorSpriteTemplate1_09:
 	oam_sprite $10, $28, $78, $01
 	oam_sprite $10, $30, $7a, $01
 	oam_sprite_end
-Player2ServeIndicatorSpriteTemplate0_09:
+Player2ServeIndicatorSoloSpriteTemplate_09:
 	; $7163, 25 bytes (sprite_template)
 	oam_sprite $20, $08, $14, $00
 	oam_sprite $20, $10, $0c, $05
@@ -355,7 +355,7 @@ Player2ServeIndicatorSpriteTemplate0_09:
 	oam_sprite $20, $28, $7c, $01
 	oam_sprite $20, $30, $7e, $01
 	oam_sprite_end
-Player2ServeIndicatorSpriteTemplate1_09:
+Player2ServeIndicatorDuoSpriteTemplate_09:
 	; $717c, 25 bytes (sprite_template)
 	oam_sprite $20, $08, $0c, $05
 	oam_sprite $20, $10, $0e, $05
@@ -374,10 +374,10 @@ GetPlayer1CharIconSprites:
 	ret ; $71a3
 Player1CharIconSpritePtrs_09:
 	; $71a4, 8 bytes (records:2)
-	dw Player1CharIconSpriteTemplate0_09 ; record 0
-	dw Player1CharIconSpriteTemplate0_09 ; record 1
-	dw Player1CharIconSpriteTemplate0_09 ; record 2
-	dw Player1CharIconSpriteTemplate1_09 ; record 3
+	dw Player1CharIconSoloSpriteTemplate_09 ; record 0
+	dw Player1CharIconSoloSpriteTemplate_09 ; record 1
+	dw Player1CharIconSoloSpriteTemplate_09 ; record 2
+	dw Player1CharIconDuoSpriteTemplate_09 ; record 3
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a ; $71af
@@ -388,35 +388,35 @@ GetPlayer2CharIconSprites:
 	ret ; $71ba
 Player2CharIconSpritePtrs_09:
 	; $71bb, 8 bytes (records:2)
-	dw Player2CharIconSpriteTemplate0_09 ; record 0
-	dw Player2CharIconSpriteTemplate0_09 ; record 1
-	dw Player2CharIconSpriteTemplate1_09 ; record 2
-	dw Player2CharIconSpriteTemplate1_09 ; record 3
-Player1CharIconSpriteTemplate0_09:
+	dw Player2CharIconSoloSpriteTemplate_09 ; record 0
+	dw Player2CharIconSoloSpriteTemplate_09 ; record 1
+	dw Player2CharIconDuoSpriteTemplate_09 ; record 2
+	dw Player2CharIconDuoSpriteTemplate_09 ; record 3
+Player1CharIconSoloSpriteTemplate_09:
 	; $71c3, 9 bytes (sprite_template)
 	oam_sprite $10, $10, $00, $04
 	oam_sprite $10, $18, $02, $04
 	oam_sprite_end
-Player1CharIconSpriteTemplate1_09:
+Player1CharIconDuoSpriteTemplate_09:
 	; $71cc, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $04
 	oam_sprite $10, $10, $02, $04
 	oam_sprite $10, $18, $10, $06
 	oam_sprite $10, $20, $12, $06
 	oam_sprite_end
-Player2CharIconSpriteTemplate0_09:
+Player2CharIconSoloSpriteTemplate_09:
 	; $71dd, 9 bytes (sprite_template)
 	oam_sprite $10, $10, $08, $05
 	oam_sprite $10, $18, $0a, $05
 	oam_sprite_end
-Player2CharIconSpriteTemplate1_09:
+Player2CharIconDuoSpriteTemplate_09:
 	; $71e6, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $08, $05
 	oam_sprite $10, $10, $0a, $05
 	oam_sprite $10, $18, $18, $07
 	oam_sprite $10, $20, $1a, $07
 	oam_sprite_end
-GameScoreDisplaySpriteTemplate_09:
+LessonScorePanelSpriteTemplate_09:
 	; $71f7, 33 bytes (sprite_template)
 	oam_sprite $08, $18, $00, $04
 	oam_sprite $08, $20, $02, $04

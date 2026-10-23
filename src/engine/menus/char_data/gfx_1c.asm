@@ -1,127 +1,129 @@
 	ds ALIGN[4]
-CharDataShiftGfx00:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx00.bin" ; $6880, 64 bytes
+CharDataBallAnimFrame00:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame00.bin" ; $6880, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx01:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx01.bin" ; $68c0, 64 bytes
+CharDataBallAnimFrame01:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame01.bin" ; $68c0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx02:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx02.bin" ; $6900, 64 bytes
+CharDataBallAnimFrame02:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame02.bin" ; $6900, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx03:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx03.bin" ; $6940, 64 bytes
+CharDataBallAnimFrame03:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame03.bin" ; $6940, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx04:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx04.bin" ; $6980, 64 bytes
+CharDataBallAnimFrame04:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame04.bin" ; $6980, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx05:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx05.bin" ; $69c0, 64 bytes
+CharDataBallAnimFrame05:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame05.bin" ; $69c0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx06:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx06.bin" ; $6a00, 64 bytes
+CharDataBallAnimFrame06:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame06.bin" ; $6a00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx07:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx07.bin" ; $6a40, 64 bytes
+CharDataBallAnimFrame07:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame07.bin" ; $6a40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx08:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx08.bin" ; $6a80, 64 bytes
+CharDataBallAnimFrame08:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame08.bin" ; $6a80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx09:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx09.bin" ; $6ac0, 64 bytes
+CharDataBallAnimFrame09:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame09.bin" ; $6ac0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx10:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx10.bin" ; $6b00, 64 bytes
+CharDataBallAnimFrame10:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame10.bin" ; $6b00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx11:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx11.bin" ; $6b40, 64 bytes
+CharDataBallAnimFrame11:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame11.bin" ; $6b40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx12:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx12.bin" ; $6b80, 64 bytes
+CharDataBallAnimFrame12:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame12.bin" ; $6b80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx13:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx13.bin" ; $6bc0, 64 bytes
+CharDataBallAnimFrame13:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame13.bin" ; $6bc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx14:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx14.bin" ; $6c00, 64 bytes
+CharDataBallAnimFrame14:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame14.bin" ; $6c00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx15:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx15.bin" ; $6c40, 64 bytes
+CharDataBallAnimFrame15:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame15.bin" ; $6c40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx16:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx16.bin" ; $6c80, 64 bytes
+CharDataBallAnimFrame16:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame16.bin" ; $6c80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx17:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx17.bin" ; $6cc0, 64 bytes
+CharDataBallAnimFrame17:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame17.bin" ; $6cc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx18:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx18.bin" ; $6d00, 64 bytes
+CharDataBallAnimFrame18:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame18.bin" ; $6d00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx19:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx19.bin" ; $6d40, 64 bytes
+CharDataBallAnimFrame19:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame19.bin" ; $6d40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx20:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx20.bin" ; $6d80, 64 bytes
+CharDataBallAnimFrame20:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame20.bin" ; $6d80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx21:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx21.bin" ; $6dc0, 64 bytes
+CharDataBallAnimFrame21:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame21.bin" ; $6dc0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx22:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx22.bin" ; $6e00, 64 bytes
+CharDataBallAnimFrame22:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame22.bin" ; $6e00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx23:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx23.bin" ; $6e40, 64 bytes
+CharDataBallAnimFrame23:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame23.bin" ; $6e40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx24:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx24.bin" ; $6e80, 64 bytes
-CharDataShiftGfx25:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx25.bin" ; $6ec0, 64 bytes
-CharDataShiftGfx26:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx26.bin" ; $6f00, 64 bytes
+CharDataBallAnimFrame24:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame24.bin" ; $6e80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx27:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx27.bin" ; $6f40, 64 bytes
+CharDataBallAnimFrame25:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame25.bin" ; $6ec0, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx28:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx28.bin" ; $6f80, 64 bytes
+CharDataBallAnimFrame26:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame26.bin" ; $6f00, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx29:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx29.bin" ; $6fc0, 64 bytes
+CharDataBallAnimFrame27:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame27.bin" ; $6f40, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx30:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx30.bin" ; $7000, 64 bytes
+CharDataBallAnimFrame28:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame28.bin" ; $6f80, 64 bytes
 	ds ALIGN[4]
-CharDataShiftGfx31:
-	INCBIN "data/engine/menus/char_data/CharDataShiftGfx31.bin" ; $7040, 64 bytes
-CharDataScreenGfx13:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx13.bin" ; $7080, 150 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx13.inc" ; DEF CharDataScreenGfx13_SIZE EQU its decoded length, generated from the .bin by make
+CharDataBallAnimFrame29:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame29.bin" ; $6fc0, 64 bytes
+	ds ALIGN[4]
+CharDataBallAnimFrame30:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame30.bin" ; $7000, 64 bytes
+	ds ALIGN[4]
+CharDataBallAnimFrame31:
+	INCBIN "data/engine/menus/char_data/CharDataBallAnimFrame31.bin" ; $7040, 64 bytes
+CharDataLargeDigitGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataLargeDigitGfx.bin" ; $7080, 150 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataLargeDigitGfx.inc" ; DEF CharDataLargeDigitGfx_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreen_LoadScreen:
-	ld hl, CharDataScreen_LoadScreenPalette ; $7116
+	ld hl, CharDataScreenBasePalettes ; $7116
 	ld_bg_pals de, 0, 8 ; $7119
 	call LoadPaletteShadow ; $711c
-	ld hl, CharDataScreen_LoadScreenPalette ; $711f
+	ld hl, CharDataScreenBasePalettes ; $711f
 	ld_obj_pals de, 0, 8 ; $7122
 	call LoadPaletteShadow ; $7125
 	wram_bank WRAM_STAGING ; $7128
-	ld hl, CharDataScreenGfx13 ; $712e
+	ld hl, CharDataLargeDigitGfx ; $712e
 	ld de, wDecompBuffer ; $7131
 	call DecompressData ; $7134
 	ld hl, wDecompBuffer ; $7137
 	ld de, vTiles0 + VRAM_BANK1 ; $713a
-	ld c, CharDataScreenGfx13_SIZE / 16 ; $713d
+	ld c, CharDataLargeDigitGfx_SIZE / 16 ; $713d
 	call QueueVRAMCopy ; $713f
-	farcall CharDataScreen_LoadGfx ; $7142
+	farcall LoadStatArrowGfx ; $7142
 	wram_bank WRAM_STAGING ; $7145
-	ld hl, CharDataScreenGfx0_1c ; $714b
+	ld hl, CharDataScreenTiles ; $714b
 	ld de, wDecompBuffer ; $714e
 	call DecompressData ; $7151
 	ld hl, wDecompBuffer ; $7154
 	ld de, vTiles2 + VRAM_BANK1 ; $7157
-	ld c, 128 ; $715a -- 128 of CharDataScreenGfx0_1c's 256 tiles
+	ld c, 128 ; $715a -- 128 of CharDataScreenTiles's 256 tiles
 	call QueueVRAMCopy ; $715c
-	ld hl, wTextTileBuffer ; $715f
+	ld hl, wDecompBufferHigh ; $715f
 	ld de, vTiles1 + VRAM_BANK1 ; $7162
-	ld c, wTextTileBuffer_SIZE / 16 ; $7165
+	ld c, wDecompBufferHigh_SIZE / 16 ; $7165
 	call QueueVRAMCopy ; $7167
 	wram_bank WRAM_STAGING ; $716a
 	ld hl, CharDataScreenTilemap_1c ; $7170
@@ -250,7 +252,7 @@ FlushCharDataTilemapsFar:
 	ret ; $72ff
 BackupCharData:
 	wram_bank WRAM_SCENE ; $7300
-	ld hl, wCharDataPointsWorking ; $7306
+	ld hl, wCharDataPointsTotal ; $7306
 	ld de, wCharDataEditBackup ; $7309
 	ld bc, wCharDataEditBackup_SIZE ; $730c
 	call CopyMemoryBC ; $730f
@@ -262,7 +264,7 @@ BackupCharData:
 RestoreCharData:
 	wram_bank WRAM_SCENE ; $731f
 	ld hl, wCharDataEditBackup ; $7325
-	ld de, wCharDataPointsWorking ; $7328
+	ld de, wCharDataPointsTotal ; $7328
 	ld bc, wCharDataEditBackup_SIZE ; $732b
 	call CopyMemoryBC ; $732e
 	ld hl, wCharDataChoiceBackup ; $7331
@@ -273,35 +275,35 @@ RestoreCharData:
 	ld [wCharDataViewOnly], a ; $733f
 	xor a ; $7342
 	ld [wStoryCharacterSlot], a ; $7343
-	ld a, [wCharDataPointsWorking] ; $7346
+	ld a, [wCharDataPointsTotal] ; $7346
 	ld [wCharDataPointsLeft], a ; $7349
 	push af ; $734c
 	ld_story_char_field CHARREC_LEVEL ; $734d
 	pop af ; $7360
-	ld a, [wCharDataLevel] ; $7361
+	ld a, [wCharDataStartLevel] ; $7361
 	ld [hl], a ; $7364
 	push af ; $7365
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPIN ; $7366
 	pop af ; $7379
-	ld a, [wCharDataNewLevels] ; $737a
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $737a
 	ld [hl], a ; $737d
 	ld [wCharDataLevels + TRAINSTAT_SPIN], a ; $737e
 	push af ; $7381
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $7382
 	pop af ; $7395
-	ld a, [wCharDataNewLevels + 1] ; $7396
+	ld a, [wCharDataStartLevels + TRAINSTAT_POWER] ; $7396
 	ld [hl], a ; $7399
 	ld [wCharDataLevels + TRAINSTAT_POWER], a ; $739a
 	push af ; $739d
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $739e
 	pop af ; $73b1
-	ld a, [wCharDataNewLevels + 2] ; $73b2
+	ld a, [wCharDataStartLevels + TRAINSTAT_CONTROL] ; $73b2
 	ld [hl], a ; $73b5
 	ld [wCharDataLevels + TRAINSTAT_CONTROL], a ; $73b6
 	push af ; $73b9
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $73ba
 	pop af ; $73cd
-	ld a, [wCharDataNewLevels + 3] ; $73ce
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPEED] ; $73ce
 	ld [hl], a ; $73d1
 	ld [wCharDataLevels + TRAINSTAT_SPEED], a ; $73d2
 	xor a ; $73d5
@@ -322,58 +324,58 @@ RestoreCharData:
 	dec b ; $73f0
 	jr nz, .loop ; $73f1
 	ret ; $73f3
-LoadCharDataScreenGraphics:
-	call LoadCharDataScreenBgAndPalettes ; $73f4
-	call LoadCharDataScreenMugshots ; $73f7
+LoadExpDistributionScreenGraphics:
+	call LoadExpDistributionScreenPalettes ; $73f4
+	call LoadExpDistributionScreenMugshots ; $73f7
 	ret ; $73fa
-LoadCharDataScreenBgAndPalettes:
-	ld hl, CharDataScreenBgAndPalettes ; $73fb
+LoadExpDistributionScreenPalettes:
+	ld hl, ExpDistributionScreenBgObjPalettes ; $73fb
 	ld_bg_pals de, 0, 8 ; $73fe
 	call LoadPaletteShadow ; $7401
-	ld hl, CharDataScreenBgAndPalettes ; $7404
+	ld hl, ExpDistributionScreenBgObjPalettes ; $7404
 	ld_obj_pals de, 0, 8 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank WRAM_SCENE ; $740d
-	ld a, [wMasterPalettes + 58] ; $7413
+	ld a, [wMasterPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE] ; $7413
 	ld [wExpScreenCharStats + EXPSTAT_SAVED_COLOR], a ; $7416
-	ld a, [wMasterPalettes + 59] ; $7419
+	ld a, [wMasterPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE + 1] ; $7419
 	ld [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1], a ; $741c
-	ld a, [wMasterPalettes + 34] ; $741f
+	ld a, [wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE] ; $741f
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR], a ; $7422
-	ld a, [wMasterPalettes + 35] ; $7425
+	ld a, [wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1] ; $7425
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1], a ; $7428
-	ld hl, wMasterPalettes + 34 ; $742b
+	ld hl, wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE ; $742b
 	farcall GrayscalePaletteColorInPlace ; $742e
-	ld hl, wMasterPalettes + 34 ; $7431
+	ld hl, wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE ; $7431
 	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank WRAM_STAGING ; $7437
-	ld hl, CharDataScreenBgGfx ; $743d
+	ld hl, ExpDistributionScreenBgGfx ; $743d
 	ld de, wDecompBuffer ; $7440
 	call DecompressData ; $7443
 	ld hl, wDecompBuffer ; $7446
 	ld de, vTiles2 + VRAM_BANK1 ; $7449
-	ld c, 128 ; $744c -- 128 of CharDataScreenBgGfx's 256 tiles
+	ld c, 128 ; $744c -- 128 of ExpDistributionScreenBgGfx's 256 tiles
 	call QueueVRAMCopy ; $744e
-	ld hl, wTextTileBuffer ; $7451
+	ld hl, wDecompBufferHigh ; $7451
 	ld de, vTiles1 + VRAM_BANK1 ; $7454
-	ld c, wTextTileBuffer_SIZE / 16 ; $7457
+	ld c, wDecompBufferHigh_SIZE / 16 ; $7457
 	call QueueVRAMCopy ; $7459
 	wram_bank WRAM_STAGING ; $745c
-	ld hl, CharDataScreenBgTilemap ; $7462
+	ld hl, ExpDistributionScreenBgTilemap ; $7462
 	ld de, wDecompBuffer ; $7465
 	call DecompressData ; $7468
 	ld hl, wDecompBuffer ; $746b
-	ld bc, CharDataScreenBgTilemap_SIZE ; $746e
+	ld bc, ExpDistributionScreenBgTilemap_SIZE ; $746e
 	call CopyWram1ToWram3 ; $7471
 	wram_bank WRAM_STAGING ; $7474
-	ld hl, CharDataScreenBgAttrmap ; $747a
+	ld hl, ExpDistributionScreenBgAttrmap ; $747a
 	ld de, wDecompBuffer ; $747d
 	call DecompressData ; $7480
 	ld hl, wDecompBuffer ; $7483
-	ld bc, CharDataScreenBgAttrmap_SIZE ; $7486
+	ld bc, ExpDistributionScreenBgAttrmap_SIZE ; $7486
 	call CopyWram1ToWram2 ; $7489
 	ret ; $748c
-LoadCharDataScreenMugshots:
+LoadExpDistributionScreenMugshots:
 	xor a ; $748d
 	ld [wStoryCharacterSlot], a ; $748e
 	push af ; $7491
@@ -393,7 +395,7 @@ LoadCharDataScreenMugshots:
 	ld de, vTiles1 tile $30 + VRAM_BANK1 ; $74d2
 	ld c, 9 ; $74d5
 	call QueueVRAMCopy ; $74d7
-	ld a, $01 ; $74da
+	ld a, STORYREC_PARTNER ; $74da
 	ld [wStoryCharacterSlot], a ; $74dc
 	push af ; $74df
 	ld_story_char_field CHARREC_PALETTE ; $74e0
@@ -412,23 +414,23 @@ LoadCharDataScreenMugshots:
 	ld de, vTiles1 tile $40 + VRAM_BANK1 ; $7520
 	ld c, 9 ; $7523
 	call QueueVRAMCopy ; $7525
-	ld hl, wMasterPalettes + 16 ; $7528
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 0 * COLOR_SIZE ; $7528
 	farcall GrayscalePaletteColorInPlace ; $752b
-	ld hl, wMasterPalettes + 18 ; $752e
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 1 * COLOR_SIZE ; $752e
 	farcall GrayscalePaletteColorInPlace ; $7531
-	ld hl, wMasterPalettes + 20 ; $7534
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 2 * COLOR_SIZE ; $7534
 	farcall GrayscalePaletteColorInPlace ; $7537
-	ld hl, wMasterPalettes + 22 ; $753a
+	ld hl, wMasterPalettes + 2 * PAL_SIZE + 3 * COLOR_SIZE ; $753a
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
-CharDataScreenBgAndPalettes:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenBgAndPalettes.asm" ; $7541, 64 bytes (palettes)
-CharDataScreenBgGfx:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgGfx.bin" ; $7581, 1886 bytes
-CharDataScreenBgTilemap:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.bin" ; $7cdf, 320 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.inc" ; DEF CharDataScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenBgAttrmap:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin" ; $7e1f, 216 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgAttrmap.inc" ; DEF CharDataScreenBgAttrmap_SIZE EQU its decoded length, generated from the .bin by make
+ExpDistributionScreenBgObjPalettes:
+	INCLUDE "data/engine/menus/char_data/ExpDistributionScreenBgObjPalettes.asm" ; $7541, 64 bytes (palettes)
+ExpDistributionScreenBgGfx:
+	INCBIN "data/engine/menus/char_data/lz_ExpDistributionScreenBgGfx.bin" ; $7581, 1886 bytes
+ExpDistributionScreenBgTilemap:
+	INCBIN "data/engine/menus/char_data/lz_ExpDistributionScreenBgTilemap.bin" ; $7cdf, 320 bytes
+	INCLUDE "data/engine/menus/char_data/lz_ExpDistributionScreenBgTilemap.inc" ; DEF ExpDistributionScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make
+ExpDistributionScreenBgAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_ExpDistributionScreenBgAttrmap.bin" ; $7e1f, 216 bytes
+	INCLUDE "data/engine/menus/char_data/lz_ExpDistributionScreenBgAttrmap.inc" ; DEF ExpDistributionScreenBgAttrmap_SIZE EQU its decoded length, generated from the .bin by make
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

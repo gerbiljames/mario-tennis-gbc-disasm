@@ -192,12 +192,12 @@ ValidateSaveRam:
 	ld hl, sSaveSignature ; $496c
 	ld de, SaveSignature ; $496f
 	call CompareSaveSignature ; $4972
-	jr nz, .setSramBank ; $4975
+	jr nz, .restoreHeaderFromBackup ; $4975
 	call VerifySaveHeaderChecksum ; $4977
-	jr nz, .setSramBank ; $497a
+	jr nz, .restoreHeaderFromBackup ; $497a
 	xor a ; $497c
 	jp .disableSram ; $497d
-.setSramBank:
+.restoreHeaderFromBackup:
 	sram_bank $01 ; $4980
 	ld hl, sSaveHeader ; $4987
 	ld de, wTextBuffer ; $498a

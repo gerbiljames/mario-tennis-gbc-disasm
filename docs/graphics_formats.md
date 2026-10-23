@@ -107,8 +107,8 @@ run **3 to 34**. `.matchTail` ends `pop hl` (source pointer pushed at `$17f6`)
 encoder always writes **three** zero bytes. If the terminator starts a fresh
 group the decoder reads all three (`$00` control byte plus `$0000`); mid-group
 it reads only the `$0000` and the third byte is never read. `tools/lz.py`'s
-`decompress()` counts that byte so extents match: all 715 mid-group streams pad
-with `$00`; the 148 fresh-group streams have no pad.
+`decompress()` counts that byte so extents match: every mid-group stream pads
+with `$00`; no fresh-group stream has a pad.
 
 A distance of 2048 at minimum length would encode as `$0000`, the terminator;
 the encoder's distances stop at 2047.
@@ -124,21 +124,20 @@ the encoder's distances stop at 2047.
 word at `$40:l` and calls `DecompressData` on it. A **slot word** `bbss` thus
 means "bank `$bb`, entry `ss/2` of its `$4000` directory": the encoding `dslot`
 emits (`include/macros/`) and `CopyDataFromBank` (`$00:$021a`) uses for
-uncompressed payloads. 282 `call` sites in `src/` reach one of the two.
+uncompressed payloads.
 
 ### 1.5 The corpus
 
-`data.manifest` declares **863** LZ streams; `check.py`'s `lz` check (§7.5)
+`data.manifest` declares every LZ stream; `check.py`'s `lz` check (§7.5)
 requires each to decode using exactly its declared extent and to re-encode to
 the same bytes.
 
 * **318,679 compressed bytes → 808,508 decompressed** (39.4%).
-* **827 decompress to a multiple of 16 bytes** (whole tiles or map planes). The
-  36 that do not are small tilemap/attrmap rect streams in banks `$1a`-`$1e`
-  (`CharDataScreen*`, `CharDataConfirmScreen*`, `Results*Tilemap_1e`,
-  `ResultsPlayerPanelAttrmap_1e`), 9 to 130 bytes.
-* Sizes: min 9, max 4096; commonest 1024 (×202), 256 (×109), 64 (×105),
-  4096 (×84), 320 (×71), 144 (×44), 32 (×40), 240 (×40), 576 (×13), 96 (×7).
+* **Nearly all decompress to a multiple of 16 bytes** (whole tiles or map planes). Those
+  that do not are small tilemap/attrmap rect streams in banks `$1a`-`$1e`
+  (`CharDataScreen*`, `CharDataConfirmScreen*`, `SuspendedMatch*Tilemap_1e`,
+  `SuspendedMatchPlayerPanelAttrmap_1e`), 9 to 130 bytes.
+* Sizes: min 9, max 4096; commonest 1024, 256, 64, 4096, 320 and 144.
 * Example: `MinigameCourtTiles` (`$5f:$4060`) is 2037 → 3024 bytes,
   `MinigameCourtTilemap` (`$5f:$4855`) 625 → 1024
   (`python3 tools/lz.py baserom.gbc <off>` decodes one).
@@ -174,7 +173,7 @@ e.g. `wDecompBuffer tile 1` at `$0a:$58f9`.
 ### 2.2 `QueueVRAMCopy` counts tiles, not bytes
 
 `QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`) is **the only way
-anything reaches VRAM**: 613 `call` sites, no direct `ld [$8xxx], a` anywhere.
+anything reaches VRAM**: no direct `ld [$8xxx], a` anywhere.
 
 ```
 hl = source
@@ -201,12 +200,12 @@ def VRAM_BANK1 equ $2000        ; include/constants/
 
 `QueueVRAMCopy` does `bit 5, d` to select `rVBK` and `res 5, d` to recover the
 address (`$0486`-`$048d`): `$b800` is `$9800` in VRAM bank 1, written
-`vBGMap0 + VRAM_BANK1`. Every VRAM address in the code (898 sites) is written
+`vBGMap0 + VRAM_BANK1`. Every VRAM address in the code is written
 as `vTiles0`/`vTiles1`/`vTiles2 tile $NN` (`tile` is `+ TILE_SIZE *`), or `vBGMap0`/`vBGMap1`
 plus `row * TILEMAP_WIDTH + col`: copy and loader arguments, destinations
 other routines take (`InitNumberSpriteGfx`, `CopyMugshotBufferToVram`,
 `ResultPortraitSlotTable`), `dw` tables of label-tile destinations
-(`CourtSelectTable`, `MainMenuLabelTileVramDests`), and bases added to an offset (`ld de, vBGMap0` /
+(`CourtIconTileVramDests`, `MainMenuIconTileVramDests`), and bases added to an offset (`ld de, vBGMap0` /
 `add hl, de` at `$00:$223a`).
 
 A word in `$8000`-`$9fff` is named by what consumes it, not its range. Sprite
@@ -234,20 +233,24 @@ and destination wrapping independently:
   (`TILEMAP_WIDTH equ 32`).
 
 The tile half repeats this with `rVBK = 0`: a 64×64 map in WRAM, a 32×32
-window into it in VRAM.
+window into it in VRAM. The story scenes and the intro cutscenes
+(`IntroOpeningToss`/`IntroClosingToss` `Tilemap`/`Attrmap`, `IntroOpponentsPanoramaTilemap`/`Attrmap`) decompress
+whole 4096-byte planes into it.
 
 Court and menu screens use flat 32×32 planes: `wShadowTilemap` (1024 bytes,
 WRAM bank `$03`) and `wScreenAttrmap` (1024 bytes, WRAM bank `$02`).
 
 ### 2.5 The `tilemap` spec
 
-Screen layouts are written as rows of cells. The 243 blobs `data.manifest`
-tags `tilemap:W` (all `lz_*`, decompressed first) get a `.tilemap` text grid
-beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an edited grid
-back and `make check` (`tilemap`) round-trips every one. Character-data screen
+Screen layouts are written as rows of cells. The blobs `data.manifest`
+tags `tilemap:W` -- tile and attribute planes and the story collision
+and behaviour maps (32×32 cells, §3.3); all `lz_*` streams, decompressed first,
+but the four raw 32×18 planes of the bank `$1a` exp screen -- get a `.tilemap`
+text grid beside their `.bin` (`tools/tilemap.py`); the Makefile encodes an
+edited grid back and `make check` (`tilemap`) round-trips every one. Character-data screen
 patches (runs of a 32-wide plane copied in at a row and column, e.g.
 `wDecompBuffer + 18 * TILEMAP_WIDTH`) are tagged when they start at column 0;
-those starting mid-row keep only their `.bin`. The 70 small layouts in the
+those starting mid-row keep only their `.bin`. The small layouts in the
 source carry a `(tilemap:W)` comment on their first line. Both use:
 
 ```asm
@@ -291,11 +294,14 @@ the scene id in `a`, computes `SceneGfxSlotTable + 16*a`, pushes slots 0-6
 | 6 | — | **popped and discarded** | `$58bd` |
 | 7 | `wDecompBuffer` → VRAM | LZ, then `QueueVRAMCopy` | `$589e` |
 
-Slot 6 is a fossil: `$58bd` pops it and `$58be` sets
-`de = wStorySceneUnusedBuffer`, but both are overwritten before any call.
+The loader drops slot 6 (`$58bd` pops it; `$58be`'s
+`de = wStorySceneUnusedBuffer` is overwritten before any call). Its reader is
+the tile animator: `AdvanceSceneTileAnimation` (`$0a:$6522`) copies raw 2bpp
+tiles from it per step of the config's `scene_tile_anim` list, into
+`vTiles2 + VRAM_BANK1` (`story_mode.md`).
 
-Slot 7's tiles go to `vTiles2 + VRAM_BANK1`, `c = 128`, and `wTextTileBuffer`
-to `vTiles1 + VRAM_BANK1`, `c = wTextTileBuffer_SIZE / 16` (128)
+Slot 7's tiles go to `vTiles2 + VRAM_BANK1`, `c = 128`, and `wDecompBufferHigh`
+to `vTiles1 + VRAM_BANK1`, `c = wDecompBufferHigh_SIZE / 16` (128)
 (`$58a4`-`$58b4`): together `$8800`-`$97ff` of VRAM bank 1.
 
 Slot 1's 64 bytes become **BG palettes 2-7**: from byte 16
@@ -332,8 +338,8 @@ and slot 6 (`$6325`), pushing 1-5 and reading 7 inline:
 | slot | destination | how | addr |
 |---|---|---|---|
 | 1 | `wScreenAttrmap` (as scratch) → palettes | raw copy, `bc = $0040` | `$6381` |
-| 2 | `wCourtTilemapSaved` | LZ | `$6377` |
-| 3 | `wCourtAttrmapSaved` | LZ | `$6370` |
+| 2 | `wCourtTilemapBase` | LZ | `$6377` |
+| 3 | `wCourtAttrmapBase` | LZ | `$6370` |
 | 4 | `wScoreboardColumnTiles` | raw copy, `bc = wScoreboardColumnTiles_SIZE` (40 bytes) | `$6363` |
 | 5 | `wScoreboardColumnAttrs` | raw copy, `bc = wScoreboardColumnAttrs_SIZE` | `$6359` |
 | 6 | — | skipped | `$6325` |
@@ -396,7 +402,7 @@ With base attr bit 5 (X-flip) set, a second loop (`$1ee0`-`$1f05`) uses
 X = `base_x + (8 - dx)` (`cpl` / `add $09`) and combines attr with **`or`**
 (`$1f01`).
 
-There are 182 templates. `StandingShadowOamTemplate` (`$08:$6301`) is reached
+`StandingShadowOamTemplate` (`$08:$6301`) is reached
 by `jp QueueSpriteTemplate` (`DrawStandingShadowSlot`, `$08:$6534`); four
 10-sprite cursor templates in bank `$3b` (`Unused_3b_*CursorWideTemplate`) by
 nothing; all others by `call`.
@@ -416,7 +422,7 @@ routine re-checks the cap and silently drops the sprite on overflow.
 | `QueueSprite24x32` | `$00:$2c2b` | 6 8×16 objects |
 | `QueueSprite32x32` | `$00:$2ced` | 8 8×16 objects via `QueueSpriteBlockPart` |
 | `QueueSpriteBlockPart` | `$00:$2d79` | one part; advances `c` by 2 |
-| `Unused_00_PositionSpriteWorld` | `$00:$1f6b` | world coords, subtracts `wCameraX/Y`, culls, ×8 → `QueueSprite16` |
+| `Unused_00_QueueSprite16AtWorldPos` | `$00:$1f6b` | world coords, subtracts `wCameraX/Y`, culls, ×8 → `QueueSprite16` |
 
 ### 4.3 Object headers
 
@@ -433,13 +439,13 @@ header**. `ObjectIdList_04` (`$04:$4f75`) maps 117 object ids to slot words
 
 Named walk sprites:
 
-* **31 from the game**: `CharObjectIdTable` (`$04:$4c29`, read by
+* **From the game**: `CharObjectIdTable` (`$04:$4c29`, read by
   `Unused_04_GetCharObjectId`) gives each `CHAR_*` id its overworld object
   (`OBJ_ALEX`, `OBJ_MARIO`, `OBJ_YOSHI`, …; the two unused roster slots share
   `OBJ_BALLOON_ELLIPSIS`). Ids `$56`-`$59` are `OBJ_ALEX_B`, `OBJ_NINA_B`,
   `OBJ_HARRY_B`, `OBJ_KATE_B`: the same drawings with fewer frames, loaded as
   `base + gender` by `LoadPlayerPartnerObjDefs_14` and the ending scenes.
-* **22 from their graphics**: eight speech balloons (`OBJ_BALLOON_EXCLAIM`,
+* **From their graphics**: eight speech balloons (`OBJ_BALLOON_EXCLAIM`,
   `_QUESTION`, `_ANGRY`, `_ELLIPSIS`, `_SCRIBBLE`, `_MUSIC`, `_SHOCK`,
   `_SWEAT`), `OBJ_RACKET`, `OBJ_TROPHY` (handed over at the awards ceremony by
   swapping object definitions), `OBJ_TOAD`, `OBJ_BOB_OMB`, `OBJ_BOO` (Peach's
@@ -447,23 +453,23 @@ Named walk sprites:
   exercisers (`OBJ_WEIGHTLIFTER_A/B`, `OBJ_SITUPS_A/B`,
   `OBJ_JUMPING_JACKS_A/B`) and `OBJ_INVISIBLE` (all-zero graphics; the
   Tournament Courtyard's talk targets).
-* The remaining 31 `OBJ_WALK_<bank>_<slot>` are the anonymous students and
+* The remaining `OBJ_WALK_<bank>_<slot>` are the anonymous students and
   staff of `docs/story_mode.md`. Bank `$6a` holds five more walk sprites no
   object id reaches.
 
 `LoadActorObjectDef` (`$04:$4ac6`) copies the header to `wActorObjDef` and
 expands it into the actor struct; `SetupCharSpriteFromObjectDef` (`$04:$4b68`)
-is the on-court equivalent:
+is the on-court equivalent. The fields are `OBJDEF_*` (`include/constants/overworld.inc`):
 
 | off | actor field | char symbol | meaning |
 |---|---|---|---|
-| +0 | +$37 | `wCharSpriteAttr` / `wCharPaletteId` | OAM attribute / CGB OBJ palette. `$63` is a sentinel (`cp $63` at `$04:$4b2b`): `LoadActorObjectDef` then stores attr `$02` and loads the 8-byte palette at +8 into OBJ palette 2 via `LoadPalettesMasterOnly` (`$00:$05e1`); no object uses it |
-| +1 | +$35 | — | **facing count**. `UpdateActorFacingFromHeading` (`$04:$5673`, `$5687`) forces facing 0 when this is 1; a single-facing object uses only the first 16x16 of each frame blob |
+| +0 `ATTR` | +$37 | `wCharSpriteAttr` / `wCharPaletteId` | OAM attribute / CGB OBJ palette. `$63` (`OBJDEF_ATTR_PALETTE_PTR`) is a sentinel (`$04:$4b2b`): `LoadActorObjectDef` then stores attr `$02` and loads the 8-byte palette at +8 into OBJ palette 2 via `LoadPalettesMasterOnly` (`$00:$05e1`); no object uses it |
+| +1 `FACING_COUNT` | +$35 | — | **facing count**. `UpdateActorFacingFromHeading` (`$04:$5673`, `$5687`) forces facing 0 when this is 1; a single-facing object uses only the first 16x16 of each frame blob |
 | +2,+3 | — | — | not read; `$02 $00` in all 92 walk-sprite headers, `$03 $00` in the character banks |
-| +4,+5 | +$24 | `wCharFrameTablePtr` | frame-pointer array |
-| +6,+7 | +$28 | `wCharAnimTablePtr` | **animation-script pointer table** |
-| +8,+9 | — | — | palette pointer, only when byte 0 == `$63` |
-| +10,+11 | +$38 | `wCharFramePlaceTablePtr` | per-frame 4-byte placement/upload records |
+| +4,+5 `FRAME_TABLE` | +$24 | `wCharFrameTablePtr` | frame-pointer array |
+| +6,+7 `ANIM_TABLE` | +$28 | `wCharAnimTablePtr` | **animation-script pointer table** |
+| +8,+9 `PALETTE` | — | — | palette pointer, only when byte 0 == `$63` |
+| +10,+11 `FRAME_PLACE_TABLE` | +$38 | `wCharFramePlaceTablePtr` | per-frame 4-byte placement/upload records; the actor copy is never read. Walk-sprite headers are 10 bytes, so there it is the first frame pointer |
 
 Frames are 64 bytes per facing (256 for 4 facings).
 `QueueActorFrameTileCopy` (`$04:$56c3`) indexes the frame table by
@@ -473,8 +479,10 @@ objects.
 
 `SetActorAnimation` (`$04:$4bbe`, body `$4bde`) and `SetCharAnimation`
 (`$08:$69ea`, body `$69fc`) index the +6 table by `animation id * 2`. In the
-walk-sprite banks it is `WalkSprite_<bank>_<slot>_AnimPtrs` and its scripts
-`..._AnimNN` (§4.4). The header's first row is commented
+walk-sprite banks it is `<Object>WalkSprite_AnimPtrs` (named for the
+`OBJ_*` id that loads it) and its scripts `..._AnimStill`/`_AnimWalk`/
+`_AnimBounce`/`_AnimNod`/`_AnimShake` for the `ANIM_*` ids 0-4, `..._AnimNN`
+past them or where a table breaks that pattern (§4.4). The header's first row is commented
 `OAM attr, facing count, unread, unread`.
 
 ### 4.4 Animation scripts
@@ -495,11 +503,11 @@ A hold writes `$ff` to the delay and never advances the script pointer
 **replaces** the attribute's high nibble rather than toggling; with the
 operands used (`$20`, `$00`) the difference is invisible.
 
-All scripts use these macros (570 character-bank, 635 walk-sprite in banks
-`$6a`, `$6f`, `$70`-`$77`). 34 end on a byte the macros cannot spell, written as
+All scripts use these macros (character banks and the walk-sprite banks
+`$6a`, `$6f`, `$70`-`$77`). A few end on a byte the macros cannot spell, written as
 a commented `db`:
 
-- **Unread hold operand**: `SeanSpriteAnim04` (`$47:$7f67`) and six walk-sprite
+- **Unread hold operand**: `SeanDejectedAnim` (`$47:$7f67`) and six walk-sprite
   scripts end `$fd, $00`; the `$00` is `db $00 ; never read: the hold above
   ends the script`.
 - **Loop operand in the next script**: the five-byte `03 14 04 1e ff` script
@@ -553,16 +561,15 @@ The game's `SplitColorComponents` / `CombineColorComponents` (`$00:$1c6a` /
 
 ### 5.2 The `palettes` spec
 
-226 regions are `palettes`. Their values are **not committed**: the source
+A `palettes` region's values are **not committed**: the source
 `INCLUDE`s `data/<folder>/<Label>.asm`, generated at setup by
 `render_palettes` (`tools/extract.py`) with one `palette` macro per palette
 (four colours as 5-bit `r,g,b`, packed by the macro, `#rrggbb` in a comment).
 The ten palettes whose words set bit 15 (six files in banks `$17`, `$1c`,
 `$28`, `$39`, `$65`) stay `dw`. Rows are fixed at 8 bytes.
 
-Sizes (8,696 bytes over 226 regions): 87 full 64-byte sets, 85 single
-palettes, 4 32-byte half-sets, 6 of 128 bytes (BG+OBJ, like
-`wMasterPalettes`), the rest in between; all whole palettes, so `render_palettes`' raw-`db` tail
+Sizes run from a single palette to 128 bytes (BG+OBJ, like
+`wMasterPalettes`); all whole palettes, so `render_palettes`' raw-`db` tail
 branch never fires.
 
 ### 5.3 The live/master pair
@@ -623,7 +630,7 @@ rising during a fade-out, so the bank `$00` fade goes to **white** and a
 fade-in comes back from white. The clamp-to-zero branch is unreachable from
 this caller.
 
-The `hFadeState` bit-7 path, `Unused_00_ApplyWhiteFade` (`$00:$1dcc`), is
+The `hFadeState` bit-7 path, `Unused_00_ApplyPackedFade` (`$00:$1dcc`), is
 unreachable (`docs/bugs.md`). It also adds toward `$1f`, with one 16-bit add
 per colour, saturating at `$1e` because it pre-clears each field's low bit.
 
@@ -635,18 +642,18 @@ toward a target:
 1. `CopyMasterPalettesToFadeBuffers` (`$03:$75e9`) seeds both buffers from
    `wMasterPalettes`;
 2. the target is rewritten by `Unused_03_ClearFadeTargetPalettes`
-   (`$03:$7606`, → black) or `DesaturateFadeTargetPalettes` (`$03:$7616`,
-   → grayscale);
+   (`$03:$7606`, → black) or `SepiaToneFadeTargetPalettes` (`$03:$7616`,
+   → sepia: R = (R+G+B)/2 capped at 31, G = sum/4, B = sum/8);
 3. `AnimatePaletteFadeToTarget` (`$03:$7719`) waits `wPaletteFadeFrameDelay`
    frames, steps every masked live palette with
    `StepPaletteColorsTowardTarget` (`$03:$7764`), uploads, and repeats
    `wPaletteFadeAmount` times; `SnapPalettesToTarget` (`$03:$77e2`) then copies
    the target over.
 
-Farptr entry slots: `$03:$4040` (`InitGrayscalePaletteFade`), `$03:$4042`
+Farptr entry slots: `$03:$4040` (`InitSepiaPaletteFade`), `$03:$4042`
 (`SetupPaletteFadeMask`), `$03:$4044` (`AnimatePaletteFadeToTarget`). The live
-callers, `RunEndingCreditsSequence` (`$0a:$6ece`) and `PlayScreenSequence0`
-(`$18:$76dd`), fade to grayscale; `Unused_03_InitBlackPaletteFade`
+callers, `RunEndingCreditsSequence` (`$0a:$6ece`) and `PlayTravelingTeamVictoryScene`
+(`$18:$76dd`), fade to sepia; `Unused_03_InitBlackPaletteFade`
 (`$03:$75ca`) is unreachable, so nothing fades to black.
 
 ---
@@ -688,7 +695,7 @@ TextStrings_XX:                          ; — spec `text_pool`
 
 The offset table runs to the pool, so it has `(pool - $4004) / 2` entries:
 **4,109 strings** in all, the most in bank `$36` (711) and `$30` (560).
-`AddTextIdOffsetWordLookupTable` (`$05:$5d99`) holds the 13 per-bank counts in
+`TextBankStringCounts_05` (`$05:$5d99`) holds the 13 per-bank counts in
 selector order; `AddTextIdOffset` (`$05:$5d2b`) uses it to carry an id offset
 across banks, so ids form one flat sequence.
 
@@ -708,7 +715,7 @@ Unchecked invariants: each `text_offsets` table is followed by its
 `text_pool`, entry 0 is `$0000`, and every word lands on a string start inside
 the pool.
 
-`include/text_ids.inc` is hand-maintained: 1,398 `def Text_<bank>_<index> equ
+`include/text_ids.inc` is hand-maintained: `def Text_<bank>_<index> equ
 <raw id>` coordinates, each aliased by what the text says, and the code uses
 the alias. Sites are named only where the id reaches a known text sink, never
 by value.
@@ -722,50 +729,49 @@ by value.
 Each structured data region's first line names the spec it was rendered from
 (`kind` or `kind:param`): `; $46ef, 112 bytes (bytes:16)`. The source is now
 edited directly as those macro rows; the retired generator and its
-`data_tables.json` are at git tag `generator-final`. Counts below are the
-2,751 declarations at that tag (today's source differs, e.g. 182
-`sprite_template` and 269 `actor_script` regions; `*` counts are today's,
-for kinds added since). `data.manifest` holds the
+`data_tables.json` are at git tag `generator-final`; `*` marks kinds
+added since that tag. `data.manifest` holds the
 extracted regions. `tools/extract.py` renders only the kinds it lists and
 rejects any other spec; the rest exist as inline declarations only.
 
-| spec | count | renders as |
-|---|---|---|
-| `bytes[:cols]` | 689 | `db` rows, index-commented (default 8 per row) |
-| `sprite_anim` | 570 | `anim_frame` / `anim_loop` / `anim_set` / `anim_flip` (§4.4) |
-| `records[:stride]` | 265 | one row per record; even stride → `dw`, odd → `db` (default 16) |
-| `actor_script` | 261 | `as_*` macros (see `docs/actor_script.md`) |
-| `palettes` | 160 | generated `dw` colour rows (§5.2) |
-| `map_scripts` | 137 | map script rows |
-| `fill` | 107 | `ds` — asserts one exact run is padding |
-| `map_actors` | 86 | `map_actor` rows with `FACE_*` names |
-| `text_ids` | 82 | `dw` text ids, `Text_*` where named |
-| `tilemap[:width]` | 70 | `tilemap_begin`/`tilemap_row`/`tilemap_end` (§2.5) |
-| `map_tree` / `map_entries` | 42 / 42 | scene structure (see `docs/story_mode.md`) |
-| `mode_hooks` | 38 | minigame hook tables |
-| `ram_ptrs` | 35 | `dw` resolved against RAM symbol names |
-| `sprite_template` | 21 | `oam_sprite` rows (§4.1) |
-| `drill_definition` | 18 | minigame drill records |
-| `text_offsets` / `text_pool` | 13 / 13 | §6.2 |
-| `ascii` | 12 | `db "…"` |
-| `save_flag_ids` / `flag_ids` | 12 / 7 | `flag_id` rows |
-| `font_glyph` | 11 | 1bpp glyph rows |
-| `actor_list` | 10 | actor id lists |
-| `rect_pair` / `rect_ptrs` | 9 / 1 | `{height, width, tiles, attrs}` / `{tiles, attrs}` |
-| `sound_data` / `sound_index` | 8 / 2 | generated (routed out of the repo) |
-| `enum` | 8 | named constants |
-| `rules_pages` | 4 | page-offset lists |
-| `pattern` | 3 | a repeated short pattern as one `ds` |
-| `words[:n]` | 2 | numeric words, never label-resolved (`n` per row) |
-| `menu_def` | 2 | menu definitions |
-| `blit_runs` | 84* | `blit_run col, row, src, length` runs and the `$ff` end (`screens_and_ui.md` §3.2) |
-| `target_script` | 57* | `tgt_*` commands (`include/macros/minigame_targets.inc`) |
-| `scoreboard_columns` | 32* | a court's `SceneConfig` (tiles) or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
-| `frame_place` | 30* | `*FramePlace` rows (§4.5) |
-| `scene_config` | 21* | a story `SceneConfig`: `scene_bounds` and the unread bytes |
-| `move_curve` | 16* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
-| `text` | 10* | game text that is not NUL-terminated strings of two or more bytes (one-character strings, a signature, NUL padding) |
+| spec | renders as |
+|---|---|
+| `bytes[:cols]` | `db` rows, index-commented (default 8 per row) |
+| `sprite_anim` | `anim_frame` / `anim_loop` / `anim_set` / `anim_flip` (§4.4) |
+| `records[:stride]` | one row per record; even stride → `dw`, odd → `db` (default 16) |
+| `actor_script` | `as_*` macros (see `docs/actor_script.md`) |
+| `palettes` | generated `dw` colour rows (§5.2) |
+| `map_scripts` | map script rows |
+| `fill` | `ds` — asserts one exact run is padding |
+| `map_actors` | `map_actor` rows with `FACE_*` names |
+| `text_ids` | `dw` text ids, `Text_*` where named |
+| `tilemap[:width]` | `tilemap_begin`/`tilemap_row`/`tilemap_end` (§2.5) |
+| `map_tree` / `map_entries` | scene structure (see `docs/story_mode.md`) |
+| `mode_hooks` | minigame hook tables |
+| `ram_ptrs` | `dw` resolved against RAM symbol names |
+| `sprite_template` | `oam_sprite` rows (§4.1) |
+| `drill_definition` | minigame drill records |
+| `text_offsets` / `text_pool` | §6.2 |
+| `ascii` | `db "…"` |
+| `save_flag_ids` / `flag_ids` | `flag_id` rows |
+| `font_glyph` | 1bpp glyph rows |
+| `actor_list` | actor id lists |
+| `rect_pair` / `rect_ptrs` | `{height, width, tiles, attrs}` / `{tiles, attrs}` |
+| `sound_data` / `sound_index` | generated (routed out of the repo) |
+| `enum` | named constants |
+| `rules_pages` | page-offset lists |
+| `pattern` | a repeated short pattern as one `ds` |
+| `words[:n]` | numeric words, never label-resolved (`n` per row) |
+| `menu_def` | menu definitions |
+| `blit_runs`* | `blit_run col, row, src, length` runs and the `$ff` end (`screens_and_ui.md` §3.2) |
+| `target_script`* | `tgt_*` commands (`include/macros/minigame_targets.inc`) |
+| `scoreboard_columns`* | a court's `ScoreboardColumnTiles` or `ScoreboardColumnAttrs`: four 2x5 `tilemap_begin` blocks (§3.4) |
+| `frame_place`* | `*FramePlace` rows (§4.5) |
+| `scene_config`* | a story `SceneConfig`: `scene_bounds`, the `scene_tile_anim` list and the unread bytes |
+| `move_curve`* | bank `$09` X-offset curves, `move_curve_hold`/`_end` |
+| `text`* | game text that is not NUL-terminated strings of two or more bytes (one-character strings, a signature, NUL padding) |
 | one each | | `cart_header`, `squares`, `story_locations`, `location_entries`, `minigame_configs`, `tilemap_scripts`, `gfx_ptr_table`, `lz_ptr_table`, `char_lz_ptr_table`, `mugshot_ptr_table`, `tilemap_dispatch` |
+
 
 ### 7.2 No ROM values in the repository
 
@@ -802,42 +808,44 @@ look like tiles:
 ### 7.5 The structural checks
 
 `python3 tools/check.py` checks what `make compare` cannot: that the structure
-the source claims is true, not just that the bytes come back. All thirty
-pass:
+the source claims is true, not just that the bytes come back:
 
-| check | count | what it asserts |
-|---|---|---|
-| `lz` | 863 | every stream decodes inside its extent and its decoded data re-encodes to the same stream |
-| `lz-labels` | 863 | no symbol lands inside a compressed stream |
-| `lz-names` | 3066 | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
-| `regions` | 4275 | manifest regions stay inside their bank and do not overlap |
-| `text` | 28 | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
-| `db-words` | 525 | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
-| `addr-words` | 320 | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
-| `records` | 514 | a `records:N` or word-table region is whole records or ends in a `$ff` terminator (exceptions allow-listed) |
-| `layout` | 4275 | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
-| `sound` | 315 | every sound track decodes over exactly its extent and renders to rows that encode back |
-| `traj` | 15 | every trajectory table is whole rows and renders to rows that parse back |
-| `macros` | 219 | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
-| `scopes` | 269 | no global label covers both actor-script bytecode and CPU code |
-| `labels` | 13781 | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
-| `headers` | 3103 | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted) |
-| `branches` | 14 | no *new* conditional branch targets the instruction after it |
-| `literals` | 33806 | no ROM address is written as a number where the source moves, and no named WRAM address is split into `add`/`adc` halves |
-| `dma` | 51 | every label handed straight to a VRAM DMA routine is 16-byte aligned |
-| `gfx` | 2903 | every PNG encodes back to the blob it was decoded from |
-| `gfx-specs` | 120 | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element or decompressed into a tilemap row (exceptions allow-listed) |
-| `tilemap` | 243 | every tilemap grid encodes back to its blob |
-| `slots` | 5153 | every `ACTOR_*` slot name holds its actor wherever a script uses it |
-| `reach` | 4904 | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
-| `unnamed` | 8877 | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
-| `entries` | 126 | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
-| `raw-ids` | 6426 | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`, `wVar + FIELD` is its own), or an immediate left in a register for a `call`/`farcall` (also one every jump into a label loads into `a`), whose other values are named never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites is passed no raw number; a `bit` test on a joypad byte (loaded from `hInput*`/`wCharInputBits`, or already tested with a `PADB_` bit) names its bit, and a `bit`/`set`/`res` on a flag byte (`wCharFlags`, `wCharBallReachFlags`, `wExpScreenBusyFlags`, `wTennisDictFlags`, `wMessageSpeed`, `hMusicFlags`, `wSoundOptionBits`, `wCharSpriteDirty`, the court-position and serve-role bytes) or a flag field reached by `ld hl, FIELD / add hl, rr` or `ld hl, wX + FIELD` (`ACTORF_FLAGS`, `ACTORF_STATUS`, `MGTARGET_FLAGS`, `OBJSLOT_FLAGS`, `MGACTOR_FLAGS`) names its bit, an `and`/`or`/`xor` mask on one a name of its family; no `Text_*` id is the `X` of `ld hl, X / add hl, rr / ld e, l / ld d, h`; listed id tables and `story_location` and `court_positions` rows name their ids (exceptions allow-listed) |
-| `fields` | 615 | a routine that names a `CHARREC_*`/`CREATEDCHAR_*`/`SLOTSUM_*`/`ACTORF_*`/`OBJSLOT_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c / ld e, a`) (exceptions allow-listed); an offset into `CHARREC_TRAIN_LEVELS` or `wCharDataLevels` is a `TRAINSTAT_*` |
-| `templates` | 161 | a label handed to `QueueSpriteTemplate` in `hl`, directly or as a row of the pointer table `hl` indexes, is a `sprite_template` region (one stale dead-code operand allow-listed) |
-| `loops` | 894 | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
-| `localnames` | 1175 | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump; a `.done`/`.exit`/`.finish` local entered only by a jump runs no dialogue, movement or prompt macro before it leaves; after `RunDialogueYesNoPrompt` (0 = yes) the `z` target is not named `.declined`/`.no`/`.refuse*`, nor the `nz` target `.accepted`/`.yes*` (exceptions allow-listed) |
-| `mirrors` | 21 | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
+| check | what it asserts |
+|---|---|
+| `lz` | every stream decodes inside its extent and its decoded data re-encodes to the same stream |
+| `lz-labels` | no symbol lands inside a compressed stream |
+| `lz-names` | no region outside `lz_` decodes as a stream over its extent, or on to a later region's end |
+| `regions` | manifest regions stay inside their bank and do not overlap |
+| `text` | a spec-less `.asm` region is NUL-terminated text; a `text` one holds only text bytes and NULs |
+| `db-words` | a `db`-only label holds no word equal to a label of its bank (coincidences allow-listed) |
+| `addr-words` | a raw-`db` label's words are not all VRAM- (either bank) or WRAM-shaped: an address table is `dw` of symbols (exceptions allow-listed) |
+| `db-ptrs` | a raw-`db` label whose words all point inside labelled blobs of its bank, or are all ROMX addresses read as a word (`ld a, [hl+]` / `ld h, [hl]` after loading it into `hl`), is `dw Label + n` rows |
+| `records` | a `records:N` or word-table region is whole records or ends in a `$ff` terminator (exceptions allow-listed) |
+| `layout` | each data file sits in the `data/` folder mirroring the `src/` fragment that uses it |
+| `sound` | every sound track decodes over exactly its extent and renders to rows that encode back |
+| `traj` | every trajectory table is whole rows and renders to rows that parse back |
+| `macros` | every `*`-kind region except `scene_config` renders through its macros alone, with no raw `db` |
+| `scopes` | no global label covers both actor-script bytecode and CPU code |
+| `labels` | code lives under its routine's name: no data label's scope runs into code, no table dispatches to another routine's local, no stray label splits a routine |
+| `headers` | every non-fill region header sits right under a label, so no region hides under another label's name (the cart header excepted), and no label something references heads a fill region: bytes the game reads are written as data |
+| `branches` | no *new* conditional branch targets the instruction after it |
+| `literals` | no ROM address is written as a number where the source moves, no named WRAM address is split into `add`/`adc` halves, an `ld bc/de/hl` immediate is never a WRAM label's start, nor its negation ahead of an `add hl, rr` (`$10000 - wX`; exceptions allow-listed); no RAM/VRAM address half is a raw byte where it is checkable: a page added to an offset (`ld a, $d0 / add h / ld h, a`), a `cp` on a pointer's high byte, an `ld l/e` re-aiming a pointer loaded from a WRAM label, an `ld h/d` page the next instructions dereference |
+| `dma` | every label handed to a VRAM DMA routine is 16-byte aligned, including each entry of a `dw` table the source is read from (`Label tile n` / `Label + n` with `n` a multiple of 16 count) |
+| `gfx` | every PNG encodes back to the blob it was decoded from |
+| `gfx-specs` | no spec-less region is named `*Gfx*`/`*Tiles*`, no spec-less whole-tile LZ stream is decompressed on to `vTiles`, and no gfx-tagged region is indexed, read element by element, decompressed into a tilemap row or a `w*Tilemap`/`w*Attrmap`/`wMapBuffer64` plane, staged in `wDecompBuffer` by `CopyMemoryFast` or decompressed on to a `CopyBank*Buffer` copy (exceptions allow-listed) |
+| `tilemap` | every tilemap grid encodes back to its blob |
+| `slots` | every `ACTOR_*` slot name names a row of a list that can be active there and holds its actor in every such list, and no `map_actor` row name repeats a word run (`TOURNAMENT_TOURNAMENT_STAFF`) |
+| `reach` | a routine is named `Unused` exactly when nothing reachable reaches it, and no reachable local label sits under an `Unused` one |
+| `unnamed` | a data label nothing else names is `Unused_` (exceptions listed in `tools/reach.py`) |
+| `entries` | a `map_entry` row is marked debug-warp only exactly when nothing in retail sends the player there |
+| `raw-ids` | a raw `cp` or store on a variable (`wVar + n` counts as `wVar`, `wVar + FIELD` is its own), or an immediate left in a register for a `call`/`farcall` (also one every jump into a label loads into `a`), whose other values are named (a `*_SIZE` names no family) never equals a member of that family, nor a byte read through a known text pointer a `TX_*` code; a routine passed `Text_*` in `hl`/`de` at two or more sites, and `ShowMessageWindow`'s `hl`, is passed no raw number, nor is a word stored into a `*TextId*` variable (`ld de, X` meeting `ld hl, wVar` at `ld a, e / ld [hl+], a / ld [hl], d`, `wVar + n` named through the symbol file); a `bit` test on a joypad byte (loaded from `hInput*`/`wCharInputBits`, or already tested with a `PADB_` bit) names its bit, and a `bit`/`set`/`res` on a flag byte (`wCharFlags`, `wCharBallReachFlags`, `wExpScreenBusyFlags`, `wTennisDictFlags`, `wMessageSpeed`, `hMusicFlags`, `wSoundOptionBits`, `wCharSpriteDirty`, `wMenuCursorLockFlags`, the court-position and serve-role bytes) or a flag field reached by `ld hl, FIELD / add hl, rr`, `ld hl, wX + FIELD` or `ld a, FIELD / add l / ld l, a` (`ACTORF_FLAGS`, `ACTORF_STATUS`, `MGTARGET_FLAGS`, `OBJSLOT_FLAGS`, `MGACTOR_FLAGS`) names its bit, an `and`/`or`/`xor` mask on one a name of its family; no `Text_*` id is the `X` of `ld hl, X / add hl, rr / ld e, l / ld d, h`; listed id tables, `story_location` and `court_positions` rows and the mode of `script_set_actor_mode` / `as_set_field ACTORF_MODE` name their ids; a `map_script` / `map_actor` flag condition is 0 or a `FLAG_`/`~FLAG_` name (exceptions allow-listed) |
+| `fields` | a routine that names a `CHARREC_*`/`CREATEDCHAR_*`/`SLOTSUM_*`/`ACTORF_*`/`OBJSLOT_*`/`SPRSLOT_*`/`SCENEOBJ_*`/`WINDOW_*` field adds no raw offset under `$100` to a record pointer (`ld hl, n / add hl, rr`, `ld a, n / add_hl_a`, `ld a, n / add c / ld e, a`) (exceptions allow-listed); an offset into `CHARREC_TRAIN_LEVELS`, `wCharDataLevels` or `wCharDataStartLevels` is a `TRAINSTAT_*`, into `wCharDataStats` and its three sibling stat arrays a `CHARSTAT_*`, into `wActorObjDef` an `OBJDEF_*`, into `wBallHistory` a `BALLHIST_*` (or `n * BALLHIST_SIZE`), into a sprite-slot record (`wCharSpriteSlot`, the shadow and ball slots, `wBallTrailSlots`) a `SPRSLOT_*` (or `n * SPRSLOT_SIZE`), into `wBGPalettes`/`wOBJPalettes`/`wMasterPalettes` an `n * PAL_SIZE + n * COLOR_SIZE`; a `...Name` char-record operand (`wStoryMainName`, `wPlayer1PartnerName`, ...) is not copied or cleared by `CHAR_RECORD_SIZE`, passed to `RecomputeCharacterStats` or given a `CHARREC_*` field add in the next dozen instructions: that is the whole record, `wStoryMain` etc.; likewise a `wCharPosX` operand copied or cleared (`CopyMemoryFast`/`ClearMemory16`), passed to `SetCharAnimation`/`StepCharAnimation`/`UpdateCharSelectCharSprite`, offset with `add hl`, or subtracted from a field is the whole `$df00` struct, `wCharStruct` |
+| `templates` | a label handed to `QueueSpriteTemplate` in `hl`, directly or as a row of the pointer table `hl` indexes, is a `sprite_template` region (one stale dead-code operand allow-listed) |
+| `loops` | a local named `*loop*` is branched back to from a later line: its own routine's, or by full name (the sound-script opcode handlers excepted), and some path from it, following branches until `ret`/`jp` out/`as_halt`, reaches that branch or a computed jump |
+| `localnames` | a `.done`/`.exit`/`.finish` local reaches no branch back to an earlier local of its routine, a `.check<Var>` local, where `w<Var>`/`h<Var>` is a RAM symbol, names it within its first three instructions, before any branch, and a `.store*` local writes memory before it falls into another label or leaves by ret or jump; a `.done`/`.exit`/`.finish` local entered only by a jump runs no dialogue, movement or prompt macro before it leaves; after `RunDialogueYesNoPrompt` (0 = yes) the `z` target is not named `.declined`/`.no`/`.refuse*`, nor the `nz` target `.accepted`/`.yes*`; a local whose straight-line path returns `a` = 0 has no positive name (`busy`, `found`, `reached`, ...), nor one returning 1 a negative one (`none`, `idle`, `no*`, ...); a local named for doubles is not reached only with `FLAG_DOUBLES` clear, nor one named for singles only with it set (`not*` and `check…Won` names exempt); in a run of `bit PADB_X` / `jr`/`jp nz` pairs where one d-pad target names its direction, every d-pad target not shared by several bits names its own (exceptions allow-listed) |
+| `mirrors` | a direct `[wX]` operand on a `ram_mirrored.inc` symbol whose banks are listed does not follow (with no `pop_wram_bank` between) a `wram_bank` selecting a bank that lacks it |
+| `wram-ptrs` | a `ld bc/de/hl, wX` on a banked WRAMX symbol is not dereferenced (`[bc]`/`[de]`/`[hl]`, before the register is rewritten) after a `wram_bank` selecting another bank, in straight-line source, nor passed by `call` to a listed tile-plane writer (text, number and bar drawers in `de`/`hl`; the char-data blit and patch-list readers in `bc`) unless it is a WRAM_SCREEN name |
+| `write-only` | a RAM label only ever stored to by name (`ld [wX], a`), whose bytes no load, raw address, pointer walk or block copy from an earlier label in the same `UNION` branch can reach, says `Write-only` / `nothing reads` / `read by nothing` in its comment (exceptions allow-listed) |
 
 ---
 
@@ -850,7 +858,7 @@ Open:
   data. It would load the object's own palette from that pointer: a
   per-object-palette feature no shipped object uses.
 * The intended difference between `AdjustColorsBrightness` and
-  `Unused_00_ApplyWhiteFade`, given both add toward `$1f`. The cheaper 16-bit
+  `Unused_00_ApplyPackedFade`, given both add toward `$1f`. The cheaper 16-bit
   form is the one left unreachable.
 
 Settled:

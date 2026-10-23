@@ -21,14 +21,14 @@ FetchShortTextToBuffer:
 	pop bc ; $40bb
 	pop af ; $40bc
 	ret ; $40bd
-Unused_05_ClearWindowGlyphPage:
+Unused_05_ClearWindowShadowMaps:
 	push_wram_bank WRAM_TEXT ; $40be
 	ld hl, wWindowShadowTilemap ; $40c7
 	ld c, (2 * TILEMAP_AREA) / 16 ; $40ca
 	call ClearMemory16 ; $40cc
 	pop_wram_bank ; $40cf
 	ret ; $40d4
-Unused_05_QueueGlyphPageDMAOnA:
+Unused_05_DMAShadowTilemapIfAHeld:
 	ldh a, [hPlayerInputFlags] ; $40d5
 	bit PADB_A, a ; $40d7
 	jr nz, .startDMA ; $40d9
@@ -131,7 +131,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	add hl, bc ; $4161
 	ld d, h ; $4162
 	ld e, l ; $4163
-	ld hl, $d000 ; $4164
+	ld hl, wActiveTilemap ; $4164
 	add hl, bc ; $4167
 	push bc ; $4168
 	ld bc, $0026 ; $4169
@@ -148,7 +148,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	ld b, $00 ; $417b
 	call QueueVRAMCopy ; $417d
 	pop af ; $4180
-	ld hl, $d000 ; $4181
+	ld hl, wActiveTilemap ; $4181
 	ld de, vBGMap0 ; $4184
 	ld c, a ; $4187
 	ld b, $00 ; $4188
@@ -159,7 +159,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	add hl, bc ; $4191
 	ld d, h ; $4192
 	ld e, l ; $4193
-	ld hl, $d400 ; $4194
+	ld hl, wActiveAttrmap ; $4194
 	add hl, bc ; $4197
 	ld a, [wCameraY + 1] ; $4198
 	and $1f ; $419b
@@ -177,7 +177,7 @@ Unused_05_CopyVisibleTilemapToVRAM:
 	ld b, $00 ; $41af
 	call QueueVRAMCopy ; $41b1
 	pop af ; $41b4
-	ld hl, $d400 ; $41b5
+	ld hl, wActiveAttrmap ; $41b5
 	ld de, vBGMap0 + VRAM_BANK1 ; $41b8
 	ld c, a ; $41bb
 	ld b, $00 ; $41bc
@@ -194,7 +194,7 @@ Unused_05_QueueFullTilemapCopy:
 	push de ; $41c8
 	push hl ; $41c9
 	wram_bank b ; $41ca
-	ld hl, $d000 ; $41cf
+	ld hl, wActiveTilemap ; $41cf
 	ld de, vBGMap0 ; $41d2
 	ld c, TILEMAP_AREA / 16 ; $41d5
 	call QueueVRAMCopy ; $41d7
@@ -209,7 +209,7 @@ Unused_05_QueueFullAttrmapCopy:
 	push de ; $41e1
 	push hl ; $41e2
 	wram_bank b ; $41e3
-	ld hl, $d400 ; $41e8
+	ld hl, wActiveAttrmap ; $41e8
 	ld de, vBGMap0 + VRAM_BANK1 ; $41eb
 	ld c, TILEMAP_AREA / 16 ; $41ee
 	call QueueVRAMCopy ; $41f0
@@ -239,7 +239,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	add hl, bc ; $421b
 	ld d, h ; $421c
 	ld e, l ; $421d
-	ld hl, $d000 ; $421e
+	ld hl, wActiveTilemap ; $421e
 	add hl, bc ; $4221
 	push bc ; $4222
 	ld c, 2 ; $4223
@@ -249,7 +249,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	add hl, bc ; $422c
 	ld d, h ; $422d
 	ld e, l ; $422e
-	ld hl, $d400 ; $422f
+	ld hl, wActiveAttrmap ; $422f
 	add hl, bc ; $4232
 	ld c, 2 ; $4233
 	call QueueVRAMCopy ; $4235
@@ -281,7 +281,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	add hl, bc ; $4263
 	ld d, h ; $4264
 	ld e, l ; $4265
-	ld hl, $d000 ; $4266
+	ld hl, wActiveTilemap ; $4266
 	add hl, bc ; $4269
 	pop af ; $426a
 	push af ; $426b
@@ -294,7 +294,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	add hl, bc ; $4276
 	ld d, h ; $4277
 	ld e, l ; $4278
-	ld hl, $d400 ; $4279
+	ld hl, wActiveAttrmap ; $4279
 	add hl, bc ; $427c
 	push de ; $427d
 	ld c, a ; $427e
@@ -302,7 +302,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	pop de ; $4282
 .done:
 	ret ; $4283
-Unused_05_CopyTilemapRowsAnimated:
+Unused_05_CopyTilemapRowsChunked:
 	push af ; $4284
 	push bc ; $4285
 	push de ; $4286

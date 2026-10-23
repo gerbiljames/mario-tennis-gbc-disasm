@@ -59,7 +59,7 @@ BuildCharSpriteSlots:
 	add $80 ; $76a8
 	ld [wCharDepthKey], a ; $76aa
 	ld a, [wCharFacingOctant] ; $76ad
-	ld_hl_indexed BuildCharSpriteSlotsTable ; $76b0
+	ld_hl_indexed CharFacingOctantFlipAttrs ; $76b0
 	ld a, [wCharSpriteAttr] ; $76b7
 	or OAM_BANK1 ; $76ba
 	xor [hl] ; $76bc
@@ -104,7 +104,7 @@ BuildCharSpriteSlots:
 	ld [hl+], a ; $76f9
 	ld [hl], d ; $76fa
 	ret ; $76fb
-BuildCharSpriteSlotsTable:
+CharFacingOctantFlipAttrs:
 	; $76fc, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawOffscreenCharArrow:
@@ -191,10 +191,11 @@ BuildAirborneShadowSlot:
 	ld [hl], d ; $778f
 	ret ; $7790
 ; Interprets the animation script at wCharAnimScriptPtr, one command per frame
-; once wCharAnimDelay expires. Commands are words: below $f0 is [delay, frame],
-; $ff rewinds to wCharAnimScriptBase + d, $fe switches animation, $fb toggles
-; the flip bits of wCharSpriteAttr. A frame change sets CHARSPRITEB_RELOAD_TILES in
-; wCharSpriteDirty so ReloadCharFacingTiles uploads new tiles.
+; once wCharAnimDelay expires. Commands are words: below $f0 is [frame, delay],
+; $ff rewinds to wCharAnimScriptBase + d, $fe switches animation, $fb sets the
+; flip bits of wCharSpriteAttr from its operand. A frame change sets
+; CHARSPRITEB_RELOAD_TILES in wCharSpriteDirty so ReloadCharFacingTiles uploads
+; new tiles.
 StepCharAnimation:
 	ld a, [wCharAnimDelay] ; $7791
 	and a ; $7794
@@ -283,34 +284,34 @@ ReadCharInput:
 CharInputPtrs:
 	; $781f, 14 bytes (records:2)
 	dw ReadCharPadInput ; record 0
-	dw CharInputHandler1_08 ; record 1
+	dw ReadCharAiInput ; record 1
 	dw ReadCharPadInput ; record 2
 	dw ReadCharPadInput ; record 3
-	dw CharInputHandler4_08 ; record 4
-	dw CharInputHandler5_08 ; record 5
-	dw CharInputHandler6_08 ; record 6
-CharInputHandler4_08:
+	dw ReadCharLinkInput ; record 4
+	dw ReadCharLinkMasterInput ; record 5
+	dw ReadCharLinkSlaveInput ; record 6
+ReadCharLinkInput:
 	ldh a, [hLinkInput] ; $782d
 	ld [wCharInputBits], a ; $782f
 	ret ; $7832
-CharInputHandler5_08:
+ReadCharLinkMasterInput:
 	ldh a, [hLinkState] ; $7833
 	cp LINKSTATE_SLAVE ; $7835
-	jr z, CharInputHandler6_08.remoteLive ; $7837
+	jr z, ReadCharLinkSlaveInput.remoteInput ; $7837
 	cp LINKSTATE_MASTER ; $7839
-	jr z, CharInputHandler6_08.remoteBuffered ; $783b
+	jr z, ReadCharLinkSlaveInput.sentInput ; $783b
 	jr ReadCharPadInput ; $783d
-CharInputHandler6_08:
+ReadCharLinkSlaveInput:
 	ldh a, [hLinkState] ; $783f
 	cp LINKSTATE_SLAVE ; $7841
-	jr z, .remoteBuffered ; $7843
+	jr z, .sentInput ; $7843
 	cp LINKSTATE_MASTER ; $7845
-	jr z, .remoteLive ; $7847
+	jr z, .remoteInput ; $7847
 	jr ReadCharPadInput ; $7849
-.remoteBuffered:
-	ldh a, [hLinkRemoteInputBuf] ; $784b
+.sentInput:
+	ldh a, [hLinkSentInput] ; $784b
 	jr .store ; $784d
-.remoteLive:
+.remoteInput:
 	ldh a, [hLinkRemoteInput] ; $784f
 .store:
 	ld [wCharInputBits], a ; $7851
@@ -324,7 +325,7 @@ ReadCharPadInput:
 	or c ; $785e
 	ld [wCharInputBits], a ; $785f
 	ret ; $7862
-CharInputHandler1_08:
+ReadCharAiInput:
 	ld hl, wAiActionTimer ; $7863
 	ld a, [hl] ; $7866
 	and a ; $7867

@@ -5,10 +5,10 @@
 	cp $01
 	jp nz, .done
 	test_flag FLAG_TEMP_SCENE_VARIANT_A
-	jr z, .setText
+	jr z, .headBackText
 	script_set_text Text_RoommateSinglesHurryUp
 	jr .done
-.setText:
+.headBackText:
 	script_set_text Text_RoommateSinglesHeadBack
 .done:
 	ret

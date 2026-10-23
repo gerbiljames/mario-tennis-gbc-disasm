@@ -51,7 +51,7 @@ FillProgressListRowAttrs:
 	jr nz, .rowLoop ; $7a2d
 	ret ; $7a2f
 Unused_1e_CopyProgressListTilemap:
-	ld hl, $d060 ; $7a30
+	ld hl, wWindowShadowTilemap + 3 * TILEMAP_WIDTH ; $7a30
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7a33
 	ld c, 15 * TILEMAP_WIDTH / 16 ; $7a36
 	call QueueVRAMCopy ; $7a38
@@ -120,39 +120,39 @@ DrawProgressEntryTrophyIcon:
 	ret ; $7a8c
 DrawProgressScreenSprites:
 	xor a ; $7a8d
-	ld [wCharPosHeight + 1], a ; $7a8e
-	ld [wCharPosHeight + 2], a ; $7a91
+	ld [wProgressUpArrow], a ; $7a8e
+	ld [wProgressDownArrow], a ; $7a91
 	ld a, [wProgressVisibleCount] ; $7a94
 	sub $07 ; $7a97
 	ld b, a ; $7a99
 	ld a, [wProgressListIndex] ; $7a9a
 	or a ; $7a9d
 	jr z, .compare ; $7a9e
-	ld [wCharPosHeight + 1], a ; $7aa0
+	ld [wProgressUpArrow], a ; $7aa0
 .compare:
 	cp b ; $7aa3
 	jr nc, .drawUpArrow ; $7aa4
 	ld a, $01 ; $7aa6
-	ld [wCharPosHeight + 2], a ; $7aa8
+	ld [wProgressDownArrow], a ; $7aa8
 .drawUpArrow:
-	ld a, [wCharPosHeight + 1] ; $7aab
+	ld a, [wProgressUpArrow] ; $7aab
 	or a ; $7aae
 	jr z, .drawDownArrow ; $7aaf
 	ld d, $0a ; $7ab1
 	ld e, $18 ; $7ab3
-	ld c, $00 ; $7ab5
+	ld c, BOBDIR_NEG ; $7ab5
 	farcall ApplySpriteBobOffsetY ; $7ab7
 	ld c, $20 ; $7aba
 	ld b, $00 ; $7abc
 	ld h, $02 ; $7abe
 	farcall QueueStackedSpritePair ; $7ac0
 .drawDownArrow:
-	ld a, [wCharPosHeight + 2] ; $7ac3
+	ld a, [wProgressDownArrow] ; $7ac3
 	or a ; $7ac6
 	jr z, .drawIcons ; $7ac7
 	ld d, $0a ; $7ac9
 	ld e, $86 ; $7acb
-	ld c, $01 ; $7acd
+	ld c, BOBDIR_POS ; $7acd
 	farcall ApplySpriteBobOffsetY ; $7acf
 	ld c, $20 ; $7ad2
 	ld b, $00 ; $7ad4
@@ -174,49 +174,49 @@ DrawProgressScreenSprites:
 	jr z, .next ; $7af4
 	ld a, d ; $7af6
 	cp $00 ; $7af7
-	jr z, .drawProgressEntryTrophyIcon ; $7af9
+	jr z, .dreamMatchIcon ; $7af9
 	cp $0b ; $7afb
-	jr nc, .drawProgressEntryDefaultIcon ; $7afd
+	jr nc, .defaultIcon ; $7afd
 	dec a ; $7aff
 	srl a ; $7b00
 	or a ; $7b02
-	jr z, .drawProgressEntryTrophyIcon ; $7b03
+	jr z, .dreamMatchIcon ; $7b03
 	cp $01 ; $7b05
-	jr z, .drawIcon1 ; $7b07
+	jr z, .juniorIcon ; $7b07
 	cp $02 ; $7b09
-	jr z, .drawIcon2 ; $7b0b
+	jr z, .seniorIcon ; $7b0b
 	cp $03 ; $7b0d
-	jr z, .drawIcon3 ; $7b0f
+	jr z, .varsityIcon ; $7b0f
 	cp $04 ; $7b11
-	jr z, .drawIcon4 ; $7b13
-.drawProgressEntryDefaultIcon:
+	jr z, .islandOpenIcon ; $7b13
+.defaultIcon:
 	call DrawProgressEntryDefaultIcon ; $7b15
 	jr .next ; $7b18
-.drawProgressEntryTrophyIcon:
+.dreamMatchIcon:
 	push bc ; $7b1a
 	ld c, $00 ; $7b1b
 	call DrawProgressEntryTrophyIcon ; $7b1d
 	pop bc ; $7b20
 	jr .next ; $7b21
-.drawIcon1:
+.juniorIcon:
 	push bc ; $7b23
 	ld c, $01 ; $7b24
 	call DrawProgressEntryTrophyIcon ; $7b26
 	pop bc ; $7b29
 	jr .next ; $7b2a
-.drawIcon2:
+.seniorIcon:
 	push bc ; $7b2c
 	ld c, $02 ; $7b2d
 	call DrawProgressEntryTrophyIcon ; $7b2f
 	pop bc ; $7b32
 	jr .next ; $7b33
-.drawIcon3:
+.varsityIcon:
 	push bc ; $7b35
 	ld c, $03 ; $7b36
 	call DrawProgressEntryTrophyIcon ; $7b38
 	pop bc ; $7b3b
 	jr .next ; $7b3c
-.drawIcon4:
+.islandOpenIcon:
 	push bc ; $7b3e
 	ld c, $04 ; $7b3f
 	call DrawProgressEntryTrophyIcon ; $7b41

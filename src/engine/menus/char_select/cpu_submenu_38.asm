@@ -46,7 +46,7 @@ RunCpuDifficultySubmenu:
 	ld [hl], a ; $6284
 	call ClearPlayerSlotPortrait ; $6285
 	call BuildVisiblePageSpriteList ; $6288
-	jr .advanceSlot ; $628b
+	jr .redrawSlotPrompt ; $628b
 .confirm:
 	sound SFX_MENU_SELECT ; $628d
 	call CloseCpuDifficultyPanel ; $628f
@@ -60,10 +60,10 @@ RunCpuDifficultySubmenu:
 	call DrawPlayerSlotPortrait ; $62a5
 	call AdvanceToNextPlayerSlot ; $62a8
 	cp $ff ; $62ab
-	jr nz, .advanceSlot ; $62ad
+	jr nz, .redrawSlotPrompt ; $62ad
 	ld a, CHARSELECT_DONE ; $62af
 	ld [wCharSelectExitCode], a ; $62b1
-.advanceSlot:
+.redrawSlotPrompt:
 	call DrawCharGridSlotPrompt ; $62b4
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $62b7
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $62ba
@@ -250,18 +250,18 @@ RunLinkCharSelectScreen:
 	ld [wMenuCursor2Y], a ; $644d
 	ldh [hLinkCursorPage], a ; $6450
 	xor a ; $6452
-	ldh [hLinkRemoteInputBuf], a ; $6453
+	ldh [hLinkSentInput], a ; $6453
 	ldh [hLinkRemoteInput], a ; $6455
 	ld [wLinkSelectCmdResult], a ; $6457
 	ld [wLinkSelectStartupFrames], a ; $645a
-	frame_task TickMenuBgScrollTask_38 ; $645d
+	frame_task TickMenuTitleScrollerTask_38 ; $645d
 	wram_bank WRAM_SCREEN ; $6465
 	call RefreshCharInfoPanel ; $646b
 .frameLoop:
 	push af ; $646e
 	farcall RunLinkCommandFrame ; $646f
 	pop af ; $6472
-	ldh a, [hLinkRemoteInputBuf] ; $6473
+	ldh a, [hLinkSentInput] ; $6473
 	ld [wMenuInputPressed], a ; $6475
 	ld a, [wMenuInputPressed] ; $6478
 	xor PADF_BUTTONS ; $647b
@@ -293,11 +293,11 @@ RunLinkCharSelectScreen:
 	pop_wram_bank ; $64ba
 	ld a, b ; $64bf
 	cp CHARSELECT_DONE ; $64c0
-	jr z, .checkDone ; $64c2
+	jr z, .selectionDone ; $64c2
 	cp CHARSELECT_CANCELLED ; $64c4
-	jr z, .done ; $64c6
+	jr z, .cancelled ; $64c6
 	jp .frameLoop ; $64c8
-.checkDone:
+.selectionDone:
 	call ClearFrameTasks ; $64cb
 	call ProcessLinkSelectCommand ; $64ce
 	sound SFX_MENU_SELECT ; $64d1
@@ -323,7 +323,7 @@ RunLinkCharSelectScreen:
 	set B_IE_TIMER, [hl] ; $6501
 	xor a ; $6503
 	ret ; $6504
-.done:
+.cancelled:
 	call ClearFrameTasks ; $6505
 	sound SFX_MENU_CANCEL ; $6508
 	push af ; $650a
@@ -378,15 +378,15 @@ ProcessLinkSelectCommand:
 	jr z, .applySelection ; $6575
 	ld a, [wCharSelectMode] ; $6577
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $657a
-	jr z, .markOwnSlot ; $657c
+	jr z, .markP1Slot ; $657c
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $657e
-	jr z, .markOwnSlot ; $6580
+	jr z, .markP1Slot ; $6580
 	ld a, [wCharSelectRemoteSlot] ; $6582
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $6585
 	add_hl_a ; $6588
 	ld [hl], $01 ; $658d
 	jr .applySelection ; $658f
-.markOwnSlot:
+.markP1Slot:
 	ld a, [wCharSelectRemoteSlot] ; $6591
 	ld hl, wCharSelectSlotLeftHanded ; $6594
 	add_hl_a ; $6597
@@ -435,7 +435,7 @@ ProcessLinkSelectCommand:
 	jr .done ; $65ed
 .checkCpuLevel4:
 	cp LINKSEL_CPU_LEVEL_4 ; $65ef
-	jr nz, .unknownCmd ; $65f1
+	jr nz, .storeCmdChar ; $65f1
 	ld c, $04 ; $65f3
 	call StoreRemoteCpuDifficulty ; $65f5
 	ld a, [wCharSelectRemoteChars + 1] ; $65f8
@@ -444,7 +444,7 @@ ProcessLinkSelectCommand:
 	xor a ; $65ff
 	ld [wLinkSelectCmdResult], a ; $6600
 	jr .done ; $6603
-.unknownCmd:
+.storeCmdChar:
 	ld [wLinkSelectCmdChar], a ; $6605
 .done:
 	ret ; $6608

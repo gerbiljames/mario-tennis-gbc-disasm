@@ -20,9 +20,9 @@ DataPtr_RulesScreenPalettes:
 Unused_17_DrawWobblingCornerBrackets:
 	push de ; $4016
 	push bc ; $4017
-	ld c, $00 ; $4018
+	ld c, BOBDIR_NEG ; $4018
 	call Unused_17_ApplySpriteWobbleX ; $401a
-	ld c, $00 ; $401d
+	ld c, BOBDIR_NEG ; $401d
 	call ApplySpriteWobbleY_17 ; $401f
 	sprite_tile_attr $00, OAM_BANK1 ; $4022
 	call QueueSprite ; $4026
@@ -34,9 +34,9 @@ Unused_17_DrawWobblingCornerBrackets:
 	add d ; $402e
 	ld d, a ; $402f
 	push de ; $4030
-	ld c, $01 ; $4031
+	ld c, BOBDIR_POS ; $4031
 	call Unused_17_ApplySpriteWobbleX ; $4033
-	ld c, $00 ; $4036
+	ld c, BOBDIR_NEG ; $4036
 	call ApplySpriteWobbleY_17 ; $4038
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $403b
 	call QueueSprite ; $403f
@@ -52,9 +52,9 @@ Unused_17_DrawWobblingCornerBrackets:
 	add d ; $404b
 	ld d, a ; $404c
 	push de ; $404d
-	ld c, $01 ; $404e
+	ld c, BOBDIR_POS ; $404e
 	call Unused_17_ApplySpriteWobbleX ; $4050
-	ld c, $01 ; $4053
+	ld c, BOBDIR_POS ; $4053
 	call ApplySpriteWobbleY_17 ; $4055
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $4058
 	call QueueSprite ; $405c
@@ -65,9 +65,9 @@ Unused_17_DrawWobblingCornerBrackets:
 	add c ; $4063
 	ld e, a ; $4064
 	push de ; $4065
-	ld c, $00 ; $4066
+	ld c, BOBDIR_NEG ; $4066
 	call Unused_17_ApplySpriteWobbleX ; $4068
-	ld c, $01 ; $406b
+	ld c, BOBDIR_POS ; $406b
 	call ApplySpriteWobbleY_17 ; $406d
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $4070
 	call QueueSprite ; $4074

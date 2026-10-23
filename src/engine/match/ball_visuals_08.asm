@@ -117,9 +117,9 @@ UpdateBallVisuals:
 	and a ; $516d
 	jr z, .shiftHistory ; $516e
 .shiftHistory:
-	ld hl, wBallHistory + 6 ; $5170
+	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $5170
 	ld de, wBallHistory ; $5173
-	ld bc, $001e ; $5176
+	ld bc, (NUM_BALLHIST - 1) * BALLHIST_SIZE ; $5176
 	call CopyMemoryBC ; $5179
 	ld hl, wBounceEffectTimer ; $517c
 	call TickTimer ; $517f
@@ -152,11 +152,11 @@ BuildBallSlot:
 	push de ; $51b2
 	ld e, l ; $51b3
 	ld d, h ; $51b4
-	ld hl, wBallHistory + 30 ; $51b5
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $51b5
 	ld a, e ; $51b8
 	ld [hl+], a ; $51b9
 	ld [hl], d ; $51ba
-	ld hl, wBallHistory + 32 ; $51bb
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $51bb
 	ld a, c ; $51be
 	ld [hl+], a ; $51bf
 	ld [hl], b ; $51c0
@@ -165,14 +165,14 @@ BuildBallSlot:
 	call ApplyCameraProjection ; $51c3
 	pop hl ; $51c6
 	bit 7, h ; $51c7
-	jr nz, .midHeight ; $51c9
+	jr nz, .negativeDepth ; $51c9
 	ld a, $42 ; $51cb
 	ld bc, $fe60 ; $51cd
 	add hl, bc ; $51d0
 	jr nc, .fillSlot ; $51d1
 	ld a, $44 ; $51d3
 	jr .fillSlot ; $51d5
-.midHeight:
+.negativeDepth:
 	ld a, $42 ; $51d7
 	ld bc, $01a0 ; $51d9
 	add hl, bc ; $51dc
@@ -193,7 +193,7 @@ BuildBallSlot:
 	ld [hl+], a ; $51f2
 	ld [hl], d ; $51f3
 .done:
-	ld hl, wBallHistory + 34 ; $51f4
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_TILE ; $51f4
 	ld a, c ; $51f7
 	add $08 ; $51f8
 	ld [hl+], a ; $51fa
@@ -203,23 +203,23 @@ BuildBallTrailSlots:
 	ld a, [wBallTrailEnabled] ; $51fd
 	and a ; $5200
 	jr z, .done ; $5201
-	ld hl, wBallHistory + 24 ; $5203
+	ld hl, wBallHistory + 4 * BALLHIST_SIZE ; $5203
 	ld de, wBallTrailSlots ; $5206
 	call BuildTrailSlot ; $5209
-	ld hl, wBallHistory + 18 ; $520c
-	ld de, wBallTrailSlots + 4 ; $520f
+	ld hl, wBallHistory + 3 * BALLHIST_SIZE ; $520c
+	ld de, wBallTrailSlots + 1 * SPRSLOT_SIZE ; $520f
 	call BuildTrailSlot ; $5212
 	ld a, [wBallTrailColor] ; $5215
 	and a ; $5218
 	jr z, .done ; $5219
-	ld hl, wBallHistory + 12 ; $521b
-	ld de, wBallTrailSlots + 8 ; $521e
+	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $521b
+	ld de, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $521e
 	call BuildTrailSlot ; $5221
-	ld hl, wBallHistory + 6 ; $5224
-	ld de, wBallTrailSlots + 12 ; $5227
+	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $5224
+	ld de, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $5227
 	call BuildTrailSlot ; $522a
 	ld hl, wBallHistory ; $522d
-	ld de, wBallTrailSlots + 16 ; $5230
+	ld de, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $5230
 	call BuildTrailSlot ; $5233
 .done:
 	ret ; $5236
@@ -310,7 +310,7 @@ BuildNetBallSlot:
 	ld de, $fdc0 ; $52b1
 	add hl, de ; $52b4
 	ret c ; $52b5
-	ld hl, wBallHistory + 30 ; $52b6
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $52b6
 	ld a, [hl+] ; $52b9
 	ld h, [hl] ; $52ba
 	ld l, a ; $52bb
@@ -404,13 +404,13 @@ DrawLandingMarker:
 	call QueueSprite16 ; $535d
 	ldh a, [hMatchFrameCounter] ; $5360
 	and $0f ; $5362
-	ld_hl_indexed DrawLandingMarkerTable ; $5364
+	ld_hl_indexed LandingMarkerFrameByTick ; $5364
 	ld a, [hl] ; $536b
 	cp $ff ; $536c
 	ret z ; $536e
-	farcall LoadBallTouchCharEffectTilesB ; $536f
+	farcall LoadLandingMarkerTiles ; $536f
 	ret ; $5372
-DrawLandingMarkerTable:
+LandingMarkerFrameByTick:
 	; $5373, 16 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08

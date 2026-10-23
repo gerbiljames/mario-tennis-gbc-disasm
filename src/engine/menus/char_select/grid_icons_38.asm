@@ -8,7 +8,7 @@ DrawCharNameAndType:
 	farcall RenderTextToBuffer64 ; $58dc
 	pop bc ; $58df
 	ld a, c ; $58e0
-	ld hl, CharNameAndTypeTable ; $58e1
+	ld hl, CharPlayTypeTable ; $58e1
 	add_hl_a ; $58e4
 	ld a, [hl] ; $58e9
 	ld hl, Text_CharTypePower ; $58ea
@@ -17,14 +17,14 @@ DrawCharNameAndType:
 	ld c, $20 ; $58f5
 	farcall RenderTextToBuffer64 ; $58f7
 	ret ; $58fa
-CharNameAndTypeTable:
+CharPlayTypeTable:
 	; $58fb, 32 bytes (bytes:16)
 	db $00, $00, $00, $00, $04, $01, $02, $02, $00, $04, $00, $03, $02, $02, $01, $04 ; 0x00
 	db $02, $04, $00, $03, $05, $05, $05, $02, $00, $04, $02, $01, $04, $00, $00, $01 ; 0x10
-DrawCharSelectSlotLabel:
-	ld a, [wCharGridPage] ; $591b
+DrawCharGridHandednessLabel:
+	ld a, [wCharGridTopRow] ; $591b
 	cp $02 ; $591e
-	jr nc, .drawName ; $5920
+	jr nc, .setLabelAttrs ; $5920
 	ld a, [wCharGridHandedness] ; $5922
 	ASSERT HAND_RIGHT == 0
 	or a ; $5925
@@ -37,7 +37,7 @@ DrawCharSelectSlotLabel:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5938
 	rect_size $05, $01 ; $593b
 	farcall CopyTilemapRect ; $593f
-	jr .drawName ; $5942
+	jr .setLabelAttrs ; $5942
 .notRightHanded:
 	cp $01 ; $5944
 	jr nz, .handsNotChosen ; $5946
@@ -49,7 +49,7 @@ DrawCharSelectSlotLabel:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5958
 	rect_size $05, $01 ; $595b
 	farcall CopyTilemapRect ; $595f
-	jr .drawName ; $5962
+	jr .setLabelAttrs ; $5962
 .handsNotChosen:
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5964
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $5967
@@ -59,7 +59,7 @@ DrawCharSelectSlotLabel:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5974
 	rect_size $08, $01 ; $5977
 	farcall CopyTilemapRect ; $597b
-.drawName:
+.setLabelAttrs:
 	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $597e
 	ld h, $08 ; $5981
 	rect_size $12, $01 ; $5983
@@ -152,7 +152,7 @@ WriteSlotIconTiles:
 InitCharGridState:
 	push_wram_bank WRAM_SCREEN ; $5a1b
 	ld a, $00 ; $5a24
-	ld [wCharGridPage], a ; $5a26
+	ld [wCharGridTopRow], a ; $5a26
 	ASSERT CHARSELECT_RUNNING == 0
 	xor a ; $5a29
 	ld [wCharSelectExitCode], a ; $5a2a
@@ -185,7 +185,7 @@ InitCharGridState:
 	call CompactRosterGridEntries ; $5a6d
 	call CompactMarioCastGridEntries ; $5a70
 	call CountCharGridEntries ; $5a73
-	call SetCharGridPageCount ; $5a76
+	call SetCharGridRowCount ; $5a76
 	call BuildVisiblePageSpriteList ; $5a79
 	pop_wram_bank ; $5a7c
 	ret ; $5a81
@@ -233,28 +233,28 @@ BuildCharUnlockFlags:
 .slotLoop:
 	ld a, c ; $5ad1
 	ld [wCurrentStorySlot], a ; $5ad2
-	farcall CheckStorySlot ; $5ad5
+	farcall ReadCurrentStorySlot ; $5ad5
 	push bc ; $5ad8
 	ld hl, wCharUnlockFlags + 18 ; $5ad9
 	ld b, $00 ; $5adc
 .charLoop:
 	ld a, b ; $5ade
 	add a ; $5adf
-	ld hl, CharUnlockCheatFlags ; $5ae0
+	ld hl, CharUnlockStoryFlags ; $5ae0
 	add_hl_a ; $5ae3
 	ld a, [hl+] ; $5ae8
 	ld d, [hl] ; $5ae9
 	ld e, a ; $5aea
 	call TestGameFlag ; $5aeb
 	jr nz, .markChar ; $5aee
-	jr .nextSlot ; $5af0
+	jr .nextChar ; $5af0
 .markChar:
 	ld hl, wCharUnlockFlags + 18 ; $5af2
 	ld a, b ; $5af5
 	add_hl_a ; $5af6
 	ld a, $01 ; $5afb
 	ld [hl], a ; $5afd
-.nextSlot:
+.nextChar:
 	ld a, b ; $5afe
 	inc a ; $5aff
 	ld b, a ; $5b00
@@ -264,7 +264,7 @@ BuildCharUnlockFlags:
 	ld a, c ; $5b06
 	inc a ; $5b07
 	ld c, a ; $5b08
-	cp $03 ; $5b09
+	cp NUM_STORY_SLOTS ; $5b09
 	jr nz, .slotLoop ; $5b0b
 	pop af ; $5b0d
 	ld [wCurrentStorySlot], a ; $5b0e
@@ -272,30 +272,30 @@ BuildCharUnlockFlags:
 	ret ; $5b16
 CharUnlockSaveFlags:
 	; $5b17, 18 bytes (save_flag_ids)
-	dw SAVEFLAG_UNLOCKED_SAMMI
+	dw SAVEFLAG_UNLOCKED_MARIO
 	dw $ffff
-	dw SAVEFLAG_UNLOCKED_ELDEN
+	dw SAVEFLAG_UNLOCKED_PEACH
 	dw $ffff
-	dw SAVEFLAG_UNLOCKED_CURT
+	dw SAVEFLAG_UNLOCKED_YOSHI
 	dw $ffff
-	dw SAVEFLAG_UNLOCKED_SEAN
-	dw SAVEFLAG_UNLOCKED_FAY
-	dw SAVEFLAG_UNLOCKED_MARK
-CharUnlockCheatFlags:
+	dw SAVEFLAG_UNLOCKED_WARIO
+	dw SAVEFLAG_UNLOCKED_WALUIGI
+	dw SAVEFLAG_UNLOCKED_BOWSER
+CharUnlockStoryFlags:
 	; $5b29, 26 bytes (flag_ids)
-	flag_id FLAG_CHEAT_UNLOCK_0
-	flag_id FLAG_CHEAT_UNLOCK_1
-	flag_id FLAG_CHEAT_UNLOCK_2
-	flag_id FLAG_CHEAT_UNLOCK_3
-	flag_id FLAG_CHEAT_UNLOCK_4
-	flag_id FLAG_CHEAT_UNLOCK_5
-	flag_id FLAG_CHEAT_UNLOCK_6
-	flag_id FLAG_CHEAT_UNLOCK_7
-	flag_id FLAG_CHEAT_UNLOCK_8
-	flag_id FLAG_CHEAT_UNLOCK_11
-	flag_id FLAG_CHEAT_UNLOCK_12
-	flag_id FLAG_CHEAT_UNLOCK_9
-	flag_id FLAG_CHEAT_UNLOCK_10
+	flag_id FLAG_UNLOCKED_PAM
+	flag_id FLAG_UNLOCKED_BOB
+	flag_id FLAG_UNLOCKED_BETH
+	flag_id FLAG_UNLOCKED_FAY
+	flag_id FLAG_UNLOCKED_CURT
+	flag_id FLAG_UNLOCKED_MARK
+	flag_id FLAG_UNLOCKED_SEAN
+	flag_id FLAG_UNLOCKED_SAMMI
+	flag_id FLAG_UNLOCKED_ELDEN
+	flag_id FLAG_UNLOCKED_SPIKE
+	flag_id FLAG_UNLOCKED_EMILY
+	flag_id FLAG_UNLOCKED_B_COZ
+	flag_id FLAG_UNLOCKED_A_COZ
 BuildCharGridFromUnlockFlags:
 	ld a, $01 ; $5b43
 	ld [wCharGridBuilt], a ; $5b45
@@ -306,7 +306,7 @@ BuildCharGridFromUnlockFlags:
 	or a ; $5b4e
 	jr z, .storeEmpty ; $5b4f
 	push hl ; $5b51
-	ld hl, CharGridFromUnlockFlagsTable ; $5b52
+	ld hl, CharGridSlotCharIds ; $5b52
 	ld a, c ; $5b55
 	add_hl_a ; $5b56
 	ld a, [hl] ; $5b5b
@@ -330,14 +330,14 @@ BuildCharGridFromUnlockFlags:
 ; A 32-entry byte mask in exactly the format BuildCharGridFromUnlockFlags
 ; reads through hl -- one byte per grid slot, nonzero meaning unlocked --
 ; sitting immediately in front of that routine's own
-; CharGridFromUnlockFlagsTable. Slots $09-$0e are zero and the rest are
+; CharGridSlotCharIds. Slots $09-$0e are zero and the rest are
 ; $01. Nothing loads its address.
 Unused_38_CharGridUnlockMask:
 	; $5b6f, 36 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
 	db $00, $00, $00, $00 ; 0x20
-CharGridFromUnlockFlagsTable:
+CharGridSlotCharIds:
 	; $5b93, 36 bytes (bytes:16)
 	table_width 1
 	db CHAR_MARIO, CHAR_LUIGI, CHAR_PEACH, CHAR_BABY_MARIO, CHAR_YOSHI, CHAR_DK, CHAR_WARIO, CHAR_WALUIGI

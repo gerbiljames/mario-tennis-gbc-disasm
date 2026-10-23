@@ -1,6 +1,6 @@
 ; --- Story locations (wStoryModeCurrentLocation, wStoryReturnLocation) ---
 ; A location id indexes StoryLocationTable_0a, 42 six-byte records ($00-$29).
-; Its name popup (LoadStoryLocationHeader, DrawStoryResultsHeader) is text id
+; Its name popup (LoadStoryLocationHeader, DrawStorySuspendedMatchHeader) is text id
 ; $0179 + id (string bank $30 index 377 + id); the names below are those
 ; strings. Ids $0b/$0c share "Junior Class Court" (singles and doubles maps).
 ; Ids $1e-$29 are the ending cutscene's re-dressed locations and keep the
@@ -58,7 +58,7 @@
 ; the exhibition block. It equals the slot count, the bound in the same
 ; `cp $03` guard, so both names exist.
 def STORYSLOT_NONE           equ $03 ; not a story file: set by exhibition, link, mini-game and debug setup, and mapped to the exhibition save block
-def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $03 / ret nc` in SaveStorySlot/CheckStorySlot, and the debug stats screen's page wrap
+def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $03 / ret nc` in SaveStorySlot/ReadCurrentStorySlot, and the debug stats screen's page wrap
 
 ; --- Story entry point sentinel (wStoryModeEntryPoint) ---
 ; Entry point ids are location-scoped: each location's map_tree carries its
@@ -115,9 +115,9 @@ def NUM_STORYTIERS equ const_value
 	const SENIORCOURTSTAGE_SINGLES_RANK1        ; $05
 	const SENIORCOURTSTAGE_DOUBLES_RANK3        ; $06 doubles has three ranking matches
 	const SENIORCOURTSTAGE_DOUBLES_RANK2        ; $07
-	const SENIORCOURTSTAGE_DOUBLES_RANK1        ; $08 last jumptable slot
+	const SENIORCOURTSTAGE_DOUBLES_RANK1        ; $08
 	const SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $09 base of EmilyPostChampionTextIds
-	const SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $0a
+	const SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $0a last jumptable slot
 	const SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN  ; $0b
 	const SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN  ; $0c
 	const SENIORCOURTSTAGE_SINGLES_COMPLETE     ; $0d

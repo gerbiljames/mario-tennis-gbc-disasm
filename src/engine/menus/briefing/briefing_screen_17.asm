@@ -86,7 +86,7 @@ ShowDrillBriefingScreen:
 	dw DrillBriefing_ServeThroughPoles ; $44d9 jumptable
 	dw DrillBriefing_ServeAndVolley ; $44db jumptable
 	dw DrillBriefing_ServeAndSmash ; $44dd jumptable
-	dw DrillBriefing_ServeAndSmash2 ; $44df jumptable
+	dw DrillBriefing_DropShot ; $44df jumptable
 	dw DrillBriefing_ReturnToTarget ; $44e1 jumptable
 	dw DrillBriefing_ReturnLob ; $44e3 jumptable
 	dw DrillBriefing_ReturnDownLine ; $44e5 jumptable
@@ -120,24 +120,24 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld [wBriefingBallY], a ; $4538
 	frame_task DrawBriefingBallSprite ; $453b
 	ld a, $01 ; $4543
-	ld [wBriefingHMarkerUnflipped], a ; $4545
+	ld [wBriefingHandUnflipped], a ; $4545
 	ld a, $60 ; $4548
-	ld [wBriefingHMarkerX], a ; $454a
+	ld [wBriefingHandX], a ; $454a
 	ld a, $40 ; $454d
-	ld [wBriefingHMarkerY], a ; $454f
-	frame_task DrawBriefingMarkerHFlip ; $4552
+	ld [wBriefingHandY], a ; $454f
+	frame_task DrawBriefingPointingHand ; $4552
 	ld hl, Text_DebugRacketTest ; $455a
 	call DrawBriefingCaption ; $455d
 	call WaitForInputBlinking ; $4560
 	call ClearFrameTasks ; $4563
 	frame_task UpdateAnimatedTilesTask_17 ; $4566
 	ld a, $09 ; $456e
-	ld [wBriefingSwingFrame], a ; $4570
+	ld [wBriefingCmdPrompt], a ; $4570
 	ld a, $40 ; $4573
-	ld [wBriefingSwingX], a ; $4575
+	ld [wBriefingCmdPromptX], a ; $4575
 	ld a, $32 ; $4578
-	ld [wBriefingSwingY], a ; $457a
-	frame_task DrawBriefingSwingAnim ; $457d
+	ld [wBriefingCmdPromptY], a ; $457a
+	frame_task DrawBriefingCmdPrompt ; $457d
 	ld a, $40 ; $4585
 	ld [wBriefingPole1X], a ; $4587
 	ld a, $20 ; $458a
@@ -148,26 +148,26 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld [wBriefingPole2Y], a ; $4596
 	frame_task DrawBriefingPoleSprites ; $4599
 	ld a, $01 ; $45a1
-	ld [wBriefingVMarkerUpright], a ; $45a3
+	ld [wBriefingDownArrowUnflipped], a ; $45a3
 	ld a, $30 ; $45a6
-	ld [wBriefingVMarkerX], a ; $45a8
+	ld [wBriefingDownArrowX], a ; $45a8
 	ld a, $20 ; $45ab
-	ld [wBriefingVMarkerY], a ; $45ad
-	frame_task DrawBriefingMarkerVFlip ; $45b0
+	ld [wBriefingDownArrowY], a ; $45ad
+	frame_task DrawBriefingDownArrow ; $45b0
 	ld a, $01 ; $45b8
-	ld [wBriefingSpinMarkerUnflipped], a ; $45ba
+	ld [wBriefingLeftArrowUnflipped], a ; $45ba
 	ld a, $20 ; $45bd
-	ld [wBriefingSpinMarkerX], a ; $45bf
+	ld [wBriefingLeftArrowX], a ; $45bf
 	ld a, $40 ; $45c2
-	ld [wBriefingSpinMarkerY], a ; $45c4
-	frame_task DrawSpinServeBriefingMarker ; $45c7
+	ld [wBriefingLeftArrowY], a ; $45c4
+	frame_task DrawBriefingLeftArrow ; $45c7
 	ld a, $03 ; $45cf
-	ld [wBriefingRotMarkerDir], a ; $45d1
+	ld [wBriefingDiagArrowDir], a ; $45d1
 	ld a, $10 ; $45d4
-	ld [wBriefingRotMarkerX], a ; $45d6
+	ld [wBriefingDiagArrowX], a ; $45d6
 	ld a, $10 ; $45d9
-	ld [wBriefingRotMarkerY], a ; $45db
-	frame_task DrawBriefingMarkerRotated ; $45de
+	ld [wBriefingDiagArrowY], a ; $45db
+	frame_task DrawBriefingDiagonalArrow ; $45de
 	ld a, $18 ; $45e6
 	ld [wBriefingBracketWidth], a ; $45e8
 	ld a, $08 ; $45eb
@@ -190,10 +190,10 @@ Unused_17_ShowCourtDiagramTestScreen:
 	ld hl, Text_DebugRacketTest ; $4628
 	call DrawBriefingCaption ; $462b
 	ld a, $70 ; $462e
-	ld [wBriefingHMarkerX], a ; $4630
+	ld [wBriefingHandX], a ; $4630
 	ld a, $20 ; $4633
-	ld [wBriefingHMarkerY], a ; $4635
-	frame_task DrawBriefingMarkerHFlip ; $4638
+	ld [wBriefingHandY], a ; $4635
+	frame_task DrawBriefingPointingHand ; $4638
 	ld b, $05 ; $4640
 	call DrawDiagramTargetOverlay ; $4642
 	frame_task CycleDiagramTargetPalette ; $4645
@@ -309,57 +309,57 @@ DrawBriefingBallSprite:
 	call QueueSprite ; $474b
 	pop_wram_bank ; $474e
 	ret ; $4753
-DrawBriefingMarkerHFlip:
+DrawBriefingPointingHand:
 	push_wram_bank WRAM_SCREEN ; $4754
 	ld b, $09 ; $475d
-	ld a, [wBriefingHMarkerUnflipped] ; $475f
+	ld a, [wBriefingHandUnflipped] ; $475f
 	cp $01 ; $4762
 	jr z, .gotAttr ; $4764
 	ld b, $29 ; $4766
 .gotAttr:
-	ld a, [wBriefingHMarkerX] ; $4768
+	ld a, [wBriefingHandX] ; $4768
 	ld d, a ; $476b
 	ldh a, [hVBlankCounter] ; $476c
 	and $10 ; $476e
 	jr z, .maskClear ; $4770
 	inc d ; $4772
 .maskClear:
-	ld a, [wBriefingHMarkerY] ; $4773
+	ld a, [wBriefingHandY] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
-	ld hl, DrawBriefingMarkerHFlip_SpriteTemplate ; $4779
+	ld hl, BriefingPointingHandSpriteTemplate ; $4779
 	call QueueSpriteTemplate ; $477c
 	pop_wram_bank ; $477f
 	ret ; $4784
-DrawBriefingMarkerHFlip_SpriteTemplate:
+BriefingPointingHandSpriteTemplate:
 	; $4785, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-DrawBriefingSwingAnim:
+DrawBriefingCmdPrompt:
 	push_wram_bank WRAM_SCREEN ; $478e
-	ld a, [wBriefingSwingFrame] ; $4797
-	ld hl, BriefingSwingFrameTileTable ; $479a
+	ld a, [wBriefingCmdPrompt] ; $4797
+	ld hl, BriefingCmdPromptTileTable ; $479a
 	add_hl_a ; $479d
 	ld c, [hl] ; $47a2
-	ld hl, DrawBriefingSwingAnim_SmallSpriteTemplate ; $47a3
-	ld a, [wBriefingSwingFrame] ; $47a6
+	ld hl, BriefingCmdPromptShortTemplate ; $47a3
+	ld a, [wBriefingCmdPrompt] ; $47a6
 	cp $06 ; $47a9
 	jr nc, .gotTemplate ; $47ab
-	ld hl, DrawBriefingSwingAnim_SpriteTemplate ; $47ad
+	ld hl, BriefingCmdPromptLongTemplate ; $47ad
 .gotTemplate:
-	ld a, [wBriefingSwingX] ; $47b0
+	ld a, [wBriefingCmdPromptX] ; $47b0
 	ld d, a ; $47b3
-	ld a, [wBriefingSwingY] ; $47b4
+	ld a, [wBriefingCmdPromptY] ; $47b4
 	ld e, a ; $47b7
 	ld b, OAM_BANK1 | 1 ; $47b8
 	call QueueSpriteTemplate ; $47ba
 	pop_wram_bank ; $47bd
 	ret ; $47c2
-BriefingSwingFrameTileTable:
+BriefingCmdPromptTileTable:
 	; $47c3, 10 bytes (bytes:10)
 	db $08, $12, $1c, $36, $40, $4a, $26, $2c, $54, $5a ; 0x00
-DrawBriefingSwingAnim_SpriteTemplate:
+BriefingCmdPromptLongTemplate:
 	; $47cd, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -367,7 +367,7 @@ DrawBriefingSwingAnim_SpriteTemplate:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-DrawBriefingSwingAnim_SmallSpriteTemplate:
+BriefingCmdPromptShortTemplate:
 	; $47e2, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -389,18 +389,18 @@ DrawBriefingPoleSprites:
 	call QueueSprite ; $4813
 	pop_wram_bank ; $4816
 	ret ; $481b
-DrawBriefingMarkerVFlip:
+DrawBriefingDownArrow:
 	push_wram_bank WRAM_SCREEN ; $481c
 	ld c, $70 ; $4825
 	ld b, $09 ; $4827
-	ld a, [wBriefingVMarkerUpright] ; $4829
+	ld a, [wBriefingDownArrowUnflipped] ; $4829
 	cp $01 ; $482c
 	jr z, .gotAttr ; $482e
 	ld b, OAM_BANK1 | OAM_YFLIP | 1 ; $4830
 .gotAttr:
-	ld a, [wBriefingVMarkerX] ; $4832
+	ld a, [wBriefingDownArrowX] ; $4832
 	ld d, a ; $4835
-	ld a, [wBriefingVMarkerY] ; $4836
+	ld a, [wBriefingDownArrowY] ; $4836
 	ld e, a ; $4839
 	call QueueSprite ; $483a
 	pop_wram_bank ; $483d

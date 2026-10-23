@@ -1,4 +1,4 @@
-InitGrayscalePaletteFade:
+InitSepiaPaletteFade:
 	push_wram_bank WRAM_SCENE ; $75ab
 	xor a ; $75b4
 	ld hl, wPaletteFadeMask ; $75b5
@@ -8,10 +8,10 @@ InitGrayscalePaletteFade:
 	dec b ; $75bb
 	jr nz, .loop ; $75bc
 	call CopyMasterPalettesToFadeBuffers ; $75be
-	call DesaturateFadeTargetPalettes ; $75c1
+	call SepiaToneFadeTargetPalettes ; $75c1
 	pop_wram_bank ; $75c4
 	ret ; $75c9
-; InitGrayscalePaletteFade with Unused_03_ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one.
+; InitSepiaPaletteFade with Unused_03_ClearFadeTargetPalettes in place of SepiaToneFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the sepia one.
 Unused_03_InitBlackPaletteFade:
 	push_wram_bank WRAM_SCENE ; $75ca
 	xor a ; $75d3
@@ -57,7 +57,7 @@ Unused_03_ClearFadeTargetPalettes:
 	dec b ; $7612
 	jr nz, .loop ; $7613
 	ret ; $7615
-DesaturateFadeTargetPalettes:
+SepiaToneFadeTargetPalettes:
 	ld hl, wPaletteFadeTarget ; $7616
 	ld de, wPaletteColorSplit ; $7619
 	ld b, wMasterPalettes_SIZE / COLOR_SIZE ; $761c
@@ -77,7 +77,7 @@ DesaturateFadeTargetPalettes:
 	ld [de], a ; $762c
 	dec de ; $762d
 	dec de ; $762e
-	call ComputeGrayscaleColor ; $762f
+	call ComputeSepiaColor ; $762f
 	inc de ; $7632
 	inc de ; $7633
 	ld a, [de] ; $7634
@@ -97,7 +97,7 @@ DesaturateFadeTargetPalettes:
 	dec b ; $7644
 	jr nz, .loop ; $7645
 	ret ; $7647
-ComputeGrayscaleColor:
+ComputeSepiaColor:
 	ld a, [de] ; $7648
 	inc de ; $7649
 	ld c, a ; $764a
@@ -348,13 +348,13 @@ StepColorComponentTowardTarget:
 	ld b, [hl] ; $77d1
 	sub b ; $77d2
 	ret z ; $77d3
-	jr c, .read ; $77d4
+	jr c, .decrement ; $77d4
 	ld a, [hl] ; $77d6
 	inc a ; $77d7
 	and $1f ; $77d8
 	ld [hl], a ; $77da
 	ret ; $77db
-.read:
+.decrement:
 	ld a, [hl] ; $77dc
 	dec a ; $77dd
 	and $1f ; $77de

@@ -1,4 +1,4 @@
-	twin_in get_cell_index_from_cursor_ptr, Unused_3b_GetCellIndexFromCursorPtr, 3b ; $43cb Unused_3b_GetCellIndexFromCursorPtr
+	twin_in get_menu_cursor_index_from_ptr, Unused_3b_GetMenuCursorIndexFromPtr, 3b ; $43cb Unused_3b_GetMenuCursorIndexFromPtr
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3b, 3b ; $43db SetMenuCursorFromIndex_3b
 Unused_3b_StoreCellIndexToCursorPtr:
 	ld d, $00 ; $43ed
@@ -63,9 +63,9 @@ RunN64ExhibData:
 	call WaitFadeEnd ; $44ce
 	wram_bank WRAM_SCREEN ; $44d1
 .loop:
-	ldh a, [hInputPressed] ; $44d7
+	ldh a, [hInputRepeat] ; $44d7
 	ld [wMenuInputPressed], a ; $44d9
-	call ScrollN64ExhibDataCursor ; $44dc
+	call ScrollN64ExhibChart ; $44dc
 	call AdvanceFrame ; $44df
 	ld a, [wMenuInputPressed] ; $44e2
 	bit PADB_A, a ; $44e5
@@ -86,48 +86,48 @@ RunN64ExhibData:
 	call ClearFrameTasks ; $4507
 	ld a, $ff ; $450a
 	ret ; $450c
-ScrollN64ExhibDataCursor:
+ScrollN64ExhibChart:
 	ld a, [wMenuInputPressed] ; $450d
 	bit PADB_LEFT, a ; $4510
 	jr z, .checkRight ; $4512
-	ld a, [wN64ExhibPage] ; $4514
+	ld a, [wChartScrollColumn] ; $4514
 	or a ; $4517
 	jr z, .done ; $4518
 	dec a ; $451a
-	ld [wN64ExhibPage], a ; $451b
+	ld [wChartScrollColumn], a ; $451b
 	sound SFX_MENU_MOVE ; $451e
 	call RedrawN64ExhibDataWindow ; $4520
 	jr .done ; $4523
 .checkRight:
 	bit PADB_RIGHT, a ; $4525
 	jr z, .checkUp ; $4527
-	ld a, [wN64ExhibPage] ; $4529
+	ld a, [wChartScrollColumn] ; $4529
 	cp $09 ; $452c
 	jr z, .done ; $452e
 	inc a ; $4530
-	ld [wN64ExhibPage], a ; $4531
+	ld [wChartScrollColumn], a ; $4531
 	sound SFX_MENU_MOVE ; $4534
 	call RedrawN64ExhibDataWindow ; $4536
 	jr .done ; $4539
 .checkUp:
 	bit PADB_UP, a ; $453b
 	jr z, .checkDown ; $453d
-	ld a, [wN64ExhibCursorRow] ; $453f
+	ld a, [wChartScrollRow] ; $453f
 	or a ; $4542
 	jr z, .done ; $4543
 	dec a ; $4545
-	ld [wN64ExhibCursorRow], a ; $4546
+	ld [wChartScrollRow], a ; $4546
 	sound SFX_MENU_MOVE ; $4549
 	call RedrawN64ExhibDataWindow ; $454b
 	jr .done ; $454e
 .checkDown:
 	bit PADB_DOWN, a ; $4550
 	jr z, .done ; $4552
-	ld a, [wN64ExhibCursorRow] ; $4554
+	ld a, [wChartScrollRow] ; $4554
 	cp $0c ; $4557
 	jr z, .done ; $4559
 	inc a ; $455b
-	ld [wN64ExhibCursorRow], a ; $455c
+	ld [wChartScrollRow], a ; $455c
 	sound SFX_MENU_MOVE ; $455f
 	call RedrawN64ExhibDataWindow ; $4561
 	jr .done ; $4564
@@ -135,44 +135,44 @@ ScrollN64ExhibDataCursor:
 	ret ; $4566
 N64ExhibScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $4567
-	ld a, [wN64ExhibPage] ; $4570
+	ld a, [wChartScrollColumn] ; $4570
 	cp $09 ; $4573
 	jr z, .checkLeftArrow ; $4575
 	ld_xy de, $93, $2f ; $4577
-	ld c, $01 ; $457a
+	ld c, BOBDIR_POS ; $457a
 	call ApplyCursorBounceX ; $457c
 	ld b, $08 ; $457f
 	ld c, $00 ; $4581
 	ld h, $00 ; $4583
 	farcall QueueStackedSpritePair ; $4585
 .checkLeftArrow:
-	ld a, [wN64ExhibPage] ; $4588
+	ld a, [wChartScrollColumn] ; $4588
 	or a ; $458b
 	jr z, .checkUpArrow ; $458c
 	ld_xy de, $08, $2f ; $458e
-	ld c, $00 ; $4591
+	ld c, BOBDIR_NEG ; $4591
 	call ApplyCursorBounceX ; $4593
 	ld b, $08 ; $4596
 	ld c, $00 ; $4598
 	ld h, $01 ; $459a
 	farcall QueueStackedSpritePair ; $459c
 .checkUpArrow:
-	ld a, [wN64ExhibCursorRow] ; $459f
+	ld a, [wChartScrollRow] ; $459f
 	or a ; $45a2
 	jr z, .checkDownArrow ; $45a3
 	ld_xy de, $0a, $20 ; $45a5
-	ld c, $01 ; $45a8
+	ld c, BOBDIR_POS ; $45a8
 	call ApplyCursorBounceY ; $45aa
 	ld b, $08 ; $45ad
 	ld c, $00 ; $45af
 	ld h, $02 ; $45b1
 	farcall QueueStackedSpritePair ; $45b3
 .checkDownArrow:
-	ld a, [wN64ExhibCursorRow] ; $45b6
+	ld a, [wChartScrollRow] ; $45b6
 	cp $0c ; $45b9
 	jr z, .restore ; $45bb
 	ld_xy de, $0a, $78 ; $45bd
-	ld c, $00 ; $45c0
+	ld c, BOBDIR_NEG ; $45c0
 	call ApplyCursorBounceY ; $45c2
 	ld b, $08 ; $45c5
 	ld c, $00 ; $45c7
@@ -184,12 +184,12 @@ N64ExhibScrollArrowsTask:
 BuildN64ExhibDataScreen:
 	wram_bank WRAM_SCREEN ; $45d4
 	xor a ; $45da
-	ld [wN64ExhibCursorRow], a ; $45db
-	ld [wN64ExhibPage], a ; $45de
-	ld c, SCREENASSET_ExhibitionMenu ; $45e1
+	ld [wChartScrollRow], a ; $45db
+	ld [wChartScrollColumn], a ; $45de
+	ld c, SCREENASSET_ExhibitionRecords ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $45e6
-	call LoadChartWindowTiles ; $45e9
+	call LoadChartCharIconTiles ; $45e9
 	ld de, vTiles0 + VRAM_BANK1 ; $45ec
 	farcall LoadMenuArrowSpriteTiles ; $45ef
 	ld b, $08 ; $45f2
@@ -197,8 +197,8 @@ BuildN64ExhibDataScreen:
 	farcall LoadIndexedPalette ; $45f6
 	wram_bank WRAM_SCREEN ; $45f9
 	call ReadN64RecordsSaveBlock ; $45ff
-.buildN64ExhibColumnList:
-	jr nz, .buildN64ExhibColumnList ; $4602
+.hangOnReadError:
+	jr nz, .hangOnReadError ; $4602
 	call BuildN64ExhibColumnList ; $4604
 	call InitChartRowFlags ; $4607
 	ld hl, wChartColumnList ; $460a
@@ -216,18 +216,18 @@ BuildN64ExhibDataScreen:
 	ret ; $462c
 RedrawN64ExhibDataWindow:
 	wram_bank WRAM_SCREEN ; $462d
-	ld a, [wN64ExhibPage] ; $4633
+	ld a, [wChartScrollColumn] ; $4633
 	ld hl, wChartColumnList ; $4636
 	add_hl_a ; $4639
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 4 ; $463e
 	ld a, $07 ; $4641
 	call DrawChartIconRow ; $4643
-	ld a, [wN64ExhibCursorRow] ; $4646
+	ld a, [wChartScrollRow] ; $4646
 	ld hl, wChartColumnList ; $4649
 	add_hl_a ; $464c
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 2 ; $4651
 	call DrawChartIconColumn ; $4654
-	ld a, [wN64ExhibCursorRow] ; $4657
+	ld a, [wChartScrollRow] ; $4657
 	ld hl, wChartRows ; $465a
 	ld de, $0010 ; $465d
 .rowSeekLoop:
@@ -237,7 +237,7 @@ RedrawN64ExhibDataWindow:
 	dec a ; $4664
 	jr .rowSeekLoop ; $4665
 .rowFound:
-	ld a, [wN64ExhibPage] ; $4667
+	ld a, [wChartScrollColumn] ; $4667
 	add_hl_a ; $466a
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 4 ; $466f
 	ld a, $07 ; $4672

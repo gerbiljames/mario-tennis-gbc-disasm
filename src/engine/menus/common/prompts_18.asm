@@ -21,33 +21,34 @@ Unused_18_InitPlayerRecordForCharacter:
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
-	ld hl, wStoryMainName ; $465e
+	ASSERT HIGH(wStoryPartner) == HIGH(wStoryMain)
+	ld hl, wStoryMain ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
 	or a ; $4664
-	jr z, .partnerSlot ; $4665
-	ld l, $40 ; $4667
-.partnerSlot:
+	jr z, .haveRecord ; $4665
+	ld l, LOW(wStoryPartner) ; $4667
+.haveRecord:
 	pop af ; $4669
 	ld b, h ; $466a
 	ld c, l ; $466b
 	ld a, [de] ; $466c
 	inc de ; $466d
-	ld hl, $000e ; $466e
+	ld hl, CHARREC_LEFT_HANDED ; $466e
 	add hl, bc ; $4671
 	ld [hl], a ; $4672
 	ld a, [de] ; $4673
-	ld hl, $000c ; $4674
+	ld hl, CHARREC_PALETTE ; $4674
 	add hl, bc ; $4677
 	ld [hl], a ; $4678
 	ret ; $4679
-ConfirmScreenBgTiles:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenBgTiles.bin" ; $467a, 2233 bytes
-ConfirmScreenBgPalettes:
-	INCLUDE "data/engine/menus/common/ConfirmScreenBgPalettes.asm" ; $4f33, 64 bytes (palettes)
-ConfirmScreenTilemap:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenTilemap.bin" ; $4f73, 347 bytes
-ConfirmScreenAttrmap:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenAttrmap.bin" ; $50ce, 138 bytes
+Unused_18_JpLevelUpScreenBgTiles:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenBgTiles.bin" ; $467a, 2233 bytes
+Unused_18_JpLevelUpScreenBgPalettes:
+	INCLUDE "data/engine/menus/common/Unused_18_JpLevelUpScreenBgPalettes.asm" ; $4f33, 64 bytes (palettes)
+Unused_18_JpLevelUpScreenTilemap:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenTilemap.bin" ; $4f73, 347 bytes
+Unused_18_JpLevelUpScreenAttrmap:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenAttrmap.bin" ; $50ce, 138 bytes
 ThreeOptionLabelTilesTop:
 	INCLUDE "data/engine/menus/common/ThreeOptionLabelTilesTop.asm" ; $5158, 16 bytes (bytes:16)
 ThreeOptionLabelTilesMiddle:
@@ -72,11 +73,11 @@ YesNoLabelAttrsTop:
 YesNoLabelAttrsBottom:
 	; $51e8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
-ConfirmScreenObjTiles:
-	INCBIN "data/engine/menus/common/lz_ConfirmScreenObjTiles.bin" ; $51f8, 206 bytes
-	INCLUDE "data/engine/menus/common/lz_ConfirmScreenObjTiles.inc" ; DEF ConfirmScreenObjTiles_SIZE EQU its decoded length, generated from the .bin by make
-ConfirmScreenObjPalettes:
-	INCLUDE "data/engine/menus/common/ConfirmScreenObjPalettes.asm" ; $52c6, 24 bytes (palettes)
+Unused_18_JpLevelUpScreenObjTiles:
+	INCBIN "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenObjTiles.bin" ; $51f8, 206 bytes
+	INCLUDE "data/engine/menus/common/lz_Unused_18_JpLevelUpScreenObjTiles.inc" ; DEF Unused_18_JpLevelUpScreenObjTiles_SIZE EQU its decoded length, generated from the .bin by make
+Unused_18_JpLevelUpScreenObjPalettes:
+	INCLUDE "data/engine/menus/common/Unused_18_JpLevelUpScreenObjPalettes.asm" ; $52c6, 24 bytes (palettes)
 Unused_18_InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
@@ -85,42 +86,42 @@ Unused_18_InitConfirmScreen:
 	xor a ; $52ea
 	ld [wScorePanelBobActive], a ; $52eb
 	ld [wScorePanelBobStep], a ; $52ee
-	ld hl, ConfirmScreenBgTiles ; $52f1
+	ld hl, Unused_18_JpLevelUpScreenBgTiles ; $52f1
 	ld de, wDecompBuffer ; $52f4
 	call DecompressData ; $52f7
 	ld hl, wDecompBuffer ; $52fa
 	ld de, vTiles2 + VRAM_BANK1 ; $52fd
-	ld c, 128 ; $5300 -- 128 of ConfirmScreenBgTiles's 256 tiles
+	ld c, 128 ; $5300 -- 128 of Unused_18_JpLevelUpScreenBgTiles's 256 tiles
 	call QueueVRAMCopy ; $5302
-	ld hl, wTextTileBuffer ; $5305
+	ld hl, wDecompBufferHigh ; $5305
 	ld de, vTiles1 + VRAM_BANK1 ; $5308
-	ld c, wTextTileBuffer_SIZE / 16 ; $530b
+	ld c, wDecompBufferHigh_SIZE / 16 ; $530b
 	call QueueVRAMCopy ; $530d
-	ld hl, ConfirmScreenBgPalettes ; $5310
+	ld hl, Unused_18_JpLevelUpScreenBgPalettes ; $5310
 	ld_bg_pals de, 0, 8 ; $5313
 	call LoadPaletteShadow ; $5316
-	ld hl, ConfirmScreenAttrmap ; $5319
+	ld hl, Unused_18_JpLevelUpScreenAttrmap ; $5319
 	ld de, wStagedAttrmap ; $531c
 	call DecompressData ; $531f
-	ld hl, ConfirmScreenTilemap ; $5322
+	ld hl, Unused_18_JpLevelUpScreenTilemap ; $5322
 	ld de, wStagedTilemap ; $5325
 	call DecompressData ; $5328
 	call Unused_18_LoadFontTiles ; $532b
 	call Unused_18_DrawConfirmScreenBox ; $532e
-	ld hl, ConfirmScreenObjTiles ; $5331
+	ld hl, Unused_18_JpLevelUpScreenObjTiles ; $5331
 	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
 	ld hl, wDecompBuffer ; $533a
 	ld de, vTiles0 tile $30 ; $533d
-	ld c, ConfirmScreenObjTiles_SIZE / 16 ; $5340
+	ld c, Unused_18_JpLevelUpScreenObjTiles_SIZE / 16 ; $5340
 	call QueueVRAMCopy ; $5342
-	ld hl, ConfirmScreenObjPalettes ; $5345
+	ld hl, Unused_18_JpLevelUpScreenObjPalettes ; $5345
 	ld_obj_pals de, 1, 3 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, vTiles0 tile $50 ; $534e
-	ld de, $0e01 ; $5351
+	ld_obj_pals de, 6, 1 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
-	call Unused_18_LoadConfirmScreenSpriteGfx ; $5357
+	call Unused_18_LoadJpLevelUpSpriteGfx ; $5357
 	call Unused_18_SetupScoreboardDisplay ; $535a
 	ld hl, wMinigameHighScoreMode ; $535d
 	ld b, [hl] ; $5360
@@ -134,31 +135,32 @@ Unused_18_DrawConfirmScreenBox:
 	ret ; $5371
 Unused_18_LoadScorePanelValue:
 	ld a, [wStoryMainLevel] ; $5372
-	ld [wScorePanelExpTier], a ; $5375
+	ld [wScorePanelLevel], a ; $5375
 	ret ; $5378
 Unused_18_StubNop1:
 	ret ; $5379
 Unused_18_SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a
 	call Unused_18_GetTextSlotPointer ; $537d
-	ld de, wTextTileBuffer tile 4 + 11 ; $5380
+	ld de, wDecompBufferHigh tile 4 + 11 ; $5380
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $5383
 	ld a, [wScorePanelValues + 1] ; $5386
 	call Unused_18_GetTextSlotPointer ; $5389
-	ld de, wTextTileBuffer tile 8 + 11 ; $538c
+	ld de, wDecompBufferHigh tile 8 + 11 ; $538c
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [wScorePanelValues + 2] ; $5392
 	call Unused_18_GetTextSlotPointer ; $5395
-	ld de, wTextTileBuffer tile 12 + 11 ; $5398
+	ld de, wDecompBufferHigh tile 12 + 11 ; $5398
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $539b
+	ASSERT wTargetZoneX1 == wScorePanelValues + 3
 	ld a, [wTargetZoneX1] ; $539e
 	call Unused_18_GetTextSlotPointer ; $53a1
-	ld de, wTextTileBuffer tile 16 + 11 ; $53a4
+	ld de, wDecompBufferHigh tile 16 + 11 ; $53a4
 	call Unused_18_DrawTileBlock6x2ToTilemap ; $53a7
 	frame_task Unused_18_DrawScoreNumbersTask, $0a ; $53aa
 	ret ; $53b2
 Unused_18_DrawScoreNumbersTask:
-	ld a, [wScorePanelExpTier] ; $53b3
+	ld a, [wScorePanelLevel] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
 	ld de, $4404 ; $53b9
@@ -190,7 +192,7 @@ Unused_18_GetTextSlotPointer:
 	ld a, [hl+] ; $53f0
 	ld h, [hl] ; $53f1
 	ld l, a ; $53f2
-	ld de, wTextTileBuffer ; $53f3
+	ld de, wDecompBufferHigh ; $53f3
 	add hl, de ; $53f6
 	ret ; $53f7
 TextSlotPointerTable:

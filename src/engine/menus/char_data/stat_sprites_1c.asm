@@ -5,19 +5,19 @@ CharDataScreen_PageColumnsRects:
 	db $6a, $d0, $05, $0a ; 0x08
 	db $0a, $d1, $09, $0a ; 0x0c
 	db $e0, $d1, $03, $0a ; 0x10
-CharDataScreen_PageColumnsPtrs:
+CharDataScreen_PageAttrPtrs:
 	; $4e4a, 10 bytes (records:2)
-	dw CharDataScreenPage0Columns ; record 0
-	dw CharDataScreenPage1Columns ; record 1
-	dw CharDataScreenPage2Columns ; record 2
-	dw CharDataScreenPage3Columns ; record 3
-	dw CharDataScreenPage4Columns ; record 4
+	dw CharDataScreenSpinPageAttrs ; record 0
+	dw CharDataScreenPowerPageAttrs ; record 1
+	dw CharDataScreenControlPageAttrs ; record 2
+	dw CharDataScreenSpeedPageAttrs ; record 3
+	dw CharDataScreenConfirmPageAttrs ; record 4
 DrawStatValueSprites:
 	wram_bank WRAM_SCENE ; $4e54
 	ld b, $0e ; $4e5a
 	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $4e5c
 	ld l, a ; $4e5f
-	ld a, [wCharDataLevelPreview] ; $4e60
+	ld a, [wCharDataHideLevelPreview] ; $4e60
 	or a ; $4e63
 	jr nz, .spinDigits ; $4e64
 	ld a, [wCharDataPage] ; $4e66
@@ -67,7 +67,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4eb3
 	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $4eb5
 	ld l, a ; $4eb8
-	ld a, [wCharDataLevelPreview] ; $4eb9
+	ld a, [wCharDataHideLevelPreview] ; $4eb9
 	or a ; $4ebc
 	jr nz, .powerDigits ; $4ebd
 	ld a, [wCharDataPage] ; $4ebf
@@ -116,7 +116,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4f10
 	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $4f12
 	ld l, a ; $4f15
-	ld a, [wCharDataLevelPreview] ; $4f16
+	ld a, [wCharDataHideLevelPreview] ; $4f16
 	or a ; $4f19
 	jr nz, .controlDigits ; $4f1a
 	ld a, [wCharDataPage] ; $4f1c
@@ -165,7 +165,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4f6d
 	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $4f6f
 	ld l, a ; $4f72
-	ld a, [wCharDataLevelPreview] ; $4f73
+	ld a, [wCharDataHideLevelPreview] ; $4f73
 	or a ; $4f76
 	jr nz, .speedDigits ; $4f77
 	ld a, [wCharDataPage] ; $4f79
@@ -215,7 +215,7 @@ DrawStatValueSprites:
 	ret ; $4fcd
 GetStatDigitSpritePos:
 	rlca ; $4fce
-	ld_hl_indexed RadialOffsetRamps_1c ; $4fcf
+	ld_hl_indexed StatDigitFlyInOffsetPtrs ; $4fcf
 	ld a, [hl+] ; $4fd6
 	ld h, [hl] ; $4fd7
 	ld l, a ; $4fd8
@@ -229,16 +229,16 @@ GetStatDigitSpritePos:
 	add e ; $4fe6
 	ld e, a ; $4fe7
 	ret ; $4fe8
-RadialOffsetRamps_1c:
-	dw RadialOffsetRamp0_1c, RadialOffsetRamp1_1c, RadialOffsetRamp2_1c, RadialOffsetRamp3_1c ; $4fe9
-RadialOffsetRamp0_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp0_1c.asm" ; $4ff1, 22 bytes (bytes:2)
-RadialOffsetRamp1_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp1_1c.asm" ; $5007, 22 bytes (bytes:2)
-RadialOffsetRamp2_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp2_1c.asm" ; $501d, 22 bytes (bytes:2)
-RadialOffsetRamp3_1c:
-	INCLUDE "data/engine/menus/char_data/RadialOffsetRamp3_1c.asm" ; $5033, 22 bytes (bytes:2)
+StatDigitFlyInOffsetPtrs:
+	dw StatDigitFlyInSpinOffsets, StatDigitFlyInPowerOffsets, StatDigitFlyInControlOffsets, StatDigitFlyInSpeedOffsets ; $4fe9
+StatDigitFlyInSpinOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInSpinOffsets.asm" ; $4ff1, 22 bytes (bytes:2)
+StatDigitFlyInPowerOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInPowerOffsets.asm" ; $5007, 22 bytes (bytes:2)
+StatDigitFlyInControlOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInControlOffsets.asm" ; $501d, 22 bytes (bytes:2)
+StatDigitFlyInSpeedOffsets:
+	INCLUDE "data/engine/menus/char_data/StatDigitFlyInSpeedOffsets.asm" ; $5033, 22 bytes (bytes:2)
 DrawRemainingPointsSprite:
 	wram_bank WRAM_SCENE ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f
@@ -332,7 +332,7 @@ CharDataScreen_InputLoop:
 	ld a, [wCharDataPage] ; $50ff
 	cp CHARDATAPAGE_CONFIRM ; $5102
 	jr nz, .selectConfirmCell ; $5104
-	call ApplyCharStatLevelUp ; $5106
+	call UndoLastCharStatPoint ; $5106
 	or a ; $5109
 	jp nz, CharDataScreen_InputLoop ; $510a
 	ld a, $01 ; $510d
@@ -401,24 +401,24 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $51bc
 	call DrawCharStatRows ; $51bf
 	ld hl, CharDataBand6RunsStep2_1c ; $51c2
-	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $51c5
+	ld bc, wCharDataScreenCell + 29 * TILEMAP_WIDTH ; $51c5
 	call BlitTilemapRunsFromTable ; $51c8
 	ld hl, CharDataBand5RunsStep2_1c ; $51cb
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $51ce
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH ; $51ce
 	call BlitTilemapRunsFromTable ; $51d1
 	wram_bank WRAM_SCENE ; $51d4
 	ld a, $01 ; $51da
 	ld [wCharDataRevealStep], a ; $51dc
-	ld [wCharDataConfirmState], a ; $51df
-	ld [wCharDataLevelPreview], a ; $51e2
+	ld [wCharDataConfirmCursor], a ; $51df
+	ld [wCharDataHideLevelPreview], a ; $51e2
 	call FlushCharDataTilemaps ; $51e5
 	call RestoreCharDataScreen ; $51e8
 	call DrawCharStatRows ; $51eb
 	ld hl, CharDataBand6RunsStep1_1c ; $51ee
-	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $51f1
+	ld bc, wCharDataScreenCell + 29 * TILEMAP_WIDTH ; $51f1
 	call BlitTilemapRunsFromTable ; $51f4
 	ld hl, CharDataBand5RunsStep1_1c ; $51f7
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $51fa
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH ; $51fa
 	call BlitTilemapRunsFromTable ; $51fd
 	wram_bank WRAM_SCENE ; $5200
 	ld a, $02 ; $5206
@@ -441,7 +441,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $523a
 	call DrawCharStatRows ; $523d
 	ld hl, CharDataBand7RunsStep1_1c ; $5240
-	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $5243
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5243
 	call BlitTilemapRunsFromTable ; $5246
 	ld hl, CharDataBand8RunsStep2_1c ; $5249
 	ld bc, wCharDataPagePlane + 16 ; $524c
@@ -450,7 +450,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $5255
 	call DrawCharStatRows ; $5258
 	ld hl, CharDataBand7RunsStep2_1c ; $525b
-	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $525e
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $525e
 	call BlitTilemapRunsFromTable ; $5261
 	ld hl, CharDataBand8RunsStep3_1c ; $5264
 	ld bc, wCharDataPagePlane + 16 ; $5267
@@ -459,7 +459,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $5270
 	call DrawCharStatRows ; $5273
 	ld hl, CharDataBand7RunsStep3_1c ; $5276
-	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $5279
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5279
 	call BlitTilemapRunsFromTable ; $527c
 	ld hl, CharDataBand8RunsStep4_1c ; $527f
 	ld bc, wCharDataPagePlane + 16 ; $5282
@@ -480,13 +480,13 @@ CharDataScreen_InputLoop:
 	and PADF_UP | PADF_DOWN ; $52a1
 	jr z, .confirmLoop ; $52a3
 	sound SFX_MENU_MOVE ; $52a5
-	ld a, [wCharDataConfirmState] ; $52a7
+	ld a, [wCharDataConfirmCursor] ; $52a7
 	xor $01 ; $52aa
-	ld [wCharDataConfirmState], a ; $52ac
+	ld [wCharDataConfirmCursor], a ; $52ac
 	jr .confirmLoop ; $52af
 .confirmA:
 	wram_bank WRAM_SCENE ; $52b1
-	ld a, [wCharDataConfirmState] ; $52b7
+	ld a, [wCharDataConfirmCursor] ; $52b7
 	or a ; $52ba
 	jr nz, .cancel ; $52bb
 	sound SFX_MENU_SELECT ; $52bd
@@ -494,13 +494,13 @@ CharDataScreen_InputLoop:
 	ret ; $52c0
 .cancel:
 	sound SFX_MENU_CANCEL ; $52c1
-	call SelectCharDataConfirmSlot ; $52c3
+	call ResetCharDataChoices ; $52c3
 	call RestoreCharDataScreen ; $52c6
 	call LoadCharStats ; $52c9
 	call CharDataScreen_DrawStats ; $52cc
 	call DrawCharStatRows ; $52cf
 	ld hl, CharDataBand7RunsStep2_1c ; $52d2
-	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $52d5
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $52d5
 	call BlitTilemapRunsFromTable ; $52d8
 	ld hl, CharDataBand8RunsStep3_1c ; $52db
 	ld bc, wCharDataPagePlane + 16 ; $52de
@@ -509,7 +509,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $52e7
 	call DrawCharStatRows ; $52ea
 	ld hl, CharDataBand7RunsStep1_1c ; $52ed
-	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $52f0
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $52f0
 	call BlitTilemapRunsFromTable ; $52f3
 	ld hl, CharDataBand8RunsStep2_1c ; $52f6
 	ld bc, wCharDataPagePlane + 16 ; $52f9
@@ -532,10 +532,10 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $5333
 	call DrawCharStatRows ; $5336
 	ld hl, CharDataBand6RunsStep1_1c ; $5339
-	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $533c
+	ld bc, wCharDataScreenCell + 29 * TILEMAP_WIDTH ; $533c
 	call BlitTilemapRunsFromTable ; $533f
 	ld hl, CharDataBand5RunsStep1_1c ; $5342
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $5345
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH ; $5345
 	call BlitTilemapRunsFromTable ; $5348
 	wram_bank WRAM_SCENE ; $534b
 	ld a, $02 ; $5351
@@ -544,10 +544,10 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreen ; $5359
 	call DrawCharStatRows ; $535c
 	ld hl, CharDataBand6RunsStep2_1c ; $535f
-	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $5362
+	ld bc, wCharDataScreenCell + 29 * TILEMAP_WIDTH ; $5362
 	call BlitTilemapRunsFromTable ; $5365
 	ld hl, CharDataBand5RunsStep2_1c ; $5368
-	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $536b
+	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH ; $536b
 	call BlitTilemapRunsFromTable ; $536e
 	wram_bank WRAM_SCENE ; $5371
 	ld a, $01 ; $5377
@@ -555,7 +555,7 @@ CharDataScreen_InputLoop:
 	call FlushCharDataTilemaps ; $537c
 	wram_bank WRAM_SCENE ; $537f
 	xor a ; $5385
-	ld [wCharDataLevelPreview], a ; $5386
+	ld [wCharDataHideLevelPreview], a ; $5386
 	ld [wCharDataRevealStep], a ; $5389
 	call RestoreCharDataScreen ; $538c
 	call DrawCharStatsAndFlush ; $538f

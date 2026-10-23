@@ -260,7 +260,7 @@ Unused_05_SetFixedMenuWindowTextId:
 	pop de ; $450d
 	pop bc ; $450e
 	ret ; $450f
-Unused_05_RunFixedTextMenu:
+Unused_05_RunYesNoMenu:
 	push hl ; $4510
 	ldh a, [hWramBank] ; $4511
 	push af ; $4513

@@ -1,45 +1,45 @@
-TickMenuBgScrollTask_1b:
-	farcall TickMenuBgScroll ; $72a4
+TickMenuTitleScrollerTask_1b:
+	farcall TickMenuTitleScroller ; $72a4
 	ret ; $72a7
-DrawSavedDataTypeSelectCursor:
+DrawMarioCharDataTypeSelectCursor:
 	ld c, $02 ; $72a8
 	call GetMenuCursorIndex_1b ; $72aa
 	or a ; $72ad
-	jr nz, .drawSavedDataCursorOption1 ; $72ae
-	call DrawSavedDataCursorOption0 ; $72b0
+	jr nz, .minigames ; $72ae
+	call DrawMarioCharDataExhibitionCursor ; $72b0
 	ret ; $72b3
-.drawSavedDataCursorOption1:
-	call DrawSavedDataCursorOption1 ; $72b4
+.minigames:
+	call DrawMarioCharDataMinigamesCursor ; $72b4
 	ret ; $72b7
-DrawSavedDataCursorOption0:
+DrawMarioCharDataExhibitionCursor:
 	ld c, $00 ; $72b8
 	ld b, $08 ; $72ba
 	ld_xy de, $0c, $50 ; $72bc
 	farcall ApplySpriteBobOffset ; $72bf
-	ld hl, DrawSavedDataCursorOption0_SpriteTemplate ; $72c2
+	ld hl, MarioCharDataExhibitionLabelTemplate ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld_xy de, $24, $48 ; $72cc
 	farcall ApplySpriteBobOffset ; $72cf
-	ld hl, DrawSavedDataCursor_SpriteTemplate ; $72d2
+	ld hl, MarioCharDataTypeLabelTailTemplate ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
-DrawSavedDataCursorOption1:
+DrawMarioCharDataMinigamesCursor:
 	ld c, $10 ; $72d9
 	ld b, $08 ; $72db
 	ld_xy de, $50, $50 ; $72dd
 	farcall ApplySpriteBobOffset ; $72e0
-	ld hl, DrawSavedDataCursorOption1_SpriteTemplate ; $72e3
+	ld hl, MarioCharDataMinigamesLabelTemplate ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld_xy de, $6c, $48 ; $72ed
 	farcall ApplySpriteBobOffset ; $72f0
-	ld hl, DrawSavedDataCursor_SpriteTemplate ; $72f3
+	ld hl, MarioCharDataTypeLabelTailTemplate ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
-DrawSavedDataCursorOption0_SpriteTemplate:
+MarioCharDataExhibitionLabelTemplate:
 	; $72fa, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -50,7 +50,7 @@ DrawSavedDataCursorOption0_SpriteTemplate:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawSavedDataCursorOption1_SpriteTemplate:
+MarioCharDataMinigamesLabelTemplate:
 	; $731b, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -62,22 +62,22 @@ DrawSavedDataCursorOption1_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-DrawSavedDataCursor_SpriteTemplate:
+MarioCharDataTypeLabelTailTemplate:
 	; $7340, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 ; Three $50/$0c, $50/$54, $50/$5c byte pairs -- one row, three columns
-; -- followed by $00 $10 $20, in front of RedrawSavedDataTypeSelect.
+; -- followed by $00 $10 $20, in front of RedrawMarioCharDataTypeSelect.
 ; Reads as three cursor positions plus three tile ids for that screen's
 ; three options, but nothing references it.
-Unused_1b_SavedDataCursorCells:
+Unused_1b_MarioCharDataTypeCursorCells:
 	; $7349, 9 bytes (bytes:9)
 	db $50, $0c, $50, $54, $50, $5c, $00, $10, $20 ; 0x00
-RedrawSavedDataTypeSelect:
+RedrawMarioCharDataTypeSelect:
 	wram_bank WRAM_SCREEN ; $7352
 	ld b, $00 ; $7358
-	ld c, $00 ; $735a
+	ld c, ATTRRECT_INACTIVE ; $735a
 .loop:
 	call SetSelectPanelAttrRect ; $735c
 	ld a, b ; $735f
@@ -88,39 +88,39 @@ RedrawSavedDataTypeSelect:
 	ld c, $02 ; $7366
 	call GetMenuCursorIndex_1b ; $7368
 	ld b, a ; $736b
-	ld c, $01 ; $736c
+	ld c, ATTRRECT_SELECTED ; $736c
 	call SetSelectPanelAttrRect ; $736e
 	ld c, $03 ; $7371
 	call GetMenuCursorIndex_1b ; $7373
-	call LoadSavedDataTypePalette ; $7376
+	call LoadMarioCharDataTypePalette ; $7376
 	call ClearMinigameLevelDescriptionRow ; $7379
-	call DrawSavedDataTypeDescription ; $737c
+	call DrawMarioCharDataTypeDescription ; $737c
 	call FlushLevelSelectTextRows ; $737f
 	ret ; $7382
-DrawSavedDataTypeDescription:
+DrawMarioCharDataTypeDescription:
 	push_wram_bank WRAM_SCREEN ; $7383
 	ld c, $03 ; $738c
 	call GetMenuCursorIndex_1b ; $738e
 	ld b, a ; $7391
-	ld hl, SavedDataTypeDescriptionTable ; $7392
+	ld hl, MarioCharDataTypeDescriptionDests ; $7392
 	add a ; $7395
 	add_hl_a ; $7396
 	ld a, [hl+] ; $739b
 	ld d, [hl] ; $739c
 	ld e, a ; $739d
 	ld a, b ; $739e
-	ld hl, Text_SavedDataExhibitionData ; $739f
+	ld hl, Text_MarioCharDataExhibitionData ; $739f
 	add_hl_a ; $73a2
 	ld c, $20 ; $73a7
 	farcall RenderTextToBuffer64 ; $73a9
 	pop_wram_bank ; $73ac
 	ret ; $73b1
-SavedDataTypeDescriptionTable:
+MarioCharDataTypeDescriptionDests:
 	; $73b2, 4 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
-LoadSavedDataTypePalette:
-	ld hl, SavedDataTypePalettePtrs ; $73b6
+LoadMarioCharDataTypePalette:
+	ld hl, MarioCharDataTypePalettePtrs ; $73b6
 	add a ; $73b9
 	add_hl_a ; $73ba
 	ld a, [hl+] ; $73bf
@@ -129,14 +129,14 @@ LoadSavedDataTypePalette:
 	ld_bg_pals de, 4, 1 ; $73c2
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
-SavedDataTypePalettePtrs:
+MarioCharDataTypePalettePtrs:
 	; $73c9, 4 bytes (records:2)
-	dw SavedDataTypePalette0 ; record 0
-	dw SavedDataTypePalette1 ; record 1
-SavedDataTypePalette0:
-	INCLUDE "data/engine/menus/minigame_select/SavedDataTypePalette0.asm" ; $73cd, 8 bytes (palettes)
-SavedDataTypePalette1:
-	INCLUDE "data/engine/menus/minigame_select/SavedDataTypePalette1.asm" ; $73d5, 8 bytes (palettes)
+	dw MarioCharDataExhibitionPalette ; record 0
+	dw MarioCharDataMinigamesPalette ; record 1
+MarioCharDataExhibitionPalette:
+	INCLUDE "data/engine/menus/minigame_select/MarioCharDataExhibitionPalette.asm" ; $73cd, 8 bytes (palettes)
+MarioCharDataMinigamesPalette:
+	INCLUDE "data/engine/menus/minigame_select/MarioCharDataMinigamesPalette.asm" ; $73d5, 8 bytes (palettes)
 ShowMinigameDataScreen:
 	sound BGM_STATUS_SCREEN ; $73dd
 	call DisableLCDSafely ; $73df
@@ -151,7 +151,7 @@ ShowMinigameDataScreen:
 	call WaitFadeEnd ; $740a
 	wram_bank WRAM_SCREEN ; $740d
 .loop:
-	ldh a, [hInputPressed] ; $7413
+	ldh a, [hInputRepeat] ; $7413
 	ld [wMenuInputPressed], a ; $7415
 	call ScrollMinigameDataList ; $7418
 	call AdvanceFrame ; $741b
@@ -183,7 +183,7 @@ BuildMinigameDataScreen:
 	wram_bank WRAM_SCREEN ; $7455
 	call LoadMinigameDataState ; $745b
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $745e
-	farcall LoadChartWindowTiles ; $7461
+	farcall LoadChartCharIconTiles ; $7461
 	ld de, vTiles0 + VRAM_BANK1 ; $7464
 	farcall LoadMenuArrowSpriteTiles ; $7467
 	ld b, $08 ; $746a
@@ -206,7 +206,7 @@ BuildMinigameDataScreen:
 	call DrawMinigameDataMugshotsScrolled ; $7490
 .drawMinigameDataMarks:
 	call DrawMinigameDataMarks ; $7493
-	call DrawStarLegendMark ; $7496
+	call DrawChallengeColumnHeader ; $7496
 	farcall QueueWram3MapToVRAM ; $7499
 	ret ; $749c
 ScrollMinigameDataList:
@@ -238,25 +238,25 @@ ScrollMinigameDataList:
 	ret ; $74c9
 LoadMinigameDataState:
 	farcall BuildMarioCastUnlockMask ; $74ca
-	call LoadMinigameClearFlags ; $74cd
-	call LoadMinigameStarFlags ; $74d0
+	call LoadMinigameLevel1ClearFlags ; $74cd
+	call LoadMinigameLevel2ClearFlags ; $74d0
 	call LoadMinigameHighScores ; $74d3
 	call CheckMinigameDataScrollable ; $74d6
 	jr nz, .done ; $74d9
 	call CompactMinigameDataRows ; $74db
 .done:
 	ret ; $74de
-LoadMinigameClearFlags:
-	ld hl, wMinigameDataClearFlags ; $74df
+LoadMinigameLevel1ClearFlags:
+	ld hl, wMinigameDataLevel1Cleared ; $74df
 	ld bc, $0009 ; $74e2
 	call ClearBytes ; $74e5
 	ld c, $00 ; $74e8
-	ld hl, wMinigameDataClearFlags ; $74ea
+	ld hl, wMinigameDataLevel1Cleared ; $74ea
 .loop:
 	ld a, c ; $74ed
 	add a ; $74ee
 	push hl ; $74ef
-	ld hl, MinigameClearFlagsTable ; $74f0
+	ld hl, MinigameLevel1ClearFlagIds ; $74f0
 	add_hl_a ; $74f3
 	ld a, [hl+] ; $74f8
 	ld d, [hl] ; $74f9
@@ -274,7 +274,7 @@ LoadMinigameClearFlags:
 	cp $09 ; $7508
 	jr nz, .loop ; $750a
 	ret ; $750c
-MinigameClearFlagsTable:
+MinigameLevel1ClearFlagIds:
 	; $750d, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; record 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; record 1
@@ -285,17 +285,17 @@ MinigameClearFlagsTable:
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; record 6
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; record 7
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; record 8
-LoadMinigameStarFlags:
-	ld hl, wMinigameDataStarFlags ; $751f
-	ld bc, wMinigameDataStarFlags_SIZE ; $7522
+LoadMinigameLevel2ClearFlags:
+	ld hl, wMinigameDataLevel2Cleared ; $751f
+	ld bc, wMinigameDataLevel2Cleared_SIZE ; $7522
 	call ClearBytes ; $7525
 	ld c, $00 ; $7528
-	ld hl, wMinigameDataStarFlags ; $752a
+	ld hl, wMinigameDataLevel2Cleared ; $752a
 .loop:
 	ld a, c ; $752d
 	add a ; $752e
 	push hl ; $752f
-	ld hl, MinigameStarFlagsTable ; $7530
+	ld hl, MinigameLevel2ClearFlagIds ; $7530
 	add_hl_a ; $7533
 	ld a, [hl+] ; $7538
 	ld d, [hl] ; $7539
@@ -313,7 +313,7 @@ LoadMinigameStarFlags:
 	cp $09 ; $7548
 	jr nz, .loop ; $754a
 	ret ; $754c
-MinigameStarFlagsTable:
+MinigameLevel2ClearFlagIds:
 	; $754d, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; record 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; record 1
@@ -408,7 +408,7 @@ DrawMinigameDataMugshotsScrolled:
 	push bc ; $7613
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7614
 	pop bc ; $7617
-	cp CHAR_UNUSED_15 ; $7618
+	cp CHAR_BALL_MACHINE ; $7618
 	jr nz, .unlocked ; $761a
 	push bc ; $761c
 	ld c, $09 ; $761d
@@ -434,7 +434,7 @@ DrawMinigameDataMugshotsStatic:
 	push bc ; $7641
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7642
 	pop bc ; $7645
-	cp CHAR_UNUSED_15 ; $7646
+	cp CHAR_BALL_MACHINE ; $7646
 	jr nz, .unlocked ; $7648
 	push bc ; $764a
 	ld c, $09 ; $764b

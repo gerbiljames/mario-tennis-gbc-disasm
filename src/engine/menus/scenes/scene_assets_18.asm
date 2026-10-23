@@ -47,33 +47,33 @@ Unused_18_ClearTileVramBothBanks:
 	xor VBK_BANK ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
-Unused_18_LoadConfirmScreenSpriteGfx:
-	ld hl, ConfirmScreenSpriteGfx0 ; $55f8
+Unused_18_LoadJpLevelUpSpriteGfx:
+	ld hl, Unused_18_JpLevelUpBannerGfx ; $55f8
 	ld de, wDecompBuffer ; $55fb
 	call DecompressData ; $55fe
 	ld hl, wDecompBuffer ; $5601
 	ld de, vTiles0 + VRAM_BANK1 ; $5604
-	ld c, ConfirmScreenSpriteGfx0_SIZE / 16 ; $5607
+	ld c, Unused_18_JpLevelUpBannerGfx_SIZE / 16 ; $5607
 	call QueueVRAMCopy ; $5609
-	ld hl, ConfirmScreenSpritePalette0 ; $560c
+	ld hl, Unused_18_JpLevelUpBannerPalette ; $560c
 	ld_obj_pals de, 4, 3 ; $560f
 	call LoadPalettesImmediate ; $5612
-	ld hl, ConfirmScreenSpriteGfx1 ; $5615
+	ld hl, Unused_18_JpLevelUpSparkleGfx ; $5615
 	ld de, wDecompBuffer ; $5618
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5621
-	ld c, ConfirmScreenSpriteGfx1_SIZE / 16 ; $5624
+	ld c, Unused_18_JpLevelUpSparkleGfx_SIZE / 16 ; $5624
 	call QueueVRAMCopy ; $5626
-	ld hl, ConfirmScreenSpritePalette1 ; $5629
+	ld hl, Unused_18_JpLevelUpSparklePalette ; $5629
 	ld_obj_pals de, 0, 1 ; $562c
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
-ConfirmScreenSpriteGfx0:
-	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.bin" ; $5633, 449 bytes
-	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx0.inc" ; DEF ConfirmScreenSpriteGfx0_SIZE EQU its decoded length, generated from the .bin by make
+Unused_18_JpLevelUpBannerGfx:
+	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpLevelUpBannerGfx.bin" ; $5633, 449 bytes
+	INCLUDE "data/engine/menus/scenes/lz_Unused_18_JpLevelUpBannerGfx.inc" ; DEF Unused_18_JpLevelUpBannerGfx_SIZE EQU its decoded length, generated from the .bin by make
 ; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. Nothing references it.
-Unused_18_ConfirmScreenSpriteTemplate:
+Unused_18_JpLevelUpBannerTemplate:
 	; $57f4, 57 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -90,13 +90,13 @@ Unused_18_ConfirmScreenSpriteTemplate:
 	oam_sprite $10, $68, $18, $00
 	oam_sprite $10, $70, $1a, $00
 	oam_sprite_end
-ConfirmScreenSpritePalette0:
-	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette0.asm" ; $582d, 24 bytes (palettes)
-ConfirmScreenSpriteGfx1:
-	INCBIN "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.bin" ; $5845, 104 bytes
-	INCLUDE "data/engine/menus/scenes/lz_ConfirmScreenSpriteGfx1.inc" ; DEF ConfirmScreenSpriteGfx1_SIZE EQU its decoded length, generated from the .bin by make
-ConfirmScreenSpritePalette1:
-	INCLUDE "data/engine/menus/scenes/ConfirmScreenSpritePalette1.asm" ; $58ad, 48 bytes (palettes)
+Unused_18_JpLevelUpBannerPalette:
+	INCLUDE "data/engine/menus/scenes/Unused_18_JpLevelUpBannerPalette.asm" ; $582d, 24 bytes (palettes)
+Unused_18_JpLevelUpSparkleGfx:
+	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpLevelUpSparkleGfx.bin" ; $5845, 104 bytes
+	INCLUDE "data/engine/menus/scenes/lz_Unused_18_JpLevelUpSparkleGfx.inc" ; DEF Unused_18_JpLevelUpSparkleGfx_SIZE EQU its decoded length, generated from the .bin by make
+Unused_18_JpLevelUpSparklePalette:
+	INCLUDE "data/engine/menus/scenes/Unused_18_JpLevelUpSparklePalette.asm" ; $58ad, 48 bytes (palettes)
 Padding_18_1:
 	; $58dd, 3 bytes (fill)
 	ds 3, $00
@@ -147,32 +147,32 @@ CharSelectCursorAnimTable:
 	INCLUDE "data/engine/menus/scenes/CharSelectCursorAnimTable.asm" ; $59fe, 32 bytes (bytes:16)
 CharSelectCursorTemplatePtrs:
 	; $5a1e, 8 bytes (records:2)
-	dw CharSelectCursorTemplate0 ; record 0
-	dw CharSelectCursorTemplate1 ; record 1
-	dw CharSelectCursorTemplate2 ; record 2
-	dw CharSelectCursorTemplate3 ; record 3
-CharSelectCursorTemplate0:
+	dw CharSelectCursorNarrowTemplate ; record 0
+	dw CharSelectCursorNarrowPulseTemplate ; record 1
+	dw CharSelectCursorWideTemplate ; record 2
+	dw CharSelectCursorWidePulseTemplate ; record 3
+CharSelectCursorNarrowTemplate:
 	; $5a26, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $18, $08, $00, $40
 	oam_sprite $10, $18, $00, $20
 	oam_sprite $18, $18, $00, $60
 	oam_sprite_end
-CharSelectCursorTemplate1:
+CharSelectCursorNarrowPulseTemplate:
 	; $5a37, 17 bytes (sprite_template)
 	oam_sprite $0f, $07, $00, $00
 	oam_sprite $19, $07, $00, $40
 	oam_sprite $0f, $19, $00, $20
 	oam_sprite $19, $19, $00, $60
 	oam_sprite_end
-CharSelectCursorTemplate2:
+CharSelectCursorWideTemplate:
 	; $5a48, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $18, $08, $00, $40
 	oam_sprite $10, $48, $00, $20
 	oam_sprite $18, $48, $00, $60
 	oam_sprite_end
-CharSelectCursorTemplate3:
+CharSelectCursorWidePulseTemplate:
 	; $5a59, 17 bytes (sprite_template)
 	oam_sprite $0f, $07, $00, $00
 	oam_sprite $19, $07, $00, $40
@@ -221,7 +221,7 @@ LoadOnCourtCharTilesB:
 	ret ; $5ae6
 LoadOnCourtCharTilesFallback:
 	ld hl, OnCourtCharTilesFallbackGfx ; $5ae7
-	ld c, (CharRosterIcon00 - OnCourtCharTilesFallbackGfx) / 16 ; $5aea
+	ld c, (MushroomAnimFrame00 - OnCourtCharTilesFallbackGfx) / 16 ; $5aea
 	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
 	ds ALIGN[4]
@@ -233,78 +233,78 @@ OnCourtCharTilesBGfx:
 	ds ALIGN[4]
 OnCourtCharTilesFallbackGfx:
 	INCBIN "data/engine/menus/scenes/OnCourtCharTilesFallbackGfx.bin" ; $6af0, 64 bytes
-CharRosterIcon00:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon00.bin" ; $6b30, 67 bytes
-CharRosterIcon01:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon01.bin" ; $6b73, 66 bytes
-CharRosterIcon02:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon02.bin" ; $6bb5, 62 bytes
-CharRosterIcon03:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon03.bin" ; $6bf3, 48 bytes
-CharRosterIcon04:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon04.bin" ; $6c23, 44 bytes
-CharRosterIcon05:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon05.bin" ; $6c4f, 46 bytes
-CharRosterIcon06:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon06.bin" ; $6c7d, 59 bytes
-CharRosterIcon07:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon07.bin" ; $6cb8, 65 bytes
-CharRosterIcon08:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon08.bin" ; $6cf9, 67 bytes
-CharRosterIcon09:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon09.bin" ; $6d3c, 65 bytes
-CharRosterIcon10:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon10.bin" ; $6d7d, 60 bytes
-CharRosterIcon11:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon11.bin" ; $6db9, 50 bytes
-CharRosterIcon12:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon12.bin" ; $6deb, 45 bytes
-CharRosterIcon13:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon13.bin" ; $6e18, 51 bytes
-CharRosterIcon14:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon14.bin" ; $6e4b, 61 bytes
-CharRosterIcon15:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon15.bin" ; $6e88, 66 bytes
-CharRosterIcon16:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon16.bin" ; $6eca, 73 bytes
-CharRosterIcon17:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon17.bin" ; $6f13, 68 bytes
-CharRosterIcon18:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon18.bin" ; $6f57, 64 bytes
-CharRosterIcon19:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon19.bin" ; $6f97, 59 bytes
-CharRosterIcon20:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon20.bin" ; $6fd2, 53 bytes
-CharRosterIcon21:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon21.bin" ; $7007, 57 bytes
-CharRosterIcon22:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon22.bin" ; $7040, 66 bytes
-CharRosterIcon23:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon23.bin" ; $7082, 73 bytes
-CharRosterIcon24:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon24.bin" ; $70cb, 71 bytes
-CharRosterIcon25:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon25.bin" ; $7112, 68 bytes
-CharRosterIcon26:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon26.bin" ; $7156, 66 bytes
-CharRosterIcon27:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon27.bin" ; $7198, 64 bytes
-CharRosterIcon28:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon28.bin" ; $71d8, 58 bytes
-CharRosterIcon29:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon29.bin" ; $7212, 60 bytes
-CharRosterIcon30:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon30.bin" ; $724e, 68 bytes
-CharRosterIcon31:
-	INCBIN "data/engine/menus/scenes/lz_CharRosterIcon31.bin" ; $7292, 73 bytes
+MushroomAnimFrame00:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame00.bin" ; $6b30, 67 bytes
+MushroomAnimFrame01:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame01.bin" ; $6b73, 66 bytes
+MushroomAnimFrame02:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame02.bin" ; $6bb5, 62 bytes
+MushroomAnimFrame03:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame03.bin" ; $6bf3, 48 bytes
+MushroomAnimFrame04:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame04.bin" ; $6c23, 44 bytes
+MushroomAnimFrame05:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame05.bin" ; $6c4f, 46 bytes
+MushroomAnimFrame06:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame06.bin" ; $6c7d, 59 bytes
+MushroomAnimFrame07:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame07.bin" ; $6cb8, 65 bytes
+MushroomAnimFrame08:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame08.bin" ; $6cf9, 67 bytes
+MushroomAnimFrame09:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame09.bin" ; $6d3c, 65 bytes
+MushroomAnimFrame10:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame10.bin" ; $6d7d, 60 bytes
+MushroomAnimFrame11:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame11.bin" ; $6db9, 50 bytes
+MushroomAnimFrame12:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame12.bin" ; $6deb, 45 bytes
+MushroomAnimFrame13:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame13.bin" ; $6e18, 51 bytes
+MushroomAnimFrame14:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame14.bin" ; $6e4b, 61 bytes
+MushroomAnimFrame15:
+	INCBIN "data/engine/menus/scenes/lz_MushroomAnimFrame15.bin" ; $6e88, 66 bytes
+InvertedStarAnimFrame00:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame00.bin" ; $6eca, 73 bytes
+InvertedStarAnimFrame01:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame01.bin" ; $6f13, 68 bytes
+InvertedStarAnimFrame02:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame02.bin" ; $6f57, 64 bytes
+InvertedStarAnimFrame03:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame03.bin" ; $6f97, 59 bytes
+InvertedStarAnimFrame04:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame04.bin" ; $6fd2, 53 bytes
+InvertedStarAnimFrame05:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame05.bin" ; $7007, 57 bytes
+InvertedStarAnimFrame06:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame06.bin" ; $7040, 66 bytes
+InvertedStarAnimFrame07:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame07.bin" ; $7082, 73 bytes
+InvertedStarAnimFrame08:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame08.bin" ; $70cb, 71 bytes
+InvertedStarAnimFrame09:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame09.bin" ; $7112, 68 bytes
+InvertedStarAnimFrame10:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame10.bin" ; $7156, 66 bytes
+InvertedStarAnimFrame11:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame11.bin" ; $7198, 64 bytes
+InvertedStarAnimFrame12:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame12.bin" ; $71d8, 58 bytes
+InvertedStarAnimFrame13:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame13.bin" ; $7212, 60 bytes
+InvertedStarAnimFrame14:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame14.bin" ; $724e, 68 bytes
+InvertedStarAnimFrame15:
+	INCBIN "data/engine/menus/scenes/lz_InvertedStarAnimFrame15.bin" ; $7292, 73 bytes
 MarioMiniGamesTilemap:
 	INCBIN "data/engine/menus/scenes/lz_MarioMiniGamesTilemap.bin" ; $72db, 304 bytes
 MarioMiniGamesAttrmap:
 	INCBIN "data/engine/menus/scenes/lz_MarioMiniGamesAttrmap.bin" ; $740b, 214 bytes
 MarioMiniGamesPalettes:
 	INCLUDE "data/engine/menus/scenes/MarioMiniGamesPalettes.asm" ; $74e1, 64 bytes (palettes)
-MatchWinLoseGfx:
-	INCBIN "data/engine/menus/scenes/lz_MatchWinLoseGfx.bin" ; $7521, 71 bytes
+WinLoseArrowGfx:
+	INCBIN "data/engine/menus/scenes/lz_WinLoseArrowGfx.bin" ; $7521, 71 bytes
 Unused_18_JpCourtStatLabelTiles:
 	INCBIN "data/engine/menus/scenes/lz_Unused_18_JpCourtStatLabelTiles.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
@@ -314,15 +314,15 @@ RunStorySceneByMode:
 	ld a, b ; $761e
 	or a ; $761f
 	jr nz, .checkMode1 ; $7620
-	call PlayScreenSequence0 ; $7622
+	call PlayTravelingTeamVictoryScene ; $7622
 	ret ; $7625
 .checkMode1:
 	cp $01 ; $7626
 	jr nz, .mode2 ; $7628
-	call PlayScreenSequence1 ; $762a
+	call PlayAwardsCeremonyScene ; $762a
 	ret ; $762d
 .mode2:
-	call PlayScreenSequence2 ; $762e
+	call PlayDreamMatchEpilogueScene ; $762e
 	ret ; $7631
 FadeOutAndResetScreen:
 	call EnableLCD ; $7632
@@ -362,7 +362,7 @@ Unused_18_DebugScreenAssetViewer:
 	call WaitFadeEnd ; $7684
 .inputLoop:
 	call AdvanceFrame ; $7687
-	ldh a, [hInputPressed] ; $768a
+	ldh a, [hInputRepeat] ; $768a
 	or a ; $768c
 	jr z, .inputLoop ; $768d
 	pop bc ; $768f
@@ -376,11 +376,11 @@ Unused_18_DebugScreenAssetViewer:
 	ret ; $769b
 DebugScreenAssetViewerRecords:
 	; $769c, 24 bytes (bytes:12)
-	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6, SCREENASSET_ShopCutscene, SCREENASSET_ShopCutscene2, SCREENASSET_ShopCutscene3, SCREENASSET_ShopCutscene4, SCREENASSET_ShopCutscene5, SCREENASSET_ShopCutscene6 ; 0x00
-	db SCREENASSET_AwardCeremony, SCREENASSET_AwardCeremony2, SCREENASSET_AwardCeremony3, SCREENASSET_AwardCeremony4, SCREENASSET_AwardCeremony5, SCREENASSET_AwardCeremony6, SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x0c
-PlayScreenSequence0:
-	call SetupScreen0Assets ; $76b4
-	call LoadScreen0TilesAndPalette ; $76b7
+	db SCREENASSET_VictoryCutsceneDoublesBoys, SCREENASSET_VictoryCutsceneDoublesBoyGirl, SCREENASSET_VictoryCutsceneDoublesGirlBoy, SCREENASSET_VictoryCutsceneDoublesGirls, SCREENASSET_VictoryCutsceneSinglesBoy, SCREENASSET_VictoryCutsceneSinglesGirl, SCREENASSET_AwardsCeremonyCutsceneDoublesBoys, SCREENASSET_AwardsCeremonyCutsceneDoublesBoyGirl, SCREENASSET_AwardsCeremonyCutsceneDoublesGirlBoy, SCREENASSET_AwardsCeremonyCutsceneDoublesGirls, SCREENASSET_AwardsCeremonyCutsceneSinglesBoy, SCREENASSET_AwardsCeremonyCutsceneSinglesGirl ; 0x00
+	db SCREENASSET_DreamMatchEpilogueDoublesBoys, SCREENASSET_DreamMatchEpilogueDoublesBoyGirl, SCREENASSET_DreamMatchEpilogueDoublesGirlBoy, SCREENASSET_DreamMatchEpilogueDoublesGirls, SCREENASSET_DreamMatchEpilogueSinglesBoy, SCREENASSET_DreamMatchEpilogueSinglesGirl, SCREENASSET_ChampionMedalDoublesBoys, SCREENASSET_ChampionMedalDoublesBoyGirl, SCREENASSET_ChampionMedalDoublesGirlBoy, SCREENASSET_ChampionMedalDoublesGirls, SCREENASSET_ChampionMedalSinglesBoy, SCREENASSET_ChampionMedalSinglesGirl ; 0x0c
+PlayTravelingTeamVictoryScene:
+	call SetupTravelingTeamVictoryScreen ; $76b4
+	call LoadToBeContinuedGfx ; $76b7
 	call EnableLCD ; $76ba
 	script_fade_in 2 ; $76bd
 	call WaitFadeEnd ; $76c2
@@ -394,7 +394,7 @@ PlayScreenSequence0:
 	ld [wScreenSequenceTimer], a ; $76d6
 	cp $fa ; $76d9
 	jr nz, .scrollLoop ; $76db
-	farcall InitGrayscalePaletteFade ; $76dd
+	farcall InitSepiaPaletteFade ; $76dd
 	ld b, $3f ; $76e0
 	ld c, $3f ; $76e2
 	ld d, $1e ; $76e4
@@ -402,56 +402,56 @@ PlayScreenSequence0:
 	farcall AnimatePaletteFadeToTarget ; $76e9
 .waitInput:
 	call AdvanceFrame ; $76ec
-	ldh a, [hInputPressed] ; $76ef
+	ldh a, [hInputRepeat] ; $76ef
 	and PADF_A | PADF_B ; $76f1
 	jr z, .waitInput ; $76f3
 	script_fade_out 16 ; $76f5
 	call WaitFadeEnd ; $76fa
 	call DisableLCDSafely ; $76fd
-	call FillAllBgPalettes ; $7700
+	call LoadAwardsCeremonyScreenBlackedOut ; $7700
 	call EnableLCD ; $7703
 	script_fade_in 16 ; $7706
 	call WaitFadeEnd ; $770b
-	frame_task QueueScreen0Sprites ; $770e
+	frame_task QueueToBeContinuedSprites ; $770e
 .waitDismiss:
 	call AdvanceFrame ; $7716
-	ldh a, [hInputPressed] ; $7719
+	ldh a, [hInputRepeat] ; $7719
 	and PADF_A | PADF_B ; $771b
 	jr z, .waitDismiss ; $771d
 	ret ; $771f
-SetupScreen0Assets:
+SetupTravelingTeamVictoryScreen:
 	call ResetScrollAndCamera ; $7720
-	call LookupScreen0AssetId ; $7723
+	call LookupTravelingTeamVictoryAssetId ; $7723
 	farcall LoadScreenAssetRecord ; $7726
 	farcall QueueWram3MapToVRAM ; $7729
 	ret ; $772c
-LookupScreen0AssetId:
+LookupTravelingTeamVictoryAssetId:
 	ld a, [wStorySceneAssetIndex] ; $772d
-	ld hl, Screen0AssetIdTable ; $7730
+	ld hl, TravelingTeamVictoryAssetIds ; $7730
 	add_hl_a ; $7733
 	ld c, [hl] ; $7738
 	ret ; $7739
-Screen0AssetIdTable:
+TravelingTeamVictoryAssetIds:
 	; $773a, 6 bytes (bytes:6)
-	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6 ; 0x00
-LoadScreen0TilesAndPalette:
-	ld b, TILEBLOCK_Screen0Gfx ; $7740
-	ld c, Screen0Gfx_SIZE / 16 ; $7742
+	db SCREENASSET_VictoryCutsceneDoublesBoys, SCREENASSET_VictoryCutsceneDoublesBoyGirl, SCREENASSET_VictoryCutsceneDoublesGirls, SCREENASSET_VictoryCutsceneDoublesGirlBoy, SCREENASSET_VictoryCutsceneSinglesBoy, SCREENASSET_VictoryCutsceneSinglesGirl ; 0x00
+LoadToBeContinuedGfx:
+	ld b, TILEBLOCK_ToBeContinuedGfx ; $7740
+	ld c, ToBeContinuedGfx_SIZE / 16 ; $7742
 	ld de, vTiles0 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
-	ld hl, Screen0Palette ; $774a
+	ld hl, ToBeContinuedPalette ; $774a
 	ld_obj_pals de, 0, 1 ; $774d
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
-Screen0Palette:
-	INCLUDE "data/engine/menus/scenes/Screen0Palette.asm" ; $7754, 8 bytes (palettes)
-QueueScreen0Sprites:
-	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
+ToBeContinuedPalette:
+	INCLUDE "data/engine/menus/scenes/ToBeContinuedPalette.asm" ; $7754, 8 bytes (palettes)
+QueueToBeContinuedSprites:
+	ld hl, QueueToBeContinuedSprites_SpriteTemplate ; $775c
 	ld_xy de, $28, $3a ; $775f
 	sprite_tile_attr $00, 0 ; $7762
 	call QueueSpriteTemplate ; $7766
 	ret ; $7769
-QueueScreen0Sprites_SpriteTemplate:
+QueueToBeContinuedSprites_SpriteTemplate:
 	; $776a, 81 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00

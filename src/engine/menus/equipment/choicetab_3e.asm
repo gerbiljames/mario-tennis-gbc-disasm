@@ -1,7 +1,7 @@
 OpenChoiceTabPanel:
 	ld a, b ; $5092
 	or a ; $5093
-	jr z, .close ; $5094
+	jr z, .rewindOut ; $5094
 	ld c, $00 ; $5096
 .openLoop:
 	call AdvanceFrame ; $5098
@@ -15,9 +15,9 @@ OpenChoiceTabPanel:
 	cp $0c ; $50a8
 	jr nz, .openLoop ; $50aa
 	ret ; $50ac
-.close:
+.rewindOut:
 	ld c, $08 ; $50ad
-.closeLoop:
+.rewindOutLoop:
 	call AdvanceFrame ; $50af
 	ld b, PANELANIM_CHOICE_TAB_OUT ; $50b2
 	farcall RestoreMenuBgAndDrawPanel ; $50b4
@@ -27,7 +27,7 @@ OpenChoiceTabPanel:
 	dec a ; $50bd
 	ld c, a ; $50be
 	cp $ff ; $50bf
-	jr nz, .closeLoop ; $50c1
+	jr nz, .rewindOutLoop ; $50c1
 	ret ; $50c3
 CloseChoiceTabPanel:
 	ld a, b ; $50c4
@@ -61,7 +61,7 @@ CloseChoiceTabPanel:
 	jr nz, .rewindInLoop ; $50f2
 	ret ; $50f4
 ChoiceTabCursorSpriteTask:
-	farcall TickMenuBgScroll ; $50f5
+	farcall TickMenuTitleScroller ; $50f5
 	ld c, $02 ; $50f8
 	call GetMenuCursorIndex_3e ; $50fa
 	push af ; $50fd
@@ -77,7 +77,7 @@ ChoiceTabCursorSpriteTask:
 	ld e, a ; $5113
 	farcall ApplySpriteBobOffset ; $5114
 	ld b, OAM_BANK1 ; $5117
-	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate0 ; $5119
+	ld hl, ChoiceTabBannerTemplate ; $5119
 	push de ; $511c
 	call QueueSpriteTemplate ; $511d
 	pop de ; $5120
@@ -85,11 +85,11 @@ ChoiceTabCursorSpriteTask:
 	add hl, de ; $5124
 	ld d, h ; $5125
 	ld e, l ; $5126
-	ld hl, ChoiceTabCursorSpriteTask_SpriteTemplate1 ; $5127
+	ld hl, ChoiceTabTailTemplate ; $5127
 	sprite_attr_tile OAM_BANK1, $70 ; $512a
 	call QueueSpriteTemplate ; $512e
 	ret ; $5131
-ChoiceTabCursorSpriteTask_SpriteTemplate0:
+ChoiceTabBannerTemplate:
 	; $5132, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -100,7 +100,7 @@ ChoiceTabCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-ChoiceTabCursorSpriteTask_SpriteTemplate1:
+ChoiceTabTailTemplate:
 	; $5153, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -153,7 +153,7 @@ RunPlayAlonePartnerMenu:
 	ld a, [wMenuSlideDirection] ; $51a2
 	ld b, a ; $51a5
 	call OpenChoiceTabPanel ; $51a6
-	farcall InitMenuBgScroll ; $51a9
+	farcall InitMenuTitleScroller ; $51a9
 	ld b, $01 ; $51ac
 	ld c, $01 ; $51ae
 	farcall LoadMenuSpritePalettePair ; $51b0
@@ -166,7 +166,7 @@ RunPlayAlonePartnerMenu:
 	wram_bank WRAM_SCREEN ; $51c5
 .loop:
 	call AdvanceFrame ; $51cb
-	ldh a, [hInputPressed] ; $51ce
+	ldh a, [hInputRepeat] ; $51ce
 	ld [wMenuInputPressed], a ; $51d0
 	ld b, $02 ; $51d3
 	ld c, $01 ; $51d5
@@ -187,7 +187,7 @@ RunPlayAlonePartnerMenu:
 	call ClearFrameTasks ; $51f1
 	ld hl, rIE ; $51f4
 	set B_IE_TIMER, [hl] ; $51f7
-	ld b, $01 ; $51f9
+	ld b, MENUSLIDE_FORWARD ; $51f9
 	call CloseChoiceTabPanel ; $51fb
 	ld a, MENUSLIDE_FORWARD ; $51fe
 	ld [wMenuSlideDirection], a ; $5200
@@ -204,7 +204,7 @@ RunPlayAlonePartnerMenu:
 	call ClearFrameTasks ; $5214
 	ld hl, rIE ; $5217
 	set B_IE_TIMER, [hl] ; $521a
-	ld b, $00 ; $521c
+	ld b, MENUSLIDE_BACK ; $521c
 	call CloseChoiceTabPanel ; $521e
 	ld a, MENUSLIDE_BACK ; $5221
 	ld [wMenuSlideDirection], a ; $5223
@@ -216,7 +216,7 @@ LoadPlayAlonePartnerGraphics:
 .loop:
 	ld a, c ; $5234
 	add a ; $5235
-	ld hl, PlayAlonePartnerGfxParams_3e ; $5236
+	ld hl, PlayAlonePartnerIconTilePtrs_3e ; $5236
 	add_hl_a ; $5239
 	ld a, [hl+] ; $523e
 	ld h, [hl] ; $523f
@@ -256,13 +256,13 @@ LoadPlayAlonePartnerGraphics:
 	ld a, c ; $5273
 	cp $02 ; $5274
 	jr nz, .loop ; $5276
-	ld b, TILEBLOCK_SharedMenuGfx35 ; $5278
-	ld c, SharedMenuGfx35_SIZE / 16 ; $527a
+	ld b, TILEBLOCK_SinglesLabelGfx ; $5278
+	ld c, SinglesLabelGfx_SIZE / 16 ; $527a
 	ld de, vTiles0 + VRAM_BANK1 ; $527c
 	farcall LoadCompressedTileBlock ; $527f
 	call AdvanceFrame ; $5282
-	ld b, TILEBLOCK_SharedMenuGfx36 ; $5285
-	ld c, SharedMenuGfx36_SIZE / 16 ; $5287
+	ld b, TILEBLOCK_DoublesLabelGfx ; $5285
+	ld c, DoublesLabelGfx_SIZE / 16 ; $5287
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5289
 	farcall LoadCompressedTileBlock ; $528c
 	call AdvanceFrame ; $528f
@@ -277,10 +277,10 @@ LoadPlayAlonePartnerGraphics:
 	farcall LoadIndexedPalette ; $52a6
 	pop_wram_bank ; $52a9
 	ret ; $52ae
-PlayAlonePartnerGfxParams_3e:
+PlayAlonePartnerIconTilePtrs_3e:
 	; $52af, 2 slot words
-	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
-	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
+	dslot DataPtr_SinglesIconTiles ; record 0
+	dslot DataPtr_DoublesIconTiles ; record 1
 PlayAlonePartnerGfxDests_3e:
 	; $52b3, 4 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
@@ -288,7 +288,7 @@ PlayAlonePartnerGfxDests_3e:
 RedrawPlayAlonePartnerMenu:
 	wram_bank WRAM_SCREEN ; $52b7
 	ld b, $00 ; $52bd
-	ld c, $00 ; $52bf
+	ld c, ATTRRECT_INACTIVE ; $52bf
 .loop:
 	call SetChoiceTabAttrRect ; $52c1
 	ld a, b ; $52c4
@@ -299,7 +299,7 @@ RedrawPlayAlonePartnerMenu:
 	ld c, $02 ; $52cb
 	call GetMenuCursorIndex_3e ; $52cd
 	ld b, a ; $52d0
-	ld c, $01 ; $52d1
+	ld c, ATTRRECT_SELECTED ; $52d1
 	call SetChoiceTabAttrRect ; $52d3
 	ld c, $02 ; $52d6
 	call GetMenuCursorIndex_3e ; $52d8
@@ -362,7 +362,7 @@ DrawPlayAlonePartnerCaption:
 	ld d, [hl] ; $536e
 	ld e, a ; $536f
 	ld a, b ; $5370
-	ld hl, Text_EquipPlayAlone ; $5371
+	ld hl, Text_PlayAlone ; $5371
 	add_hl_a ; $5374
 	ld c, $20 ; $5379
 	farcall RenderTextToBuffer64 ; $537b
@@ -388,7 +388,7 @@ ShowEquipmentStatusScreen:
 	script_fade_in 16 ; $53aa
 	call WaitFadeEnd ; $53af
 .inputLoop:
-	ldh a, [hInputPressed] ; $53b2
+	ldh a, [hInputRepeat] ; $53b2
 	bit PADB_A, a ; $53b4
 	jr nz, .exit ; $53b6
 	bit PADB_B, a ; $53b8

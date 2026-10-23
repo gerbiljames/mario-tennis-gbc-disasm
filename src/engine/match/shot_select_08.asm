@@ -190,7 +190,7 @@ BufferShotButtonPress:
 	ret z ; $7117
 	ld b, a ; $7118
 	cp PADF_A | PADF_B ; $7119
-	jr z, .done ; $711b
+	jr z, .storeFirstButton ; $711b
 	ld a, [wCharShotComboTimer] ; $711d
 	and a ; $7120
 	jr z, .startSwing ; $7121
@@ -198,7 +198,7 @@ BufferShotButtonPress:
 	cp b ; $7126
 	jr z, .startSwing ; $7127
 	ld b, $03 ; $7129
-	jr .done ; $712b
+	jr .storeFirstButton ; $712b
 .startSwing:
 	ld a, b ; $712d
 	ld [wCharLastShotButton], a ; $712e
@@ -206,18 +206,18 @@ BufferShotButtonPress:
 	ld [wCharShotComboTimer], a ; $7133
 	ld a, [wCharShotButton1] ; $7136
 	and a ; $7139
-	jr z, .done ; $713a
+	jr z, .storeFirstButton ; $713a
 	ld a, [wCharShotButton2] ; $713c
 	and a ; $713f
-	jr z, .storeShot ; $7140
+	jr z, .storeSecondButton ; $7140
 	ret ; $7142
-.storeShot:
+.storeSecondButton:
 	ld a, b ; $7143
 	ld [wCharShotButton2], a ; $7144
 	xor a ; $7147
 	ld [wCharShotComboTimer], a ; $7148
 	ret ; $714b
-.done:
+.storeFirstButton:
 	ld a, b ; $714c
 	ld [wCharShotButton1], a ; $714d
 	ret ; $7150
@@ -301,7 +301,7 @@ ApplyCharMovementInput:
 HandleServePositioning:
 	ld a, [wMinigameUsesWall] ; $71dd
 	and a ; $71e0
-	jr nz, .receiver ; $71e1
+	jr nz, .wallMinigame ; $71e1
 	ld a, [wCharInputBits] ; $71e3
 	and PADF_RIGHT | PADF_LEFT ; $71e6
 	jr z, .done ; $71e8
@@ -337,15 +337,15 @@ HandleServePositioning:
 	ld [hl+], a ; $7227
 .done:
 	ret ; $7228
-.receiver:
+.wallMinigame:
 	ld a, [wCharInputBits] ; $7229
 	and PADF_RIGHT | PADF_LEFT ; $722c
-	jr z, .receiverDone ; $722e
+	jr z, .wallMinigameDone ; $722e
 	swap a ; $7230
 	ld_hl_indexed DpadToFacingTable_08 ; $7232
 	ld a, [hl] ; $7239
 	cp $ff ; $723a
-	jr z, .receiverDone ; $723c
+	jr z, .wallMinigameDone ; $723c
 	ld hl, $000a ; $723e
 	call VectorFromLengthAndAngleRaw ; $7241
 	ld c, l ; $7244
@@ -358,7 +358,7 @@ HandleServePositioning:
 	abs_hl ; $724d
 	ld de, $fe80 ; $7257
 	add hl, de ; $725a
-	jr c, .receiverDone ; $725b
+	jr c, .wallMinigameDone ; $725b
 	ld hl, wCharPosX + 1 ; $725d
 	ld a, [hl] ; $7260
 	add c ; $7261
@@ -366,9 +366,9 @@ HandleServePositioning:
 	ld a, [hl] ; $7263
 	adc b ; $7264
 	ld [hl+], a ; $7265
-.receiverDone:
+.wallMinigameDone:
 	ret ; $7266
-CheckSwingRelease:
+CheckSwingCancel:
 	ld a, [wCharInputBits] ; $7267
 	and PADF_SELECT ; $726a
 	jr z, TickSwingHoldFrames ; $726c

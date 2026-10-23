@@ -28,7 +28,7 @@ A session starts both games on the main menu, moves both cursors to Link
 Play, and has one player press A first and the other a few seconds later --
 the order the game needs: the first console probes as master, and the
 second, which has been latching those probes, answers as slave. After the
-rules screen both players press buttons at random (mostly A, or `--keys`),
+match-format screen both players press buttons at random (mostly A, or `--keys`),
 which walks them through character select into a link match.
 `--unplug-after N` pulls the cable out N frames in: the side driving the
 clock then reads $ff, as on hardware, and the other hears nothing.

@@ -38,10 +38,10 @@ computed callers are bounded (character ids stop at `$1f`,
 
 | byte | flags | contents |
 |---|---|---|
-| `$00`-`$03` | 0-31 | **character unlocks**, one bit per character id — `CheckCharacterUnlocked` (18:452a) tests flag number = char id (ids 0-3 always unlocked) |
-| `$01` | 9-15 | within that: #9 opening seen, #10-13 Fay/Curt/Mark/Sean (granted by N64 transfer records), #14/#15 Sammi/Elden (singles/doubles Dream Match) |
-| `$02`-`$03` | 20-31 | also the first 12 **minigame-clear** flags (Boo Blast → Target Shot, 3 levels each) — the same bit, which is why clearing a minigame level unlocks a character |
-| `$04` | 32-39 | per-story-slot: `SetStorySlotFlagA` (music on/off) #32-35, `SetStorySlotFlagB` (camera view) #36-39, indexed by `wCurrentStorySlot` (3 = exhibition); `EraseStorySlotSaveData` clears the erased story slot's pair |
+| `$00`-`$03` | 0-31 | `CheckCharRecordPresent` (18:452a) has a flag number = char id lookup, reached only from unused code |
+| `$01` | 9-15 | within that: #9 game beaten (Dream Match epilogue; enables partner choice), #10-13 Waluigi/Yoshi/Bowser/Wario (granted by N64 transfer records), #14/#15 Mario/Peach (singles/doubles Dream Match), read by the character grid (`CharUnlockSaveFlags`) |
+| `$02`-`$03` | 20-31 | also the first 12 **minigame-clear** flags (Boo Blast → Target Shot, 3 levels each) |
+| `$04` | 32-39 | per-story-slot: `SetStorySlotMusicMuted` (music on/off) #32-35, `SetStorySlotCourtView` (camera view) #36-39, indexed by `wCurrentStorySlot` (3 = exhibition); `EraseStorySlotSaveData` clears the erased story slot's pair |
 | `$05`-`$06` | 40-54 | the remaining minigame clears (Fruit Fantasy → Two-On-One) |
 | `$07` | 57-63 | court unlocks (#57 Star, #58 Castle, #59 Tropics, #60 Jungle, #61 Warehouse), #62 "N64 records present", #63 the bank `$01` debug-menu toggle |
 
@@ -58,10 +58,9 @@ character and minigame selectable. `tools/savetool.py unlock` does exactly
 this; per-story-slot progress (the `wGameFlags` block at slot +`$1c0`) is
 left untouched. `ApplyUnlockEverythingCheat` (`$3b:$4b33`) is the engine's
 own batch unlock.
-It sets the five court flags, `SAVEFLAG_UNLOCKED_FAY`-`_ELDEN`, and levels 1
-and 2 of every minigame, skipping level 3, so the level-3 characters (Baby
-Mario, Yoshi, Peach) stay locked. It also sets `FLAG_CHEAT_UNLOCK_0`-`_12`
-in every existing story slot and saves that slot, then calls
+It sets the five court flags, the six Mario-cast `SAVEFLAG_UNLOCKED_*`, and
+levels 1 and 2 of every minigame, skipping level 3. It also sets the
+`FLAG_UNLOCKED_<char>` flags in every existing story slot and saves that slot, then calls
 `Unused_03_SetAllUnlockablesInSaveBlock`.
 
 Two button codes call it (`eventtest` targets `menu-cheat` and
@@ -73,7 +72,7 @@ Two button codes call it (`eventtest` targets `menu-cheat` and
   cleared by `ResetCheatCodeBuffer` when the menu opens) and on A compares
   the buffer with `CheatCodeEntryTable` (`$39:$6fc6`): 29 presses and three
   empty entries. `wCheatUnlockTriggered` stops it matching twice.
-* **Trophies screen** (Saved Data → a story slot → the third item):
+* **Trophies screen** (Status → a file → GB DATA → N64 TOURNAMENTS):
   `RunTrophiesScreen` zeroes `wTrophiesCheatRightPresses` and
   `wTrophiesCheatLeftPresses` (WRAM3 `$d900`), counts the presses, and on A with Select held
   `CheckTrophiesCheatCode` unlocks when they are `$0c` and `$22` -- Right 12
@@ -129,7 +128,7 @@ runs are `SAVEBLOCK_UNUSED_BANK0`-`_BANK6` + n, one base per SRAM bank
 |---|---|---|---|
 | 0/2/4 | 0:`$0800/$0d00/$1200` | `$300` | story slot N primary: image of WRAM `$c800-$caff` |
 | 1/3/5 | 0:`$0b00/$1000/$1500` | `$200` | story slot N secondary block: never written with data, only zero-filled by `EraseStorySlotSaveData` or invalidated |
-| 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamPreservingBlock6`) |
+| 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamKeepingPreservedBlock`) |
 | 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`Unused_03_WriteBlock7WithBackup` ... `Unused_03_ReadBlock10`, 03:587b+) are unreachable — never valid in a real save |
 | 11 (`$0b`) | 0:`$1800` | `$200` | N64 (Transfer Pak) records block, see below |
 | 12-26 | 0:`$1a00+` | `$20/$80` | defined, never written by GBC code |
@@ -186,8 +185,8 @@ award the six unlockables in the N64 block.
 | +344 | `N64REC_STAR_UNLOCKS`: bits 0/1 keep roster entries 14/15 on the trophy, ring-shot and exhibition screens |
 
 When present, `ApplyN64RecordsUnlockFlags` (03:56a8) sets
-`SAVEFLAG_N64_RECORDS_PRESENT` and `SAVEFLAG_UNLOCKED_FAY`/`_CURT`/`_MARK`/
-`_SEAN` at boot (`$01:$4091`).
+`SAVEFLAG_N64_RECORDS_PRESENT` and `SAVEFLAG_UNLOCKED_WALUIGI`/`_YOSHI`/`_BOWSER`/
+`_WARIO` at boot (`$01:$4091`).
 `Unused_03_SetAllUnlockablesInSaveBlock` (03:5787) force-sets all six flags
 (called from the bank $3b trophy/completion flow).
 

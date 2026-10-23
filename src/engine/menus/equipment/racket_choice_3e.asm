@@ -19,12 +19,12 @@ RunEraseDataConfirmMenu:
 	wram_bank WRAM_SCREEN ; $4c54
 .loop:
 	call AdvanceFrame ; $4c5a
-	ldh a, [hInputPressed] ; $4c5d
+	ldh a, [hInputRepeat] ; $4c5d
 	ld [wMenuInputPressed], a ; $4c5f
 	bit PADB_A, a ; $4c62
 	jr nz, .pressedA ; $4c64
 	bit PADB_B, a ; $4c66
-	jr nz, .playSfx ; $4c68
+	jr nz, .cancel ; $4c68
 	bit PADB_UP, a ; $4c6a
 	jr nz, .toggleChoice ; $4c6c
 	bit PADB_DOWN, a ; $4c6e
@@ -39,7 +39,7 @@ RunEraseDataConfirmMenu:
 .pressedA:
 	ld a, [wMenuCursorY] ; $4c80
 	or a ; $4c83
-	jr nz, .playSfx ; $4c84
+	jr nz, .cancel ; $4c84
 	sound SFX_MENU_DECIDE ; $4c86
 	ld hl, rIE ; $4c88
 	set B_IE_TIMER, [hl] ; $4c8b
@@ -48,7 +48,7 @@ RunEraseDataConfirmMenu:
 	call WaitFadeEnd ; $4c95
 	ld a, $01 ; $4c98
 	ret ; $4c9a
-.playSfx:
+.cancel:
 	sound SFX_MENU_CANCEL ; $4c9b
 	ld hl, rIE ; $4c9d
 	set B_IE_TIMER, [hl] ; $4ca0
@@ -62,7 +62,7 @@ LoadEraseDataConfirmScreen:
 	ld b, $01 ; $4cb1
 	call SetMenuCursorFromIndex_3e ; $4cb3
 	ld hl, vTiles0 + VRAM_BANK1 ; $4cb6
-	ld de, $0801 ; $4cb9
+	ld_obj_pals de, 0, 1 ; $4cb9
 	farcall LoadMenuHandCursorGfx ; $4cbc
 	ld a, $0a ; $4cbf
 	ld [wDigitSpriteAttr], a ; $4cc1
@@ -99,7 +99,7 @@ LoadEraseDataConfirmScreen:
 	farcall CreateWindowFromScreenRect ; $4d22
 	farcall DrawTextWindowFrame ; $4d25
 	farcall RedrawWindowRows ; $4d28
-	farcall InitMenuBgScroll ; $4d2b
+	farcall InitMenuTitleScroller ; $4d2b
 	ld b, $01 ; $4d2e
 	ld c, $01 ; $4d30
 	farcall LoadMenuSpritePalettePair ; $4d32
@@ -107,7 +107,7 @@ LoadEraseDataConfirmScreen:
 	wram_bank WRAM_SCREEN ; $4d38
 	ld a, [wScreenScratch] ; $4d3e
 	cp $02 ; $4d41
-	jr nz, .compare ; $4d43
+	jr nz, .notCurrentGame ; $4d43
 	ld hl, Text_EraseCurrentGame ; $4d45
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d48
 	ld c, $0e ; $4d4b
@@ -124,12 +124,12 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4d69
 	ld c, $0e ; $4d6c
 	farcall RenderProportionalTextAt ; $4d6e
-	ld b, TILEBLOCK_SharedMenuGfx65 ; $4d71
-	ld c, SharedMenuGfx65_SIZE / 16 ; $4d73
+	ld b, TILEBLOCK_SavedDataTitleGfx ; $4d71
+	ld c, SavedDataTitleGfx_SIZE / 16 ; $4d73
 	ld de, vTiles0 ; $4d75
 	farcall LoadCompressedTileBlock ; $4d78
-	jp .renderProportionalTextAt ; $4d7b
-.compare:
+	jp .drawYesNo ; $4d7b
+.notCurrentGame:
 	or a ; $4d7e
 	jr z, .eraseAll ; $4d7f
 	ld hl, Text_EraseAllN64Data ; $4d81
@@ -148,11 +148,11 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4da5
 	ld c, $0e ; $4da8
 	farcall RenderProportionalTextAt ; $4daa
-	ld b, TILEBLOCK_EraseDataConfirmGfx0 ; $4dad
-	ld c, EraseDataConfirmGfx0_SIZE / 16 ; $4daf
+	ld b, TILEBLOCK_EraseN64DataTitleGfx ; $4dad
+	ld c, EraseN64DataTitleGfx_SIZE / 16 ; $4daf
 	ld de, vTiles0 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
-	jr .renderProportionalTextAt ; $4db7
+	jr .drawYesNo ; $4db7
 .eraseAll:
 	ld hl, Text_EraseAllSavedData ; $4db9
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4dbc
@@ -170,11 +170,11 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4ddd
 	ld c, $0e ; $4de0
 	farcall RenderProportionalTextAt ; $4de2
-	ld b, TILEBLOCK_EraseDataConfirmGfx1 ; $4de5
-	ld c, EraseDataConfirmGfx1_SIZE / 16 ; $4de7
+	ld b, TILEBLOCK_EraseAllTitleGfx ; $4de5
+	ld c, EraseAllTitleGfx_SIZE / 16 ; $4de7
 	ld de, vTiles0 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
-.renderProportionalTextAt:
+.drawYesNo:
 	ld hl, Text_EraseConfirmYes ; $4def
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 16 ; $4df2
 	ld c, $04 ; $4df5
@@ -206,7 +206,7 @@ QueueEraseConfirmCursorSprites:
 	ld d, a ; $4e28
 	sprite_tile_attr $02, OAM_BANK1 ; $4e29
 	call QueueSprite ; $4e2d
-	farcall TickMenuBgScroll ; $4e30
+	farcall TickMenuTitleScroller ; $4e30
 	ret ; $4e33
 AnimateEraseConfirmPalette:
 	push_wram_bank WRAM_SCREEN ; $4e34
@@ -257,7 +257,7 @@ RunRacketShoesChoiceMenu:
 	ld a, [wMenuSlideDirection] ; $4eb0
 	ld b, a ; $4eb3
 	call OpenChoiceTabPanel ; $4eb4
-	farcall InitMenuBgScroll ; $4eb7
+	farcall InitMenuTitleScroller ; $4eb7
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
 	farcall LoadMenuSpritePalettePair ; $4ebe
@@ -270,7 +270,7 @@ RunRacketShoesChoiceMenu:
 	wram_bank WRAM_SCREEN ; $4ed5
 .loop:
 	call AdvanceFrame ; $4edb
-	ldh a, [hInputPressed] ; $4ede
+	ldh a, [hInputRepeat] ; $4ede
 	ld [wMenuInputPressed], a ; $4ee0
 	ld b, $02 ; $4ee3
 	ld c, $01 ; $4ee5
@@ -291,7 +291,7 @@ RunRacketShoesChoiceMenu:
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
 	set B_IE_TIMER, [hl] ; $4f07
-	ld b, $01 ; $4f09
+	ld b, MENUSLIDE_FORWARD ; $4f09
 	call CloseChoiceTabPanel ; $4f0b
 	ld a, MENUSLIDE_FORWARD ; $4f0e
 	ld [wMenuSlideDirection], a ; $4f10
@@ -304,7 +304,7 @@ RunRacketShoesChoiceMenu:
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21
 	set B_IE_TIMER, [hl] ; $4f24
-	ld b, $00 ; $4f26
+	ld b, MENUSLIDE_BACK ; $4f26
 	call CloseChoiceTabPanel ; $4f28
 	ld a, MENUSLIDE_BACK ; $4f2b
 	ld [wMenuSlideDirection], a ; $4f2d
@@ -316,7 +316,7 @@ LoadRacketShoesChoiceGraphics:
 .loop:
 	ld a, c ; $4f3e
 	add a ; $4f3f
-	ld hl, RacketShoesChoiceGfxParams_3e ; $4f40
+	ld hl, RacketShoesChoiceIconTilePtrs_3e ; $4f40
 	add_hl_a ; $4f43
 	ld a, [hl+] ; $4f48
 	ld h, [hl] ; $4f49
@@ -356,13 +356,13 @@ LoadRacketShoesChoiceGraphics:
 	ld a, c ; $4f7d
 	cp $02 ; $4f7e
 	jr nz, .loop ; $4f80
-	ld b, TILEBLOCK_RacketShoesChoiceGfx0 ; $4f82
-	ld c, RacketShoesChoiceGfx0_SIZE / 16 ; $4f84
+	ld b, TILEBLOCK_SelectRacketLabelGfx ; $4f82
+	ld c, SelectRacketLabelGfx_SIZE / 16 ; $4f84
 	ld de, vTiles0 + VRAM_BANK1 ; $4f86
 	farcall LoadCompressedTileBlock ; $4f89
 	call AdvanceFrame ; $4f8c
-	ld b, TILEBLOCK_RacketShoesChoiceGfx1 ; $4f8f
-	ld c, RacketShoesChoiceGfx1_SIZE / 16 ; $4f91
+	ld b, TILEBLOCK_SelectShoesLabelGfx ; $4f8f
+	ld c, SelectShoesLabelGfx_SIZE / 16 ; $4f91
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4f93
 	farcall LoadCompressedTileBlock ; $4f96
 	call AdvanceFrame ; $4f99
@@ -371,8 +371,8 @@ LoadRacketShoesChoiceGraphics:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $4fa0
 	farcall LoadCompressedTileBlock ; $4fa3
 	call AdvanceFrame ; $4fa6
-	ld b, TILEBLOCK_RacketShoesChoiceGfx2 ; $4fa9
-	ld c, RacketShoesChoiceGfx2_SIZE / 16 ; $4fab
+	ld b, TILEBLOCK_SetItemsTitleGfx ; $4fa9
+	ld c, SetItemsTitleGfx_SIZE / 16 ; $4fab
 	ld de, vTiles0 ; $4fad
 	farcall LoadCompressedTileBlock ; $4fb0
 	call AdvanceFrame ; $4fb3
@@ -381,11 +381,11 @@ LoadRacketShoesChoiceGraphics:
 	farcall LoadIndexedPalette ; $4fba
 	pop_wram_bank ; $4fbd
 	ret ; $4fc2
-RacketShoesChoiceGfxParams_3e:
+RacketShoesChoiceIconTilePtrs_3e:
 	; $4fc3, 3 slot words
-	dslot DataPtr_MatchStatsLabelTiles0 ; record 0
-	dslot DataPtr_MatchStatsLabelTiles1 ; record 1
-	dslot DataPtr_N64ItemLabelTiles2 ; record 2
+	dslot DataPtr_RacketIconTiles ; record 0
+	dslot DataPtr_ShoesIconTiles ; record 1
+	dslot DataPtr_SetItemsIconTiles ; record 2
 RacketShoesChoiceGfxDests_3e:
 	; $4fc9, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
@@ -394,7 +394,7 @@ RacketShoesChoiceGfxDests_3e:
 RedrawRacketShoesChoiceMenu:
 	wram_bank WRAM_SCREEN ; $4fcf
 	ld b, $00 ; $4fd5
-	ld c, $00 ; $4fd7
+	ld c, ATTRRECT_INACTIVE ; $4fd7
 .loop:
 	call SetChoiceTabAttrRect ; $4fd9
 	ld a, b ; $4fdc
@@ -405,7 +405,7 @@ RedrawRacketShoesChoiceMenu:
 	ld c, $02 ; $4fe3
 	call GetMenuCursorIndex_3e ; $4fe5
 	ld b, a ; $4fe8
-	ld c, $01 ; $4fe9
+	ld c, ATTRRECT_SELECTED ; $4fe9
 	call SetChoiceTabAttrRect ; $4feb
 	ld c, $02 ; $4fee
 	call GetMenuCursorIndex_3e ; $4ff0
@@ -445,19 +445,19 @@ SetRacketShoesChoicePalette:
 	ret ; $504a
 RacketShoesChoicePalettePtrs:
 	; $504b, 18 bytes (records:2)
-	dw RacketShoesChoicePalette0 ; record 0
-	dw RacketShoesChoicePalette1 ; record 1
-	dw RacketShoesChoicePalette0 ; record 2
-	dw RacketShoesChoicePalette0 ; record 3
-	dw RacketShoesChoicePalette0 ; record 4
-	dw RacketShoesChoicePalette0 ; record 5
-	dw RacketShoesChoicePalette0 ; record 6
-	dw RacketShoesChoicePalette0 ; record 7
-	dw RacketShoesChoicePalette0 ; record 8
-RacketShoesChoicePalette0:
-	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePalette0.asm" ; $505d, 8 bytes (palettes)
-RacketShoesChoicePalette1:
-	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePalette1.asm" ; $5065, 8 bytes (palettes)
+	dw RacketShoesChoicePaletteRacket ; record 0
+	dw RacketShoesChoicePaletteShoes ; record 1
+	dw RacketShoesChoicePaletteRacket ; record 2
+	dw RacketShoesChoicePaletteRacket ; record 3
+	dw RacketShoesChoicePaletteRacket ; record 4
+	dw RacketShoesChoicePaletteRacket ; record 5
+	dw RacketShoesChoicePaletteRacket ; record 6
+	dw RacketShoesChoicePaletteRacket ; record 7
+	dw RacketShoesChoicePaletteRacket ; record 8
+RacketShoesChoicePaletteRacket:
+	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePaletteRacket.asm" ; $505d, 8 bytes (palettes)
+RacketShoesChoicePaletteShoes:
+	INCLUDE "data/engine/menus/equipment/RacketShoesChoicePaletteShoes.asm" ; $5065, 8 bytes (palettes)
 DrawRacketShoesChoiceCaption:
 	push_wram_bank WRAM_SCREEN ; $506d
 	ld c, $02 ; $5076

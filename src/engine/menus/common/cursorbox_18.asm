@@ -45,7 +45,7 @@ Unused_18_FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4353
 	and $0f ; $4356
 	jr z, .attrPlane ; $4358
-	ld hl, wTextTileBuffer ; $435a
+	ld hl, wDecompBufferHigh ; $435a
 	ld de, vBGMap0 ; $435d
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4360
 	call QueueVRAMCopy ; $4362
@@ -53,7 +53,7 @@ Unused_18_FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4365
 	and $f0 ; $4368
 	jr z, .done ; $436a
-	ld hl, wTextTileBuffer tile 64 ; $436c
+	ld hl, wDecompBufferHigh tile 64 ; $436c
 	ld de, vBGMap0 + VRAM_BANK1 ; $436f
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4372
 	call QueueVRAMCopy ; $4374
@@ -290,7 +290,7 @@ LoadCharacterRecordToBuffer:
 	push de ; $450d
 	push hl ; $450e
 	farcall LoadPlayer2MainRecord ; $450f
-	ld hl, wPlayer2MainName ; $4512
+	ld hl, wPlayer2Main ; $4512
 	ld de, wCharRecordScratch ; $4515
 	ld c, wCharRecordScratch_SIZE / 16 ; $4518
 	call CopyMemoryFast ; $451a
@@ -305,7 +305,7 @@ LoadCharacterRecordToBuffer:
 	ld [wCharRecordScratchChar], a ; $4525
 	pop af ; $4528
 	ret ; $4529
-CheckCharacterUnlocked:
+CheckCharRecordPresent:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
 	ld a, [wCharRecordScratchChar] ; $452e

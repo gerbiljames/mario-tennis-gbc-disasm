@@ -6,26 +6,26 @@ SetMinigamePointTable:
 	ld [hl], d ; $672e
 	pop hl ; $672f
 	ret ; $6730
-SetBallGatePoint1:
+SetDrillGateLeftPost:
 	ld c, l ; $6731
 	ld b, h ; $6732
-	ld hl, wDrillGate1 + 2 ; $6733
+	ld hl, wDrillGateLeftPost + 2 ; $6733
 	ld a, e ; $6736
 	ld [hl+], a ; $6737
 	ld [hl], d ; $6738
-	ld hl, wDrillGate1 ; $6739
+	ld hl, wDrillGateLeftPost ; $6739
 	ld a, c ; $673c
 	ld [hl+], a ; $673d
 	ld [hl], b ; $673e
 	ret ; $673f
-SetBallGatePoint2:
+SetDrillGateRightPost:
 	ld c, l ; $6740
 	ld b, h ; $6741
-	ld hl, wDrillGate2 + 2 ; $6742
+	ld hl, wDrillGateRightPost + 2 ; $6742
 	ld a, e ; $6745
 	ld [hl+], a ; $6746
 	ld [hl], d ; $6747
-	ld hl, wDrillGate2 ; $6748
+	ld hl, wDrillGateRightPost ; $6748
 	ld a, c ; $674b
 	ld [hl+], a ; $674c
 	ld [hl], b ; $674d
@@ -55,7 +55,7 @@ SetTargetZoneCorner2:
 	ld [hl], b ; $676b
 	ret ; $676c
 DidBallCrossGate:
-	ld hl, wDrillGate1 + 2 ; $676d
+	ld hl, wDrillGateLeftPost + 2 ; $676d
 	ld a, [hl+] ; $6770
 	ld b, [hl] ; $6771
 	ld c, a ; $6772
@@ -78,7 +78,7 @@ DidBallCrossGate:
 	xor d ; $678c
 	bit 7, a ; $678d
 	jr z, .no ; $678f
-	ld hl, wDrillGate1 ; $6791
+	ld hl, wDrillGateLeftPost ; $6791
 	ld a, [hl+] ; $6794
 	ld d, [hl] ; $6795
 	ld e, a ; $6796
@@ -89,7 +89,7 @@ DidBallCrossGate:
 	sub_hl_de ; $679d
 	bit 7, h ; $67a3
 	jr nz, .no ; $67a5
-	ld hl, wDrillGate2 ; $67a7
+	ld hl, wDrillGateRightPost ; $67a7
 	ld a, [hl+] ; $67aa
 	ld d, [hl] ; $67ab
 	ld e, a ; $67ac
@@ -201,19 +201,19 @@ InitChar:
 	ret ; $687e
 InitAllChars:
 	wram_bank WRAM_CHAR3 ; $687f
-	ld hl, wCharPosX ; $6885
+	ld hl, wCharStruct ; $6885
 	ld c, $10 ; $6888
 	call ClearMemory16 ; $688a
 	wram_bank WRAM_CHAR2 ; $688d
-	ld hl, wCharPosX ; $6893
+	ld hl, wCharStruct ; $6893
 	ld c, $10 ; $6896
 	call ClearMemory16 ; $6898
 	wram_bank WRAM_CHAR1 ; $689b
-	ld hl, wCharPosX ; $68a1
+	ld hl, wCharStruct ; $68a1
 	ld c, $10 ; $68a4
 	call ClearMemory16 ; $68a6
 	wram_bank WRAM_CHAR0 ; $68a9
-	ld hl, wCharPosX ; $68af
+	ld hl, wCharStruct ; $68af
 	ld c, $10 ; $68b2
 	call ClearMemory16 ; $68b4
 	ld b, $00 ; $68b7
@@ -233,7 +233,7 @@ InitAllChars:
 	dw InitAllChars.char3 ; $68d3 jumptable
 	dw InitAllChars.char4 ; $68d5 jumptable
 .char4:
-	wram_bank WRAM_SCENE ; $68d7
+	wram_bank WRAM_CHAR2 ; $68d7
 	ld a, [wPlayer1PartnerChar] ; $68dd
 	ld d, a ; $68e0
 	ld a, [wPlayer1PartnerPalette] ; $68e1
@@ -241,7 +241,7 @@ InitAllChars:
 	ld a, $02 ; $68e5
 	call InitChar ; $68e7
 .char3:
-	wram_bank WRAM_SOUND ; $68ea
+	wram_bank WRAM_CHAR3 ; $68ea
 	ld a, [wPlayer2PartnerChar] ; $68f0
 	ld d, a ; $68f3
 	ld a, [wPlayer2PartnerPalette] ; $68f4
@@ -249,7 +249,7 @@ InitAllChars:
 	ld a, $03 ; $68f8
 	call InitChar ; $68fa
 .char2:
-	wram_bank WRAM_TEXT ; $68fd
+	wram_bank WRAM_CHAR1 ; $68fd
 	ld a, [wPlayer2MainChar] ; $6903
 	ld d, a ; $6906
 	ld a, [wPlayer2MainPalette] ; $6907
@@ -288,7 +288,7 @@ UpdateChar:
 	call UpdateCharBallGeometry ; $695d
 	call ReadCharInput ; $6960
 	call UpdateCharStateMachine ; $6963
-	call CheckCharBallContact ; $6966
+	call CheckBallHitsCharBody ; $6966
 	call UpdateCharVelocityFromInput ; $6969
 	call StepCharMovement ; $696c
 	call StepCharJumpPhysics ; $696f
@@ -451,7 +451,7 @@ UpdateCharStateMachine:
 	dw CharRallyState ; $6a7d jumptable
 	dw CharRecoverState ; $6a7f jumptable
 	dw CharServeState ; $6a81 jumptable
-	dw CharAwaitServeState ; $6a83 jumptable
+	dw CharServerPartnerState ; $6a83 jumptable
 	dw CharStandbyState ; $6a85 jumptable
 	dw CharWalkState ; $6a87 jumptable
 	dw CharPointEndState ; $6a89 jumptable
@@ -460,7 +460,7 @@ AdvanceCharStatePhase:
 	inc [hl] ; $6a8e
 .done:
 	ret ; $6a8f
-CharRallyEndState:
+CharFinishSwingPhase:
 	ld a, [wCharAnimId] ; $6a90
 	cp CHARANIM_FOREHAND ; $6a93
 	jr z, .clearShot ; $6a95
@@ -619,7 +619,7 @@ CharServeStrikePhase:
 	ret ; $6bd8
 CharRecoverState:
 	jumptable [wCharStatePhase] ; $6bd9
-	dw CharRallyEndState ; $6bdd jumptable
+	dw CharFinishSwingPhase ; $6bdd jumptable
 	dw CharRecoverMovementPhase ; $6bdf jumptable
 	dw AdvanceCharStatePhase.done ; $6be1 jumptable
 CharRecoverMovementPhase:
@@ -628,7 +628,7 @@ CharRecoverMovementPhase:
 	ret ; $6be9
 CharRallyState:
 	jumptable [wCharStatePhase] ; $6bea
-	dw CharRallyEndState ; $6bee jumptable
+	dw CharFinishSwingPhase ; $6bee jumptable
 	dw CharRallyReadyPhase ; $6bf0 jumptable
 	dw CharSwingWindupPhase ; $6bf2 jumptable
 	dw CharSwingContactPhase ; $6bf4 jumptable
@@ -664,7 +664,7 @@ CharSwingWindupPhase:
 	inc [hl] ; $6c32
 	call ApplyCharMovementInput ; $6c33
 	call BufferShotButtonPress ; $6c36
-	call CheckSwingRelease ; $6c39
+	call CheckSwingCancel ; $6c39
 	and a ; $6c3c
 	jr nz, .abort ; $6c3d
 	ld hl, wCharBallReachFlags ; $6c3f
@@ -676,7 +676,7 @@ CharSwingWindupPhase:
 	ld hl, wCharSwingAnim ; $6c4a
 	ld d, [hl] ; $6c4d
 	call SetCharAnimation ; $6c4e
-	sound SFX_SWING_CHARGE ; $6c51
+	sound SFX_SWING ; $6c51
 	xor a ; $6c53
 	ld [wCharChargeFlashOn], a ; $6c54
 	call EndChargeFlash ; $6c57

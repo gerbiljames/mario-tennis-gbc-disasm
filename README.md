@@ -49,15 +49,9 @@ start from a battery save (`SAVE=`, default `maxed-unlocked.sav`, which
 ## What is here
 
 The ROM is 128 banks of 16 KiB; 59 contain code, the rest graphics, audio,
-tilemaps and text.
-
-| | |
-|---|---|
-| instructions | 124,810 source lines of instructions and code macros (`tools/stats.py`) |
-| source-spelled bytes | 915,910 bytes, 43.7% of the ROM, written as instructions, records and decoded tables rather than `INCBIN` |
-| labels | 29,670: 14,446 routines and tables and 13,402 locals in ROM, 1,822 RAM names |
-| compressed graphics | 863 LZ streams, each named, sized by decoding it |
-| `Unused_` routines | 799 routines and 166 blobs nothing live reaches (`docs/unused_code.md`) |
+tilemaps and text. Every LZ stream is named and sized by decoding it, and
+`Unused_` routines and blobs are ones nothing live reaches
+(`docs/unused_code.md`).
 
 Every `INCBIN` is classified (graphics, audio, text, a resource descriptor,
 a record array or fill). Structure is rendered as source -- farcall slot
@@ -141,11 +135,10 @@ strings, the 315 sound-channel scripts) stays in `data/`.
   several banks (`docs/ram_map.md`).
 - **`Unused_` routines** are proven unreferenced; where one is a copy or
   sibling of a live routine, its note says which and how it differs.
-- **Twins**: 139 live routines are instruction-identical copies (one per
+- **Twins**: many live routines are instruction-identical copies (one per
   bank, mostly: `FetchText_25` / `FetchText_26`, the shot solver's helpers in
-  every court bank, the menu-cursor library). All but three are assembled
-  from one of 90 shared files under `src/twins/` (338 copies, dead ones
-  included) by a line such as `twin fetch_text, 25`, so a fix has one home
+  every court bank, the menu-cursor library). Nearly all are assembled
+  from a shared file under `src/twins/` (dead copies included) by a line such as `twin fetch_text, 25`, so a fix has one home
   (`docs/duplicated_code.md`).
 
 ## Editing and modding
@@ -167,14 +160,14 @@ because the layout is recomputed rather than restated:
   `dw Pool.sN - Pool`, so the assembler recomputes them. Breaks are `line` /
   `page` / `done`, the other control codes are named
   (`include/text_codes.inc`), and a roster name in a string is
-  `TX_SHORT_TEXT, CHAR_EMILY`. `tools/strings.py baserom.gbc --index --bank
+  `TX_CHAR_NAME, CHAR_EMILY`. `tools/strings.py baserom.gbc --index --bank
   <bank>` finds a string; a text id in code is named for what it says,
   an alias of its `Text_<bank>_<index>` coordinate (`include/text_ids.inc`).
 - **Data files are named after their labels**
   (`data/sprites/AlexSpriteFrame00.png`,
   `data/engine/menus/main_menu/lz_DmgLockoutTilesLZ_01.bin`, `lz_` marking a compressed
   stream).
-- **Graphics are PNGs.** Each of the 2,903 tile-graphics blobs is also
+- **Graphics are PNGs.** Each tile-graphics blob is also
   extracted as a four-colour indexed PNG: character frames as the 24x32 body
   with its standing shadow, walk sprites as four facings side by side
   (`docs/graphics_formats.md` §0), everything else as tiles in blob order,
@@ -182,9 +175,9 @@ because the layout is recomputed rather than restated:
   `lz_*`) blob with the game's own encoder, so a touched but unchanged PNG
   or grid rebuilds byte-identical; enlarging a plain image's canvas grows
   its blob.
-- **Screen layouts are text.** The 243 tile and attribute planes (all LZ
-  streams) are also `.tilemap` grids, one `tilemap_row` of hex cells per
-  row at the width the loader uses; `make` re-encodes an edited grid. The 37 scenes get a view-only
+- **Screen layouts are text.** The tile and attribute planes and the
+  story collision and behaviour maps are also `.tilemap` grids, one `tilemap_row` of hex cells per
+  row at the width the loader uses; `make` re-encodes an edited grid. The scenes get a view-only
   `<Tilemap>.preview.png` (`make previews` redraws them).
 - **Tables are structured source** with named fields
   (`docs/graphics_formats.md`, `docs/story_mode.md`). The ones a balance mod
@@ -250,15 +243,15 @@ nothing.
 
 ## Tools
 
-- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no RAM or VRAM address table spelled as `db` bytes, no stray byte past a table's last record, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no data region without a label of its own, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG and no table or tilemap is tagged as graphics, actor-slot names hold, `Unused` names match `reach.py` and every data label nothing names is `Unused`, `; debug warp only` entries match `routes.py`, no raw value where the variable's or the routine argument's constant family has a name for it.
-- `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts); the README and STATUS figures against `tools/stats.py`.
+- `tools/check.py` (`make check`) -- what a byte-perfect build cannot check: LZ streams decode in their extents and re-encode, no symbol inside a stream, no stream outside an `lz_` name, spec-less `.asm` regions are text, no label's address hidden in `db` rows, no RAM or VRAM address table spelled as `db` bytes, no stray byte past a table's last record, no overlapping regions, no routine under an actor script's, a table's or another routine's label, no data region without a label of its own, no new branch to the next instruction, no ROM address as a number, DMA sources aligned, every PNG, grid, track and trajectory table round-trips, every graphics-named or VRAM-bound blob has a PNG and no table or tilemap is tagged as graphics, actor-slot names hold, `Unused` names match `reach.py` and every data label nothing names is `Unused`, `; debug warp only` entries match `routes.py`, no raw value where the variable's or the routine argument's constant family has a name for it, and no banked WRAM name used while another bank is selected.
+- `tests/` (`make test`) -- codecs, every idiom macro against its bytes, the extractor's `--keep`, and source pins (idiom, sound-id, VRAM-name, copy-length counts).
 - `tools/extract.py` -- `data.manifest` + base ROM -> `data/`.
 - `tools/mods.py` -- copies `mods/` over `data/`; collects edited data files into `mods/`.
 - `tools/lz.py`, `tools/gfx.py`, `tools/tilemap.py`, `tools/snd.py` -- the LZ, PNG, tilemap-grid and sound-script codecs.
 - `tools/strings.py` -- game text by bank and index, or a string scan of a ROM.
 - `tools/savetool.py` -- battery save inspector and editor.
 - `tools/gfxdump.py` -- PNG contact sheets of graphics streams and palettes, in `build/gfxdump/`.
-- `tools/stats.py` -- the headline counts above, from the built `.sym` and `.map`.
+- `tools/stats.py` -- headline counts (instructions, source-spelled bytes, labels) from the built `.sym` and `.map`.
 - `tools/banksrc.py`, `tools/deps.py`, `tools/consts.py` -- a bank's source read whole; the build's dependency list; the `include/` constants by name.
 - `tools/reach.py` -- which routines can run at all, from the reset, interrupt and `rst` vectors; `--coverage` splits never-entered routines into unreachable and not yet reached.
 - `tools/routes.py` -- which `map_entry` rows anything in retail can send the player to.

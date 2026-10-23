@@ -42,11 +42,11 @@ WalkSprite_6a_00_Gfx04:
 WalkSprite_6a_00_Gfx05:
 	INCBIN "data/sprites/WalkSprite_6a_00_Gfx05.bin" ; $4530, 256 bytes
 WalkSprite_6a_00_AnimPtrs:
-	dw WalkSprite_6a_00_Anim00 ; $4630
-	dw WalkSprite_6a_00_Anim01 ; $4632
-	dw WalkSprite_6a_00_Anim02 ; $4634
-	dw WalkSprite_6a_00_Anim03 ; $4636
-	dw WalkSprite_6a_00_Anim04 ; $4638
+	dw WalkSprite_6a_00_AnimStill ; $4630
+	dw WalkSprite_6a_00_AnimWalk ; $4632
+	dw WalkSprite_6a_00_AnimBounce ; $4634
+	dw WalkSprite_6a_00_AnimNod ; $4636
+	dw WalkSprite_6a_00_AnimShake ; $4638
 	dw WalkSprite_6a_00_Anim05 ; $463a
 	dw WalkSprite_6a_00_Anim05 ; $463c
 	dw WalkSprite_6a_00_Anim06 ; $463e
@@ -54,16 +54,16 @@ WalkSprite_6a_00_AnimPtrs:
 	dw WalkSprite_6a_00_Anim08 ; $4642
 	dw WalkSprite_6a_00_Anim09 ; $4644
 	dw WalkSprite_6a_00_Anim10 ; $4646
-WalkSprite_6a_00_Anim00:
+WalkSprite_6a_00_AnimStill:
 	; $4648, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_6a_00_Anim01:
+WalkSprite_6a_00_AnimWalk:
 	; $464b, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_6a_00_Anim02:
+WalkSprite_6a_00_AnimBounce:
 	; $4651, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -71,13 +71,13 @@ WalkSprite_6a_00_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_00_Anim03:
+WalkSprite_6a_00_AnimNod:
 	; $465d, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_00_Anim04:
+WalkSprite_6a_00_AnimShake:
 	; $4665, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -155,11 +155,11 @@ WalkSprite_6a_01_Gfx04:
 WalkSprite_6a_01_Gfx05:
 	INCBIN "data/sprites/WalkSprite_6a_01_Gfx05.bin" ; $4bc0, 256 bytes
 WalkSprite_6a_01_AnimPtrs:
-	dw WalkSprite_6a_01_Anim00 ; $4cc0
-	dw WalkSprite_6a_01_Anim01 ; $4cc2
-	dw WalkSprite_6a_01_Anim02 ; $4cc4
-	dw WalkSprite_6a_01_Anim03 ; $4cc6
-	dw WalkSprite_6a_01_Anim04 ; $4cc8
+	dw WalkSprite_6a_01_AnimStill ; $4cc0
+	dw WalkSprite_6a_01_AnimWalk ; $4cc2
+	dw WalkSprite_6a_01_AnimBounce ; $4cc4
+	dw WalkSprite_6a_01_AnimNod ; $4cc6
+	dw WalkSprite_6a_01_AnimShake ; $4cc8
 	dw WalkSprite_6a_01_Anim05 ; $4cca
 	dw WalkSprite_6a_01_Anim05 ; $4ccc
 	dw WalkSprite_6a_01_Anim06 ; $4cce
@@ -167,16 +167,16 @@ WalkSprite_6a_01_AnimPtrs:
 	dw WalkSprite_6a_01_Anim08 ; $4cd2
 	dw WalkSprite_6a_01_Anim09 ; $4cd4
 	dw WalkSprite_6a_01_Anim10 ; $4cd6
-WalkSprite_6a_01_Anim00:
+WalkSprite_6a_01_AnimStill:
 	; $4cd8, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_6a_01_Anim01:
+WalkSprite_6a_01_AnimWalk:
 	; $4cdb, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_6a_01_Anim02:
+WalkSprite_6a_01_AnimBounce:
 	; $4ce1, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -184,13 +184,13 @@ WalkSprite_6a_01_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_01_Anim03:
+WalkSprite_6a_01_AnimNod:
 	; $4ced, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_01_Anim04:
+WalkSprite_6a_01_AnimShake:
 	; $4cf5, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -268,11 +268,11 @@ WalkSprite_6a_02_Gfx04:
 WalkSprite_6a_02_Gfx05:
 	INCBIN "data/sprites/WalkSprite_6a_02_Gfx05.bin" ; $5250, 256 bytes
 WalkSprite_6a_02_AnimPtrs:
-	dw WalkSprite_6a_02_Anim00 ; $5350
-	dw WalkSprite_6a_02_Anim01 ; $5352
-	dw WalkSprite_6a_02_Anim02 ; $5354
-	dw WalkSprite_6a_02_Anim03 ; $5356
-	dw WalkSprite_6a_02_Anim04 ; $5358
+	dw WalkSprite_6a_02_AnimStill ; $5350
+	dw WalkSprite_6a_02_AnimWalk ; $5352
+	dw WalkSprite_6a_02_AnimBounce ; $5354
+	dw WalkSprite_6a_02_AnimNod ; $5356
+	dw WalkSprite_6a_02_AnimShake ; $5358
 	dw WalkSprite_6a_02_Anim05 ; $535a
 	dw WalkSprite_6a_02_Anim05 ; $535c
 	dw WalkSprite_6a_02_Anim06 ; $535e
@@ -280,16 +280,16 @@ WalkSprite_6a_02_AnimPtrs:
 	dw WalkSprite_6a_02_Anim08 ; $5362
 	dw WalkSprite_6a_02_Anim09 ; $5364
 	dw WalkSprite_6a_02_Anim10 ; $5366
-WalkSprite_6a_02_Anim00:
+WalkSprite_6a_02_AnimStill:
 	; $5368, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_6a_02_Anim01:
+WalkSprite_6a_02_AnimWalk:
 	; $536b, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_6a_02_Anim02:
+WalkSprite_6a_02_AnimBounce:
 	; $5371, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -297,13 +297,13 @@ WalkSprite_6a_02_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_02_Anim03:
+WalkSprite_6a_02_AnimNod:
 	; $537d, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_02_Anim04:
+WalkSprite_6a_02_AnimShake:
 	; $5385, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -381,11 +381,11 @@ WalkSprite_6a_03_Gfx04:
 WalkSprite_6a_03_Gfx05:
 	INCBIN "data/sprites/WalkSprite_6a_03_Gfx05.bin" ; $58e0, 256 bytes
 WalkSprite_6a_03_AnimPtrs:
-	dw WalkSprite_6a_03_Anim00 ; $59e0
-	dw WalkSprite_6a_03_Anim01 ; $59e2
-	dw WalkSprite_6a_03_Anim02 ; $59e4
-	dw WalkSprite_6a_03_Anim03 ; $59e6
-	dw WalkSprite_6a_03_Anim04 ; $59e8
+	dw WalkSprite_6a_03_AnimStill ; $59e0
+	dw WalkSprite_6a_03_AnimWalk ; $59e2
+	dw WalkSprite_6a_03_AnimBounce ; $59e4
+	dw WalkSprite_6a_03_AnimNod ; $59e6
+	dw WalkSprite_6a_03_AnimShake ; $59e8
 	dw WalkSprite_6a_03_Anim05 ; $59ea
 	dw WalkSprite_6a_03_Anim05 ; $59ec
 	dw WalkSprite_6a_03_Anim06 ; $59ee
@@ -393,16 +393,16 @@ WalkSprite_6a_03_AnimPtrs:
 	dw WalkSprite_6a_03_Anim08 ; $59f2
 	dw WalkSprite_6a_03_Anim09 ; $59f4
 	dw WalkSprite_6a_03_Anim10 ; $59f6
-WalkSprite_6a_03_Anim00:
+WalkSprite_6a_03_AnimStill:
 	; $59f8, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_6a_03_Anim01:
+WalkSprite_6a_03_AnimWalk:
 	; $59fb, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_6a_03_Anim02:
+WalkSprite_6a_03_AnimBounce:
 	; $5a01, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -410,13 +410,13 @@ WalkSprite_6a_03_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_03_Anim03:
+WalkSprite_6a_03_AnimNod:
 	; $5a0d, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_03_Anim04:
+WalkSprite_6a_03_AnimShake:
 	; $5a15, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10
@@ -494,11 +494,11 @@ WalkSprite_6a_04_Gfx04:
 WalkSprite_6a_04_Gfx05:
 	INCBIN "data/sprites/WalkSprite_6a_04_Gfx05.bin" ; $5f70, 256 bytes
 WalkSprite_6a_04_AnimPtrs:
-	dw WalkSprite_6a_04_Anim00 ; $6070
-	dw WalkSprite_6a_04_Anim01 ; $6072
-	dw WalkSprite_6a_04_Anim02 ; $6074
-	dw WalkSprite_6a_04_Anim03 ; $6076
-	dw WalkSprite_6a_04_Anim04 ; $6078
+	dw WalkSprite_6a_04_AnimStill ; $6070
+	dw WalkSprite_6a_04_AnimWalk ; $6072
+	dw WalkSprite_6a_04_AnimBounce ; $6074
+	dw WalkSprite_6a_04_AnimNod ; $6076
+	dw WalkSprite_6a_04_AnimShake ; $6078
 	dw WalkSprite_6a_04_Anim05 ; $607a
 	dw WalkSprite_6a_04_Anim05 ; $607c
 	dw WalkSprite_6a_04_Anim06 ; $607e
@@ -506,16 +506,16 @@ WalkSprite_6a_04_AnimPtrs:
 	dw WalkSprite_6a_04_Anim08 ; $6082
 	dw WalkSprite_6a_04_Anim09 ; $6084
 	dw WalkSprite_6a_04_Anim10 ; $6086
-WalkSprite_6a_04_Anim00:
+WalkSprite_6a_04_AnimStill:
 	; $6088, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-WalkSprite_6a_04_Anim01:
+WalkSprite_6a_04_AnimWalk:
 	; $608b, 6 bytes (sprite_anim)
 	anim_frame $00, 30
 	anim_frame $01, 30
 	anim_loop $00
-WalkSprite_6a_04_Anim02:
+WalkSprite_6a_04_AnimBounce:
 	; $6091, 12 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $09, 8
@@ -523,13 +523,13 @@ WalkSprite_6a_04_Anim02:
 	anim_frame $09, 8
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_04_Anim03:
+WalkSprite_6a_04_AnimNod:
 	; $609d, 8 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $06, 30
 	anim_frame $00, 10
 	anim_set ANIM_WALK
-WalkSprite_6a_04_Anim04:
+WalkSprite_6a_04_AnimShake:
 	; $60a5, 20 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $07, 10

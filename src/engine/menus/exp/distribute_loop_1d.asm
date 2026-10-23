@@ -8,7 +8,7 @@ RunExpDistributionLoop:
 	jr z, .tick ; $6f48
 	xor a ; $6f4a
 	ld [wCharDataViewOnly], a ; $6f4b
-	jp CheckExpLevelDown.openConfirmPrompt ; $6f4e
+	jp RunExpConfirmPrompt ; $6f4e
 .tick:
 	wram_bank WRAM_SCENE ; $6f51
 	ld a, [wExpInputRepeating] ; $6f57
@@ -88,7 +88,7 @@ RunExpDistributionLoop:
 	or a ; $6ffc
 	jp nz, RunExpDistributionLoop ; $6ffd
 	sound SFX_MENU_MOVE ; $7000
-	ld a, $01 ; $7002
+	ld a, STORYREC_PARTNER ; $7002
 	ld [wStoryCharacterSlot], a ; $7004
 	call UpdateExpScreenSelectionPalettes ; $7007
 	ld hl, SlideExpCursorToMainCharTask ; $700a
@@ -168,7 +168,7 @@ RunExpDistributionLoop:
 	res EXPBUSYB_POINT_MOVED, [hl] ; $70bc
 	ld a, $a8 ; $70be
 	ld [wExpBarMarkerX], a ; $70c0
-	jp CheckExpLevelDown.openConfirmPrompt ; $70c3
+	jp RunExpConfirmPrompt ; $70c3
 .increaseRepeat:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
@@ -200,7 +200,7 @@ SweepExpBarMarkerLeft:
 	wram_bank WRAM_SCENE ; $7105
 	ld a, [wExpBarMarkerX] ; $710b
 	cp $a8 ; $710e
-	jr z, .checkStoryCharacterSlot ; $7110
+	jr z, .restartAtBarEnd ; $7110
 	sub b ; $7112
 	ld [wExpBarMarkerX], a ; $7113
 	cp $18 ; $7116
@@ -208,15 +208,15 @@ SweepExpBarMarkerLeft:
 	ld a, $a8 ; $7119
 	ld [wExpBarMarkerX], a ; $711b
 	ret ; $711e
-.checkStoryCharacterSlot:
+.restartAtBarEnd:
 	ld a, [wStoryCharacterSlot] ; $711f
 	or a ; $7122
 	jr nz, .partner ; $7123
 	ld a, [wExpScreenCharStats + EXPSTAT_BAR] ; $7125
-	jr .getExpBarSweepStep ; $7128
+	jr .setMarkerX ; $7128
 .partner:
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR] ; $712a
-.getExpBarSweepStep:
+.setMarkerX:
 	add $36 ; $712d
 	ld [wExpBarMarkerX], a ; $712f
 	ret ; $7132
@@ -276,42 +276,42 @@ UpdateExpScreenSelectionPalettes:
 	farcall LoadIndexedPaletteThunk ; $7198
 	wram_bank WRAM_SCENE ; $719b
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR] ; $71a1
-	ld [wBGPalettes + 58], a ; $71a4
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE], a ; $71a4
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1] ; $71a7
-	ld [wBGPalettes + 59], a ; $71aa
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $71aa
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR] ; $71ad
-	ld [wBGPalettes + 34], a ; $71b0
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE], a ; $71b0
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1] ; $71b3
-	ld [wBGPalettes + 35], a ; $71b6
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $71b6
 	ld a, [wStoryCharacterSlot] ; $71b9
 	or a ; $71bc
-	jr nz, .grayOut ; $71bd
-	ld hl, wBGPalettes + 16 ; $71bf
+	jr nz, .grayMainChar ; $71bd
+	ld hl, wBGPalettes + 2 * PAL_SIZE + 0 * COLOR_SIZE ; $71bf
 	call GrayscalePaletteColorInPlace ; $71c2
-	ld hl, wBGPalettes + 18 ; $71c5
+	ld hl, wBGPalettes + 2 * PAL_SIZE + 1 * COLOR_SIZE ; $71c5
 	call GrayscalePaletteColorInPlace ; $71c8
-	ld hl, wBGPalettes + 20 ; $71cb
+	ld hl, wBGPalettes + 2 * PAL_SIZE + 2 * COLOR_SIZE ; $71cb
 	call GrayscalePaletteColorInPlace ; $71ce
-	ld hl, wBGPalettes + 22 ; $71d1
+	ld hl, wBGPalettes + 2 * PAL_SIZE + 3 * COLOR_SIZE ; $71d1
 	call GrayscalePaletteColorInPlace ; $71d4
 	ld a, $08 ; $71d7
-	ld [wBGPalettes + 34], a ; $71d9
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE], a ; $71d9
 	ld a, $21 ; $71dc
-	ld [wBGPalettes + 35], a ; $71de
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $71de
 	ret ; $71e1
-.grayOut:
-	ld hl, wBGPalettes + 8 ; $71e2
+.grayMainChar:
+	ld hl, wBGPalettes + 1 * PAL_SIZE + 0 * COLOR_SIZE ; $71e2
 	call GrayscalePaletteColorInPlace ; $71e5
-	ld hl, wBGPalettes + 10 ; $71e8
+	ld hl, wBGPalettes + 1 * PAL_SIZE + 1 * COLOR_SIZE ; $71e8
 	call GrayscalePaletteColorInPlace ; $71eb
-	ld hl, wBGPalettes + 12 ; $71ee
+	ld hl, wBGPalettes + 1 * PAL_SIZE + 2 * COLOR_SIZE ; $71ee
 	call GrayscalePaletteColorInPlace ; $71f1
-	ld hl, wBGPalettes + 14 ; $71f4
+	ld hl, wBGPalettes + 1 * PAL_SIZE + 3 * COLOR_SIZE ; $71f4
 	call GrayscalePaletteColorInPlace ; $71f7
 	ld a, $08 ; $71fa
-	ld [wBGPalettes + 58], a ; $71fc
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE], a ; $71fc
 	ld a, $21 ; $71ff
-	ld [wBGPalettes + 59], a ; $7201
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $7201
 	ret ; $7204
 GrayscalePaletteColorInPlace:
 	ld a, [hl+] ; $7205

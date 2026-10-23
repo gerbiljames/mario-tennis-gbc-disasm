@@ -19,11 +19,11 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 ; attribute plane the full-screen UIs keep in WRAM bank $03, owned by the
 ; window engine. ResetTextWindowState clears both and points
 ; wShadowTilemapPtr / wShadowTilemapBank at $d000 / $05; the dirty-row
-; flusher copies changed rows to $9800. Bank $05 code also uses $d000/$d400
-; literals for whichever plane the current screen owns, and its glyph
-; buffers are at $d300-$d7ff in WRAM bank $07. RestoreShadowTilemapRow
-; reads wMapBuffer64 under WRAM banks $03/$02 and writes these planes under
-; bank $05.
+; flusher copies changed rows to $9800. Bank $05 code also addresses
+; wActiveTilemap / wActiveAttrmap for whichever plane the current screen
+; owns, and its glyph buffers are at $d300-$d7ff in WRAM bank $07.
+; RestoreShadowTilemapRow reads wMapBuffer64 under WRAM banks $03/$02 and
+; writes these planes under bank $05.
 ; window shadow tilemap (WRAM bank $05)
 ; Tile plane of the text-window shadow tilemap: 32 x 32 cells, rows TILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen
 wWindowShadowTilemap:: ds 1024
@@ -55,8 +55,8 @@ wDialogueWindowRow:: db
 wDialogueWindowWidth:: db
 ; [8-bit] Dialogue window height in cells, from c at CreateDialogueWindow
 wDialogueWindowHeight:: db
-; [8-bit] Re-entrancy guard around RedrawActiveTextWindow: the delay/wait text commands redraw only while it is 0 and set it during their own redraw
-wTextRedrawGuard:: db
+; [8-bit] Frames DelayTextCharacter waits per glyph, set by ApplyMessageSpeed (0 instant or fast, 2 normal, 4 slow). While it is 0 nothing has been drawn yet, so the delay/wait text commands redraw the window first (setting it to 1 around that redraw)
+wTextCharDelayFrames:: db
 ; [8-bit] Text cursor column, 0-31. RenderTextString seeds it from d & $1f with wTextCursorRow; TextCmdNewline reloads it into d for GetTilemapCellAddress to re-point the write pointer
 wTextCursorColumn:: db
 ; [8-bit] Text cursor row, 0-31. TextCmdNewline advances it by two rows (the font is double height), wrapping with `and $1f`; the two glyph-stream row commands compare it against a row computed from the stream offset
@@ -85,7 +85,7 @@ wMenuDepth:: db
 wTextArrowBlinkCounter:: db
 ; [16-bit] Shadow-tilemap address of the cell the cursor arrow is in. AnimateTextArrowTask converts it to a VRAM address (+ $3000 + $9800) and blinks the arrow there; RunMenuSelection primes it to $ffff and rewrites it whenever the cursor moves
 wTextArrowCell:: dw
-; [16-bit] VRAM address of the cell the arrow just left, overwritten with tile $20 by the blink task, which then clears it; zero means nothing pending (AnimateTextArrowTask tests the low byte, Unused_05_AnimateMenuScrollArrowsTask the high)
+; [16-bit] VRAM address of the cell the arrow just left, overwritten with tile $20 by the blink task, which then clears it; zero means nothing pending (AnimateTextArrowTask tests the low byte, Unused_05_AnimateMenuAdjustArrowsTask the high)
 wTextArrowEraseAddr:: dw
 ; [8-bit] Page RunPagedTextMenu shows; left/right step and wrap it. The returned entry is wMenuPage * 4 + row (four rows a page)
 wMenuPage:: db
@@ -99,7 +99,7 @@ wTextArgShortTextWriteIndex:: db
 wTextArgStringCount:: db
 ; [8-bit] The same count for wTextArgNumberQueue; TextCmdPrintArgNumber prints nothing once the cursor reaches it
 wTextArgNumberCount:: db
-; [8-bit] The same count for wTextArgShortTextQueue
+; [8-bit] The same count for wTextArgShortTextQueue, stored by Unused_05_PushTextArgShortTextId; nothing reads it
 wTextArgShortTextCount:: db
 	ds 1
 ; [16-bit] Text-stream pointer to resume from instead of the start of wTextBuffer; a nonzero high byte is the "set" flag RenderTextString and FitWindowToText test and clear. Filled by TextInterpreterLoop at a TextCmdWaitButtonPage, and by FindDialogueChoiceMarker with the position of the $02 choice marker so the yes/no prompt measures and renders only the tail
@@ -113,7 +113,7 @@ wScriptDialogueTextId:: dw
 ; [8-bit] Widest line of the measured text in whole cells; written by FitWindowToText, returned by MeasureDialogueWidthTiles
 wFitTextWidthCells:: db
 	ds 7
-; [8-bit] 1 when OpenSpeechBubble / Unused_05_OpenCenteredDialogueWindow put the window on the lower half (speaker near the top), else 0. Write-only
+; [8-bit] 1 when OpenSpeechBubble / Unused_05_ChooseSpeechBubbleHalf put the window on the lower half (speaker near the top), else 0. Write-only
 wSpeechBubbleLowerHalf:: db
 ; [8-bit] Stored by Unused_05_SetTextVar; nothing reads it
 wUnusedTextByte:: db
@@ -121,9 +121,9 @@ wUnusedTextByte:: db
 ; [8-bit] 1 when RenderWindowText bails on the "no text" sentinel ($03 in the text id's high byte), 0 otherwise. Write-only
 wWindowTextEmpty:: db
 	ds 2
-; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) per glyph. Set from GetSpeakerVoice; $08 = silent, also forced by a negative message speed
+; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) per glyph. Set from GetSpeakerVoice; $08 = silent, also forced by a speaker id with bit 7 set
 wDialogueVoice:: db
-; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, closed by Unused_05_RunFixedTextMenu with the menu window. Neither is called; Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before SetWindowTextId, so the "window id" they pass around is really the WRAM bank number
+; [8-bit] Window Unused_05_SetFixedMenuWindowTextId built, closed by Unused_05_RunYesNoMenu with the menu window. Neither is called; Unused_05_SetFixedMenuWindowTextId loads hWramBank into b before SetWindowTextId, so the "window id" they pass around is really the WRAM bank number
 wFixedMenuWindowId:: db
 ; [16-bit] Start of the current text row in the destination (a window shadow-tilemap cell, or RenderTextToBuffer64's buffer); TextCmdNextGlyphStreamRow advances it two row pitches
 wTextRowStartPtr:: dw
@@ -159,7 +159,7 @@ wShortTextBuffer:: ds 16
 wTextArgStringQueue:: ds 32
 ; 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
-; 16 x 1-byte short-text ids queued by Unused_05_PushTextArgShortTextId; GetNextArgShortTextLength measures them, but the $08 control code that would print one is a bare ret (TextCmdNop2)
+; 16 x 1-byte short-text ids queued by Unused_05_PushTextArgShortTextId; GetNextArgShortTextLength measures them, but the $08 control code that would print one is a bare ret (TextCmdNop08)
 wTextArgShortTextQueue:: ds 16
 
 ; Staging buffer UpdateSceneTileAnimations assembles the scene's animated
@@ -193,11 +193,11 @@ wSceneTileAnimSrcPtr:: dw
 ; and $03.
 ; window system (bank $05)
 ; [64 bytes] Eight 8-byte window records, indexed by window id (GetWindowStructPtr: id & 7, << 3):
-;   +$00 column, +$01 row (both wrapped to $1f by SetWindowRect)
-;   +$02 width in cells, +$03 height in cells
-;   +$04 state, read and written through GetWindowState / SetWindowState
-;   +$06 text id (lo/hi), stored by SetWindowTextId; $03 in the high byte
-;        is the "no text" sentinel RenderWindowText bails on
+;   WINDOW_* fields (column, row, width, height, WINDOWSTATE_* state, text id)
+;   Two text-id sentinels: RenderWindowText draws nothing (and sets
+;   wWindowTextEmpty) when the high byte & $3f is $03, while the redraw
+;   paths (RedrawWindowText, Unused_05_RenderWindowTextToCompletion) skip
+;   the text when the high byte is $ff
 ; AllocWindowStruct fills a free slot from de/bc, FreeWindow zeroes all
 ; eight bytes and releases the wWindowSlotMask bit
 wWindowStructs:: ds 64

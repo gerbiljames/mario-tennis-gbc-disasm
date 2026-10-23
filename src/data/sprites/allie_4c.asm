@@ -332,42 +332,42 @@ Unused_4c_AllieSpriteFramesCopy:
 AllieFramePlace:
 	INCLUDE "data/sprites/AllieFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 AllieSpriteAnims:
-	dw AllieSpriteAnim00 ; $7f24
-	dw AllieSpriteAnim01 ; $7f26
-	dw AllieSpriteAnim02 ; $7f28
-	dw AllieSpriteAnim03 ; $7f2a
-	dw AllieSpriteAnim04 ; $7f2c
-	dw AllieSpriteAnim05 ; $7f2e
-	dw AllieSpriteAnim06 ; $7f30
-	dw AllieSpriteAnim07 ; $7f32
-	dw AllieSpriteAnim08 ; $7f34
-	dw AllieSpriteAnim09 ; $7f36
-	dw AllieSpriteAnim10 ; $7f38
-	dw AllieSpriteAnim11 ; $7f3a
-	dw AllieSpriteAnim12 ; $7f3c
-	dw AllieSpriteAnim13 ; $7f3e
-	dw AllieSpriteAnim14 ; $7f40
-	dw AllieSpriteAnim15 ; $7f42
-	dw AllieSpriteAnim16 ; $7f44
-	dw AllieSpriteAnim17 ; $7f46
-	dw AllieSpriteAnim18 ; $7f48
-AllieSpriteAnim00:
+	dw AllieStandAnim ; $7f24
+	dw AllieIdleAnim ; $7f26
+	dw AllieRunAnim ; $7f28
+	dw AllieCelebrateAnim ; $7f2a
+	dw AllieDejectedAnim ; $7f2c
+	dw AllieForehandAnim ; $7f2e
+	dw AllieBackhandAnim ; $7f30
+	dw AllieOverheadAnim ; $7f32
+	dw AllieSmashAnim ; $7f34
+	dw AllieForehandQuickAnim ; $7f36
+	dw AllieBackhandQuickAnim ; $7f38
+	dw AllieOverheadQuickAnim ; $7f3a
+	dw AllieSmashQuickAnim ; $7f3c
+	dw AllieForehandReadyAnim ; $7f3e
+	dw AllieBackhandReadyAnim ; $7f40
+	dw AllieOverheadReadyAnim ; $7f42
+	dw AllieServeReadyAnim ; $7f44
+	dw AllieServePrepAnim ; $7f46
+	dw AllieDiveAnim ; $7f48
+AllieStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-AllieSpriteAnim01:
+AllieIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-AllieSpriteAnim02:
+AllieRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-AllieSpriteAnim03:
+AllieCelebrateAnim:
 	; $7f5d, 16 bytes (sprite_anim)
 	anim_frame $17, 8
 	anim_frame $18, 8
@@ -377,7 +377,7 @@ AllieSpriteAnim03:
 	anim_frame $18, 8
 	anim_frame $19, 25
 	anim_loop $00
-AllieSpriteAnim04:
+AllieDejectedAnim:
 	; $7f6d, 16 bytes (sprite_anim)
 	anim_frame $1a, 8
 	anim_frame $1b, 8
@@ -387,59 +387,59 @@ AllieSpriteAnim04:
 	anim_frame $1b, 8
 	anim_frame $1c, 35
 	anim_loop $00
-AllieSpriteAnim05:
+AllieForehandAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-AllieSpriteAnim06:
+AllieBackhandAnim:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-AllieSpriteAnim07:
+AllieOverheadAnim:
 	; $7f89, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-AllieSpriteAnim08:
+AllieSmashAnim:
 	; $7f8f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-AllieSpriteAnim09:
+AllieForehandQuickAnim:
 	; $7f94, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-AllieSpriteAnim10:
+AllieBackhandQuickAnim:
 	; $7f98, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-AllieSpriteAnim11:
+AllieOverheadQuickAnim:
 	; $7f9c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-AllieSpriteAnim12:
+AllieSmashQuickAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-AllieSpriteAnim13:
+AllieForehandReadyAnim:
 	; $7fa3, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-AllieSpriteAnim14:
+AllieBackhandReadyAnim:
 	; $7fa6, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-AllieSpriteAnim15:
+AllieOverheadReadyAnim:
 	; $7fa9, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-AllieSpriteAnim16:
+AllieServeReadyAnim:
 	; $7fac, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-AllieSpriteAnim17:
+AllieServePrepAnim:
 	; $7faf, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -447,7 +447,7 @@ AllieSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-AllieSpriteAnim18:
+AllieDiveAnim:
 	; $7fbb, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

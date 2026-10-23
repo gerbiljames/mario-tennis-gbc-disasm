@@ -7,7 +7,7 @@ FlushWram3MapRows:
 	ld a, b ; $4cb8
 	ASSERT MAPROWS_BANDS_3_7_11 == 0
 	or a ; $4cb9
-	jr nz, .mode1 ; $4cba
+	jr nz, .bands4_10 ; $4cba
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4cbc
 	ld hl, wShadowTilemap ; $4cbe
 	ld de, vBGMap0 ; $4cc1
@@ -42,9 +42,9 @@ FlushWram3MapRows:
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $4d11
 	call QueueVRAMCopy ; $4d14
 	jp .done ; $4d17
-.mode1:
+.bands4_10:
 	cp MAPROWS_BANDS_4_10 ; $4d1a
-	jr nz, .mode2 ; $4d1c
+	jr nz, .bands4_9 ; $4d1c
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d1e
 	ld hl, wShadowTilemap ; $4d20
 	ld de, vBGMap0 ; $4d23
@@ -71,9 +71,9 @@ FlushWram3MapRows:
 	ld de, vBGMap0 + 10 * TILEMAP_WIDTH + VRAM_BANK1 ; $4d5d
 	call QueueVRAMCopy ; $4d60
 	jr .done ; $4d63
-.mode2:
+.bands4_9:
 	cp MAPROWS_BANDS_4_9 ; $4d65
-	jr nz, .mode3 ; $4d67
+	jr nz, .band7 ; $4d67
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d69
 	ld hl, wShadowTilemap ; $4d6b
 	ld de, vBGMap0 ; $4d6e
@@ -100,7 +100,7 @@ FlushWram3MapRows:
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $4da8
 	call QueueVRAMCopy ; $4dab
 	jr .done ; $4dae
-.mode3:
+.band7:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4db0
 	ld hl, wShadowTilemap ; $4db2
 	ld de, vBGMap0 ; $4db5
@@ -216,8 +216,8 @@ TilemapAssemblyDispatch_39:
 	dw .unusedPanelSlideOut ; PANELANIM_UNUSED_PANEL_OUT
 	dw .savedDataPickerSlideIn ; PANELANIM_SAVED_DATA_PICKER_IN
 	dw .savedDataPickerSlideOut ; PANELANIM_SAVED_DATA_PICKER_OUT
-	dw .n64RecordTypeSlideIn ; PANELANIM_N64_RECORD_TYPE_IN
-	dw .n64RecordTypeSlideOut ; PANELANIM_N64_RECORD_TYPE_OUT
+	dw .threeChoiceSlideIn ; PANELANIM_THREE_CHOICE_IN
+	dw .threeChoiceSlideOut ; PANELANIM_THREE_CHOICE_OUT
 	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
 	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
 	dw .choiceTabSlideIn ; unused, as PANELANIM_CHOICE_TAB_IN
@@ -379,32 +379,32 @@ TilemapAssemblyDispatch_39:
 	dw .noRects
 	dw .noRects
 	dw .noRects
-.n64RecordTypeSlideIn:
+.threeChoiceSlideIn:
 	dw .noRects
 	dw .noRects
 	dw .noRects
-	dw .n64RecordTypeInFrame3
-	dw .n64RecordTypeInFrame4
-	dw .n64RecordTypeInFrame5
-	dw .n64RecordTypeInFrame6
-	dw .n64RecordTypeInFrame7
-	dw .n64RecordTypeInFrame8
-	dw .n64RecordTypeInFrame9
-	dw .n64RecordTypeInFrame10
-	dw .n64RecordTypeInFrame11
-	dw .n64RecordTypeInFrame12
-.n64RecordTypeSlideOut:
-	dw .n64RecordTypeOutFrame0
-	dw .n64RecordTypeOutFrame1
-	dw .n64RecordTypeOutFrame2
-	dw .n64RecordTypeOutFrame3
-	dw .n64RecordTypeOutFrame4
-	dw .n64RecordTypeOutFrame5
-	dw .n64RecordTypeOutFrame6
-	dw .n64RecordTypeOutFrame7
-	dw .n64RecordTypeOutFrame8
-	dw .n64RecordTypeOutFrame9
-	dw .n64RecordTypeOutFrame10
+	dw .threeChoiceInFrame3
+	dw .threeChoiceInFrame4
+	dw .threeChoiceInFrame5
+	dw .threeChoiceInFrame6
+	dw .threeChoiceInFrame7
+	dw .threeChoiceInFrame8
+	dw .threeChoiceInFrame9
+	dw .threeChoiceInFrame10
+	dw .threeChoiceInFrame11
+	dw .threeChoiceInFrame12
+.threeChoiceSlideOut:
+	dw .threeChoiceOutFrame0
+	dw .threeChoiceOutFrame1
+	dw .threeChoiceOutFrame2
+	dw .threeChoiceOutFrame3
+	dw .threeChoiceOutFrame4
+	dw .threeChoiceOutFrame5
+	dw .threeChoiceOutFrame6
+	dw .threeChoiceOutFrame7
+	dw .threeChoiceOutFrame8
+	dw .threeChoiceOutFrame9
+	dw .threeChoiceOutFrame10
 .choiceTabSlideIn:
 	dw .noRects
 	dw .noRects
@@ -1355,107 +1355,107 @@ TilemapAssemblyDispatch_39:
 .savedDataPickerOutFrame9:
 	panel_rect 5, 21, 25, 8, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame3:
+.threeChoiceInFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 19, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame4:
+.threeChoiceInFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 16, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame5:
+.threeChoiceInFrame5:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 13, 7, 5, 3
 	panel_rect 5, 21, 22, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame6:
+.threeChoiceInFrame6:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 10, 7, 5, 3
 	panel_rect 5, 21, 19, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame7:
+.threeChoiceInFrame7:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 7, 7, 5, 3
 	panel_rect 5, 21, 16, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame8:
+.threeChoiceInFrame8:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 4, 7, 5, 3
 	panel_rect 5, 21, 13, 7, 5, 3
 	panel_rect 10, 21, 22, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame9:
+.threeChoiceInFrame9:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 2, 7, 5, 3
 	panel_rect 5, 21, 10, 7, 5, 3
 	panel_rect 10, 21, 19, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame10:
+.threeChoiceInFrame10:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 8, 7, 5, 3
 	panel_rect 10, 21, 16, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame11:
+.threeChoiceInFrame11:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 14, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeInFrame12:
+.threeChoiceInFrame12:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame0:
+.threeChoiceOutFrame0:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 1, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame1:
+.threeChoiceOutFrame1:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 0, 7, 5, 3
 	panel_rect 5, 21, 7, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame2:
+.threeChoiceOutFrame2:
 	panel_rect 0, 27, 0, 0, 20, 2
 	panel_rect 0, 21, 30, 6, 5, 3
 	panel_rect 5, 21, 6, 7, 5, 3
 	panel_rect 10, 21, 13, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame3:
+.threeChoiceOutFrame3:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 27, 6, 5, 3
 	panel_rect 5, 21, 4, 7, 5, 3
 	panel_rect 10, 21, 12, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame4:
+.threeChoiceOutFrame4:
 	panel_rect 0, 28, 0, 0, 20, 1
 	panel_rect 0, 21, 24, 6, 5, 3
 	panel_rect 5, 21, 1, 7, 5, 3
 	panel_rect 10, 21, 10, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame5:
+.threeChoiceOutFrame5:
 	panel_rect 5, 21, 30, 6, 5, 3
 	panel_rect 10, 21, 7, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame6:
+.threeChoiceOutFrame6:
 	panel_rect 5, 21, 27, 6, 5, 3
 	panel_rect 10, 21, 4, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame7:
+.threeChoiceOutFrame7:
 	panel_rect 10, 21, 1, 7, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame8:
+.threeChoiceOutFrame8:
 	panel_rect 10, 21, 30, 6, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame9:
+.threeChoiceOutFrame9:
 	panel_rect 10, 21, 27, 6, 5, 3
 	tilemap_rect_end
-.n64RecordTypeOutFrame10:
+.threeChoiceOutFrame10:
 	panel_rect 10, 21, 24, 6, 5, 3
 	tilemap_rect_end
 .choiceTabInFrame3:

@@ -41,11 +41,11 @@ WaterSpriteSwingCountTask:
 	pop hl ; $5619
 	ld a, [wSwingContestSwingState] ; $561a
 	cp $02 ; $561d
-	jr z, .firstSwing ; $561f
+	jr z, .setRecoverPose ; $561f
 	ld a, $02 ; $5621
 	ld [wSwingContestSwingState], a ; $5623
 	jr .tick ; $5626
-.firstSwing:
+.setRecoverPose:
 	ld a, $01 ; $5628
 	ld [wSwingContestSwingState], a ; $562a
 .tick:
@@ -89,7 +89,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5673
 	ld a, $18 ; $5676
 	sub b ; $5678
-	ld [wSwingContestHudMode], a ; $5679
+	ld [wSwingContestTimerPanelX], a ; $5679
 	ld a, $80 ; $567c
 	add b ; $567e
 	ld d, a ; $567f
@@ -97,7 +97,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5683
 	ld a, $74 ; $5686
 	add b ; $5688
-	ld [wSwingContestHudPage], a ; $5689
+	ld [wSwingContestCounterPanelX], a ; $5689
 	script_wait_frames 1 ; $568c
 	dec b ; $5693
 	jp nz, .slideHudIn ; $5694
@@ -120,7 +120,7 @@ WaterSpriteSwingContestScene:
 	ld h, $00 ; $56be
 	ld_xy de, $50, $2c ; $56c0
 .countdownLoop:
-	sound SFX_CONTEST_WIN ; $56c3
+	sound SFX_CONTEST_COUNTDOWN ; $56c3
 	ld b, $3c ; $56c5
 .countdownTick:
 	farcall DrawDecimalNumberSprites_39 ; $56c7
@@ -130,7 +130,7 @@ WaterSpriteSwingContestScene:
 	dec l ; $56d5
 	jp nz, .countdownLoop ; $56d6
 	sound SFX_COUNTDOWN_GO ; $56d9
-	call TogglePlayerSpriteXFlip ; $56db
+	call MirrorPlayerSpriteIfLeftHanded_15 ; $56db
 	frame_task WaterSpriteSwingCountTask ; $56de
 .swingLoop:
 	call AdvanceFrame ; $56e6
@@ -155,7 +155,7 @@ WaterSpriteSwingContestScene:
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
 	script_wait_frames 60 ; $5716
-	call TogglePlayerSpriteXFlip ; $571d
+	call MirrorPlayerSpriteIfLeftHanded_15 ; $571d
 	ld hl, DrawWaterSpriteMinigameCounters ; $5720
 	call UnregisterFrameTask ; $5723
 	ld b, $30 ; $5726
@@ -168,7 +168,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5731
 	ld a, $e8 ; $5734
 	add b ; $5736
-	ld [wSwingContestHudMode], a ; $5737
+	ld [wSwingContestTimerPanelX], a ; $5737
 	ld a, $b0 ; $573a
 	sub b ; $573c
 	ld d, a ; $573d
@@ -179,7 +179,7 @@ WaterSpriteSwingContestScene:
 	farcall DrawDecimalNumberSprites_39 ; $5744
 	ld a, $a4 ; $5747
 	sub b ; $5749
-	ld [wSwingContestHudPage], a ; $574a
+	ld [wSwingContestCounterPanelX], a ; $574a
 	script_wait_frames 1 ; $574d
 	dec b ; $5754
 	jp nz, .slideHudOut ; $5755
@@ -194,7 +194,7 @@ WaterSpriteSwingContestScene:
 	farcall PushTextArgNumber ; $576e
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
-	twin_named mirror_player_sprite_if_left_handed, TogglePlayerSpriteXFlip ; $5777
+	twin_named mirror_player_sprite_if_left_handed, MirrorPlayerSpriteIfLeftHanded_15 ; $5777
 DrawWaterSpriteMinigameCounters:
 	ld hl, wSwingContestTimer ; $578d
 	ld a, [hl+] ; $5790
@@ -238,7 +238,7 @@ LoadWaterSpriteMinigameHudGfx:
 	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, WaterSpriteHudPalette_15 ; $58ac
-	ld_obj_pals de, 0, 2 ; $58af
+	ld_obj_pals de, 0, 2 ; $58af -- 16 bytes from the 8-byte palette: OBJ palette 1 is LoadWaterSpriteMinigameHudGfx's code
 	call LoadPaletteShadow ; $58b2
 	pop_wram_bank ; $58b5
 	ret ; $58ba
@@ -253,11 +253,11 @@ QueueWaterSpriteMinigameCounterPanel:
 	call QueueSpriteTemplate ; $58cd
 	ret ; $58d0
 QueueWaterSpriteMinigameHudPanels:
-	ld a, [wSwingContestHudMode] ; $58d1
+	ld a, [wSwingContestTimerPanelX] ; $58d1
 	ld d, a ; $58d4
 	ld e, $18 ; $58d5
 	call QueueWaterSpriteMinigameTimerPanel ; $58d7
-	ld a, [wSwingContestHudPage] ; $58da
+	ld a, [wSwingContestCounterPanelX] ; $58da
 	ld d, a ; $58dd
 	ld e, $18 ; $58de
 	call QueueWaterSpriteMinigameCounterPanel ; $58e0
@@ -265,21 +265,21 @@ QueueWaterSpriteMinigameHudPanels:
 InitWaterSpriteMinigameHud:
 	call LoadWaterSpriteMinigameHudGfx ; $58e4
 	ld a, $e8 ; $58e7
-	ld [wSwingContestHudMode], a ; $58e9
+	ld [wSwingContestTimerPanelX], a ; $58e9
 	ld a, $a0 ; $58ec
-	ld [wSwingContestHudPage], a ; $58ee
+	ld [wSwingContestCounterPanelX], a ; $58ee
 	frame_task QueueWaterSpriteMinigameHudPanels ; $58f1
 	ret ; $58f9
 	; $58fa, 6 bytes (fill)
 	ds 6, $00
 Unused_15_WaterSpriteRacketRewardPalettes:
 	INCLUDE "data/story/Unused_15_WaterSpriteRacketRewardPalettes.asm" ; $5900, 16 bytes (palettes)
-WaterSpriteRacketRewardScenePalettes0:
-	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes0.asm" ; $5910, 64 bytes (palettes)
-WaterSpriteRacketRewardScenePalettes1:
-	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes1.asm" ; $5950, 64 bytes (palettes)
-WaterSpriteRacketRewardScenePalettes2:
-	INCLUDE "data/story/WaterSpriteRacketRewardScenePalettes2.asm" ; $5990, 48 bytes (palettes)
+WaterSpriteRewardNormalPalettes:
+	INCLUDE "data/story/WaterSpriteRewardNormalPalettes.asm" ; $5910, 64 bytes (palettes)
+WaterSpriteRewardDimPalettes:
+	INCLUDE "data/story/WaterSpriteRewardDimPalettes.asm" ; $5950, 64 bytes (palettes)
+WaterSpriteRewardDarkPalettes:
+	INCLUDE "data/story/WaterSpriteRewardDarkPalettes.asm" ; $5990, 48 bytes (palettes)
 TrainingCourtIntroTourScene:
 	xor a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1

@@ -55,9 +55,9 @@
 	ld de, $fd40
 	ld a, [wCharCourtPos]
 	and COURTPOSF_FAR
-	jr z, .maskClear
+	jr z, .nearSide
 	neg_de
-.maskClear:
+.nearSide:
 	ld hl, wBallTargetDepth
 	ld a, e
 	ld [hl+], a

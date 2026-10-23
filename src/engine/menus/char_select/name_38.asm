@@ -30,7 +30,7 @@ MoveLinkCursorDown:
 	jr nc, .nextPage ; $6d36
 	cp $01 ; $6d38
 	ret z ; $6d3a
-	ld a, [wCharGridCreatedCount] ; $6d3b
+	ld a, [wCharGridMarioCastCount] ; $6d3b
 	cp $07 ; $6d3e
 	jr c, .done ; $6d40
 	ld a, $01 ; $6d42
@@ -39,7 +39,7 @@ MoveLinkCursorDown:
 .nextPage:
 	inc a ; $6d48
 	ld e, a ; $6d49
-	ld a, [wCharGridPageCount] ; $6d4a
+	ld a, [wCharGridRowCount] ; $6d4a
 	dec a ; $6d4d
 	ld b, a ; $6d4e
 	ld a, e ; $6d4f
@@ -58,13 +58,13 @@ MoveLinkCursorRight:
 	jr nz, .store ; $6d5e
 	ldh a, [hLinkCursorPage] ; $6d60
 	or a ; $6d62
-	jr z, .wrapToFirst ; $6d63
+	jr z, .toRosterRows ; $6d63
 	cp $01 ; $6d65
-	jr z, .wrapToFirst ; $6d67
+	jr z, .toRosterRows ; $6d67
 	xor a ; $6d69
 	ldh [hLinkCursorPage], a ; $6d6a
 	jr .firstColumn ; $6d6c
-.wrapToFirst:
+.toRosterRows:
 	ld a, $03 ; $6d6e
 	ldh [hLinkCursorPage], a ; $6d70
 .firstColumn:
@@ -79,13 +79,13 @@ MoveLinkCursorLeft:
 	jr nz, .store ; $6d7d
 	ldh a, [hLinkCursorPage] ; $6d7f
 	or a ; $6d81
-	jr z, .wrapToLast ; $6d82
+	jr z, .toRosterRows ; $6d82
 	cp $01 ; $6d84
-	jr z, .wrapToLast ; $6d86
+	jr z, .toRosterRows ; $6d86
 	xor a ; $6d88
 	ldh [hLinkCursorPage], a ; $6d89
 	jr .lastColumn ; $6d8b
-.wrapToLast:
+.toRosterRows:
 	ld a, $03 ; $6d8d
 	ldh [hLinkCursorPage], a ; $6d8f
 .lastColumn:
@@ -119,7 +119,7 @@ Unused_38_RetreatLinkGridSelection:
 	ret ; $6dc3
 Unused_38_ConfirmRemoteGridSelection:
 	ld a, [wCharSelectSlot] ; $6dc4
-	ld a, [wCharGridPage] ; $6dc7
+	ld a, [wCharGridTopRow] ; $6dc7
 	ld c, a ; $6dca
 	ld a, [wMenuCursor2X] ; $6dcb
 	ld d, a ; $6dce
@@ -127,7 +127,7 @@ Unused_38_ConfirmRemoteGridSelection:
 	ld e, a ; $6dd2
 	call TestAndSetGridEntryTaken ; $6dd3
 	or a ; $6dd6
-	jr nz, .done ; $6dd7
+	jr nz, .noSelection ; $6dd7
 	call GetGridSlotFromCursor ; $6dd9
 	ld b, a ; $6ddc
 	ld hl, wCharGridEntries ; $6ddd
@@ -136,18 +136,18 @@ Unused_38_ConfirmRemoteGridSelection:
 	add_hl_a ; $6de2
 	ld a, [hl] ; $6de7
 	cp $ff ; $6de8
-	jr z, .done ; $6dea
+	jr z, .noSelection ; $6dea
 	ld a, [wCharSelectSlot] ; $6dec
 	ld hl, wCharSelectSlotChars ; $6def
 	add_hl_a ; $6df2
 	ld [hl], b ; $6df7
 	ld a, $01 ; $6df8
 	ld [wLinkSelectSlotState], a ; $6dfa
-	jr .noSelection ; $6dfd
-.done:
+	jr .done ; $6dfd
+.noSelection:
 	xor a ; $6dff
 	ret ; $6e00
-.noSelection:
+.done:
 	ld a, $01 ; $6e01
 	ret ; $6e03
 WaitLinkSelectStartupFrames:
@@ -166,7 +166,7 @@ RunNameEntryScreen:
 	ld [wStoryCharacterSlot], a ; $6e15
 	wram_bank WRAM_COURT_PLANES ; $6e18
 	ld a, c ; $6e1e
-	ld [wScreenAttrmap + 1], a ; $6e1f
+	ld [wNameEntryMugshotChar], a ; $6e1f
 	call DisableLCDSafely ; $6e22
 	call ClearFrameTasks ; $6e25
 	call SetupNameEntryScreen ; $6e28
@@ -178,7 +178,7 @@ RunNameEntryScreen:
 	call WaitFadeEnd ; $6e4b
 	ld hl, rIE ; $6e4e
 	res B_IE_TIMER, [hl] ; $6e51
-	frame_task TickMenuBgScrollTask_38 ; $6e53
+	frame_task TickMenuTitleScrollerTask_38 ; $6e53
 .redraw:
 	ld a, [wMenuCursorX] ; $6e5b
 	push de ; $6e5e
@@ -188,7 +188,7 @@ RunNameEntryScreen:
 	call PrintDecimalByte ; $6e64
 	pop af ; $6e67
 	pop de ; $6e68
-	ldh a, [hInputPressed] ; $6e69
+	ldh a, [hInputRepeat] ; $6e69
 	ld [wMenuInputPressed], a ; $6e6b
 	ld b, $0f ; $6e6e
 	ld c, $06 ; $6e70
@@ -252,7 +252,7 @@ RunNameEntryScreen:
 	pop_wram_bank ; $6ef0
 	ld a, b ; $6ef5
 	cp $00 ; $6ef6
-	jr z, .storeName ; $6ef8
+	jr z, .keepDefaultName ; $6ef8
 	wram_bank WRAM_SCREEN ; $6efa
 	call TrimTrailingSpacesFromName ; $6f00
 	call GetActiveStoryNameBuffer ; $6f03
@@ -269,7 +269,7 @@ RunNameEntryScreen:
 	set B_IE_TIMER, [hl] ; $6f21
 	ld a, $00 ; $6f23
 	ret ; $6f25
-.storeName:
+.keepDefaultName:
 	wram_bank WRAM_SCREEN ; $6f26
 	call GetActiveStoryNameBuffer ; $6f2c
 	ld h, b ; $6f2f
@@ -298,12 +298,12 @@ RunNameEntryScreen:
 	ld a, $00 ; $6f6b
 	ret ; $6f6d
 SetupNameEntryScreen:
-	ld b, TILEBLOCK_NameEntryGfx ; $6f6e
-	ld c, NameEntryGfx_SIZE / 16 ; $6f70
+	ld b, TILEBLOCK_NameEntryUnderlineCursorGfx ; $6f6e
+	ld c, NameEntryUnderlineCursorGfx_SIZE / 16 ; $6f70
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, vTiles0 + VRAM_BANK1 ; $6f78
-	ld de, $0801 ; $6f7b
+	ld_obj_pals de, 0, 1 ; $6f7b
 	farcall LoadMenuHandCursorGfx ; $6f7e
 	ld b, $0f ; $6f81
 	ld c, $00 ; $6f83
@@ -342,32 +342,32 @@ SetupNameEntryScreen:
 	ld c, $0c ; $6fe8
 	farcall LoadIndexedPalette ; $6fea
 	push_wram_bank WRAM_COURT_PLANES ; $6fed
-	ld a, [wScreenAttrmap + 1] ; $6ff6
+	ld a, [wNameEntryMugshotChar] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
 	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
 	wram_bank WRAM_COURT_PLANES ; $7002
 	call GetActiveStoryNameBuffer ; $7008
-	ld hl, $000c ; $700b
+	ld hl, CHARREC_PALETTE ; $700b
 	add hl, bc ; $700e
 	ld a, [hl] ; $700f
 	ld d, $04 ; $7010
 	farcall LoadIndexedPalette_18 ; $7012
 	pop_wram_bank ; $7015
-	farcall InitMenuBgScroll ; $701a
+	farcall InitMenuTitleScroller ; $701a
 	ld b, $01 ; $701d
 	ld c, $01 ; $701f
 	farcall LoadMenuSpritePalettePair ; $7021
 	ld a, $10 ; $7024
-	ld [wMenuBgScrollTile], a ; $7026
-	ld [wMenuBgScrollTile + 1], a ; $7029
-	ld b, TILEBLOCK_SharedMenuGfx72 ; $702c
-	ld c, SharedMenuGfx72_SIZE / 16 ; $702e
+	ld [wMenuTitleScrollTile], a ; $7026
+	ld [wMenuTitleScrollTile + 1], a ; $7029
+	ld b, TILEBLOCK_CreateACharacterTitleGfx ; $702c
+	ld c, CreateACharacterTitleGfx_SIZE / 16 ; $702e
 	ld de, vTiles0 tile $10 ; $7030
 	farcall LoadCompressedTileBlock ; $7033
 	push_wram_bank WRAM_COURT_PLANES ; $7036
 	xor a ; $703f
-	ld [wScreenAttrmap], a ; $7040
+	ld [wNameEntryCharsetPage], a ; $7040
 	wram_bank WRAM_SCREEN ; $7043
 	call GetActiveStoryNameBuffer ; $7049
 	ld h, b ; $704c
@@ -393,7 +393,7 @@ HandleNameEntryCursorMove:
 	ld a, [wMenuCursorY] ; $7074
 	cp $05 ; $7077
 	jr nz, .done ; $7079
-	ldh a, [hInputPressed] ; $707b
+	ldh a, [hInputRepeat] ; $707b
 	bit PADB_RIGHT, a ; $707d
 	jr nz, .snapRight ; $707f
 	bit PADB_LEFT, a ; $7081
@@ -433,7 +433,7 @@ DrawNameEntryCharGrid:
 	ld c, $05 ; $7185
 	ld b, $03 ; $7187
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 1 ; $7189
-.lowerCase:
+.nextGroup:
 	ld a, $20 ; $718c
 	ld [de], a ; $718e
 	inc de ; $718f
@@ -450,7 +450,7 @@ DrawNameEntryCharGrid:
 	jr nz, .drawRows ; $7199
 	ld c, $05 ; $719b
 	dec b ; $719d
-	jr nz, .lowerCase ; $719e
+	jr nz, .nextGroup ; $719e
 	ld a, [hl] ; $71a0
 	or a ; $71a1
 	jr z, .done ; $71a2
@@ -461,7 +461,7 @@ DrawNameEntryCharGrid:
 	ld d, h ; $71ab
 	ld e, l ; $71ac
 	pop hl ; $71ad
-	jr .lowerCase ; $71ae
+	jr .nextGroup ; $71ae
 .done:
 	pop_wram_bank ; $71b0
 	ret ; $71b5

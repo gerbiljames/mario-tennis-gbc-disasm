@@ -1,19 +1,19 @@
-ShowTournamentBracket:
+ShowVarsityTeamChart:
 	wram_bank WRAM_SCREEN ; $775d
 	ld a, b ; $7763
 	ld [wScreenScratch], a ; $7764
 	ld a, c ; $7767
 	ld [wDataScreenPage], a ; $7768
 	call DisableLCDSafely ; $776b
-	call BuildTournamentBracketScreen ; $776e
+	call BuildVarsityTeamChartScreen ; $776e
 	call EnableLCD ; $7771
 	script_fade_in 16 ; $7774
 	call WaitFadeEnd ; $7779
-	frame_task BracketHighlightBlinkTask ; $777c
+	frame_task VarsityChartHighlightBlinkTask ; $777c
 	sound SFX_MARKER ; $7784
 	wait_frames 120 ; $7786
 .loop:
-	ldh a, [hInputPressed] ; $778a
+	ldh a, [hInputRepeat] ; $778a
 	bit PADB_A, a ; $778c
 	jr nz, .playSfx ; $778e
 	bit PADB_B, a ; $7790
@@ -26,44 +26,44 @@ ShowTournamentBracket:
 	script_fade_out 16 ; $779e
 	call WaitFadeEnd ; $77a3
 	ret ; $77a6
-BuildTournamentBracketScreen:
+BuildVarsityTeamChartScreen:
 	ld a, [wScreenScratch] ; $77a7
 	or a ; $77aa
 	jr nz, .doubles ; $77ab
-	ld c, SCREENASSET_VarsityTeamChart ; $77ad
+	ld c, SCREENASSET_VarsityTeamChartSingles ; $77ad
 	farcall LoadScreenAssetRecord ; $77af
-	ld b, TILEBLOCK_TournamentBracketGfx ; $77b2
-	ld c, TournamentBracketGfx_SIZE / 16 ; $77b4
+	ld b, TILEBLOCK_VarsityTeamChartNameBoxTiles ; $77b2
+	ld c, VarsityTeamChartNameBoxTiles_SIZE / 16 ; $77b4
 	ld de, vTiles2 ; $77b6
 	farcall LoadCompressedTileBlock ; $77b9
 	wram_bank WRAM_SCREEN ; $77bc
-	call ClearTournamentBracketAttrs ; $77c2
-	call DrawTournamentBracketNameBoxes ; $77c5
-	call WriteBracketSinglesNames ; $77c8
-	call HighlightBracketPlayerRow ; $77cb
+	call ClearVarsityTeamChartAttrs ; $77c2
+	call DrawVarsityTeamChartNameBoxes ; $77c5
+	call WriteVarsityChartSinglesNames ; $77c8
+	call HighlightVarsityChartPlayerRow ; $77cb
 	farcall QueueWram3MapToVRAM ; $77ce
 	ret ; $77d1
 .doubles:
-	ld c, SCREENASSET_VarsityTeamChart2 ; $77d2
+	ld c, SCREENASSET_VarsityTeamChartDoubles ; $77d2
 	farcall LoadScreenAssetRecord ; $77d4
-	ld b, TILEBLOCK_TournamentBracketGfx ; $77d7
-	ld c, TournamentBracketGfx_SIZE / 16 ; $77d9
+	ld b, TILEBLOCK_VarsityTeamChartNameBoxTiles ; $77d7
+	ld c, VarsityTeamChartNameBoxTiles_SIZE / 16 ; $77d9
 	ld de, vTiles2 ; $77db
 	farcall LoadCompressedTileBlock ; $77de
 	wram_bank WRAM_SCREEN ; $77e1
-	call ClearTournamentBracketAttrs ; $77e7
-	call DrawTournamentBracketNameBoxes ; $77ea
-	call WriteBracketDoublesNames ; $77ed
-	call HighlightBracketPlayerRow ; $77f0
+	call ClearVarsityTeamChartAttrs ; $77e7
+	call DrawVarsityTeamChartNameBoxes ; $77ea
+	call WriteVarsityChartDoublesNames ; $77ed
+	call HighlightVarsityChartPlayerRow ; $77f0
 	farcall QueueWram3MapToVRAM ; $77f3
 	ret ; $77f6
-ClearTournamentBracketAttrs:
+ClearVarsityTeamChartAttrs:
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; $77f7
 	rect_size $07, $08 ; $77fa
 	ld h, $00 ; $77fe
 	farcall FillTilemapRect ; $7800
 	ret ; $7803
-DrawTournamentBracketNameBoxes:
+DrawVarsityTeamChartNameBoxes:
 	ld a, [wScreenScratch] ; $7804
 	or a ; $7807
 	jr nz, .doubles ; $7808
@@ -102,9 +102,9 @@ DrawTournamentBracketNameBoxes:
 	ld h, $03 ; $7866
 	farcall FillTilemapRect ; $7868
 	ret ; $786b
-WriteBracketSinglesNames:
+WriteVarsityChartSinglesNames:
 	ld a, [wDataScreenPage] ; $786c
-	ld hl, WriteBracketSinglesNamesPtrs ; $786f
+	ld hl, WriteVarsityChartSinglesNamesPtrs ; $786f
 	add a ; $7872
 	add_hl_a ; $7873
 	ld a, [hl+] ; $7878
@@ -113,33 +113,33 @@ WriteBracketSinglesNames:
 	ld b, $00 ; $787b
 .loop:
 	ld a, [hl+] ; $787d
-	call WriteBracketEntrantName ; $787e
+	call WriteVarsityChartName ; $787e
 	ld a, b ; $7881
 	inc a ; $7882
 	ld b, a ; $7883
 	cp $04 ; $7884
 	jr nz, .loop ; $7886
 	ret ; $7888
-WriteBracketSinglesNamesPtrs:
+WriteVarsityChartSinglesNamesPtrs:
 	; $7889, 10 bytes (records:2)
-	dw BracketSinglesNames0 ; record 0
-	dw BracketSinglesNames0 ; record 1
-	dw BracketSinglesNames1 ; record 2
-	dw BracketSinglesNames2 ; record 3
-	dw BracketSinglesNames3 ; record 4
-BracketSinglesNames0:
+	dw VarsityChartSinglesNamesPlayerRow0 ; record 0
+	dw VarsityChartSinglesNamesPlayerRow0 ; record 1
+	dw VarsityChartSinglesNamesPlayerRow1 ; record 2
+	dw VarsityChartSinglesNamesPlayerRow2 ; record 3
+	dw VarsityChartSinglesNamesPlayerRow3 ; record 4
+VarsityChartSinglesNamesPlayerRow0:
 	; $7893, 4 bytes (bytes:4)
 	db $00, $01, $02, $03 ; 0x00
-BracketSinglesNames1:
+VarsityChartSinglesNamesPlayerRow1:
 	; $7897, 4 bytes (bytes:4)
 	db $01, $00, $02, $03 ; 0x00
-BracketSinglesNames2:
+VarsityChartSinglesNamesPlayerRow2:
 	; $789b, 4 bytes (bytes:4)
 	db $01, $02, $00, $03 ; 0x00
-BracketSinglesNames3:
+VarsityChartSinglesNamesPlayerRow3:
 	; $789f, 4 bytes (bytes:4)
 	db $01, $02, $03, $00 ; 0x00
-WriteBracketEntrantName:
+WriteVarsityChartName:
 	push af ; $78a3
 	push bc ; $78a4
 	push de ; $78a5
@@ -150,7 +150,7 @@ WriteBracketEntrantName:
 	dec a ; $78ad
 	add_hl_a ; $78ae
 	push hl ; $78b3
-	ld hl, WriteBracketEntrantNameTable ; $78b4
+	ld hl, WriteVarsityChartNameTable ; $78b4
 	ld a, b ; $78b7
 	add a ; $78b8
 	add_hl_a ; $78b9
@@ -166,7 +166,7 @@ WriteBracketEntrantName:
 	pop af ; $78ca
 	ret ; $78cb
 .player:
-	ld hl, WriteBracketEntrantNameTable ; $78cc
+	ld hl, WriteVarsityChartNameTable ; $78cc
 	ld a, b ; $78cf
 	add a ; $78d0
 	add_hl_a ; $78d1
@@ -180,13 +180,13 @@ WriteBracketEntrantName:
 	pop bc ; $78e1
 	pop af ; $78e2
 	ret ; $78e3
-WriteBracketEntrantNameTable:
+WriteVarsityChartNameTable:
 	; $78e4, 8 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 9 ; record 0
 	dw wShadowTilemap + 11 * TILEMAP_WIDTH + 9 ; record 1
 	dw wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; record 2
 	dw wShadowTilemap + 15 * TILEMAP_WIDTH + 9 ; record 3
-WriteBracketDoublesNames:
+WriteVarsityChartDoublesNames:
 	ld a, [wDataScreenPage] ; $78ec
 	cp $01 ; $78ef
 	jr nz, .playerBelow ; $78f1
@@ -221,12 +221,12 @@ WriteBracketDoublesNames:
 	ld c, $20 ; $793f
 	farcall RenderTextToBuffer64 ; $7941
 	ret ; $7944
-HighlightBracketPlayerRow:
+HighlightVarsityChartPlayerRow:
 	ld a, [wScreenScratch] ; $7945
 	or a ; $7948
 	jr nz, .doubles ; $7949
 	ld a, [wDataScreenPage] ; $794b
-	ld hl, HighlightBracketPlayerRowTable ; $794e
+	ld hl, HighlightVarsityChartPlayerRowTable ; $794e
 	add a ; $7951
 	add_hl_a ; $7952
 	ld a, [hl+] ; $7957
@@ -236,7 +236,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
 	ld a, [wDataScreenPage] ; $7963
-	ld hl, BracketSinglesMarkerAttrPtrs ; $7966
+	ld hl, VarsityChartSinglesMarkerAttrPtrs ; $7966
 	add a ; $7969
 	add_hl_a ; $796a
 	ld a, [hl+] ; $796f
@@ -254,7 +254,7 @@ HighlightBracketPlayerRow:
 	ret ; $7984
 .doubles:
 	ld a, [wDataScreenPage] ; $7985
-	ld hl, BracketDoublesRowAttrPtrs ; $7988
+	ld hl, VarsityChartDoublesRowAttrPtrs ; $7988
 	add a ; $798b
 	add_hl_a ; $798c
 	ld a, [hl+] ; $7991
@@ -264,7 +264,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
 	ld a, [wDataScreenPage] ; $799d
-	ld hl, BracketDoublesMarkerAttrPtrs ; $79a0
+	ld hl, VarsityChartDoublesMarkerAttrPtrs ; $79a0
 	add a ; $79a3
 	add_hl_a ; $79a4
 	ld a, [hl+] ; $79a9
@@ -274,44 +274,44 @@ HighlightBracketPlayerRow:
 	ld h, $0d ; $79b0
 	farcall FillTilemapRect ; $79b2
 	ret ; $79b5
-HighlightBracketPlayerRowTable:
+HighlightVarsityChartPlayerRowTable:
 	; $79b6, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; record 1
 	dw wShadowAttrmap + 10 * TILEMAP_WIDTH + 9 ; record 2
 	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 3
 	dw wShadowAttrmap + 14 * TILEMAP_WIDTH + 9 ; record 4
-BracketSinglesMarkerAttrPtrs:
+VarsityChartSinglesMarkerAttrPtrs:
 	; $79c0, 10 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 5 ; record 2
 	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 3
 	dw wShadowAttrmap + 15 * TILEMAP_WIDTH + 5 ; record 4
-BracketDoublesRowAttrPtrs:
+VarsityChartDoublesRowAttrPtrs:
 	; $79ca, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; record 1
 	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 2
-BracketDoublesMarkerAttrPtrs:
+VarsityChartDoublesMarkerAttrPtrs:
 	; $79d0, 6 bytes (ram_ptrs:3:NO_BOX)
 	dw NO_BOX ; record 0
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
 	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 2
-BracketHighlightBlinkTask:
-	ld hl, BracketHighlightBlinkTaskPalettes0 ; $79d6
+VarsityChartHighlightBlinkTask:
+	ld hl, VarsityChartHighlightBlinkPalettes0 ; $79d6
 	ldh a, [hVBlankCounter] ; $79d9
 	and $10 ; $79db
 	jr z, .maskClear ; $79dd
-	ld hl, BracketHighlightBlinkTaskPalettes1 ; $79df
+	ld hl, VarsityChartHighlightBlinkPalettes1 ; $79df
 .maskClear:
 	ld_bg_pals de, 5, 1 ; $79e2
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
-BracketHighlightBlinkTaskPalettes0:
-	INCLUDE "data/engine/menus/ranking/BracketHighlightBlinkTaskPalettes0.asm" ; $79e9, 8 bytes (palettes)
-BracketHighlightBlinkTaskPalettes1:
-	INCLUDE "data/engine/menus/ranking/BracketHighlightBlinkTaskPalettes1.asm" ; $79f1, 8 bytes (palettes)
+VarsityChartHighlightBlinkPalettes0:
+	INCLUDE "data/engine/menus/ranking/VarsityChartHighlightBlinkPalettes0.asm" ; $79e9, 8 bytes (palettes)
+VarsityChartHighlightBlinkPalettes1:
+	INCLUDE "data/engine/menus/ranking/VarsityChartHighlightBlinkPalettes1.asm" ; $79f1, 8 bytes (palettes)
 RunMarioCastExhibResults:
 	sound BGM_STATUS_SCREEN ; $79f9
 	call DisableLCDSafely ; $79fb
@@ -328,7 +328,7 @@ RunMarioCastExhibResults:
 	wram_bank WRAM_SCREEN ; $7a26
 .loop:
 	call AdvanceFrame ; $7a2c
-	ldh a, [hInputPressed] ; $7a2f
+	ldh a, [hInputRepeat] ; $7a2f
 	ld [wMenuInputPressed], a ; $7a31
 	call CheckMarioCastChartExpanded ; $7a34
 	or a ; $7a37
@@ -366,7 +366,7 @@ MarioCastChartScrollArrowsTask:
 	cp $02 ; $7a7f
 	jr z, .checkLeftArrow ; $7a81
 	ld_xy de, $93, $2f ; $7a83
-	ld c, $01 ; $7a86
+	ld c, BOBDIR_POS ; $7a86
 	call ApplyCursorBounceX ; $7a88
 	ld b, $08 ; $7a8b
 	ld c, $00 ; $7a8d
@@ -377,7 +377,7 @@ MarioCastChartScrollArrowsTask:
 	or a ; $7a97
 	jr z, .checkUpArrow ; $7a98
 	ld_xy de, $08, $2f ; $7a9a
-	ld c, $00 ; $7a9d
+	ld c, BOBDIR_NEG ; $7a9d
 	call ApplyCursorBounceX ; $7a9f
 	ld b, $08 ; $7aa2
 	ld c, $00 ; $7aa4
@@ -388,7 +388,7 @@ MarioCastChartScrollArrowsTask:
 	or a ; $7aae
 	jr z, .checkDownArrow ; $7aaf
 	ld_xy de, $0a, $20 ; $7ab1
-	ld c, $01 ; $7ab4
+	ld c, BOBDIR_POS ; $7ab4
 	call ApplyCursorBounceY ; $7ab6
 	ld b, $08 ; $7ab9
 	ld c, $00 ; $7abb
@@ -399,7 +399,7 @@ MarioCastChartScrollArrowsTask:
 	cp $05 ; $7ac5
 	jr z, .atBottomRow ; $7ac7
 	ld_xy de, $0a, $78 ; $7ac9
-	ld c, $00 ; $7acc
+	ld c, BOBDIR_NEG ; $7acc
 	call ApplyCursorBounceY ; $7ace
 	ld b, $08 ; $7ad1
 	ld c, $00 ; $7ad3
@@ -412,7 +412,7 @@ MarioCastChartScrollArrowsTask:
 	or a ; $7adf
 	jr z, .collapsedDownArrow ; $7ae0
 	ld_xy de, $1a, $20 ; $7ae2
-	ld c, $01 ; $7ae5
+	ld c, BOBDIR_POS ; $7ae5
 	call ApplyCursorBounceY ; $7ae7
 	ld b, $08 ; $7aea
 	ld c, $00 ; $7aec
@@ -423,7 +423,7 @@ MarioCastChartScrollArrowsTask:
 	cp $01 ; $7af6
 	jr z, .restore ; $7af8
 	ld_xy de, $1a, $78 ; $7afa
-	ld c, $00 ; $7afd
+	ld c, BOBDIR_NEG ; $7afd
 	call ApplyCursorBounceY ; $7aff
 	ld b, $08 ; $7b02
 	ld c, $00 ; $7b04
@@ -435,12 +435,12 @@ MarioCastChartScrollArrowsTask:
 BuildMarioCastExhibScreen:
 	wram_bank WRAM_SCREEN ; $7b11
 	xor a ; $7b17
-	ld [wN64ExhibCursorRow], a ; $7b18
-	ld [wN64ExhibPage], a ; $7b1b
-	ld c, SCREENASSET_ExhibitionMenu ; $7b1e
+	ld [wChartScrollRow], a ; $7b18
+	ld [wChartScrollColumn], a ; $7b1b
+	ld c, SCREENASSET_ExhibitionRecords ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $7b23
-	call LoadChartWindowTiles ; $7b26
+	call LoadChartCharIconTiles ; $7b26
 	ld de, vTiles0 + VRAM_BANK1 ; $7b29
 	farcall LoadMenuArrowSpriteTiles ; $7b2c
 	ld b, $08 ; $7b2f
@@ -624,7 +624,7 @@ FlushMarioCastChartWindowToVram:
 BuildMarioCastChartColumnList:
 	ld c, $00 ; $7cca
 .loop:
-	ld hl, MarioCastChartColumnListTable ; $7ccc
+	ld hl, MarioCastChartColumnUnlockFlags ; $7ccc
 	ld a, c ; $7ccf
 	add a ; $7cd0
 	add_hl_a ; $7cd1
@@ -640,7 +640,7 @@ BuildMarioCastChartColumnList:
 	ld b, $10 ; $7ce4
 	jr .storeColumn ; $7ce6
 .unlocked:
-	ld hl, MarioCastChartColumnTable ; $7ce8
+	ld hl, MarioCastChartColumnIconIds ; $7ce8
 	ld a, c ; $7ceb
 	add_hl_a ; $7cec
 	ld b, [hl] ; $7cf1
@@ -654,18 +654,18 @@ BuildMarioCastChartColumnList:
 	cp $09 ; $7cfe
 	jr nz, .loop ; $7d00
 	ret ; $7d02
-MarioCastChartColumnListTable:
+MarioCastChartColumnUnlockFlags:
 	; $7d03, 18 bytes (save_flag_ids)
-	dw SAVEFLAG_UNLOCKED_SAMMI ; record 0
+	dw SAVEFLAG_UNLOCKED_MARIO ; record 0
 	dw $ffff ; record 1
-	dw SAVEFLAG_UNLOCKED_ELDEN ; record 2
+	dw SAVEFLAG_UNLOCKED_PEACH ; record 2
 	dw $ffff ; record 3
-	dw SAVEFLAG_UNLOCKED_CURT ; record 4
+	dw SAVEFLAG_UNLOCKED_YOSHI ; record 4
 	dw $ffff ; record 5
-	dw SAVEFLAG_UNLOCKED_SEAN ; record 6
-	dw SAVEFLAG_UNLOCKED_FAY ; record 7
-	dw SAVEFLAG_UNLOCKED_MARK ; record 8
-MarioCastChartColumnTable:
+	dw SAVEFLAG_UNLOCKED_WARIO ; record 6
+	dw SAVEFLAG_UNLOCKED_WALUIGI ; record 7
+	dw SAVEFLAG_UNLOCKED_BOWSER ; record 8
+MarioCastChartColumnIconIds:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00
 	db $03, $04, $05 ; 0x03

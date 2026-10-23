@@ -1,13 +1,13 @@
 MovePlayerToLessonCourtSpot:
 	ld a, [wCurrentMatchIndex] ; $6253
 	sub $0a ; $6256
-	jr nc, .netCourtSpot ; $6258
+	jr nc, .strokeCourtSpot ; $6258
 	ld a, [wCurrentMatchIndex] ; $625a
 	sub $04 ; $625d
 	jr c, .serveCourtSpot ; $625f
-	jp .strokeCourtSpot ; $6261
+	jp .netCourtSpot ; $6261
 	ret ; $6264
-.netCourtSpot:
+.strokeCourtSpot:
 	script_move_target ACTOR_PLAYER, 19.0, 43.0 ; $6265
 	script_wait_move ACTOR_PLAYER ; $6270
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6275
@@ -17,7 +17,7 @@ MovePlayerToLessonCourtSpot:
 	script_wait_move ACTOR_PLAYER ; $628e
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6293
 	ret ; $62a0
-.strokeCourtSpot:
+.netCourtSpot:
 	script_move_target ACTOR_PLAYER, 45.0, 43.0 ; $62a1
 	script_wait_move ACTOR_PLAYER ; $62ac
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $62b1
@@ -34,7 +34,7 @@ NetGameMatch1ResultScene:
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
-	jr z, .netResultTextAlt ; $62d4
+	jr z, .juniorText ; $62d4
 	ld hl, wChallengerRivalWonTextId ; $62d6
 	ld de, Text_BrianBetterAtVolleying ; $62d9
 	ld a, e ; $62dc
@@ -46,7 +46,7 @@ NetGameMatch1ResultScene:
 	ld [hl+], a ; $62e6
 	ld [hl], d ; $62e7
 	jr .netResult ; $62e8
-.netResultTextAlt:
+.juniorText:
 	ld hl, wChallengerRivalWonTextId ; $62ea
 	ld de, Text_BrianCantLoseToJunior ; $62ed
 	ld a, e ; $62f0
@@ -118,7 +118,7 @@ StrokeMatch1ResultScene:
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6362
-	jr z, .serveResult ; $6365
+	jr z, .juniorText ; $6365
 	ld hl, wChallengerRivalWonTextId ; $6367
 	ld de, Text_AllieBetterAtStroke ; $636a
 	ld a, e ; $636d
@@ -129,8 +129,8 @@ StrokeMatch1ResultScene:
 	ld a, e ; $6376
 	ld [hl+], a ; $6377
 	ld [hl], d ; $6378
-	jr .serveResultDoubles ; $6379
-.serveResult:
+	jr .showResult ; $6379
+.juniorText:
 	ld hl, wChallengerRivalWonTextId ; $637b
 	ld de, Text_AllieWontLoseToJunior ; $637e
 	ld a, e ; $6381
@@ -141,7 +141,7 @@ StrokeMatch1ResultScene:
 	ld a, e ; $638a
 	ld [hl+], a ; $638b
 	ld [hl], d ; $638c
-.serveResultDoubles:
+.showResult:
 	call StrokeChallengerResultScene ; $638d
 	ret ; $6390
 StrokeMatch2ResultScene:
@@ -384,12 +384,12 @@ SpeakServeCoachDeclineLine:
 ServeCoachJuniorLessonScene:
 	script_face_toward ACTOR_TRAINING_COURT_CURT, ACTOR_PARTNER ; $66f5
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $66fd
-	jr nz, .setText ; $6700
+	jr nz, .notJunior ; $6700
 	script_set_text Text_CurtJuniorNeedServePractice ; $6702
-	jr .scriptShowSpeakerDialogueRestoreBG ; $6708
-.setText:
+	jr .prompt ; $6708
+.notJunior:
 	script_set_text Text_CurtHereForServePractice ; $670a
-.scriptShowSpeakerDialogueRestoreBG:
+.prompt:
 	script_speak_restore ACTOR_TRAINING_COURT_CURT ; $6710
 	farcall RunDialogueYesNoPrompt ; $6715
 	farcall ScriptCloseDialogueWindow ; $6718

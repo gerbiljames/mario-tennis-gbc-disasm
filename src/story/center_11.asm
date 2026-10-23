@@ -1,7 +1,7 @@
 DataPtr_CenterCourtMapScripts_11:
 	dw CenterCourtMapScripts_11 ; $4000
-DataPtr_AcademyArrivalMapScripts_11:
-	dw AcademyArrivalMapScripts_11 ; $4002
+DataPtr_AcademyEntranceMapScripts_11:
+	dw AcademyEntranceMapScripts_11 ; $4002
 DataPtr_JuniorClassCourtDoublesMapScripts_11:
 	dw JuniorClassCourtDoublesMapScripts_11 ; $4004
 DataPtr_JuniorClassCourtSinglesMapScripts_11:
@@ -52,14 +52,14 @@ CenterCourtNpc03_11:
 	ret ; $40ae
 CenterCourtNpc04_11:
 	test_flag FLAG_DOUBLES ; $40af
-	jr z, .altText ; $40b2
+	jr z, .singles ; $40b2
 	script_set_text Text_CenterCourtStaffTournamentPeak ; $40b4
 	ld a, [wMapSceneStage] ; $40ba
 	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $40bd
 	jr nz, .done ; $40bf
 	script_set_text Text_CenterCourtStaffMomentOfTruth ; $40c1
 	jr .done ; $40c7
-.altText:
+.singles:
 	script_set_text Text_CenterCourtStaffAcademySweats ; $40c9
 	script_speak_restore ACTOR_CENTER_COURT_TOURNAMENT_STAFF_2 ; $40cf
 	farcall RunDialogueYesNoPrompt ; $40d4
@@ -155,23 +155,23 @@ CenterCourtTileTriggers_11:
 CenterCourtTile01_11:
 	ret ; $41a3
 CenterCourtInitScript_11:
-	call SetupCenterCourtSceneVariant ; $41a4
+	call SetupCenterCourtStage ; $41a4
 	call LoadPlayerPartnerObjDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
 	cp ENTRY_CENTER_COURT_CREDITS ; $41ad
-	jp z, CenterCourtEntry0fScene ; $41af
+	jp z, CenterCourtCreditsScene ; $41af
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
-SetupCenterCourtSceneVariant:
+SetupCenterCourtStage:
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND1 ; $41b6
 	ld [wMapSceneStage], a ; $41b8
 	test_flag FLAG_DOUBLES ; $41bb
-	jr nz, .doneEarly ; $41be
+	jr nz, .doubles ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
 	jr z, .checkRound2 ; $41c3
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
-	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41ca
+	script_respawn_actors CenterCourtFinalCrowdActors_11 ; $41ca
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
 .checkRound2:
@@ -187,46 +187,46 @@ SetupCenterCourtSceneVariant:
 	ld [wMapSceneStage], a ; $41e8
 .keepRound1:
 	ret ; $41eb
-.doneEarly:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
 	jr z, .doublesCheckRound1 ; $41ef
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
-	script_respawn_actors CenterCourtSceneVariantActors_11 ; $41f6
+	script_respawn_actors CenterCourtFinalCrowdActors_11 ; $41f6
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
-	jr z, .done ; $4205
+	jr z, .doublesRound1 ; $4205
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4207
 	ld [wMapSceneStage], a ; $4209
 	ret ; $420c
-.done:
+.doublesRound1:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $420d
 	ld [wMapSceneStage], a ; $420f
 	ret ; $4212
-CenterCourtSceneVariantActors_11:
+CenterCourtFinalCrowdActors_11:
 	; $4213, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_11_45, 15.0, 46.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_TOURNAMENT_STAFF_1
-	map_actor $0000, ActorScript_11_45, 13.0, 39.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_TOURNAMENT_STAFF_2
-	map_actor $0000, ActorScript_11_45, 37.0, 36.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_1
-	map_actor $0000, ActorScript_11_45, 35.0, 33.0, FACE_LEFT, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $07, CENTER_COURT_SCENE_VARIANT_STUDENT_PONYTAIL_GIRL
-	map_actor $0000, ActorScript_11_45, 39.0, 35.0, FACE_LEFT, OBJ_ISLAND_SPECTATOR_A, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_ISLAND_SPECTATOR_A
-	map_actor $0000, ActorScript_11_45, 39.0, 33.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_2
-	map_actor $0000, ActorScript_11_45, 37.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_1
-	map_actor $0000, ActorScript_11_45, 11.0, 36.0, FACE_RIGHT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_STUDENT_CAP_BOY_1
-	map_actor $0000, ActorScript_11_45, 13.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_2
-	map_actor $0000, ActorScript_11_45, 9.0, 35.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $03, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_3
-	map_actor $0000, ActorScript_11_45, 5.0, 32.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_SCENE_VARIANT_STUDENT_SIDE_PART_BOY_4
-	map_actor $0000, ActorScript_11_45, 9.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_3
-	map_actor $0000, ActorScript_11_45, 43.0, 34.0, FACE_LEFT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_STUDENT_CAP_BOY_2
-	map_actor $0000, ActorScript_11_45, 43.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_STUDENT_PIGTAILS_GIRL_4
-	map_actor $0000, ActorScript_11_45, 43.0, 30.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $00, CENTER_COURT_SCENE_VARIANT_BETH
-	map_actor $0000, ActorScript_11_45, 39.0, 29.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $04, CENTER_COURT_SCENE_VARIANT_PAM
+	map_actor $0000, ActorScript_11_45, 15.0, 46.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_TOURNAMENT_STAFF_1
+	map_actor $0000, ActorScript_11_45, 13.0, 39.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_TOURNAMENT_STAFF_2
+	map_actor $0000, ActorScript_11_45, 37.0, 36.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $07, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_1
+	map_actor $0000, ActorScript_11_45, 35.0, 33.0, FACE_LEFT, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $07, CENTER_COURT_FINAL_CROWD_STUDENT_PONYTAIL_GIRL
+	map_actor $0000, ActorScript_11_45, 39.0, 35.0, FACE_LEFT, OBJ_ISLAND_SPECTATOR_A, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_ISLAND_SPECTATOR_A
+	map_actor $0000, ActorScript_11_45, 39.0, 33.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_2
+	map_actor $0000, ActorScript_11_45, 37.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_1
+	map_actor $0000, ActorScript_11_45, 11.0, 36.0, FACE_RIGHT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_STUDENT_CAP_BOY_1
+	map_actor $0000, ActorScript_11_45, 13.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_2
+	map_actor $0000, ActorScript_11_45, 9.0, 35.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $03, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_3
+	map_actor $0000, ActorScript_11_45, 5.0, 32.0, FACE_RIGHT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $06, CENTER_COURT_FINAL_CROWD_STUDENT_SIDE_PART_BOY_4
+	map_actor $0000, ActorScript_11_45, 9.0, 33.0, FACE_RIGHT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $03, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_3
+	map_actor $0000, ActorScript_11_45, 43.0, 34.0, FACE_LEFT, OBJ_STUDENT_CAP_BOY, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_STUDENT_CAP_BOY_2
+	map_actor $0000, ActorScript_11_45, 43.0, 32.0, FACE_LEFT, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_STUDENT_PIGTAILS_GIRL_4
+	map_actor $0000, ActorScript_11_45, 43.0, 30.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $00, CENTER_COURT_FINAL_CROWD_BETH
+	map_actor $0000, ActorScript_11_45, 39.0, 29.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $04, CENTER_COURT_FINAL_CROWD_PAM
 	map_actor_end
 	twin_named academy_main_bldg_arrival01, MapArrivalWalk_11 ; $42fd
 	twin load_player_partner_obj_defs, 11 ; $4343 LoadPlayerPartnerObjDefs_11
-CenterCourtEntry0fScene:
+CenterCourtCreditsScene:
 	script_set_position $0a, 37.0, 36.0 ; $437a
 	test_flag FLAG_DOUBLES ; $4385
 	jr z, .notDoubles2 ; $4388
@@ -260,72 +260,72 @@ ActorScript_11_01:
 	as_set_target 35.0, 36.0
 	as_wait_move
 	as_halt
-AcademyArrivalMapScripts_11:
+AcademyEntranceMapScripts_11:
 	; $4401, 14 bytes (map_tree)
-	dw AcademyArrivalEntryPoints_11 ; slot 0 EntryPoints
-	dw AcademyArrivalExitTriggers_11 ; slot 1 ExitTriggers
-	dw AcademyArrivalActors_11 ; slot 2 Actors
-	dw AcademyArrivalNpcScripts_11 ; slot 3 NpcScripts
-	dw AcademyArrivalFacingScripts_11 ; slot 4 FacingScripts
-	dw AcademyArrivalTileTriggers_11 ; slot 5 TileTriggers
-	dw AcademyArrivalInitScript_11 ; slot 6 InitScript
-AcademyArrivalActors_11:
+	dw AcademyEntranceEntryPoints_11 ; slot 0 EntryPoints
+	dw AcademyEntranceExitTriggers_11 ; slot 1 ExitTriggers
+	dw AcademyEntranceActors_11 ; slot 2 Actors
+	dw AcademyEntranceNpcScripts_11 ; slot 3 NpcScripts
+	dw AcademyEntranceFacingScripts_11 ; slot 4 FacingScripts
+	dw AcademyEntranceTileTriggers_11 ; slot 5 TileTriggers
+	dw AcademyEntranceInitScript_11 ; slot 6 InitScript
+AcademyEntranceActors_11:
 	; $440f, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_11_46, 25.0, 25.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $05, ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1
-	map_actor $0000, ActorScript_11_45, 21.0, 37.0, FACE_LEFT, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $00, ACADEMY_ARRIVAL_STUDENT_PONYTAIL_GIRL
-	map_actor $0000, ActorScript_11_45, 21.0, 39.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $00, ACADEMY_ARRIVAL_STUDENT_SIDE_PART_BOY
-	map_actor $0000, ActorScript_11_48, 1.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $03, ACADEMY_ARRIVAL_RACKET_STUDENT_1
-	map_actor $0000, ActorScript_11_49, 5.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $04, ACADEMY_ARRIVAL_RACKET_STUDENT_2
-	map_actor $0000, ActorScript_11_50, 10.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $07, ACADEMY_ARRIVAL_RACKET_STUDENT_3
-	map_actor $0000, ActorScript_11_51, 15.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $06, ACADEMY_ARRIVAL_RACKET_STUDENT_4
-	map_actor $0000, ActorScript_11_48, 34.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $06, ACADEMY_ARRIVAL_RACKET_STUDENT_5
-	map_actor $0000, ActorScript_11_49, 38.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $03, ACADEMY_ARRIVAL_RACKET_STUDENT_6
-	map_actor $0000, ActorScript_11_50, 44.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $07, ACADEMY_ARRIVAL_RACKET_STUDENT_7
-	map_actor $0000, ActorScript_11_51, 48.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $04, ACADEMY_ARRIVAL_RACKET_STUDENT_8
-	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, ACADEMY_ARRIVAL_BALLOON_QUESTION
-	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_ARRIVAL_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, ACADEMY_ARRIVAL_BALLOON_SWEAT
-	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_DOWN, OBJ_HEADMASTER, ANIM_WALK, $00, ACADEMY_ARRIVAL_HEADMASTER
-	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_ARRIVAL_EMILY
-	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, ACADEMY_ARRIVAL_BALLOON_ELLIPSIS
-	map_actor $0000, ActorScript_11_45, 24.0, 51.0, FACE_UP, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $03, ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2
+	map_actor $0000, ActorScript_11_46, 25.0, 25.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $05, ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_1
+	map_actor $0000, ActorScript_11_45, 21.0, 37.0, FACE_LEFT, OBJ_STUDENT_PONYTAIL_GIRL, ANIM_WALK, $00, ACADEMY_ENTRANCE_STUDENT_PONYTAIL_GIRL
+	map_actor $0000, ActorScript_11_45, 21.0, 39.0, FACE_LEFT, OBJ_STUDENT_SIDE_PART_BOY, ANIM_WALK, $00, ACADEMY_ENTRANCE_STUDENT_SIDE_PART_BOY
+	map_actor $0000, ActorScript_11_48, 1.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $03, ACADEMY_ENTRANCE_RACKET_STUDENT_1
+	map_actor $0000, ActorScript_11_49, 5.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $04, ACADEMY_ENTRANCE_RACKET_STUDENT_2
+	map_actor $0000, ActorScript_11_50, 10.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $07, ACADEMY_ENTRANCE_RACKET_STUDENT_3
+	map_actor $0000, ActorScript_11_51, 15.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $06, ACADEMY_ENTRANCE_RACKET_STUDENT_4
+	map_actor $0000, ActorScript_11_48, 34.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $06, ACADEMY_ENTRANCE_RACKET_STUDENT_5
+	map_actor $0000, ActorScript_11_49, 38.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $03, ACADEMY_ENTRANCE_RACKET_STUDENT_6
+	map_actor $0000, ActorScript_11_50, 44.0, 28.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $07, ACADEMY_ENTRANCE_RACKET_STUDENT_7
+	map_actor $0000, ActorScript_11_51, 48.0, 40.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $04, ACADEMY_ENTRANCE_RACKET_STUDENT_8
+	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, ACADEMY_ENTRANCE_BALLOON_QUESTION
+	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, ACADEMY_ENTRANCE_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, ACADEMY_ENTRANCE_BALLOON_SWEAT
+	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_DOWN, OBJ_HEADMASTER, ANIM_WALK, $00, ACADEMY_ENTRANCE_HEADMASTER
+	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, ACADEMY_ENTRANCE_EMILY
+	map_actor $0000, ActorScript_11_45, 21.0, 61.0, FACE_RIGHT, OBJ_BALLOON_ELLIPSIS, ANIM_WALK, $00, ACADEMY_ENTRANCE_BALLOON_ELLIPSIS
+	map_actor $0000, ActorScript_11_45, 24.0, 51.0, FACE_UP, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $03, ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2
 	map_actor_end
-AcademyArrivalEntryPoints_11:
+AcademyEntranceEntryPoints_11:
 	; $4515, 33 bytes (map_entries)
-	map_entry $01, FACE_DOWN, 24.0, 17.0, AcademyArrivalArrival01_11, ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG
+	map_entry $01, FACE_DOWN, 24.0, 17.0, AcademyEntranceArrival01_11, ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG
 	map_entry $02, FACE_UP, 24.0, 51.0, MapArrivalWalk_11, ACADEMY_ENTRANCE_FROM_ISLAND_SKY
 	map_entry $0c, FACE_DOWN, 24.0, 47.0, $0000, ACADEMY_ENTRANCE_DEPART_FOR_PEACHS_CASTLE
 	map_entry $0f, FACE_UP, 24.0, 47.0, $0000, ACADEMY_ENTRANCE_NEW_GAME
 	entry_id ACADEMY_ENTRANCE_DEPART_FOR_ISLAND_OPEN, $0a
 	db $ff
-	twin_named academy_main_bldg_arrival02, AcademyArrivalArrival01_11 ; $4536
-AcademyArrivalExitTriggers_11:
+	twin_named academy_main_bldg_arrival02, AcademyEntranceArrival01_11 ; $4536
+AcademyEntranceExitTriggers_11:
 	; $457c, 33 bytes (map_scripts:exit)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_FROM_ACADEMY_ENTRANCE, ACADEMY_ENTRANCE_TO_ACADEMY_MAIN_BLDG
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_TO_ISLAND_OPEN, ACADEMY_ENTRANCE_FLY_TO_ISLAND_OPEN
 	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE, ACADEMY_ENTRANCE_FLY_TO_PEACHS_CASTLE
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT, ACADEMY_ENTRANCE_TOUR
 	db $ff
-AcademyArrivalNpc03_11:
+AcademyEntranceNpc03_11:
 	ld a, [wMapSceneStage] ; $459d
 	add a ; $45a0
-	ld_hl_indexed AcademyArrivalNpc03TextIds ; $45a1
+	ld_hl_indexed AcademyEntranceNpc03TextIds ; $45a1
 	ld a, [hl+] ; $45a8
 	ld h, [hl] ; $45a9
 	ld l, a ; $45aa
 	farcall InitDialogueTextCursor ; $45ab
 	ld a, [wMapSceneStage] ; $45ae
 	cp STORYRANK_SINGLES_COMPLETE ; $45b1
-	jr nc, .altText ; $45b3
+	jr nc, .speakPlain ; $45b3
 	cp STORYRANK_SINGLES_SENIOR_CHAMP ; $45b5
-	jr nc, .speak ; $45b7
+	jr nc, .askYesNo ; $45b7
 	cp STORYRANK_SINGLES_JUNIOR_CHAMP ; $45b9
-	jr c, .speak ; $45bb
-.altText:
-	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1 ; $45bd
+	jr c, .askYesNo ; $45bb
+.speakPlain:
+	script_speak ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_1 ; $45bd
 	ret ; $45c2
-.speak:
-	script_speak_restore ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1 ; $45c3
+.askYesNo:
+	script_speak_restore ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_1 ; $45c3
 	farcall RunDialogueYesNoPrompt ; $45c8
 	farcall ScriptCloseDialogueWindow ; $45cb
 	script_wait_frames 5 ; $45ce
@@ -333,70 +333,70 @@ AcademyArrivalNpc03_11:
 	jr z, .done ; $45d6
 	farcall AdvanceDialogueTextCursor ; $45d8
 .done:
-	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1 ; $45db
+	script_speak ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_1 ; $45db
 	ret ; $45e0
-AcademyArrivalNpc03TextIds:
+AcademyEntranceNpc03TextIds:
 	; $45e1, 20 bytes (text_ids)
 	table_width 2
-	dw Text_ArrivalStudentBumpedHeadmaster ; record 0
-	dw Text_ArrivalStudentFormedDoubles ; record 1
-	dw Text_ArrivalStudentLegendOfMario ; record 2
-	dw Text_ArrivalStudentLegendOfMario ; record 3
-	dw Text_ArrivalStudentMetHeadmaster ; record 4
-	dw Text_ArrivalStudentMetHeadmaster ; record 5
-	dw Text_ArrivalStudentBeenToOpen ; record 6
-	dw Text_ArrivalStudentBeenToOpen ; record 7
-	dw Text_ArrivalStudentLieInSun ; record 8
-	dw Text_ArrivalStudentLieInSun ; record 9
+	dw Text_AcademyEntranceStudentBumpedHeadmaster ; record 0
+	dw Text_AcademyEntranceStudentFormedDoubles ; record 1
+	dw Text_AcademyEntranceStudentLegendOfMario ; record 2
+	dw Text_AcademyEntranceStudentLegendOfMario ; record 3
+	dw Text_AcademyEntranceStudentMetHeadmaster ; record 4
+	dw Text_AcademyEntranceStudentMetHeadmaster ; record 5
+	dw Text_AcademyEntranceStudentBeenToOpen ; record 6
+	dw Text_AcademyEntranceStudentBeenToOpen ; record 7
+	dw Text_AcademyEntranceStudentLieInSun ; record 8
+	dw Text_AcademyEntranceStudentLieInSun ; record 9
 	assert_table_length NUM_STORYRANKS
-AcademyArrivalNpc04_11:
+AcademyEntranceNpc04_11:
 	ld a, [wMapSceneStage] ; $45f5
 	add a ; $45f8
-	ld_hl_indexed AcademyArrivalNpc04TextIds ; $45f9
+	ld_hl_indexed AcademyEntranceNpc04TextIds ; $45f9
 	ld a, [hl+] ; $4600
 	ld h, [hl] ; $4601
 	ld l, a ; $4602
 	farcall InitDialogueTextCursor ; $4603
-	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_PONYTAIL_GIRL ; $4606
+	script_speak ACTOR_ACADEMY_ENTRANCE_STUDENT_PONYTAIL_GIRL ; $4606
 	ret ; $460b
-AcademyArrivalNpc04TextIds:
+AcademyEntranceNpc04TextIds:
 	; $460c, 20 bytes (text_ids)
 	table_width 2
-	dw Text_ArrivalGirlYoureNewStudent ; record 0
-	dw Text_ArrivalGirlLikesAcademyName ; record 1
-	dw Text_ArrivalGirlDreamToGoPro ; record 2
-	dw Text_ArrivalGirlDreamToGoPro ; record 3
-	dw Text_ArrivalGirlHeadmasterReturns ; record 4
-	dw Text_ArrivalGirlHeadmasterReturns ; record 5
-	dw Text_ArrivalGirlHeadmasterChairman ; record 6
-	dw Text_ArrivalGirlHeadmasterChairman ; record 7
-	dw Text_ArrivalGirlHowToSucceed ; record 8
-	dw Text_ArrivalGirlHowToSucceed ; record 9
+	dw Text_AcademyEntranceGirlYoureNewStudent ; record 0
+	dw Text_AcademyEntranceGirlLikesAcademyName ; record 1
+	dw Text_AcademyEntranceGirlDreamToGoPro ; record 2
+	dw Text_AcademyEntranceGirlDreamToGoPro ; record 3
+	dw Text_AcademyEntranceGirlHeadmasterReturns ; record 4
+	dw Text_AcademyEntranceGirlHeadmasterReturns ; record 5
+	dw Text_AcademyEntranceGirlHeadmasterChairman ; record 6
+	dw Text_AcademyEntranceGirlHeadmasterChairman ; record 7
+	dw Text_AcademyEntranceGirlHowToSucceed ; record 8
+	dw Text_AcademyEntranceGirlHowToSucceed ; record 9
 	assert_table_length NUM_STORYRANKS
-AcademyArrivalNpc05_11:
+AcademyEntranceNpc05_11:
 	ld a, [wMapSceneStage] ; $4620
 	sra a ; $4623
 	add a ; $4625
-	ld_hl_indexed AcademyArrivalNpc05TextIds ; $4626
+	ld_hl_indexed AcademyEntranceNpc05TextIds ; $4626
 	ld a, [hl+] ; $462d
 	ld h, [hl] ; $462e
 	ld l, a ; $462f
 	farcall InitDialogueTextCursor ; $4630
-	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_SIDE_PART_BOY ; $4633
+	script_speak ACTOR_ACADEMY_ENTRANCE_STUDENT_SIDE_PART_BOY ; $4633
 	ret ; $4638
-AcademyArrivalNpc05TextIds:
+AcademyEntranceNpc05TextIds:
 	; $4639, 10 bytes (text_ids)
 	table_width 2
-	dw Text_ArrivalBoyKingFoundedAcademy ; record 0
-	dw Text_ArrivalBoyEveryoneWantsOpen ; record 1
-	dw Text_ArrivalBoyHeadmasterHappy ; record 2
-	dw Text_ArrivalBoyHeadmasterTrophy ; record 3
-	dw Text_ArrivalBoyDreamNotImpossible ; record 4
+	dw Text_AcademyEntranceBoyKingFoundedAcademy ; record 0
+	dw Text_AcademyEntranceBoyEveryoneWantsOpen ; record 1
+	dw Text_AcademyEntranceBoyHeadmasterHappy ; record 2
+	dw Text_AcademyEntranceBoyHeadmasterTrophy ; record 3
+	dw Text_AcademyEntranceBoyDreamNotImpossible ; record 4
 	assert_table_length NUM_STORYTIERS
-AcademyArrivalNpc14_11:
-	script_set_text Text_ArrivalStudentNoLeavingCampus ; $4643
+AcademyEntranceNpc14_11:
+	script_set_text Text_AcademyEntranceStudentNoLeavingCampus ; $4643
 	test_flag FLAG_DOUBLES ; $4649
-	jr nz, .checkFlag ; $464c
+	jr nz, .doubles ; $464c
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $464e
 	jr z, .speak ; $4651
 	farcall AdvanceDialogueTextCursor ; $4653
@@ -404,11 +404,11 @@ AcademyArrivalNpc14_11:
 	jr z, .speak ; $4659
 	farcall AdvanceDialogueTextCursor ; $465b
 .speak:
-	script_set_anim ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2, ANIM_SHAKE ; $465e
-	script_wait_idle ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2 ; $4665
-	script_speak ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2 ; $466a
+	script_set_anim ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2, ANIM_SHAKE ; $465e
+	script_wait_idle ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2 ; $4665
+	script_speak ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2 ; $466a
 	ret ; $466f
-.checkFlag:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $4670
 	jr z, .speak ; $4673
 	farcall AdvanceDialogueTextCursor ; $4675
@@ -416,36 +416,36 @@ AcademyArrivalNpc14_11:
 	jr z, .speak ; $467b
 	farcall AdvanceDialogueTextCursor ; $467d
 	jr .speak ; $4680
-AcademyArrivalNpcScripts_11:
+AcademyEntranceNpcScripts_11:
 	; $4682, 33 bytes (map_scripts)
-	map_script ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, AcademyArrivalNpc03_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ACADEMY_ARRIVAL_STUDENT_PONYTAIL_GIRL, FACEMASK_ANY, $0000, AcademyArrivalNpc04_11, NPC_FACE_PLAYER, $00
-	map_script ACTOR_ACADEMY_ARRIVAL_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, AcademyArrivalNpc05_11, NPC_FACE_PLAYER, $00
-	map_script ACTOR_ACADEMY_ARRIVAL_STUDENT_LONG_HAIR_2, FACEMASK_ANY, $0000, AcademyArrivalNpc14_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, AcademyEntranceNpc03_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_ACADEMY_ENTRANCE_STUDENT_PONYTAIL_GIRL, FACEMASK_ANY, $0000, AcademyEntranceNpc04_11, NPC_FACE_PLAYER, $00
+	map_script ACTOR_ACADEMY_ENTRANCE_STUDENT_SIDE_PART_BOY, FACEMASK_ANY, $0000, AcademyEntranceNpc05_11, NPC_FACE_PLAYER, $00
+	map_script ACTOR_ACADEMY_ENTRANCE_STUDENT_LONG_HAIR_2, FACEMASK_ANY, $0000, AcademyEntranceNpc14_11, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-AcademyArrivalFacingScripts_11:
-	ds 1, $ff ; $46a3, fill
-AcademyArrivalTileTriggers_11:
+AcademyEntranceFacingScripts_11:
+	db $ff ; $46a3
+AcademyEntranceTileTriggers_11:
 	; $46a4, 9 bytes (map_scripts)
-	map_script $0f, FACEMASK_ANY, $0000, AcademyArrivalTile0F_11, $00, $00
+	map_script $0f, FACEMASK_ANY, $0000, AcademyEntranceResumeTourTrigger_11, $00, $00
 	map_script AP_GATE_TRIGGER, FACEMASK_ANY, $0000, ApFrontGateTile_11, $00, $00
 	db $ff
-AcademyArrivalTile0F_11:
+AcademyEntranceResumeTourTrigger_11:
 	call ResumeAcademyGuideTour ; $46ad
 	ret ; $46b0
-AcademyArrivalInitScript_11:
+AcademyEntranceInitScript_11:
 	call ComputeRankingProgressIndex_11 ; $46b1
 	call EnableAcademyCampusExit ; $46b4
 	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
 	cp ENTRY_ACADEMY_ENTRANCE_DEPART_FOR_ISLAND_OPEN ; $46bd
-	jp z, AcademyArrivalInitScript_11.scriptRespawnLocationActors ; $46bf
+	jp z, IslandOpenSendOffScene ; $46bf
 	cp ENTRY_ACADEMY_ENTRANCE_DEPART_FOR_PEACHS_CASTLE ; $46c2
-	jp z, AcademyArrivalEntry0cScene ; $46c4
+	jp z, AcademyEntranceDepartForPeachsCastleScene ; $46c4
 	cp ENTRY_ACADEMY_ENTRANCE_NEW_GAME ; $46c7
 	jr nz, .done ; $46c9
 	apcall ApStartNewGame
 	jp nz, ApSkipIntro
-	call LateStudentCrashCutscene ; $46cb
+	call LateHeadmasterCrashCutscene ; $46cb
 .done:
 	ret ; $46ce

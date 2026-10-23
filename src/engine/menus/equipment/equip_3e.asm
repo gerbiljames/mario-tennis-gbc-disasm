@@ -11,7 +11,7 @@ LoadEquipSelectCommon:
 	call CreateEquipCaptionWindow ; $5807
 	call CreateEquipListWindow ; $580a
 	ld de, vTiles0 + VRAM_BANK1 ; $580d
-	farcall LoadFixedTileBlockAndPalette ; $5810
+	farcall LoadCornerBracketCursorGfx ; $5810
 	ret ; $5813
 CreateEquipListWindow:
 	rect_cell $00, $04 ; $5814
@@ -76,16 +76,16 @@ FlushEquipSelectTextRows:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $58b5
 	call QueueVRAMCopy ; $58b7
 	ret ; $58ba
-; GetItemStatModListPtr over two other tables ($58d6/$58e4 in place of $5a5f/$5a6d): the same two-level pointer lookup. Nothing calls it.
-Unused_3e_GetEquipSelectTextRowPtr:
+; GetItemStatModListPtr over lists of stat-change text ids in place of the stat-mod lists: the same per-kind pointer lookup. Nothing calls it.
+Unused_3e_GetItemStatModTextListPtr:
 	push af ; $58bb
 	push bc ; $58bc
-	ld hl, EquipSelectTextRowPtrs_3e ; $58bd
+	ld hl, RacketStatModTextListPtrs_3e ; $58bd
 	ld a, [wEquipItemKind] ; $58c0
 	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $58c3
 	jr z, .readEntry ; $58c4
-	ld hl, EquipSelectTextRows_3e ; $58c6
+	ld hl, ShoesStatModTextListPtrs_3e ; $58c6
 .readEntry:
 	ld a, b ; $58c9
 	add a ; $58ca
@@ -96,19 +96,86 @@ Unused_3e_GetEquipSelectTextRowPtr:
 	pop bc ; $58d3
 	pop af ; $58d4
 	ret ; $58d5
-EquipSelectTextRowPtrs_3e:
-	; $58d6, 14 bytes (bytes:14)
-	db $ea, $58, $f2, $58, $fe, $58, $0a, $59, $22, $59, $16, $59, $2c, $59 ; 0x00
-EquipSelectTextRows_3e:
-	; $58e4, 102 bytes (bytes:14)
-	db $ea, $58, $34, $59, $40, $59, $ff, $ff, $ff, $ff, $27, $01, $00, $00 ; 0x00
-	db $fb, $00, $ff, $00, $07, $01, $1a, $01, $24, $01, $00, $00, $fd, $00 ; 0x0e
-	db $00, $01, $09, $01, $17, $01, $25, $01, $00, $00, $fa, $00, $fe, $00 ; 0x1c
-	db $02, $01, $ff, $ff, $26, $01, $00, $00, $fb, $00, $ff, $00, $06, $01 ; 0x2a
-	db $19, $01, $24, $01, $00, $00, $fd, $00, $01, $01, $03, $01, $18, $01 ; 0x38
-	db $00, $00, $fa, $00, $23, $01, $fe, $00, $00, $00, $1b, $01, $1f, $01 ; 0x46
-	db $13, $01, $26, $01, $26, $01, $00, $00, $1e, $01, $22, $01, $13, $01 ; 0x54
-	db $26, $01, $00, $00 ; 0x62
+RacketStatModTextListPtrs_3e:
+	; $58d6, 14 bytes (records:2)
+	dw NormalItemStatModTexts_3e ; record 0
+	dw LargeRacketStatModTexts_3e ; record 1
+	dw SmallRacketStatModTexts_3e ; record 2
+	dw IronRacketStatModTexts_3e ; record 3
+	dw GoldRacketStatModTexts_3e ; record 4
+	dw SilverRacketStatModTexts_3e ; record 5
+	dw DriveRacketStatModTexts_3e ; record 6
+ShoesStatModTextListPtrs_3e:
+	; $58e4, 6 bytes (records:2)
+	dw NormalItemStatModTexts_3e ; record 0
+	dw IronShoesStatModTexts_3e ; record 1
+	dw LightShoesStatModTexts_3e ; record 2
+NormalItemStatModTexts_3e:
+	; $58ea, 8 bytes (text_ids)
+	dw $ffff ; blank row
+	dw $ffff ; blank row
+	dw Text_StatModNone
+	dw 0
+LargeRacketStatModTexts_3e:
+	; $58f2, 12 bytes (text_ids)
+	dw Text_StatModServeMinus1
+	dw Text_StatModStrokeMinus1
+	dw Text_StatModSpinMinus2
+	dw Text_StatModAnglePlus2
+	dw Text_StatModControlPlus1
+	dw 0
+SmallRacketStatModTexts_3e:
+	; $58fe, 12 bytes (text_ids)
+	dw Text_StatModServePlus2
+	dw Text_StatModStrokePlus1
+	dw Text_StatModSpinPlus1
+	dw Text_StatModAngleMinus2
+	dw Text_StatModControlMinus2
+	dw 0
+IronRacketStatModTexts_3e:
+	; $590a, 12 bytes (text_ids)
+	dw Text_StatModServeMinus2
+	dw Text_StatModStrokeMinus2
+	dw Text_StatModVolleyMinus2
+	dw $ffff ; blank row
+	dw Text_StatModExpBonus
+	dw 0
+SilverRacketStatModTexts_3e:
+	; $5916, 12 bytes (text_ids)
+	dw Text_StatModServeMinus1
+	dw Text_StatModStrokeMinus1
+	dw Text_StatModVolleyPlus3
+	dw Text_StatModAnglePlus1
+	dw Text_StatModControlPlus1
+	dw 0
+GoldRacketStatModTexts_3e:
+	; $5922, 10 bytes (text_ids)
+	dw Text_StatModServePlus2
+	dw Text_StatModStrokePlus2
+	dw Text_StatModVolleyMinus1
+	dw Text_StatModAngleMinus1
+	dw 0
+DriveRacketStatModTexts_3e:
+	; $592c, 8 bytes (text_ids)
+	dw Text_StatModServeMinus2
+	dw Text_StatModTopSpinPlus3
+	dw Text_StatModStrokeMinus2
+	dw 0
+IronShoesStatModTexts_3e:
+	; $5934, 12 bytes (text_ids)
+	dw Text_StatModSpeedMinus2
+	dw Text_StatModDashMinus2
+	dw Text_StatModReactionMinus2
+	dw Text_StatModExpBonus
+	dw Text_StatModExpBonus
+	dw 0
+LightShoesStatModTexts_3e:
+	; $5940, 10 bytes (text_ids)
+	dw Text_StatModSpeedPlus2
+	dw Text_StatModDashPlus2
+	dw Text_StatModReactionMinus2
+	dw Text_StatModExpBonus
+	dw 0
 GetHoveredItemId:
 	push bc ; $594a
 	push hl ; $594b
@@ -242,12 +309,12 @@ DrawStatModEntry:
 GetItemStatModListPtr:
 	push af ; $5a44
 	push bc ; $5a45
-	ld hl, ItemStatModListPtrPtrs ; $5a46
+	ld hl, RacketStatModListPtrs ; $5a46
 	ld a, [wEquipItemKind] ; $5a49
 	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5a4c
 	jr z, .readEntry ; $5a4d
-	ld hl, ItemStatModListPtrTable ; $5a4f
+	ld hl, ShoesStatModListPtrs ; $5a4f
 .readEntry:
 	ld a, b ; $5a52
 	add a ; $5a53
@@ -258,7 +325,7 @@ GetItemStatModListPtr:
 	pop bc ; $5a5c
 	pop af ; $5a5d
 	ret ; $5a5e
-ItemStatModListPtrPtrs:
+RacketStatModListPtrs:
 	; $5a5f, 14 bytes (records:2)
 	dw NormalItemStatMods ; record 0
 	dw LargeRacketStatMods ; record 1
@@ -267,7 +334,7 @@ ItemStatModListPtrPtrs:
 	dw GoldRacketStatMods ; record 4
 	dw SilverRacketStatMods ; record 5
 	dw DriveRacketStatMods ; record 6
-ItemStatModListPtrTable:
+ShoesStatModListPtrs:
 	; $5a6d, 6 bytes (records:2)
 	dw NormalItemStatMods ; record 0
 	dw IronShoesStatMods ; record 1

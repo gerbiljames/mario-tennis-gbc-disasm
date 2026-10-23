@@ -9,10 +9,10 @@ ApServeBallPath:
 	cp SHOTTYPE_SERVE_FLAT
 	jr z, .flat
 	farcall ShotBallPathServeTopspin
-	jp SetSpecialShotFlagFromBallHeight
+	jp SetPowerServeFlagFromTossHeight
 .slice:
 	farcall ShotBallPathServeSlice
-	jp SetSpecialShotFlagFromBallHeight
+	jp SetPowerServeFlagFromTossHeight
 .flat:
 	farcall ShotBallPathServeFlat
-	jp SetSpecialShotFlagFromBallHeight
+	jp SetPowerServeFlagFromTossHeight

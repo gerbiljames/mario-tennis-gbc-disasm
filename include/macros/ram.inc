@@ -16,10 +16,10 @@ MACRO char_record
 \1Palette::       db
 \1Gender::        db
 \1LeftHanded::    db
-\1Physics::       db
+\1AiPosition::    db
 \1Reach::         ds 8
 \1Level::         db
-\1Swing::         dw
+\1ShotTraits::    dw
 \1AiParams::      ds 4
 \1Difficulty::    db
 \1Stats::
@@ -51,10 +51,10 @@ MACRO char_record
 	ASSERT \1Palette - \1 == CHARREC_PALETTE
 	ASSERT \1Gender - \1 == CHARREC_GENDER
 	ASSERT \1LeftHanded - \1 == CHARREC_LEFT_HANDED
-	ASSERT \1Physics - \1 == CHARREC_PHYSICS
+	ASSERT \1AiPosition - \1 == CHARREC_AI_POSITION
 	ASSERT \1Reach - \1 == CHARREC_REACH
 	ASSERT \1Level - \1 == CHARREC_LEVEL
-	ASSERT \1Swing - \1 == CHARREC_SWING
+	ASSERT \1ShotTraits - \1 == CHARREC_SHOT_TRAITS
 	ASSERT \1AiParams - \1 == CHARREC_AI_PARAMS
 	ASSERT \1Difficulty - \1 == CHARREC_DIFFICULTY
 	ASSERT \1TopStat - \1 == CHARREC_STAT_TOP
@@ -79,7 +79,8 @@ MACRO match_stats
 \1DoubleFaults::    db
 ENDM
 
-; The match engine's per-character struct at $df00, labelled <prefix><Field>.
+; The match engine's per-character struct at $df00, labelled <prefix><Field>,
+; with <prefix>CharStruct naming the whole struct.
 ; WRAM banks $04-$07 each hold one copy, bank = character: 4 near-P1, 5
 ; far-P1, 6 near-partner, 7 far-partner. Each bank file declares its copy
 ; under a bank-tagged prefix (w4-w7) so the symbol file resolves the right
@@ -87,8 +88,9 @@ ENDM
 ; because the bank is chosen at run time. Bank $38's
 ; UpdateCharSelectCharSprite and TickCharSelectIdleAnim drive the same struct
 ; once per preview character, selecting WRAM banks $04-$07 in turn (bank
-; $38's own $df00 is wCharSelectHandedness in WRAM bank $03).
+; $38's own $df00 is wCharGridHandedness in WRAM bank $03).
 MACRO match_char_struct
+\1CharStruct::
 UNION
 ; clear-status developer menu (bank $0a): only bank $05's copy, over the idle far-P1 struct
 ; [8-bit] RunClearStatusSetupMenu's first choice (Text_MenuSetContinue): 0 Set, 1 Continue, $ff cancelled; Continue and cancel go straight to the result code. Cleared 32 bytes at a time on entry
@@ -132,7 +134,7 @@ NEXTU
 \1CharFacingShown:: db
 ; [8-bit] State flags; bit 2 = airborne (set on a jump, cleared on landing; selects the shadow slot drawn)
 \1CharFlags:: db
-; [8-bit] Frames the character is frozen: UpdateCharStateMachine decrements it and skips the state. SetCharState clears it; FreezeMinigameOpponentOnReturn sets it to hold the minigame opponent still
+; [8-bit] Frames the character is frozen: UpdateCharStateMachine decrements it and skips the state. SetCharState clears it; FreezeFeederAfterLaunch sets it to hold the minigame opponent still
 \1CharFreezeTimer:: db
 ; [8-bit] Frames left to press a second shot button; BufferShotButtonPress seeds 5 on the first press, the state-machine dispatch counts it down
 \1CharShotComboTimer:: db
@@ -158,15 +160,15 @@ NEXTU
 \1CharSpriteFrame:: ds 3
 ; [8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)
 \1CharInputSource:: db
-; [8-bit] Input ReadCharInput produces: held buttons in the high nibble, newly pressed in the low (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); test with PADB_*
+; [8-bit] Input ReadCharInput produces: held d-pad in the high nibble, newly pressed buttons in the low (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); test with PADB_*
 \1CharInputBits:: db
 	ds 1
 ; [8-bit] Object-definition id passed to SetupCharSpriteFromObjectDef; write-only
 \1CharObjectDefId:: db
-; [8-bit] ROM bank of the character's object definition, animation scripts and frame tables, banked in by GetPerspectiveScale and passed to FarReadWordDI by SetCharAnimation / StepCharAnimation. 0 = no object loaded (UpdateChar exits)
+; [8-bit] ROM bank of the character's object definition, animation scripts and frame tables, banked in by QueueCharFrameTiles and passed to FarReadWordDI by SetCharAnimation / StepCharAnimation. 0 = no object loaded (UpdateChar exits)
 \1CharObjectBank:: db
 	ds 1
-; [16-bit] Pointer (in wCharObjectBank) to the frame graphics table GetPerspectiveScale walks for a frame's tile data
+; [16-bit] Pointer (in wCharObjectBank) to the frame graphics table QueueCharFrameTiles walks for a frame's tile data
 \1CharFrameTablePtr:: dw
 ; [16-bit] VRAM destination of the character's frame tiles
 \1CharFrameVramDest:: dw
@@ -194,7 +196,7 @@ NEXTU
 \1CharSpriteAttr:: db
 ; [16-bit] Pointer (in wCharObjectBank) to the character's *FramePlace table, read by QueueCharFrameTiles
 \1CharFramePlaceTablePtr:: dw
-; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from wActorObjDef+0); LoadCharChargeFlashPalette loads entry + 8, the flash variant
+; [8-bit] Index into CharObjPalettes_01 of the character's OBJ palette (from OBJDEF_ATTR); LoadCharChargeFlashPalette loads entry + 8, the flash variant
 \1CharPaletteId:: db
 	ds 5
 ; [16-bit] X velocity (zeroed on placement and at point end)
@@ -207,15 +209,15 @@ NEXTU
 \1CharWalkTargetX:: dw
 ; [16-bit] Walk-target depth; MoveCharTowardTarget walks toward the target, snapping when both deltas are < $18 (CheckCharNearTarget)
 \1CharWalkTargetDepth:: dw
-; [8-bit] Left/right aim held at the moment of the shot, captured by CaptureServeAim / CaptureShotAim; GetShotAimOffsetForSide and ComputeShotTargetX turn it into the target's lateral offset
+; [8-bit] Left/right aim held at the moment of the shot, captured by CaptureServeAim / CaptureShotAim; GetServeTargetX and ComputeShotTargetX turn it into the target's lateral offset
 \1CharAimOffset:: db
 ; [8-bit] Frames in the current swing phase, reset at windup start, incremented by the windup and contact phases
 \1CharSwingFrames:: db
-; [8-bit] Set when the swing was quick (uncharged): written by StartCharSwing, copied to wShotWasQuickSwing by ExecuteShot so the shot gets no charge bonus
+; [8-bit] Set when the swing was quick (uncharged): written by StartCharSwing; its only reader copies it into the write-only wShotWasQuickSwing (ExecuteShot), so it has no effect
 \1CharQuickSwing:: db
-; [8-bit] Shot button latched while the swing is held, from b in CheckSwingRelease; cleared there when SELECT is down and by CharRallyReadyPhase. Write-only
+; [8-bit] Shot button latched from b, only by the unreached Unused_08_LatchSwingHoldButton; cleared by CheckSwingCancel when SELECT is down and by CharRallyReadyPhase. Write-only
 \1CharSwingHoldButton:: db
-; [8-bit] Frames the swing has been held: CheckSwingRelease increments it per frame and zeroes it on release or with SELECT down. Write-only
+; [8-bit] Frames the swing has been held: CheckSwingCancel increments it per frame (TickSwingHoldFrames) and zeroes it with SELECT down; CharRallyReadyPhase also clears it. Write-only
 \1CharSwingHoldFrames:: db
 ; [8-bit] Shot button already recorded, so BufferShotButtonPress ignores it while held
 \1CharLastShotButton:: db
@@ -242,19 +244,19 @@ NEXTU
 ; [8-bit] Set to 1 by CharRallyReadyPhase, cleared with wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase does not steer while it is 0
 \1CharRallyReady:: db
 	ds 5
-; [16-bit] Speed limit on X: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired. From CharStatTable_07_0 indexed by attribute byte $0027
+; [16-bit] Speed limit on X: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired. From CharMaxSpeedByStat indexed by attribute byte $0027
 \1CharMaxSpeedX:: dw
-; [16-bit] Speed limit on depth: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired. LoadCharacterAttributes indexes CharStatTable_07_0 with attribute bytes ($0027 + $002b) * 2, clamped to ten entries, so this axis gets the $002b bonus that wCharMaxSpeedX does not
+; [16-bit] Speed limit on depth: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired. LoadCharacterAttributes indexes CharMaxSpeedByStat with attribute bytes ($0027 + $002b) * 2, clamped to ten entries, so this axis gets the $002b bonus that wCharMaxSpeedX does not
 \1CharMaxSpeedDepth:: dw
-; [16-bit] Acceleration, from CharStatTable_07_1 via attribute offset $0028. AccelerateCharDepth / AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired into wCharVelDepth / wCharVelX
+; [16-bit] Acceleration, from CharAccelByStat via attribute offset $0028. AccelerateCharDepth / AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired into wCharVelDepth / wCharVelX
 \1CharAcceleration:: dw
-; [16-bit] Deceleration when not accelerating, from CharStatTable_07_2 via attribute offset $002a. The brake routines negate it against the velocity's sign; one uses a flat $0040 when wCharFlags bit 1 is clear
+; [16-bit] Deceleration when not accelerating, from CharDecelByStat via attribute offset $002a. The brake routines negate it against the velocity's sign; one uses a flat $0040 when wCharFlags bit 1 is clear
 \1CharDeceleration:: dw
 ; [8-bit] Max facing change per frame (wCharFacingShown toward wCharFacingDesired)
 \1CharFacingEaseRate:: db
-; [8-bit] Fraction ComputeAimBaseOffset applies (MulHLByAFrac) to the base aim offset. From CharStatTable_07_4 via attribute offset $0025
+; [8-bit] Fraction ComputeAimBaseOffset applies (MulHLByAFrac) to the base aim offset. From CharAimOffsetScaleByStat via attribute offset $0025
 \1CharAimOffsetScale:: db
-; [8-bit] Random aim component: GetRandomAimJitter multiplies an AdvanceMatchRng byte by it; higher is less accurate. From CharStatTable_07_5 via attribute offset $0026
+; [8-bit] Random aim component: GetRandomAimJitter multiplies an AdvanceMatchRng byte by it; higher is less accurate. From CharAimJitterScaleByStat via attribute offset $0026
 \1CharAimJitterScale:: db
 ; [8-bit] Speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 (shot speed) in LoadShotPlacementEntry
 \1GroundStrokeSpeedIndex:: db
@@ -266,9 +268,9 @@ NEXTU
 \1TopspinPlacementIndex:: db
 ; [8-bit] Placement-row index (d) into ShotPlacementData for slice and serve-slice
 \1SlicePlacementIndex:: db
-; [16-bit] How far above or below the character the ball can be hit; CheckCharBallContact compares |wBallRelCharHeight| with it. Attribute record +$10, minus $10
+; [16-bit] How far above or below the character the ball can be hit; CheckBallHitsCharBody compares |wBallRelCharHeight| with it. Attribute record +$10, minus $10
 \1CharReachHeight:: dw
-; [16-bit] Lateral reach; CheckCharBallContact compares |wBallRelCharX| * 2 with it. Attribute record +$12
+; [16-bit] Lateral reach; CheckBallHitsCharBody compares |wBallRelCharX| * 2 with it. Attribute record +$12
 \1CharReachX:: dw
 ; [16-bit] Upward speed of a jump smash, negated into wCharVelHeight by StartCharSwing. Attribute record +$14, plus $0200
 \1CharSmashJumpSpeed:: dw
@@ -284,13 +286,13 @@ NEXTU
 \1AiTrackingParam:: db
 ; [8-bit] RNG threshold in AiRollAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
 \1AiAimAwayChance:: db
-; [8-bit] AI serve/shot habit: low nibble indexes ServePressTossPtrs for toss timing; AiPickShotButtons reads it too. Attribute record +$1f
-\1AiServeStyle:: db
+; [8-bit] AI difficulty: 0-3 is the CPU difficulty the menus set (easy - intense), 4-8 drill-feeder rows from the story records; the low nibble indexes AiServeQuickStrikeChancePtrs for the serve strike timing; AiPickShotButtons picks its AiShotMixTable_02 row with it. Attribute record +$1f
+\1AiDifficulty:: db
 ; [8-bit] Character id after RemapExtendedCharId; LookupCharSpriteSet and bank $09's LoadOnCourtCharacterGfx find the sprite bank with it
 \1CharSpriteSetId:: db
-; [8-bit] Where the AI stands between shots (0/5 baseline, 1 net, others mid-court); RST00 index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
+; [8-bit] Where the AI stands between shots (0/5 baseline, 1 hold its current depth, others mid-court); RST00 index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
 \1AiPositionStrategy:: db
-; [4 bytes] Sprite-slot record [tile, attr, screenY, screenX] for the character sprite
+; [4 bytes] Sprite-slot record [tile, attr, screenY, screenX] (SPRSLOT_*) for the character sprite
 \1CharSpriteSlot:: ds 4
 ; [4 bytes] Frame descriptor the single-character screens (Unused_1a_DrawCharViewerCharSprite, the results/EXP screen drawers) write after the sprite slot: wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (Y and X offsets for QueueSprite24x32), and a depth key (slot * 8 + $80). The match engine's drawer does not use it
 \1CharSpriteSlotFrame:: ds 4
@@ -298,16 +300,16 @@ NEXTU
 \1CharAirShadowSlot:: ds 4
 ; [4 bytes] Sprite-slot record for the standing shadow (tile $58, flickered while grounded)
 \1CharGroundShadowSlot:: ds 4
-; [16-bit] Attribute word from character record +$19; StartCharSwing tests bit 7 of the low byte; bits 0 and 1 of the high byte select the lob and drop placement rows
-\1CharSwingAttrWord:: dw
-; [8-bit] Placement-row index (d) into ShotPlacementDataLob (from wCharSwingAttrWord + 1 bit 0)
+; [16-bit] Shot-trait bits from character record +$19 (CHARREC_SHOT_TRAITS); StartCharSwing tests bit 7 of the low byte; bits 0 and 1 of the high byte select the lob and drop placement rows
+\1CharShotTraits:: dw
+; [8-bit] Placement-row index (d) into ShotPlacementDataLob (from wCharShotTraits + 1 bit 0)
 \1LobPlacementIndex:: db
-; [8-bit] Placement-row index (d) into ShotPlacementDataDrop (from wCharSwingAttrWord + 1 bit 1)
+; [8-bit] Placement-row index (d) into ShotPlacementDataDrop (from wCharShotTraits + 1 bit 1)
 \1DropPlacementIndex:: db
 ; [8-bit] Attribute bits XORed into wCharSpriteAttr for facing octants 2 and 6 (sprite drawn mirrored)
 \1CharMirrorAttrMask:: db
-; [8-bit] Character class/tier from attribute record +$18; LookupExpTierForChar reads it on the EXP screen
-\1CharExpTier:: db
+; [8-bit] Character level, copied from the match record (CHARREC_LEVEL); LookupExpTierForChar turns it into an EXP tier
+\1CharLevel:: db
 ; [8-bit] Draw-order depth key ((depth * 8) >> 8 + $80); DrawActorsByDepth draws back to front
 \1CharDepthKey:: db
 ENDU

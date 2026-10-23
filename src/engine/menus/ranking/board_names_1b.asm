@@ -1,6 +1,6 @@
 WaitForAOrBPress:
 	call AdvanceFrame ; $5507
-	ldh a, [hInputPressed] ; $550a
+	ldh a, [hInputRepeat] ; $550a
 	and PADF_A | PADF_B ; $550c
 	jr z, WaitForAOrBPress ; $550e
 	ret ; $5510
@@ -308,8 +308,8 @@ RenderNameBottomRow:
 	ld hl, wRankingNameRowBuffer ; $5709
 	call DrawNameWithDiacritics_1b ; $570c
 	ret ; $570f
-HighlightSinglesRankingRows:
-	ld a, [wRankingBoardPlayerRow] ; $5710
+DrawSinglesRoundBracketLines:
+	ld a, [wRankingBoardRound] ; $5710
 	or a ; $5713
 	ret z ; $5714
 	cp $01 ; $5715
@@ -317,36 +317,36 @@ HighlightSinglesRankingRows:
 	cp $02 ; $5718
 	jr nz, .compare ; $571a
 	ld b, $01 ; $571c
-	call HighlightRankingRow ; $571e
+	call DrawSinglesBracketLine ; $571e
 	ld b, $02 ; $5721
-	call HighlightRankingRow ; $5723
+	call DrawSinglesBracketLine ; $5723
 	ld b, $03 ; $5726
-	call HighlightRankingRow ; $5728
+	call DrawSinglesBracketLine ; $5728
 	ld b, $04 ; $572b
-	call HighlightRankingRow ; $572d
+	call DrawSinglesBracketLine ; $572d
 	ret ; $5730
 .compare:
 	cp $03 ; $5731
-	jr nz, .otherRow ; $5733
+	jr nz, .laterRound ; $5733
 	ld b, $05 ; $5735
-	call HighlightRankingRow ; $5737
+	call DrawSinglesBracketLine ; $5737
 	ld b, $06 ; $573a
-	call HighlightRankingRow ; $573c
+	call DrawSinglesBracketLine ; $573c
 	ld b, $07 ; $573f
-	call HighlightRankingRow ; $5741
+	call DrawSinglesBracketLine ; $5741
 	ld b, $08 ; $5744
-	call HighlightRankingRow ; $5746
+	call DrawSinglesBracketLine ; $5746
 	ret ; $5749
-.otherRow:
+.laterRound:
 	ld b, $0b ; $574a
-	call HighlightRankingRow ; $574c
+	call DrawSinglesBracketLine ; $574c
 	ret ; $574f
-HighlightRankingRow:
+DrawSinglesBracketLine:
 	ld a, b ; $5750
 	or a ; $5751
 	ret z ; $5752
 	add a ; $5753
-	ld hl, RankingRowDrawHandlers_1b ; $5754
+	ld hl, SinglesBracketLineHandlers ; $5754
 	add_hl_a ; $5757
 	ld a, [hl+] ; $575c
 	ld h, [hl] ; $575d
@@ -354,80 +354,80 @@ HighlightRankingRow:
 	jp hl ; $575f
 StubNop_1b_1:
 	ret ; $5760
-RankingRowDrawHandlers_1b:
-	dw DrawRankingRow0 ; $5761 jumptable
-	dw DrawRankingRow0 ; $5763 jumptable
-	dw DrawRankingRow2 ; $5765 jumptable
-	dw DrawRankingRow3 ; $5767 jumptable
-	dw DrawRankingRow4 ; $5769 jumptable
-	dw DrawRankingRow5 ; $576b jumptable
-	dw DrawRankingRow6 ; $576d jumptable
-	dw DrawRankingRow7 ; $576f jumptable
-	dw DrawRankingRow8 ; $5771 jumptable
-	dw DrawRankingRow9 ; $5773 jumptable
-	dw DrawRankingRow10 ; $5775 jumptable
-	dw DrawRankingRow11 ; $5777 jumptable
-DrawRankingRow0:
+SinglesBracketLineHandlers:
+	dw DrawSinglesBracketLine0 ; $5761 jumptable
+	dw DrawSinglesBracketLine0 ; $5763 jumptable
+	dw DrawSinglesBracketLine2 ; $5765 jumptable
+	dw DrawSinglesBracketLine3 ; $5767 jumptable
+	dw DrawSinglesBracketLine4 ; $5769 jumptable
+	dw DrawSinglesBracketLine5 ; $576b jumptable
+	dw DrawSinglesBracketLine6 ; $576d jumptable
+	dw DrawSinglesBracketLine7 ; $576f jumptable
+	dw DrawSinglesBracketLine8 ; $5771 jumptable
+	dw DrawSinglesBracketLine9 ; $5773 jumptable
+	dw DrawSinglesBracketLine10 ; $5775 jumptable
+	dw DrawSinglesBracketLine11 ; $5777 jumptable
+DrawSinglesBracketLine0:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5779
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $577c
 	rect_size $05, $02 ; $577f
 	farcall CopyTilemapRect ; $5783
 	jp StubNop_1b_1 ; $5786
-DrawRankingRow2:
+DrawSinglesBracketLine2:
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $5789
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; $578c
 	rect_size $04, $02 ; $578f
 	farcall CopyTilemapRect ; $5793
 	jp StubNop_1b_1 ; $5796
-DrawRankingRow3:
+DrawSinglesBracketLine3:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5799
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $579c
 	rect_size $04, $02 ; $579f
 	farcall CopyTilemapRect ; $57a3
 	jp StubNop_1b_1 ; $57a6
-DrawRankingRow4:
+DrawSinglesBracketLine4:
 	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH + 4 ; $57a9
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; $57ac
 	rect_size $04, $02 ; $57af
 	farcall CopyTilemapRect ; $57b3
 	jp StubNop_1b_1 ; $57b6
-DrawRankingRow5:
+DrawSinglesBracketLine5:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH ; $57b9
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $57bc
 	rect_size $04, $07 ; $57bf
 	farcall CopyTilemapRect ; $57c3
 	jp StubNop_1b_1 ; $57c6
-DrawRankingRow6:
+DrawSinglesBracketLine6:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 8 ; $57c9
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; $57cc
 	rect_size $04, $07 ; $57cf
 	farcall CopyTilemapRect ; $57d3
 	jp StubNop_1b_1 ; $57d6
-DrawRankingRow7:
+DrawSinglesBracketLine7:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 4 ; $57d9
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $57dc
 	rect_size $04, $07 ; $57df
 	farcall CopyTilemapRect ; $57e3
 	jp StubNop_1b_1 ; $57e6
-DrawRankingRow8:
+DrawSinglesBracketLine8:
 	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 12 ; $57e9
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; $57ec
 	rect_size $04, $07 ; $57ef
 	farcall CopyTilemapRect ; $57f3
 	jp StubNop_1b_1 ; $57f6
-DrawRankingRow9:
+DrawSinglesBracketLine9:
 	ld hl, wShadowTilemap + 20 ; $57f9
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $57fc
 	rect_size $04, $10 ; $57ff
 	farcall CopyTilemapRect ; $5803
 	jp StubNop_1b_1 ; $5806
-DrawRankingRow10:
+DrawSinglesBracketLine10:
 	ld hl, wShadowTilemap + 24 ; $5809
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $580c
 	rect_size $04, $10 ; $580f
 	farcall CopyTilemapRect ; $5813
 	jp StubNop_1b_1 ; $5816
-DrawRankingRow11:
+DrawSinglesBracketLine11:
 	ld hl, wShadowTilemap + 20 ; $5819
 	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $581c
 	rect_size $08, $10 ; $581f

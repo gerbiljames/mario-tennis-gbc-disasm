@@ -22,10 +22,10 @@ ActorScript_27_06:
 ; Two palettes nothing loads, in front of the scene's own.
 Unused_27_Palettes:
 	INCLUDE "data/story/Unused_27_Palettes.asm" ; $5570, 16 bytes (palettes)
-End11TrainingCourtInitScriptPalette0_27:
-	INCLUDE "data/story/End11TrainingCourtInitScriptPalette0_27.asm" ; $5580, 64 bytes (palettes)
-End11TrainingCourtInitScriptPalette1_27:
-	INCLUDE "data/story/End11TrainingCourtInitScriptPalette1_27.asm" ; $55c0, 48 bytes (palettes)
+End11TrainingCourtDimPalettes_27:
+	INCLUDE "data/story/End11TrainingCourtDimPalettes_27.asm" ; $5580, 64 bytes (palettes)
+End11TrainingCourtDarkPalettes_27:
+	INCLUDE "data/story/End11TrainingCourtDarkPalettes_27.asm" ; $55c0, 48 bytes (palettes)
 End10VarsityCourtMapScripts_27:
 	; $55f0, 14 bytes (map_tree)
 	dw End10VarsityCourtEntryPoints_27 ; slot 0 EntryPoints
@@ -47,24 +47,24 @@ End10VarsityCourtExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_END10_VARSITY_COURT, ENTRY_END10_VARSITY_COURT_SCENE, END10_VARSITY_COURT_DONE
 	db $ff
 End10VarsityCourtNpcScripts_27:
-	ds 1, $ff ; $561a, fill
+	db $ff ; $561a
 End10VarsityCourtFacingScripts_27:
-	ds 1, $ff ; $561b, fill
+	db $ff ; $561b
 End10VarsityCourtTileTriggers_27:
-	ds 1, $ff ; $561c, fill
+	db $ff ; $561c
 End10VarsityCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $561d
 	cp ENTRY_END10_VARSITY_COURT_SCENE ; $5620
-	jp z, End10VarsityCourtEntry01Scene ; $5622
+	jp z, End10VarsityCourtScene_27 ; $5622
 	ret ; $5625
 	twin set_partner_obj_def_by_gender, 27 ; $5626 SetPartnerObjDefByGender_27
-End10VarsityCourtEntry01Scene:
+End10VarsityCourtScene_27:
 	test_flag FLAG_DOUBLES ; $5643
 	jr z, .notDoubles ; $5646
-	jp .scriptRespawnLocationActors ; $5648
+	jp .doubles ; $5648
 .notDoubles:
 	wram_bank WRAM_SCENE ; $564b
-	script_respawn_actors End10VarsityCourtActorsAlt_27 ; $5651
+	script_respawn_actors End10VarsityCourtActorsSingles_27 ; $5651
 	script_null_script ACTOR_PLAYER_SHADOW ; $5659
 	script_player_speed 7.5 ; $565e
 	call SetPartnerObjDefByGender_27 ; $5664
@@ -78,69 +78,69 @@ End10VarsityCourtEntry01Scene:
 	script_player_speed 1.0 ; $569d
 	script_move_player 11.0, 23.0 ; $56a3
 	farcall WaitPlayerMoveDone ; $56ad
-	script_move_target ACTOR_END10_VARSITY_COURT_ALT_BOB, 11.0, 23.0 ; $56b0
-	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_BOB ; $56bb
+	script_move_target ACTOR_END10_VARSITY_COURT_SINGLES_BOB, 11.0, 23.0 ; $56b0
+	script_wait_move ACTOR_END10_VARSITY_COURT_SINGLES_BOB ; $56bb
 	sound SFX_EMOTE ; $56c0
-	script_set_position ACTOR_END10_VARSITY_COURT_ALT_BALLOON_QUESTION, 12.25, 27.75 ; $56c2
+	script_set_position ACTOR_END10_VARSITY_COURT_SINGLES_BALLOON_QUESTION, 12.25, 27.75 ; $56c2
 	script_wait_frames 40 ; $56cd
-	script_set_position ACTOR_END10_VARSITY_COURT_ALT_BALLOON_QUESTION, 63.0, 63.0 ; $56d4
+	script_set_position ACTOR_END10_VARSITY_COURT_SINGLES_BALLOON_QUESTION, 63.0, 63.0 ; $56d4
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $56df
-	script_move_player_to_actor ACTOR_END10_VARSITY_COURT_ALT_KATE ; $56e6
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_EMILY, ActorScript_27_07 ; $56ed
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_MARK, ActorScript_27_11 ; $56f8
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_KATE, ActorScript_27_10 ; $5703
+	script_move_player_to_actor ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $56e6
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_SINGLES_EMILY, ActorScript_27_07 ; $56ed
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_SINGLES_MARK, ActorScript_27_11 ; $56f8
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ActorScript_27_10 ; $5703
 	script_wait_frames 10 ; $570e
-	script_set_actor_script ACTOR_END10_VARSITY_COURT_ALT_KEVIN, ActorScript_27_09 ; $5715
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_SINGLES_KEVIN, ActorScript_27_09 ; $5715
 	script_wait_frames 30 ; $5720
 	script_move_player_to_actor ACTOR_PLAYER ; $5727
 	farcall WaitPlayerMoveDone ; $572e
-	script_wait_actor_script ACTOR_END10_VARSITY_COURT_ALT_KEVIN ; $5731
-	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_ALT_KATE ; $5736
+	script_wait_actor_script ACTOR_END10_VARSITY_COURT_SINGLES_KEVIN ; $5731
+	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $5736
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $573e
 	jr z, .variantBBounce ; $5741
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_KATE, ANIM_BOUNCE ; $5743
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_KATE ; $574a
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_KATE, ACTOR_PLAYER ; $574f
+	script_set_anim ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ANIM_BOUNCE ; $5743
+	script_wait_idle ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $574a
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ACTOR_PLAYER ; $574f
 	jr .markShakes ; $5757
 .variantBBounce:
-	script_set_anim $0d, ANIM_BOUNCE ; $5759
-	script_wait_idle $0d ; $5760
-	script_face_toward $0d, ACTOR_PLAYER ; $5765
+	script_set_anim ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ANIM_BOUNCE ; $5759
+	script_wait_idle ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $5760
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ACTOR_PLAYER ; $5765
 .markShakes:
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_MARK, ANIM_SHAKE ; $576d
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_MARK ; $5774
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_MARK, ACTOR_PLAYER ; $5779
+	script_set_anim ACTOR_END10_VARSITY_COURT_SINGLES_MARK, ANIM_SHAKE ; $576d
+	script_wait_idle ACTOR_END10_VARSITY_COURT_SINGLES_MARK ; $5774
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_MARK, ACTOR_PLAYER ; $5779
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5781
 	script_wait_idle ACTOR_PLAYER ; $5788
 	script_wait_frames 20 ; $578d
-	script_move_target ACTOR_END10_VARSITY_COURT_ALT_EMILY, 10.0, 31.0 ; $5794
-	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_EMILY ; $579f
+	script_move_target ACTOR_END10_VARSITY_COURT_SINGLES_EMILY, 10.0, 31.0 ; $5794
+	script_wait_move ACTOR_END10_VARSITY_COURT_SINGLES_EMILY ; $579f
 	script_wait_frames 20 ; $57a4
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, ACTOR_PLAYER ; $57ab
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, $0d ; $57b3
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_EMILY, ACTOR_PLAYER ; $57ab
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_EMILY, ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $57b3
 	script_wait_frames 20 ; $57bb
 	script_wait_frames 20 ; $57c2
-	script_move_target ACTOR_END10_VARSITY_COURT_ALT_KEVIN, 12.0, 31.0 ; $57c9
-	script_wait_move ACTOR_END10_VARSITY_COURT_ALT_KEVIN ; $57d4
+	script_move_target ACTOR_END10_VARSITY_COURT_SINGLES_KEVIN, 12.0, 31.0 ; $57c9
+	script_wait_move ACTOR_END10_VARSITY_COURT_SINGLES_KEVIN ; $57d4
 	script_wait_frames 20 ; $57d9
-	script_set_anim ACTOR_END10_VARSITY_COURT_ALT_KEVIN, ANIM_BOUNCE ; $57e0
-	script_wait_idle ACTOR_END10_VARSITY_COURT_ALT_KEVIN ; $57e7
-	script_set_anim $0d, ANIM_BOUNCE ; $57ec
-	script_wait_idle $0d ; $57f3
-	script_face_toward ACTOR_PLAYER, $0d ; $57f8
+	script_set_anim ACTOR_END10_VARSITY_COURT_SINGLES_KEVIN, ANIM_BOUNCE ; $57e0
+	script_wait_idle ACTOR_END10_VARSITY_COURT_SINGLES_KEVIN ; $57e7
+	script_set_anim ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ANIM_BOUNCE ; $57ec
+	script_wait_idle ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $57f3
+	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE ; $57f8
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5800
 	jr z, .face ; $5803
 .face:
-	script_face_toward $0d, ACTOR_PLAYER ; $5805
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_ROOMMATE, ACTOR_PLAYER ; $5805
 	script_wait_frames 10 ; $580d
-	script_face_toward ACTOR_END10_VARSITY_COURT_ALT_EMILY, ACTOR_PLAYER ; $5814
+	script_face_toward ACTOR_END10_VARSITY_COURT_SINGLES_EMILY, ACTOR_PLAYER ; $5814
 	script_wait_frames 10 ; $581c
 	ld a, EXIT_END10_VARSITY_COURT_DONE ; $5823
 	ld [wUnusedExitTriggerIdMirror], a ; $5825
 	ld [wStoryModeExitTriggerRequest], a ; $5828
 	ret ; $582b
-.scriptRespawnLocationActors:
-	script_respawn_actors End10VarsityCourtActorsAltB_27 ; $582c
+.doubles:
+	script_respawn_actors End10VarsityCourtActorsDoubles_27 ; $582c
 	farcall BeginCutsceneScriptMode ; $5834
 	call SetPartnerObjDefByGender_27 ; $5837
 	script_null_script ACTOR_PARTNER ; $583a
@@ -157,12 +157,12 @@ End10VarsityCourtEntry01Scene:
 	script_move_player 11.0, 23.0 ; $5886
 	farcall WaitPlayerMoveDone ; $5890
 	script_move_target ACTOR_PARTNER, 13.0, 29.0 ; $5893
-	script_move_target $09, 11.0, 23.0 ; $589e
-	script_wait_move $09 ; $58a9
-	script_set_anim $09, ANIM_SHAKE ; $58ae
-	script_wait_idle $09 ; $58b5
-	script_set_anim $04, ANIM_BOUNCE ; $58ba
-	script_wait_idle $04 ; $58c1
+	script_move_target ACTOR_END10_VARSITY_COURT_DOUBLES_MARK, 11.0, 23.0 ; $589e
+	script_wait_move ACTOR_END10_VARSITY_COURT_DOUBLES_MARK ; $58a9
+	script_set_anim ACTOR_END10_VARSITY_COURT_DOUBLES_MARK, ANIM_SHAKE ; $58ae
+	script_wait_idle ACTOR_END10_VARSITY_COURT_DOUBLES_MARK ; $58b5
+	script_set_anim ACTOR_END10_VARSITY_COURT_DOUBLES_BOB, ANIM_BOUNCE ; $58ba
+	script_wait_idle ACTOR_END10_VARSITY_COURT_DOUBLES_BOB ; $58c1
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $58c6
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $58cd
 	script_wait_idle ACTOR_PLAYER ; $58d4
@@ -171,16 +171,16 @@ End10VarsityCourtEntry01Scene:
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $58e8
 	script_wait_idle ACTOR_PARTNER ; $58ef
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58f4
-	jp z, CeremonyDoublesReaction_27 ; $58f7
+	jp z, End10VarsityCourtDoublesVariantB_27 ; $58f7
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $58fa
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5902
 	script_wait_idle ACTOR_PARTNER ; $5909
 	script_face ACTOR_PLAYER, FACE_LEFT ; $590e
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $5915
 	sound SFX_APPEAR2 ; $591c
-	script_set_position $0a, 12.0, 27.5 ; $591e
+	script_set_position ACTOR_END10_VARSITY_COURT_DOUBLES_BALLOON_SWEAT, 12.0, 27.5 ; $591e
 	script_wait_frames 40 ; $5929
-	script_set_position $0a, 63.0, 63.0 ; $5930
+	script_set_position ACTOR_END10_VARSITY_COURT_DOUBLES_BALLOON_SWEAT, 63.0, 63.0 ; $5930
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $593b
 	script_wait_frames 10 ; $5943
 	script_lock_facing ACTOR_PLAYER ; $594a
@@ -221,15 +221,15 @@ End10VarsityCourtEntry01Scene:
 	script_wait_frames 20 ; $5a0f
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5a16
 	script_wait_idle ACTOR_PLAYER ; $5a1d
-	jp CeremonyDoublesReaction_27.continue ; $5a22
-CeremonyDoublesReaction_27:
+	jp End10VarsityCourtDoublesVariantB_27.continue ; $5a22
+End10VarsityCourtDoublesVariantB_27:
 	script_set_anim ACTOR_PARTNER, ANIM_BOUNCE ; $5a25
 	script_wait_idle ACTOR_PARTNER ; $5a2c
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5a31
 	sound SFX_APPEAR2 ; $5a39
-	script_set_position $0a, 12.0, 27.5 ; $5a3b
+	script_set_position ACTOR_END10_VARSITY_COURT_DOUBLES_BALLOON_SWEAT, 12.0, 27.5 ; $5a3b
 	script_wait_frames 40 ; $5a46
-	script_set_position $0a, 63.0, 63.0 ; $5a4d
+	script_set_position ACTOR_END10_VARSITY_COURT_DOUBLES_BALLOON_SWEAT, 63.0, 63.0 ; $5a4d
 	script_wait_frames 10 ; $5a58
 	script_lock_facing ACTOR_PLAYER ; $5a5f
 	script_wait_frames 10 ; $5a66
@@ -267,28 +267,28 @@ CeremonyDoublesReaction_27:
 	script_unlock_facing ACTOR_PLAYER ; $5b13
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5b1a
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $5b21
-	script_set_actor_script $08, ActorScript_27_07 ; $5b28
-	script_set_actor_script $03, ActorScript_27_08 ; $5b33
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY, ActorScript_27_07 ; $5b28
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN, ActorScript_27_08 ; $5b33
 	script_wait_frames 20 ; $5b3e
-	script_set_actor_script $09, ActorScript_27_12 ; $5b45
+	script_set_actor_script ACTOR_END10_VARSITY_COURT_DOUBLES_MARK, ActorScript_27_12 ; $5b45
 	script_move_player 11.0, 29.0 ; $5b50
 	farcall WaitPlayerMoveDone ; $5b5a
-	script_wait_actor_script $09 ; $5b5d
-	script_face_toward ACTOR_PLAYER, $09 ; $5b62
-	script_face_toward $03, ACTOR_PARTNER ; $5b6a
-	script_set_anim $09, ANIM_SHAKE ; $5b72
-	script_wait_idle $09 ; $5b79
-	script_face_toward $09, ACTOR_PLAYER ; $5b7e
-	script_move_target $08, 10.0, 31.0 ; $5b86
-	script_wait_move $08 ; $5b91
-	script_face_toward $08, ACTOR_PLAYER ; $5b96
-	script_face_toward $03, ACTOR_PARTNER ; $5b9e
-	script_set_anim $08, ANIM_NOD ; $5ba6
-	script_wait_idle $08 ; $5bad
-	script_move_target $03, 12.0, 31.0 ; $5bb2
-	script_wait_move $03 ; $5bbd
-	script_set_anim $03, ANIM_BOUNCE ; $5bc2
-	script_wait_idle $03 ; $5bc9
+	script_wait_actor_script ACTOR_END10_VARSITY_COURT_DOUBLES_MARK ; $5b5d
+	script_face_toward ACTOR_PLAYER, ACTOR_END10_VARSITY_COURT_DOUBLES_MARK ; $5b62
+	script_face_toward ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN, ACTOR_PARTNER ; $5b6a
+	script_set_anim ACTOR_END10_VARSITY_COURT_DOUBLES_MARK, ANIM_SHAKE ; $5b72
+	script_wait_idle ACTOR_END10_VARSITY_COURT_DOUBLES_MARK ; $5b79
+	script_face_toward ACTOR_END10_VARSITY_COURT_DOUBLES_MARK, ACTOR_PLAYER ; $5b7e
+	script_move_target ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY, 10.0, 31.0 ; $5b86
+	script_wait_move ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY ; $5b91
+	script_face_toward ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY, ACTOR_PLAYER ; $5b96
+	script_face_toward ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN, ACTOR_PARTNER ; $5b9e
+	script_set_anim ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY, ANIM_NOD ; $5ba6
+	script_wait_idle ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY ; $5bad
+	script_move_target ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN, 12.0, 31.0 ; $5bb2
+	script_wait_move ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN ; $5bbd
+	script_set_anim ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN, ANIM_BOUNCE ; $5bc2
+	script_wait_idle ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN ; $5bc9
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $5bce
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5bd6
 	script_wait_idle ACTOR_PARTNER ; $5bdd
@@ -299,8 +299,8 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5bef
 	script_wait_idle ACTOR_PLAYER ; $5bf6
 	script_wait_frames 10 ; $5bfb
-	script_face_toward $08, ACTOR_PLAYER ; $5c02
-	script_face_toward $03, ACTOR_PARTNER ; $5c0a
+	script_face_toward ACTOR_END10_VARSITY_COURT_DOUBLES_EMILY, ACTOR_PLAYER ; $5c02
+	script_face_toward ACTOR_END10_VARSITY_COURT_DOUBLES_KEVIN, ACTOR_PARTNER ; $5c0a
 	script_wait_frames 10 ; $5c12
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5c19
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5c20
@@ -374,33 +374,33 @@ ActorScript_27_12:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-End10VarsityCourtActorsAlt_27:
+End10VarsityCourtActorsSingles_27:
 	; $5ccd, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 25.0, 31.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_KEVIN
-	map_actor $0000, ActorScript_27_27, 11.0, 19.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, END10_VARSITY_COURT_ALT_BOB
-	map_actor $0000, ActorScript_27_27, 19.0, 33.0, FACE_LEFT, OBJ_FAY, ANIM_WALK, $03, END10_VARSITY_COURT_ALT_FAY
-	map_actor $0000, ActorScript_27_27, 19.0, 35.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, END10_VARSITY_COURT_ALT_CURT
-	map_actor $0000, ActorScript_27_27, 19.0, 23.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $06, END10_VARSITY_COURT_ALT_BETH
-	map_actor $0000, ActorScript_27_27, 27.0, 29.0, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_EMILY
-	map_actor $0000, ActorScript_27_27, 25.0, 29.0, FACE_LEFT, OBJ_MARK, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_MARK
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_BALLOON_SWEAT
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_BALLOON_EXCLAIM
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_BALLOON_QUESTION
-	map_actor $0000, ActorScript_27_27, 23.0, 29.0, FACE_LEFT, OBJ_KATE, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_KATE
+	map_actor $0000, ActorScript_27_27, 25.0, 31.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_KEVIN
+	map_actor $0000, ActorScript_27_27, 11.0, 19.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, END10_VARSITY_COURT_SINGLES_BOB
+	map_actor $0000, ActorScript_27_27, 19.0, 33.0, FACE_LEFT, OBJ_FAY, ANIM_WALK, $03, END10_VARSITY_COURT_SINGLES_FAY
+	map_actor $0000, ActorScript_27_27, 19.0, 35.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, END10_VARSITY_COURT_SINGLES_CURT
+	map_actor $0000, ActorScript_27_27, 19.0, 23.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $06, END10_VARSITY_COURT_SINGLES_BETH
+	map_actor $0000, ActorScript_27_27, 27.0, 29.0, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_EMILY
+	map_actor $0000, ActorScript_27_27, 25.0, 29.0, FACE_LEFT, OBJ_MARK, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_MARK
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_BALLOON_SWEAT
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_BALLOON_EXCLAIM
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_BALLOON_QUESTION
+	map_actor $0000, ActorScript_27_27, 23.0, 29.0, FACE_LEFT, OBJ_KATE, ANIM_WALK, $00, END10_VARSITY_COURT_SINGLES_ROOMMATE
 	map_actor_end
-End10VarsityCourtActorsAltB_27:
+End10VarsityCourtActorsDoubles_27:
 	; $5d71, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 25.0, 29.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_KEVIN
-	map_actor $0000, ActorScript_27_27, 13.0, 23.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, END10_VARSITY_COURT_ALT_B_BOB
-	map_actor $0000, ActorScript_27_27, 19.0, 33.0, FACE_LEFT, OBJ_FAY, ANIM_WALK, $03, END10_VARSITY_COURT_ALT_B_FAY
-	map_actor $0000, ActorScript_27_27, 19.0, 35.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, END10_VARSITY_COURT_ALT_B_CURT
-	map_actor $0000, ActorScript_27_27, 19.0, 23.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $06, END10_VARSITY_COURT_ALT_B_BETH
-	map_actor $0000, ActorScript_27_27, 23.0, 29.0, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_EMILY
-	map_actor $0000, ActorScript_27_27, 11.0, 19.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_MARK
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_SWEAT
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_EXCLAIM_1
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_EXCLAIM_2
-	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_ALT_B_BALLOON_EXCLAIM_3
+	map_actor $0000, ActorScript_27_27, 25.0, 29.0, FACE_LEFT, OBJ_KEVIN, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_KEVIN
+	map_actor $0000, ActorScript_27_27, 13.0, 23.0, FACE_DOWN, OBJ_BOB, ANIM_WALK, $07, END10_VARSITY_COURT_DOUBLES_BOB
+	map_actor $0000, ActorScript_27_27, 19.0, 33.0, FACE_LEFT, OBJ_FAY, ANIM_WALK, $03, END10_VARSITY_COURT_DOUBLES_FAY
+	map_actor $0000, ActorScript_27_27, 19.0, 35.0, FACE_LEFT, OBJ_CURT, ANIM_WALK, $06, END10_VARSITY_COURT_DOUBLES_CURT
+	map_actor $0000, ActorScript_27_27, 19.0, 23.0, FACE_LEFT, OBJ_BETH, ANIM_WALK, $06, END10_VARSITY_COURT_DOUBLES_BETH
+	map_actor $0000, ActorScript_27_27, 23.0, 29.0, FACE_LEFT, OBJ_EMILY, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_EMILY
+	map_actor $0000, ActorScript_27_27, 11.0, 19.0, FACE_DOWN, OBJ_MARK, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_MARK
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_BALLOON_SWEAT
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_BALLOON_EXCLAIM_1
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_BALLOON_EXCLAIM_2
+	map_actor $0000, ActorScript_27_27, 61.0, 61.0, FACE_LEFT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END10_VARSITY_COURT_DOUBLES_BALLOON_EXCLAIM_3
 	map_actor_end
 End8SrCourtMapScripts_27:
 	; $5e15, 14 bytes (map_tree)
@@ -420,7 +420,7 @@ End8SrCourtActors_27:
 	map_actor $0000, ActorScript_27_27, 41.0, 19.0, FACE_LEFT, OBJ_RACKET_STUDENT, ANIM_WALK, $05, END8_SR_COURT_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_27_27, 41.0, 25.0, FACE_LEFT, OBJ_RACKET_STUDENT, ANIM_WALK, $00, END8_SR_COURT_RACKET_STUDENT_2
 	map_actor_end
-End8SrCourtActorsAlt_27:
+End8SrCourtActorsDoubles_27:
 	; $5e81, 66 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 43.0, 39.0, FACE_UP, OBJ_EMILY, ANIM_WALK, $00, END8_SR_COURT_ALT_EMILY
 	map_actor $0000, ActorScript_27_27, 37.0, 15.0, FACE_DOWN, OBJ_FAY, ANIM_WALK, $07, END8_SR_COURT_ALT_FAY
@@ -436,19 +436,19 @@ End8SrCourtExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END8_SR_COURT, ENTRY_END8_SR_COURT_SCENE, END8_SR_COURT_DONE
 	db $ff
 End8SrCourtNpcScripts_27:
-	ds 1, $ff ; $5ed5, fill
+	db $ff ; $5ed5
 End8SrCourtFacingScripts_27:
-	ds 1, $ff ; $5ed6, fill
+	db $ff ; $5ed6
 End8SrCourtTileTriggers_27:
-	ds 1, $ff ; $5ed7, fill
+	db $ff ; $5ed7
 End8SrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $5ed8
 	jp z, .notDoubles ; $5edb
-	script_respawn_actors End8SrCourtActorsAlt_27 ; $5ede
+	script_respawn_actors End8SrCourtActorsDoubles_27 ; $5ede
 	farcall BeginCutsceneScriptMode ; $5ee6
-	jr .step ; $5ee9
+	jr .doubles ; $5ee9
 	ret ; $5eeb
-.step:
+.doubles:
 	script_null_script ACTOR_PARTNER ; $5eec
 	script_set_position ACTOR_PLAYER, 37.0, 27.0 ; $5ef1
 	script_face ACTOR_PLAYER, FACE_UP ; $5efc
@@ -511,44 +511,44 @@ End8SrCourtInitScript_27:
 	ld [wStoryModeExitTriggerRequest], a ; $6071
 	ret ; $6074
 .notDoubles:
-	script_set_speed ACTOR_END8_SR_COURT_ALT_FAY, 0.75 ; $6075
+	script_set_speed ACTOR_END8_SR_COURT_FAY, 0.75 ; $6075
 	script_set_position ACTOR_PLAYER, 36.0, 27.0 ; $607d
 	script_face ACTOR_PLAYER, FACE_UP ; $6088
 	xor a ; $608f
 	ld [wStoryModeShowLocationName], a ; $6090
 	script_fade_in 4 ; $6093
-	script_move_target ACTOR_END8_SR_COURT_ALT_FAY, 36.0, 19.0 ; $6098
-	script_wait_move ACTOR_END8_SR_COURT_ALT_FAY ; $60a3
+	script_move_target ACTOR_END8_SR_COURT_FAY, 36.0, 19.0 ; $6098
+	script_wait_move ACTOR_END8_SR_COURT_FAY ; $60a3
 	script_delay 20 ; $60a8
 	script_delay 40 ; $60ad
-	script_set_anim ACTOR_END8_SR_COURT_ALT_FAY, ANIM_BOUNCE ; $60b2
+	script_set_anim ACTOR_END8_SR_COURT_FAY, ANIM_BOUNCE ; $60b2
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $60b9
 	script_wait_idle ACTOR_PLAYER ; $60c0
 	script_face ACTOR_PLAYER, FACE_DOWN ; $60c5
 	script_delay 30 ; $60cc
 	script_player_speed 1.5 ; $60d1
-	script_set_speed ACTOR_END8_SR_COURT_ALT_EMILY, 0.5 ; $60d7
+	script_set_speed ACTOR_END8_SR_COURT_EMILY, 0.5 ; $60d7
 	script_move_player 43.0, 31.0 ; $60df
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 43.0, 31.0 ; $60e9
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 43.0, 31.0 ; $60e9
 	script_delay 90 ; $60f4
 	script_player_speed 0.5 ; $60f9
 	script_move_player 36.0, 27.0 ; $60ff
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6109
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 31.0 ; $610e
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6119
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 30.0 ; $611e
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6129
-	script_move_target ACTOR_END8_SR_COURT_ALT_EMILY, 36.0, 29.0 ; $612e
-	script_wait_move ACTOR_END8_SR_COURT_ALT_EMILY ; $6139
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6109
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 36.0, 31.0 ; $610e
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6119
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 36.0, 30.0 ; $611e
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6129
+	script_move_target ACTOR_END8_SR_COURT_EMILY, 36.0, 29.0 ; $612e
+	script_wait_move ACTOR_END8_SR_COURT_EMILY ; $6139
 	script_delay 30 ; $613e
-	script_set_anim ACTOR_END8_SR_COURT_ALT_EMILY, ANIM_BOUNCE ; $6143
-	script_wait_idle ACTOR_END8_SR_COURT_ALT_EMILY ; $614a
+	script_set_anim ACTOR_END8_SR_COURT_EMILY, ANIM_BOUNCE ; $6143
+	script_wait_idle ACTOR_END8_SR_COURT_EMILY ; $614a
 	script_delay 30 ; $614f
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $6154
 	script_wait_idle ACTOR_PLAYER ; $615b
 	script_delay 20 ; $6160
-	script_set_anim ACTOR_END8_SR_COURT_ALT_EMILY, ANIM_NOD ; $6165
-	script_wait_idle ACTOR_END8_SR_COURT_ALT_EMILY ; $616c
+	script_set_anim ACTOR_END8_SR_COURT_EMILY, ANIM_NOD ; $6165
+	script_wait_idle ACTOR_END8_SR_COURT_EMILY ; $616c
 	script_delay 40 ; $6171
 	ld a, EXIT_END8_SR_COURT_DONE ; $6176
 	ld [wUnusedExitTriggerIdMirror], a ; $6178

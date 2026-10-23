@@ -37,7 +37,7 @@ hFrameTasksReady:: db
 hPlayerInputFlags:: db
 
 ; [8-bit] Auto-repeat pulse from ReadJoypad: the held buttons on the frame the held set changes, again every hInputRepeatDelay frames after an initial $12, 0 on other frames (hPlayerInputFlags layout)
-hInputPressed:: db
+hInputRepeat:: db
 
 ; [8-bit] Buttons held for key-repeat tracking
 hInputRepeatButtons:: db
@@ -54,7 +54,7 @@ hRomBank:: db
 ; [8-bit] Shadow of the current WRAM bank (last value written to rSVBK); match engine swaps banks 4-7 for per-character data
 hWramBank:: db
 
-; [8-bit] Shadow of the current SRAM bank (always written together with the MBC RAM-bank register at $4000)
+; [8-bit] Write-only shadow of the SRAM bank: the sram_bank macro stores it beside the MBC RAM-bank register, but nothing reads it back
 hSramBank:: db
 
 ; [8-bit] BGVIEW_*: how VBlank sets the BG map and scroll
@@ -87,7 +87,7 @@ hPeakLY:: db
 ; [8-bit] Frames until hPeakLY decays
 hPeakLYFrames:: db
 
-; [8-bit] Bit 0 = fading out, bit 1 = fading in, bit 7 = fade to white
+; [8-bit] Bit 0 = fading out, bit 1 = fading in, bit 7 = use the packed-word fade curve (Unused_00_ApplyPackedFade)
 hFadeState:: db
 
 ; [8-bit] Fade step per frame
@@ -127,7 +127,7 @@ hStatDeltaOutPtr:: dw
 hStatDeltaRecordCopy:: dw
 NEXTU
 ; save-slot debug editor (bank $03)
-; [16-bit] Unused_03_SaveSlotDebugEditor: edit-cursor offset into the $d300 save-block buffer, wrapped at $400; moved by Unused_03_MoveSaveEditorCursor (c = signed cursor step, b = value step applied on A)
+; [16-bit] Unused_03_SaveSlotDebugEditor: edit-cursor offset into the $d300 save-block buffer, wrapped at $400; moved by Unused_03_MoveSaveEditorCursorOrAdjustByte (c = signed cursor step, b = value step applied on A)
 hSaveEditorCursor:: dw
 ENDU
 
@@ -156,7 +156,7 @@ hLinkTxByte:: db
 ; [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths
 hLinkState:: db
 
-; [8-bit] Link error flags. AdvanceFrame jumps to LinkErrorReset if any of the top three bits is set while hLinkCounter is nonzero, but nothing sets them, so the check never fires; InitSerialLink and ResetSerialState clear it
+; [8-bit] Link error flags. AdvanceFrame jumps to LinkErrorReset if any of the top three bits is set while hLinkRetryCount is nonzero, but nothing sets them, so the check never fires; InitSerialLink and ResetSerialState clear it
 hLinkErrorFlags:: db
 
 ; [8-bit] Cleared by InitSerialLink and ResetSerialState; read by nothing
@@ -169,8 +169,8 @@ hLinkRxNibbleIndex:: db
 ; [8-bit] Nibble-block transfer: index into wLinkTxNibbles of the next nibble to send, stepped once per byte exchanged
 hLinkTxNibbleIndex:: db
 
-; [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8
-hLinkCounter:: db
+; [8-bit] Serial link retry count: bumped on each failed, unanswered or repeated exchange and zeroed on a good reply; AdvanceFrame checks link errors only while it is nonzero
+hLinkRetryCount:: db
 	ds 4
 
 ; [8-bit] Jingle sound id currently overriding BGM (0 = none)
@@ -190,30 +190,30 @@ UNION
 	ds 2
 ; [8-bit] Re-entrancy guard: UpdateSoundEngine returns if set, else sets it around RunSoundEngine. Inside the engine this byte is hSndChannelType (the pool is saved and restored)
 hSoundEngineBusy:: db
-; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters
+; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role)
 hLinkInput:: db
 ; [8-bit] Input byte decoded from the last received link frame
 hLinkRemoteInput:: db
-; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
-hLinkRemoteInputBuf:: db
-; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputPressed) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back
+; [8-bit] This console's own input as sent in the previous exchange: PrepareLinkInputPayload/PrepareLinkStatePayload copy hLinkTxInput here before reloading it. In a link match each console drives its own character from this and the peer's from hLinkRemoteInput
+hLinkSentInput:: db
+; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputRepeat) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores back the input as encoded (what the peer will decode); other buttons pressed that frame are lost
 hLinkTxInput:: db
 ; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
 hLinkTransferDone:: db
 ; [8-bit] Nonzero while a serial block exchange runs (set by UpdateLinkSession, ResyncLinkSession, Unused_07_ExchangeLinkBlockToWram5; cleared by the link menus). AdvanceFrame skips the debug single-step while set
 hLinkExchangeActive:: db
-; [8-bit] Cleared by InitSerialLink and ResetSerialState; otherwise unused on the serial path (the sound driver's hSndNoteTimer)
+; [8-bit] Cleared by InitSerialLink and ResetSerialState; nothing reads it on the serial path (the byte is the sound driver's hSndNoteTimer)
 hUnusedLinkSlot:: db
 ; [8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing
 hLinkLastRxMirror:: db
-; [8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkCounter and re-inits the link on the second repeat
+; [8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkRetryCount and re-inits the link on the second repeat
 hLinkLastRxByte:: db
 ; [8-bit] Sequence bits: top two bits of the last transmitted byte, inverted by PrepareLinkStatePayload/PrepareLinkInputPayload and OR'd into every byte SerialEncodeInput sends, so the peer can tell a fresh frame from a repeat
 hLinkTxSeqBits:: db
 ; [8-bit] Record of LinkStateBytePtrs_07 that ComposeLinkStateByte builds the transmitted state byte from; set per screen by the match and story pause menus and ResetMatchState
 hLinkPayloadKind:: db
-; [8-bit] One-deep history of hLinkRemoteInputBuf on the slave decode path: SerialDecodeInput swaps the two so a dropped frame can fall back to the previous remote input
-hLinkRemoteInputPrev:: db
+; [8-bit] One-deep history of hLinkSentInput on the slave decode path: SerialDecodeInput/SerialDecodeCommand swap the two, delaying the slave's own sent input by a further frame
+hLinkSentInputPrev:: db
 ; [8-bit] Nonzero makes a slave (hLinkState $02) wait for hLinkTxPending to clear before sending, so it never gets ahead of the master
 hLinkAckRequired:: db
 ; [8-bit] The byte handed to the serial port, held until SerialHandler sees the transfer finish and clears it; the slave's ack wait spins on it

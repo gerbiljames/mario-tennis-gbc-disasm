@@ -27,10 +27,10 @@ WriteMarioCastVictoryGrid:
 	pop de ; $524c
 	pop bc ; $524d
 	ret ; $524e
-Unused_03_MoveSaveEditorCursor:
+Unused_03_MoveSaveEditorCursorOrAdjustByte:
 	ldh a, [hPlayerInputFlags] ; $524f
 	bit PADB_A, a ; $5251
-	jr nz, .move ; $5253
+	jr nz, .adjustByte ; $5253
 	ld hl, hSaveEditorCursor ; $5255
 	ld a, [hl+] ; $5258
 	ld h, [hl] ; $5259
@@ -50,7 +50,7 @@ Unused_03_MoveSaveEditorCursor:
 	xor a ; $526d
 	dec a ; $526e
 	ret ; $526f
-.move:
+.adjustByte:
 	sound SFX_MENU_MOVE ; $5270
 	ld hl, hSaveEditorCursor ; $5272
 	ld a, [hl+] ; $5275
@@ -178,7 +178,7 @@ Unused_03_SaveSlotDebugEditor:
 	push de ; $5385
 	push hl ; $5386
 	ld a, h ; $5387
-	sub $d3 ; $5388
+	sub HIGH(wSaveEditorBlock) ; $5388
 	ld h, a ; $538a
 	call PrintHexWord ; $538b
 	pop hl ; $538e
@@ -255,35 +255,35 @@ Unused_03_SaveSlotDebugEditor:
 	pop de ; $53f7
 .advanceFrame:
 	call AdvanceFrame ; $53f8
-	ldh a, [hInputPressed] ; $53fb
+	ldh a, [hInputRepeat] ; $53fb
 	bit PADB_UP, a ; $53fd
-	jr z, .moveSaveEditorCursor ; $53ff
+	jr z, .checkLeft ; $53ff
 	ld bc, $f0f8 ; $5401
-	call Unused_03_MoveSaveEditorCursor ; $5404
+	call Unused_03_MoveSaveEditorCursorOrAdjustByte ; $5404
 	jr z, .printStatus ; $5407
 	jp .redraw ; $5409
-.moveSaveEditorCursor:
+.checkLeft:
 	bit PADB_LEFT, a ; $540c
 	jr z, .checkRight ; $540e
 	ld bc, $ffff ; $5410
-	call Unused_03_MoveSaveEditorCursor ; $5413
+	call Unused_03_MoveSaveEditorCursorOrAdjustByte ; $5413
 	jr z, .printStatus ; $5416
 	jp .redraw ; $5418
 .checkRight:
 	bit PADB_RIGHT, a ; $541b
 	jr z, .checkDown ; $541d
 	ld bc, $0101 ; $541f
-	call Unused_03_MoveSaveEditorCursor ; $5422
+	call Unused_03_MoveSaveEditorCursorOrAdjustByte ; $5422
 	jr z, .printStatus ; $5425
 	jp .redraw ; $5427
 .checkDown:
 	bit PADB_DOWN, a ; $542a
-	jr z, .positive ; $542c
+	jr z, .checkB ; $542c
 	ld bc, $1008 ; $542e
-	call Unused_03_MoveSaveEditorCursor ; $5431
+	call Unused_03_MoveSaveEditorCursorOrAdjustByte ; $5431
 	jp z, .printStatus ; $5434
 	jp .redraw ; $5437
-.positive:
+.checkB:
 	bit PADB_B, a ; $543a
 	jr z, .checkSelect ; $543c
 	ld a, [wCurrentStorySlot] ; $543e
@@ -324,7 +324,7 @@ Unused_03_SaveSlotDebugEditor:
 	jp .reloadSlot ; $547c
 .checkStart:
 	bit PADB_START, a ; $547f
-	jr z, .skipSave ; $5481
+	jr z, .noButton ; $5481
 	sound SFX_MENU_SELECT ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit PADB_A, a ; $5487
@@ -344,7 +344,7 @@ Unused_03_SaveSlotDebugEditor:
 	call Unused_03_InvalidateCurrentSlotBlock ; $54a6
 	jp .printStatus ; $54a9
 	db $d1 ; $54ac
-.skipSave:
+.noButton:
 	jp .inputLoop ; $54ad
 SaveResultFailedString_03:
 	; $54b0, 12 bytes (ascii)
@@ -380,7 +380,7 @@ RestoreStoryBlockFromBackup:
 	ld b, a ; $551a
 	call ReadSaveBlock ; $551b
 	or a ; $551e
-	jr nz, .restore ; $551f
+	jr nz, .bothBad ; $551f
 	ld hl, wDecompBuffer tile 64 ; $5521
 	call ReadSaveBlockTag ; $5524
 	pop bc ; $5527
@@ -388,13 +388,13 @@ RestoreStoryBlockFromBackup:
 	ld de, wDecompBuffer tile 64 ; $552b
 	call WriteSaveBlock ; $552e
 	ret ; $5531
-.restore:
+.bothBad:
 	pop bc ; $5532
 	call InvalidateSaveBlock ; $5533
 	inc b ; $5536
 	call InvalidateSaveBlock ; $5537
 	ret ; $553a
-Unused_03_InvalidateBlockIfUnwritten:
+Unused_03_InvalidateBlockIfCorrupt:
 	ld hl, WRAMX_BASE ; $553b
 	call ReadSaveBlock ; $553e
 	cp $ff ; $5541
@@ -428,7 +428,7 @@ Unused_03_RestoreBlockOrClear:
 	ld de, $0000 ; $5574
 	call WriteSaveBlock ; $5577
 	ret ; $557a
-Unused_03_RestoreBlock06FromBackup:
+Unused_03_RestorePreservedBlockFromBackup:
 	ld b, SAVEBLOCK_PRESERVED ; $557b
 	ld hl, WRAMX_BASE ; $557d
 	call ReadSaveBlock ; $5580
@@ -533,7 +533,7 @@ Unused_03_RestoreBlock0aFromBackup:
 	ld b, SAVEBLOCK_SPARE10 + SAVEBLOCK_BACKUP ; $5647
 	call InvalidateSaveBlock ; $5649
 	ret ; $564c
-Unused_03_ClearBlockIfSet:
+Unused_03_ResetBlockIfInvalid:
 	ld hl, WRAMX_BASE ; $564d
 	call ReadSaveBlock ; $5650
 	or a ; $5653

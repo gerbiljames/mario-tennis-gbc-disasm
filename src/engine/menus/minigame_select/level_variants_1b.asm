@@ -29,7 +29,7 @@ ClearMinigameLevelDescriptionRow:
 GetMinigameLevelColumnCount:
 	push af ; $6e1c
 	push_wram_bank WRAM_COURT_PLANES ; $6e1d
-	ld a, [wScreenAttrmap + 2] ; $6e26
+	ld a, [wLevelSelectColumns] ; $6e26
 	ld b, a ; $6e29
 	pop_wram_bank ; $6e2a
 	pop af ; $6e2f
@@ -43,12 +43,12 @@ RunMinigameLevelSelect2:
 	ld a, [wMenuSlideDirection] ; $6e41
 	ld b, a ; $6e44
 	farcall OpenChoiceTabPanel ; $6e45
-	farcall InitMenuBgScroll ; $6e48
+	farcall InitMenuTitleScroller ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
 	farcall LoadMenuSpritePalettePair ; $6e4f
 	wram_bank WRAM_COURT_PLANES ; $6e52
-	ld a, [wScreenAttrmap + 1] ; $6e58
+	ld a, [wLevelSelectClearedCount] ; $6e58
 	ld c, a ; $6e5b
 	ld b, $02 ; $6e5c
 	call SetMenuCursorFromIndex ; $6e5e
@@ -58,7 +58,7 @@ RunMinigameLevelSelect2:
 	wram_bank WRAM_SCREEN ; $6e72
 .loop:
 	call AdvanceFrame ; $6e78
-	ldh a, [hInputPressed] ; $6e7b
+	ldh a, [hInputRepeat] ; $6e7b
 	ld [wMenuInputPressed], a ; $6e7d
 	call GetMinigameLevelColumnCount ; $6e80
 	ld c, $01 ; $6e83
@@ -80,7 +80,7 @@ RunMinigameLevelSelect2:
 	or a ; $6ea2
 	jr z, .playSelectSfx ; $6ea3
 	wram_bank WRAM_COURT_PLANES ; $6ea5
-	ld a, [wScreenAttrmap + 1] ; $6eab
+	ld a, [wLevelSelectClearedCount] ; $6eab
 	or a ; $6eae
 	jr nz, .playSelectSfx ; $6eaf
 	sound SFX_MENU_LOCKED ; $6eb1
@@ -91,14 +91,14 @@ RunMinigameLevelSelect2:
 	ld hl, rIE ; $6eba
 	set B_IE_TIMER, [hl] ; $6ebd
 	wram_bank WRAM_SCREEN ; $6ebf
-	ld b, $01 ; $6ec5
+	ld b, MENUSLIDE_FORWARD ; $6ec5
 	farcall CloseChoiceTabPanel ; $6ec7
 	ld a, MENUSLIDE_FORWARD ; $6eca
 	ld [wMenuSlideDirection], a ; $6ecc
 	wram_bank WRAM_COURT_PLANES ; $6ecf
 	ld c, $03 ; $6ed5
 	call GetMenuCursorIndex_1b ; $6ed7
-	ld [wScreenAttrmap + 3], a ; $6eda
+	ld [wLevelSelectResult], a ; $6eda
 	ret ; $6edd
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $6ede
@@ -106,18 +106,18 @@ RunMinigameLevelSelect2:
 	ld hl, rIE ; $6ee3
 	set B_IE_TIMER, [hl] ; $6ee6
 	wram_bank WRAM_SCREEN ; $6ee8
-	ld b, $00 ; $6eee
+	ld b, MENUSLIDE_BACK ; $6eee
 	farcall CloseChoiceTabPanel ; $6ef0
 	ld a, MENUSLIDE_BACK ; $6ef3
 	ld [wMenuSlideDirection], a ; $6ef5
 	wram_bank WRAM_COURT_PLANES ; $6ef8
 	ld a, $ff ; $6efe
-	ld [wScreenAttrmap + 3], a ; $6f00
+	ld [wLevelSelectResult], a ; $6f00
 	ret ; $6f03
 RedrawMinigameLevelSelect2:
 	wram_bank WRAM_SCREEN ; $6f04
 	ld b, $00 ; $6f0a
-	ld c, $00 ; $6f0c
+	ld c, ATTRRECT_INACTIVE ; $6f0c
 .loop:
 	call SetSelectPanelAttrRect ; $6f0e
 	ld a, b ; $6f11
@@ -128,7 +128,7 @@ RedrawMinigameLevelSelect2:
 	ld c, $02 ; $6f18
 	call GetMenuCursorIndex_1b ; $6f1a
 	ld b, a ; $6f1d
-	ld c, $01 ; $6f1e
+	ld c, ATTRRECT_SELECTED ; $6f1e
 	call SetSelectPanelAttrRect ; $6f20
 	ld c, $03 ; $6f23
 	call GetMenuCursorIndex_1b ; $6f25
@@ -171,7 +171,7 @@ SelectPanelAttrRectTable:
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 3 ; record 0
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 12 ; record 1
 DrawMinigameLevelSelect2Cursor:
-	farcall TickMenuBgScroll ; $6f62
+	farcall TickMenuTitleScroller ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex_1b ; $6f67
 	push af ; $6f6a
@@ -187,7 +187,7 @@ DrawMinigameLevelSelect2Cursor:
 	ld e, a ; $6f80
 	farcall ApplySpriteBobOffset ; $6f81
 	ld b, OAM_BANK1 ; $6f84
-	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate0 ; $6f86
+	ld hl, MinigameLevelSelect2LabelTemplate ; $6f86
 	push de ; $6f89
 	call QueueSpriteTemplate ; $6f8a
 	pop de ; $6f8d
@@ -195,11 +195,11 @@ DrawMinigameLevelSelect2Cursor:
 	add hl, de ; $6f91
 	ld d, h ; $6f92
 	ld e, l ; $6f93
-	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate1 ; $6f94
+	ld hl, MinigameLevelSelect2LabelTailTemplate ; $6f94
 	sprite_attr_tile OAM_BANK1, $70 ; $6f97
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
-DrawMinigameLevelSelect2Cursor_SpriteTemplate0:
+MinigameLevelSelect2LabelTemplate:
 	; $6f9f, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -210,7 +210,7 @@ DrawMinigameLevelSelect2Cursor_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawMinigameLevelSelect2Cursor_SpriteTemplate1:
+MinigameLevelSelect2LabelTailTemplate:
 	; $6fc0, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -229,13 +229,13 @@ RunMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $6fdc
 	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
-	farcall N64RecordTypeSlideIn ; $6fe6
-	farcall InitMenuBgScroll ; $6fe9
+	farcall ThreeChoiceSlideIn ; $6fe6
+	farcall InitMenuTitleScroller ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
 	farcall LoadMenuSpritePalettePair ; $6ff0
 	wram_bank WRAM_COURT_PLANES ; $6ff3
-	ld a, [wScreenAttrmap + 1] ; $6ff9
+	ld a, [wLevelSelectClearedCount] ; $6ff9
 	ld c, a ; $6ffc
 	ld b, $03 ; $6ffd
 	call SetMenuCursorFromIndex ; $6fff
@@ -245,7 +245,7 @@ RunMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $7013
 .loop:
 	call AdvanceFrame ; $7019
-	ldh a, [hInputPressed] ; $701c
+	ldh a, [hInputRepeat] ; $701c
 	ld [wMenuInputPressed], a ; $701e
 	call GetMinigameLevelColumnCount ; $7021
 	ld c, $01 ; $7024
@@ -267,14 +267,14 @@ RunMinigameLevelSelect3:
 	ld hl, rIE ; $7043
 	set B_IE_TIMER, [hl] ; $7046
 	wram_bank WRAM_SCREEN ; $7048
-	ld b, $01 ; $704e
-	farcall N64RecordTypeSlideOut ; $7050
+	ld b, MENUSLIDE_FORWARD ; $704e
+	farcall ThreeChoiceSlideOut ; $7050
 	ld a, MENUSLIDE_FORWARD ; $7053
 	ld [wMenuSlideDirection], a ; $7055
 	wram_bank WRAM_COURT_PLANES ; $7058
 	ld c, $03 ; $705e
 	call GetMenuCursorIndex_1b ; $7060
-	ld [wScreenAttrmap + 3], a ; $7063
+	ld [wLevelSelectResult], a ; $7063
 	ret ; $7066
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $7067
@@ -282,18 +282,18 @@ RunMinigameLevelSelect3:
 	ld hl, rIE ; $706c
 	set B_IE_TIMER, [hl] ; $706f
 	wram_bank WRAM_SCREEN ; $7071
-	ld b, $00 ; $7077
-	farcall N64RecordTypeSlideOut ; $7079
+	ld b, MENUSLIDE_BACK ; $7077
+	farcall ThreeChoiceSlideOut ; $7079
 	ld a, MENUSLIDE_BACK ; $707c
 	ld [wMenuSlideDirection], a ; $707e
 	wram_bank WRAM_COURT_PLANES ; $7081
 	ld a, $ff ; $7087
-	ld [wScreenAttrmap + 3], a ; $7089
+	ld [wLevelSelectResult], a ; $7089
 	ret ; $708c
 RedrawMinigameLevelSelect3:
 	wram_bank WRAM_SCREEN ; $708d
 	ld b, $00 ; $7093
-	ld c, $00 ; $7095
+	ld c, ATTRRECT_INACTIVE ; $7095
 .loop:
 	call SetSelectPanelAttrRect3 ; $7097
 	ld a, b ; $709a
@@ -304,7 +304,7 @@ RedrawMinigameLevelSelect3:
 	ld c, $02 ; $70a1
 	call GetMenuCursorIndex_1b ; $70a3
 	ld b, a ; $70a6
-	ld c, $01 ; $70a7
+	ld c, ATTRRECT_SELECTED ; $70a7
 	call SetSelectPanelAttrRect3 ; $70a9
 	ld c, $03 ; $70ac
 	call GetMenuCursorIndex_1b ; $70ae
@@ -348,7 +348,7 @@ SelectPanelAttrRect3Table:
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 7 ; record 1
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 13 ; record 2
 DrawMinigameLevelSelect3Cursor:
-	farcall TickMenuBgScroll ; $70ed
+	farcall TickMenuTitleScroller ; $70ed
 	ld c, $03 ; $70f0
 	call GetMenuCursorIndex_1b ; $70f2
 	push af ; $70f5
@@ -364,7 +364,7 @@ DrawMinigameLevelSelect3Cursor:
 	ld e, a ; $710b
 	farcall ApplySpriteBobOffset ; $710c
 	ld b, OAM_BANK1 ; $710f
-	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate0 ; $7111
+	ld hl, MinigameLevelSelect3LabelTemplate ; $7111
 	push de ; $7114
 	call QueueSpriteTemplate ; $7115
 	pop de ; $7118
@@ -372,11 +372,11 @@ DrawMinigameLevelSelect3Cursor:
 	add hl, de ; $711c
 	ld d, h ; $711d
 	ld e, l ; $711e
-	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate1 ; $711f
+	ld hl, MinigameLevelSelect3LabelTailTemplate ; $711f
 	sprite_attr_tile OAM_BANK1, $70 ; $7122
 	call QueueSpriteTemplate ; $7126
 	ret ; $7129
-DrawMinigameLevelSelect3Cursor_SpriteTemplate0:
+MinigameLevelSelect3LabelTemplate:
 	; $712a, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -387,7 +387,7 @@ DrawMinigameLevelSelect3Cursor_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-DrawMinigameLevelSelect3Cursor_SpriteTemplate1:
+MinigameLevelSelect3LabelTailTemplate:
 	; $714b, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -398,30 +398,30 @@ MinigameLevelSelect3CursorPositions:
 MinigameLevelSelect3CursorTileBases:
 	; $715a, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
-RunSavedDataTypeSelect:
+RunMarioCharDataTypeSelect:
 	sound BGM_MENU ; $715d
 	ld hl, rIE ; $715f
 	res B_IE_TIMER, [hl] ; $7162
-	call LoadSavedDataTypeSelectGfx ; $7164
+	call LoadMarioCharDataTypeSelectGfx ; $7164
 	wram_bank WRAM_SCREEN ; $7167
 	ld a, [wMenuSlideDirection] ; $716d
 	ld b, a ; $7170
 	farcall OpenChoiceTabPanel ; $7171
-	farcall InitMenuBgScroll ; $7174
+	farcall InitMenuTitleScroller ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
 	farcall LoadMenuSpritePalettePair ; $717b
-	ld a, [wSavedDataTypeTabIndex] ; $717e
+	ld a, [wMarioCharDataTypeTabIndex] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
-	frame_task TickMenuBgScrollTask_1b ; $7187
-	frame_task DrawSavedDataTypeSelectCursor ; $718f
-	call RedrawSavedDataTypeSelect ; $7197
+	frame_task TickMenuTitleScrollerTask_1b ; $7187
+	frame_task DrawMarioCharDataTypeSelectCursor ; $718f
+	call RedrawMarioCharDataTypeSelect ; $7197
 	wram_bank WRAM_SCREEN ; $719a
 .loop:
 	call AdvanceFrame ; $71a0
-	ldh a, [hInputPressed] ; $71a3
+	ldh a, [hInputRepeat] ; $71a3
 	ld [wMenuInputPressed], a ; $71a5
 	ld b, $02 ; $71a8
 	ld c, $01 ; $71aa
@@ -429,7 +429,7 @@ RunSavedDataTypeSelect:
 	or a ; $71af
 	jr z, .checkMenuInputPressed ; $71b0
 	sound SFX_MENU_MOVE ; $71b2
-	call RedrawSavedDataTypeSelect ; $71b4
+	call RedrawMarioCharDataTypeSelect ; $71b4
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $71b7
 	bit PADB_A, a ; $71ba
@@ -443,13 +443,13 @@ RunSavedDataTypeSelect:
 	ld hl, rIE ; $71c9
 	set B_IE_TIMER, [hl] ; $71cc
 	wram_bank WRAM_SCREEN ; $71ce
-	ld b, $01 ; $71d4
+	ld b, MENUSLIDE_FORWARD ; $71d4
 	farcall CloseChoiceTabPanel ; $71d6
 	ld a, MENUSLIDE_FORWARD ; $71d9
 	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
 	call GetMenuCursorIndex_1b ; $71e0
-	ld [wSavedDataTypeTabIndex], a ; $71e3
+	ld [wMarioCharDataTypeTabIndex], a ; $71e3
 	ret ; $71e6
 .playCancelSfx:
 	sound SFX_MENU_CANCEL ; $71e7
@@ -457,20 +457,20 @@ RunSavedDataTypeSelect:
 	ld hl, rIE ; $71ec
 	set B_IE_TIMER, [hl] ; $71ef
 	wram_bank WRAM_SCREEN ; $71f1
-	ld b, $00 ; $71f7
+	ld b, MENUSLIDE_BACK ; $71f7
 	farcall CloseChoiceTabPanel ; $71f9
 	ld a, MENUSLIDE_BACK ; $71fc
 	ld [wMenuSlideDirection], a ; $71fe
 	wram_bank WRAM_COURT_PLANES ; $7201
 	ld a, $ff ; $7207
 	ret ; $7209
-LoadSavedDataTypeSelectGfx:
+LoadMarioCharDataTypeSelectGfx:
 	push_wram_bank WRAM_STAGING ; $720a
 	ld c, $00 ; $7213
 .loop:
 	ld a, c ; $7215
 	add a ; $7216
-	ld hl, SavedDataTypeSelectGfx0 ; $7217
+	ld hl, MarioCharDataTypeIconTilePtrs ; $7217
 	add_hl_a ; $721a
 	ld a, [hl+] ; $721f
 	ld h, [hl] ; $7220
@@ -485,7 +485,7 @@ LoadSavedDataTypeSelectGfx:
 	pop de ; $722d
 	pop bc ; $722e
 	pop af ; $722f
-	ld hl, SavedDataTypeSelectGfx1 ; $7230
+	ld hl, MarioCharDataTypeIconVramDests ; $7230
 	ld a, c ; $7233
 	add a ; $7234
 	add_hl_a ; $7235
@@ -510,13 +510,13 @@ LoadSavedDataTypeSelectGfx:
 	ld a, c ; $7254
 	cp $02 ; $7255
 	jr nz, .loop ; $7257
-	ld b, TILEBLOCK_SharedMenuGfx29 ; $7259
-	ld c, SharedMenuGfx29_SIZE / 16 ; $725b
+	ld b, TILEBLOCK_ExhibitionLabelGfx ; $7259
+	ld c, ExhibitionLabelGfx_SIZE / 16 ; $725b
 	ld de, vTiles0 + VRAM_BANK1 ; $725d
 	farcall LoadCompressedTileBlock ; $7260
 	call AdvanceFrame ; $7263
-	ld b, TILEBLOCK_SharedMenuGfx30 ; $7266
-	ld c, SharedMenuGfx30_SIZE / 16 ; $7268
+	ld b, TILEBLOCK_MarioMiniGamesLabelGfx ; $7266
+	ld c, MarioMiniGamesLabelGfx_SIZE / 16 ; $7268
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $726a
 	farcall LoadCompressedTileBlock ; $726d
 	call AdvanceFrame ; $7270
@@ -525,8 +525,8 @@ LoadSavedDataTypeSelectGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $7277
 	farcall LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
-	ld b, TILEBLOCK_SavedDataTypeSelectGfx ; $7280
-	ld c, SavedDataTypeSelectGfx_SIZE / 16 ; $7282
+	ld b, TILEBLOCK_MarioCharactersTitleGfx ; $7280
+	ld c, MarioCharactersTitleGfx_SIZE / 16 ; $7282
 	ld de, vTiles0 ; $7284
 	farcall LoadCompressedTileBlock ; $7287
 	call AdvanceFrame ; $728a
@@ -535,11 +535,11 @@ LoadSavedDataTypeSelectGfx:
 	farcall LoadIndexedPalette ; $7291
 	pop_wram_bank ; $7294
 	ret ; $7299
-SavedDataTypeSelectGfx0:
+MarioCharDataTypeIconTilePtrs:
 	; $729a, 2 slot words
-	dslot DataPtr_CharacterSelectLabelTiles1 ; record 0
-	dslot DataPtr_LinkErrorLabelTiles ; record 1
-SavedDataTypeSelectGfx1:
+	dslot DataPtr_ExhibitionIconTiles ; record 0
+	dslot DataPtr_MushroomIconTiles ; record 1
+MarioCharDataTypeIconVramDests:
 	; $729e, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1

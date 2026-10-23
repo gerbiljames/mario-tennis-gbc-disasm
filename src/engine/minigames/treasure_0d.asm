@@ -1,4 +1,4 @@
-PerfectShotLevelHasTargets:
+PerfectShotFormationByLevel:
 	; $58a3, 3 bytes (bytes:3)
 	db $00, $07, $08 ; 0x00
 MinigameHooks_PerfectShot:
@@ -10,7 +10,7 @@ MinigameHooks_PerfectShot:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw PerfectShotHook_BallHit ; MODEHOOK_BALL_HIT
 	dw PerfectShotHook_Bounce ; MODEHOOK_BOUNCE
-	dw PerfectShotHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw PerfectShotHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 PerfectShotHook_PerFrame:
@@ -18,13 +18,13 @@ PerfectShotHook_PerFrame:
 	ret ; $58b9
 PerfectShotHook_PointStart:
 	call StartMinigameSoloPoint ; $58ba
-	call ResetTargetGrid ; $58bd
+	call ResetPerfectShotGrid ; $58bd
 	ret ; $58c0
 PerfectShotHook_PointEnd:
 	call HandleMinigamePointEnd ; $58c1
 	ret ; $58c4
-PerfectShotHook_RallyTick:
-	call ProcessTargetTileHit ; $58c5
+PerfectShotHook_NetCross:
+	call ProcessPerfectShotTileHit ; $58c5
 	ret ; $58c8
 PerfectShotHook_Bounce:
 	call StubNop_0d_0 ; $58c9
@@ -32,7 +32,7 @@ PerfectShotHook_Bounce:
 PerfectShotHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $58cd
 	ret ; $58d0
-ProcessTargetTileHit:
+ProcessPerfectShotTileHit:
 	call ReflectBallVelocity ; $58d1
 	call GetMinigameGridCellIndex ; $58d4
 	cp $ff ; $58d7
@@ -51,7 +51,7 @@ ProcessTargetTileHit:
 	farcall FlushTilemapToVram ; $58f8
 	pop_wram_bank ; $58fb
 	sound SFX_CHIME ; $5900
-	ld a, [wTargetTileHit] ; $5902
+	ld a, [wTargetGridClearCount] ; $5902
 	inc a ; $5905
 	ld e, a ; $5906
 	ld d, $00 ; $5907
@@ -63,10 +63,10 @@ ProcessTargetTileHit:
 	ld [wPointOutcome], a ; $5914
 	ret ; $5917
 .areAllTargetsHit:
-	call AreAllTargetsHit ; $5918
+	call AreAllPerfectShotTilesHit ; $5918
 	and a ; $591b
 	ret z ; $591c
-	ld hl, wTargetTileHit ; $591d
+	ld hl, wTargetGridClearCount ; $591d
 	ld a, [hl] ; $5920
 	cp $09 ; $5921
 	jr nc, .clearGrid ; $5923
@@ -75,7 +75,7 @@ ProcessTargetTileHit:
 	push_wram_bank WRAM_COURT_PLANES ; $5926
 	ld a, $01 ; $592f
 	ld [wMatchSimFrozen], a ; $5931
-	call AnimateTargetGridClear ; $5934
+	call AnimatePerfectShotGridRefill ; $5934
 	xor a ; $5937
 	ld [wMatchSimFrozen], a ; $5938
 	pop_wram_bank ; $593b
@@ -91,15 +91,15 @@ Unused_0d_PerfectShotTargetGridLayout2:
 	db $01, $01, $01, $01, $01, $01, $01, $00 ; 0x08
 	db $01, $01, $01, $03, $01, $01, $01, $00 ; 0x10
 	db $03, $03, $03, $03, $03, $03, $03, $00 ; 0x18
-ResetTargetGrid:
+ResetPerfectShotGrid:
 	ld hl, PerfectShotTargetGridLayout ; $5979
-	call CopyMinigameTilemapBlock ; $597c
+	call LoadMinigameTargetGrid ; $597c
 	ld a, $01 ; $597f
 	ld [wMinigameTargetGrid + 7], a ; $5981
 	ld [wMinigameTargetGrid + 15], a ; $5984
 	ld [wMinigameTargetGrid + 23], a ; $5987
 	ret ; $598a
-AnimateTargetGridClear:
+AnimatePerfectShotGridRefill:
 	ld a, 2 ; $598b
 	farcall StepMatchFrames ; $598d
 	ld hl, PerfectShotTargetGridLayout ; $5990
@@ -124,9 +124,9 @@ AnimateTargetGridClear:
 	inc c ; $59af
 	dec b ; $59b0
 	jr nz, .loop ; $59b1
-	call ResetTargetGrid ; $59b3
+	call ResetPerfectShotGrid ; $59b3
 	ret ; $59b6
-AreAllTargetsHit:
+AreAllPerfectShotTilesHit:
 	ld hl, wMinigameTargetGrid ; $59b7
 	ld c, $18 ; $59ba
 	xor a ; $59bc
@@ -154,13 +154,13 @@ MinigameHooks_TreasureBox:
 	dw TreasureBoxHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TreasureBoxHook_BallHit ; MODEHOOK_BALL_HIT
 	dw TreasureBoxHook_Bounce ; MODEHOOK_BOUNCE
-	dw TreasureBoxHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TreasureBoxHook_NetCross ; MODEHOOK_NET_CROSS
 	dw TreasureBoxHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 TreasureBoxHook_MinigameStart:
 	call ClearMinigameActors ; $59fd
 	ld a, $01 ; $5a00
-	ld [wMinigameServeSlot], a ; $5a02
+	ld [wMinigameFeederPos], a ; $5a02
 	call StartMinigameMatch ; $5a05
 	ld a, $01 ; $5a08
 	ld [wTargetZoneEnabled], a ; $5a0a
@@ -180,7 +180,7 @@ TreasureBoxHook_PointStart:
 	farcall AdvanceMatchRng ; $5a25
 	and $01 ; $5a28
 	inc a ; $5a2a
-	ld hl, wMinigameServeSlot ; $5a2b
+	ld hl, wMinigameFeederPos ; $5a2b
 	add [hl] ; $5a2e
 	cp $03 ; $5a2f
 	jr c, .store ; $5a31
@@ -193,15 +193,15 @@ TreasureBoxHook_PointEnd:
 	call StubNop_0d_3 ; $5a3a
 	call EndMinigamePoint ; $5a3d
 	ret ; $5a40
-TreasureBoxHook_RallyTick:
+TreasureBoxHook_NetCross:
 	call KeepMinigameCameraFixed ; $5a41
 	ret ; $5a44
 TreasureBoxHook_Bounce:
 	ld a, [wPointOutcome] ; $5a45
 	and a ; $5a48
 	ret nz ; $5a49
-	call CheckMinigameStartBannerTrigger ; $5a4a
-	call CheckBallLandedOut ; $5a4d
+	call AwardWinnerOnReturnBounce ; $5a4a
+	call CheckBallMissedTargetZone ; $5a4d
 	ld a, [wPointOutcome] ; $5a50
 	cp POINTOUTCOME_WINNER ; $5a53
 	ret nz ; $5a55
@@ -215,7 +215,7 @@ TreasureBoxHook_Bounce:
 	sound SFX_CHIME ; $5a65
 	ret ; $5a67
 TreasureBoxHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $5a68
+	call FreezeFeederAfterLaunch ; $5a68
 	ret ; $5a6b
 UpdateTreasureBoxScorePopup:
 	call UpdateScorePopup ; $5a6c
@@ -231,8 +231,8 @@ SelectRandomTreasureBoxTargetZone:
 	and $0f ; $5a81
 	add_hl_a ; $5a83
 	ld a, [hl] ; $5a88
-	ld [wMinigameShotRoll], a ; $5a89
-	ld a, [wMinigameShotRoll] ; $5a8c
+	ld [wMinigameTargetZone], a ; $5a89
+	ld a, [wMinigameTargetZone] ; $5a8c
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [wMinigameHitScored] ; $5a92
 	and a ; $5a95
@@ -260,16 +260,16 @@ StubNop_0d_3:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5acc
-	dw TreasureBoxTargetState0 ; $5ad0 jumptable
-	dw TreasureBoxTargetState1 ; $5ad2 jumptable
-	dw TreasureBoxTargetState2 ; $5ad4 jumptable
-	dw TreasureBoxTargetState3 ; $5ad6 jumptable
+	dw TreasureBoxTargetSpawn ; $5ad0 jumptable
+	dw TreasureBoxTargetAwaitHit ; $5ad2 jumptable
+	dw TreasureBoxTargetHitBurst ; $5ad4 jumptable
+	dw TreasureBoxTargetGone ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
 AdvanceTreasureBoxActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
-TreasureBoxTargetState0:
+TreasureBoxTargetSpawn:
 	xor a ; $5adf
 	ld [wTreasureBoxAnimTimer], a ; $5ae0
 	ld hl, wMinigameServeCount ; $5ae3
@@ -288,7 +288,7 @@ TreasureBoxTargetState0:
 	add_hl_a ; $5afc
 	ld a, [hl] ; $5b01
 	ld [wMinigameSceneActor + MGACTOR_SUBTYPE], a ; $5b02
-	ld a, [wMinigameShotRoll] ; $5b05
+	ld a, [wMinigameTargetZone] ; $5b05
 	add a ; $5b08
 	ld_hl_indexed TreasureBoxSpawnPointsByZone ; $5b09
 	ld a, [hl+] ; $5b10
@@ -311,22 +311,22 @@ TreasureBoxTargetState0:
 	ld h, b ; $5b28
 	call SetMinigameActorWorldPos ; $5b29
 	call AdvanceTreasureBoxActorState ; $5b2c
-TreasureBoxTargetState1:
+TreasureBoxTargetAwaitHit:
 	call DrawTreasureBoxSprite ; $5b2f
 	call IsBallInTreasureBoxHitZone ; $5b32
 	and a ; $5b35
 	ret z ; $5b36
 	call AwardTreasureBoxHitScore ; $5b37
 	jp AdvanceTreasureBoxActorState ; $5b3a
-TreasureBoxTargetState2:
-	call DrawTreasureBoxHitCountdown ; $5b3d
+TreasureBoxTargetHitBurst:
+	call DrawTreasureBoxHitBurst ; $5b3d
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5b40
 	dec [hl] ; $5b43
 	ld a, [hl] ; $5b44
 	and a ; $5b45
 	ret nz ; $5b46
 	jp AdvanceTreasureBoxActorState ; $5b47
-TreasureBoxTargetState3:
+TreasureBoxTargetGone:
 	ret ; $5b4a
 TreasureBoxTypePoolLate:
 	; $5b4b, 16 bytes (bytes:16)

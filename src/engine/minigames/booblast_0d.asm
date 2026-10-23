@@ -12,7 +12,7 @@ BananaBunchHook_PointStart:
 	ld a, [hl+] ; $5541
 	ld h, [hl] ; $5542
 	ld l, a ; $5543
-	call CopyMinigameTilemapBlock ; $5544
+	call LoadMinigameTargetGrid ; $5544
 	ret ; $5547
 BananaBunchGridLayoutsByLevel:
 	; $5548, 6 bytes (records:2)
@@ -37,7 +37,7 @@ BananaBunchGridLayout2:
 BananaBunchHook_PointEnd:
 	call HandleMinigamePointEnd ; $5596
 	ret ; $5599
-BananaBunchHook_RallyTick:
+BananaBunchHook_NetCross:
 	call BananaBunchReflectBallAndRecordCell ; $559a
 	ret ; $559d
 BananaBunchHook_Bounce:
@@ -50,7 +50,7 @@ UpdateBananaBunchTargetHits:
 	call ScoreMinigameTargetHitOrDeflectBall ; $55a6
 	ret ; $55a9
 	twin_named banana_bunch_reflect_ball_and_record_cell, BananaBunchReflectBallAndRecordCell ; $55aa
-CopyMinigameTilemapBlock:
+LoadMinigameTargetGrid:
 	wram_bank WRAM_COURT_PLANES ; $55b4
 	ld de, wMinigameTargetGrid ; $55ba
 	ld bc, wMinigameTargetGrid_SIZE ; $55bd
@@ -59,7 +59,7 @@ CopyMinigameTilemapBlock:
 	farcall FlushTilemapToVram ; $55c6
 	ret ; $55c9
 ScoreMinigameTargetHitOrDeflectBall:
-	ld hl, wMinigameHitPending ; $55ca
+	ld hl, wMinigameNetCrossPending ; $55ca
 	ld a, [hl] ; $55cd
 	and a ; $55ce
 	ret z ; $55cf
@@ -119,7 +119,7 @@ InitMinigame_BooBlast:
 	ld a, [hl+] ; $5649
 	ld [wPlayer2MainDifficulty], a ; $564a
 	ld a, [hl+] ; $564d
-	ld [wPlayer2MainPhysics], a ; $564e
+	ld [wPlayer2MainAiPosition], a ; $564e
 	ret ; $5651
 BooBlastInitParams:
 	; $5652, 6 bytes (bytes:6)
@@ -133,11 +133,11 @@ MinigameHooks_BooBlast:
 	dw BooBlastHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw BooBlastHook_BallHit ; MODEHOOK_BALL_HIT
 	dw BooBlastHook_Bounce ; MODEHOOK_BOUNCE
-	dw BooBlastHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw BooBlastHook_NetCross ; MODEHOOK_NET_CROSS
 	dw BooBlastHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 BooBlastHook_MinigameStart:
-	call InitMinigameControllerActor ; $5668
+	call InitBooBlastTargetActor ; $5668
 	call InitBooBlastScore ; $566b
 	ret ; $566e
 BooBlastHook_PerFrame:
@@ -151,10 +151,10 @@ BooBlastHook_PointStart:
 	call DisableOffscreenArrows ; $567a
 	ret ; $567d
 BooBlastHook_PointEnd:
-	call DisableMinigameControllerActor ; $567e
+	call DisableBooBlastTargetActor ; $567e
 	call ResolveAndShowMinigamePoint ; $5681
 	ret ; $5684
-BooBlastHook_RallyTick:
+BooBlastHook_NetCross:
 	call StubNop_0d_1 ; $5685
 	ret ; $5688
 BooBlastHook_Bounce:
@@ -163,9 +163,9 @@ BooBlastHook_Bounce:
 BooBlastHook_BallHit:
 	call UpdateBooBlastHitStreak ; $568d
 	ret ; $5690
-InitMinigameControllerActor:
+InitBooBlastTargetActor:
 	call ClearMinigameActors ; $5691
-	ld de, BooBlastControllerActorHandler ; $5694
+	ld de, BooBlastTargetActorHandler ; $5694
 	ld bc, wMinigameActors ; $5697
 	call SetMinigameActorHandler ; $569a
 	ld hl, $0000 ; $569d
@@ -173,7 +173,7 @@ InitMinigameControllerActor:
 	ld bc, wMinigameActors ; $56a3
 	call SetMinigameActorPosition ; $56a6
 	ret ; $56a9
-DisableMinigameControllerActor:
+DisableBooBlastTargetActor:
 	ld hl, wMinigameActors ; $56aa
 	res 0, [hl] ; $56ad
 	ret ; $56af
@@ -211,48 +211,48 @@ StubNop_0d_2:
 UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
 	and $01 ; $56f3
-	jr nz, .maskSet ; $56f5
+	jr nz, .opponentShot ; $56f5
 	ld a, [wMinigameHitScored] ; $56f7
 	and a ; $56fa
 	jr z, .clearHitScored ; $56fb
-	jr .incrementCappedCounter ; $56fd
-.maskSet:
+	jr .extendStreak ; $56fd
+.opponentShot:
 	ld a, [wMinigameHitScored] ; $56ff
 	and a ; $5702
-	jr nz, .incrementCappedCounter ; $5703
+	jr nz, .extendStreak ; $5703
 	xor a ; $5705
 	ld [wMinigameHitStreak], a ; $5706
 	jr .clearHitScored ; $5709
-.incrementCappedCounter:
+.extendStreak:
 	ld b, $07 ; $570b
-	call IncrementCappedCounter ; $570d
+	call IncrementMinigameHitStreak ; $570d
 .clearHitScored:
 	xor a ; $5710
 	ld [wMinigameHitScored], a ; $5711
 	xor a ; $5714
 	ld [wMinigameActors + 0 * MGACTOR_SIZE + MGACTOR_STATE], a ; $5715
 	ret ; $5718
-BooBlastControllerActorHandler:
+BooBlastTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5719
-	dw BooBlastControllerState0 ; $571d jumptable
-	dw BooBlastControllerState1 ; $571f jumptable
-	dw BooBlastControllerState2 ; $5721 jumptable
-	dw BooBlastControllerState3 ; $5723 jumptable
+	dw BooBlastTargetStart ; $571d jumptable
+	dw BooBlastTargetAwaitHit ; $571f jumptable
+	dw BooBlastTargetHitBurst ; $5721 jumptable
+	dw BooBlastTargetIdle ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
-AdvanceMinigameScriptState:
+AdvanceBooBlastActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
-BooBlastControllerState0:
-	call AdvanceMinigameScriptState ; $572c
-BooBlastControllerState1:
+BooBlastTargetStart:
+	call AdvanceBooBlastActorState ; $572c
+BooBlastTargetAwaitHit:
 	call DrawBooBlastTargetSprite ; $572f
-	call IsBallWithinTargetZone ; $5732
+	call IsBallInBooHitZone ; $5732
 	and a ; $5735
 	ret z ; $5736
-	call ScoreBallHit ; $5737
-	jp AdvanceMinigameScriptState ; $573a
-BooBlastControllerState2:
+	call AwardBooBlastHitScore ; $5737
+	jp AdvanceBooBlastActorState ; $573a
+BooBlastTargetHitBurst:
 	call DrawBooBlastHitBurst ; $573d
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5740
 	dec [hl] ; $5743
@@ -267,11 +267,11 @@ BooBlastControllerState2:
 	add hl, de ; $5751
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
-	jp AdvanceMinigameScriptState ; $5758
-BooBlastControllerState3:
+	jp AdvanceBooBlastActorState ; $5758
+BooBlastTargetIdle:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
-IsBallWithinTargetZone:
+IsBallInBooHitZone:
 	ld hl, wMinigameSceneActor + MGACTOR_X ; $575f
 	ld a, [hl+] ; $5762
 	ld d, [hl] ; $5763
@@ -311,12 +311,12 @@ IsBallWithinTargetZone:
 .returnZero:
 	xor a ; $57bc
 	ret ; $57bd
-ScoreBallHit:
+AwardBooBlastHitScore:
 	ld a, $10 ; $57be
 	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $57c0
 	ld a, $01 ; $57c3
 	ld [wMinigameHitScored], a ; $57c5
-	sound SFX_THUD ; $57c8
+	sound SFX_VOICE_BOO ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
 	ld_de_indexed BooBlastStreakPoints ; $57cd
 	ld a, [de] ; $57d4
@@ -352,7 +352,7 @@ DrawBooBlastTargetSprite:
 	ld a, [hl] ; $5814
 	cp $ff ; $5815
 	ret z ; $5817
-	farcall QueueMatchSpriteFrameB ; $5818
+	farcall LoadBooFrameTiles ; $5818
 	ret ; $581b
 BooBlastTargetAnimFrames:
 	; $581c, 32 bytes (bytes:8)
@@ -380,11 +380,11 @@ ProjectBooSprite:
 	ld h, d ; $5854
 	farcall ApplyCameraProjection ; $5855
 	ld a, [wMinigameHitStreak] ; $5858
-	ld_hl_indexed MinigameHitStreakValueTable_0d ; $585b
+	ld_hl_indexed BooBlastSpriteOamAttrByHitStreak ; $585b
 	ld b, [hl] ; $5862
 	ld b, $0e ; $5863
 	ret ; $5865
-MinigameHitStreakValueTable_0d:
+BooBlastSpriteOamAttrByHitStreak:
 	; $5866, 8 bytes (bytes:8)
 	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 MinigameConfig_PerfectShot:
@@ -401,7 +401,7 @@ InitMinigame_PerfectShot:
 .initMinigameTargets:
 	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
-	ld_hl_indexed PerfectShotLevelHasTargets ; $5895
+	ld_hl_indexed PerfectShotFormationByLevel ; $5895
 	ld a, [hl] ; $589c
 	and a ; $589d
 	ret z ; $589e

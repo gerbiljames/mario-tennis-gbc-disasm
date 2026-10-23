@@ -1,7 +1,7 @@
 ApplyMinigameCharTargetFromTable:
-	push_wram_bank WRAM_TEXT ; $48b6
-	ld a, [wMinigameServeSlot] ; $48bf
-	call GetMinigameCharCoordsEntry ; $48c2
+	push_wram_bank WRAM_CHAR1 ; $48b6
+	ld a, [wMinigameFeederPos] ; $48bf
+	call GetMinigameFeederPosition ; $48c2
 	farcall SetCharTarget ; $48c5
 	pop_wram_bank ; $48c8
 	ret ; $48cd
@@ -17,7 +17,7 @@ PlayMinigameCountdown:
 	ld a, $03 ; $48e3
 .loop:
 	push af ; $48e5
-	ld b, $01 ; $48e6
+	ld b, DIGITGFX_NUMERALS ; $48e6
 	ld de, vTiles0 tile $20 ; $48e8
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
@@ -51,10 +51,10 @@ PlayMinigameCountdown:
 	call PlaySoundManaged ; $4922
 .done:
 	ret ; $4925
-GetMinigameCharCoordsEntry:
+GetMinigameFeederPosition:
 	add a ; $4926
 	add a ; $4927
-	ld_hl_indexed MinigameCharCoordsTable ; $4928
+	ld_hl_indexed MinigameFeederPositions ; $4928
 	ld a, [hl+] ; $492f
 	ld c, a ; $4930
 	ld a, [hl+] ; $4931
@@ -69,7 +69,7 @@ GetMinigameCharCoordsEntry:
 	twin snap_camera_to, 0d ; $493a SnapCameraTo_0d
 MinigameConfig_TennisMachine2:
 	; $4959, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_2, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine2, MinigamePointLayoutDuo, InitMinigame_TennisMachine2
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_2, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine2, MinigamePointLayoutDuo, InitMinigame_TennisMachine2
 InitMinigame_TennisMachine2:
 	ld a, $01 ; $4969
 	ld [wMinigameUsesTennisMachine], a ; $496b
@@ -85,7 +85,7 @@ MinigameHooks_TennisMachine2:
 	dw TennisMachine2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine2Hook_MinigameStart ; $4984
@@ -96,7 +96,7 @@ TennisMachine2Hook_PointStart:
 	farcall AdvanceMatchRng ; $4991
 	and $01 ; $4994
 	inc a ; $4996
-	ld hl, wMinigameServeSlot ; $4997
+	ld hl, wMinigameFeederPos ; $4997
 	add [hl] ; $499a
 	cp $03 ; $499b
 	jr c, .store ; $499d
@@ -108,18 +108,18 @@ TennisMachine2Hook_PointStart:
 TennisMachine2Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $49a6
 	ret ; $49a9
-TennisMachine2Hook_RallyTick:
+TennisMachine2Hook_NetCross:
 	call KeepMinigameCameraFixed ; $49aa
 	ret ; $49ad
 TennisMachine2Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $49ae
+	call AwardWinnerOnReturnBounce ; $49ae
 	ret ; $49b1
 TennisMachine2Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $49b2
+	call FreezeFeederAfterLaunch ; $49b2
 	ret ; $49b5
 MinigameConfig_TennisMachine3:
 	; $49b6, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_3, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine3, MinigamePointLayoutDuo, InitMinigame_TennisMachine3
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_3, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine3, MinigamePointLayoutDuo, InitMinigame_TennisMachine3
 InitMinigame_TennisMachine3:
 	ld a, $01 ; $49c6
 	ld [wMinigameUsesTennisMachine], a ; $49c8
@@ -135,7 +135,7 @@ MinigameHooks_TennisMachine3:
 	dw TennisMachine3Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachine3Hook_MinigameStart ; $49e1
@@ -146,7 +146,7 @@ TennisMachine3Hook_PointStart:
 	farcall AdvanceMatchRng ; $49ee
 	and $03 ; $49f1
 	inc a ; $49f3
-	ld hl, wMinigameServeSlot ; $49f4
+	ld hl, wMinigameFeederPos ; $49f4
 	add [hl] ; $49f7
 	cp $06 ; $49f8
 	jr c, .store ; $49fa
@@ -158,18 +158,18 @@ TennisMachine3Hook_PointStart:
 TennisMachine3Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a03
 	ret ; $4a06
-TennisMachine3Hook_RallyTick:
+TennisMachine3Hook_NetCross:
 	call KeepMinigameCameraFixed ; $4a07
 	ret ; $4a0a
 TennisMachine3Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $4a0b
+	call AwardWinnerOnReturnBounce ; $4a0b
 	ret ; $4a0e
 TennisMachine3Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4a0f
+	call FreezeFeederAfterLaunch ; $4a0f
 	ret ; $4a12
 MinigameConfig_TennisMachine4:
 	; $4a13, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_4, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine4, MinigamePointLayoutDuo, InitMinigame_TennisMachine4
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_4, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine4, MinigamePointLayoutDuo, InitMinigame_TennisMachine4
 InitMinigame_TennisMachine4:
 	ld a, $01 ; $4a23
 	ld [wMinigameUsesTennisMachine], a ; $4a25
@@ -185,7 +185,7 @@ MinigameHooks_TennisMachine4:
 	dw TennisMachine4Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine4Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine4Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine4Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine4Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachine4Hook_MinigameStart ; $4a3e
@@ -196,14 +196,14 @@ TennisMachine4Hook_PerFrame:
 TennisMachine4Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a60
 	ret ; $4a63
-TennisMachine4Hook_RallyTick:
+TennisMachine4Hook_NetCross:
 	call KeepMinigameCameraFixed ; $4a64
 	ret ; $4a67
 TennisMachine4Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $4a68
+	call AwardWinnerOnReturnBounce ; $4a68
 	ret ; $4a6b
 TennisMachine4Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4a6c
+	call FreezeFeederAfterLaunch ; $4a6c
 	ret ; $4a6f
 MinigameConfig_WallPractice1:
 	; $4a70, 16 bytes
@@ -226,7 +226,7 @@ MinigameHooks_WallPractice1:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw WallPractice1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw WallPractice1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw WallPractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw WallPractice1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 WallPractice1Hook_PerFrame:
@@ -238,7 +238,7 @@ WallPractice1Hook_PointStart:
 WallPractice1Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4aab
 	ret ; $4aae
-WallPractice1Hook_RallyTick:
+WallPractice1Hook_NetCross:
 	call AwardMinigamePointAndReflectBall ; $4aaf
 	ret ; $4ab2
 WallPractice1Hook_Bounce:
@@ -256,18 +256,18 @@ UpdateMinigameHudAndBallTrail:
 	call DrawMinigameScore ; $4ac4
 .trail:
 	push_wram_bank WRAM_ACTORS ; $4ac7
-	ld hl, wBallHistory + 12 ; $4ad0
-	ld de, wBallTrailSlots + 8 ; $4ad3
-	call MarkMinigameObjectOffscreen ; $4ad6
-	ld hl, wBallHistory + 6 ; $4ad9
-	ld de, wBallTrailSlots + 12 ; $4adc
-	call MarkMinigameObjectOffscreen ; $4adf
+	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $4ad0
+	ld de, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $4ad3
+	call HideBallTrailSlotAboveWall ; $4ad6
+	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $4ad9
+	ld de, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $4adc
+	call HideBallTrailSlotAboveWall ; $4adf
 	ld hl, wBallHistory ; $4ae2
-	ld de, wBallTrailSlots + 16 ; $4ae5
-	call MarkMinigameObjectOffscreen ; $4ae8
+	ld de, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $4ae5
+	call HideBallTrailSlotAboveWall ; $4ae8
 	pop_wram_bank ; $4aeb
 	ret ; $4af0
-MarkMinigameObjectOffscreen:
+HideBallTrailSlotAboveWall:
 	inc hl ; $4af1
 	inc hl ; $4af2
 	ld a, [hl+] ; $4af3
@@ -289,21 +289,21 @@ StartMinigameSoloPoint:
 	ld a, e ; $4b0e
 	ld [hl+], a ; $4b0f
 	ld [hl], d ; $4b10
-	push_wram_bank WRAM_ACTORS ; $4b11
+	push_wram_bank WRAM_CHAR0 ; $4b11
 	ld hl, $0000 ; $4b1a
 	ld de, $04e0 ; $4b1d
 	farcall SetCharPosAndTarget ; $4b20
 	pop_wram_bank ; $4b23
 	ret ; $4b28
 HandleMinigamePointEnd:
-	push_wram_bank WRAM_ACTORS ; $4b29
+	push_wram_bank WRAM_CHAR0 ; $4b29
 	ld a, CHARSTATE_STANDBY ; $4b32
 	farcall SetCharState ; $4b34
 	pop_wram_bank ; $4b37
 	call ShowPointOutcomeBanner ; $4b3c
 	call DetermineMinigamePointResult ; $4b3f
 	push de ; $4b42
-	push_wram_bank WRAM_ACTORS ; $4b43
+	push_wram_bank WRAM_CHAR0 ; $4b43
 	farcall CharPointEndReaction ; $4b4c
 	pop_wram_bank ; $4b4f
 	pop de ; $4b54
@@ -368,7 +368,7 @@ ReflectBallVelocity:
 	ld a, [wPointOutcome] ; $4bae
 	and a ; $4bb1
 	ret nz ; $4bb2
-	push_wram_bank WRAM_ACTORS ; $4bb3
+	push_wram_bank WRAM_CHAR0 ; $4bb3
 	ld a, CHARSTATE_RALLY ; $4bbc
 	farcall SetCharState ; $4bbe
 	pop_wram_bank ; $4bc1

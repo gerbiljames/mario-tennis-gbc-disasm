@@ -123,7 +123,7 @@ ScriptSetActorJumpVelocity:
 	ld [hl+], a ; $472b
 	ld [hl], d ; $472c
 	ret ; $472d
-SetActorActive:
+ScriptSetActorMode:
 	call GetActorStateAddr ; $472e
 	ret z ; $4731
 	wram_bank WRAM_ACTORS ; $4732
@@ -145,7 +145,7 @@ Unused_0a_SubDEFromHL:
 	ld d, a ; $474d
 	add hl, de ; $474e
 	ret ; $474f
-Unused_0a_SetActorMoveTarget:
+Unused_0a_SetActorAnchor:
 	inc h ; $4750
 	dec h ; $4751
 	ret z ; $4752
@@ -163,14 +163,14 @@ Unused_0a_SetActorMoveTarget:
 Unused_0a_ActorScriptSpinForever:
 	; $475f, 3 bytes (actor_script)
 	as_jump Unused_0a_ActorScriptSpinForever
-Unused_0a_ActorScriptFollowWaypoints2:
+Unused_0a_ActorScriptChaseAnchor2:
 	; $4762, 4 bytes (actor_script)
-	as_follow_wp
-	as_jump Unused_0a_ActorScriptFollowWaypoints2
-ActorScript_0a:
+	as_chase
+	as_jump Unused_0a_ActorScriptChaseAnchor2
+ActorScript_Null:
 	; $4766, 6 bytes (actor_script)
 	as_halt
-	as_set_field ACTORF_MODE, $0000
+	as_set_field ACTORF_MODE, ACTORMODE_HIDDEN
 	as_halt
 IsActorBusy:
 	xor a ; $476c
@@ -183,13 +183,13 @@ IsActorBusy:
 	ld de, ACTORF_ANIM ; $4778
 	add hl, de ; $477b
 	ld a, [hl] ; $477c
-	cp $00 ; $477d
-	jr z, .busy ; $477f
-	cp $01 ; $4781
-	jr z, .busy ; $4783
+	cp ANIM_STILL ; $477d
+	jr z, .idle ; $477f
+	cp ANIM_WALK ; $4781
+	jr z, .idle ; $4783
 	ld a, $01 ; $4785
 	jr .done ; $4787
-.busy:
+.idle:
 	xor a ; $4789
 .done:
 	pop hl ; $478a
@@ -216,7 +216,7 @@ SetPlayerMoveSpeed:
 	push af ; $47a3
 	push hl ; $47a4
 	wram_bank WRAM_ACTORS ; $47a5
-	ld hl, wActors + 1 * ACTOR_SIZE + 6 ; $47ab
+	ld hl, wActors + 1 * ACTOR_SIZE + ACTORF_SPEED ; $47ab
 	ld a, c ; $47ae
 	ld [hl+], a ; $47af
 	ld [hl], b ; $47b0
@@ -376,17 +376,17 @@ WaitPlayerMoveDone:
 	ld a, ACTORF_FLAGS ; $48a7
 	add l ; $48a9
 	ld l, a ; $48aa
-	jr nc, .teleport ; $48ab
+	jr nc, .poll ; $48ab
 	inc h ; $48ad
-.teleport:
+.poll:
 	ld a, $01 ; $48ae
 	call WaitScriptFrames ; $48b0
-	bit 7, [hl] ; $48b3
+	bit ACTORFLAGB_MOVING, [hl] ; $48b3
 	jr z, .done ; $48b5
 	dec bc ; $48b7
 	ld a, c ; $48b8
 	or b ; $48b9
-	jr nz, .teleport ; $48ba
+	jr nz, .poll ; $48ba
 .done:
 	pop hl ; $48bc
 	pop bc ; $48bd
@@ -450,25 +450,25 @@ UpdateScreenShake:
 	and c ; $491b
 IF DEF(FIXES)
 	bit 7, h
-	jr z, .negate
+	jr z, .storeX
 ELSE
-	jr nc, .negate ; $491c
+	jr nc, .storeX ; $491c
 ENDC
 	cpl ; $491e
 	inc a ; $491f
-.negate:
+.storeX:
 	ld [wScreenShakeOffsetX], a ; $4920
 	ld a, l ; $4923
 	and c ; $4924
 IF DEF(FIXES)
 	bit 7, l
-	jr z, .store
+	jr z, .storeY
 ELSE
-	jr nc, .store ; $4925
+	jr nc, .storeY ; $4925
 ENDC
 	cpl ; $4927
 	inc a ; $4928
-.store:
+.storeY:
 	ld [wScreenShakeOffsetY], a ; $4929
 	pop hl ; $492c
 	pop de ; $492d

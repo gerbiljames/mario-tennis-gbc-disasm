@@ -45,10 +45,10 @@ DecodeLinkCommandCode:
 	jr .return ; $4cf2
 .code19:
 	cp $19 ; $4cf4
-	jr nz, .passthrough ; $4cf6
+	jr nz, .unknownCode ; $4cf6
 	ld a, $02 ; $4cf8
 	jr .return ; $4cfa
-.passthrough:
+.unknownCode:
 	xor a ; $4cfc
 .return:
 	ret ; $4cfd
@@ -83,8 +83,8 @@ LinkStateBytePtrs_07:
 	; $4d21: per hLinkPayloadKind, the sources of the high and low nibble
 	dw hPlayerInputFlags, hInputRisingEdge
 	dw hPlayerInputFlags, hPlayerInputFlags
-	dw hInputPressed, hInputRisingEdge
-	dw hInputPressed, hPlayerInputFlags
+	dw hInputRepeat, hInputRisingEdge
+	dw hInputRepeat, hPlayerInputFlags
 ShotPlacementDataTopspin_07:
 	INCLUDE "data/engine/match/ShotPlacementDataTopspin_07.asm" ; $4d31, 80 bytes (words:4)
 ShotPlacementDataPowerTopspin_07:
@@ -139,7 +139,7 @@ ShotPlacementTopspin:
 	ld a, [wGroundStrokeSpeedIndex] ; $518a
 	ld e, a ; $518d
 	call LoadShotPlacementEntry ; $518e
-	call AddBallSpeedQuarter ; $5191
+	call SubBallPaceQuarter ; $5191
 	call AddChargeSpeedBonus ; $5194
 	call FinalizeShotSpeed ; $5197
 	ret ; $519a
@@ -150,7 +150,7 @@ ShotPlacementPowerTopspin:
 	ld a, [wGroundStrokeSpeedIndex] ; $51a2
 	ld e, a ; $51a5
 	call LoadShotPlacementEntry ; $51a6
-	call AddBallSpeedQuarter ; $51a9
+	call SubBallPaceQuarter ; $51a9
 	call AddChargeSpeedBonus ; $51ac
 	call FinalizeShotSpeed ; $51af
 	ret ; $51b2
@@ -161,7 +161,7 @@ ShotPlacementSlice:
 	ld a, [wGroundStrokeSpeedIndex] ; $51ba
 	ld e, a ; $51bd
 	call LoadShotPlacementEntry ; $51be
-	call AddBallSpeedEighth ; $51c1
+	call SubBallPaceEighth ; $51c1
 	call AddChargeSpeedBonusHalf ; $51c4
 	call FinalizeShotSpeed ; $51c7
 	ret ; $51ca
@@ -172,7 +172,7 @@ ShotPlacementPowerSlice:
 	ld a, [wGroundStrokeSpeedIndex] ; $51d2
 	ld e, a ; $51d5
 	call LoadShotPlacementEntry ; $51d6
-	call AddBallSpeedEighth ; $51d9
+	call SubBallPaceEighth ; $51d9
 	call AddChargeSpeedBonusHalf ; $51dc
 	call FinalizeShotSpeed ; $51df
 	ret ; $51e2
@@ -182,7 +182,7 @@ ShotPlacementNeutral:
 	ld a, [wGroundStrokeSpeedIndex] ; $51e8
 	ld e, a ; $51eb
 	call LoadShotPlacementEntry ; $51ec
-	call AddBallSpeedQuarter ; $51ef
+	call SubBallPaceQuarter ; $51ef
 	call AddChargeSpeedBonus ; $51f2
 	call FinalizeShotSpeed ; $51f5
 	ret ; $51f8
@@ -192,7 +192,7 @@ ShotPlacementSmash:
 	ld a, [wSmashServeSpeedIndex] ; $51fe
 	ld e, a ; $5201
 	call LoadShotPlacementEntry ; $5202
-	call AddBallSpeed3Sixteenths ; $5205
+	call SubBallPace3Sixteenths ; $5205
 	call AddChargeSpeedBonus ; $5208
 	call FinalizeShotSpeed ; $520b
 	ret ; $520e
@@ -202,7 +202,7 @@ ShotPlacementReachBasic:
 	ld a, [wReachSpeedIndex] ; $5214
 	ld e, a ; $5217
 	call LoadShotPlacementEntry ; $5218
-	call AddBallSpeed3Sixteenths ; $521b
+	call SubBallPace3Sixteenths ; $521b
 	call FinalizeShotSpeed ; $521e
 	ret ; $5221
 ShotPlacementReachPowerTopspin:
@@ -211,7 +211,7 @@ ShotPlacementReachPowerTopspin:
 	ld a, [wReachSpeedIndex] ; $5227
 	ld e, a ; $522a
 	call LoadShotPlacementEntry ; $522b
-	call AddBallSpeedQuarter ; $522e
+	call SubBallPaceQuarter ; $522e
 	call FinalizeShotSpeed ; $5231
 	ret ; $5234
 ShotPlacementReachPowerSlice:
@@ -220,7 +220,7 @@ ShotPlacementReachPowerSlice:
 	ld a, [wReachSpeedIndex] ; $523a
 	ld e, a ; $523d
 	call LoadShotPlacementEntry ; $523e
-	call AddBallSpeedEighth ; $5241
+	call SubBallPaceEighth ; $5241
 	call FinalizeShotSpeed ; $5244
 	ret ; $5247
 ShotPlacementReach:
@@ -229,7 +229,7 @@ ShotPlacementReach:
 	ld a, [wReachSpeedIndex] ; $524d
 	ld e, a ; $5250
 	call LoadShotPlacementEntry ; $5251
-	call AddBallSpeed3Sixteenths ; $5254
+	call SubBallPace3Sixteenths ; $5254
 	call FinalizeShotSpeed ; $5257
 	ret ; $525a
 ShotPlacementLob:
@@ -305,7 +305,7 @@ LoadShotPlacementEntry:
 	ret ; $52d6
 FinalizeShotSpeed:
 	call AddPlayerMomentumToShot ; $52d7
-	call ApplyCharFlagShotSpeedPenalty ; $52da
+	call ApplyDiveShotSpeedPenalty ; $52da
 	ld hl, -256 ; $52dd
 	add hl, bc ; $52e0
 	bit 7, h ; $52e1
@@ -317,7 +317,7 @@ FinalizeShotSpeed:
 	ld a, b ; $52ec
 	ld [wShotSpeedFinal + 1], a ; $52ed
 	ret ; $52f0
-AddBallSpeedQuarter:
+SubBallPaceQuarter:
 	ld hl, wBallVelocityDepth ; $52f1
 	ld a, [hl+] ; $52f4
 	ld h, [hl] ; $52f5
@@ -326,8 +326,8 @@ AddBallSpeedQuarter:
 	rr l ; $52f9
 	sra h ; $52fb
 	rr l ; $52fd
-	jr AddBallSpeedEighth.absSpeed ; $52ff
-AddBallSpeed3Sixteenths:
+	jr SubBallPaceEighth.forceNegative ; $52ff
+SubBallPace3Sixteenths:
 	ld hl, wBallVelocityDepth ; $5301
 	ld a, [hl+] ; $5304
 	ld h, [hl] ; $5305
@@ -344,8 +344,8 @@ AddBallSpeed3Sixteenths:
 	ld d, h ; $5318
 	add hl, de ; $5319
 	add hl, de ; $531a
-	jr AddBallSpeedEighth.absSpeed ; $531b
-AddBallSpeedEighth:
+	jr SubBallPaceEighth.forceNegative ; $531b
+SubBallPaceEighth:
 	ld hl, wBallVelocityDepth ; $531d
 	ld a, [hl+] ; $5320
 	ld h, [hl] ; $5321
@@ -356,7 +356,7 @@ AddBallSpeedEighth:
 	rr l ; $5329
 	sra h ; $532b
 	rr l ; $532d
-.absSpeed:
+.forceNegative:
 	bit 7, h ; $532f
 	jr nz, .store ; $5331
 	neg_hl ; $5333

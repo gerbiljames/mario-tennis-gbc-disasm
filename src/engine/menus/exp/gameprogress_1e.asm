@@ -3,12 +3,12 @@ ShowGameProgressScreen:
 	ld de, SAVEFLAG_COURT_STAR ; $7264
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
-	jr z, .setFlag ; $726b
+	jr z, .buildScreen ; $726b
 	set_flag FLAG_TEMP_COURT_STAR_EARNED ; $726d
-.setFlag:
-	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
+.buildScreen:
+	set_flag FLAG_TEMP_NO_MENU_TEXT_INDENT ; $7270
 	call BuildGameProgressScreen ; $7273
-	clear_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7276
+	clear_flag FLAG_TEMP_NO_MENU_TEXT_INDENT ; $7276
 	call ClearFrameTasks ; $7279
 	ret ; $727c
 InitGameProgressScreen:
@@ -84,11 +84,11 @@ BuildGameProgressScreen:
 	call BuildProgressEntryEarnedTable ; $730a
 	call BuildVisibleProgressEntryList ; $730d
 	call CreateProgressListWindow ; $7310
-	ld [wCharPosX + 1], a ; $7313
-	ld a, [wCharPosX + 1] ; $7316
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $7319
+	ld [wProgressWindowId], a ; $7313
+	ld a, [wProgressWindowId] ; $7316
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $7319
 	farcall DrawTextWindowFrame ; $731c
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $731f
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $731f
 	call DrawProgressListRows ; $7322
 	farcall RedrawWindowRows ; $7325
 	call LoadGameProgressScreenTiles ; $7328
@@ -105,7 +105,7 @@ BuildGameProgressScreen:
 .loop:
 	call AdvanceFrame ; $7353
 	wram_bank WRAM_TEXT ; $7356
-	ldh a, [hInputPressed] ; $735c
+	ldh a, [hInputRepeat] ; $735c
 	bit PADB_UP, a ; $735e
 	call nz, ScrollProgressListUp ; $7360
 	bit PADB_DOWN, a ; $7363
@@ -141,10 +141,10 @@ ScrollProgressListDown:
 	jr nc, .restore ; $739a
 	ld [hl], a ; $739c
 	sound SFX_MENU_MOVE ; $739d
-	ld a, [wCharPosX + 1] ; $739f
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73a2
+	ld a, [wProgressWindowId] ; $739f
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73a8
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73a8
 	call DrawProgressListRows ; $73ab
 .restore:
 	pop af ; $73ae
@@ -160,10 +160,10 @@ ScrollProgressListUp:
 	jr nz, .restore ; $73c1
 	ld [hl], a ; $73c3
 	sound SFX_MENU_MOVE ; $73c4
-	ld a, [wCharPosX + 1] ; $73c6
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73c9
+	ld a, [wProgressWindowId] ; $73c6
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73c9
 	farcall DrawTextWindowFrame ; $73cc
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73cf
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73cf
 	call DrawProgressListRows ; $73d2
 .restore:
 	pop af ; $73d5
@@ -209,7 +209,7 @@ RunRewardCategoryList:
 	jr z, .done ; $7417
 	push de ; $7419
 	push af ; $741a
-	ld hl, RewardCategoryFlagTable_1e ; $741b
+	ld hl, ProgressEntryRevealFlags_1e ; $741b
 	add a ; $741e
 	add_hl_a ; $741f
 	ld a, [hl+] ; $7424
@@ -385,22 +385,22 @@ LoadGameProgressScreenTiles:
 	ld de, vBGMap0 + VRAM_BANK1 ; $755b
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $755e
 	call QueueVRAMCopy ; $7560
-	ld hl, GameProgressScreenPalettes0 ; $7563
+	ld hl, GameProgressHeaderPalettes ; $7563
 	ld d, $00 ; $7566
 	ld e, $02 ; $7568
 	call LoadPaletteShadow ; $756a
 	pop_wram_bank ; $756d
-	ld hl, GameProgressScreenTiles0 ; $7572
+	ld hl, GameProgressStarBadgeTiles ; $7572
 	ld de, vTiles0 + VRAM_BANK1 ; $7575
-	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578
+	ld c, (GameProgressScreenPalettes1 - GameProgressStarBadgeTiles) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
-	ld hl, GameProgressScreenTiles2 ; $757d
+	ld hl, GameProgressArrowTiles ; $757d
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $7580
-	ld c, 4 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
+	ld c, 4 ; $7583 -- 4 of GameProgressArrowTiles's 8 tiles
 	call QueueVRAMCopy ; $7585
-	ld hl, GameProgressScreenTiles1 ; $7588
+	ld hl, GameProgressMedalTrophyTiles ; $7588
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $758b
-	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
+	ld c, (GameProgressArrowTiles - GameProgressMedalTrophyTiles) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593
 	ld_obj_pals de, 2, 1 ; $7596
@@ -419,18 +419,18 @@ GameProgressHeaderAttrmap_1e:
 	INCBIN "data/engine/menus/exp/lz_GameProgressHeaderAttrmap_1e.bin" ; $76e2, 24 bytes
 	; $76fa, 6 bytes (fill)
 	ds 6, $00
-GameProgressScreenPalettes0:
-	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
+GameProgressHeaderPalettes:
+	INCLUDE "data/engine/menus/exp/GameProgressHeaderPalettes.asm" ; $7700, 16 bytes (palettes)
 	ds ALIGN[4]
-GameProgressScreenTiles0:
-	INCBIN "data/engine/menus/exp/GameProgressScreenTiles0.bin" ; $7710, 256 bytes
+GameProgressStarBadgeTiles:
+	INCBIN "data/engine/menus/exp/GameProgressStarBadgeTiles.bin" ; $7710, 256 bytes
 GameProgressScreenPalettes1:
 	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
 	ds ALIGN[4]
-GameProgressScreenTiles1:
-	INCBIN "data/engine/menus/exp/GameProgressScreenTiles1.bin" ; $7820, 320 bytes
+GameProgressMedalTrophyTiles:
+	INCBIN "data/engine/menus/exp/GameProgressMedalTrophyTiles.bin" ; $7820, 320 bytes
 	ds ALIGN[4]
-GameProgressScreenTiles2:
-	INCBIN "data/engine/menus/exp/GameProgressScreenTiles2.bin" ; $7960, 128 bytes
+GameProgressArrowTiles:
+	INCBIN "data/engine/menus/exp/GameProgressArrowTiles.bin" ; $7960, 128 bytes
 GameProgressScreenPalettes2:
 	INCLUDE "data/engine/menus/exp/GameProgressScreenPalettes2.asm" ; $79e0, 8 bytes (palettes)

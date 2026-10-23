@@ -1,5 +1,5 @@
-; Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy.
-Unused_0f_TournamentNpc0A:
+; Instruction-for-instruction the same as TournamentNpc0ASammi_0f: the handler assembled a second time. Nothing points at this copy.
+Unused_0f_TournamentNpc0ASammi:
 	script_set_text Text_SammiIntroPlayYouFirst ; $6f18
 	script_speak_restore $0b ; $6f1e
 	farcall RunDialogueYesNoPrompt ; $6f23
@@ -13,29 +13,29 @@ Unused_0f_TournamentNpc0A:
 	ret ; $6f3b
 TournamentNpc03_0f:
 	script_set_text Text_TournamentStaffReadChartPrompt ; $6f3c
-	script_speak_restore ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f42
+	script_speak_restore ACTOR_TOURNAMENT_STAFF_1 ; $6f42
 	farcall RunDialogueYesNoPrompt ; $6f47
 	farcall ScriptCloseDialogueWindow ; $6f4a
 	script_wait_frames 5 ; $6f4d
 	and a ; $6f54
-	jr nz, .altLine ; $6f55
-	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f57
+	jr nz, .declined ; $6f55
+	script_speak ACTOR_TOURNAMENT_STAFF_1 ; $6f57
 	ret ; $6f5c
-.altLine:
+.declined:
 	ld hl, Text_TournamentStaffRoundOneJoinOthers ; $6f5d
 	ld a, [wMapSceneStage] ; $6f60
 	add_hl_a ; $6f63
 	farcall InitDialogueTextCursor ; $6f68
-	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_1 ; $6f6b
+	script_speak ACTOR_TOURNAMENT_STAFF_1 ; $6f6b
 	ret ; $6f70
 TournamentNpc04_0f:
 	ld hl, Text_TournamentStaffWaitInCircles ; $6f71
 	ld a, [wMapSceneStage] ; $6f74
 	add_hl_a ; $6f77
 	farcall InitDialogueTextCursor ; $6f7c
-	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $6f7f
+	script_speak ACTOR_TOURNAMENT_STAFF_2 ; $6f7f
 	ret ; $6f84
-MovePartnerForRoundCall_0f:
+MoveBCozForRoundCall_0f:
 	test_flag FLAG_DOUBLES ; $6f85
 	jr z, .done ; $6f88
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $6f8a
@@ -45,7 +45,7 @@ MovePartnerForRoundCall_0f:
 	script_wait_move ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ ; $6f9f
 	script_move_target ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ, 25.0, 19.0 ; $6fa4
 	script_wait_move ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ ; $6faf
-	script_face ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_A_COZ, FACE_DOWN ; $6fb4
+	script_face ACTOR_TOURNAMENT_A_COZ, FACE_DOWN ; $6fb4
 	script_face ACTOR_ROLE_ISLAND_OPEN_TOURNAMENT_B_COZ, FACE_DOWN ; $6fbb
 .done:
 	ret ; $6fc2
@@ -53,47 +53,47 @@ IslandOpenRoundCallCutscene:
 	script_set_text Text_StaffRoundAboutToBegin ; $6fc3
 	script_move_player 17.0, 15.0 ; $6fc9
 	farcall WaitPlayerMoveDone ; $6fd3
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 14.0, 12.0 ; $6fd6
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $6fe1
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 12.0 ; $6fe6
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $6ff1
-	script_face ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, FACE_DOWN ; $6ff6
-	script_set_anim ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, ANIM_BOUNCE ; $6ffd
-	script_wait_idle ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $7004
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 14.0, 12.0 ; $6fd6
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $6fe1
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 19.0, 12.0 ; $6fe6
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $6ff1
+	script_face ACTOR_TOURNAMENT_STAFF_3, FACE_DOWN ; $6ff6
+	script_set_anim ACTOR_TOURNAMENT_STAFF_3, ANIM_BOUNCE ; $6ffd
+	script_wait_idle ACTOR_TOURNAMENT_STAFF_3 ; $7004
 	call QueueUpcomingRoundNameText ; $7009
-	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $700c
-	call MovePartnerForRoundCall_0f ; $7011
-	script_face ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, FACE_UP ; $7014
-	script_set_anim ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, ANIM_NOD ; $701b
-	script_wait_idle ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $7022
-	script_face ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, FACE_DOWN ; $7027
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, 19.0, 23.0 ; $702e
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $7039
+	script_speak ACTOR_TOURNAMENT_STAFF_3 ; $700c
+	call MoveBCozForRoundCall_0f ; $7011
+	script_face ACTOR_TOURNAMENT_STAFF_2, FACE_UP ; $7014
+	script_set_anim ACTOR_TOURNAMENT_STAFF_2, ANIM_NOD ; $701b
+	script_wait_idle ACTOR_TOURNAMENT_STAFF_2 ; $7022
+	script_face ACTOR_TOURNAMENT_STAFF_2, FACE_DOWN ; $7027
+	script_move_target ACTOR_TOURNAMENT_STAFF_2, 19.0, 23.0 ; $702e
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $7039
 	script_move_player 17.0, 19.0 ; $7044
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $704e
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, 21.0, 23.0 ; $7053
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $705e
-	script_face ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, FACE_UP ; $7063
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $706a
-	script_face ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, FACE_UP ; $706f
+	script_wait_move ACTOR_TOURNAMENT_STAFF_2 ; $704e
+	script_move_target ACTOR_TOURNAMENT_STAFF_2, 21.0, 23.0 ; $7053
+	script_wait_move ACTOR_TOURNAMENT_STAFF_2 ; $705e
+	script_face ACTOR_TOURNAMENT_STAFF_2, FACE_UP ; $7063
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $706a
+	script_face ACTOR_TOURNAMENT_STAFF_3, FACE_UP ; $706f
 	call QueueUpcomingRoundNameText ; $7076
-	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $7079
-	script_face_pair ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $707e
-	script_set_anim ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2, ANIM_NOD ; $7086
-	script_wait_idle ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $708d
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 16.0, 23.0 ; $7092
+	script_speak ACTOR_TOURNAMENT_STAFF_2 ; $7079
+	script_face_pair ACTOR_TOURNAMENT_STAFF_3, ACTOR_TOURNAMENT_STAFF_2 ; $707e
+	script_set_anim ACTOR_TOURNAMENT_STAFF_2, ANIM_NOD ; $7086
+	script_wait_idle ACTOR_TOURNAMENT_STAFF_2 ; $708d
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 16.0, 23.0 ; $7092
 	ld a, [wMapSceneStage] ; $709d
 	cp ISLANDOPENROUND_FINAL ; $70a0
-	jr z, .partnerReady ; $70a2
-	script_move_target ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_2, 24.0, 23.0 ; $70a4
-	script_wait_move ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_2 ; $70af
-	script_face ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_2, FACE_UP ; $70b4
-.partnerReady:
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $70bb
-	script_face ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, FACE_UP ; $70c0
-	script_speak ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_2 ; $70c7
+	jr z, .waitStaff3 ; $70a2
+	script_move_target ACTOR_TOURNAMENT_STAFF_2, 24.0, 23.0 ; $70a4
+	script_wait_move ACTOR_TOURNAMENT_STAFF_2 ; $70af
+	script_face ACTOR_TOURNAMENT_STAFF_2, FACE_UP ; $70b4
+.waitStaff3:
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $70bb
+	script_face ACTOR_TOURNAMENT_STAFF_3, FACE_UP ; $70c0
+	script_speak ACTOR_TOURNAMENT_STAFF_2 ; $70c7
 	test_flag FLAG_DOUBLES ; $70cc
-	jp nz, .afterMatch ; $70cf
+	jp nz, .doubles ; $70cf
 	script_set_speed ACTOR_PLAYER, 1.0 ; $70d2
 	script_face_pair ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ACTOR_PLAYER ; $70da
 	script_wait_frames 30 ; $70e2
@@ -103,10 +103,10 @@ IslandOpenRoundCallCutscene:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $70fe
 	script_wait_idle ACTOR_PLAYER ; $7105
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $710a
-	jr z, .doublesWalk ; $710d
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $710f
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $711a
-	script_set_actor_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, ActorScript_0f_05 ; $711f
+	jr z, .singlesEarlyRoundWalk ; $710d
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $710f
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $711a
+	script_set_actor_script ACTOR_TOURNAMENT_STAFF_3, ActorScript_0f_05 ; $711f
 	script_wait_frames 20 ; $712a
 	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_05 ; $7131
 	script_wait_frames 20 ; $713c
@@ -116,10 +116,10 @@ IslandOpenRoundCallCutscene:
 	farcall WaitPlayerMoveDone ; $715f
 	script_wait_frames 30 ; $7162
 	jp .startMatch ; $7169
-.doublesWalk:
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $716c
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $7177
-	script_set_actor_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, ActorScript_0f_03 ; $717c
+.singlesEarlyRoundWalk:
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $716c
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $7177
+	script_set_actor_script ACTOR_TOURNAMENT_STAFF_3, ActorScript_0f_03 ; $717c
 	script_wait_frames 20 ; $7187
 	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_03 ; $718e
 	script_wait_frames 20 ; $7199
@@ -159,7 +159,7 @@ IslandOpenRoundCallCutscene:
 	farcall RunStoryMatch ; $7228
 	farcall RestoreOverworldAfterMatch ; $722b
 	ret ; $722e
-.afterMatch:
+.doubles:
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $722f
 	script_set_speed ACTOR_PLAYER, 1.0 ; $7237
 	script_set_speed ACTOR_PARTNER, 1.0 ; $723f
@@ -170,10 +170,10 @@ IslandOpenRoundCallCutscene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7261
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7268
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $726f
-	jp z, .afterMatchDoubles ; $7272
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $7275
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $7280
-	script_set_actor_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, ActorScript_0f_05 ; $7285
+	jp z, .doublesEarlyRoundWalk ; $7272
+	script_move_target ACTOR_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $7275
+	script_wait_move ACTOR_TOURNAMENT_STAFF_3 ; $7280
+	script_set_actor_script ACTOR_TOURNAMENT_STAFF_3, ActorScript_0f_05 ; $7285
 	script_wait_frames 20 ; $7290
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_05 ; $7297
 	script_wait_frames 20 ; $72a2
@@ -184,11 +184,11 @@ IslandOpenRoundCallCutscene:
 	script_set_actor_script ACTOR_ROLE_ISLAND_OPEN_OPPONENT, ActorScript_0f_06 ; $72cd
 	script_move_player 17.0, 13.0 ; $72d8
 	farcall WaitPlayerMoveDone ; $72e2
-	jp .walkOff ; $72e5
-.afterMatchDoubles:
-	script_move_target ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $72e8
-	script_wait_move ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3 ; $72f3
-	script_set_actor_script ACTOR_ISLAND_OPEN_FINAL_DOUBLES_TOURNAMENT_STAFF_3, ActorScript_0f_03 ; $72f8
+	jp .doublesStartMatch ; $72e5
+.doublesEarlyRoundWalk:
+	script_move_target ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $72e8
+	script_wait_move ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_3 ; $72f3
+	script_set_actor_script ACTOR_ISLAND_OPEN_ROUND1_DOUBLES_TOURNAMENT_STAFF_3, ActorScript_0f_03 ; $72f8
 	script_wait_frames 20 ; $7303
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_03 ; $730a
 	script_wait_frames 20 ; $7315
@@ -200,7 +200,7 @@ IslandOpenRoundCallCutscene:
 	script_move_player 17.0, 13.0 ; $734b
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames 60 ; $7358
-.walkOff:
+.doublesStartMatch:
 	script_fade_out 16 ; $735f
 	call WaitFadeEnd ; $7364
 	call ShowTournamentRankingBoard_0f ; $7367
@@ -213,15 +213,15 @@ IslandOpenRoundCallCutscene:
 	ld [wStoryModeExitTriggerRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $737f
-	jp z, .walkOffDoubles ; $7382
+	jp z, .doublesCheckRound1 ; $7382
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_FINAL ; $7385
 	jr .done ; $7392
-.walkOffDoubles:
+.doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $7394
-	jp z, .fadeOut ; $7397
+	jp z, .doublesRound1Settings ; $7397
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_SEMIFINAL ; $739a
 	jp .done ; $73a7
-.fadeOut:
+.doublesRound1Settings:
 	load_match_settings MATCHLIST_DOUBLES, STORYMATCH_ISLAND_OPEN_ROUND_2 ; $73aa
 .done:
 	farcall RunStoryMatch ; $73b7
@@ -344,7 +344,7 @@ IslandOpenSinglesMatchReturn:
 	call SetPlayerAndPartnerObjectDefs ; $749f
 	ret ; $74a2
 .wonRound:
-	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $74a3
+	clear_flag FLAG_TALKED_TO_UNION_FAN_SINGLES ; $74a3
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $74a6
 	call CheckIslandOpenVictoryTransition ; $74a9
 	and a ; $74ac
@@ -420,12 +420,12 @@ IslandOpenRoundActorsSingles_0f:
 	map_actor_end
 IslandOpenRoundNpcScriptsSingles_0f:
 	; $7615, 25 bytes (map_scripts)
-	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc03Kevin_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04Emily_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05Mark_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
-IslandOpenRoundSinglesNpc03_0f:
+	twin_named island_open_round_doubles_npc04_emily, IslandOpenRoundSinglesNpc04Emily_0f ; $762e
+IslandOpenRoundSinglesNpc03Kevin_0f:
 	ld a, [wMapSceneStage] ; $7649
 	add a ; $764c
 	ld_hl_indexed IslandOpenSinglesStageTextPtrs_0f ; $764d
@@ -437,11 +437,11 @@ IslandOpenRoundSinglesNpc03_0f:
 	script_wait_idle ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS ; $7661
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_KEVIN_SWEATS ; $7666
 	ret ; $766b
-IslandOpenRoundSinglesNpc05_0f:
+IslandOpenRoundSinglesNpc05Mark_0f:
 	ld a, [wMapSceneStage] ; $766c
 	dec a ; $766f
 	add a ; $7670
-	ld_hl_indexed IslandOpenRoundSinglesNpc05_0fTable ; $7671
+	ld_hl_indexed IslandOpenMarkStageTextPtrs_0f ; $7671
 	ld a, [hl+] ; $7678
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
@@ -450,7 +450,7 @@ IslandOpenRoundSinglesNpc05_0f:
 	script_wait_jump ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS ; $7686
 	script_speak ACTOR_ISLAND_OPEN_ROUND_SINGLES_MARK_SWEATS ; $768b
 	ret ; $7690
-IslandOpenRoundSinglesNpc05_0fTable:
+IslandOpenMarkStageTextPtrs_0f:
 	; $7691, 8 bytes (text_ids)
 	dw Text_MarkFirstTimeMadeRoundTwo ; record 0
 	dw Text_MarkFirstTimeMadeSemifinals ; record 1
@@ -481,13 +481,13 @@ IslandOpenDoublesMatchReturn:
 	farcall WaitPlayerMoveDone ; $76e5
 	ret ; $76e8
 .wonRound:
-	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $76e9
+	clear_flag FLAG_TALKED_TO_UNION_FAN_DOUBLES ; $76e9
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
 	and a ; $76f2
-	jr z, .accepted ; $76f3
+	jr z, .returnToSite ; $76f3
 	ret ; $76f5
-.accepted:
+.returnToSite:
 	script_respawn_actors IslandOpenRoundActorsDoubles_0f ; $76f6
 	farcall BeginCutsceneScriptMode ; $76fe
 	ld hl, IslandOpenRoundNpcScriptsDoubles_0f ; $7701
@@ -507,18 +507,18 @@ IslandOpenDoublesMatchReturn:
 	ld a, [wMapSceneStage] ; $7742
 	dec a ; $7745
 	add a ; $7746
-	ld_hl_indexed IslandOpenRoundSinglesNpc05TextIds ; $7747
+	ld_hl_indexed IslandOpenDoublesPartnerRoundTextIds ; $7747
 	ld a, [hl+] ; $774e
 	ld h, [hl] ; $774f
 	ld l, a ; $7750
 	farcall InitDialogueTextCursor ; $7751
 	ld a, [wStoryPartnerGender] ; $7754
 	or a ; $7757
-	jr nz, .declined ; $7758
+	jr nz, .partnerTextReady ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a
 	farcall AdvanceDialogueTextCursor ; $775d
 	farcall AdvanceDialogueTextCursor ; $7760
-.declined:
+.partnerTextReady:
 	script_get_actor_state ACTOR_ISLAND_OPEN_ROUND_DOUBLES_BALLOON_EXCLAIM ; $7763
 	ld c, l ; $7768
 	ld b, h ; $7769
@@ -560,7 +560,7 @@ IslandOpenDoublesMatchReturn:
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $7829
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $782c
 	ret ; $7839
-IslandOpenRoundSinglesNpc05TextIds:
+IslandOpenDoublesPartnerRoundTextIds:
 	; $783a, 8 bytes (text_ids)
 	dw Text_PartnerWeMadeSemifinals ; record 0
 	dw Text_PartnerWeMadeSemifinals ; record 1
@@ -577,22 +577,22 @@ IslandOpenRoundActorsDoubles_0f:
 	map_actor_end
 IslandOpenRoundNpcScriptsDoubles_0f:
 	; $78a0, 17 bytes (map_scripts)
-	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03Kevin_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_ISLAND_OPEN_ROUND_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04Emily_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
-	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
-IslandOpenRoundDoublesNpc03_0f:
+	twin_named island_open_round_doubles_npc04_emily, IslandOpenRoundDoublesNpc04Emily_0f ; $78b1
+IslandOpenRoundDoublesNpc03Kevin_0f:
 	ld a, [wMapSceneStage] ; $78cc
 	dec a ; $78cf
 	add a ; $78d0
-	ld_hl_indexed IslandOpenRoundDoublesNpc03TextIds ; $78d1
+	ld_hl_indexed IslandOpenRoundDoublesNpc03KevinTextIds ; $78d1
 	ld a, [hl+] ; $78d8
 	ld h, [hl] ; $78d9
 	ld l, a ; $78da
 	farcall InitDialogueTextCursor ; $78db
 	script_speak ACTOR_ISLAND_OPEN_ROUND_DOUBLES_KEVIN_SWEATS ; $78de
 	ret ; $78e3
-IslandOpenRoundDoublesNpc03TextIds:
+IslandOpenRoundDoublesNpc03KevinTextIds:
 	; $78e4, 8 bytes (text_ids)
 	dw Text_KevinDoublesOnToSemifinals ; record 0
 	dw Text_KevinDoublesOnToSemifinals ; record 1

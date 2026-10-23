@@ -1,9 +1,9 @@
 LoadN64RecordsToWram2:
 	push_wram_bank WRAM_COURT_PLANES ; $6c3d
-	ld hl, wScreenAttrmap ; $6c46
+	ld hl, wN64BlockProbe ; $6c46
 	ld bc, $0020 ; $6c49
 	call ClearMemory16 ; $6c4c
-	ld hl, wScreenAttrmap ; $6c4f
+	ld hl, wN64BlockProbe ; $6c4f
 	ld b, SAVEBLOCK_N64_RECORDS ; $6c52
 	farcall ReadSaveBlock ; $6c54
 	pop_wram_bank ; $6c57
@@ -34,7 +34,7 @@ RunEraseSavedDataSelect:
 	ld a, [wMenuSlideDirection] ; $6c92
 	ld b, a ; $6c95
 	call SavedDataPickerSlideIn ; $6c96
-	farcall InitMenuBgScroll ; $6c99
+	farcall InitMenuTitleScroller ; $6c99
 	ld b, $01 ; $6c9c
 	ld c, $01 ; $6c9e
 	farcall LoadMenuSpritePalettePair ; $6ca0
@@ -45,7 +45,7 @@ RunEraseSavedDataSelect:
 	call DrawEraseSavedDataGrid ; $6cb2
 	wram_bank WRAM_SCREEN ; $6cb5
 .loop:
-	ldh a, [hInputPressed] ; $6cbb
+	ldh a, [hInputRepeat] ; $6cbb
 	ld [wMenuInputPressed], a ; $6cbd
 	call MoveSavedDataPickerCursor ; $6cc0
 	or a ; $6cc3
@@ -85,7 +85,7 @@ RunEraseSavedDataSelect:
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
 	set B_IE_TIMER, [hl] ; $6d08
-	ld b, $01 ; $6d0a
+	ld b, MENUSLIDE_FORWARD ; $6d0a
 	call SavedDataPickerSlideOut ; $6d0c
 	ld a, MENUSLIDE_FORWARD ; $6d0f
 	ld [wMenuSlideDirection], a ; $6d11
@@ -97,7 +97,7 @@ RunEraseSavedDataSelect:
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
 	set B_IE_TIMER, [hl] ; $6d22
-	ld b, $00 ; $6d24
+	ld b, MENUSLIDE_BACK ; $6d24
 	call SavedDataPickerSlideOut ; $6d26
 	ld a, MENUSLIDE_BACK ; $6d29
 	ld [wMenuSlideDirection], a ; $6d2b
@@ -130,7 +130,7 @@ LoadEraseSavedDataGfx:
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank WRAM_STAGING ; $6d88
-	ld_slot hl, DataPtr_N64TransferLabelTiles0 ; $6d8e
+	ld_slot hl, DataPtr_Erase64IconTiles ; $6d8e
 	ld de, wDecompBuffer ; $6d91
 	call DecompressDataFromBank ; $6d94
 	ld hl, wDecompBuffer ; $6d97
@@ -138,7 +138,7 @@ LoadEraseSavedDataGfx:
 	ld c, 16 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
-	ld_slot hl, DataPtr_N64TransferLabelTiles1 ; $6da5
+	ld_slot hl, DataPtr_EraseAllIconTiles ; $6da5
 	ld de, wDecompBuffer ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, wDecompBuffer ; $6dae
@@ -146,28 +146,28 @@ LoadEraseSavedDataGfx:
 	ld c, 16 ; $6db4
 	call QueueVRAMCopy ; $6db6
 	call AdvanceFrame ; $6db9
-	ld b, TILEBLOCK_EraseSavedDataGfx0 ; $6dbc
-	ld c, EraseSavedDataGfx0_SIZE / 16 ; $6dbe
+	ld b, TILEBLOCK_EraseFile1LabelGfx ; $6dbc
+	ld c, EraseFile1LabelGfx_SIZE / 16 ; $6dbe
 	ld de, vTiles0 + VRAM_BANK1 ; $6dc0
 	farcall LoadCompressedTileBlock ; $6dc3
 	call AdvanceFrame ; $6dc6
-	ld b, TILEBLOCK_EraseSavedDataGfx1 ; $6dc9
-	ld c, EraseSavedDataGfx1_SIZE / 16 ; $6dcb
+	ld b, TILEBLOCK_EraseFile2LabelGfx ; $6dc9
+	ld c, EraseFile2LabelGfx_SIZE / 16 ; $6dcb
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6dcd
 	farcall LoadCompressedTileBlock ; $6dd0
 	call AdvanceFrame ; $6dd3
-	ld b, TILEBLOCK_EraseSavedDataGfx2 ; $6dd6
-	ld c, EraseSavedDataGfx2_SIZE / 16 ; $6dd8
+	ld b, TILEBLOCK_EraseFile3LabelGfx ; $6dd6
+	ld c, EraseFile3LabelGfx_SIZE / 16 ; $6dd8
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6dda
 	farcall LoadCompressedTileBlock ; $6ddd
 	call AdvanceFrame ; $6de0
-	ld b, TILEBLOCK_EraseSavedDataGfx3 ; $6de3
-	ld c, EraseSavedDataGfx3_SIZE / 16 ; $6de5
+	ld b, TILEBLOCK_EraseN64DataLabelGfx ; $6de3
+	ld c, EraseN64DataLabelGfx_SIZE / 16 ; $6de5
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6de7
 	farcall LoadCompressedTileBlock ; $6dea
 	call AdvanceFrame ; $6ded
-	ld b, TILEBLOCK_EraseSavedDataGfx4 ; $6df0
-	ld c, EraseSavedDataGfx4_SIZE / 16 ; $6df2
+	ld b, TILEBLOCK_EraseAllDataLabelGfx ; $6df0
+	ld c, EraseAllDataLabelGfx_SIZE / 16 ; $6df2
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $6df4
 	farcall LoadCompressedTileBlock ; $6df7
 	call AdvanceFrame ; $6dfa
@@ -176,8 +176,8 @@ LoadEraseSavedDataGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6e01
 	farcall LoadCompressedTileBlock ; $6e04
 	call AdvanceFrame ; $6e07
-	ld b, TILEBLOCK_SharedMenuGfx65 ; $6e0a
-	ld c, SharedMenuGfx65_SIZE / 16 ; $6e0c
+	ld b, TILEBLOCK_SavedDataTitleGfx ; $6e0a
+	ld c, SavedDataTitleGfx_SIZE / 16 ; $6e0c
 	ld de, vTiles0 ; $6e0e
 	farcall LoadCompressedTileBlock ; $6e11
 	call AdvanceFrame ; $6e14
@@ -374,7 +374,7 @@ SavedDataPickerBottomToTopColumnMap:
 	db $00 ; $6f59
 	db $02 ; $6f5a
 EraseSavedDataCursorSpriteTask:
-	farcall TickMenuBgScroll ; $6f5b
+	farcall TickMenuTitleScroller ; $6f5b
 	ld c, $03 ; $6f5e
 	call GetMenuCursorIndex_3b ; $6f60
 	push af ; $6f63
@@ -390,7 +390,7 @@ EraseSavedDataCursorSpriteTask:
 	ld e, a ; $6f79
 	farcall ApplySpriteBobOffset ; $6f7a
 	ld b, OAM_BANK1 ; $6f7d
-	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate0 ; $6f7f
+	ld hl, EraseSavedDataLabelTemplate ; $6f7f
 	push de ; $6f82
 	call QueueSpriteTemplate ; $6f83
 	pop de ; $6f86
@@ -398,11 +398,11 @@ EraseSavedDataCursorSpriteTask:
 	add hl, de ; $6f8a
 	ld d, h ; $6f8b
 	ld e, l ; $6f8c
-	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate1 ; $6f8d
+	ld hl, EraseSavedDataLabelTailTemplate ; $6f8d
 	sprite_attr_tile OAM_BANK1, $70 ; $6f90
 	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97
-EraseSavedDataCursorSpriteTask_SpriteTemplate0:
+EraseSavedDataLabelTemplate:
 	; $6f98, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -413,7 +413,7 @@ EraseSavedDataCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-EraseSavedDataCursorSpriteTask_SpriteTemplate1:
+EraseSavedDataLabelTailTemplate:
 	; $6fb9, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -558,12 +558,12 @@ LoadEraseSavedDataCellPalette:
 	ret ; $70dd
 EraseSavedDataCellPalettePtrs:
 	; $70de, 18 bytes (records:2)
-	dw SavedDataCellPalette0 ; record 0
-	dw SavedDataCellPalette0 ; record 1
-	dw SavedDataCellPalette0 ; record 2
-	dw SavedDataCellPalette1 ; record 3
-	dw SavedDataCellPalette0 ; record 4
-	dw SavedDataCellPalette0 ; record 5
-	dw SavedDataCellPalette0 ; record 6
-	dw SavedDataCellPalette0 ; record 7
-	dw SavedDataCellPalette0 ; record 8
+	dw EraseAllDataPalette ; record 0
+	dw EraseAllDataPalette ; record 1
+	dw EraseAllDataPalette ; record 2
+	dw EraseN64DataPalette ; record 3
+	dw EraseAllDataPalette ; record 4
+	dw EraseAllDataPalette ; record 5
+	dw EraseAllDataPalette ; record 6
+	dw EraseAllDataPalette ; record 7
+	dw EraseAllDataPalette ; record 8

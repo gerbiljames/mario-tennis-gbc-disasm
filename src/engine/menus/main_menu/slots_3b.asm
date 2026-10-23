@@ -7,18 +7,18 @@
 	farptr RunMainMenu ; $400c
 	farptr RunMatchFormatSelect ; $400e
 	farptr RunMinigameSelect ; $4010
-	farptr RunSavedDataSourceSelect ; $4012
+	farptr RunStatusSourceSelect ; $4012
 	farptr RunEraseSavedDataSelect ; $4014
 	farptr RunN64RecordTypeSelect ; $4016
-	farptr RunN64TransferItemSelect ; $4018
+	farptr RunGbDataItemSelect ; $4018
 	farptr PrintNumberRightAligned ; $401a
-	farptr ShowTournamentBracket ; $401c
-	farptr N64RecordTypeSlideIn ; $401e
-	farptr N64RecordTypeSlideOut ; $4020
+	farptr ShowVarsityTeamChart ; $401c
+	farptr ThreeChoiceSlideIn ; $401e
+	farptr ThreeChoiceSlideOut ; $4020
 	farptr SavedDataPickerSlideIn ; $4022
 	farptr SavedDataPickerSlideOut ; $4024
 	farptr MoveSavedDataPickerCursor ; $4026
-	farptr LoadChartWindowTiles ; $4028
+	farptr LoadChartCharIconTiles ; $4028
 	farptr DrawChartCharIcon ; $402a
 	farptr BuildMarioCastUnlockMask ; $402c
 	farptr GetUnlockedMarioCastCharAtGridSlot ; $402e

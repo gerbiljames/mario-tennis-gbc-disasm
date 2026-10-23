@@ -9,7 +9,7 @@ LoadPalettesMasterOnly:
 	add a ; $05e8
 	add a ; $05e9
 	ld e, a ; $05ea
-	ld d, $c2 ; $05eb
+	ld d, HIGH(wMasterPalettes) ; $05eb
 .copyLoop:
 	ld a, [hl+] ; $05ed
 	ld [de], a ; $05ee
@@ -36,10 +36,10 @@ RestorePalettesFromMaster:
 ApplyPendingPaletteUpdates:
 	ldh a, [hPaletteDirtyFlags] ; $060d
 	rrca ; $060f
-	jr nc, .checkPaletteDirtyFlags ; $0610
+	jr nc, .checkOBJDirty ; $0610
 	ld hl, wBGPalettes ; $0612
 	call LoadBGPaletteData ; $0615
-.checkPaletteDirtyFlags:
+.checkOBJDirty:
 	ldh a, [hPaletteDirtyFlags] ; $0618
 	rrca ; $061a
 	rrca ; $061b
@@ -79,7 +79,7 @@ FarReadWordDI:
 	ld [rROMB0], a ; $065c
 	ei ; $065f
 	ret ; $0660
-; Unused_00_FarReadPtrIndexed that returns instead of tail-jumping through the entry it read. Nothing calls it.
+; Unused_00_CallFarVectorEntry that returns the entry it read instead of calling it. Nothing calls it.
 Unused_00_ReadFarVectorEntry:
 	push bc ; $0661
 	ldh a, [hRomBank] ; $0662
@@ -206,7 +206,7 @@ Unused_00_FarCopyIndexed:
 	pop bc ; $0723
 	pop af ; $0724
 	ret ; $0725
-Unused_00_FarCallIndexed1:
+Unused_00_FarQueueVRAMCopyIndexed:
 	push af ; $0726
 	push bc ; $0727
 	push de ; $0728
@@ -234,7 +234,7 @@ Unused_00_FarCallIndexed1:
 	pop bc ; $074f
 	pop af ; $0750
 	ret ; $0751
-Unused_00_FarCallIndexed2:
+Unused_00_FarVRAMDMAIndexed:
 	push af ; $0752
 	push bc ; $0753
 	push de ; $0754
@@ -262,7 +262,7 @@ Unused_00_FarCallIndexed2:
 	pop bc ; $077b
 	pop af ; $077c
 	ret ; $077d
-Unused_00_FarCallIndexed3:
+Unused_00_FarCopyMemoryFastIndexed:
 	push af ; $077e
 	push bc ; $077f
 	push de ; $0780
@@ -290,7 +290,7 @@ Unused_00_FarCallIndexed3:
 	pop bc ; $07a7
 	pop af ; $07a8
 	ret ; $07a9
-Unused_00_FarReadPtrIndexed:
+Unused_00_CallFarVectorEntry:
 	push bc ; $07aa
 	ldh a, [hRomBank] ; $07ab
 	ld b, a ; $07ad
@@ -470,7 +470,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld de, wMapScrollPlane0 ; $088d
 	call Unused_00_CopyMapRows32To64 ; $0890
 	wram_bank WRAM_STAGING ; $0893
-	ld hl, wDecompBuffer tile 32 ; $0899
+	ld hl, wDecompBuffer + 16 * TILEMAP_WIDTH ; $0899
 	ld de, wTextBuffer ; $089c
 	ld c, $20 ; $089f
 	call CopyMemoryFast ; $08a1
@@ -482,7 +482,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld c, (WRAMX_END - wMapScrollPlane1) / 16 ; $08b6
 	call ClearMemory16 ; $08b8
 	wram_bank WRAM_STAGING ; $08bb
-	ld hl, wDecompBuffer tile 64 ; $08c1
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $08c1
 	ld de, wTextBuffer ; $08c4
 	ld c, $20 ; $08c7
 	call CopyMemoryFast ; $08c9
@@ -491,7 +491,7 @@ Unused_00_CopyMapToScrollBuffers:
 	ld de, wShadowTilemap ; $08d5
 	call Unused_00_CopyMapRows32To64 ; $08d8
 	wram_bank WRAM_STAGING ; $08db
-	ld hl, wDecompBuffer tile 96 ; $08e1
+	ld hl, wDecompBuffer + TILEMAP_AREA + 16 * TILEMAP_WIDTH ; $08e1
 	ld de, wTextBuffer ; $08e4
 	ld c, $20 ; $08e7
 	call CopyMemoryFast ; $08e9

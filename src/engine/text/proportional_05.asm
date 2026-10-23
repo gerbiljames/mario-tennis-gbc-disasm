@@ -58,7 +58,7 @@ RenderProportionalTextAt:
 .charLoop:
 	ld a, [hl] ; $5e24
 	cp $20 ; $5e25
-	jr nc, ProportionalTextCodeHandler5_05.glyph ; $5e27
+	jr nc, ProportionalTextCodeGlyph_05.glyph ; $5e27
 	push hl ; $5e29
 	push af ; $5e2a
 	add a ; $5e2b
@@ -71,23 +71,23 @@ RenderProportionalTextAt:
 	jp hl ; $5e38
 ProportionalTextCodeHandlers_05:
 	; $5e39, 32 bytes (records:2)
-	dw ProportionalTextCodeHandler0_05 ; record 0
-	dw ProportionalTextCodeHandler1_05 ; record 1
-	dw ProportionalTextCodeHandler0_05 ; record 2
-	dw ProportionalTextCodeHandler0_05 ; record 3
-	dw ProportionalTextCodeHandler4_05 ; record 4
-	dw ProportionalTextCodeHandler5_05 ; record 5
-	dw ProportionalTextCodeHandler5_05 ; record 6
-	dw ProportionalTextCodeHandler4_05 ; record 7
-	dw ProportionalTextCodeHandler4_05 ; record 8
-	dw ProportionalTextCodeHandler4_05 ; record 9
-	dw ProportionalTextCodeHandler5_05 ; record 10
-	dw ProportionalTextCodeHandler4_05 ; record 11
-	dw ProportionalTextCodeHandler5_05 ; record 12
-	dw ProportionalTextCodeHandler5_05 ; record 13
-	dw ProportionalTextCodeHandler14_05 ; record 14
-	dw ProportionalTextCodeHandler5_05 ; record 15
-ProportionalTextCodeHandler14_05:
+	dw ProportionalTextCodeEnd_05 ; record 0
+	dw ProportionalTextCodeLineBreak_05 ; record 1
+	dw ProportionalTextCodeEnd_05 ; record 2
+	dw ProportionalTextCodeEnd_05 ; record 3
+	dw ProportionalTextCodeDispatch_05 ; record 4
+	dw ProportionalTextCodeGlyph_05 ; record 5
+	dw ProportionalTextCodeGlyph_05 ; record 6
+	dw ProportionalTextCodeDispatch_05 ; record 7
+	dw ProportionalTextCodeDispatch_05 ; record 8
+	dw ProportionalTextCodeDispatch_05 ; record 9
+	dw ProportionalTextCodeGlyph_05 ; record 10
+	dw ProportionalTextCodeDispatch_05 ; record 11
+	dw ProportionalTextCodeGlyph_05 ; record 12
+	dw ProportionalTextCodeGlyph_05 ; record 13
+	dw ProportionalTextCodeCharName_05 ; record 14
+	dw ProportionalTextCodeGlyph_05 ; record 15
+ProportionalTextCodeCharName_05:
 	pop hl ; $5e59
 	inc hl ; $5e5a
 	push af ; $5e5b
@@ -99,18 +99,18 @@ ProportionalTextCodeHandler14_05:
 	call DispatchControlCode ; $5e6c
 	inc hl ; $5e6f
 	jr RenderProportionalTextAt.charLoop ; $5e70
-ProportionalTextCodeHandler1_05:
+ProportionalTextCodeLineBreak_05:
 	pop hl ; $5e72
 	ld a, $0d ; $5e73
 	call DispatchControlCode ; $5e75
 	inc hl ; $5e78
 	jr RenderProportionalTextAt.charLoop ; $5e79
-ProportionalTextCodeHandler4_05:
+ProportionalTextCodeDispatch_05:
 	pop hl ; $5e7b
 	call DispatchControlCode ; $5e7c
 	inc hl ; $5e7f
 	jr RenderProportionalTextAt.charLoop ; $5e80
-ProportionalTextCodeHandler5_05:
+ProportionalTextCodeGlyph_05:
 	pop hl ; $5e82
 .glyph:
 	push af ; $5e83
@@ -162,7 +162,7 @@ ProportionalTextCodeHandler5_05:
 	ld e, l ; $5ec8
 	pop hl ; $5ec9
 	jp RenderProportionalTextAt.charLoop ; $5eca
-ProportionalTextCodeHandler0_05:
+ProportionalTextCodeEnd_05:
 	pop hl ; $5ecd
 	push_wram_bank WRAM_TEXT ; $5ece
 	xor a ; $5ed7
@@ -184,7 +184,7 @@ ProportionalTextCodeHandler0_05:
 	ld [wGlyphRowStartCol], a ; $5efd
 	pop de ; $5f00
 	pop bc ; $5f01
-	call SaveGlyphPenColumns ; $5f02
+	call SetPendingGlyphUploadRange ; $5f02
 	clear_flag FLAG_PROPORTIONAL_TEXT_MODE ; $5f05
 	pop hl ; $5f08
 	pop de ; $5f09

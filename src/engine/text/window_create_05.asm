@@ -117,9 +117,9 @@ CreateMenuWindowFromText:
 	srl b ; $46da
 	srl b ; $46dc
 	and $07 ; $46de
-	jr z, .gotRows ; $46e0
+	jr z, .gotWidth ; $46e0
 	inc b ; $46e2
-.gotRows:
+.gotWidth:
 	inc b ; $46e3
 	inc b ; $46e4
 	inc b ; $46e5
@@ -131,7 +131,7 @@ CreateMenuWindowFromText:
 	ld b, a ; $46f4
 	call SetWindowTextId ; $46f5
 	ld a, [wWindowId] ; $46f8
-	ld b, $02 ; $46fb
+	ld b, WINDOWSTATE_MENU ; $46fb
 	call SetWindowState ; $46fd
 	ld a, [wMenuDepth] ; $4700
 	cp $ff ; $4703
@@ -178,7 +178,7 @@ CreateMenuWindowPaged:
 	push af ; $474a
 	push bc ; $474b
 	ld a, [wWindowId] ; $474c
-	ld b, $03 ; $474f
+	ld b, WINDOWSTATE_PAGED_MENU ; $474f
 	call SetWindowState ; $4751
 	pop bc ; $4754
 	pop af ; $4755
@@ -186,22 +186,22 @@ CreateMenuWindowPaged:
 ResetWindowState:
 	push af ; $4757
 	call GetWindowStructPtr ; $4758
-	ld a, $04 ; $475b
+	ld a, WINDOW_STATE ; $475b
 	add_hl_a ; $475d
-	ld [hl], $ff ; $4762
+	ld [hl], WINDOWSTATE_HIDDEN ; $4762
 	pop af ; $4764
 	ret ; $4765
 Unused_05_StubNop1:
 	ret ; $4766
 SetWindowState:
 	call GetWindowStructPtr ; $4767
-	ld a, $04 ; $476a
+	ld a, WINDOW_STATE ; $476a
 	add_hl_a ; $476c
 	ld [hl], b ; $4771
 	ret ; $4772
 GetWindowState:
 	call GetWindowStructPtr ; $4773
-	ld a, $04 ; $4776
+	ld a, WINDOW_STATE ; $4776
 	add_hl_a ; $4778
 	ld a, [hl] ; $477d
 	ret ; $477e
@@ -252,7 +252,7 @@ RunMenuSelection:
 	ldh a, [hInputRisingEdge] ; $47cd
 	bit PADB_A, a ; $47cf
 	jr nz, .confirm ; $47d1
-	ldh a, [hInputPressed] ; $47d3
+	ldh a, [hInputRepeat] ; $47d3
 	bit PADB_UP, a ; $47d5
 	jr z, .checkDown ; $47d7
 	dec b ; $47d9
@@ -263,7 +263,7 @@ RunMenuSelection:
 	ld b, a ; $47e2
 	jr .moveCursor ; $47e3
 .checkDown:
-	ldh a, [hInputPressed] ; $47e5
+	ldh a, [hInputRepeat] ; $47e5
 	and PADF_DOWN ; $47e7
 	jp z, .checkStart ; $47e9
 	ld a, [wMenuRowCount] ; $47ec
@@ -292,7 +292,7 @@ RunMenuSelection:
 	ld a, [hl+] ; $480f
 	ld h, [hl] ; $4810
 	ld l, a ; $4811
-	ld de, $3000 ; $4812
+	ld de, $10000 - wActiveTilemap ; $4812
 	add hl, de ; $4815
 	ld de, vBGMap0 ; $4816
 	add hl, de ; $4819
@@ -355,34 +355,34 @@ RunMenuSelection:
 	jp z, .checkB ; $4871
 	sound SFX_MENU_CANCEL ; $4874
 	ld a, $ff ; $4876
-	jp .cancel ; $4878
+	jp .exitMenu ; $4878
 .checkB:
-	ldh a, [hInputPressed] ; $487b
+	ldh a, [hInputRepeat] ; $487b
 	and PADF_B ; $487d
 	jp z, .checkSideScroll ; $487f
 	sound SFX_MENU_CANCEL ; $4882
 	ld a, $ff ; $4884
-	jr .cancel ; $4886
+	jr .exitMenu ; $4886
 .checkSideScroll:
 	call GetWindowState ; $4888
-	cp $03 ; $488b
+	cp WINDOWSTATE_PAGED_MENU ; $488b
 	jp nz, .inputLoop ; $488d
 	ld a, [wScrollListLength] ; $4890
 	dec a ; $4893
 	srl a ; $4894
 	srl a ; $4896
 	jp z, .inputLoop ; $4898
-	ldh a, [hInputPressed] ; $489b
+	ldh a, [hInputRepeat] ; $489b
 	and PADF_LEFT ; $489d
 	jp z, .checkRight ; $489f
 	ld a, $fe ; $48a2
-	jr .cancel ; $48a4
+	jr .exitMenu ; $48a4
 .checkRight:
-	ldh a, [hInputPressed] ; $48a6
+	ldh a, [hInputRepeat] ; $48a6
 	and PADF_RIGHT ; $48a8
 	jp z, .inputLoop ; $48aa
 	ld a, $fd ; $48ad
-.cancel:
+.exitMenu:
 	ld [wMenuCursorRow], a ; $48af
 	push af ; $48b2
 	push bc ; $48b3
@@ -393,7 +393,7 @@ RunMenuSelection:
 	call AdvanceFrame ; $48bc
 	ld a, [wMenuDepth] ; $48bf
 	or a ; $48c2
-	jr z, .restored ; $48c3
+	jr z, .noParentMenu ; $48c3
 	dec a ; $48c5
 	ld hl, wMenuStack ; $48c6
 	sla a ; $48c9
@@ -411,7 +411,7 @@ RunMenuSelection:
 	ld c, $20 ; $48db
 	ld b, TILEATTR_PRIORITY ; $48dd
 	call WriteWindowCellTileAttr ; $48df
-.restored:
+.noParentMenu:
 	pop hl ; $48e2
 	pop de ; $48e3
 	pop bc ; $48e4
@@ -445,7 +445,7 @@ AnimateTextArrowTask:
 	ld d, [hl] ; $490c
 	ld h, d ; $490d
 	ld l, e ; $490e
-	ld de, $3000 ; $490f
+	ld de, $10000 - wActiveTilemap ; $490f
 	add hl, de ; $4912
 	ld de, vBGMap0 ; $4913
 	add hl, de ; $4916

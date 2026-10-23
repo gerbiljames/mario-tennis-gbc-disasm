@@ -263,7 +263,7 @@ Unused_0a_LoadSceneGraphicsDirect:
 	ld de, vTiles2 ; $5d79
 	ld bc, $0080 ; $5d7c
 	call StartVRAMDMAFromHL ; $5d7f
-	ld hl, wTextTileBuffer ; $5d82
+	ld hl, wDecompBufferHigh ; $5d82
 	ld de, vTiles1 ; $5d85
 	ld bc, $0080 ; $5d88
 	call StartVRAMDMAFromHL ; $5d8b
@@ -280,11 +280,11 @@ Unused_0a_LoadSceneGraphicsDirect:
 	call DecompressDataFromBank ; $5da7
 	wram_bank WRAM_COURT_PLANES ; $5daa
 	pop hl ; $5db0
-	ld de, wScreenAttrmap ; $5db1
+	ld de, wMapBuffer64 ; $5db1
 	call DecompressDataFromBank ; $5db4
 	wram_bank WRAM_SCREEN ; $5db7
 	pop hl ; $5dbd
-	ld de, wShadowTilemap ; $5dbe
+	ld de, wMapBuffer64 ; $5dbe
 	call DecompressDataFromBank ; $5dc1
 	pop hl ; $5dc4
 	wram_bank WRAM_STAGING ; $5dc5

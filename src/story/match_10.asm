@@ -41,7 +41,7 @@ MatchSelectEntryPoints_10:
 	entry_id TEST_FROM_DEBUG_BOOT, $0a
 	db $ff
 MatchSelectExitTriggers_10:
-	ds 1, $ff ; $40af, fill
+	db $ff ; $40af
 MatchSelectRunCharacterSelect:
 	farcall BeginCutsceneScriptMode ; $40b0
 	script_fade_out 16 ; $40b3
@@ -66,14 +66,14 @@ MatchSelectRunCharacterSelect:
 	ret ; $40ee
 MatchSelectPlayEpilogueScene:
 	farcall BeginCutsceneScriptMode ; $40ef
-	farcall RunScrollingTextScreen ; $40f2
+	farcall RunStaffCreditsRoll ; $40f2
 	wait_frames 60 ; $40f5
 	call EnableLCD ; $40f9
-	farcall SetupSceneAnimationPalettes ; $40fc
+	farcall SetupEpilogueEndAnimation ; $40fc
 	script_fade_in 4 ; $40ff
 	call WaitFadeEnd ; $4104
 	sound BGM_COURT_WAREHOUSE ; $4107
-	frame_task SceneAnimationFrameTask_10 ; $4109
+	frame_task EpilogueEndAnimationFrameTask_10 ; $4109
 	wait_frames 120 ; $4111
 	wait_frames 255 ; $4115
 	wait_frames 255 ; $4119
@@ -81,7 +81,7 @@ MatchSelectPlayEpilogueScene:
 	wait_frames 255 ; $4121
 	wait_frames 255 ; $4125
 	wait_frames 255 ; $4129
-	ld hl, SceneAnimationFrameTask_10 ; $412d
+	ld hl, EpilogueEndAnimationFrameTask_10 ; $412d
 	call UnregisterFrameTask ; $4130
 	farcall EndCutsceneScriptMode ; $4133
 	ret ; $4136
@@ -90,8 +90,8 @@ MatchSelectRunEndingCredits:
 	farcall RunEndingCreditsSequence ; $413a
 	farcall EndCutsceneScriptMode ; $413d
 	ret ; $4140
-SceneAnimationFrameTask_10:
-	farcall UpdateSceneAnimation ; $4141
+EpilogueEndAnimationFrameTask_10:
+	farcall UpdateEpilogueEndAnimation ; $4141
 	ret ; $4144
 MatchSelectHandlerTable_10:
 	; $4145, 73 bytes (map_scripts)
@@ -106,9 +106,9 @@ MatchSelectHandlerTable_10:
 	map_script ACTOR_MATCH_SELECT_SITUPS_A_3, FACEMASK_ANY, $0000, MatchSelectRunEndingCredits, $00, $00
 	db $ff
 MatchSelectFacingScripts_10:
-	ds 1, $ff ; $418e, fill
+	db $ff ; $418e
 MatchSelectTileTriggers_10:
-	ds 1, $ff ; $418f, fill
+	db $ff ; $418f
 MatchSelectInitScript_10:
 	xor a ; $4190
 	ld [wStoryModeShowLocationName], a ; $4191
@@ -332,7 +332,7 @@ RunDrillMatchListMenu:
 	ld [wStoryModeExitTriggerRequest], a ; $4472
 	ld a, $00 ; $4475
 	ld [wCurrentStorySlot], a ; $4477
-	farcall CheckStorySlot ; $447a
+	farcall ReadCurrentStorySlot ; $447a
 	pop af ; $447d
 	set_flag FLAG_DRILL_FROM_MENU ; $447e
 	farcall RunTrainingDrillByID ; $4481
@@ -355,9 +355,9 @@ Unused_10_RunCharDataScreen:
 	ld [wStoryModeExitTriggerRequest], a ; $44ad
 	ld a, $00 ; $44b0
 	ld [wCurrentStorySlot], a ; $44b2
-	farcall CheckStorySlot ; $44b5
+	farcall ReadCurrentStorySlot ; $44b5
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $44b8
-	ld c, $00 ; $44bb
+	ld c, STORYREC_MAIN ; $44bb
 	farcall CharDataScreen_Show ; $44bd
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $44c0
 	ld a, $00 ; $44c3

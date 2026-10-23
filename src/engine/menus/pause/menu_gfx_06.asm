@@ -44,8 +44,8 @@ MatchMenuItemGfxPointers:
 	; $5274, 12 bytes (fill)
 	ds 12, $00
 	ds ALIGN[4]
-ScoreboardModeGfxTail:
-	INCBIN "data/engine/menus/pause/ScoreboardModeGfxTail.bin" ; $5280, 64 bytes
+MatchMenuCursorArrowTiles:
+	INCBIN "data/engine/menus/pause/MatchMenuCursorArrowTiles.bin" ; $5280, 64 bytes
 MatchMenuItemGfx_Rules:
 	INCBIN "data/engine/menus/pause/lz_MatchMenuItemGfx_Rules.bin" ; $52c0, 130 bytes
 MatchMenuItemGfx_Controls:
@@ -90,7 +90,7 @@ LoadScoreboardModeGfx:
 .trainingDrill:
 	ld a, [wCurrentMatchIndex] ; $5c9b
 	add a ; $5c9e
-	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f
+	ld_hl_indexed ScoreboardDrillGfxPointers ; $5c9f
 .loadGfx:
 	push_wram_bank WRAM_STAGING ; $5ca6
 	ld a, [hl+] ; $5caf
@@ -119,7 +119,7 @@ ScoreboardModeGfxPointers:
 	dw ScoreboardModeGfx_LinkedMatch ; record 9
 	dw ScoreboardModeGfx_Exhibition ; record 10
 	assert_table_length NUM_GAMEMODES
-ScoreboardMinigameGfxPointers:
+ScoreboardDrillGfxPointers:
 	; $5cdf, 84 bytes (records:2)
 	dw ScoreboardModeGfx_ServiceMatch ; record 0
 	dw ScoreboardModeGfx_ServiceMatch ; record 1
@@ -449,7 +449,7 @@ MenuItemAttrRect3x2:
 	tilemap_row $00, $00, $00 ; row 0
 	tilemap_row $00, $00, $00 ; row 1
 	tilemap_end
-Unused_06_DrawMusicMenuRowTextRect:
+Unused_06_PauseMenuItemRowTextRect:
 	; $695b, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $49, $4a, $4b, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c ; row 0

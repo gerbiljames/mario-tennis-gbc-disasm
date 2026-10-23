@@ -21,20 +21,20 @@ ResetSwingAnimation:
 	ret ; $6cbd
 CharStandbyState:
 	jumptable [wCharStatePhase] ; $6cbe
-	dw CharRallyEndState ; $6cc2 jumptable
-	dw CharAwaitServeState.checkInput ; $6cc4 jumptable
+	dw CharFinishSwingPhase ; $6cc2 jumptable
+	dw CharServerPartnerState.moveFreely ; $6cc4 jumptable
 	dw AdvanceCharStatePhase.done ; $6cc6 jumptable
-CharAwaitServeState:
+CharServerPartnerState:
 	jumptable [wCharStatePhase] ; $6cc8
-	dw CharRallyEndState ; $6ccc jumptable
-	dw CharAwaitServeState.startServe ; $6cce jumptable
-	dw CharAwaitServeState.checkInput ; $6cd0 jumptable
+	dw CharFinishSwingPhase ; $6ccc jumptable
+	dw CharServerPartnerState.waitToLeaveNet ; $6cce jumptable
+	dw CharServerPartnerState.moveFreely ; $6cd0 jumptable
 	dw AdvanceCharStatePhase.done ; $6cd2 jumptable
-.checkInput:
+.moveFreely:
 	call ApplyCharMovementInput ; $6cd4
 	call UpdateCharRunAnimation ; $6cd7
 	ret ; $6cda
-.startServe:
+.waitToLeaveNet:
 	call ApplyCharMovementInput ; $6cdb
 	call UpdateCharRunAnimation ; $6cde
 	ld hl, wCharPosDepth + 1 ; $6ce1
@@ -58,7 +58,7 @@ CharWalkState:
 	dw AdvanceCharStatePhase.done ; $6d14 jumptable
 CharPointEndState:
 	jumptable [wCharStatePhase] ; $6d16
-	dw CharRallyEndState ; $6d1a jumptable
+	dw CharFinishSwingPhase ; $6d1a jumptable
 	dw CharWalkToTargetPhase ; $6d1c jumptable
 	dw CharPointReactionPhase ; $6d1e jumptable
 	dw AdvanceCharStatePhase.done ; $6d20 jumptable
@@ -98,16 +98,16 @@ UpdateCharRunAnimation:
 	call SetCharAnimation ; $6d56
 	ret ; $6d59
 StartCharSwing:
-	ld a, [wCharSwingAttrWord] ; $6d5a
+	ld a, [wCharShotTraits] ; $6d5a
 	bit 7, a ; $6d5d
 	call PredictBallLateralOffset ; $6d5f
 	bit 7, h ; $6d62
-	jr nz, .facingLeft ; $6d64
+	jr nz, .ballOnLeft ; $6d64
 	ld a, [wCharInputBits] ; $6d66
 	bit PADB_RIGHT, a ; $6d69
 	jr z, .checkHeight ; $6d6b
 	jr .checkReach ; $6d6d
-.facingLeft:
+.ballOnLeft:
 	ld a, [wCharInputBits] ; $6d6f
 	bit PADB_LEFT, a ; $6d72
 	jr z, .checkHeight ; $6d74
@@ -178,7 +178,7 @@ StartCharSwing:
 	ld [hl], d ; $6deb
 	ld hl, wCharSwingAnim ; $6dec
 	ld [hl], CHARANIM_SMASH ; $6def
-	sound SFX_SWING ; $6df1
+	sound SFX_LEAP ; $6df1
 	ret ; $6df3
 .dive:
 	ld hl, wCharSwingAnim ; $6df4
@@ -210,7 +210,7 @@ StartCharSwing:
 	ld hl, wCharVelDepth ; $6e24
 	ld [hl+], a ; $6e27
 	ld [hl], e ; $6e28
-	sound SFX_SWING ; $6e29
+	sound SFX_LEAP ; $6e29
 	ret ; $6e2b
 .startSwing:
 	xor a ; $6e2c
@@ -304,7 +304,7 @@ UpdateCharBallGeometry:
 	bit BALLREACHB_CONTACT, [hl] ; $6ec1
 	ret z ; $6ec3
 	ret ; $6ec4
-CheckCharBallContact:
+CheckBallHitsCharBody:
 	ld a, [wCharShotButton1] ; $6ec5
 	and a ; $6ec8
 	ret nz ; $6ec9

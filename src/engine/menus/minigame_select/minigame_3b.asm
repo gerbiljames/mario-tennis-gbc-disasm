@@ -16,17 +16,17 @@ RunMinigameSelect:
 	wram_bank WRAM_SCREEN ; $6201
 	call CheckMinigameGridExpanded ; $6207
 	or a ; $620a
-	jr nz, .checkMenuSlideDirection ; $620b
+	jr nz, .slideInGrid9 ; $620b
 	ld a, [wMenuSlideDirection] ; $620d
 	ld b, a ; $6210
 	call MinigameSelectSlideIn6 ; $6211
-	jr .initMenuBgScroll ; $6214
-.checkMenuSlideDirection:
+	jr .initMenuTitleScroller ; $6214
+.slideInGrid9:
 	ld a, [wMenuSlideDirection] ; $6216
 	ld b, a ; $6219
 	call MinigameSelectSlideIn9 ; $621a
-.initMenuBgScroll:
-	farcall InitMenuBgScroll ; $621d
+.initMenuTitleScroller:
+	farcall InitMenuTitleScroller ; $621d
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
 	farcall LoadMenuSpritePalettePair ; $6224
@@ -46,12 +46,12 @@ RunMinigameSelect:
 .startInput:
 	wram_bank WRAM_SCREEN ; $6249
 .loop:
-	ldh a, [hInputPressed] ; $624f
+	ldh a, [hInputRepeat] ; $624f
 	ld [wMenuInputPressed], a ; $6251
 	call CheckMinigameGridExpanded ; $6254
 	or a ; $6257
 	jr nz, .moveGrid9Cursor ; $6258
-	farcall MoveMinigameGridCursor ; $625a
+	farcall MoveMinigameGrid6Cursor ; $625a
 	or a ; $625d
 	jr z, .advanceFrame ; $625e
 	sound SFX_MENU_MOVE ; $6260
@@ -80,7 +80,7 @@ RunMinigameSelect:
 	call GetMenuCursorIndex_3b ; $628e
 	ld c, a ; $6291
 	call GetUnlockedMarioCastCharAtGridSlot ; $6292
-	cp CHAR_UNUSED_15 ; $6295
+	cp CHAR_BALL_MACHINE ; $6295
 	jr nz, .playSelectSfx ; $6297
 	sound SFX_MENU_LOCKED ; $6299
 	jr .loop ; $629b
@@ -92,11 +92,11 @@ RunMinigameSelect:
 	call CheckMinigameGridExpanded ; $62a7
 	or a ; $62aa
 	jr nz, .slideOutGrid9 ; $62ab
-	ld b, $01 ; $62ad
+	ld b, MENUSLIDE_FORWARD ; $62ad
 	call MinigameSelectSlideOut6 ; $62af
 	jr .storeForwardSlide ; $62b2
 .slideOutGrid9:
-	ld b, $01 ; $62b4
+	ld b, MENUSLIDE_FORWARD ; $62b4
 	call MinigameSelectSlideOut9 ; $62b6
 .storeForwardSlide:
 	ld a, MENUSLIDE_FORWARD ; $62b9
@@ -115,11 +115,11 @@ RunMinigameSelect:
 	call CheckMinigameGridExpanded ; $62d5
 	or a ; $62d8
 	jr nz, .slideBackGrid9 ; $62d9
-	ld b, $00 ; $62db
+	ld b, MENUSLIDE_BACK ; $62db
 	call MinigameSelectSlideOut6 ; $62dd
 	jr .storeBackSlide ; $62e0
 .slideBackGrid9:
-	ld b, $00 ; $62e2
+	ld b, MENUSLIDE_BACK ; $62e2
 	call MinigameSelectSlideOut9 ; $62e4
 .storeBackSlide:
 	ld a, MENUSLIDE_BACK ; $62e7
@@ -139,7 +139,7 @@ LoadMinigameSelectGfx:
 	push bc ; $6306
 	ld a, c ; $6307
 	add a ; $6308
-	ld hl, MinigameSelectTable ; $6309
+	ld hl, MinigameSelectPortraitVramDests ; $6309
 	add_hl_a ; $630c
 	ld a, [hl+] ; $6311
 	ld d, [hl] ; $6312
@@ -154,44 +154,44 @@ LoadMinigameSelectGfx:
 	ld c, a ; $6322
 	cp $09 ; $6323
 	jr nz, .loop ; $6325
-	ld b, TILEBLOCK_MinigameSelectGfx0 ; $6327
-	ld c, MinigameSelectGfx0_SIZE / 16 ; $6329
+	ld b, TILEBLOCK_MarioNameGfx ; $6327
+	ld c, MarioNameGfx_SIZE / 16 ; $6329
 	ld de, vTiles0 + VRAM_BANK1 ; $632b
 	farcall LoadCompressedTileBlock ; $632e
 	call AdvanceFrame ; $6331
-	ld b, TILEBLOCK_MinigameSelectGfx1 ; $6334
-	ld c, MinigameSelectGfx1_SIZE / 16 ; $6336
+	ld b, TILEBLOCK_WaluigiNameGfx ; $6334
+	ld c, WaluigiNameGfx_SIZE / 16 ; $6336
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6338
 	farcall LoadCompressedTileBlock ; $633b
 	call AdvanceFrame ; $633e
-	ld b, TILEBLOCK_MinigameSelectGfx2 ; $6341
-	ld c, MinigameSelectGfx2_SIZE / 16 ; $6343
+	ld b, TILEBLOCK_YoshiNameGfx ; $6341
+	ld c, YoshiNameGfx_SIZE / 16 ; $6343
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6345
 	farcall LoadCompressedTileBlock ; $6348
 	call AdvanceFrame ; $634b
-	ld b, TILEBLOCK_MinigameSelectGfx3 ; $634e
-	ld c, MinigameSelectGfx3_SIZE / 16 ; $6350
+	ld b, TILEBLOCK_BowserNameGfx ; $634e
+	ld c, BowserNameGfx_SIZE / 16 ; $6350
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $6352
 	farcall LoadCompressedTileBlock ; $6355
 	call AdvanceFrame ; $6358
-	ld b, TILEBLOCK_MinigameSelectGfx4 ; $635b
-	ld c, MinigameSelectGfx4_SIZE / 16 ; $635d
+	ld b, TILEBLOCK_WarioNameGfx ; $635b
+	ld c, WarioNameGfx_SIZE / 16 ; $635d
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $635f
 	farcall LoadCompressedTileBlock ; $6362
 	call AdvanceFrame ; $6365
-	ld b, TILEBLOCK_MinigameSelectGfx5 ; $6368
-	ld c, MinigameSelectGfx5_SIZE / 16 ; $636a
+	ld b, TILEBLOCK_PeachNameGfx ; $6368
+	ld c, PeachNameGfx_SIZE / 16 ; $636a
 	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
-	ld_slot hl, DataPtr_MinigameSelectIconGfx0 ; $6375
+	ld_slot hl, DataPtr_DonkeyKongNameGfx ; $6375
 	ld de, wDecompBuffer ; $6378
 	call DecompressDataFromBank ; $637b
 	ld hl, wDecompBuffer ; $637e
 	ld de, vTiles0 tile $20 ; $6381
 	ld c, 16 ; $6384
 	call QueueVRAMCopy ; $6386
-	ld_slot hl, DataPtr_MinigameSelectIconGfx1 ; $6389
+	ld_slot hl, DataPtr_LuigiNameGfx ; $6389
 	ld de, wDecompBuffer tile 64 ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, wDecompBuffer tile 64 ; $6392
@@ -199,7 +199,7 @@ LoadMinigameSelectGfx:
 	ld c, 16 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
-	ld_slot hl, DataPtr_MinigameSelectIconGfx2 ; $63a0
+	ld_slot hl, DataPtr_BabyMarioNameGfx ; $63a0
 	ld de, wDecompBuffer ; $63a3
 	call DecompressDataFromBank ; $63a6
 	ld hl, wDecompBuffer ; $63a9
@@ -207,13 +207,13 @@ LoadMinigameSelectGfx:
 	ld c, 16 ; $63af
 	call QueueVRAMCopy ; $63b1
 	call AdvanceFrame ; $63b4
-	ld b, TILEBLOCK_SharedMenuGfx111 ; $63b7
-	ld c, 18 ; $63b9 -- 18 of SharedMenuGfx111's 16 tiles
+	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $63b7
+	ld c, 18 ; $63b9 -- 18 of QuestionMarksLabelGfx's 16 tiles
 	ld de, vTiles0 tile $50 ; $63bb
 	farcall LoadCompressedTileBlock ; $63be
 	call AdvanceFrame ; $63c1
-	ld b, TILEBLOCK_MinigameSelectGfx6 ; $63c4
-	ld c, MinigameSelectGfx6_SIZE / 16 ; $63c6
+	ld b, TILEBLOCK_MarioMiniGamesTitleGfx ; $63c4
+	ld c, MarioMiniGamesTitleGfx_SIZE / 16 ; $63c6
 	ld de, vTiles0 ; $63c8
 	farcall LoadCompressedTileBlock ; $63cb
 	call AdvanceFrame ; $63ce
@@ -235,7 +235,7 @@ Unused_3b_TableAfterLoadMinigameSelectGfx:
 	db $6a, $3c ; 0x08
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
-MinigameSelectTable:
+MinigameSelectPortraitVramDests:
 	; $63f6, 20 bytes (records:2)
 	dw vTiles2 tile $68 + VRAM_BANK1 ; record 0
 	dw vTiles2 tile $71 + VRAM_BANK1 ; record 1
@@ -310,7 +310,7 @@ MinigameSelectSlideOut9:
 	jr nz, .slideBackLoop ; $646a
 	ret ; $646c
 MinigameSelectCursorSpriteTask:
-	farcall TickMenuBgScroll ; $646d
+	farcall TickMenuTitleScroller ; $646d
 	ld c, $03 ; $6470
 	call GetMenuCursorIndex_3b ; $6472
 	push af ; $6475
@@ -331,7 +331,7 @@ MinigameSelectCursorSpriteTask:
 	add_hl_a ; $6494
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
-	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate0 ; $649d
+	ld hl, MinigameSelectLabelTemplate ; $649d
 	push de ; $64a0
 	call QueueSpriteTemplate ; $64a1
 	pop de ; $64a4
@@ -339,7 +339,7 @@ MinigameSelectCursorSpriteTask:
 	add hl, de ; $64a8
 	ld d, h ; $64a9
 	ld e, l ; $64aa
-	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate1 ; $64ab
+	ld hl, MinigameSelectLabelTailTemplate ; $64ab
 	sprite_attr_tile OAM_BANK1, $70 ; $64ae
 	call QueueSpriteTemplate ; $64b2
 	ret ; $64b5
@@ -348,17 +348,17 @@ GetMinigameCursorPosTable:
 	push bc ; $64b7
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
-	jr nz, .altTable ; $64bc
+	jr nz, .expandedGrid ; $64bc
 	ld hl, MinigameCursorPositionsCompact ; $64be
 	jr .done ; $64c1
-.altTable:
+.expandedGrid:
 	ld hl, MinigameCursorPositionsExpanded ; $64c3
 .done:
 	pop af ; $64c6
 	pop bc ; $64c7
 	pop de ; $64c8
 	ret ; $64c9
-MinigameSelectCursorSpriteTask_SpriteTemplate0:
+MinigameSelectLabelTemplate:
 	; $64ca, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -369,7 +369,7 @@ MinigameSelectCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-MinigameSelectCursorSpriteTask_SpriteTemplate1:
+MinigameSelectLabelTailTemplate:
 	; $64eb, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -408,7 +408,7 @@ OverrideMinigameCursorIfLocked:
 	call GetMenuCursorIndex_3b ; $6552
 	ld c, a ; $6555
 	call GetUnlockedMarioCastCharAtGridSlot ; $6556
-	cp CHAR_UNUSED_15 ; $6559
+	cp CHAR_BALL_MACHINE ; $6559
 	jr z, .locked ; $655b
 	pop de ; $655d
 	pop hl ; $655e
@@ -448,17 +448,17 @@ RenderMinigameNameText:
 	push af ; $65ab
 	ld c, a ; $65ac
 	call GetUnlockedMarioCastCharAtGridSlot ; $65ad
-	cp CHAR_UNUSED_15 ; $65b0
-	jr nz, .restore ; $65b2
+	cp CHAR_BALL_MACHINE ; $65b0
+	jr nz, .unlocked ; $65b2
 	pop af ; $65b4
-	ld hl, $00bb ; $65b5
+	ld hl, Text_MinigameCantPlayYet ; $65b5
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $65b8
 	jr .renderTextToBuffer64 ; $65bb
-.restore:
+.unlocked:
 	pop af ; $65bd
 	ld b, a ; $65be
 	add a ; $65bf
-	ld hl, RenderMinigameNameTextTable ; $65c0
+	ld hl, MinigameNameTextDests ; $65c0
 	add_hl_a ; $65c3
 	ld a, [hl+] ; $65c8
 	ld d, [hl] ; $65c9
@@ -473,7 +473,7 @@ RenderMinigameNameText:
 	ld c, $20 ; $65d4
 	farcall RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
-RenderMinigameNameTextTable:
+MinigameNameTextDests:
 	; $65da, 18 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
@@ -534,7 +534,7 @@ FillMinigameSelectCell:
 	ld h, $0d ; $6647
 .fill:
 	push hl ; $6649
-	ld hl, FillMinigameSelectCellTable ; $664a
+	ld hl, MinigameSelectCellAttrDests ; $664a
 	ld a, e ; $664d
 	add a ; $664e
 	add_hl_a ; $664f
@@ -548,7 +548,7 @@ FillMinigameSelectCell:
 	pop bc ; $665d
 	pop af ; $665e
 	ret ; $665f
-FillMinigameSelectCellTable:
+MinigameSelectCellAttrDests:
 	; $6660, 18 bytes (ram_ptrs:3)
 	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; record 0
 	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 8 ; record 1

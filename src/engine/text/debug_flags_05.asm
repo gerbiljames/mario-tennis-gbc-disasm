@@ -128,15 +128,15 @@ DebugMoveFlagCursor:
 	ld e, a ; $6551
 	ldh a, [hPlayerInputFlags] ; $6552
 	bit PADB_LEFT, a ; $6554
-	jr nz, .next ; $6556
+	jr nz, .left ; $6556
 	bit PADB_RIGHT, a ; $6558
 	jr nz, .right ; $655a
 	bit PADB_UP, a ; $655c
 	jr nz, .up ; $655e
 	bit PADB_DOWN, a ; $6560
-	jr nz, .negative ; $6562
+	jr nz, .down ; $6562
 	jr .wrapCursor ; $6564
-.next:
+.left:
 	dec d ; $6566
 	jr .wrapCursor ; $6567
 .right:
@@ -145,7 +145,7 @@ DebugMoveFlagCursor:
 .up:
 	dec e ; $656c
 	jr .wrapCursor ; $656d
-.negative:
+.down:
 	inc e ; $656f
 .wrapCursor:
 	ld a, d ; $6570
@@ -172,14 +172,14 @@ RunDebugFlagEditor:
 	push bc ; $65a3
 	push de ; $65a4
 	push hl ; $65a5
-	test_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65a6
-	jr z, .notDebugFlagEditorOpen ; $65a9
-	set_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65ab
+	test_flag FLAG_DEBUG_FLAG_EDITOR_INITED ; $65a6
+	jr z, .skipCursorReset ; $65a9
+	set_flag FLAG_DEBUG_FLAG_EDITOR_INITED ; $65ab
 	xor a ; $65ae
 	ld [wDebugFlagBit], a ; $65af
 	ld [wDebugFlagByte], a ; $65b2
 	ld [wDebugFlagPage], a ; $65b5
-.notDebugFlagEditorOpen:
+.skipCursorReset:
 	ld_cell de, $00, $00 ; $65b8
 	ld_size bc, $14, $04 ; $65bb
 	call CreateWindow ; $65be
@@ -217,7 +217,7 @@ RunDebugFlagEditor:
 	jr nz, .closeWindow ; $661e
 	ldh a, [hInputRisingEdge] ; $6620
 	bit PADB_A, a ; $6622
-	jr z, .checkInputRisingEdge ; $6624
+	jr z, .checkStart ; $6624
 	call DebugToggleSelectedFlag ; $6626
 	call DebugDrawFlagsWindow1 ; $6629
 	call DebugDrawFlagsWindow2 ; $662c
@@ -225,10 +225,10 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6632
 	ld a, [wDebugFlagWindow2Id] ; $6635
 	call RedrawWindowRows ; $6638
-.checkInputRisingEdge:
+.checkStart:
 	ldh a, [hInputRisingEdge] ; $663b
 	bit PADB_START, a ; $663d
-	jr z, .checkPlayerInputFlags ; $663f
+	jr z, .checkDpad ; $663f
 	ld a, [wDebugFlagPage] ; $6641
 	inc a ; $6644
 	and $03 ; $6645
@@ -239,7 +239,7 @@ RunDebugFlagEditor:
 	call RedrawWindowRows ; $6653
 	ld a, [wDebugFlagWindow2Id] ; $6656
 	call RedrawWindowRows ; $6659
-.checkPlayerInputFlags:
+.checkDpad:
 	ldh a, [hPlayerInputFlags] ; $665c
 	and PADF_DPAD ; $665e
 	jr z, .advanceFrame ; $6660
@@ -327,9 +327,9 @@ DebugMenuShowCharData:
 	ld [wUnusedExitTriggerIdMirror], a ; $6704
 	ld [wStoryModeExitTriggerRequest], a ; $6707
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $670a
-	ld c, $00 ; $670d
+	ld c, STORYREC_MAIN ; $670d
 	farcall CharDataScreen_Show ; $670f
-	ld c, $01 ; $6712
+	ld c, STORYREC_PARTNER ; $6712
 	farcall CharDataScreen_Show ; $6714
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6717
 	farcall SaveStorySlotWithTimer ; $671a
@@ -353,7 +353,7 @@ DebugDrawWarpMenu:
 	ld de, $0d02 ; $6739
 	ld a, [wDebugWarpWindowId] ; $673c
 	ld a, [wDebugWarpLocation] ; $673f
-	ld hl, $0179 ; $6742
+	ld hl, Text_DebugWarpLocationNames ; $6742
 	add_hl_a ; $6745
 	ld de, $0102 ; $674a
 	ld a, [wDebugWarpWindowId] ; $674d
@@ -425,7 +425,7 @@ RunDebugWarpMenu:
 	jr nz, .closeWindow ; $67f7
 	ldh a, [hInputRisingEdge] ; $67f9
 	and PADF_A ; $67fb
-	jr z, .checkInputPressed ; $67fd
+	jr z, .checkUpDown ; $67fd
 	ld a, [wDebugWarpLocation] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [wDebugWarpEntryPoint] ; $6805
@@ -434,8 +434,8 @@ RunDebugWarpMenu:
 	ld [wUnusedExitTriggerIdMirror], a ; $680d
 	ld [wStoryModeExitTriggerRequest], a ; $6810
 	jr .closeWindow ; $6813
-.checkInputPressed:
-	ldh a, [hInputPressed] ; $6815
+.checkUpDown:
+	ldh a, [hInputRepeat] ; $6815
 	and PADF_UP | PADF_DOWN ; $6817
 	jr z, .adjustValue ; $6819
 	ld hl, wDebugWarpCursorRow ; $681b
@@ -481,7 +481,7 @@ RunDebugWarpMenu:
 DebugStepValueWithDpad:
 	push bc ; $6862
 	ld b, a ; $6863
-	ldh a, [hInputPressed] ; $6864
+	ldh a, [hInputRepeat] ; $6864
 	bit PADB_RIGHT, a ; $6866
 	jr nz, .next ; $6868
 	bit PADB_LEFT, a ; $686a

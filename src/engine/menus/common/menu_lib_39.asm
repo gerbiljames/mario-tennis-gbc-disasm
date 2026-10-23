@@ -45,16 +45,16 @@ LoadCompressedTileBlock:
 	ret ; $46b6
 TileBlockPtrs_39:
 	; $46b7, 244 bytes (122 records x 1 slot words)
-	tileblock ObjectSceneAGfx0 ; record 0
-	tileblock ObjectSceneAGfx1 ; record 1
-	tileblock ObjectSceneAGfx2 ; record 2
-	tileblock ObjectSceneBGfx0 ; record 3
-	tileblock ObjectSceneBGfx1 ; record 4
-	tileblock ObjectSceneBGfx2 ; record 5
-	tileblock Screen0Gfx ; record 6
-	tileblock Screen1ObjGfx ; record 7
-	tileblock Screen2ObjGfx ; record 8
-	tileblock MatchWinLoseGfx ; record 9
+	tileblock AwardsCeremonyConfettiGfx0 ; record 0
+	tileblock AwardsCeremonyConfettiGfx1 ; record 1
+	tileblock AwardsCeremonyConfettiGfx2 ; record 2
+	tileblock DreamMatchEpilogueConfettiGfx0 ; record 3
+	tileblock DreamMatchEpilogueConfettiGfx1 ; record 4
+	tileblock DreamMatchEpilogueConfettiGfx2 ; record 5
+	tileblock ToBeContinuedGfx ; record 6
+	tileblock ToBeContinuedOutlineGfx ; record 7
+	tileblock TheEndGfx ; record 8
+	tileblock WinLoseArrowGfx ; record 9
 	tileblock Unused_18_JpCourtStatLabelTiles ; record 10
 	tileblock SharedMenuGfx17Alias11 ; record 11
 	tileblock SharedMenuGfx17Alias12 ; record 12
@@ -63,123 +63,123 @@ TileBlockPtrs_39:
 	tileblock SharedMenuGfx17Alias15 ; record 15
 	tileblock SharedMenuGfx17Alias16 ; record 16
 	tileblock SharedMenuGfx17Alias17 ; record 17
-	tileblock NameEntryGfx ; record 18
-	tileblock CharacterSelectGfx ; record 19
-	tileblock NumberSpriteGfxWideGfx ; record 20
+	tileblock NameEntryUnderlineCursorGfx ; record 18
+	tileblock HandednessLRSpriteGfx ; record 19
+	tileblock LargeDigitArrowSpriteGfx ; record 20
 	tileblock StatLabelTiles ; record 21
 	tileblock MugshotTiles ; record 22
-	tileblock MenuArrowGfx0 ; record 23
-	tileblock MenuArrowGfx1 ; record 24
-	tileblock MenuArrowGfx2 ; record 25
-	tileblock MenuArrowGfx3 ; record 26
+	tileblock MenuArrowRightGfx ; record 23
+	tileblock MenuArrowLeftGfx ; record 24
+	tileblock MenuArrowUpGfx ; record 25
+	tileblock MenuArrowDownGfx ; record 26
 	tileblock SharedMenuGfx27 ; record 27
-	tileblock MainMenuGfx0 ; record 28
-	tileblock SharedMenuGfx29 ; record 29
-	tileblock SharedMenuGfx30 ; record 30
-	tileblock MainMenuGfx1 ; record 31
-	tileblock MainMenuGfx2 ; record 32
-	tileblock MainMenuGfx3 ; record 33
-	tileblock MainMenuGfx4 ; record 34
-	tileblock SharedMenuGfx35 ; record 35
-	tileblock SharedMenuGfx36 ; record 36
-	tileblock SharedMenuGfx37 ; record 37
-	tileblock SharedMenuGfx38 ; record 38
-	tileblock SharedMenuGfx39 ; record 39
-	tileblock SharedMenuGfx40 ; record 40
-	tileblock SharedMenuGfx41 ; record 41
-	tileblock SavedDataSourceGfx0 ; record 42
-	tileblock SavedDataSourceGfx1 ; record 43
-	tileblock SavedDataSourceGfx2 ; record 44
-	tileblock SavedDataSourceGfx3 ; record 45
-	tileblock EraseSavedDataGfx0 ; record 46
-	tileblock EraseSavedDataGfx1 ; record 47
-	tileblock EraseSavedDataGfx2 ; record 48
-	tileblock EraseSavedDataGfx3 ; record 49
-	tileblock EraseSavedDataGfx4 ; record 50
-	tileblock MinigameSelectGfx0 ; record 51
-	tileblock MinigameSelectGfx1 ; record 52
-	tileblock MinigameSelectGfx2 ; record 53
-	tileblock MinigameSelectGfx3 ; record 54
-	tileblock MinigameSelectGfx4 ; record 55
-	tileblock MinigameSelectGfx5 ; record 56
-	tileblock N64RecordTypeGfx0 ; record 57
-	tileblock N64RecordTypeGfx1 ; record 58
-	tileblock N64TransferItemGfx0 ; record 59
-	tileblock N64TransferItemGfx1 ; record 60
-	tileblock N64TransferItemGfx2 ; record 61
-	tileblock MainMenuGfx5Alias4 ; record 62
-	tileblock SharedMenuGfx63 ; record 63
-	tileblock CourtSelectGfx0 ; record 64
-	tileblock SharedMenuGfx65 ; record 65
-	tileblock SavedDataSourceGfx4 ; record 66
-	tileblock N64RecordTypeGfx2 ; record 67
-	tileblock N64TransferItemGfx3 ; record 68
-	tileblock EraseDataConfirmGfx0 ; record 69
-	tileblock EraseDataConfirmGfx1 ; record 70
-	tileblock MinigameSelectGfx6 ; record 71
-	tileblock SharedMenuGfx72 ; record 72
+	tileblock MarioTourLabelGfx ; record 28
+	tileblock ExhibitionLabelGfx ; record 29
+	tileblock MarioMiniGamesLabelGfx ; record 30
+	tileblock LinkedPlayLabelGfx ; record 31
+	tileblock StatusLabelGfx ; record 32
+	tileblock DictionaryLabelGfx ; record 33
+	tileblock SavedDataLabelGfx ; record 34
+	tileblock SinglesLabelGfx ; record 35
+	tileblock DoublesLabelGfx ; record 36
+	tileblock TwoGamesLabelGfx ; record 37
+	tileblock SixGamesLabelGfx ; record 38
+	tileblock OneSetLabelGfx ; record 39
+	tileblock ThreeSetsLabelGfx ; record 40
+	tileblock FiveSetsLabelGfx ; record 41
+	tileblock File1LabelGfx ; record 42
+	tileblock File2LabelGfx ; record 43
+	tileblock File3LabelGfx ; record 44
+	tileblock N64DataLabelGfx ; record 45
+	tileblock EraseFile1LabelGfx ; record 46
+	tileblock EraseFile2LabelGfx ; record 47
+	tileblock EraseFile3LabelGfx ; record 48
+	tileblock EraseN64DataLabelGfx ; record 49
+	tileblock EraseAllDataLabelGfx ; record 50
+	tileblock MarioNameGfx ; record 51
+	tileblock WaluigiNameGfx ; record 52
+	tileblock YoshiNameGfx ; record 53
+	tileblock BowserNameGfx ; record 54
+	tileblock WarioNameGfx ; record 55
+	tileblock PeachNameGfx ; record 56
+	tileblock TournamentLabelGfx ; record 57
+	tileblock RingShotLabelGfx ; record 58
+	tileblock CharacterDataLabelGfx ; record 59
+	tileblock N64TournamentsLabelGfx ; record 60
+	tileblock SetItemsLabelGfx ; record 61
+	tileblock MainMenuTitleGfx ; record 62
+	tileblock PlayMenuTitleGfx ; record 63
+	tileblock SelectACourtHeadingGfx ; record 64
+	tileblock SavedDataTitleGfx ; record 65
+	tileblock StatusTitleGfx ; record 66
+	tileblock N64DataTitleGfx ; record 67
+	tileblock GbDataTitleGfx ; record 68
+	tileblock EraseN64DataTitleGfx ; record 69
+	tileblock EraseAllTitleGfx ; record 70
+	tileblock MarioMiniGamesTitleGfx ; record 71
+	tileblock CreateACharacterTitleGfx ; record 72
 	tileblock NumberSpriteGfx ; record 73
-	tileblock RacketShoesChoiceGfx0 ; record 74
-	tileblock RacketShoesChoiceGfx1 ; record 75
-	tileblock RacketShoesChoiceGfx2 ; record 76
-	tileblock CutsceneGfx0 ; record 77
-	tileblock CutsceneGfx1 ; record 78
-	tileblock CutsceneGfx2 ; record 79
-	tileblock CutsceneGfx3 ; record 80
-	tileblock CutsceneGfx4 ; record 81
-	tileblock CutsceneGfx5 ; record 82
-	tileblock CutsceneGfx6 ; record 83
-	tileblock IntroGfx0 ; record 84
-	tileblock IntroGfx1 ; record 85
-	tileblock IntroGfx2 ; record 86
-	tileblock IntroGfx3 ; record 87
+	tileblock SelectRacketLabelGfx ; record 74
+	tileblock SelectShoesLabelGfx ; record 75
+	tileblock SetItemsTitleGfx ; record 76
+	tileblock IntroRalliesAlexGfx0 ; record 77
+	tileblock IntroRalliesAlexGfx1 ; record 78
+	tileblock IntroRalliesAlexGfx2 ; record 79
+	tileblock IntroRalliesNinaGfx0 ; record 80
+	tileblock IntroRalliesNinaGfx1 ; record 81
+	tileblock IntroRalliesNinaGfx2 ; record 82
+	tileblock IntroRalliesNinaGfx3 ; record 83
+	tileblock IntroSpinningBallFrame0 ; record 84
+	tileblock IntroSpinningBallFrame1 ; record 85
+	tileblock IntroSpinningBallFrame2 ; record 86
+	tileblock IntroSpinningBallFrame3 ; record 87
 	tileblock IntroGfx4 ; record 88
 	tileblock IntroGfx5 ; record 89
 	tileblock IntroGfx6 ; record 90
-	tileblock TitleGfx0 ; record 91
-	tileblock TitleGfx1 ; record 92
-	tileblock TitleGfx2 ; record 93
-	tileblock TitleGfx3 ; record 94
-	tileblock TitleGfx4 ; record 95
-	tileblock TitleGfx5 ; record 96
-	tileblock TitleGfx6 ; record 97
-	tileblock TitleGfx7 ; record 98
+	tileblock TitleStartTextFrame0 ; record 91
+	tileblock TitleStartTextFrame1 ; record 92
+	tileblock TitleStartTextFrame2 ; record 93
+	tileblock TitleStartTextFrame3 ; record 94
+	tileblock TitleStartTextFrame4 ; record 95
+	tileblock TitleStartTextFrame5 ; record 96
+	tileblock TitleStartTextFrame6 ; record 97
+	tileblock TitleStartTextFrame7 ; record 98
 	tileblock SharedMenuGfx99 ; record 99
-	tileblock CharGridGfx1 ; record 100
-	tileblock CourtSelectGfx1 ; record 101
-	tileblock CourtSelectGfx2 ; record 102
-	tileblock CourtSelectGfx3 ; record 103
-	tileblock CourtSelectGfx4 ; record 104
-	tileblock TournamentBracketGfx ; record 105
-	tileblock CourtSelectGfx5Alias16 ; record 106
-	tileblock CourtSelectGfx6 ; record 107
-	tileblock CourtSelectGfx7 ; record 108
-	tileblock CourtSelectGfx8 ; record 109
-	tileblock CourtSelectGfx9 ; record 110
-	tileblock SharedMenuGfx111 ; record 111
-	tileblock MinigameLevelSelectGfx0 ; record 112
-	tileblock MinigameLevelSelectIconGfx ; record 113
-	tileblock MinigameLevelSelectGfx1 ; record 114
-	tileblock N64TransferItemGfx4 ; record 115
-	tileblock N64TransferItemGfx5 ; record 116
-	tileblock CharGridGfx2 ; record 117
-	tileblock SavedDataSourceGfx5 ; record 118
-	tileblock MinigameLevelSelectGfx2Alias16 ; record 119
-	tileblock SavedDataTypeSelectGfx ; record 120
+	tileblock SelectACharacterTitleGfx ; record 100
+	tileblock HardCourtNameGfx ; record 101
+	tileblock ClayCourtNameGfx ; record 102
+	tileblock GrassCourtNameGfx ; record 103
+	tileblock CompositionCourtNameGfx ; record 104
+	tileblock VarsityTeamChartNameBoxTiles ; record 105
+	tileblock StarCourtNameGfx ; record 106
+	tileblock CastleCourtNameGfx ; record 107
+	tileblock TropicsCourtNameGfx ; record 108
+	tileblock JungleCourtNameGfx ; record 109
+	tileblock WarehouseCourtNameGfx ; record 110
+	tileblock QuestionMarksLabelGfx ; record 111
+	tileblock Level1LabelGfx ; record 112
+	tileblock Level2LabelGfx ; record 113
+	tileblock ChallengeLabelGfx ; record 114
+	tileblock ClearStatusLabelGfx ; record 115
+	tileblock MarioStarGetsLabelGfx ; record 116
+	tileblock CharGridStatLabelSpriteGfx ; record 117
+	tileblock MarioCharactersLabelGfx ; record 118
+	tileblock SelectALevelTitleGfx ; record 119
+	tileblock MarioCharactersTitleGfx ; record 120
 	tileblock DigitFontTiles ; record 121
 SharedMenuGfx17:
 	INCBIN "data/engine/menus/common/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes
-NameEntryGfx:
-	INCBIN "data/engine/menus/common/lz_NameEntryGfx.bin" ; $47fa, 15 bytes
-CharacterSelectGfx:
-	INCBIN "data/engine/menus/common/lz_CharacterSelectGfx.bin" ; $4809, 42 bytes
-NumberSpriteGfxWideGfx:
-	INCBIN "data/engine/menus/common/lz_NumberSpriteGfxWideGfx.bin" ; $4833, 240 bytes
+NameEntryUnderlineCursorGfx:
+	INCBIN "data/engine/menus/common/lz_NameEntryUnderlineCursorGfx.bin" ; $47fa, 15 bytes
+HandednessLRSpriteGfx:
+	INCBIN "data/engine/menus/common/lz_HandednessLRSpriteGfx.bin" ; $4809, 42 bytes
+LargeDigitArrowSpriteGfx:
+	INCBIN "data/engine/menus/common/lz_LargeDigitArrowSpriteGfx.bin" ; $4833, 240 bytes
 StatLabelTiles:
 	INCBIN "data/engine/menus/common/lz_StatLabelTiles.bin" ; $4923, 243 bytes
 LoadMenuArrowSpriteTiles:
 	ld c, $04 ; $4a16
-	ld b, $17 ; $4a18
+	ld b, TILEBLOCK_MenuArrowRightGfx ; $4a18
 	push de ; $4a1a
 	call LoadCompressedTileBlock ; $4a1b
 	pop hl ; $4a1e
@@ -188,7 +188,7 @@ LoadMenuArrowSpriteTiles:
 	ld d, h ; $4a23
 	ld e, l ; $4a24
 	ld c, $04 ; $4a25
-	ld b, $18 ; $4a27
+	ld b, TILEBLOCK_MenuArrowLeftGfx ; $4a27
 	push de ; $4a29
 	call LoadCompressedTileBlock ; $4a2a
 	pop hl ; $4a2d
@@ -197,7 +197,7 @@ LoadMenuArrowSpriteTiles:
 	ld d, h ; $4a32
 	ld e, l ; $4a33
 	ld c, $04 ; $4a34
-	ld b, $19 ; $4a36
+	ld b, TILEBLOCK_MenuArrowUpGfx ; $4a36
 	push de ; $4a38
 	call LoadCompressedTileBlock ; $4a39
 	pop hl ; $4a3c
@@ -206,7 +206,7 @@ LoadMenuArrowSpriteTiles:
 	ld d, h ; $4a41
 	ld e, l ; $4a42
 	ld c, $04 ; $4a43
-	ld b, $1a ; $4a45
+	ld b, TILEBLOCK_MenuArrowDownGfx ; $4a45
 	push de ; $4a47
 	call LoadCompressedTileBlock ; $4a48
 	pop hl ; $4a4b
@@ -273,23 +273,23 @@ ApplySpriteBobOffsetTable:
 	db $02, $02, $02, $02, $02, $02, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x10
 	db $00, $00, $00, $00, $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fe, $fe, $fe ; 0x20
 	db $fe, $fe, $fe, $fe, $fe, $fe, $ff, $ff, $ff, $ff, $ff, $00, $00, $00, $00, $00 ; 0x30
-InitMenuBgScroll:
+InitMenuTitleScroller:
 	ld a, $01 ; $4b13
-	ld [wMenuBgScrollAttr], a ; $4b15
+	ld [wMenuTitleScrollAttr], a ; $4b15
 	ld a, $01 ; $4b18
-	ld [wMenuBgScrollAttr + 1], a ; $4b1a
+	ld [wMenuTitleScrollAttr + 1], a ; $4b1a
 	xor a ; $4b1d
-	ld [wMenuBgScrollX], a ; $4b1e
+	ld [wMenuTitleScrollX], a ; $4b1e
 	ld a, $40 ; $4b21
-	ld [wMenuBgScrollY], a ; $4b23
+	ld [wMenuTitleScrollY], a ; $4b23
 	add $86 ; $4b26
-	ld [wMenuBgScrollY + 1], a ; $4b28
+	ld [wMenuTitleScrollY + 1], a ; $4b28
 	ld a, $00 ; $4b2b
-	ld [wMenuBgScrollTile], a ; $4b2d
+	ld [wMenuTitleScrollTile], a ; $4b2d
 	ld a, $00 ; $4b30
-	ld [wMenuBgScrollTile + 1], a ; $4b32
+	ld [wMenuTitleScrollTile + 1], a ; $4b32
 	xor a ; $4b35
-	ld [wMenuBgScrollLane], a ; $4b36
+	ld [wMenuTitleScrollLane], a ; $4b36
 	ret ; $4b39
 LoadMenuSpritePalettePair:
 	push bc ; $4b3a
@@ -323,51 +323,51 @@ MenuSpritePalettePairPalettes:
 	dw $018f ; record 1
 	dw $031f ; record 2
 	dw $031f ; record 3
-TickMenuBgScroll:
-	ld a, [wMenuBgScrollY] ; $4b6d
+TickMenuTitleScroller:
+	ld a, [wMenuTitleScrollY] ; $4b6d
 	dec a ; $4b70
 	cp $b0 ; $4b71
 	jr nz, .storeLane0Y ; $4b73
 	ld a, $a0 ; $4b75
 .storeLane0Y:
-	ld [wMenuBgScrollY], a ; $4b77
-	ld a, [wMenuBgScrollY + 1] ; $4b7a
+	ld [wMenuTitleScrollY], a ; $4b77
+	ld a, [wMenuTitleScrollY + 1] ; $4b7a
 	dec a ; $4b7d
 	cp $b0 ; $4b7e
 	jr nz, .storeLane1Y ; $4b80
 	ld a, $a0 ; $4b82
 .storeLane1Y:
-	ld [wMenuBgScrollY + 1], a ; $4b84
-	ld a, [wMenuBgScrollLane] ; $4b87
+	ld [wMenuTitleScrollY + 1], a ; $4b84
+	ld a, [wMenuTitleScrollLane] ; $4b87
 	or a ; $4b8a
 	jr nz, .secondSprite ; $4b8b
-	ld a, [wMenuBgScrollY] ; $4b8d
+	ld a, [wMenuTitleScrollY] ; $4b8d
 	ld d, a ; $4b90
-	ld a, [wMenuBgScrollTile] ; $4b91
+	ld a, [wMenuTitleScrollTile] ; $4b91
 	ld c, a ; $4b94
-	ld a, [wMenuBgScrollAttr] ; $4b95
+	ld a, [wMenuTitleScrollAttr] ; $4b95
 	ld b, a ; $4b98
-	ld a, [wMenuBgScrollX] ; $4b99
+	ld a, [wMenuTitleScrollX] ; $4b99
 	ld e, a ; $4b9c
 	ld a, $01 ; $4b9d
-	ld [wMenuBgScrollLane], a ; $4b9f
+	ld [wMenuTitleScrollLane], a ; $4b9f
 	jr .queueSprite ; $4ba2
 .secondSprite:
-	ld a, [wMenuBgScrollY + 1] ; $4ba4
+	ld a, [wMenuTitleScrollY + 1] ; $4ba4
 	ld d, a ; $4ba7
-	ld a, [wMenuBgScrollTile + 1] ; $4ba8
+	ld a, [wMenuTitleScrollTile + 1] ; $4ba8
 	ld c, a ; $4bab
-	ld a, [wMenuBgScrollAttr + 1] ; $4bac
+	ld a, [wMenuTitleScrollAttr + 1] ; $4bac
 	ld b, a ; $4baf
-	ld a, [wMenuBgScrollX] ; $4bb0
+	ld a, [wMenuTitleScrollX] ; $4bb0
 	ld e, a ; $4bb3
 	xor a ; $4bb4
-	ld [wMenuBgScrollLane], a ; $4bb5
+	ld [wMenuTitleScrollLane], a ; $4bb5
 .queueSprite:
-	ld hl, TickMenuBgScroll_SpriteTemplate ; $4bb8
+	ld hl, TickMenuTitleScroller_SpriteTemplate ; $4bb8
 	call QueueSpriteTemplate ; $4bbb
 	ret ; $4bbe
-TickMenuBgScroll_SpriteTemplate:
+TickMenuTitleScroller_SpriteTemplate:
 	; $4bbf, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -420,9 +420,9 @@ LoadStadiumBgGraphics:
 	ld de, vTiles2 + VRAM_BANK1 ; $4c4d
 	ld c, 128 ; $4c50
 	call QueueVRAMCopy ; $4c52
-	ld hl, wTextTileBuffer ; $4c55
+	ld hl, wDecompBufferHigh ; $4c55
 	ld de, vTiles1 + VRAM_BANK1 ; $4c58
-	ld c, wTextTileBuffer_SIZE / 16 ; $4c5b
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4c5b
 	call QueueVRAMCopy ; $4c5d
 	wram_bank WRAM_SCREEN ; $4c60
 	ld_slot hl, DataPtr_StadiumTilemap ; $4c66

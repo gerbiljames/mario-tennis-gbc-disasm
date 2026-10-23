@@ -99,10 +99,10 @@ ApMinigameLevels:
 ; Before ApplyPendingExpAwards: empties the N64 transfer record the slot
 ; carries (trophy EXP and counts the N64 game writes into the cart), so
 ; nothing is awarded from it, and names the story-EXP award, where EXP
-; bundles collect (wPendingExpStory), in its message line (text record 13).
+; bundles collect (wN64TransferMainExp), in its message line (text record 13).
 ApPrepareExpAwards:
-	ld hl, wPendingExpTrophy
-	ld c, wN64TrophyCounts + 2 - wPendingExpTrophy
+	ld hl, wN64TransferPartnerExp
+	ld c, wN64TrophyCounts + 2 - wN64TransferPartnerExp
 	xor a
 .clear:
 	ld [hl+], a
@@ -218,7 +218,7 @@ ApStartNewGame:
 ; reloads the menu font the award screens draw with, which the pause menu's
 ; graphics overwrite.
 ApLoadAwardFont:
-	ld hl, wPendingExpStory
+	ld hl, wN64TransferMainExp
 	ld a, [hl+]
 	or [hl]
 	ld hl, wPendingExpExhibition

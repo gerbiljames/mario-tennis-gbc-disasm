@@ -29,11 +29,11 @@ Court1ExitTriggers_14:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, ENTRY_TOURNAMENT_FROM_COURT_1, COURT_1_TO_TOURNAMENT
 	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, ENTRY_TOURNAMENT_COURTYARD_FROM_COURT_1, COURT_1_TO_TOURNAMENT_COURTYARD
 	db $ff
-Court1Npc03_14:
+Court1Npc03TournamentStaff_14:
 	script_set_text Text_Court1StaffCourtNumberOne ; $5064
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_1 ; $506a
 	ret ; $506f
-Court1Npc04_14:
+Court1Npc04TournamentStaff_14:
 	script_set_text Text_Court1StaffGalleryEntrance ; $5070
 	script_speak ACTOR_COURT1_TOURNAMENT_STAFF_2 ; $5076
 	ret ; $507b
@@ -81,8 +81,8 @@ Court1Npc06TextIds:
 	assert_table_length NUM_ISLANDOPENSTAGES
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
-	map_script ACTOR_COURT1_TOURNAMENT_STAFF_1, FACEMASK_ANY, $0000, Court1Npc03_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_COURT1_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, Court1Npc04_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURT1_TOURNAMENT_STAFF_1, FACEMASK_ANY, $0000, Court1Npc03TournamentStaff_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_COURT1_TOURNAMENT_STAFF_2, FACEMASK_ANY, $0000, Court1Npc04TournamentStaff_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_COURT1_STUDENT_SIDE_PART_BOY_1, FACEMASK_ANY, $0000, Court1Npc05_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_COURT1_STUDENT_PONYTAIL_GIRL, FACEMASK_ANY, $0000, Court1Npc06_14, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
@@ -138,11 +138,11 @@ InitCourt1SceneVariant:
 	ret ; $5150
 .doublesCheckRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
-	jr z, .done ; $5154
+	jr z, .doublesRound1 ; $5154
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $5156
 	ld [wMapSceneStage], a ; $5158
 	ret ; $515b
-.done:
+.doublesRound1:
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $515c
 	ld [wMapSceneStage], a ; $515e
 	ret ; $5161
@@ -158,13 +158,13 @@ Court1EntryWalkIn:
 	cp STORYENTRY_NONE ; $51a7
 	jp z, .done ; $51a9
 	test_flag FLAG_DOUBLES ; $51ac
-	jr z, .walkOff ; $51af
+	jr z, .playerWalkIn ; $51af
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $51b1
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, 2.0 ; $51b9
 	script_wait_move ACTOR_PARTNER ; $51c3
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $51c8
 	script_set_speed ACTOR_PARTNER, 0.5 ; $51cf
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $51d7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, 2.0 ; $51df
 .done:
@@ -207,9 +207,9 @@ IslandSkyNpcScripts_14:
 	map_script ACTOR_ISLAND_SKY_HEADMASTER, FACEMASK_ANY, $0000, Text_DefineAce, $00, $00
 	db $ff
 IslandSkyFacingScripts_14:
-	ds 1, $ff ; $52b5, fill
+	db $ff ; $52b5
 IslandSkyTileTriggers_14:
-	ds 1, $ff ; $52b6, fill
+	db $ff ; $52b6
 IslandSkyInitScript_14:
 	script_set_position ACTOR_ISLAND_SKY_HEADMASTER, 63.0, 63.0 ; $52b7
 	script_set_position ACTOR_ISLAND_SKY_KEVIN_SWEATS, 63.0, 63.0 ; $52c2
@@ -217,21 +217,21 @@ IslandSkyInitScript_14:
 	script_set_position ACTOR_ISLAND_SKY_EMILY_SWEATS, 63.0, 63.0 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
 	cp ENTRY_ISLAND_SKY_HOME_FROM_ISLAND_OPEN ; $52e6
-	jp z, IslandSkyEntry02Scene ; $52e8
+	jp z, IslandSkyHomeFromIslandOpenScene ; $52e8
 	cp ENTRY_ISLAND_SKY_VICTORY_FIREWORKS ; $52eb
-	jp z, IslandSkyInitScript_14.scriptRespawnLocationActors ; $52ed
+	jp z, IslandSkyVictoryFireworksScene ; $52ed
 	cp ENTRY_ISLAND_SKY_HOME_FROM_PEACHS_CASTLE ; $52f0
-	jp z, IslandSkyEntry0eScene ; $52f2
+	jp z, IslandSkyHomeFromPeachsCastleScene ; $52f2
 	cp ENTRY_ISLAND_SKY_TO_PEACHS_CASTLE ; $52f5
-	jp z, IslandSkyEntry0fAnd0dScene ; $52f7
+	jp z, IslandSkyToPeachsCastleScene ; $52f7
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_PEACHS_CASTLE ; $52fa
-	jp z, IslandSkyEntry0fAnd0dScene ; $52fc
+	jp z, IslandSkyToPeachsCastleScene ; $52fc
 	jp .loadScene ; $52ff
 	ret ; $5302
 .loadScene:
-	set_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $5303
+	set_flag FLAG_AT_ISLAND_OPEN ; $5303
 	call DisableLCDSafely ; $5306
-	call LoadPlaneObjGfx_14 ; $5309
+	call LoadPlaneFrontObjGfx_14 ; $5309
 	call LoadWaterSplashObjGfx_14 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312
@@ -262,7 +262,7 @@ IslandSkyInitScript_14:
 	ld b, h ; $535f
 	farcall LoadActorObjectDefIfValid ; $5360
 	script_set_anim ACTOR_PLAYER, ANIM_WALK ; $5363
-	script_set_active ACTOR_PLAYER, $00 ; $536a
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
 	cp ENTRY_ISLAND_SKY_CREDITS_TO_ISLAND_OPEN ; $5374
 	jr nz, .fadeIn ; $5376
@@ -281,7 +281,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeShowLocationName], a ; $539d
 	script_fade_in 6 ; $53a0
 	call WaitFadeEnd ; $53a5
-	sound SFX_FIREWORK_LAUNCH ; $53a8
+	sound SFX_PLANE_START ; $53a8
 	script_wait_frames 60 ; $53aa
 	script_set_position ACTOR_PLAYER, 6.0, 39.0 ; $53b1
 	ld h, $08 ; $53bc
@@ -376,7 +376,7 @@ IslandSkyInitScript_14:
 	ld [wCutscenePlaneY], a ; $548d
 	dec h ; $5490
 	jr nz, .touchdownLoop ; $5491
-	sound SFX_FIREWORK_SPARKLE ; $5493
+	sound SFX_PLANE_STOP ; $5493
 	ld h, $04 ; $5495
 .rollLoop:
 	script_wait_frames 8 ; $5497
@@ -444,7 +444,7 @@ IslandSkyInitScript_14:
 	script_set_actor_script ACTOR_ISLAND_SKY_EMILY_SWEATS, ActorScript_14_1 ; $558f
 	script_wait_frames 80 ; $559a
 	script_set_position ACTOR_PLAYER, 6.0, 41.0 ; $55a1
-	script_set_active ACTOR_PLAYER, $02 ; $55ac
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_VISIBLE ; $55ac
 	script_face ACTOR_PLAYER, FACE_DOWN ; $55b3
 	script_wait_frames 30 ; $55ba
 	script_move_target ACTOR_PLAYER, 11.0, 41.0 ; $55c1
@@ -466,7 +466,7 @@ IslandSkyInitScript_14:
 .toDormRoom:
 	script_move_target ACTOR_PLAYER, 11.0, 39.0 ; $5603
 	script_wait_move ACTOR_PLAYER ; $560e
-	script_set_active ACTOR_PLAYER, $00 ; $5613
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $5613
 	script_fade_out 4 ; $561a
 	call WaitFadeEnd ; $561f
 	call WaitFadeEnd ; $5622

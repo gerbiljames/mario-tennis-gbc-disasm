@@ -1,4 +1,4 @@
-; --- Link role (hLinkState, wLinkMatchRole, wLinkState) ---
+; --- Link role (hLinkState, wLinkMatchRole) ---
 ; Role election is first-come (TryEstablishLink): the console that finds the
 ; peer's probe already waiting becomes the slave. The master drives character
 ; 0, the slave character 1 (docs/match_engine.md).

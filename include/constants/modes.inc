@@ -1,8 +1,9 @@
 ; --- Drill result messages (wDrillMessageId, DrillMessageTextIds_0b) ---
-; Named after the text each id shows. QueueDrillResultMessage adds an offset
+; Named after the text each id shows. SetDrillServerMessage adds an offset
 ; in b (DRILLWORDING_*) when the other side served, to reach the same
-; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md)
-; and get no name.
+; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md);
+; the two the drill tables use are named after the bank $26 string FIXES gives
+; them, the rest get no name.
 def DRILLMSG_NONE equ $00 ; ShowQueuedDrillMessage substitutes DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE
 def DRILLMSG_HIDE equ $ff ; show nothing
 	const_def $01
@@ -77,6 +78,8 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_I_HIT_A_SMASH_SO_YOU_FAIL                           ; $45
 	const DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2     ; $46
 	const DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL ; $47
+	const DRILLMSG_YOUR_LOB_DIDNT_REACH_MY_COURT_SO_YOU_FAIL           ; $48
+	const DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_YOU_FAIL         ; $49
 	const_def $57
 	const DRILLMSG_NICE_RETURN_YOU_DID_IT                                 ; $57
 	const DRILLMSG_NICE_LOB_YOU_DID_IT                                    ; $58
@@ -101,7 +104,7 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_I_RETURNED_YOUR_SERVE_BEFORE_IT_BOUNCED_YOUR_POINT     ; $6b
 	const DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE                      ; $6c
 
-; b for QueueDrillResultMessage and its siblings: "you" wording to "I" wording
+; b for SetDrillServerMessage and its siblings: "you" wording to "I" wording
 def DRILLWORDING_SAME    equ 0
 def DRILLWORDING_SERVICE equ DRILLMSG_SERVICE_ACE_I_GET_A_POINT - DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT ; $06
 def DRILLWORDING_NET     equ DRILLMSG_NICE_VOLLEY_I_GET_A_POINT - DRILLMSG_NICE_VOLLEY_YOU_GET_A_POINT ; $0d
@@ -171,7 +174,7 @@ def DRILL_ABORT_FRAMES equ 10 ; frames, once armed, before a drill point is give
 	const JUDGEEVENT_POINT_END  ; $00
 	const JUDGEEVENT_BALL_HIT   ; $01
 	const JUDGEEVENT_BOUNCE     ; $02
-	const JUDGEEVENT_RALLY_TICK ; $03
+	const JUDGEEVENT_NET_CROSS ; $03
 
 ; --- Lesson result (wDrillLessonResult) ---
 ; Set by each lesson's *EvaluateResult; the coach's *ResultScene in bank $15
@@ -227,7 +230,7 @@ def LESSON_PASSED equ $00
 ; SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers (whose word art spells
 ; each mode out) unguarded; it is field 0 of Singles/DoublesMatchSettingsTable
 ; and field 3 of the drill and minigame configs. wGameMode lives inside
-; wStorySlotData, so it is saved with the story slot and a results screen
+; wStorySlotData, so it is saved with the story slot and the continue-game screen
 ; reopened from the main menu renders the saved mode.
 	const_def
 	const GAMEMODE_NONE           ; $00 no match; the story overworld (RunStoryLocation clears it)
@@ -286,7 +289,7 @@ def NUM_GAMEMODES equ const_value
 ; The argument of RunTrainingDrillByID, the single entry point for
 ; MATCHLIST_TRAINING: below $12 it indexes DrillDefinitionPtrs, otherwise
 ; StartMinigameByID indexes MinigameConfigTable with id - $12 ($24 is
-; special-cased into RunDoublesDrillMatch).
+; special-cased into RunTwoOnOneMatch).
 ; The 18 drill names come from the debug drill list (text 31:141-31:147, item
 ; order == id). Match drills run on COURT_TRAINING_MATCH, Practice drills on
 ; COURT_TRAINING_PRACTICE; the story lesson menus add $03/$09/$0f to a 0-2

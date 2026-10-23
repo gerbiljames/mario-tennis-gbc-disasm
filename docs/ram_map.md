@@ -23,7 +23,7 @@ own symbols and a note naming the code that owns it. A variant's names appear
 only at sites whose scope matches: the referencing code's ROM bank and range,
 and/or the WRAM bank proven selected there (by dataflow or a traced run). So
 the same `$dxxx` offset reads as different symbols in different routines,
-and a site whose bank could not be proven keeps the number (32, all inside
+and a site whose bank could not be proven keeps the number (all such sites are inside
 `Unused_*` routines nothing reaches). The assembler accepts any variant's
 symbol anywhere, so when an edit moves an access to another owner, change the
 operand by hand; the variant notes say which one a routine may touch.
@@ -81,7 +81,7 @@ already runs past those addresses is skipped.
 | range | variant (scope) | symbols |
 |---|---|---|
 | `$c780-$c784` | character select (bank `$1b`) | `wCharSelectChar`/`PrevChar`/`Col`/`Row` — cursor state over the roster grid at `$c7a0` |
-| `$ffd0-$ffef` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkRemoteInputBuf` |
+| `$ffd0-$ffef` | serial-link input slots (default) | `hLinkInput` (merged effective input, also the scripted-input feed), `hLinkRemoteInput`, `hLinkSentInput` |
 | | sound driver (bank 0 `$3373-$3de0`) | full per-channel HRAM working set: `hSndScriptPtr`, `hSndVolume`, `hSndInstrument`, `hSndEnvShape/Length/Pos`, `hSndVolSlide*`, `hSndEcho*`, `hSndLoop*`, `hSndGateTimer`, … (29 fields) |
 | | sprite queue (bank 0 `$2ced-$2d9f`) | `hSpriteBlitX`, `hSpriteBlitY` |
 | | story actor engine (banks `$04/$05/$0a`) | `hActorPtr` |
@@ -99,8 +99,7 @@ same scope as the base (`$dd1e` is `wBallHistory + 30`, `$ffd1`
 ### Reading a bank at a glance
 
 Each banked `SECTION` in `ram/*.asm` opens with a one-line-per-region
-summary, since a bank is 4 KiB of overlapping claims (bank `$03` alone has
-122 symbols across 33 variants):
+summary, since a bank is 4 KiB of overlapping claims:
 
 ```
 ; WRAMX bank 2 at a glance (ram/wram/):
@@ -130,6 +129,7 @@ ladders at `$6063`/`$4ff5` indexed by `wOnCourtCharCountMinus1`:
 | 7 | far-side partner | 3 (Two-On-One), 4 |
 
 The fields are the untagged `wChar*` EQUs in `include/ram_mirrored.inc`
+(`wCharStruct` for the whole struct)
 (used where the WRAM bank is 4-7 or inside match banks `$07`/`$08`), with
 `w4Char*`...`w7Char*` from `match_char_struct` for the symbol file;
 `docs/match_engine.md` describes them. Other WRAM banks reuse `$dfxx` for
@@ -141,7 +141,7 @@ text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
 | `$df00-02` | X position (lateral), 24-bit fixed point: fraction byte, then signed 16-bit integer part |
 | `$df03-05` | depth position, same format; signed, net at 0, the two court sides have opposite signs |
 | `$df06-08` | height above court, same format (zeroed by `SetCharPosAndTarget`) |
-| `$df09` | serve/side role code, from byte 4-7 of the court-position record (`GamePositionTables`); XORed with 2 to swap court side per point, mapped through the `$4fa0` table to a char state at point start |
+| `$df09` | serve/side role code, from byte 4-7 of the court-position record (`GamePositionsSingles`); XORed with 2 to swap court side per point, mapped through the `$4fa0` table to a char state at point start |
 | `$df0a` | court position code, from byte 0-3 of the court-position record (XORed with 3 on the tiebreak side-swap path) |
 | `$df0b` | character index 0-3 (== bank - 4); bit 0 set = far side, so `CharPointEndReaction` negates `wPointWinLoseFlag` through it for `$df57`, and it selects the off-screen edge-arrow sprite (index * 8) |
 | `$df0d`/`$df0e` | facing direction: desired / displayed (eased toward desired in `$75c0` by at most `$df68` per frame) |
@@ -156,7 +156,7 @@ text-arg scratch at `$df00` is `wTextArgFetchBuffer`). The main fields:
 | `$df1b-1d` | the current frame's placement (X offset, Y offset, size flag), copied from its `*FramePlace` record; `DrawCharSprite` ($650a) dispatches on the flag |
 | `$df80-83` | sprite-slot record for the character sprite (see below) |
 | `$df88-8b` | sprite-slot record for the airborne shadow: tiles `$50/$52/$54/$56` shrink with jump height, drawn only while `$df0f` bit 2 is set |
-| `$df8c-8f` | sprite-slot record for the standing shadow: tile `$58` through the 3-sprite-wide `StandingShadowOamTemplate` ($6301), drawn on alternate frames (flicker transparency) while grounded, singles only (`wStandingShadowsEnabled`) |
+| `$df8c-8f` | sprite-slot record for the standing shadow: tile `$58` through the 3-sprite-wide `StandingShadowOamTemplate` ($6301), drawn on alternate frames (flicker transparency) while grounded, non-link singles only (`wStandingShadowsEnabled`) |
 | `$df96` | draw-order depth key: `(depth * 8) >> 8 + $80`; `DrawActorsByDepth` compares teammates' keys to paint back-to-front |
 
 ## Match renderer sprite slots (WRAM bank 4, `$dd00`/`$de00`)
@@ -191,8 +191,8 @@ off-screen character edge arrows (`DrawOffscreenCharArrow`, gated by
 `wOffscreenArrowsEnabled`).
 
 Frame flow: `DrawActorsByDepth` (`$6429`) draws the two team pairs and the
-ball group in painter's order by the `$df96` keys (`DrawNearTeamChars`,
-`DrawFarTeamChars`, `DrawBallAndEffects`), then `DrawMarkersAndShadows`
+ball group in painter's order by the `$df96` keys (`DrawPlayer1TeamChars`,
+`DrawPlayer2TeamChars`, `DrawBallAndEffects`), then `DrawMarkersAndShadows`
 (`$6481`) flushes markers, trail and shadow slots. Modes hook extra draws
 via `SetModeHookTable`/`CallModeHook` (`wModeHookBank`/`wModeHookTable`).
 
@@ -214,11 +214,10 @@ poisoning every listed byte with `$5a` and playing each flow twice, poisoned
 and clean. The flows cover every story state at every location and entry
 point, the Test and Test2 maps, the main menu, exhibition matches, the Mario
 minigames, link sessions, the N64 Transfer Pak record screens, both unlock
-codes and every `NpcScripts` handler (237 flows; runs that crash, such as
+codes and every `NpcScripts` handler (runs that crash, such as
 impossible warps, are left out).
 
-**Totals: 4,406 free bytes in 105 ranges, 27 of them HRAM bytes in 9
-ranges (`ram_free.py`).** The last audit split the bytes listed then into
+`ram_free.py` prints the current totals. The last audit split the bytes listed then into
 untouched, cleared only and holding data, all explained; ranges freed since
 are not yet in the tables below. No flow reads a free byte; the only poison
 read ever seen, besides the since-declared speed bonus below, was in the
@@ -325,9 +324,9 @@ Free bytes that are written with real values, each explained:
 Bytes once counted free that are now declared: record fields `+$2b` (speed
 bonus, which `LoadCharacterAttributes` adds to the Speed stat), `+$0d`
 (gender, in the match records too) and `+$2f` (write-only build tag) in all
-eight `$40`-byte records; the game progress screen's five lists in bank
-`$05`'s `$df00` page (`wProgressEntryUnlocked`, `wProgressVisibleEntries`,
-...); `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
+eight `$40`-byte records; the game progress screen's lists, window id and
+scroll-arrow flags in bank `$05`'s `$df00` page (`wProgressEntryUnlocked`,
+`wProgressVisibleEntries`, `wProgressWindowId`, ...); `$df84` of the character banks, `wCharSpriteSlotFrame`, where the
 single-character screens park the frame descriptor after the sprite slot;
 and the rest of `$c700-$c77f`, `wDebugStatsBackup`, where the debug stats
 editor saves character 0's `$df00-$df7f`.

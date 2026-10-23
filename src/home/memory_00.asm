@@ -219,43 +219,43 @@ QueueVRAMCopy:
 	push af ; $0497
 	push hl ; $0498
 	ld hl, wVRAMCopyQueue ; $0499
-	ld l, $a0 ; $049c
+	ld l, LOW(wVRAMCopyQueue + 0 * VRAMCOPY_SLOT_SIZE) ; $049c
 	ld a, [hl] ; $049e
 	or a ; $049f
 	jr z, .fillSlot ; $04a0
-	ld l, $a8 ; $04a2
+	ld l, LOW(wVRAMCopyQueue + 1 * VRAMCOPY_SLOT_SIZE) ; $04a2
 	ld a, [hl] ; $04a4
 	or a ; $04a5
 	jr z, .fillSlot ; $04a6
-	ld l, $b0 ; $04a8
+	ld l, LOW(wVRAMCopyQueue + 2 * VRAMCOPY_SLOT_SIZE) ; $04a8
 	ld a, [hl] ; $04aa
 	or a ; $04ab
 	jr z, .fillSlot ; $04ac
-	ld l, $b8 ; $04ae
+	ld l, LOW(wVRAMCopyQueue + 3 * VRAMCOPY_SLOT_SIZE) ; $04ae
 	ld a, [hl] ; $04b0
 	or a ; $04b1
 	jr z, .fillSlot ; $04b2
-	ld l, $c0 ; $04b4
+	ld l, LOW(wVRAMCopyQueue + 4 * VRAMCOPY_SLOT_SIZE) ; $04b4
 	ld a, [hl] ; $04b6
 	or a ; $04b7
 	jr z, .fillSlot ; $04b8
-	ld l, $c8 ; $04ba
+	ld l, LOW(wVRAMCopyQueue + 5 * VRAMCOPY_SLOT_SIZE) ; $04ba
 	ld a, [hl] ; $04bc
 	or a ; $04bd
 	jr z, .fillSlot ; $04be
-	ld l, $d0 ; $04c0
+	ld l, LOW(wVRAMCopyQueue + 6 * VRAMCOPY_SLOT_SIZE) ; $04c0
 	ld a, [hl] ; $04c2
 	or a ; $04c3
 	jr z, .fillSlot ; $04c4
-	ld l, $d8 ; $04c6
+	ld l, LOW(wVRAMCopyQueue + 7 * VRAMCOPY_SLOT_SIZE) ; $04c6
 	ld a, [hl] ; $04c8
 	or a ; $04c9
 	jr z, .fillSlot ; $04ca
-	ld l, $e0 ; $04cc
+	ld l, LOW(wVRAMCopyQueue + 8 * VRAMCOPY_SLOT_SIZE) ; $04cc
 	ld a, [hl] ; $04ce
 	or a ; $04cf
 	jr z, .fillSlot ; $04d0
-	ld l, $e8 ; $04d2
+	ld l, LOW(wVRAMCopyQueue + 9 * VRAMCOPY_SLOT_SIZE) ; $04d2
 	ld a, [hl] ; $04d4
 	or a ; $04d5
 	jr z, .fillSlot ; $04d6
@@ -337,13 +337,13 @@ ProcessVRAMCopyQueues:
 	or a ; $0530
 	ret z ; $0531
 	ld hl, wVRAMCopyQueue ; $0532
-	ld c, $0a ; $0535
+	ld c, NUM_VRAMCOPY_SLOTS ; $0535
 	ldh a, [hWramBank] ; $0537
 	ld e, a ; $0539
 	ldh a, [hRomBank] ; $053a
 	ld d, a ; $053c
 	push de ; $053d
-	ld d, $ff ; $053e
+	ld d, HIGH(rVDMA_SRC_HIGH) ; $053e
 .copyQueueLoop:
 	ld a, [hl] ; $0540
 	or a ; $0541
@@ -352,7 +352,7 @@ ProcessVRAMCopyQueues:
 	xor a ; $0549
 	ld [hl+], a ; $054a
 	wram_bank [hl+] ; $054b
-	ld e, $51 ; $0550
+	ld e, LOW(rVDMA_SRC_HIGH) ; $0550
 	ld a, [hl+] ; $0552
 	ld [de], a ; $0553
 	inc e ; $0554
@@ -440,7 +440,7 @@ LoadPalettesImmediate:
 	add a ; $05bc
 	add a ; $05bd
 	ld e, a ; $05be
-	ld d, $c1 ; $05bf
+	ld d, HIGH(wBGPalettes) ; $05bf
 .copyLoop:
 	ld a, [hl+] ; $05c1
 	ld [de], a ; $05c2

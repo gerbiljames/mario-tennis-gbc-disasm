@@ -130,28 +130,28 @@ ActorScript_15_23:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderSmall
 MapScriptNop_15:
 	ret ; $7d95
-Unused_15_MapScriptClearActiveFlag:
+Unused_15_MapScriptClearScriptRan:
 	xor a ; $7d96
 	ld [wStoryScriptRan], a ; $7d97
 	ret ; $7d9a
-Unused_15_MapScriptPlaySoundA2:
+Unused_15_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $7d9b
 	ret ; $7d9d
 Unused_15_MapScriptHideLocationName:

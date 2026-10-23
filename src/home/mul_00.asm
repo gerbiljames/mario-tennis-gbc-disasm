@@ -124,7 +124,7 @@ DivHLByDE:
 	ld b, a ; $098e
 	or c ; $098f
 	jr nz, .divide ; $0990
-	ld hl, rIE ; $0992
+	ld hl, $ffff ; $0992
 	pop bc ; $0995
 	pop af ; $0996
 	ret ; $0997

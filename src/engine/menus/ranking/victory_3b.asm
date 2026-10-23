@@ -40,7 +40,7 @@ RecordExhibitionVictory:
 	cp d ; $7dae
 	jr c, .restore ; $7daf
 	ld [hl], a ; $7db1
-	call UpdateMarioCastUnlocks ; $7db2
+	call UnlockWarehouseIfCastSwept ; $7db2
 	ld hl, wN64RecordsBlock ; $7db5
 	farcall WriteMarioCastVictoryGrid ; $7db8
 .spin:
@@ -53,7 +53,7 @@ Unused_3b_StubNop6:
 GetVictoryScore:
 	ld b, a ; $7dc4
 	ld hl, VictoryScoreTable ; $7dc5
-	ld a, [wVictoryScoreTableAlt] ; $7dc8
+	ld a, [wExhibitionSaveQuitUsed] ; $7dc8
 	or a ; $7dcb
 	jr z, .gotTable ; $7dcc
 	ld hl, VictoryScoreTableSaveQuit ; $7dce
@@ -69,17 +69,17 @@ VictoryScoreTableSaveQuit:
 	; $7ddd, 4 bytes (bytes:4)
 	db $02, $04, $06, $08 ; 0x00
 GetMarioCastIndex:
-	sub $17 ; $7de1
-	ld hl, MarioCastOrderTable ; $7de3
+	sub CHAR_LUIGI ; $7de1
+	ld hl, MarioCastGridSlotByChar ; $7de3
 	add_hl_a ; $7de6
 	ld a, [hl] ; $7deb
 	ret ; $7dec
-MarioCastOrderTable:
+MarioCastGridSlotByChar:
 	; $7ded, 9 bytes (bytes:3)
 	db $01, $05, $03 ; 0x00
 	db $00, $07, $04 ; 0x03
 	db $08, $06, $02 ; 0x06
-UpdateMarioCastUnlocks:
+UnlockWarehouseIfCastSwept:
 	ld c, $00 ; $7df6
 .rowLoop:
 	ld hl, wN64RecordsBlock ; $7df8
@@ -93,11 +93,11 @@ UpdateMarioCastUnlocks:
 .columnLoop:
 	ld a, c ; $7e07
 	cp b ; $7e08
-	jr z, .countDone ; $7e09
+	jr z, .nextColumn ; $7e09
 	ld a, [hl] ; $7e0b
 	or a ; $7e0c
 	jr z, .nextRow ; $7e0d
-.countDone:
+.nextColumn:
 	inc hl ; $7e0f
 	inc b ; $7e10
 	ld a, b ; $7e11

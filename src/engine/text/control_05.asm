@@ -1,4 +1,4 @@
-TextCmdNop2:
+TextCmdNop08:
 	ret ; $5297
 GetNextArgShortTextLength:
 	push bc ; $5298
@@ -191,7 +191,7 @@ Unused_05_SetTextVar:
 	pop bc ; $53c7
 	pop af ; $53c8
 	ret ; $53c9
-TextCmdPrintShortText:
+TextCmdPrintCharName:
 	push af ; $53ca
 	push bc ; $53cb
 	ld a, [wTextCharNameArg] ; $53cc
@@ -206,7 +206,7 @@ TextCmdPrintShortText:
 	pop bc ; $53e5
 	pop af ; $53e6
 	ret ; $53e7
-MeasureIndexedShortTextWidth:
+MeasureCharNameArgWidth:
 	push bc ; $53e8
 	push de ; $53e9
 	push hl ; $53ea
@@ -341,13 +341,13 @@ ControlCodeHandlers_05:
 	dw TextCmdDelay30 ; record 5
 	dw TextCmdDelay15Skippable ; record 6
 	dw TextCmdPrintPlayerName ; record 7
-	dw TextCmdNop2 ; record 8
+	dw TextCmdNop08 ; record 8
 	dw TextCmdPrintArgNumber ; record 9
 	dw TextCmdNop ; record 10
 	dw TextCmdPrintPartnerName ; record 11
 	dw TextCmdDelay150Skippable ; record 12
 	dw TextCmdNextGlyphStreamRow ; record 13
-	dw TextCmdPrintShortText ; record 14
+	dw TextCmdPrintCharName ; record 14
 	dw TextCmdNewline ; record 15
 	dw TextCmdNop10 ; record 16
 	dw TextCmdNop11 ; record 17
@@ -368,7 +368,7 @@ ControlCodeHandlers_05:
 RenderInlineString:
 	push af ; $54cf
 	ld a, [wTextStreamPtr + 1] ; $54d0
-	cp $c6 ; $54d3
+	cp HIGH(wTextBuffer) ; $54d3
 	jr nz, .checkWrap ; $54d5
 	ld a, [wTextStreamPtr] ; $54d7
 	or a ; $54da

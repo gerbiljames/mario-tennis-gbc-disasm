@@ -16,6 +16,7 @@ SetActorAnimation:
 	ld hl, ACTORF_ANIM_DELAY ; $4bd0
 	add hl, bc ; $4bd3
 	ld [hl], $00 ; $4bd4
+; Copied from SetCharAnimation: masks match char 0's attribute, not the slot's (docs/bugs.md).
 	ld hl, wCharSpriteAttr ; $4bd6
 	ld a, [hl] ; $4bd9
 	and $0f ; $4bda
@@ -99,7 +100,7 @@ CharObjectIdTable:
 	db OBJ_B_COZ ; CHAR_B_COZ
 	db OBJ_A_COZ ; CHAR_A_COZ
 	db OBJ_KEVIN ; CHAR_KEVIN
-	db OBJ_BALLOON_ELLIPSIS ; CHAR_UNUSED_15
+	db OBJ_BALLOON_ELLIPSIS ; CHAR_BALL_MACHINE
 	db OBJ_BALLOON_ELLIPSIS ; CHAR_UNUSED_16
 	db OBJ_LUIGI ; CHAR_LUIGI
 	db OBJ_DK ; CHAR_DK
@@ -278,7 +279,7 @@ SpawnActorsFromList:
 	ret ; $4d2b
 Unused_04_SpawnScriptedActorScene:
 	ldh a, [hRomBank] ; $4d2c
-	ld hl, ActorList_04_1 ; $4d2e
+	ld hl, MainCharAlexActorList_04 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31
 	call AttachActorControllerScript ; $4d34
 	ldh a, [hRomBank] ; $4d37
@@ -287,13 +288,13 @@ Unused_04_SpawnScriptedActorScene:
 	ld hl, $1700 ; $4d3f
 	ld de, $1d00 ; $4d42
 	call SetActorPosition ; $4d45
-	ld de, $d000 ; $4d48
-	call AttachActorWaypointFollower ; $4d4b
+	ld de, wActors ; $4d48
+	call AttachActorChaser ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
 	ld hl, ScriptedSceneMarioActorList ; $4d50
 	call SpawnActorFromTemplate ; $4d53
-	ld de, $d000 ; $4d56
-	call AttachActorStepMover ; $4d59
+	ld de, wActors ; $4d56
+	call AttachActorTrailer ; $4d59
 	ld hl, ScriptedSceneMarioColumnActorList ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
@@ -304,7 +305,7 @@ Unused_04_MatchNinaAlexActorList:
 	map_actor $0000, ActorScript_Idle, 14.0, 25.0, FACE_RIGHT, OBJ_MATCH_ALEX, ANIM_WALK, $00
 	map_actor $0000, ActorScript_Idle, 34.0, 25.0, FACE_LEFT, OBJ_MATCH_ALEX, ANIM_WALK, $00
 	map_actor_end
-ActorList_04_1:
+MainCharAlexActorList_04:
 	; $4da5, 24 bytes (actor_list)
 	map_actor $0000, ActorScript_Idle, 25.0, 37.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00
 	map_actor_end
@@ -331,9 +332,9 @@ ScriptedSceneMarioColumnActorList:
 	map_actor $0000, ActorScript_Idle, 23.0, 29.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor $0000, ActorScript_Idle, 23.0, 33.0, FACE_DOWN, OBJ_MARIO, ANIM_WALK, $00
 	map_actor_end
-ScriptedActorListPtrs_04:
+MainCharActorListPtrs_04:
 	; $4e5f, 8 bytes (records:2)
-	dw ActorList_04_1 ; record 0
+	dw MainCharAlexActorList_04 ; record 0
 	dw MainCharNinaActorList_04 ; record 1
 	dw MainCharHarryActorList_04 ; record 2
 	dw MainCharKateActorList_04 ; record 3
@@ -351,7 +352,7 @@ SpawnMainCharacterActor:
 	ld a, [wStoryMainChar] ; $4e77
 	and $03 ; $4e7a
 	add a ; $4e7c
-	ld_hl_indexed ScriptedActorListPtrs_04 ; $4e7d
+	ld_hl_indexed MainCharActorListPtrs_04 ; $4e7d
 	ld a, [hl+] ; $4e84
 	ld h, [hl] ; $4e85
 	ld l, a ; $4e86
@@ -369,10 +370,11 @@ SpawnMainCharacterActor:
 	ldh a, [hRomBank] ; $4e9d
 	ld de, ActorScript_Idle ; $4e9f
 	call SpawnActor ; $4ea2
+	; ignored: SetActorMode stores d; AttachActorChaser sets ACTORMODE_CAMERA
 	ld a, $01 ; $4ea5
 	call SetActorMode ; $4ea7
 	ld de, wActors ; $4eaa
-	call AttachActorWaypointFollower ; $4ead
+	call AttachActorChaser ; $4ead
 	pop hl ; $4eb0
 	pop de ; $4eb1
 	call SetActorPosition ; $4eb2
@@ -398,7 +400,7 @@ CompanionKateActorList:
 	map_actor_end
 CompanionSinglesDummyActorList:
 	; $4ef8, 24 bytes (actor_list)
-	map_actor $01e0, ActorScript_Deactivate, 1.0, 1.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00
+	map_actor FLAG_ALWAYS_SET, ActorScript_Deactivate, 1.0, 1.0, FACE_DOWN, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00
 	map_actor_end
 SpawnCompanionActor:
 	push af ; $4f10
@@ -408,13 +410,13 @@ SpawnCompanionActor:
 	wram_bank WRAM_ACTORS ; $4f14
 	ld a, [wStoryPartnerGender] ; $4f1a
 	or a ; $4f1d
-	jr nz, .partnerSlot ; $4f1e
+	jr nz, .femalePartner ; $4f1e
 	ld hl, CompanionHarryActorList ; $4f20
 	ld a, $02 ; $4f23
 	test_flag FLAG_DOUBLES ; $4f25
 	jr nz, .spawn ; $4f28
 	jr .singlesList ; $4f2a
-.partnerSlot:
+.femalePartner:
 	ld hl, CompanionKateActorList ; $4f2c
 	ld a, $03 ; $4f2f
 	test_flag FLAG_DOUBLES ; $4f31
@@ -423,14 +425,14 @@ SpawnCompanionActor:
 	ld hl, CompanionSinglesDummyActorList ; $4f36
 	ld a, $ff ; $4f39
 .spawn:
-	ld [wCompanionActorSlot], a ; $4f3b
+	ld [wCompanionCharId], a ; $4f3b
 	ldh a, [hRomBank] ; $4f3e
 	call SpawnActorFromTemplate ; $4f40
-	ld a, [wCompanionActorSlot] ; $4f43
+	ld a, [wCompanionCharId] ; $4f43
 	cp $ff ; $4f46
 	jr z, .done ; $4f48
 	ld de, wActors ; $4f4a
-	call AttachActorStepMover ; $4f4d
+	call AttachActorTrailer ; $4f4d
 	ld de, wActors ; $4f50
 	ld hl, ACTORF_HEADING ; $4f53
 	add hl, de ; $4f56

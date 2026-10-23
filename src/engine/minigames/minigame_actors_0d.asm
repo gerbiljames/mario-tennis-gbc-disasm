@@ -19,16 +19,16 @@ ShowPointOutcomeBanner:
 DetermineMinigamePointResult:
 	ld a, [wMinigameHighScoreMode] ; $43df
 	and a ; $43e2
-	jr nz, .isMinigameScoreLimitReached ; $43e3
+	jr nz, .checkNewHighScore ; $43e3
 	ld a, [wPointOutcome] ; $43e5
 	cp POINTOUTCOME_MINIGAME_CLEARED ; $43e8
 	jr z, .cleared ; $43ea
-	jr .storePointWinLoseFlag ; $43ec
-.isMinigameScoreLimitReached:
-	call IsMinigameScoreLimitReached ; $43ee
+	jr .gameOver ; $43ec
+.checkNewHighScore:
+	call IsNewMinigameHighScore ; $43ee
 	and a ; $43f1
-	jr nz, .scoreLimitReached ; $43f2
-	jr .storePointWinLoseFlag ; $43f4
+	jr nz, .newHighScore ; $43f2
+	jr .gameOver ; $43f4
 .cleared:
 	ld a, WINLOSE_WIN ; $43f6
 	ld [wPointWinLoseFlag], a ; $43f8
@@ -36,12 +36,12 @@ DetermineMinigamePointResult:
 	add BANNER_LEVEL_1_CLEARED ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
-.scoreLimitReached:
+.newHighScore:
 	ld a, WINLOSE_WIN ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
 	ld d, BANNER_HIGH_SCORE ; $4407
 	ret ; $4409
-.storePointWinLoseFlag:
+.gameOver:
 	ld a, WINLOSE_LOSE ; $440a
 	ld [wPointWinLoseFlag], a ; $440c
 	ld d, BANNER_GAME_OVER ; $440f
@@ -190,7 +190,7 @@ UpdateMinigameActor:
 	ret ; $44f9
 MinigameConfig_TennisMachine1:
 	; $44fa, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_1, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine1, MinigamePointLayoutDuo, InitMinigame_TennisMachine1
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_1, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine1, MinigamePointLayoutDuo, InitMinigame_TennisMachine1
 InitMinigame_TennisMachine1:
 	ld a, $01 ; $450a
 	ld [wMinigameUsesTennisMachine], a ; $450c
@@ -206,7 +206,7 @@ MinigameHooks_TennisMachine1:
 	dw TennisMachine1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachine1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachine1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachine1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachine1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine1_hook_minigame_start, TennisMachine1Hook_MinigameStart ; $4525
@@ -219,28 +219,28 @@ TennisMachine1Hook_PointStart:
 TennisMachine1Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4536
 	ret ; $4539
-TennisMachine1Hook_RallyTick:
+TennisMachine1Hook_NetCross:
 	call KeepMinigameCameraFixed ; $453a
 	ret ; $453d
 TennisMachine1Hook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $453e
+	call AwardWinnerOnReturnBounce ; $453e
 	ret ; $4541
 TennisMachine1Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4542
+	call FreezeFeederAfterLaunch ; $4542
 	ret ; $4545
-MinigameShotDifficultyRamp:
+MinigameShotButtonPoolColumn:
 	; $4546, 1 bytes (bytes:4)
 	db $01 ; 0x00
-; Byte 1 of each 4-byte wMinigameServeSpeed record (byte 0 is
-; MinigameShotDifficultyRamp, byte 2 LaunchBallTable): a MinigameShotIntervalByTempo index.
-LaunchBallTableTempoColumn:
+; Byte 1 of each 4-byte wMinigameServeTier record (byte 0 is
+; MinigameShotButtonPoolColumn, byte 2 MinigameShotSpeedColumn): a MinigameShotIntervalByTempo index.
+MinigameShotTempoColumn:
 	db $01 ; $4547
-LaunchBallTable:
-	INCBIN "data/engine/minigames/LaunchBallTable.bin" ; $4548, 102 bytes
+MinigameShotSpeedColumn:
+	INCBIN "data/engine/minigames/MinigameShotSpeedColumn.bin" ; $4548, 102 bytes
 MinigameShotIntervalByTempo:
 	; $45ae, 5 bytes (bytes:5)
 	db $28, $28, $1e, $14, $0a ; 0x00
-MinigameShotAimPools:
+MinigameShotButtonPools:
 	; $45b3, 144 bytes (bytes:16)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $10, $10, $10, $10, $10, $10, $10, $10, $20, $20, $20, $20, $20, $20, $20, $20 ; 0x10
@@ -251,10 +251,10 @@ MinigameShotAimPools:
 	db $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12, $12 ; 0x60
 	db $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21, $21 ; 0x70
 	db $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30, $30 ; 0x80
-MinigameShotSpinPool:
+MinigameAimDirectionPool:
 	; $4643, 8 bytes (bytes:8)
 	db $00, $00, $ff, $ff, $ff, $01, $01, $01 ; 0x00
-MinigameCharCoordsTable:
+MinigameFeederPositions:
 	; $464b, 36 bytes (bytes:4)
 	db $a0, $fe, $00, $fc ; 0x00
 	db $00, $00, $00, $fc ; 0x04
@@ -270,7 +270,7 @@ MinigameBallLaunchHeights:
 	dw $ffa0 ; record 0
 	dw $ff80 ; record 1
 	dw $ff60 ; record 2
-MinigameBallLaunchSpeeds:
+MinigameAimOffsetScales:
 	; $4675, 3 bytes (bytes:3)
 	db $ef, $c1, $93 ; 0x00
 StartMinigameMatch:
@@ -288,38 +288,38 @@ StartMinigameMatch:
 	ld a, e ; $4693
 	ld [hl+], a ; $4694
 	ld [hl], d ; $4695
-	wram_bank WRAM_ACTORS ; $4696
+	wram_bank WRAM_CHAR0 ; $4696
 	ld hl, $0000 ; $469c
 	ld de, $0480 ; $469f
 	farcall SetCharPosAndTarget ; $46a2
 	ld a, CHARSTATE_STANDBY ; $46a5
 	farcall SetCharState ; $46a7
 	wram_bank WRAM_CHAR1 ; $46aa
-	ld a, [wMinigameServeSlot] ; $46b0
-	call GetMinigameCharCoordsEntry ; $46b3
+	ld a, [wMinigameFeederPos] ; $46b0
+	call GetMinigameFeederPosition ; $46b3
 	farcall SetCharPosAndTarget ; $46b6
 	ld a, CHARSTATE_WALK ; $46b9
 	farcall SetCharState ; $46bb
 	ld a, $04 ; $46be
 	ld [wCharAimJitterScale], a ; $46c0
 	xor a ; $46c3
-	ld [wMinigameServeState], a ; $46c4
+	ld [wMinigameServerIsMachine], a ; $46c4
 	ld a, [wCharId] ; $46c7
-	cp CHAR_UNUSED_15 ; $46ca
+	cp CHAR_BALL_MACHINE ; $46ca
 	jr nz, .countdown ; $46cc
 	ld a, $01 ; $46ce
-	ld [wMinigameServeState], a ; $46d0
+	ld [wMinigameServerIsMachine], a ; $46d0
 .countdown:
 	call PlayMinigameCountdown ; $46d3
 	ret ; $46d6
 DrawMinigameScoreHud:
 	ld_xy de, $84, $03 ; $46d7
 	call DrawMinigameScore ; $46da
-	ld a, [wMinigameServeState] ; $46dd
+	ld a, [wMinigameServerIsMachine] ; $46dd
 	and a ; $46e0
 	jr z, .done ; $46e1
 	push_wram_bank WRAM_CHAR1 ; $46e3
-	ld hl, wCharSpriteSlot + 1 ; $46ec
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $46ec
 	res B_OAM_XFLIP, [hl] ; $46ef
 	pop_wram_bank ; $46f1
 .done:
@@ -332,20 +332,20 @@ LaunchMinigameServe:
 	ld l, a ; $46fe
 	ld a, h ; $46ff
 	and a ; $4700
-	jr nz, .gotSpeed ; $4701
+	jr nz, .gotTier ; $4701
 	xor a ; $4703
 	ld h, a ; $4704
 	ld e, $0a ; $4705
 	call DivAHLByE ; $4707
 	ld b, l ; $470a
-.gotSpeed:
+.gotTier:
 	ld a, b ; $470b
-	ld [wMinigameServeSpeed], a ; $470c
-	push_wram_bank WRAM_TEXT ; $470f
+	ld [wMinigameServeTier], a ; $470c
+	push_wram_bank WRAM_CHAR1 ; $470f
 	ld d, CHARANIM_FOREHAND ; $4718
 	farcall SetCharAnimation ; $471a
 	pop_wram_bank ; $471d
-	ld a, [wMinigameServeState] ; $4722
+	ld a, [wMinigameServerIsMachine] ; $4722
 	and a ; $4725
 	jr z, .launch ; $4726
 	ld a, 15 ; $4728
@@ -361,13 +361,13 @@ LaunchMinigameServe:
 	ld [hl+], a ; $4738
 	ld [hl], d ; $4739
 	call LaunchBall ; $473a
-	ld a, [wMinigameServeSlot] ; $473d
+	ld a, [wMinigameFeederPos] ; $473d
 	ld l, a ; $4740
 	ld h, $00 ; $4741
 	ld de, $0003 ; $4743
 	call DivHLByDE ; $4746
 	ld a, l ; $4749
-	ld [wMinigameServeGroup], a ; $474a
+	ld [wMinigameFeederRow], a ; $474a
 	call ApplyMinigameCharTargetFromTable ; $474d
 	ret ; $4750
 AwardMinigamePointAndEnd:
@@ -377,7 +377,7 @@ AwardMinigamePointAndEnd:
 	ld de, $0001 ; $4757
 	call AddToMinigameScore ; $475a
 EndMinigamePoint:
-	push_wram_bank WRAM_ACTORS ; $475d
+	push_wram_bank WRAM_CHAR0 ; $475d
 	ld a, CHARSTATE_STANDBY ; $4766
 	farcall SetCharState ; $4768
 	pop_wram_bank ; $476b
@@ -385,10 +385,10 @@ EndMinigamePoint:
 	farcall ResolvePointWinner ; $4773
 	add a ; $4776
 	jr c, .resolve ; $4777
-	ld a, [wMinigameServeSpeed] ; $4779
+	ld a, [wMinigameServeTier] ; $4779
 	add a ; $477c
 	add a ; $477d
-	ld_hl_indexed LaunchBallTableTempoColumn ; $477e
+	ld_hl_indexed MinigameShotTempoColumn ; $477e
 	ld a, [hl] ; $4785
 	ld_hl_indexed MinigameShotIntervalByTempo ; $4786
 	ld a, [hl] ; $478d
@@ -401,9 +401,9 @@ EndMinigamePoint:
 .resolve:
 	call DetermineMinigamePointResult ; $479b
 	push de ; $479e
-	push_wram_bank WRAM_ACTORS ; $479f
+	push_wram_bank WRAM_CHAR0 ; $479f
 	farcall CharPointEndReaction ; $47a8
-	wram_bank WRAM_TEXT ; $47ab
+	wram_bank WRAM_CHAR1 ; $47ab
 	farcall CharPointEndReaction ; $47b1
 	pop_wram_bank ; $47b4
 	pop de ; $47b9
@@ -413,7 +413,7 @@ KeepMinigameCameraFixed:
 	xor a ; $47be
 	ld [wCameraFollowBall], a ; $47bf
 	ret ; $47c2
-CheckMinigameStartBannerTrigger:
+AwardWinnerOnReturnBounce:
 	ld a, [wPointOutcome] ; $47c3
 	and a ; $47c6
 	jr nz, .done ; $47c7
@@ -429,7 +429,7 @@ CheckMinigameStartBannerTrigger:
 	ld [wPointOutcomeSide], a ; $47de
 .done:
 	ret ; $47e1
-FreezeMinigameOpponentOnReturn:
+FreezeFeederAfterLaunch:
 	ld a, [wRallyLength] ; $47e2
 	cp $03 ; $47e5
 	jr nz, .done ; $47e7
@@ -451,26 +451,26 @@ LaunchBall:
 	push_wram_bank WRAM_CHAR1 ; $4812
 	ld a, $20 ; $481b
 	ld [wCharSwingFrames], a ; $481d
-	ld a, [wMinigameServeSpeed] ; $4820
+	ld a, [wMinigameServeTier] ; $4820
 	add a ; $4823
 	add a ; $4824
-	ld_hl_indexed LaunchBallTable ; $4825
+	ld_hl_indexed MinigameShotSpeedColumn ; $4825
 	ld a, [hl] ; $482c
 	dec a ; $482d
 	ld [wGroundStrokeSpeedIndex], a ; $482e
 	ld [wReachSpeedIndex], a ; $4831
 	ld [wSlicePlacementIndex], a ; $4834
 	ld [wTopspinPlacementIndex], a ; $4837
-	ld a, [wMinigameServeSpeed] ; $483a
+	ld a, [wMinigameServeTier] ; $483a
 	add a ; $483d
 	add a ; $483e
-	ld_hl_indexed MinigameShotDifficultyRamp ; $483f
+	ld_hl_indexed MinigameShotButtonPoolColumn ; $483f
 	ld a, [hl] ; $4846
 	add a ; $4847
 	add a ; $4848
 	add a ; $4849
 	add a ; $484a
-	ld_hl_indexed MinigameShotAimPools ; $484b
+	ld_hl_indexed MinigameShotButtonPools ; $484b
 	farcall AdvanceMatchRng ; $4852
 	and $0f ; $4855
 	add_hl_a ; $4857
@@ -482,11 +482,11 @@ LaunchBall:
 	and $0f ; $4865
 	ld [wCharShotButton2], a ; $4867
 	farcall SelectRallyShotType ; $486a
-	ld a, [wMinigameServeGroup] ; $486d
-	ld_hl_indexed MinigameBallLaunchSpeeds ; $4870
+	ld a, [wMinigameFeederRow] ; $486d
+	ld_hl_indexed MinigameAimOffsetScales ; $4870
 	ld a, [hl] ; $4877
 	ld [wCharAimOffsetScale], a ; $4878
-	ld a, [wMinigameServeGroup] ; $487b
+	ld a, [wMinigameFeederRow] ; $487b
 	add a ; $487e
 	ld_hl_indexed MinigameBallLaunchHeights ; $487f
 	ld a, [hl+] ; $4886
@@ -503,7 +503,7 @@ LaunchBall:
 	farcall SetBallPosition ; $4895
 	farcall AdvanceMatchRng ; $4898
 	and $07 ; $489b
-	ld_hl_indexed MinigameShotSpinPool ; $489d
+	ld_hl_indexed MinigameAimDirectionPool ; $489d
 	ld a, [hl] ; $48a4
 	ld [wCharAimOffset], a ; $48a5
 	ld_slot hl, FarPtr_ExecuteShot ; $48a8

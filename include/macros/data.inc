@@ -13,7 +13,7 @@ ENDM
 
 ; One row of TileBlockPtrs_39, the table LoadCompressedTileBlock indexes with
 ; b: the slot word for DataPtr_<name>, and TILEBLOCK_<name>, its index (`ld b,
-; TILEBLOCK_MatchWinLoseGfx`). Inserting a row renumbers the rows after it.
+; TILEBLOCK_WinLoseArrowGfx`). Inserting a row renumbers the rows after it.
 MACRO tileblock
 DEF TILEBLOCK_\1 EQU (@ - TileBlockPtrs_39) / 2
 EXPORT TILEBLOCK_\1
@@ -33,8 +33,8 @@ ENDM
 ; copies into a character record at +$0f-+$2b and LoadCharacterAttributes
 ; turns into the wChar*/wAi* fields (docs/match_engine.md "Character stats
 ; into the engine").
-;   char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
-;                  delay_near, delay_far, tracking, aim_away, serve_style,
+;   char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, shot_traits,
+;                  delay_near, delay_far, tracking, aim_away, difficulty,
 ;                  Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
 ;                  Dash, Reaction, Stop, speed_bonus
 MACRO char_stats_row
@@ -48,9 +48,9 @@ MACRO char_stats_row
 ENDM
 
 ; One ShotTypePresets_07 row, read by ApplyShotTypePresets: the contact sound,
-; the ApplyShotRecoil variant, the SetBallTrailColor index and the nominal
+; the SHOTCLASS_*, the SetBallTrailColor index and the nominal
 ; landing depth past the net that ComputeShotTrajectory aims at.
-;   shot_preset sound, recoil, trail, depth
+;   shot_preset sound, class, trail, depth
 MACRO shot_preset
 	db \1, \2, \3
 	dw \4
@@ -59,14 +59,14 @@ ENDM
 ; One CpuDifficultyParams* row: the four AI bytes ApplyCpuDifficultyToCharRecords
 ; writes to a CPU record's +$1b-+$1e (frames of inertness after a stroke near
 ; the net and away from it, the tracking countdown, the aim-away RNG threshold),
-; then the partner's difficulty and EXP tier.
-;   cpu_difficulty delay_near, delay_far, tracking, aim_away, partner_difficulty, partner_tier
+; then the record's 0-3 difficulty (+$1f) and EXP tier.
+;   cpu_difficulty delay_near, delay_far, tracking, aim_away, difficulty, tier
 MACRO cpu_difficulty
 	db \1, \2, \3, \4, \5, \6
 ENDM
 
 ; One equipment row (RacketStatDeltas_02 / ShoeStatDeltas_02): the signed
-; delta ApplyStatModifierRow adds to each of the eleven stat bars, padded to
+; delta ApplyEquipmentStatDeltaRow adds to each of the eleven stat bars, padded to
 ; the 16-byte stride.
 ;   equip_stat_deltas Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 MACRO equip_stat_deltas
@@ -97,7 +97,7 @@ ENDM
 ; A training drill's per-outcome rows: ten entries indexed by wPointOutcome --
 ; 0 undecided, then POINTOUTCOME_FAULT, DOUBLE_FAULT, LET, NET, OUT, WINNER,
 ; SERVE_VOLLEYED, WRONG_RECEIVER, BALL_HIT_PLAYER. *Messages rows hold the
-; DRILLMSG_* id for the player serving (QueueDrillResultMessage adds an offset
+; DRILLMSG_* id for the player serving (SetDrillServerMessage adds an offset
 ; otherwise); *Verdicts rows hold the WINLOSE_* the point gives.
 MACRO drill_messages
 	ASSERT _NARG == 10, "drill_messages takes 10 entries"
@@ -119,11 +119,19 @@ MACRO court_positions
 	db \1, \2, \3, \4, \5, \6, \7, \8
 ENDM
 
-; One point of a training drill's *PointStartDrillPositions table
-; (IndexDrillTableByPoint): the two ball-gate points the drill sets for
+; One point of a training drill's *GatePositions table
+; (SetDrillGateForPoint): the two ball-gate points the drill sets for
 ; that point, each an X and a depth in court units. The list ends on $ff, $ff.
 ;   drill_gates x1, depth1, x2, depth2
 MACRO drill_gates
+	dw \1, \2, \3, \4
+ENDM
+
+; One point of a training drill's *TargetZones table
+; (SetDrillTargetZoneForPoint): the two corners of the target zone the
+; drill sets for that point, each an X and a depth in court units.
+;   drill_target_zone x1, depth1, x2, depth2
+MACRO drill_target_zone
 	dw \1, \2, \3, \4
 ENDM
 
@@ -138,11 +146,11 @@ MACRO drill_def
 	db $00, $00
 ENDM
 
-; One Target Shot scoring rule (TargetShotScoreRules; LookupMinigameShotResult
-; walks them to the first match): the shot roll (wMinigameShotRoll), the
+; One Target Shot scoring rule (TargetShotScoreRules; LookupTargetShotPoints
+; walks them to the first match): the target zone (wMinigameTargetZone), the
 ; button combination (wLastShotButtons), the shot type it applies to
 ; (SHOTTYPE_*, or $ff for any) and the points awarded. The list ends on $ff.
-;   score_rule roll, buttons, shot, points
+;   score_rule zone, buttons, shot, points
 MACRO score_rule
 	db \1, \2, \3, \4
 ENDM
@@ -280,17 +288,17 @@ ENDM
 
 ; Match-result graphics set (bank $16 loader): three LZ tile streams
 ; decompressed to VRAM $8900, $8a40, $9140 (20 tiles each). Records live in
-; GfxSetPointerTable_16 and are selected by the remapped match gfx index.
-; Usage: gfx_set tiles_lo, tiles_mid, tiles_hi
+; MatchResultBannerSetTable and are selected by the remapped match gfx index.
+; Usage: gfx_set series_line, event_line, round_label
 MACRO gfx_set
 	dw \1, \2, \3
 ENDM
 
 ; One run of a tilemap patch list: copy `length` bytes from the source row
-; (bc) + `src` to cell (`col`, `row`) of the reader's planes. The readers are
-; BlitTilemapRunsFromTable and ApplyTilemapPatchListExpScreen (cells from
-; wScreenAttrmap), and ApplyTilemapPatchList and its _1a copy (cells from
-; wCharDataScreenCell, tile and attribute planes). A $ff byte ends the list.
+; (bc) + `src` to cell (`col`, `row`) of wCharDataScreenCell, tile and
+; attribute planes. The readers are BlitTilemapRunsFromTable,
+; ApplyTilemapPatchListExpScreen, ApplyTilemapPatchList and its _1a copy.
+; A $ff byte ends the list.
 ;   blit_run col, row, src, length
 MACRO blit_run
 	ASSERT (\1) < TILEMAP_WIDTH && (\2) * TILEMAP_WIDTH + (\1) < $ff00, "blit_run: bad cell"
@@ -324,4 +332,29 @@ ENDM
 ; Usage: scene_bounds min_x, min_y, width, height
 MACRO scene_bounds
 	db \1, \2, \3, \4
+ENDM
+
+; The tile-animation list from byte 8 of a story scene config
+; (InitSceneTileAnimations, AdvanceSceneTileAnimation). One step copies
+; `count` tiles from tile `src` of the scene's slot-6 sheet to tile `dest` of
+; vTiles2 + VRAM_BANK1 and holds for `delay` frames. Init finds the markers by
+; scanning single bytes, so no field may be $fe or $ff.
+; Usage: scene_tile_anim src, count, dest, delay
+MACRO scene_tile_anim
+	REPT 4
+	ASSERT (\1) < $fe, "scene_tile_anim: \1 would read as a list marker"
+	db \1
+	SHIFT
+	ENDR
+ENDM
+
+; Closes an animation (it loops to its first step). The next animation's first
+; step waits first_delay + 1 frames; the byte is consumed even before the end.
+; Usage: scene_tile_anim_loop first_delay
+MACRO scene_tile_anim_loop
+	db $ff, \1
+ENDM
+
+MACRO scene_tile_anim_end
+	db $fe
 ENDM

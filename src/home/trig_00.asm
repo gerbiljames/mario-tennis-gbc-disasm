@@ -15,7 +15,7 @@ GetSquareOfByte:
 	ld l, a ; $1087
 	pop af ; $1088
 	ret ; $1089
-Unused_00_AngleFromVector:
+Unused_00_SqrtHL:
 	push bc ; $108a
 	push de ; $108b
 	push hl ; $108c
@@ -266,11 +266,11 @@ AngleFromVector16:
 	ld bc, $0000 ; $1416
 	ld a, h ; $1419
 	or l ; $141a
-	jp z, .applySignY ; $141b
+	jp z, .applySignX ; $141b
 	ld b, $40 ; $141e
 	ld a, d ; $1420
 	or e ; $1421
-	jp z, .applySignY ; $1422
+	jp z, .applySignX ; $1422
 	push hl ; $1425
 	push de ; $1426
 	abs_de ; $1427
@@ -479,16 +479,16 @@ AngleFromVector16:
 .restore:
 	pop de ; $154d
 	pop hl ; $154e
-.applySignY:
+.applySignX:
 	bit 7, d ; $154f
-	jr z, .signYDone ; $1551
+	jr z, .signXDone ; $1551
 	xor a ; $1553
 	sub c ; $1554
 	ld c, a ; $1555
 	ld a, $80 ; $1556
 	sbc b ; $1558
 	ld b, a ; $1559
-.signYDone:
+.signXDone:
 	bit 7, h ; $155a
 	jr z, .done ; $155c
 	neg_bc ; $155e

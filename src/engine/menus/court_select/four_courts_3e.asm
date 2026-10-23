@@ -3,11 +3,11 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
 	res B_IE_TIMER, [hl] ; $5ba1
-	farcall InitMenuBgScroll ; $5ba3
+	farcall InitMenuTitleScroller ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
 	farcall LoadMenuSpritePalettePair ; $5baa
-	call LoadCourtSelectHeader ; $5bad
+	call LoadCourtStatsRow ; $5bad
 	wram_bank WRAM_SCREEN ; $5bb0
 	ld a, [wMenuSlideDirection] ; $5bb6
 	ld b, a ; $5bb9
@@ -21,7 +21,7 @@ RunCourtSelect4Menu:
 	wram_bank WRAM_SCREEN ; $5bd1
 .loop:
 	call AdvanceFrame ; $5bd7
-	ldh a, [hInputPressed] ; $5bda
+	ldh a, [hInputRepeat] ; $5bda
 	ld [wMenuInputPressed], a ; $5bdc
 	ld b, $02 ; $5bdf
 	ld c, $02 ; $5be1
@@ -42,7 +42,7 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5bfd
 	ld hl, rIE ; $5c00
 	set B_IE_TIMER, [hl] ; $5c03
-	ld b, $01 ; $5c05
+	ld b, MENUSLIDE_FORWARD ; $5c05
 	call CloseCourtSelect4Panel ; $5c07
 	ld a, MENUSLIDE_FORWARD ; $5c0a
 	ld [wMenuSlideDirection], a ; $5c0c
@@ -59,7 +59,7 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5c20
 	ld hl, rIE ; $5c23
 	set B_IE_TIMER, [hl] ; $5c26
-	ld b, $00 ; $5c28
+	ld b, MENUSLIDE_BACK ; $5c28
 	call CloseCourtSelect4Panel ; $5c2a
 	ld a, MENUSLIDE_BACK ; $5c2d
 	ld [wMenuSlideDirection], a ; $5c2f
@@ -73,11 +73,11 @@ RunLinkCourtSelect4Menu:
 	call ClearFrameTasks ; $5c3e
 	call EnableTimerInterrupt ; $5c41
 	sound BGM_MENU ; $5c44
-	farcall InitMenuBgScroll ; $5c46
+	farcall InitMenuTitleScroller ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
 	farcall LoadMenuSpritePalettePair ; $5c4d
-	call LoadCourtSelectHeader ; $5c50
+	call LoadCourtStatsRow ; $5c50
 	wram_bank WRAM_SCREEN ; $5c53
 	ld a, [wMenuSlideDirection] ; $5c59
 	ld b, a ; $5c5c
@@ -148,7 +148,7 @@ RunLinkCourtSelect4Menu:
 	ldh [hLinkExchangeActive], a ; $5ce1
 	call ResetSerialState ; $5ce3
 	call ClearFrameTasks ; $5ce6
-	ld b, $00 ; $5ce9
+	ld b, MENUSLIDE_BACK ; $5ce9
 	call CloseCourtSelect4Panel ; $5ceb
 	ld a, MENUSLIDE_BACK ; $5cee
 	ld [wMenuSlideDirection], a ; $5cf0
@@ -178,7 +178,7 @@ LoadCourtSelectGraphics:
 .loop:
 	ld a, c ; $5d28
 	add a ; $5d29
-	ld hl, CourtSelectGraphicsTable ; $5d2a
+	ld hl, CourtIconTilePtrs ; $5d2a
 	add_hl_a ; $5d2d
 	ld a, [hl+] ; $5d32
 	ld h, [hl] ; $5d33
@@ -187,14 +187,14 @@ LoadCourtSelectGraphics:
 	push bc ; $5d36
 	push de ; $5d37
 	push hl ; $5d38
-	call GetCourtThumbnailPtr ; $5d39
+	call GetCourtIconPtr ; $5d39
 	ld de, wDecompBuffer ; $5d3c
 	call DecompressDataFromBank ; $5d3f
 	pop hl ; $5d42
 	pop de ; $5d43
 	pop bc ; $5d44
 	pop af ; $5d45
-	ld hl, CourtSelectTable ; $5d46
+	ld hl, CourtIconTileVramDests ; $5d46
 	ld a, c ; $5d49
 	add a ; $5d4a
 	add_hl_a ; $5d4b
@@ -218,52 +218,52 @@ LoadCourtSelectGraphics:
 	ld a, c ; $5d67
 	cp $09 ; $5d68
 	jr nz, .loop ; $5d6a
-	ld b, TILEBLOCK_CourtSelectGfx1 ; $5d6c
-	ld c, 18 ; $5d6e -- 18 of CourtSelectGfx1's 16 tiles
+	ld b, TILEBLOCK_HardCourtNameGfx ; $5d6c
+	ld c, 18 ; $5d6e -- 18 of HardCourtNameGfx's 16 tiles
 	ld de, vTiles0 + VRAM_BANK1 ; $5d70
 	farcall LoadCompressedTileBlock ; $5d73
-	ld b, TILEBLOCK_CourtSelectGfx2 ; $5d76
-	ld c, 18 ; $5d78 -- 18 of CourtSelectGfx2's 16 tiles
+	ld b, TILEBLOCK_ClayCourtNameGfx ; $5d76
+	ld c, 18 ; $5d78 -- 18 of ClayCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5d7a
 	farcall LoadCompressedTileBlock ; $5d7d
-	ld b, TILEBLOCK_CourtSelectGfx3 ; $5d80
-	ld c, 18 ; $5d82 -- 18 of CourtSelectGfx3's 16 tiles
+	ld b, TILEBLOCK_GrassCourtNameGfx ; $5d80
+	ld c, 18 ; $5d82 -- 18 of GrassCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5d84
 	farcall LoadCompressedTileBlock ; $5d87
-	ld b, TILEBLOCK_CourtSelectGfx4 ; $5d8a
-	ld c, 20 ; $5d8c -- 20 of CourtSelectGfx4's 18 tiles
+	ld b, TILEBLOCK_CompositionCourtNameGfx ; $5d8a
+	ld c, 20 ; $5d8c -- 20 of CompositionCourtNameGfx's 18 tiles
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5d8e
 	farcall LoadCompressedTileBlock ; $5d91
-	ld b, TILEBLOCK_CourtSelectGfx5Alias16 ; $5d94
-	ld c, 18 ; $5d96 -- 18 of CourtSelectGfx5's 16 tiles
+	ld b, TILEBLOCK_StarCourtNameGfx ; $5d94
+	ld c, 18 ; $5d96 -- 18 of StarCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5d98
 	farcall LoadCompressedTileBlock ; $5d9b
-	ld b, TILEBLOCK_CourtSelectGfx6 ; $5d9e
-	ld c, 18 ; $5da0 -- 18 of CourtSelectGfx6's 16 tiles
+	ld b, TILEBLOCK_CastleCourtNameGfx ; $5d9e
+	ld c, 18 ; $5da0 -- 18 of CastleCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $52 + VRAM_BANK1 ; $5da2
 	farcall LoadCompressedTileBlock ; $5da5
-	ld b, TILEBLOCK_CourtSelectGfx7 ; $5da8
-	ld c, 18 ; $5daa -- 18 of CourtSelectGfx7's 16 tiles
+	ld b, TILEBLOCK_TropicsCourtNameGfx ; $5da8
+	ld c, 18 ; $5daa -- 18 of TropicsCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $62 + VRAM_BANK1 ; $5dac
 	farcall LoadCompressedTileBlock ; $5daf
-	ld b, TILEBLOCK_CourtSelectGfx8 ; $5db2
-	ld c, 18 ; $5db4 -- 18 of CourtSelectGfx8's 16 tiles
+	ld b, TILEBLOCK_JungleCourtNameGfx ; $5db2
+	ld c, 18 ; $5db4 -- 18 of JungleCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $20 ; $5db6
 	farcall LoadCompressedTileBlock ; $5db9
-	ld b, TILEBLOCK_CourtSelectGfx9 ; $5dbc
-	ld c, 18 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
+	ld b, TILEBLOCK_WarehouseCourtNameGfx ; $5dbc
+	ld c, 18 ; $5dbe -- 18 of WarehouseCourtNameGfx's 16 tiles
 	ld de, vTiles0 tile $30 ; $5dc0
 	farcall LoadCompressedTileBlock ; $5dc3
-	ld b, TILEBLOCK_SharedMenuGfx111 ; $5dc6
-	ld c, 18 ; $5dc8 -- 18 of SharedMenuGfx111's 16 tiles
+	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $5dc6
+	ld c, 18 ; $5dc8 -- 18 of QuestionMarksLabelGfx's 16 tiles
 	ld de, vTiles0 tile $40 ; $5dca
 	farcall LoadCompressedTileBlock ; $5dcd
 	ld b, TILEBLOCK_SharedMenuGfx27 ; $5dd0
 	ld c, SharedMenuGfx27_SIZE / 16 ; $5dd2
 	ld de, vTiles0 tile $72 + VRAM_BANK1 ; $5dd4
 	farcall LoadCompressedTileBlock ; $5dd7
-	ld b, TILEBLOCK_CourtSelectGfx0 ; $5dda
-	ld c, CourtSelectGfx0_SIZE / 16 ; $5ddc
+	ld b, TILEBLOCK_SelectACourtHeadingGfx ; $5dda
+	ld c, SelectACourtHeadingGfx_SIZE / 16 ; $5ddc
 	ld de, vTiles0 ; $5dde
 	farcall LoadCompressedTileBlock ; $5de1
 	ld b, $08 ; $5de4
@@ -271,19 +271,19 @@ LoadCourtSelectGraphics:
 	farcall LoadIndexedPalette ; $5de8
 	pop_wram_bank ; $5deb
 	ret ; $5df0
-CourtSelectGraphicsTable:
+CourtIconTilePtrs:
 	; $5df1, 20 bytes (10 records x 1 slot words)
-	dslot DataPtr_HardCourtLabelTiles ; record 0
-	dslot DataPtr_ClayCourtLabelTiles ; record 1
-	dslot DataPtr_GrassCourtLabelTiles ; record 2
-	dslot DataPtr_CompositionCourtLabelTiles ; record 3
-	dslot DataPtr_CourtNameLabelTiles0 ; record 4
-	dslot DataPtr_CourtNameLabelTiles1 ; record 5
-	dslot DataPtr_CourtNameLabelTiles2 ; record 6
-	dslot DataPtr_CourtNameLabelTiles3 ; record 7
-	dslot DataPtr_CourtNameLabelTiles4 ; record 8
-	dslot DataPtr_CourtNameLabelTiles5 ; record 9
-CourtSelectTable:
+	dslot DataPtr_HardCourtIconTiles ; record 0
+	dslot DataPtr_ClayCourtIconTiles ; record 1
+	dslot DataPtr_GrassCourtIconTiles ; record 2
+	dslot DataPtr_CompositionCourtIconTiles ; record 3
+	dslot DataPtr_StarCourtIconTiles ; record 4
+	dslot DataPtr_CastleCourtIconTiles ; record 5
+	dslot DataPtr_TropicsCourtIconTiles ; record 6
+	dslot DataPtr_JungleCourtIconTiles ; record 7
+	dslot DataPtr_WarehouseCourtIconTiles ; record 8
+	dslot DataPtr_LockedCourtIconTiles ; record 9
+CourtIconTileVramDests:
 	; $5e05, 18 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -294,7 +294,7 @@ CourtSelectTable:
 	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
 	dw vTiles1 tile $70 + VRAM_BANK1 ; record 7
 	dw vTiles2 tile $70 + VRAM_BANK1 ; record 8
-GetCourtThumbnailPtr:
+GetCourtIconPtr:
 	push af ; $5e17
 	push bc ; $5e18
 	push de ; $5e19
@@ -304,7 +304,7 @@ GetCourtThumbnailPtr:
 	or a ; $5e1f
 	pop hl ; $5e20
 	jr nz, .restore ; $5e21
-	ld hl, $3f14 ; $5e23
+	ld_slot hl, DataPtr_LockedCourtIconTiles ; $5e23
 .restore:
 	pop de ; $5e26
 	pop bc ; $5e27
@@ -375,16 +375,16 @@ CloseCourtSelect4Panel:
 	jr nz, .rewindInLoop ; $5e90
 	ret ; $5e92
 CourtSelect4CursorSpriteTask:
-	farcall TickMenuBgScroll ; $5e93
+	farcall TickMenuTitleScroller ; $5e93
 	ld c, $02 ; $5e96
 	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b
-	ld hl, CourtSelect4CursorTiles_3e ; $5e9c
+	ld hl, CourtSelect4BannerTileBases ; $5e9c
 	add_hl_a ; $5e9f
 	ld c, [hl] ; $5ea4
 	pop af ; $5ea5
 	push af ; $5ea6
-	ld hl, CourtSelect4CursorPositions_3e ; $5ea7
+	ld hl, CourtSelect4BannerPositions ; $5ea7
 	add a ; $5eaa
 	add_hl_a ; $5eab
 	ld a, [hl+] ; $5eb0
@@ -394,7 +394,7 @@ CourtSelect4CursorSpriteTask:
 	ld b, [hl] ; $5eb6
 	pop af ; $5eb7
 	add a ; $5eb8
-	ld hl, CourtSelect4CursorTemplatePtrs ; $5eb9
+	ld hl, CourtSelect4BannerTemplatePtrs ; $5eb9
 	add_hl_a ; $5ebc
 	ld a, [hl+] ; $5ec1
 	ld h, [hl] ; $5ec2
@@ -405,7 +405,7 @@ CourtSelect4CursorSpriteTask:
 	pop de ; $5eca
 	ld c, $02 ; $5ecb
 	call GetMenuCursorIndex_3e ; $5ecd
-	ld hl, CourtSelect4LabelYOffsets_3e ; $5ed0
+	ld hl, CourtSelect4CursorXOffsets ; $5ed0
 	add_hl_a ; $5ed3
 	ld a, [hl] ; $5ed8
 	ld h, a ; $5ed9
@@ -417,13 +417,13 @@ CourtSelect4CursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $5ee2
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
-CourtSelect4CursorTemplatePtrs:
+CourtSelect4BannerTemplatePtrs:
 	; $5eea, 8 bytes (records:2)
-	dw CourtSelect4CursorTemplate0 ; record 0
-	dw CourtSelect4CursorTemplate0 ; record 1
-	dw CourtSelect4CursorTemplate0 ; record 2
-	dw CourtSelect4CursorTemplate1 ; record 3
-CourtSelect4CursorTemplate0:
+	dw CourtSelect4Banner8WideTemplate ; record 0
+	dw CourtSelect4Banner8WideTemplate ; record 1
+	dw CourtSelect4Banner8WideTemplate ; record 2
+	dw CourtSelect4Banner9WideTemplate ; record 3
+CourtSelect4Banner8WideTemplate:
 	; $5ef2, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -434,7 +434,7 @@ CourtSelect4CursorTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-CourtSelect4CursorTemplate1:
+CourtSelect4Banner9WideTemplate:
 	; $5f13, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -451,19 +451,19 @@ CourtSelect4CursorSpriteTask_SpriteTemplate:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-CourtSelect4CursorPositions_3e:
+CourtSelect4BannerPositions:
 	; $5f41, 8 bytes (bytes:8)
 	db $38, $14, $38, $4c, $60, $14, $60, $48 ; 0x00
-CourtSelect4CursorTiles_3e:
+CourtSelect4BannerTileBases:
 	; $5f49, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
-CourtSelect4LabelYOffsets_3e:
+CourtSelect4CursorXOffsets:
 	; $5f4d, 4 bytes (bytes:4)
 	db $17, $17, $17, $1b ; 0x00
 RedrawCourtSelect4Menu:
 	wram_bank WRAM_SCREEN ; $5f51
 	ld b, $00 ; $5f57
-	ld c, $00 ; $5f59
+	ld c, ATTRRECT_INACTIVE ; $5f59
 .tabLoop:
 	call SetCourtSelect4TabAttrRect ; $5f5b
 	ld a, b ; $5f5e
@@ -474,7 +474,7 @@ RedrawCourtSelect4Menu:
 	ld c, $02 ; $5f65
 	call GetMenuCursorIndex_3e ; $5f67
 	ld b, a ; $5f6a
-	ld c, $01 ; $5f6b
+	ld c, ATTRRECT_SELECTED ; $5f6b
 	call SetCourtSelect4TabAttrRect ; $5f6d
 	ld c, $02 ; $5f70
 	call GetMenuCursorIndex_3e ; $5f72
@@ -486,10 +486,10 @@ RedrawCourtSelect4Menu:
 	call IsCourtUnlocked ; $5f7f
 	or a ; $5f82
 	ld b, $ff ; $5f83
-	jr z, .drawName ; $5f85
+	jr z, .drawStats ; $5f85
 	ld b, d ; $5f87
-.drawName:
-	call DrawCourtNameTiles ; $5f88
+.drawStats:
+	call DrawCourtStatValues ; $5f88
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $5f8b
 	ld de, vBGMap0 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $5f8e
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $5f91
@@ -550,39 +550,39 @@ SetCourtSelect4Palette:
 	ret ; $5ff0
 CourtSelect4PalettePtrs:
 	; $5ff1, 18 bytes (records:2)
-	dw CourtSelect4Palette0 ; record 0
-	dw CourtSelect4Palette1 ; record 1
-	dw CourtSelect4Palette2 ; record 2
-	dw CourtSelect4Palette3 ; record 3
-	dw CourtSelect4Palette0 ; record 4
-	dw CourtSelect4Palette0 ; record 5
-	dw CourtSelect4Palette0 ; record 6
-	dw CourtSelect4Palette0 ; record 7
-	dw CourtSelect4Palette0 ; record 8
-CourtSelect4Palette0:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette0.asm" ; $6003, 8 bytes (palettes)
-CourtSelect4Palette1:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette1.asm" ; $600b, 8 bytes (palettes)
-CourtSelect4Palette2:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette2.asm" ; $6013, 8 bytes (palettes)
-CourtSelect4Palette3:
-	INCLUDE "data/engine/menus/court_select/CourtSelect4Palette3.asm" ; $601b, 8 bytes (palettes)
-Unused_3e_DrawCourtSelect4TitleText:
+	dw CourtSelect4HardPalette ; record 0
+	dw CourtSelect4ClayPalette ; record 1
+	dw CourtSelect4GrassPalette ; record 2
+	dw CourtSelect4CompositionPalette ; record 3
+	dw CourtSelect4HardPalette ; record 4
+	dw CourtSelect4HardPalette ; record 5
+	dw CourtSelect4HardPalette ; record 6
+	dw CourtSelect4HardPalette ; record 7
+	dw CourtSelect4HardPalette ; record 8
+CourtSelect4HardPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4HardPalette.asm" ; $6003, 8 bytes (palettes)
+CourtSelect4ClayPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4ClayPalette.asm" ; $600b, 8 bytes (palettes)
+CourtSelect4GrassPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4GrassPalette.asm" ; $6013, 8 bytes (palettes)
+CourtSelect4CompositionPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect4CompositionPalette.asm" ; $601b, 8 bytes (palettes)
+Unused_3e_DrawCourtSelect4StatsText:
 	push_wram_bank WRAM_SCREEN ; $6023
 	ld c, $02 ; $602c
 	call GetMenuCursorIndex_3e ; $602e
 	ld c, a ; $6031
 	push bc ; $6032
-	call Unused_3e_DrawCourtSelectTitleTiles ; $6033
+	call Unused_3e_DrawCourtStatsLabelTiles ; $6033
 	pop bc ; $6036
 	push bc ; $6037
-	call Unused_3e_RenderCourtSelectTitleText ; $6038
+	call Unused_3e_RenderCourtSpeedText ; $6038
 	pop bc ; $603b
-	call Unused_3e_RenderCourtSelectTitleText2 ; $603c
+	call Unused_3e_RenderCourtBounceText ; $603c
 	pop_wram_bank ; $603f
 	ret ; $6044
-Unused_3e_DrawCourtSelectTitleTiles:
-	ld hl, Unused_3e_CourtSelectTitleColumns ; $6045
+Unused_3e_DrawCourtStatsLabelTiles:
+	ld hl, Unused_3e_CourtStatsColumns ; $6045
 	ld a, c ; $6048
 	add_hl_a ; $6049
 	ld a, [hl] ; $604e
@@ -590,17 +590,17 @@ Unused_3e_DrawCourtSelectTitleTiles:
 	add_hl_a ; $6052
 	ld d, h ; $6057
 	ld e, l ; $6058
-	ld hl, Unused_3e_CourtSelectTitleTilesA ; $6059
+	ld hl, Unused_3e_CourtStatsLabelTilesA ; $6059
 	ld bc, 5 ; $605c
 	call CopyMemoryBC ; $605f
-	ld hl, Unused_3e_CourtSelectTitleTilesB ; $6062
+	ld hl, Unused_3e_CourtStatsLabelTilesB ; $6062
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6065
 	ld bc, 5 ; $6068
 	call CopyMemoryBC ; $606b
 	ret ; $606e
-Unused_3e_RenderCourtSelectTitleText:
+Unused_3e_RenderCourtSpeedText:
 	ld a, c ; $606f
-	ld hl, Unused_3e_CourtSelectTitleTextIndices ; $6070
+	ld hl, Unused_3e_CourtSpeedTextIndices ; $6070
 	add_hl_a ; $6073
 	ld a, [hl] ; $6078
 	ld hl, Text_CourtSpeedSlow ; $6079
@@ -609,11 +609,11 @@ Unused_3e_RenderCourtSelectTitleText:
 	ld c, $20 ; $6084
 	farcall RenderTextToBuffer64 ; $6086
 	ret ; $6089
-Unused_3e_CourtSelectTitleTextIndices:
+Unused_3e_CourtSpeedTextIndices:
 	; $608a, 9 bytes (bytes:9)
 	db $01, $00, $02, $03, $02, $01, $03, $02, $00 ; 0x00
-Unused_3e_RenderCourtSelectTitleText2:
-	ld hl, Unused_3e_CourtSelectTitleColumns ; $6093
+Unused_3e_RenderCourtBounceText:
+	ld hl, Unused_3e_CourtStatsColumns ; $6093
 	ld a, c ; $6096
 	add_hl_a ; $6097
 	ld a, [hl] ; $609c
@@ -622,7 +622,7 @@ Unused_3e_RenderCourtSelectTitleText2:
 	add_hl_a ; $60a2
 	ld d, h ; $60a7
 	ld e, l ; $60a8
-	ld hl, Unused_3e_CourtSelectTitleText2Indices ; $60a9
+	ld hl, Unused_3e_CourtBounceTextIndices ; $60a9
 	ld a, c ; $60ac
 	add_hl_a ; $60ad
 	ld a, [hl] ; $60b2
@@ -631,16 +631,16 @@ Unused_3e_RenderCourtSelectTitleText2:
 	ld c, $20 ; $60bb
 	farcall RenderTextToBuffer64 ; $60bd
 	ret ; $60c0
-Unused_3e_CourtSelectTitleText2Indices:
+Unused_3e_CourtBounceTextIndices:
 	; $60c1, 9 bytes (bytes:9)
 	db $06, $04, $04, $05, $06, $05, $04, $07, $06 ; 0x00
-Unused_3e_CourtSelectTitleColumns:
+Unused_3e_CourtStatsColumns:
 	; $60ca, 9 bytes (bytes:9)
 	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $09, $0a ; 0x00
-Unused_3e_CourtSelectTitleTilesA:
+Unused_3e_CourtStatsLabelTilesA:
 	; $60d3, 5 bytes (bytes:5)
 	db $15, $16, $17, $18, $19 ; 0x00
-Unused_3e_CourtSelectTitleTilesB:
+Unused_3e_CourtStatsLabelTilesB:
 	; $60d8, 5 bytes (bytes:5)
 	db $10, $11, $12, $13, $14 ; 0x00
 SetCourtSelectBGM:
@@ -663,13 +663,13 @@ SetCourtSelectBGMLink:
 CourtSelectBgmIdsLink_3e:
 	; $6102, 9 bytes (bytes:9)
 	db BGM_EXHIBITION_MATCH_LINK, BGM_EXHIBITION_MATCH_LINK, BGM_EXHIBITION_MATCH_LINK, BGM_EXHIBITION_MATCH_LINK, BGM_COURT_STAR, BGM_COURT_CASTLE, BGM_COURT_TROPIC, BGM_COURT_JUNGLE, BGM_COURT_WAREHOUSE ; 0x00
-LoadCourtSelectHeader:
-	call LoadCourtSelectTitleGfx ; $610b
-	call DrawCourtSelectTitleRow ; $610e
-	call FlushCourtSelectTitleRow ; $6111
+LoadCourtStatsRow:
+	call LoadCourtStatsLabelGfx ; $610b
+	call DrawCourtStatsRow ; $610e
+	call FlushCourtStatsRows ; $6111
 	call AdvanceFrame ; $6114
 	ret ; $6117
-DrawCourtSelectTitleRow:
+DrawCourtStatsRow:
 	push_wram_bank WRAM_SCREEN ; $6118
 	ld a, $12 ; $6121
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6123
@@ -679,11 +679,11 @@ DrawCourtSelectTitleRow:
 	inc hl ; $6129
 	dec a ; $612a
 	jr nz, .loop ; $612b
-	call DrawCourtSelectTitleLeft ; $612d
-	call DrawCourtSelectTitleRight ; $6130
+	call DrawBallSpeedLabel ; $612d
+	call DrawBounceLabel ; $6130
 	pop_wram_bank ; $6133
 	ret ; $6138
-DrawCourtSelectTitleLeft:
+DrawBallSpeedLabel:
 	ld b, $30 ; $6139
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $613b
 	ld c, $04 ; $613e
@@ -695,13 +695,13 @@ DrawCourtSelectTitleLeft:
 	ld c, $04 ; $614e
 	farcall FillIncrementingBytes ; $6150
 	ret ; $6153
-DrawCourtSelectTitleRight:
+DrawBounceLabel:
 	ld b, $40 ; $6154
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $6156
 	ld c, $05 ; $6159
 	farcall FillIncrementingBytes ; $615b
 	ret ; $615e
-FlushCourtSelectTitleRow:
+FlushCourtStatsRows:
 	push_wram_bank WRAM_SCREEN ; $615f
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6168
 	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $616b
@@ -709,24 +709,24 @@ FlushCourtSelectTitleRow:
 	call QueueVRAMCopy ; $6171
 	pop_wram_bank ; $6174
 	ret ; $6179
-LoadCourtSelectTitleGfx:
+LoadCourtStatsLabelGfx:
 	push_wram_bank WRAM_STAGING ; $617a
-	call LoadCourtSelectTitleTiles ; $6183
-	call LoadCourtSelectTitleTiles2 ; $6186
-	call LoadCourtSelectPanelTiles ; $6189
+	call LoadBallSpeedLabelTiles ; $6183
+	call LoadBounceLabelTiles ; $6186
+	call LoadCourtStatValueTiles ; $6189
 	pop_wram_bank ; $618c
 	ret ; $6191
-LoadCourtSelectTitleTiles:
-	ld hl, CourtSelectTitleTiles ; $6192
+LoadBallSpeedLabelTiles:
+	ld hl, BallSpeedLabelTiles ; $6192
 	ld de, wDecompBuffer ; $6195
 	call DecompressData ; $6198
 	ld hl, wDecompBuffer ; $619b
 	ld de, vTiles2 tile $30 ; $619e
-	ld bc, CourtSelectTitleTiles_SIZE / 16 ; $61a1
+	ld bc, BallSpeedLabelTiles_SIZE / 16 ; $61a1
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
-LoadCourtSelectTitleTiles2:
-	ld hl, CourtSelectTitleTiles2Gfx ; $61a8
+LoadBounceLabelTiles:
+	ld hl, BounceLabelTiles ; $61a8
 	ld de, wDecompBuffer tile 16 ; $61ab
 	call DecompressData ; $61ae
 	ld hl, wDecompBuffer tile 16 ; $61b1
@@ -734,8 +734,8 @@ LoadCourtSelectTitleTiles2:
 	ld bc, 5 ; $61b7
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
-LoadCourtSelectPanelTiles:
-	ld hl, CourtSelectPanelTiles ; $61be
+LoadCourtStatValueTiles:
+	ld hl, CourtStatValueTiles ; $61be
 	ld de, wDecompBuffer tile 32 ; $61c1
 	call DecompressData ; $61c4
 	ld hl, wDecompBuffer tile 32 ; $61c7
@@ -743,29 +743,29 @@ LoadCourtSelectPanelTiles:
 	ld bc, 55 ; $61cd
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
-CourtSelectTitleTiles:
-	INCBIN "data/engine/menus/court_select/lz_CourtSelectTitleTiles.bin" ; $61d4, 159 bytes
-	INCLUDE "data/engine/menus/court_select/lz_CourtSelectTitleTiles.inc" ; DEF CourtSelectTitleTiles_SIZE EQU its decoded length, generated from the .bin by make
-CourtSelectTitleTiles2Gfx:
-	INCBIN "data/engine/menus/court_select/lz_CourtSelectTitleTiles2Gfx.bin" ; $6273, 83 bytes
-CourtSelectPanelTiles:
-	INCBIN "data/engine/menus/court_select/lz_CourtSelectPanelTiles.bin" ; $62c6, 457 bytes
-DrawCourtNameTiles:
+BallSpeedLabelTiles:
+	INCBIN "data/engine/menus/court_select/lz_BallSpeedLabelTiles.bin" ; $61d4, 159 bytes
+	INCLUDE "data/engine/menus/court_select/lz_BallSpeedLabelTiles.inc" ; DEF BallSpeedLabelTiles_SIZE EQU its decoded length, generated from the .bin by make
+BounceLabelTiles:
+	INCBIN "data/engine/menus/court_select/lz_BounceLabelTiles.bin" ; $6273, 83 bytes
+CourtStatValueTiles:
+	INCBIN "data/engine/menus/court_select/lz_CourtStatValueTiles.bin" ; $62c6, 457 bytes
+DrawCourtStatValues:
 	push_wram_bank WRAM_SCREEN ; $648f
 	push bc ; $6498
-	call DrawCourtNameLeft ; $6499
+	call DrawCourtSpeedValue ; $6499
 	pop bc ; $649c
-	call DrawCourtNameRight ; $649d
+	call DrawCourtBounceValue ; $649d
 	pop_wram_bank ; $64a0
 	ret ; $64a5
-DrawCourtNameLeft:
+DrawCourtSpeedValue:
 	ld a, b ; $64a6
 	cp $ff ; $64a7
 	jr nz, .lookupCourt ; $64a9
 	ld b, $ac ; $64ab
 	jr .fillIncrementingBytes ; $64ad
 .lookupCourt:
-	ld hl, CourtNameLeftIndices_3e ; $64af
+	ld hl, CourtSpeedValueTileOffsets ; $64af
 	ld a, b ; $64b2
 	add_hl_a ; $64b3
 	ld a, [hl] ; $64b8
@@ -777,17 +777,17 @@ DrawCourtNameLeft:
 	ld c, $05 ; $64c0
 	farcall FillIncrementingBytes ; $64c2
 	ret ; $64c5
-CourtNameLeftIndices_3e:
+CourtSpeedValueTileOffsets:
 	; $64c6, 9 bytes (bytes:9)
 	db $0b, $00, $16, $21, $16, $0b, $21, $16, $00 ; 0x00
-DrawCourtNameRight:
+DrawCourtBounceValue:
 	ld a, b ; $64cf
 	cp $ff ; $64d0
 	jr nz, .lookupCourt ; $64d2
 	ld b, $b1 ; $64d4
 	jr .fillIncrementingBytes ; $64d6
 .lookupCourt:
-	ld hl, CourtNameRightIndices_3e ; $64d8
+	ld hl, CourtBounceValueTileOffsets ; $64d8
 	ld a, b ; $64db
 	add_hl_a ; $64dc
 	ld a, [hl] ; $64e1
@@ -799,6 +799,6 @@ DrawCourtNameRight:
 	ld c, $06 ; $64e9
 	farcall FillIncrementingBytes ; $64eb
 	ret ; $64ee
-CourtNameRightIndices_3e:
+CourtBounceValueTileOffsets:
 	; $64ef, 9 bytes (bytes:9)
 	db $1b, $05, $05, $10, $1b, $10, $05, $26, $1b ; 0x00

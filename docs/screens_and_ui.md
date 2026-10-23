@@ -18,7 +18,7 @@ dropped blue channel and the dead link-error check in `AdvanceFrame`).
 ### 1.1 `AdvanceFrame` — the barrier
 
 `AdvanceFrame` (`$00:$2631`, `src/home/flags_00.asm`) is the game's only frame
-barrier (420 call sites). Per call it:
+barrier. Per call it:
 
 1. Saves `af/bc/de/hl` and `rVBK`, clears `hVBlankOccurred` (`$2645`).
 2. Calls `RunFrameTasks` with `a = 0` (`$2647`, §1.3).
@@ -110,19 +110,19 @@ bytes in the `PADF_*` layout (buttons low nibble, d-pad high):
 |---|---|---|
 | `hPlayerInputFlags` | `$ff90` | held |
 | `hInputRisingEdge` | `$ff94` | newly pressed (`old xor new and new`, `$0310`) |
-| `hInputPressed` | `$ff91` | auto-repeat output |
+| `hInputRepeat` | `$ff91` | auto-repeat output |
 
 Repeat (`$031b`-`$0343`): a held set not overlapping the previously repeating set
 fires immediately, is recorded in `hInputRepeatButtons` and arms
-`hInputRepeatTimer = $12` (18 frames); after that `hInputPressed` is nonzero only
+`hInputRepeatTimer = $12` (18 frames); after that `hInputRepeat` is nonzero only
 when the timer expires, reloading from `hInputRepeatDelay`. Menus read
-`hInputPressed`, so held directions scroll.
+`hInputRepeat`, so held directions scroll.
 
 `hPlayerInputFlags == $0f` (all four face buttons) jumps to `SoftReset`
 (`$00:$2582`; the `jp z` is at `$27bd`).
 
 Menus mostly read `wMenuInputPressed` (`$cb0d`), a per-loop copy of
-`hInputPressed` (e.g. `$16:$450c`, `$3e:$452a`), so a screen can substitute link
+`hInputRepeat` (e.g. `$16:$450c`, `$3e:$452a`), so a screen can substitute link
 input without touching HRAM.
 
 ### 1.5 The debug single-stepper
@@ -131,7 +131,7 @@ In `AdvanceFrame`, when `hDebugStepMode` is nonzero and no link exchange is
 active, holding SELECT+START sets `hDebugStepPaused` and enters a second wait
 loop (`$268f`-`$26f1`): SELECT cycles `hDebugStepMode` through 1-3, START
 releases. While paused, `UpdateDebugOverlay` runs each VBlank. Step mode also
-makes two overflows audible: a full VRAM copy queue plays sound `$6f`
+makes two overflows audible: a full VRAM copy queue plays `SFX_DEBUG_ALARM`
 (`$00:$04e1`), a truncated text fetch `$2c` (`$30:$7dc7`).
 
 The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.buildStampLoop`
@@ -146,7 +146,7 @@ The only reachable nonzero write is `InitAndRunGame` setting it to 3 at `.buildS
 
 ### 2.1 `QueueVRAMCopy` is the only door
 
-`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`, 613 call sites); there
+`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm`); there
 is no direct `ld [$8xxx], a` in the ROM.
 
 ```
@@ -246,7 +246,7 @@ attribute byte under another.
 Sharing an address lets one loop patch both planes: `ApplyTilemapPatchList`
 (`$1d:$4bb6`) copies `[hl]` → `[de]` under `wram_bank $03` (tile), then again
 under `wram_bank $02` (attribute) from the same address. Its callers pass `bc` = a source inside the mirrored region
-(`wScreenAttrmap + 28 * TILEMAP_WIDTH + 16` at `$1d:$414c`,
+(`wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16` at `$1d:$414c`,
 `wCharDataPagePlane + 7 * TILEMAP_WIDTH` at `$1d:$4ae4`). Patch-list record,
 4 bytes, `$ff`-terminated:
 
@@ -322,8 +322,8 @@ and `$03` (tiles) and pushes one row and one column per frame through §2.4. The
 |---|---|---|
 | `BlitBGRowFrom64` | `$00:$222c` | 64-wide, one 32-cell row |
 | `BlitBGColumnFrom64` | `$00:$2299` | 64-wide, one 32-cell column |
-| `Unused_00_BlitBGStrip` | `$00:$2313` | 32-wide row |
-| `Unused_00_BlitBGStrip2` | `$00:$2380` | 32-wide column |
+| `Unused_00_BlitBGRowStrip` | `$00:$2313` | 32-wide row |
+| `Unused_00_BlitBGColumnStrip` | `$00:$2380` | 32-wide column |
 
 Each gathers into the §2.4 staging buffers indexed by destination column, so the
 strip lands rotated correctly on the VRAM torus (`inc e / res 5, e` wraps at 32),
@@ -382,7 +382,7 @@ Three dispatchers cover nearly every screen asset:
 
 `LoadScreenAssetRecord` consumes a `(Tiles, Tilemap, Attrmap, Palettes)` record
 in order: Tiles LZ into `wDecompBuffer` (WRAM `$01`), then `QueueVRAMCopy` `$80`
-blocks to `$9000 + VRAM_BANK1` plus `wTextTileBuffer` → `$8800 + VRAM_BANK1`
+blocks to `$9000 + VRAM_BANK1` plus `wDecompBufferHigh` → `$8800 + VRAM_BANK1`
 (`$40a0`-`$40b3`); Tilemap LZ into `wShadowTilemap` (WRAM `$03`, `$40c3`);
 Attrmap LZ into `wShadowAttrmap` (`$40d0`); Palettes as raw 64 bytes via
 `CopyDataFromBank`, then `LoadPaletteShadow` with `de = $0008`, the 8 BG
@@ -405,11 +405,11 @@ tileset.
 
 - `UpdateAnimatedTiles` (`$39:$4342`): `wAnimatedTileTimer` counts to
   `wAnimatedTilePeriod` (usually 3); on wrap it advances `wAnimatedTileFrame`,
-  looks up `wAnimatedTileSet` in `UpdateAnimatedTilesTable` and decompresses the
+  looks up `wAnimatedTileSet` in `AnimatedTileFrameLists` and decompresses the
   frame's tiles.
-- `InitMenuBgScroll` / `TickMenuBgScroll` (`$39:$4b13` / `$4b6d`): the two-lane
-  scrolling sprite band behind menus, alternating lanes each frame, a 10-sprite
-  row through `QueueSpriteTemplate`.
+- `InitMenuTitleScroller` / `TickMenuTitleScroller` (`$39:$4b13` / `$4b6d`): the menu title
+  that scrolls up the screen: two lanes of the screen's title gfx, alternating
+  lanes each frame, a 10-sprite row through `QueueSpriteTemplate`.
 - `LoadIndexedPalette` (`$39:$457f`, `c` = palette data index, `b` = destination
   slot) and `Unused_39_LoadFixedPaletteSet` (`$39:$4661`): palette loaders.
 
@@ -446,11 +446,11 @@ uncalled `Unused_00_SetSpriteQueueBase` (`$00:$1e50`) write it.
 `oam_sprite` lists (tagged `sprite_template` in their block comments) appear in
 21 banks. Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
 `dw .frames, <name>_AnimPtrs, .frames` triple points at frame and
-animation-script pointer arrays (e.g. `WalkSprite_72_00`,
+animation-script pointer arrays (e.g. `JuniorCoachWalkSprite`,
 `src/data/sprites/walk_72.asm:19`-`23`); see
 [graphics_formats.md](graphics_formats.md) §4.4.
 
-`Unused_00_PositionSpriteWorld` (`$00:$1f6b`) and `Unused_00_PositionSpriteWorld2`
+`Unused_00_QueueSprite16AtWorldPos` (`$00:$1f6b`) and `Unused_00_QueueSpriteAtWorldPos`
 (`$00:$1fb1`) are world-space wrappers: subtract `wCameraX`/`wCameraY`, cull on
 the difference's high byte (`cp $16` for X, `cp $14`/`$13` for Y), multiply by 8
 and take the high byte (one high-byte unit = 8 pixels, a world unit = 1/32
@@ -514,11 +514,11 @@ when `hLinkExchangeActive`, through `SyncLinkFrame`.
 `Unused_00_WaitFadeEndLinked` (`$00:$1dbd`) is the same loop hard-wired to
 `SyncLinkFrame`.
 
-`Unused_00_ApplyWhiteFade` (`$00:$1dcc`) is a cheaper second curve: adds a
+`Unused_00_ApplyPackedFade` (`$00:$1dcc`) is a cheaper second curve: adds a
 per-channel increment to the packed BGR555 word with `add`/`adc` and repairs
 carries across channel boundaries. It is reached only from the bit-7 branch at
 `$1d7a`, and the only write setting bit 7 is at `$00:$1d19`, inside the uncalled
-`Unused_00_BeginWhiteFadeOut` (`$1d0f`) — so it never runs.
+`Unused_00_BeginPackedFadeOut` (`$1d0f`) — so it never runs.
 `Unused_00_ForceFadeOut` (`$1d09`) is also unreferenced.
 
 `ConvertColorToGrayscale` (`$1d:$7210`):
@@ -557,7 +557,7 @@ the `$00`:
 On truncation it NUL-terminates (and plays `$2c` in debug step mode).
 
 `AddTextIdOffset` (`$05:$5d2b`) adds an offset to an id and **carries across
-text banks** using per-bank string counts (`AddTextIdOffsetWordLookupTable`,
+text banks** using per-bank string counts (`TextBankStringCounts_05`,
 `$05:$5d99`, 13 words), so ids form one flat sequence.
 
 `include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` and an alias
@@ -574,7 +574,7 @@ named for the text, which operands use;
 
 Per byte (`$4e75`-`$4ecd`):
 
-- `$00` → flush the glyph row (unless `FLAG_TEXT_RENDER_ACTIVE`) and return.
+- `$00` → flush the glyph row (unless `FLAG_TEXT_REDRAW_IN_PLACE`) and return.
 - `$de` / `$df` → remapped to codes `$1e` / `$1f`.
 - `$0e` → latch **one inline operand byte** into `wTextCharNameArg`, then
   dispatch as `$0e`. The only code with an operand.
@@ -601,13 +601,13 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$05` | `TextCmdDelay30` | 30 frames, not skippable |
 | `$06` | `TextCmdDelay15Skippable` | 15 frames, aborts on input |
 | `$07` | `TextCmdPrintPlayerName` | `wStoryMainName` |
-| `$08` | `TextCmdNop2` | `ret`, but the measuring pass treats `$08` as a short-text argument (§7.4) |
+| `$08` | `TextCmdNop08` | `ret`, but the measuring pass treats `$08` as a short-text argument (§7.4) |
 | `$09` | `TextCmdPrintArgNumber` | pop the number queue → `RenderInlineNumber` |
 | `$0a` | `TextCmdNop` | `ret` |
 | `$0b` | `TextCmdPrintPartnerName` | `wStoryPartnerName` |
 | `$0c` | `TextCmdDelay150Skippable` | 150 frames, skippable |
 | `$0d` | `TextCmdNextGlyphStreamRow` | `wGlyphStampCellPtr` += `$40` and `wTextRowStartPtr` += two row pitches |
-| `$0e` | `TextCmdPrintShortText` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |
+| `$0e` | `TextCmdPrintCharName` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |
 | `$0f`, `$14`-`$1d` | `TextCmdNewline` | eleven aliases |
 | `$10`-`$13` | `TextCmdNop10`-`13` | four separate bare `ret`s |
 | `$1e` (`$de`) | `TextCmdApplyDakuten` | adds a voiced-sound mark to the *previous* cell |
@@ -615,8 +615,8 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 
 The string pools (`data/text/TextStrings_*.asm`) spell these with the `TX_*`
 names of `include/text_codes.inc` (`$01`/`$02`/`$03` as `line`/`page`/`done`),
-with `TX_SHORT_TEXT`'s operand as a `CHAR_*` constant
-(`TX_SHORT_TEXT, CHAR_EMILY` in "Oh, Coach Emily!"). Codes used: `$07` (246
+with `TX_CHAR_NAME`'s operand as a `CHAR_*` constant
+(`TX_CHAR_NAME, CHAR_EMILY` in "Oh, Coach Emily!"). Codes used: `$07` (246
 times), `$0e` (95), `$06` (67), `$0b` (41), `$09` (34), `$04` (11), plus
 `$01`-`$03`; never `$05`, `$08` or the dakuten pair.
 
@@ -656,7 +656,7 @@ Message speed:
    `STORYMENUITEM_MSG_SLOW`/`NORMAL`/`FAST`) stores `2 - selection` in
    `wMessageSpeed` (`$c8a4`; 0 fast, 1 normal, 2 slow, bit 7 a transient
    "instant" override).
-2. `ApplyMessageSpeed` (`$05:$57e7`) sets `wTextRedrawGuard`: bit 7 or 0 → 0,
+2. `ApplyMessageSpeed` (`$05:$57e7`) sets `wTextCharDelayFrames`: bit 7 or 0 → 0,
    1 → 2, else 4.
 3. `DelayTextCharacter` (`$05:$579b`, per-character delay and blip) waits that
    many frames, aborting on input.
@@ -665,7 +665,7 @@ Message speed:
    does the opposite, uploading the finished row buffer only on FAST/instant,
    so FAST shows a row at a time.
 
-`wTextRedrawGuard` doubles as a re-entrancy guard for the wait and delay
+`wTextCharDelayFrames` doubles as a re-entrancy guard for the wait and delay
 commands ("if 0, set to 1, redraw, clear"), so on FAST those commands do an
 extra redraw that NORMAL and SLOW skip.
 
@@ -699,7 +699,7 @@ scans **bits 0-6 only**, claims the first clear bit and returns its index or
 record and clears the bit. `Unused_05_AllocWindowSlotBit` (`$05:$4627`) is an
 uncalled byte-identical duplicate of `AllocWindowId`.
 
-`wWindowStructs` (`$dc00`): eight 8-byte records, via `GetWindowStructPtr`
+`wWindowStructs` (`$dc00`): eight 8-byte records (`WINDOW_*` fields), via `GetWindowStructPtr`
 (`$05:$6eea`, `id & $07`, `<< 3`):
 
 | off | field | evidence |
@@ -708,9 +708,9 @@ uncalled byte-identical duplicate of `AllocWindowId`.
 | `+$01` | row (`and $1f`) | same |
 | `+$02` | **width** in cells | 20×3 bottom box built with `b = $14, c = $03` (`$39:$4c27`); `DrawTextWindowFrame` runs it horizontally (`$05:$6f80`-`$6fae`); `InitGlyphStreamForWindow` stores it − 2 in `wTextRowWidth` (`$05:$7559`-`$756e`) |
 | `+$03` | **height** in cells | `DrawTextWindowFrame`'s row counter |
-| `+$04` | state | `SetWindowState` / `GetWindowState` (`$05:$4767` / `$4773`); `$02` plain menu, `$03` paged menu, `$ff` do not draw. Bit 1 also indents text one column (`$05:$620a`). |
+| `+$04` | state | `SetWindowState` / `GetWindowState` (`$05:$4767` / `$4773`); `WINDOWSTATE_*`: `$02` plain menu, `$03` paged menu, `$ff` hidden (`DrawTextWindowFrame` skips it). Bit 1 also indents text one column (`$05:$620a`). |
 | `+$05` | unused | no live code addresses it; `FreeWindow` and the `wSavedWindowStruct` save/restore copy it with the record. Only the dead `Unused_05_WriteStringToTilemapStreamed` names `$dc05`, keeping a tilemap pointer at `$dc05`/`$dc06` and a flag at `$dc09` — scratch from before the window structs lived here |
-| `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); high byte `$03` = "no text" |
+| `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); `RenderWindowText` draws nothing when the high byte `& $3f` is `$03`, the redraw paths (`$05:$6216`, `$62ad`) when it is `$ff` |
 
 Creation entry points, all into `AllocWindowStruct` (`$05:$6e6d`):
 
@@ -727,7 +727,7 @@ Creation entry points, all into `AllocWindowStruct` (`$05:$6e6d`):
 `wShadowTilemapPtr + row * 32 + col` with the §3.3 tiles, alternating interior
 rows between blanks and glyph rows (`bit 0, d`, `$6ff3`), then repeats the
 rectangle at `+$0400` with `wWindowTileAttr`. Every cell step goes through
-`WrapCellPtrToRowStart` / `ClampCellPtrToShadowMap`, so windows may wrap the
+`WrapCellPtrToRowStart` / `WrapCellPtrToShadowMap`, so windows may wrap the
 32×32 plane. No VRAM access.
 
 `ResetTextWindowState` (`$05:$6e09`), the cold init, clears `$d000`-`$dfff` in
@@ -754,7 +754,7 @@ held throughout.
 
 ### 7.7 Menus over windows
 
-`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunMenuSelectionShared`
+`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunOptionsMenuSelection`
 (`$05:$4aa8`) run the cursor loop over a text-derived menu window:
 
 | return | meaning |
@@ -782,7 +782,7 @@ Bank `$1a` holds an unreached pause-menu layer (all `Unused_1a_*`);
 `$05`, `CreateMenuWindowFromText` (→ `wPauseMenuWindowId`), then
 `RestoreShadowTilemap` / `RenderMenuWindowText` under `FLAG_VRAM_UPDATE_BUSY`,
 then a loop of `Unused_1a_DrawPauseMenuSettingValues`,
-`Unused_05_RunMenuSelectionShared` and `CloseWindow` unless the chosen row's bit
+`Unused_05_RunOptionsMenuSelection` and `CloseWindow` unless the chosen row's bit
 is set in `wMenuKeepOpenRowMask` (`$cb29`; bit 7 = present, rotated by the row
 index) — the rows that keep the window open after a change. Menu
 contents are `menu_def` records (`include/macros/`). Item ids are the
@@ -898,19 +898,20 @@ cursor moved; they differ only in input source and cursor pair:
 | `$16` | `Unused_16_MoveMenuCursorGrid` `$40f8` | `Unused_16_MoveMenuCursorGridFromLinkInput` `$4176` | `Unused_16_MoveMenuCursorGridRemote` `$41f3` | `Unused_16_MoveMenuCursor2GridRemote` `$42be` |
 | `$1b` | `MoveMenuCursorGrid_1b` `$4132` | `Unused_1b_MoveMenuCursorGridFromLinkInput` `$41b0` | `Unused_1b_MoveMenuCursorGridRemote` `$422d` | `Unused_1b_MoveMenuCursor2GridRemote` `$42f8` |
 | `$38` | `MoveMenuCursorGrid_38` `$410a` | `Unused_38_MoveMenuCursorGridFromLinkInput` `$4188` | `Unused_38_MoveMenuCursorGridRemote` `$4205` | `Unused_38_MoveMenuCursor2GridRemote` `$42d0` |
-| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorRepeat` `$41a8` | `Unused_3b_MoveMenuCursorLinkLocal` `$4225` | `Unused_3b_MoveMenuCursorLinkRemote` `$42f0` |
+| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorGridFromLinkInput` `$41a8` | `Unused_3b_MoveMenuCursorGridRemote` `$4225` | `Unused_3b_MoveMenuCursor2GridRemote` `$42f0` |
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4235` | `Unused_3e_MoveMenuCursor2GridRemote` `$4300` |
 
-"Remote" variants pick `hLinkRemoteInputBuf` or `hLinkRemoteInput` at run time
+"Remote" variants pick `hLinkSentInput` or `hLinkRemoteInput` at run time
 on `hLinkState == $02` (e.g. `$38:$420d`, `$3b:$422d`); cursor-2 variants use
 `wMenuCursor2X`/`Y`.
 
-Bank `$39` also has `MoveMinigameGridCursor` (`$39:$6df9`), a 3×2 walker whose
-second row is a two-position toggle, and `FillMenuGridCellTile` (`$39:$6dc2`),
-which fills that grid's 3×3 attribute cell from `FillMenuGridCellTileTable`.
+Bank `$39` also has `MoveMinigameGrid6Cursor` (`$39:$6df9`), a 3×2 walker whose
+second row is a two-position toggle, and `SetMinigameGrid6CellPalette` (`$39:$6dc2`),
+which fills that grid's 3×3 attribute cell from `MinigameGrid6CellAttrmapPtrs`.
 
-`wMenuCursorLockFlags` (`$cb08`) bits 0/1 freeze the primary/secondary cursor
-while a confirmed selection runs.
+`wMenuCursorLockFlags` (`$cb08`) (`CURSORLOCKB_*`) bits 0/1 freeze the
+primary/secondary cursor while a confirmed selection runs; B with neither
+locked sets bits 2/3, which nothing reads.
 
 ### 8.4 Confirm dialogs
 
@@ -935,7 +936,7 @@ Framework-wide addresses not given above; `ram/*.asm` is authoritative.
 | `$ff8c`/`$ff8d` | `hVBlankCounter` / `hVBlankOccurred` | frame counter; barrier flag |
 | `$ff8f` | `hFrameTasksReady` | §1.3 |
 | `$ff92`/`$ff93`/`$ffa6` | `hInputRepeatButtons` / `hInputRepeatTimer` / `hInputRepeatDelay` | §1.4 |
-| `$ff95`/`$ff96`/`$ff97` | `hRomBank` / `hWramBank` / `hSramBank` | bank shadows; helpers save and restore them |
+| `$ff95`/`$ff96`/`$ff97` | `hRomBank` / `hWramBank` / `hSramBank` | bank shadows; helpers save and restore the ROM and WRAM ones, `hSramBank` is written and never read |
 | `$ff98` | `hBGViewMode` | §1.2 |
 | `$ff99` | `hVRAMQueueDirty` | copies pending; also set on overflow |
 | `$ff9e`/`$ff9a` | `hDebugStepMode` / `hDebugStepPaused` | §1.5 |
@@ -956,14 +957,14 @@ its notes and `include/ram_mirrored.inc`):
 | bank | `$d000` | `$d400` | `$d800`+ |
 |---|---|---|---|
 | `$01` | `wDecompBuffer` (2048 bytes — everything decompresses here) | | |
-| `$02` | `wScreenAttrmap` / `wCourtTilemap` / `wMapScrollPlane0` | `wCourtAttrmap` | `wMapScrollPlane1`, `wCourtTilemapSaved` |
+| `$02` | `wScreenAttrmap` / `wCourtTilemap` / `wMapScrollPlane0` | `wCourtAttrmap` | `wMapScrollPlane1`, `wCourtTilemapBase` |
 | `$03` | `wShadowTilemap` | `wShadowAttrmap` | `wScreenScratch` |
 | `$05` | `wWindowShadowTilemap` | `wWindowShadowAttrmap` | text/window state, `wWindowStructs` `$dc00`, `wTilemapRowDirty` `$dc40`, `wTilemapRowRuns` `$dc60`, `wWindowSlotMask` `$dc70` |
 | `$07` | `wGlyphTileBuffer` at `$d300` (to `$daff`) | | |
 
 Framework flags (bits of `wGameFlags`, `$c9c0`; `include/flag_constants.inc`):
 `FLAG_CUTSCENE_FAST_FORWARD` (22), `FLAG_VRAM_UPDATE_BUSY` (24),
-`FLAG_TEXT_WAITING_FOR_BUTTON` (25), `FLAG_TEXT_RENDER_ACTIVE` (35),
+`FLAG_TEXT_PAGE_ADVANCED` (25), `FLAG_TEXT_REDRAW_IN_PLACE` (35),
 `FLAG_PROPORTIONAL_TEXT_MODE` (36), `FLAG_PAUSE_OPTIONS_MENU_OPEN` (48),
 `FLAG_MINIGAME_PAUSE_MENU_OPEN` (49); debug: `FLAG_DEBUG_FREEZE_TILE_ANIM` (26),
 `FLAG_DEBUG_STATIC_TEXT_WINDOW` (27), `FLAG_DEBUG_SHORT_GLYPH_UPLOAD` (34).
@@ -980,10 +981,10 @@ the sound engine and the serial link, sets `wSpriteBufferPage = $c0`, and ends
 with `farcall InitAndRunGame` (`$00:$262c`); the following `stop` is unreachable
 because that call never returns.
 
-`InitAndRunGame` (`$01:$4018`) clears every WRAM bank, loads the shared menu
+`InitAndRunGame` (`$01:$4018`) clears WRAM banks `$01`-`$06`, loads the shared menu
 font and OBJ palettes, validates and repairs SRAM, initialises story and match
 state, enables the LCD, fades in, and does `farcall RunStoryModeOverworld` with
-`wStoryModeCurrentLocation = 0` and `wStoryModeEntryPoint = $0a`
+`STORYLOC_MAIN_MENU` and `ENTRY_MAIN_MENU_TITLE`
 (`$01:$40a5`-`$40af`). Only if that returns does the build-stamp screen at
 `.buildStampLoop` (`$01:$40b2`) appear, waiting for A or START and re-entering the
 overworld. So it is the boot manager, and its debug-harness half is unreachable.
@@ -1012,12 +1013,12 @@ overworld. So it is the boot manager, and its debug-harness half is unreachable.
 
 ### Dead framework code
 
-Not defects. Described in place: `Unused_00_ApplyWhiteFade` and
+Not defects. Described in place: `Unused_00_ApplyPackedFade` and
 `Unused_00_ForceFadeOut` (§6.3), `Unused_00_SetSpriteQueueBase` (§5.1),
 `Unused_05_AllocWindowSlotBit` and `Unused_05_DrawWindowGlyphRun` (§7.5),
 `Unused_05_RunPagedTextMenuAutoSize` / `Unused_05_PagedMenuFrameTask` (§7.7),
 `Unused_05_PushTextArgShortTextId` (§7.4), `Unused_00_CopyMapToScrollBuffers`
-(§3.5). The white fade, `Unused_00_CopyMapToScrollBuffers` and
+(§3.5). The packed fade curve, `Unused_00_CopyMapToScrollBuffers` and
 `Unused_05_PagedMenuFrameTask` also have [bugs.md](bugs.md) entries.
 
 The queue-compaction tail at `$00:$0595`-`$05ae`, after the `ret` at `$0594`,

@@ -1,4 +1,4 @@
-; Shared by IslandOpenRoundSinglesNpc04_0f, IslandOpenRoundDoublesNpc04_0f
+; Shared by IslandOpenRoundSinglesNpc04Emily_0f, IslandOpenRoundDoublesNpc04Emily_0f
 ; (bank $0f).
 
 {TWIN_LABEL}:
@@ -8,5 +8,5 @@
 	ld hl, Text_RoundNameRoundTwo
 	add_hl_a
 	call PushShortTextArg_0f
-	script_speak ACTOR_ROLE_ISLAND_OPEN_ROUND_B_COZ
+	script_speak ACTOR_ROLE_ISLAND_OPEN_ROUND_EMILY
 	ret

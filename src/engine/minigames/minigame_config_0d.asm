@@ -111,13 +111,13 @@ MinigamePracticeTargetScores:
 	dw $000f ; record 0
 	dw $001e ; record 1
 	dw $003c ; record 2
-MinigameDefaultRecordValue00:
+TennisMachine4TargetScore:
 	; $4150, 8 bytes (records:2)
 	dw $0064 ; record 0
 	dw $0032 ; record 1
 	dw $0032 ; record 2
 	dw $0032 ; record 3
-MinigameDefaultRecordValue01:
+WallPractice4TargetScore:
 	; $4158, 6 bytes (records:2)
 	dw $0032 ; record 0
 	dw $270f ; record 1
@@ -125,55 +125,55 @@ MinigameDefaultRecordValue01:
 MinigameTargetScores:
 	; $415e, 2 bytes (records:2)
 	dw $001e ; record 0
-MinigameDefaultRecordValue02:
+BooBlastLevel2TargetScore:
 	; $4160, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $001e ; record 3
-MinigameDefaultRecordValue03:
+ShootingStarLevel2TargetScore:
 	; $4168, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0015 ; record 3
-MinigameDefaultRecordValue04:
+PerfectShotLevel2TargetScore:
 	; $4170, 8 bytes (records:2)
 	dw $0015 ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $001e ; record 3
-MinigameDefaultRecordValue05:
+TargetShotLevel2TargetScore:
 	; $4178, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0032 ; record 3
-MinigameDefaultRecordValue06:
+FruitFantasyLevel2TargetScore:
 	; $4180, 8 bytes (records:2)
 	dw $0064 ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $001e ; record 3
-MinigameDefaultRecordValue07:
+BananaBunchLevel2TargetScore:
 	; $4188, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $00c8 ; record 3
-MinigameDefaultRecordValue08:
+TreasureBoxLevel2TargetScore:
 	; $4190, 8 bytes (records:2)
 	dw $012c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0064 ; record 3
-MinigameDefaultRecordValue09:
+MedallionMatchLevel2TargetScore:
 	; $4198, 8 bytes (records:2)
 	dw $012c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0001 ; record 3
-MinigameDefaultRecordValue10:
+TwoOnOneLevel2TargetScore:
 	; $41a0, 6 bytes (records:2)
 	dw $0001 ; record 0
 	dw $270f ; record 1
@@ -190,18 +190,18 @@ GetDefaultMinigameRecordValue:
 	ret ; $41b4
 MinigameDefaultRecordValuePointers:
 	; $41b5, 22 bytes (records:2)
-	dw MinigameDefaultRecordValue01 ; record 0
-	dw MinigameDefaultRecordValue00 ; record 1
-	dw MinigameDefaultRecordValue02 ; record 2
-	dw MinigameDefaultRecordValue03 ; record 3
-	dw MinigameDefaultRecordValue04 ; record 4
-	dw MinigameDefaultRecordValue05 ; record 5
-	dw MinigameDefaultRecordValue06 ; record 6
-	dw MinigameDefaultRecordValue07 ; record 7
-	dw MinigameDefaultRecordValue08 ; record 8
-	dw MinigameDefaultRecordValue09 ; record 9
-	dw MinigameDefaultRecordValue10 ; record 10
-IncrementCappedCounter:
+	dw WallPractice4TargetScore ; record 0
+	dw TennisMachine4TargetScore ; record 1
+	dw BooBlastLevel2TargetScore ; record 2
+	dw ShootingStarLevel2TargetScore ; record 3
+	dw PerfectShotLevel2TargetScore ; record 4
+	dw TargetShotLevel2TargetScore ; record 5
+	dw FruitFantasyLevel2TargetScore ; record 6
+	dw BananaBunchLevel2TargetScore ; record 7
+	dw TreasureBoxLevel2TargetScore ; record 8
+	dw MedallionMatchLevel2TargetScore ; record 9
+	dw TwoOnOneLevel2TargetScore ; record 10
+IncrementMinigameHitStreak:
 	ld hl, wMinigameHitStreak ; $41cb
 	ld a, [hl] ; $41ce
 	cp b ; $41cf
@@ -225,7 +225,8 @@ IsMinigameTargetReached:
 .notReached:
 	xor a ; $41ec
 	ret ; $41ed
-IsMinigameScoreLimitReached:
+; a = 1 when the current score beats wMinigameHighScore or has hit the 9999 cap
+IsNewMinigameHighScore:
 	ld hl, wMinigamesCurrentScore ; $41ee
 	ld a, [hl+] ; $41f1
 	ld d, [hl] ; $41f2
@@ -249,7 +250,7 @@ IsMinigameScoreLimitReached:
 	ret ; $4210
 StartScorePopup:
 	push_wram_bank WRAM_ACTORS ; $4211
-	ld hl, wBallHistory + 30 ; $421a
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $421a
 	ld de, wScorePopupSource ; $421d
 	ld a, [hl+] ; $4220
 	ld [de], a ; $4221
@@ -334,11 +335,11 @@ MinigameGridCellAttrs:
 	db $0c, $0c, $0c, $0c ; 0x1c
 GetMinigameGridCellIndex:
 	push_wram_bank WRAM_ACTORS ; $42bf
-	ld hl, wBallHistory + 30 ; $42c8
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $42c8
 	ld a, [hl+] ; $42cb
 	ld d, [hl] ; $42cc
 	ld e, a ; $42cd
-	ld hl, wBallHistory + 32 ; $42ce
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $42ce
 	ld a, [hl+] ; $42d1
 	ld b, [hl] ; $42d2
 	ld c, a ; $42d3
@@ -413,7 +414,7 @@ DrawMinigameGridCell:
 	pop hl ; $433e
 	push de ; $433f
 	ld a, d ; $4340
-	add HIGH(wCourtTilemapSaved) ; $4341
+	add HIGH(wCourtTilemapBase) ; $4341
 	ld d, a ; $4343
 	ld_size bc, $02, $02 ; $4344
 	call CopyTextRect ; $4347
@@ -429,7 +430,7 @@ DrawMinigameGridCell:
 	pop hl ; $4358
 	push de ; $4359
 	ld a, d ; $435a
-	add HIGH(wCourtAttrmapSaved) ; $435b
+	add HIGH(wCourtAttrmapBase) ; $435b
 	ld d, a ; $435d
 	ld_size bc, $02, $02 ; $435e
 	call CopyTextRect ; $4361

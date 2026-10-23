@@ -6,27 +6,31 @@ DataPtr_TitleScreenAttrmap:
 	dw TitleScreenAttrmap ; $4006
 DataPtr_TitleScreenPalettes:
 	dw TitleScreenPalettes ; $4008
-	farptr DecompressIntroTitleTiles ; $400a
-	farptr DecompressIntroTitleTilesAlias1, DecompressIntroTitleTiles ; $400c
-	farptr DecompressIntroTitleTilesAlias2, DecompressIntroTitleTiles ; $400e
-	farptr DecompressIntroTitleTilesAlias3, DecompressIntroTitleTiles ; $4010
+DataPtr_UnusedIntroScreenTiles:
+	dw LoadIntroAwesomeOpponentsCaption ; $400a
+DataPtr_UnusedIntroScreenTilemap:
+	dw LoadIntroAwesomeOpponentsCaption ; $400c
+DataPtr_UnusedIntroScreenAttrmap:
+	dw LoadIntroAwesomeOpponentsCaption ; $400e
+DataPtr_UnusedIntroScreenPalettes:
+	dw LoadIntroAwesomeOpponentsCaption ; $4010
 	farptr ShowIntroLogoScreen ; $4012
 	farptr ScrollOutIntroLogo ; $4014
 	farptr LoadIntroTilesAndPalette ; $4016
-	farptr QueueIntroSpriteBlock ; $4018
-DataPtr_AwardCeremonyTilemap:
-	dw AwardCeremonyTilemap ; $401a
-DataPtr_AwardCeremonyAttrmap:
-	dw AwardCeremonyAttrmap ; $401c
-DataPtr_AwardCeremonyTilemap2:
-	dw AwardCeremonyTilemap2 ; $401e
-DataPtr_AwardCeremonyAttrmap2:
-	dw AwardCeremonyAttrmap2 ; $4020
-DataPtr_AwardCeremonyTilemap3:
-	dw AwardCeremonyTilemap3 ; $4022
-DataPtr_AwardCeremonyAttrmap3:
-	dw AwardCeremonyAttrmap3 ; $4024
-DataPtr_AwardCeremonyTilemap4:
-	dw AwardCeremonyTilemap4 ; $4026
-DataPtr_AwardCeremonyAttrmap4:
-	dw AwardCeremonyAttrmap4 ; $4028
+	farptr QueueIntroSpinningBallFrame ; $4018
+DataPtr_DreamMatchEpilogueDoublesBoysTilemap:
+	dw DreamMatchEpilogueDoublesBoysTilemap ; $401a
+DataPtr_DreamMatchEpilogueDoublesBoysAttrmap:
+	dw DreamMatchEpilogueDoublesBoysAttrmap ; $401c
+DataPtr_DreamMatchEpilogueDoublesBoyGirlTilemap:
+	dw DreamMatchEpilogueDoublesBoyGirlTilemap ; $401e
+DataPtr_DreamMatchEpilogueDoublesBoyGirlAttrmap:
+	dw DreamMatchEpilogueDoublesBoyGirlAttrmap ; $4020
+DataPtr_DreamMatchEpilogueDoublesGirlBoyTilemap:
+	dw DreamMatchEpilogueDoublesGirlBoyTilemap ; $4022
+DataPtr_DreamMatchEpilogueDoublesGirlBoyAttrmap:
+	dw DreamMatchEpilogueDoublesGirlBoyAttrmap ; $4024
+DataPtr_DreamMatchEpilogueDoublesGirlsTilemap:
+	dw DreamMatchEpilogueDoublesGirlsTilemap ; $4026
+DataPtr_DreamMatchEpilogueDoublesGirlsAttrmap:
+	dw DreamMatchEpilogueDoublesGirlsAttrmap ; $4028

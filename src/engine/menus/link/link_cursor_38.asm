@@ -87,98 +87,98 @@ SetGridEntryTakenByCharId:
 	ret ; $6a7e
 InitLinkMatchCharsFromSelection:
 	push_wram_bank WRAM_SCREEN ; $6a7f
-	call CacheStorySlotNames ; $6a88
+	call CacheStorySlotRecords ; $6a88
 	ld a, [wCharSelectMode] ; $6a8b
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6a8e
-	jr z, .slot3Entry ; $6a90
+	jr z, .p2Slots ; $6a90
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6a92
-	jr z, .slot3Entry ; $6a94
+	jr z, .p2Slots ; $6a94
 	ld a, [wCharSelectSlotChars] ; $6a96
 	cp CHAR_NONE ; $6a99
 	jr z, .slot2 ; $6a9b
 	cp CHAR_STORY_MAIN ; $6a9d
-	jr c, .slot1Created ; $6a9f
+	jr c, .slot1Roster ; $6a9f
 	ld c, a ; $6aa1
 	and $07 ; $6aa2
 	srl a ; $6aa4
 	ld b, a ; $6aa6
 	ld a, c ; $6aa7
-	call LoadCachedStorySlotName ; $6aa8
+	call LoadCachedStorySlotRecords ; $6aa8
 	and $81 ; $6aab
 	ld b, a ; $6aad
 	ld c, MATCHREC_P1_MAIN ; $6aae
 	farcall InitMatchRecordFromCharId ; $6ab0
 	jr .slot2 ; $6ab3
-.slot1Created:
+.slot1Roster:
 	ld b, a ; $6ab5
 	ld c, MATCHREC_P1_MAIN ; $6ab6
 	farcall InitMatchRecordFromCharId ; $6ab8
 .slot2:
 	ld a, [wCharSelectSlotChars + 1] ; $6abb
 	cp CHAR_NONE ; $6abe
-	jr z, .slot3 ; $6ac0
+	jr z, .p1SlotsDone ; $6ac0
 	cp CHAR_STORY_MAIN ; $6ac2
-	jr c, .slot2Created ; $6ac4
+	jr c, .slot2Roster ; $6ac4
 	ld c, a ; $6ac6
 	and $07 ; $6ac7
 	srl a ; $6ac9
 	ld b, a ; $6acb
 	ld a, c ; $6acc
-	call LoadCachedStorySlotName ; $6acd
+	call LoadCachedStorySlotRecords ; $6acd
 	and $81 ; $6ad0
 	ld b, a ; $6ad2
 	ld c, MATCHREC_P1_PARTNER ; $6ad3
 	farcall InitMatchRecordFromCharId ; $6ad5
-	jr .slot3 ; $6ad8
-.slot2Created:
+	jr .p1SlotsDone ; $6ad8
+.slot2Roster:
 	ld b, a ; $6ada
 	ld c, MATCHREC_P1_PARTNER ; $6adb
 	farcall InitMatchRecordFromCharId ; $6add
-.slot3:
-	jr .applySettings ; $6ae0
-.slot3Entry:
+.p1SlotsDone:
+	jr .done ; $6ae0
+.p2Slots:
 	ld a, [wCharSelectSlotChars + 2] ; $6ae2
 	cp CHAR_NONE ; $6ae5
 	jr z, .slot4 ; $6ae7
 	cp CHAR_STORY_MAIN ; $6ae9
-	jr c, .slot3Created ; $6aeb
+	jr c, .slot3Roster ; $6aeb
 	ld c, a ; $6aed
 	and $07 ; $6aee
 	srl a ; $6af0
 	ld b, a ; $6af2
 	ld a, c ; $6af3
-	call LoadCachedStorySlotName ; $6af4
+	call LoadCachedStorySlotRecords ; $6af4
 	and $81 ; $6af7
 	ld b, a ; $6af9
 	ld c, MATCHREC_P2_MAIN ; $6afa
 	farcall InitMatchRecordFromCharId ; $6afc
 	jr .slot4 ; $6aff
-.slot3Created:
+.slot3Roster:
 	ld b, a ; $6b01
 	ld c, MATCHREC_P2_MAIN ; $6b02
 	farcall InitMatchRecordFromCharId ; $6b04
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $6b07
 	cp CHAR_NONE ; $6b0a
-	jr z, .applySettings ; $6b0c
+	jr z, .done ; $6b0c
 	cp CHAR_STORY_MAIN ; $6b0e
-	jr c, .slot4Created ; $6b10
+	jr c, .slot4Roster ; $6b10
 	ld c, a ; $6b12
 	and $07 ; $6b13
 	srl a ; $6b15
 	ld b, a ; $6b17
 	ld a, c ; $6b18
-	call LoadCachedStorySlotName ; $6b19
+	call LoadCachedStorySlotRecords ; $6b19
 	and $81 ; $6b1c
 	ld b, a ; $6b1e
 	ld c, MATCHREC_P2_PARTNER ; $6b1f
 	farcall InitMatchRecordFromCharId ; $6b21
-	jr .applySettings ; $6b24
-.slot4Created:
+	jr .done ; $6b24
+.slot4Roster:
 	ld b, a ; $6b26
 	ld c, MATCHREC_P2_PARTNER ; $6b27
 	farcall InitMatchRecordFromCharId ; $6b29
-.applySettings:
+.done:
 	pop_wram_bank ; $6b2c
 	ret ; $6b31
 Unused_38_LinkCpuDifficultyDebugLoop:
@@ -194,7 +194,7 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	push af ; $6b42
 	farcall RunLinkInputFrame ; $6b43
 	pop af ; $6b46
-	ldh a, [hLinkRemoteInputBuf] ; $6b47
+	ldh a, [hLinkSentInput] ; $6b47
 	ld [wMenuInputPressed], a ; $6b49
 	ld a, [wMenuInputPressed] ; $6b4c
 	xor PADF_BUTTONS ; $6b4f

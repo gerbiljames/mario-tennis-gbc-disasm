@@ -12,9 +12,9 @@ RunMinigameEndMenu:
 	call PrepareScoreboardGfx ; $4014
 	farcall StepMatchFrame ; $4017
 	call LoadScoreboardModeGfx ; $401a
-	ld hl, ScoreboardModeGfxTail ; $401d
+	ld hl, MatchMenuCursorArrowTiles ; $401d
 	ld de, vTiles0 tile $64 ; $4020
-	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
+	ld c, (MatchMenuItemGfx_Rules - MatchMenuCursorArrowTiles) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
 	wram_bank WRAM_COURT_PLANES ; $402b
@@ -55,9 +55,9 @@ RunMatchPauseMenu:
 	call PrepareScoreboardGfx ; $408a
 	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
-	ld hl, ScoreboardModeGfxTail ; $4093
+	ld hl, MatchMenuCursorArrowTiles ; $4093
 	ld de, vTiles0 tile $64 ; $4096
-	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
+	ld c, (MatchMenuItemGfx_Rules - MatchMenuCursorArrowTiles) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e
 	wram_bank WRAM_COURT_PLANES ; $40a1
@@ -412,7 +412,7 @@ MatchPauseMenu_CameraSelect:
 	cp MATCHMENUSEL_CANCELLED ; $442f
 	jr z, .done ; $4431
 	ld [wCourtViewOption], a ; $4433
-	farcall SetStorySlotFlagB ; $4436
+	farcall SetStorySlotCourtView ; $4436
 .done:
 	ret ; $4439
 MatchPauseMenu_MusicToggle:
@@ -431,7 +431,7 @@ MatchPauseMenu_MusicToggle:
 	jr z, .done ; $4458
 	ldh a, [hMusicFlags] ; $445a
 	and MUSICF_MUTED ; $445c
-	farcall SetStorySlotFlagA ; $445e
+	farcall SetStorySlotMusicMuted ; $445e
 .done:
 	ret ; $4461
 MatchPauseMenu_SaveQuit:
@@ -475,7 +475,7 @@ MatchQuitMenu_ReturnToGame:
 	ret ; $44b1
 MatchQuitMenu_SaveAndQuit:
 	ld a, $01 ; $44b2
-	ld [wKeepMatchStatsFlag], a ; $44b4
+	ld [wMatchSuspendedFlag], a ; $44b4
 	ld [wSaveAndQuitRequest], a ; $44b7
 	ld a, MATCHABORT_ALL ; $44ba
 	ld [wMatchAbortFlag], a ; $44bc

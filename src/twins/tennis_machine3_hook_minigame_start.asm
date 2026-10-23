@@ -2,6 +2,6 @@
 
 {TWIN_LABEL}:
 	ld a, $04
-	ld [wMinigameServeSlot], a
+	ld [wMinigameFeederPos], a
 	call StartMinigameMatch
 	ret

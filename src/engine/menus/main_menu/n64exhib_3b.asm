@@ -8,10 +8,10 @@ BuildN64ExhibColumnList:
 	ld a, [hl] ; $4758
 	ld b, a ; $4759
 	and $01 ; $475a
-	jr nz, .maskSet ; $475c
+	jr nz, .entry14Unlocked ; $475c
 	ld a, $10 ; $475e
 	ld [wChartColumnList + 14], a ; $4760
-.maskSet:
+.entry14Unlocked:
 	ld a, b ; $4763
 	and $02 ; $4764
 	jr nz, .buildN64ExhibResultsGrid ; $4766
@@ -46,7 +46,7 @@ BuildN64ExhibResultsGrid:
 	ld b, $00 ; $479d
 .loop:
 	push bc ; $479f
-	ld hl, N64ExhibResultsGridTable ; $47a0
+	ld hl, N64ExhibRowRecordOrder ; $47a0
 	ld a, b ; $47a3
 	add_hl_a ; $47a4
 	ld b, [hl] ; $47a9
@@ -62,7 +62,7 @@ BuildN64ExhibResultsGrid:
 	cp $10 ; $47b7
 	jr nz, .loop ; $47b9
 	ret ; $47bb
-N64ExhibResultsGridTable:
+N64ExhibRowRecordOrder:
 	; $47bc, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
 DecodeN64ExhibResultsRow:
@@ -201,7 +201,7 @@ ExpandByteToBitArray:
 	pop bc ; $48b5
 	pop hl ; $48b6
 	ret ; $48b7
-Unused_3b_FillN64RecordsPalettes:
+Unused_3b_FillN64ExhibRowsTestPattern:
 	wram_bank WRAM_SCREEN ; $48b8
 	ld hl, wN64RecordsBlock + N64REC_EXHIB_ROWS ; $48be
 	ld c, $00 ; $48c1
@@ -235,7 +235,7 @@ Unused_3b_FillN64RecordsPalettes:
 	cp $08 ; $48ed
 	jr nz, .loop ; $48ef
 	ret ; $48f1
-LoadChartWindowTiles:
+LoadChartCharIconTiles:
 	ld b, TILEBLOCK_MugshotTiles ; $48f2
 	ld c, 68 ; $48f4 -- 68 of MugshotTiles's 96 tiles
 	farcall LoadCompressedTileBlock ; $48f6
@@ -265,7 +265,7 @@ DrawChartCharIcon:
 	add hl, de ; $4914
 	ld a, b ; $4915
 	push hl ; $4916
-	ld hl, ChartCharIconTable ; $4917
+	ld hl, ChartCharIconAttrs ; $4917
 	add_hl_a ; $491a
 	ld a, [hl] ; $491f
 	pop hl ; $4920
@@ -280,7 +280,7 @@ DrawChartCharIcon:
 	pop bc ; $492b
 	pop af ; $492c
 	ret ; $492d
-ChartCharIconTable:
+ChartCharIconAttrs:
 	; $492e, 17 bytes (bytes:8)
 	db $0e, $0b, $0d, $0e, $0b, $0c, $0d, $0d ; 0x00
 	db $0f, $0c, $0e, $0c, $0d, $0e, $0c, $0e ; 0x08
@@ -314,7 +314,7 @@ RunTrophiesScreen:
 	call WaitFadeEnd ; $4987
 	wram_bank WRAM_SCREEN ; $498a
 .loop:
-	ldh a, [hInputPressed] ; $4990
+	ldh a, [hInputRepeat] ; $4990
 	ld [wMenuInputPressed], a ; $4992
 	call AdvanceFrame ; $4995
 	ld a, [wMenuInputPressed] ; $4998
@@ -362,11 +362,11 @@ BuildTrophiesScreen:
 	ld a, [wTrophySecondSetPresent] ; $49ee
 	or a ; $49f1
 	jr nz, .bothSets ; $49f2
-	ld c, SCREENASSET_N64Tournament2 ; $49f4
+	ld c, SCREENASSET_N64TournamentOneSet ; $49f4
 	farcall LoadScreenAssetRecord ; $49f6
 	jr .drawTrophiesWonRows ; $49f9
 .bothSets:
-	ld c, SCREENASSET_N64Tournament ; $49fb
+	ld c, SCREENASSET_N64TournamentTwoSets ; $49fb
 	farcall LoadScreenAssetRecord ; $49fd
 .drawTrophiesWonRows:
 	wram_bank WRAM_SCREEN ; $4a00
@@ -377,41 +377,41 @@ BuildTrophiesScreen:
 	ld a, [wStoryMainChar] ; $4a0f
 	ld c, a ; $4a12
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 2 ; $4a13
-	call DrawTrophiesCharSprite ; $4a16
+	call DrawTrophiesCharIcon ; $4a16
 	ld a, [wStoryPartnerChar] ; $4a19
 	ld c, a ; $4a1c
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 2 ; $4a1d
-	call DrawTrophiesCharSprite ; $4a20
+	call DrawTrophiesCharIcon ; $4a20
 	jr .queueWram3MapToVRAM ; $4a23
 .bothSetsChars:
 	ld c, $00 ; $4a25
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 2 ; $4a27
-	call DrawTrophiesCharSprite ; $4a2a
+	call DrawTrophiesCharIcon ; $4a2a
 	ld c, $00 ; $4a2d
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 2 ; $4a2f
-	call DrawTrophiesCharSprite ; $4a32
+	call DrawTrophiesCharIcon ; $4a32
 	ld c, $03 ; $4a35
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 2 ; $4a37
-	call DrawTrophiesCharSprite ; $4a3a
+	call DrawTrophiesCharIcon ; $4a3a
 	ld c, $03 ; $4a3d
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 2 ; $4a3f
-	call DrawTrophiesCharSprite ; $4a42
+	call DrawTrophiesCharIcon ; $4a42
 	ld a, [wStoryMainChar] ; $4a45
 	ld c, a ; $4a48
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 2 ; $4a49
-	call DrawTrophiesCharSprite ; $4a4c
+	call DrawTrophiesCharIcon ; $4a4c
 	ld a, [wStoryPartnerChar] ; $4a4f
 	ld c, a ; $4a52
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 2 ; $4a53
-	call DrawTrophiesCharSprite ; $4a56
+	call DrawTrophiesCharIcon ; $4a56
 	ld a, [wStoryMainChar] ; $4a59
 	ld c, a ; $4a5c
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 2 ; $4a5d
-	call DrawTrophiesCharSprite ; $4a60
+	call DrawTrophiesCharIcon ; $4a60
 	ld a, [wStoryPartnerChar] ; $4a63
 	ld c, a ; $4a66
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 2 ; $4a67
-	call DrawTrophiesCharSprite ; $4a6a
+	call DrawTrophiesCharIcon ; $4a6a
 .queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4a6d
 	ret ; $4a70

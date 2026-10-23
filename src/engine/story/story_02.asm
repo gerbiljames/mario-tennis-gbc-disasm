@@ -2,7 +2,7 @@ Unused_02_ValidateN64TransferRecord:
 	ld a, [wN64TransferMarker] ; $4044
 	cp $64 ; $4047
 	jr nz, .returnZero ; $4049
-	ld hl, wPendingExpStory ; $404b
+	ld hl, wN64TransferMainExp ; $404b
 	ld a, [hl+] ; $404e
 	add [hl] ; $404f
 	inc l ; $4050
@@ -95,9 +95,9 @@ InitMatchRecordFromCharId:
 	call GetStoryCharacterRecordPtr ; $40cf
 	ld b, a ; $40d2
 	push de ; $40d3
-	ld a, CHARREC_PHYSICS ; $40d4
+	ld a, CHARREC_AI_POSITION ; $40d4
 	add_de_a ; $40d6
-	ld c, CHARREC_EXP - CHARREC_PHYSICS ; $40db
+	ld c, CHARREC_EXP - CHARREC_AI_POSITION ; $40db
 .copyLoop:
 	ld a, [hl+] ; $40dd
 	ld [de], a ; $40de
@@ -188,10 +188,11 @@ GetStoryCharacterRecordPtr:
 	pop af ; $4204
 	ret ; $4205
 GetPlayerRecordPtr:
-	ld bc, wStoryMainName ; $4206
+	ASSERT HIGH(wStoryPartner) == HIGH(wStoryMain)
+	ld bc, wStoryMain ; $4206
 	or a ; $4209
 	ret z ; $420a
-	ld c, $40 ; $420b
+	ld c, LOW(wStoryPartner) ; $420b
 	ret ; $420d
 GetMatchRecordPtr:
 	and $03 ; $420e
@@ -201,14 +202,14 @@ GetMatchRecordPtr:
 	ld_bc_indexed wPlayer1Main ; $4214
 	ret ; $421b
 InitStoryModeState:
-	call CacheStorySlotSummaries ; $421c
+	call CacheStorySlotSignatures ; $421c
 	ld hl, wStorySlotData ; $421f
 	ld c, $30 ; $4222
 	call ClearMemory16 ; $4224
-	ld a, $00 ; $4227
+	ld a, STORYREC_MAIN ; $4227
 	ld d, $00 ; $4229
 	call InitPlayerRecordFromTemplate ; $422b
-	ld a, $01 ; $422e
+	ld a, STORYREC_PARTNER ; $422e
 	ld d, $02 ; $4230
 	call InitPlayerRecordFromTemplate ; $4232
 	ld hl, wStoryModeCurrentLocation ; $4235
@@ -222,8 +223,8 @@ InitStoryModeState:
 .storeMessageSpeed:
 	ld [wMessageSpeed], a ; $4241
 	farcall InitDefaultMatchSettings ; $4244
-	clear_flag FLAG_NEW_GAME_CLEARED_BIT ; $4247
-	set_flag FLAG_NEW_GAME_SET_BIT ; $424a
+	clear_flag FLAG_ALWAYS_CLEAR ; $4247
+	set_flag FLAG_ALWAYS_SET ; $424a
 	ld hl, wStorySlotBlockTag ; $424d
 	xor a ; $4250
 	ld [hl], $56 ; $4251
@@ -239,7 +240,7 @@ Unused_02_SignExtendL:
 .negative:
 	ld h, $ff ; $425e
 	ret ; $4260
-CacheStorySlotSummaries:
+CacheStorySlotSignatures:
 	push af ; $4261
 	push bc ; $4262
 	push de ; $4263
@@ -256,7 +257,7 @@ CacheStorySlotSummaries:
 	push af ; $427b
 	ld a, $00 ; $427c
 	ld [wCurrentStorySlot], a ; $427e
-	farcall CheckStorySlot ; $4281
+	farcall ReadCurrentStorySlot ; $4281
 	cp $fe ; $4284
 	jr z, .checkSlot1 ; $4286
 	ld hl, wStorySaveSignature ; $4288
@@ -265,7 +266,7 @@ CacheStorySlotSummaries:
 .checkSlot1:
 	ld a, $01 ; $4291
 	ld [wCurrentStorySlot], a ; $4293
-	farcall CheckStorySlot ; $4296
+	farcall ReadCurrentStorySlot ; $4296
 	cp $fe ; $4299
 	jr z, .checkSlot2 ; $429b
 	ld hl, wStorySaveSignature ; $429d
@@ -274,7 +275,7 @@ CacheStorySlotSummaries:
 .checkSlot2:
 	ld a, $02 ; $42a6
 	ld [wCurrentStorySlot], a ; $42a8
-	farcall CheckStorySlot ; $42ab
+	farcall ReadCurrentStorySlot ; $42ab
 	cp $fe ; $42ae
 	jr z, .restore ; $42b0
 	ld hl, wStorySaveSignature ; $42b2
@@ -483,7 +484,7 @@ InitPlayerRecordFromTemplate:
 	jr nz, .copyLoop ; $4409
 	pop bc ; $440b
 	call RecomputeCharacterStats ; $440c
-	ld hl, wStoryMainName ; $440f
+	ld hl, wStoryMain ; $440f
 	ld de, wStorySlotData ; $4412
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $4415
 	call CopyMemoryFast ; $4417

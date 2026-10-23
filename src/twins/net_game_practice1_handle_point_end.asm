@@ -19,10 +19,10 @@
 	xor a
 	ld [wPlayer2PointsWon], a
 	ld a, [wPlayer1PointsWon]
-	ld b, $01
+	ld b, DIGITGFX_NUMERALS
 	farcall LoadPlayer1PointsDigitGfx
 	ld a, [wPlayer2PointsWon]
-	ld b, $01
+	ld b, DIGITGFX_NUMERALS
 	farcall LoadPlayer2PointsDigitGfx
 	farcall StepMatchFrame
 	frame_task SyncPointWinLoseFlagTask

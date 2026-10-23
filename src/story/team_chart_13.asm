@@ -6,7 +6,7 @@ RunTravelingTeamVictoryCutscene_13:
 .notDoubles:
 	call SinglesTravelingTeamVictoryCutscene ; $7991
 	ret ; $7994
-RunTravelingTeamBracketIfWon_13:
+RunTravelingTeamChartIfWon_13:
 	wram_bank WRAM_ACTORS ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp WINLOSE_WIN ; $799e
@@ -30,7 +30,7 @@ RunTravelingTeamBracketIfWon_13:
 	script_player_speed 0.75 ; $79ce
 	script_move_player 9.0, 19.0 ; $79d4
 	farcall WaitPlayerMoveDone ; $79de
-	call ShowStoryTournamentBracket_13 ; $79e1
+	call ShowStoryVarsityTeamChart_13 ; $79e1
 	ret ; $79e4
 .isDoubles:
 	script_respawn_actors DoublesTravelingTeamActors_13 ; $79e5
@@ -47,7 +47,7 @@ RunTravelingTeamBracketIfWon_13:
 	call WaitFadeEnd ; $7a2c
 	script_move_player 9.0, 19.0 ; $7a2f
 	farcall WaitPlayerMoveDone ; $7a39
-	call ShowStoryTournamentBracket_13 ; $7a3c
+	call ShowStoryVarsityTeamChart_13 ; $7a3c
 	ret ; $7a3f
 ActorScript_13_20:
 	; $7a40, 3 bytes (actor_script)
@@ -119,7 +119,7 @@ ActorScript_13_26:
 	as_wait_move
 	as_set_field ACTORF_HEADING, FACE_RIGHT
 	as_halt
-ShowStoryTournamentBracket_13:
+ShowStoryVarsityTeamChart_13:
 	script_fade_out 8 ; $7ae0
 	call WaitFadeEnd ; $7ae5
 	xor a ; $7ae8
@@ -131,26 +131,26 @@ ShowStoryTournamentBracket_13:
 	ld [wCameraY + 1], a ; $7af4
 	call ClearFrameTasks ; $7af7
 	test_flag FLAG_DOUBLES ; $7afa
-	jr nz, .doublesBracket ; $7afd
+	jr nz, .doublesChart ; $7afd
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7aff
-	jr nz, .juniorBracket ; $7b02
+	jr nz, .singlesFinalWon ; $7b02
 	ld b, $00 ; $7b04
 	ld c, $04 ; $7b06
 	jr .show ; $7b08
-.juniorBracket:
+.singlesFinalWon:
 	ld b, $00 ; $7b0a
 	ld c, $01 ; $7b0c
 	jr .show ; $7b0e
-.doublesBracket:
+.doublesChart:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7b10
-	jr nz, .doublesFinal ; $7b13
+	jr nz, .doublesFinalWon ; $7b13
 	ld b, $01 ; $7b15
 	ld c, $02 ; $7b17
 	jr .show ; $7b19
 .show:
-	farcall ShowTournamentBracket ; $7b1b
+	farcall ShowVarsityTeamChart ; $7b1b
 	ret ; $7b1e
-.doublesFinal:
+.doublesFinalWon:
 	ld b, $01 ; $7b1f
 	ld c, $01 ; $7b21
 	jr .show ; $7b23
@@ -168,28 +168,28 @@ ActorScript_13_28:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderSmall
 MapScriptNop_13:
 	ret ; $7b4d
-Unused_13_MapScriptClearActiveFlag:
+Unused_13_MapScriptClearScriptRan:
 	xor a ; $7b4e
 	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
-Unused_13_MapScriptPlaySoundA2:
+Unused_13_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $7b53
 	ret ; $7b55
 Unused_13_MapScriptHideLocationName:

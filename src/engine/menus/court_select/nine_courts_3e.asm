@@ -15,11 +15,11 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
 	res B_IE_TIMER, [hl] ; $6527
-	farcall InitMenuBgScroll ; $6529
+	farcall InitMenuTitleScroller ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
 	farcall LoadMenuSpritePalettePair ; $6530
-	call LoadCourtSelectHeader ; $6533
+	call LoadCourtStatsRow ; $6533
 	wram_bank WRAM_SCREEN ; $6536
 	ld a, [wMenuSlideDirection] ; $653c
 	ld b, a ; $653f
@@ -33,7 +33,7 @@ RunCourtSelect9Menu:
 	wram_bank WRAM_SCREEN ; $6555
 .loop:
 	call AdvanceFrame ; $655b
-	ldh a, [hInputPressed] ; $655e
+	ldh a, [hInputRepeat] ; $655e
 	ld [wMenuInputPressed], a ; $6560
 	ld b, $03 ; $6563
 	ld c, $03 ; $6565
@@ -63,7 +63,7 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $6591
 	ld hl, rIE ; $6594
 	set B_IE_TIMER, [hl] ; $6597
-	ld b, $01 ; $6599
+	ld b, MENUSLIDE_FORWARD ; $6599
 	call CloseCourtSelect9Panel ; $659b
 	ld a, MENUSLIDE_FORWARD ; $659e
 	ld [wMenuSlideDirection], a ; $65a0
@@ -80,7 +80,7 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $65b4
 	ld hl, rIE ; $65b7
 	set B_IE_TIMER, [hl] ; $65ba
-	ld b, $00 ; $65bc
+	ld b, MENUSLIDE_BACK ; $65bc
 	call CloseCourtSelect9Panel ; $65be
 	ld a, MENUSLIDE_BACK ; $65c1
 	ld [wMenuSlideDirection], a ; $65c3
@@ -99,11 +99,11 @@ RunLinkCourtSelect9Menu:
 	or b ; $65de
 	ld b, a ; $65df
 	call StoreCourtUnlockBits ; $65e0
-	farcall InitMenuBgScroll ; $65e3
+	farcall InitMenuTitleScroller ; $65e3
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
 	farcall LoadMenuSpritePalettePair ; $65ea
-	call LoadCourtSelectHeader ; $65ed
+	call LoadCourtStatsRow ; $65ed
 	wram_bank WRAM_SCREEN ; $65f0
 	ld a, [wMenuSlideDirection] ; $65f6
 	ld b, a ; $65f9
@@ -183,7 +183,7 @@ RunLinkCourtSelect9Menu:
 	ldh [hLinkExchangeActive], a ; $668e
 	call ResetSerialState ; $6690
 	call ClearFrameTasks ; $6693
-	ld b, $00 ; $6696
+	ld b, MENUSLIDE_BACK ; $6696
 	call CloseCourtSelect9Panel ; $6698
 	ld a, MENUSLIDE_BACK ; $669b
 	ld [wMenuSlideDirection], a ; $669d
@@ -256,16 +256,16 @@ CloseCourtSelect9Panel:
 	jr nz, .slideBackLoop ; $6711
 	ret ; $6713
 CourtSelect9CursorSpriteTask:
-	farcall TickMenuBgScroll ; $6714
+	farcall TickMenuTitleScroller ; $6714
 	ld c, $03 ; $6717
 	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c
-	ld hl, CourtSelect9CursorTiles_3e ; $671d
+	ld hl, CourtSelect9BannerTileBases ; $671d
 	add_hl_a ; $6720
 	ld c, [hl] ; $6725
 	pop af ; $6726
 	push af ; $6727
-	ld hl, CourtSelect9CursorPositions_3e ; $6728
+	ld hl, CourtSelect9BannerPositions ; $6728
 	add a ; $672b
 	add_hl_a ; $672c
 	ld a, [hl+] ; $6731
@@ -275,24 +275,24 @@ CourtSelect9CursorSpriteTask:
 	push bc ; $6737
 	ld c, $03 ; $6738
 	call GetMenuCursorIndex_3e ; $673a
-	ld hl, CourtSelect9CursorAttrs_3e ; $673d
+	ld hl, CourtSelect9BannerAttrs ; $673d
 	add_hl_a ; $6740
 	pop bc ; $6745
 	ld b, [hl] ; $6746
 	pop af ; $6747
 	add a ; $6748
-	ld hl, CourtSelect9CursorTemplatePtrs_3e ; $6749
+	ld hl, CourtSelect9BannerTemplatePtrs ; $6749
 	add_hl_a ; $674c
 	ld a, [hl+] ; $6751
 	ld h, [hl] ; $6752
 	ld l, a ; $6753
 	push de ; $6754
-	call AdjustCursorForLockedCourt ; $6755
+	call UseLockedCourtBanner ; $6755
 	call QueueSpriteTemplate ; $6758
 	pop de ; $675b
 	ld c, $03 ; $675c
 	call GetMenuCursorIndex_3e ; $675e
-	ld hl, CourtSelect9LabelYOffsets_3e ; $6761
+	ld hl, CourtSelect9CursorXOffsets ; $6761
 	add_hl_a ; $6764
 	ld a, [hl] ; $6769
 	ld h, a ; $676a
@@ -304,31 +304,31 @@ CourtSelect9CursorSpriteTask:
 	sprite_attr_tile OAM_BANK1, $72 ; $6773
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
-CourtSelect9CursorTemplatePtrs_3e:
-	dw CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate1_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e, CourtSelect9CursorTemplate0_3e ; $677b
-CourtSelect9CursorTemplate0_3e:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate0_3e.asm" ; $678d, 33 bytes (sprite_template)
-CourtSelect9CursorTemplate1_3e:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9CursorTemplate1_3e.asm" ; $67ae, 37 bytes (sprite_template)
+CourtSelect9BannerTemplatePtrs:
+	dw CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner9WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate, CourtSelect9Banner8WideTemplate ; $677b
+CourtSelect9Banner8WideTemplate:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9Banner8WideTemplate.asm" ; $678d, 33 bytes (sprite_template)
+CourtSelect9Banner9WideTemplate:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9Banner9WideTemplate.asm" ; $67ae, 37 bytes (sprite_template)
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-CourtSelect9CursorPositions_3e:
+CourtSelect9BannerPositions:
 	; $67dc, 18 bytes (bytes:16)
 	db $30, $fc, $30, $2c, $30, $5c, $50, $fe, $50, $2c, $50, $5c, $6c, $fc, $6c, $2c ; 0x00
 	db $6c, $5c ; 0x10
-CourtSelect9CursorTiles_3e:
+CourtSelect9BannerTileBases:
 	; $67ee, 10 bytes (bytes:10)
 	db $00, $10, $20, $30, $42, $52, $62, $20, $30, $00 ; 0x00
-CourtSelect9CursorAttrs_3e:
+CourtSelect9BannerAttrs:
 	; $67f8, 10 bytes (bytes:10)
 	db $08, $08, $08, $08, $08, $08, $08, $00, $00, $00 ; 0x00
-CourtSelect9LabelYOffsets_3e:
+CourtSelect9CursorXOffsets:
 	; $6802, 10 bytes (bytes:10)
 	db $17, $17, $17, $1b, $17, $17, $17, $17, $17, $17 ; 0x00
-AdjustCursorForLockedCourt:
+UseLockedCourtBanner:
 	push bc ; $680c
 	push hl ; $680d
 	ld c, $03 ; $680e
@@ -349,7 +349,7 @@ AdjustCursorForLockedCourt:
 RedrawCourtSelect9Menu:
 	wram_bank WRAM_SCREEN ; $6824
 	ld b, $00 ; $682a
-	ld c, $00 ; $682c
+	ld c, ATTRRECT_INACTIVE ; $682c
 .tabLoop:
 	call SetCourtSelect9TabAttrRect ; $682e
 	ld a, b ; $6831
@@ -360,7 +360,7 @@ RedrawCourtSelect9Menu:
 	ld c, $03 ; $6838
 	call GetMenuCursorIndex_3e ; $683a
 	ld b, a ; $683d
-	ld c, $01 ; $683e
+	ld c, ATTRRECT_SELECTED ; $683e
 	call SetCourtSelect9TabAttrRect ; $6840
 	ld c, $03 ; $6843
 	call GetMenuCursorIndex_3e ; $6845
@@ -372,10 +372,10 @@ RedrawCourtSelect9Menu:
 	call IsCourtUnlocked ; $6852
 	or a ; $6855
 	ld b, $ff ; $6856
-	jr z, .drawName ; $6858
+	jr z, .drawStats ; $6858
 	ld b, d ; $685a
-.drawName:
-	call DrawCourtNameTiles ; $685b
+.drawStats:
+	call DrawCourtStatValues ; $685b
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $685e
 	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $6861
 	ld c, 3 * TILEMAP_WIDTH / 16 ; $6864
@@ -445,34 +445,34 @@ SetCourtSelect9Palette:
 	ret ; $68d8
 CourtSelect9PalettePtrs:
 	; $68d9, 18 bytes (records:2)
-	dw CourtSelect9Palette0 ; record 0
-	dw CourtSelect9Palette1 ; record 1
-	dw CourtSelect9Palette2 ; record 2
-	dw CourtSelect9Palette3 ; record 3
-	dw CourtSelect9Palette6 ; record 4
-	dw CourtSelect9Palette5 ; record 5
-	dw CourtSelect9Palette4 ; record 6
-	dw CourtSelect9Palette7 ; record 7
-	dw CourtSelect9Palette8 ; record 8
-CourtSelect9Palette0:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette0.asm" ; $68eb, 8 bytes (palettes)
-CourtSelect9Palette1:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette1.asm" ; $68f3, 8 bytes (palettes)
-CourtSelect9Palette2:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette2.asm" ; $68fb, 8 bytes (palettes)
-CourtSelect9Palette3:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette3.asm" ; $6903, 8 bytes (palettes)
-CourtSelect9Palette4:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette4.asm" ; $690b, 8 bytes (palettes)
-CourtSelect9Palette5:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette5.asm" ; $6913, 8 bytes (palettes)
-CourtSelect9Palette6:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette6.asm" ; $691b, 8 bytes (palettes)
-CourtSelect9Palette7:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette7.asm" ; $6923, 8 bytes (palettes)
-CourtSelect9Palette8:
-	INCLUDE "data/engine/menus/court_select/CourtSelect9Palette8.asm" ; $692b, 8 bytes (palettes)
-Unused_3e_DrawCourtSelect9TitleText:
+	dw CourtSelect9HardPalette ; record 0
+	dw CourtSelect9ClayPalette ; record 1
+	dw CourtSelect9GrassPalette ; record 2
+	dw CourtSelect9CompositionPalette ; record 3
+	dw CourtSelect9StarPalette ; record 4
+	dw CourtSelect9CastlePalette ; record 5
+	dw CourtSelect9TropicsPalette ; record 6
+	dw CourtSelect9JunglePalette ; record 7
+	dw CourtSelect9WarehousePalette ; record 8
+CourtSelect9HardPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9HardPalette.asm" ; $68eb, 8 bytes (palettes)
+CourtSelect9ClayPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9ClayPalette.asm" ; $68f3, 8 bytes (palettes)
+CourtSelect9GrassPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9GrassPalette.asm" ; $68fb, 8 bytes (palettes)
+CourtSelect9CompositionPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CompositionPalette.asm" ; $6903, 8 bytes (palettes)
+CourtSelect9TropicsPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9TropicsPalette.asm" ; $690b, 8 bytes (palettes)
+CourtSelect9CastlePalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9CastlePalette.asm" ; $6913, 8 bytes (palettes)
+CourtSelect9StarPalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9StarPalette.asm" ; $691b, 8 bytes (palettes)
+CourtSelect9JunglePalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9JunglePalette.asm" ; $6923, 8 bytes (palettes)
+CourtSelect9WarehousePalette:
+	INCLUDE "data/engine/menus/court_select/CourtSelect9WarehousePalette.asm" ; $692b, 8 bytes (palettes)
+Unused_3e_DrawCourtSelect9StatsText:
 	push_wram_bank WRAM_SCREEN ; $6933
 	ld c, $03 ; $693c
 	call GetMenuCursorIndex_3e ; $693e
@@ -481,12 +481,12 @@ Unused_3e_DrawCourtSelect9TitleText:
 	ld a, d ; $6943
 	ld c, a ; $6944
 	push bc ; $6945
-	call Unused_3e_DrawCourtSelectTitleTiles ; $6946
+	call Unused_3e_DrawCourtStatsLabelTiles ; $6946
 	pop bc ; $6949
 	push bc ; $694a
-	call Unused_3e_RenderCourtSelectTitleText ; $694b
+	call Unused_3e_RenderCourtSpeedText ; $694b
 	pop bc ; $694e
-	call Unused_3e_RenderCourtSelectTitleText2 ; $694f
+	call Unused_3e_RenderCourtBounceText ; $694f
 	jr .done ; $6952
 .done:
 	pop_wram_bank ; $6954
@@ -494,7 +494,7 @@ Unused_3e_DrawCourtSelect9TitleText:
 StoreCourtUnlockBits:
 	push_wram_bank WRAM_COURT_PLANES ; $695a
 	ld c, $00 ; $6963
-	ld hl, wScreenAttrmap ; $6965
+	ld hl, wCourtUnlockedFlags ; $6965
 .loop:
 	ld a, b ; $6968
 	and $01 ; $6969
@@ -517,7 +517,7 @@ IsCourtUnlocked:
 	push_wram_bank WRAM_COURT_PLANES ; $6983
 	ld a, b ; $698c
 	sub COURT_STAR ; $698d
-	ld hl, wScreenAttrmap ; $698f
+	ld hl, wCourtUnlockedFlags ; $698f
 	add_hl_a ; $6992
 	ld a, [hl] ; $6997
 	ld b, a ; $6998
@@ -536,11 +536,11 @@ ComputeUnlockedCourtFlags:
 	ld d, [hl] ; $69af
 	ld e, a ; $69b0
 	farcall TestSaveFlag ; $69b1
-	jr z, .countDone ; $69b4
+	jr z, .nextFlag ; $69b4
 	ld a, $01 ; $69b6
 	or b ; $69b8
 	ld b, a ; $69b9
-.countDone:
+.nextFlag:
 	ld a, c ; $69ba
 	inc a ; $69bb
 	ld c, a ; $69bc
@@ -561,18 +561,18 @@ CourtUnlockFlagIds_3e:
 	dw SAVEFLAG_COURT_STAR ; 4
 StubNop_3e:
 	ret ; $69d4
-AwardCeremonyTiles:
-	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTiles.bin" ; $69d5, 2641 bytes
-AwardCeremonyPalettes:
-	INCLUDE "data/engine/menus/court_select/AwardCeremonyPalettes.asm" ; $7426, 64 bytes (palettes)
-AwardCeremonyTilemap5:
-	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyTilemap5.bin" ; $7466, 279 bytes
-AwardCeremonyAttrmap5:
-	INCBIN "data/engine/menus/court_select/lz_AwardCeremonyAttrmap5.bin" ; $757d, 107 bytes
-N64TransferItemGfx4:
-	INCBIN "data/engine/menus/court_select/lz_N64TransferItemGfx4.bin" ; $75e8, 179 bytes
-N64TransferItemGfx5:
-	INCBIN "data/engine/menus/court_select/lz_N64TransferItemGfx5.bin" ; $769b, 183 bytes
-SavedDataSourceGfx5:
-	INCBIN "data/engine/menus/court_select/lz_SavedDataSourceGfx5.bin" ; $7752, 179 bytes
+DreamMatchEpilogueTiles:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueTiles.bin" ; $69d5, 2641 bytes
+DreamMatchEpiloguePalettes:
+	INCLUDE "data/engine/menus/court_select/DreamMatchEpiloguePalettes.asm" ; $7426, 64 bytes (palettes)
+DreamMatchEpilogueSinglesBoyTilemap:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueSinglesBoyTilemap.bin" ; $7466, 279 bytes
+DreamMatchEpilogueSinglesBoyAttrmap:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueSinglesBoyAttrmap.bin" ; $757d, 107 bytes
+ClearStatusLabelGfx:
+	INCBIN "data/engine/menus/court_select/lz_ClearStatusLabelGfx.bin" ; $75e8, 179 bytes
+MarioStarGetsLabelGfx:
+	INCBIN "data/engine/menus/court_select/lz_MarioStarGetsLabelGfx.bin" ; $769b, 183 bytes
+MarioCharactersLabelGfx:
+	INCBIN "data/engine/menus/court_select/lz_MarioCharactersLabelGfx.bin" ; $7752, 179 bytes
 	; $7805, 2043 bytes fill to bank end (linker-padded)

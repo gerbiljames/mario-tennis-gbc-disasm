@@ -2,12 +2,12 @@ SetPartnerObjDefByGender_12:
 	ld a, [wStoryPartnerGender] ; $5e91
 	or a ; $5e94
 	jr nz, .done ; $5e95
-	script_get_actor_state ACTOR_SENIOR_COURT_A_KATE ; $5e97
+	script_get_actor_state ACTOR_SENIOR_COURT_ROOMMATE ; $5e97
 	ld c, l ; $5e9c
 	ld b, h ; $5e9d
 	ld d, OBJ_HARRY ; $5e9e
 	farcall LoadActorObjectDefIfValid ; $5ea0
-	script_set_anim ACTOR_SENIOR_COURT_A_KATE, ANIM_WALK ; $5ea3
+	script_set_anim ACTOR_SENIOR_COURT_ROOMMATE, ANIM_WALK ; $5ea3
 .done:
 	ret ; $5eaa
 SeniorCourtWalkPlayersOntoCourt:
@@ -15,24 +15,24 @@ SeniorCourtWalkPlayersOntoCourt:
 	cp ENTRY_SENIOR_CLASS_COURT_FROM_RESTAURANT_PLAZA ; $5eae
 	jp nz, .done ; $5eb0
 	test_flag FLAG_DOUBLES ; $5eb3
-	jr z, .walkOff ; $5eb6
+	jr z, .playerWalkIn ; $5eb6
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $5eb8
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $5ec0
 	script_wait_move ACTOR_PARTNER ; $5eca
 	script_face ACTOR_PARTNER, FACE_UP ; $5ecf
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5ed6
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $5ede
 	script_move_angle ACTOR_PLAYER, FACE_UP, 2.0 ; $5ee6
 .done:
 	ret ; $5ef0
-SeniorRankOfferScenePrep:
+SeniorRankOfferScene:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $5ef1
 	test_flag FLAG_DOUBLES ; $5ef9
 	jp z, SeniorSinglesRankOfferScene ; $5efc
 	call SeniorDoublesRankOfferScene ; $5eff
 	ret ; $5f02
-SeniorRankOfferScenePrepFacingUp:
+SeniorRankOfferSceneFacingUp:
 	script_set_speed ACTOR_PLAYER, 0.25 ; $5f03
 	script_face ACTOR_PLAYER, FACE_UP ; $5f0b
 	script_lock_facing ACTOR_PLAYER ; $5f12
@@ -45,8 +45,8 @@ SeniorSinglesRankOfferScene:
 	script_wait_move ACTOR_PLAYER ; $5f2d
 	script_wait_frames 10 ; $5f32
 	script_unlock_facing ACTOR_PLAYER ; $5f39
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5f40
-	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $5f48
+	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_PLAYER ; $5f40
+	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_A_EMILY ; $5f48
 	script_set_text Text_EmilyOfferSinglesRanking ; $5f50
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $5f56
 	jr z, .prompt ; $5f59
@@ -69,17 +69,17 @@ SeniorSinglesRankOfferScene:
 	jr z, .accepted ; $5f8d
 	farcall AdvanceDialogueTextCursor ; $5f8f
 .accepted:
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $5f92
+	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $5f92
 	call RunSeniorRankingMatchIntro ; $5f97
 	script_face ACTOR_PLAYER, FACE_UP ; $5f9a
 	script_wait_frames 15 ; $5fa1
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_BOUNCE ; $5fa8
-	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5faf
+	script_set_anim ACTOR_SENIOR_COURT_A_EMILY, ANIM_BOUNCE ; $5fa8
+	script_wait_idle ACTOR_SENIOR_COURT_A_EMILY ; $5faf
 	call SeniorSinglesMatchConfirm ; $5fb4
 	ret ; $5fb7
 .declined:
 	script_set_text Text_EmilySinglesPracticeFirst ; $5fb8
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $5fbe
+	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $5fbe
 	farcall EndCutsceneScriptMode ; $5fc3
 	ret ; $5fc6
 SeniorDoublesRankOfferScene:
@@ -90,22 +90,22 @@ SeniorDoublesRankOfferScene:
 	script_wait_frames 10 ; $5fe9
 	script_wait_move ACTOR_PLAYER ; $5ff0
 	script_unlock_facing ACTOR_PLAYER ; $5ff5
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5ffc
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PLAYER ; $5ffc
 	script_wait_move ACTOR_PARTNER ; $6004
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $6009
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PARTNER ; $6009
 	script_wait_frames 30 ; $6011
-	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $6018
+	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_B_EMILY ; $6018
 	script_set_text Text_EmilyOfferDoublesRanking ; $6020
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $6026
 	jr z, .prompt ; $6029
 	farcall AdvanceDialogueTextCursor ; $602b
 .prompt:
-	script_speak_restore ACTOR_SENIOR_COURT_A_EMILY ; $602e
+	script_speak_restore ACTOR_SENIOR_COURT_B_EMILY ; $602e
 	farcall RunDialogueYesNoPrompt ; $6033
 	farcall ScriptCloseDialogueWindow ; $6036
 	script_wait_frames 5 ; $6039
 	and a ; $6040
-	jp nz, .setText ; $6041
+	jp nz, .declined ; $6041
 	script_set_text Text_EmilyFirstVsThirdTeam ; $6044
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $604a
 	jr z, .accepted ; $604d
@@ -114,18 +114,18 @@ SeniorDoublesRankOfferScene:
 	jr z, .accepted ; $6055
 	farcall AdvanceDialogueTextCursor ; $6057
 .accepted:
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $605a
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $605a
 	call RunSeniorRankingMatchIntro ; $605f
 	script_face ACTOR_PLAYER, FACE_UP ; $6062
 	script_face ACTOR_PARTNER, FACE_UP ; $6069
 	script_wait_frames 15 ; $6070
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_BOUNCE ; $6077
-	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $607e
+	script_set_anim ACTOR_SENIOR_COURT_B_EMILY, ANIM_BOUNCE ; $6077
+	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $607e
 	call SeniorDoublesMatchConfirm ; $6083
 	ret ; $6086
-.setText:
+.declined:
 	script_set_text Text_EmilyDoublesTrainFirst ; $6087
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $608d
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $608d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $6092
 	ret ; $609f
 StartSeniorRankingMatch:
@@ -142,15 +142,15 @@ StartSeniorRankingMatch:
 	dw StartSeniorRankingMatch.doublesRank2 ; $60c0 jumptable
 	dw StartSeniorRankingMatch.doublesRank1 ; $60c2 jumptable
 .doublesRank3:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $60c4
+	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_LEFT ; $60c4
 	script_wait_frames 15 ; $60cb
 	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_26 ; $60d2
-	script_set_actor_script ACTOR_SENIOR_COURT_BETH, ActorScript_12_22 ; $60dd
+	script_set_actor_script ACTOR_SENIOR_COURT_B_BETH, ActorScript_12_22 ; $60dd
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_15 ; $60e8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $60f3
 	script_move_player 36.0, 23.0 ; $60fe
 	farcall WaitPlayerMoveDone ; $6108
-	script_wait_actor_script ACTOR_SENIOR_COURT_BETH ; $610b
+	script_wait_actor_script ACTOR_SENIOR_COURT_B_BETH ; $610b
 	script_wait_frames 30 ; $6110
 	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6117
 	ld [wUnusedExitTriggerIdMirror], a ; $6119
@@ -161,18 +161,18 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $6132
 	ret ; $6135
 .doublesRank2:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $6136
+	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_RIGHT ; $6136
 	script_wait_frames 15 ; $613d
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6144
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $614b
-	script_face ACTOR_SENIOR_COURT_BRIAN, FACE_RIGHT ; $6152
+	script_face ACTOR_SENIOR_COURT_B_BRIAN, FACE_RIGHT ; $6152
 	script_face ACTOR_SENIOR_COURT_B_JOY, FACE_RIGHT ; $6159
 	call ApproachSeniorCourtPairB ; $6160
 	script_set_actor_script ACTOR_SENIOR_COURT_B_JOY, ActorScript_12_31 ; $6163
-	script_set_actor_script ACTOR_SENIOR_COURT_BRIAN, ActorScript_12_32 ; $616e
+	script_set_actor_script ACTOR_SENIOR_COURT_B_BRIAN, ActorScript_12_32 ; $616e
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_16 ; $6179
 	farcall WaitPlayerMoveDone ; $6184
-	script_wait_actor_script ACTOR_SENIOR_COURT_BRIAN ; $6187
+	script_wait_actor_script ACTOR_SENIOR_COURT_B_BRIAN ; $6187
 	script_wait_frames 30 ; $618c
 	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $6193
 	ld [wUnusedExitTriggerIdMirror], a ; $6195
@@ -183,11 +183,11 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $61ae
 	ret ; $61b1
 .doublesRank1:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $61b2
+	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_LEFT ; $61b2
 	script_wait_frames 15 ; $61b9
 	script_face ACTOR_PLAYER, FACE_LEFT ; $61c0
-	script_face ACTOR_SENIOR_COURT_BRIAN, FACE_LEFT ; $61c7
-	script_set_actor_script ACTOR_SENIOR_COURT_ALLIE, ActorScript_12_39 ; $61ce
+	script_face ACTOR_SENIOR_COURT_B_BRIAN, FACE_LEFT ; $61c7
+	script_set_actor_script ACTOR_SENIOR_COURT_B_ALLIE, ActorScript_12_39 ; $61ce
 	script_set_actor_script ACTOR_SENIOR_COURT_B_FAY, ActorScript_12_40 ; $61d9
 	script_set_actor_script ACTOR_PARTNER, ActorScript_12_15 ; $61e4
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $61ef
@@ -204,14 +204,14 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $622e
 	ret ; $6231
 .singlesRank4:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $6232
+	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $6232
 	script_wait_frames 15 ; $6239
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6240
-	script_face ACTOR_SENIOR_COURT_BRIAN, FACE_LEFT ; $6247
+	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_LEFT ; $6247
 	call ApproachSeniorCourtPairA ; $624e
-	script_set_actor_script ACTOR_SENIOR_COURT_BRIAN, ActorScript_12_01 ; $6251
+	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_01 ; $6251
 	farcall WaitPlayerMoveDone ; $625c
-	script_wait_actor_script ACTOR_SENIOR_COURT_BRIAN ; $625f
+	script_wait_actor_script ACTOR_SENIOR_COURT_A_BRIAN ; $625f
 	script_wait_frames 30 ; $6264
 	ld a, EXIT_SENIOR_CLASS_COURT_RANKING_MATCH ; $626b
 	ld [wUnusedExitTriggerIdMirror], a ; $626d
@@ -222,7 +222,7 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $6286
 	ret ; $6289
 .singlesRank3:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $628a
+	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_RIGHT ; $628a
 	script_wait_frames 15 ; $6291
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6298
 	script_face ACTOR_SENIOR_COURT_A_JOY, FACE_RIGHT ; $629f
@@ -241,13 +241,13 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $62e5
 	ret ; $62e8
 .singlesRank2:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_RIGHT ; $62e9
+	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_RIGHT ; $62e9
 	script_wait_frames 15 ; $62f0
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $62f7
-	script_face ACTOR_SENIOR_COURT_ALLIE, FACE_RIGHT ; $62fe
+	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_RIGHT ; $62fe
 	script_wait_frames 30 ; $6305
 	call ApproachSeniorCourtPairB ; $630c
-	script_set_actor_script ACTOR_SENIOR_COURT_ALLIE, ActorScript_12_05 ; $630f
+	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_05 ; $630f
 	farcall WaitPlayerMoveDone ; $631a
 	script_wait_frames 120 ; $631d
 	script_wait_move ACTOR_PLAYER ; $6324
@@ -260,7 +260,7 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $6344
 	ret ; $6347
 .singlesRank1:
-	script_face ACTOR_SENIOR_COURT_EMILY, FACE_LEFT ; $6348
+	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_LEFT ; $6348
 	script_wait_frames 15 ; $634f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6356
 	script_face ACTOR_SENIOR_COURT_A_FAY, FACE_LEFT ; $635d
@@ -278,9 +278,9 @@ StartSeniorRankingMatch:
 	farcall RestoreOverworldAfterMatch ; $639e
 	ret ; $63a1
 ApproachSeniorCourtPairA:
-	script_set_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_1, ActorScript_12_17 ; $63a2
-	script_set_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_2, ActorScript_12_18 ; $63ad
-	script_wait_actor_script ACTOR_SENIOR_COURT_RACKET_STUDENT_2 ; $63b8
+	script_set_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_1, ActorScript_12_17 ; $63a2
+	script_set_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2, ActorScript_12_18 ; $63ad
+	script_wait_actor_script ACTOR_SENIOR_COURT_A_RACKET_STUDENT_2 ; $63b8
 	script_move_player 36.0, 23.0 ; $63bd
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_13 ; $63c7
 	ret ; $63d2
@@ -348,7 +348,7 @@ SeniorRankingMatchIntroPtrs:
 	assert_table_length SENIORCOURTSTAGE_DOUBLES_RANK1 + 1 - SENIORCOURTSTAGE_SINGLES_RANK4
 SeniorDoublesRank3Intro:
 	script_wait_frames 15 ; $6500
-	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_SENIOR_COURT_A_EMILY ; $6507
+	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_SENIOR_COURT_B_EMILY ; $6507
 	script_wait_frames 30 ; $650f
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_PLAYER ; $6516
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_PARTNER ; $651e
@@ -357,49 +357,49 @@ SeniorDoublesRank3Intro:
 	script_move_player_to_actor ACTOR_SENIOR_COURT_B_CURT ; $6533
 	farcall WaitPlayerMoveDone ; $653a
 	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_B_CURT ; $653d
-	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_B_CURT ; $654a
-	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $6552
-	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $6557
-	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_BETH ; $655e
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_SENIOR_COURT_B_CURT ; $654a
+	script_null_script ACTOR_SENIOR_COURT_B_BETH ; $6552
+	script_set_anim ACTOR_SENIOR_COURT_B_BETH, ANIM_WALK ; $6557
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_SENIOR_COURT_B_BETH ; $655e
 	script_set_anim ACTOR_SENIOR_COURT_B_CURT, ANIM_NOD ; $6566
 	script_wait_idle ACTOR_SENIOR_COURT_B_CURT ; $656d
 	script_set_actor_script ACTOR_SENIOR_COURT_B_CURT, ActorScript_12_21 ; $6572
-	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_25 ; $657d
-	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $6588
+	script_set_actor_script ACTOR_SENIOR_COURT_B_BETH, ActorScript_12_25 ; $657d
+	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_DOWN ; $6588
 	script_wait_actor_script ACTOR_SENIOR_COURT_B_CURT ; $658f
 	script_null_script ACTOR_PLAYER_SHADOW ; $6594
 	script_move_player_to_actor ACTOR_PLAYER ; $6599
 	farcall WaitPlayerMoveDone ; $65a0
 	script_face_toward ACTOR_SENIOR_COURT_B_CURT, ACTOR_PLAYER ; $65a3
 	script_set_text Text_SeniorDoublesRankThreeShowYou ; $65ab
-	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_NOD ; $65b1
-	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $65b8
-	script_speak ACTOR_SENIOR_COURT_A_BETH ; $65bd
+	script_set_anim ACTOR_SENIOR_COURT_B_BETH, ANIM_NOD ; $65b1
+	script_wait_idle ACTOR_SENIOR_COURT_B_BETH ; $65b8
+	script_speak ACTOR_SENIOR_COURT_B_BETH ; $65bd
 	script_set_anim ACTOR_SENIOR_COURT_B_CURT, ANIM_NOD ; $65c2
 	script_wait_idle ACTOR_SENIOR_COURT_B_CURT ; $65c9
 	script_speak ACTOR_SENIOR_COURT_B_CURT ; $65ce
 	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_UP ; $65d3
-	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_UP ; $65da
+	script_face ACTOR_SENIOR_COURT_B_BETH, FACE_UP ; $65da
 	script_face ACTOR_PARTNER, FACE_UP ; $65e1
 	ret ; $65e8
 SeniorDoublesRank2Intro:
 	script_wait_frames 15 ; $65e9
-	script_face_toward ACTOR_SENIOR_COURT_B_JOY, ACTOR_SENIOR_COURT_A_EMILY ; $65f0
+	script_face_toward ACTOR_SENIOR_COURT_B_JOY, ACTOR_SENIOR_COURT_B_EMILY ; $65f0
 	script_wait_frames 30 ; $65f8
-	script_face_toward ACTOR_SENIOR_COURT_A_BRIAN, ACTOR_PLAYER ; $65ff
+	script_face_toward ACTOR_SENIOR_COURT_B_BRIAN, ACTOR_PLAYER ; $65ff
 	script_face_toward ACTOR_SENIOR_COURT_B_JOY, ACTOR_PARTNER ; $6607
 	script_wait_frames 30 ; $660f
 	script_player_speed 1.0 ; $6616
-	script_move_player_to_actor ACTOR_SENIOR_COURT_A_BRIAN ; $661c
+	script_move_player_to_actor ACTOR_SENIOR_COURT_B_BRIAN ; $661c
 	farcall WaitPlayerMoveDone ; $6623
-	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_A_BRIAN ; $6626
-	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_BRIAN ; $6633
-	script_set_anim ACTOR_SENIOR_COURT_A_BRIAN, ANIM_NOD ; $663b
-	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $6642
-	script_set_actor_script ACTOR_SENIOR_COURT_A_BRIAN, ActorScript_12_29 ; $6647
+	script_walk_to_actor ACTOR_PLAYER_SHADOW, ACTOR_SENIOR_COURT_B_BRIAN ; $6626
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_SENIOR_COURT_B_BRIAN ; $6633
+	script_set_anim ACTOR_SENIOR_COURT_B_BRIAN, ANIM_NOD ; $663b
+	script_wait_idle ACTOR_SENIOR_COURT_B_BRIAN ; $6642
+	script_set_actor_script ACTOR_SENIOR_COURT_B_BRIAN, ActorScript_12_29 ; $6647
 	script_set_actor_script ACTOR_SENIOR_COURT_B_JOY, ActorScript_12_30 ; $6652
-	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $665d
-	script_wait_actor_script ACTOR_SENIOR_COURT_A_BRIAN ; $6664
+	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_DOWN ; $665d
+	script_wait_actor_script ACTOR_SENIOR_COURT_B_BRIAN ; $6664
 	script_null_script ACTOR_PLAYER_SHADOW ; $6669
 	script_move_player_to_actor ACTOR_PLAYER ; $666e
 	farcall WaitPlayerMoveDone ; $6675
@@ -407,47 +407,47 @@ SeniorDoublesRank2Intro:
 	script_set_anim ACTOR_SENIOR_COURT_B_JOY, ANIM_NOD ; $667e
 	script_wait_idle ACTOR_SENIOR_COURT_B_JOY ; $6685
 	script_speak ACTOR_SENIOR_COURT_B_JOY ; $668a
-	script_set_anim ACTOR_SENIOR_COURT_A_BRIAN, ANIM_NOD ; $668f
-	script_wait_idle ACTOR_SENIOR_COURT_A_BRIAN ; $6696
-	script_speak ACTOR_SENIOR_COURT_A_BRIAN ; $669b
-	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_UP ; $66a0
+	script_set_anim ACTOR_SENIOR_COURT_B_BRIAN, ANIM_NOD ; $668f
+	script_wait_idle ACTOR_SENIOR_COURT_B_BRIAN ; $6696
+	script_speak ACTOR_SENIOR_COURT_B_BRIAN ; $669b
+	script_face ACTOR_SENIOR_COURT_B_BRIAN, FACE_UP ; $66a0
 	script_face ACTOR_SENIOR_COURT_B_JOY, FACE_UP ; $66a7
 	ret ; $66ae
 SeniorDoublesRank1Intro:
 	script_wait_frames 15 ; $66af
-	script_face_toward ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_SENIOR_COURT_A_EMILY ; $66b6
+	script_face_toward ACTOR_SENIOR_COURT_B_ALLIE, ACTOR_SENIOR_COURT_B_EMILY ; $66b6
 	script_wait_frames 30 ; $66be
 	script_face_toward ACTOR_SENIOR_COURT_B_FAY, ACTOR_PLAYER ; $66c5
-	script_face_toward ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_PARTNER ; $66cd
+	script_face_toward ACTOR_SENIOR_COURT_B_ALLIE, ACTOR_PARTNER ; $66cd
 	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $66d5
 	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_WALK ; $66da
 	script_wait_frames 30 ; $66e1
 	script_player_speed 1.0 ; $66e8
 	script_null_script ACTOR_SENIOR_COURT_B_FAY ; $66ee
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_DOWN ; $66f3
-	script_move_target ACTOR_SENIOR_COURT_A_ALLIE, 43.0, 17.0 ; $66fa
-	script_move_player_to_actor ACTOR_SENIOR_COURT_A_ALLIE ; $6705
+	script_move_target ACTOR_SENIOR_COURT_B_ALLIE, 43.0, 17.0 ; $66fa
+	script_move_player_to_actor ACTOR_SENIOR_COURT_B_ALLIE ; $6705
 	farcall WaitPlayerMoveDone ; $670c
-	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_DOWN ; $670f
-	script_face_toward ACTOR_SENIOR_COURT_A_EMILY, ACTOR_SENIOR_COURT_A_ALLIE ; $6716
-	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_NOD ; $671e
-	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $6725
-	script_set_actor_script ACTOR_SENIOR_COURT_A_ALLIE, ActorScript_12_37 ; $672a
+	script_face ACTOR_SENIOR_COURT_B_ALLIE, FACE_DOWN ; $670f
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_SENIOR_COURT_B_ALLIE ; $6716
+	script_set_anim ACTOR_SENIOR_COURT_B_ALLIE, ANIM_NOD ; $671e
+	script_wait_idle ACTOR_SENIOR_COURT_B_ALLIE ; $6725
+	script_set_actor_script ACTOR_SENIOR_COURT_B_ALLIE, ActorScript_12_37 ; $672a
 	script_wait_frames 15 ; $6735
 	script_move_player_to_actor ACTOR_PLAYER ; $673c
 	script_set_actor_script ACTOR_SENIOR_COURT_B_FAY, ActorScript_12_38 ; $6743
-	script_face ACTOR_SENIOR_COURT_A_EMILY, FACE_DOWN ; $674e
+	script_face ACTOR_SENIOR_COURT_B_EMILY, FACE_DOWN ; $674e
 	script_wait_actor_script ACTOR_SENIOR_COURT_B_FAY ; $6755
 	script_face_toward ACTOR_SENIOR_COURT_B_FAY, ACTOR_PLAYER ; $675a
-	script_face_toward ACTOR_SENIOR_COURT_A_ALLIE, ACTOR_PARTNER ; $6762
+	script_face_toward ACTOR_SENIOR_COURT_B_ALLIE, ACTOR_PARTNER ; $6762
 	script_set_text Text_SeniorDoublesRankOneSoonerThanExpected ; $676a
 	script_set_anim ACTOR_SENIOR_COURT_B_FAY, ANIM_NOD ; $6770
 	script_wait_idle ACTOR_SENIOR_COURT_B_FAY ; $6777
 	script_speak ACTOR_SENIOR_COURT_B_FAY ; $677c
-	script_set_anim ACTOR_SENIOR_COURT_A_ALLIE, ANIM_NOD ; $6781
-	script_wait_idle ACTOR_SENIOR_COURT_A_ALLIE ; $6788
-	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $678d
-	script_face ACTOR_SENIOR_COURT_A_ALLIE, FACE_UP ; $6792
+	script_set_anim ACTOR_SENIOR_COURT_B_ALLIE, ANIM_NOD ; $6781
+	script_wait_idle ACTOR_SENIOR_COURT_B_ALLIE ; $6788
+	script_speak ACTOR_SENIOR_COURT_B_ALLIE ; $678d
+	script_face ACTOR_SENIOR_COURT_B_ALLIE, FACE_UP ; $6792
 	script_face ACTOR_SENIOR_COURT_B_FAY, FACE_UP ; $6799
 	ret ; $67a0
 SeniorSinglesRank4Intro:

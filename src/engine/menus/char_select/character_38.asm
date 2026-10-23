@@ -4,42 +4,42 @@ RunCharacterSelectScreen:
 	ld a, b ; $47cf
 	ld [wCharSelectIsPartner], a ; $47d0
 	wram_bank WRAM_CHAR3 ; $47d3
-	ld hl, wCharPosX ; $47d9
+	ld hl, wCharStruct ; $47d9
 	ld c, $10 ; $47dc
 	call ClearMemory16 ; $47de
 	wram_bank WRAM_CHAR2 ; $47e1
-	ld hl, wCharPosX ; $47e7
+	ld hl, wCharStruct ; $47e7
 	ld c, $10 ; $47ea
 	call ClearMemory16 ; $47ec
 	wram_bank WRAM_CHAR1 ; $47ef
-	ld hl, wCharPosX ; $47f5
+	ld hl, wCharStruct ; $47f5
 	ld c, $10 ; $47f8
 	call ClearMemory16 ; $47fa
 	wram_bank WRAM_CHAR0 ; $47fd
-	ld hl, wCharPosX ; $4803
+	ld hl, wCharStruct ; $4803
 	ld c, $10 ; $4806
 	call ClearMemory16 ; $4808
 	farcall ResetMatchState ; $480b
 	call ClearFrameTasks ; $480e
 	xor a ; $4811
-	ld [wCharSelectIdleAnimState], a ; $4812
+	ld [wCharSelectIdleFrameCount], a ; $4812
 	ld [wCharSelectHandedness], a ; $4815
-	ld [wCharSelectIdleTimer], a ; $4818
+	ld [wCharSelectIdleSwingCount], a ; $4818
 	call DisableLCDSafely ; $481b
 	call ClearFrameTasks ; $481e
 	call SetupCharacterSelectScreen ; $4821
 	call DrawCharacterSelectChars ; $4824
 	frame_task UpdateAnimatedTilesTask_38 ; $4827
 	frame_task DrawCharacterSelectChars ; $482f
-	frame_task DrawCharacterSelectCursor ; $4837
+	frame_task DrawCharSelectHandednessMarker ; $4837
 	call EnableLCD ; $483f
 	script_fade_in 8 ; $4842
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
 	res B_IE_TIMER, [hl] ; $484d
-	frame_task TickMenuBgScrollTask_38 ; $484f
+	frame_task TickMenuTitleScrollerTask_38 ; $484f
 .redraw:
-	ldh a, [hInputPressed] ; $4857
+	ldh a, [hInputRepeat] ; $4857
 	ld [wMenuInputPressed], a ; $4859
 	ld b, $02 ; $485c
 	ld c, $01 ; $485e
@@ -49,13 +49,13 @@ RunCharacterSelectScreen:
 	call RefreshCharacterSelectHighlight ; $4866
 .pollButtons:
 	call AdvanceFrame ; $4869
-	ldh a, [hInputPressed] ; $486c
+	ldh a, [hInputRepeat] ; $486c
 	bit PADB_A, a ; $486e
 	jr nz, .confirm ; $4870
 	bit PADB_B, a ; $4872
 	jr nz, .cancel ; $4874
 	bit PADB_START, a ; $4876
-	jr nz, .viewStats ; $4878
+	jr nz, .toggleHandedness ; $4878
 	jr .redraw ; $487a
 .confirm:
 	sound SFX_MENU_SELECT ; $487c
@@ -103,7 +103,7 @@ RunCharacterSelectScreen:
 	call EnableLCD ; $48eb
 	ld a, $ff ; $48ee
 	ret ; $48f0
-.viewStats:
+.toggleHandedness:
 	sound SFX_MENU_MOVE ; $48f1
 	push_wram_bank WRAM_COURT_PLANES ; $48f3
 	ld a, [wCharSelectHandedness] ; $48fc
@@ -111,12 +111,12 @@ RunCharacterSelectScreen:
 	ld [wCharSelectHandedness], a ; $4901
 	pop_wram_bank ; $4904
 	jp .redraw ; $4909
-; DrawCharGridCursorBox with a different palette (c = 2), template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it.
+; DrawCharGridCursorBox for a 2-wide grid (c = 2 instead of 3), with its own template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it.
 Unused_38_DrawCharSelectCursorBox:
 	ld c, $02 ; $490c
 	call GetMenuCursorIndex_38 ; $490e
 	add a ; $4911
-	ld hl, CharacterSelectScreenTable ; $4912
+	ld hl, CharSelectCursorBoxPositions ; $4912
 	add_hl_a ; $4915
 	ld a, [hl+] ; $491a
 	ld d, [hl] ; $491b
@@ -124,7 +124,7 @@ Unused_38_DrawCharSelectCursorBox:
 	ld bc, $3018 ; $491d
 	call DrawSelectedOptionBox ; $4920
 	ret ; $4923
-CharacterSelectScreenTable:
+CharSelectCursorBoxPositions:
 	; $4924, 8 bytes (bytes:8)
 	db $20, $08, $20, $68, $40, $08, $40, $68 ; 0x00
 LoadCharSelectCharPalettes:
@@ -174,9 +174,9 @@ SetupCharacterSelectScreen:
 	ldh [hScrollY], a ; $4978
 	wram_bank WRAM_COURT_PLANES ; $497a
 	xor a ; $4980
-	ld [wCharSelectIdleAnimState], a ; $4981
+	ld [wCharSelectIdleFrameCount], a ; $4981
 	ld [wCharSelectHandedness], a ; $4984
-	ld [wCharSelectIdleTimer], a ; $4987
+	ld [wCharSelectIdleSwingCount], a ; $4987
 	ld [wCameraX], a ; $498a
 	ld [wCameraX + 1], a ; $498d
 	ld [wCameraY], a ; $4990
@@ -232,7 +232,7 @@ SetupCharacterSelectScreen:
 	wram_bank WRAM_COURT_PLANES ; $4a21
 	ld a, [wCharSelectIsPartner] ; $4a27
 	or a ; $4a2a
-	jr z, .secondRow ; $4a2b
+	jr z, .loadHandednessGfx ; $4a2b
 	ld a, CHAR_HARRY ; $4a2d
 	farcall LoadCharMugshotToBuffer ; $4a2f
 	ld de, vTiles2 tile $20 + VRAM_BANK1 ; $4a32
@@ -252,9 +252,9 @@ SetupCharacterSelectScreen:
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 14 ; $4a59
 	ld h, $0f ; $4a5c
 	farcall FillTilemapRect ; $4a5e
-.secondRow:
-	ld b, TILEBLOCK_CharacterSelectGfx ; $4a61
-	ld c, CharacterSelectGfx_SIZE / 16 ; $4a63
+.loadHandednessGfx:
+	ld b, TILEBLOCK_HandednessLRSpriteGfx ; $4a61
+	ld c, HandednessLRSpriteGfx_SIZE / 16 ; $4a63
 	ld de, vTiles0 ; $4a65
 	farcall LoadCompressedTileBlock ; $4a68
 	ld b, $08 ; $4a6b
@@ -263,18 +263,18 @@ SetupCharacterSelectScreen:
 	farcall QueueWram3MapToVRAM ; $4a72
 	wram_bank WRAM_COURT_PLANES ; $4a75
 	xor a ; $4a7b
-	ld [wCharSelectIdleAnimState], a ; $4a7c
-	ld [wCharSelectIdleTimer], a ; $4a7f
+	ld [wCharSelectIdleFrameCount], a ; $4a7c
+	ld [wCharSelectIdleSwingCount], a ; $4a7f
 	ld [wCharSelectHandedness], a ; $4a82
-	farcall InitMenuBgScroll ; $4a85
+	farcall InitMenuTitleScroller ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
 	farcall LoadMenuSpritePalettePair ; $4a8c
 	ld a, $10 ; $4a8f
-	ld [wMenuBgScrollTile], a ; $4a91
-	ld [wMenuBgScrollTile + 1], a ; $4a94
-	ld b, TILEBLOCK_SharedMenuGfx72 ; $4a97
-	ld c, SharedMenuGfx72_SIZE / 16 ; $4a99
+	ld [wMenuTitleScrollTile], a ; $4a91
+	ld [wMenuTitleScrollTile + 1], a ; $4a94
+	ld b, TILEBLOCK_CreateACharacterTitleGfx ; $4a97
+	ld c, CreateACharacterTitleGfx_SIZE / 16 ; $4a99
 	ld de, vTiles0 tile $10 ; $4a9b
 	farcall LoadCompressedTileBlock ; $4a9e
 	call LoadCharSelectCharPalettes ; $4aa1
@@ -290,7 +290,7 @@ RefreshCharacterSelectHighlight:
 	call ReloadSelectedCharGfx ; $4ab9
 	push_wram_bank WRAM_COURT_PLANES ; $4abc
 	xor a ; $4ac5
-	ld [wCharSelectIdleTimer], a ; $4ac6
+	ld [wCharSelectIdleSwingCount], a ; $4ac6
 	pop_wram_bank ; $4ac9
 	ret ; $4ace
 DrawCharacterSelectPrompt:
@@ -301,20 +301,20 @@ DrawCharacterSelectPrompt:
 	push_wram_bank WRAM_COURT_PLANES ; $4ad3
 	ld a, [wCharSelectIsPartner] ; $4adc
 	or a ; $4adf
-	jr nz, .altRow ; $4ae0
+	jr nz, .choosePartnerPrompt ; $4ae0
 	wram_bank WRAM_SCREEN ; $4ae2
 	ld hl, Text_CharSelectPickCharacter ; $4ae8
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
-	jr .nextRow ; $4af3
-.altRow:
+	jr .drawChangeHandsHint ; $4af3
+.choosePartnerPrompt:
 	wram_bank WRAM_SCREEN ; $4af5
 	ld hl, Text_CharSelectChoosePartner ; $4afb
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
-.nextRow:
+.drawChangeHandsHint:
 	wram_bank WRAM_SCREEN ; $4b06
 	ld hl, Text_CharSelectStartChangeHands ; $4b0c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
@@ -328,40 +328,40 @@ DrawCharacterSelectPrompt:
 	ret ; $4b20
 InitCharacterSelectChars:
 	wram_bank WRAM_CHAR3 ; $4b21
-	ld hl, wCharPosX ; $4b27
+	ld hl, wCharStruct ; $4b27
 	ld c, $10 ; $4b2a
 	call ClearMemory16 ; $4b2c
 	wram_bank WRAM_CHAR2 ; $4b2f
-	ld hl, wCharPosX ; $4b35
+	ld hl, wCharStruct ; $4b35
 	ld c, $10 ; $4b38
 	call ClearMemory16 ; $4b3a
 	wram_bank WRAM_CHAR1 ; $4b3d
-	ld hl, wCharPosX ; $4b43
+	ld hl, wCharStruct ; $4b43
 	ld c, $10 ; $4b46
 	call ClearMemory16 ; $4b48
 	wram_bank WRAM_CHAR0 ; $4b4b
-	ld hl, wCharPosX ; $4b51
+	ld hl, wCharStruct ; $4b51
 	ld c, $10 ; $4b54
 	call ClearMemory16 ; $4b56
 	ld a, CHAR_ALEX ; $4b59
 	farcall GetCharPaletteIndex ; $4b5b
 	ld e, a ; $4b5e
 	ld d, $00 ; $4b5f
-	wram_bank WRAM_ACTORS ; $4b61
+	wram_bank WRAM_CHAR0 ; $4b61
 	ld a, $00 ; $4b67
 	farcall InitChar ; $4b69
 	ld a, CHAR_NINA ; $4b6c
 	farcall GetCharPaletteIndex ; $4b6e
 	ld e, a ; $4b71
 	ld d, $01 ; $4b72
-	wram_bank WRAM_TEXT ; $4b74
+	wram_bank WRAM_CHAR1 ; $4b74
 	ld a, $01 ; $4b7a
 	farcall InitChar ; $4b7c
 	ld a, CHAR_HARRY ; $4b7f
 	farcall GetCharPaletteIndex ; $4b81
 	ld e, a ; $4b84
 	ld d, $02 ; $4b85
-	wram_bank WRAM_SCENE ; $4b87
+	wram_bank WRAM_CHAR2 ; $4b87
 	ld a, $02 ; $4b8d
 	farcall InitChar ; $4b8f
 	ld a, CHAR_KATE ; $4b92
@@ -375,33 +375,33 @@ InitCharacterSelectChars:
 	ret ; $4bab
 DrawCharacterSelectChars:
 	wram_bank WRAM_CHAR0 ; $4bac
-	ld hl, wCharPosX ; $4bb2
+	ld hl, wCharStruct ; $4bb2
 	call UpdateCharSelectCharSprite ; $4bb5
 	ld a, $58 ; $4bb8
-	ld [wCharSpriteSlot + 2], a ; $4bba
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4bba
 	ld a, $20 ; $4bbd
-	ld [wCharSpriteSlot + 3], a ; $4bbf
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4bbf
 	wram_bank WRAM_CHAR1 ; $4bc2
-	ld hl, wCharPosX ; $4bc8
+	ld hl, wCharStruct ; $4bc8
 	call UpdateCharSelectCharSprite ; $4bcb
 	ld a, $58 ; $4bce
-	ld [wCharSpriteSlot + 2], a ; $4bd0
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4bd0
 	ld a, $61 ; $4bd3
-	ld [wCharSpriteSlot + 3], a ; $4bd5
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4bd5
 	wram_bank WRAM_CHAR2 ; $4bd8
-	ld hl, wCharPosX ; $4bde
+	ld hl, wCharStruct ; $4bde
 	call UpdateCharSelectCharSprite ; $4be1
 	ld a, $c8 ; $4be4
-	ld [wCharSpriteSlot + 2], a ; $4be6
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4be6
 	ld a, $c8 ; $4be9
-	ld [wCharSpriteSlot + 3], a ; $4beb
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4beb
 	wram_bank WRAM_CHAR3 ; $4bee
-	ld hl, wCharPosX ; $4bf4
+	ld hl, wCharStruct ; $4bf4
 	call UpdateCharSelectCharSprite ; $4bf7
 	ld a, $c8 ; $4bfa
-	ld [wCharSpriteSlot + 2], a ; $4bfc
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4bfc
 	ld a, $c8 ; $4bff
-	ld [wCharSpriteSlot + 3], a ; $4c01
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c01
 	wram_bank WRAM_ACTORS ; $4c04
 	push_wram_bank WRAM_COURT_PLANES ; $4c0a
 	ld a, [wCharSelectIsPartner] ; $4c13
@@ -412,24 +412,24 @@ DrawCharacterSelectChars:
 	jr z, .applyHandedness ; $4c1e
 	wram_bank WRAM_CHAR0 ; $4c20
 	ld a, $c8 ; $4c26
-	ld [wCharSpriteSlot + 2], a ; $4c28
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c28
 	ld a, $c8 ; $4c2b
-	ld [wCharSpriteSlot + 3], a ; $4c2d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c2d
 	wram_bank WRAM_CHAR1 ; $4c30
 	ld a, $c8 ; $4c36
-	ld [wCharSpriteSlot + 2], a ; $4c38
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c38
 	ld a, $c8 ; $4c3b
-	ld [wCharSpriteSlot + 3], a ; $4c3d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c3d
 	wram_bank WRAM_CHAR2 ; $4c40
 	ld a, $58 ; $4c46
-	ld [wCharSpriteSlot + 2], a ; $4c48
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c48
 	ld a, $20 ; $4c4b
-	ld [wCharSpriteSlot + 3], a ; $4c4d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c4d
 	wram_bank WRAM_CHAR3 ; $4c50
 	ld a, $58 ; $4c56
-	ld [wCharSpriteSlot + 2], a ; $4c58
+	ld [wCharSpriteSlot + SPRSLOT_Y], a ; $4c58
 	ld a, $61 ; $4c5b
-	ld [wCharSpriteSlot + 3], a ; $4c5d
+	ld [wCharSpriteSlot + SPRSLOT_X], a ; $4c5d
 	wram_bank WRAM_ACTORS ; $4c60
 .applyHandedness:
 	push_wram_bank WRAM_COURT_PLANES ; $4c66
@@ -440,16 +440,16 @@ DrawCharacterSelectChars:
 	or a ; $4c79
 	jr z, .drawSprites ; $4c7a
 	wram_bank WRAM_CHAR0 ; $4c7c
-	ld hl, wCharSpriteSlot + 1 ; $4c82
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4c82
 	set B_OAM_XFLIP, [hl] ; $4c85
 	wram_bank WRAM_CHAR1 ; $4c87
-	ld hl, wCharSpriteSlot + 1 ; $4c8d
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4c8d
 	set B_OAM_XFLIP, [hl] ; $4c90
 	wram_bank WRAM_CHAR2 ; $4c92
-	ld hl, wCharSpriteSlot + 1 ; $4c98
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4c98
 	set B_OAM_XFLIP, [hl] ; $4c9b
 	wram_bank WRAM_CHAR3 ; $4c9d
-	ld hl, wCharSpriteSlot + 1 ; $4ca3
+	ld hl, wCharSpriteSlot + SPRSLOT_ATTR ; $4ca3
 	set B_OAM_XFLIP, [hl] ; $4ca6
 .drawSprites:
 	wram_bank WRAM_CHAR0 ; $4ca8

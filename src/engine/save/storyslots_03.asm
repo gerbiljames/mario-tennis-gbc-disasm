@@ -3,7 +3,7 @@ Unused_03_InvalidateStorySlot:
 	push de ; $4b00
 	push bc ; $4b01
 	ld a, b ; $4b02
-	cp $03 ; $4b03
+	cp NUM_STORY_SLOTS ; $4b03
 	jr nc, .badSlot ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09
@@ -334,13 +334,13 @@ SaveStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d08
 	cp NUM_STORY_SLOTS ; $4d0b
 	ret nc ; $4d0d
-	jr SaveStorySlotWithTimer.checkCurrentStorySlot ; $4d0e
+	jr SaveStorySlotWithTimer.writeSlot ; $4d0e
 SaveStorySlotWithTimer:
 	ld a, [wCurrentStorySlot] ; $4d10
 	cp NUM_STORY_SLOTS ; $4d13
 	ret nc ; $4d15
 	call SaveGameTimer ; $4d16
-.checkCurrentStorySlot:
+.writeSlot:
 	ld a, [wCurrentStorySlot] ; $4d19
 	add a ; $4d1c
 	ld b, a ; $4d1d
@@ -379,7 +379,7 @@ SaveStorySlotWithTimer:
 	pop_wram_bank ; $4d5c
 	ld a, $ff ; $4d61
 	ret ; $4d63
-CheckStorySlot:
+ReadCurrentStorySlot:
 	push bc ; $4d64
 	push de ; $4d65
 	push hl ; $4d66

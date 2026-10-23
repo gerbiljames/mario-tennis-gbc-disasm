@@ -149,12 +149,12 @@ MACRO script_unlock_facing
 	farcall ScriptSetActorFacingLock
 ENDM
 
-; Writes `state` to the actor's activity byte (state struct +$20).
-; Usage: script_set_active actor, state
-MACRO script_set_active
+; Sets the actor's ACTORF_MODE to an ACTORMODE_* value.
+; Usage: script_set_actor_mode actor, mode
+MACRO script_set_actor_mode
 	ld a, \1
 	ld b, \2
-	farcall SetActorActive
+	farcall ScriptSetActorMode
 ENDM
 
 ; Walks the player to `actor` (b is a position offset, always $00 here).
@@ -171,11 +171,12 @@ MACRO script_speak
 	farcall ScriptShowSpeakerDialogue
 ENDM
 
-; script_speak, then restores the background the speaker's window covered.
+; script_speak that leaves the window open (wDialogueWindowId kept) for a later close,
+; such as ScriptCloseDialogueWindow or RunDialogueYesNoPrompt.
 ; Usage: script_speak_restore actor
 MACRO script_speak_restore
 	ld a, \1
-	farcall ScriptShowSpeakerDialogueRestoreBG
+	farcall ScriptShowSpeakerDialogueKeepOpen
 ENDM
 
 ; Usage: script_wait_idle actor
@@ -192,25 +193,25 @@ ENDM
 
 ; Makes `actor` trail its leader: once more than about 2.8 tiles away, it walks
 ; at the leader's speed toward a point 2 tiles behind it
-; (AttachActorStepMover, as_step).
+; (AttachActorTrailer, as_step).
 ; Usage: script_follow actor, leader
 MACRO script_follow
 	script_get_actor_state \1
 	ld c, l
 	ld b, h
 	ld de, wActors + (\2) * ACTOR_SIZE
-	farcall AttachActorStepMover
+	farcall AttachActorTrailer
 ENDM
 
 ; Makes `actor` walk to where `target` stands, every frame
-; (AttachActorWaypointFollower, as_follow_wp).
+; (AttachActorChaser, as_chase).
 ; Usage: script_walk_to_actor actor, target
 MACRO script_walk_to_actor
 	ld bc, wActors + (\1) * ACTOR_SIZE
 	script_get_actor_state \2
 	ld e, l
 	ld d, h
-	farcall AttachActorWaypointFollower
+	farcall AttachActorChaser
 ENDM
 
 ; Replaces the location's actor list with `list` (a map_actors table in this

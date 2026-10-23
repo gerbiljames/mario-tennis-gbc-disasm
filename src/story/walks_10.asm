@@ -37,16 +37,16 @@ ActorScript_10_1:
 	as_flag $01, ACTORF_FLAGS, ACTORFLAGB_YIELD
 .pace:
 	as_set_target 27.0, 23.125
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 5
 	as_set_target 29.0, 23.125
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 10
 	as_set_target 29.0, 22.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 10
 	as_set_target 29.0, 23.125
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 5
 	as_jump .pace
 GetDoublesProgressStage_10:
@@ -79,28 +79,28 @@ ActorScript_10_3:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderSmall
 MapScriptNop_10:
 	ret ; $7bf9
-Unused_10_MapScriptClearActiveFlag:
+Unused_10_MapScriptClearScriptRan:
 	xor a ; $7bfa
 	ld [wStoryScriptRan], a ; $7bfb
 	ret ; $7bfe
-Unused_10_MapScriptPlaySoundA2:
+Unused_10_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $7bff
 	ret ; $7c01
 Unused_10_MapScriptHideLocationName:
@@ -320,28 +320,28 @@ SetStoryDialogueStage_10:
 Unused_10_ComputeStoryRankTier:
 	ld a, $00 ; $7e04
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e06
-	jr z, .storeIsland ; $7e09
+	jr z, .store ; $7e09
 	inc a ; $7e0b
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7e0c
-	jr z, .storeIsland ; $7e0f
+	jr z, .store ; $7e0f
 	inc a ; $7e11
 	test_flag FLAG_DOUBLES ; $7e12
-	jr nz, .doublesIsland ; $7e15
+	jr nz, .doubles ; $7e15
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7e17
-	jr z, .storeIsland ; $7e1a
+	jr z, .store ; $7e1a
 	inc a ; $7e1c
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7e1d
-	jr z, .storeIsland ; $7e20
+	jr z, .store ; $7e20
 	inc a ; $7e22
-.storeIsland:
+.store:
 	ld [wMapSceneStage], a ; $7e23
 	ret ; $7e26
-.doublesIsland:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e27
-	jr z, .storeIsland ; $7e2a
+	jr z, .store ; $7e2a
 	inc a ; $7e2c
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e2d
-	jr z, .storeIsland ; $7e30
+	jr z, .store ; $7e30
 	inc a ; $7e32
-	jr .storeIsland ; $7e33
+	jr .store ; $7e33
 	; $7e35, 459 bytes fill to bank end (linker-padded)

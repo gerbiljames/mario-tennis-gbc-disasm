@@ -9,7 +9,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, MINIGAME_WALL_PRACTICE_HIGH_SCORE ; $49df
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
-.saveMaxRecord:
+WallPracticeMaxScoreScript.saveMaxRecord:
 	push_wram_bank WRAM_SOUND ; $49e5
 	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1
@@ -36,9 +36,9 @@ RelaunchWallPracticeMasterLevel:
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $4a5b
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a62
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4a67
-.checkDoubles:
+WallPracticeMaxScoreScript.checkDoubles:
 	test_flag FLAG_DOUBLES ; $4a6c
-	jr z, .done ; $4a6f
+	jr z, WallPracticeMaxScoreScript.done ; $4a6f
 	script_wait_frames 40 ; $4a71
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a78
 	script_wait_frames 30 ; $4a80
@@ -47,7 +47,7 @@ RelaunchWallPracticeMasterLevel:
 	script_wait_idle ACTOR_PARTNER ; $4a95
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4a9a
 	script_wait_frames 40 ; $4aa7
-.done:
+WallPracticeMaxScoreScript.done:
 	ret ; $4aae
 WallPracticeScoreRetryPromptTextIds:
 	; $4aaf, 6 bytes (text_ids)
@@ -59,15 +59,15 @@ WallPracticeLevelResultScript:
 	ld [wStoryModeShowLocationName], a ; $4ab6
 	ld a, [wPointWinLoseFlag] ; $4ab9
 	cp WINLOSE_WIN ; $4abc
-	jp nz, .checkLevel ; $4abe
+	jp nz, .notWon ; $4abe
 	ld a, [wMapSceneStage] ; $4ac1
 	sub $01 ; $4ac4
 	jumptable a ; $4ac6
-	dw WallPracticeLevelResultScript.variant4 ; $4ac8 jumptable
-	dw WallPracticeLevelResultScript.variant3 ; $4aca jumptable
-	dw WallPracticeLevelResultScript.variant2 ; $4acc jumptable
-	dw WallPracticeLevelResultScript.variant1 ; $4ace jumptable
-.checkLevel:
+	dw WallPracticeLevelResultScript.clearedLevel1 ; $4ac8 jumptable
+	dw WallPracticeLevelResultScript.clearedLevel2 ; $4aca jumptable
+	dw WallPracticeLevelResultScript.clearedLevel3 ; $4acc jumptable
+	dw WallPracticeLevelResultScript.clearedLevel4 ; $4ace jumptable
+.notWon:
 	ld a, [wMapSceneStage] ; $4ad0
 	cp WALLPRACTICESTAGE_MASTER ; $4ad3
 	jp z, WallPracticeScoreRetryPrompt ; $4ad5
@@ -121,12 +121,12 @@ WallPracticeLevelResultScriptTextIds:
 	dw Text_WallGameOverNetRetry ; record 0
 	dw Text_WallGameOverOutRetry ; record 1
 	dw Text_WallGameOverDoubleBounceRetry ; record 2
-WallPracticeLevelResultScript.variant1:
+WallPracticeLevelResultScript.clearedLevel4:
 	script_set_text Text_WallClearedFourthLevel ; $4ba2
 	script_fade_in 6 ; $4ba8
 	call WaitFadeEnd ; $4bad
 	jr WallPracticeLevelResultScript.speakAndLeave ; $4bb0
-WallPracticeLevelResultScript.variant2:
+WallPracticeLevelResultScript.clearedLevel3:
 	push_wram_bank WRAM_SOUND ; $4bb2
 	ld de, $0032 ; $4bbb
 	ld hl, wMinigameRecordValue ; $4bbe
@@ -140,12 +140,12 @@ WallPracticeLevelResultScript.variant2:
 	script_fade_in 6 ; $4bd4
 	call WaitFadeEnd ; $4bd9
 	jr WallPracticeLevelResultScript.speakAndLeave ; $4bdc
-WallPracticeLevelResultScript.variant3:
+WallPracticeLevelResultScript.clearedLevel2:
 	script_set_text Text_WallClearedSecondLevel ; $4bde
 	script_fade_in 6 ; $4be4
 	call WaitFadeEnd ; $4be9
 	jr WallPracticeLevelResultScript.speakAndLeave ; $4bec
-WallPracticeLevelResultScript.variant4:
+WallPracticeLevelResultScript.clearedLevel1:
 	script_set_text Text_WallClearedFirstLevel ; $4bee
 	script_fade_in 6 ; $4bf4
 	call WaitFadeEnd ; $4bf9
@@ -177,18 +177,18 @@ WallPracticeLevelResultScript.wait:
 	ret ; $4c9f
 WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomFacing01_12, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomSearchEventStub_12, $00, $00
 	db $ff
-	twin_named development_facing01, WallPracticeRoomFacing01_12 ; $4ca9
+	twin_named development_search_event_stub, WallPracticeRoomSearchEventStub_12 ; $4ca9
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
-	map_script $02, FACEMASK_ANY, $9c00, WallPracticeRoomTile02_12, $00, $00
-	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomTile03_12, TILETRIGGER_PRESS_ONLY, $00
-	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomTile04_12, TILETRIGGER_PRESS_ONLY, $00
-	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomTile05_12, TILETRIGGER_PRESS_ONLY, $00
-	map_script $06, FACEMASK_ANY, $0000, WallPracticeRoomTile06_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $02, FACEMASK_ANY, ~FLAG_TEMP_SCENE_VARIANT_A, WallPracticeRoomLeaveSignArea_12, $00, $00
+	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomLevel1Sign_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $04, FACEMASK_ANY, $0000, WallPracticeRoomLevel2Sign_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $05, FACEMASK_ANY, $0000, WallPracticeRoomLevel3Sign_12, TILETRIGGER_PRESS_ONLY, $00
+	map_script $06, FACEMASK_ANY, $0000, WallPracticeRoomLevel4Sign_12, TILETRIGGER_PRESS_ONLY, $00
 	db $ff
-WallPracticeRoomTile02_12:
+WallPracticeRoomLeaveSignArea_12:
 	script_move_target ACTOR_PLAYER, 5.0, 57.0 ; $4ce9
 	script_wait_move ACTOR_PLAYER ; $4cf4
 	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 5.0, 55.0 ; $4cf9
@@ -201,7 +201,7 @@ WallPracticeRoomTile02_12:
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $4d1b
 .done:
 	ret ; $4d28
-WallPracticeRoomTile03_12:
+WallPracticeRoomLevel1Sign_12:
 	script_set_text Text_WallSignTryLevelOne ; $4d29
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4d2f
 	farcall RunDialogueYesNoPrompt ; $4d34
@@ -219,7 +219,7 @@ WallPracticeRoomTile03_12:
 	call WaitFadeEnd ; $4d7a
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4d7d
 	ld [wStoryModeCurrentLocation], a ; $4d7f
-	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4d82
+	ld a, ENTRY_WALL_PRACTICE_ROOM_SIGN_REPLAY_RESULT ; $4d82
 	ld [wStoryModeEntryPoint], a ; $4d84
 	ld a, EXITTRIGGER_DIRECT ; $4d87
 	ld [wUnusedExitTriggerIdMirror], a ; $4d89
@@ -229,7 +229,7 @@ WallPracticeRoomTile03_12:
 	farcall EndCutsceneScriptMode ; $4d94
 .done:
 	ret ; $4d97
-WallPracticeRoomTile04_12:
+WallPracticeRoomLevel2Sign_12:
 	ap_has ITEM_WALL_PRACTICE, 1
 	jp z, WallPracticeLevelLockedScript ; $4d9b
 	script_set_text Text_WallSignTryLevelTwo ; $4d9e
@@ -249,7 +249,7 @@ WallPracticeRoomTile04_12:
 	call WaitFadeEnd ; $4def
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4df2
 	ld [wStoryModeCurrentLocation], a ; $4df4
-	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4df7
+	ld a, ENTRY_WALL_PRACTICE_ROOM_SIGN_REPLAY_RESULT ; $4df7
 	ld [wStoryModeEntryPoint], a ; $4df9
 	ld a, EXITTRIGGER_DIRECT ; $4dfc
 	ld [wUnusedExitTriggerIdMirror], a ; $4dfe
@@ -259,7 +259,7 @@ WallPracticeRoomTile04_12:
 	farcall EndCutsceneScriptMode ; $4e09
 .done:
 	ret ; $4e0c
-WallPracticeRoomTile05_12:
+WallPracticeRoomLevel3Sign_12:
 	ap_has ITEM_WALL_PRACTICE, 2
 	jp z, WallPracticeLevelLockedScript ; $4e10
 	script_set_text Text_WallSignTryLevelThree ; $4e13
@@ -279,7 +279,7 @@ WallPracticeRoomTile05_12:
 	call WaitFadeEnd ; $4e64
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4e67
 	ld [wStoryModeCurrentLocation], a ; $4e69
-	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4e6c
+	ld a, ENTRY_WALL_PRACTICE_ROOM_SIGN_REPLAY_RESULT ; $4e6c
 	ld [wStoryModeEntryPoint], a ; $4e6e
 	ld a, EXITTRIGGER_DIRECT ; $4e71
 	ld [wUnusedExitTriggerIdMirror], a ; $4e73
@@ -289,7 +289,7 @@ WallPracticeRoomTile05_12:
 	farcall EndCutsceneScriptMode ; $4e7e
 .done:
 	ret ; $4e81
-WallPracticeRoomTile06_12:
+WallPracticeRoomLevel4Sign_12:
 	ap_has ITEM_WALL_PRACTICE, 3
 	jp z, WallPracticeLevelLockedScript ; $4e85
 	script_set_text Text_WallSignTryLevelFour ; $4e88
@@ -309,7 +309,7 @@ WallPracticeRoomTile06_12:
 	call WaitFadeEnd ; $4ed9
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4edc
 	ld [wStoryModeCurrentLocation], a ; $4ede
-	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4ee1
+	ld a, ENTRY_WALL_PRACTICE_ROOM_SIGN_REPLAY_RESULT ; $4ee1
 	ld [wStoryModeEntryPoint], a ; $4ee3
 	ld a, EXITTRIGGER_DIRECT ; $4ee6
 	ld [wUnusedExitTriggerIdMirror], a ; $4ee8
@@ -341,7 +341,7 @@ WallPracticeRoomInitScript_12:
 	ld a, [wStoryModeEntryPoint] ; $4f28
 	cp ENTRY_WALL_PRACTICE_ROOM_MINIGAME_RESULT ; $4f2b
 	jp z, .fromMatch ; $4f2d
-	cp ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $4f30
+	cp ENTRY_WALL_PRACTICE_ROOM_SIGN_REPLAY_RESULT ; $4f30
 	jp z, .reentry ; $4f32
 	call RestoreWallPracticeRoomActors ; $4f35
 	ret ; $4f38
@@ -387,7 +387,7 @@ WallPracticeRoomInitScript_12:
 	jp z, .done ; $4fcc
 	ld a, [wPointWinLoseFlag] ; $4fcf
 	cp WINLOSE_WIN ; $4fd2
-	jr nz, .checkSession ; $4fd4
+	jr nz, .lost ; $4fd4
 	script_set_text Text_WallTrySameLevelAgain ; $4fd6
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $4fdc
 	farcall RunDialogueYesNoPrompt ; $4fe1
@@ -395,14 +395,14 @@ WallPracticeRoomInitScript_12:
 	script_wait_frames 5 ; $4fe7
 	and a ; $4fee
 	jr nz, .done ; $4fef
-	jr .placeActors ; $4ff1
-.checkSession:
+	jr .relaunchDrill ; $4ff1
+.lost:
 	ld a, [wPointOutcome] ; $4ff3
 	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4ff6
-	jr nz, .sessionActive ; $4ff8
+	jr nz, .outcomeText ; $4ff8
 	script_set_text Text_WallGameOverHitYouRetry ; $4ffa
-	jr .normalEntry ; $5000
-.sessionActive:
+	jr .retryPrompt ; $5000
+.outcomeText:
 	ld a, [wPointOutcome] ; $5002
 	and $03 ; $5005
 	add a ; $5007
@@ -411,14 +411,14 @@ WallPracticeRoomInitScript_12:
 	ld h, [hl] ; $5010
 	ld l, a ; $5011
 	farcall InitDialogueTextCursor ; $5012
-.normalEntry:
+.retryPrompt:
 	script_speak_restore ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5015
 	farcall RunDialogueYesNoPrompt ; $501a
 	farcall ScriptCloseDialogueWindow ; $501d
 	script_wait_frames 5 ; $5020
 	and a ; $5027
 	jp nz, .done ; $5028
-.placeActors:
+.relaunchDrill:
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_UP ; $502b
 	script_set_anim ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, ANIM_BOUNCE ; $5032
 	script_wait_idle ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5039
@@ -426,7 +426,7 @@ WallPracticeRoomInitScript_12:
 	call WaitFadeEnd ; $5043
 	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5046
 	ld [wStoryModeCurrentLocation], a ; $5048
-	ld a, ENTRY_WALL_PRACTICE_ROOM_LEVEL_RESULT ; $504b
+	ld a, ENTRY_WALL_PRACTICE_ROOM_SIGN_REPLAY_RESULT ; $504b
 	ld [wStoryModeEntryPoint], a ; $504d
 	ld a, EXITTRIGGER_DIRECT ; $5050
 	ld [wUnusedExitTriggerIdMirror], a ; $5052
@@ -462,16 +462,16 @@ SetupWallPracticeLevelSigns:
 .step:
 	ld [wMapSceneStage], a ; $50c8
 	ret ; $50cb
-WallPracticeRoomNpc07_12:
+WallPracticeRoomNpc07MachineEngineer_12:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $50cc
-	jr z, .scoreLine ; $50cf
+	jr z, .stagePrompt ; $50cf
 	script_set_text Text_WallEngineerStandOnSign ; $50d1
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $50d7
 	ret ; $50dc
-.scoreLine:
+.stagePrompt:
 	ld a, [wMapSceneStage] ; $50dd
 	add a ; $50e0
-	ld_hl_indexed WallPracticeRoomNpc07TextIds ; $50e1
+	ld_hl_indexed WallPracticeRoomNpc07MachineEngineerTextIds ; $50e1
 	ld a, [hl+] ; $50e8
 	ld h, [hl] ; $50e9
 	ld l, a ; $50ea
@@ -497,7 +497,7 @@ WallPracticeRoomNpc07_12:
 	jp z, .accepted ; $5124
 	ld a, [wMapSceneStage] ; $5127
 	add a ; $512a
-	ld_hl_indexed WallPracticeRoomNpc07TextIds2 ; $512b
+	ld_hl_indexed WallPracticeRoomNpc07MachineEngineerTextIds2 ; $512b
 	ld a, [hl+] ; $5132
 	ld h, [hl] ; $5133
 	ld l, a ; $5134
@@ -510,7 +510,7 @@ WallPracticeRoomNpc07_12:
 	jp nz, .declined ; $514b
 	ld a, [wMapSceneStage] ; $514e
 	and a ; $5151
-	jp z, .speakDeclined ; $5152
+	jp z, .speakReply ; $5152
 	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $5155
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5160
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $5165
@@ -530,7 +530,7 @@ WallPracticeRoomNpc07_12:
 	ret ; $51b0
 .declined:
 	farcall AdvanceDialogueTextCursor ; $51b1
-.speakDeclined:
+.speakReply:
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51b4
 	ret ; $51b9
 .accepted:
@@ -563,7 +563,7 @@ WallPracticeRoomNpc07_12:
 	script_move_target ACTOR_PLAYER, 12.0, 49.0 ; $5262
 	jp LaunchWallPracticeMinigame ; $526d
 	ret ; $5270
-WallPracticeRoomNpc07TextIds:
+WallPracticeRoomNpc07MachineEngineerTextIds:
 	; $5271, 14 bytes (text_ids)
 	table_width 2
 	dw Text_WallEngineerStartLevelOne ; record 0
@@ -574,7 +574,7 @@ WallPracticeRoomNpc07TextIds:
 	dw Text_WallEngineerBreakYourRecord ; record 5
 	dw Text_WallEngineerWallMasterPlayAnyway ; record 6
 	assert_table_length NUM_WALLPRACTICESTAGES
-WallPracticeRoomNpc07TextIds2:
+WallPracticeRoomNpc07MachineEngineerTextIds2:
 	; $527f, 14 bytes (text_ids)
 	table_width 2
 	dw Text_WallEngineerOnlyForBeginners ; record 0

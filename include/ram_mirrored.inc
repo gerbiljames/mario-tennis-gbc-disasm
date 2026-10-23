@@ -18,7 +18,7 @@ def wCharDataScreenCell equ $d000
 ; in WRAM banks $06
 def wCollisionMap equ $d000
 
-; [4096 bytes] 64 rows of 64 cells, one plane in each of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Both axes wrap within the buffer (the `and $3f` on each camera coordinate, `res 5, h / set 4, h` in BlitBGColumnFrom64). Only the top 32 rows carry map data; Unused_00_CopyMapToScrollBuffers clears the bottom half.
+; [4096 bytes] 64 rows of 64 cells, one plane in each of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Both axes wrap within the buffer (the `and $3f` on each camera coordinate, `res 5, h / set 4, h` in BlitBGColumnFrom64). The story scenes and the intro and title cutscenes decompress whole 4096-byte planes here; Unused_00_CopyMapToScrollBuffers fills only the top 32 rows and clears the bottom half.
 ; in WRAM banks $02, $03
 def wMapBuffer64 equ $d000
 
@@ -46,24 +46,29 @@ def wMugshotBuffer equ $d600
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 1, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot1 equ $d7e0
 
-; [1024 bytes] Tile plane of the intro cutscene's character artwork, decompressed from DataPtr_IntroCharactersTilemap. The state inits QueueVRAMCopy slices of it ($d880, $d8c0) to $9c80/$9cc0 in VRAM bank 0, and the same offsets of wIntroCharactersAttrmap to VRAM bank 1.
+; [1024 bytes] Tile plane of the intro cutscene's Mario artwork, decompressed from DataPtr_IntroMarioTilemap. The state inits QueueVRAMCopy slices of it ($d880, $d8c0) to $9c80/$9cc0 in VRAM bank 0, and the same offsets of wIntroMarioAttrmap to VRAM bank 1.
 ; in WRAM banks $04
-def wIntroCharactersTilemap equ $d800
+def wIntroMarioTilemap equ $d800
 
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 2, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot2 equ $da20
 
-; [1024 bytes] CGB attribute plane for wIntroCharactersTilemap, cell for cell, from DataPtr_IntroCharactersAttrmap. Every copy out of it targets VRAM bank 1 at the address its tile-plane twin goes to in bank 0.
+; [1024 bytes] CGB attribute plane for wIntroMarioTilemap, cell for cell, from DataPtr_IntroMarioAttrmap. Every copy out of it targets VRAM bank 1 at the address its tile-plane twin goes to in bank 0.
 ; in WRAM banks $04
-def wIntroCharactersAttrmap equ $dc00
+def wIntroMarioAttrmap equ $dc00
 
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 3 or more (0 saves into wCharDataPagePlane + 13 * TILEMAP_WIDTH), once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot3 equ $dc60
+
+; [42 bytes] The character-data confirm screen's top banner rows, mirrored across WRAM banks $02/$03 (tile half / CGB attribute half). RunCharDataConfirmScreen decompresses each half to wDecompBufferHigh tile 106 in bank $01 and CopyBank1ToBank3/2BufferAlt copy it to the same address here, from where ApplyTilemapPatchList_1a patches three 14-byte runs into wCharDataScreenCell.
+; in WRAM banks $02, $03
+def wCharDataConfirmTopRows equ $dea0
 
 ; $df00-$df96: the per-character match struct, one copy in each of WRAM banks
 ; $04-$07, and its bank $05 overlays. The fields are documented once, in
 ; match_char_struct (include/macros/ram.inc), which declares the bank-tagged
 ; copies; tests/test_rom.py checks these names against them.
+def wCharStruct equ $df00
 def wCharPosX equ $df00
 def wClearStatusMode equ $df00
 def wTextArgFetchBuffer equ $df00
@@ -155,22 +160,26 @@ def wAiReactionDelayNear equ $df79
 def wAiReactionDelayFar equ $df7a
 def wAiTrackingParam equ $df7b
 def wAiAimAwayChance equ $df7c
-def wAiServeStyle equ $df7d
+def wAiDifficulty equ $df7d
 def wCharSpriteSetId equ $df7e
 def wAiPositionStrategy equ $df7f
 def wCharSpriteSlot equ $df80
 def wCharSpriteSlotFrame equ $df84
 def wCharAirShadowSlot equ $df88
 def wCharGroundShadowSlot equ $df8c
-def wCharSwingAttrWord equ $df90
+def wCharShotTraits equ $df90
 def wLobPlacementIndex equ $df92
 def wDropPlacementIndex equ $df93
 def wCharMirrorAttrMask equ $df94
-def wCharExpTier equ $df95
+def wCharLevel equ $df95
 def wCharDepthKey equ $df96
 
 ; The game progress screen (bank $1e) keeps its lists in WRAM bank $05's
 ; $df00 page.
+; [1 byte] Window struct index CreateProgressListWindow returns; DrawTextWindowFrame redraws the list frame with it after each scroll
+; in WRAM banks $05
+def wProgressWindowId equ $df01
+
 ; [1 byte] How many progress entries BuildVisibleProgressEntryList found unlocked
 ; in WRAM banks $05
 def wProgressVisibleCount equ $df03
@@ -178,6 +187,14 @@ def wProgressVisibleCount equ $df03
 ; [1 byte] The row the progress list is scrolled to, an index into wProgressVisibleEntries
 ; in WRAM banks $05
 def wProgressListIndex equ $df05
+
+; [1 byte] Nonzero while the list can scroll up (wProgressListIndex is not 0): DrawProgressScreenSprites draws the up arrow
+; in WRAM banks $05
+def wProgressUpArrow equ $df07
+
+; [1 byte] 1 while rows remain below the visible seven: DrawProgressScreenSprites draws the down arrow
+; in WRAM banks $05
+def wProgressDownArrow equ $df08
 
 ; [48 bytes] Per progress entry, 1 if its flag is set (RunRewardCategoryList); BuildVisibleProgressEntryList packs the set ones into wProgressVisibleEntries
 ; in WRAM banks $05

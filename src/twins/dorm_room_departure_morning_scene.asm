@@ -1,4 +1,4 @@
-; Shared by DormRoomEntry08Scene, DormRoomEntry0aScene (bank $13).
+; Shared by DormRoomDepartureMorningAltScene, DormRoomDepartureMorningScene (bank $13).
 
 {TWIN_LABEL}:
 	script_set_text Text_NarrationMorningOfDeparture

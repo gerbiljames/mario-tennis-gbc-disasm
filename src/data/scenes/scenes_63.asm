@@ -1,29 +1,29 @@
-DataPtr_WallPracticeCourtSceneConfig:
-	dw WallPracticeCourtSceneConfig ; $4000
+DataPtr_WallPracticeCourtScoreboardColumnTiles:
+	dw WallPracticeCourtScoreboardColumnTiles ; $4000
 DataPtr_WallPracticeCourtPalettes:
 	dw WallPracticeCourtPalettes ; $4002
 DataPtr_WallPracticeCourtTilemap:
 	dw WallPracticeCourtTilemap ; $4004
 DataPtr_WallPracticeCourtAttrmap:
 	dw WallPracticeCourtAttrmap ; $4006
-DataPtr_WallPracticeCourtSceneConfigAlias1:
-	dw WallPracticeCourtSceneConfig ; $4008
+DataPtr_WallPracticeCourtScoreboardColumnTilesAlias1:
+	dw WallPracticeCourtScoreboardColumnTiles ; $4008
 DataPtr_WallPracticeCourtScoreboardColumnAttrs:
 	dw WallPracticeCourtScoreboardColumnAttrs ; $400a
 DataPtr_JungleCourtPalettes:
 	dw JungleCourtPalettes ; $400c
 DataPtr_WallPracticeCourtTiles:
 	dw WallPracticeCourtTiles ; $400e
-DataPtr_JungleCourtSceneConfig:
-	dw JungleCourtSceneConfig ; $4010
+DataPtr_JungleCourtScoreboardColumnTiles:
+	dw JungleCourtScoreboardColumnTiles ; $4010
 DataPtr_JungleCourtPalettesAlias1:
 	dw JungleCourtPalettes ; $4012
 DataPtr_JungleCourtTilemap:
 	dw JungleCourtTilemap ; $4014
 DataPtr_JungleCourtAttrmap:
 	dw JungleCourtAttrmap ; $4016
-DataPtr_JungleCourtSceneConfigAlias1:
-	dw JungleCourtSceneConfig ; $4018
+DataPtr_JungleCourtScoreboardColumnTilesAlias1:
+	dw JungleCourtScoreboardColumnTiles ; $4018
 DataPtr_JungleCourtScoreboardColumnAttrs:
 	dw JungleCourtScoreboardColumnAttrs ; $401a
 DataPtr_StarPatternBgSceneConfig:
@@ -58,8 +58,8 @@ DataPtr_AcademyMainBldgCollisionMap:
 	dw AcademyMainBldgCollisionMap ; $4038
 DataPtr_AcademyMainBldgBehaviorMap:
 	dw AcademyMainBldgBehaviorMap ; $403a
-DataPtr_AcademyMainBldgSceneUnusedSlot:
-	dw AcademyMainBldgSceneUnusedSlot ; $403c
+DataPtr_AcademyMainBldgSceneNoAnimTiles:
+	dw AcademyMainBldgSceneNoAnimTiles ; $403c
 DataPtr_AcademyMainBldgTiles:
 	dw AcademyMainBldgTiles ; $403e
 WallPracticeCourtPalettes:
@@ -70,8 +70,8 @@ WallPracticeCourtTilemap:
 	INCBIN "data/scenes/lz_WallPracticeCourtTilemap.bin" ; $487a, 635 bytes
 WallPracticeCourtAttrmap:
 	INCBIN "data/scenes/lz_WallPracticeCourtAttrmap.bin" ; $4af5, 185 bytes
-WallPracticeCourtSceneConfig:
-	INCLUDE "data/scenes/WallPracticeCourtSceneConfig.asm" ; $4bae, 40 bytes (scoreboard_columns)
+WallPracticeCourtScoreboardColumnTiles:
+	INCLUDE "data/scenes/WallPracticeCourtScoreboardColumnTiles.asm" ; $4bae, 40 bytes (scoreboard_columns)
 WallPracticeCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/WallPracticeCourtScoreboardColumnAttrs.asm" ; $4bd6, 40 bytes (scoreboard_columns)
 JungleCourtPalettes:
@@ -82,8 +82,8 @@ JungleCourtTilemap:
 	INCBIN "data/scenes/lz_JungleCourtTilemap.bin" ; $5919, 713 bytes
 JungleCourtAttrmap:
 	INCBIN "data/scenes/lz_JungleCourtAttrmap.bin" ; $5be2, 323 bytes
-JungleCourtSceneConfig:
-	INCLUDE "data/scenes/JungleCourtSceneConfig.asm" ; $5d25, 40 bytes (scoreboard_columns)
+JungleCourtScoreboardColumnTiles:
+	INCLUDE "data/scenes/JungleCourtScoreboardColumnTiles.asm" ; $5d25, 40 bytes (scoreboard_columns)
 JungleCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/JungleCourtScoreboardColumnAttrs.asm" ; $5d4d, 40 bytes (scoreboard_columns)
 StarPatternBgSceneConfig:
@@ -114,5 +114,5 @@ AcademyMainBldgCollisionMap:
 	INCBIN "data/scenes/lz_AcademyMainBldgCollisionMap.bin" ; $7a10, 147 bytes
 AcademyMainBldgBehaviorMap:
 	INCBIN "data/scenes/lz_AcademyMainBldgBehaviorMap.bin" ; $7aa3, 94 bytes
-AcademyMainBldgSceneUnusedSlot:
+AcademyMainBldgSceneNoAnimTiles:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

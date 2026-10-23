@@ -1,4 +1,4 @@
-; Shared by IntroCutsceneState06Update_6b, IntroCutsceneState13Update_6b (bank $6b).
+; Shared by IntroCutsceneRallyFadeOutUpdate_6b, IntroCutsceneOpponentsCaptionUpdate_6b (bank $6b).
 
 {TWIN_LABEL}:
 	ld a, [wCutsceneStepTimer]

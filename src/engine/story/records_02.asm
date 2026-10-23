@@ -4,22 +4,22 @@ RemapExtendedCharId:
 	push hl ; $4c5b
 	sub $20 ; $4c5c
 	and $7f ; $4c5e
-	ld_hl_indexed NameTextRemap_02 ; $4c60
+	ld_hl_indexed ExtendedCharIdRemap_02 ; $4c60
 	ld a, [hl] ; $4c67
 	pop hl ; $4c68
 	ret ; $4c69
-NameTextRemap_02:
+ExtendedCharIdRemap_02:
 	; $4c6a, 71 bytes (bytes:16)
 	db $08, $09, $0b, $07, $06, $0a, $04, $05, $0a, $04, $05, $06, $09, $0b, $08, $07 ; 0x00
 	db $14, $11, $0c, $08, $0a, $0b, $09, $08, $08, $08, $0b, $0b, $0b, $06, $06, $06 ; 0x10
 	db $09, $09, $09, $04, $04, $04, $08, $08, $08, $0c, $0c, $0c, $0c, $0c, $0c, $0c ; 0x20
 	db $0c, $1a, $1a, $1f, $0c, $0c, $0c, $0c, $0c, $0c, $0c, $1a, $1a, $1a, $1a, $1a ; 0x30
 	db $1a, $1f, $1f, $1f, $1a, $1a, $1a ; 0x40
-SetStorySlotFlagB:
+SetStorySlotCourtView:
 	push af ; $4cb1
 	ld a, [wCurrentStorySlot] ; $4cb2
 	add a ; $4cb5
-	ld_hl_indexed StorySlotFlagBIds_02 ; $4cb6
+	ld_hl_indexed StorySlotCourtViewIds_02 ; $4cb6
 	ld a, [hl+] ; $4cbd
 	ld d, [hl] ; $4cbe
 	ld e, a ; $4cbf
@@ -31,16 +31,16 @@ SetStorySlotFlagB:
 .setSaveFlag:
 	farcall SetSaveFlag ; $4cc8
 	ret ; $4ccb
-StorySlotFlagBIds_02:
+StorySlotCourtViewIds_02:
 	; $4ccc, 8 bytes (save_flag_ids)
-	dw SAVEFLAG_STORY_SLOT0_B ; 0
-	dw SAVEFLAG_STORY_SLOT1_B ; 1
-	dw SAVEFLAG_STORY_SLOT2_B ; 2
-	dw SAVEFLAG_STORY_SLOT3_B ; 3
-TestStorySlotFlagB:
+	dw SAVEFLAG_STORY_SLOT0_COURT_VIEW ; 0
+	dw SAVEFLAG_STORY_SLOT1_COURT_VIEW ; 1
+	dw SAVEFLAG_STORY_SLOT2_COURT_VIEW ; 2
+	dw SAVEFLAG_STORY_SLOT3_COURT_VIEW ; 3
+TestStorySlotCourtView:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a ; $4cd7
-	ld_hl_indexed StorySlotFlagBIds_02 ; $4cd8
+	ld_hl_indexed StorySlotCourtViewIds_02 ; $4cd8
 	ld a, [hl+] ; $4cdf
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
@@ -51,11 +51,11 @@ TestStorySlotFlagB:
 .notSet:
 	ld a, $00 ; $4cea
 	ret ; $4cec
-SetStorySlotFlagA:
+SetStorySlotMusicMuted:
 	push af ; $4ced
 	ld a, [wCurrentStorySlot] ; $4cee
 	add a ; $4cf1
-	ld_hl_indexed StorySlotFlagAIds_02 ; $4cf2
+	ld_hl_indexed StorySlotMusicMutedIds_02 ; $4cf2
 	ld a, [hl+] ; $4cf9
 	ld d, [hl] ; $4cfa
 	ld e, a ; $4cfb
@@ -67,16 +67,16 @@ SetStorySlotFlagA:
 .setSaveFlag:
 	farcall SetSaveFlag ; $4d04
 	ret ; $4d07
-StorySlotFlagAIds_02:
+StorySlotMusicMutedIds_02:
 	; $4d08, 8 bytes (save_flag_ids)
-	dw SAVEFLAG_STORY_SLOT0_A ; 0
-	dw SAVEFLAG_STORY_SLOT1_A ; 1
-	dw SAVEFLAG_STORY_SLOT2_A ; 2
-	dw SAVEFLAG_STORY_SLOT3_A ; 3
-TestStorySlotFlagA:
+	dw SAVEFLAG_STORY_SLOT0_MUSIC_MUTED ; 0
+	dw SAVEFLAG_STORY_SLOT1_MUSIC_MUTED ; 1
+	dw SAVEFLAG_STORY_SLOT2_MUSIC_MUTED ; 2
+	dw SAVEFLAG_STORY_SLOT3_MUSIC_MUTED ; 3
+TestStorySlotMusicMuted:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a ; $4d13
-	ld_hl_indexed StorySlotFlagAIds_02 ; $4d14
+	ld_hl_indexed StorySlotMusicMutedIds_02 ; $4d14
 	ld a, [hl+] ; $4d1b
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d
@@ -111,7 +111,7 @@ AddExpCapped:
 	ld [hl], a ; $4d39
 	dec hl ; $4d3a
 	dec hl ; $4d3b
-	ld de, Value100000_02 ; $4d3c
+	ld de, MaxExp_02 ; $4d3c
 	call Compare24Bit ; $4d3f
 	ret z ; $4d42
 	dec hl ; $4d43
@@ -127,7 +127,7 @@ AddExpCapped:
 	ld a, [de] ; $4d4d
 	ld [hl], a ; $4d4e
 	ret ; $4d4f
-Value100000_02:
+MaxExp_02:
 	; $4d50, 4 bytes (bytes:4)
 	db $9f, $86, $01, $c9 ; 0x00
 Compare24Bit:
@@ -172,6 +172,7 @@ AddPlayerExp:
 	ld hl, CHARREC_EXP ; $4d92
 	add hl, bc ; $4d95
 	jp AddExpCapped ; $4d96
+; z when character a's exp has reached the next level (nz at MAX_LEVEL)
 HasReachedNextLevelExp:
 	call GetPlayerRecordPtr ; $4d99
 	ld hl, CHARREC_LEVEL ; $4d9c
@@ -187,7 +188,7 @@ HasReachedNextLevelExp:
 	add hl, de ; $4dac
 	push hl ; $4dad
 	xor a ; $4dae
-	ld hl, CharDataPtr_02 ; $4daf
+	ld hl, ExpThresholdTablePtr_02 ; $4daf
 	add_hl_a ; $4db2
 	ld a, [hl+] ; $4db7
 	ld h, [hl] ; $4db8
@@ -218,7 +219,7 @@ GetExpRemainingToNextLevel:
 	add hl, de ; $4ddb
 	push hl ; $4ddc
 	xor a ; $4ddd
-	ld hl, CharDataPtr_02 ; $4dde
+	ld hl, ExpThresholdTablePtr_02 ; $4dde
 	add_hl_a ; $4de1
 	ld a, [hl+] ; $4de6
 	ld h, [hl] ; $4de7
@@ -256,7 +257,7 @@ GetExpProgressInCurrentLevel:
 	add hl, de ; $4e15
 	push hl ; $4e16
 	xor a ; $4e17
-	ld hl, CharDataPtr_02 ; $4e18
+	ld hl, ExpThresholdTablePtr_02 ; $4e18
 	add_hl_a ; $4e1b
 	ld a, [hl+] ; $4e20
 	ld h, [hl] ; $4e21
@@ -287,7 +288,7 @@ GetExpRequiredForLevel:
 	add hl, de ; $4e42
 	push hl ; $4e43
 	xor a ; $4e44
-	ld hl, CharDataPtr_02 ; $4e45
+	ld hl, ExpThresholdTablePtr_02 ; $4e45
 	add_hl_a ; $4e48
 	ld a, [hl+] ; $4e4d
 	ld h, [hl] ; $4e4e
@@ -307,7 +308,7 @@ GetExpRequiredForLevel:
 	add hl, de ; $4e5d
 	push hl ; $4e5e
 	xor a ; $4e5f
-	ld hl, CharDataPtr_02 ; $4e60
+	ld hl, ExpThresholdTablePtr_02 ; $4e60
 	add_hl_a ; $4e63
 	ld a, [hl+] ; $4e68
 	ld h, [hl] ; $4e69
@@ -320,7 +321,7 @@ GetExpRequiredForLevel:
 	pop de ; $4e70
 	sub_hl_de ; $4e71
 	ret ; $4e77
-CharDataPtr_02:
+ExpThresholdTablePtr_02:
 	; $4e78, 2 bytes (records:2)
 	dw ExpLevelThresholds_02 ; record 0
 ExpLevelThresholds_02:

@@ -13,10 +13,10 @@
 ; init code.
 
 ; Actor spawn template (14 bytes, list ended by map_actor_end).
-; SpawnActorFromTemplate spawns `objdef` unless `cond` is met,
+; SpawnActorFromTemplate spawns actor script `script` unless `cond` (a flag_cond) is met,
 ; then seeds the actor's position, facing, object id, animation, and (if
 ; nonzero) a palette override. `facing` is a FACE_* constant (include/constants/).
-; Usage: map_actor cond, objdef, x, y, facing, obj_id, anim, palette[, NAME]
+; Usage: map_actor cond, script, x, y, facing, obj_id, anim, palette[, NAME]
 ; InitLocationActors fills slots 0-2 with the player, its shadow and the
 ; companion, then the list in order (a row whose cond fails still takes its
 ; slot), so row n is actor slot 3 + n. NAME defines ACTOR_NAME as that slot;
@@ -31,8 +31,24 @@ EXPORT ACTOR_\9
 ENDC
 DEF _MAP_ACTOR_ROW += 1
 	map_pos \3, \4
-	dw \1, \2, (\3) >> 8, (\4) >> 8
+	flag_cond \1
+	dw \2, (\3) >> 8, (\4) >> 8
 	db \5, $00, \6, \7, \8, $00
+ENDM
+
+; A map_actor / map_script condition word, tested by EvalFlagCondition: the
+; row is skipped (an actor spawns as an idle placeholder) while it is met.
+; `0` never; `FLAG_X` while the flag is set; `~FLAG_X` while it is clear, so
+; the row applies only while FLAG_X is set. The word is FLAG_X << 5, the
+; set_flag/test_flag operand, with bit 15 for `~`.
+MACRO flag_cond
+IF (\1) < 0
+	ASSERT ~(\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
+	dw $8000 | ((~(\1)) << 5)
+ELSE
+	ASSERT (\1) < NUM_GAME_FLAGS, "game flag \1 is past wGameFlags"
+	dw (\1) << 5
+ENDC
 ENDM
 
 ; Names an actor slot by its role in a scene whose possible lists put
@@ -76,8 +92,8 @@ ENDM
 
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
 ; matches `id` (and `facing_mask`, a FACEMASK_* constant in
-; include/constants/, against the actor's facing), checks `flag_cond`, then runs
-; `handler` with the two arg bytes. What the args mean belongs to the map_tree
+; include/constants/, against the actor's facing), skips it while `flag_cond`
+; is met, then runs `handler` with the two arg bytes. What the args mean belongs to the map_tree
 ; slot the table sits in, not to the record: in an ExitTriggers table (slot 1)
 ; RunLocationExit copies `arg0` into wStoryModeCurrentLocation --
 ; a STORYLOC_* id -- and `arg1` into wStoryModeEntryPoint, which indexes the
@@ -92,7 +108,8 @@ DEF EXIT_\7 EQU \1
 EXPORT EXIT_\7
 ENDC
 	db \1, \2
-	dw \3, \4
+	flag_cond \3
+	dw \4
 	db \5, \6
 ENDM
 

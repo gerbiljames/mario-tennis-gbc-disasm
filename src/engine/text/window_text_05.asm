@@ -3,7 +3,7 @@ SetWindowTextId:
 	ld e, l ; $55d6
 	ld a, b ; $55d7
 	call GetWindowStructPtr ; $55d8
-	ld a, $06 ; $55db
+	ld a, WINDOW_TEXT_ID ; $55db
 	add_hl_a ; $55dd
 	ld a, e ; $55e2
 	ld [hl+], a ; $55e3
@@ -30,7 +30,7 @@ RenderWindowText:
 	ld a, b ; $55fc
 	call GetWindowStructPtr ; $55fd
 	push hl ; $5600
-	ld a, $06 ; $5601
+	ld a, WINDOW_TEXT_ID ; $5601
 	add_hl_a ; $5603
 	ld a, [hl+] ; $5608
 	ld b, [hl] ; $5609
@@ -152,17 +152,17 @@ FitWindowToText:
 	jr .charLoop ; $56b1
 .checkPartnerName:
 	cp TX_PARTNER_NAME ; $56b3
-	jr nz, .checkIndexedShortText ; $56b5
+	jr nz, .checkCharName ; $56b5
 	call MeasurePartnerCharacterNameWidth ; $56b7
 	add b ; $56ba
 	ld b, a ; $56bb
 	jr .charLoop ; $56bc
-.checkIndexedShortText:
-	cp TX_SHORT_TEXT ; $56be
+.checkCharName:
+	cp TX_CHAR_NAME ; $56be
 	jr nz, .glyph ; $56c0
 	ld a, [hl+] ; $56c2
 	ld [wTextCharNameArg], a ; $56c3
-	call MeasureIndexedShortTextWidth ; $56c6
+	call MeasureCharNameArgWidth ; $56c6
 	add b ; $56c9
 	ld b, a ; $56ca
 	jr .charLoop ; $56cb
@@ -314,16 +314,16 @@ DelayTextCharacter:
 	push hl ; $579e
 	ld c, a ; $579f
 	push_wram_bank WRAM_TEXT ; $57a0
-	ld a, [wTextRedrawGuard] ; $57a9
+	ld a, [wTextCharDelayFrames] ; $57a9
 	or a ; $57ac
 	ld b, a ; $57ad
 	jr z, .restore ; $57ae
 	ld a, c ; $57b0
 	cp $20 ; $57b1
-	jr nz, .checkSpeed ; $57b3
+	jr nz, .checkVoice ; $57b3
 	ld b, $04 ; $57b5
 	jr .waitFrame ; $57b7
-.checkSpeed:
+.checkVoice:
 	ld a, [wDialogueVoice] ; $57b9
 	cp $08 ; $57bc
 	jr z, .waitFrame ; $57be
@@ -359,23 +359,23 @@ ApplyMessageSpeed:
 	bit MSGSPEEDB_INSTANT, a ; $57f4
 	jr z, .checkFast ; $57f6
 	xor a ; $57f8
-	ld [wTextRedrawGuard], a ; $57f9
+	ld [wTextCharDelayFrames], a ; $57f9
 	jr .restoreBank ; $57fc
 .checkFast:
 	or a ; $57fe
 	jr nz, .checkMedium ; $57ff
 	ld a, $00 ; $5801
-	ld [wTextRedrawGuard], a ; $5803
+	ld [wTextCharDelayFrames], a ; $5803
 	jr .restoreBank ; $5806
 .checkMedium:
 	cp MSGSPEED_NORMAL ; $5808
 	jr nz, .slow ; $580a
 	ld a, $02 ; $580c
-	ld [wTextRedrawGuard], a ; $580e
+	ld [wTextCharDelayFrames], a ; $580e
 	jr .restoreBank ; $5811
 .slow:
 	ld a, $04 ; $5813
-	ld [wTextRedrawGuard], a ; $5815
+	ld [wTextCharDelayFrames], a ; $5815
 .restoreBank:
 	pop_wram_bank ; $5818
 	pop af ; $581d
@@ -432,9 +432,9 @@ ShowSpeakerDialogue:
 	pop_wram_bank ; $589e
 	call SetActiveWindowTextId ; $58a3
 	ld a, [wDialogueWindowId] ; $58a6
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $58a9
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $58a9
 	call DrawTextWindowFrame ; $58ac
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $58af
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $58af
 	call RedrawWindowRowsPadded ; $58b2
 	call RenderActiveWindowText ; $58b5
 	ld a, [wTextPageBreakRequest] ; $58b8
@@ -461,7 +461,7 @@ ShowSpeakerDialogue:
 	pop bc ; $58ed
 	pop af ; $58ee
 	ret ; $58ef
-ShowSpeakerDialogueRestoreBG:
+ShowSpeakerDialogueKeepOpen:
 	push af ; $58f0
 	push bc ; $58f1
 	push de ; $58f2
@@ -513,9 +513,9 @@ ShowSpeakerDialogueRestoreBG:
 	call SetActiveWindowTextId ; $5971
 	call RestoreShadowTilemap ; $5974
 	ld a, [wDialogueWindowId] ; $5977
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $597a
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $597a
 	call DrawTextWindowFrame ; $597d
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5980
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5980
 	call RedrawWindowRowsPadded ; $5983
 	call RenderActiveWindowText ; $5986
 	ld a, [wTextPageBreakRequest] ; $5989

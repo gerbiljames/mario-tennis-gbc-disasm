@@ -1,11 +1,11 @@
-	farptr ShowMatchResultsScreen ; $4000
+	farptr ShowExpAwardOrContinueGameScreen ; $4000
 	farptr StubNop_1e ; $4002
 	farptr ProcessMatchRewards ; $4004
 	farptr ApplyPendingExpAwards ; $4006
 	farptr ShowGameProgressScreen ; $4008
 	farptr FetchAndDrawDialogueText ; $400a
 	farptr WriteTextToTilemap ; $400c
-ShowMatchResultsScreen:
+ShowExpAwardOrContinueGameScreen:
 	clear_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $400e
 	ld a, [wGameMode] ; $4011
 	cp GAMEMODE_TRAINING_DRILL ; $4014
@@ -14,6 +14,7 @@ ShowMatchResultsScreen:
 	jr z, .checkExpScreen ; $401a
 	cp GAMEMODE_WALL_PRACTICE ; $401c
 	jr z, .checkExpScreen ; $401e
+	; No branch follows: test_flag overwrites the flags (docs/bugs.md)
 	cp GAMEMODE_MARIO_MINIGAME ; $4020
 	test_flag FLAG_DOUBLES ; $4022
 	jr z, .checkExpScreen ; $4025
@@ -21,9 +22,9 @@ ShowMatchResultsScreen:
 .checkExpScreen:
 	ld a, c ; $402a
 	or a ; $402b
-	jr z, .showResults ; $402c
+	jr z, .continueGameScreen ; $402c
 	jp ShowExpAwardScreen ; $402e
-.showResults:
+.continueGameScreen:
 	script_fade_out 16 ; $4031
 	call WaitFadeEnd ; $4036
 	sound BGM_MENU ; $4039
@@ -46,18 +47,18 @@ ShowMatchResultsScreen:
 	call ClearSpriteQueue ; $4062
 	farcall InitActorEngine ; $4065
 	pop bc ; $4068
-	call InitResultsPromptState ; $4069
-	call BuildResultsScreenTilemap ; $406c
+	call InitContinueGameScreenState ; $4069
+	call BuildContinueGameScreenTilemap ; $406c
 	call InitResultsScreenCharacters ; $406f
 	call EnableLCD ; $4072
 	call AdvanceFrame ; $4075
-	frame_task DrawResultsCharSprites ; $4078
+	frame_task DrawContinueGameCharSprites ; $4078
 	script_fade_in 16 ; $4080
 	call WaitFadeEnd ; $4085
 	call RunContinuePrompt ; $4088
 	script_fade_out 16 ; $408b
 	call WaitFadeEnd ; $4090
-	ld hl, DrawResultsCharSprites ; $4093
+	ld hl, DrawContinueGameCharSprites ; $4093
 	call UnregisterFrameTask ; $4096
 	farcall LoadMenuFontGfx ; $4099
 	wram_bank WRAM_SCENE ; $409c
@@ -67,25 +68,25 @@ ShowMatchResultsScreen:
 	ld l, a ; $40a7
 	ld a, [wContinuePromptResult] ; $40a8
 	ret ; $40ab
-InitResultsPromptState:
+InitContinueGameScreenState:
 	wram_bank WRAM_SCENE ; $40ac
 	ld a, c ; $40b2
-	ld [wContinuePromptKind], a ; $40b3
+	ld [wResultsAlwaysShowPartner], a ; $40b3
 	xor a ; $40b6
 	ld [wContinuePromptRow], a ; $40b7
 	ld [wContinuePromptPage], a ; $40ba
 	ret ; $40bd
-BuildResultsScreenTilemap:
-	call LoadResultsScreenGraphics ; $40be
-	ld hl, Text_ResultsContinueGame ; $40c1
-	ld de, wDecompBuffer tile 4 + 1 ; $40c4
+BuildContinueGameScreenTilemap:
+	call LoadContinueGameScreenGraphics ; $40be
+	ld hl, Text_ContinueScreenContinueGame ; $40c1
+	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
-	ld hl, Text_ResultsYourSavedGame ; $40cd
+	ld hl, Text_ContinueScreenYourSavedGame ; $40cd
 	call DrawProportionalTextLine ; $40d0
-	ld hl, Text_ResultsWillBeLostOk ; $40d3
+	ld hl, Text_ContinueScreenWillBeLostOk ; $40d3
 	call DrawProportionalTextLine ; $40d6
-	call BuildResultsScreenPanels ; $40d9
+	call BuildContinueGameScreenPanels ; $40d9
 	call DrawPlayerNameAndLevel ; $40dc
 	wram_bank WRAM_SCREEN ; $40df
 	ld hl, wShadowTilemap ; $40e5
@@ -99,39 +100,39 @@ BuildResultsScreenTilemap:
 	call QueueVRAMCopy ; $40fe
 	farcall UploadGlyphBuffer ; $4101
 	ret ; $4104
-LoadResultsScreenGraphics:
-	ld hl, ResultsScreenPalettes ; $4105
+LoadContinueGameScreenGraphics:
+	ld hl, ContinueGameScreenPalettes ; $4105
 	ld_bg_pals de, 0, 6 ; $4108
 	call LoadPaletteShadow ; $410b
-	ld hl, ResultsScreenPalettes ; $410e
+	ld hl, ContinueGameScreenPalettes ; $410e
 	ld_obj_pals de, 0, 1 ; $4111
 	call LoadPaletteShadow ; $4114
 	wram_bank WRAM_STAGING ; $4117
-	ld hl, ResultsScreenGfx_1e ; $411d
+	ld hl, ContinueGameScreenGfx_1e ; $411d
 	ld de, wDecompBuffer ; $4120
 	call DecompressData ; $4123
 	ld hl, wDecompBuffer ; $4126
 	ld de, vTiles2 + VRAM_BANK1 ; $4129
-	ld c, 128 ; $412c -- 128 of ResultsScreenGfx_1e's 176 tiles
+	ld c, 128 ; $412c -- 128 of ContinueGameScreenGfx_1e's 176 tiles
 	call QueueVRAMCopy ; $412e
-	ld hl, wTextTileBuffer ; $4131
+	ld hl, wDecompBufferHigh ; $4131
 	ld de, vTiles1 + VRAM_BANK1 ; $4134
-	ld c, wTextTileBuffer_SIZE / 16 ; $4137
+	ld c, wDecompBufferHigh_SIZE / 16 ; $4137
 	call QueueVRAMCopy ; $4139
 	wram_bank WRAM_STAGING ; $413c
-	ld hl, ResultsScreenTilemap_1e ; $4142
+	ld hl, ContinueGameScreenTilemap_1e ; $4142
 	ld de, wDecompBuffer ; $4145
 	call DecompressData ; $4148
 	ld hl, wDecompBuffer ; $414b
 	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $414e
-	call ResultsCopyToTilemap ; $4151
+	call ContinueGameCopyToTilemap ; $4151
 	wram_bank WRAM_STAGING ; $4154
-	ld hl, ResultsScreenAttrmap_1e ; $415a
+	ld hl, ContinueGameScreenAttrmap_1e ; $415a
 	ld de, wDecompBuffer ; $415d
 	call DecompressData ; $4160
 	ld hl, wDecompBuffer ; $4163
 	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $4166
-	call ResultsCopyToAttrmap ; $4169
+	call ContinueGameCopyToAttrmap ; $4169
 	wram_bank WRAM_STAGING ; $416c
 	ld hl, PanelFrameGfx_1e ; $4172
 	ld de, wDecompBuffer ; $4175
@@ -141,7 +142,7 @@ LoadResultsScreenGraphics:
 	ld c, PanelFrameGfx_1e_SIZE / 16 ; $4181
 	call QueueVRAMCopy ; $4183
 	ret ; $4186
-ResultsCopyToTilemap:
+ContinueGameCopyToTilemap:
 	wram_bank WRAM_STAGING ; $4187
 	ld d, [hl] ; $418d
 	wram_bank WRAM_SCREEN ; $418e
@@ -150,9 +151,9 @@ ResultsCopyToTilemap:
 	dec bc ; $4196
 	ld a, b ; $4197
 	or c ; $4198
-	jr nz, ResultsCopyToTilemap ; $4199
+	jr nz, ContinueGameCopyToTilemap ; $4199
 	ret ; $419b
-ResultsCopyToAttrmap:
+ContinueGameCopyToAttrmap:
 	wram_bank WRAM_STAGING ; $419c
 	ld d, [hl] ; $41a2
 	wram_bank WRAM_COURT_PLANES ; $41a3
@@ -161,9 +162,9 @@ ResultsCopyToAttrmap:
 	dec bc ; $41ab
 	ld a, b ; $41ac
 	or c ; $41ad
-	jr nz, ResultsCopyToAttrmap ; $41ae
+	jr nz, ContinueGameCopyToAttrmap ; $41ae
 	ret ; $41b0
-BuildResultsScreenPanels:
+BuildContinueGameScreenPanels:
 	wram_bank WRAM_SCREEN ; $41b1
 	ld a, $02 ; $41b7
 	ld [wShadowTilemap], a ; $41b9
@@ -204,7 +205,7 @@ BuildResultsScreenPanels:
 	ld hl, wScreenAttrmap ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
-	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH + 1 ; $421e
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $421e
 	call DrawContinuePromptText ; $4221
 	wram_bank WRAM_SCREEN ; $4224
 	ld a, $02 ; $422a
@@ -278,13 +279,13 @@ BuildResultsScreenPanels:
 	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 18], a ; $42d1
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 15], a ; $42d4
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 18], a ; $42d7
-	ld hl, Text_ResultsYes ; $42da
+	ld hl, Text_ContinueScreenYes ; $42da
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 16 ; $42dd
-	ld bc, $0020 ; $42e0
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $42e0
 	call FetchAndDrawDialogueText ; $42e3
-	ld hl, Text_ResultsNo ; $42e6
+	ld hl, Text_ContinueScreenNo ; $42e6
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 16 ; $42e9
-	ld bc, $0020 ; $42ec
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
 	wram_bank WRAM_COURT_PLANES ; $42f2
 	xor a ; $42f8
@@ -303,38 +304,38 @@ BuildResultsScreenPanels:
 	ld a, [wGameMode] ; $4319
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $431c
-	jp z, DrawStoryResultsHeader ; $431d
+	jp z, DrawStorySuspendedMatchHeader ; $431d
 	cp GAMEMODE_EXHIBITION ; $4320
-	jp z, DrawExhibitionResultsHeader ; $4322
+	jp z, DrawExhibitionSuspendedMatchHeader ; $4322
 	cp GAMEMODE_RANKING_MATCH ; $4325
-	jp z, DrawRankMatchResultsHeader ; $4327
+	jp z, DrawRankMatchSuspendedMatchHeader ; $4327
 	cp GAMEMODE_ISLAND_OPEN ; $432a
-	jp z, DrawTournamentResultsHeader ; $432c
+	jp z, DrawTournamentSuspendedMatchHeader ; $432c
 	cp GAMEMODE_PRACTICE_MATCH ; $432f
-	jp z, DrawPracticeResultsHeader ; $4331
+	jp z, DrawPracticeSuspendedMatchHeader ; $4331
 	cp GAMEMODE_DREAM_MATCH ; $4334
-	jp z, DrawMarioExhibitionResultsHeader ; $4336
+	jp z, DrawMarioExhibitionSuspendedMatchHeader ; $4336
 	ret ; $4339
 LoadSinglesLabelTiles:
 	wram_bank WRAM_STAGING ; $433a
-	ld hl, ResultsSinglesLabelTilemap_1e ; $4340
+	ld hl, SuspendedMatchSinglesLabelTilemap_1e ; $4340
 	ld de, wDecompBuffer ; $4343
 	call DecompressData ; $4346
 	ret ; $4349
 LoadDoublesLabelTiles:
 	wram_bank WRAM_STAGING ; $434a
-	ld hl, ResultsDoublesLabelTilemap_1e ; $4350
+	ld hl, SuspendedMatchDoublesLabelTilemap_1e ; $4350
 	ld de, wDecompBuffer ; $4353
 	call DecompressData ; $4356
 	ret ; $4359
-DrawResultsNameLabelRows:
+DrawSuspendedMatchNameLabelRows:
 	or a ; $435a
 	jr nz, .doublesLayout ; $435b
-	ld hl, wScreenAttrmap ; $435d
-	ld de, wScreenAttrmap + 11 * TILEMAP_WIDTH ; $4360
+	ld hl, wDecompBuffer ; $435d
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH ; $4360
 	ld c, $07 ; $4363
 	call CopyLabelTilesToTilemap ; $4365
-	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $4368
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $4368
 	ld c, $07 ; $436b
 	call CopyLabelTilesToTilemap ; $436d
 	wram_bank WRAM_SCREEN ; $4370
@@ -351,11 +352,11 @@ DrawResultsNameLabelRows:
 	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4392
 	ret ; $4395
 .doublesLayout:
-	ld hl, wScreenAttrmap ; $4396
-	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $4399
+	ld hl, wDecompBuffer ; $4396
+	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $4399
 	ld c, $07 ; $439c
 	call CopyLabelTilesToTilemap ; $439e
-	ld de, wScreenAttrmap + 10 * TILEMAP_WIDTH ; $43a1
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH ; $43a1
 	ld c, $07 ; $43a4
 	call CopyLabelTilesToTilemap ; $43a6
 	wram_bank WRAM_SCREEN ; $43a9
@@ -432,40 +433,40 @@ FillMemoryC:
 	dec c ; $4462
 	jr nz, FillMemoryC ; $4463
 	ret ; $4465
-DrawStoryResultsHeader:
-	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
-	jr nz, .skyScene ; $4469
+DrawStorySuspendedMatchHeader:
+	test_flag FLAG_AT_ISLAND_OPEN ; $4466
+	jr nz, .islandOpen ; $4469
 	ld a, [wStoryReturnLocation] ; $446b
 	cp STORYLOC_PEACHS_CASTLE ; $446e
-	jr z, .altPosition ; $4470
-	ld hl, Text_ResultsTennisAcademy ; $4472
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $4475
+	jr z, .peachsCastle ; $4470
+	ld hl, Text_ContinueScreenTennisAcademy ; $4472
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
-	jr .drawOpponentName ; $447e
-.skyScene:
-	ld hl, Text_ResultsIslandOpen ; $4480
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $4483
+	jr .drawLocationName ; $447e
+.islandOpen:
+	ld hl, Text_ContinueScreenIslandOpen ; $4480
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
-.drawOpponentName:
+.drawLocationName:
 	ld a, [wStoryReturnLocation] ; $448c
 	add $79 ; $448f
 	ld l, a ; $4491
 	adc $01 ; $4492
 	sub l ; $4494
 	ld h, a ; $4495
-	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 4 ; $4496
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $4496
 	ld bc, $0020 ; $4499
 	call DrawProportionalTextLine ; $449c
 	ret ; $449f
-.altPosition:
+.peachsCastle:
 	add $79 ; $44a0
 	ld l, a ; $44a2
 	adc $01 ; $44a3
 	sub l ; $44a5
 	ld h, a ; $44a6
-	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 7 ; $44a7
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 7 ; $44a7
 	ld bc, $0020 ; $44aa
 	call DrawProportionalTextLine ; $44ad
 	ret ; $44b0

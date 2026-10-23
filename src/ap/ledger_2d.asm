@@ -26,8 +26,8 @@ ApBootLedger:
 	jr z, .checkGameRegion
 .erase:
 	call ApCloseLedger
-	ld a, BANK(ReinitSaveRamPreservingBlock6)
-	ld hl, ReinitSaveRamPreservingBlock6
+	ld a, BANK(ReinitSaveRamKeepingPreservedBlock)
+	ld hl, ReinitSaveRamKeepingPreservedBlock
 	call CallHLInBankA
 	call ApOpenLedger
 	ld hl, sApHeader

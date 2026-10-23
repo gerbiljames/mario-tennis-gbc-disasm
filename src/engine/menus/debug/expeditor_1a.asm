@@ -92,14 +92,14 @@ Unused_1a_RunDebugExpEditor:
 	ld a, [hl+] ; $4456
 	ld d, [hl] ; $4457
 	ld e, a ; $4458
-	ld l, $00 ; $4459
-	call Unused_1a_ResetCharDataScreenAnim ; $445b
+	ld l, STORYREC_MAIN ; $4459
+	call Unused_1a_RunExpGainScreenForRecord ; $445b
 	ld hl, wStoryPartnerExp ; $445e
 	ld a, [hl+] ; $4461
 	ld d, [hl] ; $4462
 	ld e, a ; $4463
-	ld l, $01 ; $4464
-	call Unused_1a_ResetCharDataScreenAnim ; $4466
+	ld l, STORYREC_PARTNER ; $4464
+	call Unused_1a_RunExpGainScreenForRecord ; $4466
 	pop_wram_bank ; $4469
 	pop hl ; $446e
 	pop de ; $446f
@@ -253,7 +253,7 @@ Unused_1a_ShowExpGainScreen:
 	ld de, vBGMap0 + VRAM_BANK1 ; $45c1
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45c4
 	call QueueVRAMCopy ; $45c6
-	ld hl, wDecompBuffer tile 64 ; $45c9
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $45c9
 	ld de, vBGMap0 ; $45cc
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $45cf
 	call QueueVRAMCopy ; $45d1
@@ -440,7 +440,7 @@ Unused_1a_ShowExpGainScreen:
 	ld de, vBGMap0 + VRAM_BANK1 ; $4747
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $474a
 	call QueueVRAMCopy ; $474c
-	ld hl, wDecompBuffer tile 64 ; $474f
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $474f
 	ld de, vBGMap0 ; $4752
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $4755
 	call QueueVRAMCopy ; $4757

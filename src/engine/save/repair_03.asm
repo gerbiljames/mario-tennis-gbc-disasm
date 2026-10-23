@@ -6,9 +6,9 @@ RepairAllSaveSlots:
 	call RestoreStoryBlockFromBackup ; $5676
 	ld b, SAVEBLOCK_SLOT2 ; $5679
 	call RestoreStoryBlockFromBackup ; $567b
-	call RestoreBlock36FromBackup ; $567e
+	call RestoreExhibitionBlockFromBackup ; $567e
 	ret ; $5681
-RestoreBlock36FromBackup:
+RestoreExhibitionBlockFromBackup:
 	ld a, SAVEBLOCK_EXHIBITION ; $5682
 	ld b, a ; $5684
 	ld hl, wDecompBuffer ; $5685
@@ -20,13 +20,13 @@ RestoreBlock36FromBackup:
 	ld b, a ; $5691
 	call ReadSaveBlock ; $5692
 	or a ; $5695
-	jr nz, .restore ; $5696
+	jr nz, .bothBad ; $5696
 	pop bc ; $5698
 	ld hl, wDecompBuffer ; $5699
 	ld de, wDecompBuffer tile 64 ; $569c
 	call WriteSaveBlock ; $569f
 	ret ; $56a2
-.restore:
+.bothBad:
 	pop bc ; $56a3
 	call InvalidateSaveBlock ; $56a4
 	ret ; $56a7
@@ -52,19 +52,19 @@ ApplyN64RecordsUnlockFlags:
 	farcall SetSaveFlag ; $56cd
 	pop de ; $56d0
 	push de ; $56d1
-	ld de, SAVEFLAG_UNLOCKED_FAY ; $56d2
+	ld de, SAVEFLAG_UNLOCKED_WALUIGI ; $56d2
 	farcall SetSaveFlag ; $56d5
 	pop de ; $56d8
 	push de ; $56d9
-	ld de, SAVEFLAG_UNLOCKED_CURT ; $56da
+	ld de, SAVEFLAG_UNLOCKED_YOSHI ; $56da
 	farcall SetSaveFlag ; $56dd
 	pop de ; $56e0
 	push de ; $56e1
-	ld de, SAVEFLAG_UNLOCKED_MARK ; $56e2
+	ld de, SAVEFLAG_UNLOCKED_BOWSER ; $56e2
 	farcall SetSaveFlag ; $56e5
 	pop de ; $56e8
 	push de ; $56e9
-	ld de, SAVEFLAG_UNLOCKED_SEAN ; $56ea
+	ld de, SAVEFLAG_UNLOCKED_WARIO ; $56ea
 	farcall SetSaveFlag ; $56ed
 	pop de ; $56f0
 .restore:
@@ -210,11 +210,11 @@ CheckUnlockCondition:
 	cp MGRECORD_BOO_BLAST ; $57ef
 	jr nc, .saveFlagCondition ; $57f1
 	or a ; $57f3
-	jr nz, .machineWall ; $57f4
+	jr nz, .machine ; $57f4
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $57f6
 	jr z, .locked ; $57f9
 	jr .checkRecord ; $57fb
-.machineWall:
+.machine:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $57fd
 	jr z, .locked ; $5800
 	jr .checkRecord ; $5802
@@ -257,7 +257,7 @@ CheckUnlockCondition:
 	pop de ; $5841
 	pop bc ; $5842
 	ret ; $5843
-WriteBlock6WithBackup:
+WritePreservedBlockWithBackup:
 	push bc ; $5844
 	push de ; $5845
 	push hl ; $5846
@@ -285,7 +285,7 @@ WriteBlock6WithBackup:
 	pop de ; $586c
 	pop bc ; $586d
 	ret ; $586e
-ReadBlock6:
+ReadPreservedBlock:
 	push bc ; $586f
 	push de ; $5870
 	push hl ; $5871

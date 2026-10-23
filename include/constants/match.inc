@@ -22,6 +22,31 @@ def OBJSLOT_SIZE equ _RS
 def OBJSLOTB_VISIBLE equ 0 ; FinishObjSlotUpdate draws the slot
 def OBJSLOTB_LOADED  equ 7 ; set by LoadObjTemplate_09; StartObjExitAnim clears it and plays the template's exit animation only if it was set
 
+; --- Ball history records ---
+; Offsets into one 6-byte wBallHistory record. UpdateBallVisuals shifts the
+; ring down one record per frame, so record 0 is the oldest.
+	rsreset
+def BALLHIST_X    rw ; $00 projected screen X
+def BALLHIST_Y    rw ; $02 projected screen Y
+def BALLHIST_TILE rb ; $04 trail tile: the ball's tile + 8
+def BALLHIST_ATTR rb ; $05
+def BALLHIST_SIZE equ _RS
+	ASSERT BALLHIST_SIZE == 6
+def NUM_BALLHIST equ 6
+def BALLHIST_NEWEST equ (NUM_BALLHIST - 1) * BALLHIST_SIZE ; BuildBallSlot writes here
+
+; --- Sprite-slot records ---
+; Offsets into one 4-byte sprite-slot record (wCharSpriteSlot and the
+; character shadow slots, the bank $08 ball slots, wBallTrailSlots), the
+; argument DrawCharSprite and the ball drawers read through hl.
+	rsreset
+def SPRSLOT_TILE rb ; $00 $ff = not drawn
+def SPRSLOT_ATTR rb ; $01 OAM attribute byte
+def SPRSLOT_Y    rb ; $02 screen Y
+def SPRSLOT_X    rb ; $03 screen X
+def SPRSLOT_SIZE equ _RS
+	ASSERT SPRSLOT_SIZE == 4
+
 ; --- Shot types (wCurrentShotType) ---
 ; Selected from the A/B button sequence by SelectRallyShotType /
 ; SelectServeShotType, which index wCharShotButton1 x wCharShotButton2 tables.
@@ -29,8 +54,8 @@ def OBJSLOTB_LOADED  equ 7 ; set by LoadObjTemplate_09; StartObjExitAnim clears 
 ; doubling a button gives its "power" variant. When the character is near the
 ; net (wCharBallReachFlags BALLREACHB_NEAR_NET) the ground strokes are swapped
 ; for their "reach" variants ($06/$07/$08, dispatched to bank $2c's
-; ProjectShotPlacement0-2), which fall back to SHOTTYPE_REACH when
-; CheckBallInSmashRange fails at the hit.
+; ShotBallPathReachBasic/ReachPowerTopspin/ReachPowerSlice), which fall back
+; to SHOTTYPE_REACH when CheckBallInSmashRange fails at the hit.
 ; Serves by first button: A -> topspin, B -> slice, A+B -> flat.
 	const_def
 	const SHOTTYPE_TOPSPIN             ; $00 A
@@ -50,7 +75,17 @@ def OBJSLOTB_LOADED  equ 7 ; set by LoadObjTemplate_09; StartObjExitAnim clears 
 	const SHOTTYPE_SERVE_FLAT          ; $0e serve, A+B
 def NUM_SHOTTYPES equ const_value
 
-; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
+; Shot class (wShotClass), the second ShotTypePresets_07 byte: picks the
+; ShotRecoilVarPtrs_07 speed index for ApplyShotRecoil, and the drills test it
+; to tell volleys and smashes apart.
+	const_def
+	const SHOTCLASS_GROUND   ; $00 ground strokes and the neutral shot
+	const SHOTCLASS_VOLLEY   ; $01 the reach (net) variants
+	const SHOTCLASS_SMASH    ; $02
+	const SHOTCLASS_LOB_DROP ; $03
+	const SHOTCLASS_SERVE    ; $04
+
+; AI shot habits (AiShotMixTable_02, one 16-entry row per wAiDifficulty;
 ; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
 ; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
 	const_def $10
@@ -86,7 +121,7 @@ def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
 	const POINTWINNER_DROP_SHOT   ; $05
 
 ; --- Court banners (ShowCourtBanner / SpawnCourtBannerObj argument) ---
-; Both a VramTileset_09 record (the word art) and a CourtBannerObjTemplates_09
+; Both a CourtBannerTileRanges_09 record (the word art) and a CourtBannerObjTemplates_09
 ; record. The point-outcome banners share POINTOUTCOME_* values, and the
 ; winning-shot banners follow POINTWINNER_* order.
 def BANNER_CHANGE_ENDS     equ $00
@@ -103,7 +138,7 @@ def BANNER_OUT             equ POINTOUTCOME_OUT
 	const BANNER_GAME            ; $0b game won
 	const BANNER_SET             ; $0c
 	const BANNER_MATCH           ; $0d
-	const BANNER_POWER_SERVE     ; $0e wSpecialShotFlag on the serve
+	const BANNER_POWER_SERVE     ; $0e wPowerServeFlag on the serve
 	const BANNER_TIEBREAK        ; $0f
 	const BANNER_START           ; $10 end of the minigame countdown
 	const BANNER_COUNTDOWN_DIGIT ; $11 SpawnCourtBannerObj only: the digit tiles come from LoadScoreDigitGfx
@@ -164,13 +199,13 @@ def NUM_COURTS equ const_value
 ; Two rules generate most of the table (every character bank is laid out alike):
 ;   swing + $08 = the held "ready" pose -- CharRallyReadyPhase plays
 ;                 `wCharSwingAnim + $08` while the button is down;
-;                 SpriteAnim0d/0e/0f are each the single held frame just
-;                 before SpriteAnim05/06/07.
+;                 the *ReadyAnim scripts are each the single held frame just
+;                 before the matching full swing.
 ;   swing + $04 = the quick (uncharged) variant -- StartCharSwing.startSwing
 ;                 adds 4 when fewer than 5 windup frames elapsed;
-;                 SpriteAnim09/0a/0b/0c are the first frame of
-;                 SpriteAnim05/06/07/08 alone before chaining back to idle.
-; CharRallyEndState tests the set $05 $06 $07 $09 $0a $0b $12: a ground
+;                 the *QuickAnim scripts are the first frame of the full
+;                 swing alone before chaining back to idle.
+; CharFinishSwingPhase tests the set $05 $06 $07 $09 $0a $0b $12: a ground
 ; swing (charged or quick) or a dive still playing. The smash is covered by
 ; the airborne bit (wCharFlags bit 2) tested on the next line.
 	const_def
@@ -203,21 +238,21 @@ def NUM_COURTS equ const_value
 ; -> state at the start of a point) and SetCharStateOnBallHitTable (the state
 ; every character is remapped through on every strike).
 	const_def
-	const CHARSTATE_INERT       ; $00 slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
-	const CHARSTATE_RALLY       ; $01 CharRallyState: ready -> windup -> contact
-	const CHARSTATE_RECOVER     ; $02 CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
-	const CHARSTATE_SERVE       ; $03 CharServeState: indicator, toss, swing window, strike
-	const CHARSTATE_AWAIT_SERVE ; $04 CharAwaitServeState
-	const CHARSTATE_STANDBY     ; $05 CharStandbyState: end-state, then state 4's movement phase
-	const CHARSTATE_WALK        ; $06 CharWalkState: the scripted changeover and walk-off walks
-	const CHARSTATE_POINT_END   ; $07 CharPointEndState: walk to target, then the win/lose reaction
+	const CHARSTATE_INERT          ; $00 slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
+	const CHARSTATE_RALLY          ; $01 CharRallyState: ready -> windup -> contact
+	const CHARSTATE_RECOVER        ; $02 CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
+	const CHARSTATE_SERVE          ; $03 CharServeState: indicator, toss, swing window, strike
+	const CHARSTATE_SERVER_PARTNER ; $04 CharServerPartnerState: the server's doubles partner; moving back past depth $0200 dismisses the serve indicator
+	const CHARSTATE_STANDBY        ; $05 CharStandbyState: CharFinishSwingPhase, then state 4's movement phase
+	const CHARSTATE_WALK           ; $06 CharWalkState: the scripted changeover and walk-off walks
+	const CHARSTATE_POINT_END      ; $07 CharPointEndState: walk to target, then the win/lose reaction
 def NUM_CHARSTATES equ const_value
 
 ; --- On-court character flags (wCharFlags) ---
 ; Bit indices only (every site is a `bit`/`res`/`set`). Bits 3 and 7 are
 ; never touched.
 	const_def
-	const CHARB_RECOIL   ; $00 set by ApplyShotRecoil after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput drops the steering intent
+	const CHARB_RECOIL   ; $00 set by ApplyShotRecoil after every stroke and by CheckBallHitsCharBody on a body hit; UpdateCharVelocityFromInput drops the steering intent
 	const CHARB_DIVING   ; $01 StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
 	const CHARB_AIRBORNE ; $02 set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
 	const_def $04
@@ -234,14 +269,14 @@ def CHARSPRITEB_RELOAD_TILES equ 6 ; the facing octant or animation frame change
 	const_def
 	const BALLREACHB_SWING_RANGE ; $00 CheckBallInSwingRange: the ball is within swing range
 	const BALLREACHB_CONTACT     ; $01 CheckBallContactWindow: the ball is inside the contact window
-	const BALLREACHB_BODY_HIT    ; $02 CheckCharBallContact: the ball hit the character's body
+	const BALLREACHB_BODY_HIT    ; $02 CheckBallHitsCharBody: the ball hit the character's body
 	const_def $04
 	const BALLREACHB_NEAR_NET    ; $04 the character's own |depth| < $2a0: picks RallyReachShotTypeTable and wAiReactionDelayNear
 	const_def $06
 	const BALLREACHB_STEER_X     ; $06 ApplyCharMovementInput: left/right held; UpdateCharVelocityFromInput accelerates X
 	const BALLREACHB_STEER_DEPTH ; $07 the same for up/down and depth
 
-; --- Court position (wCharCourtPos, wServingCharCourtPos, wPrevCourtPos) ---
+; --- Court position (wCharCourtPos, wServingCharCourtPos, wPlayer1PrevCourtPos) ---
 ; Bit 1 is the end, bit 0 the screen half with the near end at the bottom:
 ; a near server on the right is in the deuce court. GetCharBaseCourtPosition
 ; negates the depth for the far end and the X for the left half.
@@ -257,7 +292,7 @@ def COURTPOS_NONE        equ $09 ; no character in this slot
 
 ; --- Serve role (wCharServeRole, wLastShotServeRole) ---
 ; Bit 0 is the receiving side, bit 1 the doubles partner (the AI's net-player
-; tables); ToggleCharCourtRow swaps a player with its partner.
+; tables); ToggleCharServePartnerRole swaps a player with its partner.
 def SERVEROLEB_RECEIVING equ 0
 def SERVEROLEB_PARTNER   equ 1
 def SERVEROLEF_RECEIVING equ 1 << SERVEROLEB_RECEIVING
@@ -291,7 +326,7 @@ def POINTOUTCOME_MINIGAME_CLEARED equ $0b ; bank $0d only, set right after IsMin
 ; A signed -1/0/+1 shared by both flags and the set/game-level ones: AwardPoint
 ; (`add a / ret z / jr nc`) credits nobody on $00, the player-1 side on +1 and
 ; the player-2 side on -1.
-def AISERVEAIM_RANDOM equ $ff ; wAiServeAimOverride: AiApplyServeAim rolls the aim from AiApplyServeAimTable; otherwise the PADF_LEFT/PADF_RIGHT bits it ORs into the serve input
+def AISERVEAIM_RANDOM equ $ff ; wAiServeAimOverride: AiApplyServeAim rolls the aim from AiRandomServeAimDirs; otherwise the PADF_LEFT/PADF_RIGHT bits it ORs into the serve input
 
 def WINLOSE_NONE             equ $00 ; nothing decided yet
 def WINLOSE_WIN              equ $01 ; the player-1 side took it
@@ -301,7 +336,13 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const_def
 	const MATCHCONTEXT_EXHIBITION ; $00 cleared by RestoreOverworldAfterMatch
 	const MATCHCONTEXT_STORY      ; $01 InitStoryMatchSettings
-	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
+	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunTwoOnOneMatch: fixed view, doubles scoreboard
+
+; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDigitGfxStyle) ---
+; GetGfxSourcePtr's index into ScoreDigitGfxPtrs_09 / FirstScoreDigitGfxSource /
+; SecondScoreDigitGfxSource.
+def DIGITGFX_TENNIS_CALLS    equ $00 ; 0/15/30/40/Ad: a normal game's points
+def DIGITGFX_NUMERALS        equ $01 ; plain numbers: tiebreak points, minigame counters, games and sets
 
 ; --- Mode hook slots (CallModeHook's d; rows of a mode_hooks table) ---
 	const_def
@@ -311,6 +352,6 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MODEHOOK_MINIGAME_START ; $03 RunMinigamePointLoop, before the first point
 	const MODEHOOK_BALL_HIT       ; $04 HandleBallHitEvent
 	const MODEHOOK_BOUNCE         ; $05 HandleBallBounceEvent
-	const MODEHOOK_RALLY_TICK     ; $06 TickRallyTimers, ball crossed the net
+	const MODEHOOK_NET_CROSS     ; $06 HandleBallNetCrossEvent, ball crossed the net
 	const MODEHOOK_DRAW           ; $07 DrawBallAndEffects, extra draw pass
 def NUM_MODEHOOKS equ const_value

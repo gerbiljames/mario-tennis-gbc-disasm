@@ -28,7 +28,7 @@ MinigameHooks_WallPractice2:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw WallPractice2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw WallPractice2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw WallPractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw WallPractice2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 WallPractice2Hook_PerFrame:
@@ -40,7 +40,7 @@ WallPractice2Hook_PointStart:
 WallPractice2Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4c33
 	ret ; $4c36
-WallPractice2Hook_RallyTick:
+WallPractice2Hook_NetCross:
 	call AwardMinigamePointAndReflectBall ; $4c37
 	ret ; $4c3a
 WallPractice2Hook_Bounce:
@@ -70,7 +70,7 @@ MinigameHooks_WallPractice3:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw WallPractice3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw WallPractice3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw WallPractice3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw WallPractice3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 WallPractice3Hook_PerFrame:
@@ -82,7 +82,7 @@ WallPractice3Hook_PointStart:
 WallPractice3Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4c7e
 	ret ; $4c81
-WallPractice3Hook_RallyTick:
+WallPractice3Hook_NetCross:
 	call AwardMinigamePointAndReflectBall ; $4c82
 	ret ; $4c85
 WallPractice3Hook_Bounce:
@@ -112,7 +112,7 @@ MinigameHooks_WallPractice4:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw WallPractice4Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw WallPractice4Hook_Bounce ; MODEHOOK_BOUNCE
-	dw WallPractice4Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw WallPractice4Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 WallPractice4Hook_PerFrame:
@@ -124,7 +124,7 @@ WallPractice4Hook_PointStart:
 WallPractice4Hook_PointEnd:
 	call HandleMinigamePointEnd ; $4cc9
 	ret ; $4ccc
-WallPractice4Hook_RallyTick:
+WallPractice4Hook_NetCross:
 	call AwardMinigamePointAndReflectBall ; $4ccd
 	ret ; $4cd0
 WallPractice4Hook_Bounce:
@@ -135,7 +135,7 @@ WallPractice4Hook_BallHit:
 	ret ; $4cd8
 MinigameConfig_TennisMachineHighScore:
 	; $4cd9, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachineHighScore, MinigamePointLayoutDuo, InitMinigame_TennisMachineHighScore
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachineHighScore, MinigamePointLayoutDuo, InitMinigame_TennisMachineHighScore
 InitMinigame_TennisMachineHighScore:
 	ld a, $01 ; $4ce9
 	ld [wMinigameUsesTennisMachine], a ; $4ceb
@@ -153,7 +153,7 @@ MinigameHooks_TennisMachineHighScore:
 	dw TennisMachineHighScoreHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TennisMachineHighScoreHook_BallHit ; MODEHOOK_BALL_HIT
 	dw TennisMachineHighScoreHook_Bounce ; MODEHOOK_BOUNCE
-	dw TennisMachineHighScoreHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TennisMachineHighScoreHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 	twin_named tennis_machine3_hook_minigame_start, TennisMachineHighScoreHook_MinigameStart ; $4d09
@@ -164,14 +164,14 @@ TennisMachineHighScoreHook_PerFrame:
 TennisMachineHighScoreHook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4d2b
 	ret ; $4d2e
-TennisMachineHighScoreHook_RallyTick:
+TennisMachineHighScoreHook_NetCross:
 	call KeepMinigameCameraFixed ; $4d2f
 	ret ; $4d32
 TennisMachineHighScoreHook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $4d33
+	call AwardWinnerOnReturnBounce ; $4d33
 	ret ; $4d36
 TennisMachineHighScoreHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4d37
+	call FreezeFeederAfterLaunch ; $4d37
 	ret ; $4d3a
 MinigameConfig_WallPracticeHighScore:
 	; $4d3b, 16 bytes
@@ -196,7 +196,7 @@ MinigameHooks_WallPracticeHighScore:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw WallPracticeHighScoreHook_BallHit ; MODEHOOK_BALL_HIT
 	dw WallPracticeHighScoreHook_Bounce ; MODEHOOK_BOUNCE
-	dw WallPracticeHighScoreHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw WallPracticeHighScoreHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 WallPracticeHighScoreHook_PerFrame:
@@ -208,7 +208,7 @@ WallPracticeHighScoreHook_PointStart:
 WallPracticeHighScoreHook_PointEnd:
 	call HandleMinigamePointEnd ; $4d7b
 	ret ; $4d7e
-WallPracticeHighScoreHook_RallyTick:
+WallPracticeHighScoreHook_NetCross:
 	call AwardMinigamePointAndReflectBall ; $4d7f
 	ret ; $4d82
 WallPracticeHighScoreHook_Bounce:
@@ -219,7 +219,7 @@ WallPracticeHighScoreHook_BallHit:
 	ret ; $4d8a
 MinigameConfig_TargetShot:
 	; $4d8b, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TARGET_SHOT, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TARGET_SHOT, BGM_TARGET_MINIGAMES, CHAR_BABY_MARIO, MinigameHooks_TargetShot, MinigamePointLayoutDuo, InitMinigame_TargetShot
+	drill_def CHAR_BALL_MACHINE, COURT_TARGET_SHOT, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TARGET_SHOT, BGM_TARGET_MINIGAMES, CHAR_BABY_MARIO, MinigameHooks_TargetShot, MinigamePointLayoutDuo, InitMinigame_TargetShot
 	twin_named init_minigame_medallion_match, InitMinigame_TargetShot ; $4d9b
 MinigameHooks_TargetShot:
 	; $4dad, 16 bytes (mode_hooks)
@@ -230,12 +230,12 @@ MinigameHooks_TargetShot:
 	dw TargetShotHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw TargetShotHook_BallHit ; MODEHOOK_BALL_HIT
 	dw TargetShotHook_Bounce ; MODEHOOK_BOUNCE
-	dw TargetShotHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw TargetShotHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 TargetShotHook_MinigameStart:
 	ld a, $01 ; $4dbd
-	ld [wMinigameServeSlot], a ; $4dbf
+	ld [wMinigameFeederPos], a ; $4dbf
 	call StartMinigameMatch ; $4dc2
 	ld a, $01 ; $4dc5
 	ld [wTargetZoneEnabled], a ; $4dc7
@@ -245,11 +245,11 @@ TargetShotHook_PerFrame:
 	call UpdateTargetShotScorePopup ; $4dce
 	ret ; $4dd1
 TargetShotHook_PointStart:
-	call SelectRandomMinigameShot ; $4dd2
+	call SelectRandomTargetShotZone ; $4dd2
 	farcall AdvanceMatchRng ; $4dd5
 	and $01 ; $4dd8
 	inc a ; $4dda
-	ld hl, wMinigameServeSlot ; $4ddb
+	ld hl, wMinigameFeederPos ; $4ddb
 	add [hl] ; $4dde
 	cp $03 ; $4ddf
 	jr c, .store ; $4de1
@@ -261,19 +261,19 @@ TargetShotHook_PointStart:
 TargetShotHook_PointEnd:
 	call EndMinigamePoint ; $4dea
 	ret ; $4ded
-TargetShotHook_RallyTick:
+TargetShotHook_NetCross:
 	call KeepMinigameCameraFixed ; $4dee
 	ret ; $4df1
 TargetShotHook_Bounce:
 	ld a, [wPointOutcome] ; $4df2
 	and a ; $4df5
 	ret nz ; $4df6
-	call CheckMinigameStartBannerTrigger ; $4df7
-	call CheckBallLandedOut ; $4dfa
+	call AwardWinnerOnReturnBounce ; $4df7
+	call CheckBallMissedTargetZone ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
 	cp POINTOUTCOME_WINNER ; $4e00
 	ret nz ; $4e02
-	call LookupMinigameShotResult ; $4e03
+	call LookupTargetShotPoints ; $4e03
 	ld d, $00 ; $4e06
 	ld e, a ; $4e08
 	ld hl, wScorePopupValue ; $4e09
@@ -285,12 +285,12 @@ TargetShotHook_Bounce:
 	sound SFX_CHIME ; $4e15
 	ret ; $4e17
 TargetShotHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4e18
+	call FreezeFeederAfterLaunch ; $4e18
 	ret ; $4e1b
 UpdateTargetShotScorePopup:
 	call UpdateScorePopup ; $4e1c
 	ret ; $4e1f
-SelectRandomMinigameShot:
+SelectRandomTargetShotZone:
 	push_wram_bank WRAM_COURT_PLANES ; $4e20
 	ld a, [wMinigameLevel] ; $4e29
 	add a ; $4e2c
@@ -302,11 +302,11 @@ SelectRandomMinigameShot:
 	and $0f ; $4e3a
 	add_hl_a ; $4e3c
 	ld a, [hl] ; $4e41
-	ld [wMinigameShotRoll], a ; $4e42
-	ld a, [wMinigameShotRoll] ; $4e45
+	ld [wMinigameTargetZone], a ; $4e42
+	ld a, [wMinigameTargetZone] ; $4e45
 	call LoadTargetZoneConfig ; $4e48
-	ld a, [wMinigameShotRoll] ; $4e4b
-	call LoadMatchUiCourtTilemap ; $4e4e
+	ld a, [wMinigameTargetZone] ; $4e4b
+	call DrawTargetShotZoneOverlay ; $4e4e
 	call QueueMinigameHudVRAMCopy ; $4e51
 	pop_wram_bank ; $4e54
 	ret ; $4e59
@@ -321,7 +321,7 @@ TargetShotZonePool0:
 TargetShotZonePool1:
 	; $4e70, 16 bytes (bytes:16)
 	db $00, $00, $00, $00, $01, $01, $01, $01, $02, $02, $02, $03, $03, $03, $04, $04 ; 0x00
-CheckBallLandedOut:
+CheckBallMissedTargetZone:
 	ld a, [wLastShotCharIndex] ; $4e80
 	and $01 ; $4e83
 	ret nz ; $4e85
@@ -333,7 +333,7 @@ CheckBallLandedOut:
 	ld a, $ff ; $4e90
 	ld [wPointOutcomeSide], a ; $4e92
 	ret ; $4e95
-LookupMinigameShotResult:
+LookupTargetShotPoints:
 	ld hl, TargetShotScoreRules ; $4e96
 .loop:
 	ld a, [hl+] ; $4e99
@@ -346,7 +346,7 @@ LookupMinigameShotResult:
 	ld c, a ; $4ea2
 	ld a, [hl+] ; $4ea3
 	ld b, a ; $4ea4
-	ld a, [wMinigameShotRoll] ; $4ea5
+	ld a, [wMinigameTargetZone] ; $4ea5
 	cp e ; $4ea8
 	jr nz, .loop ; $4ea9
 	ld a, [wLastShotButtons] ; $4eab
@@ -366,7 +366,7 @@ LookupMinigameShotResult:
 	ret ; $4ec0
 TargetShotScoreRules:
 	; $4ec1, 69 bytes (score_rule)
-; score_rule roll, buttons, shot, points
+; score_rule zone, buttons, shot, points
 	score_rule 0, $11, SHOTTYPE_POWER_TOPSPIN, 3
 	score_rule 0, $11, SHOTTYPE_REACH_POWER_TOPSPIN, 3
 	score_rule 0, $11, $ff, 3

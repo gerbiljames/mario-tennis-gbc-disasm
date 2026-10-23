@@ -1,4 +1,4 @@
-ReadScriptedMatchInput:
+ReadLinkMatchInput:
 	ldh a, [hLinkInput] ; $4425
 	ret ; $4427
 StepMatchFrames:
@@ -136,7 +136,7 @@ InitViewFlipPreference:
 	ld a, [wGameMode] ; $451c
 	cp GAMEMODE_MARIO_MINIGAME ; $451f
 	jr z, .storeFlip ; $4521
-	farcall TestStorySlotFlagB ; $4523
+	farcall TestStorySlotCourtView ; $4523
 	ld [wCourtViewOption], a ; $4526
 	xor a ; $4529
 	ld [wCourtViewLocked], a ; $452a
@@ -151,7 +151,7 @@ ApplyMatchBgmPreference:
 	ld a, [wGameMode] ; $4539
 	cp GAMEMODE_LINK_MATCH ; $453c
 	jr z, .resume ; $453e
-	farcall TestStorySlotFlagA ; $4540
+	farcall TestStorySlotMusicMuted ; $4540
 	call SetMusicMuted ; $4543
 	ret ; $4546
 .resume:
@@ -160,13 +160,13 @@ ApplyMatchBgmPreference:
 SelectScoreboardLayout:
 	ld a, [wMatchContext] ; $454b
 	cp MATCHCONTEXT_MINIGAME ; $454e
-	jr z, .doubles ; $4550
+	jr z, .minigame ; $4550
 	ld a, [wOnCourtCharCount] ; $4552
 	sub $02 ; $4555
 	and $03 ; $4557
 	ld [wScoreboardLayout], a ; $4559
 	ret ; $455c
-.doubles:
+.minigame:
 	ld b, SCOREBOARD_LESSON ; $455d
 	ld a, [wDrillIsPracticeLesson] ; $455f
 	and a ; $4562
@@ -336,9 +336,9 @@ CheckBallOutOfBounds:
 	ld l, a ; $4647
 	abs_hl ; $4648
 	add hl, bc ; $4652
-	jr nc, .outOfBounds ; $4653
+	jr nc, .checkDepth ; $4653
 	set 0, d ; $4655
-.outOfBounds:
+.checkDepth:
 	ld hl, wCourtLimitDepth ; $4657
 	ld a, [hl+] ; $465a
 	ld b, [hl] ; $465b

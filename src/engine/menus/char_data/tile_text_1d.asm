@@ -17,13 +17,13 @@ PlotTilesAtOffsets:
 .restore:
 	pop de ; $4791
 	ret ; $4792
-DrawFourTileFlagLabel:
+DrawHandednessLabel:
 	or a ; $4793
-	jr nz, .flagSet ; $4794
+	jr nz, .leftHanded ; $4794
 	wram_bank WRAM_SCREEN ; $4796
 	ld a, $01 ; $479c
 	jr .store ; $479e
-.flagSet:
+.leftHanded:
 	wram_bank WRAM_SCREEN ; $47a0
 	ld a, $05 ; $47a6
 .store:
@@ -214,9 +214,9 @@ FormatExp24BitDecimal:
 	dec c ; $48c2
 	jp nz, .loop ; $48c3
 	ret ; $48c6
-CharDataValuesSyncTask:
+DrawCharDataSummarySpritesTask:
 	wram_bank WRAM_SCENE ; $48c7
-	ld a, [wCharDataSyncSource] ; $48cd
+	ld a, [wCharDataPlayTimeLive] ; $48cd
 	or a ; $48d0
 	jr nz, .fromGameTimer ; $48d1
 	ld hl, wSavedGameTimer + 2 ; $48d3
@@ -224,13 +224,13 @@ CharDataValuesSyncTask:
 .fromGameTimer:
 	ld hl, wGameTimer + 2 ; $48d8
 .copyPair:
-	ld de, wCharDataSyncPair ; $48db
+	ld de, wCharDataPlayTime ; $48db
 	ld a, [hl+] ; $48de
 	ld [de], a ; $48df
 	inc de ; $48e0
 	ld a, [hl] ; $48e1
 	ld [de], a ; $48e2
-	ld a, [wCharDataSyncPair + 1] ; $48e3
+	ld a, [wCharDataPlayTime + 1] ; $48e3
 	ld h, $00 ; $48e6
 	ld l, a ; $48e8
 	ld a, $02 ; $48e9
@@ -251,7 +251,7 @@ CharDataValuesSyncTask:
 	ld hl, wCharDataValuesSlideX ; $4910
 	call ApplySlideOffsetToSpriteX ; $4913
 	call QueueSprite ; $4916
-	ld a, [wCharDataSyncPair] ; $4919
+	ld a, [wCharDataPlayTime] ; $4919
 	ld h, $00 ; $491c
 	ld l, a ; $491e
 	ld a, $02 ; $491f
@@ -333,14 +333,14 @@ CharDataValuesSyncTask:
 	ld a, [wStoryMainEquipment] ; $49dd
 	push af ; $49e0
 	and $0f ; $49e1
-	jr z, .restore ; $49e3
+	jr z, .checkShoes ; $49e3
 	ld b, $0e ; $49e5
 	ld c, $d6 ; $49e7
 	ld_xy de, $30, $3c ; $49e9
 	ld hl, wCharDataValuesSlideX ; $49ec
 	call ApplySlideOffsetToSpriteX ; $49ef
 	call QueueSprite ; $49f2
-.restore:
+.checkShoes:
 	pop af ; $49f5
 	and $f0 ; $49f6
 	jr z, .done ; $49f8

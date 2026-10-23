@@ -177,7 +177,7 @@ ApClampServeHeight:
 
 ; c = SHOTTYPE_SERVE_*, de = wBallHeight (negative up) -> de. Height band
 ; (-de >> 4) & $1f picks the serve's trajectory row and, from 21, the nice
-; flag (SpecialShotFlagTable_07); without the item, bands 21-31 become 20.
+; flag (PowerServeTossHeightBands_07); without the item, bands 21-31 become 20.
 ApClampServeHeightFor:
 	push de
 	ld a, c

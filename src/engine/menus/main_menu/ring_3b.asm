@@ -34,7 +34,7 @@ DrawRingShotRowIcons:
 LoadN64RingShotRecords:
 	wram_bank WRAM_SCREEN ; $523e
 	call ReadN64RecordsSaveBlock ; $5244
-	ld hl, N64RingShot ; $5247
+	ld hl, N64RingShotRowChars ; $5247
 	ld de, wRingShotEntryList ; $524a
 	ld bc, wRingShotEntryList_SIZE ; $524d
 	call CopyMemoryBC ; $5250
@@ -53,51 +53,51 @@ LoadN64RingShotRecords:
 	ld [wRingShotEntryList + 15], a ; $5268
 .entry15Unlocked:
 	ld hl, wChartRows ; $526b
-	ld bc, $0140 ; $526e
+	ld bc, $0140 ; $526e -- 64 bytes past wChartRows' 256
 	call ClearBytes ; $5271
 	call BuildRingShotResultsGrid ; $5274
 	ret ; $5277
-N64RingShot:
+N64RingShotRowChars:
 	; $5278, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 Unused_3b_SeedDefaultRingShotRecords:
-	ld hl, DefaultRingShot0 ; $5288
+	ld hl, DefaultRingShotClears ; $5288
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS ; $528b
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $528e
 	call CopyMemoryBC ; $5291
-	ld hl, DefaultRingShot0 ; $5294
+	ld hl, DefaultRingShotClears ; $5294
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 4 * N64_RING_CLEARS_SIZE ; $5297
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $529a
 	call CopyMemoryBC ; $529d
-	ld hl, DefaultRingShot0 ; $52a0
+	ld hl, DefaultRingShotClears ; $52a0
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 8 * N64_RING_CLEARS_SIZE ; $52a3
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $52a6
 	call CopyMemoryBC ; $52a9
-	ld hl, DefaultRingShot0 ; $52ac
+	ld hl, DefaultRingShotClears ; $52ac
 	ld de, wN64RecordsBlock + N64REC_RING_CLEARS + 12 * N64_RING_CLEARS_SIZE ; $52af
 	ld bc, 4 * N64_RING_CLEARS_SIZE ; $52b2
 	call CopyMemoryBC ; $52b5
-	ld hl, DefaultRingShot1 ; $52b8
+	ld hl, DefaultRingShotScores ; $52b8
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES ; $52bb
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52be
 	call CopyMemoryBC ; $52c1
-	ld hl, DefaultRingShot1 ; $52c4
+	ld hl, DefaultRingShotScores ; $52c4
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 4 * N64_RING_SCORES_SIZE ; $52c7
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52ca
 	call CopyMemoryBC ; $52cd
-	ld hl, DefaultRingShot1 ; $52d0
+	ld hl, DefaultRingShotScores ; $52d0
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 8 * N64_RING_SCORES_SIZE ; $52d3
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52d6
 	call CopyMemoryBC ; $52d9
-	ld hl, DefaultRingShot1 ; $52dc
+	ld hl, DefaultRingShotScores ; $52dc
 	ld de, wN64RecordsBlock + N64REC_RING_SCORES + 12 * N64_RING_SCORES_SIZE ; $52df
 	ld bc, 4 * N64_RING_SCORES_SIZE ; $52e2
 	call CopyMemoryBC ; $52e5
 	ret ; $52e8
-DefaultRingShot0:
+DefaultRingShotClears:
 	; $52e9, 16 bytes (bytes:16)
 	db $1f, $03, $0f, $01, $00, $01, $0f, $1f, $07, $05, $03, $0f, $1f, $03, $07, $03 ; 0x00
-DefaultRingShot1:
+DefaultRingShotScores:
 	; $52f9, 32 bytes (bytes:16)
 	db $00, $33, $00, $44, $00, $55, $00, $66, $00, $11, $00, $28, $00, $22, $01, $ff ; 0x00
 	db $00, $02, $00, $00, $01, $43, $01, $00, $00, $01, $00, $21, $00, $12, $00, $12 ; 0x10
@@ -105,7 +105,7 @@ BuildRingShotResultsGrid:
 	ld de, wChartRows ; $5319
 	ld c, $00 ; $531c
 .clearsLoop:
-	ld hl, RingShotResultsGridTable ; $531e
+	ld hl, RingShotRowRecordOrder ; $531e
 	ld a, c ; $5321
 	add_hl_a ; $5322
 	ld b, [hl] ; $5327
@@ -122,7 +122,7 @@ BuildRingShotResultsGrid:
 	ld de, wChartRows + 4 ; $5338
 	ld c, $00 ; $533b
 .scoresLoop:
-	ld hl, RingShotResultsGridTable ; $533d
+	ld hl, RingShotRowRecordOrder ; $533d
 	ld a, c ; $5340
 	add_hl_a ; $5341
 	ld b, [hl] ; $5346
@@ -137,7 +137,7 @@ BuildRingShotResultsGrid:
 	cp $10 ; $5353
 	jr nz, .scoresLoop ; $5355
 	ret ; $5357
-RingShotResultsGridTable:
+RingShotRowRecordOrder:
 	; $5358, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
 CopyRingShotCharScores:
@@ -315,7 +315,7 @@ RingShotScrollArrowsTask:
 	cp $03 ; $549d
 	jr z, .checkLeftArrow ; $549f
 	ld_xy de, $78, $12 ; $54a1
-	ld c, $01 ; $54a4
+	ld c, BOBDIR_POS ; $54a4
 	call ApplyCursorBounceX ; $54a6
 	ld b, $08 ; $54a9
 	ld c, $00 ; $54ab
@@ -326,7 +326,7 @@ RingShotScrollArrowsTask:
 	or a ; $54b5
 	jr z, .checkUpArrow ; $54b6
 	ld_xy de, $23, $12 ; $54b8
-	ld c, $00 ; $54bb
+	ld c, BOBDIR_NEG ; $54bb
 	call ApplyCursorBounceX ; $54bd
 	ld b, $08 ; $54c0
 	ld c, $00 ; $54c2
@@ -337,7 +337,7 @@ RingShotScrollArrowsTask:
 	or a ; $54cc
 	jr z, .checkDownArrow ; $54cd
 	ld_xy de, $0c, $26 ; $54cf
-	ld c, $01 ; $54d2
+	ld c, BOBDIR_POS ; $54d2
 	call ApplyCursorBounceY ; $54d4
 	ld b, $08 ; $54d7
 	ld c, $00 ; $54d9
@@ -348,7 +348,7 @@ RingShotScrollArrowsTask:
 	cp $0b ; $54e3
 	jr z, .restore ; $54e5
 	ld_xy de, $0c, $82 ; $54e7
-	ld c, $00 ; $54ea
+	ld c, BOBDIR_NEG ; $54ea
 	call ApplyCursorBounceY ; $54ec
 	ld b, $08 ; $54ef
 	ld c, $00 ; $54f1

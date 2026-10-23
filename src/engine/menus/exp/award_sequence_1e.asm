@@ -17,7 +17,7 @@ RunExpAwardSequence:
 BeginNextExpAward:
 	call DrawNextExpAwardMessage ; $5b19
 	or a ; $5b1c
-	jp z, .waitFramesCmd ; $5b1d
+	jp z, .noMoreAwards ; $5b1d
 	sound BGM_NONE ; $5b20
 	sound BGM_EXP_AWARD ; $5b22
 	wram_bank WRAM_SCENE ; $5b24
@@ -42,7 +42,7 @@ BeginNextExpAward:
 	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
 	ret ; $5b5f
-.waitFramesCmd:
+.noMoreAwards:
 	wait_frames 10 ; $5b60
 	xor a ; $5b64
 	ret ; $5b65
@@ -154,7 +154,7 @@ ProcessMatchRewards:
 	ld a, [wMatchExitRequest] ; $6534
 	or a ; $6537
 	ret nz ; $6538
-	ld a, [wKeepMatchStatsFlag] ; $6539
+	ld a, [wMatchSuspendedFlag] ; $6539
 	or a ; $653c
 	ret nz ; $653d
 	call DisableLCDSafely ; $653e
@@ -167,9 +167,9 @@ ProcessMatchRewards:
 	cp GAMEMODE_LINK_MATCH ; $6552
 	jp z, .linkMatch ; $6554
 	cp GAMEMODE_TENNIS_MACHINE ; $6557
-	jp z, .checkMatchExitRequest ; $6559
+	jp z, .machineOrWallPractice ; $6559
 	cp GAMEMODE_WALL_PRACTICE ; $655c
-	jp z, .checkMatchExitRequest ; $655e
+	jp z, .machineOrWallPractice ; $655e
 	cp GAMEMODE_DREAM_MATCH ; $6561
 	jp z, .computeMatchStatsReward ; $6563
 	cp GAMEMODE_EXHIBITION ; $6566
@@ -185,7 +185,7 @@ ProcessMatchRewards:
 	ld l, e ; $657d
 	call SetRewardGameFlag ; $657e
 	jp .runExpDistributionFlow ; $6581
-.checkMatchExitRequest:
+.machineOrWallPractice:
 	ld a, [wMatchExitRequest] ; $6584
 	and a ; $6587
 	jp nz, .runExpDistributionFlow ; $6588
@@ -211,7 +211,7 @@ ProcessMatchRewards:
 	add hl, de ; $65aa
 	ld a, [wPlayer1MainEquipment] ; $65ab
 	ld d, a ; $65ae
-	call ApplyMatchSettingsExpBonus ; $65af
+	call ApplyIronEquipmentExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
 	cp WINLOSE_WIN ; $65b5
 	jp nz, .getScoreBonus ; $65b7
@@ -257,7 +257,7 @@ ProcessMatchRewards:
 	call ComputeMatchStatsReward ; $65ff
 	ld a, [wPlayer1MainEquipment] ; $6602
 	ld d, a ; $6605
-	call ApplyMatchSettingsExpBonus ; $6606
+	call ApplyIronEquipmentExpBonus ; $6606
 	ld de, $0000 ; $6609
 	ld a, [wMatchWinLoseFlag] ; $660c
 	cp WINLOSE_WIN ; $660f
@@ -278,14 +278,14 @@ ProcessMatchRewards:
 	push hl ; $6626
 	call ApplyRewardUnlockFlags ; $6627
 	pop hl ; $662a
-	call ApplyClassProgressFlags ; $662b
+	call GrantRankEquipment ; $662b
 	jr .runExpDistributionFlow ; $662e
 .exhibition:
 	wram_bank WRAM_ACTORS ; $6630
 	call ComputeMatchStatsReward ; $6636
 	ld a, [wPlayer1MainEquipment] ; $6639
 	ld d, a ; $663c
-	call ApplyMatchSettingsExpBonus ; $663d
+	call ApplyIronEquipmentExpBonus ; $663d
 	ld d, h
 	ld e, l
 	apcall ApScaleExp
@@ -301,7 +301,7 @@ ProcessMatchRewards:
 	call ComputeMatchStatsReward ; $6651
 	ld a, [wPlayer1MainEquipment] ; $6654
 	ld d, a ; $6657
-	call ApplyMatchSettingsExpBonus ; $6658
+	call ApplyIronEquipmentExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
 	cp WINLOSE_WIN ; $665e
 	jr z, .winBonus ; $6660
@@ -311,7 +311,7 @@ ProcessMatchRewards:
 	call ComputeMatchStatsReward ; $666a
 	ld a, [wPlayer2MainEquipment] ; $666d
 	ld d, a ; $6670
-	call ApplyMatchSettingsExpBonus ; $6671
+	call ApplyIronEquipmentExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
 	cp WINLOSE_LOSE ; $6677
 	jr z, .winBonus ; $6679
@@ -342,11 +342,11 @@ ProcessMatchRewards:
 	or l ; $6696
 	jr z, .showIslandOpenRankingBoard ; $6697
 	farcall RunExpDistributionFlow ; $6699
-	ld c, $00 ; $669c
+	ld c, STORYREC_MAIN ; $669c
 	farcall CharDataScreen_Show ; $669e
-	ld c, $01 ; $66a1
+	ld c, STORYREC_PARTNER ; $66a1
 	farcall CharDataScreen_Show ; $66a3
-	call ApplyStatGapProgressFlag ; $66a6
+	call GrantDriveRacketForSpinLead ; $66a6
 .showIslandOpenRankingBoard:
 	call ShowIslandOpenRankingBoard ; $66a9
 	ld a, GAMEMODE_NONE ; $66ac
@@ -354,14 +354,14 @@ ProcessMatchRewards:
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
 	jr z, .checkDreamDoubles ; $66b4
 	push de ; $66b6
-	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $66b7
+	ld de, SAVEFLAG_UNLOCKED_MARIO ; $66b7
 	farcall SetSaveFlag ; $66ba
 	pop de ; $66bd
 .checkDreamDoubles:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $66be
 	jr z, .checkAllProgressComplete ; $66c1
 	push de ; $66c3
-	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $66c4
+	ld de, SAVEFLAG_UNLOCKED_PEACH ; $66c4
 	farcall SetSaveFlag ; $66c7
 	pop de ; $66ca
 .checkAllProgressComplete:

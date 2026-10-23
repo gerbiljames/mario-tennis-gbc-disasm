@@ -73,7 +73,7 @@ Unused_1a_RunCharViewerInputLoop:
 	call Unused_1a_DrawCharViewerCharSprite ; $6c9f
 	wram_bank WRAM_SCENE ; $6ca2
 	call AdvanceFrame ; $6ca8
-	ldh a, [hInputPressed] ; $6cab
+	ldh a, [hInputRepeat] ; $6cab
 	bit PADB_UP, a ; $6cad
 	jr nz, .up ; $6caf
 	bit PADB_DOWN, a ; $6cb1
@@ -214,7 +214,7 @@ Unused_1a_RunCharViewerInputLoop:
 	jr nz, .selectPalette ; $6df0
 	ld a, [wCharViewerCursor] ; $6df2
 	ld [wCharViewerSavedCursor], a ; $6df5
-	ld hl, CharViewerInputLoopTable ; $6df8
+	ld hl, CharViewerCursorAnimIds ; $6df8
 	add_hl_a ; $6dfb
 	ld d, [hl] ; $6e00
 	wram_bank WRAM_ACTORS ; $6e01
@@ -399,15 +399,15 @@ Unused_1a_SetupCharViewerScene:
 	farcall SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
 	ld [wActors + ACTORF_OAM_ATTR], a ; $6f8f
-	ld [wActors + 1 * ACTOR_SIZE + 55], a ; $6f92
-	ld [wActors + 2 * ACTOR_SIZE + 55], a ; $6f95
-	ld [wActors + 3 * ACTOR_SIZE + 55], a ; $6f98
+	ld [wActors + 1 * ACTOR_SIZE + ACTORF_OAM_ATTR], a ; $6f92
+	ld [wActors + 2 * ACTOR_SIZE + ACTORF_OAM_ATTR], a ; $6f95
+	ld [wActors + 3 * ACTOR_SIZE + ACTORF_OAM_ATTR], a ; $6f98
 	wram_bank WRAM_CHAR2 ; $6f9b
 	ld a, [wCharViewerCharId] ; $6fa1
 	ld [wMatchPlayerChar], a ; $6fa4
 	ld d, a ; $6fa7
 	wram_bank WRAM_CHAR0 ; $6fa8
-	ld hl, wCharPosX ; $6fae
+	ld hl, wCharStruct ; $6fae
 	ld c, $10 ; $6fb1
 	call ClearMemory16 ; $6fb3
 	ld a, $00 ; $6fb6
@@ -424,10 +424,10 @@ Unused_1a_SetupCharViewerScene:
 	ret ; $6fce
 CharViewerSceneActors_1a:
 	; $6fcf, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_1a_CharViewer, 15.0, 4.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_1
-	map_actor $0000, ActorScript_1a_CharViewer, 17.5, 4.0, FACE_LEFT, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_2
-	map_actor $0000, ActorScript_1a_CharViewer, 15.0, 6.5, FACE_UP, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_3
-	map_actor $0000, ActorScript_1a_CharViewer, 17.5, 6.5, FACE_RIGHT, OBJ_ALEX, ANIM_WALK, $00, CHAR_VIEWER_SCENE_ALEX_4
+	map_actor $0000, ActorScript_1a_CharViewer, 15.0, 4.0, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_1a_CharViewer, 17.5, 4.0, FACE_LEFT, OBJ_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_1a_CharViewer, 15.0, 6.5, FACE_UP, OBJ_ALEX, ANIM_WALK, $00
+	map_actor $0000, ActorScript_1a_CharViewer, 17.5, 6.5, FACE_RIGHT, OBJ_ALEX, ANIM_WALK, $00
 	map_actor_end
 ; A one-opcode actor script, as_halt: the four character-viewer actors stand still.
 ActorScript_1a_CharViewer:

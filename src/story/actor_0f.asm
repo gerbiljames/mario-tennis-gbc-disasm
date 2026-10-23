@@ -61,7 +61,7 @@ ReplacePartnerWithStandInActor:
 	ld a, [wStoryPartnerGender] ; $7a1f
 	or a ; $7a22
 	jr nz, .female ; $7a23
-	ld d, $58 ; $7a25
+	ld d, OBJ_HARRY_B ; $7a25
 	jr .apply ; $7a27
 .noPartner:
 	ret ; $7a29
@@ -109,7 +109,7 @@ WalkActorsInFromEntryPoint_0f:
 	cp STORYENTRY_NONE ; $7ab2
 	jp z, .done ; $7ab4
 	test_flag FLAG_DOUBLES ; $7ab7
-	jr z, .walkOff ; $7aba
+	jr z, .playerWalkIn ; $7aba
 	script_set_speed ACTOR_PARTNER, 7.96875 ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
@@ -123,7 +123,7 @@ WalkActorsInFromEntryPoint_0f:
 	ld b, [hl] ; $7ae9
 	script_face ACTOR_PARTNER, b ; $7aea
 	script_set_speed ACTOR_PARTNER, 0.5 ; $7af0
-.walkOff:
+.playerWalkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $7af8
 	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
@@ -172,13 +172,13 @@ ActorScript_0f_10:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 ActorScript_0f_11:
@@ -186,16 +186,16 @@ ActorScript_0f_11:
 	as_set_wander_home
 .wander:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 Unused_0f_MapScriptNopAlt:
 	ret ; $7b7f
-Unused_0f_MapScriptClearActiveFlag:
+Unused_0f_MapScriptClearScriptRan:
 	xor a ; $7b80
 	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
-Unused_0f_MapScriptPlaySoundA2:
+Unused_0f_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $7b85
 	ret ; $7b87
 Unused_0f_MapScriptHideLocationName:
@@ -415,28 +415,28 @@ Unused_0f_ComputeRankingProgressIndex:
 Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
-	jr z, .storeIsland ; $7d8f
+	jr z, .store ; $7d8f
 	inc a ; $7d91
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d92
-	jr z, .storeIsland ; $7d95
+	jr z, .store ; $7d95
 	inc a ; $7d97
 	test_flag FLAG_DOUBLES ; $7d98
-	jr nz, .doublesIsland ; $7d9b
+	jr nz, .doubles ; $7d9b
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d9d
-	jr z, .storeIsland ; $7da0
+	jr z, .store ; $7da0
 	inc a ; $7da2
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7da3
-	jr z, .storeIsland ; $7da6
+	jr z, .store ; $7da6
 	inc a ; $7da8
-.storeIsland:
+.store:
 	ld [wMapSceneStage], a ; $7da9
 	ret ; $7dac
-.doublesIsland:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
-	jr z, .storeIsland ; $7db0
+	jr z, .store ; $7db0
 	inc a ; $7db2
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7db3
-	jr z, .storeIsland ; $7db6
+	jr z, .store ; $7db6
 	inc a ; $7db8
-	jr .storeIsland ; $7db9
+	jr .store ; $7db9
 	; $7dbb, 581 bytes fill to bank end (linker-padded)

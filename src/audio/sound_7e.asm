@@ -85,13 +85,13 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40a4
 	dw SfxDoorAlt_Trk0 ; $40a6
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40a8
-	dw SfxFireworkLaunch_Trk0 ; $40aa
+	dw SfxPlaneStart_Trk0 ; $40aa
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40ac
 	dw SfxPlane_Trk0 ; $40ae
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40b0
 	dw Sfx7c_Trk0 ; $40b2
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40b4
-	dw SfxFireworkSparkle_Trk0 ; $40b6
+	dw SfxPlaneStop_Trk0 ; $40b6
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40b8
 	dw SfxSplash_Trk0 ; $40ba
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40bc
@@ -113,13 +113,13 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40dc
 	dw Sfx85_Trk0 ; $40de
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40e0
-	dw SfxThud_Trk0 ; $40e2
+	dw SfxVoiceBoo_Trk0 ; $40e2
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40e4
 	dw SfxVoiceYoshi_Trk0 ; $40e6
 	snd_channel 1, SNDCHANTYPE_NOISE ; $40e8
 	dw SfxVoiceYoshi_Trk1 ; $40ea
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40ec
-	dw SfxPeachFanfare_Trk0 ; $40ee
+	dw SfxVoiceDK_Trk0 ; $40ee
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40f0
 	dw SfxVoiceBabyMario_Trk0 ; $40f2
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40f4
@@ -127,7 +127,7 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_NOISE ; $40f8
 	dw Sfx8b_Trk0 ; $40fa
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40fc
-	dw SfxContestWin_Trk0 ; $40fe
+	dw SfxContestCountdown_Trk0 ; $40fe
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4100
 	dw SfxContestFinish_Trk0 ; $4102
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4104
@@ -137,9 +137,9 @@ SoundTable_7e:
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $410c
 	dw SfxRacketGet_Trk0 ; $410e
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4110
-	dw Sfx91_Trk0 ; $4112
+	dw SfxSwingThrough_Trk0 ; $4112
 	snd_channel 0, SNDCHANTYPE_NOISE ; $4114
-	dw Sfx92_Trk0 ; $4116
+	dw SfxSidestep_Trk0 ; $4116
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4118
 	dw Sfx93_Trk0 ; $411a
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $411c
@@ -230,14 +230,14 @@ SfxMarker_Trk0:
 	INCLUDE "data/audio/SfxMarker_Trk0.asm" ; $754e, 64 bytes (snd_script:noise)
 SfxDoorAlt_Trk0:
 	INCLUDE "data/audio/SfxDoorAlt_Trk0.asm" ; $758e, 42 bytes (snd_script:noise)
-SfxFireworkLaunch_Trk0:
-	INCLUDE "data/audio/SfxFireworkLaunch_Trk0.asm" ; $75b8, 54 bytes (snd_script:noise)
+SfxPlaneStart_Trk0:
+	INCLUDE "data/audio/SfxPlaneStart_Trk0.asm" ; $75b8, 54 bytes (snd_script:noise)
 SfxPlane_Trk0:
 	INCLUDE "data/audio/SfxPlane_Trk0.asm" ; $75ee, 34 bytes (snd_script:noise)
 Sfx7c_Trk0:
 	INCLUDE "data/audio/Sfx7c_Trk0.asm" ; $7610, 62 bytes (snd_script:noise)
-SfxFireworkSparkle_Trk0:
-	INCLUDE "data/audio/SfxFireworkSparkle_Trk0.asm" ; $764e, 34 bytes (snd_script:noise)
+SfxPlaneStop_Trk0:
+	INCLUDE "data/audio/SfxPlaneStop_Trk0.asm" ; $764e, 34 bytes (snd_script:noise)
 SfxSplash_Trk0:
 	INCLUDE "data/audio/SfxSplash_Trk0.asm" ; $7670, 70 bytes (snd_script:noise)
 SfxRankingBoard_Trk0:
@@ -258,22 +258,22 @@ SfxTwinkle_Trk1:
 	INCLUDE "data/audio/SfxTwinkle_Trk1.asm" ; $78d6, 50 bytes (snd_script:pulse)
 Sfx85_Trk0:
 	INCLUDE "data/audio/Sfx85_Trk0.asm" ; $7908, 42 bytes (snd_script:noise)
-SfxThud_Trk0:
-	INCLUDE "data/audio/SfxThud_Trk0.asm" ; $7932, 122 bytes (snd_script:pulse)
+SfxVoiceBoo_Trk0:
+	INCLUDE "data/audio/SfxVoiceBoo_Trk0.asm" ; $7932, 122 bytes (snd_script:pulse)
 SfxVoiceYoshi_Trk0:
 	INCLUDE "data/audio/SfxVoiceYoshi_Trk0.asm" ; $79ac, 30 bytes (snd_script:pulse)
 SfxVoiceYoshi_Trk1:
 	INCLUDE "data/audio/SfxVoiceYoshi_Trk1.asm" ; $79ca, 14 bytes (snd_script:noise)
-SfxPeachFanfare_Trk0:
-	INCLUDE "data/audio/SfxPeachFanfare_Trk0.asm" ; $79d8, 50 bytes (snd_script:noise)
+SfxVoiceDK_Trk0:
+	INCLUDE "data/audio/SfxVoiceDK_Trk0.asm" ; $79d8, 50 bytes (snd_script:noise)
 SfxVoiceBabyMario_Trk0:
 	INCLUDE "data/audio/SfxVoiceBabyMario_Trk0.asm" ; $7a0a, 196 bytes (snd_script:pulse)
 SfxWaterSpriteMagic_Trk0:
 	INCLUDE "data/audio/SfxWaterSpriteMagic_Trk0.asm" ; $7ace, 240 bytes (snd_script:pulse)
 Sfx8b_Trk0:
 	INCLUDE "data/audio/Sfx8b_Trk0.asm" ; $7bbe, 52 bytes (snd_script:noise)
-SfxContestWin_Trk0:
-	INCLUDE "data/audio/SfxContestWin_Trk0.asm" ; $7bf2, 22 bytes (snd_script:pulse)
+SfxContestCountdown_Trk0:
+	INCLUDE "data/audio/SfxContestCountdown_Trk0.asm" ; $7bf2, 22 bytes (snd_script:pulse)
 SfxContestFinish_Trk0:
 	INCLUDE "data/audio/SfxContestFinish_Trk0.asm" ; $7c08, 144 bytes (snd_script:pulse)
 SfxWaterSpriteAppear_Trk0:
@@ -282,10 +282,10 @@ SfxWaterSpriteFly_Trk0:
 	INCLUDE "data/audio/SfxWaterSpriteFly_Trk0.asm" ; $7cd8, 264 bytes (snd_script:pulse)
 SfxRacketGet_Trk0:
 	INCLUDE "data/audio/SfxRacketGet_Trk0.asm" ; $7de0, 240 bytes (snd_script:pulse)
-Sfx91_Trk0:
-	INCLUDE "data/audio/Sfx91_Trk0.asm" ; $7ed0, 46 bytes (snd_script:noise)
-Sfx92_Trk0:
-	INCLUDE "data/audio/Sfx92_Trk0.asm" ; $7efe, 22 bytes (snd_script:noise)
+SfxSwingThrough_Trk0:
+	INCLUDE "data/audio/SfxSwingThrough_Trk0.asm" ; $7ed0, 46 bytes (snd_script:noise)
+SfxSidestep_Trk0:
+	INCLUDE "data/audio/SfxSidestep_Trk0.asm" ; $7efe, 22 bytes (snd_script:noise)
 Sfx93_Trk0:
 	INCLUDE "data/audio/Sfx93_Trk0.asm" ; $7f14, 54 bytes (snd_script:pulse)
 SfxGridClear_Trk0:

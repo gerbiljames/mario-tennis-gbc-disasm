@@ -89,7 +89,7 @@ Unused_1b_DrawCharSelectMugshots:
 .loop:
 	ld a, [hl] ; $6075
 	farcall LoadCharacterRecordToBuffer ; $6076
-	farcall CheckCharacterUnlocked ; $6079
+	farcall CheckCharRecordPresent ; $6079
 	jr z, .step ; $607c
 	ld a, [wCharRecordScratchChar] ; $607e
 	farcall LoadCharMugshotToBuffer ; $6081
@@ -205,12 +205,12 @@ Unused_1b_UpdateCharSelectSelection:
 	ld_hl_indexed wNavGridBuffer ; $6182
 	ld a, [hl] ; $6189
 	cp $ff ; $618a
-.storeCharSelectChar:
-	jr z, .storeCharSelectChar ; $618c
+.hangOnEmptyCell:
+	jr z, .hangOnEmptyCell ; $618c
 	ld [wCharSelectChar], a ; $618e
 	ret ; $6191
 Unused_1b_MoveCharSelectCursor:
-	ldh a, [hInputPressed] ; $6192
+	ldh a, [hInputRepeat] ; $6192
 	ld b, a ; $6194
 	and PADF_DPAD ; $6195
 	jr z, .done ; $6197
@@ -223,7 +223,7 @@ Unused_1b_MoveCharSelectCursor:
 	ld hl, wNavGridBuffer ; $61a3
 	farcall Unused_18_MoveGridCursor ; $61a6
 	farcall LoadCharacterRecordToBuffer ; $61a9
-	farcall CheckCharacterUnlocked ; $61ac
+	farcall CheckCharRecordPresent ; $61ac
 	jr z, .loop ; $61af
 	ld a, d ; $61b1
 	ld [wCharSelectCol], a ; $61b2
@@ -246,9 +246,9 @@ RunNewGameSetup:
 .rosterLoop:
 	push af ; $61d8
 	farcall LoadCharacterRecordToBuffer ; $61d9
-	ld a, [wCharRecordBuffer + 14] ; $61dc
+	ld a, [wCharRecordBuffer + CHARREC_LEFT_HANDED] ; $61dc
 	ld [hl+], a ; $61df
-	ld a, [wCharRecordBuffer + 12] ; $61e0
+	ld a, [wCharRecordBuffer + CHARREC_PALETTE] ; $61e0
 	ld [hl+], a ; $61e3
 	pop af ; $61e4
 	inc a ; $61e5
@@ -303,9 +303,9 @@ RunNewGameSetup:
 	ld [wStoryCharacterSlot], a ; $624f
 	ld a, [wStoryCharacterSlot] ; $6252
 	push af ; $6255
-	ld a, $01 ; $6256
+	ld a, STORYREC_PARTNER ; $6256
 	ld [wStoryCharacterSlot], a ; $6258
-	ld de, SAVEFLAG_OPENING_SEEN ; $625b
+	ld de, SAVEFLAG_GAME_BEATEN ; $625b
 	farcall TestSaveFlag ; $625e
 	jr nz, .selectPartner ; $6261
 	push af ; $6263
@@ -363,7 +363,7 @@ RunNewGameSetup:
 .restore:
 	pop af ; $62df
 	ld [wStoryCharacterSlot], a ; $62e0
-	ld hl, wStoryMainName ; $62e3
+	ld hl, wStoryMain ; $62e3
 	ld de, wStorySlotData ; $62e6
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $62e9
 	call CopyMemoryFast ; $62eb
@@ -386,9 +386,9 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld hl, wStorySlotData ; $630c
 	ld b, a ; $630f
 	ld [wCurrentStorySlot], a ; $6310
-	farcall CheckStorySlot ; $6313
+	farcall ReadCurrentStorySlot ; $6313
 	or a ; $6316
-	jp z, .clearFrameTasks ; $6317
+	jp z, .slotLoaded ; $6317
 	call RunNewGameSetup ; $631a
 	cp $ff ; $631d
 	jp z, Unused_1b_RunDebugSaveDataFlow ; $631f
@@ -409,7 +409,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr nz, .slotPicked ; $6340
 	or a ; $6342
 	jr nz, .saveMenuLoop ; $6343
-	farcall ReinitSaveRamPreservingBlock6 ; $6345
+	farcall ReinitSaveRamKeepingPreservedBlock ; $6345
 	ld b, $01 ; $6348
 	jr .saveMenuLoop ; $634a
 .slotPicked:
@@ -417,7 +417,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld b, a ; $634e
 	ld hl, wPlayer1MainName ; $634f
 	ld [wCurrentStorySlot], a ; $6352
-	farcall CheckStorySlot ; $6355
+	farcall ReadCurrentStorySlot ; $6355
 	or a ; $6358
 	jr z, .slotOk ; $6359
 	sound SFX_MENU_CANCEL ; $635b
@@ -454,29 +454,29 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld [wUnlockDebugSelection], a ; $6390
 	farcall Unused_1b_RunMinigameFlagsDebugScreen ; $6393
 	jp .saveMenuLoop ; $6396
-.clearFrameTasks:
+.slotLoaded:
 	call ClearFrameTasks ; $6399
 	farcall Unused_02_ValidateN64TransferRecord ; $639c
 	or a ; $639f
 	jr z, .showNoN64DataFoundScreen ; $63a0
-	ld hl, wPendingExpStory ; $63a2
+	ld hl, wN64TransferMainExp ; $63a2
 	ld a, [hl+] ; $63a5
 	ld d, [hl] ; $63a6
 	ld e, a ; $63a7
 	or d ; $63a8
-	jr z, .checkTrophyExp ; $63a9
+	jr z, .checkPartnerExp ; $63a9
 	push_wram_bank WRAM_SCENE ; $63ab
 	xor a ; $63b4
 	ld [wCharDataAnimCounter], a ; $63b5
 	pop_wram_bank ; $63b8
 	ld h, $01 ; $63bd
-	ld l, $00 ; $63bf
+	ld l, STORYREC_MAIN ; $63bf
 	ld a, $01 ; $63c1
 	farcall Unused_1a_ShowExpGainScreen ; $63c3
-	ld c, $00 ; $63c6
+	ld c, STORYREC_MAIN ; $63c6
 	farcall CharDataScreen_Show ; $63c8
-.checkTrophyExp:
-	ld hl, wPendingExpTrophy ; $63cb
+.checkPartnerExp:
+	ld hl, wN64TransferPartnerExp ; $63cb
 	ld a, [hl+] ; $63ce
 	ld d, [hl] ; $63cf
 	ld e, a ; $63d0
@@ -487,16 +487,16 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld [wCharDataAnimCounter], a ; $63de
 	pop_wram_bank ; $63e1
 	ld h, $01 ; $63e6
-	ld l, $01 ; $63e8
+	ld l, STORYREC_PARTNER ; $63e8
 	ld a, $01 ; $63ea
 	farcall Unused_1a_ShowExpGainScreen ; $63ec
-	ld c, $01 ; $63ef
+	ld c, STORYREC_PARTNER ; $63ef
 	farcall CharDataScreen_Show ; $63f1
 .clearPendingExp:
 	xor a ; $63f4
-	ld hl, wPendingExpStory ; $63f5
-	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
-	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
+	ld hl, wN64TransferMainExp ; $63f5
+	ASSERT wN64TransferPartnerExp == wN64TransferMainExp + 2, "this code walks from wN64TransferMainExp into wN64TransferPartnerExp"
+	ASSERT wN64TransferMarker == wN64TransferMainExp + 4, "this code walks from wN64TransferMainExp into wN64TransferMarker"
 	ld [hl+], a ; $63f8
 	ld [hl+], a ; $63f9
 	ld [hl+], a ; $63fa
@@ -531,18 +531,18 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld de, $0077 ; $642d
 	farcall SetPendingExpAward ; $6430
 	ld c, $01 ; $6433
-	farcall ShowMatchResultsScreen ; $6435
+	farcall ShowExpAwardOrContinueGameScreen ; $6435
 	farcall RunExpDistributionFlow ; $6438
 	pop hl ; $643b
 	pop de ; $643c
 	pop bc ; $643d
 	pop af ; $643e
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $643f
-	ld c, $00 ; $6442
+	ld c, STORYREC_MAIN ; $6442
 	farcall CharDataScreen_Show ; $6444
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6447
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $644a
-	ld c, $01 ; $644d
+	ld c, STORYREC_PARTNER ; $644d
 	farcall CharDataScreen_Show ; $644f
 	clear_flag FLAG_CHAR_DATA_START_EXITS ; $6452
 	farcall SaveStorySlotWithTimer ; $6455

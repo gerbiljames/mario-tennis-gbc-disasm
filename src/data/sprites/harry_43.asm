@@ -332,106 +332,106 @@ Unused_43_HarrySpriteFramesCopy:
 HarryFramePlace:
 	INCLUDE "data/sprites/HarryFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 HarrySpriteAnims:
-	dw HarrySpriteAnim00 ; $7f24
-	dw HarrySpriteAnim01 ; $7f26
-	dw HarrySpriteAnim02 ; $7f28
-	dw HarrySpriteAnim03 ; $7f2a
-	dw HarrySpriteAnim04 ; $7f2c
-	dw HarrySpriteAnim05 ; $7f2e
-	dw HarrySpriteAnim06 ; $7f30
-	dw HarrySpriteAnim07 ; $7f32
-	dw HarrySpriteAnim08 ; $7f34
-	dw HarrySpriteAnim09 ; $7f36
-	dw HarrySpriteAnim10 ; $7f38
-	dw HarrySpriteAnim11 ; $7f3a
-	dw HarrySpriteAnim12 ; $7f3c
-	dw HarrySpriteAnim13 ; $7f3e
-	dw HarrySpriteAnim14 ; $7f40
-	dw HarrySpriteAnim15 ; $7f42
-	dw HarrySpriteAnim16 ; $7f44
-	dw HarrySpriteAnim17 ; $7f46
-	dw HarrySpriteAnim18 ; $7f48
-HarrySpriteAnim00:
+	dw HarryStandAnim ; $7f24
+	dw HarryIdleAnim ; $7f26
+	dw HarryRunAnim ; $7f28
+	dw HarryCelebrateAnim ; $7f2a
+	dw HarryDejectedAnim ; $7f2c
+	dw HarryForehandAnim ; $7f2e
+	dw HarryBackhandAnim ; $7f30
+	dw HarryOverheadAnim ; $7f32
+	dw HarrySmashAnim ; $7f34
+	dw HarryForehandQuickAnim ; $7f36
+	dw HarryBackhandQuickAnim ; $7f38
+	dw HarryOverheadQuickAnim ; $7f3a
+	dw HarrySmashQuickAnim ; $7f3c
+	dw HarryForehandReadyAnim ; $7f3e
+	dw HarryBackhandReadyAnim ; $7f40
+	dw HarryOverheadReadyAnim ; $7f42
+	dw HarryServeReadyAnim ; $7f44
+	dw HarryServePrepAnim ; $7f46
+	dw HarryDiveAnim ; $7f48
+HarryStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-HarrySpriteAnim01:
+HarryIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-HarrySpriteAnim02:
+HarryRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-HarrySpriteAnim03:
+HarryCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 12
 	anim_frame $18, 30
 	anim_frame $19, 12
 	anim_loop $00
-HarrySpriteAnim04:
+HarryDejectedAnim:
 	; $7f65, 8 bytes (sprite_anim)
 	anim_frame $1a, 8
 	anim_frame $1b, 8
 	anim_frame $1c, 8
 	anim_loop $00
-HarrySpriteAnim05:
+HarryForehandAnim:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-HarrySpriteAnim06:
+HarryBackhandAnim:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-HarrySpriteAnim07:
+HarryOverheadAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-HarrySpriteAnim08:
+HarrySmashAnim:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-HarrySpriteAnim09:
+HarryForehandQuickAnim:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-HarrySpriteAnim10:
+HarryBackhandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-HarrySpriteAnim11:
+HarryOverheadQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-HarrySpriteAnim12:
+HarrySmashQuickAnim:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-HarrySpriteAnim13:
+HarryForehandReadyAnim:
 	; $7f93, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-HarrySpriteAnim14:
+HarryBackhandReadyAnim:
 	; $7f96, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-HarrySpriteAnim15:
+HarryOverheadReadyAnim:
 	; $7f99, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-HarrySpriteAnim16:
+HarryServeReadyAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-HarrySpriteAnim17:
+HarryServePrepAnim:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -439,7 +439,7 @@ HarrySpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-HarrySpriteAnim18:
+HarryDiveAnim:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

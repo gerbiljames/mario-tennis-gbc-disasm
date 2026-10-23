@@ -1,9 +1,9 @@
 DrawSelectionBoxCorners:
 	push de ; $4048
 	push bc ; $4049
-	ld c, $00 ; $404a
+	ld c, BOBDIR_NEG ; $404a
 	call ApplySelectionBoxWobbleX ; $404c
-	ld c, $00 ; $404f
+	ld c, BOBDIR_NEG ; $404f
 	call ApplySelectionBoxWobbleY ; $4051
 	sprite_tile_attr $00, OAM_BANK1 ; $4054
 	call QueueSprite ; $4058
@@ -15,9 +15,9 @@ DrawSelectionBoxCorners:
 	add d ; $4060
 	ld d, a ; $4061
 	push de ; $4062
-	ld c, $01 ; $4063
+	ld c, BOBDIR_POS ; $4063
 	call ApplySelectionBoxWobbleX ; $4065
-	ld c, $00 ; $4068
+	ld c, BOBDIR_NEG ; $4068
 	call ApplySelectionBoxWobbleY ; $406a
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $406d
 	call QueueSprite ; $4071
@@ -33,9 +33,9 @@ DrawSelectionBoxCorners:
 	add d ; $407d
 	ld d, a ; $407e
 	push de ; $407f
-	ld c, $01 ; $4080
+	ld c, BOBDIR_POS ; $4080
 	call ApplySelectionBoxWobbleX ; $4082
-	ld c, $01 ; $4085
+	ld c, BOBDIR_POS ; $4085
 	call ApplySelectionBoxWobbleY ; $4087
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $408a
 	call QueueSprite ; $408e
@@ -46,9 +46,9 @@ DrawSelectionBoxCorners:
 	add c ; $4095
 	ld e, a ; $4096
 	push de ; $4097
-	ld c, $00 ; $4098
+	ld c, BOBDIR_NEG ; $4098
 	call ApplySelectionBoxWobbleX ; $409a
-	ld c, $01 ; $409d
+	ld c, BOBDIR_POS ; $409d
 	call ApplySelectionBoxWobbleY ; $409f
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $40a2
 	call QueueSprite ; $40a6

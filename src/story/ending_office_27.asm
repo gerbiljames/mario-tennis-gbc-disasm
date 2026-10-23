@@ -62,11 +62,11 @@ End12PrincipalsOfficeExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_ENTRANCE, ENTRY_ACADEMY_ENTRANCE_FROM_ACADEMY_MAIN_BLDG, END12_PRINCIPALS_OFFICE_DONE
 	db $ff
 End12PrincipalsOfficeNpcScripts_27:
-	ds 1, $ff ; $4c5e, fill
+	db $ff ; $4c5e
 End12PrincipalsOfficeFacingScripts_27:
-	ds 1, $ff ; $4c5f, fill
+	db $ff ; $4c5f
 End12PrincipalsOfficeTileTriggers_27:
-	ds 1, $ff ; $4c60, fill
+	db $ff ; $4c60
 End12PrincipalsOfficeInitScript_27:
 	ld a, $16 ; $4c61
 	ld [wMapScrollMinX], a ; $4c63
@@ -83,9 +83,9 @@ End12PrincipalsOfficeInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $4c80
 	cp ENTRY_END12_PRINCIPALS_OFFICE_SCENE_B ; $4c83
 	jp z, .altScene ; $4c85
-	jp .clearStoryModeShowLocationName ; $4c88
+	jp .sceneA ; $4c88
 	ret ; $4c8b
-.clearStoryModeShowLocationName:
+.sceneA:
 	xor a ; $4c8c
 	ld [wStoryModeShowLocationName], a ; $4c8d
 	script_set_position ACTOR_PLAYER, 43.0, 59.0 ; $4c90
@@ -171,7 +171,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_face ACTOR_END12_PRINCIPALS_OFFICE_KEVIN, FACE_LEFT ; $4eb6
 	script_delay 10 ; $4ebd
 	test_flag FLAG_DOUBLES ; $4ec2
-	jp z, .playSfx ; $4ec5
+	jp z, .singles ; $4ec5
 	script_delay 60 ; $4ec8
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $4ecd
 	script_set_anim ACTOR_PLAYER, ANIM_BOUNCE ; $4ed5
@@ -195,8 +195,8 @@ End12PrincipalsOfficeInitScript_27:
 	script_move_target ACTOR_PLAYER, 31.0, 50.0 ; $4f44
 	script_move_target ACTOR_PARTNER, 33.0, 50.0 ; $4f4f
 	script_wait_move ACTOR_PARTNER ; $4f5a
-	jp .storeStoryModeExitLocationRequest ; $4f5f
-.playSfx:
+	jp .exit ; $4f5f
+.singles:
 	sound SFX_APPEAR2 ; $4f62
 	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, 33.5, 51.5 ; $4f64
 	script_delay 80 ; $4f6f
@@ -217,7 +217,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4fd0
 	script_move_target ACTOR_PLAYER, 32.0, 50.0 ; $4fd7
 	script_wait_move ACTOR_PLAYER ; $4fe2
-.storeStoryModeExitLocationRequest:
+.exit:
 	ld a, EXIT_END12_PRINCIPALS_OFFICE_DONE ; $4fe7
 	ld [wUnusedExitTriggerIdMirror], a ; $4fe9
 	ld [wStoryModeExitTriggerRequest], a ; $4fec
@@ -227,7 +227,7 @@ End12PrincipalsOfficeInitScript_27:
 	farcall BeginCutsceneScriptMode ; $4ff8
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, ANIM_TROPHY_SINGLES ; $4ffb
 	test_flag FLAG_DOUBLES ; $5002
-	jp z, .placeActors ; $5005
+	jp z, .altSingles ; $5005
 	script_null_script ACTOR_PARTNER ; $5008
 	script_set_position ACTOR_PLAYER, 31.0, 52.0 ; $500d
 	script_set_position ACTOR_PARTNER, 33.0, 52.0 ; $5018
@@ -236,7 +236,7 @@ End12PrincipalsOfficeInitScript_27:
 	jr nz, .face ; $502d
 	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_ALT_TROPHY_1, 63.0, 63.0 ; $502f
 	jr .face ; $503a
-.placeActors:
+.altSingles:
 	script_set_position ACTOR_PLAYER, 32.0, 52.0 ; $503c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5047
 	jr nz, .face ; $504a
@@ -248,7 +248,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_fade_in 4 ; $5062
 	call WaitFadeEnd ; $5067
 	test_flag FLAG_DOUBLES ; $506a
-	jp z, .animate ; $506d
+	jp z, .altSinglesExit ; $506d
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $5070
 	script_wait_idle ACTOR_PLAYER ; $5077
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_HEADMASTER, ANIM_NOD ; $507c
@@ -270,7 +270,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_04 ; $50ed
 	script_delay 20 ; $50f8
 	jr .closeDoorBehind ; $50fd
-.animate:
+.altSinglesExit:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $50ff
 	script_wait_idle ACTOR_PLAYER ; $5106
 	script_set_anim ACTOR_END12_PRINCIPALS_OFFICE_ALT_HEADMASTER, ANIM_NOD ; $510b
@@ -286,7 +286,7 @@ End12PrincipalsOfficeInitScript_27:
 .closeDoorBehind:
 	call AcademyWingCloseDoor_27 ; $514f
 	script_delay 60 ; $5152
-	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157
+	set_flag FLAG_ENDING_SKIP_STAFF_PAGE ; $5157
 	script_fade_out 4 ; $515a
 	call WaitFadeEnd ; $515f
 	ld a, EXIT_END12_PRINCIPALS_OFFICE_DONE ; $5162
@@ -333,24 +333,24 @@ End11TrainingCourtExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $00, END11_TRAINING_COURT_DONE
 	db $ff
 End11TrainingCourtNpcScripts_27:
-	ds 1, $ff ; $526d, fill
+	db $ff ; $526d
 End11TrainingCourtFacingScripts_27:
-	ds 1, $ff ; $526e, fill
+	db $ff ; $526e
 End11TrainingCourtTileTriggers_27:
-	ds 1, $ff ; $526f, fill
+	db $ff ; $526f
 End11TrainingCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $5270
 	cp ENTRY_END11_TRAINING_COURT_SCENE_A ; $5273
-	jp z, .checkDoubles ; $5275
+	jp z, .sceneA ; $5275
 	cp ENTRY_END11_TRAINING_COURT_SCENE_B ; $5278
 	jp z, .altScene ; $527a
 	ret ; $527d
-.checkDoubles:
+.sceneA:
 	test_flag FLAG_DOUBLES ; $527e
-	jr z, .checkStoryModeMainCharacterLeftHanded ; $5281
+	jr z, .mirrorIfLeftHanded ; $5281
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_27 ; $5283
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $528e
-.checkStoryModeMainCharacterLeftHanded:
+.mirrorIfLeftHanded:
 	ld a, [wStoryMainLeftHanded] ; $5299
 	and a ; $529c
 	jr z, .face ; $529d
@@ -395,22 +395,22 @@ End11TrainingCourtInitScript_27:
 	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_QUESTION, 52.5, 11.5 ; $5337
 	script_delay 60 ; $5342
 	script_set_position ACTOR_END11_TRAINING_COURT_WATER_SPRITE, 51.0, 7.0 ; $5347
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $00 ; $5352
+	script_set_actor_mode ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $5352
 	script_player_speed 0.5 ; $5359
 	script_move_player_to_actor ACTOR_END11_TRAINING_COURT_WATER_SPRITE ; $535f
-	ld hl, End11TrainingCourtInitScriptPalette0_27 ; $5366
+	ld hl, End11TrainingCourtDimPalettes_27 ; $5366
 	ld_bg_pals de, 2, 6 ; $5369
 	call LoadPalettesImmediate ; $536c
 	script_delay 30 ; $536f
-	ld hl, End11TrainingCourtInitScriptPalette1_27 ; $5374
+	ld hl, End11TrainingCourtDarkPalettes_27 ; $5374
 	ld_bg_pals de, 2, 6 ; $5377
 	call LoadPalettesImmediate ; $537a
 	ld a, $10 ; $537d
 .loop:
 	ld d, a ; $537f
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $02 ; $5380
+	script_set_actor_mode ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $5380
 	script_wait_frames 4 ; $5387
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $00 ; $538e
+	script_set_actor_mode ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_HIDDEN ; $538e
 	push af ; $5395
 	ld a, d ; $5396
 	farcall WaitScriptFrames ; $5397
@@ -418,7 +418,7 @@ End11TrainingCourtInitScript_27:
 	ld a, d ; $539b
 	sub $02 ; $539c
 	jp nz, .loop ; $539e
-	script_set_active ACTOR_END11_TRAINING_COURT_WATER_SPRITE, $02 ; $53a1
+	script_set_actor_mode ACTOR_END11_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $53a1
 	script_delay 60 ; $53a8
 	script_set_position ACTOR_END11_TRAINING_COURT_BALLOON_QUESTION, 63.0, 63.0 ; $53ad
 	script_face ACTOR_PLAYER, FACE_UP ; $53b8

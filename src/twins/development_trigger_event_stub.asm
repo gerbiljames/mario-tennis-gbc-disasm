@@ -1,4 +1,4 @@
-; Shared by DevelopmentTile01_10, Test2Tile01_10 (bank $10).
+; Shared by DevelopmentTriggerEventStub_10, Test2TriggerEventStub_10 (bank $10).
 
 {TWIN_LABEL}:
 	farcall BeginCutsceneScriptMode

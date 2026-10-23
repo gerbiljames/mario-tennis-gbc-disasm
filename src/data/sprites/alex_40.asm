@@ -332,42 +332,42 @@ Unused_40_AlexSpriteFramesCopy:
 AlexFramePlace:
 	INCLUDE "data/sprites/AlexFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 AlexSpriteAnims:
-	dw AlexSpriteAnim00 ; $7f24
-	dw AlexSpriteAnim01 ; $7f26
-	dw AlexSpriteAnim02 ; $7f28
-	dw AlexSpriteAnim03 ; $7f2a
-	dw AlexSpriteAnim04 ; $7f2c
-	dw AlexSpriteAnim05 ; $7f2e
-	dw AlexSpriteAnim06 ; $7f30
-	dw AlexSpriteAnim07 ; $7f32
-	dw AlexSpriteAnim08 ; $7f34
-	dw AlexSpriteAnim09 ; $7f36
-	dw AlexSpriteAnim10 ; $7f38
-	dw AlexSpriteAnim11 ; $7f3a
-	dw AlexSpriteAnim12 ; $7f3c
-	dw AlexSpriteAnim13 ; $7f3e
-	dw AlexSpriteAnim14 ; $7f40
-	dw AlexSpriteAnim15 ; $7f42
-	dw AlexSpriteAnim16 ; $7f44
-	dw AlexSpriteAnim17 ; $7f46
-	dw AlexSpriteAnim18 ; $7f48
-AlexSpriteAnim00:
+	dw AlexStandAnim ; $7f24
+	dw AlexIdleAnim ; $7f26
+	dw AlexRunAnim ; $7f28
+	dw AlexCelebrateAnim ; $7f2a
+	dw AlexDejectedAnim ; $7f2c
+	dw AlexForehandAnim ; $7f2e
+	dw AlexBackhandAnim ; $7f30
+	dw AlexOverheadAnim ; $7f32
+	dw AlexSmashAnim ; $7f34
+	dw AlexForehandQuickAnim ; $7f36
+	dw AlexBackhandQuickAnim ; $7f38
+	dw AlexOverheadQuickAnim ; $7f3a
+	dw AlexSmashQuickAnim ; $7f3c
+	dw AlexForehandReadyAnim ; $7f3e
+	dw AlexBackhandReadyAnim ; $7f40
+	dw AlexOverheadReadyAnim ; $7f42
+	dw AlexServeReadyAnim ; $7f44
+	dw AlexServePrepAnim ; $7f46
+	dw AlexDiveAnim ; $7f48
+AlexStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-AlexSpriteAnim01:
+AlexIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-AlexSpriteAnim02:
+AlexRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-AlexSpriteAnim03:
+AlexCelebrateAnim:
 	; $7f5d, 34 bytes (sprite_anim)
 	anim_flip $20
 	anim_frame $17, 20
@@ -386,66 +386,66 @@ AlexSpriteAnim03:
 	anim_frame $19, 8
 	anim_frame $18, 8
 	anim_loop $00
-AlexSpriteAnim04:
+AlexDejectedAnim:
 	; $7f7f, 10 bytes (sprite_anim)
 	anim_frame $1a, 10
 	anim_frame $1b, 10
 	anim_frame $1c, 10
 	anim_frame $1b, 10
 	anim_loop $00
-AlexSpriteAnim05:
+AlexForehandAnim:
 	; $7f89, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-AlexSpriteAnim06:
+AlexBackhandAnim:
 	; $7f8f, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-AlexSpriteAnim07:
+AlexOverheadAnim:
 	; $7f95, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-AlexSpriteAnim08:
+AlexSmashAnim:
 	; $7f9b, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-AlexSpriteAnim09:
+AlexForehandQuickAnim:
 	; $7fa0, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-AlexSpriteAnim10:
+AlexBackhandQuickAnim:
 	; $7fa4, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-AlexSpriteAnim11:
+AlexOverheadQuickAnim:
 	; $7fa8, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-AlexSpriteAnim12:
+AlexSmashQuickAnim:
 	; $7fac, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-AlexSpriteAnim13:
+AlexForehandReadyAnim:
 	; $7faf, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-AlexSpriteAnim14:
+AlexBackhandReadyAnim:
 	; $7fb2, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-AlexSpriteAnim15:
+AlexOverheadReadyAnim:
 	; $7fb5, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-AlexSpriteAnim16:
+AlexServeReadyAnim:
 	; $7fb8, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-AlexSpriteAnim17:
+AlexServePrepAnim:
 	; $7fbb, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -453,7 +453,7 @@ AlexSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-AlexSpriteAnim18:
+AlexDiveAnim:
 	; $7fc7, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

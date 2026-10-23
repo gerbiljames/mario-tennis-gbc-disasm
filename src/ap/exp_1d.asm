@@ -23,7 +23,7 @@ ApAssignAllExp:
 	res EXPBUSYB_POINT_MOVED, [hl]
 	ld a, $a8
 	ld [wExpBarMarkerX], a
-	jp CheckExpLevelDown.openConfirmPrompt
+	jp RunExpConfirmPrompt
 
 ; The full-speed increase's extra points this frame: 1, doubling every 32
 ; frames held (wExpInputRepeating) up to 64

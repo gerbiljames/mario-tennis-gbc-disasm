@@ -15,7 +15,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	sla a ; $6e1a
 	sla a ; $6e1c
 	ld c, a ; $6e1e
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnimTable ; $6e1f
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_PlayerPosTable ; $6e1f
 	ld a, [hl] ; $6e26
 	inc hl ; $6e27
 	inc hl ; $6e28
@@ -55,35 +55,35 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e6a
 	ld [wBriefingBallY], a ; $6e6b
 	ld a, [wBriefingAnimStep] ; $6e6e
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6e71
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HandUnflippedTable ; $6e71
 	ld a, [hl] ; $6e78
-	ld [wBriefingHMarkerUnflipped], a ; $6e79
+	ld [wBriefingHandUnflipped], a ; $6e79
 	ld a, c ; $6e7c
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable ; $6e7d
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HandPosTable ; $6e7d
 	ld a, [hl] ; $6e84
 	inc hl ; $6e85
 	inc hl ; $6e86
 	ld b, [hl] ; $6e87
 	ld a, a ; $6e88
-	ld [wBriefingHMarkerX], a ; $6e89
+	ld [wBriefingHandX], a ; $6e89
 	ld a, b ; $6e8c
-	ld [wBriefingHMarkerY], a ; $6e8d
+	ld [wBriefingHandY], a ; $6e8d
 	ld a, [wBriefingAnimStep] ; $6e90
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable ; $6e93
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_DownArrowUnflippedTable ; $6e93
 	ld a, [hl] ; $6e9a
-	ld [wBriefingVMarkerUpright], a ; $6e9b
+	ld [wBriefingDownArrowUnflipped], a ; $6e9b
 	ld a, c ; $6e9e
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable ; $6e9f
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_DownArrowPosTable ; $6e9f
 	ld a, [hl] ; $6ea6
 	inc hl ; $6ea7
 	inc hl ; $6ea8
 	ld b, [hl] ; $6ea9
 	ld a, a ; $6eaa
-	ld [wBriefingVMarkerX], a ; $6eab
+	ld [wBriefingDownArrowX], a ; $6eab
 	ld a, b ; $6eae
-	ld [wBriefingVMarkerY], a ; $6eaf
+	ld [wBriefingDownArrowY], a ; $6eaf
 	ret ; $6eb2
-ReturnDownLineBriefing_AdvanceAnimTable:
+ReturnDownLineBriefing_AdvanceAnim_PlayerPosTable:
 	; $6eb3, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -97,14 +97,14 @@ ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes (words:2)
-ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.asm" ; $6ee3, 4 bytes (bytes:4)
-ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $6ee7, 16 bytes (words:2)
-ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.asm" ; $6ef7, 4 bytes (bytes:4)
-ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable:
-	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6efb, 16 bytes (words:2)
+ReturnDownLineBriefing_AdvanceAnim_HandUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HandUnflippedTable.asm" ; $6ee3, 4 bytes (bytes:4)
+ReturnDownLineBriefing_AdvanceAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_HandPosTable.asm" ; $6ee7, 16 bytes (words:2)
+ReturnDownLineBriefing_AdvanceAnim_DownArrowUnflippedTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_DownArrowUnflippedTable.asm" ; $6ef7, 4 bytes (bytes:4)
+ReturnDownLineBriefing_AdvanceAnim_DownArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_DownArrowPosTable.asm" ; $6efb, 16 bytes (words:2)
 ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.asm" ; $6f0b, 16 bytes (words:2)
 ShowRulesScreen:
@@ -116,7 +116,7 @@ ShowRulesScreen:
 	ld [wRulesMinigameLevel], a ; $6f29
 	xor a ; $6f2c
 	ld [wRulesExitCode], a ; $6f2d
-	ld [wRulesAnimEnabled], a ; $6f30
+	ld [wRulesToadTalking], a ; $6f30
 	ld [wRulesAnimCounter], a ; $6f33
 	ld [wRulesPastFirstPage], a ; $6f36
 	ld [wRulesScreenAnimFrame], a ; $6f39
@@ -133,9 +133,9 @@ ShowRulesScreen:
 	script_fade_in 32 ; $6f5f
 	call WaitFadeEnd ; $6f64
 	wram_bank WRAM_SCREEN ; $6f67
-	frame_task AdvanceRulesScreenAnimFrame ; $6f6d
+	frame_task AnimateRulesToad ; $6f6d
 	ld a, $01 ; $6f75
-	ld [wRulesAnimEnabled], a ; $6f77
+	ld [wRulesToadTalking], a ; $6f77
 	xor a ; $6f7a
 	ld [wRulesAnimCounter], a ; $6f7b
 	call RunMinigameRulesPages ; $6f7e
@@ -295,10 +295,10 @@ MinigameRulesPageLoop:
 	sound SFX_MENU_SELECT ; $711e
 	ld hl, DrawRulesNextPageArrow ; $7120
 	call UnregisterFrameTask ; $7123
-	ld hl, RulesScreenTiles ; $7126
+	ld hl, RulesScreenTiles ; $7126 -- no task: a stale address, never registered
 	call UnregisterFrameTask ; $7129
 	ld a, $01 ; $712c
-	ld [wRulesAnimEnabled], a ; $712e
+	ld [wRulesToadTalking], a ; $712e
 	ld [wRulesPastFirstPage], a ; $7131
 	xor a ; $7134
 	ld [wRulesAnimCounter], a ; $7135
@@ -308,7 +308,7 @@ MinigameRulesPageLoop:
 	sound SFX_MENU_CANCEL ; $713c
 	ld hl, DrawRulesNextPageArrow ; $713e
 	call UnregisterFrameTask ; $7141
-	ld hl, RulesScreenTiles ; $7144
+	ld hl, RulesScreenTiles ; $7144 -- no task: a stale address, never registered
 	call UnregisterFrameTask ; $7147
 	ld a, $ff ; $714a
 	ld [wRulesExitCode], a ; $714c
@@ -321,7 +321,7 @@ MinigameRulesPageLoop:
 	sound SFX_MENU_DECIDE ; $7154
 	ret ; $7156
 LoadRulesScreen:
-	call LoadRulesBorderAnimTiles ; $7157
+	call LoadRulesToadTiles ; $7157
 	farcall LoadMenuFontGfx ; $715a
 	ld c, SCREENASSET_RulesScreen ; $715d
 	farcall LoadScreenAssetRecord ; $715f
@@ -336,7 +336,7 @@ LoadRulesScreen:
 	pop_wram_bank ; $7178
 	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
-	ld hl, RulesScreenPalette ; $7183
+	ld hl, RulesToadObjPalettes ; $7183
 	ld_obj_pals de, 1, 2 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, vTiles0 + VRAM_BANK1 ; $718c
@@ -351,11 +351,11 @@ LoadRulesScreen:
 	ld a, WRAM_SCREEN ; $71a3
 	ld [wShadowTilemapBank], a ; $71a5
 	ld hl, wShadowTilemapPtr ; $71a8
-	ld de, wDecompBuffer ; $71ab
+	ld de, wShadowTilemap ; $71ab
 	ld a, e ; $71ae
 	ld [hl+], a ; $71af
 	ld [hl], d ; $71b0
-	frame_task DrawRulesScreenCharacters ; $71b1
+	frame_task DrawRulesScreenToad ; $71b1
 	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
 ClearRulesScreenTextArea:
@@ -437,22 +437,22 @@ QueueRulesPageToVRAM:
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $728d
 	call QueueVRAMCopy ; $728f
 	ret ; $7292
-LoadRulesBorderAnimTiles:
+LoadRulesToadTiles:
 	wram_bank WRAM_STAGING ; $7293
-	ld hl, RulesBorderAnimTiles0 ; $7299
+	ld hl, RulesToadBaseTiles ; $7299
 	ld de, wDecompBuffer ; $729c
 	call DecompressData ; $729f
 	ld hl, wDecompBuffer ; $72a2
 	ld de, vTiles0 ; $72a5
-	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72a8
+	ld bc, RulesToadBaseTiles_SIZE / 16 ; $72a8
 	call QueueVRAMCopy ; $72ab
 	ld hl, wDecompBuffer ; $72ae
 	ld de, vTiles0 tile $24 ; $72b1
-	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72b4
+	ld bc, RulesToadBaseTiles_SIZE / 16 ; $72b4
 	call QueueVRAMCopy ; $72b7
 	ld hl, wDecompBuffer ; $72ba
 	ld de, vTiles0 tile $48 ; $72bd
-	ld bc, RulesBorderAnimTiles0_SIZE / 16 ; $72c0
+	ld bc, RulesToadBaseTiles_SIZE / 16 ; $72c0
 	call QueueVRAMCopy ; $72c3
 	ld hl, wDecompBuffer ; $72c6
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $72c9
@@ -466,26 +466,26 @@ LoadRulesBorderAnimTiles:
 	ld de, vTiles0 tile $58 + VRAM_BANK1 ; $72e1
 	ld bc, 18 ; $72e4
 	call QueueVRAMCopy ; $72e7
-	ld hl, RulesBorderAnimTiles1 ; $72ea
+	ld hl, RulesToadBasePatch1 ; $72ea
 	ld de, wDecompBuffer ; $72ed
 	call DecompressData ; $72f0
 	ld hl, wDecompBuffer ; $72f3
 	ld de, vTiles0 tile $4a ; $72f6
-	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $72f9
+	ld bc, RulesToadBasePatch1_SIZE / 16 ; $72f9
 	call QueueVRAMCopy ; $72fc
 	ld hl, wDecompBuffer ; $72ff
 	ld de, vTiles0 tile $12 + VRAM_BANK1 ; $7302
-	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $7305
+	ld bc, RulesToadBasePatch1_SIZE / 16 ; $7305
 	call QueueVRAMCopy ; $7308
 	ld hl, wDecompBuffer ; $730b
 	ld de, vTiles0 tile $36 + VRAM_BANK1 ; $730e
-	ld bc, RulesBorderAnimTiles1_SIZE / 16 ; $7311
+	ld bc, RulesToadBasePatch1_SIZE / 16 ; $7311
 	call QueueVRAMCopy ; $7314
 	ld hl, wDecompBuffer ; $7317
 	ld de, vTiles0 tile $5a + VRAM_BANK1 ; $731a
 	ld bc, 2 ; $731d
 	call QueueVRAMCopy ; $7320
-	ld hl, RulesBorderAnimTiles2 ; $7323
+	ld hl, RulesToadBasePatch2 ; $7323
 	ld de, wDecompBuffer ; $7326
 	call DecompressData ; $7329
 	ld hl, wDecompBuffer tile 2 ; $732c
@@ -504,20 +504,20 @@ LoadRulesBorderAnimTiles:
 	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $7353
 	ld bc, 1 ; $7356
 	call QueueVRAMCopy ; $7359
-	ld hl, RulesBorderAnimTiles3 ; $735c
+	ld hl, RulesToadOverlayTiles ; $735c
 	ld de, wDecompBuffer ; $735f
 	call DecompressData ; $7362
 	ld hl, wDecompBuffer ; $7365
 	ld de, vTiles0 tile $12 ; $7368
-	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $736b
+	ld bc, RulesToadOverlayTiles_SIZE / 16 ; $736b
 	call QueueVRAMCopy ; $736e
 	ld hl, wDecompBuffer ; $7371
 	ld de, vTiles0 tile $36 ; $7374
-	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $7377
+	ld bc, RulesToadOverlayTiles_SIZE / 16 ; $7377
 	call QueueVRAMCopy ; $737a
 	ld hl, wDecompBuffer ; $737d
 	ld de, vTiles0 tile $5a ; $7380
-	ld bc, RulesBorderAnimTiles3_SIZE / 16 ; $7383
+	ld bc, RulesToadOverlayTiles_SIZE / 16 ; $7383
 	call QueueVRAMCopy ; $7386
 	ld hl, wDecompBuffer ; $7389
 	ld de, vTiles0 tile $22 + VRAM_BANK1 ; $738c
@@ -531,26 +531,26 @@ LoadRulesBorderAnimTiles:
 	ld de, vTiles0 tile $6a + VRAM_BANK1 ; $73a4
 	ld bc, 18 ; $73a7
 	call QueueVRAMCopy ; $73aa
-	ld hl, RulesBorderAnimTiles4 ; $73ad
+	ld hl, RulesToadOverlayPatch1 ; $73ad
 	ld de, wDecompBuffer ; $73b0
 	call DecompressData ; $73b3
 	ld hl, wDecompBuffer ; $73b6
 	ld de, vTiles0 tile $5c ; $73b9
-	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73bc
+	ld bc, RulesToadOverlayPatch1_SIZE / 16 ; $73bc
 	call QueueVRAMCopy ; $73bf
 	ld hl, wDecompBuffer ; $73c2
 	ld de, vTiles0 tile $24 + VRAM_BANK1 ; $73c5
-	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73c8
+	ld bc, RulesToadOverlayPatch1_SIZE / 16 ; $73c8
 	call QueueVRAMCopy ; $73cb
 	ld hl, wDecompBuffer ; $73ce
 	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $73d1
-	ld bc, RulesBorderAnimTiles4_SIZE / 16 ; $73d4
+	ld bc, RulesToadOverlayPatch1_SIZE / 16 ; $73d4
 	call QueueVRAMCopy ; $73d7
 	ld hl, wDecompBuffer ; $73da
 	ld de, vTiles0 tile $6c + VRAM_BANK1 ; $73dd
 	ld bc, 2 ; $73e0
 	call QueueVRAMCopy ; $73e3
-	ld hl, RulesBorderAnimTiles5 ; $73e6
+	ld hl, RulesToadOverlayPatch2 ; $73e6
 	ld de, wDecompBuffer ; $73e9
 	call DecompressData ; $73ec
 	ld hl, wDecompBuffer tile 2 ; $73ef
@@ -570,49 +570,49 @@ LoadRulesBorderAnimTiles:
 	ld bc, 1 ; $7419
 	call QueueVRAMCopy ; $741c
 	ret ; $741f
-AdvanceRulesScreenAnimFrame:
+AnimateRulesToad:
 	push_wram_bank WRAM_SCREEN ; $7420
 	ld a, [wRulesAnimCounter] ; $7429
 	inc a ; $742c
 	ld [wRulesAnimCounter], a ; $742d
-	ld a, [wRulesAnimEnabled] ; $7430
+	ld a, [wRulesToadTalking] ; $7430
 	or a ; $7433
-	jr z, .slowAnim ; $7434
+	jr z, .idle ; $7434
 	ldh a, [hVBlankCounter] ; $7436
 	srl a ; $7438
 	srl a ; $743a
 	srl a ; $743c
 	and $3f ; $743e
-	ld hl, RulesScreenNewPageAnimFrameTable ; $7440
+	ld hl, RulesToadTalkFrames ; $7440
 	add_hl_a ; $7443
 	ld a, [hl] ; $7448
 	ld [wRulesScreenAnimFrame], a ; $7449
 	jr .checkAnimEnd ; $744c
-.slowAnim:
+.idle:
 	ldh a, [hVBlankCounter] ; $744e
 	srl a ; $7450
 	srl a ; $7452
 	srl a ; $7454
 	srl a ; $7456
 	and $1f ; $7458
-	ld hl, RulesScreenAnimFrameTable ; $745a
+	ld hl, RulesToadIdleFrames ; $745a
 	add_hl_a ; $745d
 	ld a, [hl] ; $7462
 	ld [wRulesScreenAnimFrame], a ; $7463
 	jr .checkAnimEnd ; $7466
 .checkAnimEnd:
-	ld a, [wRulesAnimEnabled] ; $7468
+	ld a, [wRulesToadTalking] ; $7468
 	or a ; $746b
 	jr z, .restore ; $746c
 	ld a, [wRulesAnimCounter] ; $746e
 	cp $ff ; $7471
 	jr nz, .restore ; $7473
 	xor a ; $7475
-	ld [wRulesAnimEnabled], a ; $7476
+	ld [wRulesToadTalking], a ; $7476
 .restore:
 	pop_wram_bank ; $7479
 	ret ; $747e
-RulesScreenAnimFrameTable:
+RulesToadIdleFrames:
 	; $747f, 32 bytes (records:2)
 	dw $0100 ; record 0
 	dw $0000 ; record 1
@@ -630,7 +630,7 @@ RulesScreenAnimFrameTable:
 	dw $0000 ; record 13
 	dw $0001 ; record 14
 	dw $0000 ; record 15
-RulesScreenNewPageAnimFrameTable:
+RulesToadTalkFrames:
 	; $749f, 60 bytes (records:2)
 	dw $0402 ; record 0
 	dw $0404 ; record 1
@@ -662,35 +662,35 @@ RulesScreenNewPageAnimFrameTable:
 	dw $0202 ; record 27
 	dw $0302 ; record 28
 	dw $0402 ; record 29
-DrawRulesScreenCharacters:
+DrawRulesScreenToad:
 	push_wram_bank WRAM_SCREEN ; $74db
 	ld a, [wRulesScreenAnimFrame] ; $74e4
-	ld hl, RulesScreenCharFrameTileTable ; $74e7
+	ld hl, RulesToadFrameTileTable ; $74e7
 	add_hl_a ; $74ea
 	ld a, [hl] ; $74ef
 	ld c, a ; $74f0
 	push bc ; $74f1
 	ld a, [wRulesScreenAnimFrame] ; $74f2
-	ld hl, RulesScreenCharBaseAttrTable ; $74f5
+	ld hl, RulesToadBaseAttrTable ; $74f5
 	add_hl_a ; $74f8
 	ld b, [hl] ; $74fd
 	ld_xy de, $7e, $68 ; $74fe
-	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $7501
+	ld hl, RulesToadTemplate ; $7501
 	call QueueSpriteTemplate ; $7504
 	pop bc ; $7507
 	ld a, $12 ; $7508
 	add c ; $750a
 	ld c, a ; $750b
 	ld a, [wRulesScreenAnimFrame] ; $750c
-	ld hl, RulesScreenCharOverlayAttrTable ; $750f
+	ld hl, RulesToadOverlayAttrTable ; $750f
 	add_hl_a ; $7512
 	ld b, [hl] ; $7517
 	ld_xy de, $7e, $68 ; $7518
-	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b
+	ld hl, RulesToadTemplate ; $751b
 	call QueueSpriteTemplate ; $751e
 	pop_wram_bank ; $7521
 	ret ; $7526
-DrawRulesScreenCharacters_SpriteTemplate:
+RulesToadTemplate:
 	; $7527, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -702,18 +702,18 @@ DrawRulesScreenCharacters_SpriteTemplate:
 	oam_sprite $20, $18, $0e, $00
 	oam_sprite $30, $18, $10, $00
 	oam_sprite_end
-RulesScreenCharFrameTileTable:
+RulesToadFrameTileTable:
 	; $754c, 6 bytes (bytes:6)
 	db $00, $24, $48, $10, $34, $58 ; 0x00
-RulesScreenCharBaseAttrTable:
+RulesToadBaseAttrTable:
 	; $7552, 6 bytes (bytes:6)
 	db $01, $01, $01, $09, $09, $09 ; 0x00
-RulesScreenCharOverlayAttrTable:
+RulesToadOverlayAttrTable:
 	; $7558, 6 bytes (bytes:6)
 	db $02, $02, $02, $0a, $0a, $0a ; 0x00
 DrawRulesNextPageArrow:
 	ld de, $7888 ; $755e
-	ld c, $00 ; $7561
+	ld c, BOBDIR_NEG ; $7561
 	call ApplySpriteWobbleY_17 ; $7563
 	ld b, $08 ; $7566
 	ld c, $00 ; $7568
@@ -728,22 +728,22 @@ RulesScreenAttrmap:
 	INCBIN "data/engine/menus/briefing/lz_RulesScreenAttrmap.bin" ; $78a5, 87 bytes
 RulesScreenPalettes:
 	INCLUDE "data/engine/menus/briefing/RulesScreenPalettes.asm" ; $78fc, 64 bytes (palettes)
-RulesBorderAnimTiles0:
-	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles0.bin" ; $793c, 204 bytes
-	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles0.inc" ; DEF RulesBorderAnimTiles0_SIZE EQU its decoded length, generated from the .bin by make
-RulesBorderAnimTiles1:
-	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles1.bin" ; $7a08, 39 bytes
-	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles1.inc" ; DEF RulesBorderAnimTiles1_SIZE EQU its decoded length, generated from the .bin by make
-RulesBorderAnimTiles2:
-	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles2.bin" ; $7a2f, 39 bytes
-RulesBorderAnimTiles3:
-	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles3.bin" ; $7a56, 162 bytes
-	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles3.inc" ; DEF RulesBorderAnimTiles3_SIZE EQU its decoded length, generated from the .bin by make
-RulesBorderAnimTiles4:
-	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles4.bin" ; $7af8, 32 bytes
-	INCLUDE "data/engine/menus/briefing/lz_RulesBorderAnimTiles4.inc" ; DEF RulesBorderAnimTiles4_SIZE EQU its decoded length, generated from the .bin by make
-RulesBorderAnimTiles5:
-	INCBIN "data/engine/menus/briefing/lz_RulesBorderAnimTiles5.bin" ; $7b18, 33 bytes
-RulesScreenPalette:
-	INCLUDE "data/engine/menus/briefing/RulesScreenPalette.asm" ; $7b39, 64 bytes (palettes)
+RulesToadBaseTiles:
+	INCBIN "data/engine/menus/briefing/lz_RulesToadBaseTiles.bin" ; $793c, 204 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesToadBaseTiles.inc" ; DEF RulesToadBaseTiles_SIZE EQU its decoded length, generated from the .bin by make
+RulesToadBasePatch1:
+	INCBIN "data/engine/menus/briefing/lz_RulesToadBasePatch1.bin" ; $7a08, 39 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesToadBasePatch1.inc" ; DEF RulesToadBasePatch1_SIZE EQU its decoded length, generated from the .bin by make
+RulesToadBasePatch2:
+	INCBIN "data/engine/menus/briefing/lz_RulesToadBasePatch2.bin" ; $7a2f, 39 bytes
+RulesToadOverlayTiles:
+	INCBIN "data/engine/menus/briefing/lz_RulesToadOverlayTiles.bin" ; $7a56, 162 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesToadOverlayTiles.inc" ; DEF RulesToadOverlayTiles_SIZE EQU its decoded length, generated from the .bin by make
+RulesToadOverlayPatch1:
+	INCBIN "data/engine/menus/briefing/lz_RulesToadOverlayPatch1.bin" ; $7af8, 32 bytes
+	INCLUDE "data/engine/menus/briefing/lz_RulesToadOverlayPatch1.inc" ; DEF RulesToadOverlayPatch1_SIZE EQU its decoded length, generated from the .bin by make
+RulesToadOverlayPatch2:
+	INCBIN "data/engine/menus/briefing/lz_RulesToadOverlayPatch2.bin" ; $7b18, 33 bytes
+RulesToadObjPalettes:
+	INCLUDE "data/engine/menus/briefing/RulesToadObjPalettes.asm" ; $7b39, 64 bytes (palettes)
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

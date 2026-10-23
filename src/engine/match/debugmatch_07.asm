@@ -4,7 +4,7 @@ Unused_07_RunDebugTestMatch:
 	ld a, STORYSLOT_NONE ; $5dfe
 	ld [wCurrentStorySlot], a ; $5e00
 	ld a, $01 ; $5e03
-	ld [wKeepMatchStatsFlag], a ; $5e05
+	ld [wMatchSuspendedFlag], a ; $5e05
 	ld a, $01 ; $5e08
 	ld [wPlayer1SetsWon], a ; $5e0a
 	ld [wPlayer1GamesWon], a ; $5e0d
@@ -15,7 +15,7 @@ Unused_07_RunDebugTestMatch:
 	ld a, $02 ; $5e1c
 	ld [wPlayer1GamesWon], a ; $5e1e
 	ld a, $01 ; $5e21
-	ld [wTotalGamesWonInMatch], a ; $5e23
+	ld [wTotalGamesPlayedInMatch], a ; $5e23
 	ld [wCharacter1ServiceAces], a ; $5e26
 	ld [wCharacter1ReturnAces], a ; $5e29
 	ld [wCharacter1SmashAces], a ; $5e2c
@@ -59,9 +59,9 @@ Unused_07_RunDebugTestMatch:
 	ld c, MATCHREC_P2_PARTNER ; $5e89
 	farcall InitMatchRecordFromCharId ; $5e8b
 	ld a, $00 ; $5e8e
-	farcall SetStorySlotFlagB ; $5e90
+	farcall SetStorySlotCourtView ; $5e90
 	ld a, $01 ; $5e93
-	farcall SetStorySlotFlagA ; $5e95
+	farcall SetStorySlotMusicMuted ; $5e95
 	ld a, $fe ; $5e98
 	ld [wDebugMatchFlags], a ; $5e9a
 	farcall RunMatch ; $5e9d
@@ -95,10 +95,10 @@ Unused_07_ResolveTargetModePoint:
 	farcall UpdatePointStats ; $5edc
 	farcall AwardPoint ; $5edf
 	ld a, [wPlayer1PointsWon] ; $5ee2
-	ld b, $01 ; $5ee5
+	ld b, DIGITGFX_NUMERALS ; $5ee5
 	farcall LoadPlayer1PointsDigitGfx ; $5ee7
 	ld a, [wPlayer2PointsWon] ; $5eea
-	ld b, $01 ; $5eed
+	ld b, DIGITGFX_NUMERALS ; $5eed
 	farcall LoadPlayer2PointsDigitGfx ; $5eef
 	farcall StepMatchFrame ; $5ef2
 	farcall StartPointEndReactions ; $5ef5
@@ -113,7 +113,7 @@ ModeHookTable_07:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw Unused_07_TargetZoneBallHitHook ; MODEHOOK_BALL_HIT
 	dw Unused_07_TargetZoneBounceHook ; MODEHOOK_BOUNCE
-	dw Unused_07_StubNop1 ; MODEHOOK_RALLY_TICK
+	dw Unused_07_StubNop1 ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 Unused_07_ModeHookNop:
@@ -157,10 +157,10 @@ Unused_07_TargetZoneBallHitHook:
 Unused_07_TargetZonePointStartHook:
 	ld hl, $fdc0 ; $5f4d
 	ld de, $fd80 ; $5f50
-	farcall SetBallGatePoint1 ; $5f53
+	farcall SetDrillGateLeftPost ; $5f53
 	ld hl, $0240 ; $5f56
 	ld de, $fd80 ; $5f59
-	farcall SetBallGatePoint2 ; $5f5c
+	farcall SetDrillGateRightPost ; $5f5c
 	ld hl, $ff60 ; $5f5f
 	ld de, $fd60 ; $5f62
 	farcall SetTargetZoneCorner1 ; $5f65
@@ -170,7 +170,7 @@ Unused_07_TargetZonePointStartHook:
 	call Unused_07_StubNop0 ; $5f71
 	ret ; $5f74
 Unused_07_TargetZonePointEndHook:
-	ld hl, $013f ; $5f75
+	ld hl, Text_CheckRules ; $5f75
 	ld_cell de, $00, $0b ; $5f78
 	ld_size bc, $13, $05 ; $5f7b
 	farcall ShowMessageWindow ; $5f7e

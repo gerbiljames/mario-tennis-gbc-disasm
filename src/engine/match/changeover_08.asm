@@ -87,7 +87,7 @@ GetCharBaseCourtPosition:
 	ld a, [wCharServeRole] ; $6098
 	add a ; $609b
 	add a ; $609c
-	ld_hl_indexed GetCharBaseCourtPositionTable ; $609d
+	ld_hl_indexed CharBaseCourtPosByServeRole ; $609d
 	ld a, [hl+] ; $60a4
 	ld c, a ; $60a5
 	ld a, [hl+] ; $60a6
@@ -108,7 +108,7 @@ GetCharBaseCourtPosition:
 	neg_hl ; $60c1
 .done:
 	ret ; $60c7
-GetCharBaseCourtPositionTable:
+CharBaseCourtPosByServeRole:
 	; $60c8, 16 bytes (records:4)
 ; 4 records x 4 bytes
 	dw $0120, $04e0 ; record 0
@@ -119,7 +119,7 @@ GetCharChangeoverPosition:
 	ld a, [wCharServeRole] ; $60d8
 	add a ; $60db
 	add a ; $60dc
-	ld_hl_indexed GetCharChangeoverPositionTable ; $60dd
+	ld_hl_indexed CharChangeoverPosByServeRole ; $60dd
 	ld a, [hl+] ; $60e4
 	ld c, a ; $60e5
 	ld a, [hl+] ; $60e6
@@ -140,7 +140,7 @@ GetCharChangeoverPosition:
 	neg_hl ; $6100
 .done:
 	ret ; $6106
-GetCharChangeoverPositionTable:
+CharChangeoverPosByServeRole:
 	; $6107, 16 bytes (records:4)
 ; 4 records x 4 bytes
 	dw $0300, $0240 ; record 0
@@ -148,12 +148,12 @@ GetCharChangeoverPositionTable:
 	dw $0300, $0180 ; record 2
 	dw $0300, $0180 ; record 3
 PlayCourtIntro:
-	ld b, $44 ; $6117
+	ld b, JINGLE_COURT_INTRO_EXHIBITION ; $6117
 	ld a, [wMatchContext] ; $6119
 	ASSERT MATCHCONTEXT_EXHIBITION == 0
 	and a ; $611c
 	jr z, .playFanfare ; $611d
-	ld b, $45 ; $611f
+	ld b, JINGLE_COURT_INTRO ; $611f
 .playFanfare:
 	ld a, b ; $6121
 	call PlaySoundManaged ; $6122
@@ -359,9 +359,9 @@ UpdateMatchCamera:
 	add hl, de ; $6292
 	ld a, h ; $6293
 	bit 7, a ; $6294
-	jr z, .clampY ; $6296
+	jr z, .clampXHigh ; $6296
 	ld hl, $0000 ; $6298
-.clampY:
+.clampXHigh:
 	sub $0c ; $629b
 	bit 7, a ; $629d
 	jr nz, .applyScroll ; $629f

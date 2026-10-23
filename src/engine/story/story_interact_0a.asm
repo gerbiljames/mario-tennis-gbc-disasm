@@ -66,7 +66,7 @@ FindActorFacingPlayer:
 	push de ; $5228
 	push hl ; $5229
 	wram_bank WRAM_ACTORS ; $522a
-	farcall BuildActorQueryList ; $5230
+	farcall BuildTalkableActorList ; $5230
 	ld hl, wActors ; $5233
 	ld de, $01c0 ; $5236
 	ld a, $00 ; $5239
@@ -180,7 +180,7 @@ ShowLocationNamePopup:
 	set MSGSPEEDB_INSTANT, a ; $5308
 	ld [wMessageSpeed], a ; $530a
 	ld a, $83 ; $530d
-	farcall ShowSpeakerDialogueRestoreBG ; $530f
+	farcall ShowSpeakerDialogueKeepOpen ; $530f
 	ld b, $50 ; $5312
 .waitLoop:
 	call AdvanceFrame ; $5314
@@ -511,7 +511,7 @@ RunNpcInteraction:
 .restoreAnim:
 	ld a, b ; $5554
 	and NPC_IDLE_ANIM ; $5555
-	jr z, .clearBusy ; $5557
+	jr z, .restoreAnimRate ; $5557
 	push bc ; $5559
 	push de ; $555a
 	ld c, e ; $555b
@@ -521,7 +521,7 @@ RunNpcInteraction:
 	farcall SetActorAnimationChecked ; $5561
 	pop de ; $5564
 	pop bc ; $5565
-.clearBusy:
+.restoreAnimRate:
 	ld hl, ACTORF_ANIM_RATE_MOVING ; $5566
 	add hl, de ; $5569
 	ld a, [wStoryScriptSavedActorAnimRate] ; $556a

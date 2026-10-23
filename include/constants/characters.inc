@@ -10,12 +10,12 @@ def CHARREC_CHAR             rb   ; $0b CHAR_* id
 def CHARREC_PALETTE          rb   ; $0c
 def CHARREC_GENDER           rb   ; $0d 0 male, 1 female
 def CHARREC_LEFT_HANDED      rb   ; $0e becomes the OAM X-flip on court
-def CHARREC_PHYSICS          rb   ; $0f
+def CHARREC_AI_POSITION      rb   ; $0f home-position strategy, copied to wAiPositionStrategy
 def CHARREC_REACH            rb 8 ; $10 the reach box
 def CHARREC_LEVEL            rb   ; $18 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
-def CHARREC_SWING            rw   ; $19
+def CHARREC_SHOT_TRAITS      rw   ; $19 shot-trait bits: bit 7 of the low byte for StartCharSwing, high bits 0/1 pick the lob and drop placement rows; STATARCH_TRAIT_UNLOCKS can OR more in
 def CHARREC_AI_PARAMS        rb 4 ; $1b reaction delays near and far, tracking, aim-away chance
-def CHARREC_DIFFICULTY       rb   ; $1f CPU difficulty 0 easy - 3 intense, the AI's serve style on court
+def CHARREC_DIFFICULTY       rb   ; $1f AI difficulty: 0 easy - 3 intense from the CPU menus, 4-8 drill-feeder shot rows (wAiDifficulty)
 def CHARREC_STAT_TOP         rb   ; $20 the eleven 0-9 stats, in this order
 def CHARREC_STAT_SLICE       rb   ; $21
 def CHARREC_STAT_SERVE       rb   ; $22
@@ -39,6 +39,32 @@ def CHAR_RECORD_SIZE equ _RS
 def MAX_LEVEL equ 99 ; CHARREC_LEVEL stops here
 def NUM_CHAR_STATS equ CHARREC_SPEED_BONUS - CHARREC_STAT_TOP ; the eleven 0-9 stat bars
 
+; --- Stat index (CHARREC_STAT_* - CHARREC_STAT_TOP; wCharDataStats and its siblings + n) ---
+	const_def
+	const CHARSTAT_TOP       ; $00
+	const CHARSTAT_SLICE     ; $01
+	const CHARSTAT_SERVE     ; $02
+	const CHARSTAT_STROKE    ; $03
+	const CHARSTAT_VOLLEY    ; $04
+	const CHARSTAT_ANGLE     ; $05
+	const CHARSTAT_PLACEMENT ; $06
+	const CHARSTAT_SPEED     ; $07
+	const CHARSTAT_DASH      ; $08
+	const CHARSTAT_REACTION  ; $09
+	const CHARSTAT_STOP      ; $0a
+	ASSERT const_value == NUM_CHAR_STATS
+	ASSERT CHARREC_STAT_TOP - CHARREC_STAT_TOP == CHARSTAT_TOP
+	ASSERT CHARREC_STAT_SLICE - CHARREC_STAT_TOP == CHARSTAT_SLICE
+	ASSERT CHARREC_STAT_SERVE - CHARREC_STAT_TOP == CHARSTAT_SERVE
+	ASSERT CHARREC_STAT_STROKE - CHARREC_STAT_TOP == CHARSTAT_STROKE
+	ASSERT CHARREC_STAT_VOLLEY - CHARREC_STAT_TOP == CHARSTAT_VOLLEY
+	ASSERT CHARREC_STAT_ANGLE - CHARREC_STAT_TOP == CHARSTAT_ANGLE
+	ASSERT CHARREC_STAT_PLACEMENT - CHARREC_STAT_TOP == CHARSTAT_PLACEMENT
+	ASSERT CHARREC_STAT_SPEED - CHARREC_STAT_TOP == CHARSTAT_SPEED
+	ASSERT CHARREC_STAT_DASH - CHARREC_STAT_TOP == CHARSTAT_DASH
+	ASSERT CHARREC_STAT_REACTION - CHARREC_STAT_TOP == CHARSTAT_REACTION
+	ASSERT CHARREC_STAT_STOP - CHARREC_STAT_TOP == CHARSTAT_STOP
+
 ; --- Stat archetype layout (StatArchetype*_02, picked by CHARREC_CHAR & 3) ---
 	rsreset
 def STATARCH_LEVEL          rb      ; $00 -> CHARREC_LEVEL
@@ -55,8 +81,8 @@ def STATARCH_SPEED          rb 9
 def STATARCH_DASH           rb 9
 def STATARCH_REACTION       rb 9
 def STATARCH_STOP           rb 9
-def STATARCH_MODIFIERS      equ _RS ; $70 (level, icon) pairs for CHARREC_SWING, to $ff
-	ASSERT STATARCH_MODIFIERS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
+def STATARCH_TRAIT_UNLOCKS  equ _RS ; $70 (level, ShotTraitMasks_02 index) pairs OR'd into CHARREC_SHOT_TRAITS, to $ff
+	ASSERT STATARCH_TRAIT_UNLOCKS - STATARCH_THRESHOLDS == NUM_CHAR_STATS * 9
 
 ; --- Match record slots (GetMatchRecordPtr's a, InitMatchRecordFromCharId's c) ---
 	const_def
@@ -106,9 +132,7 @@ def SLOTSUM_SIZE equ _RS
 ; The 32-entry roster, in the order every character-indexed table takes:
 ; CharSpriteSetTable, CharPaletteIndexTable, CharacterPortraitTable_16 and the
 ; bank $1b menu mugshots. The name is text id $001b + id (bank $30 strings
-; from index $1b). Ids 0-3 are always unlocked; for 4-31
-; CheckCharacterUnlocked tests save flag number = character id, so the
-; SAVEFLAG_UNLOCKED_*/_CLEARED_* block above names the same characters.
+; from index $1b).
 	const_def
 	const CHAR_ALEX       ; $00
 	const CHAR_NINA       ; $01
@@ -132,7 +156,7 @@ def NUM_STORY_HEROES equ const_value ; the four story heroes, always unlocked
 	const CHAR_B_COZ      ; $12 "B. Coz"
 	const CHAR_A_COZ      ; $13 "A. Coz"
 	const CHAR_KEVIN      ; $14
-	const CHAR_UNUSED_15  ; $15 roster slot reading "Not used"; see below
+	const CHAR_BALL_MACHINE ; $15 roster slot reading "Not used", drawn as BallMachineSprite; see below
 	const CHAR_UNUSED_16  ; $16 roster slot reading "Not used"
 	const CHAR_LUIGI      ; $17
 	const CHAR_DK         ; $18
@@ -148,7 +172,7 @@ def NUM_STORY_HEROES equ const_value ; the four story heroes, always unlocked
 ; Records $20-$35 of StoryCharacterRecords_02 continue the roster's name pool
 ; (bank $30 string id + 27): "Ranker 32" to "Ranker 47", then six named
 ; opponents. On screen RemapExtendedCharId shows each as a roster character
-; (NameTextRemap_02). Records $36 and up have no name in the pool. $36,
+; (ExtendedCharIdRemap_02). Records $36 and up have no name in the pool. $36,
 ; $49-$53, $57 and $5a are unnamed because nothing loads them; their stats are
 ; all zero.
 	const_def $20
@@ -228,10 +252,20 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 ; bit 7 set names a story character record instead -- bit 0 selects $c900
 ; (main) or $c940 (partner). Ids $20 and up are remapped into 4-31 by
 ; RemapExtendedCharId for their name and portrait.
-; CHAR_UNUSED_15 doubles as a "no visible opponent / locked" marker: it is the
-; opponent of every Tennis Machine config and of Shooting Star, and
-; GetUnlockedMarioCastCharAtGridSlot returns it for a locked Mario-cast slot.
+; CHAR_BALL_MACHINE is the ball launcher (sprite set $1a) standing in as the
+; opponent of every Tennis Machine config and of Shooting Star. It doubles as a
+; locked marker: GetUnlockedMarioCastCharAtGridSlot returns it for a locked
+; Mario-cast slot.
 def CHAR_NONE          equ $ff ; empty court slot
 def CHAR_STORY_MAIN    equ $80 ; the story slot's own character ($c900 record)
 def CHAR_STORY_PARTNER equ $81 ; its doubles partner ($c940 record)
 def CHAR_EMPTY_SLOT    equ $3f ; an empty story file's character, shown with palette $03; DecompressCharMugshot adds wCurrentStorySlot to it
+
+; --- Story character record (wStoryCharacterSlot; GetPlayerRecordPtr's a) ---
+; GetPlayerRecordPtr tests a for zero, so any nonzero value selects the
+; partner; InitMatchRecordFromCharId picks the record by bit 0 of a
+; CHAR_STORY_* id.
+def STORYREC_MAIN    equ $00 ; wStoryMain ($c900)
+def STORYREC_PARTNER equ $01 ; wStoryPartner ($c940)
+ASSERT (CHAR_STORY_MAIN & 1) == STORYREC_MAIN
+ASSERT (CHAR_STORY_PARTNER & 1) == STORYREC_PARTNER

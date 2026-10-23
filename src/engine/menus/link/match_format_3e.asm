@@ -1,4 +1,4 @@
-	twin_in get_cell_index_from_cursor_ptr, Unused_3e_GetCellIndexFromCursorPtr, 3e ; $43db Unused_3e_GetCellIndexFromCursorPtr
+	twin_in get_menu_cursor_index_from_ptr, Unused_3e_GetMenuCursorIndexFromPtr, 3e ; $43db Unused_3e_GetMenuCursorIndexFromPtr
 	twin_in set_menu_cursor_from_index, SetMenuCursorFromIndex_3e, 3e ; $43eb SetMenuCursorFromIndex_3e
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_3e_SetMenuCursorFromIndexToPtr, 3e ; $43fd Unused_3e_SetMenuCursorFromIndexToPtr
 Unused_3e_ClearWram3Row64:
@@ -42,7 +42,7 @@ RestoreMenuScreenAndFadeIn:
 	call EnableLCD ; $44c2
 	script_fade_in 16 ; $44c5
 	ret ; $44ca
-RunLinkMatchRulesMenu:
+RunLinkMatchFormatMenu:
 	call EnableTimerInterrupt ; $44cb
 	sound BGM_MENU ; $44ce
 	xor a ; $44d0
@@ -52,18 +52,18 @@ RunLinkMatchRulesMenu:
 	xor a ; $44da
 	ldh [hLinkExchangeActive], a ; $44db
 	call ResetSerialState ; $44dd
-	call LoadMatchRulesMenuGraphics ; $44e0
+	call LoadLinkMatchFormatMenuGraphics ; $44e0
 	wram_bank WRAM_SCREEN ; $44e3
 	ld a, [wMenuSlideDirection] ; $44e9
 	ld b, a ; $44ec
-	call OpenMatchRulesPanel ; $44ed
-	farcall InitMenuBgScroll ; $44f0
+	call OpenLinkMatchFormatPanel ; $44ed
+	farcall InitMenuTitleScroller ; $44f0
 	ld b, $01 ; $44f3
 	ld c, $01 ; $44f5
 	farcall LoadMenuSpritePalettePair ; $44f7
-	call DrawMatchRulesInitialState ; $44fa
-	frame_task MatchRulesCursorSpriteTask ; $44fd
-	call DrawMatchRulesCaption ; $4505
+	call DrawLinkMatchFormatInitialState ; $44fa
+	frame_task LinkMatchFormatCursorSpriteTask ; $44fd
+	call DrawLinkMatchFormatCaption ; $4505
 	farcall ResyncLinkSessionWithTimer ; $4508
 	push af ; $450b
 	farcall RunLinkInputFrame ; $450c
@@ -78,17 +78,17 @@ RunLinkMatchRulesMenu:
 	res B_IE_TIMER, [hl] ; $451d
 	wram_bank WRAM_SCREEN ; $451f
 .loop:
-	farcall TickMenuBgScroll ; $4525
+	farcall TickMenuTitleScroller ; $4525
 	ldh a, [hLinkInput] ; $4528
 	ld [wMenuInputPressed], a ; $452a
-	call HandleMatchRulesToggleInput ; $452d
+	call HandleLinkMatchFormatToggleInput ; $452d
 	ld b, $01 ; $4530
 	ld c, $03 ; $4532
 	call MoveMenuCursorGrid_3e ; $4534
 	or a ; $4537
 	jr z, .cursorUnmoved ; $4538
 	sound SFX_MENU_MOVE ; $453a
-	call DrawMatchRulesCaption ; $453c
+	call DrawLinkMatchFormatCaption ; $453c
 .cursorUnmoved:
 	push af ; $453f
 	farcall RunLinkInputFrame ; $4540
@@ -109,8 +109,8 @@ RunLinkMatchRulesMenu:
 	call ResetSerialState ; $455b
 	call EnableTimerInterrupt ; $455e
 	call ClearFrameTasks ; $4561
-	ld b, $01 ; $4564
-	call CloseMatchRulesPanel ; $4566
+	ld b, MENUSLIDE_FORWARD ; $4564
+	call SlideLinkMatchFormatPanel ; $4566
 	ld a, MENUSLIDE_FORWARD ; $4569
 	ld [wMenuSlideDirection], a ; $456b
 	ld c, $03 ; $456e
@@ -127,64 +127,64 @@ RunLinkMatchRulesMenu:
 	ldh [hLinkExchangeActive], a ; $4581
 	call ResetSerialState ; $4583
 	call ClearFrameTasks ; $4586
-	ld b, $00 ; $4589
-	call CloseMatchRulesPanel ; $458b
+	ld b, MENUSLIDE_BACK ; $4589
+	call SlideLinkMatchFormatPanel ; $458b
 	ld a, MENUSLIDE_BACK ; $458e
 	ld [wMenuSlideDirection], a ; $4590
 	ld hl, rIE ; $4593
 	set B_IE_TIMER, [hl] ; $4596
 	ld a, $ff ; $4598
 	ret ; $459a
-DrawMatchRulesInitialState:
+DrawLinkMatchFormatInitialState:
 	ld b, $01 ; $459b
 	ld c, $00 ; $459d
 	call SetMenuCursorFromIndex_3e ; $459f
 	ld a, [wMatchFormatDoubles] ; $45a2
 	ld b, a ; $45a5
-	ld c, $01 ; $45a6
-	call SetMatchRuleOptionAttrRect ; $45a8
-	ld b, $00 ; $45ab
-	call FlushMatchRuleRowAttrs ; $45ad
+	ld c, ATTRRECT_SELECTED ; $45a6
+	call SetLinkMatchFormatOptionAttrRect ; $45a8
+	ld b, MATCHFMTROW_MODE ; $45ab
+	call FlushLinkMatchFormatRowAttrs ; $45ad
 	ld a, [wMatchFormatGames] ; $45b0
-	add $02 ; $45b3
+	add MATCHFMTOPT_GAMES ; $45b3
 	ld b, a ; $45b5
-	ld c, $01 ; $45b6
-	call SetMatchRuleOptionAttrRect ; $45b8
-	ld b, $01 ; $45bb
-	call FlushMatchRuleRowAttrs ; $45bd
+	ld c, ATTRRECT_SELECTED ; $45b6
+	call SetLinkMatchFormatOptionAttrRect ; $45b8
+	ld b, MATCHFMTROW_GAMES ; $45bb
+	call FlushLinkMatchFormatRowAttrs ; $45bd
 	ld a, [wMatchFormatSets] ; $45c0
-	add $04 ; $45c3
+	add MATCHFMTOPT_SETS ; $45c3
 	ld b, a ; $45c5
-	ld c, $01 ; $45c6
-	call SetMatchRuleOptionAttrRect ; $45c8
-	ld b, $02 ; $45cb
-	call FlushMatchRuleRowAttrs ; $45cd
-	ld hl, MatchRulesInitialStatePalettes0 ; $45d0
+	ld c, ATTRRECT_SELECTED ; $45c6
+	call SetLinkMatchFormatOptionAttrRect ; $45c8
+	ld b, MATCHFMTROW_SETS ; $45cb
+	call FlushLinkMatchFormatRowAttrs ; $45cd
+	ld hl, LinkMatchFormatModeRowPalette ; $45d0
 	ld d, $04 ; $45d3
 	ld e, $01 ; $45d5
 	call LoadPaletteShadow ; $45d7
-	ld hl, MatchRulesInitialStatePalettes1 ; $45da
+	ld hl, LinkMatchFormatGamesRowPalette ; $45da
 	ld d, $06 ; $45dd
 	ld e, $01 ; $45df
 	call LoadPaletteShadow ; $45e1
-	ld hl, MatchRulesInitialStatePalettes2 ; $45e4
+	ld hl, LinkMatchFormatSetsRowPalette ; $45e4
 	ld d, $07 ; $45e7
 	ld e, $01 ; $45e9
 	call LoadPaletteShadow ; $45eb
 	ret ; $45ee
-MatchRulesInitialStatePalettes0:
-	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes0.asm" ; $45ef, 8 bytes (palettes)
-MatchRulesInitialStatePalettes1:
-	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes1.asm" ; $45f7, 8 bytes (palettes)
-MatchRulesInitialStatePalettes2:
-	INCLUDE "data/engine/menus/link/MatchRulesInitialStatePalettes2.asm" ; $45ff, 8 bytes (palettes)
-LoadMatchRulesMenuGraphics:
+LinkMatchFormatModeRowPalette:
+	INCLUDE "data/engine/menus/link/LinkMatchFormatModeRowPalette.asm" ; $45ef, 8 bytes (palettes)
+LinkMatchFormatGamesRowPalette:
+	INCLUDE "data/engine/menus/link/LinkMatchFormatGamesRowPalette.asm" ; $45f7, 8 bytes (palettes)
+LinkMatchFormatSetsRowPalette:
+	INCLUDE "data/engine/menus/link/LinkMatchFormatSetsRowPalette.asm" ; $45ff, 8 bytes (palettes)
+LoadLinkMatchFormatMenuGraphics:
 	push_wram_bank WRAM_STAGING ; $4607
 	ld c, $00 ; $4610
 .loop:
 	ld a, c ; $4612
 	add a ; $4613
-	ld hl, MatchRulesMenuGraphicsTable ; $4614
+	ld hl, LinkMatchFormatIconTilePtrs ; $4614
 	add_hl_a ; $4617
 	ld a, [hl+] ; $461c
 	ld h, [hl] ; $461d
@@ -199,7 +199,7 @@ LoadMatchRulesMenuGraphics:
 	pop de ; $462a
 	pop bc ; $462b
 	pop af ; $462c
-	ld hl, MatchRulesMenuTable ; $462d
+	ld hl, LinkMatchFormatIconTileVramDests ; $462d
 	ld a, c ; $4630
 	add a ; $4631
 	add_hl_a ; $4632
@@ -224,38 +224,38 @@ LoadMatchRulesMenuGraphics:
 	ld a, c ; $4651
 	cp $07 ; $4652
 	jr nz, .loop ; $4654
-	ld b, TILEBLOCK_SharedMenuGfx35 ; $4656
-	ld c, SharedMenuGfx35_SIZE / 16 ; $4658
+	ld b, TILEBLOCK_SinglesLabelGfx ; $4656
+	ld c, SinglesLabelGfx_SIZE / 16 ; $4658
 	ld de, vTiles0 + VRAM_BANK1 ; $465a
 	farcall LoadCompressedTileBlock ; $465d
 	call AdvanceFrame ; $4660
-	ld b, TILEBLOCK_SharedMenuGfx36 ; $4663
-	ld c, SharedMenuGfx36_SIZE / 16 ; $4665
+	ld b, TILEBLOCK_DoublesLabelGfx ; $4663
+	ld c, DoublesLabelGfx_SIZE / 16 ; $4665
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $4667
 	farcall LoadCompressedTileBlock ; $466a
 	call AdvanceFrame ; $466d
-	ld b, TILEBLOCK_SharedMenuGfx37 ; $4670
-	ld c, SharedMenuGfx37_SIZE / 16 ; $4672
+	ld b, TILEBLOCK_TwoGamesLabelGfx ; $4670
+	ld c, TwoGamesLabelGfx_SIZE / 16 ; $4672
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $4674
 	farcall LoadCompressedTileBlock ; $4677
 	call AdvanceFrame ; $467a
-	ld b, TILEBLOCK_SharedMenuGfx38 ; $467d
-	ld c, SharedMenuGfx38_SIZE / 16 ; $467f
+	ld b, TILEBLOCK_SixGamesLabelGfx ; $467d
+	ld c, SixGamesLabelGfx_SIZE / 16 ; $467f
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $4681
 	farcall LoadCompressedTileBlock ; $4684
 	call AdvanceFrame ; $4687
-	ld b, TILEBLOCK_SharedMenuGfx39 ; $468a
-	ld c, SharedMenuGfx39_SIZE / 16 ; $468c
+	ld b, TILEBLOCK_OneSetLabelGfx ; $468a
+	ld c, OneSetLabelGfx_SIZE / 16 ; $468c
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $468e
 	farcall LoadCompressedTileBlock ; $4691
 	call AdvanceFrame ; $4694
-	ld b, TILEBLOCK_SharedMenuGfx40 ; $4697
-	ld c, SharedMenuGfx40_SIZE / 16 ; $4699
+	ld b, TILEBLOCK_ThreeSetsLabelGfx ; $4697
+	ld c, ThreeSetsLabelGfx_SIZE / 16 ; $4699
 	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $469b
 	farcall LoadCompressedTileBlock ; $469e
 	call AdvanceFrame ; $46a1
-	ld b, TILEBLOCK_SharedMenuGfx41 ; $46a4
-	ld c, SharedMenuGfx41_SIZE / 16 ; $46a6
+	ld b, TILEBLOCK_FiveSetsLabelGfx ; $46a4
+	ld c, FiveSetsLabelGfx_SIZE / 16 ; $46a6
 	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $46a8
 	farcall LoadCompressedTileBlock ; $46ab
 	call AdvanceFrame ; $46ae
@@ -264,8 +264,8 @@ LoadMatchRulesMenuGraphics:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $46b5
 	farcall LoadCompressedTileBlock ; $46b8
 	call AdvanceFrame ; $46bb
-	ld b, TILEBLOCK_SharedMenuGfx63 ; $46be
-	ld c, SharedMenuGfx63_SIZE / 16 ; $46c0
+	ld b, TILEBLOCK_PlayMenuTitleGfx ; $46be
+	ld c, PlayMenuTitleGfx_SIZE / 16 ; $46c0
 	ld de, vTiles0 ; $46c2
 	farcall LoadCompressedTileBlock ; $46c5
 	call AdvanceFrame ; $46c8
@@ -274,16 +274,16 @@ LoadMatchRulesMenuGraphics:
 	farcall LoadIndexedPalette ; $46cf
 	pop_wram_bank ; $46d2
 	ret ; $46d7
-MatchRulesMenuGraphicsTable:
+LinkMatchFormatIconTilePtrs:
 	; $46d8, 14 bytes (7 records x 1 slot words)
-	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
-	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
-	dslot DataPtr_GamesLabelTiles ; record 2
-	dslot DataPtr_GamesLabelTiles2 ; record 3
-	dslot DataPtr_OneSetLabelTiles ; record 4
-	dslot DataPtr_ThreeSetsLabelTiles ; record 5
-	dslot DataPtr_FiveSetsLabelTiles ; record 6
-MatchRulesMenuTable:
+	dslot DataPtr_SinglesIconTiles ; record 0
+	dslot DataPtr_DoublesIconTiles ; record 1
+	dslot DataPtr_TwoGamesIconTiles ; record 2
+	dslot DataPtr_SixGamesIconTiles ; record 3
+	dslot DataPtr_OneSetIconTiles ; record 4
+	dslot DataPtr_ThreeSetsIconTiles ; record 5
+	dslot DataPtr_FiveSetsIconTiles ; record 6
+LinkMatchFormatIconTileVramDests:
 	; $46e6, 14 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -292,7 +292,7 @@ MatchRulesMenuTable:
 	dw vTiles1 tile $40 + VRAM_BANK1 ; record 4
 	dw vTiles1 tile $50 + VRAM_BANK1 ; record 5
 	dw vTiles1 tile $60 + VRAM_BANK1 ; record 6
-OpenMatchRulesPanel:
+OpenLinkMatchFormatPanel:
 	ld a, b ; $46f4
 	or a ; $46f5
 	jr z, .slideBack ; $46f6
@@ -325,8 +325,8 @@ OpenMatchRulesPanel:
 	jr nz, .slideBackLoop ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
-	twin_named match_format_slide_out, CloseMatchRulesPanel ; $472c
-HandleMatchRulesToggleInput:
+	twin_named slide_match_format_panel, SlideLinkMatchFormatPanel ; $472c
+HandleLinkMatchFormatToggleInput:
 	ld a, [wMenuInputPressed] ; $475d
 	bit PADB_LEFT, a ; $4760
 	jr nz, .left ; $4762
@@ -343,20 +343,20 @@ HandleMatchRulesToggleInput:
 	xor $01 ; $4776
 	ld [wMatchFormatDoubles], a ; $4778
 	call DrawSinglesDoublesRow ; $477b
-	call DrawMatchRulesCaption ; $477e
-	ld b, $00 ; $4781
-	call FlushMatchRuleRowAttrs ; $4783
+	call DrawLinkMatchFormatCaption ; $477e
+	ld b, MATCHFMTROW_MODE ; $4781
+	call FlushLinkMatchFormatRowAttrs ; $4783
 	ret ; $4786
 .leftGames:
-	cp $01 ; $4787
+	cp MATCHFMTROW_GAMES ; $4787
 	jr nz, .decSets ; $4789
 	ld a, [wMatchFormatGames] ; $478b
 	xor $01 ; $478e
 	ld [wMatchFormatGames], a ; $4790
 	call DrawGameCountRow ; $4793
-	call DrawMatchRulesCaption ; $4796
-	ld b, $01 ; $4799
-	call FlushMatchRuleRowAttrs ; $479b
+	call DrawLinkMatchFormatCaption ; $4796
+	ld b, MATCHFMTROW_GAMES ; $4799
+	call FlushLinkMatchFormatRowAttrs ; $479b
 	ret ; $479e
 .decSets:
 	ld a, [wMatchFormatSets] ; $479f
@@ -374,9 +374,9 @@ HandleMatchRulesToggleInput:
 .storeDecSets:
 	ld [wMatchFormatSets], a ; $47b1
 	call DrawSetCountRow ; $47b4
-	call DrawMatchRulesCaption ; $47b7
-	ld b, $02 ; $47ba
-	call FlushMatchRuleRowAttrs ; $47bc
+	call DrawLinkMatchFormatCaption ; $47b7
+	ld b, MATCHFMTROW_SETS ; $47ba
+	call FlushLinkMatchFormatRowAttrs ; $47bc
 	ret ; $47bf
 .right:
 	sound SFX_MENU_MOVE ; $47c0
@@ -388,20 +388,20 @@ HandleMatchRulesToggleInput:
 	xor $01 ; $47cd
 	ld [wMatchFormatDoubles], a ; $47cf
 	call DrawSinglesDoublesRow ; $47d2
-	call DrawMatchRulesCaption ; $47d5
-	ld b, $00 ; $47d8
-	call FlushMatchRuleRowAttrs ; $47da
+	call DrawLinkMatchFormatCaption ; $47d5
+	ld b, MATCHFMTROW_MODE ; $47d8
+	call FlushLinkMatchFormatRowAttrs ; $47da
 	ret ; $47dd
 .rightGames:
-	cp $01 ; $47de
+	cp MATCHFMTROW_GAMES ; $47de
 	jr nz, .incSets ; $47e0
 	ld a, [wMatchFormatGames] ; $47e2
 	xor $01 ; $47e5
 	ld [wMatchFormatGames], a ; $47e7
 	call DrawGameCountRow ; $47ea
-	call DrawMatchRulesCaption ; $47ed
-	ld b, $01 ; $47f0
-	call FlushMatchRuleRowAttrs ; $47f2
+	call DrawLinkMatchFormatCaption ; $47ed
+	ld b, MATCHFMTROW_GAMES ; $47f0
+	call FlushLinkMatchFormatRowAttrs ; $47f2
 	ret ; $47f5
 .incSets:
 	ld a, [wMatchFormatSets] ; $47f6
@@ -419,7 +419,7 @@ HandleMatchRulesToggleInput:
 .storeIncSets:
 	ld [wMatchFormatSets], a ; $4808
 	call DrawSetCountRow ; $480b
-	call DrawMatchRulesCaption ; $480e
-	ld b, $02 ; $4811
-	call FlushMatchRuleRowAttrs ; $4813
+	call DrawLinkMatchFormatCaption ; $480e
+	ld b, MATCHFMTROW_SETS ; $4811
+	call FlushLinkMatchFormatRowAttrs ; $4813
 	ret ; $4816

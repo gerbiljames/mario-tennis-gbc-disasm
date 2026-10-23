@@ -15,21 +15,21 @@ SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 ; the single upper WRAM half, the bytes a CGB calls bank 1.
 UNION
 ; cutscene text scroll buffer (bank $03)
-; [640 bytes] Eight 80-column rows of rendered cutscene text: DrawCutsceneTextLines draws each line from column 19 of row 1, and BlitCutsceneTextWindow copies a 20-column window of it, one column further per call, into wWindowShadowTilemap to scroll the text. Both select the bank themselves
-wCutsceneTextScrollBuffer:: ds 640
+; [640 bytes] Eight 80-column rows of rendered cutscene text: DrawCreditsStaffLines draws each line from column 19 of row 1, and BlitCreditsStaffWindow copies a 20-column window of it, one column further per call, into wWindowShadowTilemap to scroll the text. Both select the bank themselves
+wCreditsStaffScrollBuffer:: ds 640
 	ds 3456
 NEXTU
 ; character record copy (bank $1b)
 	ds 1408
-; [128 bytes] Copy of a character record LoadCharacterRecordToBuffer takes from wPlayer2MainName, so one character's fields can be read without disturbing the live records. CheckCharacterUnlocked tests +$0b (the id) against $ff; RunNewGameSetup reads +$0c and +$0e of each starting character
+; [128 bytes] Copy of a character record LoadCharacterRecordToBuffer takes from wPlayer2MainName, so one character's fields can be read without disturbing the live records. CheckCharRecordPresent tests CHARREC_CHAR against $ff; RunNewGameSetup reads CHARREC_PALETTE and CHARREC_LEFT_HANDED of each starting character
 wCharRecordBuffer:: ds 128
 NEXTU
 ; VRAM staging (WRAM bank $01)
-; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways: the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16; the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. Unused_00_CopyMapToScrollBuffers expands map planes from it into WRAM bank $02
+; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways: the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16; the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. A stream of over 2048 bytes (most screens' 4096-byte tile sets) runs on into wDecompBufferHigh. Unused_00_CopyMapToScrollBuffers expands map planes from it into WRAM bank $02
 wDecompBuffer:: ds 2048
-; [2048 bytes] The other half: Unused_1a_DrawStringToTileBuffer renders strings here as tile data (the EXP screen's captions and bonus messages), uploaded like any other graphics
-wTextTileBuffer:: ds 2048
-	export_size wTextTileBuffer
+; [2048 bytes] The staging area's second 2 KB, where a 4096-byte tile set's upper half lands: the graphics loaders queue it to vTiles1 (QueueVRAMCopy, c = 128 tiles) after the first half goes to vTiles2, whole or in 32-tile quarters. RunCharDataConfirmScreen stages its banner rows at tile 106; several unused screens keep planes or text tiles here. The dead Unused_1a_DrawStringToTileBuffer would have rendered the EXP screen's captions into it
+wDecompBufferHigh:: ds 2048
+	export_size wDecompBufferHigh
 NEXTU
 ; staged screen planes (banks $18/$1b)
 	ds 2048

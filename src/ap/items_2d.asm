@@ -3,7 +3,7 @@
 
 ; Applies to the loaded slot whatever it has not had applied yet: the
 ; equipment flags, and EXP bundles into the slot's pending story EXP
-; (wPendingExpStory), awarded with the EXP screens when the player opens
+; (wN64TransferMainExp), awarded with the EXP screens when the player opens
 ; Char/Partner Data or next continues the slot. wApApplied counts what was
 ; applied.
 ApCatchUpSlot:
@@ -46,7 +46,7 @@ ApCatchUpSlot:
 	ret z
 	ret c
 	inc [hl]
-	ld hl, wPendingExpStory
+	ld hl, wN64TransferMainExp
 	ld a, [hl+]
 	ld h, [hl]
 	ld l, a
@@ -57,9 +57,9 @@ ApCatchUpSlot:
 	ld hl, $ffff
 .store:
 	ld a, l
-	ld [wPendingExpStory], a
+	ld [wN64TransferMainExp], a
 	ld a, h
-	ld [wPendingExpStory + 1], a
+	ld [wN64TransferMainExp + 1], a
 	jr .exp
 
 ; -> a = 1 with wApMessage composed if a message is waiting, else 0. A done

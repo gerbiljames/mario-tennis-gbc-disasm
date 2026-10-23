@@ -141,7 +141,8 @@ Test2ExitTriggers_10:
 	map_script $07, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, ENTRY_COURTYARD_FROM_TRAINING_CENTER, TEST_2_TO_COURTYARD
 	map_script $08, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_MAIN_MENU, ENTRY_MAIN_MENU_FROM_STORY, TEST_2_TO_MAIN_MENU
 	db $ff
-Unused_10_Test2Npc03:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc03ServiceMatch2:
 	ld hl, wStoryModePlayersXPosition ; $47cf
 	ld de, wStoryModeSpawnPosition ; $47d2
 	ld bc, wStoryModeSpawnPosition_SIZE ; $47d5
@@ -158,8 +159,8 @@ Unused_10_Test2Npc03:
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $47fa
 	farcall RunTrainingDrillByID ; $47fc
 	ret ; $47ff
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc04:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc04ServiceMatch3:
 	ld hl, wStoryModePlayersXPosition ; $4800
 	ld de, wStoryModeSpawnPosition ; $4803
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4806
@@ -176,8 +177,8 @@ Unused_10_Test2Npc04:
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $482b
 	farcall RunTrainingDrillByID ; $482d
 	ret ; $4830
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc05:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc05ServicePractice1:
 	ld hl, wStoryModePlayersXPosition ; $4831
 	ld de, wStoryModeSpawnPosition ; $4834
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4837
@@ -194,8 +195,8 @@ Unused_10_Test2Npc05:
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $485c
 	farcall RunTrainingDrillByID ; $485e
 	ret ; $4861
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc06:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc06ServicePractice2:
 	ld hl, wStoryModePlayersXPosition ; $4862
 	ld de, wStoryModeSpawnPosition ; $4865
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4868
@@ -212,8 +213,8 @@ Unused_10_Test2Npc06:
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $488d
 	farcall RunTrainingDrillByID ; $488f
 	ret ; $4892
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc07:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc07ServicePractice3:
 	ld hl, wStoryModePlayersXPosition ; $4893
 	ld de, wStoryModeSpawnPosition ; $4896
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4899
@@ -230,8 +231,8 @@ Unused_10_Test2Npc07:
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $48be
 	farcall RunTrainingDrillByID ; $48c0
 	ret ; $48c3
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc08:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc08NetGameMatch1:
 	ld hl, wStoryModePlayersXPosition ; $48c4
 	ld de, wStoryModeSpawnPosition ; $48c7
 	ld bc, wStoryModeSpawnPosition_SIZE ; $48ca
@@ -248,8 +249,8 @@ Unused_10_Test2Npc08:
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $48ef
 	farcall RunTrainingDrillByID ; $48f1
 	ret ; $48f4
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc09:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc09NetGameMatch2:
 	ld hl, wStoryModePlayersXPosition ; $48f5
 	ld de, wStoryModeSpawnPosition ; $48f8
 	ld bc, wStoryModeSpawnPosition_SIZE ; $48fb
@@ -266,8 +267,8 @@ Unused_10_Test2Npc09:
 	ld a, MINIGAME_NET_GAME_MATCH_2 ; $4920
 	farcall RunTrainingDrillByID ; $4922
 	ret ; $4925
-; Test2Npc0B_10 with its own test number and minigame id: one of seven template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
-Unused_10_Test2Npc0A:
+; Test2Npc0BNetGamePractice1_10 with its own test number and minigame id: one of eight template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it.
+Unused_10_Test2Npc0ANetGameMatch3:
 	ld hl, wStoryModePlayersXPosition ; $4926
 	ld de, wStoryModeSpawnPosition ; $4929
 	ld bc, wStoryModeSpawnPosition_SIZE ; $492c
@@ -284,7 +285,7 @@ Unused_10_Test2Npc0A:
 	ld a, MINIGAME_NET_GAME_MATCH_3 ; $4951
 	farcall RunTrainingDrillByID ; $4953
 	ret ; $4956
-Test2Npc0B_10:
+Test2Npc0BNetGamePractice1_10:
 	ld hl, wStoryModePlayersXPosition ; $4957
 	ld de, wStoryModeSpawnPosition ; $495a
 	ld bc, wStoryModeSpawnPosition_SIZE ; $495d
@@ -301,7 +302,7 @@ Test2Npc0B_10:
 	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $4982
 	farcall RunTrainingDrillByID ; $4984
 	ret ; $4987
-Test2Npc0C_10:
+Test2Npc0CNetGamePractice2_10:
 	ld hl, wStoryModePlayersXPosition ; $4988
 	ld de, wStoryModeSpawnPosition ; $498b
 	ld bc, wStoryModeSpawnPosition_SIZE ; $498e
@@ -318,7 +319,7 @@ Test2Npc0C_10:
 	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $49b3
 	farcall RunTrainingDrillByID ; $49b5
 	ret ; $49b8
-Test2Npc0D_10:
+Test2Npc0DNetGamePractice3_10:
 	ld hl, wStoryModePlayersXPosition ; $49b9
 	ld de, wStoryModeSpawnPosition ; $49bc
 	ld bc, wStoryModeSpawnPosition_SIZE ; $49bf
@@ -335,7 +336,7 @@ Test2Npc0D_10:
 	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $49e4
 	farcall RunTrainingDrillByID ; $49e6
 	ret ; $49e9
-Test2Npc0E_10:
+Test2Npc0EStrokeMatch1_10:
 	ld hl, wStoryModePlayersXPosition ; $49ea
 	ld de, wStoryModeSpawnPosition ; $49ed
 	ld bc, wStoryModeSpawnPosition_SIZE ; $49f0
@@ -352,7 +353,7 @@ Test2Npc0E_10:
 	ld a, MINIGAME_STROKE_MATCH_1 ; $4a15
 	farcall RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
-Test2Npc0F_10:
+Test2Npc0FStrokeMatch2_10:
 	ld hl, wStoryModePlayersXPosition ; $4a1b
 	ld de, wStoryModeSpawnPosition ; $4a1e
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4a21
@@ -369,7 +370,7 @@ Test2Npc0F_10:
 	ld a, MINIGAME_STROKE_MATCH_2 ; $4a46
 	farcall RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
-Test2Npc10_10:
+Test2Npc10StrokeMatch3_10:
 	ld hl, wStoryModePlayersXPosition ; $4a4c
 	ld de, wStoryModeSpawnPosition ; $4a4f
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4a52
@@ -386,7 +387,7 @@ Test2Npc10_10:
 	ld a, MINIGAME_STROKE_MATCH_3 ; $4a77
 	farcall RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
-Test2Npc11_10:
+Test2Npc11StrokePractice1_10:
 	ld hl, wStoryModePlayersXPosition ; $4a7d
 	ld de, wStoryModeSpawnPosition ; $4a80
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4a83
@@ -403,7 +404,7 @@ Test2Npc11_10:
 	ld a, MINIGAME_STROKE_PRACTICE_1 ; $4aa8
 	farcall RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
-Test2Npc12_10:
+Test2Npc12StrokePractice2_10:
 	ld hl, wStoryModePlayersXPosition ; $4aae
 	ld de, wStoryModeSpawnPosition ; $4ab1
 	ld bc, wStoryModeSpawnPosition_SIZE ; $4ab4
@@ -430,25 +431,25 @@ Test2NpcScripts_10:
 	map_script ACTOR_TEST2_MARIO, FACEMASK_ANY, $0000, Text_RestaurantChefWhatAreYouEating, $00, $00
 	map_script ACTOR_TEST2_BOWSER, FACEMASK_ANY, $0000, Text_RestaurantThinkAsLongAsYouLike, $00, $00
 	map_script ACTOR_TEST2_WALUIGI, FACEMASK_ANY, $0000, Text_RestaurantFruitAndCake, $00, $00
-	map_script ACTOR_TEST2_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, Test2Npc0B_10, $00, $00
-	map_script ACTOR_TEST2_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, Test2Npc0C_10, $00, $00
-	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, Test2Npc0D_10, $00, $00
-	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_2, FACEMASK_ANY, $0000, Test2Npc0E_10, $00, $00
-	map_script ACTOR_TEST2_RESTAURANT_SERVER_3, FACEMASK_ANY, $0000, Test2Npc0F_10, $00, $00
-	map_script ACTOR_TEST2_RESTAURANT_SERVER_4, FACEMASK_ANY, $0000, Test2Npc10_10, $00, $00
-	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_3, FACEMASK_ANY, $0000, Test2Npc11_10, $00, $00
-	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_4, FACEMASK_ANY, $0000, Test2Npc12_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, Test2Npc0BNetGamePractice1_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, Test2Npc0CNetGamePractice2_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, Test2Npc0DNetGamePractice3_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_2, FACEMASK_ANY, $0000, Test2Npc0EStrokeMatch1_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_3, FACEMASK_ANY, $0000, Test2Npc0FStrokeMatch2_10, $00, $00
+	map_script ACTOR_TEST2_RESTAURANT_SERVER_4, FACEMASK_ANY, $0000, Test2Npc10StrokeMatch3_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_3, FACEMASK_ANY, $0000, Test2Npc11StrokePractice1_10, $00, $00
+	map_script ACTOR_TEST2_STUDENT_LONG_HAIR_4, FACEMASK_ANY, $0000, Test2Npc12StrokePractice2_10, $00, $00
 	db $ff
 Test2FacingScripts_10:
 	; $4b60, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, Test2Facing01_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, Test2SearchEventStub_10, $00, $00
 	db $ff
-	twin_named development_facing01, Test2Facing01_10 ; $4b69
+	twin_named development_search_event_stub, Test2SearchEventStub_10 ; $4b69
 Test2TileTriggers_10:
 	; $4b80, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, Test2Tile01_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, Test2TriggerEventStub_10, $00, $00
 	db $ff
-	twin_named development_tile01, Test2Tile01_10 ; $4b89
+	twin_named development_trigger_event_stub, Test2TriggerEventStub_10 ; $4b89
 Test2InitScript_10:
 	ld a, [wStoryModeEntryPoint] ; $4b9b
 	cp ENTRY_TEST_2_SKIP_MENU ; $4b9e

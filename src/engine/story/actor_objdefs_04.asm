@@ -77,7 +77,7 @@ TryPickRandomReachableTarget:
 .done:
 	pop bc ; $4947
 	ret ; $4948
-ActorScriptOp_WaitMove2:
+ActorScriptOp_WaitMoveOrBlocked:
 	ld hl, hActorPtr ; $4949
 	ld a, [hl+] ; $494c
 	ld h, [hl] ; $494d
@@ -257,7 +257,7 @@ ComputeSpriteScrollOffset:
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4a53
-	jr z, .clamp ; $4a56
+	jr z, .addShakeY ; $4a56
 	ld hl, wRasterScrollStartLY ; $4a58
 	ld a, [hl+] ; $4a5b
 	ld h, [hl] ; $4a5c
@@ -265,14 +265,14 @@ ComputeSpriteScrollOffset:
 	add hl, de ; $4a5e
 	ld d, h ; $4a5f
 	ld e, l ; $4a60
-.clamp:
+.addShakeY:
 	ld a, [wScreenShakeOffsetY] ; $4a61
 	ld l, a ; $4a64
 	ld h, $00 ; $4a65
 	bit 7, l ; $4a67
-	jr z, .done ; $4a69
+	jr z, .scaleShakeY ; $4a69
 	ld h, $ff ; $4a6b
-.done:
+.scaleShakeY:
 	add hl, hl ; $4a6d
 	add hl, hl ; $4a6e
 	add hl, hl ; $4a6f
@@ -316,7 +316,7 @@ DrawActors:
 	ld hl, ACTORF_MODE ; $4aae
 	add hl, bc ; $4ab1
 	ld a, [hl] ; $4ab2
-	cp $02 ; $4ab3
+	cp ACTORMODE_VISIBLE ; $4ab3
 	call z, DrawAndAnimateActor ; $4ab5
 	pop de ; $4ab8
 .next:
@@ -354,42 +354,43 @@ LoadActorObjectDef:
 	push bc ; $4ae7
 	ld de, wActorObjDef ; $4ae8
 	ld bc, wActorObjDef_SIZE ; $4aeb
+	ASSERT OBJDEF_SIZE <= wActorObjDef_SIZE
 	call CopyDataFromBank ; $4aee
 	pop bc ; $4af1
-	ld a, [wActorObjDef] ; $4af2
+	ld a, [wActorObjDef + OBJDEF_ATTR] ; $4af2
 	ld hl, ACTORF_OAM_ATTR ; $4af5
 	add hl, bc ; $4af8
 	ld [hl], a ; $4af9
-	ld a, [wActorObjDef + 1] ; $4afa
+	ld a, [wActorObjDef + OBJDEF_FACING_COUNT] ; $4afa
 	ld hl, ACTORF_FACING_COUNT ; $4afd
 	add hl, bc ; $4b00
 	ld [hl], a ; $4b01
 	ld hl, ACTORF_FRAME_TABLE ; $4b02
 	add hl, bc ; $4b05
-	ld a, [wActorObjDef + 4] ; $4b06
+	ld a, [wActorObjDef + OBJDEF_FRAME_TABLE] ; $4b06
 	ld [hl+], a ; $4b09
-	ld a, [wActorObjDef + 5] ; $4b0a
+	ld a, [wActorObjDef + OBJDEF_FRAME_TABLE + 1] ; $4b0a
 	ld [hl+], a ; $4b0d
 	ld hl, ACTORF_ANIM_TABLE ; $4b0e
 	add hl, bc ; $4b11
-	ld a, [wActorObjDef + 6] ; $4b12
+	ld a, [wActorObjDef + OBJDEF_ANIM_TABLE] ; $4b12
 	ld [hl+], a ; $4b15
-	ld a, [wActorObjDef + 7] ; $4b16
+	ld a, [wActorObjDef + OBJDEF_ANIM_TABLE + 1] ; $4b16
 	ld [hl+], a ; $4b19
-	ld hl, ACTORF_SHADOW_TABLE ; $4b1a
+	ld hl, ACTORF_FRAME_PLACE_TABLE ; $4b1a
 	add hl, bc ; $4b1d
-	ld a, [wActorObjDef + 10] ; $4b1e
+	ld a, [wActorObjDef + OBJDEF_FRAME_PLACE_TABLE] ; $4b1e
 	ld [hl+], a ; $4b21
-	ld a, [wActorObjDef + 11] ; $4b22
+	ld a, [wActorObjDef + OBJDEF_FRAME_PLACE_TABLE + 1] ; $4b22
 	ld [hl+], a ; $4b25
 	ld hl, ACTORF_OAM_ATTR ; $4b26
 	add hl, bc ; $4b29
 	ld a, [hl] ; $4b2a
-	cp $63 ; $4b2b
+	cp OBJDEF_ATTR_PALETTE_PTR ; $4b2b
 	jr nz, .initFields ; $4b2d
 	ld [hl], $02 ; $4b2f
 	push bc ; $4b31
-	ld hl, wActorObjDef + 8 ; $4b32
+	ld hl, wActorObjDef + OBJDEF_PALETTE ; $4b32
 	ld a, [hl+] ; $4b35
 	ld h, [hl] ; $4b36
 	ld l, a ; $4b37
@@ -408,7 +409,7 @@ LoadActorObjectDef:
 .initFields:
 	ld hl, ACTORF_MODE ; $4b51
 	add hl, bc ; $4b54
-	ld [hl], $02 ; $4b55
+	ld [hl], ACTORMODE_VISIBLE ; $4b55
 	ld hl, ACTORF_DRAWN_FACING ; $4b57
 	add hl, bc ; $4b5a
 	ld a, $ff ; $4b5b
@@ -433,23 +434,23 @@ SetupCharSpriteFromObjectDef:
 	ld de, wActorObjDef ; $4b7b
 	ld bc, wActorObjDef_SIZE ; $4b7e
 	call CopyDataFromBank ; $4b81
-	ld a, [wActorObjDef] ; $4b84
+	ld a, [wActorObjDef + OBJDEF_ATTR] ; $4b84
 	ld [wCharSpriteAttr], a ; $4b87
 	ld [wCharPaletteId], a ; $4b8a
 	ld hl, wCharFrameTablePtr ; $4b8d
-	ld a, [wActorObjDef + 4] ; $4b90
+	ld a, [wActorObjDef + OBJDEF_FRAME_TABLE] ; $4b90
 	ld [hl+], a ; $4b93
-	ld a, [wActorObjDef + 5] ; $4b94
+	ld a, [wActorObjDef + OBJDEF_FRAME_TABLE + 1] ; $4b94
 	ld [hl+], a ; $4b97
 	ld hl, wCharAnimTablePtr ; $4b98
-	ld a, [wActorObjDef + 6] ; $4b9b
+	ld a, [wActorObjDef + OBJDEF_ANIM_TABLE] ; $4b9b
 	ld [hl+], a ; $4b9e
-	ld a, [wActorObjDef + 7] ; $4b9f
+	ld a, [wActorObjDef + OBJDEF_ANIM_TABLE + 1] ; $4b9f
 	ld [hl+], a ; $4ba2
 	ld hl, wCharFramePlaceTablePtr ; $4ba3
-	ld a, [wActorObjDef + 10] ; $4ba6
+	ld a, [wActorObjDef + OBJDEF_FRAME_PLACE_TABLE] ; $4ba6
 	ld [hl+], a ; $4ba9
-	ld a, [wActorObjDef + 11] ; $4baa
+	ld a, [wActorObjDef + OBJDEF_FRAME_PLACE_TABLE + 1] ; $4baa
 	ld [hl+], a ; $4bad
 	ld hl, wCharFacingOctant ; $4bae
 	ld a, $ff ; $4bb1

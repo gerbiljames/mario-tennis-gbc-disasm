@@ -31,7 +31,7 @@ class Static(unittest.TestCase):
 
     def test_ram_free(self):
         import ram_free
-        self.assertEqual(sum(e - s for _, _, s, e in ram_free.free_ranges()), 4278)
+        self.assertEqual(sum(e - s for _, _, s, e in ram_free.free_ranges()), 4280)
 
     def test_twins(self):
         import twins
@@ -59,6 +59,14 @@ class Static(unittest.TestCase):
         self.assertEqual(target, "build/main.o")
         missing = [d for d in deps.split() if not d.startswith("data/") and not (ROOT / d).exists()]
         self.assertEqual(missing, [])
+
+    def test_consts_every_def_evaluates(self):
+        import consts
+        strings = {"HARDWARE_INC_VERSION", "tile", "tiles"}  # EQUS, not numbers
+        counters = {"AP_NUM_LOCATIONS", "AP_NUM_ITEMS"}  # `=` variables the ap_location/ap_item macros bump
+        failed = [f"{f.relative_to(ROOT)}:{n}: {line.strip()}" for f, n, line in consts.unevaluated()
+                  if line.split()[1] not in strings | counters]
+        self.assertEqual(failed, [])
 
     @needs_rgbasm
     def test_consts_match_assembler(self):
@@ -88,6 +96,17 @@ class Built(unittest.TestCase):
         out = run(TOOLS / "stats.py")
         self.assertIn("labels", out)
         self.assertIn("spelled out", out)
+
+    def test_ram_free_matches_sym(self):
+        import banksrc
+        import ram_free
+        sym = {}
+        for bank, addr, name in banksrc.read_sym(SYM):
+            sym.setdefault(name, (bank, addr))
+        wrong = [(name, f"{bank:02x}:{addr:04x}", sym.get(name))
+                 for _, bank, name, addr, _ in ram_free.placed()
+                 if name and sym.get(name) != (bank, addr)]
+        self.assertEqual(wrong, [])
 
     def test_eventtest_locations(self):
         import eventtest

@@ -1,4 +1,4 @@
-LoadMatchUiCourtTilemap:
+DrawTargetShotZoneOverlay:
 	add a ; $50fa
 	ld_hl_indexed TargetShotZoneOverlayOffsets ; $50fb
 	ld a, [hl+] ; $5102
@@ -13,7 +13,7 @@ LoadMatchUiCourtTilemap:
 	push hl ; $510f
 	push hl ; $5110
 	pop hl ; $5111
-	ld de, wCourtTilemapSaved + 9 * TILEMAP_WIDTH + 11 ; $5112
+	ld de, wCourtTilemapBase + 9 * TILEMAP_WIDTH + 11 ; $5112
 	ld_size bc, $0a, $05 ; $5115
 	call CopyTextRect ; $5118
 	pop hl ; $511b
@@ -21,7 +21,7 @@ LoadMatchUiCourtTilemap:
 	ld_size bc, $0a, $05 ; $511f
 	call CopyTextRect ; $5122
 	pop hl ; $5125
-	ld de, wCourtAttrmapSaved + 9 * TILEMAP_WIDTH + 11 ; $5126
+	ld de, wCourtAttrmapBase + 9 * TILEMAP_WIDTH + 11 ; $5126
 	ld_size bc, $0a, $05 ; $5129
 	call CopyTextRect ; $512c
 	pop hl ; $512f
@@ -58,7 +58,7 @@ MinigameTargetZoneBounds:
 	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x30
 MinigameConfig_ShootingStar:
 	; $5194, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
+	drill_def CHAR_BALL_MACHINE, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
 	twin_named init_minigame_medallion_match, InitMinigame_ShootingStar ; $51a4
 MinigameHooks_ShootingStar:
 	; $51b6, 16 bytes (mode_hooks)
@@ -69,13 +69,13 @@ MinigameHooks_ShootingStar:
 	dw ShootingStarHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ShootingStarHook_BallHit ; MODEHOOK_BALL_HIT
 	dw ShootingStarHook_Bounce ; MODEHOOK_BOUNCE
-	dw ShootingStarHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ShootingStarHook_NetCross ; MODEHOOK_NET_CROSS
 	dw ShootingStarHook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ShootingStarHook_MinigameStart:
-	call InitBallTargetActor ; $51c6
+	call InitShootingStarTarget ; $51c6
 	ld a, $01 ; $51c9
-	ld [wMinigameServeSlot], a ; $51cb
+	ld [wMinigameFeederPos], a ; $51cb
 	call StartMinigameMatch ; $51ce
 	ret ; $51d1
 ShootingStarHook_PerFrame:
@@ -86,11 +86,11 @@ ShootingStarHook_Draw:
 	call UpdateMinigameActors ; $51d9
 	ret ; $51dc
 ShootingStarHook_PointStart:
-	call ResetTargetHitState ; $51dd
+	call ResetShootingStarHitState ; $51dd
 	farcall AdvanceMatchRng ; $51e0
 	and $01 ; $51e3
 	inc a ; $51e5
-	ld hl, wMinigameServeSlot ; $51e6
+	ld hl, wMinigameFeederPos ; $51e6
 	add [hl] ; $51e9
 	cp $03 ; $51ea
 	jr c, .store ; $51ec
@@ -102,16 +102,16 @@ ShootingStarHook_PointStart:
 ShootingStarHook_PointEnd:
 	call EndMinigamePoint ; $51f5
 	ret ; $51f8
-ShootingStarHook_RallyTick:
+ShootingStarHook_NetCross:
 	call KeepMinigameCameraFixed ; $51f9
 	ret ; $51fc
 ShootingStarHook_Bounce:
-	call CheckMinigameStartBannerTrigger ; $51fd
+	call AwardWinnerOnReturnBounce ; $51fd
 	ret ; $5200
 ShootingStarHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $5201
+	call FreezeFeederAfterLaunch ; $5201
 	ret ; $5204
-InitBallTargetActor:
+InitShootingStarTarget:
 	call ClearMinigameActors ; $5205
 	ld de, ShootingStarTargetActorHandler ; $5208
 	ld bc, wMinigameActors ; $520b
@@ -121,7 +121,7 @@ InitBallTargetActor:
 	ld bc, wMinigameActors ; $5217
 	call SetMinigameActorPosition ; $521a
 	ret ; $521d
-ResetTargetHitState:
+ResetShootingStarHitState:
 	ld a, [wMinigameHitScored] ; $521e
 	and a ; $5221
 	jr nz, .clearHitScored ; $5222
@@ -135,16 +135,16 @@ ResetTargetHitState:
 	ret ; $5230
 ShootingStarTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5231
-	dw ShootingStarTargetState0 ; $5235 jumptable
-	dw ShootingStarTargetState1 ; $5237 jumptable
-	dw ShootingStarTargetState2 ; $5239 jumptable
-	dw ShootingStarTargetState3 ; $523b jumptable
+	dw ShootingStarTargetRespawn ; $5235 jumptable
+	dw ShootingStarTargetAwaitHit ; $5237 jumptable
+	dw ShootingStarTargetHitBurst ; $5239 jumptable
+	dw ShootingStarTargetIdle ; $523b jumptable
 	dw RetStub ; $523d jumptable
-AdvanceTargetActorState:
+AdvanceShootingStarActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
-ShootingStarTargetState0:
+ShootingStarTargetRespawn:
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $5244
 	and a ; $5247
 	jr z, .advance ; $5248
@@ -159,16 +159,16 @@ ShootingStarTargetState0:
 .advance:
 	xor a ; $525b
 	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $525c
-	call AdvanceTargetActorState ; $525f
-ShootingStarTargetState1:
-	call DrawTargetReticleSprite ; $5262
-	call IsBallInHitZone ; $5265
+	call AdvanceShootingStarActorState ; $525f
+ShootingStarTargetAwaitHit:
+	call DrawShootingStarSprite ; $5262
+	call IsBallInShootingStarHitZone ; $5265
 	and a ; $5268
 	ret z ; $5269
-	call AwardHitScore ; $526a
-	jp AdvanceTargetActorState ; $526d
-ShootingStarTargetState2:
-	call DrawTargetHitCountdown ; $5270
+	call AwardShootingStarHitScore ; $526a
+	jp AdvanceShootingStarActorState ; $526d
+ShootingStarTargetHitBurst:
+	call DrawShootingStarHitBurst ; $5270
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5273
 	dec [hl] ; $5276
 	ld a, [hl] ; $5277
@@ -182,11 +182,11 @@ ShootingStarTargetState2:
 	add hl, de ; $5284
 	ld de, $fdc0 ; $5285
 	call SetMinigameActorWorldPos ; $5288
-	jp AdvanceTargetActorState ; $528b
-ShootingStarTargetState3:
-	call DrawTargetReticleSprite ; $528e
+	jp AdvanceShootingStarActorState ; $528b
+ShootingStarTargetIdle:
+	call DrawShootingStarSprite ; $528e
 	ret ; $5291
-IsBallInHitZone:
+IsBallInShootingStarHitZone:
 	ld a, [wLastShotCharIndex] ; $5292
 	and $01 ; $5295
 	jp nz, .returnZero ; $5297
@@ -229,7 +229,7 @@ IsBallInHitZone:
 .returnZero:
 	xor a ; $52f7
 	ret ; $52f8
-AwardHitScore:
+AwardShootingStarHitScore:
 	ld a, $10 ; $52f9
 	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $52fb
 	ld hl, $0001 ; $52fe
@@ -243,11 +243,11 @@ AwardHitScore:
 	ld a, $01 ; $5310
 	ld [wMinigameHitScored], a ; $5312
 	ld a, [wMinigameHitStreak] ; $5315
-	ld_de_indexed MinigameHitStreakSounds ; $5318
+	ld_de_indexed ShootingStarHitStreakSounds ; $5318
 	ld a, [de] ; $531f
 	call PlaySoundManaged ; $5320
 	ld a, [wMinigameHitStreak] ; $5323
-	ld_de_indexed MinigameHitStreakMultipliers ; $5326
+	ld_de_indexed ShootingStarHitStreakMultipliers ; $5326
 	ld a, [de] ; $532d
 	call MulHLByA ; $532e
 	ld e, l ; $5331
@@ -259,45 +259,45 @@ AwardHitScore:
 	call AddToMinigameScore ; $5339
 	call StartScorePopup ; $533c
 	ld b, $07 ; $533f
-	call IncrementCappedCounter ; $5341
+	call IncrementMinigameHitStreak ; $5341
 	ld a, POINTOUTCOME_WINNER ; $5344
 	ld [wPointOutcome], a ; $5346
 	ld a, $01 ; $5349
 	ld [wPointOutcomeSide], a ; $534b
 	ret ; $534e
-MinigameHitStreakSounds:
+ShootingStarHitStreakSounds:
 	; $534f, 8 bytes (bytes:8)
 	db SFX_SCORE_STEP1, SFX_SCORE_STEP2, SFX_SCORE_STEP3, SFX_SCORE_STEP4, SFX_SCORE_STEP5, SFX_SCORE_STEP6, SFX_SCORE_STEP7, SFX_SCORE_STEP7
-MinigameHitStreakMultipliers:
+ShootingStarHitStreakMultipliers:
 	; $5357, 8 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
-DrawTargetReticleSprite:
-	call ProjectMinigameWorldPosition ; $535f
+DrawShootingStarSprite:
+	call ProjectShootingStarSprite ; $535f
 	ld c, $30 ; $5362
 	ld h, $fc ; $5364
 	ld l, $f1 ; $5366
 	call QueueSprite24x32 ; $5368
 	ldh a, [hVBlankCounter] ; $536b
 	and $1f ; $536d
-	ld_hl_indexed TargetReticleAnimFrames ; $536f
+	ld_hl_indexed ShootingStarAnimFrames ; $536f
 	ld a, [hl] ; $5376
 	cp $ff ; $5377
 	ret z ; $5379
-	farcall QueueMatchSpriteFrameA ; $537a
+	farcall LoadShootingStarFrameTiles ; $537a
 	ret ; $537d
-TargetReticleAnimFrames:
+ShootingStarAnimFrames:
 	; $537e, 32 bytes (bytes:8)
 	db $00, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
 	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x08
 	db $02, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
 	db $01, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x18
-DrawTargetHitCountdown:
-	call ProjectMinigameWorldPosition ; $539e
+DrawShootingStarHitBurst:
+	call ProjectShootingStarSprite ; $539e
 	ld c, $3c ; $53a1
 	ld a, [wMinigameSceneActor + MGACTOR_TIMER] ; $53a3
 	call QueueMinigameHitBurst ; $53a6
 	ret ; $53a9
-ProjectMinigameWorldPosition:
+ProjectShootingStarSprite:
 	ld hl, wMinigameSceneActor + MGACTOR_SCREEN_X ; $53aa
 	ld a, [hl+] ; $53ad
 	ld e, a ; $53ae
@@ -311,10 +311,10 @@ ProjectMinigameWorldPosition:
 	ld h, d ; $53b6
 	farcall ApplyCameraProjection ; $53b7
 	ld a, [wMinigameHitStreak] ; $53ba
-	ld_hl_indexed MinigameTargetSpriteOamAttrByHitStreak ; $53bd
+	ld_hl_indexed ShootingStarSpriteOamAttrByHitStreak ; $53bd
 	ld b, [hl] ; $53c4
 	ret ; $53c5
-MinigameTargetSpriteOamAttrByHitStreak:
+ShootingStarSpriteOamAttrByHitStreak:
 	; $53c6, 8 bytes (bytes:8)
 	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 QueueMinigameHitBurst:
@@ -390,7 +390,7 @@ InitMinigame_BananaBunch:
 	ld a, $05 ; $54ff
 	farcall SpawnMinigameTargetFormation ; $5501
 	ld a, $01 ; $5504
-	ld [wMinigameTargetsAltMode], a ; $5506
+	ld [wMinigameTargetsScoreMode], a ; $5506
 	ld a, $01 ; $5509
 	ld [wMinigameUsesWall], a ; $550b
 	ld a, [wMinigameLevel] ; $550e
@@ -409,6 +409,6 @@ MinigameHooks_BananaBunch:
 	dw BananaBunchHook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw BananaBunchHook_BallHit ; MODEHOOK_BALL_HIT
 	dw BananaBunchHook_Bounce ; MODEHOOK_BOUNCE
-	dw BananaBunchHook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw BananaBunchHook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS

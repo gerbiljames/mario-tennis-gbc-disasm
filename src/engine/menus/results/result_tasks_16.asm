@@ -1,4 +1,4 @@
-	twin_in get_cell_index_from_cursor_ptr, Unused_16_GetCellIndexFromCursorPtr, 16 ; $4399 Unused_16_GetCellIndexFromCursorPtr
+	twin_in get_menu_cursor_index_from_ptr, Unused_16_GetMenuCursorIndexFromPtr, 16 ; $4399 Unused_16_GetMenuCursorIndexFromPtr
 	twin_in set_menu_cursor_from_index, Unused_16_SetMenuCursorFromIndex, 16 ; $43a9 Unused_16_SetMenuCursorFromIndex
 	twin_in set_menu_cursor_from_index_to_ptr, Unused_16_SetMenuCursorFromIndexToPtr, 16 ; $43bb Unused_16_SetMenuCursorFromIndexToPtr
 Unused_16_ClearWram3Row64:
@@ -24,18 +24,17 @@ Unused_16_ClearWram3Row64Alt:
 UpdateResultScreenAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $43f6
 	ret ; $43f9
-Unused_16_DrawCourtDiagramMarkers:
+Unused_16_PlaceTextWithDiacritics:
 	push af ; $43fa
 	push bc ; $43fb
 .loop:
 	ld a, [hl] ; $43fc
 	cp $00 ; $43fd
-	jr z, Unused_16_CourtDiagramBaseTask.restore ; $43ff
+	jr z, .restore ; $43ff
 	ld [de], a ; $4401
 	inc hl ; $4402
 	ld a, [hl] ; $4403
 	cp TX_DAKUTEN ; $4404
-Unused_16_CourtDiagramBaseTask:
 	jr z, .diacritic ; $4406
 	cp TX_HANDAKUTEN ; $4408
 	jr nz, .nextCell ; $440a
@@ -61,7 +60,7 @@ Unused_16_CourtDiagramBaseTask:
 	inc de ; $4421
 	ld a, e ; $4422
 	and $1f ; $4423
-	jr nz, Unused_16_DrawCourtDiagramMarkers.loop ; $4425
+	jr nz, Unused_16_PlaceTextWithDiacritics.loop ; $4425
 	push hl ; $4427
 	ld h, d ; $4428
 	ld l, e ; $4429
@@ -69,7 +68,7 @@ Unused_16_CourtDiagramBaseTask:
 	ld d, h ; $442b
 	ld e, l ; $442c
 	pop hl ; $442d
-	jr Unused_16_DrawCourtDiagramMarkers.loop ; $442e
+	jr Unused_16_PlaceTextWithDiacritics.loop ; $442e
 .restore:
 	pop bc ; $4430
 	pop af ; $4431
@@ -130,10 +129,10 @@ RunMatchWinLoseScreen:
 .storyMatch:
 	xor a ; $449a
 .store:
-	ld [wResultScreenWon], a ; $449b
+	ld [wResultScreenIsVersus], a ; $449b
 	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
-	ld [wMatchWinLoseState], a ; $44a4
+	ld [wSavedMatchWinLoseFlag], a ; $44a4
 	call ApplyLinkRoleToWinLoseFlag ; $44a7
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
@@ -161,7 +160,7 @@ RunMatchWinLoseScreen:
 	ld [wRasterScrollEndLY], a ; $44ea
 	xor a ; $44ed
 	ld [wRasterScrollX], a ; $44ee
-	frame_task AdvanceResultScreenTimer ; $44f1
+	frame_task ScrollResultRasterBandTask ; $44f1
 .loop:
 	call AdvanceFrame ; $44f9
 	ld a, [wCurrentMatchIndex] ; $44fc
@@ -172,7 +171,7 @@ RunMatchWinLoseScreen:
 	call PrintDecimalByte ; $4505
 	pop af ; $4508
 	pop de ; $4509
-	ldh a, [hInputPressed] ; $450a
+	ldh a, [hInputRepeat] ; $450a
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
 	jr nz, .playSelectSfx ; $4511
@@ -190,7 +189,7 @@ RunMatchWinLoseScreen:
 	res B_IE_STAT, [hl] ; $452d
 	ld a, $03 ; $452f
 	ld [wAnimatedTilePeriod], a ; $4531
-	ld a, [wMatchWinLoseState] ; $4534
+	ld a, [wSavedMatchWinLoseFlag] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
 .pressedRight:
@@ -201,7 +200,7 @@ RunMatchWinLoseScreen:
 	call ClearFrameTasks ; $4548
 	call RunMatchStatsScreen ; $454b
 	push af ; $454e
-	ld a, [wMatchWinLoseState] ; $454f
+	ld a, [wSavedMatchWinLoseFlag] ; $454f
 	ld [wMatchWinLoseFlag], a ; $4552
 	pop af ; $4555
 	cp $ff ; $4556
@@ -244,50 +243,50 @@ InitMatchWinLoseScreen:
 	ld c, $00 ; $45b6
 	call LoadResultScreenPortraits ; $45b8
 	push_wram_bank WRAM_STAGING ; $45bb
-	ld hl, MatchWinLoseScreenGfx ; $45c4
+	ld hl, WinTextSpriteGfx ; $45c4
 	ld de, wDecompBuffer ; $45c7
 	call DecompressData ; $45ca
 	ld hl, wDecompBuffer ; $45cd
 	ld de, vTiles0 + VRAM_BANK1 ; $45d0
-	ld c, MatchWinLoseScreenGfx_SIZE / 16 ; $45d3
+	ld c, WinTextSpriteGfx_SIZE / 16 ; $45d3
 	call QueueVRAMCopy ; $45d5
-	ld hl, MatchWinLoseScreenGfx1 ; $45d8
+	ld hl, LoseTextSpriteGfx ; $45d8
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $45e4
-	ld c, MatchWinLoseScreenGfx1_SIZE / 16 ; $45e7
+	ld c, LoseTextSpriteGfx_SIZE / 16 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
 	ld_obj_pals de, 0, 3 ; $45ef
 	call LoadPaletteShadow ; $45f2
-	ld b, TILEBLOCK_MatchWinLoseGfx ; $45f5
-	ld c, MatchWinLoseGfx_SIZE / 16 ; $45f7
+	ld b, TILEBLOCK_WinLoseArrowGfx ; $45f5
+	ld c, WinLoseArrowGfx_SIZE / 16 ; $45f7
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop_wram_bank ; $45ff
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
-MatchWinLoseScreenGfx:
-	INCBIN "data/engine/menus/results/lz_MatchWinLoseScreenGfx.bin" ; $4608, 380 bytes
-	INCLUDE "data/engine/menus/results/lz_MatchWinLoseScreenGfx.inc" ; DEF MatchWinLoseScreenGfx_SIZE EQU its decoded length, generated from the .bin by make
-MatchWinLoseScreenGfx1:
-	INCBIN "data/engine/menus/results/lz_MatchWinLoseScreenGfx1.bin" ; $4784, 368 bytes
-	INCLUDE "data/engine/menus/results/lz_MatchWinLoseScreenGfx1.inc" ; DEF MatchWinLoseScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
+WinTextSpriteGfx:
+	INCBIN "data/engine/menus/results/lz_WinTextSpriteGfx.bin" ; $4608, 380 bytes
+	INCLUDE "data/engine/menus/results/lz_WinTextSpriteGfx.inc" ; DEF WinTextSpriteGfx_SIZE EQU its decoded length, generated from the .bin by make
+LoseTextSpriteGfx:
+	INCBIN "data/engine/menus/results/lz_LoseTextSpriteGfx.bin" ; $4784, 368 bytes
+	INCLUDE "data/engine/menus/results/lz_LoseTextSpriteGfx.inc" ; DEF LoseTextSpriteGfx_SIZE EQU its decoded length, generated from the .bin by make
 MatchWinLoseScreenPalettes:
 	INCLUDE "data/engine/menus/results/MatchWinLoseScreenPalettes.asm" ; $48f4, 24 bytes (palettes)
 LoadWinLoseScreenAssets:
-	ld a, [wResultScreenWon] ; $490c
+	ld a, [wResultScreenIsVersus] ; $490c
 	or a ; $490f
 	jr z, .nonVersus ; $4910
-	ld c, SCREENASSET_MatchStats2 ; $4912
+	ld c, SCREENASSET_MatchWinLoseVersus ; $4912
 	farcall LoadScreenAssetRecord ; $4914
-	jr .testGameFlagByNumber ; $4917
+	jr .checkDoubles ; $4917
 .nonVersus:
-	ld c, SCREENASSET_MatchStats ; $4919
+	ld c, SCREENASSET_MatchWinLose ; $4919
 	farcall LoadScreenAssetRecord ; $491b
-	jr .testGameFlagByNumber ; $491e
-.testGameFlagByNumber:
+	jr .checkDoubles ; $491e
+.checkDoubles:
 	ld de, FLAG_DOUBLES ; $4920
 	call TestGameFlagByNumber ; $4923
 	jr nz, .done ; $4926
@@ -333,7 +332,7 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $4998
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
-	jr .doneResult ; $49a1
+	jr .done ; $49a1
 .singles:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $49a3
 	rect_size $04, $04 ; $49a6
@@ -343,12 +342,12 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $49b2
 	ld h, $0e ; $49b6
 	farcall FillTilemapRect ; $49b8
-.doneResult:
+.done:
 	ret ; $49bb
 .versusMatch:
 	ld de, FLAG_DOUBLES ; $49bc
 	call TestGameFlagByNumber ; $49bf
-	jr z, .fillTilemapRect ; $49c2
+	jr z, .versusSingles ; $49c2
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $49c4
 	rect_size $03, $03 ; $49c7
 	ld h, $0c ; $49cb
@@ -366,7 +365,7 @@ SetWinLosePortraitPaletteAttrs:
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
 	jr .doneVersus ; $49f4
-.fillTilemapRect:
+.versusSingles:
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 13 ; $49f6
 	rect_size $03, $03 ; $49f9
 	ld h, $0c ; $49fd

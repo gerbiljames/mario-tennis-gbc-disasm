@@ -332,106 +332,106 @@ Unused_56_JoySpriteFramesCopy:
 JoyFramePlace:
 	INCLUDE "data/sprites/JoyFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 JoySpriteAnims:
-	dw JoySpriteAnim00 ; $7f24
-	dw JoySpriteAnim01 ; $7f26
-	dw JoySpriteAnim02 ; $7f28
-	dw JoySpriteAnim03 ; $7f2a
-	dw JoySpriteAnim04 ; $7f2c
-	dw JoySpriteAnim05 ; $7f2e
-	dw JoySpriteAnim06 ; $7f30
-	dw JoySpriteAnim07 ; $7f32
-	dw JoySpriteAnim08 ; $7f34
-	dw JoySpriteAnim09 ; $7f36
-	dw JoySpriteAnim10 ; $7f38
-	dw JoySpriteAnim11 ; $7f3a
-	dw JoySpriteAnim12 ; $7f3c
-	dw JoySpriteAnim13 ; $7f3e
-	dw JoySpriteAnim14 ; $7f40
-	dw JoySpriteAnim15 ; $7f42
-	dw JoySpriteAnim16 ; $7f44
-	dw JoySpriteAnim17 ; $7f46
-	dw JoySpriteAnim18 ; $7f48
-JoySpriteAnim00:
+	dw JoyStandAnim ; $7f24
+	dw JoyIdleAnim ; $7f26
+	dw JoyRunAnim ; $7f28
+	dw JoyCelebrateAnim ; $7f2a
+	dw JoyDejectedAnim ; $7f2c
+	dw JoyForehandAnim ; $7f2e
+	dw JoyBackhandAnim ; $7f30
+	dw JoyOverheadAnim ; $7f32
+	dw JoySmashAnim ; $7f34
+	dw JoyForehandQuickAnim ; $7f36
+	dw JoyBackhandQuickAnim ; $7f38
+	dw JoyOverheadQuickAnim ; $7f3a
+	dw JoySmashQuickAnim ; $7f3c
+	dw JoyForehandReadyAnim ; $7f3e
+	dw JoyBackhandReadyAnim ; $7f40
+	dw JoyOverheadReadyAnim ; $7f42
+	dw JoyServeReadyAnim ; $7f44
+	dw JoyServePrepAnim ; $7f46
+	dw JoyDiveAnim ; $7f48
+JoyStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-JoySpriteAnim01:
+JoyIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-JoySpriteAnim02:
+JoyRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-JoySpriteAnim03:
+JoyCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
 	anim_frame $19, 20
 	anim_loop $02
-JoySpriteAnim04:
+JoyDejectedAnim:
 	; $7f65, 8 bytes (sprite_anim)
 	anim_frame $1a, 10
 	anim_frame $1b, 10
 	anim_frame $1c, 20
 	anim_loop $02
-JoySpriteAnim05:
+JoyForehandAnim:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-JoySpriteAnim06:
+JoyBackhandAnim:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-JoySpriteAnim07:
+JoyOverheadAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-JoySpriteAnim08:
+JoySmashAnim:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-JoySpriteAnim09:
+JoyForehandQuickAnim:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-JoySpriteAnim10:
+JoyBackhandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-JoySpriteAnim11:
+JoyOverheadQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-JoySpriteAnim12:
+JoySmashQuickAnim:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-JoySpriteAnim13:
+JoyForehandReadyAnim:
 	; $7f93, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-JoySpriteAnim14:
+JoyBackhandReadyAnim:
 	; $7f96, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-JoySpriteAnim15:
+JoyOverheadReadyAnim:
 	; $7f99, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-JoySpriteAnim16:
+JoyServeReadyAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-JoySpriteAnim17:
+JoyServePrepAnim:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -439,7 +439,7 @@ JoySpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-JoySpriteAnim18:
+JoyDiveAnim:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

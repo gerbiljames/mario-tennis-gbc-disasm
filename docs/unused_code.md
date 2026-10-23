@@ -1,6 +1,6 @@
 # Unused code, and the patterns in it
 
-965 labels carry an `Unused` prefix: 799 routines and 166 data blobs.
+An `Unused` prefix marks a routine or data blob nothing live reaches.
 "Unused" is a proof, not a guess: nothing reachable from the game's entry
 points -- the reset, interrupt and `rst` vectors -- reaches the label, by
 call, jump, branch, pointer table, macro body, fall-through or farcall. A
@@ -31,9 +31,9 @@ data label only dead code names (`FontTiles`, read by a routine after a
 ## Dead roots
 
 Many `Unused` routines have no reference at all: ROM0 spares
-(`Unused_00_FarCallIndexed1`-`3`, `Unused_00_FarCopyIndexed`,
-`Unused_00_AngleFromVector`, …), the save-repair block helpers, per-bank
-map-script helpers no bank calls, menu-cursor variants, 19 `ret`-only stubs,
+(`Unused_00_FarQueueVRAMCopyIndexed`, `_FarVRAMDMAIndexed`, `_FarCopyMemoryFastIndexed`, `Unused_00_FarCopyIndexed`,
+`Unused_00_SqrtHL`, …), the save-repair block helpers, per-bank
+map-script helpers no bank calls, menu-cursor variants, `ret`-only stubs,
 and dead copies in `src/twins` groups (the trajectory helpers in banks
 `$20`-`$2c`, the menu-cursor and decimal-number copies).
 
@@ -44,12 +44,12 @@ dialogue-at-position and auto-size paged-menu helpers, the scene viewer, the
 EXP editor hotkey), routines only `Unused` code calls (the helpers of the
 debug save-data, minigame-flags and character-select screens, the
 high-score confirm screen), and everything below them. The largest subtrees
-are the debug save-data flow (22 routines), the minigame-flags debug screen
-(20), the high-score confirm screen (20) and the minigame pause menu (11).
+are the debug save-data flow, the minigame-flags debug screen, the
+high-score confirm screen and the minigame pause menu.
 
 Code after an unconditional `ret` or `jp` with no label on it runs for no
 one. `CheckDebugStatsEditorHotkey` begins with `ret`, so everything after it
--- the in-match debug stats editor, 16 routines down to the ROM0 helpers only
+-- the in-match debug stats editor, down to the ROM0 helpers only
 the editor calls (`Unused_00_CopyTextString`, `_DrawHexWord`,
 `_MoveCursorVertical`) -- is `Unused`.
 
@@ -66,7 +66,7 @@ it reached must be named `Unused`) or **live**, with how it is written;
 `make check` fails on an unreviewed one. The four dead ones:
 
 * `hFadeState` bit 7, which only an unreferenced routine sets, so
-  `Unused_00_ApplyWhiteFade` never runs (`docs/bugs.md`);
+  `Unused_00_ApplyPackedFade` never runs (`docs/bugs.md`);
 * `wSecondaryTimerMode`: `UpdateGameTimer` runs
   `Unused_00_TickSecondaryTimer` when it is 1, and the only store to it is
   `Unused_00_TickSecondaryTimerCountdown` writing `$ff`;
@@ -80,12 +80,12 @@ match id word, all written through pointers.
 ## Checked at run time
 
 No `Unused` routine runs in play (one sweep artifact below) in the
-`tools/eventtest.py --coverage` sweeps (every story location under 36 story
-states, main-menu and targeted sessions, link play, damaged-save, drill-id and handler targets). The
+`tools/eventtest.py --coverage` sweeps (every story location under every story
+state, main-menu and targeted sessions, link play, damaged-save, drill-id and handler targets). The
 reverse holds too: every reachable routine has been entered, by play or, for
-the 158 nothing played into, by `tools/steer.py` forcing the branches on a
+those nothing played into, by `tools/steer.py` forcing the branches on a
 call chain down from a routine some session entered (`docs/STATUS.md` lists
-the runtime tools). Of those 158, `SeniorCourtReloadIntoVictoryScene` runs
+the runtime tools). Of those, `SeniorCourtReloadIntoVictoryScene` runs
 by entering the Senior Court by entry point `$0e`, which no `map_entry` row
 lists (the game sets it returning from a match), and two are the dead-by-data
 routines above.
@@ -133,7 +133,7 @@ mostly small, all siblings of live ones: `Unused_00_ForceFadeOut` is
 / `_EnableVBlankInterrupt` / two `SetInterrupts…` variants are the interrupt
 helpers the game never selects, `Unused_00_SwitchCPUSpeedSingle`,
 `_FarDecompressData` (94% of `FarCopyBytes`), `_ReadFarVectorEntry`,
-`_MulHLByDEBothSigned`, `_PrintDecimalByteSigned`, `_BeginWhiteFadeOut`.
+`_MulHLByDEBothSigned`, `_PrintDecimalByteSigned`, `_BeginPackedFadeOut`.
 The engine was written as a library and the game used the subset it needed.
 
 **4. Debug tooling whose entry point is gone.** The largest unused routines
@@ -148,7 +148,7 @@ the menu that would launch them is unreachable (the retail build never sets
 `hDebugStepMode`, see `docs/screens_and_ui.md`). The developer "Test" map
 (`docs/story_mode.md`) is the part of this tooling that *is* reachable.
 
-**5. Text-engine features nobody typed.** Bank `$05` has 52 unused routines,
+**5. Text-engine features nobody typed.** Bank `$05` has many unused routines,
 the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `DecimalByte` (printf-style inline renderers, near twins of the live
 `Print*`), `Unused_05_SetTextVar`, the streamed tilemap writers
@@ -156,9 +156,9 @@ the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `Unused_05_WriteDialogueToTilemapStreamed`) and the
 whole-plane queue helpers. Same shape as pattern 3, one bank up.
 
-**6. Templates and stubs.** `Unused_10_Test2Npc04`-`0A` are seven
+**6. Templates and stubs.** `Unused_10_Test2Npc03ServiceMatch2`-`Npc0ANetGameMatch3` are eight
 drill-launcher handlers for the "Test 2" debug map, the template of its live
-NPCs `0B`-`0D` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
+NPCs `0B`-`12` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
 (`Unused_11_NullScriptA`-`C`) and three more after the last row of a table
 (`Unused_16_StubRet`, `Unused_1b_StubRet3`, `Unused_38_StubRet`); `Unused_17_StubRet`, `Unused_18_StubRet3`
 and the `Unused_1b_StubRet1`/`2` pair; `Unused_39_PushPopNop_1`/`_2` and
@@ -173,10 +173,10 @@ and `Unused_07_ApplyCharStatPreset` (168 instructions of stat presets
 nothing loads) are the largest bodies with no live twin at all.
 `Unused_10_SwingContestPrototype` is an early cut of bank `$15`'s swing
 contest (count task, then the GO sound), its counters two bytes lower.
-`Unused_08_DrawStandingShadowSlot16`, the ball-ETA wrapper and the timer
+`Unused_08_DrawSlotSprite16`, the ball-ETA wrapper and the timer
 trampoline in bank `$08` are match-engine hooks left in place.
 
-**8. Data that came along.** By bytes the 166 unused blobs are mostly
+**8. Data that came along.** By bytes the unused blobs are mostly
 bank `$0c`, an entire sound bank of 36 channel scripts that the sound-id
 tables never index (`docs/sound_engine.md`), the Japanese font and
 window tiles in bank `$01` (`Unused_01_JpFontTiles`, 3,136 bytes, and
@@ -190,15 +190,17 @@ in the other story banks that carry them
 
 ## Where it sits
 
-| bank | unused routines | what |
-|---|---|---|
-| `$1b` | 80 | the debug save-data flow and its screens |
-| `$1a` | 73 | minigame pause menu, EXP screen and editor, character viewer |
-| `$00` | 60 | ROM0 library spares |
-| `$05` | 52 | text engine spares |
-| `$18` | 44 | confirm and two-option screens, box and number drawers |
-| `$10` | 36 | Test 2 NPC templates, story helpers |
-| `$03` | 30 | the save editor and its block helpers |
+Most of it sits in a few banks:
+
+| bank | what |
+|---|---|
+| `$1b` | the debug save-data flow and its screens |
+| `$1a` | minigame pause menu, EXP screen and editor, character viewer |
+| `$00` | ROM0 library spares |
+| `$05` | text engine spares |
+| `$18` | confirm and two-option screens, box and number drawers |
+| `$10` | Test 2 NPC templates, story helpers |
+| `$03` and `$38` | the save editor and its block helpers; link and character-select spares |
 
 The long tail is stubs and one-off helpers; the bulk of the bytes is the
 debug tooling.
@@ -217,7 +219,7 @@ Eight routines had no label to classify: each sits straight after a table
 (a `dw` jump table, a farcall slot list, a record array), where nothing
 falls through, and no pointer anywhere in the ROM holds its address:
 `Unused_00_RenderNumberToTiles`, `Unused_08_DrawShotAimMarker`,
-`Unused_0b_GetBallXAndDepth`, `Unused_10_Test2Npc03` (the first of the Test 2
+`Unused_0b_GetBallXAndDepth`, `Unused_10_Test2Npc03ServiceMatch2` (the first of the Test 2
 map's drill-launcher NPC handlers), `Unused_38_GetGridEntryAtCursor`, and the
 corner-bracket drawers of banks `$16` and `$17`
 (`Unused_16_DrawWobblingCornerBrackets`, whose old label sat sixteen bytes
@@ -227,13 +229,13 @@ label between are a lone dead `ret` after a jump table, or a dead case inside
 a live routine's own scope.
 
 Two more sat inside palette blobs in bank `$3e`, straight after the last
-palette of each court-select screen: `Unused_3e_DrawCourtSelect4TitleText`
-and `Unused_3e_DrawCourtSelect9TitleText`, an older way of putting the
+palette of each court-select screen: `Unused_3e_DrawCourtSelect4StatsText`
+and `Unused_3e_DrawCourtSelect9StatsText`, an older way of putting the
 cursor's court name into the title row, sharing three helpers and four small
 tables after the first one. `Unused_08_AdvanceCharStatePhase`, a copy of
 `AdvanceCharStatePhase` after `CharPointEndState`'s jump table, had been read
 as two more table entries.
 Three were carved as raw `db`: `Unused_02_GetCharArchetypeField`,
-`Unused_0a_FarcallUpdateSceneAnimation`, and
+`Unused_0a_FarcallUpdateEpilogueEndAnimation`, and
 `Unused_12_PushPartnerGenderShortTextArg`, a `ld a, [wStoryPartnerGender]`
 falling into `PushShortTextArg_12`.

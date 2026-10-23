@@ -58,8 +58,8 @@ DataPtr_DormEntranceCollisionMap:
 	dw DormEntranceCollisionMap ; $4038
 DataPtr_DormEntranceBehaviorMap:
 	dw DormEntranceBehaviorMap ; $403a
-DataPtr_DormEntranceSceneUnusedSlot:
-	dw DormEntranceSceneUnusedSlot ; $403c
+DataPtr_DormEntranceSceneNoAnimTiles:
+	dw DormEntranceSceneNoAnimTiles ; $403c
 DataPtr_DormEntranceTiles:
 	dw DormEntranceTiles ; $403e
 JuniorClassCourtSceneConfig:
@@ -118,5 +118,5 @@ DormEntranceCollisionMap:
 	INCBIN "data/scenes/lz_DormEntranceCollisionMap.bin" ; $7b83, 95 bytes
 DormEntranceBehaviorMap:
 	INCBIN "data/scenes/lz_DormEntranceBehaviorMap.bin" ; $7be2, 75 bytes
-DormEntranceSceneUnusedSlot:
+DormEntranceSceneNoAnimTiles:
 	; $7c2d, 979 bytes fill to bank end (linker-padded)

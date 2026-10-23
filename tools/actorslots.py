@@ -33,8 +33,9 @@ The analysis follows control flow through the story code carrying the set of
 A routine that can also be entered from a place the analysis does not
 follow (an unwalked caller, a pointer it does not resolve) only yields names
 that do not depend on its entry state. `make check` runs `check()`: a name
-whose slot holds a different actor in some list the analysis finds possible
-at that line is a failure.
+whose own list cannot be active at that line, or whose slot holds a
+different actor in some list that can, is a failure. Where several
+candidates agree, `Chooser` picks the list a name spells.
 """
 import argparse
 import atexit
@@ -62,7 +63,7 @@ ACTOR_ARGS = {
     ("script_set_actor_script", 0), ("script_face_toward", 0), ("script_face_toward", 1),
     ("script_set_speed", 0), ("script_get_actor_state", 0), ("script_wait_actor_script", 0),
     ("script_null_script", 0), ("script_jump_velocity", 0), ("script_face_pair", 0),
-    ("script_face_pair", 1), ("script_move_player_to_actor", 0), ("script_set_active", 0),
+    ("script_face_pair", 1), ("script_move_player_to_actor", 0), ("script_set_actor_mode", 0),
     ("script_move_angle", 0), ("script_set_objdef", 1), ("script_lock_facing", 0),
     ("script_unlock_facing", 0), ("script_wait_jump", 0), ("script_follow", 0), ("script_follow", 1),
     ("script_walk_to_actor", 0), ("script_walk_to_actor", 1),
@@ -103,20 +104,31 @@ FLAG_LISTS = {
     "IslandOpenFinalActorsDoubles_0f": {"FLAG_DOUBLES": 1, "FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL": 1},
     "SinglesTravelingTeamActors_13": {"FLAG_DOUBLES": 0},
     "DoublesTravelingTeamActors_13": {"FLAG_DOUBLES": 1},
-    "End10VarsityCourtActorsAlt_27": {"FLAG_DOUBLES": 0},
-    "End10VarsityCourtActorsAltB_27": {"FLAG_DOUBLES": 1},
-    "End16BeforeFinalsActorsAlt_27": {"FLAG_DOUBLES": 0},
-    "End16BeforeFinalsActorsAltB_27": {"FLAG_DOUBLES": 1},
-    "End17AwardCeremonyActorsAlt_27": {"FLAG_DOUBLES": 1},
+    "End10VarsityCourtActorsSingles_27": {"FLAG_DOUBLES": 0},
+    "End10VarsityCourtActorsDoubles_27": {"FLAG_DOUBLES": 1},
+    "End16BeforeFinalsActorsSingles_27": {"FLAG_DOUBLES": 0},
+    "End16BeforeFinalsActorsDoubles_27": {"FLAG_DOUBLES": 1},
+    "End17AwardCeremonyActorsDoubles_27": {"FLAG_DOUBLES": 1},
+    "End4JrCourtActorsDoubles_27": {"FLAG_DOUBLES": 1},
+    "AwardsCeremonyActorsDoubles_0f": {"FLAG_DOUBLES": 1},
+    "SeniorCourtActorsA_12": {"FLAG_DOUBLES": 0},
+    "SeniorCourtActorsB_12": {"FLAG_DOUBLES": 1},
+}
+# The game picks the junior court location by FLAG_DOUBLES, but a debug warp
+# can load either under both values: these steer which candidate a name
+# spells (Chooser), never which candidates the check accepts.
+HINT_LISTS = {
+    "JuniorClassCourtSinglesActors_11": {"FLAG_DOUBLES": 0},
+    "JuniorClassCourtDoublesActors_11": {"FLAG_DOUBLES": 1},
 }
 # A tile trigger whose cell is not in the map's own behaviour data runs only
 # under the lists installed by the routine that writes the cell:
 # LoadIslandOpenRoundNpcs writes trigger $0f for singles, $0e for doubles.
 TILE_LISTS = {
-    "TournamentTile0F_0f": {"TournamentActors_0f", "IslandOpenRound2Actors_0f",
-                            "IslandOpenSemifinalActors_0f", "IslandOpenFinalActors_0f"},
-    "TournamentTile0E_0f": {"IslandOpenRound1ActorsDoubles_0f", "IslandOpenSemifinalActorsDoubles_0f",
-                            "IslandOpenFinalActorsDoubles_0f"},
+    "TournamentRoundCallTileSingles_0f": {"TournamentActors_0f", "IslandOpenRound2Actors_0f",
+                                          "IslandOpenSemifinalActors_0f", "IslandOpenFinalActors_0f"},
+    "TournamentRoundCallTileDoubles_0f": {"IslandOpenRound1ActorsDoubles_0f", "IslandOpenSemifinalActorsDoubles_0f",
+                                          "IslandOpenFinalActorsDoubles_0f"},
 }
 
 
@@ -124,11 +136,11 @@ def constants():
     return consts.constants()
 
 
-def stage_filter(st, var, ok):
+def stage_filter(st, var, ok, flags=FLAG_LISTS):
     """Keep the states whose list is not bound to var's stage, or has a stage ok() accepts."""
     if var.startswith("FLAG_"):
-        return frozenset(x for x in st if var not in FLAG_LISTS.get(x[0], {})
-                         or ok(FLAG_LISTS[x[0]][var]))
+        return frozenset(x for x in st if var not in flags.get(x[0], {})
+                         or ok(flags[x[0]][var]))
     return frozenset(x for x in st if STAGE_LISTS.get(x[0], (None,))[0] != var
                      or any(ok(v) for v in STAGE_LISTS[x[0]][1]))
 DATA = re.compile(r"\t(db|dw|dn|ds|map_(?!cell\b)\w+|as_\w+|dslot|INCBIN|INCLUDE|anim_\w+|char_record|char_stats_row|"
@@ -165,7 +177,8 @@ class Source:
         for n, (b, i, e) in self.funcs.items():
             body = self.banks[b][0][i + 1:e]
             rows = [x for x in body if x.startswith("\tmap_actor ")]
-            if rows and any(x.startswith("\tmap_actor_end") for x in body):
+            if (rows or any("(map_actors)" in x for x in body[:2])) and \
+                    any(x.startswith("\tmap_actor_end") for x in body):
                 args = [[a.strip() for a in x.split(";")[0].replace("map_actor", "", 1).split(",")]
                         for x in rows]
                 self.lists[n] = [(a[1], a[5]) for a in args]
@@ -227,14 +240,14 @@ class Source:
         return True
 
 
-def dispatch(info, st):
+def dispatch(info, st, flags=FLAG_LISTS):
     """Jump-table targets with the states that reach each: a stage-indexed
     table's entry only runs at its own stage."""
     out = []
     for t in info:
         if isinstance(t[1], tuple) or (len(t) == 2 and isinstance(t[0], tuple)):
             entry, (var, stage) = t
-            out.append((entry, stage_filter(st, var, lambda x, stage=stage: x == stage)))
+            out.append((entry, stage_filter(st, var, lambda x, stage=stage: x == stage, flags)))
         else:
             out.append((t, st))
     return out
@@ -245,8 +258,9 @@ def entry_of_target(t):
 
 
 class Flow:
-    def __init__(self, src):
+    def __init__(self, src, flags=FLAG_LISTS):
         self.s = src
+        self.flags = flags
         self.tables = {t["NpcScripts"] for t in src.trees.values() if "NpcScripts" in t}
         for n in src.funcs:
             if src.is_story(n):
@@ -288,7 +302,7 @@ class Flow:
     def stage_compare(self, L, i):
         """(cond, stage, variable) when line i branches on a compare of a loaded stage."""
         code = L[i].split(";")[0].strip()
-        m = re.match(r"(?:jr|jp|ret) (nz|z|nc|c)\b", code)
+        m = re.match(r"(?:jr|jp|ret|call) (nz|z|nc|c)\b", code)
         if not m:
             return None
         k = i - 1
@@ -310,7 +324,7 @@ class Flow:
             elif re.match(r"ld a, \[(\w+)\]$", c) and c[7:-1] in STAGE_VARS:
                 var = c[7:-1]
                 break
-            elif not (mm or re.match(r"(jr|jp) (nz|z|nc|c),", c)):
+            elif not (mm or re.match(r"(jr|jp|call) (nz|z|nc|c),", c)):
                 return None
             k -= 1
         if k < 0 or cmp is None:
@@ -349,9 +363,17 @@ class Flow:
         m = re.match(r"script_respawn_actors (\w+)$", code)
         if m:
             return ("install", m.group(1) if m.group(1) in s.lists else ANY)
-        m = re.match(r"(call|farcall) (\w+(?:\.\w+)?)$", code)
+        m = re.match(r"(call|farcall) (?:(nz|z|nc|c), )?(\w+(?:\.\w+)?)$", code)
+        if m and m.group(2):
+            t = m.group(3)
+            if "RespawnLocationActors" in t or t in ("WriteStoryStateWord", "JumpToHL", "CallHLInBankA"):
+                return ("unknown_call", None)
+            r = self.resolve(b, i, t)
+            if r and r[1] is not None and s.is_story(t.split(".")[0]):
+                return ("ccall", r)
+            return ("nop", None)
         if m:
-            t = m.group(2)
+            t = m.group(3)
             if "RespawnLocationActors" in t:
                 lm = re.findall(r"ld hl, (\w+)", " ".join(prev[-3:]))
                 return ("install", lm[-1] if lm and lm[-1] in s.lists else ANY)
@@ -424,19 +446,23 @@ class Flow:
                 kind, info = self.step(b, i)
                 if kind == "data":
                     break
-                cmp = self.stage_compare(L, i) if kind in ("cjump", "ctail", "cret", "cjump_out") else None
+                cmp = self.stage_compare(L, i) if kind in ("cjump", "ctail", "ccall", "cret", "cjump_out") else None
                 if cmp:
                     cond, v, var = cmp
                     test = {"z": lambda x: x == v, "nz": lambda x: x != v,
                             "c": lambda x: x < v, "nc": lambda x: x >= v}[cond]
-                    taken = stage_filter(st, var, test)
-                    st = stage_filter(st, var, lambda x: not test(x))
+                    taken = stage_filter(st, var, test, self.flags)
+                    st = stage_filter(st, var, lambda x: not test(x), self.flags)
                     if kind == "cjump":
                         work.append((info, taken))
                     elif kind == "ctail":
                         if calls is not None:
                             calls.append((info, taken))
                         out |= self.apply(info, taken)
+                    elif kind == "ccall":
+                        if calls is not None:
+                            calls.append((info, taken))
+                        st = frozenset(set(st) | self.apply(info, taken))
                     elif kind == "cret":
                         out |= taken
                     else:
@@ -452,15 +478,19 @@ class Flow:
                     st = frozenset((l, t, False) for (l, t, _) in st)
                 elif kind in ("call", "multicall"):
                     res = set()
-                    for ce, cs in (dispatch(info, st) if kind == "multicall" else [(info, st)]):
+                    for ce, cs in (dispatch(info, st, self.flags) if kind == "multicall" else [(info, st)]):
                         if calls is not None:
                             calls.append((ce, cs))
                         res |= self.apply(ce, cs)
                     st = frozenset(res)
+                elif kind == "ccall":
+                    if calls is not None:
+                        calls.append((info, st))
+                    st = frozenset(set(st) | self.apply(info, st))
                 elif kind == "unknown_call":
                     st = frozenset(set(st) | self.poison(st))
                 elif kind == "multitail":
-                    for ce, cs in dispatch(info, st):
+                    for ce, cs in dispatch(info, st, self.flags):
                         if calls is not None:
                             calls.append((ce, cs))
                         out |= self.apply(ce, cs)
@@ -605,7 +635,7 @@ class Flow:
                 if not code.strip() or re.match(r"^\.?\w+:", code):
                     continue
                 k, _ = self.step(b, i)
-                if (b, i) in walked and k in ("call", "multicall", "multitail", "tail", "ctail", "jump", "cjump"):
+                if (b, i) in walked and k in ("call", "ccall", "multicall", "multitail", "tail", "ctail", "jump", "cjump"):
                     continue
                 if re.match(r"\s*(map_|as_call|as_jump)", code) or s.owner[(b, i)] in s.trees:
                     continue
@@ -621,7 +651,7 @@ class Flow:
         for (b, i) in walked:
             k, info = self.step(b, i)
             for t in ([entry_of_target(x) for x in info] if k in ("multicall", "multitail")
-                      else [info] if k in ("call", "tail", "ctail") else []):
+                      else [info] if k in ("call", "ccall", "tail", "ctail") else []):
                 callees[s.owner[(b, i)]].add(s.owner[t])
         self.tainted, stack = set(), list(ext)
         while stack:
@@ -660,9 +690,63 @@ class Flow:
                     yield b, k, "map_script", 0, m.group(1), (None if ANY in ls else sorted(ls))
 
 
+def list_mode(lst):
+    """The mode ("Singles" or "Doubles") a list belongs to, if one."""
+    v = {**FLAG_LISTS, **HINT_LISTS}.get(lst, {}).get("FLAG_DOUBLES")
+    if v is not None:
+        return ("Singles", "Doubles")[v]
+    return next((m for m in ("Singles", "Doubles") if m in lst), None)
+
+
+class Chooser:
+    """Which of the candidate lists that agree on a slot a name spells: one
+    the FLAG_DOUBLES-pruned flow (HINT_LISTS) still allows, then one whose
+    mode the nearest local label, else the routine's name, says, one the
+    routine installs, the location's default list, the list the operand
+    already names, the list most of the routine's sites can be under, the
+    shortest name."""
+    def __init__(self, src, flow):
+        self.s = src
+        hint = Flow(src, {**FLAG_LISTS, **HINT_LISTS})
+        hint.analyse()
+        self.hint = {(b, k): set(ls) for b, k, _, _, _, ls in hint.sites() if ls}
+        self.defaults = {t.get("Actors") for t in src.trees.values()}
+        self.per_owner = collections.defaultdict(collections.Counter)
+        for b, k, _, _, _, ls in flow.sites():
+            for l in ls or ():
+                self.per_owner[src.owner[(b, k)]][l] += 1
+        self.installs = collections.defaultdict(set)
+        for n in src.funcs:
+            for x in src.body(n):
+                m = re.match(r"\tscript_respawn_actors (\w+)", x)
+                if m:
+                    self.installs[n].add(m.group(1))
+
+    def __call__(self, b, k, ls, slot, current=None):
+        s = self.s
+        ls = [l for l in ls if slot - 3 < len(s.rowname[l]) and s.rowname[l][slot - 3]]
+        if not ls:
+            return None
+        owner = s.owner[(b, k)]
+        hint = self.hint.get((b, k), set()) & set(ls)
+        local = next((m.group(1) for m in (LOCAL.match(s.banks[b][0][i])
+                                           for i in range(k, s.lab_at[(b, owner)], -1)) if m), "")
+        mode = next((m for m in ("Singles", "Doubles") if m.lower() in local.lower()), None) or \
+            next((m for m in ("Singles", "Doubles") if m in owner), None)
+
+        def key(l):
+            lm = list_mode(l)
+            return (bool(hint) and l not in hint,
+                    0 if not mode or lm == mode else 1 if lm is None else 2,
+                    l not in self.installs[owner], l not in self.defaults, l != current,
+                    -self.per_owner[owner][l], len(l), l)
+        return "ACTOR_" + s.rowname[min(ls, key=key)][slot - 3]
+
+
 def evaluate(src, flow):
     """(renames, conflicts, counts): renames are (file, line, macro, arg, old, new)."""
     renames, conflicts, counts = [], [], collections.Counter()
+    choose = Chooser(src, flow)
     for b, k, op, pos, a, ls in flow.sites():
         f, ln = src.banks[b][1][k]
         twin = src.banks[b][0][k] != Path(f).read_text().split("\n")[ln - 1]
@@ -673,7 +757,7 @@ def evaluate(src, flow):
             if ls is not None:
                 bad = [l for l in ls if l not in src.roles[a][1]]
                 if bad:
-                    conflicts.append((f, ln, a, bad))
+                    conflicts.append((f, ln, a, f"does not hold in {', '.join(bad)}"))
             continue
         if a.startswith("ACTOR_"):
             counts["names"] += 1
@@ -682,7 +766,15 @@ def evaluate(src, flow):
             l0, slot = src.slot_of[a]
             bad = [l for l in ls if src.ident(l, slot) != src.ident(l0, slot)]
             if bad:
-                conflicts.append((f, ln, a, bad))
+                conflicts.append((f, ln, a, f"does not hold in {', '.join(bad)}"))
+                continue
+            if l0 not in ls:
+                conflicts.append((f, ln, a, f"names a row of {l0}, which cannot be active here ({', '.join(ls)})"))
+            name = choose(b, k, ls, slot, l0)
+            if name != a:
+                counts["respell"] += 1
+                if not twin:
+                    renames.append((f, ln, op, pos, a, name))
         elif re.match(r"\$[0-9a-f]{2}$", a) and int(a[1:], 16) >= 3:
             slot = int(a[1:], 16)
             counts["numbers"] += 1
@@ -690,12 +782,13 @@ def evaluate(src, flow):
                 counts["unknown"] += 1
                 continue
             ids = {src.ident(l, slot) for l in ls}
-            if None in ids or len(ids) != 1:
+            name = choose(b, k, ls, slot)
+            if None in ids or len(ids) != 1 or name is None:
                 counts["ambiguous"] += 1
             elif twin:
                 counts["twin"] += 1
             else:
-                renames.append((f, ln, op, pos, a, "ACTOR_" + src.rowname[ls[0]][slot - 3]))
+                renames.append((f, ln, op, pos, a, name))
     return renames, conflicts, counts
 
 
@@ -705,9 +798,20 @@ def check(fail):
     flow = Flow(src)
     flow.analyse()
     renames, conflicts, counts = evaluate(src, flow)
-    for f, ln, name, bad in conflicts:
-        fail("slots", f"{Path(f).relative_to(ROOT)}:{ln}: {name} does not hold in {', '.join(bad)}")
+    for f, ln, name, why in conflicts:
+        fail("slots", f"{Path(f).relative_to(ROOT)}:{ln}: {name} {why}")
+    for lst, names in src.rowname.items():
+        for name in filter(None, names):
+            if stutters(name):
+                fail("slots", f"{lst}: ACTOR_{name} repeats a word run")
     return counts["names"]
+
+
+def stutters(name):
+    """True if a run of `_` words repeats right after itself (TOURNAMENT_TOURNAMENT_STAFF)."""
+    t = name.split("_")
+    return any(t[i:i + n] == t[i + n:i + 2 * n]
+               for n in range(1, len(t) // 2 + 1) for i in range(len(t) - 2 * n + 1))
 
 
 def apply_renames(renames):
@@ -864,9 +968,10 @@ def main():
     renames, conflicts, counts = evaluate(src, flow)
     print(f"{counts['names']} names reached, {len(conflicts)} contradicted; "
           f"{counts['numbers']} numbers reached: {len(renames)} resolvable, {counts['ambiguous']} ambiguous, "
-          f"{counts['unknown']} unknown state, {counts['twin']} in twin files")
-    for f, ln, name, bad in conflicts:
-        print(f"    {Path(f).relative_to(ROOT)}:{ln}: {name} does not hold in {', '.join(bad)}")
+          f"{counts['unknown']} unknown state, {counts['twin']} in twin files; "
+          f"{counts['respell']} names to respell")
+    for f, ln, name, why in conflicts:
+        print(f"    {Path(f).relative_to(ROOT)}:{ln}: {name} {why}")
     if a.list:
         for b, k, op, pos, arg, ls in flow.sites():
             if re.match(r"\$[0-9a-f]{2}$", arg) and int(arg[1:], 16) >= 3:

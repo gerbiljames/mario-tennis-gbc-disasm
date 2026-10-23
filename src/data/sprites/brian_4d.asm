@@ -332,42 +332,42 @@ Unused_4d_BrianSpriteFramesCopy:
 BrianFramePlace:
 	INCLUDE "data/sprites/BrianFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BrianSpriteAnims:
-	dw BrianSpriteAnim00 ; $7f24
-	dw BrianSpriteAnim01 ; $7f26
-	dw BrianSpriteAnim02 ; $7f28
-	dw BrianSpriteAnim03 ; $7f2a
-	dw BrianSpriteAnim04 ; $7f2c
-	dw BrianSpriteAnim05 ; $7f2e
-	dw BrianSpriteAnim06 ; $7f30
-	dw BrianSpriteAnim07 ; $7f32
-	dw BrianSpriteAnim08 ; $7f34
-	dw BrianSpriteAnim09 ; $7f36
-	dw BrianSpriteAnim10 ; $7f38
-	dw BrianSpriteAnim11 ; $7f3a
-	dw BrianSpriteAnim12 ; $7f3c
-	dw BrianSpriteAnim13 ; $7f3e
-	dw BrianSpriteAnim14 ; $7f40
-	dw BrianSpriteAnim15 ; $7f42
-	dw BrianSpriteAnim16 ; $7f44
-	dw BrianSpriteAnim17 ; $7f46
-	dw BrianSpriteAnim18 ; $7f48
-BrianSpriteAnim00:
+	dw BrianStandAnim ; $7f24
+	dw BrianIdleAnim ; $7f26
+	dw BrianRunAnim ; $7f28
+	dw BrianCelebrateAnim ; $7f2a
+	dw BrianDejectedAnim ; $7f2c
+	dw BrianForehandAnim ; $7f2e
+	dw BrianBackhandAnim ; $7f30
+	dw BrianOverheadAnim ; $7f32
+	dw BrianSmashAnim ; $7f34
+	dw BrianForehandQuickAnim ; $7f36
+	dw BrianBackhandQuickAnim ; $7f38
+	dw BrianOverheadQuickAnim ; $7f3a
+	dw BrianSmashQuickAnim ; $7f3c
+	dw BrianForehandReadyAnim ; $7f3e
+	dw BrianBackhandReadyAnim ; $7f40
+	dw BrianOverheadReadyAnim ; $7f42
+	dw BrianServeReadyAnim ; $7f44
+	dw BrianServePrepAnim ; $7f46
+	dw BrianDiveAnim ; $7f48
+BrianStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-BrianSpriteAnim01:
+BrianIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-BrianSpriteAnim02:
+BrianRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-BrianSpriteAnim03:
+BrianCelebrateAnim:
 	; $7f5d, 18 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
@@ -378,65 +378,65 @@ BrianSpriteAnim03:
 	anim_frame $17, 10
 	anim_frame $19, 10
 	anim_loop $00
-BrianSpriteAnim04:
+BrianDejectedAnim:
 	; $7f6f, 8 bytes (sprite_anim)
 	anim_frame $1a, 20
 	anim_frame $1b, 15
 	anim_frame $1c, 45
 	anim_loop $00
-BrianSpriteAnim05:
+BrianForehandAnim:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-BrianSpriteAnim06:
+BrianBackhandAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-BrianSpriteAnim07:
+BrianOverheadAnim:
 	; $7f83, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-BrianSpriteAnim08:
+BrianSmashAnim:
 	; $7f89, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-BrianSpriteAnim09:
+BrianForehandQuickAnim:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-BrianSpriteAnim10:
+BrianBackhandQuickAnim:
 	; $7f92, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-BrianSpriteAnim11:
+BrianOverheadQuickAnim:
 	; $7f96, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-BrianSpriteAnim12:
+BrianSmashQuickAnim:
 	; $7f9a, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-BrianSpriteAnim13:
+BrianForehandReadyAnim:
 	; $7f9d, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-BrianSpriteAnim14:
+BrianBackhandReadyAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-BrianSpriteAnim15:
+BrianOverheadReadyAnim:
 	; $7fa3, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-BrianSpriteAnim16:
+BrianServeReadyAnim:
 	; $7fa6, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-BrianSpriteAnim17:
+BrianServePrepAnim:
 	; $7fa9, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -444,7 +444,7 @@ BrianSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-BrianSpriteAnim18:
+BrianDiveAnim:
 	; $7fb5, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

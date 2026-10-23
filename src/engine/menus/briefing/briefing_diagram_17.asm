@@ -1,40 +1,40 @@
-DrawSpinServeBriefingMarker:
+DrawBriefingLeftArrow:
 	push_wram_bank WRAM_SCREEN ; $4843
 	ld c, $64 ; $484c
 	ld b, $09 ; $484e
-	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
+	ld a, [wBriefingLeftArrowUnflipped] ; $4850
 	cp $01 ; $4853
 	jr z, .gotAttr ; $4855
 	ld b, OAM_BANK1 | OAM_XFLIP | 1 ; $4857
 .gotAttr:
-	ld a, [wBriefingSpinMarkerX] ; $4859
+	ld a, [wBriefingLeftArrowX] ; $4859
 	ld d, a ; $485c
-	ld a, [wBriefingSpinMarkerY] ; $485d
+	ld a, [wBriefingLeftArrowY] ; $485d
 	ld e, a ; $4860
-	ld hl, DrawSpinServeBriefingMarker_SpriteTemplate ; $4861
+	ld hl, BriefingLeftArrowSpriteTemplate ; $4861
 	call QueueSpriteTemplate ; $4864
 	pop_wram_bank ; $4867
 	ret ; $486c
-DrawSpinServeBriefingMarker_SpriteTemplate:
+BriefingLeftArrowSpriteTemplate:
 	; $486d, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-DrawBriefingMarkerRotated:
+DrawBriefingDiagonalArrow:
 	push_wram_bank WRAM_SCREEN ; $4876
-	ld hl, BriefingMarkerRotatedTable ; $487f
-	ld a, [wBriefingRotMarkerDir] ; $4882
+	ld hl, BriefingDiagonalArrowAttrs ; $487f
+	ld a, [wBriefingDiagArrowDir] ; $4882
 	add_hl_a ; $4885
 	ld b, [hl] ; $488a
 	ld c, $68 ; $488b
-	ld a, [wBriefingRotMarkerX] ; $488d
+	ld a, [wBriefingDiagArrowX] ; $488d
 	ld d, a ; $4890
-	ld a, [wBriefingRotMarkerY] ; $4891
+	ld a, [wBriefingDiagArrowY] ; $4891
 	ld e, a ; $4894
 	call QueueSprite ; $4895
 	pop_wram_bank ; $4898
 	ret ; $489d
-BriefingMarkerRotatedTable:
+BriefingDiagonalArrowAttrs:
 	; $489e, 4 bytes (bytes:4)
 	db $49, $09, $29, $69 ; 0x00
 DrawBlinkingPrompt:
@@ -215,18 +215,15 @@ Unused_17_DrawSecondCaptionRow:
 	ld c, 6 * TILEMAP_WIDTH / 16 ; $4a15
 	call QueueVRAMCopy ; $4a17
 	ret ; $4a1a
-; Queues the two-sprite template at $4a29 through QueueSpriteTemplate at
-; screen position de = $2020, with c = $04 (tile base) and b = $09
-; (flags; bit 5 would mirror it).
-; Nothing calls it, so what it draws is unknown.
-Unused_17_QueueSpritePair:
+; The court-diagram opponent (tile $04) at a fixed $20,$20, OBJ palette 1.
+Unused_17_DrawBriefingOpponentFixed:
 	ld c, $04 ; $4a1b
 	ld b, OAM_BANK1 | 1 ; $4a1d
-	ld hl, QueueSpritePair_17_SpriteTemplate ; $4a1f
+	ld hl, BriefingOpponentFixedSpriteTemplate ; $4a1f
 	ld_xy de, $20, $20 ; $4a22
 	call QueueSpriteTemplate ; $4a25
 	ret ; $4a28
-QueueSpritePair_17_SpriteTemplate:
+BriefingOpponentFixedSpriteTemplate:
 	; $4a29, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -315,26 +312,26 @@ DecompressGraphicsList:
 	ret ; $4aba
 CourtDiagramGraphicsList:
 	; $4abb
-	dw CourtDiagramGfx0, vTiles0 tile $00
-	dw CourtDiagramGfx1, vTiles0 tile $04
-	dw CourtDiagramGfx2, vTiles0 tile $08
-	dw CourtDiagramGfx3, vTiles0 tile $12
-	dw CourtDiagramGfx4, vTiles0 tile $1c
-	dw CourtDiagramGfx5, vTiles0 tile $26
-	dw CourtDiagramGfx6, vTiles0 tile $2c
-	dw CourtDiagramGfx7, vTiles0 tile $36
-	dw CourtDiagramGfx8, vTiles0 tile $40
-	dw CourtDiagramGfx9, vTiles0 tile $4a
-	dw CourtDiagramGfx10, vTiles0 tile $54
-	dw CourtDiagramGfx11, vTiles0 tile $5a
-	dw CourtDiagramGfx12, vTiles0 tile $60
-	dw CourtDiagramGfx13, vTiles0 tile $64
-	dw CourtDiagramGfx14, vTiles0 tile $68
-	dw CourtDiagramGfx15, vTiles0 tile $6a
-	dw CourtDiagramGfx16, vTiles0 tile $6c
-	dw CourtDiagramGfx17, vTiles0 tile $6e
-	dw CourtDiagramGfx18, vTiles0 tile $70
-	dw CourtDiagramGfx19, vTiles0 tile $72
+	dw CourtDiagramPlayerGfx, vTiles0 tile $00
+	dw CourtDiagramOpponentGfx, vTiles0 tile $04
+	dw CourtDiagramCmdAToBLeftGfx, vTiles0 tile $08
+	dw CourtDiagramCmdAPlusBLeftGfx, vTiles0 tile $12
+	dw CourtDiagramCmdBToALeftGfx, vTiles0 tile $1c
+	dw CourtDiagramCmdARightGfx, vTiles0 tile $26
+	dw CourtDiagramCmdBRightGfx, vTiles0 tile $2c
+	dw CourtDiagramCmdAToBRightGfx, vTiles0 tile $36
+	dw CourtDiagramCmdAPlusBRightGfx, vTiles0 tile $40
+	dw CourtDiagramCmdBToARightGfx, vTiles0 tile $4a
+	dw CourtDiagramCmdALeftGfx, vTiles0 tile $54
+	dw CourtDiagramCmdBLeftGfx, vTiles0 tile $5a
+	dw CourtDiagramPointingHandGfx, vTiles0 tile $60
+	dw CourtDiagramLeftArrowGfx, vTiles0 tile $64
+	dw CourtDiagramDiagonalArrowGfx, vTiles0 tile $68
+	dw CourtDiagramPoleGfx, vTiles0 tile $6a
+	dw CourtDiagramTargetBracketGfx, vTiles0 tile $6c
+	dw CourtDiagramBallGfx, vTiles0 tile $6e
+	dw CourtDiagramDownArrowGfx, vTiles0 tile $70
+	dw CourtDiagramPromptArrowGfx, vTiles0 tile $72
 	dw 0
 LoadCourtDiagramObjPalettes:
 	ld hl, CourtDiagramObjPalettes ; $4b0d
@@ -351,46 +348,46 @@ CourtDiagramPalettes:
 	INCLUDE "data/engine/menus/briefing/CourtDiagramPalettes.asm" ; $4ec2, 16 bytes (palettes)
 CycleDiagramTargetPaletteData:
 	INCLUDE "data/engine/menus/briefing/CycleDiagramTargetPaletteData.asm" ; $4ed2, 48 bytes (palettes)
-CourtDiagramGfx0:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx0.bin" ; $4f02, 59 bytes
-CourtDiagramGfx1:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx1.bin" ; $4f3d, 63 bytes
-CourtDiagramGfx2:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx2.bin" ; $4f7c, 143 bytes
-CourtDiagramGfx3:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx3.bin" ; $500b, 143 bytes
-CourtDiagramGfx4:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx4.bin" ; $509a, 147 bytes
-CourtDiagramGfx5:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx5.bin" ; $512d, 98 bytes
-CourtDiagramGfx6:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx6.bin" ; $518f, 98 bytes
-CourtDiagramGfx7:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx7.bin" ; $51f1, 143 bytes
-CourtDiagramGfx8:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx8.bin" ; $5280, 143 bytes
-CourtDiagramGfx9:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx9.bin" ; $530f, 145 bytes
-CourtDiagramGfx10:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx10.bin" ; $53a0, 105 bytes
-CourtDiagramGfx11:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx11.bin" ; $5409, 100 bytes
-CourtDiagramGfx12:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx12.bin" ; $546d, 74 bytes
-CourtDiagramGfx13:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx13.bin" ; $54b7, 33 bytes
-CourtDiagramGfx14:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx14.bin" ; $54d8, 39 bytes
-CourtDiagramGfx15:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx15.bin" ; $54ff, 18 bytes
-CourtDiagramGfx16:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx16.bin" ; $5511, 18 bytes
-CourtDiagramGfx17:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx17.bin" ; $5523, 19 bytes
-CourtDiagramGfx18:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx18.bin" ; $5536, 24 bytes
-CourtDiagramGfx19:
-	INCBIN "data/engine/menus/briefing/lz_CourtDiagramGfx19.bin" ; $554e, 25 bytes
+CourtDiagramPlayerGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPlayerGfx.bin" ; $4f02, 59 bytes
+CourtDiagramOpponentGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramOpponentGfx.bin" ; $4f3d, 63 bytes
+CourtDiagramCmdAToBLeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAToBLeftGfx.bin" ; $4f7c, 143 bytes
+CourtDiagramCmdAPlusBLeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAPlusBLeftGfx.bin" ; $500b, 143 bytes
+CourtDiagramCmdBToALeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBToALeftGfx.bin" ; $509a, 147 bytes
+CourtDiagramCmdARightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdARightGfx.bin" ; $512d, 98 bytes
+CourtDiagramCmdBRightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBRightGfx.bin" ; $518f, 98 bytes
+CourtDiagramCmdAToBRightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAToBRightGfx.bin" ; $51f1, 143 bytes
+CourtDiagramCmdAPlusBRightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdAPlusBRightGfx.bin" ; $5280, 143 bytes
+CourtDiagramCmdBToARightGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBToARightGfx.bin" ; $530f, 145 bytes
+CourtDiagramCmdALeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdALeftGfx.bin" ; $53a0, 105 bytes
+CourtDiagramCmdBLeftGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramCmdBLeftGfx.bin" ; $5409, 100 bytes
+CourtDiagramPointingHandGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPointingHandGfx.bin" ; $546d, 74 bytes
+CourtDiagramLeftArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramLeftArrowGfx.bin" ; $54b7, 33 bytes
+CourtDiagramDiagonalArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramDiagonalArrowGfx.bin" ; $54d8, 39 bytes
+CourtDiagramPoleGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPoleGfx.bin" ; $54ff, 18 bytes
+CourtDiagramTargetBracketGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramTargetBracketGfx.bin" ; $5511, 18 bytes
+CourtDiagramBallGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramBallGfx.bin" ; $5523, 19 bytes
+CourtDiagramDownArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramDownArrowGfx.bin" ; $5536, 24 bytes
+CourtDiagramPromptArrowGfx:
+	INCBIN "data/engine/menus/briefing/lz_CourtDiagramPromptArrowGfx.bin" ; $554e, 25 bytes
 CourtDiagramObjPalettes:
 	INCLUDE "data/engine/menus/briefing/CourtDiagramObjPalettes.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:
@@ -399,8 +396,8 @@ DrillBriefing_ServeToTargets:
 	call ServeToTargetsBriefing_AdvanceAnim ; $5584
 	frame_task DrawBriefingPlayerSprite ; $5587
 	frame_task DrawBriefingBallSprite ; $558f
-	frame_task DrawBriefingMarkerHFlip ; $5597
-	frame_task DrawBriefingMarkerRotated ; $559f
+	frame_task DrawBriefingPointingHand ; $5597
+	frame_task DrawBriefingDiagonalArrow ; $559f
 	frame_task CycleDiagramTargetPalette ; $55a7
 	ld hl, Text_BriefTargetServeFourCourts ; $55af
 	call DrawBriefingCaption ; $55b2
@@ -409,7 +406,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $55b9
 .animFirstCaption:
 	call ServeToTargetsBriefing_TickAnim ; $55bc
-	ld c, $00 ; $55bf
+	ld c, BRIEFPROMPT_SHOW ; $55bf
 	call AdvanceFrameCheckInput ; $55c1
 	and a ; $55c4
 	jp z, .animFirstCaption ; $55c5
@@ -419,7 +416,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $55d5
 	call ServeToTargetsBriefing_AdvanceAnim ; $55d8
 	frame_task DrawBriefingPlayerSprite ; $55db
-	frame_task DrawBriefingMarkerHFlip ; $55e3
+	frame_task DrawBriefingPointingHand ; $55e3
 	frame_task CycleDiagramTargetPalette ; $55eb
 	ld a, $00 ; $55f3
 	ld [wBriefingBracketWidth], a ; $55f5
@@ -433,7 +430,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $560f
 .animSecondCaption:
 	call ServeToTargetsBriefing_TickAnim ; $5612
-	ld c, $00 ; $5615
+	ld c, BRIEFPROMPT_SHOW ; $5615
 	call AdvanceFrameCheckInput ; $5617
 	and a ; $561a
 	jp z, .animSecondCaption ; $561b
@@ -450,19 +447,19 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingBallY], a ; $5642
 	frame_task DrawBriefingBallSprite ; $5645
 	ld a, $00 ; $564d
-	ld [wBriefingHMarkerUnflipped], a ; $564f
+	ld [wBriefingHandUnflipped], a ; $564f
 	ld a, $3a ; $5652
-	ld [wBriefingHMarkerX], a ; $5654
+	ld [wBriefingHandX], a ; $5654
 	ld a, $24 ; $5657
-	ld [wBriefingHMarkerY], a ; $5659
-	frame_task DrawBriefingMarkerHFlip ; $565c
+	ld [wBriefingHandY], a ; $5659
+	frame_task DrawBriefingPointingHand ; $565c
 	ld a, $03 ; $5664
-	ld [wBriefingRotMarkerDir], a ; $5666
+	ld [wBriefingDiagArrowDir], a ; $5666
 	ld a, $52 ; $5669
-	ld [wBriefingRotMarkerX], a ; $566b
+	ld [wBriefingDiagArrowX], a ; $566b
 	ld a, $40 ; $566e
-	ld [wBriefingRotMarkerY], a ; $5670
-	frame_task DrawBriefingMarkerRotated ; $5673
+	ld [wBriefingDiagArrowY], a ; $5670
+	frame_task DrawBriefingDiagonalArrow ; $5673
 	ld b, $04 ; $567b
 	call DrawDiagramTargetOverlay ; $567d
 	frame_task CycleDiagramTargetPalette ; $5680
@@ -485,7 +482,7 @@ DrillBriefing_ServeToTargets:
 	call ServeToTargetsBriefing_AdvanceAnim ; $56bd
 	frame_task DrawBriefingPlayerSprite ; $56c0
 	frame_task DrawBriefingBallSprite ; $56c8
-	frame_task DrawBriefingMarkerRotated ; $56d0
+	frame_task DrawBriefingDiagonalArrow ; $56d0
 	frame_task CycleDiagramTargetPalette ; $56d8
 	ld a, $00 ; $56e0
 	ld [wBriefingBracketWidth], a ; $56e2
@@ -499,7 +496,7 @@ DrillBriefing_ServeToTargets:
 	ld [wBriefingAnimStep], a ; $56fc
 .animLastCaption:
 	call ServeToTargetsBriefing_TickAnim ; $56ff
-	ld c, $01 ; $5702
+	ld c, BRIEFPROMPT_NONE ; $5702
 	call AdvanceFrameCheckInput ; $5704
 	and a ; $5707
 	jp z, .animLastCaption ; $5708

@@ -1,4 +1,4 @@
-DecompressIntroTitleTiles:
+LoadIntroAwesomeOpponentsCaption:
 	push_wram_bank WRAM_STAGING ; $73f2
 	ld_slot hl, DataPtr_IntroAwesomeTiles ; $73fb
 	ld de, wDecompBuffer ; $73fe
@@ -7,23 +7,23 @@ DecompressIntroTitleTiles:
 	ld de, vTiles2 ; $7407
 	ld c, 128 ; $740a
 	call QueueVRAMCopy ; $740c
-	ld hl, wTextTileBuffer ; $740f
+	ld hl, wDecompBufferHigh ; $740f
 	ld de, vTiles1 ; $7412
-	ld c, wTextTileBuffer_SIZE / 16 ; $7415
+	ld c, wDecompBufferHigh_SIZE / 16 ; $7415
 	call QueueVRAMCopy ; $7417
 	wram_bank WRAM_TEXT ; $741a
-	ld hl, IntroTitleTilemap ; $7420
+	ld hl, IntroAwesomeOpponentsCaptionTilemap ; $7420
 	ld de, wWindowShadowTilemap ; $7423
 	call DecompressData ; $7426
-	ld hl, IntroTitleAttrmap ; $7429
+	ld hl, IntroAwesomeOpponentsCaptionAttrmap ; $7429
 	ld de, wWindowShadowAttrmap ; $742c
 	call DecompressData ; $742f
 	pop_wram_bank ; $7432
 	ret ; $7437
-IntroTitleTilemap:
-	INCBIN "data/engine/cutscenes/lz_IntroTitleTilemap.bin" ; $7438, 221 bytes
-IntroTitleAttrmap:
-	INCBIN "data/engine/cutscenes/lz_IntroTitleAttrmap.bin" ; $7515, 76 bytes
+IntroAwesomeOpponentsCaptionTilemap:
+	INCBIN "data/engine/cutscenes/lz_IntroAwesomeOpponentsCaptionTilemap.bin" ; $7438, 221 bytes
+IntroAwesomeOpponentsCaptionAttrmap:
+	INCBIN "data/engine/cutscenes/lz_IntroAwesomeOpponentsCaptionAttrmap.bin" ; $7515, 76 bytes
 Unused_6b_IncrementCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $7561
 	inc a ; $7564
@@ -33,8 +33,8 @@ ApplyScrollYFromWram:
 	ld a, [wCutsceneSpriteAX] ; $7569
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
-IntroCutsceneState18InitPalettes_6b:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState18InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
+IntroCutsceneMarioCloseupScrollInitPalettes_6b:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneMarioCloseupScrollInitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
 	wram_bank WRAM_SCREEN ; $75b2
@@ -43,7 +43,7 @@ RunTitleScreen:
 	ldh [hScrollY], a ; $75bb
 	ld [wScreenScratch], a ; $75bd
 	ld [wTitleSpriteFrame], a ; $75c0
-	ld [wTitleSpriteTimer], a ; $75c3
+	ld [wTitleSpriteHoldTimer], a ; $75c3
 	ld a, $98 ; $75c6
 	ld [wScreenScratch], a ; $75c8
 	script_fade_out 127 ; $75cb
@@ -54,39 +54,39 @@ RunTitleScreen:
 	ld c, SCREENASSET_TitleScreen ; $75de
 	farcall LoadScreenAssetRecord ; $75e0
 	farcall QueueWram3MapToVRAM ; $75e3
-	ld c, TitleGfx0_SIZE / 16 ; $75e6
-	ld b, TILEBLOCK_TitleGfx0 ; $75e8
+	ld c, TitleStartTextFrame0_SIZE / 16 ; $75e6
+	ld b, TILEBLOCK_TitleStartTextFrame0 ; $75e8
 	ld de, vTiles0 + VRAM_BANK1 ; $75ea
 	farcall LoadCompressedTileBlock ; $75ed
-	ld c, TitleGfx1_SIZE / 16 ; $75f0
-	ld b, TILEBLOCK_TitleGfx1 ; $75f2
+	ld c, TitleStartTextFrame1_SIZE / 16 ; $75f0
+	ld b, TILEBLOCK_TitleStartTextFrame1 ; $75f2
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $75f4
 	farcall LoadCompressedTileBlock ; $75f7
-	ld c, TitleGfx2_SIZE / 16 ; $75fa
-	ld b, TILEBLOCK_TitleGfx2 ; $75fc
+	ld c, TitleStartTextFrame2_SIZE / 16 ; $75fa
+	ld b, TILEBLOCK_TitleStartTextFrame2 ; $75fc
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $75fe
 	farcall LoadCompressedTileBlock ; $7601
-	ld c, TitleGfx3_SIZE / 16 ; $7604
-	ld b, TILEBLOCK_TitleGfx3 ; $7606
+	ld c, TitleStartTextFrame3_SIZE / 16 ; $7604
+	ld b, TILEBLOCK_TitleStartTextFrame3 ; $7606
 	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $7608
 	farcall LoadCompressedTileBlock ; $760b
-	ld c, TitleGfx4_SIZE / 16 ; $760e
-	ld b, TILEBLOCK_TitleGfx4 ; $7610
+	ld c, TitleStartTextFrame4_SIZE / 16 ; $760e
+	ld b, TILEBLOCK_TitleStartTextFrame4 ; $7610
 	ld de, vTiles0 ; $7612
 	farcall LoadCompressedTileBlock ; $7615
-	ld c, TitleGfx5_SIZE / 16 ; $7618
-	ld b, TILEBLOCK_TitleGfx5 ; $761a
+	ld c, TitleStartTextFrame5_SIZE / 16 ; $7618
+	ld b, TILEBLOCK_TitleStartTextFrame5 ; $761a
 	ld de, vTiles0 tile $20 ; $761c
 	farcall LoadCompressedTileBlock ; $761f
-	ld c, TitleGfx6_SIZE / 16 ; $7622
-	ld b, TILEBLOCK_TitleGfx6 ; $7624
+	ld c, TitleStartTextFrame6_SIZE / 16 ; $7622
+	ld b, TILEBLOCK_TitleStartTextFrame6 ; $7624
 	ld de, vTiles0 tile $40 ; $7626
 	farcall LoadCompressedTileBlock ; $7629
-	ld c, TitleGfx7_SIZE / 16 ; $762c
-	ld b, TILEBLOCK_TitleGfx7 ; $762e
+	ld c, TitleStartTextFrame7_SIZE / 16 ; $762c
+	ld b, TILEBLOCK_TitleStartTextFrame7 ; $762e
 	ld de, vTiles0 tile $60 ; $7630
 	farcall LoadCompressedTileBlock ; $7633
-	ld hl, Palettes_6b_11 ; $7636
+	ld hl, TitleSpritePalette ; $7636
 	ld_obj_pals de, 0, 1 ; $7639
 	call LoadPaletteShadow ; $763c
 	frame_task QueueTitleSprite ; $763f
@@ -171,15 +171,15 @@ QueueTitleSprite_SpriteTemplate:
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
 StepTitleSpriteAnimation:
-	ld a, [wTitleSpriteTimer] ; $771f
+	ld a, [wTitleSpriteHoldTimer] ; $771f
 	or a ; $7722
 	jr z, .advanceFrame ; $7723
 	inc a ; $7725
-	ld [wTitleSpriteTimer], a ; $7726
+	ld [wTitleSpriteHoldTimer], a ; $7726
 	cp $10 ; $7729
 	jr nz, .done ; $772b
 	xor a ; $772d
-	ld [wTitleSpriteTimer], a ; $772e
+	ld [wTitleSpriteHoldTimer], a ; $772e
 	ret ; $7731
 .advanceFrame:
 	ldh a, [hVBlankCounter] ; $7732
@@ -193,7 +193,7 @@ StepTitleSpriteAnimation:
 	cp $07 ; $7743
 	jr nz, .done ; $7745
 	ld a, $01 ; $7747
-	ld [wTitleSpriteTimer], a ; $7749
+	ld [wTitleSpriteHoldTimer], a ; $7749
 .done:
 	ret ; $774c
 	ret ; $774d
@@ -203,22 +203,22 @@ TitleScreenAttrmap:
 	INCBIN "data/engine/cutscenes/lz_TitleScreenAttrmap.bin" ; $7872, 157 bytes
 TitleScreenPalettes:
 	INCLUDE "data/engine/cutscenes/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
-Palettes_6b_11:
-	INCLUDE "data/engine/cutscenes/Palettes_6b_11.asm" ; $794f, 8 bytes (palettes)
-AwardCeremonyTilemap:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap.bin" ; $7957, 293 bytes
-AwardCeremonyAttrmap:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap.bin" ; $7a7c, 114 bytes
-AwardCeremonyTilemap2:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap2.bin" ; $7aee, 292 bytes
-AwardCeremonyAttrmap2:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap2.bin" ; $7c12, 125 bytes
-AwardCeremonyTilemap3:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap3.bin" ; $7c8f, 296 bytes
-AwardCeremonyAttrmap3:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap3.bin" ; $7db7, 120 bytes
-AwardCeremonyTilemap4:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyTilemap4.bin" ; $7e2f, 296 bytes
-AwardCeremonyAttrmap4:
-	INCBIN "data/engine/cutscenes/lz_AwardCeremonyAttrmap4.bin" ; $7f57, 129 bytes
+TitleSpritePalette:
+	INCLUDE "data/engine/cutscenes/TitleSpritePalette.asm" ; $794f, 8 bytes (palettes)
+DreamMatchEpilogueDoublesBoysTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoysTilemap.bin" ; $7957, 293 bytes
+DreamMatchEpilogueDoublesBoysAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoysAttrmap.bin" ; $7a7c, 114 bytes
+DreamMatchEpilogueDoublesBoyGirlTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoyGirlTilemap.bin" ; $7aee, 292 bytes
+DreamMatchEpilogueDoublesBoyGirlAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoyGirlAttrmap.bin" ; $7c12, 125 bytes
+DreamMatchEpilogueDoublesGirlBoyTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlBoyTilemap.bin" ; $7c8f, 296 bytes
+DreamMatchEpilogueDoublesGirlBoyAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlBoyAttrmap.bin" ; $7db7, 120 bytes
+DreamMatchEpilogueDoublesGirlsTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlsTilemap.bin" ; $7e2f, 296 bytes
+DreamMatchEpilogueDoublesGirlsAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlsAttrmap.bin" ; $7f57, 129 bytes
 	; $7fd8, 40 bytes fill to bank end (linker-padded)

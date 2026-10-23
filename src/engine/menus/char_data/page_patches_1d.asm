@@ -40,9 +40,9 @@ CharDataScreenPagePatch0Attrmap:
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch0Attrmap.inc" ; DEF CharDataScreenPagePatch0Attrmap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPalettes:
 	INCLUDE "data/engine/menus/char_data/CharDataScreenPalettes.asm" ; $6334, 8 bytes (palettes)
-CharDataScreenGfx14:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx14.bin" ; $633c, 184 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx14.inc" ; DEF CharDataScreenGfx14_SIZE EQU its decoded length, generated from the .bin by make
+CharStatusTitleGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharStatusTitleGfx.bin" ; $633c, 184 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharStatusTitleGfx.inc" ; DEF CharStatusTitleGfx_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch1Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch1Tilemap.bin" ; $63f4, 85 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch1Tilemap.inc" ; DEF CharDataScreenPagePatch1Tilemap_SIZE EQU its decoded length, generated from the .bin by make
@@ -67,22 +67,22 @@ CharDataScreenPagePatch4Tilemap:
 CharDataScreenPagePatch4Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch4Attrmap.bin" ; $64b2, 9 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch4Attrmap.inc" ; DEF CharDataScreenPagePatch4Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPageGfx10:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGfx10.bin" ; $64bb, 149 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGfx10.inc" ; DEF CharDataScreenPageGfx10_SIZE EQU its decoded length, generated from the .bin by make
+CharDataMediumDigitGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataMediumDigitGfx.bin" ; $64bb, 149 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataMediumDigitGfx.inc" ; DEF CharDataMediumDigitGfx_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch5Tilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Tilemap.bin" ; $6550, 24 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Tilemap.inc" ; DEF CharDataScreenPagePatch5Tilemap_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPagePatch5Attrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Attrmap.bin" ; $6568, 7 bytes
 	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPagePatch5Attrmap.inc" ; DEF CharDataScreenPagePatch5Attrmap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPageGfx13:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGfx13.bin" ; $656f, 117 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGfx13.inc" ; DEF CharDataScreenPageGfx13_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenPageGfx14:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGfx14.bin" ; $65e4, 134 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGfx14.inc" ; DEF CharDataScreenPageGfx14_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate0:
+CharDataSmallDigitGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataSmallDigitGfx.bin" ; $656f, 117 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataSmallDigitGfx.inc" ; DEF CharDataSmallDigitGfx_SIZE EQU its decoded length, generated from the .bin by make
+CharDataMoreLeftArrowGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataMoreLeftArrowGfx.bin" ; $65e4, 134 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataMoreLeftArrowGfx.inc" ; DEF CharDataMoreLeftArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
+CharDataMoreLeftArrowTemplate:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -90,10 +90,10 @@ DrawCharDataPageArrowsTask_SpriteTemplate0:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-CharDataScreenPageGraphicsGfx0:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx0.bin" ; $667f, 141 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx0.inc" ; DEF CharDataScreenPageGraphicsGfx0_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate1:
+CharDataMoreRightArrowGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataMoreRightArrowGfx.bin" ; $667f, 141 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataMoreRightArrowGfx.inc" ; DEF CharDataMoreRightArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
+CharDataMoreRightArrowTemplate:
 	; $670c, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -101,20 +101,20 @@ DrawCharDataPageArrowsTask_SpriteTemplate1:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-CharDataScreenPageGraphicsGfx1:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx1.bin" ; $6721, 121 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx1.inc" ; DEF CharDataScreenPageGraphicsGfx1_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate2:
+CharDataBackLeftArrowGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataBackLeftArrowGfx.bin" ; $6721, 121 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataBackLeftArrowGfx.inc" ; DEF CharDataBackLeftArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
+CharDataBackLeftArrowTemplate:
 	; $679a, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
-CharDataScreenPageGraphicsGfx2:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 112 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenPageGraphicsGfx2.inc" ; DEF CharDataScreenPageGraphicsGfx2_SIZE EQU its decoded length, generated from the .bin by make
-DrawCharDataPageArrowsTask_SpriteTemplate3:
+CharDataBackRightArrowGfx:
+	INCBIN "data/engine/menus/char_data/lz_CharDataBackRightArrowGfx.bin" ; $67ab, 112 bytes
+	INCLUDE "data/engine/menus/char_data/lz_CharDataBackRightArrowGfx.inc" ; DEF CharDataBackRightArrowGfx_SIZE EQU its decoded length, generated from the .bin by make
+CharDataBackRightArrowTemplate:
 	; $681b, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -138,27 +138,27 @@ RunExpDistributionFlow:
 	ld a, [hl+] ; $684c
 	ld d, [hl] ; $684d
 	ld e, a ; $684e
-	ld a, $01 ; $684f
+	ld a, STORYREC_PARTNER ; $684f
 	farcall AddPlayerExp ; $6851
 .showCharData:
-	ld c, $00 ; $6854
+	ld c, STORYREC_MAIN ; $6854
 	farcall CharDataScreen_Show ; $6856
 	dec a ; $6859
-	jr z, .commitExp ; $685a
+	jr z, .revertExp ; $685a
 	inc a ; $685c
-	jr nz, .countLeft ; $685d
+	jr nz, .showPartner ; $685d
 	farcall BackupCharData ; $685f
-	ld c, $01 ; $6862
+	ld c, STORYREC_PARTNER ; $6862
 	farcall CharDataScreen_Show ; $6864
 	dec a ; $6867
 	jr z, .restoreCharData ; $6868
-.countLeft:
-	ld c, $01 ; $686a
+.showPartner:
+	ld c, STORYREC_PARTNER ; $686a
 	farcall CharDataScreen_Show ; $686c
 	dec a ; $686f
-	jr z, .countDone ; $6870
+	jr z, .partnerCancelled ; $6870
 	ret ; $6872
-.commitExp:
+.revertExp:
 	wram_bank WRAM_SCENE ; $6873
 	ld hl, wExpScreenCharStats + EXPSTAT_EXP ; $6879
 	ld de, wStoryMainExp ; $687c
@@ -186,8 +186,8 @@ RunExpDistributionFlow:
 .restoreCharData:
 	farcall RestoreCharData ; $689c
 	jr .showCharData ; $689f
-.countDone:
-	jr .commitExp ; $68a1
+.partnerCancelled:
+	jr .revertExp ; $68a1
 ShowExpDistributionScreen:
 	push hl ; $68a3
 	sound BGM_EXP_DISTRIBUTION ; $68a4
@@ -205,7 +205,7 @@ ShowExpDistributionScreen:
 	call ClearSpriteQueue ; $68c1
 	pop hl ; $68c4
 	call InitLevelUpScreenState ; $68c5
-	farcall LoadCharDataScreenGraphics ; $68c8
+	farcall LoadExpDistributionScreenGraphics ; $68c8
 	call BuildExpDistributionScreen ; $68cb
 	call EnableLCD ; $68ce
 	call AdvanceFrame ; $68d1
@@ -270,7 +270,7 @@ BuildExpDistributionScreen:
 	ld [wStoryCharacterSlot], a ; $697e
 	call DrawExpScreenLevelNumber ; $6981
 	call DrawExpScreenLevelBar ; $6984
-	ld a, $01 ; $6987
+	ld a, STORYREC_PARTNER ; $6987
 	ld [wStoryCharacterSlot], a ; $6989
 	call DrawExpScreenLevelNumber ; $698c
 	call DrawExpScreenLevelBar ; $698f
@@ -289,63 +289,63 @@ BuildExpDistributionScreen:
 	ld bc, ExpDistributionScreenPatchAttrmap_SIZE ; $69bc
 	call CopyWram1ToWram2ExpScreen ; $69bf
 	wram_bank WRAM_STAGING ; $69c2
-	ld hl, ExpDistributionScreenGfx7 ; $69c8
+	ld hl, ExpPromptCursorGfx ; $69c8
 	ld de, wDecompBuffer ; $69cb
 	call DecompressData ; $69ce
 	ld hl, wDecompBuffer ; $69d1
 	ld de, vTiles0 tile $16 + VRAM_BANK1 ; $69d4
-	ld c, ExpDistributionScreenGfx7_SIZE / 16 ; $69d7
+	ld c, ExpPromptCursorGfx_SIZE / 16 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank WRAM_STAGING ; $69dc
-	ld hl, ExpDistributionScreenGfx2 ; $69e2
+	ld hl, ExpDigitSpriteGfx ; $69e2
 	ld de, wDecompBuffer ; $69e5
 	call DecompressData ; $69e8
 	ld hl, wDecompBuffer ; $69eb
 	ld de, vTiles0 tile $18 + VRAM_BANK1 ; $69ee
-	ld c, ExpDistributionScreenGfx2_SIZE / 16 ; $69f1
+	ld c, ExpDigitSpriteGfx_SIZE / 16 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank WRAM_STAGING ; $69f6
-	ld hl, ExpDistributionScreenGfx3 ; $69fc
+	ld hl, ExpToNextLevelBubbleGfx ; $69fc
 	ld de, wDecompBuffer ; $69ff
 	call DecompressData ; $6a02
 	ld hl, wDecompBuffer ; $6a05
 	ld de, vTiles0 tile $2c + VRAM_BANK1 ; $6a08
-	ld c, ExpDistributionScreenGfx3_SIZE / 16 ; $6a0b
+	ld c, ExpToNextLevelBubbleGfx_SIZE / 16 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank WRAM_STAGING ; $6a10
-	ld hl, ExpDistributionScreenGfx4 ; $6a16
+	ld hl, ExpToNextLevelBubblePartnerGfx ; $6a16
 	ld de, wDecompBuffer ; $6a19
 	call DecompressData ; $6a1c
 	ld hl, wDecompBuffer ; $6a1f
 	ld de, vTiles0 tile $44 + VRAM_BANK1 ; $6a22
-	ld c, ExpDistributionScreenGfx4_SIZE / 16 ; $6a25
+	ld c, ExpToNextLevelBubblePartnerGfx_SIZE / 16 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
 	ld_obj_pals de, 6, 2 ; $6a2d
 	call LoadPaletteShadow ; $6a30
 	wram_bank WRAM_STAGING ; $6a33
-	ld hl, ExpDistributionScreenGfx8 ; $6a39
+	ld hl, ExpCharCursorHandGfx ; $6a39
 	ld de, wDecompBuffer ; $6a3c
 	call DecompressData ; $6a3f
 	ld hl, wDecompBuffer ; $6a42
 	ld de, vTiles0 + VRAM_BANK1 ; $6a45
-	ld c, ExpDistributionScreenGfx8_SIZE / 16 ; $6a48
+	ld c, ExpCharCursorHandGfx_SIZE / 16 ; $6a48
 	call QueueVRAMCopy ; $6a4a
 	wram_bank WRAM_STAGING ; $6a4d
-	ld hl, ExpDistributionScreenGfx0 ; $6a53
+	ld hl, ExpBarBallGfx ; $6a53
 	ld de, wDecompBuffer ; $6a56
 	call DecompressData ; $6a59
 	ld hl, wDecompBuffer ; $6a5c
 	ld de, vTiles0 tile $0c + VRAM_BANK1 ; $6a5f
-	ld c, ExpDistributionScreenGfx0_SIZE / 16 ; $6a62
+	ld c, ExpBarBallGfx_SIZE / 16 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank WRAM_STAGING ; $6a67
-	ld hl, ExpDistributionScreenGfx1 ; $6a6d
+	ld hl, ExpBarSweepBallGfx ; $6a6d
 	ld de, wDecompBuffer ; $6a70
 	call DecompressData ; $6a73
 	ld hl, wDecompBuffer ; $6a76
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6a79
-	ld c, ExpDistributionScreenGfx1_SIZE / 16 ; $6a7c
+	ld c, ExpBarSweepBallGfx_SIZE / 16 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
 	wram_bank WRAM_SCREEN ; $6a81
 	ld hl, wShadowTilemap ; $6a87
@@ -413,7 +413,7 @@ DrawExpPoolGauge:
 .positive:
 	ld b, $58 ; $6b0d
 	call ScaleValueToBar ; $6b0f
-	ld de, wExpScreenCharStats ; $6b12
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $6b12
 	ld b, a ; $6b15
 	ld c, $0b ; $6b16
 	wram_bank WRAM_SCREEN ; $6b18
@@ -490,7 +490,7 @@ InitExpScreenCharStats:
 	push af ; $6b8c
 	ld_story_char_field CHARREC_NAME ; $6b8d
 	pop af ; $6ba0
-	ld de, wCharDataChoiceBackup + 47 ; $6ba1
+	ld de, wCharDataScreenCell + 7 * TILEMAP_WIDTH + 12 ; $6ba1
 	ld c, $20 ; $6ba4
 	call WriteExpScreenStringTiles ; $6ba6
 	wram_bank WRAM_SCENE ; $6ba9
@@ -508,7 +508,7 @@ InitExpScreenCharStats:
 	ld a, $02 ; $6bcf
 	ld de, wCharDataNumberBuffer ; $6bd1
 	call FormatDecimalNumberUnsigned ; $6bd4
-	ld de, wCharDataChoiceLog + 65 ; $6bd7
+	ld de, wCharDataScreenCell + 3 * TILEMAP_WIDTH + 11 ; $6bd7
 	farcall CharDataScreen_WriteStatNumber ; $6bda
 	wram_bank WRAM_SCENE ; $6bdd
 	pop af ; $6be3
@@ -538,7 +538,7 @@ InitExpScreenCharStats:
 	ld [wExpScreenCharStats + EXPSTAT_EXP + 1], a ; $6c21
 	ld a, [hl] ; $6c24
 	ld [wExpScreenCharStats + EXPSTAT_EXP + 2], a ; $6c25
-	ld a, $01 ; $6c28
+	ld a, STORYREC_PARTNER ; $6c28
 	ld [wStoryCharacterSlot], a ; $6c2a
 	push af ; $6c2d
 	ld_story_char_field CHARREC_NAME ; $6c2e
@@ -570,13 +570,13 @@ InitExpScreenCharStats:
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP], a ; $6c89
 	ld a, h ; $6c8c
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL_EXP + 1], a ; $6c8d
-	ld a, $01 ; $6c90
+	ld a, STORYREC_PARTNER ; $6c90
 	farcall GetExpProgressInCurrentLevel ; $6c92
 	ld a, l ; $6c95
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL], a ; $6c96
 	ld a, h ; $6c99
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL + 1], a ; $6c9a
-	ld a, $01 ; $6c9d
+	ld a, STORYREC_PARTNER ; $6c9d
 	farcall GetExpRemainingToNextLevel ; $6c9f
 	ld a, l ; $6ca2
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT], a ; $6ca3
@@ -598,7 +598,7 @@ InitExpScreenCharStats:
 	push af ; $6cd0
 	ld_story_char_field CHARREC_NAME ; $6cd1
 	pop af ; $6ce4
-	ld de, wCharDataChoiceBackup + 47 ; $6ce5
+	ld de, wCharDataScreenCell + 7 * TILEMAP_WIDTH + 12 ; $6ce5
 	ld c, $20 ; $6ce8
 	call WriteExpScreenStringTiles ; $6cea
 	wram_bank WRAM_SCENE ; $6ced
@@ -611,9 +611,9 @@ InitExpScreenCharStats:
 	ld a, $02 ; $6d0c
 	ld de, wCharDataNumberBuffer ; $6d0e
 	call FormatDecimalNumberUnsigned ; $6d11
-	ld de, wCharDataChoiceLog + 65 ; $6d14
+	ld de, wCharDataScreenCell + 3 * TILEMAP_WIDTH + 11 ; $6d14
 	farcall CharDataScreen_WriteStatNumber ; $6d17
-	ld a, $01 ; $6d1a
+	ld a, STORYREC_PARTNER ; $6d1a
 	ld [wStoryCharacterSlot], a ; $6d1c
 	push af ; $6d1f
 	ld_story_char_field CHARREC_NAME ; $6d20
@@ -820,7 +820,7 @@ DrawExpScreenLevelBar:
 	jr c, .scaleMainBar ; $6eb3
 	xor a ; $6eb5
 	ld [wExpScreenCharStats + EXPSTAT_BAR], a ; $6eb6
-	ld de, wCharDataRevealStep ; $6eb9
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 7 ; $6eb9
 	jr .drawBar ; $6ebc
 .scaleMainBar:
 	ld hl, wExpScreenCharStats + EXPSTAT_EXP_IN_LEVEL ; $6ebe
@@ -834,7 +834,7 @@ DrawExpScreenLevelBar:
 	ld b, $40 ; $6eca
 	call ScaleValueToBar ; $6ecc
 	ld [wExpScreenCharStats + EXPSTAT_BAR], a ; $6ecf
-	ld de, wCharDataRevealStep ; $6ed2
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 7 ; $6ed2
 	jr .drawBar ; $6ed5
 .partner:
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_LEVEL] ; $6ed7
@@ -842,7 +842,7 @@ DrawExpScreenLevelBar:
 	jr c, .scalePartnerBar ; $6edc
 	xor a ; $6ede
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR], a ; $6edf
-	ld de, wCharDataValuesSlideX ; $6ee2
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 7 ; $6ee2
 	jr .drawBar ; $6ee5
 .scalePartnerBar:
 	ld hl, wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_IN_LEVEL ; $6ee7
@@ -856,7 +856,7 @@ DrawExpScreenLevelBar:
 	ld b, $40 ; $6ef3
 	call ScaleValueToBar ; $6ef5
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR], a ; $6ef8
-	ld de, wCharDataValuesSlideX ; $6efb
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 7 ; $6efb
 .drawBar:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff

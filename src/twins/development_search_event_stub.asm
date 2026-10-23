@@ -1,4 +1,4 @@
-; Shared by DevelopmentFacing01_10, Test2Facing01_10, WallPracticeRoomFacing01_12, DormRoomFacing01_13 (banks $10, $12, $13).
+; Shared by DevelopmentSearchEventStub_10, Test2SearchEventStub_10, WallPracticeRoomSearchEventStub_12, DormRoomSearchEventStub_13 (banks $10, $12, $13).
 
 {TWIN_LABEL}:
 	farcall BeginCutsceneScriptMode

@@ -158,15 +158,15 @@ Unused_1b_LoadUnlockDebugScreenGfx:
 	ld de, vTiles2 + VRAM_BANK1 ; $661b
 	ld c, 128 ; $661e
 	call QueueVRAMCopy ; $6620
-	ld hl, wTextTileBuffer ; $6623
+	ld hl, wDecompBufferHigh ; $6623
 	ld de, vTiles1 + VRAM_BANK1 ; $6626
-	ld c, wTextTileBuffer_SIZE / 16 ; $6629
+	ld c, wDecompBufferHigh_SIZE / 16 ; $6629
 	call QueueVRAMCopy ; $662b
 	ld hl, UnlockDebugNavGridTable ; $662e
-	ld de, wTextTileBuffer tile 64 ; $6631
+	ld de, wDecompBufferHigh tile 64 ; $6631
 	call DecompressData ; $6634
 	ld hl, UnlockDebugNavGridTable ; $6637
-	ld de, wTextTileBuffer ; $663a
+	ld de, wDecompBufferHigh ; $663a
 	call DecompressData ; $663d
 	ld hl, UnlockDebugNavGridTable ; $6640
 	ld_bg_pals de, 0, 8 ; $6643
@@ -222,7 +222,7 @@ Unused_1b_UpdateUnlockDebugSelectedMugshot:
 	jr .registerStatTask ; $66b4
 .locked:
 	ld a, $20 ; $66b6
-	ld [wCharRecordBuffer + 11], a ; $66b8
+	ld [wCharRecordBuffer + CHARREC_CHAR], a ; $66b8
 .registerStatTask:
 	frame_task Unused_1b_UpdateUnlockDebugStatOnChange, $0a ; $66bb
 	ret ; $66c3
@@ -244,7 +244,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	farcall LoadCharacterRecordToBuffer ; $66de
 	farcall Unused_18_CheckUnlockFlag ; $66e1
 	jr z, .nextEntry ; $66e4
-	ld a, [wCharRecordBuffer + 11] ; $66e6
+	ld a, [wCharRecordBuffer + CHARREC_CHAR] ; $66e6
 	farcall LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
@@ -253,7 +253,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call Unused_1b_GetUnlockDebugRosterField ; $66fa
-	ld a, [wCharRecordBuffer + 12] ; $66fd
+	ld a, [wCharRecordBuffer + CHARREC_PALETTE] ; $66fd
 	farcall Unused_1b_SetMugshotAttrs ; $6700
 .nextEntry:
 	ld a, $08 ; $6703
@@ -263,7 +263,7 @@ Unused_1b_DrawUnlockDebugMugshots:
 	jr nz, .loop ; $670d
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
-	ld a, [wCharRecordBuffer + 11] ; $6715
+	ld a, [wCharRecordBuffer + CHARREC_CHAR] ; $6715
 	farcall Unused_1b_StubNop0 ; $6718
 	ret ; $671b
 Unused_1b_RunMinigameFlagsDebugScreen:
@@ -284,11 +284,11 @@ Unused_1b_RunMinigameFlagsDebugScreen:
 	call Unused_1b_LoadUnlockDebugScreenGfx ; $674b
 	call Unused_1b_DrawUnlockDebugMugshots ; $674e
 	call Unused_1b_UpdateUnlockDebugSelectedMugshot ; $6751
-	ld hl, wTextTileBuffer tile 64 ; $6754
+	ld hl, wDecompBufferHigh tile 64 ; $6754
 	ld de, vBGMap0 + VRAM_BANK1 ; $6757
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $675a
 	call QueueVRAMCopy ; $675c
-	ld hl, wTextTileBuffer ; $675f
+	ld hl, wDecompBufferHigh ; $675f
 	ld de, vBGMap0 ; $6762
 	ld c, SCREEN_HEIGHT * TILEMAP_WIDTH / 16 ; $6765
 	call QueueVRAMCopy ; $6767
@@ -358,7 +358,7 @@ Unused_1b_UpdateUnlockDebugSelection:
 	ld [wCharSelectChar], a ; $67f0
 	ret ; $67f3
 Unused_1b_MoveUnlockDebugCursor:
-	ldh a, [hInputPressed] ; $67f4
+	ldh a, [hInputRepeat] ; $67f4
 	ld b, a ; $67f6
 	and PADF_DPAD ; $67f7
 	jr z, .done ; $67f9
@@ -379,7 +379,7 @@ Unused_1b_MoveUnlockDebugCursor:
 	jr .storeCursor ; $6817
 .locked:
 	ld a, $20 ; $6819
-	ld [wCharRecordBuffer + 11], a ; $681b
+	ld [wCharRecordBuffer + CHARREC_CHAR], a ; $681b
 .storeCursor:
 	ld a, d ; $681e
 	ld [wCharSelectCol], a ; $681f

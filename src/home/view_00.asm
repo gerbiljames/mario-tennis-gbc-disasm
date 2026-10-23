@@ -79,28 +79,28 @@ QueueSpriteBlockPart:
 	inc c ; $2d8a
 	ret ; $2d8b
 ProjectWorldToScreen:
-	push_rom_bank BANK(ViewScaleTableA) ; $2d8c
+	push_rom_bank BANK(ViewRotateSinTable) ; $2d8c
 	push hl ; $2d96
 	push de ; $2d97
 	ld l, e ; $2d98
 	ld h, d ; $2d99
-	call MulViewScaleA ; $2d9a
+	call MulViewSin ; $2d9a
 	ld e, l ; $2d9d
 	ld d, h ; $2d9e
 	ld l, c ; $2d9f
 	ld h, b ; $2da0
-	call MulViewScaleB ; $2da1
+	call MulViewCos ; $2da1
 	add hl, de ; $2da4
 	pop de ; $2da5
 	push hl ; $2da6
 	ld l, e ; $2da7
 	ld h, d ; $2da8
-	call MulViewScaleB ; $2da9
+	call MulViewCos ; $2da9
 	ld e, l ; $2dac
 	ld d, h ; $2dad
 	ld l, c ; $2dae
 	ld h, b ; $2daf
-	call MulViewScaleANeg ; $2db0
+	call MulViewSinNeg ; $2db0
 	add hl, de ; $2db3
 	ld e, l ; $2db4
 	ld d, h ; $2db5
@@ -134,13 +134,13 @@ ProjectWorldToScreen:
 	pop de ; $2de1
 	pop_rom_bank ; $2de2
 	ret ; $2de8
-MulViewScaleA:
+MulViewSin:
 	bit 7, h ; $2de9
 	jr nz, .negative ; $2deb
 	res 0, l ; $2ded
 	ld a, h ; $2def
 	and $1f ; $2df0
-	add HIGH(ViewScaleTableA) ; $2df2
+	add HIGH(ViewRotateSinTable) ; $2df2
 	ld h, a ; $2df4
 	ld a, [hl+] ; $2df5
 	ld h, [hl] ; $2df6
@@ -151,20 +151,20 @@ MulViewScaleA:
 	res 0, l ; $2dff
 	ld a, h ; $2e01
 	and $1f ; $2e02
-	add HIGH(ViewScaleTableA) ; $2e04
+	add HIGH(ViewRotateSinTable) ; $2e04
 	ld h, a ; $2e06
 	ld a, [hl+] ; $2e07
 	ld h, [hl] ; $2e08
 	ld l, a ; $2e09
 	neg_hl ; $2e0a
 	ret ; $2e10
-MulViewScaleANeg:
+MulViewSinNeg:
 	bit 7, h ; $2e11
 	jr nz, .negative ; $2e13
 	res 0, l ; $2e15
 	ld a, h ; $2e17
 	and $1f ; $2e18
-	add HIGH(ViewScaleTableA) ; $2e1a
+	add HIGH(ViewRotateSinTable) ; $2e1a
 	ld h, a ; $2e1c
 	ld a, [hl+] ; $2e1d
 	ld h, [hl] ; $2e1e
@@ -176,19 +176,19 @@ MulViewScaleANeg:
 	res 0, l ; $2e2d
 	ld a, h ; $2e2f
 	and $1f ; $2e30
-	add HIGH(ViewScaleTableA) ; $2e32
+	add HIGH(ViewRotateSinTable) ; $2e32
 	ld h, a ; $2e34
 	ld a, [hl+] ; $2e35
 	ld h, [hl] ; $2e36
 	ld l, a ; $2e37
 	ret ; $2e38
-MulViewScaleB:
+MulViewCos:
 	bit 7, h ; $2e39
 	jr nz, .negative ; $2e3b
 	res 0, l ; $2e3d
 	ld a, h ; $2e3f
 	and $1f ; $2e40
-	add HIGH(ViewScaleTableB) ; $2e42
+	add HIGH(ViewRotateCosTable) ; $2e42
 	ld h, a ; $2e44
 	ld a, [hl+] ; $2e45
 	ld h, [hl] ; $2e46
@@ -199,7 +199,7 @@ MulViewScaleB:
 	res 0, l ; $2e4f
 	ld a, h ; $2e51
 	and $1f ; $2e52
-	add HIGH(ViewScaleTableB) ; $2e54
+	add HIGH(ViewRotateCosTable) ; $2e54
 	ld h, a ; $2e56
 	ld a, [hl+] ; $2e57
 	ld h, [hl] ; $2e58

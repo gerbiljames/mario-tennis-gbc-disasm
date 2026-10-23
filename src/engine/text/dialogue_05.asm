@@ -37,9 +37,9 @@ Unused_05_ShowDialogueAtPosition:
 	pop_wram_bank ; $5a08
 	call SetActiveWindowTextId ; $5a0d
 	ld a, [wDialogueWindowId] ; $5a10
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5a13
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5a13
 	call DrawTextWindowFrame ; $5a16
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5a19
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5a19
 	call RedrawWindowRowsPadded ; $5a1c
 	call RenderActiveWindowText ; $5a1f
 	ld a, [wTextPageBreakRequest] ; $5a22
@@ -544,7 +544,7 @@ AddTextIdOffset:
 	sra a ; $5d50
 	ld e, a ; $5d52
 	ld d, $00 ; $5d53
-	ld hl, AddTextIdOffsetWordLookupTable ; $5d55
+	ld hl, TextBankStringCounts_05 ; $5d55
 	add hl, de ; $5d58
 	ld e, [hl] ; $5d59
 	inc hl ; $5d5a
@@ -599,7 +599,7 @@ AddTextIdOffset:
 	pop bc ; $5d96
 	pop af ; $5d97
 	ret ; $5d98
-AddTextIdOffsetWordLookupTable:
+TextBankStringCounts_05:
 	; $5d99, 26 bytes (records:2)
 	dw $0230 ; record 0
 	dw $015b ; record 1

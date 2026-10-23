@@ -14,7 +14,7 @@ Unused_05_IsCursorOnAdjustRow:
 	rlc b ; $4c8a
 	bit 0, b ; $4c8c
 	jr z, .restore ; $4c8e
-	ldh a, [hInputPressed] ; $4c90
+	ldh a, [hInputRepeat] ; $4c90
 	and PADF_UP | PADF_DOWN ; $4c92
 	jr nz, .restore ; $4c94
 	pop bc ; $4c96
@@ -24,7 +24,7 @@ Unused_05_IsCursorOnAdjustRow:
 	pop bc ; $4c9a
 	xor a ; $4c9b
 	ret ; $4c9c
-Unused_05_AnimateMenuScrollArrowsTask:
+Unused_05_AnimateMenuAdjustArrowsTask:
 	wram_bank WRAM_TEXT ; $4c9d
 	ld a, [wMenuAdjustRowMask] ; $4ca3
 	bit 7, a ; $4ca6
@@ -82,7 +82,7 @@ Unused_05_AnimateMenuScrollArrowsTask:
 	ld d, [hl] ; $4d0b
 	ld h, d ; $4d0c
 	ld l, e ; $4d0d
-	ld de, $3000 ; $4d0e
+	ld de, $10000 - wActiveTilemap ; $4d0e
 	add hl, de ; $4d11
 	ld de, vBGMap0 ; $4d12
 	add hl, de ; $4d15
@@ -219,7 +219,7 @@ RenderTextString:
 	ld a, [wTextResumePtr + 1] ; $4e24
 	or a ; $4e27
 	jr z, .noResume ; $4e28
-	ld bc, $3a00 ; $4e2a
+	ld bc, $10000 - wTextBuffer ; $4e2a
 	add hl, bc ; $4e2d
 	ld b, h ; $4e2e
 	ld c, l ; $4e2f
@@ -267,7 +267,7 @@ TextInterpreterLoop:
 	ld b, a ; $4e77
 	or a ; $4e78
 	jr nz, .compare ; $4e79
-	test_flag FLAG_TEXT_RENDER_ACTIVE ; $4e7b
+	test_flag FLAG_TEXT_REDRAW_IN_PLACE ; $4e7b
 	jr nz, .restore ; $4e7e
 	call FlushGlyphRow ; $4e80
 .restore:
@@ -278,7 +278,7 @@ TextInterpreterLoop:
 	jr z, .dakuten ; $4e87
 	cp TX_HANDAKUTEN ; $4e89
 	jr z, .handakuten ; $4e8b
-	cp TX_SHORT_TEXT ; $4e8d
+	cp TX_CHAR_NAME ; $4e8d
 	jr z, .charNameArg ; $4e8f
 	cp $20 ; $4e91
 	jr nc, .printGlyph ; $4e93
@@ -375,14 +375,14 @@ TextCmdNextGlyphStreamRow:
 	ret ; $4f31
 TextCmdDelay30:
 	push af ; $4f32
-	ld a, [wTextRedrawGuard] ; $4f33
+	ld a, [wTextCharDelayFrames] ; $4f33
 	or a ; $4f36
 	jr nz, .startDelay ; $4f37
 	ld a, $01 ; $4f39
-	ld [wTextRedrawGuard], a ; $4f3b
+	ld [wTextCharDelayFrames], a ; $4f3b
 	call RedrawActiveTextWindow ; $4f3e
 	xor a ; $4f41
-	ld [wTextRedrawGuard], a ; $4f42
+	ld [wTextCharDelayFrames], a ; $4f42
 .startDelay:
 	ld a, $1e ; $4f45
 .loop:
@@ -394,19 +394,19 @@ TextCmdDelay30:
 TextCmdDelay15Skippable:
 	push af ; $4f4f
 	push bc ; $4f50
-	ld a, [wTextRedrawGuard] ; $4f51
+	ld a, [wTextCharDelayFrames] ; $4f51
 	or a ; $4f54
 	jr nz, .startDelay ; $4f55
 	ld a, $01 ; $4f57
-	ld [wTextRedrawGuard], a ; $4f59
+	ld [wTextCharDelayFrames], a ; $4f59
 	call RedrawActiveTextWindow ; $4f5c
 	xor a ; $4f5f
-	ld [wTextRedrawGuard], a ; $4f60
+	ld [wTextCharDelayFrames], a ; $4f60
 .startDelay:
 	ld b, $0f ; $4f63
 .loop:
 	call AdvanceFrame ; $4f65
-	ldh a, [hInputPressed] ; $4f68
+	ldh a, [hInputRepeat] ; $4f68
 	and ~(PADF_SELECT | PADF_START) ; $4f6a
 	jr nz, .restore ; $4f6c
 	dec b ; $4f6e
@@ -442,9 +442,9 @@ TextCmdWaitButtonPage:
 	call AdvanceFrame ; $4fa1
 	ld hl, TextContinueArrowBlinkTask ; $4fa4
 	call UnregisterFrameTask ; $4fa7
-	set_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4faa
+	set_flag FLAG_TEXT_PAGE_ADVANCED ; $4faa
 	call AdvanceFrame ; $4fad
-	clear_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4fb0
+	clear_flag FLAG_TEXT_PAGE_ADVANCED ; $4fb0
 	pop hl ; $4fb3
 	pop de ; $4fb4
 	pop bc ; $4fb5

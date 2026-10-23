@@ -1,9 +1,9 @@
-; Shared by JuniorClassCourtSinglesNpc03FaceUp_11, JuniorClassCourtDoublesNpc03FaceUp_11 (bank $11).
+; Shared by VarsityCourtSinglesNpc03KevinFaceUp_13, VarsityCourtDoublesNpc03KevinFaceUp_13 (bank $13).
 
 {TWIN_LABEL}:
 	script_set_speed ACTOR_PLAYER, 0.25
 	script_lock_facing ACTOR_PLAYER
-	script_move_target ACTOR_PLAYER, 19.0, 21.0
+	script_move_target ACTOR_PLAYER, 13.0, 31.0
 	script_wait_move ACTOR_PLAYER
 	script_unlock_facing ACTOR_PLAYER
 	script_face ACTOR_PLAYER, FACE_UP

@@ -15,14 +15,14 @@ End17AwardCeremonyActors_27:
 	map_actor $0000, ActorScript_27_27, 15.0, 22.0, FACE_UP, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2
 	map_actor $0000, ActorScript_27_27, 14.0, 14.25, FACE_DOWN, OBJ_KEVIN_SWEATS, ANIM_WALK, $00, END17_AWARD_CEREMONY_KEVIN_SWEATS
 	map_actor $0000, ActorScript_27_27, 10.0, 13.75, FACE_DOWN, OBJ_A_COZ, ANIM_WALK, $00, END17_AWARD_CEREMONY_A_COZ
-	map_actor $0000, ActorScript_27_27, 12.0, 13.25, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALEX
+	map_actor $0000, ActorScript_27_27, 12.0, 13.25, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, END17_AWARD_CEREMONY_PLAYER_STAND_IN
 	map_actor $0000, ActorScript_27_27, 7.0, 5.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, END17_AWARD_CEREMONY_STUDENT_LONG_HAIR
 	map_actor $0000, ActorScript_27_27, 15.0, 7.0, FACE_DOWN, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $00, END17_AWARD_CEREMONY_STUDENT_PIGTAILS_GIRL
 	map_actor $0000, ActorScript_27_27, 14.5, 27.0, FACE_UP, OBJ_B_COZ, ANIM_WALK, $00, END17_AWARD_CEREMONY_B_COZ
 	map_actor $0000, ActorScript_27_27, 9.5, 27.0, FACE_UP, OBJ_ISLAND_SPECTATOR_A, ANIM_WALK, $00, END17_AWARD_CEREMONY_ISLAND_SPECTATOR_A
 	map_actor $0000, ActorScript_27_27, 8.0, 25.25, FACE_RIGHT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $05, END17_AWARD_CEREMONY_TOURNAMENT_STAFF_3
 	map_actor_end
-End17AwardCeremonyActorsAlt_27:
+End17AwardCeremonyActorsDoubles_27:
 	; $40d8, 178 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 15.0, 22.0, FACE_UP, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1
 	map_actor $0000, ActorScript_27_27, 14.0, 19.0, FACE_UP, OBJ_HEADMASTER, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_HEADMASTER
@@ -30,7 +30,7 @@ End17AwardCeremonyActorsAlt_27:
 	map_actor $0000, ActorScript_27_27, 15.0, 22.0, FACE_UP, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2
 	map_actor $0000, ActorScript_27_27, 9.0, 14.0, FACE_DOWN, OBJ_B_COZ, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_B_COZ
 	map_actor $0000, ActorScript_27_27, 11.0, 14.0, FACE_DOWN, OBJ_A_COZ, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_A_COZ
-	map_actor $0000, ActorScript_27_27, 13.0, 13.375, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_ALEX
+	map_actor $0000, ActorScript_27_27, 13.0, 13.375, FACE_DOWN, OBJ_ALEX, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_PLAYER_STAND_IN
 	map_actor $0000, ActorScript_27_27, 7.0, 5.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_STUDENT_LONG_HAIR
 	map_actor $0000, ActorScript_27_27, 15.0, 7.0, FACE_DOWN, OBJ_STUDENT_PIGTAILS_GIRL, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_STUDENT_PIGTAILS_GIRL
 	map_actor $0000, ActorScript_27_27, 15.0, 27.0, FACE_UP, OBJ_KEVIN_SWEATS, ANIM_WALK, $00, END17_AWARD_CEREMONY_ALT_KEVIN_SWEATS
@@ -46,21 +46,21 @@ End17AwardCeremonyExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_TRAINING_COURT, END17_AWARD_CEREMONY_DONE
 	db $ff
 End17AwardCeremonyNpcScripts_27:
-	ds 1, $ff ; $419c, fill
+	db $ff ; $419c
 End17AwardCeremonyFacingScripts_27:
-	ds 1, $ff ; $419d, fill
+	db $ff ; $419d
 End17AwardCeremonyTileTriggers_27:
-	ds 1, $ff ; $419e, fill
+	db $ff ; $419e
 End17AwardCeremonyInitScript_27:
 	test_flag FLAG_DOUBLES ; $419f
-	jr z, .animate ; $41a2
-	script_respawn_actors End17AwardCeremonyActorsAlt_27 ; $41a4
+	jr z, .singles ; $41a2
+	script_respawn_actors End17AwardCeremonyActorsDoubles_27 ; $41a4
 	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $41ac
 	farcall BeginCutsceneScriptMode ; $41bb
-	jr .setEnd17CeremonyObjectDefs ; $41be
-.animate:
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, ANIM_TROPHY_SINGLES ; $41c0
-.setEnd17CeremonyObjectDefs:
+	jr .setObjDefs ; $41be
+.singles:
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_TROPHY, ANIM_TROPHY_SINGLES ; $41c0
+.setObjDefs:
 	call SetEnd17CeremonyObjectDefs_27 ; $41c7
 	jr .placeActors ; $41ca
 	ret ; $41cc
@@ -73,66 +73,66 @@ End17AwardCeremonyInitScript_27:
 	call WaitFadeEnd ; $41ec
 	test_flag FLAG_DOUBLES ; $41ef
 	jp nz, .isDoubles ; $41f2
-	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1, 0.5 ; $41f5
-	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER, 0.5 ; $41fd
-	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 0.5 ; $4205
-	script_set_speed ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, 0.5 ; $420d
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, FACE_DOWN ; $4215
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_1, 0.5 ; $41f5
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_HEADMASTER, 0.5 ; $41fd
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_TROPHY, 0.5 ; $4205
+	script_set_speed ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, 0.5 ; $420d
+	script_face ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, FACE_DOWN ; $4215
 	script_delay 30 ; $421c
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.5, 22.0 ; $4221
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TROPHY, 15.5, 22.0 ; $4221
 	script_delay 30 ; $422c
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, 63.0, 63.0 ; $4231
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1, 15.0, 22.0 ; $423c
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.0, 21.0 ; $4247
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1, FACE_UP ; $4252
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 15.0, 18.0 ; $4259
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1, 15.0, 19.0 ; $4264
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1 ; $426f
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_1, 63.0, 63.0 ; $4274
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, 15.0, 19.0 ; $427f
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 14.0, 19.0 ; $428a
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, FACE_LEFT ; $4295
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, 14.0, 19.0 ; $429c
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 13.0, 19.0 ; $42a7
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $42b2
-	script_lock_facing ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2 ; $42b7
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, 15.0, 19.0 ; $42be
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2 ; $42c9
-	script_unlock_facing ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2 ; $42ce
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, 15.0, 22.0 ; $42d5
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2 ; $42e0
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_2, FACE_UP ; $42e5
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER, 12.0, 17.0 ; $42ec
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.0, 16.0 ; $42f7
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $4302
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, 63.0, 63.0 ; $4231
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_1, 15.0, 22.0 ; $423c
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TROPHY, 15.0, 21.0 ; $4247
+	script_face ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_1, FACE_UP ; $4252
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TROPHY, 15.0, 18.0 ; $4259
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_1, 15.0, 19.0 ; $4264
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_1 ; $426f
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_1, 63.0, 63.0 ; $4274
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, 15.0, 19.0 ; $427f
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TROPHY, 14.0, 19.0 ; $428a
+	script_face ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, FACE_LEFT ; $4295
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, 14.0, 19.0 ; $429c
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TROPHY, 13.0, 19.0 ; $42a7
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_TROPHY ; $42b2
+	script_lock_facing ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2 ; $42b7
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, 15.0, 19.0 ; $42be
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2 ; $42c9
+	script_unlock_facing ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2 ; $42ce
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, 15.0, 22.0 ; $42d5
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2 ; $42e0
+	script_face ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_2, FACE_UP ; $42e5
+	script_move_target ACTOR_END17_AWARD_CEREMONY_HEADMASTER, 12.0, 17.0 ; $42ec
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TROPHY, 12.0, 16.0 ; $42f7
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_TROPHY ; $4302
 	script_delay 80 ; $4307
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER, 12.0, 15.5 ; $430c
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.0, 14.25 ; $4317
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY ; $4322
-	script_lock_facing ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER ; $4327
-	script_move_target ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER, 12.0, 17.0 ; $432e
-	script_wait_move ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER ; $4339
-	script_unlock_facing ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER ; $433e
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_HEADMASTER, FACE_UP ; $4345
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_3, ANIM_BOUNCE ; $434c
-	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_3 ; $4353
+	script_move_target ACTOR_END17_AWARD_CEREMONY_HEADMASTER, 12.0, 15.5 ; $430c
+	script_move_target ACTOR_END17_AWARD_CEREMONY_TROPHY, 12.0, 14.25 ; $4317
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_TROPHY ; $4322
+	script_lock_facing ACTOR_END17_AWARD_CEREMONY_HEADMASTER ; $4327
+	script_move_target ACTOR_END17_AWARD_CEREMONY_HEADMASTER, 12.0, 17.0 ; $432e
+	script_wait_move ACTOR_END17_AWARD_CEREMONY_HEADMASTER ; $4339
+	script_unlock_facing ACTOR_END17_AWARD_CEREMONY_HEADMASTER ; $433e
+	script_face ACTOR_END17_AWARD_CEREMONY_HEADMASTER, FACE_UP ; $4345
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_3, ANIM_BOUNCE ; $434c
+	script_wait_idle ACTOR_END17_AWARD_CEREMONY_TOURNAMENT_STAFF_3 ; $4353
 	script_delay 50 ; $4358
 	script_face ACTOR_END17_AWARD_CEREMONY_KEVIN_SWEATS, FACE_LEFT ; $435d
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $4364
+	script_face ACTOR_END17_AWARD_CEREMONY_A_COZ, FACE_RIGHT ; $4364
 	script_delay 60 ; $436b
-	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 11.25, 12.25 ; $4370
-.alexFinale:
+	script_set_position ACTOR_END17_AWARD_CEREMONY_TROPHY, 11.25, 12.25 ; $4370
+.playerStandInFinale:
 	ld a, [wStoryMainGender] ; $437b
 	ld d, OBJ_ALEX ; $437e
 	add d ; $4380
 	ld d, a ; $4381
-	script_get_actor_state ACTOR_END17_AWARD_CEREMONY_ALT_ALEX ; $4382
+	script_get_actor_state ACTOR_END17_AWARD_CEREMONY_ALT_PLAYER_STAND_IN ; $4382
 	ld c, l ; $4387
 	ld b, h ; $4388
 	farcall LoadActorObjectDefIfValid ; $4389
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_WALK ; $438c
-	script_face ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, FACE_RIGHT ; $4393
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_DISTANT ; $439a
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_PLAYER_STAND_IN, ANIM_WALK ; $438c
+	script_face ACTOR_END17_AWARD_CEREMONY_ALT_PLAYER_STAND_IN, FACE_RIGHT ; $4393
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_PLAYER_STAND_IN, ANIM_DISTANT ; $439a
 	script_player_speed 0.1875 ; $43a1
 	script_move_player 12.0, 13.0 ; $43a7
 	farcall WaitPlayerMoveDone ; $43b1
@@ -199,7 +199,7 @@ End17AwardCeremonyInitScript_27:
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_3, ANIM_BOUNCE ; $456c
 	script_wait_idle ACTOR_END17_AWARD_CEREMONY_ALT_TOURNAMENT_STAFF_3 ; $4573
 	script_delay 30 ; $4578
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_NOD ; $457d
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_PLAYER_STAND_IN, ANIM_NOD ; $457d
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $4584
 	script_wait_idle ACTOR_PARTNER ; $458b
 	script_delay 30 ; $4590
@@ -208,11 +208,11 @@ End17AwardCeremonyInitScript_27:
 	script_face ACTOR_END17_AWARD_CEREMONY_ALT_A_COZ, FACE_RIGHT ; $45a3
 	script_delay 60 ; $45aa
 	script_set_position ACTOR_END17_AWARD_CEREMONY_ALT_TROPHY, 12.25, 12.375 ; $45af
-	jp .alexFinale ; $45ba
+	jp .playerStandInFinale ; $45ba
 	ret ; $45bd
 SetEnd17CeremonyObjectDefs_27:
 	test_flag FLAG_DOUBLES ; $45be
-	jp z, .checkStoryModeGenderOfMainCharacter ; $45c1
+	jp z, .loadPlayerStandIn ; $45c1
 	ld a, [wStoryPartnerGender] ; $45c4
 	ld d, OBJ_HARRY_B ; $45c7
 	add d ; $45c9
@@ -225,16 +225,16 @@ SetEnd17CeremonyObjectDefs_27:
 	script_null_script ACTOR_PARTNER ; $45dc
 	script_set_position ACTOR_PARTNER, 15.0, 13.375 ; $45e1
 	script_face ACTOR_PARTNER, FACE_DOWN ; $45ec
-.checkStoryModeGenderOfMainCharacter:
+.loadPlayerStandIn:
 	ld a, [wStoryMainGender] ; $45f3
 	ld d, OBJ_ALEX_B ; $45f6
 	add d ; $45f8
 	ld d, a ; $45f9
-	script_get_actor_state ACTOR_END17_AWARD_CEREMONY_ALT_ALEX ; $45fa
+	script_get_actor_state ACTOR_END17_AWARD_CEREMONY_PLAYER_STAND_IN ; $45fa
 	ld c, l ; $45ff
 	ld b, h ; $4600
 	farcall LoadActorObjectDefIfValid ; $4601
-	script_set_anim ACTOR_END17_AWARD_CEREMONY_ALT_ALEX, ANIM_WALK ; $4604
+	script_set_anim ACTOR_END17_AWARD_CEREMONY_PLAYER_STAND_IN, ANIM_WALK ; $4604
 	ret ; $460b
 End16BeforeFinalsMapScripts_27:
 	; $460c, 14 bytes (map_tree)
@@ -271,22 +271,22 @@ End16BeforeFinalsExitTriggers_27:
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CENTER_COURT, ENTRY_CENTER_COURT_FROM_TOURNAMENT_WEST, END16_BEFORE_FINALS_DONE
 	db $ff
 End16BeforeFinalsNpcScripts_27:
-	ds 1, $ff ; $46fa, fill
+	db $ff ; $46fa
 End16BeforeFinalsFacingScripts_27:
-	ds 1, $ff ; $46fb, fill
+	db $ff ; $46fb
 End16BeforeFinalsTileTriggers_27:
-	ds 1, $ff ; $46fc, fill
+	db $ff ; $46fc
 End16BeforeFinalsInitScript_27:
 	test_flag FLAG_DOUBLES ; $46fd
 	jr nz, .isDoubles ; $4700
-	script_respawn_actors End16BeforeFinalsActorsAlt_27 ; $4702
+	script_respawn_actors End16BeforeFinalsActorsSingles_27 ; $4702
 	call End16BeforeFinalsCutscene_27 ; $470a
 	ret ; $470d
 .isDoubles:
-	script_respawn_actors End16BeforeFinalsActorsAltB_27 ; $470e
+	script_respawn_actors End16BeforeFinalsActorsDoubles_27 ; $470e
 	call End16BeforeFinalsCutscene_27 ; $4716
 	ret ; $4719
-End16BeforeFinalsActorsAlt_27:
+End16BeforeFinalsActorsSingles_27:
 	; $471a, 206 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 39.0, 17.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_1
 	map_actor $0000, ActorScript_27_27, 19.0, 15.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_2
@@ -303,23 +303,23 @@ End16BeforeFinalsActorsAlt_27:
 	map_actor $0000, ActorScript_27_27, 5.0, 33.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_FRANK
 	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_ELLIS
 	map_actor_end
-End16BeforeFinalsActorsAltB_27:
+End16BeforeFinalsActorsDoubles_27:
 	; $47e8, 192 bytes (map_actors)
-	map_actor $0000, ActorScript_27_27, 39.0, 17.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_TOURNAMENT_STAFF_1
-	map_actor $0000, ActorScript_27_27, 19.0, 15.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_TOURNAMENT_STAFF_2
-	map_actor $0000, ActorScript_27_27, 14.0, 4.0, FACE_RIGHT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_TOURNAMENT_STAFF_3
-	map_actor $0000, ActorScript_27_27, 35.0, 17.0, FACE_DOWN, OBJ_KEVIN_SWEATS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_KEVIN_SWEATS
-	map_actor $0000, ActorScript_27_27, 35.0, 19.0, FACE_UP, OBJ_EMILY_SWEATS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_EMILY_SWEATS
-	map_actor $0000, ActorScript_27_27, 41.0, 23.0, FACE_LEFT, OBJ_SPIKE, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_SPIKE
-	map_actor $0000, ActorScript_27_27, 41.0, 25.0, FACE_LEFT, OBJ_ELDEN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_ELDEN
-	map_actor $0000, ActorScript_27_27, 15.0, 19.0, FACE_DOWN, OBJ_A_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_A_COZ
-	map_actor $0000, ActorScript_27_27, 17.0, 19.0, FACE_DOWN, OBJ_B_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_B_COZ
-	map_actor $0000, ActorScript_27_27, 29.0, 17.0, FACE_RIGHT, OBJ_SAMMI, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_SAMMI
-	map_actor $0000, ActorScript_27_27, 29.0, 19.0, FACE_RIGHT, OBJ_SEAN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_SEAN
-	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALT_B_ELLIS
-	map_actor $0000, ActorScript_27_29, 36.0, 24.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $05, END16_BEFORE_FINALS_ALT_B_FRANK
+	map_actor $0000, ActorScript_27_27, 39.0, 17.0, FACE_LEFT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_1
+	map_actor $0000, ActorScript_27_27, 19.0, 15.0, FACE_DOWN, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_2
+	map_actor $0000, ActorScript_27_27, 14.0, 4.0, FACE_RIGHT, OBJ_TOURNAMENT_STAFF, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_3
+	map_actor $0000, ActorScript_27_27, 35.0, 17.0, FACE_DOWN, OBJ_KEVIN_SWEATS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_KEVIN_SWEATS
+	map_actor $0000, ActorScript_27_27, 35.0, 19.0, FACE_UP, OBJ_EMILY_SWEATS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_EMILY_SWEATS
+	map_actor $0000, ActorScript_27_27, 41.0, 23.0, FACE_LEFT, OBJ_SPIKE, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_SPIKE
+	map_actor $0000, ActorScript_27_27, 41.0, 25.0, FACE_LEFT, OBJ_ELDEN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_ELDEN
+	map_actor $0000, ActorScript_27_27, 15.0, 19.0, FACE_DOWN, OBJ_A_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_A_COZ
+	map_actor $0000, ActorScript_27_27, 17.0, 19.0, FACE_DOWN, OBJ_B_COZ, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_B_COZ
+	map_actor $0000, ActorScript_27_27, 29.0, 17.0, FACE_RIGHT, OBJ_SAMMI, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_SAMMI
+	map_actor $0000, ActorScript_27_27, 29.0, 19.0, FACE_RIGHT, OBJ_SEAN, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_SEAN
+	map_actor $0000, ActorScript_27_29, 41.0, 21.0, FACE_DOWN, OBJ_ELLIS, ANIM_WALK, $00, END16_BEFORE_FINALS_ALTB_ELLIS
+	map_actor $0000, ActorScript_27_29, 36.0, 24.0, FACE_DOWN, OBJ_FRANK, ANIM_WALK, $05, END16_BEFORE_FINALS_ALTB_EDGAR
 	map_actor_end
-End16BeforeFinalsScriptBody_27:
+End16BeforeFinalsWalkPlayersIn_27:
 	script_move_target ACTOR_PLAYER, 28.0, 25.0 ; $48a8
 	script_wait_move ACTOR_PLAYER ; $48b3
 	test_flag FLAG_DOUBLES ; $48b8
@@ -351,7 +351,7 @@ SetEnd16BeforeFinalsDoublesWalkScripts_27:
 End16BeforeFinalsCutscene_27:
 	script_fade_in 8 ; $490c
 	call WaitFadeEnd ; $4911
-	call End16BeforeFinalsScriptBody_27 ; $4914
+	call End16BeforeFinalsWalkPlayersIn_27 ; $4914
 	farcall BeginCutsceneScriptMode ; $4917
 	script_move_player 17.0, 15.0 ; $491a
 	farcall WaitPlayerMoveDone ; $4924
@@ -382,20 +382,20 @@ End16BeforeFinalsCutscene_27:
 	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3 ; $49db
 	script_face ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3, FACE_UP ; $49e0
 	test_flag FLAG_DOUBLES ; $49e7
-	jp nz, .face ; $49ea
+	jp nz, .doubles ; $49ea
 	script_set_speed ACTOR_PLAYER, 1.0 ; $49ed
-	script_face_pair ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ACTOR_PLAYER ; $49f5
+	script_face_pair ACTOR_END16_BEFORE_FINALS_ALT_A_COZ, ACTOR_PLAYER ; $49f5
 	script_wait_frames 30 ; $49fd
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4a04
-	script_face ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, FACE_DOWN ; $4a0b
-	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ANIM_NOD ; $4a12
+	script_face ACTOR_END16_BEFORE_FINALS_ALT_A_COZ, FACE_DOWN ; $4a0b
+	script_set_anim ACTOR_END16_BEFORE_FINALS_ALT_A_COZ, ANIM_NOD ; $4a12
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4a19
 	script_wait_idle ACTOR_PLAYER ; $4a20
 	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $4a25
 	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3 ; $4a30
 	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3, ActorScript_27_02 ; $4a35
 	script_wait_frames 20 ; $4a40
-	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_02 ; $4a47
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_A_COZ, ActorScript_27_02 ; $4a47
 	script_wait_frames 20 ; $4a52
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_02 ; $4a59
 	script_wait_frames 20 ; $4a64
@@ -406,7 +406,7 @@ End16BeforeFinalsCutscene_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $4a81
 	ld [wStoryModeExitTriggerRequest], a ; $4a84
 	ret ; $4a87
-.face:
+.doubles:
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $4a88
 	script_set_speed ACTOR_PLAYER, 1.0 ; $4a90
 	script_set_speed ACTOR_PARTNER, 1.0 ; $4a98
@@ -416,29 +416,29 @@ End16BeforeFinalsCutscene_27:
 	script_wait_idle ACTOR_PLAYER ; $4ab5
 	script_face ACTOR_PLAYER, FACE_DOWN ; $4aba
 	script_face ACTOR_PARTNER, FACE_DOWN ; $4ac1
-	script_move_target ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $4ac8
-	script_wait_move ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3 ; $4ad3
-	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_TOURNAMENT_STAFF_3, ActorScript_27_02 ; $4ad8
+	script_move_target ACTOR_END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_3, 19.0, 23.0 ; $4ac8
+	script_wait_move ACTOR_END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_3 ; $4ad3
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALTB_TOURNAMENT_STAFF_3, ActorScript_27_02 ; $4ad8
 	script_wait_frames 20 ; $4ae3
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_02 ; $4aea
 	script_wait_frames 20 ; $4af5
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_02 ; $4afc
 	script_wait_frames 60 ; $4b07
-	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_B_COZ, ActorScript_27_03 ; $4b0e
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALTB_B_COZ, ActorScript_27_03 ; $4b0e
 	script_wait_frames 20 ; $4b19
-	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALT_B_A_COZ, ActorScript_27_03 ; $4b20
+	script_set_actor_script ACTOR_END16_BEFORE_FINALS_ALTB_A_COZ, ActorScript_27_03 ; $4b20
 	script_move_player 17.0, 13.0 ; $4b2b
 	farcall WaitPlayerMoveDone ; $4b35
 	ld a, EXIT_END16_BEFORE_FINALS_DONE ; $4b38
 	ld [wUnusedExitTriggerIdMirror], a ; $4b3a
 	ld [wStoryModeExitTriggerRequest], a ; $4b3d
 	ret ; $4b40
-; Two lists of three 6-byte records, each terminated by a $00 byte, in
-; the shape of this bank's actor lists. The two differ in one byte
+; Two lists of three 6-byte records, each terminated by a $00 byte (not
+; map_actor rows, which are 14 bytes). The two differ in one byte
 ; (record 0 field 4 is $15 in the first list, $13 in the second): two
 ; variants of the same scene population.
 ; Nothing reads it.
-Unused_27_ActorLists:
+Unused_27_SixByteRecordLists:
 	; $4b41, 38 bytes (bytes:6)
 	db $04, $00, $13, $00, $15, $02 ; 0x00
 	db $04, $00, $13, $00, $0b, $02 ; 0x06

@@ -1,10 +1,10 @@
-CheckBallHitsMinigameTargetAlt:
+CheckBallHitsScoringMinigameTarget:
 	ld a, [wBallCrossedNetFlag] ; $6df4
 	and a ; $6df7
 	ret z ; $6df8
 	ld a, $01 ; $6df9
-	ld [wMinigameHitPending], a ; $6dfb
-	ld hl, wBallHistory + 30 ; $6dfe
+	ld [wMinigameNetCrossPending], a ; $6dfb
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_X ; $6dfe
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
 	ld e, a ; $6e03
@@ -19,7 +19,7 @@ CheckBallHitsMinigameTargetAlt:
 	add hl, de ; $6e17
 	bit 7, h ; $6e18
 	jr nz, .done ; $6e1a
-	ld hl, wBallHistory + 32 ; $6e1c
+	ld hl, wBallHistory + BALLHIST_NEWEST + BALLHIST_Y ; $6e1c
 	ld a, [hl+] ; $6e1f
 	ld d, [hl] ; $6e20
 	ld e, a ; $6e21
@@ -98,20 +98,20 @@ RunEndingCreditsSequence:
 	ld [wRasterScrollStartLY], a ; $6eba
 	ld [wRasterScrollEndLY], a ; $6ebd
 	call RunStoryLocation ; $6ec0
-	test_flag FLAG_ENDING_CREDITS_PENDING ; $6ec3
+	test_flag FLAG_ENDING_SKIP_STAFF_PAGE ; $6ec3
 	jr nz, .fadeOut ; $6ec6
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $6ec8
 	call FreezeAllActors ; $6ecb
-	farcall InitGrayscalePaletteFade ; $6ece
+	farcall InitSepiaPaletteFade ; $6ece
 	ld b, $3f ; $6ed1
 	ld c, $ff ; $6ed3
 	ld d, $1e ; $6ed5
 	farcall SetupPaletteFadeMask ; $6ed7
 	farcall AnimatePaletteFadeToTarget ; $6eda
 	ld a, [wStoryCharacterSlot] ; $6edd
-	farcall PlayScrollingStoryCutscene ; $6ee0
+	farcall ShowEndingCreditsStaffPage ; $6ee0
 .fadeOut:
-	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
+	clear_flag FLAG_ENDING_SKIP_STAFF_PAGE ; $6ee3
 	script_fade_out 4 ; $6ee6
 	call WaitFadeEnd ; $6eeb
 	ld a, SCREEN_HEIGHT_PX ; $6eee
@@ -161,7 +161,7 @@ FreezeAllActors:
 	jp nz, .actorLoop ; $6f3e
 	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
-Unused_0a_FarcallUpdateSceneAnimation:
-	farcall UpdateSceneAnimation ; $6f45
+Unused_0a_FarcallUpdateEpilogueEndAnimation:
+	farcall UpdateEpilogueEndAnimation ; $6f45
 	ret ; $6f48
 	; $6f49, 4279 bytes fill to bank end (linker-padded)

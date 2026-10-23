@@ -129,8 +129,8 @@ DrawN64TnmtRowIcons:
 	push de ; $4f47
 	push hl ; $4f48
 	push_wram_bank WRAM_SCREEN ; $4f49
-	ld hl, wN64TnmtLayout ; $4f52
-	ld a, [wDataScreenCursorRow] ; $4f55
+	ld hl, wN64TnmtRowChars ; $4f52
+	ld a, [wDataScreenScrollRow] ; $4f55
 	add_hl_a ; $4f58
 	ld d, h ; $4f5d
 	ld e, l ; $4f5e
@@ -200,7 +200,7 @@ DrawN64TnmtPageLabels:
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
 	wram_bank WRAM_SCREEN ; $5000
-	ld a, [wDataScreenCursorRow] ; $5006
+	ld a, [wDataScreenScrollRow] ; $5006
 	add a ; $5009
 	ld b, a ; $500a
 	add a ; $500b
@@ -323,47 +323,47 @@ FlushN64TnmtWindowToVram:
 	ret ; $50d5
 N64TnmtScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $50d6
-	ld a, [wScreenScratch] ; $50df
+	ld a, [wN64TnmtHasSecondPage] ; $50df
 	or a ; $50e2
-	jr z, .applyCursorBounceX ; $50e3
+	jr z, .checkLeftArrow ; $50e3
 	ld a, [wDataScreenPage] ; $50e5
 	or a ; $50e8
-	jr nz, .applyCursorBounceX ; $50e9
+	jr nz, .checkLeftArrow ; $50e9
 	ld_xy de, $93, $2f ; $50eb
-	ld c, $01 ; $50ee
+	ld c, BOBDIR_POS ; $50ee
 	call ApplyCursorBounceX ; $50f0
 	ld b, $08 ; $50f3
 	ld c, $00 ; $50f5
 	ld h, $00 ; $50f7
 	farcall QueueStackedSpritePair ; $50f9
-.applyCursorBounceX:
+.checkLeftArrow:
 	ld a, [wDataScreenPage] ; $50fc
 	or a ; $50ff
 	jr z, .checkUpArrow ; $5100
 	ld_xy de, $20, $2f ; $5102
-	ld c, $00 ; $5105
+	ld c, BOBDIR_NEG ; $5105
 	call ApplyCursorBounceX ; $5107
 	ld b, $08 ; $510a
 	ld c, $00 ; $510c
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
 .checkUpArrow:
-	ld a, [wDataScreenCursorRow] ; $5113
+	ld a, [wDataScreenScrollRow] ; $5113
 	or a ; $5116
 	jr z, .checkDownArrow ; $5117
 	ld_xy de, $0c, $32 ; $5119
-	ld c, $01 ; $511c
+	ld c, BOBDIR_POS ; $511c
 	call ApplyCursorBounceY ; $511e
 	ld b, $08 ; $5121
 	ld c, $00 ; $5123
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
 .checkDownArrow:
-	ld a, [wDataScreenCursorRow] ; $512a
+	ld a, [wDataScreenScrollRow] ; $512a
 	cp $0b ; $512d
 	jr z, .restore ; $512f
 	ld_xy de, $0c, $88 ; $5131
-	ld c, $00 ; $5134
+	ld c, BOBDIR_NEG ; $5134
 	call ApplyCursorBounceY ; $5136
 	ld b, $08 ; $5139
 	ld c, $00 ; $513b
@@ -386,7 +386,7 @@ RunN64RingShotData:
 	call WaitFadeEnd ; $5174
 	wram_bank WRAM_SCREEN ; $5177
 .loop:
-	ldh a, [hInputPressed] ; $517d
+	ldh a, [hInputRepeat] ; $517d
 	ld [wMenuInputPressed], a ; $517f
 	call ScrollRingShotCursor ; $5182
 	call AdvanceFrame ; $5185
@@ -413,13 +413,13 @@ BuildN64RingShotScreen:
 	xor a ; $51b3
 	ld [wMenuCursorX], a ; $51b4
 	ld [wMenuCursorY], a ; $51b7
-	ld c, SCREENASSET_RingShotHud ; $51ba
+	ld c, SCREENASSET_N64RingShotPoints ; $51ba
 	farcall LoadScreenAssetRecord ; $51bc
 	wram_bank WRAM_SCREEN ; $51bf
 	call LoadN64RingShotRecords ; $51c5
 	wram_bank WRAM_SCREEN ; $51c8
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $51ce
-	call LoadChartWindowTiles ; $51d1
+	call LoadChartCharIconTiles ; $51d1
 	ld de, vTiles0 + VRAM_BANK1 ; $51d4
 	farcall LoadMenuArrowSpriteTiles ; $51d7
 	ld b, $08 ; $51da

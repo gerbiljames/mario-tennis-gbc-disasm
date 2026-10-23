@@ -3,7 +3,7 @@
 
 Both directions: decompress() reads the game's streams, compress() is the
 original encoder, which is what makes the compressed graphics editable.
-Verified by round-tripping all 863 streams in the ROM: each re-encodes from
+Verified by round-tripping every stream in the ROM: each re-encodes from
 its decoded data to the same bytes.
 
 A stream is a sequence of groups: one control byte holding 8 flags consumed
@@ -18,8 +18,8 @@ terminating reference starts a fresh flag group, the decoder consumes all
 three ($00 control byte + $0000 reference); mid-group it consumes only the
 $0000 reference and the third byte goes unread. decompress() counts that
 authored-but-unread pad byte in the returned stream length so extents match
-the encoder's output (verified over every stream in the ROM: 715 mid-group
-streams all pad with $00, 148 fresh-group streams have no pad).
+the encoder's output (verified over every stream in the ROM: every mid-group
+stream pads with $00, no fresh-group stream has a pad).
 """
 import sys
 from pathlib import Path

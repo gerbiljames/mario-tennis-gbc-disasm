@@ -30,17 +30,17 @@ Unused_10_CheckAnyStorySlot:
 	push af ; $5721
 	xor a ; $5722
 	ld [wCurrentStorySlot], a ; $5723
-	farcall CheckStorySlot ; $5726
+	farcall ReadCurrentStorySlot ; $5726
 	cp $fe ; $5729
 	jr nz, .restore ; $572b
 	ld a, $01 ; $572d
 	ld [wCurrentStorySlot], a ; $572f
-	farcall CheckStorySlot ; $5732
+	farcall ReadCurrentStorySlot ; $5732
 	cp $fe ; $5735
 	jr nz, .restore ; $5737
 	ld a, $02 ; $5739
 	ld [wCurrentStorySlot], a ; $573b
-	farcall CheckStorySlot ; $573e
+	farcall ReadCurrentStorySlot ; $573e
 	cp $fe ; $5741
 	jr nz, .restore ; $5743
 	pop af ; $5745
@@ -54,7 +54,7 @@ Unused_10_CheckAnyStorySlot:
 	ret ; $5751
 GetStoryContinueDestination:
 	test_flag FLAG_DOUBLES ; $5752
-	jr nz, .checkFlag ; $5755
+	jr nz, .doubles ; $5755
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5757
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $575a
 	jr z, .done ; $575c
@@ -69,7 +69,7 @@ GetStoryContinueDestination:
 .dormSingles:
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $576c
 	jr .done ; $576e
-.checkFlag:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5770
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $5773
 	jr z, .done ; $5775
@@ -134,16 +134,16 @@ ConfirmDiscardSuspendedExhibMatch:
 	ld b, $02 ; $57d7
 	farcall RunEraseDataConfirmMenu ; $57d9
 	or a ; $57dc
-	jr z, .discarded ; $57dd
+	jr z, .cancelled ; $57dd
 	xor a ; $57df
 	ld [wSaveAndQuitRequest], a ; $57e0
-	ld [wKeepMatchStatsFlag], a ; $57e3
+	ld [wMatchSuspendedFlag], a ; $57e3
 	farcall WriteExhibitionSaveBlock ; $57e6
 	pop bc ; $57e9
 	pop af ; $57ea
 	ld a, $00 ; $57eb
 	ret ; $57ed
-.discarded:
+.cancelled:
 	pop bc ; $57ee
 	pop af ; $57ef
 	ld a, $01 ; $57f0
@@ -392,9 +392,9 @@ CafeteriaNpcScripts_10:
 	map_script ACTOR_CAFETERIA_STUDENT_BLACK_HAIR_BOY_2, FACEMASK_ANY, $0000, CafeteriaNpc09_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 CafeteriaFacingScripts_10:
-	ds 1, $ff ; $5a50, fill
+	db $ff ; $5a50
 CafeteriaTileTriggers_10:
-	ds 1, $ff ; $5a51, fill
+	db $ff ; $5a51
 CafeteriaInitScript_10:
 	call SetStoryDialogueStage_10 ; $5a52
 	ld a, [wMapSceneStage] ; $5a55
@@ -425,8 +425,8 @@ RestaurantMapScripts_10:
 	dw RestaurantInitScript_10 ; slot 6 InitScript
 RestaurantActors_10:
 	; $5a8e, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_10_2, 17.0, 25.0, FACE_LEFT, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, RESTAURANT_RESTAURANT_SERVER_1
-	map_actor $0000, ActorScript_10_2, 33.0, 21.0, FACE_UP, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, RESTAURANT_RESTAURANT_SERVER_2
+	map_actor $0000, ActorScript_10_2, 17.0, 25.0, FACE_LEFT, OBJ_RESTAURANT_SERVER, ANIM_WALK, $00, RESTAURANT_SERVER_1
+	map_actor $0000, ActorScript_10_2, 33.0, 21.0, FACE_UP, OBJ_RESTAURANT_SERVER, ANIM_WALK, $07, RESTAURANT_SERVER_2
 	map_actor $0000, ActorScript_10_2, 22.0, 19.0, FACE_DOWN, OBJ_STUDENT_LONG_HAIR, ANIM_WALK, $00, RESTAURANT_STUDENT_LONG_HAIR_1
 	map_actor $0000, ActorScript_10_2, 29.0, 23.0, FACE_UP, OBJ_CHEF, ANIM_WALK, $00, RESTAURANT_CHEF
 	map_actor $0000, ActorScript_10_2, 41.0, 41.0, FACE_RIGHT, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, RESTAURANT_BALLOON_EXCLAIM
@@ -451,10 +451,10 @@ RestaurantEntryPoints_10:
 	twin_named academy_main_bldg_arrival01, RestaurantArrival01_10 ; $5b97
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_RESTAURANT, RESTAURANT_TO_RESTAURANT_PLAZA
+	map_script $01, FACEMASK_ANY, $0000, RestaurantExitResetNpc08Seat_10, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_RESTAURANT, RESTAURANT_TO_RESTAURANT_PLAZA
 	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_CAFETERIA, ENTRY_CAFETERIA_FROM_RESTAURANT, RESTAURANT_TO_CAFETERIA
 	db $ff
-RestaurantExit01_10:
+RestaurantExitResetNpc08Seat_10:
 	clear_flag FLAG_RESTAURANT_NPC08_MOVED ; $5bee
 	ret ; $5bf1
 RestaurantNpc03_10:
@@ -470,7 +470,7 @@ RestaurantNpc03_10:
 	jr nz, .speak ; $5c08
 	farcall AdvanceDialogueTextCursor ; $5c0a
 .speak:
-	script_speak ACTOR_RESTAURANT_RESTAURANT_SERVER_1 ; $5c0d
+	script_speak ACTOR_RESTAURANT_SERVER_1 ; $5c0d
 	ret ; $5c12
 RestaurantNpc03TextIds:
 	; $5c13, 10 bytes (text_ids)
@@ -489,7 +489,7 @@ RestaurantNpc04_10:
 	ld h, [hl] ; $5c29
 	ld l, a ; $5c2a
 	farcall InitDialogueTextCursor ; $5c2b
-	script_speak ACTOR_RESTAURANT_RESTAURANT_SERVER_2 ; $5c2e
+	script_speak ACTOR_RESTAURANT_SERVER_2 ; $5c2e
 	ret ; $5c33
 RestaurantNpc04TextIds:
 	; $5c34, 10 bytes (text_ids)
@@ -555,7 +555,7 @@ RestaurantNpc06_10:
 	ld a, [wMapSceneStage2] ; $5cdf
 	cp STORYTIER_ACADEMY ; $5ce2
 	jr nz, .animate ; $5ce4
-	call RestaurantShowActor11NearPlayer_10 ; $5ce6
+	call RestaurantShowEllipsisBalloonNearPlayer_10 ; $5ce6
 .animate:
 	script_set_anim ACTOR_RESTAURANT_CHEF, ANIM_NOD ; $5ce9
 	script_wait_idle ACTOR_RESTAURANT_CHEF ; $5cf0
@@ -646,12 +646,12 @@ RestaurantNpc08_10:
 	script_speak ACTOR_RESTAURANT_STUDENT_CAP_BOY_1 ; $5dff
 	script_set_speed ACTOR_RESTAURANT_STUDENT_CAP_BOY_1, 0.5 ; $5e04
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e0c
-	jr z, .altText ; $5e0f
+	jr z, .walkToSeat ; $5e0f
 	script_jump_velocity ACTOR_PLAYER, -2.0 ; $5e11
 	script_move_target ACTOR_PLAYER, 31.0, 15.0 ; $5e19
 	script_wait_move ACTOR_PLAYER ; $5e24
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5e29
-.altText:
+.walkToSeat:
 	script_move_target ACTOR_RESTAURANT_STUDENT_CAP_BOY_1, 33.25, 15.0 ; $5e30
 	script_wait_move ACTOR_RESTAURANT_STUDENT_CAP_BOY_1 ; $5e3b
 	script_wait_frames 10 ; $5e40
@@ -692,10 +692,10 @@ RestaurantNpc09_10:
 	farcall InitDialogueTextCursor ; $5e99
 	ld a, [wMapSceneStage] ; $5e9c
 	cp STORYRANK_SINGLES_ISLAND_OPEN ; $5e9f
-	jr nc, .altText ; $5ea1
+	jr nc, .askYesNo ; $5ea1
 	script_speak ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ea3
 	ret ; $5ea8
-.altText:
+.askYesNo:
 	script_speak_restore ACTOR_RESTAURANT_STUDENT_WAVY_HAIR_GIRL ; $5ea9
 	farcall RunDialogueYesNoPrompt ; $5eae
 	farcall ScriptCloseDialogueWindow ; $5eb1
@@ -839,15 +839,15 @@ RestaurantNpc0D_10:
 	farcall InitDialogueTextCursor ; $5fd7
 	ld a, [wMapSceneStage2] ; $5fda
 	cp STORYTIER_ISLAND_OPEN ; $5fdd
-	jr nz, .advanceDialogueTextCursor ; $5fdf
+	jr nz, .checkDoublesJuniorChamp ; $5fdf
 	script_speak_restore ACTOR_RESTAURANT_STUDENT_HEADBAND_BOY_1 ; $5fe1
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
 	script_wait_frames 5 ; $5fec
 	and a ; $5ff3
-	jr z, .advanceDialogueTextCursor ; $5ff4
+	jr z, .checkDoublesJuniorChamp ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
-.advanceDialogueTextCursor:
+.checkDoublesJuniorChamp:
 	ld a, [wMapSceneStage] ; $5ff9
 	cp STORYRANK_DOUBLES_JUNIOR_CHAMP ; $5ffc
 	jr nz, .speak ; $5ffe
@@ -923,8 +923,8 @@ RestaurantNpc10TextIds:
 	assert_table_length NUM_STORYTIERS
 RestaurantNpcScripts_10:
 	; $6076, 121 bytes (map_scripts)
-	map_script ACTOR_RESTAURANT_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, RestaurantNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_RESTAURANT_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, RestaurantNpc04_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_RESTAURANT_SERVER_1, FACEMASK_ANY, $0000, RestaurantNpc03_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_RESTAURANT_SERVER_2, FACEMASK_ANY, $0000, RestaurantNpc04_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_RESTAURANT_STUDENT_LONG_HAIR_1, FACEMASK_ANY, $0000, RestaurantNpc05_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_RESTAURANT_CHEF, FACEMASK_ANY, $0000, RestaurantNpc06_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_RESTAURANT_STUDENT_PIGTAILS_GIRL_2, FACEMASK_ANY, $0000, RestaurantNpc12_10, $00, $00
@@ -940,9 +940,9 @@ RestaurantNpcScripts_10:
 	map_script ACTOR_RESTAURANT_STUDENT_BLACK_HAIR_BOY_2, FACEMASK_ANY, $0000, RestaurantNpc10_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 RestaurantFacingScripts_10:
-	ds 1, $ff ; $60ef, fill
+	db $ff ; $60ef
 RestaurantTileTriggers_10:
-	ds 1, $ff ; $60f0, fill
+	db $ff ; $60f0
 RestaurantInitScript_10:
 	call SetStoryDialogueStage_10 ; $60f1
 	ld a, [wMapSceneStage] ; $60f4
@@ -991,7 +991,7 @@ RestaurantNpc12StageFlagTable_10:
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_3 ; 3
 	dw FLAG_RESTAURANT_NPC12_MOVED_STAGE_4 ; 4
 	assert_table_length NUM_STORYTIERS
-RestaurantShowActor11NearPlayer_10:
+RestaurantShowEllipsisBalloonNearPlayer_10:
 	wram_bank WRAM_ACTORS ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160
 	ld c, l ; $6165
@@ -1005,7 +1005,7 @@ RestaurantShowActor11NearPlayer_10:
 	add hl, de ; $6171
 	ld e, l ; $6172
 	ld d, h ; $6173
-	ld hl, wMapScratch + 6 ; $6174
+	ld hl, wPlaceActorX ; $6174
 	ld a, e ; $6177
 	ld [hl+], a ; $6178
 	ld [hl], d ; $6179
@@ -1018,15 +1018,15 @@ RestaurantShowActor11NearPlayer_10:
 	add hl, de ; $6184
 	ld e, l ; $6185
 	ld d, h ; $6186
-	ld hl, wMapScratch + 8 ; $6187
+	ld hl, wPlaceActorY ; $6187
 	ld a, e ; $618a
 	ld [hl+], a ; $618b
 	ld [hl], d ; $618c
-	ld hl, wMapScratch + 6 ; $618d
+	ld hl, wPlaceActorX ; $618d
 	ld a, [hl+] ; $6190
 	ld b, [hl] ; $6191
 	ld c, a ; $6192
-	ld hl, wMapScratch + 8 ; $6193
+	ld hl, wPlaceActorY ; $6193
 	ld a, [hl+] ; $6196
 	ld d, [hl] ; $6197
 	ld e, a ; $6198

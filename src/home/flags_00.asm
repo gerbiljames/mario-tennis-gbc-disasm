@@ -18,7 +18,7 @@ Unused_00_GetScrollBufferAddr:
 	ld de, wMapBuffer64 ; $230e
 	add hl, de ; $2311
 	ret ; $2312
-Unused_00_BlitBGStrip:
+Unused_00_BlitBGRowStrip:
 	ld a, [wCameraY + 1] ; $2313
 	add c ; $2316
 	and $1f ; $2317
@@ -87,7 +87,7 @@ Unused_00_BlitBGStrip:
 	ld a, $01 ; $237b
 	ldh [hBGRowBlitPending], a ; $237d
 	ret ; $237f
-Unused_00_BlitBGStrip2:
+Unused_00_BlitBGColumnStrip:
 	ld a, [wCameraX + 1] ; $2380
 	add b ; $2383
 	and $1f ; $2384
@@ -480,7 +480,7 @@ SoftReset:
 	xor a ; $25b4
 	ld [rRAMG], a ; $25b5
 	call CopyOAMDMARoutineToHRAM ; $25b8
-	call ClearVRAMBank ; $25bb
+	call ClearVRAM ; $25bb
 	ASSERT DEBUGSTEP_OFF == 0
 	xor a ; $25be
 	ldh [hDebugStepMode], a ; $25bf
@@ -545,7 +545,7 @@ AdvanceFrame:
 	push bc ; $2632
 	push de ; $2633
 	push hl ; $2634
-	ldh a, [hLinkCounter] ; $2635
+	ldh a, [hLinkRetryCount] ; $2635
 	or a ; $2637
 	jr z, .linkOk ; $2638
 	ldh a, [hLinkErrorFlags] ; $263a
@@ -624,7 +624,7 @@ AdvanceFrame:
 	ldh [hDebugStepPaused], a ; $26c0
 	jr .waitFrame ; $26c2
 .stepWaitFrame:
-	ldh a, [hInputPressed] ; $26c4
+	ldh a, [hInputRepeat] ; $26c4
 	and ~(PADF_SELECT | PADF_START) ; $26c6
 	jr nz, .waitFrame ; $26c8
 	ldh a, [hLinkExchangeActive] ; $26ca

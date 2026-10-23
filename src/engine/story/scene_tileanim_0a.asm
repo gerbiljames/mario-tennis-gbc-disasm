@@ -70,11 +70,11 @@ UpdateCameraFromPlayer:
 	ld [hl], a ; $6299
 	ret ; $629a
 Unused_0a_StepCourtSceneGfxStream:
-	ld a, [wCourtSceneGfxStepsLeft] ; $629b
+	ld a, [wCourtSceneGfxStreamDelay] ; $629b
 	or a ; $629e
 	jr nz, .done ; $629f
 .readEntry:
-	ld hl, CameraFromPlayerSpriteList ; $62a1
+	ld hl, Unused_0a_CourtSceneGfxStreamList ; $62a1
 	ld a, [wCourtSceneGfxCursor] ; $62a4
 	add l ; $62a7
 	ld l, a ; $62a8
@@ -123,9 +123,9 @@ Unused_0a_StepCourtSceneGfxStream:
 	pop af ; $62e5
 .done:
 	dec a ; $62e6
-	ld [wCourtSceneGfxStepsLeft], a ; $62e7
+	ld [wCourtSceneGfxStreamDelay], a ; $62e7
 	ret ; $62ea
-CameraFromPlayerSpriteList:
+Unused_0a_CourtSceneGfxStreamList:
 	; $62eb, 13 bytes (records:4)
 ; 3 records x 4 bytes
 	dw $1000, $0a50 ; record 0
@@ -185,9 +185,9 @@ LoadCourtSceneGraphics:
 	ld de, vTiles2 + VRAM_BANK1 ; $6339
 	ld c, 128 ; $633c
 	call QueueVRAMCopy ; $633e
-	ld hl, wTextTileBuffer ; $6341
+	ld hl, wDecompBufferHigh ; $6341
 	ld de, vTiles1 + VRAM_BANK1 ; $6344
-	ld c, wTextTileBuffer_SIZE / 16 ; $6347
+	ld c, wDecompBufferHigh_SIZE / 16 ; $6347
 	call QueueVRAMCopy ; $6349
 	wram_bank WRAM_ACTORS ; $634c
 	pop hl ; $6352
@@ -200,19 +200,19 @@ LoadCourtSceneGraphics:
 	call CopyDataFromBank ; $6363
 	wram_bank WRAM_COURT_PLANES ; $6366
 	pop hl ; $636c
-	ld de, wCourtAttrmapSaved ; $636d
+	ld de, wCourtAttrmapBase ; $636d
 	call DecompressDataFromBank ; $6370
 	pop hl ; $6373
-	ld de, wCourtTilemapSaved ; $6374
+	ld de, wCourtTilemapBase ; $6374
 	call DecompressDataFromBank ; $6377
 	pop hl ; $637a
 	ld de, wScreenAttrmap ; $637b
 	ld bc, $0040 ; $637e
 	call CopyDataFromBank ; $6381
-	ld hl, wScreenAttrmap + 16 ; $6384
+	ld hl, wScreenAttrmap + 2 * PAL_SIZE ; $6384
 	ld_bg_pals de, 2, 6 ; $6387
 	call LoadPaletteShadow ; $638a
-	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 8 ; $638d
+	ld hl, wScreenAttrmap + 5 * PAL_SIZE ; $638d
 	ld_obj_pals de, 3, 1 ; $6390
 	call LoadPaletteShadow ; $6393
 	pop hl ; $6396

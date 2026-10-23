@@ -5,7 +5,7 @@ JuniorClassCourtDoublesMatchReturn:
 	jr z, .lostOrQuit ; $5d43
 	ld a, [wMatchWinLoseFlag] ; $5d45
 	cp WINLOSE_WIN ; $5d48
-	jp z, JuniorClassCourtDoublesEntry0eScene ; $5d4a
+	jp z, JuniorClassCourtDoublesMatchWonScene ; $5d4a
 .lostOrQuit:
 	script_player_speed 2.0 ; $5d4d
 	script_move_player 19.0, 21.0 ; $5d53
@@ -15,7 +15,7 @@ JuniorClassCourtDoublesMatchReturn:
 	script_face ACTOR_PARTNER, FACE_UP ; $5d7a
 	farcall WaitPlayerMoveDone ; $5d81
 	ret ; $5d84
-JuniorClassCourtDoublesEntry0eScene:
+JuniorClassCourtDoublesMatchWonScene:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $5d85
 	ld [wStoryModeCurrentLocation], a ; $5d87
 	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_VICTORY_SCENE ; $5d8a
@@ -25,7 +25,7 @@ JuniorClassCourtDoublesEntry0eScene:
 	ld [wStoryModeExitTriggerRequest], a ; $5d94
 	farcall StubNop_1e ; $5d97
 	ret ; $5d9a
-JuniorClassCourtDoublesEntry0dScene:
+JuniorClassCourtDoublesVictoryScene:
 	xor a ; $5d9b
 	ld [wStoryModeShowLocationName], a ; $5d9c
 	script_null_script ACTOR_PARTNER ; $5d9f
@@ -33,9 +33,9 @@ JuniorClassCourtDoublesEntry0dScene:
 	ld a, [wCurrentMatchIndex] ; $5daa
 	sub STORYMATCH_JUNIOR_3 ; $5dad
 	jumptable a ; $5daf
-	dw JuniorClassCourtDoublesEntry0dScene.wonRank3 ; $5db1 jumptable
-	dw JuniorClassCourtDoublesEntry0dScene.wonRank2 ; $5db3 jumptable
-	dw JuniorClassCourtDoublesEntry0dScene.wonRank1 ; $5db5 jumptable
+	dw JuniorClassCourtDoublesVictoryScene.wonRank3 ; $5db1 jumptable
+	dw JuniorClassCourtDoublesVictoryScene.wonRank2 ; $5db3 jumptable
+	dw JuniorClassCourtDoublesVictoryScene.wonRank1 ; $5db5 jumptable
 .wonRank3:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5db7
 	script_player_speed 2.0 ; $5dba
@@ -232,7 +232,7 @@ OfferDoublesRankingMatch:
 	farcall ScriptCloseDialogueWindow ; $62ac
 	script_wait_frames 5 ; $62af
 	and a ; $62b6
-	jp nz, .speak ; $62b7
+	jp nz, .declined ; $62b7
 	script_set_speed ACTOR_PLAYER, 0.5 ; $62ba
 	script_set_speed ACTOR_PARTNER, 0.5 ; $62c2
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $62ca
@@ -255,17 +255,17 @@ OfferDoublesRankingMatch:
 	script_wait_move ACTOR_PARTNER ; $6319
 	script_face ACTOR_PARTNER, FACE_UP ; $631e
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $6325
-	call DrawDoublesRankingOpponentInfo ; $632a
+	call DoublesRankingOpponentStepUpScene ; $632a
 	script_face ACTOR_PLAYER, FACE_UP ; $632d
 	script_wait_frames 15 ; $6334
 	script_set_anim ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH, ANIM_BOUNCE ; $633b
 	script_wait_idle ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $6342
 	call PromptChallengeRankingOpponent ; $6347
 	ret ; $634a
-.speak:
+.declined:
 	script_speak ACTOR_JUNIOR_CLASS_COURT_DOUBLES_JUNIOR_COACH ; $634b
 	ret ; $6350
-DrawDoublesRankingOpponentInfo:
+DoublesRankingOpponentStepUpScene:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $6351
 	jp z, .vsRank3 ; $6354
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $6357

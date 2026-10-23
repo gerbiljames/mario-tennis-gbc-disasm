@@ -364,18 +364,18 @@ ReadJoypad:
 	ldh a, [hInputRepeatDelay] ; $0330
 	ldh [hInputRepeatTimer], a ; $0332
 	ld a, b ; $0334
-	jr .storePressed ; $0335
+	jr .storeRepeat ; $0335
 .storeRepeatTimer:
 	ldh [hInputRepeatTimer], a ; $0337
 	xor a ; $0339
-	jr .storePressed ; $033a
+	jr .storeRepeat ; $033a
 .setInputRepeatTimer:
 	ld a, $12 ; $033c
 	ldh [hInputRepeatTimer], a ; $033e
 	ld a, b ; $0340
 	ldh [hInputRepeatButtons], a ; $0341
-.storePressed:
-	ldh [hInputPressed], a ; $0343
+.storeRepeat:
+	ldh [hInputRepeat], a ; $0343
 	ret ; $0345
 DisableLCDSafely:
 	ldh a, [rLCDC] ; $0346
@@ -418,7 +418,7 @@ EnableLCD:
 	xor a ; $037f
 	ldh [hVBlankOccurred], a ; $0380
 	ret ; $0382
-ClearVRAMBank:
+ClearVRAM:
 	ldh a, [hIsCGB] ; $0383
 	and a ; $0385
 	jp nz, ClearBothVRAMBanks ; $0386

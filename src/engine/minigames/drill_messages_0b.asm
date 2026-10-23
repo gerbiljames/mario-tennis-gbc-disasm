@@ -100,7 +100,7 @@ LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, MATCHREC_P2_MAIN ; $4405
 	farcall InitMatchRecordFromCharId ; $4407
-	push_wram_bank WRAM_TEXT ; $440a
+	push_wram_bank WRAM_CHAR1 ; $440a
 	farcall LoadCharacterAttributes ; $4413
 	pop_wram_bank ; $4416
 	ret ; $441b
@@ -114,7 +114,7 @@ LoadDrillOpponentBySide:
 Unused_0b_WriteCharStructByte:
 	ld b, a ; $442b
 	push_wram_bank WRAM_CHAR1 ; $442c
-	ld de, wCharPosX ; $4435
+	ld de, wCharStruct ; $4435
 	add hl, de ; $4438
 	ld [hl], b ; $4439
 	pop_wram_bank ; $443a
@@ -130,8 +130,8 @@ IsCharNearNet:
 	ld a, $04 ; $444b
 	add b ; $444d
 	wram_bank a ; $444e
-	ld de, wCharPosX ; $4453
-	ld hl, wCharBallReachFlags - wCharPosX ; $4456
+	ld de, wCharStruct ; $4453
+	ld hl, wCharBallReachFlags - wCharStruct ; $4456
 	add hl, de ; $4459
 	ld a, [hl] ; $445a
 	bit BALLREACHB_NEAR_NET, a ; $445b
@@ -250,7 +250,7 @@ QueueDrillOutcomeMessage:
 	ld a, DRILLMSG_HIDE ; $452e
 	ld [wDrillMessageId], a ; $4530
 	ret ; $4533
-QueueDrillResultMessage:
+SetDrillServerMessage:
 	cp DRILLMSG_HIDE ; $4534
 	jr z, .store ; $4536
 	ld c, a ; $4538
@@ -263,7 +263,7 @@ QueueDrillResultMessage:
 .store:
 	ld [wDrillMessageId], a ; $4541
 	ret ; $4544
-SetDrillMessageByServer:
+SetDrillReceiverMessage:
 	cp DRILLMSG_HIDE ; $4545
 	jr z, .store ; $4547
 	ld c, a ; $4549
@@ -518,45 +518,45 @@ ENDC
 Unused_0b_DrillMessageTableTail:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
-QueueDrillMarker1_0b:
+QueueDrillGateLeftPole:
 	ld a, [wDrillGateActive] ; $46a0
 	and a ; $46a3
 	ret z ; $46a4
 	ld bc, $0000 ; $46a5
-	ld hl, wDrillGate1 + 2 ; $46a8
+	ld hl, wDrillGateLeftPost + 2 ; $46a8
 	ld a, [hl+] ; $46ab
 	ld d, [hl] ; $46ac
 	ld e, a ; $46ad
-	ld hl, wDrillGate1 ; $46ae
+	ld hl, wDrillGateLeftPost ; $46ae
 	ld a, [hl+] ; $46b1
 	ld h, [hl] ; $46b2
 	ld l, a ; $46b3
 	farcall ProjectWorldToScreen_08 ; $46b4
 	farcall ApplyCameraProjection ; $46b7
-	ld hl, DrillSpriteTemplate_0b ; $46ba
+	ld hl, DrillGatePoleSpriteTemplate ; $46ba
 	ld_oam bc, OAM_BANK1 | 1, $30 ; $46bd
 	call QueueSpriteTemplate ; $46c0
 	ret ; $46c3
-QueueDrillMarker2_0b:
+QueueDrillGateRightPole:
 	ld a, [wDrillGateActive] ; $46c4
 	and a ; $46c7
 	ret z ; $46c8
 	ld bc, $0000 ; $46c9
-	ld hl, wDrillGate2 + 2 ; $46cc
+	ld hl, wDrillGateRightPost + 2 ; $46cc
 	ld a, [hl+] ; $46cf
 	ld d, [hl] ; $46d0
 	ld e, a ; $46d1
-	ld hl, wDrillGate2 ; $46d2
+	ld hl, wDrillGateRightPost ; $46d2
 	ld a, [hl+] ; $46d5
 	ld h, [hl] ; $46d6
 	ld l, a ; $46d7
 	farcall ProjectWorldToScreen_08 ; $46d8
 	farcall ApplyCameraProjection ; $46db
-	ld hl, DrillSpriteTemplate_0b ; $46de
+	ld hl, DrillGatePoleSpriteTemplate ; $46de
 	ld_oam bc, OAM_BANK1 | 1, $30 ; $46e1
 	call QueueSpriteTemplate ; $46e4
 	ret ; $46e7
-DrillSpriteTemplate_0b:
+DrillGatePoleSpriteTemplate:
 	; $46e8, 9 bytes (sprite_template)
 	oam_sprite $f1, $04, $00, $00
 	oam_sprite $01, $04, $02, $00

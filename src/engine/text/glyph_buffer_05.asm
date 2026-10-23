@@ -102,7 +102,7 @@ ClearWindowGlyphTiles:
 	ld h, $00 ; $7400
 	call MulHLByA ; $7402
 	ld b, l ; $7405
-	ld de, wWindowShadowTilemap + 24 * TILEMAP_WIDTH ; $7406
+	ld de, wGlyphTileBuffer ; $7406
 	ld a, [wGlyphRowStartCol] ; $7409
 	ld l, a ; $740c
 	ld h, $00 ; $740d
@@ -437,7 +437,7 @@ UploadLastGlyphTiles:
 	ret ; $7630
 .maskSet:
 	push_wram_bank WRAM_SOUND ; $7631
-	ld a, [wKeepMatchStatsFlag] ; $763a
+	ld a, [wMatchSuspendedFlag] ; $763a
 	or a ; $763d
 	jr z, .defaultLimit ; $763e
 	ld b, $5f ; $7640

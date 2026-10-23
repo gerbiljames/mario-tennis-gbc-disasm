@@ -37,19 +37,19 @@ PrepareScoreboardGfx:
 	cp MATCHCONTEXT_MINIGAME ; $496d
 	jr z, .minigame ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
-	ld b, $01 ; $4974
+	ld b, DIGITGFX_NUMERALS ; $4974
 	ld de, vTiles0 tile $70 ; $4976
 	farcall LoadScoreDigitGfx ; $4979
 	ld a, [wPlayer1SetsWon] ; $497c
-	ld b, $01 ; $497f
+	ld b, DIGITGFX_NUMERALS ; $497f
 	ld de, vTiles0 tile $68 ; $4981
 	farcall LoadScoreDigitGfx ; $4984
 	ld a, [wPlayer2GamesWon] ; $4987
-	ld b, $01 ; $498a
+	ld b, DIGITGFX_NUMERALS ; $498a
 	ld de, vTiles0 tile $74 ; $498c
 	farcall LoadScoreDigitGfx ; $498f
 	ld a, [wPlayer2SetsWon] ; $4992
-	ld b, $01 ; $4995
+	ld b, DIGITGFX_NUMERALS ; $4995
 	ld de, vTiles0 tile $6c ; $4997
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
@@ -241,7 +241,7 @@ ScoreboardPipAltRect:
 ScoreboardPipEmptyRect:
 	; $4aa7, 6 bytes (rect_pair)
 	rect_pair 2, 2, ScoreboardPipTilesEmpty, ScoreboardPipAttrsEmpty
-ScoreboardTilemap0:
+ScoreboardMatchTilemap:
 	; $4aad, 133 bytes (tilemap:19)
 	tilemap_begin 19, 7
 	tilemap_row $02, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04 ; row 0
@@ -252,7 +252,7 @@ ScoreboardTilemap0:
 	tilemap_row $05, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $20, $06 ; row 5
 	tilemap_row $07, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $09 ; row 6
 	tilemap_end
-ScoreboardTilemap1:
+ScoreboardLessonTilemap:
 	; $4b32, 95 bytes (tilemap:19)
 	tilemap_begin 19, 5
 	tilemap_row $02, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04 ; row 0
@@ -261,7 +261,7 @@ ScoreboardTilemap1:
 	tilemap_row $05, $20, $20, $20, $20, $15, $15, $15, $15, $15, $15, $15, $15, $20, $15, $16, $16, $15, $06 ; row 3
 	tilemap_row $07, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $09 ; row 4
 	tilemap_end
-ScoreboardTilemap2:
+ScoreboardDrillTilemap:
 	; $4b91, 133 bytes (tilemap:19)
 	tilemap_begin 19, 7
 	tilemap_row $02, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04 ; row 0
@@ -272,7 +272,7 @@ ScoreboardTilemap2:
 	tilemap_row $05, $20, $20, $20, $20, $15, $15, $15, $15, $15, $15, $15, $15, $20, $15, $16, $16, $15, $06 ; row 5
 	tilemap_row $07, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $09 ; row 6
 	tilemap_end
-ScoreboardTilemap3:
+ScoreboardPointPipsTilemap:
 	; $4c16, 133 bytes (tilemap:19)
 	tilemap_begin 19, 7
 	tilemap_row $02, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04 ; row 0
@@ -283,7 +283,7 @@ ScoreboardTilemap3:
 	tilemap_row $05, $20, $20, $15, $15, $15, $15, $15, $15, $15, $15, $15, $15, $20, $15, $16, $16, $15, $06 ; row 5
 	tilemap_row $07, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $09 ; row 6
 	tilemap_end
-ScoreboardTilemap4:
+ScoreboardScoreTilemap:
 	; $4c9b, 98 bytes (tilemap:14)
 	tilemap_begin 14, 7
 	tilemap_row $02, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04 ; row 0
@@ -294,7 +294,7 @@ ScoreboardTilemap4:
 	tilemap_row $05, $20, $20, $20, $20, $20, $20, $20, $20, $15, $16, $16, $15, $06 ; row 5
 	tilemap_row $07, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $09 ; row 6
 	tilemap_end
-ScoreboardTilemap5:
+ScoreboardHighScoreTilemap:
 	; $4cfd, 98 bytes (tilemap:14)
 	tilemap_begin 14, 7
 	tilemap_row $02, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $04 ; row 0
@@ -305,7 +305,7 @@ ScoreboardTilemap5:
 	tilemap_row $05, $20, $20, $20, $20, $20, $20, $20, $20, $15, $16, $16, $15, $06 ; row 5
 	tilemap_row $07, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $08, $09 ; row 6
 	tilemap_end
-ScoreboardAttrmap0:
+ScoreboardMatchAttrmap:
 	; $4d5f, 133 bytes (tilemap:19)
 	tilemap_begin 19, 7
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -316,7 +316,7 @@ ScoreboardAttrmap0:
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 5
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 6
 	tilemap_end
-ScoreboardAttrmap1:
+ScoreboardLessonAttrmap:
 	; $4de4, 95 bytes (tilemap:19)
 	tilemap_begin 19, 5
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -325,7 +325,7 @@ ScoreboardAttrmap1:
 	tilemap_row $00, $00, $00, $00, $00, $41, $61, $41, $61, $41, $61, $41, $61, $00, $41, $41, $41, $61, $00 ; row 3
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 4
 	tilemap_end
-ScoreboardAttrmap2:
+ScoreboardDrillAttrmap:
 	; $4e43, 133 bytes (tilemap:19)
 	tilemap_begin 19, 7
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -336,7 +336,7 @@ ScoreboardAttrmap2:
 	tilemap_row $00, $00, $00, $00, $00, $41, $61, $41, $61, $41, $61, $41, $61, $00, $41, $41, $41, $61, $00 ; row 5
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 6
 	tilemap_end
-ScoreboardAttrmap3:
+ScoreboardPointPipsAttrmap:
 	; $4ec8, 133 bytes (tilemap:19)
 	tilemap_begin 19, 7
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -347,7 +347,7 @@ ScoreboardAttrmap3:
 	tilemap_row $00, $00, $00, $41, $61, $41, $61, $41, $61, $41, $61, $41, $61, $00, $41, $41, $41, $61, $00 ; row 5
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 6
 	tilemap_end
-ScoreboardAttrmap4:
+ScoreboardScoreAttrmap:
 	; $4f4d, 98 bytes (tilemap:14)
 	tilemap_begin 14, 7
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -358,7 +358,7 @@ ScoreboardAttrmap4:
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $41, $41, $41, $61, $00 ; row 5
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 6
 	tilemap_end
-ScoreboardAttrmap5:
+ScoreboardHighScoreAttrmap:
 	; $4faf, 98 bytes (tilemap:14)
 	tilemap_begin 14, 7
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -369,34 +369,34 @@ ScoreboardAttrmap5:
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $41, $41, $41, $61, $00 ; row 5
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 6
 	tilemap_end
-ScoreboardTilemapDesc0:
+ScoreboardMatchTilemapDesc:
 	; $5011, 6 bytes (rect_pair)
-	rect_pair 7, 19, ScoreboardTilemap0, ScoreboardAttrmap0
-ScoreboardTilemapDesc1:
+	rect_pair 7, 19, ScoreboardMatchTilemap, ScoreboardMatchAttrmap
+ScoreboardLessonTilemapDesc:
 	; $5017, 6 bytes (rect_pair)
-	rect_pair 5, 19, ScoreboardTilemap1, ScoreboardAttrmap1
-ScoreboardTilemapDesc2:
+	rect_pair 5, 19, ScoreboardLessonTilemap, ScoreboardLessonAttrmap
+ScoreboardDrillTilemapDesc:
 	; $501d, 6 bytes (rect_pair)
-	rect_pair 7, 19, ScoreboardTilemap2, ScoreboardAttrmap2
-ScoreboardTilemapDesc3:
+	rect_pair 7, 19, ScoreboardDrillTilemap, ScoreboardDrillAttrmap
+ScoreboardPointPipsTilemapDesc:
 	; $5023, 6 bytes (rect_pair)
-	rect_pair 7, 19, ScoreboardTilemap3, ScoreboardAttrmap3
-ScoreboardTilemapDesc4:
+	rect_pair 7, 19, ScoreboardPointPipsTilemap, ScoreboardPointPipsAttrmap
+ScoreboardScoreTilemapDesc:
 	; $5029, 6 bytes (rect_pair)
-	rect_pair 7, 14, ScoreboardTilemap4, ScoreboardAttrmap4
-ScoreboardTilemapDesc5:
+	rect_pair 7, 14, ScoreboardScoreTilemap, ScoreboardScoreAttrmap
+ScoreboardHighScoreTilemapDesc:
 	; $502f, 6 bytes (rect_pair)
-	rect_pair 7, 14, ScoreboardTilemap5, ScoreboardAttrmap5
+	rect_pair 7, 14, ScoreboardHighScoreTilemap, ScoreboardHighScoreAttrmap
 ScoreboardTilemapPointers:
 	; $5035, 16 bytes (records:2)
-	dw ScoreboardTilemapDesc0 ; record 0
-	dw ScoreboardTilemapDesc0 ; record 1
-	dw ScoreboardTilemapDesc0 ; record 2
-	dw ScoreboardTilemapDesc1 ; record 3
-	dw ScoreboardTilemapDesc2 ; record 4
-	dw ScoreboardTilemapDesc3 ; record 5
-	dw ScoreboardTilemapDesc4 ; record 6
-	dw ScoreboardTilemapDesc5 ; record 7
+	dw ScoreboardMatchTilemapDesc ; record 0
+	dw ScoreboardMatchTilemapDesc ; record 1
+	dw ScoreboardMatchTilemapDesc ; record 2
+	dw ScoreboardLessonTilemapDesc ; record 3
+	dw ScoreboardDrillTilemapDesc ; record 4
+	dw ScoreboardPointPipsTilemapDesc ; record 5
+	dw ScoreboardScoreTilemapDesc ; record 6
+	dw ScoreboardHighScoreTilemapDesc ; record 7
 CopyTextRectPair:
 	push de ; $5045
 	push hl ; $5046
@@ -450,21 +450,21 @@ DrawScoreboardSprites:
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
 	cp SCOREBOARD_SCORE ; $5093
-	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5095
+	jr z, DrawScoreboardSprites.drawScoreNumbers ; $5095
 	cp SCOREBOARD_HIGH_SCORE ; $5097
-	jr z, DrawScoreboardSprites.adjustSpriteCoordsForScroll ; $5099
+	jr z, DrawScoreboardSprites.drawScoreNumbers ; $5099
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:
 	; $509c, 16 bytes (records:2)
-	dw ScoreboardSpriteTemplate0 ; record 0
-	dw ScoreboardSpriteTemplate1 ; record 1
-	dw ScoreboardSpriteTemplate2 ; record 2
-	dw ScoreboardSpriteTemplate5 ; record 3
-	dw ScoreboardSpriteTemplate3 ; record 4
-	dw ScoreboardSpriteTemplate4 ; record 5
-	dw ScoreboardSpriteTemplate6 ; record 6
-	dw ScoreboardSpriteTemplate6 ; record 7
-DrawScoreboardSprites.adjustSpriteCoordsForScroll:
+	dw ScoreboardSinglesTemplate ; record 0
+	dw ScoreboardThreeCharsTemplate ; record 1
+	dw ScoreboardDoublesTemplate ; record 2
+	dw ScoreboardLessonTemplate ; record 3
+	dw ScoreboardDrillTemplate ; record 4
+	dw ScoreboardPointPipsTemplate ; record 5
+	dw ScoreboardScoreTemplate ; record 6
+	dw ScoreboardScoreTemplate ; record 7
+DrawScoreboardSprites.drawScoreNumbers:
 	ld hl, $4c0c ; $50ac
 	add hl, de ; $50af
 	ld e, l ; $50b0
@@ -486,9 +486,9 @@ DrawScoreboardSprites.adjustSpriteCoordsForScroll:
 	ld a, [wMinigameHighScoreMode] ; $50cb
 	and a ; $50ce
 	ld hl, wMinigameHighScore ; $50cf
-	jr nz, DrawScoreboardSprites.read ; $50d2
+	jr nz, DrawScoreboardSprites.drawSecondNumber ; $50d2
 	ld hl, wMinigamesTargetScore ; $50d4
-DrawScoreboardSprites.read:
+DrawScoreboardSprites.drawSecondNumber:
 	ld a, [hl+] ; $50d7
 	ld h, [hl] ; $50d8
 	ld l, a ; $50d9
@@ -496,7 +496,7 @@ DrawScoreboardSprites.read:
 	ld a, $04 ; $50dc
 	farcall DrawNumberWithSprites ; $50de
 	ret ; $50e1
-ScoreboardSpriteTemplate0:
+ScoreboardSinglesTemplate:
 	; $50e2, 65 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
@@ -515,7 +515,7 @@ ScoreboardSpriteTemplate0:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-ScoreboardSpriteTemplate1:
+ScoreboardThreeCharsTemplate:
 	; $5123, 73 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
@@ -536,7 +536,7 @@ ScoreboardSpriteTemplate1:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-ScoreboardSpriteTemplate2:
+ScoreboardDoublesTemplate:
 	; $516c, 81 bytes (sprite_template)
 	oam_sprite $20, $10, $00, $04
 	oam_sprite $20, $18, $02, $04
@@ -559,7 +559,7 @@ ScoreboardSpriteTemplate2:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-ScoreboardSpriteTemplate3:
+ScoreboardDrillTemplate:
 	; $51bd, 33 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
@@ -570,7 +570,7 @@ ScoreboardSpriteTemplate3:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-ScoreboardSpriteTemplate4:
+ScoreboardPointPipsTemplate:
 	; $51de, 33 bytes (sprite_template)
 	oam_sprite $20, $0e, $00, $04
 	oam_sprite $20, $16, $02, $04
@@ -581,14 +581,14 @@ ScoreboardSpriteTemplate4:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-ScoreboardSpriteTemplate5:
+ScoreboardLessonTemplate:
 	; $51ff, 17 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
 	oam_sprite $20, $80, $78, $01
 	oam_sprite $20, $88, $7a, $01
 	oam_sprite_end
-ScoreboardSpriteTemplate6:
+ScoreboardScoreTemplate:
 	; $5210, 9 bytes (sprite_template)
 	oam_sprite $18, $14, $00, $04
 	oam_sprite $18, $1c, $02, $04

@@ -49,17 +49,17 @@ SoundTable_7d:
 	snd_channel 5, SNDCHANTYPE_NOISE ; $405c
 	dw MusicHighScore_Trk3 ; $405e
 	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $4060
-	dw Music32_Trk0 ; $4062
+	dw MusicCourtIntro_Trk0 ; $4062
 	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $4064
-	dw Music32_Trk1 ; $4066
+	dw MusicCourtIntro_Trk1 ; $4066
 	snd_channel 4, SNDCHANTYPE_WAVE ; $4068
-	dw Music32_Trk2 ; $406a
+	dw MusicCourtIntro_Trk2 ; $406a
 	snd_channel 5, SNDCHANTYPE_NOISE ; $406c
-	dw Music32_Trk3 ; $406e
+	dw MusicCourtIntro_Trk3 ; $406e
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4070
 	dw SfxNetCord_Trk0 ; $4072
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4074
-	dw SfxSwing_Trk0 ; $4076
+	dw SfxLeap_Trk0 ; $4076
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $4078
 	dw Sfx9c_Trk0 ; $407a
 MusicDrillPractice_Trk0:
@@ -110,18 +110,18 @@ MusicHighScore_Trk2:
 	INCLUDE "data/audio/MusicHighScore_Trk2.asm" ; $7d1a, 26 bytes (snd_script:wave)
 MusicHighScore_Trk3:
 	INCLUDE "data/audio/MusicHighScore_Trk3.asm" ; $7d34, 188 bytes (snd_script:noise)
-Music32_Trk0:
-	INCLUDE "data/audio/Music32_Trk0.asm" ; $7df0, 42 bytes (snd_script:pulse)
-Music32_Trk1:
-	INCLUDE "data/audio/Music32_Trk1.asm" ; $7e1a, 42 bytes (snd_script:pulse)
-Music32_Trk2:
-	INCLUDE "data/audio/Music32_Trk2.asm" ; $7e44, 42 bytes (snd_script:wave)
-Music32_Trk3:
-	INCLUDE "data/audio/Music32_Trk3.asm" ; $7e6e, 226 bytes (snd_script:noise)
+MusicCourtIntro_Trk0:
+	INCLUDE "data/audio/MusicCourtIntro_Trk0.asm" ; $7df0, 42 bytes (snd_script:pulse)
+MusicCourtIntro_Trk1:
+	INCLUDE "data/audio/MusicCourtIntro_Trk1.asm" ; $7e1a, 42 bytes (snd_script:pulse)
+MusicCourtIntro_Trk2:
+	INCLUDE "data/audio/MusicCourtIntro_Trk2.asm" ; $7e44, 42 bytes (snd_script:wave)
+MusicCourtIntro_Trk3:
+	INCLUDE "data/audio/MusicCourtIntro_Trk3.asm" ; $7e6e, 226 bytes (snd_script:noise)
 SfxNetCord_Trk0:
 	INCLUDE "data/audio/SfxNetCord_Trk0.asm" ; $7f50, 76 bytes (snd_script:pulse)
-SfxSwing_Trk0:
-	INCLUDE "data/audio/SfxSwing_Trk0.asm" ; $7f9c, 76 bytes (snd_script:pulse)
+SfxLeap_Trk0:
+	INCLUDE "data/audio/SfxLeap_Trk0.asm" ; $7f9c, 76 bytes (snd_script:pulse)
 Sfx9c_Trk0:
 	INCLUDE "data/audio/Sfx9c_Trk0.asm" ; $7fe8, 10 bytes (snd_script:pulse)
 	; $7ff2, 14 bytes fill to bank end (linker-padded)

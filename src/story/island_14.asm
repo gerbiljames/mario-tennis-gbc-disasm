@@ -1,12 +1,12 @@
 	ds ALIGN[4]
-IslandSkyTilesA_14:
-	INCBIN "data/story/IslandSkyTilesA_14.bin" ; $7190, 256 bytes
+RainbowArcTiles_14:
+	INCBIN "data/story/RainbowArcTiles_14.bin" ; $7190, 256 bytes
 	ds ALIGN[4]
-IslandSkyTilesB_14:
-	INCBIN "data/story/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
-IslandSkySpriteData_14:
-	INCLUDE "data/story/IslandSkySpriteData_14.asm" ; $7350, 33 bytes (sprite_template)
-AnimateIslandSkyEffectSprites_14_SpriteTemplate:
+RainbowEndTiles_14:
+	INCBIN "data/story/RainbowEndTiles_14.bin" ; $7290, 192 bytes
+RainbowArcSpriteTemplate_14:
+	INCLUDE "data/story/RainbowArcSpriteTemplate_14.asm" ; $7350, 33 bytes (sprite_template)
+RainbowEndSpriteTemplate_14:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -15,24 +15,24 @@ AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	oam_sprite $10, $18, $08, $00
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
-IslandSkyPalettes_14:
-	INCLUDE "data/story/IslandSkyPalettes_14.asm" ; $738a, 32 bytes (palettes)
-LoadIslandSkyEffectObjGfx_14:
+RainbowPalettes_14:
+	INCLUDE "data/story/RainbowPalettes_14.asm" ; $738a, 32 bytes (palettes)
+LoadRainbowObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $73aa
-	ld hl, IslandSkyTilesA_14 ; $73b3
+	ld hl, RainbowArcTiles_14 ; $73b3
 	ld de, vTiles0 tile $10 ; $73b6
-	ld c, 64 ; $73b9
+	ld c, 64 ; $73b9 -- RainbowArcTiles_14's 16 tiles; the next copy overwrites the other 48
 	call QueueVRAMCopy ; $73bb
-	ld hl, IslandSkyTilesB_14 ; $73be
+	ld hl, RainbowEndTiles_14 ; $73be
 	ld de, vTiles0 tile $20 ; $73c1
-	ld c, 48 ; $73c4
+	ld c, 48 ; $73c4 -- RainbowEndTiles_14's 12 tiles, then 576 bytes of templates, code and tiles
 	call QueueVRAMCopy ; $73c6
-	ld hl, IslandSkyPalettes_14 ; $73c9
+	ld hl, RainbowPalettes_14 ; $73c9
 	ld_obj_pals de, 1, 3 ; $73cc
 	call LoadPaletteShadow ; $73cf
 	pop_wram_bank ; $73d2
 	ret ; $73d7
-AnimateIslandSkyEffectSprites_14:
+AnimateRainbowSprites_14:
 	ldh a, [hScrollX] ; $73d8
 	ld b, a ; $73da
 	ld a, $40 ; $73db
@@ -44,7 +44,7 @@ AnimateIslandSkyEffectSprites_14:
 	sub b ; $73e4
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
-	ld hl, IslandSkySpriteData_14 ; $73e8
+	ld hl, RainbowArcSpriteTemplate_14 ; $73e8
 	ld a, [wCutsceneObjHalt] ; $73eb
 	and a ; $73ee
 	jr nz, .noTick ; $73ef
@@ -74,7 +74,7 @@ AnimateIslandSkyEffectSprites_14:
 	sub b ; $7419
 	ld e, a ; $741a
 	ld c, $20 ; $741b
-	ld hl, AnimateIslandSkyEffectSprites_14_SpriteTemplate ; $741d
+	ld hl, RainbowEndSpriteTemplate_14 ; $741d
 	ld a, [wCutsceneObjLimit] ; $7420
 	swap a ; $7423
 	and $03 ; $7425
@@ -87,7 +87,7 @@ AnimateIslandSkyEffectSprites_14:
 	ds ALIGN[4]
 DistantPlaneObjGfx:
 	INCBIN "data/story/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
-DistantPlaneSpriteTemplate_14:
+Obj16x16SpriteTemplate_14:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -96,23 +96,23 @@ LoadDistantPlaneObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $7539
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, vTiles0 + VRAM_BANK1 ; $7545
-	ld c, (DistantPlaneSpriteTemplate_14 - DistantPlaneObjGfx) / 16 ; $7548
+	ld c, (Obj16x16SpriteTemplate_14 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
-	ld hl, IslandObjPalette_14 ; $754d
+	ld hl, PlaneObjPalette_14 ; $754d
 	ld_obj_pals de, 0, 1 ; $7550
 	call LoadPaletteShadow ; $7553
 	pop_wram_bank ; $7556
 	ret ; $755b
 QueueDistantPlaneSprite_14:
-	call GetSceneObjectScreenPos_14 ; $755c
+	call GetCutscenePlaneScreenPos_14 ; $755c
 	ld a, [wCutsceneObjPhase] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
-	ld hl, DistantPlaneSpriteTemplate_14 ; $7564
+	ld hl, Obj16x16SpriteTemplate_14 ; $7564
 	ld b, OAM_BANK1 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
-GetSceneObjectScreenPos_14:
+GetCutscenePlaneScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
 	ld a, [wCutscenePlaneX] ; $7570
@@ -155,19 +155,19 @@ QueueTwinkleSprite_14:
 	ld e, a ; $76b8
 	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
-	ld hl, DistantPlaneSpriteTemplate_14 ; $76bd
+	ld hl, Obj16x16SpriteTemplate_14 ; $76bd
 	ld b, OAM_BANK1 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5
-IslandSkyEntry0eScene:
+IslandSkyHomeFromPeachsCastleScene:
 	call DisableLCDSafely ; $76c6
-	call LoadIslandSkyEffectObjGfx_14 ; $76c9
+	call LoadRainbowObjGfx_14 ; $76c9
 	call LoadTwinkleObjGfx_14 ; $76cc
 	call EnableLCD ; $76cf
 	ld a, $00 ; $76d2
 	ld [wCutsceneObjLimit], a ; $76d4
 	ld [wCutsceneObjLimit + 1], a ; $76d7
-	frame_task AnimateIslandSkyEffectSprites_14 ; $76da
+	frame_task AnimateRainbowSprites_14 ; $76da
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $76e2
 	test_flag FLAG_DOUBLES ; $76ed
 	jp z, .loadScene ; $76f0
@@ -217,7 +217,7 @@ IslandSkyEntry0eScene:
 	call PlayPlaneMoveSfx_14 ; $7780
 	dec h ; $7783
 	jr nz, .planeOffscreenLoop ; $7784
-	call LoadPlaneObjGfx2_14 ; $7786
+	call LoadPlaneRearObjGfx_14 ; $7786
 	ld a, $a4 ; $7789
 	ld [wCutscenePlaneX], a ; $778b
 	ld a, $c6 ; $778e
@@ -296,7 +296,7 @@ IslandSkyEntry0eScene:
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
 	jr nz, .planeDriftLoop ; $784d
-	sound SFX_FIREWORK_SPARKLE ; $784f
+	sound SFX_PLANE_STOP ; $784f
 	script_wait_frames 70 ; $7851
 	script_fade_out 4 ; $7858
 	call WaitFadeEnd ; $785d
@@ -348,28 +348,28 @@ ActorScript_14_3:
 	as_set_wander_home
 .wander:
 	as_rand_box $02, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wander
 	as_set_wander_home
 .wanderNarrow:
 	as_rand_box $01, $02
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderNarrow
 	as_set_wander_home
 .wanderSmall:
 	as_rand_box $01, $01
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 40
 	as_jump .wanderSmall
 MapScriptNop_14:
 	ret ; $78d9
-Unused_14_MapScriptClearActiveFlag:
+Unused_14_MapScriptClearScriptRan:
 	xor a ; $78da
 	ld [wStoryScriptRan], a ; $78db
 	ret ; $78de
-Unused_14_MapScriptPlaySoundA2:
+Unused_14_MapScriptPlayStoryCue:
 	sound SFX_STORY_CUE ; $78df
 	ret ; $78e1
 Unused_14_MapScriptHideLocationName:
@@ -556,28 +556,28 @@ Unused_14_ActorScriptStudentSwings:
 Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
-	jr z, .storeIsland ; $7ae9
+	jr z, .store ; $7ae9
 	inc a ; $7aeb
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aec
-	jr z, .storeIsland ; $7aef
+	jr z, .store ; $7aef
 	inc a ; $7af1
 	test_flag FLAG_DOUBLES ; $7af2
-	jr nz, .doublesIsland ; $7af5
+	jr nz, .doubles ; $7af5
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7af7
-	jr z, .storeIsland ; $7afa
+	jr z, .store ; $7afa
 	inc a ; $7afc
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7afd
-	jr z, .storeIsland ; $7b00
+	jr z, .store ; $7b00
 	inc a ; $7b02
-.storeIsland:
+.store:
 	ld [wMapSceneStage], a ; $7b03
 	ret ; $7b06
-.doublesIsland:
+.doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7b07
-	jr z, .storeIsland ; $7b0a
+	jr z, .store ; $7b0a
 	inc a ; $7b0c
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7b0d
-	jr z, .storeIsland ; $7b10
+	jr z, .store ; $7b10
 	inc a ; $7b12
-	jr .storeIsland ; $7b13
+	jr .store ; $7b13
 	; $7b15, 1259 bytes fill to bank end (linker-padded)

@@ -3,21 +3,21 @@
 ; [buffer] Base of the story-slot state image ($c800-$caff): the main character, game mode, match settings and roster fields, saved whole as save block 2N (docs/save_format.md) and reloaded on slot load
 wStorySlotData::
 ; Saved-slot copies of the story records at $c900/$c940, kept in step by a
-; 128-byte copy ($02:$4795). RefreshMainCharacterStats normalises
+; 128-byte copy in RefreshMainCharacterStats, which also normalises
 ; wSavedMainEquipment before the stats are recomputed: a low nibble of 3
 ; clears the low nibble, a high nibble of 1 the high one.
 	char_record wSavedMain
 
 	char_record wSavedPartner
 
-; [4 bytes] Signature that tells story saves apart. CacheStorySlotSummaries copies each slot's to $d400 + slot * 4, CheckStorySignatureCollision compares them, GenerateUniqueStorySaveSignature rerolls from wStoryRandomBytes until no slot matches
+; [4 bytes] Signature that tells story saves apart. CacheStorySlotSignatures copies each slot's to $d400 + slot * 4, CheckStorySignatureCollision compares them, GenerateUniqueStorySaveSignature rerolls from wStoryRandomBytes until no slot matches
 wStorySaveSignature:: ds 4
 
 ; [3 bytes] Tag InitStoryModeState stamps on a fresh story slot: $56 then two zero bytes
 wStorySlotBlockTag:: ds 3
 	ds 7
 
-; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer). Its minutes and hours are what CharDataValuesSyncTask shows when wCharDataSyncSource is clear and what the save-slot summaries store
+; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can restore it (RestoreGameTimer). Its minutes and hours are what DrawCharDataSummarySpritesTask shows when wCharDataPlayTimeLive is clear and what the save-slot summaries store
 wSavedGameTimer:: ds 4
 	ds 17
 
@@ -27,7 +27,7 @@ wSoundOptionBits:: db
 ; [8-bit] Message speed: MSGSPEED_FAST/NORMAL/SLOW in bits 0-6 (ApplyMessageSpeed). Bit 7, MSGSPEEDB_INSTANT, draws text at once whatever the speed: set by ShowLocationNamePopup, the Tennis Dictionary redraw, Unused_1a_ForceInstantMessageSpeed and ToggleCutsceneFastForward (as it clears FLAG_CUTSCENE_FAST_FORWARD), tested by ApplyMessageSpeed, FlushGlyphRow and UploadLastGlyphTiles, and cleared before saving
 wMessageSpeed:: db
 
-; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the results screen and saves the slot, and clears it with wKeepMatchStatsFlag
+; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, the story menu's confirm prompt), which also call SaveStoryReturnPoint. Bank $10's post-match code then shows the continue-game screen (ShowExpAwardOrContinueGameScreen, c = 0) and saves the slot, and clears it with wMatchSuspendedFlag
 wSaveAndQuitRequest:: db
 
 ; [8-bit] Game Mode
@@ -47,11 +47,11 @@ wSaveAndQuitRequest:: db
 ; See GAMEMODE_* in include/constants/. Bank $38 sets GAMEMODE_LINK_MATCH right after RunLinkCharSelectScreen. SaveQuitMenuIdByGameMode and ScoreboardModeGfxPointers index it unguarded, 11 entries each
 wGameMode:: db
 
-; [8-bit] Nonzero makes ResetMatchState keep the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps them); cleared after use
-wKeepMatchStatsFlag:: db
+; [8-bit] A match was suspended by Save & Quit and can be resumed; saved with the slot image. Set to 1 by MatchQuitMenu_SaveAndQuit and Unused_07_RunDebugTestMatch. While set, ResetMatchState keeps the per-character match stats (then clears it), ProcessMatchRewards gives no rewards, RunStoryFileFlow resumes with ResumeSuspendedStoryMatch on continue, RunExhibitionModeFlow skips the menus and restarts the match, and UploadGlyphBufferQueued / UploadLastGlyphTiles clamp the glyph upload to columns $60/$5f instead of $80/$7f. Also cleared by InitDefaultMatchSettings, RunMinigameModeFlow, ConfirmDiscardSuspendedExhibMatch and the bank $0a/$10 post-match paths
+wMatchSuspendedFlag:: db
 
-; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; set on two paths of the match-select handler
-wVictoryScoreTableAlt:: db
+; [8-bit] Nonzero selects VictoryScoreTableSaveQuit over VictoryScoreTable in GetVictoryScore; RunExhibitionModeFlow sets it when an exhibition match ends by Save & Quit and clears it when a fresh exhibition starts
+wExhibitionSaveQuitUsed:: db
 
 ; [8-bit] Location SaveStoryReturnPoint recorded to return to; called with b = $ff it snapshots the live position instead of a door
 wStoryReturnLocation:: db
@@ -89,8 +89,8 @@ wStoryRandomBytes:: ds 4
 	ds 1
 	match_stats wCharacter2
 
-; [8-bit] wCharCourtPos as of last frame. CheckServerEndChanged swaps the new value in and raises wChangeEndsPending when bit 1 differs; UpdateViewFlipState reads it for the flipped view
-wPrevCourtPos:: db
+; [8-bit] Character 0's wCharCourtPos, stored once per AssignCourtPositions by CheckPlayer1EndChanged, which first raises wChangeEndsPending when bit 1 differs from the stored value; UpdateViewFlipState reads it for the flipped view
+wPlayer1PrevCourtPos:: db
 	match_stats wCharacter3
 	ds 1
 	match_stats wCharacter4
@@ -142,8 +142,8 @@ wGameWinLoseFlag:: db
 ; [8-bit] Point Win/Lose Flag (0x01 - win, 0xff - lose, 0x00 otherwise)
 wPointWinLoseFlag:: db
 
-; [8-bit] Total Games Won In Match
-wTotalGamesWonInMatch:: db
+; [8-bit] Games played so far in the match, by either side; AwardGame increments it
+wTotalGamesPlayedInMatch:: db
 
 ; [8-bit] Total Points Scored In Current Game; a drill ends at DRILL_LESSON_POINTS or DRILL_MATCH_POINTS
 wTotalPointsScoredInCurrentGame:: db
@@ -192,7 +192,7 @@ wOnCourtCharCount:: db
 ; 0x18 - Training Court (Match)
 wCurrentlyUsedCourt:: db
 
-; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). At 2, SelectScoreboardLayout forces the doubles scoreboard and InitViewFlipPreference the fixed court view
+; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunTwoOnOneMatch). At 2, SelectScoreboardLayout picks SCOREBOARD_LESSON/HIGH_SCORE/SCORE/DRILL from the drill flags instead of the player count, and InitViewFlipPreference the fixed court view
 wMatchContext:: db
 
 UNION
@@ -295,11 +295,11 @@ wApApplied:: ds 32
 	ASSERT ITEM_EXP_BUNDLE < 32
 	ds 16
 
-; [16-bit] EXP a story match earned, pending like wPendingExpExhibition / wPendingExpLinked. ApplyPendingExpAwards adds it to wPendingExpTrophy, scales the total by player level and folds in the trophy awards
-wPendingExpStory:: dw
+; [16-bit] Head of the N64 transfer record that wN64TransferMarker ends (Unused_02_ValidateN64TransferRecord checksums it). No ROM code stores a nonzero value; story matches award through SetPendingExpAward_Match. ApplyPendingExpAwards sums it with wN64TransferPartnerExp, scales by player level and awards it as EXPAWARD_N64; the old debug path shows it against the main character
+wN64TransferMainExp:: dw
 
-; [16-bit] Trophy half of the pending award, summed with wPendingExpStory before scaling. Unused_02_ValidateN64TransferRecord and the debug stats screen treat the pair as the head of the N64 transfer record that wN64TransferMarker ends
-wPendingExpTrophy:: dw
+; [16-bit] Second N64 transfer EXP word, summed with wN64TransferMainExp; the old debug path shows it against the partner
+wN64TransferPartnerExp:: dw
 
 ; [8-bit] Marker byte of the N64 transfer record at $c9b0: Unused_02_ValidateN64TransferRecord rejects the record unless it is $64, then checksums the bytes around it
 wN64TransferMarker:: db
@@ -314,130 +314,47 @@ wGameFlags:: flag_array NUM_GAME_FLAGS
 NEXTU
 	ds 5
 
-; [8-bit] Singles/Doubles Indicator (Story & Exhibition Mode)
-;
-; 0x00 - Singles
-; 0x01 - Doubles
+; [8-bit] wGameFlags byte $05: mask $01 = FLAG_DOUBLES (0 singles, 1 doubles), mask $02 = FLAG_STORY_MENU_LOCKED
 wSinglesDoublesIndicator:: db
 
-; [Lower4] Story Mode - Match Completion Flags (1/6)
-;
-; Bit 0 - Doubles Island Open Round 1
-; Bit 1 - Doubles Island Open Semifinals
-; Bit 2 - Doubles Island Open Finals
-; Bit 3 - Doubles Dream Match
-wStoryModeMatchCompletionFlags1:: db
+; [8-bit] wGameFlags byte $06: FLAG_WON_ISLAND_OPEN_DOUBLES_*, FLAG_WON_DREAM_MATCH_DOUBLES, and the two *_PAUSE_*_MENU_OPEN bits
+wIslandOpenDoublesWinFlags:: db
 
-; [8-bit] Story Mode - Match Completion Flags (2/6)
-;
-; Bit 0 - Singles Island Open Round 1
-; Bit 1 - Singles Island Open Round 2
-; Bit 2 - Singles Island Open Semifinals
-; Bit 3 - Singles Island Open Finals
-; Bit 4 - Singles Dream Match
-wStoryModeMatchCompletionFlags2:: db
+; [8-bit] wGameFlags byte $07: FLAG_WON_ISLAND_OPEN_SINGLES_*, FLAG_WON_DREAM_MATCH_SINGLES
+wIslandOpenSinglesWinFlags:: db
 
-; [8-bit] Story Mode - Match Completion Flags (3/6)
-;
-; Bit 7 - Doubles Junior Rank 3
-; Bit 6 - Doubles Junior Rank 2
-; Bit 5 - Doubles Junior Rank 1
-; Bit 3 - Doubles Senior Rank 3
-; Bit 2 - Doubles Senior Rank 2
-; Bit 1 - Doubles Senior Rank 1
-wStoryModeMatchCompletionFlags3:: db
+; [8-bit] wGameFlags byte $08: FLAG_WON_JUNIOR_DOUBLES_RANK_* and FLAG_WON_SENIOR_DOUBLES_RANK_*
+wDoublesRankWinFlags:: db
 
-; [Upper4] Story Mode - Match Completion Flags (4/6)
-;
-; Bit 7 - Doubles Varsity Rank 2
-wStoryModeMatchCompletionFlags4:: db
+; [8-bit] wGameFlags byte $09: FLAG_WON_VARSITY_DOUBLES_RANK_2, FLAG_AT_ISLAND_OPEN
+wVarsityDoublesWinFlags:: db
 
-; [8-bit] Story Mode - Match Completion Flags (5/6)
-;
-; Bit 7 - Singles Junior Rank 4
-; Bit 6 - Singles Junior Rank 3
-; Bit 5 - Singles Junior Rank 2
-; Bit 4 - Singles Junior Rank 1
-; Bit 3 - Singles Senior Rank 4
-; Bit 2 - Singles Senior Rank 3
-; Bit 1 - Singles Senior Rank 2
-; Bit 0 - Singles Senior Rank 1
-wStoryModeMatchCompletionFlags5:: db
+; [8-bit] wGameFlags byte $0a: FLAG_WON_JUNIOR_SINGLES_RANK_* and FLAG_WON_SENIOR_SINGLES_RANK_*
+wSinglesRankWinFlags:: db
 
-; [Upper4] Story Mode - Match Completion Flags (6/6)
-;
-; Bit 7 - Singles Varsity Rank 4
-wStoryModeMatchCompletionFlags6:: db
+; [8-bit] wGameFlags byte $0b: FLAG_WON_VARSITY_SINGLES_RANK_4
+wVarsitySinglesWinFlags:: db
 
-; [8-bit] Story Mode - Equipment Flags (1/2)
-;
-; Bit 6 - Large Racket
-; Bit 5 - Small Racket
-; Bit 4 - Iron Racket
-; Bit 3 - Silver Racket
-; Bit 2 - Gold Racket
-; Bit 1 - Drive Racket
-; Bit 0 - Iron Shoes
-wStoryModeEquipmentFlags1:: db
+; [8-bit] wGameFlags byte $0c: FLAG_HAVE_* for every racket and the Iron Shoes
+wEquipmentOwnedFlags:: db
 
-; [Upper4] Story Mode - Equipment Flags (2/2)
-;
-; Bit 7 - Light Shoes
-wStoryModeEquipmentFlags2:: db
+; [8-bit] wGameFlags byte $0d: FLAG_HAVE_LIGHT_SHOES, FLAG_ENDING_SKIP_STAFF_PAGE, FLAG_ENDING_CREDITS_RUNNING, FLAG_ACTORS_FROZEN
+wLightShoesAndCreditsFlags:: db
 
 ; [3 bytes] wGameFlags bytes $0e-$10 (flags 112-135): NPC talked/moved/turned and scene-seen flags (FLAG_*_TALKED_*, FLAG_*_MOVED, FLAG_REPAIR_COUNTER_*, FLAG_AWARDS_CEREMONY_SEEN_*, ...; include/flag_constants.inc)
 wStoryModeNpcEventFlags:: ds 3
 
 ; [3 bytes] wGameFlags bytes $11-$13 (flags 136-159): FLAG_TROPHY_EXP_GROUP_*_TIER_*, the once-only N64 trophy-EXP tiers ComputeTrophyExpForGroup awards (TrophyExpTierFlags)
-wGameFlagsSpare:: ds 3
+wTrophyExpTierFlags:: ds 3
 
-; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): FLAG_CHEAT_UNLOCK_0-12 (set by the unlock-everything cheat, never read), then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES
-wCheatUnlockFlags:: dw
+; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): the FLAG_UNLOCKED_<char> story-cast grid unlocks (set by story wins via RewardUnlockCharFlags and by the unlock-everything cheat; read by BuildCharUnlockFlags), then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES
+wStoryCastUnlockFlags:: dw
 
-; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_GREETED bits
+; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_LESSON_PASSED_THIS_VISIT bits
 wStoryProgressFlags:: dw
 
-; [8-bit] Story Mode - Minigame Completion Flags (1/4)
-;
-; Bit 7 - Service Match 1
-; Bit 6 - Service Match 2
-; Bit 5 - Service Match 3
-; Bit 4 - Service Practice 1
-; Bit 3 - Service Practice 2
-; Bit 2 - Service Practice 3
-; Bit 1 - Net Play Match 1
-; Bit 0 - Net Play Match 2
-wStoryModeMinigameCompletionFlags1:: db
-
-; [8-bit] Story Mode - Minigame Completion Flags (2/4)
-;
-; Bit 7 - Net Play Match 3
-; Bit 6 - Net Play Practice 1
-; Bit 5 - Net Play Practice 2
-; Bit 4 - Net Play Practice 3
-; Bit 3 - Stroke Match 1
-; Bit 2 - Stroke Match 2
-; Bit 1 - Stroke Match 3
-; Bit 0 - Stroke Practice 1
-wStoryModeMinigameCompletionFlags2:: db
-
-; [8-bit] Story Mode - Minigame Completion Flags (3/4)
-;
-; Bit 7 - Stroke Practice 2
-; Bit 6 - Stroke Practice 3
-; Bit 5 - Machine Level 1
-; Bit 4 - Machine Level 2
-; Bit 3 - Machine Level 3
-; Bit 2 - Machine Level 4
-; Bit 1 - Wall Level 1
-; Bit 0 - Wall Level 2
-wStoryModeMinigameCompletionFlags3:: db
-
-; [Upper4] Story Mode - Minigame Completion Flags (4/4)
-;
-; Bit 7 - Wall Level 3
-; Bit 6 - Wall Level 4
-wStoryModeMinigameCompletionFlags4:: db
+; [4 bytes] wGameFlags bytes $18-$1b (flags 192-223): FLAG_CLEARED_<drill>_<level> for every training drill, then the Tennis Machine/Wall master and expert clears
+wDrillClearFlags:: ds 4
 
 ; [4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff), temporary: ClearTemporaryStoryFlags zeroes them at the top of RunStoryLocation, so they last until the next location load. Used for per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear ($1f)
 wGameFlagsTemp:: ds 4
@@ -445,13 +362,13 @@ ENDU
 	ds 32
 
 ; The four on-court records: player 1's main character and partner, then
-; player 2's. The results screen prints the names; LoadCharacterAttributes
-; copies each record's physics and AI attributes into that character's
+; player 2's. The continue-game screen prints the names; LoadCharacterAttributes
+; copies each record's shot and AI attributes into that character's
 ; banked struct. ExchangeLinkUnlockFlags borrows the main records'
 ; LinkCourtMask for the peer's bonus-court unlock mask: the one matching
 ; the link role goes to wLinkPartnerCourtMask, then both are cleared. The
 ; CPU menus set Difficulty on the three records the player does not pick
-; for. Boo Blast's setup writes wPlayer2MainPhysics, which nothing reads.
+; for. Boo Blast's setup writes wPlayer2MainAiPosition, which nothing reads.
 	char_record wPlayer1Main
 	char_record wPlayer1Partner
 	char_record wPlayer2Main

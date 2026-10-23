@@ -4,12 +4,12 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ;
 ;   $d000-$d5ff  overworld actors
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 3]
-;   $d800-$dbff  wIntroCharactersTilemap
+;   $d800-$dbff  wIntroMarioTilemap
 ;   $da00-$da31  actor engine
 ;   $dac0-$dae9  actor engine
 ;   $daea-$daf7  actor engine
 ;   $dc00-$dcd1  minigames / minigame targets
-;   $dc00-$dfff  wIntroCharactersAttrmap
+;   $dc00-$dfff  wIntroMarioAttrmap
 ;   $dcf0-$dcff  minigame targets
 ;   $dd00-$dd23  match ball history ring
 ;   $dd80-$ddcf  match object slots
@@ -20,10 +20,10 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
 ; Overworld / story actor slots: 24 records of ACTOR_SIZE bytes, the array
 ; SpawnActor allocates from and the bank $04 engine walks once a frame.
-; Several helpers (GetActorStateAddr, AttachActorWaypointFollower,
-; AttachActorStepMover, script_get_actor_state) select WRAM bank $04
+; Several helpers (GetActorStateAddr, AttachActorChaser,
+; AttachActorTrailer, script_get_actor_state) select WRAM bank $04
 ; themselves, so callers such as the bank $0e-$15 cutscene scripts load slot
-; addresses (`ld de, $d000` / `ld bc, $d040`) with another bank selected.
+; addresses (`ld de, wActors` / `ld bc, wActors + ACTOR_SIZE`) with another bank selected.
 ; Fields are ACTORF_* offsets (`ld hl, ACTORF_* / add hl, bc`); the
 ; field-size table the script opcodes use is ActorFieldTypeTable_04.
 ; overworld actors (WRAM bank $04)
@@ -33,11 +33,11 @@ wActors:: ds 1536
 
 	ds 1024
 
-; List of actor slots near the player, rebuilt by BuildNearbyActorList
+; List of actor slots, rebuilt by BuildNearbyActorList or BuildTalkableActorList
 ; (banks $18/$1b/$28/$38 keep unrelated screen state at the same addresses
 ; in WRAM bank $03).
 ; actor engine (bank $04)
-; [up to 24 x 2 bytes + terminator] Pointers to the live actor slots BuildNearbyActorList selected (nonzero +$01, +$30 bit 7 and +$05 bit 3 set, close enough to the player). A zero word ends the list; FindActorAtPoint and the proximity searches walk it
+; [up to 24 x 2 bytes + terminator] Pointers to the live, on-screen actor slots BuildNearbyActorList (+$05 bit 3 set, close enough to the player) or BuildTalkableActorList (+$05 bit 4 set, any distance) selected. A zero word ends the list; FindActorAtPoint and the proximity searches walk it
 wNearbyActorList:: ds 50
 
 	ds 142
@@ -46,7 +46,7 @@ wNearbyActorList:: ds 50
 ; they live in whichever bank the caller was running and the engine wants
 ; them at a fixed address.
 ; actor engine (bank $04)
-; [14 bytes] One map_actor record, copied from the ROM list by SpawnActorsFromList and passed to SpawnActorFromTemplate. +$09 (obj_id) is $ff on the list terminator
+; [14 bytes] One map_actor record, copied from the ROM list by SpawnActorsFromList and passed to SpawnActorFromTemplate. +$09 (the pad byte after facing) is $ff on the list terminator
 wActorTemplate:: ds 14
 	export_size wActorTemplate
 	ds 2
@@ -67,12 +67,12 @@ wPlayerObjDefPending:: db
 ; [8-bit] Heading the D-pad asks the overworld player to walk ($40 per quarter turn, as FACE_*). UpdatePlayerControl also writes it to actor field +$34, then probes $20/$40/$e0/$c0 away from it to slide along a blocked wall
 wPlayerMoveAngle:: db
 	ds 1
-; [8-bit] Heading actually walked this frame, 0 when the move was blocked
-wPlayerMoveAngleApplied:: db
-; [8-bit] Previous frame's wPlayerMoveAngleApplied, saved before it is recomputed
-wPlayerMoveAnglePrev:: db
-; [8-bit] Cleared when no direction is held, so the walk animation stops
-wPlayerMoving:: db
+; [8-bit] What stopped the player's straight-ahead move this frame (IsPointBlocked: actor slot, or terrain cell | $80); 0 when not blocked
+wPlayerBlockedBy:: db
+; [8-bit] Previous frame's wPlayerBlockedBy, saved before it is recomputed
+wPlayerBlockedByPrev:: db
+; [8-bit] Frames the player has kept walking into the same blocker; reset when unblocked or no direction is held. The location loop turns $1e frames into an interaction
+wPlayerWallPushFrames:: db
 ; [8-bit] How far ahead GetPointAheadOfActorRanged probes: times 32 plus the facing nibble indexes ActorMoveVectors_04, selecting the table's 32-byte range row. The unranged entry point uses $40
 wActorProbeRange:: db
 ; [16-bit] First coordinate of the point FindActorAtPoint searches at (from hl), before it walks wNearbyActorList
@@ -85,7 +85,7 @@ wActorProbeAngle:: db
 wActorRandBoxHalfWidth:: db
 ; [8-bit] Half-depth of the same box (operand high byte); passed to TestPointInBox as l. The centre is the word at actor + $16
 wActorRandBoxHalfDepth:: db
-; [8-bit] ROM bank of the executing actor script, from ACTORF_OBJECT_BANK; every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA
+; [8-bit] ROM bank the actor VM reads from: ACTORF_SCRIPT_BANK while StepActorScript runs (every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA); DrawActors reloads it from ACTORF_OBJECT_BANK for the frame-table read
 wActorScriptBank:: db
 
 	ds 264
@@ -124,7 +124,7 @@ wMinigameTargetWork:: ds 16
 
 ; Match ball-visuals history ring (bank $08 renderer).
 ; match ball history ring (WRAM bank 4)
-; [36 bytes] Ball position-history ring: six 6-byte records [projX word, projY word, tile+8, attr]; UpdateBallVisuals shifts it down one record per frame and BuildBallSlot writes the newest at +$1e
+; [36 bytes] Ball position-history ring: NUM_BALLHIST BALLHIST_* records, oldest first; UpdateBallVisuals shifts it down one record per frame and BuildBallSlot writes the newest at BALLHIST_NEWEST
 wBallHistory:: ds 36
 
 	ds 92
@@ -183,15 +183,16 @@ wBallTrailSlots:: ds 20
 
 	ds 96
 
-; Pre-rendered scoreboard columns for the flipped court. LoadCourtSceneGraphics
-; copies two $28-byte blocks here from the scene record;
-; RefreshCourtScoreboardFlipped feeds them to CopyScoreboardTileColumn, which
-; reads under WRAM bank $04 and writes under bank $02.
-; court scoreboard columns (banks $08/$0a)
-; [40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it (and the row at $de9e) into wCourtTilemapSaved; $de94 is the second column
+; Pre-rendered court scoreboard columns (banks $08/$0a), copied here from the
+; scene record by LoadCourtSceneGraphics. Each half holds four 2x5 blocks:
+; flipped-view left, normal-view left, normal-view right, flipped-view right.
+; RefreshCourtScoreboard copies +10/+20 and RefreshCourtScoreboardFlipped
+; +0/+30 to tilemap row 12, columns 4 and 26, via CopyScoreboardTileColumn,
+; which reads under WRAM bank $04 and writes under bank $02.
+; [40 bytes] Tile half of the scoreboard columns, copied into wCourtTilemapBase
 wScoreboardColumnTiles:: ds 40
 	export_size wScoreboardColumnTiles
-; [40 bytes] Attribute half of the same columns, cell for cell with wScoreboardColumnTiles, copied into wCourtAttrmapSaved
+; [40 bytes] Attribute half of the same columns, cell for cell with wScoreboardColumnTiles, copied into wCourtAttrmapBase
 wScoreboardColumnAttrs:: ds 40
 	export_size wScoreboardColumnAttrs
 

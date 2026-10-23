@@ -1,7 +1,7 @@
 	farptr LoadScreenAssetRecord ; $4000
 	farptr QueueWram3MapToVRAM ; $4002
 	farptr UpdateAnimatedTiles ; $4004
-	farptr LoadFixedTileBlockAndPalette ; $4006
+	farptr LoadCornerBracketCursorGfx ; $4006
 	farptr Unused_39_LoadFixedBgPalette0 ; $4008
 	farptr CopyTilemapRect ; $400a
 	farptr FillTilemapRect ; $400c
@@ -16,9 +16,9 @@
 	farptr FlushWram3MapRows ; $401e
 	farptr RestoreMenuBgAndDrawPanel ; $4020
 	farptr ResetScreenAndTextWindows ; $4022
-	farptr InitMenuBgScroll ; $4024
+	farptr InitMenuTitleScroller ; $4024
 	farptr LoadMenuSpritePalettePair ; $4026
-	farptr TickMenuBgScroll ; $4028
+	farptr TickMenuTitleScroller ; $4028
 	farptr LoadMenuFontTiles ; $402a
 	farptr QueueWram3MapToVRAMAlias1, QueueWram3MapToVRAM ; $402c
 	farptr QueueWram3MapToVRAMAlias2, QueueWram3MapToVRAM ; $402e
@@ -60,34 +60,34 @@ DataPtr_SharedMenuGfx17Alias16:
 	dw SharedMenuGfx17 ; $4054
 DataPtr_SharedMenuGfx17Alias17:
 	dw SharedMenuGfx17 ; $4056
-DataPtr_NameEntryGfx:
-	dw NameEntryGfx ; $4058
-DataPtr_CharacterSelectGfx:
-	dw CharacterSelectGfx ; $405a
-DataPtr_NumberSpriteGfxWideGfx:
-	dw NumberSpriteGfxWideGfx ; $405c
+DataPtr_NameEntryUnderlineCursorGfx:
+	dw NameEntryUnderlineCursorGfx ; $4058
+DataPtr_HandednessLRSpriteGfx:
+	dw HandednessLRSpriteGfx ; $405a
+DataPtr_LargeDigitArrowSpriteGfx:
+	dw LargeDigitArrowSpriteGfx ; $405c
 DataPtr_StatLabelTiles:
 	dw StatLabelTiles ; $405e
-	farptr FillMenuGridCellTile ; $4060
-	farptr MoveMinigameGridCursor ; $4062
+	farptr SetMinigameGrid6CellPalette ; $4060
+	farptr MoveMinigameGrid6Cursor ; $4062
 	farptr InitNumberSpriteGfx ; $4064
 	farptr DrawDecimalNumberSprites_39 ; $4066
 	farptr ResetCheatCodeBuffer ; $4068
 	farptr UpdateCheatCodeEntry ; $406a
-DataPtr_RacketShoesChoiceGfx0:
-	dw RacketShoesChoiceGfx0 ; $406c
-DataPtr_RacketShoesChoiceGfx1:
-	dw RacketShoesChoiceGfx1 ; $406e
-DataPtr_MenuArrowGfx0:
-	dw MenuArrowGfx0 ; $4070
-DataPtr_MenuArrowGfx1:
-	dw MenuArrowGfx1 ; $4072
-DataPtr_MenuArrowGfx2:
-	dw MenuArrowGfx2 ; $4074
-DataPtr_MenuArrowGfx3:
-	dw MenuArrowGfx3 ; $4076
-DataPtr_CharGridGfx2:
-	dw CharGridGfx2 ; $4078
+DataPtr_SelectRacketLabelGfx:
+	dw SelectRacketLabelGfx ; $406c
+DataPtr_SelectShoesLabelGfx:
+	dw SelectShoesLabelGfx ; $406e
+DataPtr_MenuArrowRightGfx:
+	dw MenuArrowRightGfx ; $4070
+DataPtr_MenuArrowLeftGfx:
+	dw MenuArrowLeftGfx ; $4072
+DataPtr_MenuArrowUpGfx:
+	dw MenuArrowUpGfx ; $4074
+DataPtr_MenuArrowDownGfx:
+	dw MenuArrowDownGfx ; $4076
+DataPtr_CharGridStatLabelSpriteGfx:
+	dw CharGridStatLabelSpriteGfx ; $4078
 DataPtr_DigitFontTiles:
 	dw DigitFontTiles ; $407a
 	farptr FillIncrementingBytes ; $407c

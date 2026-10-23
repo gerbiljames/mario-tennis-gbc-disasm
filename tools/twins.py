@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-from banksrc import bank_lines, bank_of, holders  # noqa: E402
+from banksrc import MAIN, bank_lines, bank_of, holders  # noqa: E402
 _LABEL_RE = re.compile(r"^([A-Za-z_]\w*):")
 # what counts as an instruction: CPU mnemonics, the code idiom macros, and the
 # story script_* macros (prefix-matched below) -- not table rows, and not the
@@ -33,7 +33,7 @@ _CODE_WORDS = frozenset(
     "push res ret reti rl rla rlc rlca rr rra rrc rrca rst sbc scf set sla sra srl stop sub "
     "swap xor farcall push_wram_bank pop_wram_bank wram_bank ld_hl_indexed wait_frames lb "
     "set_flag clear_flag test_flag ld_flag_id sound ld_slot ld_de_indexed ld_bc_indexed ld_xy ld_oam "
-    "ld_size ld_tile_run ld_bg_cell rect_size rect_cell map_cell sprite_xy sprite_attr_tile sprite_tile_attr "
+    "ld_size ld_tile_run ld_bg_cell ld_text_attr rect_size rect_cell map_cell sprite_xy sprite_attr_tile sprite_tile_attr "
     "ld_bg_pals ld_obj_pals ld_cell rect_ptrs rect_pair add_hl_a add_de_a add_bc_a "
     "neg_hl neg_de neg_bc abs_hl abs_de abs_bc sub_hl_de sub_hl_bc ld_story_char_field rom_bank "
     "push_rom_bank pop_rom_bank sram_bank jumptable frame_task".split())
@@ -45,11 +45,15 @@ _WEIGHT = {"add_hl_a": 4, "add_de_a": 4, "add_bc_a": 4, "neg_hl": 6, "neg_de": 6
 # these load their argument, if given, into a first
 _ARG_LOADS = {"rom_bank", "push_rom_bank", "sram_bank", "jumptable"}
 _SUFFIX_RE = re.compile(r"\b([A-Za-z]\w*?)_[0-9a-f]{2}\b")
+# a bank's `<Template>_<bank>_NAME EQUS "<name>"` copy, fingerprinted as its template
+_NAME_EQUS_RE = re.compile(r'^DEF (\w+)_[0-9a-f]{2}_NAME EQUS "(\w+)"', re.M)
+_WORD_RE = re.compile(r"\b[A-Za-z_]\w*\b")
 
 
 def routines(min_instrs):
     """name -> (bank, normalised line tuple, instruction count)."""
     out = {}
+    alias = {name: tmpl for tmpl, name in _NAME_EQUS_RE.findall(MAIN.read_text())}
     for f in holders():
         bank = bank_of(f)
         cur, seq, n = None, [], 0
@@ -66,7 +70,7 @@ def routines(min_instrs):
                 continue
             if not line.startswith("\t") or line.startswith("\t;"):
                 continue
-            body = line.split(" ; ")[0]
+            body = _WORD_RE.sub(lambda m: alias.get(m.group(0), m.group(0)), line.split(" ; ")[0])
             # a text id (Text_25_61) is not a bank-suffixed name
             seq.append(_SUFFIX_RE.sub(lambda m: m.group(0) if m.group(1).startswith("Text_")
                                       else m.group(1), body))

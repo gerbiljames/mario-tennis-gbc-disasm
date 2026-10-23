@@ -1,4 +1,4 @@
-FillMenuGridCellTile:
+SetMinigameGrid6CellPalette:
 	push af ; $6dc2
 	push bc ; $6dc3
 	push de ; $6dc4
@@ -16,7 +16,7 @@ FillMenuGridCellTile:
 	ld h, $0d ; $6dd4
 .fillRect:
 	push hl ; $6dd6
-	ld hl, FillMenuGridCellTileTable ; $6dd7
+	ld hl, MinigameGrid6CellAttrmapPtrs ; $6dd7
 	ld a, e ; $6dda
 	add a ; $6ddb
 	add_hl_a ; $6ddc
@@ -30,7 +30,7 @@ FillMenuGridCellTile:
 	pop bc ; $6dea
 	pop af ; $6deb
 	ret ; $6dec
-FillMenuGridCellTileTable:
+MinigameGrid6CellAttrmapPtrs:
 	; $6ded, 12 bytes (ram_ptrs:3)
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; record 0
 	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 8 ; record 1
@@ -38,7 +38,7 @@ FillMenuGridCellTileTable:
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 3
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 4
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 5
-MoveMinigameGridCursor:
+MoveMinigameGrid6Cursor:
 	ld a, [wMenuCursorY] ; $6df9
 	or a ; $6dfc
 	jr nz, .bottomRow ; $6dfd
@@ -187,8 +187,8 @@ InitNumberSpriteGfx:
 	ret ; $6ef8
 InitNumberSpriteGfxWide:
 	push bc ; $6ef9
-	ld b, TILEBLOCK_NumberSpriteGfxWideGfx ; $6efa
-	ld c, NumberSpriteGfxWideGfx_SIZE / 16 ; $6efc
+	ld b, TILEBLOCK_LargeDigitArrowSpriteGfx ; $6efa
+	ld c, LargeDigitArrowSpriteGfx_SIZE / 16 ; $6efc
 	farcall LoadCompressedTileBlock ; $6efe
 	pop bc ; $6f01
 	ld c, $0c ; $6f02
@@ -317,20 +317,20 @@ TriggerCheatUnlock:
 	sound SFX_LOGO_JINGLE ; $7003
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
-RacketShoesChoiceGfx0:
-	INCBIN "data/engine/menus/common/lz_RacketShoesChoiceGfx0.bin" ; $7009, 178 bytes
-RacketShoesChoiceGfx1:
-	INCBIN "data/engine/menus/common/lz_RacketShoesChoiceGfx1.bin" ; $70bb, 194 bytes
-MenuArrowGfx0:
-	INCBIN "data/engine/menus/common/lz_MenuArrowGfx0.bin" ; $717d, 57 bytes
-MenuArrowGfx1:
-	INCBIN "data/engine/menus/common/lz_MenuArrowGfx1.bin" ; $71b6, 50 bytes
-MenuArrowGfx2:
-	INCBIN "data/engine/menus/common/lz_MenuArrowGfx2.bin" ; $71e8, 59 bytes
-MenuArrowGfx3:
-	INCBIN "data/engine/menus/common/lz_MenuArrowGfx3.bin" ; $7223, 58 bytes
-CharGridGfx2:
-	INCBIN "data/engine/menus/common/lz_CharGridGfx2.bin" ; $725d, 241 bytes
+SelectRacketLabelGfx:
+	INCBIN "data/engine/menus/common/lz_SelectRacketLabelGfx.bin" ; $7009, 178 bytes
+SelectShoesLabelGfx:
+	INCBIN "data/engine/menus/common/lz_SelectShoesLabelGfx.bin" ; $70bb, 194 bytes
+MenuArrowRightGfx:
+	INCBIN "data/engine/menus/common/lz_MenuArrowRightGfx.bin" ; $717d, 57 bytes
+MenuArrowLeftGfx:
+	INCBIN "data/engine/menus/common/lz_MenuArrowLeftGfx.bin" ; $71b6, 50 bytes
+MenuArrowUpGfx:
+	INCBIN "data/engine/menus/common/lz_MenuArrowUpGfx.bin" ; $71e8, 59 bytes
+MenuArrowDownGfx:
+	INCBIN "data/engine/menus/common/lz_MenuArrowDownGfx.bin" ; $7223, 58 bytes
+CharGridStatLabelSpriteGfx:
+	INCBIN "data/engine/menus/common/lz_CharGridStatLabelSpriteGfx.bin" ; $725d, 241 bytes
 DigitFontTiles:
 	INCBIN "data/engine/menus/common/lz_DigitFontTiles.bin" ; $734e, 249 bytes
 Unused_39_StubNop:

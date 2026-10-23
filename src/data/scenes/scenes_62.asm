@@ -1,65 +1,65 @@
-DataPtr_StarCourtSceneConfig:
-	dw StarCourtSceneConfig ; $4000
+DataPtr_StarCourtScoreboardColumnTiles:
+	dw StarCourtScoreboardColumnTiles ; $4000
 DataPtr_StarCourtPalettes:
 	dw StarCourtPalettes ; $4002
 DataPtr_StarCourtTilemap:
 	dw StarCourtTilemap ; $4004
 DataPtr_StarCourtAttrmap:
 	dw StarCourtAttrmap ; $4006
-DataPtr_StarCourtSceneConfigAlias1:
-	dw StarCourtSceneConfig ; $4008
+DataPtr_StarCourtScoreboardColumnTilesAlias1:
+	dw StarCourtScoreboardColumnTiles ; $4008
 DataPtr_StarCourtScoreboardColumnAttrs:
 	dw StarCourtScoreboardColumnAttrs ; $400a
 DataPtr_BowserCourtPalettes:
 	dw BowserCourtPalettes ; $400c
 DataPtr_StarCourtTiles:
 	dw StarCourtTiles ; $400e
-DataPtr_BowserCourtSceneConfig:
-	dw BowserCourtSceneConfig ; $4010
+DataPtr_BowserCourtScoreboardColumnTiles:
+	dw BowserCourtScoreboardColumnTiles ; $4010
 DataPtr_BowserCourtPalettesAlias1:
 	dw BowserCourtPalettes ; $4012
 DataPtr_BowserCourtTilemap:
 	dw BowserCourtTilemap ; $4014
 DataPtr_BowserCourtAttrmap:
 	dw BowserCourtAttrmap ; $4016
-DataPtr_BowserCourtSceneConfigAlias1:
-	dw BowserCourtSceneConfig ; $4018
+DataPtr_BowserCourtScoreboardColumnTilesAlias1:
+	dw BowserCourtScoreboardColumnTiles ; $4018
 DataPtr_BowserCourtScoreboardColumnAttrs:
 	dw BowserCourtScoreboardColumnAttrs ; $401a
 DataPtr_WarehouseCourtPalettes:
 	dw WarehouseCourtPalettes ; $401c
 DataPtr_BowserCourtTiles:
 	dw BowserCourtTiles ; $401e
-DataPtr_WarehouseCourtSceneConfig:
-	dw WarehouseCourtSceneConfig ; $4020
+DataPtr_WarehouseCourtScoreboardColumnTiles:
+	dw WarehouseCourtScoreboardColumnTiles ; $4020
 DataPtr_WarehouseCourtPalettesAlias1:
 	dw WarehouseCourtPalettes ; $4022
 DataPtr_WarehouseCourtTilemap:
 	dw WarehouseCourtTilemap ; $4024
 DataPtr_WarehouseCourtAttrmap:
 	dw WarehouseCourtAttrmap ; $4026
-DataPtr_WarehouseCourtSceneConfigAlias1:
-	dw WarehouseCourtSceneConfig ; $4028
+DataPtr_WarehouseCourtScoreboardColumnTilesAlias1:
+	dw WarehouseCourtScoreboardColumnTiles ; $4028
 DataPtr_WarehouseCourtScoreboardColumnAttrs:
 	dw WarehouseCourtScoreboardColumnAttrs ; $402a
 DataPtr_CastleCourtPalettes:
 	dw CastleCourtPalettes ; $402c
 DataPtr_WarehouseCourtTiles:
 	dw WarehouseCourtTiles ; $402e
-DataPtr_CastleCourtSceneConfig:
-	dw CastleCourtSceneConfig ; $4030
+DataPtr_CastleCourtScoreboardColumnTiles:
+	dw CastleCourtScoreboardColumnTiles ; $4030
 DataPtr_CastleCourtPalettesAlias1:
 	dw CastleCourtPalettes ; $4032
 DataPtr_CastleCourtTilemap:
 	dw CastleCourtTilemap ; $4034
 DataPtr_CastleCourtAttrmap:
 	dw CastleCourtAttrmap ; $4036
-DataPtr_CastleCourtSceneConfigAlias1:
-	dw CastleCourtSceneConfig ; $4038
+DataPtr_CastleCourtScoreboardColumnTilesAlias1:
+	dw CastleCourtScoreboardColumnTiles ; $4038
 DataPtr_CastleCourtScoreboardColumnAttrs:
 	dw CastleCourtScoreboardColumnAttrs ; $403a
-DataPtr_CastleCourtSceneUnusedSlot:
-	dw CastleCourtSceneUnusedSlot ; $403c
+DataPtr_CastleCourtSceneNoAnimTiles:
+	dw CastleCourtSceneNoAnimTiles ; $403c
 DataPtr_CastleCourtTiles:
 	dw CastleCourtTiles ; $403e
 StarCourtPalettes:
@@ -70,8 +70,8 @@ StarCourtTilemap:
 	INCBIN "data/scenes/lz_StarCourtTilemap.bin" ; $4846, 508 bytes
 StarCourtAttrmap:
 	INCBIN "data/scenes/lz_StarCourtAttrmap.bin" ; $4a42, 209 bytes
-StarCourtSceneConfig:
-	INCLUDE "data/scenes/StarCourtSceneConfig.asm" ; $4b13, 40 bytes (scoreboard_columns)
+StarCourtScoreboardColumnTiles:
+	INCLUDE "data/scenes/StarCourtScoreboardColumnTiles.asm" ; $4b13, 40 bytes (scoreboard_columns)
 StarCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/StarCourtScoreboardColumnAttrs.asm" ; $4b3b, 40 bytes (scoreboard_columns)
 BowserCourtPalettes:
@@ -82,8 +82,8 @@ BowserCourtTilemap:
 	INCBIN "data/scenes/lz_BowserCourtTilemap.bin" ; $528d, 598 bytes
 BowserCourtAttrmap:
 	INCBIN "data/scenes/lz_BowserCourtAttrmap.bin" ; $54e3, 285 bytes
-BowserCourtSceneConfig:
-	INCLUDE "data/scenes/BowserCourtSceneConfig.asm" ; $5600, 40 bytes (scoreboard_columns)
+BowserCourtScoreboardColumnTiles:
+	INCLUDE "data/scenes/BowserCourtScoreboardColumnTiles.asm" ; $5600, 40 bytes (scoreboard_columns)
 BowserCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/BowserCourtScoreboardColumnAttrs.asm" ; $5628, 40 bytes (scoreboard_columns)
 WarehouseCourtPalettes:
@@ -94,8 +94,8 @@ WarehouseCourtTilemap:
 	INCBIN "data/scenes/lz_WarehouseCourtTilemap.bin" ; $5ffc, 723 bytes
 WarehouseCourtAttrmap:
 	INCBIN "data/scenes/lz_WarehouseCourtAttrmap.bin" ; $62cf, 274 bytes
-WarehouseCourtSceneConfig:
-	INCLUDE "data/scenes/WarehouseCourtSceneConfig.asm" ; $63e1, 40 bytes (scoreboard_columns)
+WarehouseCourtScoreboardColumnTiles:
+	INCLUDE "data/scenes/WarehouseCourtScoreboardColumnTiles.asm" ; $63e1, 40 bytes (scoreboard_columns)
 WarehouseCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/WarehouseCourtScoreboardColumnAttrs.asm" ; $6409, 40 bytes (scoreboard_columns)
 CastleCourtPalettes:
@@ -106,9 +106,9 @@ CastleCourtTilemap:
 	INCBIN "data/scenes/lz_CastleCourtTilemap.bin" ; $6bc3, 562 bytes
 CastleCourtAttrmap:
 	INCBIN "data/scenes/lz_CastleCourtAttrmap.bin" ; $6df5, 313 bytes
-CastleCourtSceneConfig:
-	INCLUDE "data/scenes/CastleCourtSceneConfig.asm" ; $6f2e, 40 bytes (scoreboard_columns)
+CastleCourtScoreboardColumnTiles:
+	INCLUDE "data/scenes/CastleCourtScoreboardColumnTiles.asm" ; $6f2e, 40 bytes (scoreboard_columns)
 CastleCourtScoreboardColumnAttrs:
 	INCLUDE "data/scenes/CastleCourtScoreboardColumnAttrs.asm" ; $6f56, 40 bytes (scoreboard_columns)
-CastleCourtSceneUnusedSlot:
+CastleCourtSceneNoAnimTiles:
 	; $6f7e, 4226 bytes fill to bank end (linker-padded)

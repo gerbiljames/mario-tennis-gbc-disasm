@@ -43,7 +43,7 @@ commits. It leaves by writing `wStoryModeExitTriggerRequest`, looked up in
 | --- | --- | --- |
 | `$01` `NEW_GAME` | `ENTRY_ACADEMY_ENTRANCE_NEW_GAME` | new game (`$10:$5081`) |
 | `$02` `CONTINUE` | `ENTRY_DORM_ROOM_CONTINUE` | ordinary continue |
-| `$03` `TEST_2` | `ENTRY_TEST_2_SETUP_MENU` | `FLAG_DEBUG_SKIP_LOCATION_EXIT` shortcut (Test 2 runs the clear-status setup menu) |
+| `$03` `TEST_2` | `ENTRY_TEST_2_SETUP_MENU` | `FLAG_DEBUG_EXIT_TO_TEST_2` shortcut (Test 2 runs the clear-status setup menu) |
 | `$04` `CONTINUE_ISLAND_OPEN_WON` | `ENTRY_ACADEMY_WING_ISLAND_OPEN_WON` | Island Open final won, story not yet flagged complete |
 | `$05` `CONTINUE_TO_PEACHS_CASTLE` | `ENTRY_PEACHS_CASTLE_FIRST_VISIT` | story complete, Mario World not yet visited |
 
@@ -87,7 +87,7 @@ continue passes an explicit pair (`$10:$50df`: `b=$0a, c=$01`, the dorm room).
 `.frameLoop` (`$0a:$4ff5`) switches to WRAM bank `$04` and checks
 `CheckStoryEventRequests` (OR of `$c2a0-$c2a5`). With none set it drops into
 `.waitForEvent`, attaching the player's controller script and idling until a
-request appears. With one pending it re-installs `ActorScript_0a` on the
+request appears. With one pending it re-installs `ActorScript_Null` on the
 player (a 6-byte halting script) and tests in order:
 
 | order | request | handler |
@@ -190,10 +190,11 @@ The matched record goes to `wStoryMapRecord`, then is split into
 are written in tiles with a point (`map_pos` checks the form).
 
 An entry id is local to its location (`$0f` returns from a match at the
-Junior courts and runs a firework scene at Island Sky). A scene an init
-script runs for an entry is named `<Location>Entry<id>Scene`
-(`DormRoomEntry0fScene`; `IslandSkyEntry0fAnd0dScene` serves two ids,
-`TennisMachineRoomNoEntryScene` none).
+Junior courts and flies to Peach's Castle from Island Sky). A scene an init
+script runs for an entry is named `<Location><what it shows>Scene`
+(`IslandSkyToPeachsCastleScene` serves two ids,
+`TennisMachineRoomNoEntryScene` none); one whose role is still unknown keeps
+`<Location>Entry<id>Scene`.
 
 A row's optional last argument names it: `ENTRY_<location>_<name>` (the
 `STORYLOC_*` suffix, then what reaches it or the scene it runs:
@@ -271,8 +272,9 @@ A slot is named only where the active list is certain at that line.
   `wMapSceneStage` round `LoadIslandOpenRoundNpcs` sets (`STAGE_LISTS`); a
   stage-indexed table dispatches each entry under its own stage's lists;
 * lists a script installs on a flag (the singles and doubles ending lists,
-  the traveling teams, the Island Open round lists, which also hang on the
-  semifinal flags) are bound to its value (`FLAG_LISTS`), and a
+  the traveling teams, the doubles award ceremony, the Senior Court's
+  singles list A and doubles list B, the Island Open round lists, which also
+  hang on the semifinal flags) are bound to its value (`FLAG_LISTS`), and a
   `test_flag` branch keeps, on each side, the lists that agree; a
   location's default list is never bound, since it is active before any
   test;
@@ -281,17 +283,24 @@ A slot is named only where the active list is certain at that line.
   its round lists — singles for trigger `$0f`, doubles for `$0e`
   (`TILE_LISTS`).
 
-With several candidate lists, a row name fits only if every candidate holds
-the same actor there. A slot that means one thing across candidates anyway —
+With several candidate lists, a row name fits only if its own list is one of
+them and every candidate holds the same actor there. Among agreeing
+candidates the name spells, in order of preference: one a second pass still
+allows with the junior court's default lists bound to `FLAG_DOUBLES` (the
+game picks that location by the flag; a debug warp need not, so the bound
+only steers spelling, `HINT_LISTS`); one whose mode the nearest local label,
+else the routine's name, says (`Singles`/`Doubles`); one the routine
+installs; the location's default list; the one already named; the one most
+of the routine's sites can be under; the shortest. A slot that means one thing across candidates anyway —
 the same character under different scripts (the five seniors in all three
 Senior Court lists) or whoever plays a part (Island Open slot `$0a` is this
 round's opponent, Spike in one round and A. Coz in another) — gets a *role*
 name, `ACTOR_ROLE_<location>_<role>`, declared with its lists in
-`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`). Twelve roles cover 55 operands and 7
+`include/actor_roles.inc` (`actor_role SENIOR_COURT_FAY, $04, ...`), covering operands and
 `NpcScripts` ids.
 
-The sites the tool reaches carry 5,153 slot names (row and role names,
-script operands, `NpcScripts` ids); 13 keep a number, and unreached code
+The sites the tool reaches carry slot names (row and role names,
+script operands, `NpcScripts` ids); a few keep a number, and unreached code
 keeps more. A PyBoy sweep that hooks each numbered site and records the
 installed list and the slot's object agrees with the analysis wherever it
 reached one. The numbered ones are:
@@ -300,16 +309,18 @@ reached one. The numbered ones are:
   B. Coz in the doubles award ceremony but a walk-sprite student in the
   singles one, where the flow cannot tie the list to the branch;
 * slots past the end of every candidate list: at run time the slot is
-  empty (`DormRoomTile0F_13` and `CenterCourtEntry0fScene` position slots
-  `$06` and `$0a`, which their lists never fill, so those lines move
-  nothing);
+  empty (`DormRoomTravelingTeamMeetingTrigger_13` and
+  `CenterCourtCreditsScene` position slots `$06` and `$0a`, which their
+  lists never fill, so those lines move nothing), and the `NpcScripts` ids of locations whose lists are empty
+  (the development map's sixteen, `RestaurantPlazaNpcScripts_13`'s `$03`);
 * lines inside shared twin files;
 * tables of locations the player never controls.
 
 A routine also entered from somewhere the flow does not follow keeps a
 number unless it installs its own list first. `actorslots.py` lists what is
-left and renames what it can (`--apply`). `make check` fails on a row name
-whose slot holds a different actor in a possible list, and on a role name
+left and renames what it can (`--apply`, which also respells names to the
+preferred candidate). `make check` fails on a row name whose list cannot be
+active there or whose slot holds a different actor in a possible list, and on a role name
 used where an undeclared list is possible. `make slot-audit` checks every
 name at run time over 36 story states and every location, comparing the
 list `InitLocationActors` last installed.
@@ -384,7 +395,7 @@ speaker/actor id in `a`:
 resets screen shake, and only when `hDebugStepMode` is nonzero registers
 `ToggleCutsceneFastForward` (Start fast-forwards cutscenes in debug only).
 `EndCutsceneScriptMode` re-attaches the follower
-(`AttachActorWaypointFollower`, slot 1 following slot 0) and copies the
+(`AttachActorChaser`, slot 1 following slot 0) and copies the
 player's heading (`+$14`) into `wPlayerMoveAngle`.
 
 An NPC handler's speaker id is the actor slot `FindActorFacingPlayer`
@@ -398,14 +409,16 @@ turns it into `$d000 + slot*$40`.
 `court_scene` rows); the overworld uses `$10`-`$24`. `SCENE_*` constants name
 each record; its blob family (`SceneConfig`, `Palettes`, `Tiles`, `Tilemap`,
 `Attrmap`, `CollisionMap`, `BehaviorMap`, and the `data/` files) uses the same
-name in CamelCase (`SCENE_RESTAURANT` → `lz_RestaurantTilemap.tilemap`).
+name in CamelCase (`SCENE_RESTAURANT` → `lz_RestaurantTilemap.tilemap`). The
+courts have `ScoreboardColumnTiles`/`ScoreboardColumnAttrs` in place of
+`SceneConfig`, `CollisionMap` and `BehaviorMap`.
 
 `LoadStorySceneGraphics` (`$0a:$585d`) consumes the slots in this order:
 
 | slot | destination | meaning |
 | --- | --- | --- |
 | 7 | `wDecompBuffer` (WRAM `$01`), then `$80` tiles to VRAM bank 1 `$9000` | BG tiles |
-| 6 | **discarded** (meant for `wStorySceneUnusedBuffer`; [`graphics_formats.md`](graphics_formats.md)) | — |
+| 6 | skipped here; read per frame by the tile animator (below) | animation tiles |
 | 5 | `$d400`, WRAM `$06` | behaviour map (1 KiB) |
 | 4 | `$d000`, WRAM `$06` | collision map (1 KiB) |
 | 3 | `wScreenAttrmap` (WRAM `$02`) | BG attribute map |
@@ -413,15 +426,24 @@ name in CamelCase (`SCENE_RESTAURANT` → `lz_RestaurantTilemap.tilemap`).
 | 1 | 64 raw bytes to `wDecompBuffer`, palettes from +16 | palettes |
 | 0 | 136 raw bytes to `wStorySceneRecord` (WRAM `$06`) | scene config |
 
-Slots 2-5 and 7 are decompressed. Most records' slot 6 holds an
-`*SceneUnusedSlot` filler or a stray pointer to the next scene's config. For
-the 16 court records, read by the court loader, slot 4 aliases slot 0 and
-slot 5 is `*ScoreboardColumnAttrs` (`graphics_formats.md` §3.4).
+Slots 2-5 and 7 are decompressed. For the 16 court records, read by the
+court loader, slots 0 and 4 are `*ScoreboardColumnTiles` and slot 5 is
+`*ScoreboardColumnAttrs` (`graphics_formats.md` §3.4).
 
-Only scene-config bytes `+2..+5` are read: `wMapScrollMinX`,
-`wMapScrollMinY`, `wMapWidthTiles`, `wMapHeightTiles` (`$0a:$5912`). The
-fixed `$88`-byte copy over-reads the 9-42-byte story config blobs,
-harmlessly.
+`LoadStorySceneGraphics` reads scene-config bytes `+2..+5` (`scene_bounds`):
+`wMapScrollMinX`, `wMapScrollMinY`, `wMapWidthTiles`, `wMapHeightTiles`
+(`$0a:$5912`). `InitSceneTileAnimations` (`$0a:$639b`) copies the config
+again and reads from `+8` (`wSceneTileAnimEntries`) a list of 4-byte
+`scene_tile_anim src, count, dest, delay` steps, `$ff` (`scene_tile_anim_loop`)
+closing each animation and `$fe` ending the list. `AdvanceSceneTileAnimation`
+copies `count` tiles from tile `src` of the slot-6 sheet to tile `dest` of VRAM
+bank 1 `$9000`. Six scenes animate (Courtyard, IslandSky, SpecialCourt,
+TournamentCourtyard, PeachsCastle, AwardsCeremony): their slot 6 is a raw
+96-tile `*SceneAnimTiles` sheet, one frame per 16-tile row. The rest have an
+empty list; their slot 6 points at the next scene's config or at bank-end
+padding (`*SceneNoAnimTiles`). Only animation slots 0-2 ever advance
+(`UpdateSceneTileAnimations` stops at slot 3). The fixed `$88`-byte copies
+over-read the 9-42-byte configs, harmlessly.
 
 ### The two 32x32 maps
 
@@ -469,7 +491,7 @@ An NPC is a `map_actor` (position, sprite, script) plus an `NpcScripts`
 record keyed on its slot. The handler is usually a small routine that
 indexes a per-NPC table of text ids by `wMapSceneStage` (`$c2b0`) and calls
 `script_speak`. `wMapSceneStage` is per-location, derived from save flags by
-the init script (`SetupCenterCourtSceneVariant`,
+the init script (`SetupCenterCourtStage`,
 `InitTournamentSiteSceneVariant`, `ComputeIslandOpenRound`, …);
 `wMapSceneStage2` (`$c2b1`) is a second selector some locations use.
 
@@ -483,7 +505,7 @@ bank `$5e` (`Text_MarioWorldMarioMamaMia`-`Text_BobOmbWorldBelowExit`, ids `$308
 `a`, resets the three text-argument queues, applies `wMessageSpeed`, picks a
 voice, and opens a bubble over the actor. The location-name popup uses the
 same engine (`ShowLocationNamePopup`, `$0a:$52f5`, via
-`ShowSpeakerDialogueRestoreBG` with speaker `$83`, closing after 80 frames or
+`ShowSpeakerDialogueKeepOpen` with speaker `$83`, closing after 80 frames or
 any input).
 
 **There is no story bytecode VM.** Story flow is native code in the location
@@ -520,7 +542,7 @@ player in place.
   unrelated to the developer `RunClearStatusSetupMenu` (see
   [Oddities](#oddities)).
 * **OPTIONS** — `wMessageSpeed` and music on/off (persisted with
-  `SetStorySlotFlagA`).
+  `SetStorySlotMusicMuted`).
 * **SAVE** — `SaveStoryReturnPoint` + `SaveStorySlotWithTimer`, then loc
   `$00` entry `$01`. "TO MAIN MENU" does the same without saving.
 
@@ -533,7 +555,7 @@ player in place.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), in the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global |
 | accessors | `rst $20/$28/$30` → `SetGameFlagCmd`/`ClearGameFlagCmd`/`TestGameFlagCmd` (`$00:$255e`/`$256b`/`$2551`, inline operand) over `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$2509`/`$2523`/`$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 166 `FLAG_*` in `include/flag_constants.inc` | 49 `SAVEFLAG_*` in `include/constants/` |
+| names | `FLAG_*` in `include/flag_constants.inc` | `SAVEFLAG_*` in `include/constants/` |
 
 Both use one encoding: flag number = `byte * 8 + bit`; the inline operand is
 `bit << 5` then the byte index; the mask is `$80 >> bit`. `test_flag` leaves
@@ -551,15 +573,14 @@ screen-mode bits that cannot outlive a map transition.
 | `$0c`-`$0d` | equipment owned; ending-credits control bits |
 | `$0e`-`$10` | NPC talked/moved/turned and scene-seen bits (`FLAG_RESTAURANT_NPC12_MOVED_STAGE_*`, `FLAG_REPAIR_COUNTER_*`, …) |
 | `$11`-`$13` | `FLAG_TROPHY_EXP_GROUP_*_TIER_*`: one-time N64 trophy-EXP tiers (`TrophyExpTierFlags`) |
-| `$14`-`$17` | `FLAG_CHEAT_UNLOCK_0`-`_12` (`$14`-`$15`, set in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
+| `$14`-`$17` | `FLAG_UNLOCKED_<char>` (`$14`-`$15`: the 13 story-cast grid unlocks, set by story wins through `RewardUnlockCharFlags` and in every slot by the unlock codes), `FLAG_REACHED_ISLAND_OPEN_*`, `FLAG_STORY_COMPLETE_*`, `FLAG_REACHED_MARIO_WORLD_*`, `FLAG_ISLAND_OPEN_IN_PROGRESS` |
 | `$18`-`$1b` | training-drill clears (Service / Net Game / Stroke match+practice, Tennis Machine, Wall) |
 
 `SAVEFLAG_*` covers what survives a slot erase: character unlocks
-(`SAVEFLAG_UNLOCKED_FAY` … `_ELDEN`, plus flags 20-31 whose number equals the
-character id they unlock), arcade-minigame clears, court unlocks, the
-per-slot option bits (A = music on/off, `SetStorySlotFlagA` from
-`StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotFlagB` from
-`MatchPauseMenu_CameraSelect`), `SAVEFLAG_OPENING_SEEN`, and
+(the six Mario-cast `SAVEFLAG_UNLOCKED_*`), arcade-minigame clears, court unlocks, the
+per-slot option bits (A = music on/off, `SetStorySlotMusicMuted` from
+`StoryPauseMenu_MusicToggle`; B = camera view, `SetStorySlotCourtView` from
+`MatchPauseMenu_CameraSelect`), `SAVEFLAG_GAME_BEATEN`, and
 `SAVEFLAG_DEBUG_TEST_MENU`.
 
 ### The ranking ladder and the tournament arc
@@ -580,10 +601,10 @@ progression flag exists in both.
    set (`$14:$7117`/`$7121`).
 5. Peach's Castle (29) and Special Court (28), gated on
    `FLAG_REACHED_MARIO_WORLD_*`, hosting the Dream Match
-   (`FLAG_WON_DREAM_MATCH_*`, granting `SAVEFLAG_UNLOCKED_SAMMI`/`_ELDEN`).
+   (`FLAG_WON_DREAM_MATCH_*`, granting `SAVEFLAG_UNLOCKED_MARIO`/`_PEACH`).
 
 Stages read back as scene variation: `InitTournamentSiteSceneVariant`
-(`$15:$4271`) and `SetupCenterCourtSceneVariant` (`$11:$41b6`) test the
+(`$15:$4271`) and `SetupCenterCourtStage` (`$11:$41b6`) test the
 bracket flags in descending order to derive `wMapSceneStage`;
 `TournamentInitScript_0f` (`$0f:$620f`) derives the round with
 `ComputeIslandOpenRound` and installs its actor list and `NpcScripts` table
@@ -593,7 +614,7 @@ Win flags are set by each court's own post-match cutscene, not a shared
 match-end routine: it checks `wMatchExitRequest` and `wMatchWinLoseFlag` and
 sets the flag. E.g. on a win `JuniorClassCourtDoublesMatchReturn`
 (`$11:$5d38`) reloads the court at entry `$0d`, and
-`JuniorClassCourtDoublesEntry0dScene` dispatches on
+`JuniorClassCourtDoublesVictoryScene` dispatches on
 `wCurrentMatchIndex` (`$11:$5daa`) to `set_flag
 FLAG_WON_JUNIOR_DOUBLES_RANK_{3,2,1}` (`.wonRank3`/`2`/`1`, `$11:$5db7`/
 `$5ec0`/`$5fbd`). Arcade-minigame clears go to SRAM instead: `SetMinigameClearFlag`
@@ -619,7 +640,7 @@ macro). High byte `wCurrentMatchList` = category (0 singles, 1 doubles,
 `SinglesMatchSettingsTable_0a` (`$0a:$4ab2`) or `DoublesMatchSettingsTable_0a`
 (`$0a:$4b2f`), 25 five-byte records each, by `low byte * 5`: `wGameMode`,
 `wMatchOpponentChar`, `wCurrentlyUsedCourt`, a packed sets/games byte,
-`wMatchBGM`. `FLAG_DEBUG_KEEP_MATCH_SETTINGS` replaces the sets/games byte
+`wMatchBGM`. `FLAG_DEBUG_SHORT_MATCH` replaces the sets/games byte
 with one set of two games.
 
 `RunStoryMatch` (`$0a:$4962`) fades out, calls `AssignStoryMatchCharacters`
@@ -642,18 +663,20 @@ location load. Match internals: [`match_engine.md`](match_engine.md).
 walks `EndingCutsceneLocationList` (`$0a:$6e40`), 21 (location, entry point)
 pairs: the twelve `$27` "End*" rooms plus Island Sky, Center Court, Peach's
 Castle and Special Court. After each `RunStoryLocation`, unless
-`FLAG_ENDING_CREDITS_PENDING` was raised, it freezes the actors, fades to
-grayscale and plays `PlayScrollingStoryCutscene` (bank `$03`).
+`FLAG_ENDING_SKIP_STAFF_PAGE` was raised, it freezes the actors, fades to
+sepia and shows the next staff page, `ShowEndingCreditsStaffPage` (bank `$03`).
 `ShowFinalCreditsCard` closes the sequence. The index is read with `ld a,
 [wStoryCharacterSlot]`; the `byte0 == 0` branch at `$0a:$6ea4`-`$6eab`
 computes `sprite * 2` and discards it, and no record has a zero first byte.
 
-`RunStorySceneByMode` (`$18:$7617`): `b` picks `PlayScreenSequence0/1/2`, `c`
-the artwork. Sequence 1 is the Awards-Ceremony congratulations (from
-`$0f:$4e91`/`$556b`, gender-derived key); sequence 2 the ending/Dream-Match
-epilogue (sets `SAVEFLAG_OPENING_SEEN`). Bank `$03` owns the scrolling
-caption screen (`RunScrollingTextScreen`, `$03:$59c5`) and the credits
-montage (`PlayScrollingStoryCutscene`).
+`RunStorySceneByMode` (`$18:$7617`): `b` picks the scene, `c` the artwork.
+`PlayTravelingTeamVictoryScene` (from bank `$13`) ends on TO BE CONTINUED;
+`PlayAwardsCeremonyScene` (from `$0f:$4e91`/`$556b`, gender-derived key) runs
+the credits caption scroll and its own TO BE CONTINUED; `PlayDreamMatchEpilogueScene`
+(from bank `$0e`) runs the ending credits on the first clear, then the
+champion-medal screen with "The End", and sets `SAVEFLAG_GAME_BEATEN`. Bank
+`$03` owns the scrolling staff roll (`RunStaffCreditsRoll`,
+`$03:$59c5`) and the credits montage's staff pages (`ShowEndingCreditsStaffPage`).
 
 ## The character record
 
@@ -678,8 +701,8 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$0c | palette index (`GetCharPaletteIndex`) |
 | +$0d | gender (0 male, 1 female) |
 | +$0e | left-handed flag |
-| +$0f-$1e | AI / physics attributes (reach windows, smash and dive speeds, reaction delays, swing word) |
-| +$1f | CPU difficulty (0 easy - 3 intense), the AI's serve style on court |
+| +$0f-$1e | AI / physics attributes (home-position strategy, reach windows, smash and dive speeds, shot-trait bits, reaction delays) |
+| +$1f | AI difficulty (0 easy - 3 intense; 4-8 drill-feeder rows) |
 | +$18 | level for player characters (1-99, capped `$63`), class tier for roster NPCs |
 | +$20-$2a | eleven stat bars, 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
 | +$2b | speed bonus, added to Speed by `LoadCharacterAttributes` |
@@ -712,9 +735,10 @@ bar  = count of thresholds raw clears (0-9)     ; LookupStatBarLevel, 9-entry si
 ```
 
 `record[+$0b] & 3` picks one of four 113-byte archetype tables via
-`StatArchetypePtrs_02` (`StatArchetype0_02`-`3_02`, laid out as `STATARCH_*`):
+`StatArchetypePtrs_02` (`AlexStatArchetype_02`-`KateStatArchetype_02` by hero
+id, laid out as `STATARCH_*`):
 a tier byte, the 12-byte template copied to `+$30`-`+$3b` at build time,
-eleven `stat_thresholds` rows, then (level, icon) modifier pairs to a `$ff`
+eleven `stat_thresholds` rows, then (level, trait) pairs OR'd into the shot traits, to a `$ff`
 (every archetype has none).
 
 | trainable level | feeds |
@@ -729,7 +753,7 @@ ahead of the overall level: growth is a budget across categories.
 
 It then copies `+$30`-`+$37` to `+$10`-`+$17` and, **only when the record
 base's low byte is zero** (`$c800`, `$c900`, `$ca00`; not
-`$c840`/`$c940`/`$ca40`/`$ca80`/`$cac0`), calls `ApplyStatModifiers`
+`$c840`/`$c940`/`$ca40`/`$ca80`/`$cac0`), calls `ApplyEquipmentStatDeltas`
 (`$02:$468e`), so equipment bonuses apply to the main character only. That
 adds a signed per-stat row for each nibble of `+$3c` from
 `RacketStatDeltas_02` (7 rows) and `ShoeStatDeltas_02` (`$02:$475f`, 3 rows),
@@ -754,8 +778,8 @@ rows, 99 levels), `$ff,$ff,$ff`-terminated, indexed by `(level-1)*3`, read by
 `GetExpProgressInCurrentLevel` and `HasReachedNextLevelExp`. The two
 `GetExp*` readers use only the low two bytes, which suffices since the
 level-99 requirement is under 65536. Awards are staged per source
-(`wPendingExpStory`, `wPendingExpTrophy`, `wPendingExpExhibition`,
-`wPendingExpLinked`) and applied by `ApplyPendingExpAwards` (`$1e:$6afd`) on
+(`wPendingExpExhibition`, `wPendingExpLinked`, and the N64 transfer words
+`wN64TransferMainExp`/`wN64TransferPartnerExp`, which no ROM code fills) and applied by `ApplyPendingExpAwards` (`$1e:$6afd`) on
 the next slot load; `ScaleExpByPlayerLevel` averages the two story records'
 `+$18` and scales by x1, x1.5, x2 … x3.5 in steps of 10 levels, x4 from 60.
 
@@ -765,7 +789,7 @@ the next slot load; `ScaleExpByPlayerLevel` averages the two story records'
 slots. `GenerateUniqueStorySaveSignature` (`src/engine/story/story_02.asm`)
 seeds it from `wStoryRandomBytes` and re-rolls until
 `CheckStorySignatureCollision` passes against the cached per-slot signatures
-(`CacheStorySlotSummaries` puts each at `$d400 + slot*4`); all-zero counts as
+(`CacheStorySlotSignatures` puts each at `$d400 + slot*4`); all-zero counts as
 a collision. Called once, on new game (`$10:$5076`).
 
 The image `$c800`-`$caff` is saved as block `2N` for slot *N* plus a backup at

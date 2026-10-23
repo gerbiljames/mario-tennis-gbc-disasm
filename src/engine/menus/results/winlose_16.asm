@@ -140,20 +140,20 @@ LoadResultPortraitSlot:
 	push de ; $608d
 	ld a, c ; $608e
 	cp $02 ; $608f
-	jr z, .fixedVariant ; $6091
+	jr z, .opponentSide ; $6091
 	cp $03 ; $6093
-	jr z, .fixedVariant ; $6095
-	jr .checkOutcome ; $6097
-.fixedVariant:
+	jr z, .opponentSide ; $6095
+	jr .playerSide ; $6097
+.opponentSide:
 	ld c, $00 ; $6099
 	jr .decompress ; $609b
-.checkOutcome:
+.playerSide:
 	ld a, [wResultScreenMode] ; $609d
 	or a ; $60a0
-	jr z, .winner ; $60a1
+	jr z, .winOrLosePose ; $60a1
 	ld c, $00 ; $60a3
 	jr .decompress ; $60a5
-.winner:
+.winOrLosePose:
 	ld c, $01 ; $60a7
 	ld a, [wMatchWinLoseFlag] ; $60a9
 	cp WINLOSE_LOSE ; $60ac
@@ -174,10 +174,10 @@ Unused_16_StubRet:
 DecompressResultPortrait:
 	ld a, c ; $60c0
 	or a ; $60c1
-	jr z, .compare ; $60c2
+	jr z, .neutralPose ; $60c2
 	call DecompressWinLosePortraitVariant ; $60c4
 	ret ; $60c7
-.compare:
+.neutralPose:
 	cp $20 ; $60c8
 	jr c, .decompressCharacterPortrait ; $60ca
 	ld a, b ; $60cc
@@ -207,30 +207,30 @@ DecompressWinLosePortraitVariant:
 	ret ; $60f0
 WinLosePortraitVariantTable_16:
 	; $60f1, 16 bytes (lz_ptr_table)
-	dw WinLosePortrait0 ; 0
-	dw WinLosePortrait1 ; 1
-	dw WinLosePortrait2 ; 2
-	dw WinLosePortrait3 ; 3
-	dw WinLosePortrait4 ; 4
-	dw WinLosePortrait5 ; 5
-	dw WinLosePortrait6 ; 6
-	dw WinLosePortrait7 ; 7
-WinLosePortrait0:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait0.bin" ; $6101, 275 bytes
-WinLosePortrait1:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait1.bin" ; $6214, 257 bytes
-WinLosePortrait2:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait2.bin" ; $6315, 269 bytes
-WinLosePortrait3:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait3.bin" ; $6422, 276 bytes
-WinLosePortrait4:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait4.bin" ; $6536, 254 bytes
-WinLosePortrait5:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait5.bin" ; $6634, 243 bytes
-WinLosePortrait6:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait6.bin" ; $6727, 291 bytes
-WinLosePortrait7:
-	INCBIN "data/engine/menus/results/lz_WinLosePortrait7.bin" ; $684a, 267 bytes
+	dw AlexWinPortrait ; 0
+	dw AlexLosePortrait ; 1
+	dw NinaWinPortrait ; 2
+	dw NinaLosePortrait ; 3
+	dw HarryWinPortrait ; 4
+	dw HarryLosePortrait ; 5
+	dw KateWinPortrait ; 6
+	dw KateLosePortrait ; 7
+AlexWinPortrait:
+	INCBIN "data/engine/menus/results/lz_AlexWinPortrait.bin" ; $6101, 275 bytes
+AlexLosePortrait:
+	INCBIN "data/engine/menus/results/lz_AlexLosePortrait.bin" ; $6214, 257 bytes
+NinaWinPortrait:
+	INCBIN "data/engine/menus/results/lz_NinaWinPortrait.bin" ; $6315, 269 bytes
+NinaLosePortrait:
+	INCBIN "data/engine/menus/results/lz_NinaLosePortrait.bin" ; $6422, 276 bytes
+HarryWinPortrait:
+	INCBIN "data/engine/menus/results/lz_HarryWinPortrait.bin" ; $6536, 254 bytes
+HarryLosePortrait:
+	INCBIN "data/engine/menus/results/lz_HarryLosePortrait.bin" ; $6634, 243 bytes
+KateWinPortrait:
+	INCBIN "data/engine/menus/results/lz_KateWinPortrait.bin" ; $6727, 291 bytes
+KateLosePortrait:
+	INCBIN "data/engine/menus/results/lz_KateLosePortrait.bin" ; $684a, 267 bytes
 DecompressCharacterPortrait:
 	ld a, b ; $6955
 	and $1f ; $6956

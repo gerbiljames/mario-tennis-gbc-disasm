@@ -7,7 +7,7 @@ RunMainMenu:
 	xor a ; $55de
 	ld [wCheatCodeLength], a ; $55df
 	call LoadMainMenuGfx ; $55e2
-	farcall InitMenuBgScroll ; $55e5
+	farcall InitMenuTitleScroller ; $55e5
 	ld b, $01 ; $55e8
 	ld c, $01 ; $55ea
 	farcall LoadMenuSpritePalettePair ; $55ec
@@ -16,9 +16,9 @@ RunMainMenu:
 	ld c, a ; $55f4
 	call SetMenuCursorFromIndex_3b ; $55f5
 	ld a, $00 ; $55f8
-	ld [wMenuBgScrollTile + 1], a ; $55fa
+	ld [wMenuTitleScrollTile + 1], a ; $55fa
 	ld a, $01 ; $55fd
-	ld [wMenuBgScrollAttr + 1], a ; $55ff
+	ld [wMenuTitleScrollAttr + 1], a ; $55ff
 	wram_bank WRAM_SCREEN ; $5602
 	ld a, [wMenuSlideDirection] ; $5608
 	ld b, a ; $560b
@@ -31,7 +31,7 @@ RunMainMenu:
 .loop:
 	call AdvanceFrame ; $5626
 	farcall UpdateCheatCodeEntry ; $5629
-	ldh a, [hInputPressed] ; $562c
+	ldh a, [hInputRepeat] ; $562c
 	ld [wMenuInputPressed], a ; $562e
 	ld b, $03 ; $5631
 	ld c, $03 ; $5633
@@ -45,7 +45,7 @@ RunMainMenu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5642
 	bit PADB_A, a ; $5645
-	jr nz, .clearFrameTasks ; $5647
+	jr nz, .pressedA ; $5647
 	bit PADB_B, a ; $5649
 	jr nz, .playCancelSfx ; $564b
 	bit PADB_SELECT, a ; $564d
@@ -53,14 +53,14 @@ RunMainMenu:
 	jr .loop ; $5651
 .pressedSelect:
 	jr .loop ; $5653
-.clearFrameTasks:
+.pressedA:
 	ld a, $01 ; $5655
 	ld [wCheatUnlockTriggered], a ; $5657
 	sound SFX_MENU_SELECT ; $565a
 	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
 	set B_IE_TIMER, [hl] ; $5662
-	ld b, $01 ; $5664
+	ld b, MENUSLIDE_FORWARD ; $5664
 	call MainMenuSlideOut ; $5666
 	ld a, [wMenuCursorX] ; $5669
 	cp $02 ; $566c
@@ -87,7 +87,7 @@ RunMainMenu:
 	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
 	set B_IE_TIMER, [hl] ; $56a1
-	ld b, $00 ; $56a3
+	ld b, MENUSLIDE_BACK ; $56a3
 	call MainMenuSlideOut ; $56a5
 	ld a, MENUSLIDE_BACK ; $56a8
 	ld [wMenuSlideDirection], a ; $56aa
@@ -111,7 +111,7 @@ LoadMainMenuGfx:
 .loop:
 	ld a, c ; $56cf
 	add a ; $56d0
-	ld hl, MainMenuLabelTilePtrs ; $56d1
+	ld hl, MainMenuIconTilePtrs ; $56d1
 	add_hl_a ; $56d4
 	ld a, [hl+] ; $56d9
 	ld h, [hl] ; $56da
@@ -126,7 +126,7 @@ LoadMainMenuGfx:
 	pop de ; $56e7
 	pop bc ; $56e8
 	pop af ; $56e9
-	ld hl, MainMenuLabelTileVramDests ; $56ea
+	ld hl, MainMenuIconTileVramDests ; $56ea
 	ld a, c ; $56ed
 	add a ; $56ee
 	add_hl_a ; $56ef
@@ -175,38 +175,38 @@ LoadMainMenuGfx:
 	ld de, vTiles1 tile $70 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
-	ld b, TILEBLOCK_MainMenuGfx0 ; $5761
-	ld c, MainMenuGfx0_SIZE / 16 ; $5763
+	ld b, TILEBLOCK_MarioTourLabelGfx ; $5761
+	ld c, MarioTourLabelGfx_SIZE / 16 ; $5763
 	ld de, vTiles0 + VRAM_BANK1 ; $5765
 	farcall LoadCompressedTileBlock ; $5768
 	call AdvanceFrame ; $576b
-	ld b, TILEBLOCK_SharedMenuGfx29 ; $576e
-	ld c, SharedMenuGfx29_SIZE / 16 ; $5770
+	ld b, TILEBLOCK_ExhibitionLabelGfx ; $576e
+	ld c, ExhibitionLabelGfx_SIZE / 16 ; $5770
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5772
 	farcall LoadCompressedTileBlock ; $5775
 	call AdvanceFrame ; $5778
-	ld b, TILEBLOCK_SharedMenuGfx30 ; $577b
-	ld c, SharedMenuGfx30_SIZE / 16 ; $577d
+	ld b, TILEBLOCK_MarioMiniGamesLabelGfx ; $577b
+	ld c, MarioMiniGamesLabelGfx_SIZE / 16 ; $577d
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $577f
 	farcall LoadCompressedTileBlock ; $5782
 	call AdvanceFrame ; $5785
-	ld b, TILEBLOCK_MainMenuGfx1 ; $5788
-	ld c, MainMenuGfx1_SIZE / 16 ; $578a
+	ld b, TILEBLOCK_LinkedPlayLabelGfx ; $5788
+	ld c, LinkedPlayLabelGfx_SIZE / 16 ; $578a
 	ld de, vTiles0 tile $32 + VRAM_BANK1 ; $578c
 	farcall LoadCompressedTileBlock ; $578f
 	call AdvanceFrame ; $5792
-	ld b, TILEBLOCK_MainMenuGfx2 ; $5795
-	ld c, MainMenuGfx2_SIZE / 16 ; $5797
+	ld b, TILEBLOCK_StatusLabelGfx ; $5795
+	ld c, StatusLabelGfx_SIZE / 16 ; $5797
 	ld de, vTiles0 tile $42 + VRAM_BANK1 ; $5799
 	farcall LoadCompressedTileBlock ; $579c
 	call AdvanceFrame ; $579f
-	ld b, TILEBLOCK_MainMenuGfx3 ; $57a2
-	ld c, MainMenuGfx3_SIZE / 16 ; $57a4
+	ld b, TILEBLOCK_DictionaryLabelGfx ; $57a2
+	ld c, DictionaryLabelGfx_SIZE / 16 ; $57a4
 	ld de, vTiles0 tile $52 + VRAM_BANK1 ; $57a6
 	farcall LoadCompressedTileBlock ; $57a9
 	call AdvanceFrame ; $57ac
-	ld b, TILEBLOCK_MainMenuGfx4 ; $57af
-	ld c, MainMenuGfx4_SIZE / 16 ; $57b1
+	ld b, TILEBLOCK_SavedDataLabelGfx ; $57af
+	ld c, SavedDataLabelGfx_SIZE / 16 ; $57b1
 	ld de, vTiles0 tile $62 + VRAM_BANK1 ; $57b3
 	farcall LoadCompressedTileBlock ; $57b6
 	call AdvanceFrame ; $57b9
@@ -218,21 +218,21 @@ LoadMainMenuGfx:
 	ld c, $10 ; $57c8
 	farcall LoadIndexedPalette ; $57ca
 	call AdvanceFrame ; $57cd
-	ld b, TILEBLOCK_MainMenuGfx5Alias4 ; $57d0
-	ld c, MainMenuGfx5_SIZE / 16 ; $57d2
+	ld b, TILEBLOCK_MainMenuTitleGfx ; $57d0
+	ld c, MainMenuTitleGfx_SIZE / 16 ; $57d2
 	ld de, vTiles0 ; $57d4
 	farcall LoadCompressedTileBlock ; $57d7
 	pop_wram_bank ; $57da
 	ret ; $57df
-MainMenuLabelTilePtrs:
+MainMenuIconTilePtrs:
 	; $57e0, 6 slot words
-	dslot DataPtr_ModeSelectLabelTiles0 ; record 0
-	dslot DataPtr_ModeSelectLabelTiles1 ; record 1
-	dslot DataPtr_ModeSelectLabelTiles2 ; record 2
-	dslot DataPtr_ModeSelectLabelTiles3 ; record 3
-	dslot DataPtr_ModeSelectLabelTiles4 ; record 4
-	dslot DataPtr_ModeSelectLabelTiles5 ; record 5
-MainMenuLabelTileVramDests:
+	dslot DataPtr_ExhibitionModeIconTiles ; record 0
+	dslot DataPtr_MarioFaceIconTiles ; record 1
+	dslot DataPtr_LinkedPlayIconTiles ; record 2
+	dslot DataPtr_StatusIconTiles ; record 3
+	dslot DataPtr_DictionaryIconTiles ; record 4
+	dslot DataPtr_SavedDataIconTiles ; record 5
+MainMenuIconTileVramDests:
 	; $57ec, 20 bytes (bytes:2)
 	dw vTiles1 + VRAM_BANK1 ; 0x00
 	dw vTiles1 tile $10 + VRAM_BANK1 ; 0x02
@@ -307,7 +307,7 @@ MainMenuSlideOut:
 	jr nz, .slideBackLoop ; $5860
 	ret ; $5862
 MainMenuCursorSpriteTask:
-	farcall TickMenuBgScroll ; $5863
+	farcall TickMenuTitleScroller ; $5863
 	ld c, $03 ; $5866
 	call GetMenuCursorIndex_3b ; $5868
 	push af ; $586b
@@ -324,7 +324,7 @@ MainMenuCursorSpriteTask:
 	ld e, a ; $5882
 	farcall ApplySpriteBobOffset ; $5883
 	pop af ; $5886
-	ld hl, MainMenuCursorTemplatePtrs ; $5887
+	ld hl, MainMenuLabelTemplatePtrs ; $5887
 	add_hl_a ; $588a
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
@@ -344,22 +344,22 @@ MainMenuCursorSpriteTask:
 	ld e, l ; $58ac
 	add d ; $58ad
 	ld d, a ; $58ae
-	ld hl, MainMenuCursorSpriteTask_SpriteTemplate ; $58af
+	ld hl, MainMenuLabelTailTemplate ; $58af
 	sprite_attr_tile OAM_BANK1, $72 ; $58b2
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
-MainMenuCursorTemplatePtrs:
+MainMenuLabelTemplatePtrs:
 	; $58ba, 18 bytes (records:2)
-	dw MainMenuCursorTemplate0 ; record 0
-	dw MainMenuCursorTemplate1 ; record 1
-	dw MainMenuCursorTemplate0 ; record 2
-	dw MainMenuCursorTemplate0 ; record 3
-	dw MainMenuCursorTemplate0 ; record 4
-	dw MainMenuCursorTemplate0 ; record 5
-	dw MainMenuCursorTemplate0 ; record 6
-	dw MainMenuCursorTemplate0 ; record 7
-	dw MainMenuCursorTemplate0 ; record 8
-MainMenuCursorTemplate0:
+	dw MainMenuLabelTemplate ; record 0
+	dw MainMenuMiniGamesLabelTemplate ; record 1
+	dw MainMenuLabelTemplate ; record 2
+	dw MainMenuLabelTemplate ; record 3
+	dw MainMenuLabelTemplate ; record 4
+	dw MainMenuLabelTemplate ; record 5
+	dw MainMenuLabelTemplate ; record 6
+	dw MainMenuLabelTemplate ; record 7
+	dw MainMenuLabelTemplate ; record 8
+MainMenuLabelTemplate:
 	; $58cc, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -370,7 +370,7 @@ MainMenuCursorTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-MainMenuCursorTemplate1:
+MainMenuMiniGamesLabelTemplate:
 	; $58ed, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -382,7 +382,7 @@ MainMenuCursorTemplate1:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-MainMenuCursorSpriteTask_SpriteTemplate:
+MainMenuLabelTailTemplate:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -545,24 +545,24 @@ LoadMainMenuItemPalette:
 	ret ; $5a69
 MainMenuItemPalettePtrs:
 	; $5a6a, 18 bytes (records:2)
-	dw MainMenuItemPalette0 ; record 0
-	dw MainMenuItemPalette2 ; record 1
-	dw MainMenuItemPalette3 ; record 2
-	dw MainMenuItemPalette0 ; record 3
-	dw MainMenuItemPalette0 ; record 4
-	dw MainMenuItemPalette0 ; record 5
-	dw MainMenuItemPalette4 ; record 6
-	dw MainMenuItemPalette1 ; record 7
-	dw MainMenuItemPalette5 ; record 8
-MainMenuItemPalette0:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette0.asm" ; $5a7c, 8 bytes (palettes)
-MainMenuItemPalette1:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette1.asm" ; $5a84, 8 bytes (palettes)
-MainMenuItemPalette2:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette2.asm" ; $5a8c, 8 bytes (palettes)
-MainMenuItemPalette3:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette3.asm" ; $5a94, 8 bytes (palettes)
-MainMenuItemPalette4:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette4.asm" ; $5a9c, 8 bytes (palettes)
-MainMenuItemPalette5:
-	INCLUDE "data/engine/menus/main_menu/MainMenuItemPalette5.asm" ; $5aa4, 8 bytes (palettes)
+	dw MainMenuExhibitionPalette ; record 0
+	dw MainMenuMiniGamesPalette ; record 1
+	dw MainMenuLinkedPlayPalette ; record 2
+	dw MainMenuExhibitionPalette ; record 3
+	dw MainMenuExhibitionPalette ; record 4
+	dw MainMenuExhibitionPalette ; record 5
+	dw MainMenuStatusPalette ; record 6
+	dw MainMenuDictionaryPalette ; record 7
+	dw MainMenuSavedDataPalette ; record 8
+MainMenuExhibitionPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuExhibitionPalette.asm" ; $5a7c, 8 bytes (palettes)
+MainMenuDictionaryPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuDictionaryPalette.asm" ; $5a84, 8 bytes (palettes)
+MainMenuMiniGamesPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuMiniGamesPalette.asm" ; $5a8c, 8 bytes (palettes)
+MainMenuLinkedPlayPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuLinkedPlayPalette.asm" ; $5a94, 8 bytes (palettes)
+MainMenuStatusPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuStatusPalette.asm" ; $5a9c, 8 bytes (palettes)
+MainMenuSavedDataPalette:
+	INCLUDE "data/engine/menus/main_menu/MainMenuSavedDataPalette.asm" ; $5aa4, 8 bytes (palettes)

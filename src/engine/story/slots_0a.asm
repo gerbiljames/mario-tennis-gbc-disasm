@@ -3,7 +3,7 @@
 	farptr WaitScriptFrames ; $4004
 	farptr ScriptRespawnLocationActors ; $4006
 	farptr ScriptShowSpeakerDialogue ; $4008
-	farptr ScriptShowSpeakerDialogueRestoreBG ; $400a
+	farptr ScriptShowSpeakerDialogueKeepOpen ; $400a
 	farptr ScriptCloseDialogueWindow ; $400c
 	farptr InitDialogueTextCursor ; $400e
 	farptr AdvanceDialogueTextCursor ; $4010
@@ -34,7 +34,7 @@
 	farptr ScriptSetActorJumpVelocity ; $4042
 	farptr ScriptWaitActorJumpDone ; $4044
 	farptr RunMenuFromText ; $4046
-	farptr SetActorActive ; $4048
+	farptr ScriptSetActorMode ; $4048
 	farptr InitStoryMatchSettings ; $404a
 	farptr RunStoryMatch ; $404c
 	farptr RestoreOverworldAfterMatch ; $404e

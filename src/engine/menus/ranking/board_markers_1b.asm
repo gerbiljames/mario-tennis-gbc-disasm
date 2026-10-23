@@ -1,26 +1,26 @@
-HighlightDoublesRankingRows:
-	ld a, [wRankingBoardPlayerRow] ; $5829
+DrawDoublesRoundBracketLines:
+	ld a, [wRankingBoardRound] ; $5829
 	or a ; $582c
 	ret z ; $582d
 	cp $01 ; $582e
 	ret z ; $5830
 	cp $02 ; $5831
-	jr nz, .otherRow ; $5833
+	jr nz, .laterRound ; $5833
 	ld b, $01 ; $5835
-	call HighlightDoublesRankingRow ; $5837
+	call DrawDoublesBracketLine ; $5837
 	ld b, $02 ; $583a
-	call HighlightDoublesRankingRow ; $583c
+	call DrawDoublesBracketLine ; $583c
 	ret ; $583f
-.otherRow:
+.laterRound:
 	ld b, $05 ; $5840
-	call HighlightDoublesRankingRow ; $5842
+	call DrawDoublesBracketLine ; $5842
 	ret ; $5845
-HighlightDoublesRankingRow:
+DrawDoublesBracketLine:
 	ld a, b ; $5846
 	or a ; $5847
 	ret z ; $5848
 	add a ; $5849
-	ld hl, RankingMarkerHandlers_1b ; $584a
+	ld hl, DoublesBracketLineHandlers ; $584a
 	add_hl_a ; $584d
 	ld a, [hl+] ; $5852
 	ld h, [hl] ; $5853
@@ -28,45 +28,45 @@ HighlightDoublesRankingRow:
 	jp hl ; $5855
 StubNop_1b_2:
 	ret ; $5856
-RankingMarkerHandlers_1b:
-	dw DrawDoublesRankingMarker0 ; $5857 jumptable
-	dw DrawDoublesRankingMarker0 ; $5859 jumptable
-	dw DrawDoublesRankingMarker2 ; $585b jumptable
-	dw DrawDoublesRankingMarker3 ; $585d jumptable
-	dw DrawDoublesRankingMarker4 ; $585f jumptable
-	dw DrawDoublesRankingMarker5 ; $5861 jumptable
-	dw DrawDoublesRankingMarker6 ; $5863 jumptable
-DrawDoublesRankingMarker0:
+DoublesBracketLineHandlers:
+	dw DrawDoublesBracketLine0 ; $5857 jumptable
+	dw DrawDoublesBracketLine0 ; $5859 jumptable
+	dw DrawDoublesBracketLine2 ; $585b jumptable
+	dw DrawDoublesBracketLine3 ; $585d jumptable
+	dw DrawDoublesBracketLine4 ; $585f jumptable
+	dw DrawDoublesBracketLine5 ; $5861 jumptable
+	dw DrawDoublesBracketLine6 ; $5863 jumptable
+DrawDoublesBracketLine0:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5865
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5868
 	rect_size $04, $04 ; $586b
 	farcall CopyTilemapRect ; $586f
 	jp StubNop_1b_2 ; $5872
-DrawDoublesRankingMarker2:
+DrawDoublesBracketLine2:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5875
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5878
 	rect_size $04, $04 ; $587b
 	farcall CopyTilemapRect ; $587f
 	jp StubNop_1b_2 ; $5882
-DrawDoublesRankingMarker3:
+DrawDoublesBracketLine3:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $5885
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5888
 	rect_size $04, $07 ; $588b
 	farcall CopyTilemapRect ; $588f
 	jp StubNop_1b_2 ; $5892
-DrawDoublesRankingMarker4:
+DrawDoublesBracketLine4:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $5895
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5898
 	rect_size $04, $07 ; $589b
 	farcall CopyTilemapRect ; $589f
 	jp StubNop_1b_2 ; $58a2
-DrawDoublesRankingMarker5:
+DrawDoublesBracketLine5:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $58a5
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58a8
 	rect_size $08, $07 ; $58ab
 	farcall CopyTilemapRect ; $58af
 	jp StubNop_1b_2 ; $58b2
-DrawDoublesRankingMarker6:
+DrawDoublesBracketLine6:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 16 ; $58b5
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58b8
 	rect_size $08, $07 ; $58bb
@@ -102,7 +102,7 @@ PushRankingBoardTilemapRows:
 	call AdvanceFrame ; $590d
 	ret ; $5910
 	ret ; $5911
-RankingBoardAnimTask_1b:
+RankingCongratsSlideTask:
 	ld a, [wRankingBannerAnimFrame] ; $5912
 	or a ; $5915
 	jr nz, .advance ; $5916
@@ -110,13 +110,13 @@ RankingBoardAnimTask_1b:
 	ld [wRankingBannerX], a ; $591a
 .advance:
 	ld a, [wRankingBannerAnimFrame] ; $591d
-	ld hl, RankingBoardAnimTaskTable ; $5920
+	ld hl, RankingCongratsSlideXDeltas ; $5920
 	add_hl_a ; $5923
 	ld b, [hl] ; $5928
 	ld a, [wRankingBannerX] ; $5929
 	add b ; $592c
 	ld [wRankingBannerX], a ; $592d
-	ld hl, RankingBoardAnimTask_1b_SpriteTemplate ; $5930
+	ld hl, RankingCongratsTemplate ; $5930
 	ld e, $40 ; $5933
 	ld a, [wRankingBoardDoubles] ; $5935
 	or a ; $5938
@@ -132,11 +132,11 @@ RankingBoardAnimTask_1b:
 	ld [wRankingBannerAnimFrame], a ; $594c
 	cp $87 ; $594f
 	jr nz, .done ; $5951
-	ld hl, RankingBoardAnimTask_1b ; $5953
+	ld hl, RankingCongratsSlideTask ; $5953
 	call UnregisterFrameTask ; $5956
 .done:
 	ret ; $5959
-RankingBoardAnimTask_1b_SpriteTemplate:
+RankingCongratsTemplate:
 	; $595a, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -147,9 +147,9 @@ RankingBoardAnimTask_1b_SpriteTemplate:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-RankingBoardAnimTaskTable:
-	INCLUDE "data/engine/menus/ranking/RankingBoardAnimTaskTable.asm" ; $597b, 137 bytes (bytes:16)
-RankingCursorBobTask:
+RankingCongratsSlideXDeltas:
+	INCLUDE "data/engine/menus/ranking/RankingCongratsSlideXDeltas.asm" ; $597b, 137 bytes (bytes:16)
+RankingGameOverBobTask:
 	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07
 	jr nz, .setBobOffset ; $5a08
@@ -161,11 +161,11 @@ RankingCursorBobTask:
 	ld_xy de, $30, $50 ; $5a13
 .applySpriteBobOffset:
 	farcall ApplySpriteBobOffset ; $5a16
-	ld hl, RankingCursorBobTask_SpriteTemplate ; $5a19
+	ld hl, RankingGameOverTemplate ; $5a19
 	sprite_tile_attr $20, OAM_BANK1 | 5 ; $5a1c
 	call QueueSpriteTemplate ; $5a20
 	ret ; $5a23
-RankingCursorBobTask_SpriteTemplate:
+RankingGameOverTemplate:
 	; $5a24, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -209,7 +209,7 @@ QueueRankingMarkerSprite:
 	pop bc ; $5a6b
 	pop af ; $5a6c
 	ret ; $5a6d
-StartRankingMarkerAnim0:
+StartRankingMarkerSlideX0:
 	ld b, h ; $5a6e
 	ld c, l ; $5a6f
 	ld hl, wRankingAnimSlotPtrs ; $5a70
@@ -222,9 +222,9 @@ StartRankingMarkerAnim0:
 	ld [hl], d ; $5a7b
 	xor a ; $5a7c
 	ld [wRankingAnimStepIndex], a ; $5a7d
-	frame_task UpdateScriptedOffsetChannel0 ; $5a80
+	frame_task UpdateRankingMarkerSlideX0 ; $5a80
 	ret ; $5a88
-StartRankingMarkerAnim1:
+StartRankingMarkerSlideX1:
 	ld b, h ; $5a89
 	ld c, l ; $5a8a
 	ld hl, wRankingAnimSlotPtrs + 2 ; $5a8b
@@ -237,9 +237,9 @@ StartRankingMarkerAnim1:
 	ld [hl], d ; $5a96
 	xor a ; $5a97
 	ld [wRankingAnimStepIndex + 1], a ; $5a98
-	frame_task UpdateScriptedOffsetChannel1 ; $5a9b
+	frame_task UpdateRankingMarkerSlideX1 ; $5a9b
 	ret ; $5aa3
-StartRankingMarkerAnim2:
+StartRankingMarkerSlideY0:
 	ld b, h ; $5aa4
 	ld c, l ; $5aa5
 	ld hl, wRankingAnimSlotPtrs + 4 ; $5aa6
@@ -252,9 +252,9 @@ StartRankingMarkerAnim2:
 	ld [hl], d ; $5ab1
 	xor a ; $5ab2
 	ld [wRankingAnimStepIndex + 2], a ; $5ab3
-	frame_task UpdateScriptedOffsetChannel2 ; $5ab6
+	frame_task UpdateRankingMarkerSlideY0 ; $5ab6
 	ret ; $5abe
-StartRankingMarkerAnim3:
+StartRankingMarkerSlideY1:
 	ld b, h ; $5abf
 	ld c, l ; $5ac0
 	ld hl, wRankingAnimSlotPtrs + 6 ; $5ac1
@@ -267,9 +267,9 @@ StartRankingMarkerAnim3:
 	ld [hl], d ; $5acc
 	xor a ; $5acd
 	ld [wRankingAnimStepIndex + 3], a ; $5ace
-	frame_task UpdateScriptedOffsetChannel3 ; $5ad1
+	frame_task UpdateRankingMarkerSlideY1 ; $5ad1
 	ret ; $5ad9
-UpdateScriptedOffsetChannel0:
+UpdateRankingMarkerSlideX0:
 	ld hl, wRankingAnimScriptPtrs ; $5ada
 	ld a, [hl+] ; $5add
 	ld d, [hl] ; $5ade
@@ -292,7 +292,7 @@ UpdateScriptedOffsetChannel0:
 	ld [hl], a ; $5af6
 	jr .nextStep ; $5af7
 .scriptEnd:
-	ld hl, UpdateScriptedOffsetChannel0 ; $5af9
+	ld hl, UpdateRankingMarkerSlideX0 ; $5af9
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
 .nextStep:
@@ -300,7 +300,7 @@ UpdateScriptedOffsetChannel0:
 	inc a ; $5b03
 	ld [wRankingAnimStepIndex], a ; $5b04
 	ret ; $5b07
-UpdateScriptedOffsetChannel1:
+UpdateRankingMarkerSlideX1:
 	ld hl, wRankingAnimScriptPtrs + 2 ; $5b08
 	ld a, [hl+] ; $5b0b
 	ld d, [hl] ; $5b0c
@@ -323,7 +323,7 @@ UpdateScriptedOffsetChannel1:
 	ld [hl], a ; $5b24
 	jr .nextStep ; $5b25
 .scriptEnd:
-	ld hl, UpdateScriptedOffsetChannel1 ; $5b27
+	ld hl, UpdateRankingMarkerSlideX1 ; $5b27
 	call UnregisterFrameTask ; $5b2a
 	ret ; $5b2d
 .nextStep:
@@ -331,7 +331,7 @@ UpdateScriptedOffsetChannel1:
 	inc a ; $5b31
 	ld [wRankingAnimStepIndex + 1], a ; $5b32
 	ret ; $5b35
-UpdateScriptedOffsetChannel2:
+UpdateRankingMarkerSlideY0:
 	ld hl, wRankingAnimScriptPtrs + 4 ; $5b36
 	ld a, [hl+] ; $5b39
 	ld d, [hl] ; $5b3a
@@ -355,7 +355,7 @@ UpdateScriptedOffsetChannel2:
 	ld [hl], a ; $5b53
 	jr .nextStep ; $5b54
 .scriptEnd:
-	ld hl, UpdateScriptedOffsetChannel2 ; $5b56
+	ld hl, UpdateRankingMarkerSlideY0 ; $5b56
 	call UnregisterFrameTask ; $5b59
 	ret ; $5b5c
 .nextStep:
@@ -363,7 +363,7 @@ UpdateScriptedOffsetChannel2:
 	inc a ; $5b60
 	ld [wRankingAnimStepIndex + 2], a ; $5b61
 	ret ; $5b64
-UpdateScriptedOffsetChannel3:
+UpdateRankingMarkerSlideY1:
 	ld hl, wRankingAnimScriptPtrs + 6 ; $5b65
 	ld a, [hl+] ; $5b68
 	ld d, [hl] ; $5b69
@@ -387,7 +387,7 @@ UpdateScriptedOffsetChannel3:
 	ld [hl], a ; $5b82
 	jr .nextStep ; $5b83
 .scriptEnd:
-	ld hl, UpdateScriptedOffsetChannel3 ; $5b85
+	ld hl, UpdateRankingMarkerSlideY1 ; $5b85
 	call UnregisterFrameTask ; $5b88
 	ret ; $5b8b
 .nextStep:
@@ -395,60 +395,62 @@ UpdateScriptedOffsetChannel3:
 	inc a ; $5b8f
 	ld [wRankingAnimStepIndex + 3], a ; $5b90
 	ret ; $5b93
-RankingAnimSinglesClimbRow01Right8:
+RankingAnimSinglesClimbRound01Plus8:
 	; $5b94, 1 bytes (bytes:1)
 	db $01 ; 0x00
-RankingAnimSinglesClimbRow01Right7:
+RankingAnimSinglesClimbRound01Plus7:
 	; $5b95, 3 bytes (bytes:3)
 	db $01, $01, $01 ; 0x00
-RankingAnimDoublesClimbRow3Table:
+RankingAnimDoublesClimbRound3Plus4:
 	; $5b98, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesClimbRow01Left7:
+RankingAnimSinglesClimbRound01Minus7:
 	; $5b9d, 8 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesClimbRow01Right12:
+RankingAnimSinglesClimbRound01Plus12:
 	; $5ba5, 13 bytes (bytes:13)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesClimbRow01Left8:
+RankingAnimSinglesClimbRound01Minus8:
 	; $5bb2, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesClimbRow2Right16:
+RankingAnimSinglesClimbRound2Plus16:
 	; $5bbb, 1 bytes (bytes:1)
 	db $01 ; 0x00
-RankingAnimSinglesClimbRow2Right15:
+RankingAnimSinglesClimbRound2Plus15:
 	; $5bbc, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingAnimSinglesClimbRow2Right8:
+RankingAnimSinglesClimbRound2Plus8:
 	; $5bc3, 2 bytes (bytes:2)
 	db $01, $01 ; 0x00
-RankingAnimDoublesClimbRow01Right6:
+RankingAnimDoublesClimbRound01Plus6:
 	; $5bc5, 7 bytes (bytes:7)
 	db $01, $01, $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesClimbRow2Left16:
-	ds 1, $ff ; $5bcc, fill
-RankingAnimSinglesClimbRow2Left15:
-	ds 7, $ff ; $5bcd, fill
-RankingAnimSinglesClimbRow2Left8:
+RankingAnimSinglesClimbRound2Minus16:
+	; $5bcc, 1 bytes (bytes:1)
+	db $ff ; 0x00
+RankingAnimSinglesClimbRound2Minus15:
+	; $5bcd, 7 bytes (bytes:7)
+	db $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
+RankingAnimSinglesClimbRound2Minus8:
 	; $5bd4, 9 bytes (bytes:9)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesMarkRow4Right4:
+RankingAnimSinglesMarkRound4Plus4:
 	; $5bdd, 5 bytes (bytes:5)
 	db $01, $01, $01, $01, $40 ; 0x00
-RankingAnimSinglesMarkRow4Left4:
+RankingAnimSinglesMarkRound4Minus4:
 	; $5be2, 5 bytes (bytes:5)
 	db $ff, $ff, $ff, $ff, $40 ; 0x00
-RankingAnimSinglesClimbRow3Right36:
+RankingAnimSinglesClimbRound3Plus36:
 	; $5be7, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingAnimDoublesClimbRow2Table:
+RankingAnimDoublesClimbRound2Plus28:
 	; $5bef, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
-RankingAnimDoublesClimbRow01Right20:
+RankingAnimDoublesClimbRound01Plus20:
 	; $5bf7, 21 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 	db $01, $01, $01, $01, $40 ; 0x10
-RankingAnimSinglesClimbRow3Left36:
+RankingAnimSinglesClimbRound3Minus36:
 	; $5c0c, 37 bytes (bytes:16)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
@@ -468,7 +470,7 @@ LoadRankingMarkerCoords:
 	jr z, .gotTable ; $5c48
 	ld hl, RankingMarkerFanfareCoordsTable ; $5c4a
 .gotTable:
-	ld a, [wRankingBoardPlayerRow] ; $5c4d
+	ld a, [wRankingBoardRound] ; $5c4d
 	add a ; $5c50
 	add_hl_a ; $5c51
 	ld a, [hl+] ; $5c56
@@ -489,7 +491,7 @@ LoadRankingMarkerCoords:
 	jr z, .gotDoublesTable ; $5c6e
 	ld hl, DoublesRankingMarkerFanfareCoordsTable ; $5c70
 .gotDoublesTable:
-	ld a, [wRankingBoardPlayerRow] ; $5c73
+	ld a, [wRankingBoardRound] ; $5c73
 	add a ; $5c76
 	add_hl_a ; $5c77
 	ld a, [hl+] ; $5c7c
@@ -505,12 +507,12 @@ LoadRankingMarkerCoords:
 	ret ; $5c8c
 RankingMarkerCoordsTable:
 	; $5c8d, 10 bytes (records:2)
-	dw RankingMarkerCoordSet0 ; record 0
-	dw RankingMarkerCoordSet0 ; record 1
-	dw RankingMarkerCoordSet1 ; record 2
-	dw RankingMarkerCoordSet2 ; record 3
-	dw RankingMarkerCoordSet3 ; record 4
-RankingMarkerCoordSet0:
+	dw RankingMarkerCoordsRound01 ; record 0
+	dw RankingMarkerCoordsRound01 ; record 1
+	dw RankingMarkerCoordsRound2 ; record 2
+	dw RankingMarkerCoordsRound3 ; record 3
+	dw RankingMarkerCoordsRound4 ; record 4
+RankingMarkerCoordsRound01:
 	; $5c97, 48 bytes (bytes:4)
 	db $00, $34, $0c, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -524,7 +526,7 @@ RankingMarkerCoordSet0:
 	db $02, $6b, $54, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordSet1:
+RankingMarkerCoordsRound2:
 	; $5cc7, 48 bytes (bytes:4)
 	db $00, $3c, $18, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -538,7 +540,7 @@ RankingMarkerCoordSet1:
 	db $02, $64, $60, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordSet2:
+RankingMarkerCoordsRound3:
 	; $5cf7, 48 bytes (bytes:4)
 	db $00, $44, $28, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -552,7 +554,7 @@ RankingMarkerCoordSet2:
 	db $02, $5c, $70, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerCoordSet3:
+RankingMarkerCoordsRound4:
 	; $5d27, 48 bytes (bytes:4)
 	db $00, $4c, $4c, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -568,12 +570,12 @@ RankingMarkerCoordSet3:
 	db $00, $6b, $80, $00 ; 0x2c
 RankingMarkerFanfareCoordsTable:
 	; $5d57, 10 bytes (records:2)
-	dw RankingMarkerFanfareCoordSet0 ; record 0
-	dw RankingMarkerFanfareCoordSet0 ; record 1
-	dw RankingMarkerFanfareCoordSet1 ; record 2
-	dw RankingMarkerFanfareCoordSet2 ; record 3
-	dw RankingMarkerFanfareCoordSet3 ; record 4
-RankingMarkerFanfareCoordSet0:
+	dw RankingMarkerFanfareCoordsRound01 ; record 0
+	dw RankingMarkerFanfareCoordsRound01 ; record 1
+	dw RankingMarkerFanfareCoordsRound2 ; record 2
+	dw RankingMarkerFanfareCoordsRound3 ; record 3
+	dw RankingMarkerFanfareCoordsRound4 ; record 4
+RankingMarkerFanfareCoordsRound01:
 	; $5d61, 48 bytes (bytes:4)
 	db $00, $3c, $0c, $00 ; 0x00
 	db $01, $3c, $24, $00 ; 0x04
@@ -587,7 +589,7 @@ RankingMarkerFanfareCoordSet0:
 	db $02, $6b, $54, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerFanfareCoordSet1:
+RankingMarkerFanfareCoordsRound2:
 	; $5d91, 48 bytes (bytes:4)
 	db $00, $44, $18, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -601,7 +603,7 @@ RankingMarkerFanfareCoordSet1:
 	db $02, $64, $60, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerFanfareCoordSet2:
+RankingMarkerFanfareCoordsRound3:
 	; $5dc1, 48 bytes (bytes:4)
 	db $00, $4c, $28, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -615,7 +617,7 @@ RankingMarkerFanfareCoordSet2:
 	db $02, $5c, $70, $00 ; 0x24
 	db $03, $6b, $6c, $00 ; 0x28
 	db $00, $6b, $80, $00 ; 0x2c
-RankingMarkerFanfareCoordSet3:
+RankingMarkerFanfareCoordsRound4:
 	; $5df1, 48 bytes (bytes:4)
 	db $00, $50, $4c, $00 ; 0x00
 	db $01, $34, $24, $00 ; 0x04
@@ -631,11 +633,11 @@ RankingMarkerFanfareCoordSet3:
 	db $00, $6b, $80, $00 ; 0x2c
 DoublesRankingMarkerCoordsTable:
 	; $5e21, 8 bytes (records:2)
-	dw DoublesRankingMarkerCoordSet0 ; record 0
-	dw DoublesRankingMarkerCoordSet0 ; record 1
-	dw DoublesRankingMarkerCoordSet1 ; record 2
-	dw DoublesRankingMarkerCoordSet2 ; record 3
-DoublesRankingMarkerCoordSet0:
+	dw DoublesRankingMarkerCoordsRound01 ; record 0
+	dw DoublesRankingMarkerCoordsRound01 ; record 1
+	dw DoublesRankingMarkerCoordsRound2 ; record 2
+	dw DoublesRankingMarkerCoordsRound3 ; record 3
+DoublesRankingMarkerCoordsRound01:
 	; $5e29, 48 bytes (bytes:4)
 	db $00, $34, $1c, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -649,7 +651,7 @@ DoublesRankingMarkerCoordSet0:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-DoublesRankingMarkerCoordSet1:
+DoublesRankingMarkerCoordsRound2:
 	; $5e59, 48 bytes (bytes:4)
 	db $00, $3c, $30, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -663,7 +665,7 @@ DoublesRankingMarkerCoordSet1:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-DoublesRankingMarkerCoordSet2:
+DoublesRankingMarkerCoordsRound3:
 	; $5e89, 48 bytes (bytes:4)
 	db $00, $44, $4c, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -679,11 +681,11 @@ DoublesRankingMarkerCoordSet2:
 	db $ff, $ff, $ff, $ff ; 0x2c
 DoublesRankingMarkerFanfareCoordsTable:
 	; $5eb9, 8 bytes (records:2)
-	dw DoublesRankingMarkerFanfareCoordSet0 ; record 0
-	dw DoublesRankingMarkerFanfareCoordSet0 ; record 1
-	dw DoublesRankingMarkerFanfareCoordSet1 ; record 2
-	dw DoublesRankingMarkerFanfareCoordSet2 ; record 3
-DoublesRankingMarkerFanfareCoordSet0:
+	dw DoublesRankingMarkerFanfareCoordsRound01 ; record 0
+	dw DoublesRankingMarkerFanfareCoordsRound01 ; record 1
+	dw DoublesRankingMarkerFanfareCoordsRound2 ; record 2
+	dw DoublesRankingMarkerFanfareCoordsRound3 ; record 3
+DoublesRankingMarkerFanfareCoordsRound01:
 	; $5ec1, 48 bytes (bytes:4)
 	db $00, $3c, $1c, $00 ; 0x00
 	db $01, $3c, $44, $00 ; 0x04
@@ -697,7 +699,7 @@ DoublesRankingMarkerFanfareCoordSet0:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-DoublesRankingMarkerFanfareCoordSet1:
+DoublesRankingMarkerFanfareCoordsRound2:
 	; $5ef1, 48 bytes (bytes:4)
 	db $00, $44, $30, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04
@@ -711,7 +713,7 @@ DoublesRankingMarkerFanfareCoordSet1:
 	db $ff, $ff, $ff, $ff ; 0x24
 	db $ff, $ff, $ff, $ff ; 0x28
 	db $ff, $ff, $ff, $ff ; 0x2c
-DoublesRankingMarkerFanfareCoordSet2:
+DoublesRankingMarkerFanfareCoordsRound3:
 	; $5f21, 48 bytes (bytes:4)
 	db $00, $4c, $4c, $00 ; 0x00
 	db $01, $34, $44, $00 ; 0x04

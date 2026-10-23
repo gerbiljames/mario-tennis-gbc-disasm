@@ -51,7 +51,7 @@ MACRO as_move_rel    ; $08 move by angle + distance, angle relative to facing
 	dw \2
 ENDM
 
-MACRO as_rand_box    ; $09 pick a random reachable target in a box around the as_set_wander_home centre (only while ACTORSTATUSB_LIVE)
+MACRO as_rand_box    ; $09 pick a random reachable target in a box around the as_set_wander_home centre (only while ACTORSTATUSB_ON_SCREEN)
 	db $09, \1, \2
 ENDM
 
@@ -59,7 +59,7 @@ MACRO as_step        ; $0a trail the ACTORF_ANCHOR actor (2 tiles behind, its sp
 	db $0a
 ENDM
 
-MACRO as_follow_wp   ; $0b head for the ACTORF_ANCHOR actor's position, then yield
+MACRO as_chase       ; $0b head for the ACTORF_ANCHOR actor's position, then yield
 	db $0b
 ENDM
 
@@ -99,7 +99,7 @@ MACRO as_set_wander_home ; $13 centre as_rand_box's box (ACTORF_ANCHOR) on the c
 	db $13
 ENDM
 
-MACRO as_wait_move2  ; $14 wait for the move to finish / countdown
+MACRO as_wait_move_or_blocked ; $14 yield until the move finishes (then wait 40 frames) or stops short for the player (ACTORFLAGB_BLOCKED, then wait 10)
 	db $14
 ENDM
 

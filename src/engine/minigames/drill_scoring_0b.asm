@@ -95,17 +95,17 @@ Unused_0b_CheckTwoPointLead:
 	bit 7, a ; $4105
 	jr nz, .player2Ahead ; $4107
 	cp $02 ; $4109
-	jr c, .tied ; $410b
+	jr c, .noTwoPointLead ; $410b
 	ld a, $01 ; $410d
 	ret ; $410f
 .player2Ahead:
 	cpl ; $4110
 	inc a ; $4111
 	cp $02 ; $4112
-	jr c, .tied ; $4114
+	jr c, .noTwoPointLead ; $4114
 	ld a, $02 ; $4116
 	ret ; $4118
-.tied:
+.noTwoPointLead:
 	xor a ; $4119
 	ret ; $411a
 Unused_0b_CheckBallOutOfBounds:
@@ -142,13 +142,13 @@ Unused_0b_GetObjectXAndDepth:
 	ld h, [hl] ; $4148
 	ld l, a ; $4149
 	ret ; $414a
-ResetActiveCharState:
-	push_wram_bank WRAM_TEXT ; $414b
+SetOpponentCharInert:
+	push_wram_bank WRAM_CHAR1 ; $414b
 	ld a, CHARSTATE_INERT ; $4154
 	farcall SetCharState ; $4156
 	pop_wram_bank ; $4159
 	ret ; $415e
-IndexDrillTableByPoint:
+SetDrillGateForPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $415f
 	add a ; $4162
 	add a ; $4163
@@ -167,7 +167,7 @@ IndexDrillTableByPoint:
 	ld h, [hl] ; $4178
 	ld l, a ; $4179
 	push bc ; $417a
-	farcall SetBallGatePoint1 ; $417b
+	farcall SetDrillGateLeftPost ; $417b
 	pop bc ; $417e
 	ld hl, $0006 ; $417f
 	add hl, bc ; $4182
@@ -179,7 +179,7 @@ IndexDrillTableByPoint:
 	ld a, [hl+] ; $418a
 	ld h, [hl] ; $418b
 	ld l, a ; $418c
-	farcall SetBallGatePoint2 ; $418d
+	farcall SetDrillGateRightPost ; $418d
 	ret ; $4190
 SetDrillTargetZoneForPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4191

@@ -149,10 +149,10 @@ TennisDictionaryLetterRowTable:
 	db $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x10
 DrawTennisDictionaryIndexCursor:
 	or a ; $54c8
-	jr z, .compactTiles ; $54c9
+	jr z, .normalTiles ; $54c9
 	ld hl, TennisDictionaryIndexCursorHighlightTiles ; $54cb
 	jr .gotTiles ; $54ce
-.compactTiles:
+.normalTiles:
 	ld hl, TennisDictionaryIndexCursorNormalTiles ; $54d0
 .gotTiles:
 	wram_bank WRAM_SCREEN ; $54d3
@@ -227,7 +227,7 @@ HandleTennisDictionaryIndexInput:
 	jr z, .checkB ; $5594
 	pop af ; $5596
 	sound SFX_MENU_SELECT ; $5597
-	ld a, $04 ; $5599
+	ld a, TDICTSTATE_OPEN_LIST ; $5599
 	push af ; $559b
 	jr .restore ; $559c
 .checkB:
@@ -235,11 +235,11 @@ HandleTennisDictionaryIndexInput:
 	jr z, .checkUp ; $55a0
 	pop af ; $55a2
 	sound SFX_MENU_CANCEL ; $55a3
-	ld a, $01 ; $55a5
+	ld a, TDICTSTATE_EXIT ; $55a5
 	push af ; $55a7
 	jr .restore ; $55a8
 .checkUp:
-	ldh a, [hInputPressed] ; $55aa
+	ldh a, [hInputRepeat] ; $55aa
 	bit PADB_UP, a ; $55ac
 	jr z, .checkDown ; $55ae
 	ld a, [wTennisDictCursorRow] ; $55b0
@@ -344,9 +344,9 @@ HandleTennisDictionaryListInput:
 	ld a, MSGSPEEDF_INSTANT | MSGSPEED_FAST ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a ; $5678
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5679
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5679
 	farcall RedrawWindowText ; $567c
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $567f
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a ; $5686
@@ -366,27 +366,27 @@ HandleTennisDictionaryListInput:
 	sound SFX_MENU_CANCEL ; $56a9
 	ld a, [wTennisDictMode] ; $56ab
 	cp TENNISDICT_INDEX ; $56ae
-	jr z, .backToChar6Page ; $56b0
-	ld a, $01 ; $56b2
+	jr z, .backToIndexPage ; $56b0
+	ld a, TDICTSTATE_EXIT ; $56b2
 	push af ; $56b4
 	jp .restore ; $56b5
-.backToChar6Page:
-	ld a, $10 ; $56b8
+.backToIndexPage:
+	ld a, TDICTSTATE_OPEN_INDEX ; $56b8
 	push af ; $56ba
 	jp .restore ; $56bb
 .checkUp:
-	ldh a, [hInputPressed] ; $56be
+	ldh a, [hInputRepeat] ; $56be
 	bit PADB_UP, a ; $56c0
 	jr z, .checkDown ; $56c2
 	sound SFX_MENU_MOVE ; $56c4
 	ld a, [wTennisDictCursorRow] ; $56c6
 	dec a ; $56c9
 	cp $ff ; $56ca
-	jr z, .checkTennisDictScrollTop ; $56cc
+	jr z, .scrollListUp ; $56cc
 	ld [wTennisDictCursorRow], a ; $56ce
 	call DrawTennisDictionaryLetterLabels ; $56d1
 	jr .restore ; $56d4
-.checkTennisDictScrollTop:
+.scrollListUp:
 	ld a, [wTennisDictScrollTop] ; $56d6
 	dec a ; $56d9
 	cp $ff ; $56da
@@ -404,11 +404,11 @@ HandleTennisDictionaryListInput:
 	ld a, [wTennisDictCursorRow] ; $56f0
 	inc a ; $56f3
 	cp $06 ; $56f4
-	jr nc, .checkTennisDictEntryCount ; $56f6
+	jr nc, .scrollListDown ; $56f6
 	ld [wTennisDictCursorRow], a ; $56f8
 	call DrawTennisDictionaryLetterLabels ; $56fb
 	jr .restore ; $56fe
-.checkTennisDictEntryCount:
+.scrollListDown:
 	ld a, [wTennisDictEntryCount] ; $5700
 	ld b, a ; $5703
 	ld a, [wTennisDictScrollTop] ; $5704
@@ -511,92 +511,92 @@ QueueTennisDictionaryListRows:
 	pop af ; $57e4
 	pop_wram_bank ; $57e5
 	ret ; $57ea
-HardCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_HardCourtLabelTiles.bin" ; $57eb, 193 bytes
-ClayCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_ClayCourtLabelTiles.bin" ; $58ac, 200 bytes
-GrassCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_GrassCourtLabelTiles.bin" ; $5974, 195 bytes
-CompositionCourtLabelTiles:
-	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtLabelTiles.bin" ; $5a37, 190 bytes
-CourtNameLabelTiles0:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles0.bin" ; $5af5, 210 bytes
-CourtNameLabelTiles1:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles1.bin" ; $5bc7, 222 bytes
-CourtNameLabelTiles2:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles2.bin" ; $5ca5, 251 bytes
-CourtNameLabelTiles3:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles3.bin" ; $5da0, 242 bytes
-CourtNameLabelTiles4:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles4.bin" ; $5e92, 235 bytes
-CourtNameLabelTiles5:
-	INCBIN "data/engine/menus/dictionary/lz_CourtNameLabelTiles5.bin" ; $5f7d, 183 bytes
-CourtSelectGfx1:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx1.bin" ; $6034, 151 bytes
-CourtSelectGfx2:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx2.bin" ; $60cb, 164 bytes
-CourtSelectGfx3:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx3.bin" ; $616f, 170 bytes
-CourtSelectGfx4:
-	INCBIN "data/engine/menus/dictionary/lz_CourtSelectGfx4.bin" ; $6219, 196 bytes
+HardCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_HardCourtIconTiles.bin" ; $57eb, 193 bytes
+ClayCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_ClayCourtIconTiles.bin" ; $58ac, 200 bytes
+GrassCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_GrassCourtIconTiles.bin" ; $5974, 195 bytes
+CompositionCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtIconTiles.bin" ; $5a37, 190 bytes
+StarCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_StarCourtIconTiles.bin" ; $5af5, 210 bytes
+CastleCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_CastleCourtIconTiles.bin" ; $5bc7, 222 bytes
+TropicsCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_TropicsCourtIconTiles.bin" ; $5ca5, 251 bytes
+JungleCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_JungleCourtIconTiles.bin" ; $5da0, 242 bytes
+WarehouseCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_WarehouseCourtIconTiles.bin" ; $5e92, 235 bytes
+LockedCourtIconTiles:
+	INCBIN "data/engine/menus/dictionary/lz_LockedCourtIconTiles.bin" ; $5f7d, 183 bytes
+HardCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_HardCourtNameGfx.bin" ; $6034, 151 bytes
+ClayCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_ClayCourtNameGfx.bin" ; $60cb, 164 bytes
+GrassCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_GrassCourtNameGfx.bin" ; $616f, 170 bytes
+CompositionCourtNameGfx:
+	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtNameGfx.bin" ; $6219, 196 bytes
 VarsityTeamChartTiles:
 	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTiles.bin" ; $62dd, 1314 bytes
-VarsityTeamChartTilemap:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap.bin" ; $67ff, 325 bytes
-VarsityTeamChartAttrmap:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap.bin" ; $6944, 141 bytes
+VarsityTeamChartSinglesTilemap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartSinglesTilemap.bin" ; $67ff, 325 bytes
+VarsityTeamChartSinglesAttrmap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartSinglesAttrmap.bin" ; $6944, 141 bytes
 VarsityTeamChartPalettes:
 	INCLUDE "data/engine/menus/dictionary/VarsityTeamChartPalettes.asm" ; $69d1, 64 bytes (palettes)
-VarsityTeamChartTilemap2:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap2.bin" ; $6a11, 317 bytes
-VarsityTeamChartAttrmap2:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap2.bin" ; $6b4e, 143 bytes
-TournamentBracketGfx:
-	INCBIN "data/engine/menus/dictionary/lz_TournamentBracketGfx.bin" ; $6bdd, 38 bytes
+VarsityTeamChartDoublesTilemap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartDoublesTilemap.bin" ; $6a11, 317 bytes
+VarsityTeamChartDoublesAttrmap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartDoublesAttrmap.bin" ; $6b4e, 143 bytes
+VarsityTeamChartNameBoxTiles:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartNameBoxTiles.bin" ; $6bdd, 38 bytes
 MugshotTiles:
 	INCBIN "data/engine/menus/dictionary/lz_MugshotTiles.bin" ; $6c03, 1000 bytes
 TournamentBracketTiles:
 	INCBIN "data/engine/menus/dictionary/lz_TournamentBracketTiles.bin" ; $6feb, 1224 bytes
-BracketCharIcon00:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon00.bin" ; $74b3, 31 bytes
-BracketCharIcon01:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon01.bin" ; $74d2, 210 bytes
-BracketCharIcon02:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon02.bin" ; $75a4, 213 bytes
-BracketCharIcon03:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon03.bin" ; $7679, 74 bytes
-BracketCharIcon04:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon04.bin" ; $76c3, 75 bytes
-BracketCharIcon05:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon05.bin" ; $770e, 73 bytes
-BracketCharIcon06:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon06.bin" ; $7757, 70 bytes
-BracketCharIcon07:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon07.bin" ; $779d, 67 bytes
-BracketCharIcon08:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon08.bin" ; $77e0, 70 bytes
-BracketCharIcon09:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon09.bin" ; $7826, 74 bytes
-BracketCharIcon10:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon10.bin" ; $7870, 74 bytes
-BracketCharIcon11:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon11.bin" ; $78ba, 74 bytes
-BracketCharIcon12:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon12.bin" ; $7904, 75 bytes
-BracketCharIcon13:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon13.bin" ; $794f, 73 bytes
-BracketCharIcon14:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon14.bin" ; $7998, 67 bytes
-BracketCharIcon15:
-	INCBIN "data/engine/menus/dictionary/lz_BracketCharIcon15.bin" ; $79db, 66 bytes
-BracketExtraIcon0:
-	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon0.bin" ; $7a1d, 70 bytes
-BracketExtraIcon1:
-	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon1.bin" ; $7a63, 74 bytes
-BracketExtraIcon2:
-	INCBIN "data/engine/menus/dictionary/lz_BracketExtraIcon2.bin" ; $7aad, 74 bytes
-MinigameLevelSelectGfx2:
-	INCBIN "data/engine/menus/dictionary/lz_MinigameLevelSelectGfx2.bin" ; $7af7, 153 bytes
-SavedDataTypeSelectGfx:
-	INCBIN "data/engine/menus/dictionary/lz_SavedDataTypeSelectGfx.bin" ; $7b90, 185 bytes
+RankingBoardBallMarkerTiles:
+	INCBIN "data/engine/menus/dictionary/lz_RankingBoardBallMarkerTiles.bin" ; $74b3, 31 bytes
+CongratulationsSpriteTiles:
+	INCBIN "data/engine/menus/dictionary/lz_CongratulationsSpriteTiles.bin" ; $74d2, 210 bytes
+GameOverSpriteTiles:
+	INCBIN "data/engine/menus/dictionary/lz_GameOverSpriteTiles.bin" ; $75a4, 213 bytes
+StarAnimFrame00:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame00.bin" ; $7679, 74 bytes
+StarAnimFrame01:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame01.bin" ; $76c3, 75 bytes
+StarAnimFrame02:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame02.bin" ; $770e, 73 bytes
+StarAnimFrame03:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame03.bin" ; $7757, 70 bytes
+StarAnimFrame04:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame04.bin" ; $779d, 67 bytes
+StarAnimFrame05:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame05.bin" ; $77e0, 70 bytes
+StarAnimFrame06:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame06.bin" ; $7826, 74 bytes
+StarAnimFrame07:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame07.bin" ; $7870, 74 bytes
+StarAnimFrame08:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame08.bin" ; $78ba, 74 bytes
+StarAnimFrame09:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame09.bin" ; $7904, 75 bytes
+StarAnimFrame10:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame10.bin" ; $794f, 73 bytes
+StarAnimFrame11:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame11.bin" ; $7998, 67 bytes
+StarAnimFrame12:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame12.bin" ; $79db, 66 bytes
+StarAnimFrame13:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame13.bin" ; $7a1d, 70 bytes
+StarAnimFrame14:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame14.bin" ; $7a63, 74 bytes
+StarAnimFrame15:
+	INCBIN "data/engine/menus/dictionary/lz_StarAnimFrame15.bin" ; $7aad, 74 bytes
+SelectALevelTitleGfx:
+	INCBIN "data/engine/menus/dictionary/lz_SelectALevelTitleGfx.bin" ; $7af7, 153 bytes
+MarioCharactersTitleGfx:
+	INCBIN "data/engine/menus/dictionary/lz_MarioCharactersTitleGfx.bin" ; $7b90, 185 bytes
 	; $7c49, 951 bytes fill to bank end (linker-padded)

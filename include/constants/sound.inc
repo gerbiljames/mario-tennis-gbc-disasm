@@ -57,19 +57,19 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_COURT_CASTLE          ; $12 row 5; the Peach's Castle story_location and Perfect Shot use it
 	const BGM_COURT_TROPIC          ; $13 row 6; MinigameConfig_FruitFantasy
 	const BGM_COURT_WAREHOUSE       ; $14 row 8; MinigameConfig_TreasureBox
-	const BGM_TWO_ON_ONE            ; $15 RunDoublesDrillMatch
+	const BGM_TWO_ON_ONE            ; $15 RunTwoOnOneMatch
 	const BGM_COURT_JUNGLE          ; $16 row 7; MinigameConfig_BananaBunch
 	const_def $19
 	const BGM_TARGET_MINIGAMES      ; $19 the drill_defs of Medallion Match, Shooting Star and Target Shot
 	const BGM_ACADEMY_BUILDING      ; $1a story_location: the Academy Main Building and the Academy Wing
 	const BGM_ACADEMY_OUTDOORS      ; $1b story_location: the courtyards, entrances, class courts, Court #1/#2, the awards ceremony and the island flyover (13 locations)
-	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomEntry0fScene
+	const BGM_DORM_ROOM             ; $1c DormRoomInitScript_13 / DormRoomTourEndScene
 	const BGM_ACADEMY_ROOMS         ; $1d story_location: the restaurant, cafeteria, training rooms, the Center Court and the tournament (7 locations)
 	const BGM_TENNIS_MACHINE        ; $1e the Tennis Machine Room's drill_defs
 	const BGM_WALL_PRACTICE         ; $1f the Wall Practice Room's drill_defs
 	const BGM_PRACTICE_MATCH        ; $20 the story practice matches (GAMEMODE_PRACTICE_MATCH rows of the match settings tables)
 	const BGM_JUNIOR_RANKING        ; $21 the Junior class ranking matches (hard court)
-	const BGM_SENIOR_RANKING        ; $22 MatchSettingsTable records 6-9; reused by the intro character showcase and the trophy cheat screen
+	const BGM_SENIOR_RANKING        ; $22 MatchSettingsTable records 6-9; reused by the trophy cheat screen and the unused placeholder screen (Unused_6d_ShowPlaceholderScreen)
 	const BGM_VARSITY_RANKING       ; $23 the Varsity ranking matches (composition court)
 	const BGM_DRILL_MATCH           ; $24 the match drills' drill_def (COURT_TRAINING_MATCH)
 	const BGM_DRILL_PRACTICE        ; $25 the practice drills' drill_def (COURT_TRAINING_PRACTICE)
@@ -80,16 +80,18 @@ def BGM_UNCHANGED            equ $ff ; story_location: keep whatever is playing 
 	const BGM_ISLAND_OPEN_LOSE      ; $2a ShowRankingBoard with wRankingBoardMode 2, which SetupRankingBoardArgs sets when wMatchWinLoseFlag != 1
 	const BGM_ISLAND_OPEN_WIN       ; $2b the same board with mode 1 (match won)
 	const BGM_CREDITS               ; $2c RunEndingCreditsSequence, the End1 story_location, and the debug text-overflow alarm
-	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayScreenSequence1/2)
+	const BGM_THE_END               ; $2d the still screen after each credit scroll (PlayAwardsCeremonyScene, PlayDreamMatchEpilogueScene)
 def BGM_LEVEL_UP             equ $2f ; TickLevelUpJingle
 
 ; Jingles ($40-$45), through the `sound` macro or PlaySoundManaged. The
 ; handler stores the id in hActiveJingle, plays JingleSoundIds[id - $40] (a
 ; music id) and leaves ResumeBGMAfterJingle/WaitJingleEnd to restore
-; wCurrentBGM when the music channels fall idle. These three are the ones used.
+; wCurrentBGM when the music channels fall idle. $40 maps to music $00.
 def JINGLE_LEVEL_CLEARED     equ $42 ; the LEVEL n CLEARED court banners (CourtBannerObjTemplates_09 rows 18-21)
 def JINGLE_HIGH_SCORE        equ $43 ; the HIGH SCORE court banner (row 22)
-def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomEntry0fScene, DormRoomEntry02Scene) and the save-slot debug editor
+def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomTourEndScene, DormRoomReturnFromEntranceScene) and the save-slot debug editor
+def JINGLE_COURT_INTRO_EXHIBITION equ $44 ; PlayCourtIntro, exhibition matches
+def JINGLE_COURT_INTRO       equ $45 ; PlayCourtIntro, story and minigame matches
 
 ; Sound effects, named for the event they play for.
 def SFX_STOP                 equ $50 ; silences the two effect channels
@@ -103,7 +105,7 @@ def SFX_STOP                 equ $50 ; silences the two effect channels
 	const SFX_HIT_SERVE   ; $54 all three serves
 def SFX_HIT_SLICE            equ $57 ; slice, power slice and the smash
 def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent
-def SFX_SWING                equ $5c ; racket swing (StartCharSwing)
+def SFX_LEAP                 equ $5c ; a jump smash or dive starting (StartCharSwing)
 def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent, HandleMinigameTargetHit, MinigameTargetTypeScores
 	const_def $5e
 	const SFX_MENU_MOVE   ; $5e every menu's "the cursor moved" branch
@@ -135,12 +137,12 @@ def SFX_SCORE_STEP7          equ $ba
 
 ; Effects named for where they play, not what they sound like.
 def SFX_SPECIAL_HIT            equ $55 ; the special-shot hit spark (StartHitEffect $08)
-def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (CharSwingWindupPhase $08)
+def SFX_SWING                  equ $59 ; every swing, as CharSwingWindupPhase calls StartCharSwing ($08)
 def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
 ; The on-court object cues, from the *ObjTemplate* tables of bank $09 (the
 ; sound field LoadObjTemplate_09 plays as the object appears).
 	const_def $66
-	const SFX_SCORE_DISPLAY          ; $66 the point-score digit objects appearing (ObjTemplates_09, the game-score display)
+	const SFX_SCORE_DISPLAY          ; $66 the score panel's objects appearing (ScorePanelCharIconObjTemplates_09, ScoreDigitsObjTemplates_09)
 	const SFX_BANNER_WINNER          ; $67 the SERVICE/RETURN/SMASH ACE, LOB and DROP SHOT banners (rows 24-28)
 	const SFX_BANNER_POINT_SITUATION ; $68 the BREAK/GAME/SET/MATCH POINT banners (rows 7-10)
 	const_def $6a
@@ -155,31 +157,33 @@ def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/
 def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (Unused_1a_DrawExpScreenCaption $1a)
 def SFX_BALL_LAUNCH            equ $76 ; the minigame ball launcher (LaunchBall $0d)
 def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board marker (RankingAnim*), the on-court score digits and banner row 15 (CourtBannerObjTemplates_09)
-def SFX_FIREWORK_LAUNCH        equ $7a ; the island sky scene: firework ascent, the plane pass (bank $14)
-def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane cues (bank $14)
+def SFX_PLANE_START            equ $7a ; the island-sky plane flight starting, after the fade-in (bank $14)
+def SFX_PLANE_STOP             equ $7d ; the island-sky plane's last move ending, before the fade-out or touchdown roll (bank $14)
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)
-def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
+def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingAnimSingles/DoublesClimbRound*/MarkRound* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
 	const_def $86
-	const SFX_THUD               ; $86 a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
+	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0DBoo_0e, the welcome cutscene) and a Boo Blast hit (AwardBooBlastHitScore $0d)
 	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
-	const SFX_PEACH_FANFARE      ; $88 before "Princess Peach!" in Mario World (MarioWorldNpc0C_0e)
+	const SFX_VOICE_DK           ; $88 Donkey Kong speaking in Mario World (MarioWorldNpc0CDonkeyKong_0e)
 	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
 	const SFX_WATER_SPRITE_MAGIC ; $8a the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
 	const_def $8c
-	const SFX_CONTEST_WIN         ; $8c winning the water-sprite swing contest (WaterSpriteSwingContestScene $15)
+	const SFX_CONTEST_COUNTDOWN   ; $8c each beep of the swing contest's 3-2-1 countdown (WaterSpriteSwingContestScene $15)
 	const SFX_CONTEST_FINISH      ; $8d the swing contest ending (WaterSpriteSwingContestScene $15)
 	const SFX_WATER_SPRITE_APPEAR ; $8e the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
 	const SFX_WATER_SPRITE_FLY    ; $8f the water sprite flying off (WaterSpriteRacketRewardScene $15)
 	const SFX_RACKET_GET          ; $90 receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
-def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTargetGridClear $0d)
+	const SFX_SWING_THROUGH       ; $91 the player trying out a newly equipped racket at the repair counter (ActorScript_0e_03)
+	const SFX_SIDESTEP            ; $92 each sidestep of the player trying out newly equipped shoes there (ActorScript_0e_04)
+def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimatePerfectShotGridRefill $0d)
 	const_def $96
 	const SFX_APPEAR2 ; $96 the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)
 	const SFX_CHIME   ; $97 a minigame target hit / score popup, and a success cue in cutscenes
 	const SFX_EMOTE   ; $98 an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
 	const SFX_APPEAR1 ; $99 the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
-def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_MusicSettingHandler0/1 $1a)
-def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries
+def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (Unused_1a_ToggleMusicOnRow/Unused_1a_Toggle3DScreenRow $1a)
+def SFX_STORY_CUE              equ $a2 ; only the Unused_<bank>_MapScriptPlayStoryCue copies play it
 
 ; --- Music flags (hMusicFlags) ---
 def MUSICB_MUTED equ 0 ; PlaySoundCmd drops BGM and jingle requests

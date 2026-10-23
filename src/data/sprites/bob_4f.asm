@@ -332,108 +332,108 @@ Unused_4f_BobSpriteFramesCopy:
 BobFramePlace:
 	INCLUDE "data/sprites/BobFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BobSpriteAnims:
-	dw BobSpriteAnim00 ; $7f24
-	dw BobSpriteAnim01 ; $7f26
-	dw BobSpriteAnim02 ; $7f28
-	dw BobSpriteAnim03 ; $7f2a
-	dw BobSpriteAnim04 ; $7f2c
-	dw BobSpriteAnim05 ; $7f2e
-	dw BobSpriteAnim06 ; $7f30
-	dw BobSpriteAnim07 ; $7f32
-	dw BobSpriteAnim08 ; $7f34
-	dw BobSpriteAnim09 ; $7f36
-	dw BobSpriteAnim10 ; $7f38
-	dw BobSpriteAnim11 ; $7f3a
-	dw BobSpriteAnim12 ; $7f3c
-	dw BobSpriteAnim13 ; $7f3e
-	dw BobSpriteAnim14 ; $7f40
-	dw BobSpriteAnim15 ; $7f42
-	dw BobSpriteAnim16 ; $7f44
-	dw BobSpriteAnim17 ; $7f46
-	dw BobSpriteAnim18 ; $7f48
-BobSpriteAnim00:
+	dw BobStandAnim ; $7f24
+	dw BobIdleAnim ; $7f26
+	dw BobRunAnim ; $7f28
+	dw BobCelebrateAnim ; $7f2a
+	dw BobDejectedAnim ; $7f2c
+	dw BobForehandAnim ; $7f2e
+	dw BobBackhandAnim ; $7f30
+	dw BobOverheadAnim ; $7f32
+	dw BobSmashAnim ; $7f34
+	dw BobForehandQuickAnim ; $7f36
+	dw BobBackhandQuickAnim ; $7f38
+	dw BobOverheadQuickAnim ; $7f3a
+	dw BobSmashQuickAnim ; $7f3c
+	dw BobForehandReadyAnim ; $7f3e
+	dw BobBackhandReadyAnim ; $7f40
+	dw BobOverheadReadyAnim ; $7f42
+	dw BobServeReadyAnim ; $7f44
+	dw BobServePrepAnim ; $7f46
+	dw BobDiveAnim ; $7f48
+BobStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-BobSpriteAnim01:
+BobIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-BobSpriteAnim02:
+BobRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-BobSpriteAnim03:
+BobCelebrateAnim:
 	; $7f5d, 10 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $19, 15
 	anim_frame $18, 15
 	anim_frame $19, 15
 	anim_loop $00
-BobSpriteAnim04:
+BobDejectedAnim:
 	; $7f67, 10 bytes (sprite_anim)
 	anim_frame $1a, 10
 	anim_frame $1c, 10
 	anim_frame $1b, 10
 	anim_frame $1c, 10
 	anim_loop $00
-BobSpriteAnim05:
+BobForehandAnim:
 	; $7f71, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-BobSpriteAnim06:
+BobBackhandAnim:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-BobSpriteAnim07:
+BobOverheadAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-BobSpriteAnim08:
+BobSmashAnim:
 	; $7f83, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-BobSpriteAnim09:
+BobForehandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-BobSpriteAnim10:
+BobBackhandQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-BobSpriteAnim11:
+BobOverheadQuickAnim:
 	; $7f90, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-BobSpriteAnim12:
+BobSmashQuickAnim:
 	; $7f94, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-BobSpriteAnim13:
+BobForehandReadyAnim:
 	; $7f97, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-BobSpriteAnim14:
+BobBackhandReadyAnim:
 	; $7f9a, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-BobSpriteAnim15:
+BobOverheadReadyAnim:
 	; $7f9d, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-BobSpriteAnim16:
+BobServeReadyAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-BobSpriteAnim17:
+BobServePrepAnim:
 	; $7fa3, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -441,7 +441,7 @@ BobSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-BobSpriteAnim18:
+BobDiveAnim:
 	; $7faf, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

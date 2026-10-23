@@ -1,6 +1,6 @@
 Unused_1a_StubNop3:
 	ret ; $4da8
-Unused_1a_DrawExpScreenMessage_1:
+Unused_1a_DrawContinuePreviousGamePrompt:
 	push af ; $4da9
 	push bc ; $4daa
 	push de ; $4dab
@@ -20,7 +20,7 @@ Unused_1a_DrawExpScreenMessage_1:
 	ld de, vBGMap0 + VRAM_BANK1 ; $4dd9
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4ddc
 	call QueueVRAMCopy ; $4dde
-	ld hl, wDecompBuffer tile 64 ; $4de1
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $4de1
 	ld de, vBGMap0 ; $4de4
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4de7
 	call QueueVRAMCopy ; $4de9
@@ -35,7 +35,7 @@ Unused_1a_DrawExpScreenMessage_1:
 	pop bc ; $4e04
 	pop af ; $4e05
 	ret ; $4e06
-Unused_1a_DrawExpScreenMessage_2:
+Unused_1a_DrawEraseSuspendDataPrompt:
 	push af ; $4e07
 	push bc ; $4e08
 	push de ; $4e09
@@ -55,7 +55,7 @@ Unused_1a_DrawExpScreenMessage_2:
 	ld de, vBGMap0 + VRAM_BANK1 ; $4e37
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4e3a
 	call QueueVRAMCopy ; $4e3c
-	ld hl, wDecompBuffer tile 64 ; $4e3f
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $4e3f
 	ld de, vBGMap0 ; $4e42
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4e45
 	call QueueVRAMCopy ; $4e47
@@ -260,52 +260,52 @@ Unused_1a_QueueNumberSprites:
 	ret ; $4faa
 Unused_1a_DrawExpScreenCaption:
 	and a ; $4fab
-	jr z, .caption0 ; $4fac
+	jr z, .transferringPts ; $4fac
 	dec a ; $4fae
-	jr z, .caption1 ; $4faf
+	jr z, .fromN64 ; $4faf
 	dec a ; $4fb1
-	jr z, .caption2 ; $4fb2
+	jr z, .levelGained ; $4fb2
 	dec a ; $4fb4
-	jr z, .caption3 ; $4fb5
+	jr z, .movedUpLevel ; $4fb5
 	dec a ; $4fb7
-	jr z, .caption4 ; $4fb8
+	jr z, .topLevel ; $4fb8
 	dec a ; $4fba
-	jp z, .caption5 ; $4fbb
+	jp z, .areYouReady ; $4fbb
 	ret ; $4fbe
-.caption0:
+.transferringPts:
 	ld hl, Text_ExpTransferringPts ; $4fbf
 	call Unused_1a_LoadDialogueTextToBuffer ; $4fc2
 	wram_bank WRAM_STAGING ; $4fc5
-	ld hl, wTextTileBuffer ; $4fcb
+	ld hl, wDecompBufferHigh ; $4fcb
 	ld bc, $0302 ; $4fce
 	ld e, $01 ; $4fd1
 	call Unused_1a_DrawStringToTileBuffer ; $4fd3
 	ret ; $4fd6
-.caption1:
+.fromN64:
 	ld hl, Text_ExpFromMarioTennisN64 ; $4fd7
 	call Unused_1a_LoadDialogueTextToBuffer ; $4fda
 	wram_bank WRAM_STAGING ; $4fdd
-	ld hl, wTextTileBuffer ; $4fe3
+	ld hl, wDecompBufferHigh ; $4fe3
 	ld bc, $0101 ; $4fe6
 	ld e, $01 ; $4fe9
 	call Unused_1a_DrawStringToTileBuffer ; $4feb
 	ld hl, Text_ExpPtsToNextLevel ; $4fee
 	call Unused_1a_LoadDialogueTextToBuffer ; $4ff1
-	ld hl, wTextTileBuffer ; $4ff4
+	ld hl, wDecompBufferHigh ; $4ff4
 	ld bc, $0103 ; $4ff7
 	ld e, $01 ; $4ffa
 	call Unused_1a_DrawStringToTileBuffer ; $4ffc
 	ret ; $4fff
-.caption2:
+.levelGained:
 	ld hl, Text_ExpLevelGained ; $5000
 	call Unused_1a_LoadDialogueTextToBuffer ; $5003
 	wram_bank WRAM_STAGING ; $5006
-	ld hl, wTextTileBuffer ; $500c
+	ld hl, wDecompBufferHigh ; $500c
 	ld bc, $0110 ; $500f
 	ld e, $01 ; $5012
 	call Unused_1a_DrawStringToTileBuffer ; $5014
 	ret ; $5017
-.caption3:
+.movedUpLevel:
 	wram_bank WRAM_SCREEN ; $5018
 	ld hl, Text_ExpMovedUpLevel ; $501e
 	ld de, wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 11 ; $5021
@@ -313,21 +313,21 @@ Unused_1a_DrawExpScreenCaption:
 	farcall RenderProportionalTextAt ; $5026
 	sound SFX_CAPTION ; $5029
 	ret ; $502b
-.caption4:
+.topLevel:
 	ld hl, Text_ExpTopLevel ; $502c
 	call Unused_1a_LoadDialogueTextToBuffer ; $502f
 	wram_bank WRAM_STAGING ; $5032
-	ld hl, wTextTileBuffer ; $5038
+	ld hl, wDecompBufferHigh ; $5038
 	ld bc, $0302 ; $503b
 	ld e, $01 ; $503e
 	call Unused_1a_DrawStringToTileBuffer ; $5040
 	ret ; $5043
-.caption5:
+.areYouReady:
 	sound BGM_NONE ; $5044
 	ld hl, Text_RoommateAreYouReady ; $5046
 	call Unused_1a_LoadDialogueTextToBuffer ; $5049
 	wram_bank WRAM_STAGING ; $504c
-	ld hl, wTextTileBuffer ; $5052
+	ld hl, wDecompBufferHigh ; $5052
 	ld bc, $0a10 ; $5055
 	ld e, $01 ; $5058
 	call Unused_1a_DrawStringToTileBuffer ; $505a
@@ -336,7 +336,7 @@ Unused_1a_LoadDialogueTextToBuffer:
 	wram_bank WRAM_TEXT ; $505e
 	farcall FetchDialogueText ; $5064
 	ld hl, wTextBuffer ; $5067
-	ld de, wTextTileBuffer ; $506a
+	ld de, wDecompBufferHigh ; $506a
 .copyLoop:
 	wram_bank WRAM_TEXT ; $506d
 	ld b, [hl] ; $5073
@@ -348,7 +348,7 @@ Unused_1a_LoadDialogueTextToBuffer:
 	and a ; $507e
 	jr nz, .copyLoop ; $507f
 	ret ; $5081
-Unused_1a_ResetCharDataScreenAnim:
+Unused_1a_RunExpGainScreenForRecord:
 	push af ; $5082
 	push bc ; $5083
 	push de ; $5084
@@ -419,12 +419,12 @@ Unused_1a_DrawExpBonusMessage:
 	jp z, .nameSean ; $5116
 	cp $1e ; $5119
 	jp z, .nameSammi ; $511b
-	jp .otherBonus ; $511e
+	jp .nameElden ; $511e
 .academyIntroYes:
 	ld hl, Text_RoommateExplainAcademy ; $5121
 	call Unused_1a_LoadDialogueTextToBuffer ; $5124
 	wram_bank WRAM_STAGING ; $5127
-	ld hl, wTextTileBuffer ; $512d
+	ld hl, wDecompBufferHigh ; $512d
 	ld bc, $0201 ; $5130
 	ld e, $01 ; $5133
 	call Unused_1a_DrawStringToTileBuffer ; $5135
@@ -433,7 +433,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateNotYetExplain ; $513b
 	call Unused_1a_LoadDialogueTextToBuffer ; $513e
 	wram_bank WRAM_STAGING ; $5141
-	ld hl, wTextTileBuffer ; $5147
+	ld hl, wDecompBufferHigh ; $5147
 	ld bc, $0201 ; $514a
 	ld e, $01 ; $514d
 	call Unused_1a_DrawStringToTileBuffer ; $514f
@@ -442,7 +442,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateNoPracticeSchedule ; $5155
 	call Unused_1a_LoadDialogueTextToBuffer ; $5158
 	wram_bank WRAM_STAGING ; $515b
-	ld hl, wTextTileBuffer ; $5161
+	ld hl, wDecompBufferHigh ; $5161
 	ld bc, $0201 ; $5164
 	ld e, $01 ; $5167
 	call Unused_1a_DrawStringToTileBuffer ; $5169
@@ -451,21 +451,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $516f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5172
 	wram_bank WRAM_STAGING ; $5175
-	ld hl, wTextTileBuffer ; $517b
+	ld hl, wDecompBufferHigh ; $517b
 	ld bc, $0201 ; $517e
 	ld e, $01 ; $5181
 	call Unused_1a_DrawStringToTileBuffer ; $5183
 	ld hl, Text_NameAllie ; $5186
 	call Unused_1a_LoadDialogueTextToBuffer ; $5189
 	wram_bank WRAM_STAGING ; $518c
-	ld hl, wTextTileBuffer ; $5192
+	ld hl, wDecompBufferHigh ; $5192
 	ld bc, $0601 ; $5195
 	ld e, $01 ; $5198
 	call Unused_1a_DrawStringToTileBuffer ; $519a
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $519d
 	call Unused_1a_LoadDialogueTextToBuffer ; $51a0
 	wram_bank WRAM_STAGING ; $51a3
-	ld hl, wTextTileBuffer ; $51a9
+	ld hl, wDecompBufferHigh ; $51a9
 	ld bc, $0901 ; $51ac
 	ld e, $01 ; $51af
 	call Unused_1a_DrawStringToTileBuffer ; $51b1
@@ -474,21 +474,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $51b7
 	call Unused_1a_LoadDialogueTextToBuffer ; $51ba
 	wram_bank WRAM_STAGING ; $51bd
-	ld hl, wTextTileBuffer ; $51c3
+	ld hl, wDecompBufferHigh ; $51c3
 	ld bc, $0201 ; $51c6
 	ld e, $01 ; $51c9
 	call Unused_1a_DrawStringToTileBuffer ; $51cb
 	ld hl, Text_NameJoy ; $51ce
 	call Unused_1a_LoadDialogueTextToBuffer ; $51d1
 	wram_bank WRAM_STAGING ; $51d4
-	ld hl, wTextTileBuffer ; $51da
+	ld hl, wDecompBufferHigh ; $51da
 	ld bc, $0601 ; $51dd
 	ld e, $01 ; $51e0
 	call Unused_1a_DrawStringToTileBuffer ; $51e2
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $51e5
 	call Unused_1a_LoadDialogueTextToBuffer ; $51e8
 	wram_bank WRAM_STAGING ; $51eb
-	ld hl, wTextTileBuffer ; $51f1
+	ld hl, wDecompBufferHigh ; $51f1
 	ld bc, $0a01 ; $51f4
 	ld e, $01 ; $51f7
 	call Unused_1a_DrawStringToTileBuffer ; $51f9
@@ -497,21 +497,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $51ff
 	call Unused_1a_LoadDialogueTextToBuffer ; $5202
 	wram_bank WRAM_STAGING ; $5205
-	ld hl, wTextTileBuffer ; $520b
+	ld hl, wDecompBufferHigh ; $520b
 	ld bc, $0201 ; $520e
 	ld e, $01 ; $5211
 	call Unused_1a_DrawStringToTileBuffer ; $5213
 	ld hl, Text_NameBrian ; $5216
 	call Unused_1a_LoadDialogueTextToBuffer ; $5219
 	wram_bank WRAM_STAGING ; $521c
-	ld hl, wTextTileBuffer ; $5222
+	ld hl, wDecompBufferHigh ; $5222
 	ld bc, $0601 ; $5225
 	ld e, $01 ; $5228
 	call Unused_1a_DrawStringToTileBuffer ; $522a
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $522d
 	call Unused_1a_LoadDialogueTextToBuffer ; $5230
 	wram_bank WRAM_STAGING ; $5233
-	ld hl, wTextTileBuffer ; $5239
+	ld hl, wDecompBufferHigh ; $5239
 	ld bc, $0a01 ; $523c
 	ld e, $01 ; $523f
 	call Unused_1a_DrawStringToTileBuffer ; $5241
@@ -520,21 +520,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $5247
 	call Unused_1a_LoadDialogueTextToBuffer ; $524a
 	wram_bank WRAM_STAGING ; $524d
-	ld hl, wTextTileBuffer ; $5253
+	ld hl, wDecompBufferHigh ; $5253
 	ld bc, $0201 ; $5256
 	ld e, $01 ; $5259
 	call Unused_1a_DrawStringToTileBuffer ; $525b
 	ld hl, Text_NamePam ; $525e
 	call Unused_1a_LoadDialogueTextToBuffer ; $5261
 	wram_bank WRAM_STAGING ; $5264
-	ld hl, wTextTileBuffer ; $526a
+	ld hl, wDecompBufferHigh ; $526a
 	ld bc, $0601 ; $526d
 	ld e, $01 ; $5270
 	call Unused_1a_DrawStringToTileBuffer ; $5272
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $5275
 	call Unused_1a_LoadDialogueTextToBuffer ; $5278
 	wram_bank WRAM_STAGING ; $527b
-	ld hl, wTextTileBuffer ; $5281
+	ld hl, wDecompBufferHigh ; $5281
 	ld bc, $0901 ; $5284
 	ld e, $01 ; $5287
 	call Unused_1a_DrawStringToTileBuffer ; $5289
@@ -543,21 +543,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $528f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5292
 	wram_bank WRAM_STAGING ; $5295
-	ld hl, wTextTileBuffer ; $529b
+	ld hl, wDecompBufferHigh ; $529b
 	ld bc, $0201 ; $529e
 	ld e, $01 ; $52a1
 	call Unused_1a_DrawStringToTileBuffer ; $52a3
 	ld hl, Text_NameBob ; $52a6
 	call Unused_1a_LoadDialogueTextToBuffer ; $52a9
 	wram_bank WRAM_STAGING ; $52ac
-	ld hl, wTextTileBuffer ; $52b2
+	ld hl, wDecompBufferHigh ; $52b2
 	ld bc, $0601 ; $52b5
 	ld e, $01 ; $52b8
 	call Unused_1a_DrawStringToTileBuffer ; $52ba
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $52bd
 	call Unused_1a_LoadDialogueTextToBuffer ; $52c0
 	wram_bank WRAM_STAGING ; $52c3
-	ld hl, wTextTileBuffer ; $52c9
+	ld hl, wDecompBufferHigh ; $52c9
 	ld bc, $0901 ; $52cc
 	ld e, $01 ; $52cf
 	call Unused_1a_DrawStringToTileBuffer ; $52d1
@@ -566,21 +566,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $52d7
 	call Unused_1a_LoadDialogueTextToBuffer ; $52da
 	wram_bank WRAM_STAGING ; $52dd
-	ld hl, wTextTileBuffer ; $52e3
+	ld hl, wDecompBufferHigh ; $52e3
 	ld bc, $0201 ; $52e6
 	ld e, $01 ; $52e9
 	call Unused_1a_DrawStringToTileBuffer ; $52eb
 	ld hl, Text_NameBeth ; $52ee
 	call Unused_1a_LoadDialogueTextToBuffer ; $52f1
 	wram_bank WRAM_STAGING ; $52f4
-	ld hl, wTextTileBuffer ; $52fa
+	ld hl, wDecompBufferHigh ; $52fa
 	ld bc, $0601 ; $52fd
 	ld e, $01 ; $5300
 	call Unused_1a_DrawStringToTileBuffer ; $5302
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $5305
 	call Unused_1a_LoadDialogueTextToBuffer ; $5308
 	wram_bank WRAM_STAGING ; $530b
-	ld hl, wTextTileBuffer ; $5311
+	ld hl, wDecompBufferHigh ; $5311
 	ld bc, $0a01 ; $5314
 	ld e, $01 ; $5317
 	call Unused_1a_DrawStringToTileBuffer ; $5319
@@ -589,21 +589,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $531f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5322
 	wram_bank WRAM_STAGING ; $5325
-	ld hl, wTextTileBuffer ; $532b
+	ld hl, wDecompBufferHigh ; $532b
 	ld bc, $0201 ; $532e
 	ld e, $01 ; $5331
 	call Unused_1a_DrawStringToTileBuffer ; $5333
 	ld hl, Text_NameFay ; $5336
 	call Unused_1a_LoadDialogueTextToBuffer ; $5339
 	wram_bank WRAM_STAGING ; $533c
-	ld hl, wTextTileBuffer ; $5342
+	ld hl, wDecompBufferHigh ; $5342
 	ld bc, $0601 ; $5345
 	ld e, $01 ; $5348
 	call Unused_1a_DrawStringToTileBuffer ; $534a
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $534d
 	call Unused_1a_LoadDialogueTextToBuffer ; $5350
 	wram_bank WRAM_STAGING ; $5353
-	ld hl, wTextTileBuffer ; $5359
+	ld hl, wDecompBufferHigh ; $5359
 	ld bc, $0a01 ; $535c
 	ld e, $01 ; $535f
 	call Unused_1a_DrawStringToTileBuffer ; $5361
@@ -612,21 +612,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $5367
 	call Unused_1a_LoadDialogueTextToBuffer ; $536a
 	wram_bank WRAM_STAGING ; $536d
-	ld hl, wTextTileBuffer ; $5373
+	ld hl, wDecompBufferHigh ; $5373
 	ld bc, $0201 ; $5376
 	ld e, $01 ; $5379
 	call Unused_1a_DrawStringToTileBuffer ; $537b
 	ld hl, Text_NameCurt ; $537e
 	call Unused_1a_LoadDialogueTextToBuffer ; $5381
 	wram_bank WRAM_STAGING ; $5384
-	ld hl, wTextTileBuffer ; $538a
+	ld hl, wDecompBufferHigh ; $538a
 	ld bc, $0601 ; $538d
 	ld e, $01 ; $5390
 	call Unused_1a_DrawStringToTileBuffer ; $5392
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $5395
 	call Unused_1a_LoadDialogueTextToBuffer ; $5398
 	wram_bank WRAM_STAGING ; $539b
-	ld hl, wTextTileBuffer ; $53a1
+	ld hl, wDecompBufferHigh ; $53a1
 	ld bc, $0901 ; $53a4
 	ld e, $01 ; $53a7
 	call Unused_1a_DrawStringToTileBuffer ; $53a9
@@ -635,21 +635,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $53af
 	call Unused_1a_LoadDialogueTextToBuffer ; $53b2
 	wram_bank WRAM_STAGING ; $53b5
-	ld hl, wTextTileBuffer ; $53bb
+	ld hl, wDecompBufferHigh ; $53bb
 	ld bc, $0201 ; $53be
 	ld e, $01 ; $53c1
 	call Unused_1a_DrawStringToTileBuffer ; $53c3
 	ld hl, Text_NameMark ; $53c6
 	call Unused_1a_LoadDialogueTextToBuffer ; $53c9
 	wram_bank WRAM_STAGING ; $53cc
-	ld hl, wTextTileBuffer ; $53d2
+	ld hl, wDecompBufferHigh ; $53d2
 	ld bc, $0601 ; $53d5
 	ld e, $01 ; $53d8
 	call Unused_1a_DrawStringToTileBuffer ; $53da
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $53dd
 	call Unused_1a_LoadDialogueTextToBuffer ; $53e0
 	wram_bank WRAM_STAGING ; $53e3
-	ld hl, wTextTileBuffer ; $53e9
+	ld hl, wDecompBufferHigh ; $53e9
 	ld bc, $0901 ; $53ec
 	ld e, $01 ; $53ef
 	call Unused_1a_DrawStringToTileBuffer ; $53f1
@@ -658,21 +658,21 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $53f7
 	call Unused_1a_LoadDialogueTextToBuffer ; $53fa
 	wram_bank WRAM_STAGING ; $53fd
-	ld hl, wTextTileBuffer ; $5403
+	ld hl, wDecompBufferHigh ; $5403
 	ld bc, $0201 ; $5406
 	ld e, $01 ; $5409
 	call Unused_1a_DrawStringToTileBuffer ; $540b
 	ld hl, Text_NameSean ; $540e
 	call Unused_1a_LoadDialogueTextToBuffer ; $5411
 	wram_bank WRAM_STAGING ; $5414
-	ld hl, wTextTileBuffer ; $541a
+	ld hl, wDecompBufferHigh ; $541a
 	ld bc, $0601 ; $541d
 	ld e, $01 ; $5420
 	call Unused_1a_DrawStringToTileBuffer ; $5422
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $5425
 	call Unused_1a_LoadDialogueTextToBuffer ; $5428
 	wram_bank WRAM_STAGING ; $542b
-	ld hl, wTextTileBuffer ; $5431
+	ld hl, wDecompBufferHigh ; $5431
 	ld bc, $0a01 ; $5434
 	ld e, $01 ; $5437
 	call Unused_1a_DrawStringToTileBuffer ; $5439
@@ -681,44 +681,44 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateChooseOwnLessons ; $543f
 	call Unused_1a_LoadDialogueTextToBuffer ; $5442
 	wram_bank WRAM_STAGING ; $5445
-	ld hl, wTextTileBuffer ; $544b
+	ld hl, wDecompBufferHigh ; $544b
 	ld bc, $0201 ; $544e
 	ld e, $01 ; $5451
 	call Unused_1a_DrawStringToTileBuffer ; $5453
 	ld hl, Text_NameSammi ; $5456
 	call Unused_1a_LoadDialogueTextToBuffer ; $5459
 	wram_bank WRAM_STAGING ; $545c
-	ld hl, wTextTileBuffer ; $5462
+	ld hl, wDecompBufferHigh ; $5462
 	ld bc, $0601 ; $5465
 	ld e, $01 ; $5468
 	call Unused_1a_DrawStringToTileBuffer ; $546a
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $546d
 	call Unused_1a_LoadDialogueTextToBuffer ; $5470
 	wram_bank WRAM_STAGING ; $5473
-	ld hl, wTextTileBuffer ; $5479
+	ld hl, wDecompBufferHigh ; $5479
 	ld bc, $0b01 ; $547c
 	ld e, $01 ; $547f
 	call Unused_1a_DrawStringToTileBuffer ; $5481
 	jr .drawFooterLine ; $5484
-.otherBonus:
+.nameElden:
 	ld hl, Text_RoommateChooseOwnLessons ; $5486
 	call Unused_1a_LoadDialogueTextToBuffer ; $5489
 	wram_bank WRAM_STAGING ; $548c
-	ld hl, wTextTileBuffer ; $5492
+	ld hl, wDecompBufferHigh ; $5492
 	ld bc, $0201 ; $5495
 	ld e, $01 ; $5498
 	call Unused_1a_DrawStringToTileBuffer ; $549a
 	ld hl, Text_NameElden ; $549d
 	call Unused_1a_LoadDialogueTextToBuffer ; $54a0
 	wram_bank WRAM_STAGING ; $54a3
-	ld hl, wTextTileBuffer ; $54a9
+	ld hl, wDecompBufferHigh ; $54a9
 	ld bc, $0601 ; $54ac
 	ld e, $01 ; $54af
 	call Unused_1a_DrawStringToTileBuffer ; $54b1
 	ld hl, Text_RoommateSeeLobVolleyCoach ; $54b4
 	call Unused_1a_LoadDialogueTextToBuffer ; $54b7
 	wram_bank WRAM_STAGING ; $54ba
-	ld hl, wTextTileBuffer ; $54c0
+	ld hl, wDecompBufferHigh ; $54c0
 	ld bc, $0901 ; $54c3
 	ld e, $01 ; $54c6
 	call Unused_1a_DrawStringToTileBuffer ; $54c8
@@ -727,7 +727,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld hl, Text_RoommateAreYouReady ; $54cd
 	call Unused_1a_LoadDialogueTextToBuffer ; $54d0
 	wram_bank WRAM_STAGING ; $54d3
-	ld hl, wTextTileBuffer ; $54d9
+	ld hl, wDecompBufferHigh ; $54d9
 	ld bc, $0203 ; $54dc
 	ld e, $01 ; $54df
 	call Unused_1a_DrawStringToTileBuffer ; $54e1
@@ -741,7 +741,7 @@ Unused_1a_DrawExpBonusMessage:
 	ld de, vBGMap0 + VRAM_BANK1 ; $54fe
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $5501
 	call QueueVRAMCopy ; $5503
-	ld hl, wDecompBuffer tile 64 ; $5506
+	ld hl, wDecompBuffer + TILEMAP_AREA ; $5506
 	ld de, vBGMap0 ; $5509
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $550c
 	call QueueVRAMCopy ; $550e

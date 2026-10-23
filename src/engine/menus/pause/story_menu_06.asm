@@ -1,18 +1,18 @@
-TextRectAttrs_06:
+StoryMenuItemRowAttrs:
 	; $6973, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 1
 	tilemap_end
-Unused_06_DrawMusicMenuRow:
+Unused_06_DrawPauseMenuItemRow:
 	ld_cell de, $03, $0a ; $698b
 	call GetShadowTilemapAddr ; $698e
-	ld hl, Unused_06_DrawMusicMenuRowTextRect ; $6991
+	ld hl, Unused_06_PauseMenuItemRowTextRect ; $6991
 	ld_size bc, $0c, $02 ; $6994
 	call CopyTextRect ; $6997
 	ld_cell de, $03, $0a ; $699a
 	call GetShadowAttrmapAddr ; $699d
-	ld hl, TextRectAttrs_06 ; $69a0
+	ld hl, StoryMenuItemRowAttrs ; $69a0
 	ld_size bc, $0c, $02 ; $69a3
 	call CopyTextRect ; $69a6
 	ld a, [wCourtViewLocked] ; $69a9
@@ -27,7 +27,7 @@ QueueMatchMenuCursorSprite:
 	add $fc ; $69b8
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
-	ld hl, QueueMatchMenuCursorSprite_SpriteTemplate ; $69be
+	ld hl, MatchMenuCursorAndCaptionSpriteTemplate ; $69be
 	ld_oam bc, 0, $00 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
@@ -48,7 +48,7 @@ DrawScoreboardModeTitle:
 	ld_oam bc, 0, $00 ; $69e0
 	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
-QueueMatchMenuCursorSprite_SpriteTemplate:
+MatchMenuCursorAndCaptionSpriteTemplate:
 	; $69e7, 41 bytes (sprite_template)
 	oam_sprite $00, $20, $64, $02
 	oam_sprite $00, $28, $66, $02
@@ -232,9 +232,9 @@ Unused_06_RunDebugStatsEditor:
 	ldh a, [hWramBank] ; $6b84
 	push af ; $6b86
 	farcall StepMatchFrame ; $6b87
-	farcall Unused_01_LoadMenuTilesBChunk2 ; $6b8a
+	farcall Unused_01_LoadMenuFontUppercaseTiles ; $6b8a
 	wram_bank WRAM_CHAR0 ; $6b8d
-	ld hl, wCharPosX ; $6b93
+	ld hl, wCharStruct ; $6b93
 	ld de, wDebugStatsBackup ; $6b96
 	ld c, wDebugStatsBackup_SIZE / 16 ; $6b99
 	call CopyMemoryFast ; $6b9b
@@ -268,13 +268,13 @@ Unused_06_RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6bdc
 	wram_bank WRAM_CHAR0 ; $6bdf
 	ld hl, wDebugStatsBackup ; $6be5
-	ld de, wCharPosX ; $6be8
+	ld de, wCharStruct ; $6be8
 	ld c, wDebugStatsBackup_SIZE / 16 ; $6beb
 	call CopyMemoryFast ; $6bed
 	pop_wram_bank ; $6bf0
 	ret ; $6bf5
 Unused_06_HandleDebugStatsInput:
-	ldh a, [hInputPressed] ; $6bf6
+	ldh a, [hInputRepeat] ; $6bf6
 	ld b, a ; $6bf8
 	ld c, $0b ; $6bf9
 	ld a, [wMatchMenuSelection] ; $6bfb
@@ -356,7 +356,7 @@ Unused_06_AdjustSelectedDebugStat:
 	ld hl, wDebugStatBytes + 7 ; $6c97
 	jp Unused_06_AdjustDebugStatDigit ; $6c9a
 Unused_06_AdjustDebugStatDigit:
-	ldh a, [hInputPressed] ; $6c9d
+	ldh a, [hInputRepeat] ; $6c9d
 	ld b, a ; $6c9f
 	ld c, $0a ; $6ca0
 	ld a, [hl] ; $6ca2
@@ -364,7 +364,7 @@ Unused_06_AdjustDebugStatDigit:
 	ld [hl], a ; $6ca6
 	ret ; $6ca7
 Unused_06_AdjustDebugStatByte:
-	ldh a, [hInputPressed] ; $6ca8
+	ldh a, [hInputRepeat] ; $6ca8
 	bit PADB_LEFT, a ; $6caa
 	jr nz, .decrease ; $6cac
 	bit PADB_RIGHT, a ; $6cae
@@ -381,7 +381,7 @@ Unused_06_AdjustDebugStatByte:
 	ld [hl], a ; $6cb9
 	ret ; $6cba
 Unused_06_AdjustDebugStatWord:
-	ldh a, [hInputPressed] ; $6cbb
+	ldh a, [hInputRepeat] ; $6cbb
 	bit PADB_LEFT, a ; $6cbd
 	jr nz, .decrease ; $6cbf
 	bit PADB_RIGHT, a ; $6cc1
@@ -592,7 +592,7 @@ RunStoryModeMenu:
 	ld a, TILEATTR_PRIORITY | TILEATTR_PAL1 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
 	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e35
-	farcall LoadMatchStoryGfx ; $6e38
+	farcall LoadStoryPauseMenuGfx ; $6e38
 	call RestoreStoryTilemapNoPriority ; $6e3b
 	rect_cell $00, $0e ; $6e3e
 	rect_size $13, $03 ; $6e42
@@ -600,9 +600,9 @@ RunStoryModeMenu:
 	call AdvanceFrame ; $6e49
 	wram_bank WRAM_TEXT ; $6e4c
 .loop:
-	ld hl, ScoreboardModeGfxTail ; $6e52
+	ld hl, MatchMenuCursorArrowTiles ; $6e52
 	ld de, vTiles0 tile $64 ; $6e55
-	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6e58
+	ld c, (MatchMenuItemGfx_Rules - MatchMenuCursorArrowTiles) / 16 ; $6e58
 	call QueueVRAMCopy ; $6e5a
 	ld a, STORYMENU_PAUSE ; $6e5d
 	ld [wPauseMenuId], a ; $6e5f
@@ -657,9 +657,9 @@ StoryPauseMenu_AfterItem:
 	ret ; $6ec6
 Unused_06_StoryMenuRedrawReentry:
 	call Unused_06_DrawStoryMenuItemRow ; $6ec7
-	ld hl, ScoreboardModeGfxTail ; $6eca
+	ld hl, MatchMenuCursorArrowTiles ; $6eca
 	ld de, vTiles0 tile $64 ; $6ecd
-	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0
+	ld c, (MatchMenuItemGfx_Rules - MatchMenuCursorArrowTiles) / 16 ; $6ed0
 	call QueueVRAMCopy ; $6ed2
 	jr .loadItemGfx ; $6ed5
 .loop:
@@ -827,7 +827,7 @@ StoryPauseMenu_MusicToggle:
 	call SetMusicMuted ; $7024
 	ldh a, [hMusicFlags] ; $7027
 	and MUSICF_MUTED ; $7029
-	farcall SetStorySlotFlagA ; $702b
+	farcall SetStorySlotMusicMuted ; $702b
 .done:
 	ret ; $702e
 StoryPauseMenu_SaveQuit:

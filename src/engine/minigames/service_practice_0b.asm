@@ -20,7 +20,7 @@ ServiceMatch3Hooks:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw ServiceMatch3Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServiceMatch3Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServiceMatch3Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch3Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServiceMatch3Hook_PerFrame:
@@ -67,8 +67,8 @@ ServiceMatch3Hook_PointEnd:
 	ld a, WINLOSE_NONE ; $4c86
 	ld [wPointWinLoseFlag], a ; $4c88
 	ret ; $4c8b
-ServiceMatch3Hook_RallyTick:
-	call ServiceMatch3JudgeOnRallyTick ; $4c8c
+ServiceMatch3Hook_NetCross:
+	call ServiceMatch3JudgeOnNetCross ; $4c8c
 	ret ; $4c8f
 ServiceMatch3Hook_Bounce:
 	call ServiceMatch3JudgeOnBounce ; $4c90
@@ -103,10 +103,10 @@ ServiceMatch3HandlePointEnd:
 	ld a, [wDrillCounters + DRILLCTR_P2_SUCCESSES] ; $4cce
 	ld [wPlayer2PointsWon], a ; $4cd1
 	ld a, [wPlayer1PointsWon] ; $4cd4
-	ld b, $01 ; $4cd7
+	ld b, DIGITGFX_NUMERALS ; $4cd7
 	farcall LoadPlayer1PointsDigitGfx ; $4cd9
 	ld a, [wPlayer2PointsWon] ; $4cdc
-	ld b, $01 ; $4cdf
+	ld b, DIGITGFX_NUMERALS ; $4cdf
 	farcall LoadPlayer2PointsDigitGfx ; $4ce1
 	farcall StepMatchFrame ; $4ce4
 	farcall StartPointEndReactions ; $4ce7
@@ -129,9 +129,9 @@ ServiceMatch3JudgeOnBounce:
 	call ServiceMatch3JudgePoint ; $4d2c
 	ld [wDrillPointJudgement], a ; $4d2f
 	ret ; $4d32
-ServiceMatch3JudgeOnRallyTick:
+ServiceMatch3JudgeOnNetCross:
 	ret ; $4d33
-	ld a, JUDGEEVENT_RALLY_TICK ; $4d34
+	ld a, JUDGEEVENT_NET_CROSS ; $4d34
 	call ServiceMatch3JudgePoint ; $4d36
 	ld [wDrillPointJudgement], a ; $4d39
 	ret ; $4d3c
@@ -144,28 +144,28 @@ ServiceMatch3JudgePoint:
 	dec a ; $4d46
 	jumptable a ; $4d47
 	dw ServiceMatch3JudgePoint.rally1 ; $4d49 jumptable
-	dw ServiceMatch3Cases1.dispatchResult ; $4d4b jumptable
+	dw ServiceMatch3Cases1.rally2 ; $4d4b jumptable
 .rally1:
 	ld a, b ; $4d4d
 	jumptable a ; $4d4e
-	dw ServiceMatch3JudgePoint.result0 ; $4d50 jumptable
+	dw ServiceMatch3JudgePoint.rally1PointEnd ; $4d50 jumptable
 	dw ServiceMatch3Cases1 ; $4d52 jumptable
 	dw ServiceMatch3Cases1.ignoreBounce ; $4d54 jumptable
-	dw ServiceMatch3Cases1.ignoreRallyTick ; $4d56 jumptable
-.result0:
+	dw ServiceMatch3Cases1.ignoreNetCross ; $4d56 jumptable
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $4d58
-	ld hl, ServiceMatch3JudgePointMessages ; $4d5b
+	ld hl, ServiceMatch3Rally1Messages ; $4d5b
 	add_hl_a ; $4d5e
 	ld a, [hl] ; $4d63
 	ld a, a ; $4d64
 	ld b, DRILLWORDING_SERVICE ; $4d65
-	call QueueDrillResultMessage ; $4d67
+	call SetDrillServerMessage ; $4d67
 	ld a, [wPointOutcome] ; $4d6a
 	ld hl, OddRallyVerdicts ; $4d6d
 	add_hl_a ; $4d70
 	ld a, [hl] ; $4d75
 	ret ; $4d76
-ServiceMatch3JudgePointMessages:
+ServiceMatch3Rally1Messages:
 	; $4d77, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch3Cases1:
@@ -174,30 +174,30 @@ ServiceMatch3Cases1:
 .ignoreBounce:
 	xor a ; $4d83
 	ret ; $4d84
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $4d85
 	ret ; $4d86
-.dispatchResult:
+.rally2:
 	ld a, b ; $4d87
 	jumptable a ; $4d88
-	dw ServiceMatch3Cases1.checkPointOutcome ; $4d8a jumptable
+	dw ServiceMatch3Cases1.rally2PointEnd ; $4d8a jumptable
 	dw ServiceMatch3Cases2 ; $4d8c jumptable
 	dw ServiceMatch3Cases2.ignoreBounce ; $4d8e jumptable
-	dw ServiceMatch3Cases2.ignoreRallyTick ; $4d90 jumptable
-.checkPointOutcome:
+	dw ServiceMatch3Cases2.ignoreNetCross ; $4d90 jumptable
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $4d92
-	ld hl, ServiceMatch3Cases1Messages ; $4d95
+	ld hl, ServiceMatch3Rally2Messages ; $4d95
 	add_hl_a ; $4d98
 	ld a, [hl] ; $4d9d
 	ld a, a ; $4d9e
 	ld b, DRILLWORDING_SERVICE ; $4d9f
-	call QueueDrillResultMessage ; $4da1
+	call SetDrillServerMessage ; $4da1
 	ld a, [wPointOutcome] ; $4da4
 	ld hl, EvenRallyVerdicts ; $4da7
 	add_hl_a ; $4daa
 	ld a, [hl] ; $4daf
 	ret ; $4db0
-ServiceMatch3Cases1Messages:
+ServiceMatch3Rally2Messages:
 	; $4db1, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch3Cases2:
@@ -207,7 +207,7 @@ ServiceMatch3Cases2:
 	ret z ; $4dc2
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4dc3
 	ld b, DRILLWORDING_SERVICE ; $4dc5
-	call QueueDrillResultMessage ; $4dc7
+	call SetDrillServerMessage ; $4dc7
 	jr DrillPointLost_3 ; $4dca
 .unreachable:
 	xor a ; $4dcc
@@ -215,7 +215,7 @@ ServiceMatch3Cases2:
 .ignoreBounce:
 	xor a ; $4dce
 	ret ; $4dcf
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $4dd0
 	ret ; $4dd1
 Unused_0b_DrillPointWon_3:
@@ -244,7 +244,7 @@ ServicePractice1Hooks:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw ServicePractice1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServicePractice1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServicePractice1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServicePractice1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServicePractice1Hook_PerFrame:
@@ -260,7 +260,7 @@ ServicePractice1Hook_PointStart:
 	ld [wDrillMessageId], a ; $4e16
 	ld a, $01 ; $4e19
 	ld [wTargetZoneEnabled], a ; $4e1b
-	ld hl, ServicePractice1PointStartDrillPositions ; $4e1e
+	ld hl, ServicePractice1TargetZones ; $4e1e
 	call SetDrillTargetZoneForPoint ; $4e21
 	ret ; $4e24
 ServicePractice1Hook_PointEnd:
@@ -311,7 +311,7 @@ ServicePractice1EvaluateResult:
 	ld [wDrillLessonResult], a ; $4e6e
 	ld a, WINLOSE_WIN ; $4e71
 	ret ; $4e73
-ServicePractice1Hook_RallyTick:
+ServicePractice1Hook_NetCross:
 	ret ; $4e74
 	twin_named service_practice1_hook_bounce, ServicePractice1Hook_Bounce ; $4e75
 Unused_0b_ServeSecondBounceSound_1:
@@ -329,17 +329,17 @@ ServicePractice1Hook_BallHit:
 	jr c, .done ; $4e93
 	ld a, $01 ; $4e95
 	ld [wDrillAbortCountdownActive], a ; $4e97
-	call ResetActiveCharState ; $4e9a
+	call SetOpponentCharInert ; $4e9a
 	sound SFX_MENU_SELECT ; $4e9d
 .done:
 	ret ; $4e9f
-ServicePractice1PointStartDrillPositions:
-	; $4ea0, 34 bytes (drill_gates)
-; drill_gates x1, depth1, x2, depth2
-	drill_gates $fe50, $fd60, $ff28, $feb0 ; point 0
-	drill_gates $00d8, $fd60, $01b0, $feb0 ; point 1
-	drill_gates $00d8, $0150, $01b0, $02a0 ; point 2
-	drill_gates $fe50, $0150, $ff28, $02a0 ; point 3
+ServicePractice1TargetZones:
+	; $4ea0, 34 bytes (drill_target_zone)
+; drill_target_zone x1, depth1, x2, depth2
+	drill_target_zone $fe50, $fd60, $ff28, $feb0 ; point 0
+	drill_target_zone $00d8, $fd60, $01b0, $feb0 ; point 1
+	drill_target_zone $00d8, $0150, $01b0, $02a0 ; point 2
+	drill_target_zone $fe50, $0150, $ff28, $02a0 ; point 3
 	db $ff, $ff ; end
 ServicePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4ec2
@@ -360,10 +360,10 @@ ServicePractice1HandlePointEnd:
 	xor a ; $4eed
 	ld [wPlayer2PointsWon], a ; $4eee
 	ld a, [wPlayer1PointsWon] ; $4ef1
-	ld b, $01 ; $4ef4
+	ld b, DIGITGFX_NUMERALS ; $4ef4
 	farcall LoadPlayer1PointsDigitGfx ; $4ef6
 	ld a, [wPlayer2PointsWon] ; $4ef9
-	ld b, $01 ; $4efc
+	ld b, DIGITGFX_NUMERALS ; $4efc
 	farcall LoadPlayer2PointsDigitGfx ; $4efe
 	farcall StepMatchFrame ; $4f01
 	frame_task SyncPointWinLoseFlagTask ; $4f04
@@ -389,18 +389,18 @@ ServicePractice1QueueOutcomeMessage:
 	jr z, .doubleFault ; $4f34
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $4f36
 	ld b, DRILLWORDING_SAME ; $4f38
-	call QueueDrillResultMessage ; $4f3a
+	call SetDrillServerMessage ; $4f3a
 	call CheckDrillTargetZoneHit ; $4f3d
 	or a ; $4f40
 	jr z, .missed ; $4f41
 	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $4f43
 	ld b, DRILLWORDING_SAME ; $4f45
-	call QueueDrillResultMessage ; $4f47
+	call SetDrillServerMessage ; $4f47
 	jr .targetHit ; $4f4a
 .doubleFault:
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $4f4c
 	ld b, DRILLWORDING_SAME ; $4f4e
-	call QueueDrillResultMessage ; $4f50
+	call SetDrillServerMessage ; $4f50
 	ld a, WINLOSE_LOSE ; $4f53
 	ret ; $4f55
 .unreachable:
@@ -434,7 +434,7 @@ ServicePractice2Hooks:
 	dw ServicePractice2Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ServicePractice2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServicePractice2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServicePractice2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServicePractice2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServicePractice2Hook_MinigameStart:
@@ -452,7 +452,7 @@ ServicePractice2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $4fa2
 	ld a, $01 ; $4fa5
 	ld [wTargetZoneEnabled], a ; $4fa7
-	ld hl, ServicePractice2PointStartDrillPositions ; $4faa
+	ld hl, ServicePractice2TargetZones ; $4faa
 	call SetDrillTargetZoneForPoint ; $4fad
 	ASSERT DRILLMSG_NONE == 0
 	xor a ; $4fb0
@@ -489,14 +489,14 @@ ServicePractice2EvaluateResult:
 .countTargetZoneMisses:
 	call CountDrillTargetZoneMisses ; $4fe9
 	or a ; $4fec
-	jr z, .checkCounter2 ; $4fed
+	jr z, .checkSliceServesLeft ; $4fed
 	ld a, LESSON_SERVE_MISSED_TARGET ; $4fef
 	ld [wDrillLessonResult], a ; $4ff1
 	jr .lessonFailed ; $4ff4
-.checkCounter2:
+.checkSliceServesLeft:
 	ld a, [wDrillCounters + DRILLCTR_SLICE_SERVES_LEFT] ; $4ff6
 	or a ; $4ff9
-	jr z, .checkCounter1 ; $4ffa
+	jr z, .checkTopspinServesLeft ; $4ffa
 	ld a, [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT] ; $4ffc
 	or a ; $4fff
 	jr z, .byHandedness ; $5000
@@ -511,7 +511,7 @@ ServicePractice2EvaluateResult:
 	add b ; $5010
 	ld [wDrillLessonResult], a ; $5011
 	jr .lessonFailed ; $5014
-.checkCounter1:
+.checkTopspinServesLeft:
 	ld a, [wDrillCounters + DRILLCTR_TOPSPIN_SERVES_LEFT] ; $5016
 	or a ; $5019
 	jr z, .allPassed ; $501a
@@ -529,10 +529,10 @@ ServicePractice2EvaluateResult:
 	ld [wDrillLessonResult], a ; $502b
 	ld a, WINLOSE_WIN ; $502e
 	ret ; $5030
-ServicePractice2Hook_RallyTick:
+ServicePractice2Hook_NetCross:
 	ret ; $5031
 ServicePractice2Hook_Bounce:
-	ld a, [wBallHasBouncedFlag] ; $5032
+	ld a, [wBallTouchedNetFlag] ; $5032
 	or a ; $5035
 	ret nz ; $5036
 	ld a, [wRallyLength] ; $5037

@@ -1,5 +1,5 @@
 BuildPartnerStatPage:
-	ld a, $01 ; $4b50
+	ld a, STORYREC_PARTNER ; $4b50
 	ld [wStoryCharacterSlot], a ; $4b52
 	call BuildCharStatDisplay ; $4b55
 	wram_bank WRAM_SCENE ; $4b58
@@ -85,39 +85,39 @@ ApplyTilemapPatchList:
 	jr ApplyTilemapPatchList ; $4c02
 DrawCharDataPageArrowsTask:
 	wram_bank WRAM_SCENE ; $4c04
-	ld a, [wCharDataArrowHold] ; $4c0a
+	ld a, [wCharDataArrowSlideX] ; $4c0a
 	or a ; $4c0d
 	jr nz, .drawArrows ; $4c0e
 	ld hl, wCharDataArrowPhase ; $4c10
 	inc [hl] ; $4c13
 .drawArrows:
-	ld a, [wCharDataPageArrowMode] ; $4c14
+	ld a, [wCharDataStatPageView] ; $4c14
 	or a ; $4c17
 	jr z, .bothArrows ; $4c18
 	dec a ; $4c1a
-	jr z, .countDone ; $4c1b
+	jr z, .mainPageArrow ; $4c1b
 	ld de, $0103 ; $4c1d
 	call BobArrowSpriteLeft ; $4c20
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate2 ; $4c23
+	ld hl, CharDataBackLeftArrowTemplate ; $4c23
 	sprite_attr_tile OAM_BANK1 | 6, $28 ; $4c26
 	call QueueSpriteTemplate ; $4c2a
 	ret ; $4c2d
-.countDone:
+.mainPageArrow:
 	ld_xy de, $7f, $03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate3 ; $4c34
+	ld hl, CharDataBackRightArrowTemplate ; $4c34
 	sprite_attr_tile OAM_BANK1 | 6, $30 ; $4c37
 	call QueueSpriteTemplate ; $4c3b
 	ret ; $4c3e
 .bothArrows:
 	ld de, $1010 ; $4c3f
 	call BobArrowSpriteLeft ; $4c42
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate0 ; $4c45
+	ld hl, CharDataMoreLeftArrowTemplate ; $4c45
 	sprite_attr_tile OAM_BANK1 | 6, $14 ; $4c48
 	call QueueSpriteTemplate ; $4c4c
 	ld_xy de, $68, $10 ; $4c4f
 	call BobArrowSpriteRight ; $4c52
-	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate1 ; $4c55
+	ld hl, CharDataMoreRightArrowTemplate ; $4c55
 	sprite_attr_tile OAM_BANK1 | 6, $1e ; $4c58
 	call QueueSpriteTemplate ; $4c5c
 	ret ; $4c5f
@@ -132,7 +132,7 @@ BobArrowSpriteLeft:
 	inc a ; $4c75
 	add d ; $4c76
 	ld d, a ; $4c77
-	ld a, [wCharDataArrowHold] ; $4c78
+	ld a, [wCharDataArrowSlideX] ; $4c78
 	cpl ; $4c7b
 	inc a ; $4c7c
 	add d ; $4c7d
@@ -147,16 +147,16 @@ BobArrowSpriteRight:
 	ld a, [hl] ; $4c93
 	add d ; $4c94
 	ld d, a ; $4c95
-	ld a, [wCharDataArrowHold] ; $4c96
+	ld a, [wCharDataArrowSlideX] ; $4c96
 	add d ; $4c99
 	ld d, a ; $4c9a
 	ret ; $4c9b
 CharDataArrowBobOffsetTable_1d:
 	; $4c9c, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
-RunDrillResultInputLoop:
+RunCharDataPageInputLoop:
 	wram_bank WRAM_SCENE ; $4cac
-	ld a, [wCharDataPageArrowMode] ; $4cb2
+	ld a, [wCharDataStatPageView] ; $4cb2
 	or a ; $4cb5
 	jr z, .overviewLoop ; $4cb6
 	dec a ; $4cb8
@@ -198,7 +198,7 @@ RunDrillResultInputLoop:
 	call SlideToPartnerStatPage ; $4d21
 	wram_bank WRAM_SCENE ; $4d24
 	ld a, $02 ; $4d2a
-	ld [wCharDataPageArrowMode], a ; $4d2c
+	ld [wCharDataStatPageView], a ; $4d2c
 	frame_task SlideCharDataArrowsInTask ; $4d2f
 	jp .partnerPageLoop ; $4d37
 .toMainPage:
@@ -225,7 +225,7 @@ RunDrillResultInputLoop:
 	call SlideToMainCharStatPage ; $4d82
 	wram_bank WRAM_SCENE ; $4d85
 	ld a, $01 ; $4d8b
-	ld [wCharDataPageArrowMode], a ; $4d8d
+	ld [wCharDataStatPageView], a ; $4d8d
 	frame_task SlideCharDataArrowsInTask ; $4d90
 	jr .mainPageLoop ; $4d98
 .cancel:
@@ -252,12 +252,12 @@ RunDrillResultInputLoop:
 	call SlideFromMainCharStatPage ; $4dc3
 	wram_bank WRAM_SCENE ; $4dc6
 	xor a ; $4dcc
-	ld [wCharDataPageArrowMode], a ; $4dcd
+	ld [wCharDataStatPageView], a ; $4dcd
 	call ClearFrameTasks ; $4dd0
 	frame_task CharDataScreenBgScrollTask ; $4dd3
 	frame_task SlideCharDataArrowsInTask ; $4ddb
 	frame_task DrawCharDataPageArrowsTask ; $4de3
-	frame_task CharDataValuesSyncTask ; $4deb
+	frame_task DrawCharDataSummarySpritesTask ; $4deb
 	farcall StartCharDataScreenAnimTask ; $4df3
 	jp .overviewLoop ; $4df6
 .mainPageCancel:
@@ -284,12 +284,12 @@ RunDrillResultInputLoop:
 	call SlideFromPartnerStatPage ; $4e22
 	wram_bank WRAM_SCENE ; $4e25
 	xor a ; $4e2b
-	ld [wCharDataPageArrowMode], a ; $4e2c
+	ld [wCharDataStatPageView], a ; $4e2c
 	call ClearFrameTasks ; $4e2f
 	frame_task CharDataScreenBgScrollTask ; $4e32
 	frame_task SlideCharDataArrowsInTask ; $4e3a
 	frame_task DrawCharDataPageArrowsTask ; $4e42
-	frame_task CharDataValuesSyncTask ; $4e4a
+	frame_task DrawCharDataSummarySpritesTask ; $4e4a
 	farcall StartCharDataScreenAnimTask ; $4e52
 	jp .overviewLoop ; $4e55
 .partnerPageCancel:
@@ -300,9 +300,9 @@ RunDrillResultInputLoop:
 	ret ; $4e5d
 SlideCharDataArrowsOutTask:
 	wram_bank WRAM_SCENE ; $4e5e
-	ld a, [wCharDataArrowHold] ; $4e64
+	ld a, [wCharDataArrowSlideX] ; $4e64
 	add $04 ; $4e67
-	ld [wCharDataArrowHold], a ; $4e69
+	ld [wCharDataArrowSlideX], a ; $4e69
 	cp $40 ; $4e6c
 	ret c ; $4e6e
 	ld hl, SlideCharDataArrowsOutTask ; $4e6f
@@ -310,9 +310,9 @@ SlideCharDataArrowsOutTask:
 	ret ; $4e75
 SlideCharDataArrowsInTask:
 	wram_bank WRAM_SCENE ; $4e76
-	ld a, [wCharDataArrowHold] ; $4e7c
+	ld a, [wCharDataArrowSlideX] ; $4e7c
 	sub $08 ; $4e7f
-	ld [wCharDataArrowHold], a ; $4e81
+	ld [wCharDataArrowSlideX], a ; $4e81
 	or a ; $4e84
 	ret nz ; $4e85
 	ld hl, SlideCharDataArrowsInTask ; $4e86
@@ -330,13 +330,13 @@ BuildCharStatDisplay:
 	pop af ; $4ec0
 	ld a, [hl] ; $4ec1
 	inc a ; $4ec2
-	ld [wCharDataStats], a ; $4ec3
+	ld [wCharDataStats + CHARSTAT_TOP], a ; $4ec3
 	push af ; $4ec6
 	ld_story_char_field CHARREC_STAT_SLICE ; $4ec7
 	pop af ; $4eda
 	ld a, [hl] ; $4edb
 	inc a ; $4edc
-	ld [wCharDataStats + 1], a ; $4edd
+	ld [wCharDataStats + CHARSTAT_SLICE], a ; $4edd
 	push af ; $4ee0
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_POWER ; $4ee1
 	pop af ; $4ef4
@@ -347,19 +347,19 @@ BuildCharStatDisplay:
 	pop af ; $4f0d
 	ld a, [hl] ; $4f0e
 	inc a ; $4f0f
-	ld [wCharDataStats + 2], a ; $4f10
+	ld [wCharDataStats + CHARSTAT_SERVE], a ; $4f10
 	push af ; $4f13
 	ld_story_char_field CHARREC_STAT_STROKE ; $4f14
 	pop af ; $4f27
 	ld a, [hl] ; $4f28
 	inc a ; $4f29
-	ld [wCharDataStats + 3], a ; $4f2a
+	ld [wCharDataStats + CHARSTAT_STROKE], a ; $4f2a
 	push af ; $4f2d
 	ld_story_char_field CHARREC_STAT_VOLLEY ; $4f2e
 	pop af ; $4f41
 	ld a, [hl] ; $4f42
 	inc a ; $4f43
-	ld [wCharDataStats + 4], a ; $4f44
+	ld [wCharDataStats + CHARSTAT_VOLLEY], a ; $4f44
 	push af ; $4f47
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_CONTROL ; $4f48
 	pop af ; $4f5b
@@ -370,13 +370,13 @@ BuildCharStatDisplay:
 	pop af ; $4f74
 	ld a, [hl] ; $4f75
 	inc a ; $4f76
-	ld [wCharDataStats + 5], a ; $4f77
+	ld [wCharDataStats + CHARSTAT_ANGLE], a ; $4f77
 	push af ; $4f7a
 	ld_story_char_field CHARREC_STAT_PLACEMENT ; $4f7b
 	pop af ; $4f8e
 	ld a, [hl] ; $4f8f
 	inc a ; $4f90
-	ld [wCharDataStats + 6], a ; $4f91
+	ld [wCharDataStats + CHARSTAT_PLACEMENT], a ; $4f91
 	push af ; $4f94
 	ld_story_char_field CHARREC_TRAIN_LEVELS + TRAINSTAT_SPEED ; $4f95
 	pop af ; $4fa8
@@ -387,25 +387,25 @@ BuildCharStatDisplay:
 	pop af ; $4fc1
 	ld a, [hl] ; $4fc2
 	inc a ; $4fc3
-	ld [wCharDataStats + 7], a ; $4fc4
+	ld [wCharDataStats + CHARSTAT_SPEED], a ; $4fc4
 	push af ; $4fc7
 	ld_story_char_field CHARREC_STAT_DASH ; $4fc8
 	pop af ; $4fdb
 	ld a, [hl] ; $4fdc
 	inc a ; $4fdd
-	ld [wCharDataStats + 8], a ; $4fde
+	ld [wCharDataStats + CHARSTAT_DASH], a ; $4fde
 	push af ; $4fe1
 	ld_story_char_field CHARREC_STAT_REACTION ; $4fe2
 	pop af ; $4ff5
 	ld a, [hl] ; $4ff6
 	inc a ; $4ff7
-	ld [wCharDataStats + 9], a ; $4ff8
+	ld [wCharDataStats + CHARSTAT_REACTION], a ; $4ff8
 	push af ; $4ffb
 	ld_story_char_field CHARREC_STAT_STOP ; $4ffc
 	pop af ; $500f
 	ld a, [hl] ; $5010
 	inc a ; $5011
-	ld [wCharDataStats + 10], a ; $5012
+	ld [wCharDataStats + CHARSTAT_STOP], a ; $5012
 	farcall CharDataScreen_DrawStats ; $5015
 	wram_bank WRAM_SCREEN ; $5018
 	ld hl, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 1 ; $501e
@@ -478,7 +478,7 @@ SlideToMainCharStatPage:
 	ld hl, MainCharStatPageTilemapPatch04 ; $50ba
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $50bd
 	call ApplyTilemapPatchList ; $50c0
-	ld hl, DrillDisplayData_1d ; $50c3
+	ld hl, CharDataAttrClearPatch_1d ; $50c3
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $50c6
 	call ApplyTilemapPatchList ; $50c9
 	farcall FlushCharDataTilemapsFar ; $50cc
@@ -788,7 +788,7 @@ SlideFromMainCharStatPage:
 	ld hl, MainCharStatPageTilemapPatch04 ; $53f1
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $53f4
 	call ApplyTilemapPatchList ; $53f7
-	ld hl, DrillDisplayData_1d ; $53fa
+	ld hl, CharDataAttrClearPatch_1d ; $53fa
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $53fd
 	call ApplyTilemapPatchList ; $5400
 	farcall FlushCharDataTilemapsFar ; $5403
@@ -807,7 +807,7 @@ SlideFromMainCharStatPage:
 	ld hl, StatPageTilemapPatch8 ; $5427
 	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $542a
 	call ApplyTilemapPatchList ; $542d
-	ld hl, DrillDisplayData_1d ; $5430
+	ld hl, CharDataAttrClearPatch_1d ; $5430
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $5433
 	call ApplyTilemapPatchList ; $5436
 	farcall FlushCharDataTilemapsFar ; $5439

@@ -7,16 +7,16 @@ wShadowOAM:: ds 160
 	export_size wShadowOAM
 
 ; [80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank (0 = slot free), wram bank, src hi, src lo, vbk, dest hi, dest lo, length in 16-byte blocks - 1]. ProcessVRAMCopyQueues banks in the source, writes +$02..+$06 to $ff51-$ff54 and rVBK, starts the transfer by writing +$07 to $ff55, and clears +$00
-wVRAMCopyQueue:: ds 80
+wVRAMCopyQueue:: ds NUM_VRAMCOPY_SLOTS * VRAMCOPY_SLOT_SIZE
 	export_size wVRAMCopyQueue
 
 ; [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)
 wGameTimer:: ds 4
 
-; [8-bit] Enables wSecondaryTimer: UpdateGameTimer ticks it only while this is exactly 1. The unused countdown at $00:$240a writes $ff here when its clock runs out ($ff = expired)
+; [8-bit] Enables wSecondaryTimer: UpdateGameTimer ticks it only while this is exactly 1. Unused_00_TickSecondaryTimerCountdown writes $ff here when its clock runs out ($ff = expired)
 wSecondaryTimerMode:: db
 
-; [3 bytes] Second clock, ticked by Unused_00_TickSecondaryTimer: frames (0-59), seconds, minutes. Saturates at 9:59. The unused countdown at $00:$240a runs it downwards, sound $af each second and sound $b0 at zero
+; [3 bytes] Second clock, ticked by Unused_00_TickSecondaryTimer: frames (0-59), seconds, minutes. Saturates at 9:59. Unused_00_TickSecondaryTimerCountdown runs it downwards, sound $af each second and sound $b0 at zero
 wSecondaryTimer:: ds 3
 
 ; [8-bit] Width in pixels of the glyph Unused_00_RenderGlyphToTiles is drawing (glyph byte 0); the per-column loop count. The caller re-reads the byte afterwards to advance the pen
@@ -134,7 +134,7 @@ wStoryModeTriggerScript:: db
 ; [8-bit] Nonzero requests leaving the location loop (RunLocationExit + reload); cleared with $c2a0-$c2a5 by ClearStoryEventRequests. The value is an exit-trigger id, not a location: RunLocationExit matches it against the id column of map_tree slot 1, and that row's arg0 is the destination STORYLOC_* id, so one id leads to different places per location
 wStoryModeExitTriggerRequest:: db
 
-; [8-bit] Set to 1 by the overworld player-move code ($04:$52a6) when the point ahead of the player has a nonzero behaviour value. The location event loop consumes it; together with wPlayerMoving reaching $1e frames at an unchanged angle it turns walking into a door or sign into an interaction
+; [8-bit] Set to 1 by UpdatePlayerControl when the point straight ahead of the player is blocked. The location event loop consumes it; together with wPlayerWallPushFrames reaching $1e frames against an unchanged wPlayerBlockedBy it turns walking into a door or sign into an interaction
 wStoryAutoInteractArmed:: db
 
 ; [8-bit] $ff once the auto-interact has raised wStoryModeInteractRequest this frame, else 0. Read only by the debug-menu check later in the frame, which then stands down
@@ -148,7 +148,7 @@ wStoryModeMenuRequest:: db
 	ds 10
 
 UNION
-; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
+; [8-bit] Scene stage of the loaded location, derived from save flags by the map's init script (SetupCenterCourtStage, InitCourt1SceneVariant, ComputeIslandOpenRound, Unused_27_ComputeRankingProgressIndex, ...). NPC scripts index per-stage text-id tables with it. Values are per location. First byte of the $c2b0-$c2bf per-location scratch block
 wMapSceneStage:: db
 ; [8-bit] Second per-location scene stage, set by map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, ComputeSeniorCourtStage) and read by that location's NPC scripts to pick a text id
 wMapSceneStage2:: db
@@ -157,11 +157,17 @@ NEXTU
 ; [8-bit] Training Court (bank $15): the actor slot of the challenger a result scene walks on, from TrainingCourtReentryDispatch or the scene itself: $06 Bob (serve), $0c Allie (stroke), $11 Brian (net)
 wChallengerActor:: db
 NEXTU
-; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyEntry02Scene, IslandSkyEntry0eScene, IslandSkyEntry0fAnd0dScene and the plane sprite drawers)
-; [8-bit] World X of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollX
+; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyHomeFromIslandOpenScene, IslandSkyHomeFromPeachsCastleScene, IslandSkyToPeachsCastleScene and the plane sprite drawers)
+; [8-bit] World X of the plane sprite; GetCutscenePlaneScreenPos_14 subtracts hScrollX
 wCutscenePlaneX:: db
-; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
+; [8-bit] World Y of the plane sprite; GetCutscenePlaneScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
 wCutscenePlaneY:: db
+NEXTU
+; courts-tour pointer sprite (bank $13: AcademyCourtsTourCutscene, AnimateTourPointerSprite_13)
+; [8-bit] Screen X of the pointer arrow
+wTourPointerX:: db
+; [8-bit] Screen Y of the pointer arrow's lowest point; the animator bobs it up to 7 px above
+wTourPointerY:: db
 NEXTU
 ; [16-bit] Frames left in Unused_10_SwingContestPrototype; Unused_10_SwingContestCountTask counts it down (the bank $15 contest keeps it 2 bytes higher)
 wUnusedSwingProtoTimer:: dw
@@ -181,11 +187,11 @@ wCutsceneObjY:: dw
 wCutsceneObjPhase:: dw
 ; [2 bytes] Per-slot frame timer: the splash's hit counter (0-8), the firework's countdown to the next burst frame
 wCutsceneObjTimer:: dw
-; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns
+; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns; AnimateRainbowSprites_14 instead counts frames in byte 0 (sprite frame 1-3, wraps at 3)
 wCutsceneObjLimit:: dw
 ; [2 bytes] Frames left in the rise, counted down by AdvanceWaterSplash0Rise_14 / AdvanceWaterSplash1Rise_14, which also lift wCutsceneObjY by 2 per frame
 wCutsceneObjRiseTimer:: dw
-; [2 bytes] Per-slot halt flag: 0 while the effect runs (cleared when it starts), 1 set just before the scene exits. Nonzero skips the rise step and the island anim tick, and lets a splash finish instead of respawning
+; [2 bytes] Per-slot halt flag: 0 while the effect runs (cleared when it starts), 1 set just before the scene exits. Nonzero skips the rise step and the rainbow frame tick, and lets a splash finish instead of respawning
 wCutsceneObjHalt:: dw
 NEXTU
 ; water-sprite swing contest (bank $15)
@@ -196,12 +202,12 @@ wSwingContestTimer:: dw
 wSwingContestSwings:: dw
 ; [8-bit] Previous frame's A/B state, so one press counts once
 wSwingContestPrevInput:: db
-; [8-bit] 2 when a swing registers, 1 the frame after; triggers the swing animation once
+; [8-bit] Player pose: starts 1 (recover), each counted swing flips 1 <-> 2 (swing); 0 when the timer runs out ends the contest
 wSwingContestSwingState:: db
-; [8-bit] Which HUD panels QueueWaterSpriteMinigameHudPanels draws
-wSwingContestHudMode:: db
-; [8-bit] HUD page shown; seeded by InitWaterSpriteMinigameHud, panels queued by QueueWaterSpriteMinigameHudPanels
-wSwingContestHudPage:: db
+; [8-bit] Screen X of the timer panel QueueWaterSpriteMinigameHudPanels draws; slid on and off by the scene
+wSwingContestTimerPanelX:: db
+; [8-bit] Screen X of the counter panel; seeded by InitWaterSpriteMinigameHud
+wSwingContestCounterPanelX:: db
 NEXTU
 ; bank $10's swing contest prototype (Unused_10_SwingContestPrototype)
 ; [16-bit] Swings counted and printed by PrintHexWord
@@ -212,7 +218,7 @@ wUnusedSwingProtoPrevInput:: db
 wUnusedSwingProtoRunning:: db
 NEXTU
 ; Training Court challenger dialogue ids (bank $15, $5d00-$6400)
-; [16-bit] Each challenger result scene writes its court's tied-point text id here ($201d serve, $204a net, $2078 stroke) when wPointWinLoseFlag is WINLOSE_NONE, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerTiedTextId
+; [16-bit] Each challenger result scene writes its court's tied-point text id here (Text_ServeRivalTiedKeepGoing serve, Text_BrianTiedKeepGoing net, Text_AllieEvenKeepGoing stroke) when wPointWinLoseFlag is WINLOSE_NONE, one slot below the ids the handlers read. Nothing reads it; the live copy is wChallengerTiedTextId
 wUnusedChallengerTiedTextId:: dw
 ; [16-bit] Tied-point text id (Text_*TiedKeepGoing) seeded per court by the challenger setup scenes; ChallengerResultTied (WINLOSE_NONE) speaks it
 wChallengerTiedTextId:: dw
@@ -222,6 +228,48 @@ wChallengerRivalWonTextId:: dw
 wChallengerRivalLostTextId:: dw
 ; [16-bit] Follow-up dialogue text id spoken after the verdict line; overlaps the swing contest's two HUD bytes
 wChallengerFollowupTextId:: dw
+NEXTU
+; saved player position (SavePlayerActorPosition, bank $0f; the test maps read it back)
+; [16-bit] Player actor's ACTORF_X
+wSavedPlayerX:: dw
+; [16-bit] Player actor's ACTORF_Y
+wSavedPlayerY:: dw
+NEXTU
+; Training Center (bank $0e): gym runners and the repair counter
+; [16-bit] The running student's ACTORF_X; TrainingGymRunnerCheckClearance compares it with wGymRunnerTargetX
+wGymRunnerX:: dw
+; [16-bit] The running student's ACTORF_Y
+wGymRunnerY:: dw
+; [16-bit] The next runner's ACTORF_TARGET_X
+wGymRunnerTargetX:: dw
+; [16-bit] The next runner's ACTORF_TARGET_Y
+wGymRunnerTargetY:: dw
+; [8-bit] wStoryMainEquipment before the racket/shoes select screen; CheckEquipmentUnchanged compares against it
+wRepairCounterEquipSnapshot:: db
+	ds 1
+; [8-bit] Text_MenuEquipChange choice: 0 rackets, 1 shoes, 2 / $ff leave. Also the offset added to the per-item text ids
+wRepairCounterChoice:: db
+NEXTU
+; Peach's exhibition match prompt (bank $0e: PromptExhibitionMatch, ExhibitionMatchIntroCutscene, RunExhibitionMatch)
+; [16-bit] Text id of the singles/doubles prompt
+wExhibitionPromptTextId:: dw
+; [8-bit] ENTRY_SPECIAL_COURT_* the warp enters by; the Special Court intro rewrites it as entry - 1, ExhibitionMatchSettingsPtrs's index
+wExhibitionMatchEntry:: db
+NEXTU
+; roommate dialogue (bank $13: DormRoomReturnFromEntranceScene, RunAcademyQuestionsMenu)
+; [16-bit] First text id of the scene's dialogue variant; the scene and the AcademyTopic* handlers add line offsets to it
+wRoommateTextIdBase:: dw
+NEXTU
+	ds 6
+; [8-bit] Tennis Machine level being offered (0-based); MachinePracticeLevelPrompt prints it + 1 and runs MINIGAME_TENNIS_MACHINE_1 + it
+wMachinePracticeLevel:: db
+NEXTU
+	ds 6
+; actor placement near the player (ComputeEmoteActorPosition_13, PlaceRoommateAtPlayerPosition_13, RestaurantShowEllipsisBalloonNearPlayer_10), passed to ScriptSetActorPosition
+; [16-bit] World X
+wPlaceActorX:: dw
+; [16-bit] World Y
+wPlaceActorY:: dw
 NEXTU
 ; generic location scratch
 ; [14 bytes] Rest of the location's scratch block after wMapSceneStage / wMapSceneStage2. Story scripts in banks $0e-$13 use it for whatever the location needs (a saved actor position, a name for a text argument, menu working bytes); the fixed-layout overlays are the variants above
@@ -270,7 +318,7 @@ wDrillAbortCountdownActive:: db
 ; [8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing
 wUnusedDrillPointStartByte:: db
 
-; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
+; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice*/StrokePractice* EvaluateResult (LESSON_*: LESSON_PASSED, else a per-coach, per-lesson reason). The bank $15 training-court coaches pick their follow-up dialogue on it
 wDrillLessonResult:: db
 
 ; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneMiss when the ball's first bounce landed outside the target zone (IsBallInTargetZone returned z); CountDrillTargetZoneMisses and CheckDrillTargetZoneHit read it back
@@ -286,7 +334,7 @@ wDrillMessageId:: db
 wDrillCounters:: ds 9
 	ds 8
 
-; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1 (target hit) / -1 (missed) from CheckDrillTargetZoneHit
+; [2 bytes] Indexed by wCurrentServingPlayer: +1 (target hit) / -1 (missed) from CheckDrillTargetZoneHit; only the unreferenced Unused_0b_StoreDrillServeTargetResult stores it. Read by ServiceMatch2HandlePointEnd and the Service Match 2 ace message
 wDrillServeTargetResult:: dw
 	ds 2
 
@@ -333,11 +381,11 @@ wMapHeightTiles:: db
 ; [8-bit] Entry count of the list a side-scrolling menu shows; RunMenuSelection and the scene viewer derive a page count from it (four entries a page). InitSceneScroll sets $25
 wScrollListLength:: db
 
-; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16), used by Unused_0a_LoadAndDisplayScene / InitSceneTileAnimations
+; [8-bit] Scene index of the current story location or court (LoadStorySceneGraphics, LoadCourtSceneGraphics); GetSceneSlotPtr indexes SceneGfxSlotTable with it (index*16)
 wCurrentScene:: db
 	ds 1
 
-; [8 bytes] Four scene tile-animation slots, 2 bytes each: current offset into the animation script at $05:$da88, then frame countdown. The scroll task calls AdvanceSceneTileAnimation on a slot whose countdown reaches zero
+; [8 bytes] Four scene tile-animation slots, 2 bytes each: current offset into the animation script at wSceneTileAnimEntries, then frame countdown. The UpdateSceneTileAnimations frame task calls AdvanceSceneTileAnimation on a slot whose countdown reaches zero
 wSceneTileAnimState:: ds 8
 
 ; [4 bytes] Script start offset of each tile-animation slot; AdvanceSceneTileAnimation rewinds here at the $ff terminator. $ff marks an unbuilt slot
@@ -413,7 +461,7 @@ wBGRowBlitTiles:: ds 32
 ; [8-bit] Nonzero makes RenderInlineNumber right-align its number in a five-character field. Set and cleared around the Text_NumberArg line only
 wTextNumberRightAlign:: db
 
-; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth print as text id $1b + id
+; [8-bit] Argument of text control code $0e: a character id, which TextCmdPrintCharName and MeasureCharNameArgWidth print as text id $1b + id
 wTextCharNameArg:: db
 
 ; [8-bit] Destination row pitch, negated: the text setup writes -c (-$20 for a tilemap); TextCmdNextGlyphStreamRow negates and doubles it to step wTextRowStartPtr two rows. Zeroed when a text window closes
@@ -430,7 +478,7 @@ wScreenShakeOffsetX:: db
 wScreenShakeOffsetY:: db
 	ds 2
 
-; [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on
+; [8-bit] Active story save-slot index (0-2, or STORYSLOT_NONE outside story mode); selects which SRAM story slot ReadCurrentStorySlot / SaveStorySlotWithTimer operate on
 wCurrentStorySlot:: db
 	ds 2
 
@@ -467,10 +515,10 @@ wDeferredTilemapPending:: db
 wSpriteBufferPage:: db
 	ds 8
 
-; [8-bit] Character id assigned to court slot 0 (player's main character) during match setup; also used for portraits/sprites
+; [8-bit] Write-only: the court slot 0 character id, stored by match setup (InitStoryMatchSettings, RunLinkMatchSequence, RunTwoOnOneMatch, the drill and minigame starters, the debug test modes and character viewer); nothing reads it
 wMatchPlayerChar:: db
 
-; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup ($ff = none); set by Unused_0a_SetStoryMatchOpponent
+; [8-bit] Character id assigned to court slot 2 (opponent's main character) during match setup
 wMatchOpponentChar:: db
 
 ; [8-bit] BG attribute written for window-frame cells ($80 = BG priority)

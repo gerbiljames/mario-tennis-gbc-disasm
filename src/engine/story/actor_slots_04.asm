@@ -54,7 +54,7 @@ SpawnActor:
 	ld [hl], a ; $4090
 	ld hl, ACTORF_MODE ; $4091
 	add hl, bc ; $4094
-	ld [hl], $00 ; $4095
+	ld [hl], ACTORMODE_HIDDEN ; $4095
 	ld hl, ACTORF_TURN_RATE ; $4097
 	add hl, bc ; $409a
 	ld [hl], $10 ; $409b
@@ -223,7 +223,7 @@ AttachActorControllerScript:
 	pop de ; $4178
 	pop af ; $4179
 	ret ; $417a
-AttachActorWaypointFollower:
+AttachActorChaser:
 	inc b ; $417b
 	dec b ; $417c
 	ret z ; $417d
@@ -237,11 +237,11 @@ AttachActorWaypointFollower:
 	ld [hl+], a ; $418c
 	ld [hl], d ; $418d
 	ldh a, [hRomBank] ; $418e
-	ld hl, ActorScript_FollowWaypoints ; $4190
+	ld hl, ActorScript_ChaseAnchor ; $4190
 	call SetActorScript ; $4193
 	ld hl, ACTORF_MODE ; $4196
 	add hl, bc ; $4199
-	ld [hl], $01 ; $419a
+	ld [hl], ACTORMODE_CAMERA ; $419a
 	ld hl, ACTORF_TURN_RATE ; $419c
 	add hl, bc ; $419f
 	ld [hl], $40 ; $41a0
@@ -249,7 +249,7 @@ AttachActorWaypointFollower:
 	pop de ; $41a3
 	pop af ; $41a4
 	ret ; $41a5
-AttachActorStepMover:
+AttachActorTrailer:
 	inc b ; $41a6
 	dec b ; $41a7
 	ret z ; $41a8
@@ -262,7 +262,7 @@ AttachActorStepMover:
 	ld [hl+], a ; $41b1
 	ld [hl], d ; $41b2
 	ldh a, [hRomBank] ; $41b3
-	ld hl, ActorScript_StepToTarget ; $41b5
+	ld hl, ActorScript_TrailAnchor ; $41b5
 	call SetActorScript ; $41b8
 	ld hl, ACTORF_FLAGS ; $41bb
 	add hl, bc ; $41be
@@ -284,18 +284,18 @@ ActorScript_PlayerControl:
 	; $41d2, 6 bytes (actor_script)
 	as_call UpdatePlayerControl
 	as_jump ActorScript_PlayerControl
-ActorScript_FollowWaypoints:
+ActorScript_ChaseAnchor:
 	; $41d8, 4 bytes (actor_script)
-	as_follow_wp
-	as_jump ActorScript_FollowWaypoints
-ActorScript_StepToTarget:
+	as_chase
+	as_jump ActorScript_ChaseAnchor
+ActorScript_TrailAnchor:
 	; $41dc, 6 bytes (actor_script)
 	as_step
 	as_wait 1
-	as_jump ActorScript_StepToTarget
+	as_jump ActorScript_TrailAnchor
 ActorScript_Deactivate:
 	; $41e2, 5 bytes (actor_script)
-	as_set_field ACTORF_MODE, $0000
+	as_set_field ACTORF_MODE, ACTORMODE_HIDDEN
 	as_halt
 UpdateActors:
 	wram_bank WRAM_ACTORS ; $41e7
@@ -341,10 +341,10 @@ StepActorScript:
 	add hl, bc ; $4233
 	ld a, [hl] ; $4234
 	or a ; $4235
-	jr z, .stepJump ; $4236
+	jr z, .runScript ; $4236
 	dec [hl] ; $4238
 	ret ; $4239
-.stepJump:
+.runScript:
 	push bc ; $423a
 	ld hl, ACTORF_SCRIPT ; $423b
 	add hl, bc ; $423e
@@ -473,12 +473,12 @@ AdvanceActorTowardTarget:
 	sub e ; $42f2
 	ld d, a ; $42f3
 	bit 7, a ; $42f4
-	jr z, .absDeltaX ; $42f6
+	jr z, .absTurnDelta ; $42f6
 	cpl ; $42f8
 	inc a ; $42f9
-.absDeltaX:
+.absTurnDelta:
 	cp $60 ; $42fa
-	jr c, .compareDeltas ; $42fc
+	jr c, .clampTurnToRate ; $42fc
 	ld a, e ; $42fe
 	add $80 ; $42ff
 	ld e, a ; $4301
@@ -486,20 +486,20 @@ AdvanceActorTowardTarget:
 	add $80 ; $4303
 	ld d, a ; $4305
 	bit 7, a ; $4306
-	jr z, .compareDeltas ; $4308
+	jr z, .clampTurnToRate ; $4308
 	cpl ; $430a
 	inc a ; $430b
-.compareDeltas:
+.clampTurnToRate:
 	inc hl ; $430c
 	cp [hl] ; $430d
 	ld a, d ; $430e
-	jr c, .stepAxis ; $430f
+	jr c, .applyTurn ; $430f
 	ld a, [hl] ; $4311
 	bit 7, d ; $4312
-	jr z, .stepAxis ; $4314
+	jr z, .applyTurn ; $4314
 	cpl ; $4316
 	inc a ; $4317
-.stepAxis:
+.applyTurn:
 	add e ; $4318
 	dec hl ; $4319
 	ld [hl], a ; $431a
@@ -520,7 +520,7 @@ AdvanceActorTowardTarget:
 	add hl, bc ; $4331
 	bit ACTORFLAGB_YIELD, [hl] ; $4332
 	pop hl ; $4334
-	jr z, .arrived ; $4335
+	jr z, .takeStep ; $4335
 	push de ; $4337
 	push hl ; $4338
 	push de ; $4339
@@ -547,7 +547,7 @@ AdvanceActorTowardTarget:
 	pop hl ; $4354
 	pop de ; $4355
 	and a ; $4356
-	jr z, .arrived ; $4357
+	jr z, .takeStep ; $4357
 	ld hl, ACTORF_FLAGS ; $4359
 	add hl, bc ; $435c
 	set ACTORFLAGB_BLOCKED, [hl] ; $435d
@@ -555,14 +555,14 @@ AdvanceActorTowardTarget:
 	pop hl ; $4360
 	pop de ; $4361
 	jp .done ; $4362
-.arrived:
+.takeStep:
 	ld bc, $0001 ; $4365
 	pop af ; $4368
 	add $20 ; $4369
 	and $40 ; $436b
-	jr z, .storeArrival ; $436d
+	jr z, .stepY ; $436d
 	inc c ; $436f
-.storeArrival:
+.stepY:
 	push hl ; $4370
 	ld hl, hActorPtr ; $4371
 	ld a, [hl+] ; $4374
@@ -593,17 +593,17 @@ AdvanceActorTowardTarget:
 	sub_hl_de ; $4391
 	ld a, h ; $4397
 	or l ; $4398
-	jr nz, .stepTowardTarget ; $4399
+	jr nz, .checkYOvershoot ; $4399
 	set 1, b ; $439b
-.stepTowardTarget:
+.checkYOvershoot:
 	pop de ; $439d
 	ld a, h ; $439e
 	pop hl ; $439f
 	xor h ; $43a0
 	bit 7, a ; $43a1
-	jr z, .applyStep ; $43a3
+	jr z, .stepX ; $43a3
 	set 1, b ; $43a5
-.applyStep:
+.stepX:
 	ld hl, hActorPtr ; $43a7
 	ld a, [hl+] ; $43aa
 	ld h, [hl] ; $43ab
@@ -633,16 +633,16 @@ AdvanceActorTowardTarget:
 	sub_hl_de ; $43c7
 	ld a, h ; $43cd
 	or l ; $43ce
-	jr nz, .clampToTarget ; $43cf
+	jr nz, .checkXOvershoot ; $43cf
 	set 0, b ; $43d1
-.clampToTarget:
+.checkXOvershoot:
 	ld a, h ; $43d3
 	pop hl ; $43d4
 	xor h ; $43d5
 	bit 7, a ; $43d6
-	jr z, .storePosition ; $43d8
+	jr z, .checkArrived ; $43d8
 	set 0, b ; $43da
-.storePosition:
+.checkArrived:
 	ld a, b ; $43dc
 	and c ; $43dd
 	jr z, .done ; $43de

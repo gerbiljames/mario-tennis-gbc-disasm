@@ -3,7 +3,8 @@
 ; selected by CourtSceneDataTable; 16-36 the overworld, selected by the
 ; story_location records. Each scene's blob family (SceneConfig, Palettes,
 ; Tiles, Tilemap, ...) carries the same name in CamelCase: SCENE_RESTAURANT's
-; tilemap is RestaurantTilemap.
+; tilemap is RestaurantTilemap. The courts have ScoreboardColumnTiles/Attrs in
+; place of SceneConfig.
 	const_def
 	const SCENE_MINIGAME_COURT       ; $00 Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
 	const SCENE_TARGET_SHOT_COURT    ; $01
@@ -47,3 +48,23 @@ def NUM_SCENES equ const_value
 ; --- Scene tilemap copy origin (a for CopyScrolledSceneTilemapToVram) ---
 def SCENECOPY_FROM_PLAYER equ $00 ; re-centre the camera on the player first
 def SCENECOPY_FROM_CAMERA equ $01 ; any nonzero: copy around wCameraX/wCameraY as they stand
+
+; --- Ending-sequence object fields (bank $18, wScreenScratch) ---
+; NUM_SCENEOBJS 16-byte records, each spawned from an 11-byte
+; AwardsCeremonyConfettiSpawnTable / DreamMatchEpilogueConfettiSpawnTable row. TaskUpdateObjects_18
+; adds the steps to the positions and jumps to the callback with the object
+; in bc; TaskDrawObjectSprites_18 draws it as two 8x16 sprites side by side.
+	rsreset
+def SCENEOBJ_ATTR      rb ; $00 OAM attributes
+def SCENEOBJ_X         rw ; $01 8.8 pixels
+def SCENEOBJ_Y         rw ; $03 8.8 pixels; wraps to $10 at $c0
+def SCENEOBJ_X_STEP    rb ; $05 1/256 pixels added to SCENEOBJ_X each frame
+def SCENEOBJ_Y_STEP    rb ; $06 1/256 pixels added to SCENEOBJ_Y each frame
+def SCENEOBJ_TILE      rb ; $07 the left sprite's tile (the right one is +2); the callback steps its low nibble by 4
+def SCENEOBJ_PHASE     rb ; $08 the tile steps when (hVBlankCounter - this) & 7 is 0
+def SCENEOBJ_CALLBACK  rw ; $09 jumped to; ends in jp ObjectUpdateLoopTail_18
+def SCENEOBJ_SPAWN_SIZE equ _RS
+	rb_skip 5             ; $0b
+def SCENEOBJ_SIZE equ _RS
+	ASSERT SCENEOBJ_SIZE == $10
+def NUM_SCENEOBJS equ 16

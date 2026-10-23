@@ -44,7 +44,7 @@ TennisDictionaryScreen:
 	ld [wTennisDictFlags], a ; $40c5
 	ld [wTennisDictScrollTop], a ; $40c8
 	ld [wTennisDictCursorRow], a ; $40cb
-	ld [wTennisDictScrollTimer], a ; $40ce
+	ld [wTennisDictCursorBobTick], a ; $40ce
 	ld a, $08 ; $40d1
 	ld [wTennisDictSpriteTimer], a ; $40d3
 	ld a, $00 ; $40d6
@@ -67,7 +67,7 @@ TennisDictionaryScreen:
 	ld [wTennisDictSingleEntry], a ; $4103
 .disableLCDSafely:
 	call DisableLCDSafely ; $4106
-	farcall LoadMenuTilesA ; $4109
+	farcall LoadMenuWindowTiles ; $4109
 	call EnableLCD ; $410c
 	sound BGM_DICTIONARY ; $410f
 	call AdvanceFrame ; $4111
@@ -77,41 +77,41 @@ TennisDictionaryScreen:
 	wram_bank WRAM_SCENE ; $4124
 	ld a, [wTennisDictMode] ; $412a
 	cp TENNISDICT_INDEX ; $412d
-	jr nz, .checkTennisDictFlags ; $412f
+	jr nz, .startInList ; $412f
 	wram_bank WRAM_SCENE ; $4131
 	ld a, [wTennisDictFlags] ; $4137
 	res TDICTFLAGB_WINDOW_OPEN, a ; $413a
 	ld [wTennisDictFlags], a ; $413c
 	call EndTennisDictionaryAnim ; $413f
 	wait_frames 1 ; $4142
-	ld a, $02 ; $4146
+	ld a, TDICTSTATE_INDEX ; $4146
 	jr .loop ; $4148
-.checkTennisDictFlags:
+.startInList:
 	ld a, [wTennisDictFlags] ; $414a
 	set TDICTFLAGB_LIST_SHOWN, a ; $414d
 	ld [wTennisDictFlags], a ; $414f
-	ld a, $08 ; $4152
+	ld a, TDICTSTATE_LIST ; $4152
 .loop:
 	call AdvanceFrame ; $4154
-	cp $04 ; $4157
-	jp z, .showTennisDictionaryPageDefault ; $4159
-	cp $10 ; $415c
-	jp z, .showTennisDictionaryPageChar6 ; $415e
-	cp $08 ; $4161
+	cp TDICTSTATE_OPEN_LIST ; $4157
+	jp z, .showTennisDictionaryPageList ; $4159
+	cp TDICTSTATE_OPEN_INDEX ; $415c
+	jp z, .showTennisDictionaryPageIndex ; $415e
+	cp TDICTSTATE_LIST ; $4161
 	jp z, .handleTennisDictionaryListInput ; $4163
 	call HandleTennisDictionaryIndexInput ; $4166
 	jr .restorePalettesFromMaster ; $4169
 .handleTennisDictionaryListInput:
 	call HandleTennisDictionaryListInput ; $416b
 	jr .restorePalettesFromMaster ; $416e
-.showTennisDictionaryPageDefault:
-	call ShowTennisDictionaryPageDefault ; $4170
+.showTennisDictionaryPageList:
+	call ShowTennisDictionaryPageList ; $4170
 	jr .restorePalettesFromMaster ; $4173
-.showTennisDictionaryPageChar6:
-	call ShowTennisDictionaryPageChar6 ; $4175
+.showTennisDictionaryPageIndex:
+	call ShowTennisDictionaryPageIndex ; $4175
 .restorePalettesFromMaster:
 	call RestorePalettesFromMaster ; $4178
-	cp $01 ; $417b
+	cp TDICTSTATE_EXIT ; $417b
 	jp nz, .loop ; $417d
 	push af ; $4180
 	script_fade_out 16 ; $4181
@@ -121,7 +121,7 @@ TennisDictionaryScreen:
 	ld hl, UpdateTennisDictionarySprites ; $418d
 	call UnregisterFrameTask ; $4190
 	ret ; $4193
-ShowTennisDictionaryPageDefault:
+ShowTennisDictionaryPageList:
 	script_fade_out 16 ; $4194
 	call WaitFadeEnd ; $4199
 	ld a, $0d ; $419c
@@ -136,7 +136,7 @@ ShowTennisDictionaryPageDefault:
 	farcall UpdateSceneScroll ; $41b3
 	call AdvanceFrame ; $41b6
 	call DisableLCDSafely ; $41b9
-	call LoadTennisDictionaryAssetsDefault ; $41bc
+	call LoadTennisDictionaryAssetsList ; $41bc
 	ld a, SCENECOPY_FROM_CAMERA ; $41bf
 	farcall CopyScrolledSceneTilemapToVram ; $41c1
 	call EnableLCD ; $41c4
@@ -147,9 +147,9 @@ ShowTennisDictionaryPageDefault:
 	ld [wTennisDictFlags], a ; $41d2
 	script_fade_in 16 ; $41d5
 	call WaitFadeEnd ; $41da
-	ld a, $08 ; $41dd
+	ld a, TDICTSTATE_LIST ; $41dd
 	ret ; $41df
-ShowTennisDictionaryPageChar6:
+ShowTennisDictionaryPageIndex:
 	script_fade_out 16 ; $41e0
 	call WaitFadeEnd ; $41e5
 	ld a, $21 ; $41e8
@@ -164,7 +164,7 @@ ShowTennisDictionaryPageChar6:
 	farcall UpdateSceneScroll ; $41fd
 	call AdvanceFrame ; $4200
 	call DisableLCDSafely ; $4203
-	call LoadTennisDictionaryAssetsChar6 ; $4206
+	call LoadTennisDictionaryAssetsIndex ; $4206
 	ld a, SCENECOPY_FROM_CAMERA ; $4209
 	farcall CopyScrolledSceneTilemapToVram ; $420b
 	call EnableLCD ; $420e
@@ -174,7 +174,7 @@ ShowTennisDictionaryPageChar6:
 	ld [wTennisDictFlags], a ; $421c
 	script_fade_in 16 ; $421f
 	call WaitFadeEnd ; $4224
-	ld a, $02 ; $4227
+	ld a, TDICTSTATE_INDEX ; $4227
 	ret ; $4229
 	add hl, de ; $422a
 	ld a, h ; $422b
@@ -206,7 +206,7 @@ ResetTennisDictionaryScroll:
 	ldh [hBGColumnBlitPending], a ; $425a
 	ldh [hBGRowBlitPending], a ; $425c
 	ret ; $425e
-LoadTennisDictionaryAssetsDefault:
+LoadTennisDictionaryAssetsList:
 	wram_bank WRAM_STAGING ; $425f
 	ld_slot hl, DataPtr_TennisDictionaryListTiles ; $4265
 	ld de, wDecompBuffer ; $4268
@@ -215,20 +215,20 @@ LoadTennisDictionaryAssetsDefault:
 	ld de, vTiles2 + VRAM_BANK1 ; $4271
 	ld c, 128 ; $4274
 	call QueueVRAMCopy ; $4276
-	ld hl, wTextTileBuffer ; $4279
+	ld hl, wDecompBufferHigh ; $4279
 	ld de, vTiles1 + VRAM_BANK1 ; $427c
-	ld c, wTextTileBuffer_SIZE / 16 ; $427f
+	ld c, wDecompBufferHigh_SIZE / 16 ; $427f
 	call QueueVRAMCopy ; $4281
-	ld hl, TennisDictionaryPalettesDefault ; $4284
+	ld hl, TennisDictionaryPalettesList ; $4284
 	ld_bg_pals de, 0, 8 ; $4287
 	call LoadPalettesMasterOnly ; $428a
 	wram_bank WRAM_COURT_PLANES ; $428d
-	ld hl, TennisDictionaryAttrmapDefault ; $4293
-	ld de, wScreenAttrmap ; $4296
+	ld hl, TennisDictionaryAttrmapList ; $4293
+	ld de, wScreenAttrmap ; $4296 -- 36 rows: rows 32-35 land in wCourtAttrmap, unread
 	call DecompressData ; $4299
-	call ClearTennisDictionaryTilemap ; $429c
+	call ClearTennisDictionaryListAttrs ; $429c
 	ret ; $429f
-LoadTennisDictionaryAssetsChar6:
+LoadTennisDictionaryAssetsIndex:
 	wram_bank WRAM_STAGING ; $42a0
 	ld_slot hl, DataPtr_TennisDictionaryTiles ; $42a6
 	ld de, wDecompBuffer ; $42a9
@@ -237,21 +237,22 @@ LoadTennisDictionaryAssetsChar6:
 	ld de, vTiles2 + VRAM_BANK1 ; $42b2
 	ld c, 128 ; $42b5
 	call QueueVRAMCopy ; $42b7
-	ld hl, wTextTileBuffer ; $42ba
+	ld hl, wDecompBufferHigh ; $42ba
 	ld de, vTiles1 + VRAM_BANK1 ; $42bd
-	ld c, wTextTileBuffer_SIZE / 16 ; $42c0
+	ld c, wDecompBufferHigh_SIZE / 16 ; $42c0
 	call QueueVRAMCopy ; $42c2
-	ld hl, TennisDictionaryPalettesChar6 ; $42c5
+	ld hl, TennisDictionaryPalettesIndex ; $42c5
 	ld_bg_pals de, 0, 8 ; $42c8
 	call LoadPalettesMasterOnly ; $42cb
 	wram_bank WRAM_COURT_PLANES ; $42ce
-	ld hl, TennisDictionaryAttrmapChar6 ; $42d4
-	ld de, wScreenAttrmap ; $42d7
+	ld hl, TennisDictionaryAttrmapIndex ; $42d4
+	ld de, wScreenAttrmap ; $42d7 -- 36 rows: rows 32-35 land in wCourtAttrmap, unread
 	call DecompressData ; $42da
 	ret ; $42dd
-ClearTennisDictionaryTilemap:
+ClearTennisDictionaryListAttrs:
 	wram_bank WRAM_COURT_PLANES ; $42de
 	ld c, $0e ; $42e4
+	; the spans are wShadowTilemap cells; under this bank they clear wScreenAttrmap's
 	ld hl, TennisDictionaryListClearSpans ; $42e6
 .loop:
 	push bc ; $42e9
@@ -276,10 +277,10 @@ LoadTennisDictionaryScreen:
 	wram_bank WRAM_SCENE ; $42fe
 	ld a, [wTennisDictMode] ; $4304
 	cp TENNISDICT_INDEX ; $4307
-	jr nz, .defaultScrollX ; $4309
+	jr nz, .listScrollX ; $4309
 	ld a, $21 ; $430b
 	jr .store ; $430d
-.defaultScrollX:
+.listScrollX:
 	ld a, $0d ; $430f
 .store:
 	ldh [hScrollX], a ; $4311
@@ -340,20 +341,20 @@ LoadTennisDictionaryScreen:
 	ld c, TennisDictionaryTilesA400_SIZE / 16 ; $43aa
 	call QueueVRAMCopy ; $43ac
 	ld hl, TennisDictionaryPalettes ; $43af
-	ld_obj_pals de, 0, 8 ; $43b2
+	ld_obj_pals de, 0, 8 ; $43b2 -- 64 bytes from the 48-byte block: OBJ palettes 6-7 are EndTennisDictionaryAnim's code
 	call LoadPalettesMasterOnly ; $43b5
 	wram_bank WRAM_SCENE ; $43b8
 	ld a, [wTennisDictMode] ; $43be
 	cp TENNISDICT_INDEX ; $43c1
-	jr nz, .loadTennisDictionaryAssetsDefault ; $43c3
-	call LoadTennisDictionaryAssetsChar6 ; $43c5
+	jr nz, .loadListAssets ; $43c3
+	call LoadTennisDictionaryAssetsIndex ; $43c5
 	jr .decompressData ; $43c8
-.loadTennisDictionaryAssetsDefault:
-	call LoadTennisDictionaryAssetsDefault ; $43ca
+.loadListAssets:
+	call LoadTennisDictionaryAssetsList ; $43ca
 .decompressData:
 	wram_bank WRAM_SCREEN ; $43cd
 	ld hl, TennisDictionaryTilemap ; $43d3
-	ld de, wShadowTilemap ; $43d6
+	ld de, wShadowTilemap ; $43d6 -- 36 rows: rows 32-35 land in wShadowAttrmap, unread
 	call DecompressData ; $43d9
 	wram_bank WRAM_SCREEN ; $43dc
 	ld c, $0e ; $43e2
@@ -447,18 +448,18 @@ TennisDictionaryListClearSpans:
 	dw wShadowTilemap + 30 * TILEMAP_WIDTH + 15, $0010 ; record 11
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 16, $0001 ; record 12
 	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 30, $0001 ; record 13
-TennisDictionaryAttrmapChar6:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapChar6.bin" ; $44bf, 130 bytes
-TennisDictionaryAttrmapDefault:
-	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapDefault.bin" ; $4541, 91 bytes
+TennisDictionaryAttrmapIndex:
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapIndex.bin" ; $44bf, 130 bytes
+TennisDictionaryAttrmapList:
+	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryAttrmapList.bin" ; $4541, 91 bytes
 TennisDictionaryTilemap:
 	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTilemap.bin" ; $459c, 367 bytes
 Unused_3f_TennisDictionaryTilemapAlt:
 	INCBIN "data/engine/menus/dictionary/lz_Unused_3f_TennisDictionaryTilemapAlt.bin" ; $470b, 163 bytes
-TennisDictionaryPalettesChar6:
-	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesChar6.asm" ; $47ae, 72 bytes (palettes)
-TennisDictionaryPalettesDefault:
-	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesDefault.asm" ; $47f6, 72 bytes (palettes)
+TennisDictionaryPalettesIndex:
+	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesIndex.asm" ; $47ae, 72 bytes (palettes)
+TennisDictionaryPalettesList:
+	INCLUDE "data/engine/menus/dictionary/TennisDictionaryPalettesList.asm" ; $47f6, 72 bytes (palettes)
 TennisDictionaryTiles8000:
 	INCBIN "data/engine/menus/dictionary/lz_TennisDictionaryTiles8000.bin" ; $483e, 287 bytes
 	INCLUDE "data/engine/menus/dictionary/lz_TennisDictionaryTiles8000.inc" ; DEF TennisDictionaryTiles8000_SIZE EQU its decoded length, generated from the .bin by make
@@ -508,11 +509,11 @@ UpdateTennisDictionarySprites:
 	push de ; $4e92
 	push hl ; $4e93
 	wram_bank WRAM_SCENE ; $4e94
-	test_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4e9a
-	jr z, .notTextWaitingForButton ; $4e9d
+	test_flag FLAG_TEXT_PAGE_ADVANCED ; $4e9a
+	jr z, .noPageAdvance ; $4e9d
 	sound SFX_MENU_SELECT ; $4e9f
 	call StartTennisDictionaryAnim ; $4ea1
-.notTextWaitingForButton:
+.noPageAdvance:
 	ld a, [wTennisDictAnimState] ; $4ea4
 	cp $04 ; $4ea7
 	jr nz, .compare ; $4ea9
@@ -539,11 +540,11 @@ UpdateTennisDictionarySprites:
 .checkTennisDictMode:
 	ld a, [wTennisDictMode] ; $4ed4
 	cp TENNISDICT_INDEX ; $4ed7
-	jp nz, .checkScrollAnim ; $4ed9
+	jp nz, .drawListSprites ; $4ed9
 	ld a, [wTennisDictSpriteTimer] ; $4edc
 	dec a ; $4edf
 	ld [wTennisDictSpriteTimer], a ; $4ee0
-	jr nz, .countLeft ; $4ee3
+	jr nz, .drawDemo ; $4ee3
 	ld a, $08 ; $4ee5
 	ld [wTennisDictSpriteTimer], a ; $4ee7
 	ld a, [wTennisDictSpritePhase] ; $4eea
@@ -553,7 +554,7 @@ UpdateTennisDictionarySprites:
 	xor a ; $4ef2
 .store:
 	ld [wTennisDictSpritePhase], a ; $4ef3
-.countLeft:
+.drawDemo:
 	ld hl, TennisDictDemoAnimFrames ; $4ef6
 	ld a, [wTennisDictAnimState] ; $4ef9
 	add a ; $4efc
@@ -584,7 +585,7 @@ UpdateTennisDictionarySprites:
 	ld_xy de, $80, $7d ; $4f2b
 .queueBase:
 	push hl ; $4f2e
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate2 ; $4f2f
+	ld hl, TennisDictDemoCenterTemplate ; $4f2f
 	call QueueSpriteTemplate ; $4f32
 	pop hl ; $4f35
 	ld a, [hl+] ; $4f36
@@ -600,7 +601,7 @@ UpdateTennisDictionarySprites:
 	ld_xy de, $78, $6d ; $4f46
 .queueTop:
 	push hl ; $4f49
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f4a
+	ld hl, TennisDictDemoRowTemplate ; $4f4a
 	call QueueSpriteTemplate ; $4f4d
 	pop hl ; $4f50
 	ld a, [hl+] ; $4f51
@@ -616,7 +617,7 @@ UpdateTennisDictionarySprites:
 	ld_xy de, $78, $7d ; $4f61
 .queueMiddle:
 	push hl ; $4f64
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f65
+	ld hl, TennisDictDemoRowTemplate ; $4f65
 	call QueueSpriteTemplate ; $4f68
 	pop hl ; $4f6b
 	ld a, [hl+] ; $4f6c
@@ -631,18 +632,18 @@ UpdateTennisDictionarySprites:
 .leftBottomPos:
 	ld_xy de, $78, $8d ; $4f7c
 .queueBottom:
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f7f
+	ld hl, TennisDictDemoRowTemplate ; $4f7f
 	call QueueSpriteTemplate ; $4f82
-.checkScrollAnim:
+.drawListSprites:
 	ld a, [wTennisDictFlags] ; $4f85
 	bit TDICTFLAGB_LIST_SHOWN, a ; $4f88
 	jr z, .restore ; $4f8a
 	ld a, [wTennisDictFlags] ; $4f8c
 	bit TDICTFLAGB_WINDOW_OPEN, a ; $4f8f
 	jr nz, .checkTennisDictCursorRow ; $4f91
-	ld a, [wTennisDictScrollTimer] ; $4f93
+	ld a, [wTennisDictCursorBobTick] ; $4f93
 	inc a ; $4f96
-	ld [wTennisDictScrollTimer], a ; $4f97
+	ld [wTennisDictCursorBobTick], a ; $4f97
 .checkTennisDictCursorRow:
 	ld a, [wTennisDictCursorRow] ; $4f9a
 	ld b, a ; $4f9d
@@ -657,20 +658,20 @@ UpdateTennisDictionarySprites:
 	add e ; $4fa8
 	add $14 ; $4fa9
 	ld e, a ; $4fab
-	ld hl, TennisDictionarySprites0 ; $4fac
-	ld a, [wTennisDictScrollTimer] ; $4faf
+	ld hl, TennisDictCursorBobOffsets ; $4fac
+	ld a, [wTennisDictCursorBobTick] ; $4faf
 	and $0f ; $4fb2
 	add_hl_a ; $4fb4
 	ld a, [hl] ; $4fb9
 	add $0a ; $4fba
 	ld d, a ; $4fbc
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate1 ; $4fbd
+	ld hl, TennisDictListCursorTemplate ; $4fbd
 	ld_oam bc, OAM_BANK1 | 3, $28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
 	bit TDICTFLAGB_LEFT_ARROW, a ; $4fc9
 	jr z, .checkRightArrow ; $4fcb
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
+	ld hl, TennisDictPageArrowTemplate ; $4fcd
 	ld_xy de, $18, $10 ; $4fd0
 	ld_oam bc, OAM_BANK1 | 5, $34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
@@ -678,7 +679,7 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4fd9
 	bit TDICTFLAGB_RIGHT_ARROW, a ; $4fdc
 	jr z, .restore ; $4fde
-	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
+	ld hl, TennisDictPageArrowTemplate ; $4fe0
 	ld_xy de, $88, $10 ; $4fe3
 	ld_oam bc, OAM_BANK1 | 5, $3a ; $4fe6
 	call QueueSpriteTemplate ; $4fe9
@@ -689,10 +690,10 @@ UpdateTennisDictionarySprites:
 	pop af ; $4fef
 	pop_wram_bank ; $4ff0
 	ret ; $4ff5
-TennisDictionarySprites0:
+TennisDictCursorBobOffsets:
 	; $4ff6, 16 bytes (bytes:16)
 	db $00, $01, $01, $02, $03, $04, $06, $08, $06, $04, $03, $02, $01, $01, $00, $00 ; 0x00
-UpdateTennisDictionarySprites_SpriteTemplate0:
+TennisDictPageArrowTemplate:
 	; $5006, 25 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $10, $00, $20, $00
@@ -701,7 +702,7 @@ UpdateTennisDictionarySprites_SpriteTemplate0:
 	oam_sprite $00, $10, $04, $00
 	oam_sprite $10, $10, $24, $00
 	oam_sprite_end
-UpdateTennisDictionarySprites_SpriteTemplate1:
+TennisDictListCursorTemplate:
 	; $501f, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
@@ -710,12 +711,12 @@ TennisDictDemoAnimFrames:
 	INCLUDE "data/engine/menus/dictionary/TennisDictDemoAnimFrames.asm" ; $5028, 80 bytes (bytes:16)
 TennisDictDemoFrameOam:
 	INCLUDE "data/engine/menus/dictionary/TennisDictDemoFrameOam.asm" ; $5078, 88 bytes (bytes:8)
-UpdateTennisDictionarySprites_SpriteTemplate2:
+TennisDictDemoCenterTemplate:
 	; $50d0, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
 	oam_sprite_end
-UpdateTennisDictionarySprites_SpriteTemplate3:
+TennisDictDemoRowTemplate:
 	; $50d9, 17 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
@@ -847,7 +848,7 @@ ScrollTennisDictionaryToPrevLetter:
 	ld [wTennisDictCursorRow], a ; $51a2
 	ld a, [wTennisDictCategoryMask] ; $51a5
 	ld e, a ; $51a8
-	jr WrapTennisDictionaryScanToEnd.findEntryLoop ; $51a9
+	jr ScrollTennisDictionaryToPrevLetter.findEntryLoop ; $51a9
 WrapTennisDictionaryScanToEnd:
 	push af ; $51ab
 	ld a, [wTennisDictEntryCount] ; $51ac
@@ -860,65 +861,65 @@ WrapTennisDictionaryScanToEnd:
 	dec hl ; $51b9
 	pop af ; $51ba
 	ret ; $51bb
-.findEntryLoop:
+ScrollTennisDictionaryToPrevLetter.findEntryLoop:
 	ld a, [hl+] ; $51bc
 	and e ; $51bd
-	jr z, .findEntryLoop ; $51be
+	jr z, ScrollTennisDictionaryToPrevLetter.findEntryLoop ; $51be
 	dec b ; $51c0
-	jr nz, .findEntryLoop ; $51c1
+	jr nz, ScrollTennisDictionaryToPrevLetter.findEntryLoop ; $51c1
 	dec hl ; $51c3
-.toLetterStartLoop:
+ScrollTennisDictionaryToPrevLetter.toLetterStartLoop:
 	ld a, [hl-] ; $51c4
 	ld d, a ; $51c5
 	and e ; $51c6
-	jr z, .notInCategory ; $51c7
+	jr z, ScrollTennisDictionaryToPrevLetter.notInCategory ; $51c7
 	dec c ; $51c9
-.notInCategory:
+ScrollTennisDictionaryToPrevLetter.notInCategory:
 	ld a, d ; $51ca
 	cp $40 ; $51cb
-	jr z, .wrapAtLetterStart ; $51cd
+	jr z, ScrollTennisDictionaryToPrevLetter.wrapAtLetterStart ; $51cd
 	cp $00 ; $51cf
-	jr nz, .toLetterStartLoop ; $51d1
-	jr .findPrevMatchLoop ; $51d3
-.wrapAtLetterStart:
+	jr nz, ScrollTennisDictionaryToPrevLetter.toLetterStartLoop ; $51d1
+	jr ScrollTennisDictionaryToPrevLetter.findPrevMatchLoop ; $51d3
+ScrollTennisDictionaryToPrevLetter.wrapAtLetterStart:
 	call WrapTennisDictionaryScanToEnd ; $51d5
-.findPrevMatchLoop:
+ScrollTennisDictionaryToPrevLetter.findPrevMatchLoop:
 	ld a, [hl-] ; $51d8
 	cp $40 ; $51d9
-	jr nz, .testPrevMatch ; $51db
+	jr nz, ScrollTennisDictionaryToPrevLetter.testPrevMatch ; $51db
 	call WrapTennisDictionaryScanToEnd ; $51dd
-.testPrevMatch:
+ScrollTennisDictionaryToPrevLetter.testPrevMatch:
 	and e ; $51e0
-	jr z, .findPrevMatchLoop ; $51e1
+	jr z, ScrollTennisDictionaryToPrevLetter.findPrevMatchLoop ; $51e1
 	dec c ; $51e3
-.toPrevLetterStartLoop:
+ScrollTennisDictionaryToPrevLetter.toPrevLetterStartLoop:
 	ld a, [hl-] ; $51e4
 	ld d, a ; $51e5
 	and e ; $51e6
-	jr z, .prevNotInCategory ; $51e7
+	jr z, ScrollTennisDictionaryToPrevLetter.prevNotInCategory ; $51e7
 	dec c ; $51e9
-.prevNotInCategory:
+ScrollTennisDictionaryToPrevLetter.prevNotInCategory:
 	ld a, d ; $51ea
 	cp $40 ; $51eb
-	jr z, .wrapAtPrevLetterStart ; $51ed
+	jr z, ScrollTennisDictionaryToPrevLetter.wrapAtPrevLetterStart ; $51ed
 	cp $00 ; $51ef
-	jr nz, .toPrevLetterStartLoop ; $51f1
+	jr nz, ScrollTennisDictionaryToPrevLetter.toPrevLetterStartLoop ; $51f1
 	inc hl ; $51f3
 	inc c ; $51f4
-	jr .findFirstMatchLoop ; $51f5
-.wrapAtPrevLetterStart:
+	jr ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop ; $51f5
+ScrollTennisDictionaryToPrevLetter.wrapAtPrevLetterStart:
 	call WrapTennisDictionaryScanToEnd ; $51f7
 	inc hl ; $51fa
-.findFirstMatchLoop:
+ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop:
 	ld a, [hl+] ; $51fb
 	cp $40 ; $51fc
-	jr nz, .testFirstMatch ; $51fe
+	jr nz, ScrollTennisDictionaryToPrevLetter.testFirstMatch ; $51fe
 	ld c, $00 ; $5200
 	ld hl, TennisDictEntryCategories ; $5202
-	jr .findFirstMatchLoop ; $5205
-.testFirstMatch:
+	jr ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop ; $5205
+ScrollTennisDictionaryToPrevLetter.testFirstMatch:
 	and e ; $5207
-	jr z, .findFirstMatchLoop ; $5208
+	jr z, ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop ; $5208
 	ld a, c ; $520a
 	ld [wTennisDictScrollTop], a ; $520b
 	ret ; $520e
@@ -1068,7 +1069,7 @@ DrawTennisDictionaryList:
 	jr z, .nextEntry ; $52e7
 	dec c ; $52e9
 	push hl ; $52ea
-	ld hl, $10f0 ; $52eb
+	ld hl, Text_TennisDictTermAce ; $52eb
 	ld a, c ; $52ee
 	add_hl_a ; $52ef
 	inc c ; $52f4

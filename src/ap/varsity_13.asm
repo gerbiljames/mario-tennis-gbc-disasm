@@ -16,46 +16,46 @@ ApReturnToCourtyard_13:
 ; The Varsity court once its match is won, until the arc's third pass opens
 ; the Island Open
 ApVarsityWonSingles_13:
-	script_respawn_actors VarsityCourtActorsA_13
+	script_respawn_actors VarsityCourtSinglesActors_13
 	ld hl, ApVarsityWonNpcScriptsA_13
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation
 	farcall WriteStoryStateWord
 	ret
 
 ApVarsityWonDoubles_13:
-	script_respawn_actors VarsityCourtActorsB_13
+	script_respawn_actors VarsityCourtDoublesActors_13
 	ld hl, ApVarsityWonNpcScriptsB_13
 	ld de, wMapNpcScriptsPtr - wStoryModeCurrentLocation
 	farcall WriteStoryStateWord
 	ret
 
 ApVarsityWonNpcScriptsA_13:
-	map_script ACTOR_VARSITY_COURT_A_KEVIN, FACEMASK_ANY, $0000, Text_31_0, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_A_BOB, FACEMASK_ANY, $0000, Text_BobYouRepresentAcademy, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_A_FAY, FACEMASK_ANY, $0000, VarsityCourtANpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_A_CURT, FACEMASK_ANY, $0000, Text_CurtTravelingTeamRepresents, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_VARSITY_COURT_A_BETH, FACEMASK_ANY, $0000, Text_BethTravelingTeamSelection, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_SINGLES_KEVIN, FACEMASK_ANY, $0000, Text_31_0, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_SINGLES_BOB, FACEMASK_ANY, $0000, Text_BobYouRepresentAcademy, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_SINGLES_FAY, FACEMASK_ANY, $0000, VarsityCourtSinglesNpc05Fay_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_SINGLES_CURT, FACEMASK_ANY, $0000, Text_CurtTravelingTeamRepresents, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_SINGLES_BETH, FACEMASK_ANY, $0000, Text_BethTravelingTeamSelection, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 
 ApVarsityWonNpcScriptsB_13:
-	map_script ACTOR_VARSITY_COURT_B_KEVIN, FACEMASK_ANY, $0000, Text_31_31, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_BOB, FACEMASK_ANY, $0000, Text_KevinDoublesConcede, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_FAY, FACEMASK_ANY, $0000, VarsityCourtBNpc05_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_CURT, FACEMASK_ANY, $0000, Text_CurtNeverMakeDoublesTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_VARSITY_COURT_B_BETH, FACEMASK_ANY, $0000, Text_BethAcceptedNeverMakeTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_VARSITY_COURT_B_MARK, FACEMASK_ANY, $0000, Text_31_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_DOUBLES_KEVIN, FACEMASK_ANY, $0000, Text_31_31, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_DOUBLES_BOB, FACEMASK_ANY, $0000, Text_MarkDoublesConcede, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_DOUBLES_FAY, FACEMASK_ANY, $0000, VarsityCourtDoublesNpc05Fay_13, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_DOUBLES_CURT, FACEMASK_ANY, $0000, Text_CurtNeverMakeDoublesTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_VARSITY_COURT_DOUBLES_BETH, FACEMASK_ANY, $0000, Text_BethAcceptedNeverMakeTeam, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_VARSITY_COURT_DOUBLES_MARK, FACEMASK_ANY, $0000, Text_31_29, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	db $ff
 
 ; court C is the post-Island-Open court of both arcs
 ApVarsityPracticeC_13:
 	test_flag FLAG_DOUBLES
 	jr nz, .doubles
-	ap_varsity_practice_offer ACTOR_VARSITY_COURT_C_FAY, Text_FaySkillOrLuckChallenge, LOC_VARSITY_SINGLES_PRACTICE, MATCHLIST_SINGLES
+	ap_varsity_practice_offer ACTOR_VARSITY_COURT_SINGLES_ISLAND_OPEN_FAY, Text_FaySkillOrLuckChallenge, LOC_VARSITY_SINGLES_PRACTICE, MATCHLIST_SINGLES
 .doubles:
-	ap_varsity_practice_offer ACTOR_VARSITY_COURT_C_FAY, Text_FayDoublesPracticeMatchOffer, LOC_VARSITY_DOUBLES_PRACTICE, MATCHLIST_DOUBLES
+	ap_varsity_practice_offer ACTOR_VARSITY_COURT_SINGLES_ISLAND_OPEN_FAY, Text_FayDoublesPracticeMatchOffer, LOC_VARSITY_DOUBLES_PRACTICE, MATCHLIST_DOUBLES
 
 ApVarsityPracticeD_13:
 	ap_varsity_practice_offer ACTOR_COURTYARD_FAY, Text_FaySkillOrLuckChallenge, LOC_VARSITY_SINGLES_PRACTICE, MATCHLIST_SINGLES
 
 ApVarsityPracticeE_13:
-	ap_varsity_practice_offer ACTOR_VARSITY_COURT_B_FAY, Text_FayDoublesPracticeMatchOffer, LOC_VARSITY_DOUBLES_PRACTICE, MATCHLIST_DOUBLES
+	ap_varsity_practice_offer ACTOR_VARSITY_COURT_DOUBLES_FAY, Text_FayDoublesPracticeMatchOffer, LOC_VARSITY_DOUBLES_PRACTICE, MATCHLIST_DOUBLES

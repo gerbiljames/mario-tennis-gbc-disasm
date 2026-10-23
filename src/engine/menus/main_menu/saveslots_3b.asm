@@ -11,7 +11,7 @@ BuildSaveSlotSummaries:
 	wram_bank WRAM_COURT_PLANES ; $5ac5
 	pop af ; $5acb
 	farcall LoadCharacterRecordToBuffer ; $5acc
-	farcall CheckCharacterUnlocked ; $5acf
+	farcall CheckCharRecordPresent ; $5acf
 	ld hl, SLOTSUM_CHAR ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank WRAM_COURT_PLANES ; $5ad6
@@ -254,21 +254,21 @@ TryMainMenuLinkHandshake:
 	ldh a, [hLinkRxByte] ; $5c71
 	ei ; $5c73
 	cp LINKMSG_PROBE ; $5c74
-	jr z, .waitFramesCmd ; $5c76
+	jr z, .partnerProbing ; $5c76
 .attemptLink:
 	farcall ShowLinkMessageScreen ; $5c78
 	farcall TryEstablishLink ; $5c7b
 	push af ; $5c7e
 	jr nc, .beginFadeOut ; $5c7f
 	or a ; $5c81
-	jr nz, .showMessage1 ; $5c82
+	jr nz, .showImproperlyLinked ; $5c82
 	ldh a, [hWramBank] ; $5c84
 	push af ; $5c86
 	ld c, $00 ; $5c87
 	farcall ShowLinkStatusMessage ; $5c89
 	pop_wram_bank ; $5c8c
 	jr .animateLinkStatusPalette ; $5c91
-.showMessage1:
+.showImproperlyLinked:
 	ldh a, [hWramBank] ; $5c93
 	push af ; $5c95
 	ld c, $01 ; $5c96
@@ -280,7 +280,7 @@ TryMainMenuLinkHandshake:
 	farcall AnimateLinkStatusPalette ; $5ca3
 	farcall UpdateAnimatedTiles ; $5ca6
 	call AdvanceFrame ; $5ca9
-	ldh a, [hInputPressed] ; $5cac
+	ldh a, [hInputRepeat] ; $5cac
 	bit PADB_A, a ; $5cae
 	jr nz, .beginFadeOut ; $5cb0
 	bit PADB_B, a ; $5cb2
@@ -299,7 +299,7 @@ TryMainMenuLinkHandshake:
 	call WaitFadeEnd ; $5cd1
 	pop af ; $5cd4
 	jr .done ; $5cd5
-.waitFramesCmd:
+.partnerProbing:
 	wait_frames 6 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
 	jr c, .attemptLink ; $5cde
@@ -321,7 +321,7 @@ RunMatchFormatSelect:
 	ld a, [wMenuSlideDirection] ; $5d03
 	ld b, a ; $5d06
 	call MatchFormatSlideIn ; $5d07
-	farcall InitMenuBgScroll ; $5d0a
+	farcall InitMenuTitleScroller ; $5d0a
 	ld b, $01 ; $5d0d
 	ld c, $01 ; $5d0f
 	farcall LoadMenuSpritePalettePair ; $5d11
@@ -331,7 +331,7 @@ RunMatchFormatSelect:
 	wram_bank WRAM_SCREEN ; $5d22
 .loop:
 	call AdvanceFrame ; $5d28
-	ldh a, [hInputPressed] ; $5d2b
+	ldh a, [hInputRepeat] ; $5d2b
 	ld [wMenuInputPressed], a ; $5d2d
 	call HandleMatchFormatInput ; $5d30
 	ld b, $01 ; $5d33
@@ -353,8 +353,8 @@ RunMatchFormatSelect:
 	ld hl, rIE ; $5d51
 	set B_IE_TIMER, [hl] ; $5d54
 	call ClearFrameTasks ; $5d56
-	ld b, $01 ; $5d59
-	call MatchFormatSlideOut ; $5d5b
+	ld b, MENUSLIDE_FORWARD ; $5d59
+	call SlideMatchFormatPanel ; $5d5b
 	ld a, MENUSLIDE_FORWARD ; $5d5e
 	ld [wMenuSlideDirection], a ; $5d60
 	ld c, $03 ; $5d63
@@ -365,8 +365,8 @@ RunMatchFormatSelect:
 	ld hl, rIE ; $5d6b
 	set B_IE_TIMER, [hl] ; $5d6e
 	call ClearFrameTasks ; $5d70
-	ld b, $00 ; $5d73
-	call MatchFormatSlideOut ; $5d75
+	ld b, MENUSLIDE_BACK ; $5d73
+	call SlideMatchFormatPanel ; $5d75
 	ld a, MENUSLIDE_BACK ; $5d78
 	ld [wMenuSlideDirection], a ; $5d7a
 	ld a, $ff ; $5d7d
@@ -377,50 +377,50 @@ InitMatchFormatOptions:
 	call SetMenuCursorFromIndex_3b ; $5d84
 	ld a, [wMatchFormatDoubles] ; $5d87
 	ld b, a ; $5d8a
-	ld c, $01 ; $5d8b
+	ld c, ATTRRECT_SELECTED ; $5d8b
 	call FillMatchFormatOptionCell ; $5d8d
-	ld b, $00 ; $5d90
-	call FlushMatchFormatRowToVram ; $5d92
+	ld b, MATCHFMTROW_MODE ; $5d90
+	call FlushMatchFormatRowAttrs ; $5d92
 	ld a, [wMatchFormatGames] ; $5d95
-	add $02 ; $5d98
+	add MATCHFMTOPT_GAMES ; $5d98
 	ld b, a ; $5d9a
-	ld c, $01 ; $5d9b
+	ld c, ATTRRECT_SELECTED ; $5d9b
 	call FillMatchFormatOptionCell ; $5d9d
-	ld b, $01 ; $5da0
-	call FlushMatchFormatRowToVram ; $5da2
+	ld b, MATCHFMTROW_GAMES ; $5da0
+	call FlushMatchFormatRowAttrs ; $5da2
 	ld a, [wMatchFormatSets] ; $5da5
-	add $04 ; $5da8
+	add MATCHFMTOPT_SETS ; $5da8
 	ld b, a ; $5daa
-	ld c, $01 ; $5dab
+	ld c, ATTRRECT_SELECTED ; $5dab
 	call FillMatchFormatOptionCell ; $5dad
-	ld b, $02 ; $5db0
-	call FlushMatchFormatRowToVram ; $5db2
-	ld hl, MatchFormatOptionsPalettes0 ; $5db5
+	ld b, MATCHFMTROW_SETS ; $5db0
+	call FlushMatchFormatRowAttrs ; $5db2
+	ld hl, MatchFormatModeRowPalette ; $5db5
 	ld d, $04 ; $5db8
 	ld e, $01 ; $5dba
 	call LoadPaletteShadow ; $5dbc
-	ld hl, MatchFormatOptionsPalettes1 ; $5dbf
+	ld hl, MatchFormatGamesRowPalette ; $5dbf
 	ld d, $06 ; $5dc2
 	ld e, $01 ; $5dc4
 	call LoadPaletteShadow ; $5dc6
-	ld hl, MatchFormatOptionsPalettes2 ; $5dc9
+	ld hl, MatchFormatSetsRowPalette ; $5dc9
 	ld d, $07 ; $5dcc
 	ld e, $01 ; $5dce
 	call LoadPaletteShadow ; $5dd0
 	ret ; $5dd3
-MatchFormatOptionsPalettes0:
-	INCLUDE "data/engine/menus/main_menu/MatchFormatOptionsPalettes0.asm" ; $5dd4, 8 bytes (palettes)
-MatchFormatOptionsPalettes1:
-	INCLUDE "data/engine/menus/main_menu/MatchFormatOptionsPalettes1.asm" ; $5ddc, 8 bytes (palettes)
-MatchFormatOptionsPalettes2:
-	INCLUDE "data/engine/menus/main_menu/MatchFormatOptionsPalettes2.asm" ; $5de4, 8 bytes (palettes)
+MatchFormatModeRowPalette:
+	INCLUDE "data/engine/menus/main_menu/MatchFormatModeRowPalette.asm" ; $5dd4, 8 bytes (palettes)
+MatchFormatGamesRowPalette:
+	INCLUDE "data/engine/menus/main_menu/MatchFormatGamesRowPalette.asm" ; $5ddc, 8 bytes (palettes)
+MatchFormatSetsRowPalette:
+	INCLUDE "data/engine/menus/main_menu/MatchFormatSetsRowPalette.asm" ; $5de4, 8 bytes (palettes)
 LoadMatchFormatGfx:
 	push_wram_bank WRAM_STAGING ; $5dec
 	ld c, $00 ; $5df5
 .loop:
 	ld a, c ; $5df7
 	add a ; $5df8
-	ld hl, MatchFormatLabelTilePtrs ; $5df9
+	ld hl, MatchFormatIconTilePtrs ; $5df9
 	add_hl_a ; $5dfc
 	ld a, [hl+] ; $5e01
 	ld h, [hl] ; $5e02
@@ -435,7 +435,7 @@ LoadMatchFormatGfx:
 	pop de ; $5e0f
 	pop bc ; $5e10
 	pop af ; $5e11
-	ld hl, MatchFormatLabelTileVramDests ; $5e12
+	ld hl, MatchFormatIconTileVramDests ; $5e12
 	ld a, c ; $5e15
 	add a ; $5e16
 	add_hl_a ; $5e17
@@ -460,38 +460,38 @@ LoadMatchFormatGfx:
 	ld a, c ; $5e36
 	cp $07 ; $5e37
 	jr nz, .loop ; $5e39
-	ld b, TILEBLOCK_SharedMenuGfx35 ; $5e3b
-	ld c, SharedMenuGfx35_SIZE / 16 ; $5e3d
+	ld b, TILEBLOCK_SinglesLabelGfx ; $5e3b
+	ld c, SinglesLabelGfx_SIZE / 16 ; $5e3d
 	ld de, vTiles0 + VRAM_BANK1 ; $5e3f
 	farcall LoadCompressedTileBlock ; $5e42
 	call AdvanceFrame ; $5e45
-	ld b, TILEBLOCK_SharedMenuGfx36 ; $5e48
-	ld c, SharedMenuGfx36_SIZE / 16 ; $5e4a
+	ld b, TILEBLOCK_DoublesLabelGfx ; $5e48
+	ld c, DoublesLabelGfx_SIZE / 16 ; $5e4a
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5e4c
 	farcall LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
-	ld b, TILEBLOCK_SharedMenuGfx37 ; $5e55
-	ld c, SharedMenuGfx37_SIZE / 16 ; $5e57
+	ld b, TILEBLOCK_TwoGamesLabelGfx ; $5e55
+	ld c, TwoGamesLabelGfx_SIZE / 16 ; $5e57
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $5e59
 	farcall LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
-	ld b, TILEBLOCK_SharedMenuGfx38 ; $5e62
-	ld c, SharedMenuGfx38_SIZE / 16 ; $5e64
+	ld b, TILEBLOCK_SixGamesLabelGfx ; $5e62
+	ld c, SixGamesLabelGfx_SIZE / 16 ; $5e64
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5e66
 	farcall LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
-	ld b, TILEBLOCK_SharedMenuGfx39 ; $5e6f
-	ld c, SharedMenuGfx39_SIZE / 16 ; $5e71
+	ld b, TILEBLOCK_OneSetLabelGfx ; $5e6f
+	ld c, OneSetLabelGfx_SIZE / 16 ; $5e71
 	ld de, vTiles0 tile $40 + VRAM_BANK1 ; $5e73
 	farcall LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
-	ld b, TILEBLOCK_SharedMenuGfx40 ; $5e7c
-	ld c, SharedMenuGfx40_SIZE / 16 ; $5e7e
+	ld b, TILEBLOCK_ThreeSetsLabelGfx ; $5e7c
+	ld c, ThreeSetsLabelGfx_SIZE / 16 ; $5e7e
 	ld de, vTiles0 tile $50 + VRAM_BANK1 ; $5e80
 	farcall LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
-	ld b, TILEBLOCK_SharedMenuGfx41 ; $5e89
-	ld c, SharedMenuGfx41_SIZE / 16 ; $5e8b
+	ld b, TILEBLOCK_FiveSetsLabelGfx ; $5e89
+	ld c, FiveSetsLabelGfx_SIZE / 16 ; $5e8b
 	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $5e8d
 	farcall LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
@@ -500,8 +500,8 @@ LoadMatchFormatGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $5e9a
 	farcall LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
-	ld b, TILEBLOCK_SharedMenuGfx63 ; $5ea3
-	ld c, SharedMenuGfx63_SIZE / 16 ; $5ea5
+	ld b, TILEBLOCK_PlayMenuTitleGfx ; $5ea3
+	ld c, PlayMenuTitleGfx_SIZE / 16 ; $5ea5
 	ld de, vTiles0 ; $5ea7
 	farcall LoadCompressedTileBlock ; $5eaa
 	call AdvanceFrame ; $5ead
@@ -510,16 +510,16 @@ LoadMatchFormatGfx:
 	farcall LoadIndexedPalette ; $5eb4
 	pop_wram_bank ; $5eb7
 	ret ; $5ebc
-MatchFormatLabelTilePtrs:
+MatchFormatIconTilePtrs:
 	; $5ebd, 7 slot words
-	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
-	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
-	dslot DataPtr_GamesLabelTiles ; record 2
-	dslot DataPtr_GamesLabelTiles2 ; record 3
-	dslot DataPtr_OneSetLabelTiles ; record 4
-	dslot DataPtr_ThreeSetsLabelTiles ; record 5
-	dslot DataPtr_FiveSetsLabelTiles ; record 6
-MatchFormatLabelTileVramDests:
+	dslot DataPtr_SinglesIconTiles ; record 0
+	dslot DataPtr_DoublesIconTiles ; record 1
+	dslot DataPtr_TwoGamesIconTiles ; record 2
+	dslot DataPtr_SixGamesIconTiles ; record 3
+	dslot DataPtr_OneSetIconTiles ; record 4
+	dslot DataPtr_ThreeSetsIconTiles ; record 5
+	dslot DataPtr_FiveSetsIconTiles ; record 6
+MatchFormatIconTileVramDests:
 	; $5ecb, 14 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -559,7 +559,7 @@ MatchFormatSlideIn:
 	cp $ff ; $5f06
 	jr nz, .slideBackLoop ; $5f08
 	ret ; $5f0a
-	twin_named match_format_slide_out, MatchFormatSlideOut ; $5f0b
+	twin_named slide_match_format_panel, SlideMatchFormatPanel ; $5f0b
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f
@@ -576,19 +576,19 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatDoubles] ; $5f52
 	xor $01 ; $5f55
 	ld [wMatchFormatDoubles], a ; $5f57
-	ld b, $00 ; $5f5a
-	call FlushMatchFormatRowToVram ; $5f5c
+	ld b, MATCHFMTROW_MODE ; $5f5a
+	call FlushMatchFormatRowAttrs ; $5f5c
 	call RedrawMatchFormatModeRow ; $5f5f
 	call DrawMatchFormatCaption ; $5f62
 	ret ; $5f65
 .leftGamesOrSets:
-	cp $01 ; $5f66
+	cp MATCHFMTROW_GAMES ; $5f66
 	jr nz, .decSets ; $5f68
 	ld a, [wMatchFormatGames] ; $5f6a
 	xor $01 ; $5f6d
 	ld [wMatchFormatGames], a ; $5f6f
-	ld b, $01 ; $5f72
-	call FlushMatchFormatRowToVram ; $5f74
+	ld b, MATCHFMTROW_GAMES ; $5f72
+	call FlushMatchFormatRowAttrs ; $5f74
 	call RedrawMatchFormatGamesRow ; $5f77
 	call DrawMatchFormatCaption ; $5f7a
 	ret ; $5f7d
@@ -607,8 +607,8 @@ HandleMatchFormatInput:
 	xor a ; $5f8f
 .storeDecSets:
 	ld [wMatchFormatSets], a ; $5f90
-	ld b, $02 ; $5f93
-	call FlushMatchFormatRowToVram ; $5f95
+	ld b, MATCHFMTROW_SETS ; $5f93
+	call FlushMatchFormatRowAttrs ; $5f95
 	call RedrawMatchFormatSetsRow ; $5f98
 	call DrawMatchFormatCaption ; $5f9b
 	ret ; $5f9e
@@ -621,19 +621,19 @@ HandleMatchFormatInput:
 	ld a, [wMatchFormatDoubles] ; $5fa9
 	xor $01 ; $5fac
 	ld [wMatchFormatDoubles], a ; $5fae
-	ld b, $00 ; $5fb1
-	call FlushMatchFormatRowToVram ; $5fb3
+	ld b, MATCHFMTROW_MODE ; $5fb1
+	call FlushMatchFormatRowAttrs ; $5fb3
 	call RedrawMatchFormatModeRow ; $5fb6
 	call DrawMatchFormatCaption ; $5fb9
 	ret ; $5fbc
 .rightGamesOrSets:
-	cp $01 ; $5fbd
+	cp MATCHFMTROW_GAMES ; $5fbd
 	jr nz, .incSets ; $5fbf
 	ld a, [wMatchFormatGames] ; $5fc1
 	xor $01 ; $5fc4
 	ld [wMatchFormatGames], a ; $5fc6
-	ld b, $01 ; $5fc9
-	call FlushMatchFormatRowToVram ; $5fcb
+	ld b, MATCHFMTROW_GAMES ; $5fc9
+	call FlushMatchFormatRowAttrs ; $5fcb
 	call RedrawMatchFormatGamesRow ; $5fce
 	call DrawMatchFormatCaption ; $5fd1
 	ret ; $5fd4
@@ -652,50 +652,50 @@ HandleMatchFormatInput:
 	xor a ; $5fe6
 .storeIncSets:
 	ld [wMatchFormatSets], a ; $5fe7
-	ld b, $02 ; $5fea
-	call FlushMatchFormatRowToVram ; $5fec
+	ld b, MATCHFMTROW_SETS ; $5fea
+	call FlushMatchFormatRowAttrs ; $5fec
 	call RedrawMatchFormatSetsRow ; $5fef
 	call DrawMatchFormatCaption ; $5ff2
 	ret ; $5ff5
 RedrawMatchFormatModeRow:
-	ld b, $00 ; $5ff6
-	ld c, $00 ; $5ff8
+	ld b, MATCHFMTOPT_SINGLES ; $5ff6
+	ld c, ATTRRECT_INACTIVE ; $5ff8
 	call FillMatchFormatOptionCell ; $5ffa
-	ld b, $01 ; $5ffd
-	ld c, $00 ; $5fff
+	ld b, MATCHFMTOPT_DOUBLES ; $5ffd
+	ld c, ATTRRECT_INACTIVE ; $5fff
 	call FillMatchFormatOptionCell ; $6001
 	ld a, [wMatchFormatDoubles] ; $6004
 	ld b, a ; $6007
-	ld c, $01 ; $6008
+	ld c, ATTRRECT_SELECTED ; $6008
 	call FillMatchFormatOptionCell ; $600a
 	ret ; $600d
 RedrawMatchFormatGamesRow:
-	ld b, $02 ; $600e
-	ld c, $00 ; $6010
+	ld b, MATCHFMTOPT_GAMES ; $600e
+	ld c, ATTRRECT_INACTIVE ; $6010
 	call FillMatchFormatOptionCell ; $6012
-	ld b, $03 ; $6015
-	ld c, $00 ; $6017
+	ld b, MATCHFMTOPT_GAMES + 1 ; $6015
+	ld c, ATTRRECT_INACTIVE ; $6017
 	call FillMatchFormatOptionCell ; $6019
 	ld a, [wMatchFormatGames] ; $601c
-	add $02 ; $601f
+	add MATCHFMTOPT_GAMES ; $601f
 	ld b, a ; $6021
-	ld c, $01 ; $6022
+	ld c, ATTRRECT_SELECTED ; $6022
 	call FillMatchFormatOptionCell ; $6024
 	ret ; $6027
 RedrawMatchFormatSetsRow:
-	ld b, $04 ; $6028
-	ld c, $00 ; $602a
+	ld b, MATCHFMTOPT_SETS ; $6028
+	ld c, ATTRRECT_INACTIVE ; $602a
 	call FillMatchFormatOptionCell ; $602c
-	ld b, $05 ; $602f
-	ld c, $00 ; $6031
+	ld b, MATCHFMTOPT_SETS + 1 ; $602f
+	ld c, ATTRRECT_INACTIVE ; $6031
 	call FillMatchFormatOptionCell ; $6033
-	ld b, $06 ; $6036
-	ld c, $00 ; $6038
+	ld b, MATCHFMTOPT_SETS + 2 ; $6036
+	ld c, ATTRRECT_INACTIVE ; $6038
 	call FillMatchFormatOptionCell ; $603a
 	ld a, [wMatchFormatSets] ; $603d
-	add $04 ; $6040
+	add MATCHFMTOPT_SETS ; $6040
 	ld b, a ; $6042
-	ld c, $01 ; $6043
+	ld c, ATTRRECT_SELECTED ; $6043
 	call FillMatchFormatOptionCell ; $6045
 	ret ; $6048
 FillMatchFormatOptionCell:
@@ -716,7 +716,7 @@ FillMatchFormatOptionCell:
 	or a ; $6066
 	jr z, .fill ; $6067
 	ld a, b ; $6069
-	ld hl, MatchFormatOptionCellTable ; $606a
+	ld hl, MatchFormatOptionSelectedAttrs ; $606a
 	add_hl_a ; $606d
 	ld a, [hl] ; $6072
 	ld h, a ; $6073
@@ -738,12 +738,12 @@ FillMatchFormatOptionCellTable:
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 4
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 5
 	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 6
-MatchFormatOptionCellTable:
+MatchFormatOptionSelectedAttrs:
 	; $6093, 7 bytes (bytes:8)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
-	twin_named flush_match_format_row_to_vram, FlushMatchFormatRowToVram ; $609a
+	twin_named flush_match_format_row_attrs, FlushMatchFormatRowAttrs ; $609a
 MatchFormatCursorSpriteTask:
-	farcall TickMenuBgScroll ; $60d0
+	farcall TickMenuTitleScroller ; $60d0
 	ld c, $01 ; $60d3
 	call GetMenuCursorIndex_3b ; $60d5
 	or a ; $60d8
@@ -751,14 +751,14 @@ MatchFormatCursorSpriteTask:
 	ld a, [wMatchFormatDoubles] ; $60db
 	jr .gotRuleValue ; $60de
 .compare:
-	cp $01 ; $60e0
+	cp MATCHFMTROW_GAMES ; $60e0
 	jr nz, .checkMatchFormatSets ; $60e2
 	ld a, [wMatchFormatGames] ; $60e4
-	add $02 ; $60e7
+	add MATCHFMTOPT_GAMES ; $60e7
 	jr .gotRuleValue ; $60e9
 .checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $60eb
-	add $04 ; $60ee
+	add MATCHFMTOPT_SETS ; $60ee
 .gotRuleValue:
 	push af ; $60f0
 	ld hl, MatchFormatCursorTileBases ; $60f1
@@ -773,7 +773,7 @@ MatchFormatCursorSpriteTask:
 	ld e, a ; $6106
 	farcall ApplySpriteBobOffset ; $6107
 	ld b, OAM_BANK1 ; $610a
-	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate0 ; $610c
+	ld hl, MatchFormatLabelTemplate ; $610c
 	push de ; $610f
 	call QueueSpriteTemplate ; $6110
 	pop de ; $6113
@@ -781,11 +781,11 @@ MatchFormatCursorSpriteTask:
 	add hl, de ; $6117
 	ld d, h ; $6118
 	ld e, l ; $6119
-	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate1 ; $611a
+	ld hl, MatchFormatLabelTailTemplate ; $611a
 	sprite_attr_tile OAM_BANK1, $70 ; $611d
 	call QueueSpriteTemplate ; $6121
 	ret ; $6124
-MatchFormatCursorSpriteTask_SpriteTemplate0:
+MatchFormatLabelTemplate:
 	; $6125, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -796,7 +796,7 @@ MatchFormatCursorSpriteTask_SpriteTemplate0:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-MatchFormatCursorSpriteTask_SpriteTemplate1:
+MatchFormatLabelTailTemplate:
 	; $6146, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -841,7 +841,7 @@ RenderMatchFormatOptionText:
 	farcall RenderTextToBuffer64 ; $61b9
 	ret ; $61bc
 .compare:
-	cp $01 ; $61bd
+	cp MATCHFMTROW_GAMES ; $61bd
 	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
 	ld hl, Text_MatchFormatOneSetTwoGames ; $61c4

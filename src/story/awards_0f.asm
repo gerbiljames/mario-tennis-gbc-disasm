@@ -1,4 +1,4 @@
-AwardsCeremonyNpc08_0f:
+AwardsCeremonyNpc08Spike_0f:
 	script_set_text Text_AwardsSpikeSilence ; $5628
 	call CheckAwardsCeremonyRivalSceneDone ; $562e
 	and $01 ; $5631
@@ -12,11 +12,11 @@ ReplacePlayerWithStandInActor:
 	ld d, OBJ_ALEX_B ; $5644
 	add d ; $5646
 	ld d, a ; $5647
-	script_get_actor_state ACTOR_AWARDS_CEREMONY_ALEX ; $5648
+	script_get_actor_state ACTOR_AWARDS_CEREMONY_PLAYER_STAND_IN ; $5648
 	ld c, l ; $564d
 	ld b, h ; $564e
 	farcall LoadActorObjectDefIfValid ; $564f
-	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_WALK ; $5652
+	script_set_anim ACTOR_AWARDS_CEREMONY_PLAYER_STAND_IN, ANIM_WALK ; $5652
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $5659
 	ret ; $5664
 ActorScript_0f_00:
@@ -31,7 +31,7 @@ ActorScript_0f_00:
 	twin wait_script_frames_save_a, 0f ; $5678 WaitScriptFramesSaveA_0f
 CutsceneStompScreenShake:
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_SPIKE, -2.0 ; $567f
-	script_wait_jump ACTOR_AWARDS_CEREMONY_DOUBLES_SPIKE ; $5687
+	script_wait_jump ACTOR_AWARDS_CEREMONY_SPIKE ; $5687
 	sound SFX_STOMP ; $568c
 	ld a, $02 ; $568e
 	farcall SetScreenShake ; $5690
@@ -42,7 +42,7 @@ CutsceneStompScreenShake:
 	ld a, $00 ; $56a2
 	farcall SetScreenShake ; $56a4
 	ret ; $56a7
-AwardsCeremonyEntry0aScene:
+AwardsCeremonySinglesArrivalScene:
 	call AwardsCeremonyArrivalIntro ; $56a8
 	script_set_anim ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, ANIM_BOUNCE ; $56ab
 	script_wait_idle ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS ; $56b2
@@ -122,7 +122,7 @@ AwardsCeremonyEntry0aScene:
 	script_wait_idle ACTOR_PLAYER ; $5876
 	script_follow ACTOR_AWARDS_CEREMONY_KEVIN_SWEATS, ACTOR_PLAYER ; $587b
 	ret ; $5888
-AwardsCeremonyEntry0bScene:
+AwardsCeremonyDoublesArrivalScene:
 	script_null_script ACTOR_PARTNER ; $5889
 	script_set_position ACTOR_PARTNER, 11.0, 39.0 ; $588e
 	script_face ACTOR_PARTNER, FACE_UP ; $5899
@@ -243,7 +243,7 @@ AwardsCeremonyNpcScriptsDoubles_0f:
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_B_COZ, FACEMASK_ANY, $0000, Text_AwardsBCozBackFromDead, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SAMMI, FACEMASK_ANY, $0000, Text_AwardsSammiAmazedYouBeatThem, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SEAN, FACEMASK_ANY, $0000, Text_AwardsSeanCostellosFreaky, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SPIKE, FACEMASK_ANY, $0000, AwardsCeremonyNpc08_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_SPIKE, FACEMASK_ANY, $0000, AwardsCeremonyNpc08Spike_0f, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_ISLAND_SPECTATOR_B, FACEMASK_ANY, $0000, Text_AwardsSpectatorExcitingMatch, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_ISLAND_SPECTATOR_A, FACEMASK_ANY, $0000, Text_AwardsSpectatorEveryMonth, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
 	map_script ACTOR_AWARDS_CEREMONY_DOUBLES_EMILY_SWEATS, FACEMASK_ANY, $0000, Text_AwardsEmilyAvengingMyLoss, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
@@ -268,7 +268,7 @@ AwardsCeremonyArrivalIntro:
 	script_set_anim ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, ANIM_SHAKE ; $5bc0
 	script_wait_idle ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bc7
 	script_jump_velocity ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY, -2.0 ; $5bcc
-	script_wait_jump ACTOR_AWARDS_CEREMONY_DOUBLES_BALLOON_ANGRY ; $5bd4
+	script_wait_jump ACTOR_AWARDS_CEREMONY_BALLOON_ANGRY ; $5bd4
 	script_set_speed ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 1.0 ; $5bd9
 	script_move_target ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT, 15.0, 7.5 ; $5be1
 	script_wait_move ACTOR_AWARDS_CEREMONY_BALLOON_SWEAT ; $5bec
@@ -407,7 +407,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f63
 	ld d, [hl] ; $5f64
 	ld e, a ; $5f65
-	ld hl, wMapScratch ; $5f66
+	ld hl, wSavedPlayerX ; $5f66
 	ld a, e ; $5f69
 	ld [hl+], a ; $5f6a
 	ld [hl], d ; $5f6b
@@ -416,7 +416,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f70
 	ld d, [hl] ; $5f71
 	ld e, a ; $5f72
-	ld hl, wMapScratch + 2 ; $5f73
+	ld hl, wSavedPlayerY ; $5f73
 	ld a, e ; $5f76
 	ld [hl+], a ; $5f77
 	ld [hl], d ; $5f78

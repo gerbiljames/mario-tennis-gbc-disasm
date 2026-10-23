@@ -332,42 +332,42 @@ Unused_53_BowserSpriteFramesCopy:
 BowserFramePlace:
 	INCLUDE "data/sprites/BowserFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 BowserSpriteAnims:
-	dw BowserSpriteAnim00 ; $7f24
-	dw BowserSpriteAnim01 ; $7f26
-	dw BowserSpriteAnim02 ; $7f28
-	dw BowserSpriteAnim03 ; $7f2a
-	dw BowserSpriteAnim04 ; $7f2c
-	dw BowserSpriteAnim05 ; $7f2e
-	dw BowserSpriteAnim06 ; $7f30
-	dw BowserSpriteAnim07 ; $7f32
-	dw BowserSpriteAnim08 ; $7f34
-	dw BowserSpriteAnim09 ; $7f36
-	dw BowserSpriteAnim10 ; $7f38
-	dw BowserSpriteAnim11 ; $7f3a
-	dw BowserSpriteAnim12 ; $7f3c
-	dw BowserSpriteAnim13 ; $7f3e
-	dw BowserSpriteAnim14 ; $7f40
-	dw BowserSpriteAnim15 ; $7f42
-	dw BowserSpriteAnim16 ; $7f44
-	dw BowserSpriteAnim17 ; $7f46
-	dw BowserSpriteAnim18 ; $7f48
-BowserSpriteAnim00:
+	dw BowserStandAnim ; $7f24
+	dw BowserIdleAnim ; $7f26
+	dw BowserRunAnim ; $7f28
+	dw BowserCelebrateAnim ; $7f2a
+	dw BowserDejectedAnim ; $7f2c
+	dw BowserForehandAnim ; $7f2e
+	dw BowserBackhandAnim ; $7f30
+	dw BowserOverheadAnim ; $7f32
+	dw BowserSmashAnim ; $7f34
+	dw BowserForehandQuickAnim ; $7f36
+	dw BowserBackhandQuickAnim ; $7f38
+	dw BowserOverheadQuickAnim ; $7f3a
+	dw BowserSmashQuickAnim ; $7f3c
+	dw BowserForehandReadyAnim ; $7f3e
+	dw BowserBackhandReadyAnim ; $7f40
+	dw BowserOverheadReadyAnim ; $7f42
+	dw BowserServeReadyAnim ; $7f44
+	dw BowserServePrepAnim ; $7f46
+	dw BowserDiveAnim ; $7f48
+BowserStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-BowserSpriteAnim01:
+BowserIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-BowserSpriteAnim02:
+BowserRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-BowserSpriteAnim03:
+BowserCelebrateAnim:
 	; $7f5d, 18 bytes (sprite_anim)
 	anim_flip $00
 	anim_frame $18, 8
@@ -378,66 +378,66 @@ BowserSpriteAnim03:
 	anim_frame $19, 12
 	anim_frame $17, 36
 	anim_loop $00
-BowserSpriteAnim04:
+BowserDejectedAnim:
 	; $7f6f, 10 bytes (sprite_anim)
 	anim_frame $1a, 6
 	anim_frame $1b, 6
 	anim_frame $1c, 6
 	anim_frame $1b, 6
 	anim_loop $00
-BowserSpriteAnim05:
+BowserForehandAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-BowserSpriteAnim06:
+BowserBackhandAnim:
 	; $7f7f, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-BowserSpriteAnim07:
+BowserOverheadAnim:
 	; $7f85, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-BowserSpriteAnim08:
+BowserSmashAnim:
 	; $7f8b, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-BowserSpriteAnim09:
+BowserForehandQuickAnim:
 	; $7f90, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-BowserSpriteAnim10:
+BowserBackhandQuickAnim:
 	; $7f94, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-BowserSpriteAnim11:
+BowserOverheadQuickAnim:
 	; $7f98, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-BowserSpriteAnim12:
+BowserSmashQuickAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-BowserSpriteAnim13:
+BowserForehandReadyAnim:
 	; $7f9f, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-BowserSpriteAnim14:
+BowserBackhandReadyAnim:
 	; $7fa2, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-BowserSpriteAnim15:
+BowserOverheadReadyAnim:
 	; $7fa5, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-BowserSpriteAnim16:
+BowserServeReadyAnim:
 	; $7fa8, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-BowserSpriteAnim17:
+BowserServePrepAnim:
 	; $7fab, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -445,7 +445,7 @@ BowserSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-BowserSpriteAnim18:
+BowserDiveAnim:
 	; $7fb7, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

@@ -16,7 +16,7 @@ ApStoryIdle:
 	ret z
 	wram_bank WRAM_ACTORS
 	ld bc, wActors
-	ld hl, ActorScript_0a
+	ld hl, ActorScript_Null
 	ldh a, [hRomBank]
 	farcall SetActorScript
 	ld hl, wActors + $18

@@ -61,7 +61,7 @@ WriteDecimalDigitTile:
 	push hl ; $4470
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4471
 	sub $30 ; $4474
-	jr c, .skipOperand ; $4476
+	jr c, .skipNonDigit ; $4476
 	add $30 ; $4478
 	ld b, a ; $447a
 	wram_bank WRAM_SCREEN ; $447b
@@ -70,7 +70,7 @@ WriteDecimalDigitTile:
 	inc de ; $4483
 	pop hl ; $4484
 	ret ; $4485
-.skipOperand:
+.skipNonDigit:
 	inc de ; $4486
 	pop hl ; $4487
 	ret ; $4488
@@ -84,7 +84,7 @@ Unused_38_RunMatchTypeMenu:
 	script_fade_in 16 ; $44a5
 	call WaitFadeEnd ; $44aa
 .inputLoop:
-	ldh a, [hInputPressed] ; $44ad
+	ldh a, [hInputRepeat] ; $44ad
 	ld [wMenuInputPressed], a ; $44af
 	call Unused_38_AdjustMatchTypeSetting ; $44b2
 	ld b, $01 ; $44b5
@@ -99,7 +99,7 @@ Unused_38_RunMatchTypeMenu:
 	bit PADB_A, a ; $44c8
 	jr nz, .confirm ; $44ca
 	bit PADB_B, a ; $44cc
-	jr nz, .done ; $44ce
+	jr nz, .cancel ; $44ce
 	jr .inputLoop ; $44d0
 .confirm:
 	sound SFX_MENU_SELECT ; $44d2
@@ -108,7 +108,7 @@ Unused_38_RunMatchTypeMenu:
 	call ClearFrameTasks ; $44dc
 	xor a ; $44df
 	ret ; $44e0
-.done:
+.cancel:
 	sound SFX_MENU_CANCEL ; $44e1
 	script_fade_out 16 ; $44e3
 	call WaitFadeEnd ; $44e8
@@ -214,7 +214,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld e, a ; $45c0
 	ld c, $01 ; $45c1
 	call GetMenuCursorIndex_38 ; $45c3
-	cp $01 ; $45c6
+	cp MATCHFMTROW_GAMES ; $45c6
 	jr z, .drawGames ; $45c8
 	ld bc, $3010 ; $45ca
 	call Unused_38_DrawCornerBrackets ; $45cd
@@ -232,7 +232,7 @@ Unused_38_DrawMatchTypeOptionBoxes:
 	ld e, a ; $45e6
 	ld c, $01 ; $45e7
 	call GetMenuCursorIndex_38 ; $45e9
-	cp $02 ; $45ec
+	cp MATCHFMTROW_SETS ; $45ec
 	jr z, .drawSets ; $45ee
 	ld bc, $3010 ; $45f0
 	call Unused_38_DrawCornerBrackets ; $45f3
@@ -256,7 +256,7 @@ Unused_38_SetupMatchTypeMenuScreen:
 	ld a, [wMainMenuCursor] ; $4611
 	ld c, a ; $4614
 	call SetMenuCursorFromIndex_38 ; $4615
-	ld c, SCREENASSET_MatchTypeMenu ; $4618
+	ld c, SCREENASSET_Placeholder0 ; $4618
 	farcall LoadScreenAssetRecord ; $461a
 	farcall ResetTextWindowState ; $461d
 	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $4620
@@ -276,7 +276,7 @@ Unused_38_SetupMatchTypeMenuScreen:
 	call Unused_38_DrawMatchTypeOptionLabel ; $464b
 	farcall QueueWram3MapToVRAM ; $464e
 	ld de, vTiles0 + VRAM_BANK1 ; $4651
-	farcall LoadFixedTileBlockAndPalette ; $4654
+	farcall LoadCornerBracketCursorGfx ; $4654
 	ld b, $08 ; $4657
 	ld c, $0d ; $4659
 	farcall LoadIndexedPalette ; $465b
@@ -343,7 +343,7 @@ Unused_38_AdjustMatchTypeSetting:
 	ld [wMatchFormatDoubles], a ; $476a
 	ret ; $476d
 .decGames:
-	cp $01 ; $476e
+	cp MATCHFMTROW_GAMES ; $476e
 	jr nz, .decSets ; $4770
 	ld a, [wMatchFormatGames] ; $4772
 	xor $01 ; $4775
@@ -376,7 +376,7 @@ Unused_38_AdjustMatchTypeSetting:
 	ld [wMatchFormatDoubles], a ; $47a0
 	ret ; $47a3
 .incGames:
-	cp $01 ; $47a4
+	cp MATCHFMTROW_GAMES ; $47a4
 	jr nz, .incSets ; $47a6
 	ld a, [wMatchFormatGames] ; $47a8
 	xor $01 ; $47ab

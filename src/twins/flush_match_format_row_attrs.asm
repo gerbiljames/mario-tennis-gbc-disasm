@@ -1,4 +1,4 @@
-; Shared by FlushMatchFormatRowToVram, FlushMatchRuleRowAttrs (banks $3b,
+; Shared by FlushMatchFormatRowAttrs, FlushLinkMatchFormatRowAttrs (banks $3b,
 ; $3e).
 
 {TWIN_LABEL}:
@@ -15,7 +15,7 @@
 	call QueueVRAMCopy
 	jr .done
 .row1:
-	cp $01
+	cp MATCHFMTROW_GAMES
 	jr nz, .row2
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH
 	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1

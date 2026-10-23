@@ -5,7 +5,7 @@ RecordReturnAceStat:
 	ld a, POINTWINNER_RETURN_ACE ; $5c74
 	ld [wPointWinnerShotType], a ; $5c76
 	ld hl, wCharacter1ReturnAces ; $5c79
-	jp RecordDropShotWinnerStat.bumpStat ; $5c7c
+	jp BumpCharStat ; $5c7c
 RecordSmashAceStat:
 	ld a, [wCurrentShotType] ; $5c7f
 	cp SHOTTYPE_SMASH ; $5c82
@@ -13,7 +13,7 @@ RecordSmashAceStat:
 	ld a, POINTWINNER_SMASH_ACE ; $5c85
 	ld [wPointWinnerShotType], a ; $5c87
 	ld hl, wCharacter1SmashAces ; $5c8a
-	jp RecordDropShotWinnerStat.bumpStat ; $5c8d
+	jp BumpCharStat ; $5c8d
 RecordLobWinnerStat:
 	ld a, [wCurrentShotType] ; $5c90
 	cp SHOTTYPE_LOB ; $5c93
@@ -21,7 +21,7 @@ RecordLobWinnerStat:
 	ld a, POINTWINNER_LOB ; $5c96
 	ld [wPointWinnerShotType], a ; $5c98
 	ld hl, wCharacter1LobShotWinners ; $5c9b
-	jp RecordDropShotWinnerStat.bumpStat ; $5c9e
+	jp BumpCharStat ; $5c9e
 RecordDropShotWinnerStat:
 	ld a, [wCurrentShotType] ; $5ca1
 	cp SHOTTYPE_DROP ; $5ca4
@@ -29,8 +29,8 @@ RecordDropShotWinnerStat:
 	ld a, POINTWINNER_DROP_SHOT ; $5ca7
 	ld [wPointWinnerShotType], a ; $5ca9
 	ld hl, wCharacter1DropShotWinners ; $5cac
-	jp .bumpStat ; $5caf
-.bumpStat:
+	jp BumpCharStat ; $5caf
+BumpCharStat:
 	ld a, [wLastShotCharIndex] ; $5cb2
 	add a ; $5cb5
 	add a ; $5cb6
@@ -252,16 +252,16 @@ LoadCourtSceneData:
 	ld [wCourtSurfaceBounce], a ; $5e42
 	ld a, [hl+] ; $5e45
 	farcall LoadCourtSceneGraphics ; $5e46
-	call SnapshotCourtTilemaps ; $5e49
+	call ResetCourtTilemapsFromBase ; $5e49
 	pop_wram_bank ; $5e4c
 	ret ; $5e51
-SnapshotCourtTilemaps:
+ResetCourtTilemapsFromBase:
 	wram_bank WRAM_COURT_PLANES ; $5e52
-	ld hl, wCourtTilemapSaved ; $5e58
+	ld hl, wCourtTilemapBase ; $5e58
 	ld de, wCourtTilemap ; $5e5b
 	ld c, wCourtTilemap_SIZE / 16 ; $5e5e
 	call CopyMemoryFast ; $5e60
-	ld hl, wCourtAttrmapSaved ; $5e63
+	ld hl, wCourtAttrmapBase ; $5e63
 	ld de, wCourtAttrmap ; $5e66
 	ld c, wCourtAttrmap_SIZE / 16 ; $5e69
 	call CopyMemoryFast ; $5e6b
@@ -288,33 +288,33 @@ RefreshCourtScoreboard:
 	and a ; $5e9c
 	jr nz, RefreshCourtScoreboardFlipped ; $5e9d
 	ld hl, wScoreboardColumnTiles + 20 ; $5e9f
-	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 26 ; $5ea2
+	ld de, wCourtTilemapBase + 12 * TILEMAP_WIDTH + 26 ; $5ea2
 	call CopyScoreboardTileColumn ; $5ea5
 	ld hl, wScoreboardColumnAttrs + 20 ; $5ea8
-	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 26 ; $5eab
+	ld de, wCourtAttrmapBase + 12 * TILEMAP_WIDTH + 26 ; $5eab
 	call CopyScoreboardTileColumn ; $5eae
 	ld hl, wScoreboardColumnTiles + 10 ; $5eb1
-	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 4 ; $5eb4
+	ld de, wCourtTilemapBase + 12 * TILEMAP_WIDTH + 4 ; $5eb4
 	call CopyScoreboardTileColumn ; $5eb7
 	ld hl, wScoreboardColumnAttrs + 10 ; $5eba
-	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 4 ; $5ebd
+	ld de, wCourtAttrmapBase + 12 * TILEMAP_WIDTH + 4 ; $5ebd
 	call CopyScoreboardTileColumn ; $5ec0
-	call SnapshotCourtTilemaps ; $5ec3
+	call ResetCourtTilemapsFromBase ; $5ec3
 	ret ; $5ec6
 RefreshCourtScoreboardFlipped:
 	ld hl, wScoreboardColumnTiles ; $5ec7
-	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 4 ; $5eca
+	ld de, wCourtTilemapBase + 12 * TILEMAP_WIDTH + 4 ; $5eca
 	call CopyScoreboardTileColumn ; $5ecd
 	ld hl, wScoreboardColumnAttrs ; $5ed0
-	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 4 ; $5ed3
+	ld de, wCourtAttrmapBase + 12 * TILEMAP_WIDTH + 4 ; $5ed3
 	call CopyScoreboardTileColumn ; $5ed6
 	ld hl, wScoreboardColumnTiles + 30 ; $5ed9
-	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 26 ; $5edc
+	ld de, wCourtTilemapBase + 12 * TILEMAP_WIDTH + 26 ; $5edc
 	call CopyScoreboardTileColumn ; $5edf
 	ld hl, wScoreboardColumnAttrs + 30 ; $5ee2
-	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 26 ; $5ee5
+	ld de, wCourtAttrmapBase + 12 * TILEMAP_WIDTH + 26 ; $5ee5
 	call CopyScoreboardTileColumn ; $5ee8
-	call SnapshotCourtTilemaps ; $5eeb
+	call ResetCourtTilemapsFromBase ; $5eeb
 	ret ; $5eee
 CopyScoreboardTileColumn:
 	wram_bank WRAM_ACTORS ; $5eef

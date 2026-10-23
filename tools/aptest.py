@@ -312,11 +312,11 @@ FLAG_DOUBLES = 47
 # the practice NPC's script on each court once every win is in and every pass held
 LATE_PRACTICE_NPCS = [
     (False, STORYLOC_JUNIOR_SINGLES, "ApJuniorSinglesBrianD_11", (0, 0), "LOC_JUNIOR_SINGLES_PRACTICE"),
-    (False, STORYLOC_SENIOR, "SeniorCourtNpc08_12", (0, 5), "LOC_SENIOR_SINGLES_PRACTICE"),
-    (False, STORYLOC_COURTYARD_, "VarsityCourtDNpc05_13", (0, 10), "LOC_VARSITY_SINGLES_PRACTICE"),
-    (True, STORYLOC_JUNIOR_DOUBLES, "JuniorClassCourtDoublesDNpc0A_11", (1, 0), "LOC_JUNIOR_DOUBLES_PRACTICE"),
-    (True, STORYLOC_SENIOR, "SeniorCourtNpc0A_12", (1, 5), "LOC_SENIOR_DOUBLES_PRACTICE"),
-    (True, STORYLOC_COURTYARD_, "VarsityCourtENpc05_13", (1, 10), "LOC_VARSITY_DOUBLES_PRACTICE"),
+    (False, STORYLOC_SENIOR, "SeniorCourtNpc08Beth_12", (0, 5), "LOC_SENIOR_SINGLES_PRACTICE"),
+    (False, STORYLOC_COURTYARD_, "VarsityCourtSinglesCompleteNpc05Fay_13", (0, 10), "LOC_VARSITY_SINGLES_PRACTICE"),
+    (True, STORYLOC_JUNIOR_DOUBLES, "JuniorClassCourtDoublesStoryCompleteNpc0AAllie_11", (1, 0), "LOC_JUNIOR_DOUBLES_PRACTICE"),
+    (True, STORYLOC_SENIOR, "SeniorCourtNpc0ABob_12", (1, 5), "LOC_SENIOR_DOUBLES_PRACTICE"),
+    (True, STORYLOC_COURTYARD_, "VarsityCourtDoublesCompleteNpc05Fay_13", (1, 10), "LOC_VARSITY_DOUBLES_PRACTICE"),
 ]
 
 
@@ -375,7 +375,7 @@ def senior_practice_needs_a_pass(g, c):
     for flag in WIN_FLAGS:
         set_flag(g, flag, True)
     set_flag(g, FLAG_DOUBLES, False)
-    assert practice_offered(g, STORYLOC_SENIOR, "SeniorCourtNpc08_12") is None, "Senior practice without a pass"
+    assert practice_offered(g, STORYLOC_SENIOR, "SeniorCourtNpc08Beth_12") is None, "Senior practice without a pass"
 
 
 check_reward_lists.tokens = lambda c: placements(c, {
@@ -408,7 +408,7 @@ def two_on_one_length(g):
     g.pb.hook_register(b, a, lambda _: seen.append((g.mem[g.addr("wMatchTypeNumberOfGames")],
                                                     g.mem[g.addr("wMatchTypeNumberOfSets")])), None)
     g.wram("wMinigameLevel", 2)
-    g.pending.append(("RunDoublesDrillMatch", {}))
+    g.pending.append(("RunTwoOnOneMatch", {}))
     for _ in range(600):
         g.tick()
         if seen:
@@ -626,7 +626,7 @@ def total_exp(g):
 @test
 def exp_bundles_at_char_data(g, c):
     g.tick(30)
-    assert word(g, "wPendingExpStory") == 300, word(g, "wPendingExpStory")
+    assert word(g, "wN64TransferMainExp") == 300, word(g, "wN64TransferMainExp")
     before = total_exp(g)
     # the pause menu: Status, then Char Data
     g.press("start", wait=60)
@@ -645,7 +645,7 @@ def exp_bundles_at_char_data(g, c):
             break
     else:
         raise AssertionError("never came back from Char/Partner Data")
-    assert word(g, "wPendingExpStory") == 0, "the pending EXP was not awarded"
+    assert word(g, "wN64TransferMainExp") == 0, "the pending EXP was not awarded"
     assert total_exp(g) > before, (before, total_exp(g))
 
 
@@ -675,7 +675,7 @@ def boot_without_ledger(rom, sym, save):
 @test
 def default_camera_mode(g, c):
     g.call("EraseStorySlotSaveData")
-    g.call("TestStorySlotFlagB")
+    g.call("TestStorySlotCourtView")
     g.tick(30)
     assert g.result["A"] == 1, "a new file did not start with the PLAYER camera"
 
@@ -686,7 +686,7 @@ default_camera_mode.tokens = lambda c: {"ApOptCameraMode": b"\x01"}
 @test
 def default_camera_mode_vanilla(g, c):
     g.call("EraseStorySlotSaveData")
-    g.call("TestStorySlotFlagB")
+    g.call("TestStorySlotCourtView")
     g.tick(30)
     assert g.result["A"] == 0
 
@@ -708,12 +708,12 @@ def varsity_table(g):
 
 @test
 def varsity_needs_two_passes(g, c):
-    assert varsity_table(g) != g.addr("VarsityCourtNpcScriptsA_13"), "Kevin's match without the passes"
+    assert varsity_table(g) != g.addr("VarsityCourtSinglesNpcScripts_13"), "Kevin's match without the passes"
 
 
 @test
 def varsity_opens_at_two_passes(g, c):
-    assert varsity_table(g) == g.addr("VarsityCourtNpcScriptsA_13"), "no Kevin's match with two passes"
+    assert varsity_table(g) == g.addr("VarsityCourtSinglesNpcScripts_13"), "no Kevin's match with two passes"
 
 
 varsity_opens_at_two_passes.tokens = lambda c: {("ApStartInventory", c["ITEM_SINGLES_PASS"]): b"\x02"}
@@ -1049,7 +1049,7 @@ exp_modifier_quintuple.tokens = lambda c: {"ApOptExpModifier": b"\x0a"}
 
 @test
 def exp_bundle_scaled(g, c):
-    assert int.from_bytes(g.mem[g.addr("wPendingExpStory"):g.addr("wPendingExpStory") + 2], "little") == 300, \
+    assert int.from_bytes(g.mem[g.addr("wN64TransferMainExp"):g.addr("wN64TransferMainExp") + 2], "little") == 300, \
         "a tripled EXP Bundle"
 
 
@@ -1092,10 +1092,10 @@ def match_reward_state(g, c, mode, matchlist, match, first_clear_flag):
     g.wram("wMatchWinLoseFlag", include_value("WINLOSE_WIN"))
     g.wram("wPointWinLoseFlag", include_value("WINLOSE_WIN"))
     g.wram("wMatchExitRequest", 0)
-    g.wram("wKeepMatchStatsFlag", 0)
+    g.wram("wMatchSuspendedFlag", 0)
     g.wram("wMinigameHighScoreMode", 0)
     g.wram("wMinigamesCurrentScore", 200, 0)
-    g.wram("wTotalGamesWonInMatch", 6)
+    g.wram("wTotalGamesPlayedInMatch", 6)
     g.wram("wLinkMatchRole", include_value("LINKSTATE_MASTER"))
     g.wram("wCurrentMinigameStoryMatch", matchlist, match)
     g.mem[include_value("WRAM_ACTORS"), include_value("wCharId")] = 0
@@ -1329,7 +1329,7 @@ def play_match(g, frames, peak_toss=False):
     """Play a short Junior Rank 4 match with the CPU driving character 0, which
     the shot gates still take for the player (input source 0 while they ask);
     character 0 presses every button pair and serve in turn. -> the shots
-    (character, wCurrentShotType, wLastShotButtons, wSpecialShotFlag) and the
+    (character, wCurrentShotType, wLastShotButtons, wPowerServeFlag) and the
     faults seen. peak_toss serves every ball from the top of the toss."""
     m = g.mem
     shots, faults = [], []
@@ -1362,7 +1362,7 @@ def play_match(g, frames, peak_toss=False):
 
     def hit(_):
         shots.append((m[g.addr("wLastShotCharIndex")], m[g.addr("wCurrentShotType")],
-                      m[g.addr("wLastShotButtons")], m[g.addr("wSpecialShotFlag")]))
+                      m[g.addr("wLastShotButtons")], m[g.addr("wPowerServeFlag")]))
 
     for label, fn, off in (("ReadCharInput", read_input, 0), ("ApShotsGated", gated, 0),
                            ("SelectRallyShotType", rally, 0), ("SelectServeShotType", serve, 0),

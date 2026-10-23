@@ -249,32 +249,32 @@ Unused_1b_ShowNoN64DataFoundScreen:
 	call WaitFadeEnd ; $6ae9
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
-	ld hl, wTextTileBuffer tile 6 + 2 ; $6af1
+	ld hl, wDecompBufferHigh tile 6 + 2 ; $6af1
 	call Unused_1b_FillTilemapRow17 ; $6af4
-	ld hl, wTextTileBuffer tile 8 + 2 ; $6af7
+	ld hl, wDecompBufferHigh tile 8 + 2 ; $6af7
 	call Unused_1b_FillTilemapRow17 ; $6afa
-	ld hl, wTextTileBuffer tile 10 + 2 ; $6afd
+	ld hl, wDecompBufferHigh tile 10 + 2 ; $6afd
 	call Unused_1b_FillTilemapRow17 ; $6b00
-	ld hl, wTextTileBuffer tile 12 + 2 ; $6b03
+	ld hl, wDecompBufferHigh tile 12 + 2 ; $6b03
 	call Unused_1b_FillTilemapRow17 ; $6b06
-	ld hl, wTextTileBuffer tile 14 + 2 ; $6b09
+	ld hl, wDecompBufferHigh tile 14 + 2 ; $6b09
 	call Unused_1b_FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
-	ld hl, wTextTileBuffer tile 70 + 2 ; $6b11
+	ld hl, wDecompBufferHigh tile 70 + 2 ; $6b11
 	call Unused_1b_FillTilemapRow17 ; $6b14
-	ld hl, wTextTileBuffer tile 72 + 2 ; $6b17
+	ld hl, wDecompBufferHigh tile 72 + 2 ; $6b17
 	call Unused_1b_FillTilemapRow17 ; $6b1a
-	ld hl, wTextTileBuffer tile 74 + 2 ; $6b1d
+	ld hl, wDecompBufferHigh tile 74 + 2 ; $6b1d
 	call Unused_1b_FillTilemapRow17 ; $6b20
-	ld hl, wTextTileBuffer tile 76 + 2 ; $6b23
+	ld hl, wDecompBufferHigh tile 76 + 2 ; $6b23
 	call Unused_1b_FillTilemapRow17 ; $6b26
-	ld hl, wTextTileBuffer tile 78 + 2 ; $6b29
+	ld hl, wDecompBufferHigh tile 78 + 2 ; $6b29
 	call Unused_1b_FillTilemapRow17 ; $6b2c
 	ld hl, Text_NoN64DataFound ; $6b2f
-	ld de, wTextTileBuffer tile 8 + 3 ; $6b32
+	ld de, wDecompBufferHigh tile 8 + 3 ; $6b32
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b35
 	ld hl, Text_MenuLevelUpStatusTrophies ; $6b38
-	ld de, wTextTileBuffer tile 12 + 3 ; $6b3b
+	ld de, wDecompBufferHigh tile 12 + 3 ; $6b3b
 	farcall Unused_18_RenderProportionalTextAt32 ; $6b3e
 	farcall Unused_18_ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
@@ -329,12 +329,12 @@ Unused_1b_ShowTrophiesPlaceholderScreen:
 RunMinigameLevelSelect:
 	push_wram_bank WRAM_COURT_PLANES ; $6b9c
 	ld a, c ; $6ba5
-	ld [wScreenAttrmap], a ; $6ba6
+	ld [wLevelSelectMinigame], a ; $6ba6
 	xor a ; $6ba9
-	ld [wScreenAttrmap + 1], a ; $6baa
+	ld [wLevelSelectClearedCount], a ; $6baa
 	call CountClearedMinigameLevels ; $6bad
 	call LoadMinigameLevelSelectGfx ; $6bb0
-	ld a, [wScreenAttrmap + 1] ; $6bb3
+	ld a, [wLevelSelectClearedCount] ; $6bb3
 	cp $02 ; $6bb6
 	jr z, .runMinigameLevelSelect3 ; $6bb8
 	call RunMinigameLevelSelect2 ; $6bba
@@ -343,16 +343,16 @@ RunMinigameLevelSelect:
 	call RunMinigameLevelSelect3 ; $6bbf
 .readResult:
 	wram_bank WRAM_COURT_PLANES ; $6bc2
-	ld a, [wScreenAttrmap + 3] ; $6bc8
+	ld a, [wLevelSelectResult] ; $6bc8
 	ld c, a ; $6bcb
 	pop_wram_bank ; $6bcc
 	ld a, c ; $6bd1
 	ret ; $6bd2
 CountClearedMinigameLevels:
 	ld c, $00 ; $6bd3
-	ld a, [wScreenAttrmap] ; $6bd5
+	ld a, [wLevelSelectMinigame] ; $6bd5
 	add a ; $6bd8
-	ld hl, ClearedMinigameLevelsTable ; $6bd9
+	ld hl, MinigameLevelClearFlagPtrs ; $6bd9
 	add_hl_a ; $6bdc
 	ld a, [hl+] ; $6be1
 	ld h, [hl] ; $6be2
@@ -375,72 +375,72 @@ CountClearedMinigameLevels:
 	jr z, .countDone ; $6bf7
 	inc c ; $6bf9
 .countDone:
-	ld a, [wScreenAttrmap]
+	ld a, [wLevelSelectMinigame]
 	ld e, a
 	ld d, c
 	apcall ApMinigameLevels
-	ld [wScreenAttrmap + 1], a ; $6bfb
-	ld a, [wScreenAttrmap + 1] ; $6bfe
-	ld hl, CountClearedMinigameLevelsTable ; $6c01
+	ld [wLevelSelectClearedCount], a ; $6bfb
+	ld a, [wLevelSelectClearedCount] ; $6bfe
+	ld hl, LevelSelectColumnsByClearedCount ; $6c01
 	add_hl_a ; $6c04
 	ld a, [hl] ; $6c09
-	ld [wScreenAttrmap + 2], a ; $6c0a
+	ld [wLevelSelectColumns], a ; $6c0a
 	ret ; $6c0d
-CountClearedMinigameLevelsTable:
+LevelSelectColumnsByClearedCount:
 	; $6c0e, 3 bytes (bytes:3)
 	db $02, $02, $03 ; 0x00
-ClearedMinigameLevelsTable:
+MinigameLevelClearFlagPtrs:
 	; $6c11, 18 bytes (records:2)
-	dw MinigameLevelRow0 ; record 0
-	dw MinigameLevelRow1 ; record 1
-	dw MinigameLevelRow2 ; record 2
-	dw MinigameLevelRow3 ; record 3
-	dw MinigameLevelRow4 ; record 4
-	dw MinigameLevelRow5 ; record 5
-	dw MinigameLevelRow6 ; record 6
-	dw MinigameLevelRow7 ; record 7
-	dw MinigameLevelRow8 ; record 8
-MinigameLevelRow0:
+	dw BooBlastLevelClearFlags ; record 0
+	dw ShootingStarLevelClearFlags ; record 1
+	dw PerfectShotLevelClearFlags ; record 2
+	dw TargetShotLevelClearFlags ; record 3
+	dw FruitFantasyLevelClearFlags ; record 4
+	dw BananaBunchLevelClearFlags ; record 5
+	dw TreasureBoxLevelClearFlags ; record 6
+	dw MedallionMatchLevelClearFlags ; record 7
+	dw TwoOnOneLevelClearFlags ; record 8
+BooBlastLevelClearFlags:
 	; $6c23, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; 0
 	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; 1
 	dw SAVEFLAG_CLEARED_BOO_BLAST_3 ; 2
-MinigameLevelRow1:
+ShootingStarLevelClearFlags:
 	; $6c29, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; 1
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_3 ; 2
-MinigameLevelRow2:
+PerfectShotLevelClearFlags:
 	; $6c2f, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_1 ; 0
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; 1
 	dw SAVEFLAG_CLEARED_PERFECT_SHOT_3 ; 2
-MinigameLevelRow3:
+TargetShotLevelClearFlags:
 	; $6c35, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_TARGET_SHOT_1 ; 0
 	dw SAVEFLAG_CLEARED_TARGET_SHOT_2 ; 1
 	dw SAVEFLAG_CLEARED_TARGET_SHOT_3 ; 2
-MinigameLevelRow4:
+FruitFantasyLevelClearFlags:
 	; $6c3b, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_1 ; 0
 	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_2 ; 1
 	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_3 ; 2
-MinigameLevelRow5:
+BananaBunchLevelClearFlags:
 	; $6c41, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BANANA_BUNCH_1 ; 0
 	dw SAVEFLAG_CLEARED_BANANA_BUNCH_2 ; 1
 	dw SAVEFLAG_CLEARED_BANANA_BUNCH_3 ; 2
-MinigameLevelRow6:
+TreasureBoxLevelClearFlags:
 	; $6c47, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; 0
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_2 ; 1
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_3 ; 2
-MinigameLevelRow7:
+MedallionMatchLevelClearFlags:
 	; $6c4d, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; 0
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; 1
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_3 ; 2
-MinigameLevelRow8:
+TwoOnOneLevelClearFlags:
 	; $6c53, 6 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; 0
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 1
@@ -451,7 +451,7 @@ LoadMinigameLevelSelectGfx:
 .loop:
 	ld a, c ; $6c64
 	add a ; $6c65
-	ld hl, MinigameLevelSelectGfxTable ; $6c66
+	ld hl, MinigameLevelFlagIconTilePtrs ; $6c66
 	add_hl_a ; $6c69
 	ld a, [hl+] ; $6c6e
 	ld h, [hl] ; $6c6f
@@ -466,7 +466,7 @@ LoadMinigameLevelSelectGfx:
 	pop de ; $6c7c
 	pop bc ; $6c7d
 	pop af ; $6c7e
-	ld hl, MinigameLevelSelectTable ; $6c7f
+	ld hl, MinigameLevelFlagIconVramDests ; $6c7f
 	ld a, c ; $6c82
 	add a ; $6c83
 	add_hl_a ; $6c84
@@ -489,7 +489,7 @@ LoadMinigameLevelSelectGfx:
 	ld c, a ; $6c9f
 	call AdvanceFrame ; $6ca0
 	push_wram_bank WRAM_COURT_PLANES ; $6ca3
-	ld a, [wScreenAttrmap + 1] ; $6cac
+	ld a, [wLevelSelectClearedCount] ; $6cac
 	ld b, a ; $6caf
 	pop_wram_bank ; $6cb0
 	ld a, b ; $6cb5
@@ -498,35 +498,35 @@ LoadMinigameLevelSelectGfx:
 	ld a, c ; $6cb9
 	cp $03 ; $6cba
 	jr nz, .loop ; $6cbc
-	jr .loadGfx0 ; $6cbe
+	jr .loadLabelGfx ; $6cbe
 .noneCleared:
 	ld a, c ; $6cc0
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
-.loadGfx0:
-	ld b, TILEBLOCK_MinigameLevelSelectGfx0 ; $6cc5
-	ld c, MinigameLevelSelectGfx0_SIZE / 16 ; $6cc7
+.loadLabelGfx:
+	ld b, TILEBLOCK_Level1LabelGfx ; $6cc5
+	ld c, Level1LabelGfx_SIZE / 16 ; $6cc7
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
 	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
 	push_wram_bank WRAM_COURT_PLANES ; $6cd2
-	ld a, [wScreenAttrmap + 1] ; $6cdb
+	ld a, [wLevelSelectClearedCount] ; $6cdb
 	ld b, a ; $6cde
 	pop_wram_bank ; $6cdf
 	ld a, b ; $6ce4
 	or a ; $6ce5
-	jr z, .noneClearedIcons ; $6ce6
-	ld b, TILEBLOCK_MinigameLevelSelectIconGfx ; $6ce8
-	jr .loadIconBlock ; $6cea
-.noneClearedIcons:
-	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
-.loadIconBlock:
-	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
+	jr z, .noneClearedLabel ; $6ce6
+	ld b, TILEBLOCK_Level2LabelGfx ; $6ce8
+	jr .loadSecondLabel ; $6cea
+.noneClearedLabel:
+	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $6cec
+.loadSecondLabel:
+	ld c, QuestionMarksLabelGfx_SIZE / 16 ; $6cee
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
 	call AdvanceFrame ; $6cf6
-	ld b, TILEBLOCK_MinigameLevelSelectGfx1 ; $6cf9
-	ld c, MinigameLevelSelectGfx1_SIZE / 16 ; $6cfb
+	ld b, TILEBLOCK_ChallengeLabelGfx ; $6cf9
+	ld c, ChallengeLabelGfx_SIZE / 16 ; $6cfb
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $6cfd
 	farcall LoadCompressedTileBlock ; $6d00
 	call AdvanceFrame ; $6d03
@@ -535,8 +535,8 @@ LoadMinigameLevelSelectGfx:
 	ld de, vTiles0 tile $70 + VRAM_BANK1 ; $6d0a
 	farcall LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
-	ld b, TILEBLOCK_MinigameLevelSelectGfx2Alias16 ; $6d13
-	ld c, MinigameLevelSelectGfx2_SIZE / 16 ; $6d15
+	ld b, TILEBLOCK_SelectALevelTitleGfx ; $6d13
+	ld c, SelectALevelTitleGfx_SIZE / 16 ; $6d15
 	ld de, vTiles0 ; $6d17
 	farcall LoadCompressedTileBlock ; $6d1a
 	call AdvanceFrame ; $6d1d
@@ -545,13 +545,13 @@ LoadMinigameLevelSelectGfx:
 	farcall LoadIndexedPalette ; $6d24
 	pop_wram_bank ; $6d27
 	ret ; $6d2c
-MinigameLevelSelectGfxTable:
+MinigameLevelFlagIconTilePtrs:
 	; $6d2d, 8 bytes (records:2)
-	dslot DataPtr_MinigameLabelTiles0 ; record 0
-	dslot DataPtr_MinigameLabelTiles1 ; record 1
-	dslot DataPtr_MinigameLabelTiles2 ; record 2
-	dslot DataPtr_MinigameLabelTiles3 ; record 3
-MinigameLevelSelectTable:
+	dslot DataPtr_Level1FlagIconTiles ; record 0
+	dslot DataPtr_Level2FlagIconTiles ; record 1
+	dslot DataPtr_Level3FlagIconTiles ; record 2
+	dslot DataPtr_LockedLevelFlagIconTiles ; record 3
+MinigameLevelFlagIconVramDests:
 	; $6d35, 8 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1
@@ -559,7 +559,7 @@ MinigameLevelSelectTable:
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 3
 DrawMinigameLevelDescription:
 	push_wram_bank WRAM_COURT_PLANES ; $6d3d
-	ld a, [wScreenAttrmap + 1] ; $6d46
+	ld a, [wLevelSelectClearedCount] ; $6d46
 	or a ; $6d49
 	jr nz, .getMenuCursorIndex ; $6d4a
 	ld c, $03 ; $6d4c
@@ -567,7 +567,7 @@ DrawMinigameLevelDescription:
 	cp $01 ; $6d51
 	jr nz, .getMenuCursorIndex ; $6d53
 	wram_bank WRAM_SCREEN ; $6d55
-	ld hl, $00c5 ; $6d5b
+	ld hl, Text_MinigameLevelCantPlayYet ; $6d5b
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6d5e
 	jr .renderTextToBuffer64 ; $6d61
 .getMenuCursorIndex:
@@ -575,7 +575,7 @@ DrawMinigameLevelDescription:
 	ld c, $03 ; $6d69
 	call GetMenuCursorIndex_1b ; $6d6b
 	ld b, a ; $6d6e
-	ld hl, MinigameLevelDescriptionTable ; $6d6f
+	ld hl, MinigameLevelDescriptionDests ; $6d6f
 	add a ; $6d72
 	add_hl_a ; $6d73
 	ld a, [hl+] ; $6d78
@@ -592,7 +592,7 @@ DrawMinigameLevelDescription:
 	farcall RenderTextToBuffer64 ; $6d86
 	pop_wram_bank ; $6d89
 	ret ; $6d8e
-MinigameLevelDescriptionTable:
+MinigameLevelDescriptionDests:
 	; $6d8f, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
@@ -609,12 +609,12 @@ LoadMinigameLevelSelectPalette:
 	ret ; $6da7
 MinigameLevelSelectPalettePtrs:
 	; $6da8, 6 bytes (records:2)
-	dw MinigameLevelSelectPalette0 ; record 0
-	dw MinigameLevelSelectPalette2 ; record 1
-	dw MinigameLevelSelectPalette1 ; record 2
-MinigameLevelSelectPalette0:
-	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette0.asm" ; $6dae, 8 bytes (palettes)
-MinigameLevelSelectPalette1:
-	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette1.asm" ; $6db6, 8 bytes (palettes)
-MinigameLevelSelectPalette2:
-	INCLUDE "data/engine/menus/minigame_select/MinigameLevelSelectPalette2.asm" ; $6dbe, 8 bytes (palettes)
+	dw MinigameLevel1Palette ; record 0
+	dw MinigameLevel2Palette ; record 1
+	dw MinigameLevel3Palette ; record 2
+MinigameLevel1Palette:
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevel1Palette.asm" ; $6dae, 8 bytes (palettes)
+MinigameLevel3Palette:
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevel3Palette.asm" ; $6db6, 8 bytes (palettes)
+MinigameLevel2Palette:
+	INCLUDE "data/engine/menus/minigame_select/MinigameLevel2Palette.asm" ; $6dbe, 8 bytes (palettes)

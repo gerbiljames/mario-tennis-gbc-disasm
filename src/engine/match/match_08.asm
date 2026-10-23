@@ -1,6 +1,6 @@
 InitDefaultMatchSettings:
 	xor a ; $4070
-	ld [wKeepMatchStatsFlag], a ; $4071
+	ld [wMatchSuspendedFlag], a ; $4071
 	ld hl, wMatchMenuSelection ; $4074
 	ld c, $02 ; $4077
 	call ClearMemory16 ; $4079
@@ -28,7 +28,7 @@ ResetMatchState:
 	ld hl, wBallXFrac ; $40b1
 	ld c, $0e ; $40b4
 	call ClearMemory16 ; $40b6
-	ld a, [wKeepMatchStatsFlag] ; $40b9
+	ld a, [wMatchSuspendedFlag] ; $40b9
 	and a ; $40bc
 	jr nz, .keepStats ; $40bd
 	ld hl, wCharacter1ServiceAces ; $40bf
@@ -36,7 +36,7 @@ ResetMatchState:
 	call ClearMemory16 ; $40c4
 .keepStats:
 	xor a ; $40c7
-	ld [wKeepMatchStatsFlag], a ; $40c8
+	ld [wMatchSuspendedFlag], a ; $40c8
 	ld a, $ff ; $40cb
 	ld [wMatchSimFrozen], a ; $40cd
 	ld a, $01 ; $40d0
@@ -169,7 +169,7 @@ UpdateMatchFrame:
 	call HandleBallHitEvent ; $420c
 	call HandleBallTouchCharEvent ; $420f
 	call UpdateBallVisuals ; $4212
-	call TickRallyTimers ; $4215
+	call HandleBallNetCrossEvent ; $4215
 	call HandleBallBounceEvent ; $4218
 	ld d, MODEHOOK_PER_FRAME ; $421b
 	call CallModeHook ; $421d
@@ -192,11 +192,11 @@ UpdateMatchFrame:
 	call DrawMarkersAndShadows ; $423e
 .done:
 	ret ; $4241
-TickRallyTimers:
+HandleBallNetCrossEvent:
 	ld a, [wBallCrossedNetFlag] ; $4242
 	and a ; $4245
 	ret z ; $4246
-	ld hl, wRallyNetFrames ; $4247
+	ld hl, wRallyNetCrossings ; $4247
 	ld a, [hl] ; $424a
 	cp $64 ; $424b
 	jr nc, .checkFirstShot ; $424d
@@ -207,20 +207,20 @@ TickRallyTimers:
 	jr nz, .modeHook ; $4255
 	ld a, [wPointOutcome] ; $4257
 	and a ; $425a
-	jr nz, .checkBounce ; $425b
+	jr nz, .checkNetCord ; $425b
 	ld a, $01 ; $425d
 	ld [wCameraFollowBall], a ; $425f
-.checkBounce:
-	ld a, [wBallHasBouncedFlag] ; $4262
+.checkNetCord:
+	ld a, [wBallTouchedNetFlag] ; $4262
 	and a ; $4265
 	jr z, .modeHook ; $4266
-	ld hl, SetCharStateForRallyTick ; $4268
+	ld hl, SetCharStandbyAfterServeNetCord ; $4268
 	call ForEachCharBank ; $426b
 .modeHook:
-	ld d, MODEHOOK_RALLY_TICK ; $426e
+	ld d, MODEHOOK_NET_CROSS ; $426e
 	call CallModeHook ; $4270
 	ret ; $4273
-SetCharStateForRallyTick:
+SetCharStandbyAfterServeNetCord:
 	ld a, CHARSTATE_STANDBY ; $4274
 	call SetCharState ; $4276
 	ret ; $4279
@@ -236,7 +236,7 @@ HandleBallHitEvent:
 .clearEvent:
 	xor a ; $4288
 	ld [wBallHitEvent], a ; $4289
-	ld [wBallHasBouncedFlag], a ; $428c
+	ld [wBallTouchedNetFlag], a ; $428c
 	ld [wLandingMarkerActive], a ; $428f
 	call StartLandingMarker ; $4292
 	call StartHitEffect ; $4295
@@ -244,23 +244,23 @@ HandleBallHitEvent:
 	call SetCharStateOnBallHit ; $429e
 	wram_bank WRAM_CHAR2 ; $42a1
 	call SetCharStateOnBallHit ; $42a7
-	wram_bank WRAM_TEXT ; $42aa
+	wram_bank WRAM_CHAR1 ; $42aa
 	call SetCharStateOnBallHit ; $42b0
-	wram_bank WRAM_ACTORS ; $42b3
+	wram_bank WRAM_CHAR0 ; $42b3
 	call SetCharStateOnBallHit ; $42b9
-	call DetectServeAceOutcome ; $42bc
+	call DetectServeReturnFault ; $42bc
 	ld d, MODEHOOK_BALL_HIT ; $42bf
 	call CallModeHook ; $42c1
 	xor a ; $42c4
 	ld [wBallBounceCount], a ; $42c5
 	ld a, [wRallyLength] ; $42c8
 	cp $01 ; $42cb
-	jr z, .specialShot ; $42cd
+	jr z, .serveHit ; $42cd
 	cp $02 ; $42cf
 	jr z, .resetCourtLimits ; $42d1
 	ret ; $42d3
-.specialShot:
-	ld a, [wSpecialShotFlag] ; $42d4
+.serveHit:
+	ld a, [wPowerServeFlag] ; $42d4
 	and a ; $42d7
 	jr z, .done ; $42d8
 	ld a, BANNER_POWER_SERVE ; $42da
@@ -303,7 +303,7 @@ SetCharStateOnBallHitTable:
 	table_width 1
 	db CHARSTATE_INERT, CHARSTATE_RECOVER, CHARSTATE_RALLY, CHARSTATE_RECOVER, CHARSTATE_RECOVER, CHARSTATE_RALLY, CHARSTATE_WALK, CHARSTATE_POINT_END
 	assert_table_length NUM_CHARSTATES
-DetectServeAceOutcome:
+DetectServeReturnFault:
 	ld a, [wRallyLength] ; $4326
 	cp $02 ; $4329
 	jr nz, .done ; $432b
@@ -386,7 +386,7 @@ EvaluateBounceOutcome:
 	jr z, .setOutcome ; $43bd
 	ld b, POINTOUTCOME_LET ; $43bf
 	ld c, $00 ; $43c1
-	ld a, [wBallHasBouncedFlag] ; $43c3
+	ld a, [wBallTouchedNetFlag] ; $43c3
 	and a ; $43c6
 	jr nz, .setOutcome ; $43c7
 .done:
@@ -433,18 +433,18 @@ AdvanceMatchRng:
 ReadMatchInputHeld:
 	ldh a, [hLinkExchangeActive] ; $440d
 	and a ; $440f
-	jr nz, ReadScriptedMatchInput ; $4410
+	jr nz, ReadLinkMatchInput ; $4410
 	ldh a, [hPlayerInputFlags] ; $4412
 	ret ; $4414
 ReadMatchInputPressed:
 	ldh a, [hLinkExchangeActive] ; $4415
 	and a ; $4417
-	jr nz, ReadScriptedMatchInput ; $4418
+	jr nz, ReadLinkMatchInput ; $4418
 	ldh a, [hInputRisingEdge] ; $441a
 	ret ; $441c
 ReadMatchInputRepeat:
 	ldh a, [hLinkExchangeActive] ; $441d
 	and a ; $441f
-	jr nz, ReadScriptedMatchInput ; $4420
-	ldh a, [hInputPressed] ; $4422
+	jr nz, ReadLinkMatchInput ; $4420
+	ldh a, [hInputRepeat] ; $4422
 	ret ; $4424

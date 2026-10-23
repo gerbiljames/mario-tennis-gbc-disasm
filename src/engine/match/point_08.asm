@@ -1,11 +1,11 @@
 ResetPointState:
 	xor a ; $4cb9
-	ld [wRallyNetFrames], a ; $4cba
+	ld [wRallyNetCrossings], a ; $4cba
 	ld [wBallBounceCount], a ; $4cbd
 	ld [wRallyLength], a ; $4cc0
 	ld [wBallHitEvent], a ; $4cc3
 	ld [wBallTouchCharFlag], a ; $4cc6
-	ld [wBallHasBouncedFlag], a ; $4cc9
+	ld [wBallTouchedNetFlag], a ; $4cc9
 	ld [wServiceAceFlag], a ; $4ccc
 	ld [wReturnAceFlag], a ; $4ccf
 	ld [wLandingMarkerActive], a ; $4cd2
@@ -74,19 +74,19 @@ PlayPoint:
 	ld [hl], a ; $4d61
 	ret ; $4d62
 SetPointSituationBgm:
-	ld d, $0f ; $4d63
+	ld d, BGM_SET_POINT ; $4d63
 	ld a, [wMatchPointFlag] ; $4d65
 	and a ; $4d68
 	jr nz, .play ; $4d69
-	ld d, $0f ; $4d6b
+	ld d, BGM_SET_POINT ; $4d6b
 	ld a, [wSetPointFlag] ; $4d6d
 	and a ; $4d70
 	jr nz, .play ; $4d71
-	ld d, $10 ; $4d73
+	ld d, BGM_GAME_POINT ; $4d73
 	ld a, [wGamePointFlag] ; $4d75
 	and a ; $4d78
 	jr nz, .play ; $4d79
-	ld d, $0e ; $4d7b
+	ld d, BGM_TIEBREAK ; $4d7b
 	ld a, [wTiebreakerIndicator] ; $4d7d
 	and a ; $4d80
 	jr nz, .play ; $4d81
@@ -192,7 +192,7 @@ DelayAfterPointResolution:
 	call StepMatchFrames ; $4e45
 	ret ; $4e48
 ResolveServeVolleyedPoint:
-	ld hl, $0174 ; $4e49
+	ld hl, Text_RulesReturnServeAfterBounce ; $4e49
 	ld_cell de, $05, $04 ; $4e4c
 	ld_size bc, $0a, $07 ; $4e4f
 	farcall ShowMessageWindow ; $4e52
@@ -200,7 +200,7 @@ ResolveServeVolleyedPoint:
 	call StepMatchFrames ; $4e57
 	ret ; $4e5a
 ResolveWrongReceiverPoint:
-	ld hl, $0175 ; $4e5b
+	ld hl, Text_RulesOnlyReceiverMayReturn ; $4e5b
 	ld_cell de, $02, $04 ; $4e5e
 	ld_size bc, $0f, $07 ; $4e61
 	farcall ShowMessageWindow ; $4e64
@@ -244,10 +244,10 @@ ShowPointScoreSequence:
 	call StepMatchFramesSkippable ; $4eb2
 	ld a, [wDeuceIndicator] ; $4eb5
 	and a ; $4eb8
-	jr z, .case6 ; $4eb9
+	jr z, .updateScore ; $4eb9
 	sound SFX_DEUCE ; $4ebb
 	call StepMatchFrame ; $4ebd
-.case6:
+.updateScore:
 	farcall UpdateScorePanelDisplay ; $4ec0
 	ld a, 10 ; $4ec3
 	call StepMatchFrames ; $4ec5
@@ -258,20 +258,20 @@ ShowPointScoreSequence:
 ShowMatchEndSequence:
 	ld a, [wGameMode] ; $4ed1
 	cp GAMEMODE_MARIO_MINIGAME ; $4ed4
-	jr nz, .case9 ; $4ed6
+	jr nz, .tennisMatch ; $4ed6
 	ld a, [wMatchWinLoseFlag] ; $4ed8
 	add a ; $4edb
-	jr nc, .case8 ; $4edc
+	jr nc, .levelCleared ; $4edc
 	ld d, BANNER_GAME_OVER ; $4ede
 	farcall ShowMinigamePointResult ; $4ee0
 	ret ; $4ee3
-.case8:
+.levelCleared:
 	ld a, [wMinigameLevel] ; $4ee4
 	add BANNER_LEVEL_1_CLEARED ; $4ee7
 	ld d, a ; $4ee9
 	farcall ShowMinigamePointResult ; $4eea
 	ret ; $4eed
-.case9:
+.tennisMatch:
 	ld a, BANNER_MATCH ; $4eee
 	farcall ShowCourtBanner ; $4ef0
 	ld a, 10 ; $4ef3
@@ -287,20 +287,20 @@ ShowMatchEndSequence:
 	ret ; $4f0e
 ShowSetEndSequence:
 	ld a, [wPlayer1SetsWon] ; $4f0f
-	ld b, $01 ; $4f12
-	farcall LoadPlayer1ScoreDigitGfx ; $4f14
+	ld b, DIGITGFX_NUMERALS ; $4f12
+	farcall LoadFirstScoreDigitGfx ; $4f14
 	ld a, [wPlayer2SetsWon] ; $4f17
-	ld b, $01 ; $4f1a
-	farcall LoadPlayer2ScoreDigitGfx ; $4f1c
+	ld b, DIGITGFX_NUMERALS ; $4f1a
+	farcall LoadSecondScoreDigitGfx ; $4f1c
 	ld d, BANNER_SET ; $4f1f
 	jr ShowGameEndSequence.done ; $4f21
 ShowGameEndSequence:
 	ld a, [wPlayer1GamesWon] ; $4f23
-	ld b, $01 ; $4f26
-	farcall LoadPlayer1ScoreDigitGfx ; $4f28
+	ld b, DIGITGFX_NUMERALS ; $4f26
+	farcall LoadFirstScoreDigitGfx ; $4f28
 	ld a, [wPlayer2GamesWon] ; $4f2b
-	ld b, $01 ; $4f2e
-	farcall LoadPlayer2ScoreDigitGfx ; $4f30
+	ld b, DIGITGFX_NUMERALS ; $4f2e
+	farcall LoadSecondScoreDigitGfx ; $4f30
 	ld d, BANNER_GAME ; $4f33
 	jr .done ; $4f35
 .done:
@@ -353,7 +353,7 @@ SetCharStateFromServeRole:
 	ret ; $4f9f
 ServeRoleCharStateTable_08:
 	; $4fa0, 4 bytes (bytes:4)
-	db CHARSTATE_SERVE, CHARSTATE_STANDBY, CHARSTATE_AWAIT_SERVE, CHARSTATE_STANDBY
+	db CHARSTATE_SERVE, CHARSTATE_STANDBY, CHARSTATE_SERVER_PARTNER, CHARSTATE_STANDBY
 EndPointBallEffects:
 	xor a ; $4fa4
 	ld [wBallTrailEnabled], a ; $4fa5
@@ -406,7 +406,7 @@ SpreadTeammateTargets:
 	jumptable [wOnCourtCharCountMinus1] ; $4ff5
 	dw RetStub ; $4ff9 jumptable
 	dw RetStub ; $4ffb jumptable
-	dw SpreadFarTeamPair ; $4ffd jumptable
+	dw SpreadPlayer2TeamPair ; $4ffd jumptable
 	dw SpreadBothTeamPairs ; $4fff jumptable
 SpreadBothTeamPairs:
 	wram_bank WRAM_CHAR0 ; $5001
@@ -430,7 +430,7 @@ SpreadBothTeamPairs:
 	ld a, c ; $5031
 	ld [hl+], a ; $5032
 	ld [hl], b ; $5033
-SpreadFarTeamPair:
+SpreadPlayer2TeamPair:
 	wram_bank WRAM_CHAR1 ; $5034
 	ld hl, wCharPosDepth + 1 ; $503a
 	ld a, [hl+] ; $503d

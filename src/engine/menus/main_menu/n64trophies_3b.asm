@@ -62,7 +62,7 @@ DrawWonTrophyIcon:
 	pop bc ; $4aee
 	pop af ; $4aef
 	ret ; $4af0
-DrawTrophiesCharSprite:
+DrawTrophiesCharIcon:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4af1
 	ld a, c ; $4af4
 	add a ; $4af5
@@ -111,17 +111,17 @@ ApplyUnlockEverythingCheat:
 	farcall SetSaveFlag ; $4b48
 	ld de, SAVEFLAG_COURT_WAREHOUSE ; $4b4b
 	farcall SetSaveFlag ; $4b4e
-	ld de, SAVEFLAG_UNLOCKED_FAY ; $4b51
+	ld de, SAVEFLAG_UNLOCKED_WALUIGI ; $4b51
 	farcall SetSaveFlag ; $4b54
-	ld de, SAVEFLAG_UNLOCKED_CURT ; $4b57
+	ld de, SAVEFLAG_UNLOCKED_YOSHI ; $4b57
 	farcall SetSaveFlag ; $4b5a
-	ld de, SAVEFLAG_UNLOCKED_MARK ; $4b5d
+	ld de, SAVEFLAG_UNLOCKED_BOWSER ; $4b5d
 	farcall SetSaveFlag ; $4b60
-	ld de, SAVEFLAG_UNLOCKED_SEAN ; $4b63
+	ld de, SAVEFLAG_UNLOCKED_WARIO ; $4b63
 	farcall SetSaveFlag ; $4b66
-	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $4b69
+	ld de, SAVEFLAG_UNLOCKED_MARIO ; $4b69
 	farcall SetSaveFlag ; $4b6c
-	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $4b6f
+	ld de, SAVEFLAG_UNLOCKED_PEACH ; $4b6f
 	farcall SetSaveFlag ; $4b72
 	ld de, SAVEFLAG_CLEARED_BOO_BLAST_1 ; $4b75
 	farcall SetSaveFlag ; $4b78
@@ -166,34 +166,34 @@ ApplyUnlockEverythingCheat:
 	push bc ; $4be7
 	ld a, c ; $4be8
 	ld [wCurrentStorySlot], a ; $4be9
-	farcall CheckStorySlot ; $4bec
+	farcall ReadCurrentStorySlot ; $4bec
 	cp $fe ; $4bef
 	jr z, .restore ; $4bf1
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_0 ; $4bf3
+	ld_flag_id de, FLAG_UNLOCKED_PAM ; $4bf3
 	call SetGameFlag ; $4bf6
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_1 ; $4bf9
+	ld_flag_id de, FLAG_UNLOCKED_BOB ; $4bf9
 	call SetGameFlag ; $4bfc
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_2 ; $4bff
+	ld_flag_id de, FLAG_UNLOCKED_BETH ; $4bff
 	call SetGameFlag ; $4c02
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_3 ; $4c05
+	ld_flag_id de, FLAG_UNLOCKED_FAY ; $4c05
 	call SetGameFlag ; $4c08
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_4 ; $4c0b
+	ld_flag_id de, FLAG_UNLOCKED_CURT ; $4c0b
 	call SetGameFlag ; $4c0e
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_5 ; $4c11
+	ld_flag_id de, FLAG_UNLOCKED_MARK ; $4c11
 	call SetGameFlag ; $4c14
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_6 ; $4c17
+	ld_flag_id de, FLAG_UNLOCKED_SEAN ; $4c17
 	call SetGameFlag ; $4c1a
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_7 ; $4c1d
+	ld_flag_id de, FLAG_UNLOCKED_SAMMI ; $4c1d
 	call SetGameFlag ; $4c20
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_8 ; $4c23
+	ld_flag_id de, FLAG_UNLOCKED_ELDEN ; $4c23
 	call SetGameFlag ; $4c26
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_9 ; $4c29
+	ld_flag_id de, FLAG_UNLOCKED_B_COZ ; $4c29
 	call SetGameFlag ; $4c2c
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_10 ; $4c2f
+	ld_flag_id de, FLAG_UNLOCKED_A_COZ ; $4c2f
 	call SetGameFlag ; $4c32
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_11 ; $4c35
+	ld_flag_id de, FLAG_UNLOCKED_SPIKE ; $4c35
 	call SetGameFlag ; $4c38
-	ld_flag_id de, FLAG_CHEAT_UNLOCK_12 ; $4c3b
+	ld_flag_id de, FLAG_UNLOCKED_EMILY ; $4c3b
 	call SetGameFlag ; $4c3e
 	farcall SaveStorySlot ; $4c41
 .restore:
@@ -294,7 +294,7 @@ RunN64TnmtData:
 	call WaitFadeEnd ; $4d1e
 	wram_bank WRAM_SCREEN ; $4d21
 .loop:
-	ldh a, [hInputPressed] ; $4d27
+	ldh a, [hInputRepeat] ; $4d27
 	ld [wMenuInputPressed], a ; $4d29
 	call ScrollN64TnmtDataCursor ; $4d2c
 	call AdvanceFrame ; $4d2f
@@ -332,7 +332,7 @@ ScrollN64TnmtDataCursor:
 .checkRight:
 	bit PADB_RIGHT, a ; $4d75
 	jr z, .checkUp ; $4d77
-	ld a, [wScreenScratch] ; $4d79
+	ld a, [wN64TnmtHasSecondPage] ; $4d79
 	or a ; $4d7c
 	jr z, .done ; $4d7d
 	ld a, [wDataScreenPage] ; $4d7f
@@ -346,41 +346,41 @@ ScrollN64TnmtDataCursor:
 .checkUp:
 	bit PADB_UP, a ; $4d91
 	jr z, .checkDown ; $4d93
-	ld a, [wDataScreenCursorRow] ; $4d95
+	ld a, [wDataScreenScrollRow] ; $4d95
 	or a ; $4d98
 	jr z, .done ; $4d99
 	dec a ; $4d9b
-	ld [wDataScreenCursorRow], a ; $4d9c
+	ld [wDataScreenScrollRow], a ; $4d9c
 	sound SFX_MENU_MOVE ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .checkDown:
 	bit PADB_DOWN, a ; $4da6
 	jr z, .done ; $4da8
-	ld a, [wDataScreenCursorRow] ; $4daa
+	ld a, [wDataScreenScrollRow] ; $4daa
 	cp $0b ; $4dad
 	jr z, .done ; $4daf
 	inc a ; $4db1
-	ld [wDataScreenCursorRow], a ; $4db2
+	ld [wDataScreenScrollRow], a ; $4db2
 	sound SFX_MENU_MOVE ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
 	jr .done ; $4dba
 .done:
 	ret ; $4dbc
 BuildN64TnmtDataScreen:
-	ld c, SCREENASSET_ModeSelect ; $4dbd
+	ld c, SCREENASSET_N64TnmtData ; $4dbd
 	farcall LoadScreenAssetRecord ; $4dbf
 	wram_bank WRAM_SCREEN ; $4dc2
 	xor a ; $4dc8
-	ld [wScreenScratch], a ; $4dc9
+	ld [wN64TnmtHasSecondPage], a ; $4dc9
 	ld a, $00 ; $4dcc
 	ld [wDataScreenPage], a ; $4dce
 	ld a, $00 ; $4dd1
-	ld [wDataScreenCursorRow], a ; $4dd3
+	ld [wDataScreenScrollRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank WRAM_SCREEN ; $4dd9
 	ld de, vTiles1 tile $2c + VRAM_BANK1 ; $4ddf
-	call LoadChartWindowTiles ; $4de2
+	call LoadChartCharIconTiles ; $4de2
 	ld de, vTiles0 + VRAM_BANK1 ; $4de5
 	farcall LoadMenuArrowSpriteTiles ; $4de8
 	ld b, $08 ; $4deb
@@ -396,34 +396,34 @@ LoadN64TnmtDataRecords:
 	ld hl, wScreenScratch ; $4e05
 	ld bc, (WRAMX_END - wScreenScratch) / 16 ; $4e08
 	call ClearMemory16 ; $4e0b
-	ld hl, N64TnmtData ; $4e0e
-	ld de, wN64TnmtLayout ; $4e11
-	ld bc, wN64TnmtLayout_SIZE ; $4e14
+	ld hl, N64TnmtRowChars ; $4e0e
+	ld de, wN64TnmtRowChars ; $4e11
+	ld bc, wN64TnmtRowChars_SIZE ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
 	ld hl, wN64RecordsBlock + N64REC_STAR_UNLOCKS ; $4e1d
 	ld a, [hl] ; $4e20
 	ld b, a ; $4e21
 	and $01 ; $4e22
-	jr nz, .maskSet ; $4e24
+	jr nz, .entry14Unlocked ; $4e24
 	ld a, $10 ; $4e26
-	ld [wN64TnmtLayout + 14], a ; $4e28
-.maskSet:
+	ld [wN64TnmtRowChars + 14], a ; $4e28
+.entry14Unlocked:
 	ld a, b ; $4e2b
 	and $02 ; $4e2c
 	jr nz, .buildN64TnmtTrophyGrid ; $4e2e
 	ld a, $10 ; $4e30
-	ld [wN64TnmtLayout + 15], a ; $4e32
+	ld [wN64TnmtRowChars + 15], a ; $4e32
 .buildN64TnmtTrophyGrid:
 	call BuildN64TnmtTrophyGrid ; $4e35
 	call CheckN64TnmtSecondPage ; $4e38
 	or a ; $4e3b
 	jr z, .done ; $4e3c
 	ld a, $01 ; $4e3e
-	ld [wScreenScratch], a ; $4e40
+	ld [wN64TnmtHasSecondPage], a ; $4e40
 .done:
 	ret ; $4e43
-N64TnmtData:
+N64TnmtRowChars:
 	; $4e44, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 BuildN64TnmtTrophyGrid:
@@ -449,12 +449,12 @@ BuildN64TnmtTrophyGrid:
 	ret ; $4e73
 GetN64CharTrophyRowPtr:
 	ld a, b ; $4e74
-	ld hl, N64CharTrophyRowPtrTable ; $4e75
+	ld hl, N64TnmtRowRecordOrder ; $4e75
 	add_hl_a ; $4e78
 	ld a, [hl] ; $4e7d
 	ld hl, wN64RecordsBlock + N64REC_TROPHIES ; $4e7e
 	add_hl_a ; $4e81
 	ret ; $4e86
-N64CharTrophyRowPtrTable:
+N64TnmtRowRecordOrder:
 	; $4e87, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00

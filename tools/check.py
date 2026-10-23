@@ -23,6 +23,11 @@ after a real defect broke it:
             all VRAM- or WRAM-shaped ($80-$bf / $c0-$df high bytes, $a0-$bf
             being VRAM bank 1): such a table is addresses, written
             `dw wShadowAttrmap + ...` or `dw vTiles1 + VRAM_BANK1`
+  db-ptrs   a raw-db label whose words all point inside labelled blobs
+            of its bank, or are all ROMX addresses read as a word (`ld a,
+            [hl+] / ld h, [hl]` after loading it into hl), is `dw Label + n`
+            rows
+            (three bank $28 tile-frame tables were db byte pairs)
   records   a (records:N) region, or a word table (words, text_ids,
             ram_ptrs, save_flag_ids, mode_hooks), is whole records or ends in
             a $ff terminator (three stray `ret`s once sat after word tables)
@@ -41,7 +46,8 @@ after a real defect broke it:
             a branch that decides nothing, which is always either a deleted
             guarded block or an inverted condition (14 exist; the list is
             curated so a new one shows up as a failure)
-  dma       every ROM label handed straight to a VRAM DMA routine is
+  dma       every ROM label handed to a VRAM DMA routine, directly or as an
+            entry of a dw table the code reads the source from, is
             preceded by `ds ALIGN[4]`: the DMA ignores a source's low four
             bits, so an edit that unaligns one garbles what it copies
   literals  no ROM address is written as a number where the source moves:
@@ -54,18 +60,24 @@ after a real defect broke it:
             data-named label's scope does not run on into code (a routine's
             tail after a table is `Routine.local:`), a dw table does not
             dispatch to another routine's local that starts after a ret/jp
-            (a case is a routine of its own), and no unreferenced label sits
-            where code falls into it (it would split a routine in two)
+            (a case is a routine of its own), and no label referenced only
+            through its locals, or not at all, sits where code falls into it
+            (it would split a routine in two)
   headers   every non-fill region header (`; $xxxx, N bytes (...)`) sits
             right under a label: a region after a ret or a table's end is
-            data under another label's name (seven such once hid there)
+            data under another label's name (seven such once hid there),
+            and no referenced global label heads a fill region (empty map
+            script lists and a tile the game uploads were written as fill)
   gfx       every gfx blob with a PNG beside it encodes back to the bytes
             the PNG was decoded from
   gfx-specs graphics carry a gfx spec, so they get a PNG: no spec-less
             region named *Gfx*/*Tiles*, and no spec-less LZ stream of whole
             tiles that the source decompresses on to vTiles (192 graphics blobs
             once had no PNG); a gfx-tagged region the source indexes, reads
-            element by element or decompresses into a tilemap row fails
+            element by element, decompresses into a tilemap row or a
+            w*Tilemap / w*Attrmap / wMapBuffer64 plane, stages in
+            wDecompBuffer with CopyMemoryFast (tiles go to VRAM straight from
+            ROM) or hands on to a CopyBank*Buffer tilemap copy fails
   tilemap   every tilemap:W blob with a grid beside it encodes back to the
             bytes the grid was decoded from
   reach     a routine is named Unused exactly when nothing reachable from
@@ -73,10 +85,12 @@ after a real defect broke it:
   unnamed   a data label no other label names is Unused_ (a slot-table
             row, padding and the few the hardware or a raw pointer finds
             are listed in tools/reach.py); routines are reach's
-  slots     every ACTOR_<list>_<object> name a story script uses holds that
-            actor in every map_actor list tools/actorslots.py finds can be
-            active at that line (a name is a row number, so reordering or
-            retargeting a list keeps the bytes and changes the actor)
+  slots     every ACTOR_<list>_<object> name a story script uses names a
+            row of a map_actor list tools/actorslots.py finds can be active
+            at that line, and holds that actor in every such list (a name is
+            a row number, so reordering or retargeting a list keeps the
+            bytes and changes the actor); no map_actor row name repeats a
+            word run (TOURNAMENT_TOURNAMENT_STAFF)
   progress  every story progress-flag reference still in the source has its
             Archipelago role in tools/progress_reads.json (record, setter,
             cosmetic, dead), and every entry still matches a reference
@@ -91,19 +105,25 @@ after a real defect broke it:
             argument), a byte read through a known text pointer is not
             compared with a raw TX_* code, the macro and table rows RAW_ID_*
             lists name their ids, and a routine passed Text_* in hl/de at
-            two or more sites is passed no raw number there, and no `bit n, r` on a joypad byte (loaded
+            two or more sites (or in a TEXT_ID_ARGS register) is passed no
+            raw number there, nor is a word stored into a *TextId* variable
+            (`ld de, X` .. `ld a, e / ld [hl+], a / ld [hl], d`), and no `bit n, r` on a joypad byte (loaded
             from hInput* / wCharInputBits, or tested with a PADB_ bit before)
             leaves n raw, nor does a bit/set/res on a FLAG_BYTES byte
             (wCharFlags, wCharBallReachFlags, wExpScreenBusyFlags, ...) or
-            a FLAG_FIELDS record field use anything but its family, and no Text_* id is the X of
+            a FLAG_FIELDS record field (also via `ld a, FIELD / add l /
+            ld l, a`) use anything but its family, and no Text_* id is the X of
             `ld hl, X / add hl, rr / ld e, l / ld d, h` (five scoreboard
-            caption cells were)
+            caption cells were), and no map_script / map_actor flag
+            condition is a nonzero number (flag_cond FLAG_X / ~FLAG_X)
   fields    a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
-            ACTORF_* / OBJSLOT_* field adds no raw offset under $100 to a
-            record pointer (`ld hl, n / add hl, rr`, `ld a, n / add c|e /
-            ld e|c, a`): 25 once reached a record by number beside the
+            ACTORF_* / OBJSLOT_* / SPRSLOT_* / SCENEOBJ_* / WINDOW_* field adds no raw
+            offset under $100 to a record pointer (`ld hl, n / add hl, rr`,
+            `ld a, n / add_hl_a`, `ld a, n / add c|e / ld e|c, a`): 25 once reached a record by number beside the
             names (the record in de, bc named), as the created-character
-            routines all did
+            routines all did; `wActorObjDef + n` is an OBJDEF_* field;
+            a wCharPosX operand that copies, clears, is passed or offset
+            as the whole $df00 struct is wCharStruct
   templates every label handed to QueueSpriteTemplate in hl, directly or as
             a row of the pointer table hl is indexed into, is a
             sprite_template region (five were raw db rows)
@@ -124,11 +144,29 @@ after a real defect broke it:
             it leaves (22 were alternate branches or placement cases), and
             the z target after RunDialogueYesNoPrompt (0 = yes) is not named
             .declined / .no / .refuse*, nor the nz one .accepted / .yes* (two
-            were swapped; one confirms a decline)
+            were swapped; one confirms a decline), and a local whose
+            straight-line path returns a = 0 has no positive name (busy,
+            found, ...), nor one returning 1 a negative name (none, idle,
+            no*, ...) (two were swapped; two return a status or a score),
+            and a local named for doubles is not reached only with
+            FLAG_DOUBLES clear, nor one named for singles only with it set
+            (not* and check...Won names exempt; three were inverted)
   mirrors   a direct `[wX]` operand on a ram_mirrored.inc symbol whose banks
             are listed does not follow (with no pop_wram_bank between) a
             `wram_bank` selecting a bank that lacks it (four read
             wMenuCursorRow under WRAM_TEXT as a char-data page cell)
+  wram-ptrs a `ld bc/de/hl, wX` on a banked WRAMX symbol is not dereferenced
+            (`[bc]`, `[de]`, `[hl]`, `[hl+]`, `[hl-]`, before it is rewritten)
+            after a `wram_bank` selecting another bank (char-data bars drew
+            through bank 6 names as wShadowTilemap cursors), nor passed by
+            `call` to a listed tile-plane writer unless it is a bank-3 name
+            (results/award text went to wScreenAttrmap names; char-data
+            blit/patch cells to wScreenAttrmap and bank 6 names)
+  write-only a RAM label only ever stored to by name (`ld [wX], a`), whose
+            bytes no load, raw address, pointer walk or block copy from an
+            earlier label of the same UNION branch can reach, says
+            "Write-only" / "nothing reads" / "read by nothing" in its
+            comment (seven claimed a reader)
 
 The lz-labels check reads the symbol file the build writes, so run `make`
 first (`make check` does). Exit status is non-zero if any check fails.
@@ -294,7 +332,7 @@ _CODE_PREFIXES = ("script_", "farcall", "push_wram_bank", "pop_wram_bank", "wram
 _DATA_PREFIXES = ("db", "dw", "INCBIN", "map_actor", "map_actor_end", "map_entry",
                   "map_script", "map_tree", "as_", "anim_", "tilemap_", "oam_",
                   "palette", "snd_", "drill_", "court_", "story_location")
-_UNCOND_RE = re.compile(r"^	(ret|reti|jp hl|jp [A-Za-z_$][\w.$+ ]*|jr [A-Za-z_.][\w.]*)\s*(;.*)?$")
+_UNCOND_RE = re.compile(r"^	(ret|reti|jp hl|jp [A-Za-z_.$][\w.$+ ]*|jr [A-Za-z_.][\w.]*)\s*(;.*)?$")
 _QUAL_DEF_RE = re.compile(r"^([A-Za-z_]\w*)\.(\w+):")
 _LOCAL_DEF_RE = re.compile(r"^\.(\w+):")
 
@@ -320,9 +358,9 @@ def check_label_scopes(fail):
         for line in lines:
             if _GLOBAL_RE.match(line):
                 continue
-            words.update(re.findall(r"\b([A-Za-z_]\w*)\b", line.split(";")[0]))
+            words.update(re.findall(r"\b([A-Za-z_]\w*)\b(?!\.)", line.split(";")[0]))
     for inc in (ROOT / "include").rglob("*.inc"):
-        words.update(re.findall(r"\b([A-Za-z_]\w*)\b", inc.read_text()))
+        words.update(re.findall(r"\b([A-Za-z_]\w*)\b(?!\.)", inc.read_text()))
     n = 0
     for h, lines in texts.items():
         bank = bank_of(h)
@@ -334,7 +372,7 @@ def check_label_scopes(fail):
             if m:
                 name = m.group(1)
                 if (last and _line_kind(last) == "code" and not _UNCOND_RE.match(last)
-                        and name not in words and not name.startswith("Unused")):
+                        and name not in words):
                     fail("labels", f"bank ${bank:02x}: {name} is referenced nowhere and code "
                                    "falls into it -- it splits a routine")
                 glob_, first, owner_shift, last = name, None, False, ""
@@ -463,13 +501,13 @@ def check_blob_pointers(rom, manifest, fail):
 KNOWN_DB_WORDS = {
     ("ArcTanTable", 6): "arctangent steps",
     ("WavePatterns", 30): "wave RAM samples",
-    ("TextPageDescriptors_03", 116): "7-byte records, not word-aligned",
+    ("CreditsStaffPageDescriptors_03", 116): "7-byte records, not word-aligned",
     ("ShotRecoilTable_07", 2): "recoil speeds",
     ("TargetShotZoneOverlayTiles", 32): "tile ids",
     ("StarWarpPathY", 146): "Y coordinates",
     ("ContinuePreviousGamePromptString", 6): "tile data",
-    ("RankingMarkerFanfareCoordSet1", 8): "screen coordinates",
-    ("DoublesRankingMarkerFanfareCoordSet1", 8): "screen coordinates",
+    ("RankingMarkerFanfareCoordsRound2", 8): "screen coordinates",
+    ("DoublesRankingMarkerFanfareCoordsRound2", 8): "screen coordinates",
     **{(f"CharDataScreenStatBar{n}", 2): "bar tile ids" for n in range(11, 16)},
     ("NameEntryCursorTable", 54): "cursor y, x pairs",
 }
@@ -531,7 +569,7 @@ def check_db_pointers(manifest, fail):
 # they are.
 KNOWN_ADDR_SHAPED = {
     "TennisDictionaryIndexCursorNormalTiles": "2x2 tile-id cells, $84 the blank tile",
-    "MinigameHighScoreNumberTable": "sprite y, x pairs",
+    "MinigameHighScoreNumberPositions": "sprite y, x pairs",
 }
 _DB_HEX_RE = re.compile(r"\$([0-9a-fA-F]{2})")
 
@@ -592,10 +630,95 @@ def check_addr_shaped(rom, manifest, fail):
     return n
 
 
+# db tables whose words land inside labelled blobs but are not pointers.
+KNOWN_DB_PTR_TABLES = {
+    "FireworkPhaseTileBases1_14": "per-phase tile offsets, read a byte at a time",
+}
+_HL_TABLE_RE = re.compile(r"^\s*(?:ld_hl_indexed|ld hl,)\s+([A-Za-z_]\w*)\s*(?:;|$)")
+
+
+def _word_deref_tables(lines):
+    """Labels loaded into hl (`ld hl, T` / `ld_hl_indexed T`) that the code
+    after reads as a word: `ld a, [hl+] / ld h, [hl]`, before the next global
+    label or a ret, jp or call."""
+    out = set()
+    for i, line in enumerate(lines):
+        m = _HL_TABLE_RE.match(line)
+        if not m:
+            continue
+        prev = ""
+        for nxt in lines[i + 1:i + 16]:
+            if _GLOBAL_RE.match(nxt):
+                break
+            code = nxt.split(";")[0].strip()
+            if not code or code.endswith(":"):
+                continue
+            if prev == "ld a, [hl+]" and code == "ld h, [hl]":
+                out.add(m.group(1))
+                break
+            if re.match(r"(ret|reti|jp|call|farcall)\b", code):
+                break
+            prev = code
+    return out
+
+
+def check_db_word_tables(rom, manifest, fail):
+    """A table of raw bytes (inline `db` rows or a `bytes` region) whose
+    words all address the inside of a labelled blob of its own bank, or that
+    the code reads as a word (`ld a, [hl+] / ld h, [hl]` after loading it
+    into hl) and whose words are all ROMX addresses, is a pointer table the assembler cannot move: it
+    wants `dw Label + n` rows. db-words only sees words equal to a label;
+    these point past one (three bank $28 frame tables once did)."""
+    built = ROOT / "mariotennis.gbc"
+    out = built.read_bytes() if built.exists() else b""
+    if hashlib.sha1(out).hexdigest() != USA_SHA1:
+        return Skipped("mariotennis.gbc is not the byte-perfect USA build")
+    specs = {p: s for p, _o, _n, s in manifest}
+    offsets = {p: (o, n) for p, o, n, _s in manifest}
+    starts = {}
+    for bank, addr, name in read_sym(rom_only=True):
+        if "." not in name and not name.startswith(("FarPtr_", "DataPtr_")):
+            starts.setdefault(bank, {}).setdefault(addr, name)
+    starts = {b: sorted(v.items()) for b, v in starts.items()}
+    found, n = set(), 0
+    for h in holders():
+        b = h.bank
+        lines = bank_lines(h)[0]
+        deref = _word_deref_tables(lines)
+        lo, hi = (0x4000, 0x8000) if b else (0x150, 0x4000)
+        keys = [a for a, _ in starts.get(b, [])]
+        name, body = None, []
+        for line in lines + ["End:"]:
+            m = _GLOBAL_RE.match(line)
+            if not m:
+                s = line.split(";")[0].strip()
+                if s and not s.endswith(":"):
+                    body.append(s)
+                continue
+            data = _db_bytes(body, specs, rom, offsets) if name and body else None
+            if data and len(data) % 2 == 0:
+                n += 1
+                words = [data[k] | data[k + 1] << 8 for k in range(0, len(data), 2)]
+                owners = []
+                for w in words:
+                    i = bisect.bisect_right(keys, w) - 1
+                    owners.append(starts[b][i] if lo <= w < hi and i >= 0 else None)
+                if all(owners) or name in deref and all(0x4000 <= w < 0x8000 for w in words):
+                    found.add(name)
+                    if name not in KNOWN_DB_PTR_TABLES:
+                        rows = ", ".join(f"{o[1]} + ${w - o[0]:x}" if o else f"${w:04x}"
+                                         for w, o in zip(words[:4], owners))
+                        fail("db-ptrs", f"${b:02x}: {name} is {rows} -- `dw Label + n`, not db")
+            name, body = m.group(1), []
+    for name in sorted(set(KNOWN_DB_PTR_TABLES) - found):
+        fail("db-ptrs", f"{name} no longer reads as pointers -- drop it from KNOWN_DB_PTR_TABLES")
+    return n
+
+
 # (records:N) regions whose size is not whole records, with what the tail is.
 # A tail of $ff bytes is a terminator and needs no entry.
 KNOWN_RECORD_TAILS = {
-    "VramTileset_09": "two $00 bytes of padding before the ALIGN[4] tile blob",
+    "CourtBannerTileRanges_09": "two $00 bytes of padding before the ALIGN[4] tile blob",
 }
 _RECORDS_HEADER_RE = re.compile(r"^\t(?:\w+ \".*\" )?; \$([0-9a-f]{4}), (\d+) bytes "
                                 r"\((?:records:(\d+)|(?:words|text_ids|ram_ptrs|save_flag_ids|mode_hooks)\b)[^)]*\)$")
@@ -828,16 +951,33 @@ def check_gfx_specs(rom, manifest, fail):
 TABLE_READ_GFX = {}
 
 _TABLE_READ_RE = re.compile(r"^\t(add_hl_a\b|add hl, |ld \w, \[hl\+?\]|"
-                            r"ld de, wDecompBuffer \+ .*TILEMAP_WIDTH)")
+                            r"ld de, wDecompBuffer \+ .*TILEMAP_(WIDTH|AREA)|"
+                            r"ld de, (w\w*(Tilemap|Attrmap)|wMapBuffer64)\b)")
 _SCAN_END_RE = re.compile(r"^\t(call|ret|jp|jr|rst)\b|^\tld hl, |^\S")
+_DECOMP_CALL_RE = re.compile(r"^\t(call|farcall) DecompressData\b")
+_BANK_PLANE_COPY_RE = re.compile(r"^\tcall \w*CopyBank\w*Buffer")
+
+
+def _hands_to_bank_copy(after):
+    """The lines after a DecompressData pass the result on to a
+    CopyBank*Buffer copy (WRAM 1 into the tilemap banks 2 / 3)."""
+    for line in after:
+        if _BANK_PLANE_COPY_RE.match(line):
+            return True
+        if re.match(r"^\t(call|ret|jp|jr|rst|farcall)\b|^\S", line):
+            return False
+    return False
 
 
 def check_gfx_tables(manifest, fail):
     """A gfx spec is for tiles: a gfx-tagged region the source loads with
     `ld hl, Label` and then indexes or reads element by element (add_hl_a,
     add hl, ld r,[hl]/[hl+]) before the next call, jump or `ld hl` is a
-    table, and one decompressed to wDecompBuffer + n * TILEMAP_WIDTH is a
-    tilemap."""
+    table, and one decompressed to wDecompBuffer + n * TILEMAP_WIDTH or to
+    a w*Tilemap / w*Attrmap / wMapBuffer64 plane, staged in wDecompBuffer
+    by CopyMemoryFast (tiles are queued to VRAM straight from ROM), or
+    decompressed and passed on to a CopyBank*Buffer copy into the tilemap
+    banks is a tilemap."""
     gfx = {}
     for path, off, length, spec in manifest:
         if spec == "gfx" or (spec or "").startswith("gfx:"):
@@ -850,16 +990,22 @@ def check_gfx_tables(manifest, fail):
             if not m or m.group(1) not in gfx:
                 continue
             label = m.group(1)
-            for nxt in lines[i + 1:i + 8]:
+            staged = False
+            for k in range(i + 1, min(i + 8, len(lines))):
+                nxt = lines[k]
+                staged |= nxt.startswith("\tld de, wDecompBuffer ")
                 if _SCAN_END_RE.match(nxt):
-                    break
-                if _TABLE_READ_RE.match(nxt):
-                    if label in TABLE_READ_GFX:
-                        seen.add(label)
-                    else:
-                        fail("gfx-specs", f"{gfx[label]}: tagged gfx but read as "
-                                          f"a table or tilemap ({f.relative_to(ROOT)}:{i + 1})")
-                    break
+                    if not (staged and nxt.startswith("\tcall CopyMemoryFast")
+                            or _DECOMP_CALL_RE.match(nxt) and _hands_to_bank_copy(lines[k + 1:k + 5])):
+                        break
+                elif not _TABLE_READ_RE.match(nxt):
+                    continue
+                if label in TABLE_READ_GFX:
+                    seen.add(label)
+                else:
+                    fail("gfx-specs", f"{gfx[label]}: tagged gfx but read as "
+                                      f"a table or tilemap ({f.relative_to(ROOT)}:{i + 1})")
+                break
     for label in sorted(set(TABLE_READ_GFX) - seen):
         fail("gfx-specs", f"{label}: no longer read as a table -- "
                           "drop it from TABLE_READ_GFX")
@@ -916,6 +1062,29 @@ def check_region_headers(fail):
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
             fail("headers", f"{where}: {m.group(1)} has no label of its own -- "
                             f"name it (Unused_<bank>_*), or mark it (fill)")
+    return n + check_fill_labels(fail)
+
+
+_FILL_LINE_RE = re.compile(r"[^;]*;.*(, fill\b|\(fill\))")
+
+
+def check_fill_labels(fail):
+    """A global label directly over a fill region is referenced by nothing:
+    bytes the game reads are data, written as what they are."""
+    banks = [bank_lines(h) for h in holders()]
+    refs = {w for lines, _origin in banks for line in lines if not _GLOBAL_RE.match(line)
+            for w in re.findall(r"[A-Za-z_]\w*", line.split(";", 1)[0])}
+    n = 0
+    for lines, origin in banks:
+        for i, line in enumerate(lines[:-1]):
+            if not (g := _GLOBAL_RE.match(line)) or not _FILL_LINE_RE.match(lines[i + 1]):
+                continue
+            n += 1
+            name = g.group(1)
+            if name in refs:
+                where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                fail("headers", f"{where}: {name} is referenced but marked fill -- "
+                                f"write the bytes it holds")
     return n
 
 
@@ -963,11 +1132,19 @@ _NUM_RE = re.compile(r"\$[0-9a-fA-F]+|%[01]+|\d+")
 _OPERAND_RE = re.compile(r"^\t([a-z_]\w*)\s+([^;]+)")
 _NOT_MACROS = frozenset(_MNEMONICS | {"db", "dw", "ds", "lb", "text", "line", "page"})
 _ROMX_WORD_RE = re.compile(r"\$[4-7][0-9a-fA-F]{3}")
+# `ld rr` immediates that read as a WRAM address, or as one negated before an
+# `add hl, rr`, and are not.
+_NOT_WRAM_ADDRESSES = {
+    "$00: ld de, $3573": "the random LCG's increment",
+    "$04: ld de, $4000": "a distance bound, tested by the carry",
+    "$08: ld bc, $c000": "a velocity for SetBallVelocityPolar",
+    "$0b: ld bc, $d000": "$80-byte records in a WRAM bank nothing pins (Unused_0b_GetObjectXAndDepth)",
+}
 # The ROM0 routines that take a (bank << 8) | slot pair in hl.
 _SLOT_CONSUMERS = frozenset(
-    "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarCallIndexed1 "
-    "Unused_00_FarCallIndexed2 Unused_00_FarCallIndexed3 Unused_00_FarCopyIndexed Unused_00_FarDecompressIndexed "
-    "Unused_00_FarReadPtrIndexed".split())
+    "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarQueueVRAMCopyIndexed "
+    "Unused_00_FarVRAMDMAIndexed Unused_00_FarCopyMemoryFastIndexed Unused_00_FarCopyIndexed Unused_00_FarDecompressIndexed "
+    "Unused_00_CallFarVectorEntry".split())
 
 
 def _drop_unresolved(names, list_name, check, fail):
@@ -1036,6 +1213,7 @@ def check_literal_pointers(fail):
             return labels[i][1]
         return None
     n = 0
+    not_wram_seen = set()
     for bank, lines in banks:
         pending_hl = stack_hl = None
         split_lo, split_hi = None, None
@@ -1069,6 +1247,18 @@ def check_literal_pointers(fail):
                     if name and (("[hl" in after) if args[0] == "hl" else f"add hl, {args[0]}" in after):
                         n += 1
                         fail("literals", f"{where} -- points into {name}")
+                if where in _NOT_WRAM_ADDRESSES:
+                    not_wram_seen.add(where)
+                elif value is not None and f"add hl, {args[0]}" in " ".join(x.group(0) for x in lines[k + 1:k + 3]):
+                    n += 1
+                    name = ram_by_addr.get(0x10000 - value)
+                    if name:
+                        fail("literals", f"{where} -- subtracts {name}: spell it $10000 - {name}")
+                if value is not None and 0xc000 <= value < 0xe000 and where not in _NOT_WRAM_ADDRESSES:
+                    n += 1
+                    name = ram_by_addr.get(value)
+                    if name:
+                        fail("literals", f"{where} -- is {name}")
             if re.fullmatch(r"ld_(hl|de|bc)_indexed", op):
                 n += 1
                 if re.match(r"\w+", args[0]).group(0) in routines:
@@ -1108,6 +1298,131 @@ def check_literal_pointers(fail):
                         name = by_addr.get((bank, int(arg[1:], 16)))
                         if name:
                             fail("literals", f"{where} -- {arg} is {name}")
+    for where in sorted(set(_NOT_WRAM_ADDRESSES) - not_wram_seen):
+        fail("literals", f"{where}: no such line -- drop it from _NOT_WRAM_ADDRESSES")
+    return n
+
+
+_VRAM_DEF_RE = re.compile(r"^def (v\w+) equ \$([0-9a-fA-F]{4})\b")
+_BYTE_RE = re.compile(r"\$([0-9a-fA-F]{2})")
+_PAIR_WRITES = {
+    "h": re.compile(r"^(ld (h|hl),|pop hl|inc hl|dec hl|ldi|ldd|ld \[hl[+-]\]|ld a, \[hl[+-]\]|call|rst|j[pr] (?!n?[zc],)|reti?$)"),
+    "d": re.compile(r"^(ld (d|de),|pop de|inc de|dec de|call|rst|j[pr] (?!n?[zc],)|reti?$)"),
+}
+
+
+def check_ram_byte_literals(fail):
+    """The halves of a RAM or VRAM address written as numbers: `ld a, $d0 /
+    add h / ld h, a` adding a page to an offset, `cp $c6` after the high byte
+    of a pointer (`ld a, [wPtr + 1]`, `ld a, h`), `ld l, $a8` re-aiming hl or
+    de within the WRAM label it was loaded with, and `ld h, $98` building a
+    pointer that the next instructions dereference. A page counts when an
+    address label (RAM) or a VRAM region constant starts on it."""
+    pages, ram = {}, {}
+    for bank, addr, name in read_sym():
+        if 0xa000 <= addr < 0xe000 and "." not in name:
+            ram.setdefault(name, (bank, addr))
+            if not addr & 0xff:
+                pages.setdefault(addr >> 8, []).append(name)
+    for line in (ROOT / "include/constants/memory.inc").read_text().splitlines():
+        if (m := _VRAM_DEF_RE.match(line)) and not int(m.group(2), 16) & 0xff:
+            pages.setdefault(int(m.group(2), 16) >> 8, []).append(m.group(1))
+    spans = {}
+    for name, (bank, addr) in ram.items():
+        spans.setdefault(bank, []).append((addr, name))
+    for v in spans.values():
+        v.sort()
+
+    def inside(base, target):
+        bank, addr = ram[base]
+        labels = spans[bank]
+        i = bisect.bisect_right(labels, (target, "\uffff")) - 1
+        if i >= 0 and labels[i][0] >= addr:
+            off = target - labels[i][0]
+            return labels[i][1] + (f" + {off}" if off else "")
+        return None
+
+    def high(p):
+        names = pages[p]
+        more = f" (or {len(names) - 1} more)" if len(names) > 1 else ""
+        return f"HIGH({names[0]}){more}"
+
+    def page(arg, lo=0x80, hi=0xdf):
+        if re.match(r"(HIGH|LOW)\(", arg):
+            return -1
+        m = _BYTE_RE.fullmatch(arg)
+        return int(m.group(1), 16) if m and lo <= int(m.group(1), 16) <= hi else None
+
+    n = 0
+    for holder in holders():
+        bank = bank_of(holder)
+        lines = bank_lines(holder)[0]
+        code = []
+        for line in lines:
+            if _GLOBAL_RE.match(line) or _LOCAL_RE.match(line):
+                code.append((line[:-1], None, None, ""))
+            elif (m := _OPERAND_RE.match(line)) and m.group(1) in _MNEMONICS:
+                a = _ADDR_RE.search(line)
+                code.append((m.group(1), [x.strip() for x in m.group(2).split(",")],
+                             f"${bank:02x}:{a.group(1) if a else '?'}",
+                             f"{m.group(1)} {m.group(2).strip()}"))
+            elif (m := re.match(r"^\t([a-z]+)\s*(;.*)?$", line)) and m.group(1) in _MNEMONICS:
+                code.append((m.group(1), [], None, m.group(1)))
+        held = {"h": None, "d": None}
+
+        def derefs(k, pair, reg):
+            """The pointer in hl/de is dereferenced before `reg` changes."""
+            ptr = ("[hl]", "[hl+]", "[hl-]") if pair == "h" else ("[de]",)
+            for op2, args2, _w, text2 in code[k + 1:k + 17]:
+                if args2 is None:
+                    if op2.startswith("."):
+                        continue
+                    return False
+                if any(x in ptr for x in args2):
+                    return True
+                if _PAIR_WRITES[pair].match(text2) or re.match(rf"(ld|inc|dec|pop) {reg}\b", text2):
+                    return False
+            return False
+
+        def flag(where, text, name, why):
+            fail("literals", f"{where} {text} -- {why} {name}")
+
+        for k, (op, args, where, text) in enumerate(code):
+            if args is None:
+                held = {"h": None, "d": None}
+                continue
+            nxt = code[k + 1:k + 3]
+            if op == "ld" and args[0] == "a" and (p := page(args[1], 0xc0)) is not None \
+                    and len(nxt) == 2 and nxt[0][3] in ("add h", "add d") \
+                    and nxt[1][3] == f"ld {nxt[0][3][-1]}, a":
+                n += 1
+                if p in pages:
+                    flag(where, text, high(p), "adds the page of")
+            if op == "cp" and (p := page(args[-1], 0xc0)) is not None and k:
+                prev = code[k - 1][3]
+                if prev in ("ld a, h", "ld a, d") or re.fullmatch(r"ld a, \[\w+ \+ 1\]", prev):
+                    n += 1
+                    if p in pages:
+                        flag(where, text, high(p), "compares a pointer's high byte with")
+            if op == "ld" and args[0] in ("l", "e") and (lo := page(args[1], 0, 0xff)) is not None:
+                base = held["h" if args[0] == "l" else "d"]
+                if base and derefs(k, "h" if args[0] == "l" else "d", args[0]):
+                    n += 1
+                    name = lo >= 0 and inside(base, ram[base][1] & 0xff00 | lo)
+                    if name:
+                        flag(where, text, f"LOW({name})", "re-aims a pointer at")
+            if op == "ld" and args[0] in ("h", "d") and (p := page(args[1])) is not None:
+                if derefs(k, args[0], args[0]):
+                    n += 1
+                    if p in pages:
+                        flag(where, text, high(p), "builds a pointer into")
+            for reg in held:
+                if _PAIR_WRITES[reg].match(text):
+                    held[reg] = None
+            if op == "ld" and args[0] in ("hl", "de"):
+                name = re.match(r"(\w+)", args[1])
+                if name and name.group(1) in ram and ram[name.group(1)][1] >= 0xc000:
+                    held[args[0][0]] = name.group(1)
     return n
 
 
@@ -1115,13 +1430,16 @@ _DMA_ROUTINES = frozenset({"QueueVRAMCopy", "StartVRAMDMATransfer", "StartVRAMDM
 
 
 def check_dma_alignment(fail):
-    """A label passed as the source of a VRAM DMA must be declared aligned."""
-    aligned, lines_of = set(), []
+    """A label passed as the source of a VRAM DMA must be declared aligned,
+    whether handed over directly (`ld hl, X` / `ld_hl_indexed X`) or read
+    from a dw table (`ld_hl_indexed T` / `ld a, [hl+]` / `ld h, [hl]` /
+    `ld l, a`), where every entry counts."""
+    aligned, lines_of, tables = set(), [], {}
     _drop_unresolved(_DMA_ROUTINES, "_DMA_ROUTINES", "dma", fail)
     for h in holders():
         lines = bank_lines(h)[0]
         lines_of.append((bank_of(h), lines))
-        pending = False
+        pending, words = False, None
         for line in lines:
             if line.strip() == "ds ALIGN[4]":
                 pending = True
@@ -1130,23 +1448,47 @@ def check_dma_alignment(fail):
             if m:
                 if pending:
                     aligned.add(m.group(1))
+                words = tables.setdefault(m.group(1), [])
                 continue
-            if line.strip() and not line.lstrip().startswith(";"):
+            code = line.split(";")[0].strip()
+            if words is not None and code.startswith("dw "):
+                words += [w.strip() for w in code[3:].split(",")]
+            if code:
                 pending = False
+
+    def entry_aligned(word):
+        m = re.fullmatch(r"([A-Z]\w*)(?: tile [$\w]+| \+ (\$[0-9a-fA-F]+|\d+))?", word)
+        if not m or m.group(1) not in aligned:
+            return False
+        return m.group(2) is None or int(m.group(2).replace("$", "0x"), 0) % 16 == 0
+
+    deref = ["ld a, [hl+]", "ld h, [hl]", "ld l, a"]
     n = 0
     for bank, lines in lines_of:
         for i, line in enumerate(lines):
-            m = re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)?(?: ;|$)", line)
+            m = (re.match(r"\tld hl, ([A-Z]\w*)(?: \+ [^;]+)?(?: ;|$)", line)
+                 or re.match(r"\tld_hl_indexed ([A-Z]\w*)(?: ;|$)", line))
             if not m or m.group(1).startswith(("w", "v", "h")):
                 continue
-            for nxt in lines[i + 1:i + 6]:
-                c = re.match(r"\t(?:call|farcall|jp) (\w+)", nxt)
+            following = [nxt.split(";")[0].strip() for nxt in lines[i + 1:i + 10]]
+            via_table = line.startswith("\tld_hl_indexed") and following[:3] == deref
+            for nxt in following[3:] if via_table else following[:5]:
+                c = re.match(r"(?:call|farcall|jp) (\w+)", nxt)
                 if c:
                     if c.group(1) in _DMA_ROUTINES:
                         n += 1
-                        if m.group(1) not in aligned:
-                            fail("dma", f"${bank:02x}: {m.group(1)} is a DMA source "
-                                        "without ds ALIGN[4] before it")
+                        if not via_table:
+                            if m.group(1) not in aligned:
+                                fail("dma", f"${bank:02x}: {m.group(1)} is a DMA source "
+                                            "without ds ALIGN[4] before it")
+                        elif not tables.get(m.group(1)):
+                            fail("dma", f"${bank:02x}: DMA source table {m.group(1)} has no dw entries")
+                        else:
+                            for word in tables[m.group(1)]:
+                                if not entry_aligned(word):
+                                    fail("dma", f"${bank:02x}: {m.group(1)} entry {word} is a DMA "
+                                                "source without ds ALIGN[4] before it (or a "
+                                                "non-multiple-of-16 offset)")
                     break
     return n
 
@@ -1160,10 +1502,13 @@ KNOWN_RAW_IDS = {
     ("wMinigameLevel", "$02"),     # Tennis Machine / Wall level 3: an index, not the Mario high-score level
     ("QueueSprite(b)", "0"),       # no attribute bits; OAM_PAL0 is the DMG palette bit, unused on CGB
 }
-# Data rows whose values are ids: a macro's argument by position, and tables
+# Data rows whose values are ids: a macro's argument by position (a macro
+# keyed "<macro> <first arg>" counts only with that first argument), and tables
 # by label or by the kind their header comment names.
 RAW_ID_MACRO_ARGS = {
     ("story_location", 0): "STORYLOC_",
+    ("script_set_actor_mode", 1): "ACTORMODE_",
+    ("as_set_field ACTORF_MODE", 1): "ACTORMODE_",
     **{("court_positions", k): "COURTPOS_" for k in range(4)},
     **{("court_positions", k): "SERVEROLE_" for k in range(4, 8)},
 }
@@ -1190,10 +1535,62 @@ RAW_ID_FAMILIES = {
     "GetDefaultMinigameRecordValue(a)": "MGRECORD",
     "CheckUnlockCondition(a)": "MGRECORD",
     "RestoreMenuBgAndDrawPanel(b)": "PANELANIM",
+    "CloseChoiceTabPanel(b)": "MENUSLIDE",
+    "CloseCourtSelect4Panel(b)": "MENUSLIDE",
+    "CloseCourtSelect9Panel(b)": "MENUSLIDE",
+    "SavedDataPickerSlideOut(b)": "MENUSLIDE",
+    "ThreeChoiceSlideOut(b)": "MENUSLIDE",
+    "MainMenuSlideOut(b)": "MENUSLIDE",
+    "SlideMatchFormatPanel(b)": "MENUSLIDE",
+    "SlideLinkMatchFormatPanel(b)": "MENUSLIDE",
+    "MinigameSelectSlideOut6(b)": "MENUSLIDE",
+    "MinigameSelectSlideOut9(b)": "MENUSLIDE",
+    "ApplyCursorBounceX(c)": "BOBDIR",
+    "ApplyCursorBounceY(c)": "BOBDIR",
+    "ApplySpriteBobOffsetX(c)": "BOBDIR",
+    "ApplySpriteBobOffsetY(c)": "BOBDIR",
+    "ApplyArrowBobOffset(c)": "BOBDIR",
+    "Unused_1b_ApplyCursorBobOffsetX(c)": "BOBDIR",
+    "ApplySelectionBoxWobbleX(c)": "BOBDIR",
+    "ApplySelectionBoxWobbleY(c)": "BOBDIR",
+    "ApplySpriteWobbleY(c)": "BOBDIR",
+    "Unused_16_ApplySpriteWobbleX(c)": "BOBDIR",
+    "Unused_16_ApplySpriteWobbleY(c)": "BOBDIR",
+    "Unused_17_ApplySpriteWobbleX(c)": "BOBDIR",
+    "AdvanceFrameCheckInput(c)": "BRIEFPROMPT",
     "FlushWram3MapRows(b)": "MAPROWS",
     "InitMatchRecordFromCharId(c)": "MATCHREC",
     "SetPendingExpAward(b)": "EXPAWARD",
+    "wStoryCharacterSlot": "STORYREC",
+    "CharDataScreen_Show(c)": "STORYREC",
+    "LevelUpPlayer(a)": "STORYREC",
+    "GetExpRemainingToNextLevel(a)": "STORYREC",
+    "GetExpProgressInCurrentLevel(a)": "STORYREC",
+    "AddPlayerExp(a)": "STORYREC",
+    "InitPlayerRecordFromTemplate(a)": "STORYREC",
+    "Unused_1a_ShowExpGainScreen(l)": "STORYREC",
+    "Unused_1a_RunExpGainScreenForRecord(l)": "STORYREC",
+    "SetLinkMatchFormatOptionAttrRect(c)": "ATTRRECT",
+    "FillMatchFormatOptionCell(c)": "ATTRRECT",
+    "SetSelectPanelAttrRect(c)": "ATTRRECT",
+    "SetSelectPanelAttrRect3(c)": "ATTRRECT",
+    "SetCourtSelect4TabAttrRect(c)": "ATTRRECT",
+    "SetCourtSelect9TabAttrRect(c)": "ATTRRECT",
+    "SetChoiceTabAttrRect(c)": "ATTRRECT",
+    "FillN64RecordTypeCell(c)": "ATTRRECT",
+    "SetLinkMatchFormatOptionAttrRect(b)": "MATCHFMTOPT",
+    "FillMatchFormatOptionCell(b)": "MATCHFMTOPT",
+    "FlushLinkMatchFormatRowAttrs(b)": "MATCHFMTROW",
+    "FlushMatchFormatRowAttrs(b)": "MATCHFMTROW",
+    "LoadScoreDigitGfx(b)": "DIGITGFX",
+    "LoadPlayer1PointsDigitGfx(b)": "DIGITGFX",
+    "LoadPlayer2PointsDigitGfx(b)": "DIGITGFX",
+    "LoadFirstScoreDigitGfx(b)": "DIGITGFX",
+    "LoadSecondScoreDigitGfx(b)": "DIGITGFX",
+    "wScoreDigitGfxStyle": "DIGITGFX",
 }
+# Text-id arguments with too few named sites to infer them: no raw number.
+TEXT_ID_ARGS = {"ShowMessageWindow(hl)"}
 # Routines whose argument is a base id plus an offset: `ld a, <base> / add c`
 # or `add <base>` into that register counts as passing the base.
 BASE_ID_ARGS = {
@@ -1202,6 +1599,8 @@ BASE_ID_ARGS = {
     "VerifySaveBlock": "b",
     "ClearSaveBlock": "b",
     "RestoreStoryBlockFromBackup": "b",
+    "SetLinkMatchFormatOptionAttrRect": "b",
+    "FillMatchFormatOptionCell": "b",
 }
 # Text pointers: a byte read through one is a text byte, so its compares name
 # TX_* codes. Buffers by address loaded into hl; labels (Routine or
@@ -1216,7 +1615,7 @@ TEXT_POINTER_LABELS = {
     "RenderInlineString.charLoop": "hl",
     "WriteStringToWindow": "hl",
     "TextCodeLiteral_05.storeChar": "hl",
-    "ProportionalTextCodeHandler5_05.glyph": "hl",
+    "ProportionalTextCodeGlyph_05.glyph": "hl",
     "Unused_05_WriteStringToTilemapStreamed.storeChar": "hl",
     "Unused_05_WriteDialogueToTilemapStreamed.storeChar": "hl",
     "Unused_05_WriteStringToTilemap": "hl",
@@ -1227,7 +1626,7 @@ TEXT_POINTER_LABELS = {
     "RenderInlineString.checkMark": "hl",
     "WriteExpScreenStringTiles": "hl",
     "Unused_00_CopyTextString": "hl",
-    "Unused_16_DrawCourtDiagramMarkers": "hl",
+    "Unused_16_PlaceTextWithDiacritics": "hl",
     "Unused_1a_CopyNameToTileBuffer": "hl",
     "Unused_1a_DrawStringToTileBuffer": "hl",
     "TextInterpreterLoop.compare": "a",
@@ -1236,7 +1635,7 @@ TEXT_POINTER_LABELS = {
     "FitWindowToText.checkMainCharName": "a",
     "FitWindowToText.checkArgString": "a",
     "FitWindowToText.checkPartnerName": "a",
-    "FitWindowToText.checkIndexedShortText": "a",
+    "FitWindowToText.checkCharName": "a",
     "MeasureTextDimensions.notLineBreak": "a",
     "MeasureTextDimensions.notShortTextArg": "a",
 }
@@ -1246,7 +1645,7 @@ _VAR_RE = r"([wh][A-Z]\w*(?: \+ (?:\$[0-9a-fA-F]+|\d+|[A-Z][A-Z0-9_]*))?)"
 _REGS8 = frozenset("abcdehl")
 _PAIRS = {"bc": "bc", "de": "de", "hl": "hl", "af": "a"}
 # Instructions that leave every register as it was.
-_KEEPS_ALL_RE = re.compile(r"(cp |test_flag |set_flag |clear_flag |bit |push |nop$|ei$|di$|"
+_KEEPS_ALL_RE = re.compile(r"(cp |sound |test_flag |set_flag |clear_flag |bit |push |nop$|ei$|di$|"
                            r"scf$|ccf$|halt$|and a$|or a$|"
                            r"(jr|jp) (n?z|n?c),|ret (n?z|n?c)$|ldh? \[[^\]]+\], [a-l]$|ld \[(bc|de)\], a$)")
 
@@ -1434,6 +1833,9 @@ def _raw_id_uses():
                 _clobber(regs, spent, m.group(1))
                 regs[m.group(1)[0]], regs[m.group(1)[1]] = m.group(2), m.group(3)
                 continue
+            if m := re.match(r"(?:ld_cell|ld_size|ld_bg_cell|ld_text_attr|ld_tile_run|ld_bg_pals|ld_obj_pals) (bc|de|hl),", t):
+                _clobber(regs, spent, m.group(1))
+                continue
             m = re.match(r"(?:ldh? ([a-l]|bc|de|hl|sp), |(?:inc|dec|pop|swap|rlc?|rrc?|sla|sra|srl) "
                          r"([a-l]|bc|de|hl|af)$|(?:res|set) \w+, ([a-l])$|add (hl|sp), |"
                          r"(add|adc|sub|sbc|and|or|xor|cpl|rla|rra|rlca|rrca|daa)\b)", t)
@@ -1530,7 +1932,7 @@ def _raw_data_ids(seen):
             elif word not in ("db", "dw", "table_width", "assert_table_length"):
                 table = None
             for (macro, k), prefix in RAW_ID_MACRO_ARGS.items():
-                if word == macro and k < len(args):
+                if macro in (word, f"{word} {args[0] if args else ''}") and k < len(args):
                     out.append((prefix, args[k], where))
     return out
 
@@ -1615,14 +2017,15 @@ FLAG_BYTES = {
     "wMessageSpeed": "MSGSPEEDB_",
     "wCharCourtPos": "COURTPOSB_",
     "wServingCharCourtPos": "COURTPOSB_",
-    "wPrevCourtPos": "COURTPOSB_",
+    "wPlayer1PrevCourtPos": "COURTPOSB_",
     "wCharServeRole": "SERVEROLEB_",
     "hMusicFlags": "MUSICB_",
     "wSoundOptionBits": "SOUNDOPTB_",
     "wCharSpriteDirty": "CHARSPRITEB_",
+    "wMenuCursorLockFlags": "CURSORLOCKB_",
 }
-# Record fields of the same kind, reached through `ld hl, FIELD / add hl, rr`
-# or `ld hl, wRecord + FIELD`.
+# Record fields of the same kind, reached through `ld hl, FIELD / add hl, rr`,
+# `ld hl, wRecord + FIELD` or `ld a, FIELD / add l / ld l, a`.
 FLAG_FIELDS = {
     "ACTORF_FLAGS": "ACTORFLAGB_",
     "ACTORF_STATUS": "ACTORSTATUSB_",
@@ -1634,6 +2037,9 @@ FLAG_FIELDS = {
 KNOWN_RAW_FIELD_BITS = {("ACTORF_FLAGS", "1"), ("ACTORF_STATUS", "1"), ("ACTORF_STATUS", "3")}
 _FLAG_NAMES = "|".join(FLAG_BYTES)
 _FLAG_FIELD_RE = re.compile(rf"ld hl, (?:\w+ \+ )?({'|'.join(FLAG_FIELDS)})")
+_FLAG_FIELD_A_RE = re.compile(rf"ld a, ({'|'.join(FLAG_FIELDS)})")
+# Calls that leave hl alone, so a tracked [hl] survives them.
+HL_KEEPING_CALLS = {"WaitScriptFrames"}
 _FLAG_LOAD_RE = re.compile(rf"ldh? ([abcdehl]), \[({_FLAG_NAMES})\]")
 _FLAG_HL_RE = re.compile(rf"ld hl, ({_FLAG_NAMES})\b.*")
 _FLAG_STORE_RE = re.compile(rf"ldh? \[({_FLAG_NAMES})\], ([abcdehl])")
@@ -1651,6 +2057,7 @@ def _raw_flag_bits(fail):
         lines, origin = bank_lines(h)
         scope = owner = None
         state, built, pending = {}, {}, {}
+        field_off = None
         for i, line in enumerate(lines):
             if m := _GLOBAL_RE.match(line):
                 scope = owner = m.group(1)
@@ -1664,6 +2071,15 @@ def _raw_flag_bits(fail):
             if not ins:
                 continue
             where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            off, field_off = field_off, None
+            if m := _FLAG_FIELD_A_RE.fullmatch(ins):
+                field_off = (FLAG_FIELDS[m.group(1)], False)
+            elif off and ins == "add l" and not off[1]:
+                field_off = (off[0], True)
+            elif off and ins == "ld l, a" and off[1]:
+                state["[hl]"] = off[0]
+                state.pop("h", None), state.pop("l", None)
+                continue
 
             def judge(op, prefix):
                 nonlocal n
@@ -1693,8 +2109,9 @@ def _raw_flag_bits(fail):
                 continue
             if (m := re.fullmatch(r"(?:and|or|xor) (.+)", ins)) and "a" in state and m.group(1) not in _REGS8:
                 n += 1
-                if not m.group(1).lstrip("~").startswith(state["a"].split("B_")[0]):
+                if not m.group(1).lstrip("~(").startswith(state["a"].split("B_")[0]):
                     fail("raw-ids", f"{where}: {owner} mask {m.group(1)} on a {state['a']}* byte -- a name?")
+                continue
             if m := _FLAG_BIT_RE.fullmatch(ins):
                 if m.group(3) in state:
                     judge(m.group(2), state[m.group(3)])
@@ -1708,7 +2125,8 @@ def _raw_flag_bits(fail):
                     state, built = {}, {}
                 continue
             if ins in ("ret", "reti", "jp hl") or ins.startswith(("call", "farcall", "rst")):
-                state, built = {}, {}
+                keep = ins.split(" ")[-1] in HL_KEEPING_CALLS and "[hl]" in state
+                state, built = ({"[hl]": state["[hl]"]} if keep else {}), {}
                 continue
             if (m := re.fullmatch(r"ld ([abcde]), \[hl\]", ins)) and "[hl]" in state:
                 state[m.group(1)] = state["[hl]"]
@@ -1758,8 +2176,10 @@ def check_raw_ids(fail):
     for var, ops in uses.items():
         if var in _PER_LOCATION_VARS:
             continue
-        families = {op.split("_")[0] for op, _ in ops if op in values and "_" in op}
-        families |= {RAW_ID_FAMILIES.get(var), "TX" if var.startswith("text@") else None} - {None}
+        families = {op.split("_")[0] for op, _ in ops
+                    if op in values and "_" in op and not op.endswith("_SIZE")}
+        families |= {RAW_ID_FAMILIES.get(var), "TX" if var.startswith("text@") else None,
+                     "Text" if var in TEXT_ID_ARGS else None} - {None}
         for op, where in ops:
             if not _NUMBER_RE.fullmatch(op):
                 continue
@@ -1767,8 +2187,9 @@ def check_raw_ids(fail):
             names = names_of(_number(op), families)
             if names and (var, op) not in KNOWN_RAW_IDS:
                 fail("raw-ids", f"{where}: {var} {op} -- {names[0]}?")
-            elif (var.endswith(("(hl)", "(de)")) and (var, op) not in KNOWN_RAW_IDS
-                  and sum(o.startswith("Text_") for o, _ in ops) >= 2):
+            elif ((var, op) not in KNOWN_RAW_IDS
+                  and (var in TEXT_ID_ARGS or var.endswith(("(hl)", "(de)"))
+                       and sum(o.startswith("Text_") for o, _ in ops) >= 2)):
                 fail("raw-ids", f"{where}: {var} {op} -- a text id with no Text_ name?")
     seen = set()
     for prefix, op, where in _raw_data_ids(seen):
@@ -1781,14 +2202,114 @@ def check_raw_ids(fail):
             fail("raw-ids", f"{where}: {op} is not a {prefix}* id")
     for key in sorted((set(RAW_ID_TABLES) | set(RAW_ID_TABLE_KINDS)) - seen):
         fail("raw-ids", f"{key}: matches no table -- drop it from RAW_ID_TABLES/_KINDS")
-    for var in sorted(set(RAW_ID_FAMILIES) - set(uses)):
-        fail("raw-ids", f"{var} is no longer used -- drop it from RAW_ID_FAMILIES")
+    for var in sorted((set(RAW_ID_FAMILIES) | TEXT_ID_ARGS) - set(uses)):
+        fail("raw-ids", f"{var} is no longer used -- drop it from RAW_ID_FAMILIES/TEXT_ID_ARGS")
     for routine, r in sorted(BASE_ID_ARGS.items()):
         if f"{routine}({r})" not in uses:
             fail("raw-ids", f"{routine}({r}) is never passed an id -- drop it from BASE_ID_ARGS")
     for var, op in sorted(KNOWN_RAW_IDS - {(v, o) for v, ops in uses.items() for o, _ in ops}):
         fail("raw-ids", f"{var} {op} is no longer used raw -- drop it from KNOWN_RAW_IDS")
-    return n + _raw_pad_bits(fail) + _raw_flag_bits(fail) + _text_cell_offsets(fail)
+    return (n + _raw_pad_bits(fail) + _raw_flag_bits(fail) + _text_cell_offsets(fail)
+            + _raw_flag_conds(fail) + _text_id_stores(fail))
+
+
+_KEEPS_HL_DE_RE = re.compile(r"(ldh? a, [^\[\]]+|ldh? \[[wh]\w*\], a|test_flag \w+|cp .+|and a|or a|"
+                             r"(jr|jp) (n?z|n?c), \S+)$")
+
+
+def _text_id_stores(fail):
+    """A word stored into a *TextId* variable is a Text_ name: `ld de, X` and
+    `ld hl, wVar` (stepped by `ld [hl+], r` / `inc hl`, so `wVar + n` is
+    named through the symbol file) meet at `ld a, e / ld [hl+], a / ld [hl], d`
+    or `ld [hl], e / inc hl / ld [hl], d`, also at a local label every
+    earlier jump into (and the fall-through) agrees on hl for; a later jump
+    back in only adds values unseen."""
+    import consts
+    from banksrc import read_sym
+    values = consts.constants()
+    at, named = {}, {}
+    for bank, addr, name in read_sym():
+        if addr >= 0x8000:
+            at.setdefault(name, (bank, addr))
+            named.setdefault((bank, addr), []).append(name)
+
+    def target(hl):
+        var, off = hl
+        if not off:
+            return var
+        if var not in at:
+            return None
+        bank, addr = at[var]
+        return next((x for x in named.get((bank, addr + off), []) if "TextId" in x), None)
+
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        hl = de = None
+        owner, jumps, after_jump = "", {}, False
+        for i, line in enumerate(lines):
+            if _GLOBAL_RE.match(line) or re.match(r"[A-Za-z_]", line):
+                owner = re.match(r"\w+", line).group(0)
+                hl = de = None
+                after_jump = False
+                continue
+            t = line.split(";")[0].strip()
+            if not t:
+                continue
+            if t.startswith("."):
+                label = owner + t.rstrip(":")
+                ways = jumps.get(label, []) + ([] if after_jump else [(hl, de)])
+                hl = de = None
+                if ways and all(w[0] == ways[0][0] and w[1] for w in ways):
+                    hl, de = ways[0][0], tuple(dict.fromkeys(x for w in ways for x in w[1]))
+                after_jump = False
+                continue
+            code = [c for c in (x.split(";")[0].strip() for x in lines[i:i + 3]) if c]
+            after_jump = bool(_NO_FALLTHROUGH_RE.match(t))
+            if m := re.match(r"(?:jr|jp) (?:(?:n?z|n?c), )?(\.\w+)$", t):
+                jumps.setdefault(owner + m.group(1), []).append((hl, de))
+            if hl and de and code in (["ld a, e", "ld [hl+], a", "ld [hl], d"],
+                                      ["ld [hl], e", "inc hl", "ld [hl], d"]):
+                var = target(hl)
+                if var and "TextId" in var:
+                    for x, where in de:
+                        n += 1
+                        if _NUMBER_RE.fullmatch(x):
+                            names = sorted((k for k, v in values.items() if v == _number(x) and k.startswith("Text_")),
+                                           key=lambda k: bool(_TEXT_INDEX_RE.match(k)))
+                            fail("raw-ids", f"{where}: {var} {x} -- {names[0] if names else 'a text id with no Text_ name'}?")
+            if m := re.match(rf"ld hl, {_VAR_RE}$", t):
+                var, _, off = m.group(1).partition(" + ")
+                hl = (var, _number(off) if off else 0) if not off or _NUMBER_RE.fullmatch(off) else None
+            elif m := re.match(r"ld de, ([^\[]+)$", t):
+                de = ((m.group(1), f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"),)
+            elif re.match(r"ld \[hl\+\], [a-e]$|inc hl$", t):
+                hl = hl and (hl[0], hl[1] + 1)
+            elif re.match(r"ld \[hl\], [a-e]$", t) or _KEEPS_HL_DE_RE.match(t):
+                pass
+            elif t not in ("ld a, e", "ld a, d") and not t.startswith(("jr ", "jp ")):
+                hl = de = None
+    return n
+
+
+_FLAG_COND_ARG = {"map_actor": 0, "map_script": 2}
+
+
+def _raw_flag_conds(fail):
+    """A map_script / map_actor flag condition is 0 or a FLAG_ name."""
+    n = 0
+    for holder in holders():
+        lines, origin = bank_lines(holder)
+        for i, line in enumerate(lines):
+            word, _, rest = line.split(";")[0].strip().partition(" ")
+            if word not in _FLAG_COND_ARG:
+                continue
+            n += 1
+            op = rest.split(",")[_FLAG_COND_ARG[word]].strip()
+            if _NUMBER_RE.fullmatch(op) and _number(op):
+                where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                fail("raw-ids", f"{where}: {word} flag condition {op} -- FLAG_ or ~FLAG_ name?")
+    return n
 
 
 def _text_cell_offsets(fail):
@@ -1817,13 +2338,31 @@ def _text_cell_offsets(fail):
 # a record: (routine, operand) -> what the number is.
 KNOWN_RAW_FIELD_OFFSETS = {
     ("UpdateActorJumpPhysics", "$0010"): "gravity added to the vertical velocity",
+    ("Unused_1b_DrawUnlockDebugMugshots", "$08"): "wCharSelectRoster entry stride",
 }
-_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT)_(?!SIZE\b)\w+")
+_FIELD_FAMILY_RE = re.compile(r"\b(?:CHARREC|CREATEDCHAR|SLOTSUM|ACTORF|OBJSLOT|SPRSLOT|SCENEOBJ|WINDOW)_(?!SIZE\b)\w+")
 _FIELD_HL_RE = re.compile(r"ld hl, ([^,]+)")
 # Arrays whose entries are a constant family: `Array + n` names the entry.
 INDEXED_ARRAYS = {
     "CHARREC_TRAIN_LEVELS": "TRAINSTAT_",
     "wCharDataLevels": "TRAINSTAT_",
+    "wCharDataStartLevels": "TRAINSTAT_",
+    "wCharDataStats": "CHARSTAT_",
+    "wCharDataStatDeltas": "CHARSTAT_",
+    "wCharDataStatsNoEquipment": "CHARSTAT_",
+    "wCharDataEquipmentDeltas": "CHARSTAT_",
+    "wActorObjDef": "OBJDEF_",
+    "wBallHistory": "BALLHIST_",
+    "wCharSpriteSlot": "SPRSLOT_",
+    "wCharAirShadowSlot": "SPRSLOT_",
+    "wCharGroundShadowSlot": "SPRSLOT_",
+    "wNetBallSlot": "SPRSLOT_",
+    "wBallSlot": "SPRSLOT_",
+    "wBallShadowSlot": "SPRSLOT_",
+    "wBallTrailSlots": "SPRSLOT_",
+    "wBGPalettes": ("PAL_SIZE", "COLOR_SIZE"),
+    "wOBJPalettes": ("PAL_SIZE", "COLOR_SIZE"),
+    "wMasterPalettes": ("PAL_SIZE", "COLOR_SIZE"),
 }
 _INDEXED_ARRAY_RE = re.compile(rf"\b({'|'.join(INDEXED_ARRAYS)}) \+ ([^\],;]+)")
 _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
@@ -1831,11 +2370,11 @@ _FIELD_A_RE = re.compile(r"ld a, ([^,]+)")
 
 def check_field_offsets(fail):
     """In a routine that names a CHARREC_* / CREATEDCHAR_* / SLOTSUM_* /
-    ACTORF_* / OBJSLOT_* field, an offset added to a record pointer (`ld hl, off /
-    add hl, bc|de`, or `ld a, off / add c|e / ld e|c, a`) is not a raw number
-    under $100: the same record reached through another register is still
-    that record. An offset into an INDEXED_ARRAYS array is a member of its
-    family."""
+    ACTORF_* / OBJSLOT_* / SPRSLOT_* / SCENEOBJ_* / WINDOW_* field, an offset added to a
+    record pointer (`ld hl, off / add hl, bc|de`, `ld a, off / add_hl_a`, or
+    `ld a, off / add c|e / ld e|c, a`) is not a raw number under $100: the same record reached through another register is still
+    that record. An offset into an INDEXED_ARRAYS array (or record buffer)
+    is a member of its family."""
     n, seen = 0, set()
     for holder in holders():
         lines, origin = bank_lines(holder)
@@ -1843,10 +2382,13 @@ def check_field_offsets(fail):
         for i, line in enumerate(lines):
             for m in _INDEXED_ARRAY_RE.finditer(line.split(";")[0]):
                 n += 1
-                if not m.group(2).strip().startswith(INDEXED_ARRAYS[m.group(1)]):
+                off = re.sub(r"^\d+ \* ", "", m.group(2).strip())
+                fam = INDEXED_ARRAYS[m.group(1)]
+                if not off.startswith(fam):
                     where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+                    fam = fam if isinstance(fam, str) else "/".join(fam)
                     fail("fields", f"{where}: {m.group(1)} + {m.group(2).strip()} -- "
-                                   f"a {INDEXED_ARRAYS[m.group(1)]}* entry?")
+                                   f"a {fam}* entry?")
             if m := re.match(r"^([A-Za-z_]\w*)::?$", line):
                 cur = (m.group(1), [])
                 routines.append(cur)
@@ -1860,7 +2402,8 @@ def check_field_offsets(fail):
                 m = _FIELD_HL_RE.fullmatch(t)
                 if not (m and re.fullmatch(r"add hl, (bc|de)", nxt[0])):
                     m = _FIELD_A_RE.fullmatch(t)
-                    if not (m and re.fullmatch(r"add [ce]", nxt[0]) and re.fullmatch(r"ld [ce], a", nxt[1])):
+                    if not (m and (nxt[0] == "add_hl_a" or re.fullmatch(r"add [ce]", nxt[0])
+                                   and re.fullmatch(r"ld [ce], a", nxt[1]))):
                         continue
                 op = m.group(1).strip()
                 n += 1
@@ -1873,6 +2416,104 @@ def check_field_offsets(fail):
                 fail("fields", f"{where}: {name} adds raw {op} to a record -- a field name?")
     for name, op in sorted(set(KNOWN_RAW_FIELD_OFFSETS) - seen):
         fail("fields", f"{name} {op} is no longer added raw -- drop it from KNOWN_RAW_FIELD_OFFSETS")
+    return n + _char_record_bases(fail) + _char_struct_bases(fail)
+
+
+_CHARREC_NAME_RE = re.compile(r"ld (bc|de|hl), ((?:wStory|wPlayer[12])(?:Main|Partner))Name")
+_REG_COPIES = {("ld b, h", "ld c, l"): ("hl", "bc"), ("ld d, h", "ld e, l"): ("hl", "de"),
+               ("ld h, b", "ld l, c"): ("bc", "hl"), ("ld h, d", "ld l, e"): ("de", "hl"),
+               ("ld d, b", "ld e, c"): ("bc", "de"), ("ld b, d", "ld c, e"): ("de", "bc")}
+# Routines that take a whole char record in a register.
+_CHARREC_ARG_ROUTINES = {"RecomputeCharacterStats": "bc"}
+
+
+def _char_record_bases(fail):
+    """A `...Name` char-record operand is the name: one copied or cleared by
+    CHAR_RECORD_SIZE, passed to a _CHARREC_ARG_ROUTINES routine or with a
+    CHARREC_* field added to it within the next dozen instructions, is the
+    whole record and takes the base label."""
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        code = [(i, c) for i, c in ((i, l.split(";")[0].strip()) for i, l in enumerate(lines))
+                if c and not c.endswith(":")]
+        for k, (i, t) in enumerate(code):
+            m = _CHARREC_NAME_RE.fullmatch(t)
+            if not m:
+                continue
+            n += 1
+            regs, why = {m.group(1)}, None
+            window = [u for _, u in code[k + 1:k + 13]]
+            for j, u in enumerate(window):
+                if j < 3 and "CHAR_RECORD_SIZE" in u:
+                    why = "is copied or cleared as a whole record"
+                    break
+                if src_dst := _REG_COPIES.get((u, window[j + 1] if j + 1 < len(window) else "")):
+                    if src_dst[0] in regs:
+                        regs.add(src_dst[1])
+                    continue
+                if (f := re.fullmatch(r"(?:far)?call (\w+)", u)) and _CHARREC_ARG_ROUTINES.get(f.group(1)) in regs:
+                    why = f"is passed to {f.group(1)}"
+                    break
+                nxt = window[j + 1] if j + 1 < len(window) else ""
+                if (f := re.fullmatch(r"ld hl, (CHARREC_\w+)", u)) and nxt in {f"add hl, {r}" for r in regs}:
+                    why = f"has {f.group(1)} added"
+                    break
+                if (f := re.fullmatch(r"ld a, (CHARREC_\w+)", u)) and nxt == "add_hl_a" and "hl" in regs:
+                    why = f"has {f.group(1)} added"
+                    break
+            if why:
+                fail("fields", f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}: "
+                               f"{m.group(2)}Name {why} -- {m.group(2)}?")
+    return n
+
+# Routines handed the whole $df00 char struct in a register.
+_CHARSTRUCT_ARG_ROUTINES = {"SetCharAnimation": "bc", "StepCharAnimation": "bc",
+                            "UpdateCharSelectCharSprite": "hl"}
+
+
+def _char_struct_bases(fail):
+    """`wCharPosX` is the first field only: an operand that copies or clears
+    the struct, is passed to a _CHARSTRUCT_ARG_ROUTINES routine, has an offset
+    added to it, or is subtracted from a field (`wX - wCharPosX`) means the
+    whole struct, wCharStruct."""
+    n = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        code = [(i, c) for i, c in ((i, l.split(";")[0].strip()) for i, l in enumerate(lines))
+                if c and not c.endswith(":")]
+        for k, (i, t) in enumerate(code):
+            where = f"{Path(origin[i][0]).relative_to(ROOT)}:{origin[i][1]}"
+            if re.search(r"-\s*wCharPosX\b", t):
+                n += 1
+                fail("fields", f"{where}: offset from wCharPosX -- wCharStruct?")
+                continue
+            m = re.fullmatch(r"ld (bc|de|hl), wCharPosX", t)
+            if not m:
+                continue
+            n += 1
+            regs, why = {m.group(1)}, None
+            window = [u for _, u in code[k + 1:k + 13]]
+            for j, u in enumerate(window):
+                nxt = window[j + 1] if j + 1 < len(window) else ""
+                if j < 3 and re.fullmatch(r"call (CopyMemoryFast|ClearMemory16)", u):
+                    why = "is copied or cleared as a whole struct"
+                    break
+                if src_dst := _REG_COPIES.get((u, nxt)):
+                    if src_dst[0] in regs:
+                        regs.add(src_dst[1])
+                    continue
+                if (f := re.fullmatch(r"(?:far)?call (\w+)", u)) and _CHARSTRUCT_ARG_ROUTINES.get(f.group(1)) in regs:
+                    why = f"is passed to {f.group(1)}"
+                    break
+                if j == 0 and u in {f"add hl, {r}" for r in regs - {"hl"}}:
+                    why = "has an offset added"
+                    break
+                if re.fullmatch(r"ld hl, w\w+ - w\w+", u) and nxt in {f"add hl, {r}" for r in regs - {"hl"}}:
+                    why = "has a field offset added"
+                    break
+            if why:
+                fail("fields", f"{where}: wCharPosX {why} -- wCharStruct?")
     return n
 
 _TEMPLATE_HL_RE = re.compile(r"\tld hl, ([A-Za-z_]\w*)(?: ;|$)")
@@ -1976,6 +2617,291 @@ def check_mirrored_operands(fail):
                 if name in mirrored and cur is not None and cur not in mirrored[name]:
                     fail("mirrors", f"${bank:02x}: [{name}] read or written with WRAM bank {cur} selected")
     return len(mirrored)
+
+
+# Instructions and macros that leave de and hl alone.
+_PTR_KEEPS = {"cp", "bit", "push", "nop", "jr", "halt", "di", "ei", "ldh", "cpl", "scf",
+              "ccf", "rlca", "rrca", "rla", "rra", "daa"}
+_PTR_WRITES = {"ld", "pop", "add", "adc", "sub", "sbc", "inc", "dec", "swap", "srl", "rr",
+               "rl", "rrc", "rlc", "sla", "sra", "res", "set", "xor", "or", "and"}
+
+# Routines that select WRAM_SCREEN themselves and write tile ids through the
+# register (most also the attribute, under WRAM_COURT_PLANES at the same address), so
+# a WRAMX destination passed in must be a bank-3 name. The bc routines read their
+# source rows the same way. ShiftDestForLongName
+# only steps de back before WriteTextToTilemap.
+_TILE_PLANE_WRITERS = {
+    "DrawProportionalTextLine": "de", "WriteTextToTilemap": "de", "FetchAndDrawDialogueText": "de",
+    "FormatAndDrawNumber": "de", "CopyLabelTilesToTilemap": "de", "CopyTilesAndAttrsRun": "de",
+    "WriteNameStringTiles": "de", "PlotTilesAtOffsets": "de", "ShiftDestForLongName": "de",
+    "DrawContinuePromptText": "hl", "DrawSaveWarningTextLine1": "hl", "DrawSaveWarningTextLine2": "hl",
+    "FillTilemapRun": "hl", "DrawHandednessLabel": "hl",
+    "CharDataScreen_WriteStatNumber": "de", "CharDataScreen_DrawStatBar": "de",
+    "WriteExpScreenStringTiles": "de",
+    "BlitTilemapRunsFromTable": "bc", "ApplyTilemapPatchList": "bc",
+    "ApplyTilemapPatchList_1a": "bc", "ApplyTilemapPatchListExpScreen": "bc",
+}
+
+
+def check_wram_pointers(fail):
+    """`ld bc/de/hl, wX` with wX in one WRAMX bank, then `[bc]`/`[de]`/`[hl]` in
+    straight-line source after a `wram_bank` selecting another, or wX
+    passed to a _TILE_PLANE_WRITERS routine that is not a bank-3 name. A global
+    label, a call or an unknown macro forgets the pointers."""
+    wbank = {n: b for b, a, n in read_sym() if 0xd000 <= a < 0xe000 and "." not in n}
+    consts = {name: int(v, 16) for name, v in re.findall(
+        r"^\tconst (WRAM_\w+)\s*; \$([0-9a-f]+)", (ROOT / "include" / "constants" / "memory.inc").read_text(), re.M)}
+    sites = 0
+    for h in holders():
+        lines, origin = bank_lines(h)
+        cur, ptr = None, {}
+        for i, line in enumerate(lines):
+            code = line.split(";")[0].strip()
+            if re.match(r"[A-Za-z_]\w*:", line):
+                cur, ptr = None, {}
+                continue
+            if not code or code.endswith(":"):
+                continue
+            if re.match(r"pop_wram_bank\b", code):
+                cur = None
+                continue
+            m = re.match(r"(?:push_)?wram_bank\s+(\w+)", code)
+            if m:
+                cur = consts.get(m.group(1))
+                continue
+            m = re.match(r"ld (bc|de|hl), (w\w+)\b", code)
+            if m:
+                ptr.pop(m.group(1), None)
+                if m.group(2) in wbank:
+                    ptr[m.group(1)] = (m.group(2), wbank[m.group(2)], origin[i])
+                    sites += 1
+                continue
+            for rr in ("bc", "de", "hl"):
+                if rr in ptr and cur is not None and re.search(r"\[" + rr + r"[+-]?\]", code):
+                    sym, b, (f, ln) = ptr[rr]
+                    if b != cur:
+                        fail("wram-ptrs", f"{Path(f).relative_to(ROOT)}:{ln}: {sym} (WRAM bank {b}) "
+                                          f"dereferenced with bank {cur} selected")
+                        del ptr[rr]
+            op, _, args = code.partition(" ")
+            rr = _TILE_PLANE_WRITERS.get(args) if op in ("call", "farcall") else None
+            if rr in ptr:
+                sym, b, (f, ln) = ptr[rr]
+                if b != consts["WRAM_SCREEN"]:
+                    fail("wram-ptrs", f"{Path(f).relative_to(ROOT)}:{ln}: {sym} (WRAM bank {b}) "
+                                      f"passed to {args}, which writes the WRAM_SCREEN tile plane")
+            if op in _PTR_WRITES:
+                dst = args.split(",")[0].strip()
+                for rr in ("bc", "de", "hl"):
+                    if dst in (rr[0], rr[1]) or (dst == rr and op not in ("inc", "dec")):
+                        ptr.pop(rr, None)
+            elif op in ("lb", "ld_tile_run", "ld_text_attr"):
+                ptr.pop(args.split(",")[0].strip(), None)
+            elif op == "ld_hl_indexed":
+                ptr.pop("hl", None)
+            elif op == "ld_de_indexed":
+                ptr.pop("de", None)
+            elif op == "ld_bc_indexed":
+                ptr.pop("bc", None)
+            elif op in ("ret", "reti", "jp") and "," not in args:
+                ptr = {}
+            elif op not in _PTR_KEEPS:
+                ptr = {}
+    return sites
+
+
+# Store-only RAM labels whose comment need not say they are unread.
+WRITE_ONLY_EXEMPT = {
+    "wDebugColorDigitsEnd": "the NUL WriteStringToWindow stops at, reading on from wDebugColorRedDigits",
+}
+
+# Callees whose length-shaped register argument is not a byte count.
+_NOT_BLOCK_CALLEES = {"MulMem24ByFrac"}  # b is the multiplier
+
+_RAM_TOKEN = re.compile(r"\b[whs][A-Z]\w*\b")
+_WINDOW_LEN = re.compile(r"ld (?:bc|de|[abcde]), (?!(?:[abcdehl]|bc|de|hl|sp)$)([^\[].*)$")
+
+
+def _pointer_extent(lines, i, rr, ext, names, rom_names):
+    """How far `ld rr, <ram>` at lines[i] can be read through: `ext`, the
+    bytes straight-line `[rr+]` / `inc rr` walk, and any length loaded before
+    the call (or backward jump) that takes the pointer, unless the callee
+    only clears or fills, or the loop only stores through it."""
+    import consts
+    walk, lens, locs, reads = 1, [], set(), False
+    for c in lines[i + 1:i + 12]:
+        if re.match(r"\.\w+:", c):
+            locs.add(c.split(":")[0])
+        if re.match(r"\w+:", c) or c.startswith("ret"):
+            break
+        if re.search(r"\[%s[+-]\]|inc %s\b" % (rr, rr), c):
+            walk += 1
+        if re.search(r"\[%s[+-]?\]" % rr, c) and not re.match(r"ld \[", c):
+            reads = True
+        if (re.match(r"(?:ld|pop|add|adc|sub|sbc|swap|srl|sla|rr|rl|res|set|xor|or|and) (?:%s|%s|%s)\b(?!\])"
+                     % (rr, rr[0], rr[1]), c) or any("_" in t and rr in t.split("_") for t in re.findall(r"\w+", c))):
+            break
+        ml = _WINDOW_LEN.match(c)
+        if ml:
+            n = consts.evaluate(ml.group(1), names)
+            if re.search(r"\bText_", ml.group(1)) or (n is None and any(
+                    t in rom_names for t in re.findall(r"[A-Za-z_][\w.]*", ml.group(1)))):
+                n = 0
+            lens.append(0x100 if n is None else n if n < 0x8000 else 0)
+        mj = re.match(r"(call|farcall|callfar|rst|jr|jp)\b(?:.*, |\s+)(\S+)$", c)
+        if mj:
+            callee = mj.group(2)
+            if mj.group(1) in ("jr", "jp"):
+                if callee in locs and reads:
+                    ext = max([ext] + lens)
+            elif callee not in _NOT_BLOCK_CALLEES and not re.match(r"(?:Unused_\w\w_)?(?:Clear|Fill)", callee):
+                ext = max([ext] + lens)
+            break
+    return max(ext, walk)
+
+
+def check_write_only_ram(fail):
+    """A RAM label whose every reference is a store (`ld [wX], a` /
+    `ldh [hX], a`) says so in its comment ("Write-only" / "nothing reads" /
+    "read by nothing"), unless its bytes can be read without its name: a
+    `[wY + n]` load, a raw `$xxxx`, or a pointer to an earlier label
+    (`ld rr, wY`, `LOW`/`HIGH`, `dw`, a macro argument), which covers that
+    label's size, the bytes `[rr+]` walks, and any length loaded before the
+    call or loop that takes it. A label in another branch of its UNION, or a
+    ram_mirrored.inc plane, is another variable and reads nothing of it."""
+    import consts
+    from banksrc import SYM
+    names = consts.constants()
+    sym, rom_names = {}, {n for b, a, n in read_sym(rom_only=True)}
+    for b, a, n in read_sym():
+        if a >= 0x8000 and "." not in n:
+            sym[n] = ({b}, a)
+    for line in SYM.read_text().splitlines():
+        m = re.match(r"([0-9a-f]+) (\w+)$", line)
+        if m:
+            names.setdefault(m.group(2), int(m.group(1), 16))
+    names.update({n: a for n, (b, a) in sym.items()})
+    starts = {}
+    for (b,), a in sym.values():
+        starts.setdefault(b, set()).add(a)
+    starts = {b: sorted(s) for b, s in starts.items()}
+
+    mirrored, size, banks = {}, 1, None
+    for line in (ROOT / "include" / "ram_mirrored.inc").read_text().split("\n"):
+        m = re.match(r"; \[(\d+) bytes\]", line)
+        if m:
+            size = int(m.group(1))
+        if line.startswith("; in WRAM banks"):
+            banks = {int(b, 16) for b in re.findall(r"\$([0-9a-f]+)", line)}
+        m = re.match(r"def (\w+) equ", line)
+        if m:
+            mirrored[m.group(1)] = (banks, names[m.group(1)], size)
+            size, banks = 1, None
+
+    def coexist(tok, name):
+        """tok and name can be live at once: not a mirrored plane, and in
+        the same branch of every UNION both sit in."""
+        if tok in mirrored:
+            return False
+        p, q = paths.get(tok, {}), paths.get(name, {})
+        return all(q[u] == br for u, br in p.items() if u in q)
+
+    def target(tok, v):
+        """(banks or None for any, extent) of a pointer to v through tok."""
+        if tok in mirrored:
+            banks, a, n = mirrored[tok]
+            return banks, max(1, a + n - v)
+        b = next(iter(sym[tok][0])) if tok in sym else 0
+        s = starts.get(b, [])
+        j = bisect.bisect_right(s, v)
+        return {b}, s[j] - v if j < len(s) else 1
+
+    defs, paths = {}, {}
+    for f in sorted((ROOT / "ram").rglob("*.asm")):
+        lines = f.read_text().split("\n")
+        stack = []
+        for i, line in enumerate(lines):
+            word = line.split(";")[0].strip()
+            if word == "UNION":
+                stack.append([(f, i), 0])
+            elif word == "NEXTU":
+                stack[-1][1] += 1
+            elif word == "ENDU":
+                stack.pop()
+            m = re.match(r"(\w+)::", line)
+            if m:
+                paths[m.group(1)] = {u: br for u, br in stack}
+            if m and m.group(1) in sym:
+                j, com = i - 1, [line.partition(";")[2]]
+                while j >= 0 and lines[j].startswith(";"):
+                    com.append(lines[j])
+                    j -= 1
+                defs[m.group(1)] = (f, i + 1, " ".join(com))
+
+    files = ([ROOT / "main.asm"] + sorted((ROOT / "src").rglob("*.asm"))
+             + sorted((ROOT / "include").rglob("*.inc")))
+    stores, other, raw, cover = {}, set(), set(), []
+    for f in files:
+        lines = [l.split(";")[0].strip() for l in f.read_text().split("\n")]
+        for i, code in enumerate(lines):
+            for m in re.finditer(r"\$([0-9a-f]{4})\b", code, re.I):
+                raw.add(int(m.group(1), 16))
+            if not any(t in names and names[t] >= 0x8000 for t in _RAM_TOKEN.findall(code)):
+                continue
+            op, _, args = code.partition(" ")
+            if op.upper() in ("ASSERT", "STATIC_ASSERT", "DEF", "IF", "ELIF"):
+                continue
+            m = re.fullmatch(r"ldh? \[(\w+)\], (?:a|sp)", code)
+            if m and m.group(1) in sym:
+                stores.setdefault(m.group(1), []).append((f, i + 1))
+                continue
+            for expr in re.split(r",(?![^()]*\))", args):
+                toks = [t for t in _RAM_TOKEN.findall(expr) if t in names and names[t] >= 0x8000]
+                if not toks:
+                    continue
+                other.update(toks)
+                inner = re.fullmatch(r"\s*\[(.*)\]\s*", expr)
+                lohi = re.fullmatch(r"\s*(?:LOW|HIGH)\((.*)\)\s*", expr)
+                v = consts.evaluate((inner or lohi or re.match(r"(.*)", expr)).group(1), names)
+                if v is None:
+                    v, ext = names[toks[0]], 0x100
+                    banks = target(toks[0], v)[0]
+                elif not 0x8000 <= v < 0x10000:
+                    continue
+                else:
+                    banks, ext = target(toks[0], v)
+                if inner:
+                    if not re.match(r"ldh? \[", code):
+                        cover.append((banks, v, v + (ext if ext == 0x100 else 1), toks[0]))
+                    continue
+                rr = re.match(r"(hl|de|bc),", args) if op == "ld" else None
+                if rr:
+                    ext = _pointer_extent(lines, i, rr.group(1), ext, names, rom_names)
+                elif op not in _MNEMONICS:
+                    for a in args.split(","):
+                        n = consts.evaluate(a, names)
+                        if n is not None and 0 < n < 0x8000:
+                            ext = max(ext, n)
+                cover.append((banks, v, v + ext, toks[0]))
+
+    n = 0
+    for name, (f, ln, com) in defs.items():
+        if name not in stores or name in other:
+            continue
+        (b,), a = sym[name]
+        span = range(a, a + target(name, a)[1])
+        if any(x in raw for x in span):
+            continue
+        if any((cb is None or b in cb) and lo < span.stop and hi > a and coexist(tok, name)
+               for cb, lo, hi, tok in cover):
+            continue
+        n += 1
+        if name in WRITE_ONLY_EXEMPT or re.search(r"write-only|nothing reads|read by nothing", com, re.I):
+            continue
+        sf, sl = stores[name][0]
+        fail("write-only", f"{f.relative_to(ROOT)}:{ln}: {name} is only stored "
+                           f"({sf.relative_to(ROOT)}:{sl}) but its comment does not say nothing reads it")
+    return n
 
 
 # Routines whose "loop" locals name the domain, not the control flow.
@@ -2082,9 +3008,9 @@ KNOWN_LOCAL_NAMES = {
 _END_LOCAL_RE = re.compile(r"\.(?:done|exit|finish)\d*$")
 # End locals entered only by a jump that run a scene: (routine, local) -> why.
 KNOWN_END_SCENES = {
-    ("TrainingCourtNpc07_15", ".done"): "the all-lessons-done line",
-    ("TrainingCourtNpc12_15", ".done"): "the all-lessons-done line",
-    ("TrainingCourtNpc0D_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc07Curt_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc12Beth_15", ".done"): "the all-lessons-done line",
+    ("TrainingCourtNpc0DBob_15", ".done"): "the all-lessons-done line",
     ("WaterSpriteSwingContestScene", ".finish"): "the contest's end, left from its swing loop",
 }
 _END_SCENE_RE = re.compile(r"(?:script_(?:set_text|speak\w*|move\w*|set_position|face\w*|follow|set_anim)"
@@ -2099,6 +3025,14 @@ _NO_NAME_RE = re.compile(r"\.(?:declined|no(?![a-z])|refuse)")
 _STORE_LOCAL_RE = re.compile(r"\.store(?![a-z])")
 _STORE_RE = re.compile(r"^\s*(?:ldh?\s+\[|ld\s+\[|(?:inc|dec)\s+\[hl\]|(?:set|res)\s+\w+\s*,\s*\[hl\])")
 _CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
+# Locals whose return value contradicts their name, but hold anyway: (routine, local) -> why.
+KNOWN_RETURN_NAMES = {
+    ("LookupTargetShotPoints", ".noMatch"): "a is the score, 1 point when no rule matches",
+}
+_POS_WORDS = {"busy", "found", "reached", "pending", "selected", "yes", "accepted", "success", "valid", "taken",
+              "ok", "hit", "active", "ready", "true", "allowed"}
+_NEG_WORDS = {"none", "idle", "fail", "failed", "empty", "invalid", "miss", "missed", "false", "free", "skip",
+              "declined", "inactive"}
 
 
 def check_local_names(fail):
@@ -2110,14 +3044,20 @@ def check_local_names(fail):
     `.done` / `.exit` / `.finish` local the line above does not fall into
     runs no dialogue, movement or prompt macro before it leaves. The `jr z`
     target after a yes/no prompt is not named as a no, nor the `jr nz` one
-    as a yes."""
+    as a yes, and a local's constant 0 / 1 return agrees with its name. In a
+    run of `bit PADB_X / jr|jp nz` pairs, once one d-pad target names its
+    direction, every d-pad target not shared by several bits names its own."""
     ram = {name for _, addr, name in read_sym() if addr >= 0x8000 and "." not in name}
     ram |= set(re.findall(r"^def (\w+) equ", (ROOT / "include" / "ram_mirrored.inc").read_text(), re.M))
-    n, seen, yes_no_used = 0, set(), set()
+    n, seen, yes_no_used, return_used, mode_used = 0, set(), set(), set(), set()
+    external = _qualified_refs()
     for h in holders():
         bank = bank_of(h)
         lines = bank_lines(h)[0]
+        n += _mode_names(fail, bank, lines, mode_used, external)
         n += _yes_no_branch_names(fail, bank, lines, yes_no_used)
+        n += _return_value_names(fail, bank, lines, return_used)
+        n += _pad_dispatch_names(fail, bank, lines)
         labels, scope = {}, None
         for k, line in enumerate(lines):
             g = _GLOBAL_RE.match(line)
@@ -2186,8 +3126,223 @@ def check_local_names(fail):
                 fail("localnames", f"${bank:02x}: {owner}{local} does not read {syms[0]}")
             elif named and key in KNOWN_LOCAL_NAMES:
                 fail("localnames", f"{owner}{local} now reads {syms[0]} -- drop it from KNOWN_LOCAL_NAMES")
+    for key in KNOWN_RETURN_NAMES.keys() - return_used:
+        fail("localnames", f"{key[0]}{key[1]} no longer contradicts its return value -- drop it from KNOWN_RETURN_NAMES")
+    for key in KNOWN_MODE_NAMES.keys() - mode_used:
+        fail("localnames", f"{key[0]}{key[1]} now matches its FLAG_DOUBLES state -- drop it from KNOWN_MODE_NAMES")
     for key in KNOWN_YES_NO_NAMES.keys() - yes_no_used:
         fail("localnames", f"{key[0]}{key[1]} is no longer a misnamed yes/no branch -- drop it from KNOWN_YES_NO_NAMES")
+    return n
+
+
+# Mode-named locals that hold despite their FLAG_DOUBLES state: (routine, local) -> why.
+KNOWN_MODE_NAMES = {
+    ("RunPlayDoublesTodayPrompt", ".promptSwitchToSingles"): "offers doubles players the switch to singles",
+}
+_MODE_EXEMPT_RE = re.compile(r"\.(?:not|check\w*Won)")
+_MODE_BRANCH_RE = re.compile(r"(jr|jp) (?:(nz|z|nc|c), )?([\w.]+)$")
+_MODE_STOP_RE = re.compile(r"(?:reti?|jp hl|rst \w+|jumptable\b.*|(?:db|dw|dn|ds|INCBIN|as_\w+|map_\w+)\b.*)$")
+
+
+def _qualified_refs():
+    """Every Routine.local named outside its definition, in any bank."""
+    refs = set()
+    for h in holders():
+        for line in bank_lines(h)[0]:
+            code = line.split(";")[0]
+            refs |= set(re.findall(r"\b([A-Za-z_]\w*\.\w+)\b(?!:)", code))
+    return refs
+
+
+def _mode_names(fail, bank, lines, used, external):
+    """A local named for doubles is not reached only with FLAG_DOUBLES clear,
+    nor one named for singles only with it set. The flag's state follows the
+    routine's flow from `test_flag FLAG_DOUBLES` and a z/nz branch or return
+    right after it, and from set_flag/clear_flag; a routine's entry, and a
+    local named from anywhere but a jr/jp, is reached in either mode."""
+    labels, owner_of, scope = {}, [], None
+    for k, line in enumerate(lines):
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+            labels[scope] = k
+        elif lm := re.match(r"^(\w+)?(\.\w+):", line):
+            labels[(lm.group(1) or scope) + lm.group(2)] = k
+        owner_of.append(scope)
+    state = [set() for _ in lines]
+    for full, k in labels.items():
+        if "." not in full or full in external:
+            state[k].add("U")
+    work = [k for k, s in enumerate(state) if s]
+    for k, line in enumerate(lines):
+        code = line.split(";")[0].strip()
+        if _MODE_BRANCH_RE.fullmatch(code) or re.match(r"^[\w.]+:", code):
+            continue
+        for ref in re.findall(r"(?<![\w.])(\.\w+)\b", code):
+            t = labels.get((owner_of[k] or "") + ref)
+            if t is not None and "U" not in state[t]:
+                state[t].add("U")
+                work.append(t)
+    while work:
+        k = work.pop()
+        st = frozenset(state[k])
+        code = lines[k].split(";")[0].strip()
+        prev = next((lines[j].split(";")[0].strip() for j in range(k - 1, -1, -1)
+                     if lines[j].split(";")[0].strip()), "")
+        tested = prev == "test_flag FLAG_DOUBLES"
+        succ = []
+        if m := re.fullmatch(r"(set|clear)_flag FLAG_DOUBLES", code):
+            succ = [(k + 1, {"S" if m.group(1) == "set" else "C"})]
+        elif b := _MODE_BRANCH_RE.fullmatch(code):
+            cond, name = b.group(2), b.group(3)
+            taken = ft = st
+            if tested and cond in ("z", "nz"):
+                taken, ft = ({"S"}, {"C"}) if cond == "nz" else ({"C"}, {"S"})
+            full = (owner_of[k] or "") + name if name.startswith(".") else name
+            if "." in full and full in labels:
+                succ.append((labels[full], taken))
+            if cond:
+                succ.append((k + 1, ft))
+        elif r := re.fullmatch(r"ret (n?z|n?c)", code):
+            succ = [(k + 1, {"S"} if tested and r.group(1) == "z" else {"C"} if tested and r.group(1) == "nz" else st)]
+        elif not _MODE_STOP_RE.fullmatch(code):
+            succ = [(k + 1, st)]
+        for n, s in succ:
+            if n < len(lines) and not set(s) <= state[n]:
+                state[n] |= set(s)
+                work.append(n)
+    count = 0
+    for full, k in labels.items():
+        if "." not in full or "U" in state[k] or not state[k]:
+            continue
+        owner, local = full.split(".", 1)
+        local = "." + local
+        lower = local.lower()
+        if _MODE_EXEMPT_RE.match(local) or ("doubles" in lower) == ("singles" in lower):
+            continue
+        count += 1
+        key = (owner, local)
+        wrong = state[k] == {"C"} if "doubles" in lower else state[k] == {"S"}
+        if wrong:
+            used.add(key)
+            if key not in KNOWN_MODE_NAMES:
+                fail("localnames", f"${bank:02x}: {full} is reached only with FLAG_DOUBLES "
+                                   f"{'clear' if 'doubles' in lower else 'set'}")
+    return count
+
+
+def _straight_return(lines, start, labels, owner):
+    """The constant a (0 or 1) a local's straight-line path returns with, or
+    None: the path follows fall-through and unconditional local jumps and
+    gives up at a conditional branch, call or macro."""
+    k, val, seen = start + 1, None, set()
+    while k < len(lines) and k not in seen:
+        seen.add(k)
+        code = lines[k].split(";")[0].strip()
+        k += 1
+        if not code or code.endswith(":"):
+            continue
+        if code == "ret":
+            return val
+        if m := re.fullmatch(r"j[rp] (\.\w+)", code):
+            k = labels.get(owner + m.group(1))
+            if k is None:
+                return None
+            continue
+        if code in ("xor a", "ld a, $00", "ld a, 0"):
+            val = 0
+        elif code in ("ld a, $01", "ld a, 1"):
+            val = 1
+        elif re.fullmatch(r"(?:pop (?:bc|de|hl)|push (?:af|bc|de|hl)|ld [bcdehl], [bcdehl]|ld \[\w+(?: \+ \w+)?\], a|nop)", code):
+            continue
+        elif re.fullmatch(r"(?:ldh?|inc|dec|add|adc|sub|sbc|and|or|xor|cpl|rlca|rrca|rla|rra|swap|res|set|bit|cp) .*", code) \
+                and not re.match(r"(?:ldh? a|inc a|dec a|add|adc|sub|sbc|and|or|xor|cpl|rlca|rrca|rla|rra|swap a|pop af)\b", code):
+            continue
+        else:
+            return None
+    return None
+
+
+def _name_words(local):
+    words = [w.lower() for w in re.findall(r"[a-z]+|[A-Z][a-z]*", local[1:])]
+    if words and words[0] in ("clear", "reset", "set", "mark", "store", "check", "test"):
+        return False, False
+    neg = bool(words) and (words[0] in ("no", "not") or any(w in _NEG_WORDS for w in words))
+    pos = not neg and any(w in _POS_WORDS for w in words)
+    return pos, neg
+
+
+
+_PAD_DIRS = ("UP", "DOWN", "LEFT", "RIGHT")
+
+
+def _pad_dispatch_names(fail, bank, lines):
+    """In a run of 2+ `bit PADB_X, r / jr|jp nz, T` pairs where some d-pad
+    target carries its own direction word, every d-pad target does, unless
+    several bits share it."""
+    code = [line.split(";")[0].strip() for line in lines]
+    owner, scope = [], None
+    for line in lines:
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+        owner.append(scope)
+    n, i = 0, 0
+    while i < len(code):
+        chain, j = [], i
+        while j + 1 < len(code):
+            m = re.fullmatch(r"bit PADB_(\w+), \w+", code[j])
+            b = re.fullmatch(r"j[rp] nz, ([\w.]+)", code[j + 1])
+            if not (m and b):
+                break
+            chain.append((m.group(1), b.group(1)))
+            j += 2
+        start, i = i, j + 1 if j > i else i + 1
+        pads = [(d, t) for d, t in chain if d in _PAD_DIRS]
+        if len(chain) < 2 or not pads:
+            continue
+        n += 1
+        targets = [t for _, t in chain]
+        own = [(d, t, d.lower() in _words(t.split(".")[-1])) for d, t in pads]
+        if not any(o for *_, o in own):
+            continue
+        for d, t, o in own:
+            if not o and targets.count(t) == 1:
+                full = owner[start] + t if t.startswith(".") else t
+                fail("localnames", f"${bank:02x}: {full} is the PADB_{d} target of a dispatch "
+                                   "whose other d-pad targets name their direction")
+    return n
+
+
+def _words(name):
+    return [w.lower() for w in re.findall(r"[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+", name)]
+
+
+def _return_value_names(fail, bank, lines, used):
+    """A local whose straight-line path returns a = 0 is not named as a
+    positive (busy, found, ...), nor one returning a = 1 as a negative (none,
+    idle, notFound, ...)."""
+    labels, scope, locs = {}, None, []
+    for k, line in enumerate(lines):
+        if g := _GLOBAL_RE.match(line):
+            scope = g.group(1)
+            labels[scope] = k
+            continue
+        if lm := re.match(r"^(\w+)?(\.\w+):", line):
+            key = (lm.group(1) or scope, lm.group(2))
+            labels[key[0] + key[1]] = k
+            locs.append((k, key))
+    n = 0
+    for k, key in locs:
+        pos, neg = _name_words(key[1])
+        if not (pos or neg):
+            continue
+        val = _straight_return(lines, k, labels, key[0])
+        if val is None:
+            continue
+        n += 1
+        if (val == 0 and pos) or (val == 1 and neg):
+            used.add(key)
+            if key not in KNOWN_RETURN_NAMES:
+                fail("localnames", f"${bank:02x}: {key[0]}{key[1]} returns a = {val}")
     return n
 
 
@@ -2313,6 +3468,7 @@ def main():
         "text": check_text_regions(rom, manifest, fail),
         "db-words": check_db_pointers(manifest, fail),
         "addr-words": check_addr_shaped(rom, manifest, fail),
+        "db-ptrs": check_db_word_tables(rom, manifest, fail),
         "records": check_record_tails(rom, fail),
         "layout": check_layout(manifest, fail),
         "sound": check_sound(rom, manifest, fail),
@@ -2322,7 +3478,8 @@ def main():
         "labels": check_label_scopes(fail),
         "headers": check_region_headers(fail),
         "branches": check_collapsed_branches(fail),
-        "literals": check_literal_pointers(fail) + check_blob_pointers(rom, manifest, fail),
+        "literals": (check_literal_pointers(fail) + check_ram_byte_literals(fail)
+                     + check_blob_pointers(rom, manifest, fail)),
         "dma": check_dma_alignment(fail),
         "gfx": check_gfx(manifest, fail),
         "gfx-specs": check_gfx_specs(rom, manifest, fail),
@@ -2338,6 +3495,8 @@ def main():
         "loops": check_loop_labels(fail),
         "localnames": check_local_names(fail),
         "mirrors": check_mirrored_operands(fail),
+        "wram-ptrs": check_wram_pointers(fail),
+        "write-only": check_write_only_ram(fail),
     }
     by_check = {}
     for check, msg in failures:

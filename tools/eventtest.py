@@ -542,7 +542,7 @@ def match_lost(g):
     the saved state's leftovers (a win at a stage the flags say is not won)
     send some of them through a jump table past its end."""
     for name, value in (("wMatchWinLoseFlag", WINLOSE_LOSE), ("wPointWinLoseFlag", WINLOSE_LOSE),
-                        ("wMatchExitRequest", 0), ("wPointOutcome", 0), ("wKeepMatchStatsFlag", 0)):
+                        ("wMatchExitRequest", 0), ("wPointOutcome", 0), ("wMatchSuspendedFlag", 0)):
         g.mem[g.sym[name][1]] = value
 
 
@@ -739,11 +739,11 @@ def handler_setup(g, sym_path, row, extra, actions):
         m[g.sym[ptr][1]], m[g.sym[ptr][1] + 1] = a & 0xff, a >> 8
         facing = next(i for i, bit in enumerate((0x10, 0x80, 0x20, 0x40)) if mvalue & bit)
         m[4, g.sym["wPlayerMoveAngle"][1]] = facing << 6
-        c = int(cond.lstrip("$"), 16) if cond.startswith("$") else 0
-        if c:
-            n = ((c >> 8) & 0x7f) * 8 + ((c >> 5) & 7)
+        if cond.lstrip("$0"):
+            import consts
+            n = consts.constants()[cond.lstrip("~")]
             addr, bit = g.sym["wGameFlags"][1] + n // 8, 0x80 >> (n % 8)
-            m[addr] = (m[addr] | bit) if c & 0x8000 else (m[addr] & ~bit & 0xff)
+            m[addr] = (m[addr] | bit) if cond.startswith("~") else (m[addr] & ~bit & 0xff)
         armed.append("npc")
     actions[240] = fire
 

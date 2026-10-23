@@ -15,14 +15,14 @@ ClearRoundLabelRow:
 	ld [hl], a ; $487f
 	ret ; $4880
 DrawPracticeMatchLabel:
-	ld hl, Text_ResultsPracticeMatch ; $4881
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 11 ; $4884
+	ld hl, Text_ContinueScreenPracticeMatch ; $4881
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 11 ; $4884
 	ld bc, $0020 ; $4887
 	call DrawProportionalTextLine ; $488a
 	ret ; $488d
 DrawMarioExhibitionLabel:
-	ld hl, Text_ResultsMarioExhibition ; $488e
-	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $4891
+	ld hl, Text_ContinueScreenMarioExhibition ; $488e
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4891
 	ld bc, $0020 ; $4894
 	call DrawProportionalTextLine ; $4897
 	ret ; $489a
@@ -31,26 +31,26 @@ DrawPlayerNameAndLevel:
 	cp GAMEMODE_EXHIBITION ; $489e
 	ret z ; $48a0
 	wram_bank WRAM_STAGING ; $48a1
-	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
+	ld hl, SuspendedMatchPlayerPanelTilemap_1e ; $48a7
 	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
-	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
-	ld de, wDecompBuffer tile 12 + 8 ; $48b3
+	ld hl, SuspendedMatchPlayerPanelAttrmap_1e ; $48b0
+	ld de, wDecompBuffer + RESULTS_PANEL_ATTRS ; $48b3
 	call DecompressData ; $48b6
 	ld hl, wDecompBuffer ; $48b9
-	ld de, wDecompBuffer tile 10 ; $48bc
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
-	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $48c4
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $48c4
 	ld c, $08 ; $48c7
 	call CopyTilesAndAttrsRun ; $48c9
-	ld de, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $48cc
+	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH ; $48cc
 	ld c, $08 ; $48cf
 	call CopyTilesAndAttrsRun ; $48d1
-	ld de, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $48d4
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH ; $48d4
 	ld c, $08 ; $48d7
 	call CopyTilesAndAttrsRun ; $48d9
-	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $48dc
+	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $48dc
 	ld c, $08 ; $48df
 	call CopyTilesAndAttrsRun ; $48e1
 	wram_bank WRAM_SCREEN ; $48e4
@@ -66,11 +66,11 @@ DrawPlayerNameAndLevel:
 	ld hl, wStoryMainName ; $4904
 	call CopyStringToTextBuffer ; $4907
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $490a
-	ld bc, $0020 ; $490d
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $490d
 	call WriteTextToTilemap ; $4910
 	ld hl, Text_LevelAbbrev ; $4913
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
-	ld bc, $0020 ; $4919
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4919
 	call FetchAndDrawDialogueText ; $491c
 	ld a, [wStoryMainLevel] ; $491f
 	ld h, $00 ; $4922
@@ -80,7 +80,7 @@ DrawPlayerNameAndLevel:
 	call FormatDecimalNumberUnsigned ; $492a
 	ld hl, wTextBuffer ; $492d
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; $4930
-	ld bc, $0020 ; $4933
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $4933
 	call WriteTextToTilemap ; $4936
 	wram_bank WRAM_COURT_PLANES ; $4939
 	ld a, $04 ; $493f
@@ -110,7 +110,7 @@ CopyTilesAndAttrsRun:
 	ld [de], a ; $4970
 	wram_bank WRAM_STAGING ; $4971
 	push hl ; $4977
-	ld a, $c8 ; $4978
+	ld a, RESULTS_PANEL_ATTRS ; $4978
 	add_hl_a ; $497a
 	ld b, [hl] ; $497f
 	wram_bank WRAM_COURT_PLANES ; $4980
@@ -127,7 +127,7 @@ InitResultsScreenCharacters:
 	srl a ; $4992
 	add $04 ; $4994
 	wram_bank a ; $4996
-	ld bc, wCharPosX ; $499b
+	ld bc, wCharStruct ; $499b
 	ld a, [wGameMode] ; $499e
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $49a1
@@ -166,7 +166,7 @@ InitResultsScreenCharacters:
 	ld [hl], d ; $49dc
 	ld hl, wCharTileBase ; $49dd
 	ld [hl], $00 ; $49e0
-	ld bc, wCharPosX ; $49e2
+	ld bc, wCharStruct ; $49e2
 	ld d, CHARANIM_CELEBRATE ; $49e5
 	farcall SetCharAnimation ; $49e7
 	pop af ; $49ea
@@ -174,7 +174,7 @@ InitResultsScreenCharacters:
 	ld_obj_pals de, 7, 1 ; $49ee
 	farcall LoadIndexedPaletteThunk ; $49f1
 	wram_bank WRAM_SCENE ; $49f4
-	ld a, [wContinuePromptKind] ; $49fa
+	ld a, [wResultsAlwaysShowPartner] ; $49fa
 	or a ; $49fd
 	jr nz, .initPartner ; $49fe
 	wram_bank WRAM_ACTORS ; $4a00
@@ -185,7 +185,7 @@ InitResultsScreenCharacters:
 	srl a ; $4a0d
 	add $06 ; $4a0f
 	wram_bank a ; $4a11
-	ld bc, wCharPosX ; $4a16
+	ld bc, wCharStruct ; $4a16
 	ld a, [wGameMode] ; $4a19
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $4a1c
@@ -224,7 +224,7 @@ InitResultsScreenCharacters:
 	ld [hl], d ; $4a57
 	ld hl, wCharTileBase ; $4a58
 	ld [hl], $10 ; $4a5b
-	ld bc, wCharPosX ; $4a5d
+	ld bc, wCharStruct ; $4a5d
 	ld d, CHARANIM_CELEBRATE ; $4a60
 	farcall SetCharAnimation ; $4a62
 	pop af ; $4a65
@@ -233,10 +233,10 @@ InitResultsScreenCharacters:
 	farcall LoadIndexedPaletteThunk ; $4a6c
 	wram_bank WRAM_CHAR0 ; $4a6f
 	ret ; $4a75
-DrawResultsCharSprites:
+DrawContinueGameCharSprites:
 	wram_bank WRAM_CHAR0 ; $4a76
 	xor a ; $4a7c
-	call UpdateResultsCharSprite ; $4a7d
+	call UpdateContinueGameCharSprite ; $4a7d
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
 	wram_bank WRAM_CHAR0 ; $4a86
@@ -244,14 +244,14 @@ DrawResultsCharSprites:
 	ret z ; $4a8f
 	wram_bank WRAM_CHAR2 ; $4a90
 	ld a, $01 ; $4a96
-	call UpdateResultsCharSprite ; $4a98
+	call UpdateContinueGameCharSprite ; $4a98
 	ld hl, wCharSpriteSlot ; $4a9b
 	farcall DrawCharSprite ; $4a9e
 	wram_bank WRAM_CHAR0 ; $4aa1
 	ret ; $4aa7
-UpdateResultsCharSprite:
+UpdateContinueGameCharSprite:
 	push af ; $4aa8
-	ld hl, wCharPosX ; $4aa9
+	ld hl, wCharStruct ; $4aa9
 	ld b, h ; $4aac
 	ld c, l ; $4aad
 	farcall StepCharAnimation ; $4aae
@@ -260,15 +260,15 @@ UpdateResultsCharSprite:
 	farcall ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
-	ld_hl_indexed UpdateResultsCharSpriteTable ; $4ab9
+	ld_hl_indexed ContinueGameFacingFlipAttrs ; $4ab9
 	ld b, [hl] ; $4ac0
 	pop af ; $4ac1
 	push af ; $4ac2
 	or a ; $4ac3
-	jr nz, .player2 ; $4ac4
+	jr nz, .partnerHand ; $4ac4
 	ld a, [wPlayer1MainLeftHanded] ; $4ac6
 	jr .compare ; $4ac9
-.player2:
+.partnerHand:
 	ld a, [wPlayer2MainLeftHanded] ; $4acb
 .compare:
 	or a ; $4ace
@@ -288,7 +288,7 @@ UpdateResultsCharSprite:
 	push bc ; $4adf
 	push de ; $4ae0
 	or a ; $4ae1
-	jr nz, .player2Pos ; $4ae2
+	jr nz, .partnerPos ; $4ae2
 	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $4ae4
 	jr z, .singlesLayout ; $4ae7
 	ld d, $48 ; $4ae9
@@ -298,7 +298,7 @@ UpdateResultsCharSprite:
 	ld d, $54 ; $4aef
 	ld e, $56 ; $4af1
 	jr .setPos ; $4af3
-.player2Pos:
+.partnerPos:
 	ld d, $60 ; $4af5
 	ld e, $56 ; $4af7
 .setPos:
@@ -332,7 +332,7 @@ UpdateResultsCharSprite:
 	add $80 ; $4b20
 	ld [hl+], a ; $4b22
 	ret ; $4b23
-UpdateResultsCharSpriteTable:
+ContinueGameFacingFlipAttrs:
 	; $4b24, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 RunContinuePrompt:
@@ -385,7 +385,7 @@ DrawContinuePromptCursor:
 	ld a, [wContinuePromptRow] ; $4b91
 	or a ; $4b94
 	jr z, .acceptWarning ; $4b95
-.loop:
+.backToFirstPage:
 	xor a ; $4b97
 	ld [wContinuePromptPage], a ; $4b98
 	call RefreshContinuePromptText ; $4b9b
@@ -411,7 +411,7 @@ DrawContinuePromptCursor:
 	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
 .cancelWarning:
-	jr .loop ; $4bc8
+	jr .backToFirstPage ; $4bc8
 RefreshContinuePromptText:
 	ld a, [wContinuePromptPage] ; $4bca
 	or a ; $4bcd
@@ -419,9 +419,9 @@ RefreshContinuePromptText:
 	xor a ; $4bd0
 	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
-	ld hl, wContinuePromptTilemapRow2 + 1 ; $4bd7
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $4bd7
 	call DrawContinuePromptText ; $4bda
-	ld hl, wContinuePromptKind ; $4bdd
+	ld hl, wShadowTilemap ; $4bdd
 	ld de, vBGMap0 ; $4be0
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4be3
 	call QueueVRAMCopy ; $4be5
@@ -431,11 +431,11 @@ RefreshContinuePromptText:
 	ld a, $01 ; $4bef
 	ld [wContinuePromptRow], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
-	ld hl, wContinuePromptTilemapRow1 + 1 ; $4bf7
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
-	ld hl, wContinuePromptTilemapRow3 + 1 ; $4bfd
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
-	ld hl, wContinuePromptKind ; $4c03
+	ld hl, wShadowTilemap ; $4c03
 	ld de, vBGMap0 ; $4c06
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4c09
 	call QueueVRAMCopy ; $4c0b

@@ -8,29 +8,29 @@
 	farptr Unused_03_ResetAllSaveBlocks ; $400e
 	farptr EraseAndInitSaveRam ; $4010
 	farptr RepairAllSaveSlots ; $4012
-	farptr ReinitSaveRamPreservingBlock6 ; $4014
+	farptr ReinitSaveRamKeepingPreservedBlock ; $4014
 	farptr EraseStorySlotSaveData ; $4016
 	farptr SaveStorySlotWithTimer ; $4018
-	farptr CheckStorySlot ; $401a
+	farptr ReadCurrentStorySlot ; $401a
 	farptr TestSaveFlag ; $401c
 	farptr SetSaveFlag ; $401e
 	farptr ClearSaveFlag ; $4020
 	farptr Unused_03_SaveSlotDebugEditor ; $4022
 	farptr ReadExhibitionSaveBlock ; $4024
 	farptr WriteExhibitionSaveBlock ; $4026
-	farptr ClearSaveBlock11 ; $4028
+	farptr ClearN64RecordsSaveBlock ; $4028
 	farptr UpdateMinigameRecord ; $402a
 	farptr ReadMinigameRecord ; $402c
 	farptr ApplyN64RecordsUnlockFlags ; $402e
 	farptr UpdateUnlockablesSaveBlock ; $4030
 	farptr ReadMarioCastVictoryGrid ; $4032
 	farptr WriteMarioCastVictoryGrid ; $4034
-	farptr RunScrollingTextScreen ; $4036
-	farptr SetupSceneAnimationPalettes ; $4038
-	farptr UpdateSceneAnimation ; $403a
-	farptr PlayScrollingStoryCutscene ; $403c
+	farptr RunStaffCreditsRoll ; $4036
+	farptr SetupEpilogueEndAnimation ; $4038
+	farptr UpdateEpilogueEndAnimation ; $403a
+	farptr ShowEndingCreditsStaffPage ; $403c
 	farptr ShowFinalCreditsCard ; $403e
-	farptr InitGrayscalePaletteFade ; $4040
+	farptr InitSepiaPaletteFade ; $4040
 	farptr SetupPaletteFadeMask ; $4042
 	farptr AnimatePaletteFadeToTarget ; $4044
 	farptr Unused_03_SetAllUnlockablesInSaveBlock ; $4046

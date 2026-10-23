@@ -49,6 +49,7 @@ ENDU
 ; [1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400
 ; higher (the attribute of cell $d08b is $d48b)
 wShadowAttrmap:: ds 1024
+	export_size wShadowAttrmap
 
 ; $d800 on: the screen-local blocks below, or the intro's swing planes.
 UNION
@@ -79,32 +80,33 @@ wNameEntryBuffer:: ds 11
 	export_size wNameEntryBuffer
 NEXTU
 ; match results (bank $16)
-; [8-bit] 1 if the player won the match just played, else 0; written with wResultScreenMode by RunMatchWinLoseScreen, used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
-wResultScreenWon:: db
+; [8-bit] 1 for an exhibition or link match, 0 for a story match; written with wResultScreenMode by RunMatchWinLoseScreen, used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
+wResultScreenIsVersus:: db
 ; [8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it
 wResultScreenMode:: db
 NEXTU
 ; ranking board (bank $1b)
-; [8-bit] Nonzero shows the doubles ranking; from b of ShowRankingBoard. Picks the screen asset record and the singles or doubles Draw/Highlight*RankingRows pair
+; [8-bit] Nonzero shows the doubles ranking; from b of ShowRankingBoard. Picks the screen asset record and the singles or doubles Draw*RankingNames / Draw*RoundBracketLines pair
 wRankingBoardDoubles:: db
-; [8-bit] The player's ranking row, from c; the highlight and the marker animation use it
-wRankingBoardPlayerRow:: db
-; [8-bit] Board presentation, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. 3 becomes 0 with w3_d85a set
+; [8-bit] Island Open round (0-4), from c: GetIslandOpenRoundParams passes the scene stage + 1. Selects which bracket lines Draw*RoundBracketLines pre-draws and the per-round marker animation
+wRankingBoardRound:: db
+; [8-bit] Board presentation, from d: 0 plain, 1 (won) plays BGM_ISLAND_OPEN_WIN, 2 (lost) plays BGM_ISLAND_OPEN_LOSE and registers RankingGameOverBobTask. 3 becomes 0 with wRankingBoardSilent set
 wRankingBoardMode:: db
 ; [8-bit] Base of the ranking marker slots: twelve 4-byte records [tile, X, Y, -], $d803-$d832, running into the $d810 block. GetRankingMarkerSlot returns base + index * 4; DrawRankingMarkersTask queues each as a sprite, skipping those whose +0 is $ff. ClearRankingMarkerSlots clears the $30 bytes, LoadRankingMarkerCoords copies $30 bytes of coordinates over them; BuildRankingBoardScreen's $53-byte clear wipes the whole screen state from here up to wRankingBannerAnimFrame
 wRankingMarkerSlots:: db
 NEXTU
 ; trophy / N64-tournament / bracket screens (bank $3b)
-	ds 1
+; [8-bit] N64 tournament screen: nonzero when CheckN64TnmtSecondPage finds data for the second page; gates the Left/Right scroll and its arrows
+wN64TnmtHasSecondPage:: db
 ; [8-bit] Page the bank $3b data screens show; DrawN64TnmtPageLabels and the bracket builders key off it, N64TnmtScrollArrowsTask picks the scroll arrows from it
 wDataScreenPage:: db
-; [8-bit] Cursor row within the page, stepped by ScrollN64TnmtDataCursor
-wDataScreenCursorRow:: db
+; [8-bit] First of the five visible rows of the 16-row N64 tournament grid (0-$0b), stepped by Up/Down in ScrollN64TnmtDataCursor
+wDataScreenScrollRow:: db
 NEXTU
 ; minigame data screen (bank $1b, $73dd-$78bd)
 	ds 9
-; [7 of 9 bytes] One byte per list row, nonzero when that row's minigame has its level-1 clear flag. LoadMinigameClearFlags clears nine bytes and fills them from MinigameClearFlagsTable (the SAVEFLAG_CLEARED_*_1 of Boo Blast through Two-On-One) through TestSaveFlag; DrawMinigameClearMarks indexes it by wMenuCursorY for the five visible rows. The array runs to $d811, into the $d810 block
-wMinigameDataClearFlags:: ds 7
+; [7 of 9 bytes] One byte per list row, nonzero when that row's minigame has its level-1 clear flag. LoadMinigameLevel1ClearFlags clears nine bytes and fills them from MinigameLevel1ClearFlagIds (the SAVEFLAG_CLEARED_*_1 of Boo Blast through Two-On-One) through TestSaveFlag; DrawMinigameLevel1Marks indexes it by wMenuCursorY for the five visible rows. The array runs to $d811, into the $d810 block
+wMinigameDataLevel1Cleared:: ds 7
 NEXTU
 ; trophies screen (bank $3b, $49e5-$4cfa)
 ; [6 bytes] One trophy row: six cells, each 0 or 1, one icon per set cell drawn by DrawTrophyRowPair (three, a gap, three). DecodeTrophyCounts fills the first three from wN64TrophyCounts bits 0-1 and the next three from bits 4-5, one 1 per unit of the 0-3 count. The main character's first set, drawn beside wStoryMainChar
@@ -118,14 +120,15 @@ NEXTU
 	ds 1
 ; [8-bit] Frame of the title screen's animated sprite; read by QueueTitleSprite, advanced by StepTitleSpriteAnimation
 wTitleSpriteFrame:: db
-; [8-bit] Frames left on the current title sprite frame
-wTitleSpriteTimer:: db
+; [8-bit] Hold on the title sprite's last frame: 0 while StepTitleSpriteAnimation advances the frame every 8 vblanks; set to 1 when the frame wraps to 7, then counted up and cleared at $10, holding that frame 15 frames
+wTitleSpriteHoldTimer:: db
 NEXTU
 ; screen scratch (any other screen)
 ; [8-bit] Base of the screen-local scratch block. Screens with no named
 ; variant use it as a working buffer: an object array (bank $18), a
 ; decompression staging area (banks $1b/$39), a cursor or mode byte
-; (banks $3b/$6b).
+; (banks $3b/$6b). The bank $18 ending-sequence array is NUM_SCENEOBJS
+; SCENEOBJ_SIZE-byte records (SCENEOBJ_* fields).
 wScreenScratch:: db
 ENDU
 
@@ -134,11 +137,11 @@ ENDU
 ; WRAM bank $03 in a callee.
 UNION
 ; N64 tournament data screen (bank $3b)
-; [16 bytes] Copy of N64TnmtData made by LoadN64TnmtDataRecords. +$0e and +$0f are the singles and doubles column masks, forced to $10 when bit 0 / bit 1 of the records block's byte +344 is clear (that half has no data)
-wN64TnmtLayout:: ds 16
-	export_size wN64TnmtLayout
+; [16 bytes] Chart character per grid row, copied from N64TnmtRowChars by LoadN64TnmtDataRecords; DrawN64TnmtRowIcons draws one icon per row. +$0e and +$0f are forced to $10 (blank) when bit 0 / bit 1 of the records block's byte +344 is clear
+wN64TnmtRowChars:: ds 16
+	export_size wN64TnmtRowChars
 	ds 16
-; [12 bytes] First of 16 rows of 12 cells, one per character in N64CharTrophyRowPtrTable order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; rows run to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide on a second page
+; [12 bytes] First of 16 rows of 12 cells, one per character in N64TnmtRowRecordOrder order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; rows run to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide on a second page
 wN64TnmtTrophyCells:: ds 12
 	ds 3
 NEXTU
@@ -156,26 +159,26 @@ wBriefingPlayerY:: db
 wBriefingOpponentX:: db
 ; [8-bit] Drill-briefing diagram: opponent sprite Y
 wBriefingOpponentY:: db
-; [8-bit] Drill-briefing diagram: swing-animation sprite X, queued by DrawBriefingSwingAnim
-wBriefingSwingX:: db
-; [8-bit] Drill-briefing diagram: swing-animation sprite Y
-wBriefingSwingY:: db
-; [8-bit] Drill-briefing diagram: spin-serve marker X, queued by DrawSpinServeBriefingMarker
-wBriefingSpinMarkerX:: db
-; [8-bit] Drill-briefing diagram: spin-serve marker Y
-wBriefingSpinMarkerY:: db
-; [8-bit] Drill-briefing diagram: rotatable marker X, queued by DrawBriefingMarkerRotated
-wBriefingRotMarkerX:: db
-; [8-bit] Drill-briefing diagram: rotatable marker Y
-wBriefingRotMarkerY:: db
+; [8-bit] Drill-briefing diagram: button-command prompt sprite X, queued by DrawBriefingCmdPrompt
+wBriefingCmdPromptX:: db
+; [8-bit] Drill-briefing diagram: button-command prompt sprite Y
+wBriefingCmdPromptY:: db
+; [8-bit] Drill-briefing diagram: left arrow X, queued by DrawBriefingLeftArrow
+wBriefingLeftArrowX:: db
+; [8-bit] Drill-briefing diagram: left arrow Y
+wBriefingLeftArrowY:: db
+; [8-bit] Drill-briefing diagram: diagonal arrow X, queued by DrawBriefingDiagonalArrow
+wBriefingDiagArrowX:: db
+; [8-bit] Drill-briefing diagram: diagonal arrow Y
+wBriefingDiagArrowY:: db
 ; [8-bit] Drill-briefing diagram: first pole sprite X, queued by DrawBriefingPoleSprites
 wBriefingPole1X:: db
 ; [8-bit] Drill-briefing diagram: first pole sprite Y
 wBriefingPole1Y:: db
-; [8-bit] Drill-briefing diagram: horizontal marker X, queued by DrawBriefingMarkerHFlip (jiggles by 1px on hVBlankCounter bit 4)
-wBriefingHMarkerX:: db
-; [8-bit] Drill-briefing diagram: horizontal marker Y
-wBriefingHMarkerY:: db
+; [8-bit] Drill-briefing diagram: pointing hand X, queued by DrawBriefingPointingHand (jiggles by 1px on hVBlankCounter bit 4)
+wBriefingHandX:: db
+; [8-bit] Drill-briefing diagram: pointing hand Y
+wBriefingHandY:: db
 ; [8-bit] Drill-briefing diagram: ball sprite X, queued by DrawBriefingBallSprite
 wBriefingBallX:: db
 ; [8-bit] Drill-briefing diagram: ball sprite Y
@@ -184,18 +187,18 @@ wBriefingBallY:: db
 wBriefingPole2X:: db
 ; [8-bit] Drill-briefing diagram: second pole sprite Y
 wBriefingPole2Y:: db
-; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingFrameTileTable for the base tile, and < 6 selects the 5-sprite racket template
-wBriefingSwingFrame:: db
-; [8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip
-wBriefingVMarkerX:: db
-; [8-bit] Drill-briefing diagram: vertical marker Y
-wBriefingVMarkerY:: db
-; [8-bit] Drill-briefing diagram: 1 draws the vertical marker upright (OAM attr $09), anything else Y-flipped ($49)
-wBriefingVMarkerUpright:: db
-; [8-bit] Drill-briefing diagram: 1 draws the spin-serve marker unflipped (OAM attr $09), anything else X-flipped ($29)
-wBriefingSpinMarkerUnflipped:: db
-; [8-bit] Drill-briefing diagram: rotatable marker orientation (0-3); indexes BriefingMarkerRotatedTable, the four flip combinations of OAM attr $x9
-wBriefingRotMarkerDir:: db
+; [8-bit] Drill-briefing diagram: button-command prompt shown (0-9); indexes BriefingCmdPromptTileTable for the base tile, and < 6 (the two-button combos) selects the 5-sprite template
+wBriefingCmdPrompt:: db
+; [8-bit] Drill-briefing diagram: down arrow X, queued by DrawBriefingDownArrow
+wBriefingDownArrowX:: db
+; [8-bit] Drill-briefing diagram: down arrow Y
+wBriefingDownArrowY:: db
+; [8-bit] Drill-briefing diagram: 1 draws the down arrow unflipped (OAM attr $09), anything else Y-flipped ($49)
+wBriefingDownArrowUnflipped:: db
+; [8-bit] Drill-briefing diagram: 1 draws the left arrow unflipped (OAM attr $09), anything else X-flipped ($29)
+wBriefingLeftArrowUnflipped:: db
+; [8-bit] Drill-briefing diagram: diagonal arrow orientation (0-3); indexes BriefingDiagonalArrowAttrs, the four flip combinations of OAM attr $x9
+wBriefingDiagArrowDir:: db
 ; [8-bit] Drill-briefing diagram: target-bracket top-left X; DrawBriefingTargetBrackets draws the four corners at X, X+width+3
 wBriefingBracketX:: db
 ; [8-bit] Drill-briefing diagram: target-bracket top-left Y; corners sit at Y and Y+height-5
@@ -206,8 +209,8 @@ wBriefingBracketWidth:: db
 wBriefingBracketHeight:: db
 ; [8-bit] Drill-briefing animation frame timer; each briefing's *_TickAnim increments it and calls *_AdvanceAnim at $78 (120 frames)
 wBriefingAnimTimer:: db
-; [8-bit] Drill-briefing diagram: 1 draws the horizontal marker unflipped (OAM attr $09), anything else X-flipped ($29)
-wBriefingHMarkerUnflipped:: db
+; [8-bit] Drill-briefing diagram: 1 draws the pointing hand unflipped (OAM attr $09), anything else X-flipped ($29)
+wBriefingHandUnflipped:: db
 ; [8-bit] Drill-briefing animation step; each briefing's *_AdvanceAnim wraps it (& $03) and indexes its 4-byte-per-step position table with it
 wBriefingAnimStep:: db
 	ds 1
@@ -218,9 +221,9 @@ NEXTU
 ; character-select grid (banks $38/$10)
 	ds 1
 ; [8-bit] Character-select grid: top row shown (wMenuCursorX/Y address the cell within it); MoveCharGridCursor* wrap it and rebuild the page sprite list
-wCharGridPage:: db
-; [8-bit] Character-select grid: number of pages, looked up from wCharGridEntryCount through CharGridPageCountTable
-wCharGridPageCount:: db
+wCharGridTopRow:: db
+; [8-bit] Character-select grid: number of rows (one more per three entries past six), looked up from wCharGridEntryCount through CharGridRowCountTable
+wCharGridRowCount:: db
 ; [8-bit] Character-select mode id stored on entry by RunExhibitionCharSelectScreen / RunLinkCharSelectScreen; picks the slot-box table and starting slot (3 and 5 start at slot 2)
 wCharSelectMode:: db
 ; [8-bit] Character-select: player slot being chosen (0-3); $04 means every slot is filled and the screen shows the wait banner
@@ -231,9 +234,9 @@ wCharSelectExitCode:: db
 wCharSelectSlotChars:: ds 4
 ; [8-bit] Character-select grid: roster entries present from $da24 on (CountCharGridEntries)
 wCharGridEntryCount:: db
-; [8-bit] Character-select grid: page saved when a left/right wrap jumps to the roster pages
-wCharGridPrevPage:: db
-; [8-bit] Set to 1 by BuildCharGridFromUnlockFlags once the grid has been populated
+; [8-bit] Character-select grid: wCharGridTopRow as MoveCharGridCursorLeft/Right jump between the Mario-cast and roster rows. Write-only
+wCharGridPrevTopRow:: db
+; [8-bit] Set to 1 by BuildCharGridFromUnlockFlags as it builds the grid; nothing reads it
 wCharGridBuilt:: db
 ; [8-bit] Link character-select: slot the remote player is choosing; Advance/RetreatRemotePlayerSlot step it
 wCharSelectRemoteSlot:: db
@@ -242,10 +245,10 @@ wCharSelectRemoteSlot:: db
 wCharSelectRemoteChars:: dw
 ; [8-bit] Link character-select: character id carried by the last received select command
 wLinkSelectCmdChar:: db
-; [8-bit] Link character-select slot bookkeeping, reset when a selection is retreated
+; [8-bit] Link character-select: $ff from RunLinkCharSelectScreen, 1 from Unused_38_ConfirmRemoteGridSelection, 2 from Unused_38_RetreatLinkGridSelection; nothing reads it
 wLinkSelectSlotState:: db
-; [8-bit] Character-select grid: entries present in the nine created-character rows at $da00
-wCharGridCreatedCount:: db
+; [8-bit] Character-select grid: Mario-cast entries present in grid entries 0-8; the page-down checks need 7 or more for a second Mario-cast page
+wCharGridMarioCastCount:: db
 ; [8-bit] Set when the slot just filled needs the CPU-difficulty submenu; the frame loop then runs RunCpuDifficultySubmenu instead of normal input
 wCpuDifficultyPrompt:: db
 ; [8-bit] Set once OpenCpuDifficultyPanel has drawn the panel, so it is drawn only on the first pass
@@ -257,7 +260,7 @@ wCpuDifficultyCursor:: db
 wCharSelectSlotDifficulty:: ds 4
 ; [4 bytes] Left-handed flag per player slot, toggled with START on the grid (Mario-cast characters only). ApplyHandednessToCharRecords copies it to the match records' +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask: OAM X-flip plus the forehand/backhand swap in SelectForehandBackhand
 wCharSelectSlotLeftHanded:: ds 4
-; [8-bit] Link character-select: result byte ProcessLinkSelectCommand leaves for commands $24-$27
+; [8-bit] Link character-select: zeroed by RunLinkCharSelectScreen and by ProcessLinkSelectCommand after each CPU-level command; nothing reads it
 wLinkSelectCmdResult:: db
 ; [8-bit] Link character-select: CPU difficulty for the link match, stepped by Unused_38_HandleLinkCpuDifficultyInput
 wLinkCpuDifficulty:: db
@@ -271,7 +274,7 @@ wEquipEquippedIndex:: db
 wEquipSelectExitTimer:: db
 ; [8-bit] 0 = rackets, 1 = shoes; selects the icon set, the info panel and which stat-modifier table GetItemStatModListPtr reads
 wEquipItemKind:: db
-; [8-bit] Which row-address table GetStatModRowAddr uses for the stat-modifier panel; both loaders set it to 0
+; [8-bit] Which row-address table GetStatModRowAddr uses for the stat-modifier panel: 0 on the select screens, 1 from DrawEquippedRacketPanel, 2 from DrawEquippedShoesPanel
 wEquipStatRowSet:: db
 NEXTU
 ; match results (bank $16)
@@ -280,12 +283,12 @@ wStatsPrintBuffer:: ds 8
 NEXTU
 ; minigame data screen (bank $1b, $73dd-$78bd)
 	ds 2
-; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag; LoadMinigameStarFlags fills it from MinigameStarFlagsTable (the SAVEFLAG_CLEARED_*_2 run) as wMinigameDataClearFlags is filled. DrawMinigameStarMarks draws mark 1 per set row, DrawStarLegendMark draws the legend if any is set, and DrawMinigameHighScoreNumber shows no number for a row without a star
-wMinigameDataStarFlags:: ds 9
-	export_size wMinigameDataStarFlags
+; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag; LoadMinigameLevel2ClearFlags fills it from MinigameLevel2ClearFlagIds (the SAVEFLAG_CLEARED_*_2 run) as wMinigameDataLevel1Cleared is filled. DrawMinigameLevel2Marks draws mark 1 per set row, DrawChallengeColumnHeader draws the column-14 header if any is set, and DrawMinigameHighScoreNumber shows no number for a row without it
+wMinigameDataLevel2Cleared:: ds 9
+	export_size wMinigameDataLevel2Cleared
 ; [8 x 16-bit] The number shown on each of the first eight rows: LoadMinigameHighScores reads record row + 2 of the block $38 minigame records with ReadMinigameRecord (value in wMinigameRecordValue, WRAM bank $07) and stores it at row * 2. Row 8 has no record; its slot is wMinigameDataTwoOnOneCleared
 wMinigameDataHighScores:: ds 16
-; [2 bytes] Row 8's slot, used as a flag pair: LoadMinigameHighScores writes $01 to both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set (after clearing all 18 bytes from $d81b). DrawMinigameSpecialMark draws mark 2 for it when the list is scrolled to the bottom (wMenuCursorY = 4)
+; [2 bytes] Row 8's slot, used as a flag pair: LoadMinigameHighScores writes $01 to both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set (after clearing all 18 bytes from $d81b). DrawTwoOnOneChallengeMark draws mark 2 for it when the list is scrolled to the bottom (wMenuCursorY = 4)
 wMinigameDataTwoOnOneCleared:: dw
 NEXTU
 ; trophies screen (bank $3b, $49e5-$4cfa)
@@ -308,19 +311,19 @@ wCharUnlockFlags:: ds 40
 	export_size wCharUnlockFlags
 NEXTU
 ; ranking board (bank $1b)
-; [4 x 16-bit] Per animation channel, the ranking marker slot it moves, from hl in StartRankingMarkerAnim<N> (via GetRankingMarkerSlot). UpdateScriptedOffsetChannel<N> adds the script's delta each frame to the slot's +1 (X) on channels 0-1 and +2 (Y) on channels 2-3
+; [4 x 16-bit] Per animation channel, the ranking marker slot it moves, from hl in StartRankingMarkerSlide<X0|X1|Y0|Y1> (via GetRankingMarkerSlot). UpdateRankingMarkerSlide* adds the script's delta each frame to the slot's +1 (X) on channels 0-1 and +2 (Y) on channels 2-3
 wRankingAnimSlotPtrs:: ds 8
-; [4 x 16-bit] Per channel, the delta script it plays, from de in StartRankingMarkerAnim<N>. One byte of movement per frame ($01 or $ff), ending at $40, where UpdateScriptedOffsetChannel<N> unregisters its frame task
+; [4 x 16-bit] Per channel, the delta script it plays, from de in StartRankingMarkerSlide*. One byte of movement per frame ($01 or $ff), ending at $40, where UpdateRankingMarkerSlide* unregisters its frame task
 wRankingAnimScriptPtrs:: ds 8
-; [4 bytes] Each channel's offset into its script: zeroed by StartRankingMarkerAnim<N>, incremented by UpdateScriptedOffsetChannel<N> after each non-terminator byte (so also the frame counter)
+; [4 bytes] Each channel's offset into its script: zeroed by StartRankingMarkerSlide*, incremented by UpdateRankingMarkerSlide* after each non-terminator byte (so also the frame counter)
 wRankingAnimStepIndex:: ds 4
 	ds 1
-; [8-bit] Frame counter of the sliding banner sprite: RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for the frame's X delta and unregisters at $87
+; [8-bit] Frame counter of the sliding CONGRATULATIONS banner: RankingCongratsSlideTask indexes RankingCongratsSlideXDeltas with it for the frame's X delta and unregisters at $87
 wRankingBannerAnimFrame:: db
 ; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
 wRankingBannerX:: db
 	ds 1
-; [8-bit] Set to 1 at the end of each ranking-board animation state; the state machine advances on it
+; [8-bit] Write-only: cleared by BuildRankingBoardScreen and set to 1 as each RankingAnimSinglesClimbRound* step ends; nothing reads it
 wRankingAnimStateDone:: db
 	ds 1
 ; [8-bit] Set when ShowRankingBoard gets mode $03 (rewritten to $00): no entrance animation (DispatchRankingBoardAnim returns at once) and no closing jingle, for when the board is part of a longer sequence
@@ -359,9 +362,9 @@ wTrophiesCheatLeftPresses:: db
 NEXTU
 ; screen sequences (bank $18)
 	ds 256
-; [8-bit] Cleared as the ending sequence enters its third scene and stepped through the scenes that follow
-wEndingSceneStep:: db
-; [8-bit] Frame counter each PlayScreenSequence* routine runs from 0 to $fa while its screen scrolls, then fades out
+; [8-bit] Step of TaskFadeInTheEndPalette fading in the "The End" sprite palette, 0 to $10; cleared before PlayDreamMatchEpilogueScene loads that screen
+wTheEndPaletteFadeStep:: db
+; [8-bit] Frame counter for the timed waits of the RunStorySceneByMode scenes: to $fa (traveling team), $af every fourth frame (awards ceremony), $b4 before "The End"
 wScreenSequenceTimer:: db
 ENDU
 
@@ -382,9 +385,9 @@ UNION
 wRulesPageListId:: db
 ; [8-bit] Value ShowRulesScreen returns once the page loop finishes
 wRulesExitCode:: db
-; [8-bit] Nonzero lets AdvanceRulesScreenAnimFrame run; cleared while a page transition is in progress
-wRulesAnimEnabled:: db
-; [8-bit] Frame counter AdvanceRulesScreenAnimFrame increments, wrapping at $ff
+; [8-bit] Nonzero while the Rules-screen Toad talks: AnimateRulesToad plays RulesToadTalkFrames instead of RulesToadIdleFrames, for 255 ticks after a page turn
+wRulesToadTalking:: db
+; [8-bit] Frame counter AnimateRulesToad increments, wrapping at $ff
 wRulesAnimCounter:: db
 ; [8-bit] 0 on the rules screen's first page, 1 once a page has been turned: the first page tints its header row by wRulesMinigameLevel and sits one row lower
 wRulesPastFirstPage:: db
@@ -394,17 +397,17 @@ wRulesMinigameLevel:: db
 NEXTU
 ; N64 exhibition and Mario-cast charts (bank $3b)
 	ds 1
-; [16 bytes] Column each chart row shows. BuildMarioCastChartColumnList fills it from MarioCastChartColumnTable, using $10 (blank column) for entries whose save flag is clear, so a locked character leaves a gap
+; [16 bytes] Column each chart row shows. BuildMarioCastChartColumnList fills it from MarioCastChartColumnIconIds, using $10 (blank column) for entries whose save flag is clear, so a locked character leaves a gap
 wChartColumnList:: ds 16
 	export_size wChartColumnList
 	ds 1
-; [8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it
-wN64ExhibPage:: db
-; [8-bit] Cursor row within the page, stepped by ScrollN64ExhibDataCursor
-wN64ExhibCursorRow:: db
+; [8-bit] First visible chart column (0-9 of 16, seven shown), stepped by Left/Right in ScrollN64ExhibChart; N64ExhibScrollArrowsTask picks the arrows from it
+wChartScrollColumn:: db
+; [8-bit] First visible chart row (0-12 of 16, four shown), stepped by Up/Down in ScrollN64ExhibChart
+wChartScrollRow:: db
 NEXTU
 ; rules screen (bank $17)
-; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharFrameTileTable-2 with it
+; [8-bit] Frame AnimateRulesToad steps; DrawRulesScreenToad indexes RulesToadFrameTileTable-2 with it
 wRulesScreenAnimFrame:: db
 ENDU
 
@@ -419,29 +422,29 @@ wExhibCellBits:: ds 64
 NEXTU
 ; ring-shot results (bank $3b)
 	ds 32
-; [16 bytes] Ring-shot rows to show, copied from the N64RingShot table; an entry becomes $10 (blank row) when its bit in the N64 records block is clear, leaving out courses never transferred
+; [16 bytes] Chart character per ring-shot row, copied from N64RingShotRowChars; entries 14 and 15 become $10 (blank row) when their star-unlock bit in the N64 records block is clear
 wRingShotEntryList:: ds 16
 	export_size wRingShotEntryList
 ENDU
 
 	ds 416
 
-; Character-grid scroll counter, bank $38.
+; Character-grid Right-press counter, bank $38.
 ; character select (bank $38)
-; [8-bit] Incremented each time the grid scrolls down a row; the select screen prints it as a decimal byte at row 3, column 1 every frame (a leftover on-screen counter, no other reader)
-wCharGridScrollCount:: db
+; [8-bit] Incremented on each Right press in HandleCharGridDpad; the select screen prints it as a decimal byte at row 3, column 1 every frame (a leftover on-screen counter, no other reader)
+wCharGridRightPressCount:: db
 
 	ds 255
 
 ; Character-select handedness, bank $38. The same address is the
 ; per-character match struct in WRAM banks $04-$07.
 ; character select (bank $38)
-; [8-bit] Handedness the exhibition and link character grids offer for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it (`xor $01`, 2 becomes 1) only when IsMarioCastCharacter passes. DrawCharSelectSlotLabel picks label 30:150/151/152 ("START: Right-Handed" / "START: Left-Handed" / "START: Change Hands") from it. The story screen uses wCharSelectHandedness instead
+; [8-bit] Handedness the exhibition and link character grids offer for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it (`xor $01`, 2 becomes 1) only when IsMarioCastCharacter passes. DrawCharGridHandednessLabel picks label 30:150/151/152 ("START: Right-Handed" / "START: Left-Handed" / "START: Change Hands") from it. The story screen uses wCharSelectHandedness instead
 wCharGridHandedness:: db
 NEXTU
 ; intro swing scene (bank $6b)
-; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroSwingTilemap. IntroCutsceneState02Init and State04Init queue rows 4-13 of it to $9880 in VRAM bank 0
+; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroAlexSwingTilemap (IntroCutsceneAlexRallyInit_6b) or DataPtr_IntroNinaSwingTilemap (IntroCutsceneNinaRallyInit_6b). IntroCutsceneAlexSwingInit_6b and IntroCutsceneNinaSwingInit_6b queue rows 4-13 of it to $9880 in VRAM bank 0
 wIntroSwingTilemap:: ds 1024
-; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroSwingAttrmap; copied to the same VRAM addresses in bank 1
+; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroAlexSwingAttrmap or DataPtr_IntroNinaSwingAttrmap; copied to the same VRAM addresses in bank 1
 wIntroSwingAttrmap:: ds 1024
 ENDU

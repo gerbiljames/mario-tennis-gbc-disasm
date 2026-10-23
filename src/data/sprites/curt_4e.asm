@@ -332,106 +332,106 @@ Unused_4e_CurtSpriteFramesCopy:
 CurtFramePlace:
 	INCLUDE "data/sprites/CurtFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 CurtSpriteAnims:
-	dw CurtSpriteAnim00 ; $7f24
-	dw CurtSpriteAnim01 ; $7f26
-	dw CurtSpriteAnim02 ; $7f28
-	dw CurtSpriteAnim03 ; $7f2a
-	dw CurtSpriteAnim04 ; $7f2c
-	dw CurtSpriteAnim05 ; $7f2e
-	dw CurtSpriteAnim06 ; $7f30
-	dw CurtSpriteAnim07 ; $7f32
-	dw CurtSpriteAnim08 ; $7f34
-	dw CurtSpriteAnim09 ; $7f36
-	dw CurtSpriteAnim10 ; $7f38
-	dw CurtSpriteAnim11 ; $7f3a
-	dw CurtSpriteAnim12 ; $7f3c
-	dw CurtSpriteAnim13 ; $7f3e
-	dw CurtSpriteAnim14 ; $7f40
-	dw CurtSpriteAnim15 ; $7f42
-	dw CurtSpriteAnim16 ; $7f44
-	dw CurtSpriteAnim17 ; $7f46
-	dw CurtSpriteAnim18 ; $7f48
-CurtSpriteAnim00:
+	dw CurtStandAnim ; $7f24
+	dw CurtIdleAnim ; $7f26
+	dw CurtRunAnim ; $7f28
+	dw CurtCelebrateAnim ; $7f2a
+	dw CurtDejectedAnim ; $7f2c
+	dw CurtForehandAnim ; $7f2e
+	dw CurtBackhandAnim ; $7f30
+	dw CurtOverheadAnim ; $7f32
+	dw CurtSmashAnim ; $7f34
+	dw CurtForehandQuickAnim ; $7f36
+	dw CurtBackhandQuickAnim ; $7f38
+	dw CurtOverheadQuickAnim ; $7f3a
+	dw CurtSmashQuickAnim ; $7f3c
+	dw CurtForehandReadyAnim ; $7f3e
+	dw CurtBackhandReadyAnim ; $7f40
+	dw CurtOverheadReadyAnim ; $7f42
+	dw CurtServeReadyAnim ; $7f44
+	dw CurtServePrepAnim ; $7f46
+	dw CurtDiveAnim ; $7f48
+CurtStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-CurtSpriteAnim01:
+CurtIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-CurtSpriteAnim02:
+CurtRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-CurtSpriteAnim03:
+CurtCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 10
 	anim_frame $18, 10
 	anim_frame $19, 10
 	anim_loop $00
-CurtSpriteAnim04:
+CurtDejectedAnim:
 	; $7f65, 8 bytes (sprite_anim)
 	anim_frame $1a, 25
 	anim_frame $1b, 55
 	anim_frame $1c, 10
 	anim_loop $00
-CurtSpriteAnim05:
+CurtForehandAnim:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-CurtSpriteAnim06:
+CurtBackhandAnim:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-CurtSpriteAnim07:
+CurtOverheadAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-CurtSpriteAnim08:
+CurtSmashAnim:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-CurtSpriteAnim09:
+CurtForehandQuickAnim:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-CurtSpriteAnim10:
+CurtBackhandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-CurtSpriteAnim11:
+CurtOverheadQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-CurtSpriteAnim12:
+CurtSmashQuickAnim:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-CurtSpriteAnim13:
+CurtForehandReadyAnim:
 	; $7f93, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-CurtSpriteAnim14:
+CurtBackhandReadyAnim:
 	; $7f96, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-CurtSpriteAnim15:
+CurtOverheadReadyAnim:
 	; $7f99, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-CurtSpriteAnim16:
+CurtServeReadyAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-CurtSpriteAnim17:
+CurtServePrepAnim:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -439,7 +439,7 @@ CurtSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-CurtSpriteAnim18:
+CurtDiveAnim:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

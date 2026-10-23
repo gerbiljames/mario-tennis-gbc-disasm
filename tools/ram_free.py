@@ -30,12 +30,7 @@ import consts  # noqa: E402
 # $cf34, so the top 512 bytes of WRAM0 are reserved for it, not free.
 STACK_ZONE = 0xCE00
 _SECTION_RE = re.compile(r'^SECTION "[^"]*", (WRAM0|WRAMX|HRAM)\[\$([0-9a-f]+)\](?:, BANK\[(\d+)\])?')
-_DECL_RE = re.compile(r"^(?:([A-Za-z_]\w*)::?\s*)?(db|dw|ds)(?:\s+(\S+))?\s*(?:;.*)?$")
-
-
-def _num(s):
-    s = s.strip()
-    return int(s[1:], 16) if s.startswith("$") else int(s)
+_DECL_RE = re.compile(r"^(?:([A-Za-z_]\w*)::?\s*)?(?:(db|dw|ds)\b\s*([^;]*?))?\s*(?:;.*)?$")
 
 
 def _ram_macros():
@@ -52,19 +47,20 @@ def _ram_macros():
     return macros
 
 
-def _expand(path, macros=None):
+def _expand(path, macros=None, names=None):
     """The file's lines with its `INCLUDE "ram/..."` lines and RAM structure
     macros expanded in place."""
     macros = _ram_macros() if macros is None else macros
+    names = consts.constants() if names is None else names
     out = []
     for line in path.read_text().splitlines():
         m = re.match(r'^INCLUDE "(ram/[^"]+)"', line)
         mm = re.match(r"^\t(\w+) (\w+)\s*(?:;.*)?$", line)
         if m:
-            out += _expand(ROOT / m.group(1), macros)
+            out += _expand(ROOT / m.group(1), macros, names)
         elif re.match(r"^\w+::\s*flag_array \w+", line):
             name, count = re.match(r"^(\w+::)\s*flag_array (\w+)", line).groups()
-            out.append(f"{name} ds {(consts.constants()[count] + 7) // 8}")
+            out.append(f"{name} ds {(names[count] + 7) // 8}")
         elif mm and mm.group(1) in macros:
             out += [x.replace("\\1", mm.group(2)) for x in macros[mm.group(1)]]
         else:
@@ -72,14 +68,18 @@ def _expand(path, macros=None):
     return out
 
 
-def named_bytes():
-    """{(space, bank): set(addresses a symbol covers)}; space 'w' or 'h'."""
-    named = {}
+def placed():
+    """[(space, bank, name or None, address, size)] of every declaration and
+    label in `ram/wram.asm` and `ram/hram.asm`, in order; space 'w' or 'h'.
+    A line it cannot read or size raises ValueError."""
+    names = consts.constants()
+    macros = _ram_macros()
+    out = []
     for fn in ("wram.asm", "hram.asm"):
         space = bank = None
         addr = 0
         union = []          # stack of (start, max_end)
-        for line in _expand(ROOT / "ram" / fn):
+        for line in _expand(ROOT / "ram" / fn, macros, names):
             line = line.rstrip()
             m = _SECTION_RE.match(line)
             if m:
@@ -102,14 +102,30 @@ def named_bytes():
                 start, end = union.pop()
                 addr = max(end, addr)
                 continue
-            d = _DECL_RE.match(s)
-            if not d:
+            if re.match(r"(export_size|ASSERT)\b", s):
                 continue
-            name, kind, arg = d.groups()
-            n = {"db": 1, "dw": 2}.get(kind) or _num(arg)
-            if name:
-                named.setdefault((space, bank), set()).update(range(addr, addr + n))
+            d = _DECL_RE.match(s)
+            if d:
+                name, kind, arg = d.groups()
+                if kind == "ds":
+                    n = consts.evaluate(arg, names) if arg else None
+                elif kind:
+                    n = {"db": 1, "dw": 2}[kind] * (len(arg.split(",")) if arg else 1)
+                else:
+                    n = 0
+            if not d or n is None or n < 0:
+                raise ValueError(f"ram_free: cannot size {line.strip()!r}")
+            out.append((space, bank, name, addr, n))
             addr += n
+    return out
+
+
+def named_bytes():
+    """{(space, bank): set(addresses a symbol covers)}; space 'w' or 'h'."""
+    named = {}
+    for space, bank, name, addr, n in placed():
+        if name:
+            named.setdefault((space, bank), set()).update(range(addr, addr + n))
     # mirrored names (include/ram_mirrored.inc) allocate nothing -- the banks
     # they exist in declare the bytes -- but a range only they name must still
     # count as named, in the banks its `; in WRAM banks` line lists

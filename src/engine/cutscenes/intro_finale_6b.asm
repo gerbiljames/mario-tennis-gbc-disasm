@@ -1,41 +1,41 @@
-	twin_named intro_cutscene_state16_update, IntroCutsceneState16Update_6b ; $4a42
-IntroCutsceneState16Exit_6b:
+	twin_named intro_cutscene_greatest_player_update, IntroCutsceneGreatestPlayerUpdate_6b ; $4a42
+IntroCutsceneGreatestPlayerExit_6b:
 	xor a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp DispatchCutsceneStateInit.nextState ; $4a55
-IntroCutsceneState16InitPalettes_6b:
-	INCLUDE "data/engine/cutscenes/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
-IntroCutsceneState17Init_6b:
+IntroCutsceneGreatestPlayerInitPalettes_6b:
+	INCLUDE "data/engine/cutscenes/IntroCutsceneGreatestPlayerInitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
+IntroCutsceneMarioRevealInit_6b:
 	wram_bank WRAM_ACTORS ; $4a98
-	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
+	ld hl, wIntroMarioTilemap + 6 * TILEMAP_WIDTH ; $4a9e
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH ; $4aa1
 	ld c, 8 * TILEMAP_WIDTH / 16 ; $4aa4
 	call QueueVRAMCopy ; $4aa6
-	ld hl, wIntroCharactersAttrmap + 6 * TILEMAP_WIDTH ; $4aa9
+	ld hl, wIntroMarioAttrmap + 6 * TILEMAP_WIDTH ; $4aa9
 	ld de, vBGMap1 + 6 * TILEMAP_WIDTH + VRAM_BANK1 ; $4aac
 	ld c, 8 * TILEMAP_WIDTH / 16 ; $4aaf
 	call QueueVRAMCopy ; $4ab1
 	call AdvanceFrame ; $4ab4
-	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4ab7
+	ld hl, wIntroMarioTilemap + 4 * TILEMAP_WIDTH ; $4ab7
 	ld de, vBGMap1 + 4 * TILEMAP_WIDTH ; $4aba
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4abd
 	call QueueVRAMCopy ; $4abf
-	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $4ac2
+	ld hl, wIntroMarioAttrmap + 4 * TILEMAP_WIDTH ; $4ac2
 	ld de, vBGMap1 + 4 * TILEMAP_WIDTH + VRAM_BANK1 ; $4ac5
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4ac8
 	call QueueVRAMCopy ; $4aca
 	call AdvanceFrame ; $4acd
-	ld hl, Palettes_6b_03 ; $4ad0
+	ld hl, IntroMarioPalettes1To7 ; $4ad0
 	ld_bg_pals de, 1, 7 ; $4ad3
 	call LoadPaletteShadow ; $4ad6
 	xor a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
 	jp DispatchCutsceneStateInit.runUpdate ; $4add
-	twin_named intro_cutscene_state16_update, IntroCutsceneState17Update_6b ; $4ae0
-IntroCutsceneState17Exit_6b:
+	twin_named intro_cutscene_greatest_player_update, IntroCutsceneMarioRevealUpdate_6b ; $4ae0
+IntroCutsceneMarioRevealExit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $4aef
-IntroCutsceneState18Init_6b:
-	ld hl, IntroCutsceneState18InitPalettes_6b ; $4af2
+IntroCutsceneMarioCloseupScrollInit_6b:
+	ld hl, IntroCutsceneMarioCloseupScrollInitPalettes_6b ; $4af2
 	ld_bg_pals de, 0, 8 ; $4af5
 	call LoadPaletteShadow ; $4af8
 	wram_bank WRAM_TEXT ; $4afb
@@ -78,7 +78,7 @@ IntroCutsceneState18Init_6b:
 	ld de, vBGMap1 + VRAM_BANK1 ; $4b69
 	ld c, 4 * TILEMAP_WIDTH / 16 ; $4b6c
 	call QueueVRAMCopy ; $4b6e
-	ld hl, Palettes_6b_03 ; $4b71
+	ld hl, IntroMarioPalettes1To7 ; $4b71
 	ld_bg_pals de, 1, 7 ; $4b74
 	call LoadPaletteShadow ; $4b77
 	call AdvanceFrame ; $4b7a
@@ -103,7 +103,7 @@ IntroCutsceneState18Init_6b:
 	ld c, 32 ; $4bb3
 	call QueueVRAMCopy ; $4bb5
 	call AdvanceFrame ; $4bb8
-	ld hl, wTextTileBuffer ; $4bbb
+	ld hl, wDecompBufferHigh ; $4bbb
 	ld de, vTiles1 ; $4bbe
 	ld c, 32 ; $4bc1
 	call QueueVRAMCopy ; $4bc3
@@ -111,7 +111,7 @@ IntroCutsceneState18Init_6b:
 	xor a ; $4bc9
 	ld [wCutsceneStepTimer], a ; $4bca
 	jp DispatchCutsceneStateInit.runUpdate ; $4bcd
-IntroCutsceneState18Update_6b:
+IntroCutsceneMarioCloseupScrollUpdate_6b:
 	ld a, [wCutsceneSpriteAX] ; $4bd0
 	sub $04 ; $4bd3
 	ld [wCutsceneSpriteAX], a ; $4bd5
@@ -125,17 +125,17 @@ IntroCutsceneState18Update_6b:
 	inc a ; $4be6
 	ld [wCutsceneStepTimer], a ; $4be7
 	jp DispatchCutsceneStateInit.runUpdate ; $4bea
-IntroCutsceneState18Exit_6b:
+IntroCutsceneMarioCloseupScrollExit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank WRAM_SCREEN ; $4bf3
 	ld a, BGVIEW_NORMAL ; $4bf9
 	ldh [hBGViewMode], a ; $4bfb
 	jp DispatchCutsceneStateInit.nextState ; $4bfd
-Palettes_6b_03:
-	INCLUDE "data/engine/cutscenes/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
-IntroCutsceneState19Init_6b:
-	ld hl, Palette_6b_1 ; $4c38
+IntroMarioPalettes1To7:
+	INCLUDE "data/engine/cutscenes/IntroMarioPalettes1To7.asm" ; $4c00, 56 bytes (palettes)
+IntroCutsceneClosingTossInit_6b:
+	ld hl, IntroBallTossPalettes ; $4c38
 	ld_bg_pals de, 0, 8 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
 	xor a ; $4c41
@@ -149,7 +149,7 @@ IntroCutsceneState19Init_6b:
 	ld [wCutsceneSpriteAnimTick], a ; $4c53
 	ld [wCutsceneSpriteAnimFrame], a ; $4c56
 	ld de, $015c ; $4c59
-	ld hl, wCutsceneScrollAccum ; $4c5c
+	ld hl, wIntroBallY ; $4c5c
 	ld a, e ; $4c5f
 	ld [hl+], a ; $4c60
 	ld [hl], d ; $4c61
@@ -159,11 +159,11 @@ IntroCutsceneState19Init_6b:
 	ld [hl+], a ; $4c69
 	ld [hl], d ; $4c6a
 	jp DispatchCutsceneStateInit.runUpdate ; $4c6b
-IntroCutsceneState19Exit_6b:
+IntroCutsceneClosingTossExit_6b:
 	script_fade_out 4 ; $4c6e
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.nextState ; $4c76
-	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
+	twin_named intro_cutscene_opening_toss_update, IntroCutsceneClosingTossUpdate_6b ; $4c79
 UpdateIntroScrollY:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, IntroScrollYDeltaTable ; $4ca1
@@ -182,24 +182,24 @@ UpdateIntroScrollY:
 	ret ; $4cc0
 IntroScrollYDeltaTable:
 	INCLUDE "data/engine/cutscenes/IntroScrollYDeltaTable.asm" ; $4cc1, 160 bytes (bytes:16)
-UpdateCutsceneScrollY:
+UpdateIntroBallY:
 	ld a, [wCutsceneStepTimer] ; $4d61
-	ld hl, CutsceneScrollYTable ; $4d64
+	ld hl, IntroBallYStepTable ; $4d64
 	add_hl_a ; $4d67
 	ld e, [hl] ; $4d6c
-	ld hl, wCutsceneScrollAccum ; $4d6d
+	ld hl, wIntroBallY ; $4d6d
 	ld a, [hl+] ; $4d70
 	ld h, [hl] ; $4d71
 	ld l, a ; $4d72
 	ld d, $00 ; $4d73
 	sub_hl_de ; $4d75
 	ld a, h ; $4d7b
-	ld [wCutsceneScrollAccum + 1], a ; $4d7c
+	ld [wIntroBallY + 1], a ; $4d7c
 	ld a, l ; $4d7f
-	ld [wCutsceneScrollAccum], a ; $4d80
+	ld [wIntroBallY], a ; $4d80
 	ret ; $4d83
-CutsceneScrollYTable:
-	INCLUDE "data/engine/cutscenes/CutsceneScrollYTable.asm" ; $4d84, 169 bytes (bytes:16)
+IntroBallYStepTable:
+	INCLUDE "data/engine/cutscenes/IntroBallYStepTable.asm" ; $4d84, 169 bytes (bytes:16)
 QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp $20 ; $4e30
@@ -278,6 +278,7 @@ ApplyIntroScrollToSpriteY:
 	pop hl ; $51a2
 	pop bc ; $51a3
 	ret ; $51a4
+Unused_6b_WaitForAPress:
 .loop:
 	ldh a, [hInputRisingEdge] ; $51a5
 	bit PADB_A, a ; $51a7
@@ -330,43 +331,43 @@ ScrollOutIntroLogo:
 	xor a ; $5206
 	ldh [hScrollY], a ; $5207
 	ret ; $5209
-LoadCutsceneTileset:
-	ld b, TILEBLOCK_CutsceneGfx0 ; $520a
-	ld c, CutsceneGfx0_SIZE / 16 ; $520c
+LoadIntroRallySpriteTiles:
+	ld b, TILEBLOCK_IntroRalliesAlexGfx0 ; $520a
+	ld c, IntroRalliesAlexGfx0_SIZE / 16 ; $520c
 	ld de, vTiles0 + VRAM_BANK1 ; $520e
 	farcall LoadCompressedTileBlock ; $5211
-	ld b, TILEBLOCK_CutsceneGfx1 ; $5214
-	ld c, CutsceneGfx1_SIZE / 16 ; $5216
+	ld b, TILEBLOCK_IntroRalliesAlexGfx1 ; $5214
+	ld c, IntroRalliesAlexGfx1_SIZE / 16 ; $5216
 	ld de, vTiles0 tile $06 + VRAM_BANK1 ; $5218
 	farcall LoadCompressedTileBlock ; $521b
-	ld b, TILEBLOCK_CutsceneGfx2 ; $521e
-	ld c, CutsceneGfx2_SIZE / 16 ; $5220
+	ld b, TILEBLOCK_IntroRalliesAlexGfx2 ; $521e
+	ld c, IntroRalliesAlexGfx2_SIZE / 16 ; $5220
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $5222
 	farcall LoadCompressedTileBlock ; $5225
-	ld b, TILEBLOCK_CutsceneGfx3 ; $5228
-	ld c, CutsceneGfx3_SIZE / 16 ; $522a
+	ld b, TILEBLOCK_IntroRalliesNinaGfx0 ; $5228
+	ld c, IntroRalliesNinaGfx0_SIZE / 16 ; $522a
 	ld de, vTiles0 tile $20 + VRAM_BANK1 ; $522c
 	farcall LoadCompressedTileBlock ; $522f
-	ld b, TILEBLOCK_CutsceneGfx4 ; $5232
-	ld c, CutsceneGfx4_SIZE / 16 ; $5234
+	ld b, TILEBLOCK_IntroRalliesNinaGfx1 ; $5232
+	ld c, IntroRalliesNinaGfx1_SIZE / 16 ; $5234
 	ld de, vTiles0 tile $26 + VRAM_BANK1 ; $5236
 	farcall LoadCompressedTileBlock ; $5239
-	ld b, TILEBLOCK_CutsceneGfx5 ; $523c
-	ld c, CutsceneGfx5_SIZE / 16 ; $523e
+	ld b, TILEBLOCK_IntroRalliesNinaGfx2 ; $523c
+	ld c, IntroRalliesNinaGfx2_SIZE / 16 ; $523e
 	ld de, vTiles0 tile $38 + VRAM_BANK1 ; $5240
 	farcall LoadCompressedTileBlock ; $5243
-	ld b, TILEBLOCK_CutsceneGfx6 ; $5246
-	ld c, CutsceneGfx6_SIZE / 16 ; $5248
+	ld b, TILEBLOCK_IntroRalliesNinaGfx3 ; $5246
+	ld c, IntroRalliesNinaGfx3_SIZE / 16 ; $5248
 	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $524a
 	farcall LoadCompressedTileBlock ; $524d
-	ld hl, CutsceneTilesetPalettes ; $5250
+	ld hl, IntroRallySpritePalettes ; $5250
 	ld_obj_pals de, 0, 2 ; $5253
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
-CutsceneTilesetPalettes:
-	INCLUDE "data/engine/cutscenes/CutsceneTilesetPalettes.asm" ; $525a, 16 bytes (palettes)
-QueueCutsceneSpriteGroupA:
-	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate0 ; $526a
+IntroRallySpritePalettes:
+	INCLUDE "data/engine/cutscenes/IntroRallySpritePalettes.asm" ; $525a, 16 bytes (palettes)
+QueueIntroAlexSprite:
+	ld hl, QueueIntroAlexSprite_SpriteTemplate0 ; $526a
 	ld a, [wCutsceneSpriteAX] ; $526d
 	ld d, $10 ; $5270
 	add d ; $5272
@@ -376,7 +377,7 @@ QueueCutsceneSpriteGroupA:
 	call ApplyCutsceneBobOffset ; $5278
 	sprite_tile_attr $00, OAM_BANK1 ; $527b
 	call QueueSpriteTemplate ; $527f
-	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate1 ; $5282
+	ld hl, QueueIntroAlexSprite_SpriteTemplate1 ; $5282
 	ld a, [wCutsceneSpriteAX] ; $5285
 	ld d, $08 ; $5288
 	add d ; $528a
@@ -388,7 +389,7 @@ QueueCutsceneSpriteGroupA:
 	call ApplyCutsceneBobOffset ; $5293
 	sprite_tile_attr $06, OAM_BANK1 ; $5296
 	call QueueSpriteTemplate ; $529a
-	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate2 ; $529d
+	ld hl, QueueIntroAlexSprite_SpriteTemplate2 ; $529d
 	ld a, [wCutsceneSpriteAX] ; $52a0
 	ld d, a ; $52a3
 	ld a, [wCutsceneSpriteAY] ; $52a4
@@ -399,13 +400,13 @@ QueueCutsceneSpriteGroupA:
 	sprite_tile_attr $10, OAM_BANK1 ; $52ae
 	call QueueSpriteTemplate ; $52b2
 	ret ; $52b5
-QueueCutsceneSpriteGroupA_SpriteTemplate0:
+QueueIntroAlexSprite_SpriteTemplate0:
 	; $52b6, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-QueueCutsceneSpriteGroupA_SpriteTemplate1:
+QueueIntroAlexSprite_SpriteTemplate1:
 	; $52c3, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -413,7 +414,7 @@ QueueCutsceneSpriteGroupA_SpriteTemplate1:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-QueueCutsceneSpriteGroupA_SpriteTemplate2:
+QueueIntroAlexSprite_SpriteTemplate2:
 	; $52d8, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -424,8 +425,8 @@ QueueCutsceneSpriteGroupA_SpriteTemplate2:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-QueueCutsceneSpriteGroupB:
-	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate0 ; $52f9
+QueueIntroNinaSprite:
+	ld hl, QueueIntroNinaSprite_SpriteTemplate0 ; $52f9
 	ld a, [wCutsceneSpriteBX] ; $52fc
 	ld d, $18 ; $52ff
 	add d ; $5301
@@ -435,7 +436,7 @@ QueueCutsceneSpriteGroupB:
 	call ApplyCutsceneBobOffset ; $5307
 	sprite_tile_attr $20, OAM_BANK1 | 1 ; $530a
 	call QueueSpriteTemplate ; $530e
-	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate1 ; $5311
+	ld hl, QueueIntroNinaSprite_SpriteTemplate1 ; $5311
 	ld a, [wCutsceneSpriteBX] ; $5314
 	ld d, $08 ; $5317
 	add d ; $5319
@@ -447,7 +448,7 @@ QueueCutsceneSpriteGroupB:
 	call ApplyCutsceneBobOffset ; $5322
 	sprite_tile_attr $26, OAM_BANK1 | 1 ; $5325
 	call QueueSpriteTemplate ; $5329
-	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate2 ; $532c
+	ld hl, QueueIntroNinaSprite_SpriteTemplate2 ; $532c
 	ld a, [wCutsceneSpriteBX] ; $532f
 	ld d, a ; $5332
 	ld a, [wCutsceneSpriteBY] ; $5333
@@ -457,7 +458,7 @@ QueueCutsceneSpriteGroupB:
 	call ApplyCutsceneBobOffset ; $533a
 	sprite_tile_attr $38, OAM_BANK1 | 1 ; $533d
 	call QueueSpriteTemplate ; $5341
-	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate3 ; $5344
+	ld hl, QueueIntroNinaSprite_SpriteTemplate3 ; $5344
 	ld a, [wCutsceneSpriteBX] ; $5347
 	ld d, $48 ; $534a
 	add d ; $534c
@@ -470,13 +471,13 @@ QueueCutsceneSpriteGroupB:
 	sprite_tile_attr $48, OAM_BANK1 | 1 ; $5358
 	call QueueSpriteTemplate ; $535c
 	ret ; $535f
-QueueCutsceneSpriteGroupB_SpriteTemplate0:
+QueueIntroNinaSprite_SpriteTemplate0:
 	; $5360, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-QueueCutsceneSpriteGroupB_SpriteTemplate1:
+QueueIntroNinaSprite_SpriteTemplate1:
 	; $536d, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -488,7 +489,7 @@ QueueCutsceneSpriteGroupB_SpriteTemplate1:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-QueueCutsceneSpriteGroupB_SpriteTemplate2:
+QueueIntroNinaSprite_SpriteTemplate2:
 	; $5392, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -499,7 +500,7 @@ QueueCutsceneSpriteGroupB_SpriteTemplate2:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-QueueCutsceneSpriteGroupB_SpriteTemplate3:
+QueueIntroNinaSprite_SpriteTemplate3:
 	; $53b3, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end

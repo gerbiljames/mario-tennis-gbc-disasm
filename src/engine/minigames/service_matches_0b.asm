@@ -9,7 +9,7 @@ RunTrainingDrillByID:
 	farcall InitMinigameMatchSettings ; $4706
 	pop af ; $4709
 	cp MINIGAME_TWO_ON_ONE ; $470a
-	jp z, .doublesDrill ; $470c
+	jp z, .twoOnOne ; $470c
 	cp MINIGAME_TENNIS_MACHINE_1 ; $470f
 	jr nc, .minigame ; $4711
 	ld l, a ; $4713
@@ -34,7 +34,7 @@ RunTrainingDrillByID:
 	ld hl, wAiServeTargetX ; $4734
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
-	ld [wAiServeSkipToss], a ; $4739
+	ld [wAiServeNoQuickStrike], a ; $4739
 	farcall RunMinigameMatch ; $473c
 .afterMatch:
 	xor a ; $473f
@@ -46,7 +46,7 @@ RunTrainingDrillByID:
 	ld hl, wAiServeTargetX ; $474a
 	ld [hl+], a ; $474d
 	ld [hl], a ; $474e
-	ld [wAiServeSkipToss], a ; $474f
+	ld [wAiServeNoQuickStrike], a ; $474f
 	ld a, [wMatchRetryRequest] ; $4752
 	or a ; $4755
 	ld a, [wCurrentMatchIndex] ; $4756
@@ -83,8 +83,8 @@ RunTrainingDrillByID:
 	clear_flag FLAG_DRILL_FROM_MENU ; $47a7
 	farcall ProcessMatchRewards ; $47aa
 	ret ; $47ad
-.doublesDrill:
-	call RunDoublesDrillMatch ; $47ae
+.twoOnOne:
+	call RunTwoOnOneMatch ; $47ae
 	jp .afterMatch ; $47b1
 DrillDefinitionPtrs:
 	; $47b4, 36 bytes (records:2)
@@ -152,7 +152,7 @@ ServiceMatch1Hooks:
 	dw ServiceMatch1Hook_MinigameStart ; MODEHOOK_MINIGAME_START
 	dw ServiceMatch1Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServiceMatch1Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServiceMatch1Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch1Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw RetStub ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServiceMatch1Hook_MinigameStart:
@@ -181,22 +181,22 @@ ServiceMatch1Hook_PointEnd:
 	ld hl, wDrillCounters + DRILLCTR_P2_SUCCESSES ; $4880
 	ld a, [hl-] ; $4883
 	sub [hl] ; $4884
-	jr z, .clearPointWinLoseFlag ; $4885
-	jr nc, .storePointWinLoseFlag ; $4887
+	jr z, .tied ; $4885
+	jr nc, .player2Ahead ; $4887
 	ld a, WINLOSE_WIN ; $4889
 	ld [wPointWinLoseFlag], a ; $488b
 	ret ; $488e
-.clearPointWinLoseFlag:
+.tied:
 	ASSERT WINLOSE_NONE == 0
 	xor a ; $488f
 	ld [wPointWinLoseFlag], a ; $4890
 	ret ; $4893
-.storePointWinLoseFlag:
+.player2Ahead:
 	ld a, WINLOSE_LOSE ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
-ServiceMatch1Hook_RallyTick:
-	call ServiceMatch1JudgeOnRallyTick ; $489a
+ServiceMatch1Hook_NetCross:
+	call ServiceMatch1JudgeOnNetCross ; $489a
 	ret ; $489d
 ServiceMatch1Hook_Bounce:
 	call ServiceMatch1JudgeOnBounce ; $489e
@@ -231,10 +231,10 @@ ServiceMatch1HandlePointEnd:
 	ld a, [wDrillCounters + DRILLCTR_P2_SUCCESSES] ; $48dc
 	ld [wPlayer2PointsWon], a ; $48df
 	ld a, [wPlayer1PointsWon] ; $48e2
-	ld b, $01 ; $48e5
+	ld b, DIGITGFX_NUMERALS ; $48e5
 	farcall LoadPlayer1PointsDigitGfx ; $48e7
 	ld a, [wPlayer2PointsWon] ; $48ea
-	ld b, $01 ; $48ed
+	ld b, DIGITGFX_NUMERALS ; $48ed
 	farcall LoadPlayer2PointsDigitGfx ; $48ef
 	farcall StepMatchFrame ; $48f2
 	farcall StartPointEndReactions ; $48f5
@@ -253,21 +253,22 @@ ServiceMatch1JudgeOnBallHit:
 ; Judges the point on the ball-bounce event -- except that the leading `ret`
 ; means the body never runs, so this drill does not judge on a bounce.
 ;
-; Each drill has four of these, one per hook: PointEnd, BallHit, Bounce and
-; RallyTick, passing 0-3 to its JudgePoint as the event code. 20 of the 60 in
-; this bank start with `ret`, and which ones varies by drill -- most disable
-; only RallyTick, the serve and net drills also disable Bounce, and
-; ServiceMatch2 disables Bounce while leaving RallyTick live, so each drill
-; scores on its own subset of events. See docs/bugs.md.
+; Each drill with judges (the Service Practices have none) has four of these,
+; one per hook: PointEnd, BallHit, Bounce and NetCross, passing 0-3 to its
+; JudgePoint as the event code. Some start with `ret`, and which ones varies by
+; drill -- most disable only NetCross, the Service Match and Net Game Match
+; drills also disable Bounce, and ServiceMatch2 disables Bounce while leaving
+; NetCross live, so each drill scores on its own subset of events. See
+; docs/bugs.md.
 ServiceMatch1JudgeOnBounce:
 	ret ; $490e
 	ld a, JUDGEEVENT_BOUNCE ; $490f
 	call ServiceMatch1JudgePoint ; $4911
 	ld [wDrillPointJudgement], a ; $4914
 	ret ; $4917
-ServiceMatch1JudgeOnRallyTick:
+ServiceMatch1JudgeOnNetCross:
 	ret ; $4918
-	ld a, JUDGEEVENT_RALLY_TICK ; $4919
+	ld a, JUDGEEVENT_NET_CROSS ; $4919
 	call ServiceMatch1JudgePoint ; $491b
 	ld [wDrillPointJudgement], a ; $491e
 	ret ; $4921
@@ -280,28 +281,28 @@ ServiceMatch1JudgePoint:
 	dec a ; $492b
 	jumptable a ; $492c
 	dw ServiceMatch1JudgePoint.rally1 ; $492e jumptable
-	dw ServiceMatch1Cases1.dispatchResult ; $4930 jumptable
+	dw ServiceMatch1Cases1.rally2 ; $4930 jumptable
 .rally1:
 	ld a, b ; $4932
 	jumptable a ; $4933
-	dw ServiceMatch1JudgePoint.result0 ; $4935 jumptable
+	dw ServiceMatch1JudgePoint.rally1PointEnd ; $4935 jumptable
 	dw ServiceMatch1Cases1 ; $4937 jumptable
 	dw ServiceMatch1Cases1.ignoreBounce ; $4939 jumptable
-	dw ServiceMatch1Cases1.ignoreRallyTick ; $493b jumptable
-.result0:
+	dw ServiceMatch1Cases1.ignoreNetCross ; $493b jumptable
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $493d
-	ld hl, ServiceMatch1JudgePointMessages ; $4940
+	ld hl, ServiceMatch1Rally1Messages ; $4940
 	add_hl_a ; $4943
 	ld a, [hl] ; $4948
 	ld a, a ; $4949
 	ld b, DRILLWORDING_SERVICE ; $494a
-	call QueueDrillResultMessage ; $494c
+	call SetDrillServerMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
 	ld hl, OddRallyVerdicts ; $4952
 	add_hl_a ; $4955
 	ld a, [hl] ; $495a
 	ret ; $495b
-ServiceMatch1JudgePointMessages:
+ServiceMatch1Rally1Messages:
 	; $495c, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch1Cases1:
@@ -310,30 +311,30 @@ ServiceMatch1Cases1:
 .ignoreBounce:
 	xor a ; $4968
 	ret ; $4969
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $496a
 	ret ; $496b
-.dispatchResult:
+.rally2:
 	ld a, b ; $496c
 	jumptable a ; $496d
-	dw ServiceMatch1Cases1.checkPointOutcome ; $496f jumptable
+	dw ServiceMatch1Cases1.rally2PointEnd ; $496f jumptable
 	dw ServiceMatch1Cases2 ; $4971 jumptable
 	dw ServiceMatch1Cases2.ignoreBounce ; $4973 jumptable
-	dw ServiceMatch1Cases2.ignoreRallyTick ; $4975 jumptable
-.checkPointOutcome:
+	dw ServiceMatch1Cases2.ignoreNetCross ; $4975 jumptable
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $4977
-	ld hl, ServiceMatch1Cases1Messages ; $497a
+	ld hl, ServiceMatch1Rally2Messages ; $497a
 	add_hl_a ; $497d
 	ld a, [hl] ; $4982
 	ld a, a ; $4983
 	ld b, DRILLWORDING_SERVICE ; $4984
-	call QueueDrillResultMessage ; $4986
+	call SetDrillServerMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
 	ld hl, EvenRallyVerdicts ; $498c
 	add_hl_a ; $498f
 	ld a, [hl] ; $4994
 	ret ; $4995
-ServiceMatch1Cases1Messages:
+ServiceMatch1Rally2Messages:
 	; $4996, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch1Cases2:
@@ -343,7 +344,7 @@ ServiceMatch1Cases2:
 	ret z ; $49a7
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $49a8
 	ld b, DRILLWORDING_SERVICE ; $49aa
-	call QueueDrillResultMessage ; $49ac
+	call SetDrillServerMessage ; $49ac
 	jr DrillPointLost_1 ; $49af
 .unreachable:
 	xor a ; $49b1
@@ -351,7 +352,7 @@ ServiceMatch1Cases2:
 .ignoreBounce:
 	xor a ; $49b3
 	ret ; $49b4
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $49b5
 	ret ; $49b6
 Unused_0b_DrillPointWon_1:
@@ -376,15 +377,15 @@ ServiceMatch2Hooks:
 	dw RetStub ; MODEHOOK_MINIGAME_START
 	dw ServiceMatch2Hook_BallHit ; MODEHOOK_BALL_HIT
 	dw ServiceMatch2Hook_Bounce ; MODEHOOK_BOUNCE
-	dw ServiceMatch2Hook_RallyTick ; MODEHOOK_RALLY_TICK
+	dw ServiceMatch2Hook_NetCross ; MODEHOOK_NET_CROSS
 	dw ServiceMatch2Hook_Draw ; MODEHOOK_DRAW
 	assert_table_length NUM_MODEHOOKS
 ServiceMatch2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $49e7
 	ret ; $49ea
 ServiceMatch2Hook_Draw:
-	call QueueDrillMarker1_0b ; $49eb
-	call QueueDrillMarker2_0b ; $49ee
+	call QueueDrillGateLeftPole ; $49eb
+	call QueueDrillGateRightPole ; $49ee
 	ret ; $49f1
 ServiceMatch2Hook_PointStart:
 	xor a ; $49f2
@@ -394,8 +395,8 @@ ServiceMatch2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $49fb
 	ld a, $01 ; $49fe
 	ld [wDrillGateActive], a ; $4a00
-	ld hl, ServiceMatch2PointStartDrillPositions ; $4a03
-	call IndexDrillTableByPoint ; $4a06
+	ld hl, ServiceMatch2GatePositions ; $4a03
+	call SetDrillGateForPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
 	ld hl, ServiceMatch2ServeAims ; $4a0e
@@ -431,22 +432,22 @@ ServiceMatch2Hook_PointEnd:
 	ld hl, wDrillCounters + DRILLCTR_P2_SUCCESSES ; $4a44
 	ld a, [hl-] ; $4a47
 	sub [hl] ; $4a48
-	jr z, .clearPointWinLoseFlag ; $4a49
-	jr nc, .storePointWinLoseFlag ; $4a4b
+	jr z, .tied ; $4a49
+	jr nc, .player2Ahead ; $4a4b
 	ld a, WINLOSE_WIN ; $4a4d
 	ld [wPointWinLoseFlag], a ; $4a4f
 	ret ; $4a52
-.clearPointWinLoseFlag:
+.tied:
 	ASSERT WINLOSE_NONE == 0
 	xor a ; $4a53
 	ld [wPointWinLoseFlag], a ; $4a54
 	ret ; $4a57
-.storePointWinLoseFlag:
+.player2Ahead:
 	ld a, WINLOSE_LOSE ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
-ServiceMatch2Hook_RallyTick:
-	call ServiceMatch2JudgeOnRallyTick ; $4a5e
+ServiceMatch2Hook_NetCross:
+	call ServiceMatch2JudgeOnNetCross ; $4a5e
 	ret ; $4a61
 ServiceMatch2Hook_Bounce:
 	call ServiceMatch2JudgeOnBounce ; $4a62
@@ -454,7 +455,7 @@ ServiceMatch2Hook_Bounce:
 ServiceMatch2Hook_BallHit:
 	call ServiceMatch2JudgeOnBallHit ; $4a66
 	ret ; $4a69
-ServiceMatch2PointStartDrillPositions:
+ServiceMatch2GatePositions:
 	; $4a6a, 66 bytes (drill_gates)
 ; drill_gates x1, depth1, x2, depth2
 	drill_gates $0000, $0000, $01b0, $0000 ; point 0
@@ -491,15 +492,15 @@ ServiceMatch2HandlePointEnd:
 	add_hl_a ; $4adc
 	ld a, [hl] ; $4ae1
 	or a ; $4ae2
-	jr z, .serviceMatch2AwardPointToSide ; $4ae3
+	jr z, .awardPoint ; $4ae3
 	farcall UpdatePointStats ; $4ae5
-.serviceMatch2AwardPointToSide:
+.awardPoint:
 	call ServiceMatch2AwardPointToSide ; $4ae8
 	ld a, [wPlayer1PointsWon] ; $4aeb
-	ld b, $01 ; $4aee
+	ld b, DIGITGFX_NUMERALS ; $4aee
 	farcall LoadPlayer1PointsDigitGfx ; $4af0
 	ld a, [wPlayer2PointsWon] ; $4af3
-	ld b, $01 ; $4af6
+	ld b, DIGITGFX_NUMERALS ; $4af6
 	farcall LoadPlayer2PointsDigitGfx ; $4af8
 	farcall StepMatchFrame ; $4afb
 	farcall StartPointEndReactions ; $4afe
@@ -522,8 +523,8 @@ ServiceMatch2JudgeOnBounce:
 	call ServiceMatch2JudgePoint ; $4b43
 	ld [wDrillPointJudgement], a ; $4b46
 	ret ; $4b49
-ServiceMatch2JudgeOnRallyTick:
-	ld a, JUDGEEVENT_RALLY_TICK ; $4b4a
+ServiceMatch2JudgeOnNetCross:
+	ld a, JUDGEEVENT_NET_CROSS ; $4b4a
 	call ServiceMatch2JudgePoint ; $4b4c
 	ld [wDrillPointJudgement], a ; $4b4f
 	ret ; $4b52
@@ -536,28 +537,28 @@ ServiceMatch2JudgePoint:
 	dec a ; $4b5c
 	jumptable a ; $4b5d
 	dw ServiceMatch2JudgePoint.rally1 ; $4b5f jumptable
-	dw ServiceMatch2Cases1.dispatchResult ; $4b61 jumptable
+	dw ServiceMatch2Cases1.rally2 ; $4b61 jumptable
 .rally1:
 	ld a, b ; $4b63
 	jumptable a ; $4b64
-	dw ServiceMatch2JudgePoint.result0 ; $4b66 jumptable
+	dw ServiceMatch2JudgePoint.rally1PointEnd ; $4b66 jumptable
 	dw ServiceMatch2Cases1 ; $4b68 jumptable
 	dw ServiceMatch2Cases1.ignoreBounce ; $4b6a jumptable
-	dw ServiceMatch2Cases1.checkBallHasBouncedFlag ; $4b6c jumptable
-.result0:
+	dw ServiceMatch2Cases1.judgeGate ; $4b6c jumptable
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $4b6e
-	ld hl, ServiceMatch2JudgePointMessages ; $4b71
+	ld hl, ServiceMatch2Rally1Messages ; $4b71
 	add_hl_a ; $4b74
 	ld a, [hl] ; $4b79
 	ld a, a ; $4b7a
 	ld b, DRILLWORDING_SERVICE ; $4b7b
-	call QueueDrillResultMessage ; $4b7d
+	call SetDrillServerMessage ; $4b7d
 	ld a, [wPointOutcome] ; $4b80
 	ld hl, OddRallyVerdicts ; $4b83
 	add_hl_a ; $4b86
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
-ServiceMatch2JudgePointMessages:
+ServiceMatch2Rally1Messages:
 	; $4b8d, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch2Cases1:
@@ -566,14 +567,14 @@ ServiceMatch2Cases1:
 .ignoreBounce:
 	xor a ; $4b99
 	ret ; $4b9a
-.checkBallHasBouncedFlag:
-	ld a, [wBallHasBouncedFlag] ; $4b9b
+.judgeGate:
+	ld a, [wBallTouchedNetFlag] ; $4b9b
 	or a ; $4b9e
 	ld a, $00 ; $4b9f
 	ret nz ; $4ba1
 	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED ; $4ba2
 	ld b, DRILLWORDING_SERVICE ; $4ba4
-	call QueueDrillResultMessage ; $4ba6
+	call SetDrillServerMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
 	jr z, DrillPointLost_2 ; $4bac
 	xor a ; $4bae
@@ -582,27 +583,27 @@ ServiceMatch2Cases1:
 	ld [wDrillGateActive], a ; $4bb3
 	xor a ; $4bb6
 	ret ; $4bb7
-.dispatchResult:
+.rally2:
 	ld a, b ; $4bb8
 	jumptable a ; $4bb9
-	dw ServiceMatch2Cases1.checkPointOutcome ; $4bbb jumptable
+	dw ServiceMatch2Cases1.rally2PointEnd ; $4bbb jumptable
 	dw ServiceMatch2Cases2 ; $4bbd jumptable
 	dw ServiceMatch2Cases2.ignoreBounce ; $4bbf jumptable
-	dw ServiceMatch2Cases2.ignoreRallyTick ; $4bc1 jumptable
-.checkPointOutcome:
+	dw ServiceMatch2Cases2.ignoreNetCross ; $4bc1 jumptable
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $4bc3
-	ld hl, ServiceMatch2Cases1Messages ; $4bc6
+	ld hl, ServiceMatch2Rally2Messages ; $4bc6
 	add_hl_a ; $4bc9
 	ld a, [hl] ; $4bce
 	ld a, a ; $4bcf
 	ld b, DRILLWORDING_SERVICE ; $4bd0
-	call QueueDrillResultMessage ; $4bd2
+	call SetDrillServerMessage ; $4bd2
 	ld a, [wPointOutcome] ; $4bd5
 	ld hl, EvenRallyVerdicts ; $4bd8
 	add_hl_a ; $4bdb
 	ld a, [hl] ; $4be0
 	ret ; $4be1
-ServiceMatch2Cases1Messages:
+ServiceMatch2Rally2Messages:
 	; $4be2, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch2Cases2:
@@ -612,7 +613,7 @@ ServiceMatch2Cases2:
 	ret z ; $4bf3
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4bf4
 	ld b, DRILLWORDING_SERVICE ; $4bf6
-	call QueueDrillResultMessage ; $4bf8
+	call SetDrillServerMessage ; $4bf8
 	jr DrillPointLost_2 ; $4bfb
 .unreachable:
 	xor a ; $4bfd
@@ -620,6 +621,6 @@ ServiceMatch2Cases2:
 .ignoreBounce:
 	xor a ; $4bff
 	ret ; $4c00
-.ignoreRallyTick:
+.ignoreNetCross:
 	xor a ; $4c01
 	ret ; $4c02

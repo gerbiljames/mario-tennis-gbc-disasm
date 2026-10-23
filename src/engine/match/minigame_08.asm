@@ -9,10 +9,10 @@ ClearSpriteSlots:
 	ld [wNetBallSlot], a ; $6310
 	ld [wBallSlot], a ; $6313
 	ld [wBallTrailSlots], a ; $6316
-	ld [wBallTrailSlots + 4], a ; $6319
-	ld [wBallTrailSlots + 8], a ; $631c
-	ld [wBallTrailSlots + 12], a ; $631f
-	ld [wBallTrailSlots + 16], a ; $6322
+	ld [wBallTrailSlots + 1 * SPRSLOT_SIZE], a ; $6319
+	ld [wBallTrailSlots + 2 * SPRSLOT_SIZE], a ; $631c
+	ld [wBallTrailSlots + 3 * SPRSLOT_SIZE], a ; $631f
+	ld [wBallTrailSlots + 4 * SPRSLOT_SIZE], a ; $6322
 	ld [wBallShadowSlot], a ; $6325
 	wram_bank WRAM_CHAR3 ; $6328
 	ld a, $ff ; $632e
@@ -35,14 +35,14 @@ ClearSpriteSlots:
 	ld [wCharAirShadowSlot], a ; $6366
 	ld [wCharGroundShadowSlot], a ; $6369
 	ret ; $636c
-DrawNearTeamChars:
+DrawPlayer1TeamChars:
 	ld hl, wCharDepthKey ; $636d
 	wram_bank WRAM_CHAR2 ; $6370
 	ld b, [hl] ; $6376
 	wram_bank WRAM_CHAR0 ; $6377
 	ld a, [hl] ; $637d
 	cp b ; $637e
-	jr c, DrawNearTeamCharsDoubles ; $637f
+	jr c, DrawPlayer1TeamCharsSwapped ; $637f
 	wram_bank WRAM_CHAR0 ; $6381
 	ld hl, wCharSpriteSlot ; $6387
 	call DrawCharSprite ; $638a
@@ -51,7 +51,7 @@ DrawNearTeamChars:
 	call DrawCharSprite ; $6396
 	wram_bank WRAM_CHAR0 ; $6399
 	ret ; $639f
-DrawNearTeamCharsDoubles:
+DrawPlayer1TeamCharsSwapped:
 	wram_bank WRAM_CHAR2 ; $63a0
 	ld hl, wCharSpriteSlot ; $63a6
 	call DrawCharSprite ; $63a9
@@ -60,14 +60,14 @@ DrawNearTeamCharsDoubles:
 	call DrawCharSprite ; $63b5
 	wram_bank WRAM_CHAR0 ; $63b8
 	ret ; $63be
-DrawFarTeamChars:
+DrawPlayer2TeamChars:
 	ld hl, wCharDepthKey ; $63bf
 	wram_bank WRAM_CHAR3 ; $63c2
 	ld b, [hl] ; $63c8
 	wram_bank WRAM_CHAR1 ; $63c9
 	ld a, [hl] ; $63cf
 	cp b ; $63d0
-	jr c, DrawFarTeamCharsDoubles ; $63d1
+	jr c, DrawPlayer2TeamCharsSwapped ; $63d1
 	wram_bank WRAM_CHAR1 ; $63d3
 	ld hl, wCharSpriteSlot ; $63d9
 	call DrawCharSprite ; $63dc
@@ -76,7 +76,7 @@ DrawFarTeamChars:
 	call DrawCharSprite ; $63e8
 	wram_bank WRAM_CHAR0 ; $63eb
 	ret ; $63f1
-DrawFarTeamCharsDoubles:
+DrawPlayer2TeamCharsSwapped:
 	wram_bank WRAM_CHAR3 ; $63f2
 	ld hl, wCharSpriteSlot ; $63f8
 	call DrawCharSprite ; $63fb
@@ -98,56 +98,56 @@ DrawBallAndEffects:
 DrawActorsByDepth:
 	ld a, [wMinigameUsesTennisMachine] ; $6429
 	and a ; $642c
-	jr nz, .done ; $642d
+	jr nz, .fixedOrder ; $642d
 	ld hl, wCharDepthKey ; $642f
-	wram_bank WRAM_TEXT ; $6432
+	wram_bank WRAM_CHAR1 ; $6432
 	ld b, [hl] ; $6438
-	wram_bank WRAM_ACTORS ; $6439
+	wram_bank WRAM_CHAR0 ; $6439
 	ld a, [hl] ; $643f
 	cp b ; $6440
-	jr nc, .nearFirst ; $6441
+	jr nc, .player1First ; $6441
 	ld a, [wPointOutcome] ; $6443
 	and a ; $6446
-	jr z, .farBallNear ; $6447
-	call DrawFarTeamChars ; $6449
-	call DrawNearTeamChars ; $644c
+	jr z, .player2BallPlayer1 ; $6447
+	call DrawPlayer2TeamChars ; $6449
+	call DrawPlayer1TeamChars ; $644c
 	call DrawBallAndEffects ; $644f
 	ret ; $6452
-.farBallNear:
-	call DrawFarTeamChars ; $6453
+.player2BallPlayer1:
+	call DrawPlayer2TeamChars ; $6453
 	call DrawBallAndEffects ; $6456
-	call DrawNearTeamChars ; $6459
+	call DrawPlayer1TeamChars ; $6459
 	ret ; $645c
-.nearFirst:
+.player1First:
 	ld a, [wPointOutcome] ; $645d
 	and a ; $6460
-	jr z, .nearBallFar ; $6461
-	call DrawNearTeamChars ; $6463
-	call DrawFarTeamChars ; $6466
+	jr z, .player1BallPlayer2 ; $6461
+	call DrawPlayer1TeamChars ; $6463
+	call DrawPlayer2TeamChars ; $6466
 	call DrawBallAndEffects ; $6469
 	ret ; $646c
-.nearBallFar:
-	call DrawNearTeamChars ; $646d
+.player1BallPlayer2:
+	call DrawPlayer1TeamChars ; $646d
 	call DrawBallAndEffects ; $6470
-	call DrawFarTeamChars ; $6473
+	call DrawPlayer2TeamChars ; $6473
 	ret ; $6476
-.done:
-	call DrawNearTeamChars ; $6477
+.fixedOrder:
+	call DrawPlayer1TeamChars ; $6477
 	call DrawBallAndEffects ; $647a
-	call DrawFarTeamChars ; $647d
+	call DrawPlayer2TeamChars ; $647d
 	ret ; $6480
 DrawMarkersAndShadows:
 	call DrawTargetZone ; $6481
 	call DrawLandingMarker ; $6484
 	ld hl, wBallTrailSlots ; $6487
 	call DrawSlotSprite ; $648a
-	ld hl, wBallTrailSlots + 4 ; $648d
+	ld hl, wBallTrailSlots + 1 * SPRSLOT_SIZE ; $648d
 	call DrawSlotSprite ; $6490
-	ld hl, wBallTrailSlots + 8 ; $6493
+	ld hl, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $6493
 	call DrawSlotSprite ; $6496
-	ld hl, wBallTrailSlots + 12 ; $6499
+	ld hl, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $6499
 	call DrawSlotSprite ; $649c
-	ld hl, wBallTrailSlots + 16 ; $649f
+	ld hl, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $649f
 	call DrawSlotSprite ; $64a2
 	call DrawBounceEffect ; $64a5
 	ld hl, wCharAirShadowSlot ; $64a8
@@ -214,8 +214,8 @@ DrawStandingShadowSlot:
 	ld d, [hl] ; $6530
 	ld hl, StandingShadowOamTemplate ; $6531
 	jp QueueSpriteTemplate ; $6534
-; Instruction-for-instruction the same as DrawSlotSprite, with the operands aimed at slot 16. Nothing calls it.
-Unused_08_DrawStandingShadowSlot16:
+; DrawSlotSprite queued through QueueSprite16 instead of QueueSprite. Nothing calls it.
+Unused_08_DrawSlotSprite16:
 	ld a, [hl+] ; $6537
 	cp $ff ; $6538
 	ret z ; $653a
@@ -230,8 +230,8 @@ InitMinigameMatchSettings:
 	call InitDefaultMatchSettings ; $6544
 	ld a, MATCHCONTEXT_MINIGAME ; $6547
 	ld [wMatchContext], a ; $6549
-	ld a, $01 ; $654c
-	ld [wScoreDisplayIsTiebreak], a ; $654e
+	ld a, DIGITGFX_NUMERALS ; $654c
+	ld [wScoreDigitGfxStyle], a ; $654e
 	ld a, AISERVEAIM_RANDOM ; $6551
 	ld [wAiServeAimOverride], a ; $6553
 	ret ; $6556

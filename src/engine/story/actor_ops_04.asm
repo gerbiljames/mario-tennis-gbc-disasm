@@ -2,7 +2,7 @@ UpdateCameraIfActorIsCameraTarget:
 	ld hl, ACTORF_MODE ; $4402
 	add hl, bc ; $4405
 	ld a, [hl] ; $4406
-	cp $01 ; $4407
+	cp ACTORMODE_CAMERA ; $4407
 	ret nz ; $4409
 UpdateCameraToActor:
 	push af ; $440a
@@ -90,7 +90,7 @@ ActorScriptOpHandlers_04:
 	dw ActorScriptOp_MoveRel ; record 8
 	dw ActorScriptOp_RandBox ; record 9
 	dw ActorScriptOp_Step ; record 10
-	dw ActorScriptOp_FollowWaypoint ; record 11
+	dw ActorScriptOp_ChaseAnchor ; record 11
 	dw ActorScriptOp_Jump ; record 12
 	dw ActorScriptOp_SetField ; record 13
 	dw ActorScriptOp_AddField ; record 14
@@ -99,7 +99,7 @@ ActorScriptOpHandlers_04:
 	dw ActorScriptOp_Sound ; record 17
 	dw ActorScriptOp_Call ; record 18
 	dw ActorScriptOp_SetWanderHome ; record 19
-	dw ActorScriptOp_WaitMove2 ; record 20
+	dw ActorScriptOp_WaitMoveOrBlocked ; record 20
 	dw ActorScriptOp_Flag ; record 21
 ActorScriptOp_Call:
 	inc de ; $44a9
@@ -373,7 +373,7 @@ ActorScriptOp_Wait:
 	inc de ; $4620
 	xor a ; $4621
 	ret ; $4622
-ActorScriptOp_FollowWaypoint:
+ActorScriptOp_ChaseAnchor:
 	inc de ; $4623
 	push de ; $4624
 	ld hl, hActorPtr ; $4625
@@ -593,6 +593,7 @@ ActorScriptOp_Step:
 	pop de ; $4757
 	xor a ; $4758
 	ret ; $4759
+; z when the actor is at its target
 IsActorAtTarget:
 	ld hl, ACTORF_X ; $475a
 	add hl, bc ; $475d
@@ -797,7 +798,7 @@ ActorScriptOp_RandBox:
 	ld h, [hl] ; $488a
 	add ACTORF_STATUS ; $488b
 	ld l, a ; $488d
-	bit ACTORSTATUSB_LIVE, [hl] ; $488e
+	bit ACTORSTATUSB_ON_SCREEN, [hl] ; $488e
 	jr z, .advance ; $4890
 	push de ; $4892
 	inc de ; $4893

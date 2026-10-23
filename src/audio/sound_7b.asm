@@ -87,13 +87,13 @@ SoundTable_7b:
 	snd_channel 5, SNDCHANTYPE_NOISE ; $40a8
 	dw MusicLevelUp_Trk3 ; $40aa
 	snd_channel 2, SNDCHANTYPE_SQUARE2 ; $40ac
-	dw Music31_Trk0 ; $40ae
+	dw MusicCourtIntroExhibition_Trk0 ; $40ae
 	snd_channel 3, SNDCHANTYPE_SQUARE1 ; $40b0
-	dw Music31_Trk1 ; $40b2
+	dw MusicCourtIntroExhibition_Trk1 ; $40b2
 	snd_channel 4, SNDCHANTYPE_WAVE ; $40b4
-	dw Music31_Trk2 ; $40b6
+	dw MusicCourtIntroExhibition_Trk2 ; $40b6
 	snd_channel 5, SNDCHANTYPE_NOISE ; $40b8
-	dw Music31_Trk3 ; $40ba
+	dw MusicCourtIntroExhibition_Trk3 ; $40ba
 	snd_channel 0, SNDCHANTYPE_SQUARE1 ; $40bc
 	dw SfxOptionToggle_Trk0 ; $40be
 MusicCourtJungle_Trk0:
@@ -182,14 +182,14 @@ MusicLevelUp_Trk2:
 	INCLUDE "data/audio/MusicLevelUp_Trk2.asm" ; $7e94, 22 bytes (snd_script:wave)
 MusicLevelUp_Trk3:
 	INCLUDE "data/audio/MusicLevelUp_Trk3.asm" ; $7eaa, 76 bytes (snd_script:noise)
-Music31_Trk0:
-	INCLUDE "data/audio/Music31_Trk0.asm" ; $7ef6, 38 bytes (snd_script:pulse)
-Music31_Trk1:
-	INCLUDE "data/audio/Music31_Trk1.asm" ; $7f1c, 38 bytes (snd_script:pulse)
-Music31_Trk2:
-	INCLUDE "data/audio/Music31_Trk2.asm" ; $7f42, 34 bytes (snd_script:wave)
-Music31_Trk3:
-	INCLUDE "data/audio/Music31_Trk3.asm" ; $7f64, 130 bytes (snd_script:noise)
+MusicCourtIntroExhibition_Trk0:
+	INCLUDE "data/audio/MusicCourtIntroExhibition_Trk0.asm" ; $7ef6, 38 bytes (snd_script:pulse)
+MusicCourtIntroExhibition_Trk1:
+	INCLUDE "data/audio/MusicCourtIntroExhibition_Trk1.asm" ; $7f1c, 38 bytes (snd_script:pulse)
+MusicCourtIntroExhibition_Trk2:
+	INCLUDE "data/audio/MusicCourtIntroExhibition_Trk2.asm" ; $7f42, 34 bytes (snd_script:wave)
+MusicCourtIntroExhibition_Trk3:
+	INCLUDE "data/audio/MusicCourtIntroExhibition_Trk3.asm" ; $7f64, 130 bytes (snd_script:noise)
 SfxOptionToggle_Trk0:
 	INCLUDE "data/audio/SfxOptionToggle_Trk0.asm" ; $7fe6, 10 bytes (snd_script:pulse)
 	; $7ff0, 16 bytes fill to bank end (linker-padded)

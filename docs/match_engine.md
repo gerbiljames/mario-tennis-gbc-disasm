@@ -38,9 +38,10 @@ Companion documents: `ram/*.asm` (per-address RAM notes), `save_format.md`,
 | `$04` | Not match AI. Its only match contribution is `SetupCharSpriteFromObjectDef` (`src/engine/story/actor_objdefs_04.asm`), which fills a character's sprite/animation pointers. |
 
 The engine's public API is bank `$08`'s 56-slot farptr header at `$08:$4000`
-(`src/engine/match/slots_08.asm`). Callers are the exhibition and story menus
-(`$10`, `$0a`, `$0b`, `$38`, `$01`) plus the unreachable
-`Unused_07_RunDebugTestMatch` (`$07:$5df9`).
+(`src/engine/match/slots_08.asm`), called from most banks, the shot banks
+`$20`-`$2c` included. `RunMatch`/`RunMinigameMatch` are entered from the
+exhibition and story menus (`$10`, `$0a`, `$0b`, `$38`, `$01`) plus the
+unreachable `Unused_07_RunDebugTestMatch` (`$07:$5df9`).
 
 ## How a match runs
 
@@ -54,9 +55,9 @@ RunMatch                     $08:$4190   src/engine/match/match_08.asm
 ├─ PlayCourtIntro            $08:$6117   camera pan + walk-on
 ├─ RunMatchPlayLoop          $08:$4714   loop: PlaySet until wMatchWinLoseFlag
 │  └─ PlaySet                $08:$4737   loop: play a game until wSetWinLoseFlag
-│     ├─ CheckSetComplete.playGame  $08:$4758   normal game
+│     ├─ PlayGame            $08:$4758   normal game
 │     │  └─ loop: AssignCourtPositions; PlayPoint  until wGameWinLoseFlag
-│     └─ CheckSetComplete.tiebreak  $08:$4782   tiebreak game
+│     └─ PlayTiebreakGame    $08:$4782   tiebreak game
 │        └─ loop: changeover; PlayPoint  until wGameWinLoseFlag
 │           └─ PlayPoint     $08:$4d0f   src/engine/match/point_08.asm
 │              ├─ ResetPointState
@@ -95,7 +96,7 @@ wait point.
 4. `HandleBallHitEvent`
 5. `HandleBallTouchCharEvent`
 6. `UpdateBallVisuals` — which also reaches `StepBallPhysics`
-7. `TickRallyTimers`
+7. `HandleBallNetCrossEvent`
 8. `HandleBallBounceEvent`
 9. mode hook 0, then `UpdateAllObjSprites` (bank `$09`) via `FarPtr_UpdateAllObjSprites`
 10. `DrawActorsByDepth` (skipped if `wMatchDrawFrozen`)
@@ -125,7 +126,7 @@ The ids are `MODEHOOK_*`, in table order below.
 | 3 | `RunMinigamePointLoop` `$08:$65d7` | once, before the first point |
 | 4 | `HandleBallHitEvent` `$08:$42c1` | ball struck |
 | 5 | `HandleBallBounceEvent` `$08:$4375` | ball bounced |
-| 6 | `TickRallyTimers` `$08:$4270` | ball crossed the net |
+| 6 | `HandleBallNetCrossEvent` `$08:$4270` | ball crossed the net |
 | 7 | `DrawBallAndEffects` `$08:$6425` (from `DrawActorsByDepth`) | extra draw pass |
 
 `ModeHookTable_07` (`$07:$5efc`), installed only by the unreachable
@@ -276,8 +277,8 @@ triples by `wCourtSurfaceFriction` and the height triple by
 frame, and `wBallCrossedNetFlag` is raised for that frame. Unless the
 wall-practice flag is set it then adds `wNetHeight` to `wBallHeight`; a
 non-negative sum means the ball is **at or below the net top**
-(`$08:$5836-$583f`), so it plays sound `$5a`, starts the bounce effect, sets
-`wBallHasBouncedFlag`, quarters X velocity and reflects the depth position. Three
+(`$08:$5836-$583f`), so it plays `SFX_NET_CORD`, starts the bounce effect, sets
+`wBallTouchedNetFlag`, quarters X velocity and reflects the depth position. Three
 bands then apply (`$08:$5874-$5882`):
 
 | Contact height | Result |
@@ -286,10 +287,9 @@ bands then apply (`$08:$5874-$5882`):
 | `$58`-`$5a` | same kick from the current height, but depth velocity negated and cut to ⅛ — pops back |
 | below `$58` | depth velocity negated and cut to ⅛ — drops on the hitter's side |
 
-`wBallHasBouncedFlag` (`$c4bf`) is set only at `$08:$5848`, in that branch:
-**despite its name it means "touched the net since the last strike"**. That is
-how `EvaluateBounceOutcome`'s let rule reads, and also what `TickRallyTimers`
-(`$08:$4262`) and `AiTrackBallPhase` (`$08:$7d73`) use it for.
+`wBallTouchedNetFlag` (`$c4bf`) is set only at `$08:$5848`, in that branch.
+`EvaluateBounceOutcome`'s let rule, `HandleBallNetCrossEvent` (`$08:$4262`) and
+`AiTrackBallPhase` (`$08:$7d73`) read it.
 
 **Fences.** `BounceBallOffCourtFences` (`$08:$5949`) applies the court damping
 twice and raises `wBallBounceEvent = 2`.
@@ -300,8 +300,8 @@ twice and raises `wBallBounceEvent = 2`.
 |---|---|---|---|
 | `wBallHitEvent` `$c4b7` | `ExecuteShot` `$07:$53b8` | `HandleBallHitEvent` `$08:$427a` | a character struck the ball |
 | `wBallBounceEvent` `$c4b3` | `StepBallPhysics` `$08:$57e8` (=1), `BounceBallOffCourtFences` (=2) | `HandleBallBounceEvent` `$08:$4352` | ground / fence bounce |
-| `wBallCrossedNetFlag` `$c4b4` | `HandleBallNetCrossing` `$08:$5827` | `TickRallyTimers` `$08:$4242` | passed the net plane |
-| `wBallTouchCharFlag` `$c4ae` | `CheckCharBallContact` `$08:$6f30` | `HandleBallTouchCharEvent` `$08:$43d3` | the ball hit a body |
+| `wBallCrossedNetFlag` `$c4b4` | `HandleBallNetCrossing` `$08:$5827` | `HandleBallNetCrossEvent` `$08:$4242` | passed the net plane |
+| `wBallTouchCharFlag` `$c4ae` | `CheckBallHitsCharBody` `$08:$6f30` | `HandleBallTouchCharEvent` `$08:$43d3` | the ball hit a body |
 
 `ExecuteShot` returns if `wBallHitEvent` is still set (`$07:$53b0-$53b5`), so
 two characters cannot hit the same ball on one frame.
@@ -309,9 +309,9 @@ two characters cannot hit the same ball on one frame.
 `HandleBallHitEvent` (`src/engine/match/match_08.asm`): increment `wRallyLength`
 (saturating at `$64`), clear the bounce/marker flags, start the landing marker
 and hit effect, run `SetCharStateOnBallHit` on every character,
-`DetectServeAceOutcome`, mode hook 4, and **zero `wBallBounceCount`**. Then:
+`DetectServeReturnFault`, mode hook 4, and **zero `wBallBounceCount`**. Then:
 
-- `wRallyLength == 1` (serve struck): if `wSpecialShotFlag`, court banner `$0e`.
+- `wRallyLength == 1` (serve struck): if `wPowerServeFlag`, court banner `$0e`.
 - `wRallyLength == 2` (serve returned): restore the full limits — depth `-$4e0`,
   X `-$1b0`/`-$240` by format (`$08:$42f3-$430d`).
 
@@ -351,7 +351,7 @@ ExecuteShot                              $07:$53b0
 ├─ rst Rst00 on wCurrentShotType -> one of 15 ExecuteShot<Type> handlers
 │  ├─ NormalizeBallHeightForShot  /  RaiseBallHeightForLob
 │  ├─ ApplyShotTypePresets        $07:$557e   -> sound, trail, bc = target depth
-│  ├─ WeakenShotByCharge / BoostShotByCharge / NudgeShotByPlayerMomentum
+│  ├─ ShortenShotDepthByCharge / LengthenShotDepthByCharge / NudgeShotByPlayerMomentum
 │  ├─ ComputeShotTrajectory(bc)   $07:$571e   -> aim point, angle, row window
 │  └─ farcall ShotBallPath<Type>  into a ball-path bank
 │     ├─ farcall ComputeShotPlacement  $07:$5161  -> spin, bc = requested speed
@@ -378,14 +378,14 @@ sides and both handednesses.
 
 `ApplyShotTypePresets` (`$07:$557e`) reads a 5-byte `shot_preset` row from
 `ShotTypePresets_07` (`$07:$559e`) per `SHOTTYPE_*`: `[sound id (SFX_HIT_*),
-recoil variant, trail colour, target depth lo, hi]`. The target depth — nominal
+shot class (`SHOTCLASS_*`, into `wShotClass`), trail colour, target depth lo, hi]`. The target depth — nominal
 landing depth past the net — is the shot type's personality: ground strokes
 `$0280` (6.1 m), power variants and neutral `$03c0` (9.1 m), reach shots
 `$0380`-`$0480`, smash `$0440` (10.4 m), lobs and drops `$0200` (4.9 m), serves
 `$02a0` (6.4 m, the service line).
 
-Charge then bends it: `WeakenShotByCharge` subtracts `charge*4`,
-`BoostShotByCharge` (lobs) adds `charge*12`, `NudgeShotByPlayerMomentum` adds
+Charge then bends it: `ShortenShotDepthByCharge` subtracts `charge*4`,
+`LengthenShotDepthByCharge` (lobs) adds `charge*12`, `NudgeShotByPlayerMomentum` adds
 `±wCharVelDepth/16`.
 
 ### Where the ball is aimed
@@ -396,7 +396,7 @@ Charge then bends it: `WeakenShotByCharge` subtracts `charge*4`,
    `wShotAimTargetDepth`; `wShotAimDeltaDepth = target - wBallDepth`
    (`$07:$5725-$573d`).
 2. **Lateral target**, `ComputeShotTargetX` (`$07:$5646`):
-   - Serve (`wRallyLength == 0`): tail-jumps to `GetShotAimOffsetForSide`
+   - Serve (`wRallyLength == 0`): tail-jumps to `GetServeTargetX`
      (`$07:$55e9`), which picks from one of two 4-record tables by
      `wCharCourtPos & 1` (the diagonal box), indexed by `wCharAimOffset + 1`,
      and adds `-charX/16`.
@@ -448,7 +448,7 @@ Charge then bends it: `WeakenShotByCharge` subtracts `charge*4`,
    (`$07:$52d7`): `±wCharVelDepth/2`, `-$0c00` while diving (`wCharFlags` bit
    1), floor `$0100`, stored in `wShotSpeedFinal`.
 
-The pace term (`AddBallSpeedQuarter`/`3Sixteenths`/`Eighth`,
+The pace term (`SubBallPaceQuarter`/`3Sixteenths`/`Eighth`,
 `$07:$52f1`/`$5301`/`$531d`) takes a fraction of `wBallVelocityDepth` and forces
 it **negative** (`$07:$532f`), so a fast incoming ball *reduces* the requested
 speed. Whether that was intended is not established.
@@ -552,7 +552,7 @@ come from `SelectRallyShotType`/`SelectServeShotType` (see
 | `$09` | `SHOTTYPE_SMASH` | only via `$04`'s upgrade | Normalize | — | `$24` |
 | `$0a` | `SHOTTYPE_LOB` | A → B | Raise | boost + momentum | `$24` |
 | `$0b` | `SHOTTYPE_DROP` | B → A | Raise | weaken | `$24` |
-| `$0c`-`$0e` | `SHOTTYPE_SERVE_*` | A / B / A+B | — | — | `$29`/`$2a`/`$2b`, then `SetSpecialShotFlagFromBallHeight` |
+| `$0c`-`$0e` | `SHOTTYPE_SERVE_*` | A / B / A+B | — | — | `$29`/`$2a`/`$2b`, then `SetPowerServeFlagFromTossHeight` |
 
 - `CheckBallInSmashRange` (`$07:$5525`) returns Z ("not smashable") below
   `-$0070`; otherwise it sums two `AngleFromVector16` results over the ball's
@@ -560,8 +560,8 @@ come from `SelectRallyShotType`/`SelectServeShotType` (see
 - `NormalizeBallHeightForShot` (`$07:$5876`) raises a contact point lower than
   `$60` halfway toward `-$60`; `RaiseBallHeightForLob` (`$07:$5899`) sets it to
   `$ffa0` (`-$60`), or lowers a ball already above `$80` by `$20`.
-- `SetSpecialShotFlagFromBallHeight` (`$07:$5a01`) indexes a 32-byte table by
-  height band: bands `$15`-`$1f` set `wSpecialShotFlag`, so a serve struck above
+- `SetPowerServeFlagFromTossHeight` (`$07:$5a01`) indexes a 32-byte table by
+  height band: bands `$15`-`$1f` set `wPowerServeFlag`, so a serve struck above
   about `$150` (≈ 3.2 m) is a power serve.
 
 `ShotRecoilFrameTask` (`$07:$5463`), pushed as `ExecuteShot`'s return address,
@@ -569,7 +569,7 @@ calls `ApplyShotRecoil` (`$07:$546b`), then clears `wCharSwingFrames`
 (`$5466`). `ApplyShotRecoil`: set `CHARB_RECOIL`, clear `CHARB_CHARGING`, quarter the hitter's
 depth velocity (and X unless diving), add a push of the pre-hit ball depth
 velocity scaled by `ShotRecoilTable_07` (indexed by the speed-index byte the
-preset's recoil variant selects).
+preset's shot class selects).
 
 ## On-court characters
 
@@ -610,7 +610,7 @@ match-relevant fields:
 
 | Bit | Meaning | Read by |
 |---|---|---|
-| 0 | movement input suspended (`CHARB_RECOIL`) | `$08:$73d7` — kills steering. Set mainly by `ApplyShotRecoil` (`$07:$546e`) after *every* stroke, not just a body hit; `CharRallyEndState` clears it when the swing animation ends |
+| 0 | movement input suspended (`CHARB_RECOIL`) | `$08:$73d7` — kills steering. Set mainly by `ApplyShotRecoil` (`$07:$546e`) after *every* stroke, not just a body hit; `CharFinishSwingPhase` clears it when the swing animation ends |
 | 1 | diving | widens the contact box (`$08:$6fc7`), flat brake (`$74b3`), freezes facing ease (`$75c3`), `-$0c00` shot speed (`$07:$53a2`), disables power strokes |
 | 2 | airborne | jump physics, shadow selection |
 | 4 | moving | run animation |
@@ -632,7 +632,7 @@ near/far reaction delay. The bits are `BALLREACHB_*`.
 UpdateCharBallGeometry   rebuild the relative-position words and the reach flags
 ReadCharInput            synthesise wCharInputBits (pad, AI or link)
 UpdateCharStateMachine   run the current state's current phase
-CheckCharBallContact     body-hit test
+CheckBallHitsCharBody    body-hit test
 UpdateCharVelocityFromInput
 StepCharMovement
 StepCharJumpPhysics
@@ -652,13 +652,13 @@ zeroes `wCharStatePhase`, `wAiPhase`, `wCharFreezeTimer` and `wAiActionTimer`.
 | `wCharState` | Handler | Phases |
 |---|---|---|
 | 0 | (bare `ret`) | inert — set by `InitChar`, `ResetCharForPoint` and a body hit |
-| 1 | `CharRallyState` `$08:$6bea` | `CharRallyEndState`, `CharRallyReadyPhase`, `CharSwingWindupPhase`, `CharSwingContactPhase` |
+| 1 | `CharRallyState` `$08:$6bea` | `CharFinishSwingPhase`, `CharRallyReadyPhase`, `CharSwingWindupPhase`, `CharSwingContactPhase` |
 | 2 | `CharRecoverState` `$08:$6bd9` | finish the swing, then movement only |
 | 3 | `CharServeState` `$08:$6ae2` | init, wait-anim, `CharServeTossPhase`, `CharServeSwingWindowPhase`, `CharServeStrikePhase` |
-| 4 | `CharAwaitServeState` `$08:$6cc8` | end-state, start-serve, check-input |
-| 5 | `CharStandbyState` `$08:$6cbe` | end-state, then state 4's check-input |
+| 4 | `CharServerPartnerState` `$08:$6cc8` | `CharFinishSwingPhase`, `.waitToLeaveNet` (dismisses the serve indicator once past depth `$0200`), `.moveFreely` |
+| 5 | `CharStandbyState` `$08:$6cbe` | `CharFinishSwingPhase`, then state 4's `.moveFreely` |
 | 6 | `CharWalkState` `$08:$6d0e` | `CharWalkToTargetPhase` — scripted walks (changeover, walk-off) |
-| 7 | `CharPointEndState` `$08:$6d16` | end-state, walk-to-target, `CharPointReactionPhase` |
+| 7 | `CharPointEndState` `$08:$6d16` | `CharFinishSwingPhase`, `CharWalkToTargetPhase`, `CharPointReactionPhase` |
 
 Transitions:
 
@@ -668,9 +668,9 @@ Transitions:
   characters on every hit: `00 02 01 02 02 01 06 07` — swaps 1 and 2, maps
   3 → 2, 4 → 2, 5 → 1, leaves 0/6/7. Whoever hit goes to recovery, everyone else
   to rally-ready, phases restart. States 2 (`CHARSTATE_RECOVER`) and 4
-  (`CHARSTATE_AWAIT_SERVE`) are reached *only* through these two tables.
+  (`CHARSTATE_SERVER_PARTNER`) are reached *only* through these two tables.
 
-`CharRallyEndState` (`$08:$6a90`) is phase 0 of states 1, 2, 4, 5 and 7: it waits
+`CharFinishSwingPhase` (`$08:$6a90`) is phase 0 of states 1, 2, 4, 5 and 7: it waits
 for the swing/dive animation to finish, clears the buffered buttons and charge
 counter, then advances — so a new swing cannot start inside the old one.
 
@@ -682,11 +682,11 @@ counter, then advances — so a new swing cannot start inside the old one.
 | Value | Handler | Source |
 |---|---|---|
 | 0 | `ReadCharPadInput` | the local human |
-| 1 | `CharInputHandler1_08` | the CPU AI |
+| 1 | `ReadCharAiInput` | the CPU AI |
 | 2, 3 | `ReadCharPadInput` | never assigned |
-| 4 | `CharInputHandler4_08` | raw `hLinkInput` |
-| 5 | `CharInputHandler5_08` | link, local seat |
-| 6 | `CharInputHandler6_08` | link, remote seat |
+| 4 | `ReadCharLinkInput` | raw `hLinkInput` |
+| 5 | `ReadCharLinkMasterInput` | link, the master's character |
+| 6 | `ReadCharLinkSlaveInput` | link, the slave's character |
 
 `InitChar` (`$08:$684a`) makes every character an AI (`$08:$687b`);
 `InitAllChars` sets character 0 to the pad (`$08:$6925`). A link match sets
@@ -733,12 +733,12 @@ setting `wCharQuickSwing`.
 `StartCharSwing` (`$08:$6d5a`) picks the swing by geometry:
 
 - predicted lateral offset beyond `wCharReachX` and that direction held →
-  **dive** (animation `$12`, `wCharFlags` bit 1, lunge from `wCharDiveSpeed`,
-  sound `$5c`);
+  **dive** (`CHARANIM_DIVE`, `CHARB_DIVING`, lunge from `wCharDiveSpeed`,
+  `SFX_LEAP`);
 - else ball high enough relative to `wCharReachHeight` → **jump smash**
-  (airborne, `wCharVelHeight = -wCharSmashJumpSpeed`, animation `$08`);
-- else a slightly lower band → overhead animation `$07`;
-- else forehand/backhand from `SelectForehandBackhand` (`$05`/`$06`).
+  (airborne, `wCharVelHeight = -wCharSmashJumpSpeed`, `CHARANIM_SMASH`);
+- else a slightly lower band → `CHARANIM_OVERHEAD`;
+- else forehand/backhand from `SelectForehandBackhand` (`CHARANIM_FOREHAND`/`_BACKHAND`).
 
 ### Contact geometry
 
@@ -746,7 +746,7 @@ setting `wCharQuickSwing`.
 |---|---|---|---|---|---|
 | `CheckBallInSwingRange` | `$08:$702a` | `< $a0` | `< 1.5 × wCharReachX` | — | bit 0 — may start a swing |
 | `CheckBallContactWindow` | `$08:$6fa7` | `< $60` | `< wCharReachX` (`1.25 ×` diving) | `< 2 × wCharReachHeight` | bit 1 — the racket connects |
-| `CheckCharBallContact` | `$08:$6ec5` | `< $10` | `2 × |relX| < wCharReachX` | `< wCharReachHeight` | bit 2 — body hit |
+| `CheckBallHitsCharBody` | `$08:$6ec5` | `< $10` | `2 × |relX| < wCharReachX` | `< wCharReachHeight` | bit 2 — body hit |
 
 `CheckBallContactWindow`'s animation-id test (`$08:$6fda`-`$6feb`) has no effect
 (see `docs/bugs.md`). `CharSwingWindupPhase` waits on bit 0 before
@@ -765,7 +765,7 @@ character loses the point.
 `StepCharMovement` (`$08:$72de`) **refuses** out-of-box moves rather than
 clamping:
 
-1. While charging (`wCharFlags` bit 5) both velocities `>> 3`
+1. While charging (`CHARB_CHARGING`) both velocities `>> 3`
    (`$08:$72ea-$7307`).
 2. `res 6, [wCharFlags]`.
 3. `AddDEToMem24IntoBC` (`$08:$5ac7`) returns the candidate integer part without
@@ -817,17 +817,18 @@ The rest of the movement chain:
 - `StepCharJumpPhysics` (`$08:$72a6`), airborne only, uses gravity `$0090` per
   frame (character height is 24-bit, not 32).
 - `HandleServePositioning` (`$08:$71dd`): the server's left/right shuffle, fixed
-  `$000a` step, committed only if `$20 ≤ |X| < $180`.
+  `$000a` step, committed only if `$20 ≤ |X| < $180` (wall minigames drop
+  the `$20` lower bound).
 
 ## The AI
 
-The AI is a **fake controller**: `CharInputHandler1_08` (`$08:$7863`) writes
+The AI is a **fake controller**: `ReadCharAiInput` (`$08:$7863`) writes
 `wCharInputBits` and the human's state machine consumes it, so all swing,
 movement and contact rules apply.
 
 ### Structure
 
-1. `CharInputHandler1_08` ticks `wAiActionTimer` and **returns while it is
+1. `ReadCharAiInput` ticks `wAiActionTimer` and **returns while it is
    nonzero, input zero** — the reaction delay, fully inert. Then it ticks
    `wAiSecondButtonDelay` and picks a jumptable on `wCharState`: singles,
    doubles net player or doubles baseliner (by `wCharServeRole & $02`,
@@ -893,16 +894,18 @@ mid-court and chases drops and lobs; further back it stays behind the landing
 spot and chases only lobs. It adapts to its own position, not the opponent.
 
 `AiChooseHomePosition` (`$08:$7cae`), a separate table on the same byte, is used
-between shots: baseline (depth `$0460`), net (hold depth) or mid-court
+between shots: baseline (depth `$0460`), its current depth or mid-court
 (`$0180`), X = `wBallTargetX >> 2` in every case.
 
 ### Difficulty
 
-**The AI never reads the 0-3 difficulty value.**
-`ApplyCpuDifficultyToCharRecords` (`$38:$5f4c`) copies four AI bytes per CPU
-slot from a 6-byte `cpu_difficulty` row (`CpuDifficultyParamPtrs_38`,
-`$38:$5feb`) into record bytes `+$1b`..`+$1e`, which `LoadCharacterAttributes`
-(`$07:$5ab3`) loads into the struct. Slot 0 (the human) is never touched.
+`ApplyCpuDifficultyToCharRecords` (`$38:$5f4c`) copies four AI bytes and the
+0-3 difficulty per CPU slot from a 6-byte `cpu_difficulty` row
+(`CpuDifficultyParamPtrs_38`, `$38:$5feb`) into record bytes `+$1b`..`+$1f`,
+which `LoadCharacterAttributes` (`$07:$5ab3`) loads into the struct. Slot 0
+(the human) is never touched. The difficulty lands in `wAiDifficulty` and
+picks the shot-mix and serve-timing rows below; story drill feeders carry rows
+4-8 there instead.
 
 | Field | Struct | Easy → Intense | Effect |
 |---|---|---|---|
@@ -932,9 +935,9 @@ read A-then-B rather than A+B.
    in singles — only if the opponent is inside depth `$01e0` (doubles: a further
    1-in-4 roll) → A→B → `SHOTTYPE_LOB`. **The CPU lobs when you come to the
    net.**
-3. Else a 16-entry button-pair distribution from `CharGroupTable_02`
-   (`$02:$5e23`, 9 rows × 16, `AISHOT_*` codes) indexed by `wAiServeStyle` and
-   `AdvanceMatchRng & $0f` — the character's shot personality.
+3. Else a 16-entry button-pair distribution from `AiShotMixTable_02`
+   (`$02:$5e23`, 9 rows × 16, `AISHOT_*` codes) indexed by `wAiDifficulty` and
+   `AdvanceMatchRng & $0f`.
 
 `AiAimAwayFromChar` (`$08:$7b1f`) reads the target's X position **and X
 velocity** from its WRAM bank: 2 in 4 aim away from where the opponent is
@@ -945,14 +948,14 @@ velocity** from its WRAM bank: 2 in 4 aim away from where the opponent is
 `AiServeState` (`$08:$79f2`), five phases: walk to one of eight baseline X
 offsets, steer there, press A to toss and set the wait, strike, apply aim.
 
-`AiServePressToss` (`$08:$7a5f`) picks the toss-to-strike gap from a per-style
-row of `ServePressTossPtrs` (`$08:$7a9d`): eight bytes giving the probability of
-a **short 35-frame versus long 50-frame gap**, from never (style 0) to always
-(style 3). Since a high contact point earns `wSpecialShotFlag`, this is how serve
-power is expressed. Not difficulty-scaled.
+`AiServePressToss` (`$08:$7a5f`) picks the toss-to-strike gap from a per-difficulty
+row of `AiServeQuickStrikeChancePtrs` (`$08:$7a9d`): eight bytes giving the probability of
+a **short 35-frame versus long 50-frame gap**, from never (Easy) to always
+(Intense). Since a high contact point earns `wPowerServeFlag`, harder CPUs serve
+harder.
 
 Buttons: `AdvanceMatchRng & $07` into `$08:$7b73` — topspin 3/8, slice 2/8, flat
-3/8. Aim is 50/50 left/right (`AiApplyServeAimTable`, `$08:$7b0b`) unless a
+3/8. Aim is 50/50 left/right (`AiRandomServeAimDirs`, `$08:$7b0b`) unless a
 minigame script sets `wAiServeAimOverride`.
 
 ## Scoring and point resolution
@@ -973,10 +976,10 @@ fall-through ladder:
 | `CheckBallOutOfBounds` reports anything | 5 `OUT` | `$ff` |
 | not the serve (`wRallyLength != 1`) | — (rally continues) | — |
 | serve did not change lateral half (`… & 1 == 0`) — wrong box | 5 `OUT` | `$ff` |
-| serve touched the net (`wBallHasBouncedFlag`), right box | 3 `LET` | `$00` |
+| serve touched the net (`wBallTouchedNetFlag`), right box | 3 `LET` | `$00` |
 
 `ApplyBallTouchOutcome` (`$08:$43e5`) sets **9** on a body hit.
-`DetectServeAceOutcome` (`$08:$4326`), inside `HandleBallHitEvent` on the second
+`DetectServeReturnFault` (`$08:$4326`), inside `HandleBallHitEvent` on the second
 hit of the point and *before* `wBallBounceCount` is cleared, sets:
 
 - **7** `POINTOUTCOME_SERVE_VOLLEYED` — receiver struck the serve with
@@ -1049,7 +1052,7 @@ rules, anything else = 6-game rules.
 Awards: `AwardPoint` increments the winner's points, clears `wServeFaultFlag`,
 bumps `wTotalPointsScoredInCurrentGame`. `AwardGame` increments games, zeroes
 both point counts, the in-game point counter and `wDeuceIndicator`, bumps
-`wTotalGamesWonInMatch`. `AwardSet` increments sets, zeroes both game counts and
+`wTotalGamesPlayedInMatch`. `AwardSet` increments sets, zeroes both game counts and
 `wTiebreakerIndicator`.
 
 ### Situation flags — game, set and match point
@@ -1064,7 +1067,7 @@ restores. Level point counts zero all three, **so deuce is never a situation**.
 point → `$10`, tiebreak → `$0e`, else `wMatchBGM`) and banner (match point
 `$0a`, set point `$09`, game point `$07` or `$08` by whether server or receiver
 holds it — `wCurrentServingPlayer` XOR the flag's sign). Deuce surfaces only as
-sound `$69` in the point-end sequence and `LoadDeuceAdvantageGfx` on the score
+`SFX_DEUCE` in the point-end sequence and `LoadDeuceGfx` on the score
 panel; at advantage the leader's digit stays 4 and the other side's is drawn as
 digit 5 (`$09:$403f`).
 
@@ -1099,34 +1102,34 @@ shared tail (`$08:$5cb2`) indexes `$c8c0 + charIndex*8` and saturates at 99.
 
 Records are 8 bytes per character at `$c8c0`/`$c8c8`/`$c8d0`/`$c8d8`: service
 aces, return aces, smash aces, lob winners, drop-shot winners, faults, double
-faults, spare. Two spares are reused: `$c8cf` (`wPrevCourtPos`), `$c8df`
+faults, spare. Two spares are reused: `$c8cf` (`wPlayer1PrevCourtPos`), `$c8df`
 (`wMatchRngState`).
 
 ### Changing ends
 
-`CheckServerEndChanged` (`$08:$4c19`), once per `AssignCourtPositions`, compares
-character 0's new `wCharCourtPos` with `wPrevCourtPos` and raises
+`CheckPlayer1EndChanged` (`$08:$4c19`), once per `AssignCourtPositions`, compares
+character 0's new `wCharCourtPos` with `wPlayer1PrevCourtPos` and raises
 `wChangeEndsPending` if bit 1 differs. `RunChangeoverSequence` (`$08:$5f8c`)
 shows banner `$00` (unless `wChangeoverSkipBanner`) and walks everyone to their
 new ends.
 
 The position tables drive it:
 
-- Normal games: `GetGamePositionHandler` (`$08:$4808`) indexes an 8-byte record
-  by `wTotalGamesWonInMatch & $03`; character 0's end bit goes 0, 1, 1, 0 —
+- Normal games: `LoadGameCourtPositions` (`$08:$4808`) indexes an 8-byte record
+  by `wTotalGamesPlayedInMatch & $03`; character 0's end bit goes 0, 1, 1, 0 —
   **ends change after every odd game**, serve role alternates every game.
 - Within a game, `wTotalPointsScoredInCurrentGame` bit 0 flips only the service
   box (`FlipCharPositionCode` XORs bit 0).
-- Tiebreak: `TiebreakPositionTables` indexed by
+- Tiebreak: the `TiebreakPositions*` tables, indexed by
   `wTotalPointsScoredInCurrentGame` (0-23), end bit flipping **every six
   points**. `InitTiebreakPointCounter` (`$08:$47cd`) seeds the counter from
-  `wTotalGamesWonInMatch & 3` via a table of multiples of six so the phase is
+  `wTotalGamesPlayedInMatch & 3` via a table of multiples of six so the phase is
   right for either game parity.
 
 A position record is four `wCharCourtPos` codes then four `wCharServeRole`
 codes, written into the four WRAM banks by `LoadPositionRecord` (`$08:$48ed`).
 
-`wPrevCourtPos` also feeds `UpdateViewFlipState` (`$08:$4c33`), which mirrors the
+`wPlayer1PrevCourtPos` also feeds `UpdateViewFlipState` (`$08:$4c33`), which mirrors the
 court view (`FlipAllCharPositions`, mirrored scoreboard layout) to keep the
 human's end nearest the camera when the saved camera option asks.
 
@@ -1139,7 +1142,7 @@ WRAM banks 4, 5 and 7) and `wMatchIsDoubles` set.
   (`$08:$4104-$4111`); the serve still uses the singles width (see the
   [serve box](#per-frame-ball-events)).
 - **Teams are {0,2} and {1,3}.** Within a team one member's role has bit 1 set,
-  the other's clear; `ToggleCharCourtRow` (`$08:$4971`) XORs the role with `$02`
+  the other's clear; `ToggleCharServePartnerRole` (`$08:$4971`) XORs the role with `$02`
   to swap places.
 - **`wCharServeRole & $02` = forward member** and selects the AI variant
   (`$08:$787a`): set → net player at depth `$0180`; clear → baseliner at
@@ -1148,7 +1151,7 @@ WRAM banks 4, 5 and 7) and `wMatchIsDoubles` set.
   the **sign** of the teammate's walk-target X and parks at ∓192 in the opposite
   half at baseline depth.
 - **The net player poaches.** `AiDoublesTrackBallPhase` (`$08:$7ed2`), on the
-  teammate buffering a shot button, jumps to `AiNetPlayerPoachCheck`
+  teammate buffering a shot button, jumps to `AiDoublesPoachCheck`
   (`$08:$7f11`): ball in *my* swing range → take it; otherwise, ball deeper than
   the teammate by over 32 units → slide across.
 - **Doubles AI always places.** `AiSwingControlDoubles` (`$08:$7f8a`) picks the
@@ -1195,9 +1198,10 @@ cannot drift.
 ### The wire format during play
 
 `SerialEncodeInput` packs a **6-bit payload plus a 2-bit alternating tag**,
-draining the local input a piece at a time:
+and stores back into `hLinkTxInput` exactly what it encoded (what the peer
+decodes); other buttons pressed that frame are dropped:
 
-| Local input | Payload | Residue kept for the next frame |
+| Local input | Payload | Stored back |
 |---|---|---|
 | low nibble is all four buttons | `$3f` | `$0f` |
 | START held | `$30` | `$08` |
@@ -1221,12 +1225,12 @@ Kinds 1 and 3 are in the table but never selected.
 
 `UpdateLinkSession` (`$07:$4846`) sets `wCharInputSource` to `$05` in bank `$04`
 and `$06` in bank `$05`. Those handlers read `hLinkRemoteInput` and
-`hLinkRemoteInputBuf` **with polarity keyed on `hLinkState`**
+`hLinkSentInput` **with polarity keyed on `hLinkState`**
 (`$08:$7833`/`$783f`), so the master always drives character 0 and the slave
 character 1, on either console.
 
-`hLinkRemoteInputBuf` is not remote in a match: `PrepareLinkStatePayload` seeds
-it with the previous frame's *local* residue, so each console reads its own
+`PrepareLinkStatePayload` seeds `hLinkSentInput` with the previous frame's
+*local* input as encoded, so each console reads its own
 slightly delayed input for its character and the decoded peer byte for the
 other. Doubles partners keep AI handler `$01`, which works because the AI is
 bit-reproducible: `ResetMatchState` normally seeds `wMatchRngState` from
@@ -1269,8 +1273,8 @@ the slave path; its `$c2` reaches the master a probe later. It fails if both
 choose at once (each hears the other's `$c1`) or if the second chooses while the
 master's message is still drawing (the slave's `AwaitSerialByte` counts loop
 passes, not frames, once a VBlank goes unanswered, and gives up within a few
-frames). Then come the rules screen (per-frame exchange), the unlock-flag nibble
-block, character select, and the match loop.
+frames). Then come the match-format screen (per-frame exchange), the unlock-flag
+nibble block, character select, and the match loop.
 
 ## Character stats into the engine
 
@@ -1310,7 +1314,7 @@ four); clamps it signed (`ScaleStatForBarLevel`, `$02:$44b7`); and looks it up i
 a **9-entry ascending signed threshold table** for a 0-9 bar
 (`LookupStatBarLevel`, `$02:$4494`). A bar measures how *unevenly* level-ups
 were spent. Equipment then adds signed per-stat deltas clamped to 0-9
-(`ApplyStatModifiers`, `$02:$468e`) — e.g. the Large Racket trades spin for angle
+(`ApplyEquipmentStatDeltas`, `$02:$468e`) — e.g. the Large Racket trades spin for angle
 and placement, Light Shoes stopping for speed. Results live in the saved record
 (`$c920`-`$c92a` bars, `$c938`-`$c93b` levels).
 
@@ -1334,14 +1338,14 @@ and placement, Light Shoes stopping for speed. Results live in the saved record
 | `+$12` | — | `wCharReachX` `$df72` | lateral reach; dive threshold |
 | `+$14` | — | `wCharSmashJumpSpeed` `$df74` (`+$200`) | jump-smash launch speed |
 | `+$16` | — | `wCharDiveSpeed` `$df76` | dive lunge speed |
-| `+$19` | — | `wCharSwingAttrWord` `$df90` | high byte bits 0/1 pick the lob and drop placement rows |
+| `+$19` | — | `wCharShotTraits` `$df90` | high byte bits 0/1 pick the lob and drop placement rows |
 | `+$0e` | handedness | `wCharMirrorAttrMask` `$df94` | counts into `wShotAimMirror` |
 | `+$0f`, `+$1b`-`+$1f` | — | the `wAi*` block | AI behaviour ([The AI](#the-ai)) |
 
 `OverrideCharStatsForDebug` (`$07:$5cf4`), reached only when
 `Unused_07_RunDebugTestMatch` sets `wDebugMatchFlags` bit 1, forces a
 near-perfect AI: 4-frame reaction delays, zero tracking latency, aim-away chance
-`$ff`, serve style 2, zero aim jitter, adaptive strategy (1).
+`$ff`, difficulty 2, zero aim jitter, adaptive strategy (1).
 
 ## WRAM state you will need
 
@@ -1361,7 +1365,7 @@ set, less addresses already given in the text:
 | `$c450`/`$c452` | `wBallTargetX` / `wBallTargetDepth` | predicted landing; the AI's main input |
 | `$c484`/`$c486`/`$c488` | `wCourtLimitX` / `wCourtLimitDepth` / `wNetHeight` | limits negated |
 | `$c48a`-`$c48f` | `wShotDistMin`/`Max`, `wShotTrajRowMin`/`Max` | distance window |
-| `$c4a0`-`$c4a7` | `wCurrentShotType`, `wShotChargeLevel`, `wSpecialShotFlag`, `wShotAimMirror` | the shot in flight |
+| `$c4a0`-`$c4a7` | `wCurrentShotType`, `wShotChargeLevel`, `wPowerServeFlag`, `wShotAimMirror` | the shot in flight |
 | `$c4ac`/`$c4ad` | `wCourtSurfaceFriction` / `wCourtSurfaceBounce` | per-court damping |
 | `$c4b0`-`$c4b4` | `wBallCourtQuadrant`, `wBallOutOfBoundsBits`, `wBallBounceCount`, `wBallBounceEvent`, `wBallCrossedNetFlag` | per-frame ball verdicts |
 | `$c4b6`-`$c4b9` | `wRallyLength`, `wBallHitEvent`, `wLastShotCharIndex`, `wLastShotServeRole` | |
@@ -1373,10 +1377,10 @@ set, less addresses already given in the text:
 | `$c8e0`-`$c8e5` | `wPlayer{1,2}{Sets,Games,Points}Won` | points 0-3 = 0/15/30/40, 4 = advantage, 5-7 tiebreak only |
 | `$c8e6`/`$c8e7` | `wDeuceIndicator` / `wTiebreakerIndicator` | |
 | `$c8e8`-`$c8eb` | `wMatch`/`wSet`/`wGame`/`wPointWinLoseFlag` | `$01` even-index side, `$ff` odd, 0 undecided |
-| `$c8ec`/`$c8ed` | `wTotalGamesWonInMatch` / `wTotalPointsScoredInCurrentGame` | drive ends and service boxes |
+| `$c8ec`/`$c8ed` | `wTotalGamesPlayedInMatch` / `wTotalPointsScoredInCurrentGame` | drive ends and service boxes |
 | `$c8ee` | `wServeFaultFlag` | 1 after a first-serve fault |
 | `$ffc2` | `hLinkState` | 0 idle, 1 master, 2 slave |
-| `$ffd3`-`$ffd6` | `hLinkInput`, `hLinkRemoteInput`, `hLinkRemoteInputBuf`, `hLinkTxInput` | per-frame input plumbing |
+| `$ffd3`-`$ffd6` | `hLinkInput`, `hLinkRemoteInput`, `hLinkSentInput`, `hLinkTxInput` | per-frame input plumbing |
 | `$ffd8` | `hLinkExchangeActive` | the `StepMatchFrame` fork |
 | `$ffe9` | `hMatchFrameCounter` | stepped identically on local and link paths |
 | `$ff96` | `hWramBank` | effectively the current character |
@@ -1385,7 +1389,7 @@ set, less addresses already given in the text:
 
 - **World scale** (105 units/m) is inferred; the fixed-point layouts are proven,
   the metric reading is not.
-- **`wCharFlags` bit 6** is written by `StepCharMovement` and read nowhere.
+- **`CHARB_MOVE_BLOCKED`** is written by `StepCharMovement` and read nowhere.
 - **Placement-record bytes `+6`/`+7`** are zero in all fifteen tables, with no
   reader.
 - **Court record byte 4** in `CourtSceneDataTable` has no reader.
@@ -1402,7 +1406,7 @@ set, less addresses already given in the text:
 - **Unreachable code**: `Unused_08_ComputeBallEtaToChar` and its only caller
   `Unused_08_ComputeBallEtaToCharWrapper` (`$08:$70f1`); the lob check after
   `AiChoosePositionByStrategy`'s jump table (`$08:$7d37`, no slot points at it);
-  `Unused_07_SetSpecialShotFlagThreshold` (`$07:$59ec`);
+  `Unused_07_SetPowerServeFlagAboveHeight` (`$07:$59ec`);
   `Unused_07_ApplyCharStatPreset` (`$07:$5d1e`). The prologue of
-  `AiNetPlayerPoachCheck` (`$08:$7f11-$7f21`) runs but the `a` it leaves is
+  `AiDoublesPoachCheck` (`$08:$7f11-$7f21`) runs but the `a` it leaves is
   unused.

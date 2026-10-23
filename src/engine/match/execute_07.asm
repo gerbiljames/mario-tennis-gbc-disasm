@@ -274,14 +274,14 @@ RaiseBallHeightForLob:
 	ld hl, $0080 ; $589f
 	add hl, de ; $58a2
 	bit 7, h ; $58a3
-	jr nz, .raise ; $58a5
+	jr nz, .lowerBy20 ; $58a5
 	ld de, $ffa0 ; $58a7
 	ld hl, wBallHeight ; $58aa
 	ld a, e ; $58ad
 	ld [hl+], a ; $58ae
 	ld [hl], d ; $58af
 	ret ; $58b0
-.raise:
+.lowerBy20:
 	ld hl, $0020 ; $58b1
 	add hl, de ; $58b4
 	ld e, l ; $58b5
@@ -296,7 +296,7 @@ ExecuteShotTopspin:
 	ld [wCurrentShotType], a ; $58c0
 	call NormalizeBallHeightForShot ; $58c3
 	call ApplyShotTypePresets ; $58c6
-	call WeakenShotByCharge ; $58c9
+	call ShortenShotDepthByCharge ; $58c9
 	call ComputeShotTrajectory ; $58cc
 	farcall ShotBallPathTopspin ; $58cf
 	ret ; $58d2
@@ -316,7 +316,7 @@ ExecuteShotSlice:
 	ld [wCurrentShotType], a ; $58ee
 	call NormalizeBallHeightForShot ; $58f1
 	call ApplyShotTypePresets ; $58f4
-	call WeakenShotByCharge ; $58f7
+	call ShortenShotDepthByCharge ; $58f7
 	call ComputeShotTrajectory ; $58fa
 	farcall ShotBallPathSlice ; $58fd
 	ret ; $5900
@@ -334,7 +334,7 @@ ExecuteShotPowerSlice:
 ExecuteShotLob:
 	call RaiseBallHeightForLob ; $591a
 	call ApplyShotTypePresets ; $591d
-	call BoostShotByCharge ; $5920
+	call LengthenShotDepthByCharge ; $5920
 	call NudgeShotByPlayerMomentum ; $5923
 	farcall ComputeShotTrajectory ; $5926
 	farcall ShotBallPathLob ; $5929
@@ -342,7 +342,7 @@ ExecuteShotLob:
 ExecuteShotDrop:
 	call RaiseBallHeightForLob ; $592d
 	call ApplyShotTypePresets ; $5930
-	call WeakenShotByCharge ; $5933
+	call ShortenShotDepthByCharge ; $5933
 	call ComputeShotTrajectory ; $5936
 	farcall ShotBallPathDrop ; $5939
 	ret ; $593c
@@ -351,34 +351,34 @@ ExecuteShotReachBasic:
 	jr z, ExecuteShotReach ; $5940
 	call NormalizeBallHeightForShot ; $5942
 	call ApplyShotTypePresets ; $5945
-	call WeakenShotByCharge ; $5948
+	call ShortenShotDepthByCharge ; $5948
 	call ComputeShotTrajectory ; $594b
-	farcall ProjectShotPlacement0 ; $594e
+	farcall ShotBallPathReachBasic ; $594e
 	ret ; $5951
 ExecuteShotReachPowerTopspin:
 	call CheckBallInSmashRange ; $5952
 	jr z, ExecuteShotReach ; $5955
 	call NormalizeBallHeightForShot ; $5957
 	call ApplyShotTypePresets ; $595a
-	call WeakenShotByCharge ; $595d
+	call ShortenShotDepthByCharge ; $595d
 	call ComputeShotTrajectory ; $5960
-	farcall ProjectShotPlacement1 ; $5963
+	farcall ShotBallPathReachPowerTopspin ; $5963
 	ret ; $5966
 ExecuteShotReachPowerSlice:
 	call CheckBallInSmashRange ; $5967
 	jr z, ExecuteShotReach ; $596a
 	call NormalizeBallHeightForShot ; $596c
 	call ApplyShotTypePresets ; $596f
-	call WeakenShotByCharge ; $5972
+	call ShortenShotDepthByCharge ; $5972
 	call ComputeShotTrajectory ; $5975
-	farcall ProjectShotPlacement2 ; $5978
+	farcall ShotBallPathReachPowerSlice ; $5978
 	ret ; $597b
 ExecuteShotReach:
 	ld a, SHOTTYPE_REACH ; $597c
 	ld [wCurrentShotType], a ; $597e
 	call NormalizeBallHeightForShot ; $5981
 	call ApplyShotTypePresets ; $5984
-	call WeakenShotByCharge ; $5987
+	call ShortenShotDepthByCharge ; $5987
 	call ComputeShotTrajectory ; $598a
 	farcall ShotBallPathReach ; $598d
 	ret ; $5990
@@ -420,7 +420,7 @@ ExecuteShotServeFlat:
 	call ApplyShotTypePresets ; $59df
 	call ComputeShotTrajectory ; $59e2
 	jp ApServeBallPath
-Unused_07_SetSpecialShotFlagThreshold:
+Unused_07_SetPowerServeFlagAboveHeight:
 	ld hl, wBallHeight ; $59ec
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
@@ -429,7 +429,7 @@ Unused_07_SetSpecialShotFlagThreshold:
 	add hl, de ; $59f5
 	jr c, .done ; $59f6
 	ld a, $01 ; $59f8
-	ld [wSpecialShotFlag], a ; $59fa
+	ld [wPowerServeFlag], a ; $59fa
 	ld [wLastShotWasPowerShot], a ; $59fd
 .done:
 	ret ; $5a00

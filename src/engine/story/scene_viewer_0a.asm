@@ -244,11 +244,11 @@ Unused_0a_InitSceneViewerDefault:
 	ret ; $60b2
 Unused_0a_SceneViewerMainLoop:
 	call Unused_0a_InitSceneViewerDefault ; $60b3
-.clearScroll:
+.loop:
 	call Unused_0a_UpdateSceneViewerScroll ; $60b6
 	call Unused_0a_SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
-	jr .clearScroll ; $60bf
+	jr .loop ; $60bf
 Unused_0a_StubNop:
 	ret ; $60c1
 Unused_0a_UpdateSceneViewerScroll:
@@ -260,24 +260,24 @@ Unused_0a_UpdateSceneViewerScroll:
 	pop hl ; $60cd
 	ld a, [wCameraY + 1] ; $60ce
 	cp h ; $60d1
-	jr z, .checkVertical ; $60d2
-	jr c, .scrollLeft ; $60d4
+	jr z, .checkHorizontal ; $60d2
+	jr c, .scrollUp ; $60d4
 	ld bc, $fb13 ; $60d6
 	call BlitBGRowFrom64 ; $60d9
-	jr .checkVertical ; $60dc
-.scrollLeft:
+	jr .checkHorizontal ; $60dc
+.scrollUp:
 	ld bc, $fb00 ; $60de
 	call BlitBGRowFrom64 ; $60e1
-.checkVertical:
+.checkHorizontal:
 	pop hl ; $60e4
 	ld a, [wCameraX + 1] ; $60e5
 	cp h ; $60e8
 	jr z, .store ; $60e9
-	jr c, .scrollUp ; $60eb
+	jr c, .scrollLeft ; $60eb
 	ld bc, $15fa ; $60ed
 	call BlitBGColumnFrom64 ; $60f0
 	jr .store ; $60f3
-.scrollUp:
+.scrollLeft:
 	ld bc, $00fa ; $60f5
 	call BlitBGColumnFrom64 ; $60f8
 .store:

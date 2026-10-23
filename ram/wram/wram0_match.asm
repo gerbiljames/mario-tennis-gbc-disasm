@@ -82,7 +82,7 @@ wShotAimTargetX:: dw
 ; [16-bit] World depth the shot is aimed at (net at 0, sign corrected for the hitter's side), written by ComputeShotTrajectory; copied to wBallTargetDepth and used for the aim marker
 wShotAimTargetDepth:: dw
 
-; [16-bit] wShotAimTargetX - wBallX, the lateral leg of the ball->target vector, written by ComputeShotTrajectory. Read by every court bank's SetBallTargetByPrediction and the trajectory-length path ($20:$416a, VectorLengthFromAngle with wShotAimDeltaDepth)
+; [16-bit] wShotAimTargetX - wBallX, the lateral leg of the ball->target vector, written by ComputeShotTrajectory. Read by every court bank's SetBallTargetByPrediction and the trajectory-length path (Unused_20_ApplyBallTrajectoryCapped, VectorLengthFromAngle with wShotAimDeltaDepth)
 wShotAimDeltaX:: dw
 
 ; [16-bit] wShotAimTargetDepth - wBallDepth, the depth leg, written by ComputeShotTrajectory and fed to AngleFromVector16 with wShotAimDeltaX to make wShotAimAngle; also read by the court banks' trajectory-length code
@@ -133,13 +133,13 @@ wShotRecoilVelocityDepth:: dw
 ; [16-bit] Shot speed as FinalizeShotSpeed leaves it, after momentum and the character-flag penalty and clamped up to $0100. Write-only, like the three term traces above it
 wShotSpeedFinal:: dw
 
-; [16-bit] The incoming ball's contribution to the shot speed, as AddBallSpeedEighth computed it (signed, then made positive). Write-only
+; [16-bit] The incoming ball's contribution to the shot speed, as SubBallPaceEighth computed it, forced negative. Write-only
 wShotSpeedBallTerm:: dw
 
 ; [16-bit] The striker's own depth velocity contribution, halved and signed by which end of the court the character is on (AddPlayerMomentumToShot). Write-only
 wShotSpeedMomentumTerm:: dw
 
-; [16-bit] The charge bonus AddChargeSpeedBonusHalf added, scaled $40 or $20 by sign. Write-only; with the three above it, the shot-speed sum broken into terms, none read back
+; [16-bit] The charge bonus AddChargeSpeedBonus (scaled $80/$40 by sign) or AddChargeSpeedBonusHalf ($40/$20) added. Write-only; with the three above it, the shot-speed sum broken into terms, none read back
 wShotSpeedChargeTerm:: dw
 
 ; [16-bit] Projected X of the ball-bounce dust effect (cached at bounce time)
@@ -198,7 +198,7 @@ wCourtLimitX:: dw
 ; [16-bit] In-bounds depth limit, stored negated: $fb20 (-$4e0, the baseline) normally, $fd60 (-$2a0, the service line) while a serve is in flight. CheckBallOutOfBounds adds it to |wBallDepth| and sets bit 1 of the out mask on carry
 wCourtLimitDepth:: dw
 
-; [16-bit] Net height in ball-height units: $0060 in a match, $0000 in the netless solo minigames. When the ball crosses depth 0, HandleBallNetCrossing adds it to wBallHeight (negative is up); a non-negative sum means the ball clipped the net: sound $5a, bounce effect, wBallHasBouncedFlag set, depth position and velocity negated
+; [16-bit] Net height in ball-height units: $0060 in a match, $0000 in the netless solo minigames. When the ball crosses depth 0, HandleBallNetCrossing adds it to wBallHeight (negative is up); a non-negative sum means the ball clipped the net: SFX_NET_CORD, bounce effect, wBallTouchedNetFlag set, X velocity quartered, depth position negated, and the depth velocity negated and cut to 1/8 unless the ball met the top of the net (above $5a), where it keeps its sign at 1/4 and dribbles over
 wNetHeight:: dw
 
 ; [16-bit] Shot solver: distance along the aim line from the ball to depth $0140 past the net, (|wBallDepth| + $0140) / sin(wShotAimAngle), from ComputeShotTrajectory. Every court bank's ApplyBallTrajectory passes it to BallTrajEntryPtr6/4 as the starting trajectory-table row
@@ -232,22 +232,22 @@ wScoreboardLayout:: db
 ; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAceStat/RecordLobWinnerStat/RecordDropShotWinnerStat)
 wCurrentShotType:: db
 
-; [8-bit] Recoil kind for the shot in flight, from the ShotTypePresets_07 record (ApplyShotTypePresets); ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it
-wShotRecoilVariant:: db
+; [8-bit] SHOTCLASS_* of the shot in flight, from the ShotTypePresets_07 record (ApplyShotTypePresets); ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it and the drills test it for volleys and smashes
+wShotClass:: db
 
-; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's wCharSwingFrames clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and WeakenShotByCharge / BoostShotByCharge; $3f (fully charged) picks the special hit flash over the normal spark
+; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's wCharSwingFrames clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and the target depth in ShortenShotDepthByCharge / LengthenShotDepthByCharge; $3f (fully charged) picks the special hit flash over the normal spark
 wShotChargeLevel:: db
 
-; [8-bit] The striker's wCharQuickSwing copied by ExecuteShot, so the shot keeps the value the swing started with
+; [8-bit] The striker's wCharQuickSwing, stored by ExecuteShot. Write-only
 wShotWasQuickSwing:: db
 
 ; [8-bit] The striker's wCharAimOffset at contact, stored by ExecuteShot. Write-only
 wLastShotAimOffset:: db
 
-; [8-bit] Nonzero when the shot just struck is a special/power hit. Cleared at the top of ExecuteShot; set to 1 when the ball is struck above height $0140, and from the 32-entry toss-height table on serves. Forces the special-shot flash (wSpecialHitTimer) over the normal spark, and on the rally's first shot shows court banner $0e
-wSpecialShotFlag:: db
+; [8-bit] Nonzero when the serve just struck is a power serve. Cleared at the top of ExecuteShot; the serve executors set it from the 32-entry toss-height table (Unused_07_SetPowerServeFlagAboveHeight would set it for any contact above height $0140). Forces the special-shot flash (wSpecialHitTimer) over the normal spark, and on the rally's first shot shows BANNER_POWER_SERVE
+wPowerServeFlag:: db
 
-; [8-bit] Set to 1 by each ExecuteShotPower* variant, cleared by ExecuteShot at every swing: marks the power version of topspin/slice/flat. Write-only
+; [8-bit] Cleared by ExecuteShot at every swing; set to 1 by ExecuteShotPowerTopspin/PowerSlice/Smash, and given wPowerServeFlag's value by SetPowerServeFlagFromTossHeight. Write-only
 wLastShotWasPowerShot:: db
 
 ; [8-bit] When 1, the shot's lateral aim offsets are negated. ExecuteShot sets it to the parity of four conditions (hitter wCharSwingAnim == 6, == $0a, wCharMirrorAttrMask nonzero, wRallyLength == 0). LoadShotPlacementEntry negates the placement angle offset with it, and every court bank's SetBallVelocityFromEntry6 negates the entry's angle delta before adding it to wShotAimAngle
@@ -265,7 +265,7 @@ wSpecialHitTimer:: db
 ; [8-bit] Frames left of the ball-hit-a-character effect; started at $28 by StartBallTouchCharEffect, ticked and used as animation index by DrawBallTouchCharEffect
 wBallTouchCharTimer:: db
 
-; [8-bit] Court horizontal bounce damping (8-bit fraction, e.g. $cd = 0.80 on court 0), loaded per court from a 4-byte-per-court table at $08:$5dc4. ApplyCourtBounceDamping multiplies the X and depth velocities by it
+; [8-bit] Court horizontal bounce damping (8-bit fraction, e.g. $cd = 0.80 on court 0), loaded per court from CourtSceneDataTable (4 bytes per court). ApplyCourtBounceDamping multiplies the X and depth velocities by it
 wCourtSurfaceFriction:: db
 
 ; [8-bit] Court vertical restitution (8-bit fraction) from the same per-court record; ApplyCourtBounceDamping multiplies the height velocity by it
@@ -280,7 +280,7 @@ wBallTouchCharIndex:: db
 ; [8-bit] Court quadrant under the ball: bit 1 = sign of wBallDepth (net side), bit 0 = sign of wBallX (lateral half). Rebuilt every frame by StepBallPhysics; forced to $02 by the bank $0d wall-practice setup
 wBallCourtQuadrant:: db
 
-; [8-bit] CheckBallOutOfBounds' verdict bits for the frame (which bound the ball passed). Write-only; the caller uses the returned a
+; [8-bit] CheckBallOutOfBounds' verdict bits for the frame (which bound the ball passed). read only by Unused_0b_CheckBallOutOfBounds; the caller uses the returned a
 wBallOutOfBoundsBits:: db
 
 ; [8-bit] Bounces since the ball was last struck, saturating at $0a. Zeroed by HandleBallHitEvent and ResetPointState, incremented by HandleBallBounceEvent. Tested for == 1 (first bounce) by EvaluateBounceOutcome, the fault check, the bank $0b drill graders and bank $0d
@@ -289,22 +289,22 @@ wBallBounceCount:: db
 ; [8-bit] Per-frame bounce event, cleared at the top of StepBallPhysics: 1 = ball reached the ground, 2 = ball bounced off a court fence/wall (BounceBallOffCourtFences). HandleBallBounceEvent returns at once on 0
 wBallBounceEvent:: db
 
-; [8-bit] 1 for the single frame the ball crosses the net plane; set and cleared by HandleBallNetCrossing. Read by TickRallyTimers, AiTrackBallPhase and CheckBallHitsMinigameTarget / CheckBallHitsMinigameTargetAlt
+; [8-bit] 1 for the single frame the ball crosses the net plane; set and cleared by HandleBallNetCrossing. Read by HandleBallNetCrossEvent, AiTrackBallPhase and CheckBallHitsMinigameTarget / CheckBallHitsScoringMinigameTarget
 wBallCrossedNetFlag:: db
 
-; [8-bit] Frames the ball has spent past the net this point: TickRallyTimers increments it while wBallCrossedNetFlag is set, capped at $64; ResetPointState clears it. Read only by its own cap test
-wRallyNetFrames:: db
+; [8-bit] Net crossings this point: HandleBallNetCrossEvent increments it on each frame wBallCrossedNetFlag is set (once per crossing), capped at $64; ResetPointState clears it. Read only by its own cap test
+wRallyNetCrossings:: db
 
 ; [8-bit] Rally Length; number of times the ball was hit in the span of a point
 wRallyLength:: db
 
-; [8-bit] Set to 1 by ExecuteShot, which refuses to run again while it is set. HandleBallHitEvent consumes it: increments wRallyLength, clears wBallHasBouncedFlag and wLandingMarkerActive, starts the landing marker and hit effect, updates every character's state. Cleared by ResetPointState
+; [8-bit] Set to 1 by ExecuteShot, which refuses to run again while it is set. HandleBallHitEvent consumes it: increments wRallyLength, clears wBallTouchedNetFlag and wLandingMarkerActive, starts the landing marker and hit effect, updates every character's state. Cleared by ResetPointState
 wBallHitEvent:: db
 
 ; [8-bit] Character index (0-3) of the hitter, from wCharIndex in ExecuteShot. Selects the wCharacterN stat block (index * 8) when crediting an ace/winner, its low bit gives the point outcome's side sign, and the bank $0d minigames test it for player vs machine
 wLastShotCharIndex:: db
 
-; [8-bit] The hitter's wCharServeRole, from ExecuteShot. Read only by DetectServeAceOutcome: on a point's second hit with the ball unbounced, role 1 (receiver) gives POINTOUTCOME_SERVE_VOLLEYED and any other role POINTOUTCOME_WRONG_RECEIVER
+; [8-bit] The hitter's wCharServeRole, from ExecuteShot. Read only by DetectServeReturnFault: on a point's second hit any role but SERVEROLE_RECEIVER gives POINTOUTCOME_WRONG_RECEIVER, and the receiver gives POINTOUTCOME_SERVE_VOLLEYED if the ball has not bounced
 wLastShotServeRole:: db
 
 ; [8-bit] Nonzero draws the ball sprite slot
@@ -322,8 +322,8 @@ wBallTrailColor:: db
 ; [8-bit] wBallCourtQuadrant when the shot was struck. EvaluateBounceOutcome XORs it with the live quadrant: bit 1 = reached the other side of the net, bit 0 = changed lateral half (the serve's diagonal-box rule). The bank $0d wall-practice bounce flips bit 1 by hand
 wBallQuadrantAtHit:: db
 
-; [8-bit] Set to 1 when the ball bounces on the court (the same path fires StartBounceEffect); cleared by HandleBallHitEvent and ResetPointState. Read by EvaluateBounceOutcome, TickRallyTimers and AiTrackBallPhase
-wBallHasBouncedFlag:: db
+; [8-bit] Ball touched the net since the last strike: set to 1 only by HandleBallNetCrossing when the ball crosses depth 0 at or below net height (with SFX_NET_CORD and StartBounceEffect); cleared by HandleBallHitEvent and ResetPointState. Read by EvaluateBounceOutcome (a serve in the right box becomes a let), HandleBallNetCrossEvent, AiTrackBallPhase and the drill hooks NetGamePractice2Cases1, NetGamePractice3Cases1, ServiceMatch2Cases1 and ServicePractice2Hook_Bounce
+wBallTouchedNetFlag:: db
 
 ; [8-bit] Nonzero freezes the match simulation: UpdateMatchFrame skips ClearSpriteSlots, UpdateMatchCamera, UpdateAllChars, ball events, UpdateBallVisuals, timers and the mode hook. $ff during match setup and while the pause menu is open
 wMatchSimFrozen:: db
@@ -349,22 +349,22 @@ wFallbackTrajectoryFlag:: db
 ; [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it
 wMatchExitRequest:: db
 
-; [8-bit] Set by InitViewFlipPreference when the court view is fixed instead of following the saved preference (link matches, game modes $08/$09, any minigame); the pause menus then lock the view row
+; [8-bit] Bit 0 is set by InitViewFlipPreference when the court view is fixed instead of following the saved preference (link matches, game modes $08/$09, any minigame); bit 1 is set by CharServeSwingWindowPhase when the serve swing starts and cleared by PlayPoint. Either bit stops ReinitPointAfterPause and locks the pause menus' view row; RefreshCourtScoreboard tests bit 0 only
 wCourtViewLocked:: db
 
 ; [8-bit] Nonzero makes UpdateMatchCamera retarget to wBallGroundProjX/Y every frame instead of holding SetCameraTarget's target. Cleared by SetCameraTarget, SnapCameraTo_08 and KeepMinigameCameraFixed; set to 1 when the rally starts and by the bank $0d wall bounce
 wCameraFollowBall:: db
 
-; [8-bit] Set in singles only; enables the wide flickering ground shadow under grounded characters
+; [8-bit] InitAllChars sets it for a non-link singles match (minigame starts clear it); enables the wide flickering ground shadow under grounded characters
 wStandingShadowsEnabled:: db
 
-; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of wPrevCourtPos), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set
+; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side: (wCourtViewOption != 0) && (bit 1 of wPlayer1PrevCourtPos), recomputed by UpdateViewFlipState. FlipAllCharPositions skips flipping court-position codes when 0; RefreshCourtScoreboard picks the mirrored scoreboard layout when set
 wCourtViewFlipped:: db
 
 ; [8-bit] Nonzero makes RunChangeoverSequence walk the characters to their new ends without the CHANGE ENDS banner. Set at the start of a set, at set end and when a tiebreak begins; cleared by the sequence
 wChangeoverSkipBanner:: db
 
-; [8-bit] Set to 1 by CheckServerEndChanged when bit 1 of wPrevCourtPos toggles (players change ends). RunChangeoverSequence then shows court banner $00, walks the characters over and clears it; also cleared at match setup
+; [8-bit] Set to 1 by CheckPlayer1EndChanged when bit 1 of wPlayer1PrevCourtPos toggles (players change ends). RunChangeoverSequence then shows court banner $00, walks the characters over and clears it; also cleared at match setup
 wChangeEndsPending:: db
 
 ; [8-bit] Nonzero when wCourtViewFlipped changed on the last UpdateViewFlipState (old minus new). RefreshCourtAfterEndChange returns at once on 0; ReinitPointAfterPause uses it to decide whether to redraw the court
@@ -412,7 +412,7 @@ wRulesSetsIndex:: db
 ; [8-bit] Bit 2 of wMatchTypeNumberOfGames, set at match setup; low term of wRulesPageListIndex
 wRulesGamesIndex:: db
 
-; [8-bit] Saved camera / court view option, loaded from story save-slot flag B (forced to 0 for minigames and game mode 8); edited by MatchPauseMenu_CameraSelect, which writes it back with SetStorySlotFlagB. UpdateViewFlipState mirrors the court only when nonzero
+; [8-bit] Saved camera / court view option, loaded from story save-slot flag B (forced to 0 for minigames and game mode 8); edited by MatchPauseMenu_CameraSelect, which writes it back with SetStorySlotCourtView. UpdateViewFlipState mirrors the court only when nonzero
 wCourtViewOption:: db
 
 ; [8-bit] Set to 1 by MatchQuitMenu_Retry; reruns the current drill/minigame (RunTrainingDrillByID)
@@ -424,7 +424,7 @@ wMatchSelectNewLevelRequest:: db
 ; [8-bit] Pause/quit menu selection (rst00 jumptable index: check rules / review controls / change options / save-quit); $ff = cancelled
 wMatchMenuSelection:: db
 
-; [8-bit] Item id of the first entry of the story option submenu to draw ($04 court view, $06 message speed, $09 music, $0b save; $0e for the story pause root). RunStoryTwoOptionMenu and RunStoryThreeOptionMenu draw this id, +1 and +2, and add wMatchMenuSelection to it for the caption text ($0162 + n) and highlighted item graphics
+; [8-bit] Item id of the first entry of the story option submenu to draw (STORYMENUITEM_MESSAGES for the options submenu, _MSG_SLOW message speed, _MUSIC_ON music, _SAVE_GAME save; _CHAR_DATA for the story pause root). RunStoryTwoOptionMenu and RunStoryThreeOptionMenu draw this id, +1 and +2, and add wMatchMenuSelection to it for the caption text ($0162 + n) and highlighted item graphics
 wStoryMenuFirstItem:: db
 
 ; [8-bit] Nonzero means the shadow tilemap needs flushing to VRAM: Unused_06_FlushTilemapToVramIfDirty returns on 0, FlushTilemapToVram clears it, the debug stats editor sets it after redrawing
@@ -442,15 +442,15 @@ wPauseMenuId:: db
 ; [8-bit] Item count of the running menu, from Get*MenuItemCount in RunMatchMenu / RunStoryMenu. Wrap modulus for MoveCursorHorizontal, loop count in DrawMatchMenuItems / DrawStoryMenuItems, and index into the per-count item-position tables
 wPauseMenuItemCount:: db
 
-; [16-bit] Text id of the first body page of the rules sequence ($2c62 match rules, $2c6a training rules, or a per-minigame table value); ShowRulesPageSequence adds the page number to it
+; [16-bit] Text id of the first body page of the rules sequence (Text_RulesFirstToTwoGamesWins match rules, Text_RulesServiceMatchServeAces training rules, or a per-minigame table value); ShowRulesPageSequence adds the page number to it
 wRulesFirstPageTextId:: dw
 
-; [16-bit] Text id of the caption above the rules pages: a fixed base plus wRulesPageListIndex ($2c25 + n match, $2c2b + n training, $2c47 + n minigame); passed to DrawMenuCaptionWindow
+; [16-bit] Text id of the caption above the rules pages: a fixed base plus wRulesPageListIndex (Text_RulesHeadingOneSetMatch + n match, Text_RulesHeadingServiceMatch + n training, Text_RulesHeadingBooBlast + n minigame); passed to DrawMenuCaptionWindow
 wRulesTitleTextId:: dw
 
 ; [16-bit] Saved best score for the current minigame, copied from the record ReadMinigameRecord returns (WRAM bank 7, $de00). Drawn instead of wMinigamesTargetScore when wMinigameHighScoreMode marks a high-score attempt; bank $0d compares the current score against it
 wMinigameHighScore:: dw
 
-; [8-bit] Flags for the built-in debug test match; $fe from Unused_07_RunDebugTestMatch. Bit 1 makes character setup call OverrideCharStatsForDebug; bit 0 makes the frame-stepping loop skip the input wait
+; [8-bit] Flags for the built-in debug test match; $fe from Unused_07_RunDebugTestMatch. Bit 1 makes character setup call OverrideCharStatsForDebug; bit 0 stops StepMatchFramesSkippable counting down, so it waits for A or B indefinitely
 wDebugMatchFlags:: db
 	ds 17

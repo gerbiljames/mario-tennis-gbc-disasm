@@ -48,7 +48,7 @@ wDebugColorEditorWindowId:: db
 ; [8-bit] Which of the four colours in the selected palette the debug cursor is on, masked to $03
 wDebugPaletteColorIndex:: db
 
-; [8-bit] Palette under the debug cursor, masked to $0f. GetSelectedBGPaletteColorPtr indexes wBGPalettes with (palette * 4 + colour) * 2, so 8-15 run on into wOBJPalettes
+; [8-bit] Palette under the debug cursor, masked to $0f. GetSelectedPaletteColorPtr indexes wBGPalettes with (palette * 4 + colour) * 2, so 8-15 run on into wOBJPalettes
 wDebugPaletteIndex:: db
 
 ; [8-bit] Page of 64 game flags shown by the debug flag editor; the flag number DebugToggleSelectedFlag builds is page * 64 + byte * 8 + bit
@@ -100,7 +100,7 @@ wDebugColorBlueDigits:: ds 3
 wDebugColorDigitsEnd:: db
 NEXTU
 ; debug stats editor (bank $06)
-; [128 bytes] Unused_06_RunDebugStatsEditor copies character 0's $df00-$df7f (from wCharPosX) here on entry and back on exit, over every debug variable above; wDebugStatWords to wDebugStatWords2 sit on its +$60-$77
+; [128 bytes] Unused_06_RunDebugStatsEditor copies character 0's $df00-$df7f (from wCharStruct) here on entry and back on exit, over every debug variable above; wDebugStatWords to wDebugStatWords2 sit on its +$60-$77
 wDebugStatsBackup:: ds 128
 	export_size wDebugStatsBackup
 ENDU
@@ -127,26 +127,26 @@ NEXTU
 ; minigames (bank $0d)
 ; [16-bit] Serves launched this round. LaunchMinigameServe increments it and derives the ball speed from it (count / 10, capped at $19), so the feed speeds up
 wMinigameServeCount:: dw
-; [16-bit] Points shown by the score popup; AwardHitScore and the per-minigame scorers store the award here before AddToMinigameScore
+; [16-bit] Points shown by the score popup; AwardShootingStarHitScore and the per-minigame scorers store the award here before AddToMinigameScore
 wScorePopupValue:: dw
-; [8-bit] Ball speed LaunchMinigameServe passed to LaunchBall for this serve
-wMinigameServeSpeed:: db
-; [8-bit] Which serve the tennis machine plays next; the machine hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable indexes the aim table with it
-wMinigameServeSlot:: db
-; [8-bit] wMinigameServeSlot / 3, taken by LaunchMinigameServe and read back by LaunchBall
-wMinigameServeGroup:: db
+; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotButtonPoolColumn/MinigameShotSpeedColumn with it
+wMinigameServeTier:: db
+; [8-bit] Cell (0-8) of the 3x3 MinigameFeederPositions grid the feeding opponent serves from; the hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable walks the opponent there
+wMinigameFeederPos:: db
+; [8-bit] wMinigameFeederPos / 3 (the depth row), taken by LaunchMinigameServe; LaunchBall picks the aim scale and launch height by it
+wMinigameFeederRow:: db
 ; [8-bit] Frames left on the score popup, seeded with $10 by StartScorePopup; UpdateScorePopup ticks it and uses it as the rise offset
 wScorePopupTimer:: db
-; [8-bit] Set while a hit is being scored; ResetTargetHitState clears the streak only when this is clear, which keeps a streak alive across one rally's points
+; [8-bit] Set while a hit is being scored; ResetShootingStarHitState clears the streak only when this is clear, which keeps a streak alive across one rally's points
 wMinigameHitScored:: db
-; [8-bit] Consecutive scoring hits, stepped by IncrementCappedCounter (cap in b). AwardHitScore indexes a sound table and a score table with it
+; [8-bit] Consecutive scoring hits, stepped by IncrementMinigameHitStreak (cap in b). AwardShootingStarHitScore indexes a sound table and a score table with it
 wMinigameHitStreak:: db
-; [8-bit] Treasure Box animation timer: zeroed by TreasureBoxTargetState0, incremented on every DrawTreasureBoxSprite, whose low 5 bits index TreasureBoxSpriteAnimFrames
+; [8-bit] Treasure Box animation timer: zeroed by TreasureBoxTargetSpawn, incremented on every DrawTreasureBoxSprite, whose low 5 bits index TreasureBoxSpriteAnimFrames
 wTreasureBoxAnimTimer:: db
 NEXTU
 ; training drills (bank $0b)
 	ds 11
-; [8-bit] Set while the serve gate stands: RecordGateCrossOnServe clears it when the serve passes through (recording the bit in wDrillGateCrossBits); QueueDrillMarker1/2 draw the gate markers only while set
+; [8-bit] Set while the serve gate stands: RecordGateCrossOnServe clears it when the serve passes through (recording the bit in wDrillGateCrossBits); QueueDrillGateLeftPole/QueueDrillGateRightPole draw the gate markers only while set
 wDrillGateActive:: db
 NEXTU
 ; scoreboard (bank $18)
@@ -157,8 +157,8 @@ wScorePanelBobStep:: db
 wScorePanelBobActive:: db
 	ds 6
 ; [8-bit] Snapshot of wStoryMainLevel taken by Unused_18_LoadScorePanelValue, drawn by Unused_18_DrawScoreNumbersTask
-wScorePanelExpTier:: db
-; [8-bit named; read as a 16-bit word] Unused_18_DrawScoreNumbersTask draws $c78b-$c78c as a 3-digit sprite number beside wScorePanelExpTier. Nothing in bank $18 writes it and the high byte is wTargetZoneEnabled, so it reads whatever the mode-page clear left (0)
+wScorePanelLevel:: db
+; [8-bit named; read as a 16-bit word] Unused_18_DrawScoreNumbersTask draws $c78b-$c78c as a 3-digit sprite number beside wScorePanelLevel. Nothing in bank $18 writes it and the high byte is wTargetZoneEnabled, so it reads whatever the mode-page clear left (0)
 wScorePanelScore:: db
 ENDU
 
@@ -172,12 +172,12 @@ UNION
 ; minigame targets (banks $0a/$0d)
 ; [8-bit] Type of the target the ball just hit, an index into MinigameTargetTypeScores; $ff = scores nothing
 wMinigameHitTargetType:: db
-; [8-bit] Set by the deflect hit-test and cleared by ScoreMinigameTargetHitOrDeflectBall once the hit has been scored
-wMinigameHitPending:: db
+; [8-bit] Set whenever wBallCrossedNetFlag is (before any position test); ScoreMinigameTargetHitOrDeflectBall clears it whether or not a target was hit
+wMinigameNetCrossPending:: db
 	ds 1
 NEXTU
 ; scoreboard (bank $18)
-; [3 bytes] Three values Unused_18_SetupScoreboardDisplay draws as 6x2 tile blocks, each via Unused_18_GetTextSlotPointer
+; [3 bytes] Values Unused_18_SetupScoreboardDisplay draws as 6x2 tile blocks, each via Unused_18_GetTextSlotPointer; its fourth comes from the next byte, wTargetZoneX1
 wScorePanelValues:: ds 3
 ENDU
 
@@ -193,11 +193,11 @@ wTargetZoneX2:: dw
 ; [16-bit] Target zone depth bound 2 (world units)
 wTargetZoneDepth2:: dw
 
-; [4 bytes] First drill gate: two 16-bit coordinates (+$00 from hl, +$02 from de in SetBallGatePoint1). DidBallCrossGate tests the ball against it each frame; QueueDrillMarker1_0b draws the marker there
-wDrillGate1:: ds 4
+; [4 bytes] Drill gate's left post: X (+$00, hl) and depth (+$02, de) from SetDrillGateLeftPost. DidBallCrossGate counts a crossing when the ball passes this depth with wBallX between the two posts' X; QueueDrillGateLeftPole draws its pole there
+wDrillGateLeftPost:: ds 4
 
-; [4 bytes] The second gate, set and tested the same way
-wDrillGate2:: ds 4
+; [4 bytes] The same gate's right post (SetDrillGateRightPost); only its X is tested
+wDrillGateRightPost:: ds 4
 
 ; Mode-local scratch, the first five bytes above $c780, used by the
 ; minigame banks. Bank $1b loads its 32-byte nav grids from the same
@@ -212,21 +212,21 @@ NEXTU
 ; minigame targets (banks $0a/$0d)
 ; [4 bytes] Start position of the floating score popup, copied from wBallHistory + 30 by StartScorePopup and stepped by UpdateScorePopup
 wScorePopupSource:: ds 4
-; [8-bit] Set at init by Banana Bunch and Fruit Fantasy, whose targets deflect the ball instead of absorbing it; UpdateMinigameTarget then runs the Alt draw, hit-test and scoring handlers
-wMinigameTargetsAltMode:: db
+; [8-bit] Set at init by Banana Bunch and Fruit Fantasy, whose targets score a hit (wMinigameHitTargetType) instead of deflecting the ball; UpdateMinigameTarget then runs DrawScoringMinigameTarget, CheckBallHitsScoringMinigameTarget and HandleScoringMinigameTargetHit
+wMinigameTargetsScoreMode:: db
 ENDU
 
-; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while walking their weight tables
-wMinigameShotRoll:: db
+; [8-bit] Target zone picked at random from the level's zone pool by SelectRandomTargetShotZone and SelectRandomTreasureBoxTargetZone; LoadTargetZoneConfig, the score rules and the treasure-box spawn points key on it
+wMinigameTargetZone:: db
 
-; [8-bit] Set when the ball lands on a target tile; ProcessTargetTileHit clears it as it scores the hit
-wTargetTileHit:: db
+; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessPerfectShotTileHit scores each tile hit at this + 1 and increments it when AreAllPerfectShotTilesHit. Zeroed with wModeScratch at match start
+wTargetGridClearCount:: db
 
-; [8-bit] Where the minigame is in its serve: StartMinigameMatch seeds it, DrawMinigameScoreHud and LaunchMinigameServe branch on it
-wMinigameServeState:: db
+; [8-bit] 1 when the opponent is CHAR_BALL_MACHINE (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
+wMinigameServerIsMachine:: db
 
-; [8-bit] Nonzero makes AiServePressToss release the serve at once instead of running the wAiServeStyle toss table (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
-wAiServeSkipToss:: db
+; [8-bit] Nonzero makes AiServePressToss skip the AiServeQuickStrikeChance roll and always wait the long toss-to-strike gap (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
+wAiServeNoQuickStrike:: db
 	ds 7
 
 ; [16-bit] Pointer to the layout table for the current minigame point, set by SetMinigamePointTable and walked by LoadMinigamePointLayout and RunMinigamePointLoop
@@ -238,7 +238,7 @@ wModeHookTable:: dw
 ; [8-bit] ROM bank of the mode callback table (0 = no hooks registered)
 wModeHookBank:: db
 
-; [8-bit] Aim AiApplyServeAim uses for the next serve; $ff (set by RunMatch) = random from AiApplyServeAimTable. The drill point-start hooks write a fixed aim
+; [8-bit] Aim AiApplyServeAim uses for the next serve; $ff (set by RunMatch) = random from AiRandomServeAimDirs. The drill point-start hooks write a fixed aim
 wAiServeAimOverride:: db
 
 ; [16-bit] Spot the serving CPU walks to; zero makes AiServeWalkToSpot roll a new one. The drill runner clears it before each match
@@ -253,14 +253,14 @@ wMinigameUsesWall:: db
 ; [8-bit] Set to 1 by InitMinigame_BooBlast
 wMinigameIsBooBlast:: db
 
-; [8-bit] Set to 1 by the bank $0b Service/NetGame practice drills (coach lessons). RecordDrillPointResultBits stores per-point results differently while set; SelectScoreboardLayout picks layout 3
+; [8-bit] Set to 1 by the bank $0b Service/NetGame/Stroke practice drills (coach lessons). RecordDrillPointResultBits stores per-point results differently while set; SelectScoreboardLayout picks layout 3
 wDrillIsPracticeLesson:: db
 
 ; [8-bit] Set to 1 for a high-score attempt: outright by the InitMinigame_*HighScore entries, and by ordinary minigames at wMinigameLevel 2. SelectScoreboardLayout picks layout 7
 wMinigameHighScoreMode:: db
 
-; [8-bit] Passed in b to LoadPlayer1ScoreDigitGfx/LoadPlayer2ScoreDigitGfx so the score panel shows tiebreak counts instead of 0/15/30/40. CheckSetComplete sets it entering a tiebreak and clears it at the start of an ordinary game
-wScoreDisplayIsTiebreak:: db
+; [8-bit] DIGITGFX_* glyph set passed in b to LoadFirstScoreDigitGfx/LoadSecondScoreDigitGfx for the score panel. PlayTiebreakGame and InitMinigameMatchSettings set DIGITGFX_NUMERALS; PlayGame resets it to DIGITGFX_TENNIS_CALLS
+wScoreDigitGfxStyle:: db
 
 ; Mode-local scratch above the named mode flags; as with the $c780 block,
 ; each mode reuses the bytes; variants belong to the owning bank.
@@ -270,18 +270,18 @@ UNION
 wMinigameTargetsActive:: db
 ; [8-bit] Grid cell the ball last bounced off, recorded by the Banana Bunch / Fruit Fantasy deflection handlers and read when the hit is scored
 wMinigameLastHitCell:: db
-; [24 bytes] The 3 x 8 target grid, one byte per cell. AreAllTargetsHit passes when all 24 are 1; ResetTargetGrid clears it a row at a time (+$07, +$0f, +$17 are the row ends)
+; [24 bytes] The 3 x 8 target grid, one cell type per byte (0 = empty), copied from a layout by LoadMinigameTargetGrid. Perfect Shot sets a cell to 1 when hit: ResetPerfectShotGrid loads PerfectShotTargetGridLayout and marks the unused eighth column (+$07, +$0f, +$17) hit, and AreAllPerfectShotTilesHit passes when all 24 are 1
 wMinigameTargetGrid:: ds 24
 	export_size wMinigameTargetGrid
 NEXTU
 ; character select and new game (bank $1b)
-; [8-bit] Cursor column carried in and out of RunCharacterSelectScreen, so the new-game roster loop resumes where the player left off
+; [8-bit] Cursor column RunNewGameSetup passes to RunCharacterSelectScreen in d and stores back from d after it; that routine never reads d/e and returns them clobbered, so nothing uses the value
 wCharSelectCursorCol:: db
 ; [8-bit] Cursor row, the same
 wCharSelectCursorRow:: db
 ; [8 bytes] Two bytes per starting character (wCharRecordBuffer + 14 and + 12), collected by RunNewGameSetup before the roster is shown
 wNewGameRosterFields:: ds 8
-; [8-bit] Cleared by Unused_1b_RunStoryDataConfirmMenu as the prompt opens
+; [8-bit] Cleared by Unused_1b_RunStoryDataConfirmMenu as the prompt opens; nothing reads it
 wStoryDataPromptFlag:: db
 ENDU
 

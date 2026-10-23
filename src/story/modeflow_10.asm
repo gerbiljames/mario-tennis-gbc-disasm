@@ -1,6 +1,6 @@
 RunMinigameModeFlow:
 	xor a ; $5216
-	ld [wKeepMatchStatsFlag], a ; $5217
+	ld [wMatchSuspendedFlag], a ; $5217
 	farcall RunMinigameSelect ; $521a
 	cp $ff ; $521d
 	jr nz, .levelMenu ; $521f
@@ -57,7 +57,7 @@ RunMinigameModeFlow:
 	cp WINLOSE_WIN ; $5299
 	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
-MatchSelectHandlersBHandler5:
+RunLinkedPlayFlow:
 	ld a, STORYSLOT_NONE ; $52a0
 	ld [wCurrentStorySlot], a ; $52a2
 	farcall InitStoryModeState ; $52a5
@@ -76,18 +76,18 @@ MatchSelectHandlersBHandler5:
 	call EnableLCD ; $52c6
 	script_fade_in 16 ; $52c9
 	jp RunTitleAndMainMenuLoop.menuLoop ; $52ce
-RunSavedDataMenuFlow:
-	farcall RunSavedDataSourceSelect ; $52d1
+RunStatusMenuFlow:
+	farcall RunStatusSourceSelect ; $52d1
 	cp $ff ; $52d4
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52d6
 	cp NUM_STORY_SLOTS ; $52d9
-	jp nc, .checkSavedData ; $52db
+	jp nc, .pickNonFileMenu ; $52db
 	ld [wCurrentStorySlot], a ; $52de
-	farcall CheckStorySlot ; $52e1
-.transferMenu:
-	farcall RunN64TransferItemSelect ; $52e4
+	farcall ReadCurrentStorySlot ; $52e1
+.gbDataMenu:
+	farcall RunGbDataItemSelect ; $52e4
 	cp $ff ; $52e7
-	jp z, RunSavedDataMenuFlow ; $52e9
+	jp z, RunStatusMenuFlow ; $52e9
 	or a ; $52ec
 	jr nz, .progressMenu ; $52ed
 	script_fade_out 16 ; $52ef
@@ -101,7 +101,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5308
 	ld a, MENUSLIDE_BACK ; $530d
 	ld [wMenuSlideDirection], a ; $530f
-	jp .transferMenu ; $5312
+	jp .gbDataMenu ; $5312
 .progressMenu:
 	cp $01 ; $5315
 	jr nz, .trophiesMenu ; $5317
@@ -117,7 +117,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5338
 	ld a, MENUSLIDE_BACK ; $533d
 	ld [wMenuSlideDirection], a ; $533f
-	jp .transferMenu ; $5342
+	jp .gbDataMenu ; $5342
 .trophiesMenu:
 	cp $02 ; $5345
 	jr nz, .equipmentMenu ; $5347
@@ -131,7 +131,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5360
 	ld a, MENUSLIDE_BACK ; $5365
 	ld [wMenuSlideDirection], a ; $5367
-	jp .transferMenu ; $536a
+	jp .gbDataMenu ; $536a
 .equipmentMenu:
 	farcall RunRacketShoesChoiceMenu ; $536d
 	cp $00 ; $5370
@@ -140,7 +140,7 @@ RunSavedDataMenuFlow:
 	jr z, .shoesSelect ; $5376
 	ld a, MENUSLIDE_BACK ; $5378
 	ld [wMenuSlideDirection], a ; $537a
-	jp .transferMenu ; $537d
+	jp .gbDataMenu ; $537d
 .racketSelect:
 	script_fade_out 16 ; $5380
 	call WaitFadeEnd ; $5385
@@ -169,15 +169,15 @@ RunSavedDataMenuFlow:
 	ld a, MENUSLIDE_BACK ; $53cc
 	ld [wMenuSlideDirection], a ; $53ce
 	jp .equipmentMenu ; $53d1
-.checkSavedData:
+.pickNonFileMenu:
 	cp $03 ; $53d4
 	jr nz, .n64RecordMenu ; $53d6
-.savedDataMenu:
-	farcall RunSavedDataTypeSelect ; $53d8
+.marioCharDataMenu:
+	farcall RunMarioCharDataTypeSelect ; $53d8
 	cp $ff ; $53db
-	jr nz, .savedDataOption ; $53dd
-	jp RunSavedDataMenuFlow ; $53df
-.savedDataOption:
+	jr nz, .marioCharDataOption ; $53dd
+	jp RunStatusMenuFlow ; $53df
+.marioCharDataOption:
 	or a ; $53e2
 	jr nz, .minigameData ; $53e3
 	script_fade_out 16 ; $53e5
@@ -192,7 +192,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5404
 	ld a, MENUSLIDE_BACK ; $5409
 	ld [wMenuSlideDirection], a ; $540b
-	jp .savedDataMenu ; $540e
+	jp .marioCharDataMenu ; $540e
 .minigameData:
 	script_fade_out 16 ; $5411
 	call WaitFadeEnd ; $5416
@@ -206,13 +206,13 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5430
 	ld a, MENUSLIDE_BACK ; $5435
 	ld [wMenuSlideDirection], a ; $5437
-	jp .savedDataMenu ; $543a
+	jp .marioCharDataMenu ; $543a
 .n64RecordMenu:
 	farcall RunN64RecordTypeSelect ; $543d
 	cp $ff ; $5440
-	jp z, RunSavedDataMenuFlow ; $5442
+	jp z, RunStatusMenuFlow ; $5442
 	or a ; $5445
-	jr nz, .n64RecordOption1 ; $5446
+	jr nz, .n64ExhibData ; $5446
 	script_fade_out 16 ; $5448
 	call WaitFadeEnd ; $544d
 	farcall RunN64TnmtData ; $5450
@@ -223,8 +223,8 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $545f
 	ld a, MENUSLIDE_BACK ; $5464
 	ld [wMenuSlideDirection], a ; $5466
-	jp .checkSavedData ; $5469
-.n64RecordOption1:
+	jp .pickNonFileMenu ; $5469
+.n64ExhibData:
 	cp $01 ; $546c
 	jr nz, .ringShotData ; $546e
 	script_fade_out 16 ; $5470
@@ -237,7 +237,7 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $5487
 	ld a, MENUSLIDE_BACK ; $548c
 	ld [wMenuSlideDirection], a ; $548e
-	jp .checkSavedData ; $5491
+	jp .pickNonFileMenu ; $5491
 .ringShotData:
 	farcall RunN64RingShotData ; $5494
 	call DisableLCDSafely ; $5497
@@ -247,8 +247,8 @@ RunSavedDataMenuFlow:
 	script_fade_in 16 ; $54a3
 	ld a, MENUSLIDE_BACK ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
-	jp .checkSavedData ; $54ad
-MatchSelectHandlersBHandler7:
+	jp .pickNonFileMenu ; $54ad
+RunDictionaryFlow:
 	script_fade_out 16 ; $54b0
 	call WaitFadeEnd ; $54b5
 	ld a, TENNISDICT_INDEX ; $54b8
@@ -275,15 +275,15 @@ RunEraseSavedDataFlow:
 	jp hl ; $54eb
 EraseSavedDataFlowHandlers_10:
 	; $54ec, 10 bytes (records:2)
-	dw EraseSavedDataFlowHandler0_10 ; record 0
-	dw EraseSavedDataFlowHandler0_10 ; record 1
-	dw EraseSavedDataFlowHandler0_10 ; record 2
-	dw EraseSavedDataFlowHandler3_10 ; record 3
-	dw EraseSavedDataFlowHandler4_10 ; record 4
-EraseSavedDataFlowHandler0_10:
+	dw EraseStoryFileFlow ; record 0
+	dw EraseStoryFileFlow ; record 1
+	dw EraseStoryFileFlow ; record 2
+	dw EraseN64RecordsFlow ; record 3
+	dw EraseAllDataFlow ; record 4
+EraseStoryFileFlow:
 	ld a, b ; $54f6
 	ld [wCurrentStorySlot], a ; $54f7
-	farcall CheckStorySlot ; $54fa
+	farcall ReadCurrentStorySlot ; $54fa
 	push bc ; $54fd
 	script_fade_out 16 ; $54fe
 	call WaitFadeEnd ; $5503
@@ -309,14 +309,14 @@ EraseSavedDataFlowHandler0_10:
 	ld a, MENUSLIDE_BACK ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
-EraseSavedDataFlowHandler3_10:
+EraseN64RecordsFlow:
 	script_fade_out 16 ; $5539
 	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
 	farcall RunEraseDataConfirmMenu ; $5543
 	or a ; $5546
 	jr z, .redrawAfterBlockErase ; $5547
-	farcall ClearSaveBlock11 ; $5549
+	farcall ClearN64RecordsSaveBlock ; $5549
 .redrawAfterBlockErase:
 	call DisableLCDSafely ; $554c
 	farcall LoadMenuFontGfx ; $554f
@@ -326,7 +326,7 @@ EraseSavedDataFlowHandler3_10:
 	ld a, MENUSLIDE_BACK ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
-EraseSavedDataFlowHandler4_10:
+EraseAllDataFlow:
 	script_fade_out 16 ; $5565
 	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
@@ -344,7 +344,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wMainMenuCursor], a ; $558c
 	jp RunEraseSavedDataFlow ; $558f
 .reinitSram:
-	farcall ReinitSaveRamPreservingBlock6 ; $5592
+	farcall ReinitSaveRamKeepingPreservedBlock ; $5592
 	call DisableLCDSafely ; $5595
 	farcall LoadMenuFontGfx ; $5598
 	farcall ResetScreenAndTextWindows ; $559b
@@ -357,7 +357,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wSelectedMinigame], a ; $55af
 	jp RunEraseSavedDataFlow ; $55b2
 	ret ; $55b5
-MatchSelectRunMatch:
+ResumeSuspendedStoryMatch:
 	farcall RunMatch ; $55b6
 	ld a, [wSaveAndQuitRequest] ; $55b9
 	or a ; $55bc
@@ -375,20 +375,20 @@ MatchSelectRunMatch:
 	ld a, [wGameMode] ; $55d5
 	cp GAMEMODE_EXHIBITION ; $55d8
 	jr nz, .chooseReturn ; $55da
-	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
+	clear_flag FLAG_AT_ISLAND_OPEN ; $55dc
 	xor a ; $55df
-	ld [wKeepMatchStatsFlag], a ; $55e0
+	ld [wMatchSuspendedFlag], a ; $55e0
 	ld b, STORYLOC_MAIN_MENU ; $55e3
 	ld c, ENTRY_MAIN_MENU_FROM_STORY ; $55e5
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
-	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
-	jr nz, .returnToLocation3 ; $55f0
+	test_flag FLAG_DEBUG_EXIT_TO_TEST_2 ; $55ed
+	jr nz, .testExit ; $55f0
 	ld a, EXIT_MAIN_MENU_CONTINUE ; $55f2
 	ld [wUnusedExitTriggerIdMirror], a ; $55f4
 	ld [wStoryModeExitTriggerRequest], a ; $55f7
 	ret ; $55fa
-.returnToLocation3:
+.testExit:
 	ld a, EXIT_MAIN_MENU_TEST_2 ; $55fb
 	ld [wUnusedExitTriggerIdMirror], a ; $55fd
 	ld [wStoryModeExitTriggerRequest], a ; $5600
@@ -461,9 +461,9 @@ MatchSelectRunMatch:
 	ret ; $568f
 .junior:
 	test_flag FLAG_DOUBLES ; $5690
-	jr nz, .otherRoom ; $5693
+	jr nz, .juniorDoubles ; $5693
 	cp STORYMATCH_JUNIOR_PRACTICE ; $5695
-	jr z, .practiceRoomAlt ; $5697
+	jr z, .juniorSinglesPractice ; $5697
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
 	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN ; $569e
@@ -472,7 +472,7 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $56a5
 	ld [wStoryModeExitTriggerRequest], a ; $56a8
 	ret ; $56ab
-.practiceRoomAlt:
+.juniorSinglesPractice:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $56ac
 	ld [wStoryModeCurrentLocation], a ; $56ae
 	ld a, ENTRY_JUNIOR_CLASS_COURT_SINGLES_PRACTICE_MATCH_RETURN ; $56b1
@@ -481,9 +481,9 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $56b8
 	ld [wStoryModeExitTriggerRequest], a ; $56bb
 	ret ; $56be
-.otherRoom:
+.juniorDoubles:
 	cp STORYMATCH_JUNIOR_PRACTICE ; $56bf
-	jr z, .otherRoomAlt ; $56c1
+	jr z, .juniorDoublesPractice ; $56c1
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
 	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_MATCH_RETURN ; $56c8
@@ -492,7 +492,7 @@ MatchSelectRunMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $56cf
 	ld [wStoryModeExitTriggerRequest], a ; $56d2
 	ret ; $56d5
-.otherRoomAlt:
+.juniorDoublesPractice:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56d6
 	ld [wStoryModeCurrentLocation], a ; $56d8
 	ld a, ENTRY_JUNIOR_CLASS_COURT_DOUBLES_PRACTICE_MATCH_RETURN ; $56db

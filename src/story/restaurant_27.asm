@@ -74,7 +74,7 @@ End3DormEntMapScripts_27:
 End3DormEntActors_27:
 	; $6c26, 66 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, END3_DORM_ENT_EMILY
-	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, END3_DORM_ENT_KATE
+	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, END3_DORM_ENT_ROOMMATE
 	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END3_DORM_ENT_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END3_DORM_ENT_BALLOON_QUESTION
 	map_actor_end
@@ -85,13 +85,13 @@ End3DormEntEntryPoints_27:
 	map_entry $0f, FACE_UP, 22.0, 27.0, $0000 ; debug warp only
 	db $ff
 End3DormEntExitTriggers_27:
-	ds 1, $ff ; $6c81, fill
+	db $ff ; $6c81
 End3DormEntNpcScripts_27:
-	ds 1, $ff ; $6c82, fill
+	db $ff ; $6c82
 End3DormEntFacingScripts_27:
-	ds 1, $ff ; $6c83, fill
+	db $ff ; $6c83
 End3DormEntTileTriggers_27:
-	ds 1, $ff ; $6c84, fill
+	db $ff ; $6c84
 End3DormEntInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6c85
 	ld a, [wStoryModeEntryPoint] ; $6c88
@@ -106,7 +106,7 @@ End3DormEntCutscene_27:
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $6ca4
 .notDoubles:
 	script_set_speed ACTOR_END3_DORM_ENT_EMILY, 0.5 ; $6caf
-	script_set_speed ACTOR_END3_DORM_ENT_KATE, 0.5 ; $6cb7
+	script_set_speed ACTOR_END3_DORM_ENT_ROOMMATE, 0.5 ; $6cb7
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6cbf
 	script_player_speed 0.5 ; $6cc7
 	script_set_position ACTOR_PLAYER, 22.0, 31.0 ; $6ccd
@@ -151,7 +151,7 @@ End3DormEntCutscene_27:
 	script_set_position ACTOR_END3_DORM_ENT_BALLOON_EXCLAIM, 1.0, 1.0 ; $6de8
 	script_move_target ACTOR_END3_DORM_ENT_EMILY, 22.0, 11.0 ; $6df3
 	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6dfe
-	script_set_position ACTOR_END3_DORM_ENT_KATE, 23.0, 11.0 ; $6e03
+	script_set_position ACTOR_END3_DORM_ENT_ROOMMATE, 23.0, 11.0 ; $6e03
 	script_wait_frames 60 ; $6e0e
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6e15
 	script_wait_frames 20 ; $6e1c
@@ -159,29 +159,29 @@ End3DormEntCutscene_27:
 	script_wait_idle ACTOR_PLAYER ; $6e2a
 	script_wait_frames 20 ; $6e2f
 	script_face ACTOR_PLAYER, FACE_UP ; $6e36
-	script_set_active ACTOR_END3_DORM_ENT_EMILY, $02 ; $6e3d
+	script_set_actor_mode ACTOR_END3_DORM_ENT_EMILY, ACTORMODE_VISIBLE ; $6e3d
 	script_set_position ACTOR_END3_DORM_ENT_EMILY, 21.0, 11.0 ; $6e44
 	ld a, [wStoryPartnerGender] ; $6e4f
 	or a ; $6e52
 	jr nz, .walk ; $6e53
-	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_KATE ; $6e55
-	script_set_anim ACTOR_END3_DORM_ENT_KATE, ANIM_WALK ; $6e61
+	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_ROOMMATE ; $6e55
+	script_set_anim ACTOR_END3_DORM_ENT_ROOMMATE, ANIM_WALK ; $6e61
 .walk:
 	script_move_target ACTOR_END3_DORM_ENT_EMILY, 21.0, 15.0 ; $6e68
 	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6e73
-	script_move_target ACTOR_END3_DORM_ENT_KATE, 23.0, 15.0 ; $6e78
-	script_wait_move ACTOR_END3_DORM_ENT_KATE ; $6e83
+	script_move_target ACTOR_END3_DORM_ENT_ROOMMATE, 23.0, 15.0 ; $6e78
+	script_wait_move ACTOR_END3_DORM_ENT_ROOMMATE ; $6e83
 	sound SFX_EMOTE ; $6e88
 	script_set_position ACTOR_END3_DORM_ENT_BALLOON_QUESTION, 23.5, 17.0 ; $6e8a
 	script_wait_frames 60 ; $6e95
 	script_set_anim ACTOR_END3_DORM_ENT_EMILY, ANIM_SHAKE ; $6e9c
 	script_wait_idle ACTOR_END3_DORM_ENT_EMILY ; $6ea3
 	script_set_position ACTOR_END3_DORM_ENT_BALLOON_QUESTION, 1.0, 1.0 ; $6ea8
-	script_face_toward ACTOR_END3_DORM_ENT_KATE, ACTOR_END3_DORM_ENT_EMILY ; $6eb3
+	script_face_toward ACTOR_END3_DORM_ENT_ROOMMATE, ACTOR_END3_DORM_ENT_EMILY ; $6eb3
 	script_wait_frames 60 ; $6ebb
 	script_face_toward ACTOR_PLAYER, ACTOR_END3_DORM_ENT_EMILY ; $6ec2
-	script_set_anim ACTOR_END3_DORM_ENT_KATE, ANIM_NOD ; $6eca
-	script_wait_idle ACTOR_END3_DORM_ENT_KATE ; $6ed1
+	script_set_anim ACTOR_END3_DORM_ENT_ROOMMATE, ANIM_NOD ; $6eca
+	script_wait_idle ACTOR_END3_DORM_ENT_ROOMMATE ; $6ed1
 	ld a, $0f ; $6ed6
 	ld [wUnusedExitTriggerIdMirror], a ; $6ed8
 	ld [wStoryModeExitTriggerRequest], a ; $6edb
@@ -215,11 +215,11 @@ EndRestaurantEntExitTriggers_27:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, ENTRY_TRAINING_COURT_TOUR
 	db $ff
 EndRestaurantEntNpcScripts_27:
-	ds 1, $ff ; $6f49, fill
+	db $ff ; $6f49
 EndRestaurantEntFacingScripts_27:
-	ds 1, $ff ; $6f4a, fill
+	db $ff ; $6f4a
 EndRestaurantEntTileTriggers_27:
-	ds 1, $ff ; $6f4b, fill
+	db $ff ; $6f4b
 EndRestaurantEntInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6f4c
 	cp ENTRY_END_RESTAURANT_ENT_SCENE ; $6f4f
@@ -228,7 +228,7 @@ EndRestaurantEntInitScript_27:
 .done:
 	ret ; $6f56
 EndRestaurantEntCutscene_27:
-	script_respawn_actors EndRestaurantEntActorsAlt_27 ; $6f57
+	script_respawn_actors EndRestaurantEntCutsceneActors_27 ; $6f57
 	farcall BeginCutsceneScriptMode ; $6f5f
 	test_flag FLAG_DOUBLES ; $6f62
 	jr z, .placeActors ; $6f65
@@ -290,7 +290,7 @@ EndRestaurantEntCutscene_27:
 	ld [wStoryModeExitTriggerRequest], a ; $7106
 	farcall EndCutsceneScriptMode ; $7109
 	ret ; $710c
-EndRestaurantEntActorsAlt_27:
+EndRestaurantEntCutsceneActors_27:
 	; $710d, 94 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END_RESTAURANT_ENT_ALT_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_27_27, 253.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END_RESTAURANT_ENT_ALT_BALLOON_QUESTION
@@ -338,19 +338,19 @@ End1MainBldgExitTriggers_27:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, ENTRY_ACADEMY_MAIN_BLDG_NEW_STUDENT
 	db $ff
 End1MainBldgNpcScripts_27:
-	ds 1, $ff ; $72f9, fill
+	db $ff ; $72f9
 End1MainBldgFacingScripts_27:
-	ds 1, $ff ; $72fa, fill
+	db $ff ; $72fa
 End1MainBldgTileTriggers_27:
-	ds 1, $ff ; $72fb, fill
+	db $ff ; $72fb
 End1MainBldgInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $72fc
 	cp ENTRY_END1_MAIN_BLDG_SCENE ; $72ff
-	jp z, .walkOff ; $7301
+	jp z, .walkIn ; $7301
 	cp ENTRY_END1_MAIN_BLDG_GROUP_DEPARTURE ; $7304
 	jp z, End1MainBldgGroupDepartureCutscene_27 ; $7306
 	ret ; $7309
-.walkOff:
+.walkIn:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $730a
 	xor a ; $7312
 	ld [wStoryModeShowLocationName], a ; $7313

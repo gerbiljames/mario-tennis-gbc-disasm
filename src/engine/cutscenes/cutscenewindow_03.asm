@@ -6,7 +6,7 @@ FillMemoryDE:
 	or e ; $6ff3
 	jr nz, FillMemoryDE ; $6ff4
 	ret ; $6ff6
-PlayScrollingStoryCutscene:
+ShowEndingCreditsStaffPage:
 	push af ; $6ff7
 	push bc ; $6ff8
 	push de ; $6ff9
@@ -38,7 +38,7 @@ PlayScrollingStoryCutscene:
 	ld [wCutsceneSlideTimer], a ; $7036
 	pop af ; $7039
 	push af ; $703a
-	ld [wCutsceneWindowSliding], a ; $703b
+	ld [wCreditsStaffPageIndex], a ; $703b
 	frame_task AnimateWindowSlideUpTask ; $703e
 .waitSlideLoop:
 	call AdvanceFrame ; $7046
@@ -63,8 +63,8 @@ PlayScrollingStoryCutscene:
 	call FillMemoryDE ; $7077
 	call AdvanceFrame ; $707a
 	pop af ; $707d
-	call DrawCutsceneTextPage ; $707e
-	call ScrollCutsceneTextWindow ; $7081
+	call DrawCreditsStaffPage ; $707e
+	call ScrollCreditsStaffWindow ; $7081
 	pop_wram_bank ; $7084
 	pop hl ; $7089
 	pop de ; $708a
@@ -75,7 +75,8 @@ PlayScrollingStoryCutscene:
 	ds 2, $00
 	ds ALIGN[4]
 WindowSolidTile_03:
-	ds 16, $ff ; $7090, fill
+	; $7090, 16 bytes (pattern)
+	ds 16, $ff
 	ds ALIGN[4]
 WindowAttrMap_03:
 	; $70a0, 256 bytes (pattern)
@@ -86,7 +87,7 @@ WindowTileMap_03:
 	ds 256, $20
 AnimateWindowSlideUpTask:
 	push_wram_bank WRAM_SCENE ; $72a0
-	ld a, [wCutsceneWindowSliding] ; $72a9
+	ld a, [wCreditsStaffPageIndex] ; $72a9
 	ld b, a ; $72ac
 	ld hl, WindowSlideStepTable_03 ; $72ad
 	ld a, b ; $72b0
@@ -99,7 +100,7 @@ AnimateWindowSlideUpTask:
 	pop_wram_bank ; $72bc
 	ldh a, [hVBlankCounter] ; $72c1
 	and $01 ; $72c3
-	jr nz, .maskSet ; $72c5
+	jr nz, .skipScroll ; $72c5
 	ldh a, [hScrollY] ; $72c7
 	add c ; $72c9
 	ldh [hScrollY], a ; $72ca
@@ -115,7 +116,7 @@ AnimateWindowSlideUpTask:
 	ld a, e ; $72d8
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da
-.maskSet:
+.skipScroll:
 	ld a, [wCutsceneSlideTimer] ; $72db
 	inc a ; $72de
 	ld [wCutsceneSlideTimer], a ; $72df
@@ -161,7 +162,7 @@ WindowSlideStepTable_03:
 	db $01, $20 ; 0x2c
 	db $01, $20 ; 0x2e
 	db $02, $20 ; 0x30
-DrawCutsceneTextPage:
+DrawCreditsStaffPage:
 	push af ; $7333
 	push bc ; $7334
 	push de ; $7335
@@ -176,16 +177,16 @@ DrawCutsceneTextPage:
 	add c ; $7340
 	add a ; $7341
 	add c ; $7342
-	ld hl, TextPageDescriptors_03 ; $7343
+	ld hl, CreditsStaffPageDescriptors_03 ; $7343
 	add_hl_a ; $7346
 	wram_bank WRAM_SCENE ; $734b
 	ld a, [hl] ; $7351
-	ld [wCutsceneTextScrollRows], a ; $7352
+	ld [wCreditsStaffPanelCount], a ; $7352
 	ld b, a ; $7355
 	inc hl ; $7356
 	ld c, $00 ; $7357
 .loop:
-	call DrawCutsceneTextLines ; $7359
+	call DrawCreditsStaffLines ; $7359
 	call AdvanceFrame ; $735c
 	inc hl ; $735f
 	inc hl ; $7360
@@ -199,7 +200,7 @@ DrawCutsceneTextPage:
 	pop bc ; $736d
 	pop af ; $736e
 	ret ; $736f
-TextPageDescriptors_03:
+CreditsStaffPageDescriptors_03:
 	; $7370, 147 bytes (records:7)
 ; 21 records x 7 bytes
 	db $02, $00, $04, $04, $06, $00, $00 ; record 0
@@ -223,7 +224,7 @@ TextPageDescriptors_03:
 	db $02, $7b, $07, $82, $07, $00, $00 ; record 18
 	db $01, $89, $06, $00, $00, $00, $00 ; record 19
 	db $01, $8f, $04, $00, $00, $00, $00 ; record 20
-DrawCutsceneTextLines:
+DrawCreditsStaffLines:
 	push af ; $7403
 	push bc ; $7404
 	push de ; $7405
@@ -241,7 +242,7 @@ DrawCutsceneTextLines:
 .mulHLByA:
 	call MulHLByA ; $7418
 .step:
-	ld de, wCutsceneTextScrollBuffer + 99 ; $741b
+	ld de, wCreditsStaffScrollBuffer + 99 ; $741b
 	add hl, de ; $741e
 	ld d, h ; $741f
 	ld e, l ; $7420
@@ -250,7 +251,7 @@ DrawCutsceneTextLines:
 	push af ; $7423
 	ld a, [hl] ; $7424
 	ld b, a ; $7425
-	ld hl, $30ab ; $7426
+	ld hl, Text_CreditsStaffPageLines ; $7426
 	pop af ; $7429
 	add_hl_a ; $742a
 	wram_bank WRAM_STAGING ; $742f
@@ -269,25 +270,25 @@ DrawCutsceneTextLines:
 	pop bc ; $744f
 	pop af ; $7450
 	ret ; $7451
-ScrollCutsceneTextWindow:
+ScrollCreditsStaffWindow:
 	push af ; $7452
 	push bc ; $7453
 	push de ; $7454
 	push hl ; $7455
 	push_wram_bank WRAM_SCENE ; $7456
-	ld a, [wCutsceneTextScrollRows] ; $745f
+	ld a, [wCreditsStaffPanelCount] ; $745f
 	and $03 ; $7462
-	jr nz, .maskSet ; $7464
+	jr nz, .gotSteps ; $7464
 	ld a, $01 ; $7466
-.maskSet:
+.gotSteps:
 	ld b, a ; $7468
 	ld d, $00 ; $7469
 	ld c, $00 ; $746b
-.scrollRowLoop:
+.panelLoop:
 	call AdvanceFrame ; $746d
 	ld e, $14 ; $7470
 .blitLoop:
-	call BlitCutsceneTextWindow ; $7472
+	call BlitCreditsStaffWindow ; $7472
 	inc c ; $7475
 	dec e ; $7476
 	jr nz, .blitLoop ; $7477
@@ -299,21 +300,21 @@ ScrollCutsceneTextWindow:
 	inc d ; $7481
 	ld a, d ; $7482
 	cp b ; $7483
-	jr nz, .scrollRowLoop ; $7484
+	jr nz, .panelLoop ; $7484
 	pop_wram_bank ; $7486
 	pop hl ; $748b
 	pop de ; $748c
 	pop bc ; $748d
 	pop af ; $748e
 	ret ; $748f
-BlitCutsceneTextWindow:
+BlitCreditsStaffWindow:
 	push af ; $7490
 	push bc ; $7491
 	push de ; $7492
 	push hl ; $7493
 	ldh a, [hWramBank] ; $7494
 	push af ; $7496
-	ld hl, wCutsceneTextScrollBuffer ; $7497
+	ld hl, wCreditsStaffScrollBuffer ; $7497
 	ld a, c ; $749a
 	add_hl_a ; $749b
 	ld b, $08 ; $74a0
@@ -403,11 +404,11 @@ ShowFinalCreditsCard:
 	call FillMemoryDE ; $7544
 	ld hl, Text_CreditCamelot ; $7547
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $754a
-	ld bc, $0020 ; $754d
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $754d
 	farcall FetchAndDrawDialogueText ; $7550
 	ld hl, Text_CreditNintendo ; $7553
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $7556
-	ld bc, $0020 ; $7559
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $7559
 	farcall FetchAndDrawDialogueText ; $755c
 	wram_bank WRAM_COURT_PLANES ; $755f
 	ld hl, wScreenAttrmap ; $7565

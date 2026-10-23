@@ -411,7 +411,7 @@ ClampCharXSpeed:
 MoveCharTowardTarget:
 	call CheckCharNearTarget ; $7541
 	and a ; $7544
-	jp nz, .toward ; $7545
+	jp nz, .arrived ; $7545
 	ld hl, wCharPosX + 1 ; $7548
 	ld a, [hl+] ; $754b
 	ld b, [hl] ; $754c
@@ -454,7 +454,7 @@ MoveCharTowardTarget:
 	ld [wCharScriptedMove], a ; $7593
 	ld a, $01 ; $7596
 	ret ; $7598
-.toward:
+.arrived:
 	ld hl, wCharWalkTargetX ; $7599
 	ld a, [hl+] ; $759c
 	ld b, [hl] ; $759d
@@ -515,9 +515,9 @@ EaseCharFacing:
 UpdateCharFacingOctant:
 	ld a, [wCharAnimId] ; $75e8
 	cp CHARANIM_RUN ; $75eb
-	jr z, .mirrored ; $75ed
+	jr z, .roundShownFacing ; $75ed
 	cp CHARANIM_IDLE ; $75ef
-	jr z, .mirrored ; $75f1
+	jr z, .roundShownFacing ; $75f1
 	cp CHARANIM_DIVE ; $75f3
 	jr z, .easeToShown ; $75f5
 	ld a, [wCharBaseFacing] ; $75f7
@@ -529,7 +529,7 @@ UpdateCharFacingOctant:
 	sra a ; $7603
 	add [hl] ; $7605
 	jr .toOctant ; $7606
-.mirrored:
+.roundShownFacing:
 	ld a, [wCharFacingShown] ; $7608
 	add $10 ; $760b
 .toOctant:
@@ -553,7 +553,7 @@ ReloadCharFacingTiles:
 	ret z ; $7626
 	res CHARSPRITEB_RELOAD_TILES, [hl] ; $7627
 	ld a, d ; $7629
-	ld_hl_indexed ReloadCharFacingTilesTable ; $762a
+	ld_hl_indexed FacingOctantSpriteColumns ; $762a
 	ld d, [hl] ; $7631
 	ld a, [wCharAnimFrame] ; $7632
 	ld e, a ; $7635
@@ -567,6 +567,6 @@ ReloadCharFacingTiles:
 	ld e, l ; $763e
 	ld d, h ; $763f
 	jp QueueCharFrameTiles ; $7640
-ReloadCharFacingTilesTable:
+FacingOctantSpriteColumns:
 	; $7643, 8 bytes (bytes:8)
 	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00

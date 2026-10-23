@@ -71,7 +71,7 @@ StartHitEffect:
 	ld a, c ; $53f0
 	ld [hl+], a ; $53f1
 	ld [hl], b ; $53f2
-	ld a, [wSpecialShotFlag] ; $53f3
+	ld a, [wPowerServeFlag] ; $53f3
 	and a ; $53f6
 	jr nz, .specialEffect ; $53f7
 	ld a, [wShotChargeLevel] ; $53f9
@@ -131,13 +131,13 @@ DrawSpecialHitEffect:
 	ld hl, wSpecialHitTimer ; $5454
 	call TickTimer ; $5457
 	ld a, [wSpecialHitTimer] ; $545a
-	ld_hl_indexed DrawSpecialHitEffectTable ; $545d
+	ld_hl_indexed SpecialHitEffectFrameByTimer ; $545d
 	ld a, [hl] ; $5464
 	cp $ff ; $5465
 	ret z ; $5467
 	farcall LoadSpecialHitEffectTiles ; $5468
 	ret ; $546b
-DrawSpecialHitEffectTable:
+SpecialHitEffectFrameByTimer:
 	; $546c, 16 bytes (bytes:4)
 	db $ff, $ff, $ff, $03 ; 0x00
 	db $ff, $ff, $ff, $02 ; 0x04
@@ -166,13 +166,13 @@ DrawBallTouchCharEffect:
 	ld hl, wBallTouchCharTimer ; $54aa
 	call TickTimer ; $54ad
 	ld a, [wBallTouchCharTimer] ; $54b0
-	ld_hl_indexed DrawBallTouchCharEffectTable ; $54b3
+	ld_hl_indexed BallTouchCharEffectFrameByTimer ; $54b3
 	ld a, [hl] ; $54ba
 	cp $ff ; $54bb
 	ret z ; $54bd
-	farcall LoadBallTouchCharEffectTilesA ; $54be
+	farcall LoadBallTouchCharEffectTiles ; $54be
 	ret ; $54c1
-DrawBallTouchCharEffectTable:
+BallTouchCharEffectFrameByTimer:
 	; $54c2, 40 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08
@@ -224,7 +224,7 @@ DrawTargetZone:
 	ld bc, $0000 ; $5533
 	call ProjectWorldToScreen_08 ; $5536
 	call ApplyCameraProjection ; $5539
-	ld hl, DrawTargetZone_SpriteTemplate0 ; $553c
+	ld hl, TargetZoneTopLeftSpriteTemplate ; $553c
 	ld_oam bc, OAM_BANK1 | 1, $20 ; $553f
 	call QueueSpriteTemplate ; $5542
 	ld hl, wTargetZoneDepth1 ; $5545
@@ -238,7 +238,7 @@ DrawTargetZone:
 	ld bc, $0000 ; $5551
 	call ProjectWorldToScreen_08 ; $5554
 	call ApplyCameraProjection ; $5557
-	ld hl, DrawTargetZone_SpriteTemplate1 ; $555a
+	ld hl, TargetZoneTopRightSpriteTemplate ; $555a
 	ld_oam bc, OAM_BANK1 | 1, $22 ; $555d
 	call QueueSpriteTemplate ; $5560
 	ld hl, wTargetZoneDepth2 ; $5563
@@ -252,7 +252,7 @@ DrawTargetZone:
 	ld bc, $0000 ; $556f
 	call ProjectWorldToScreen_08 ; $5572
 	call ApplyCameraProjection ; $5575
-	ld hl, DrawTargetZone_SpriteTemplate2 ; $5578
+	ld hl, TargetZoneBottomLeftSpriteTemplate ; $5578
 	ld_oam bc, OAM_BANK1 | 1, $24 ; $557b
 	call QueueSpriteTemplate ; $557e
 	ld hl, wTargetZoneDepth2 ; $5581
@@ -266,23 +266,23 @@ DrawTargetZone:
 	ld bc, $0000 ; $558d
 	call ProjectWorldToScreen_08 ; $5590
 	call ApplyCameraProjection ; $5593
-	ld hl, DrawTargetZone_SpriteTemplate3 ; $5596
+	ld hl, TargetZoneBottomRightSpriteTemplate ; $5596
 	ld_oam bc, OAM_BANK1 | 1, $26 ; $5599
 	call QueueSpriteTemplate ; $559c
 	ret ; $559f
-DrawTargetZone_SpriteTemplate0:
+TargetZoneTopLeftSpriteTemplate:
 	; $55a0, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
-DrawTargetZone_SpriteTemplate1:
+TargetZoneTopRightSpriteTemplate:
 	; $55a5, 5 bytes (sprite_template)
 	oam_sprite $10, $01, $00, $00
 	oam_sprite_end
-DrawTargetZone_SpriteTemplate2:
+TargetZoneBottomLeftSpriteTemplate:
 	; $55aa, 5 bytes (sprite_template)
 	oam_sprite $09, $08, $00, $00
 	oam_sprite_end
-DrawTargetZone_SpriteTemplate3:
+TargetZoneBottomRightSpriteTemplate:
 	; $55af, 5 bytes (sprite_template)
 	oam_sprite $09, $01, $00, $00
 	oam_sprite_end
@@ -403,9 +403,9 @@ ApplyBallSpin:
 	rra ; $5674
 	ld hl, hMathSign ; $5675
 	bit 7, [hl] ; $5678
-	jr z, .accumulateX ; $567a
+	jr z, .addSideSpinVel ; $567a
 	call NegateADE ; $567c
-.accumulateX:
+.addSideSpinVel:
 	ld hl, wBallVelocityDepthFrac ; $567f
 	call Add24ToMem24 ; $5682
 	pop de ; $5685
@@ -495,9 +495,9 @@ ApplyBallSpin:
 	rra ; $5713
 	ld hl, hMathSign ; $5714
 	bit 7, [hl] ; $5717
-	jr z, .accumulateDepth ; $5719
+	jr z, .addTopspinVel ; $5719
 	call NegateADE ; $571b
-.accumulateDepth:
+.addTopspinVel:
 	ld hl, wBallVelocityHeightFrac ; $571e
 	call Add24ToMem24 ; $5721
 	ld hl, wBallHeadingAngle ; $5724
@@ -577,14 +577,14 @@ StepBallPhysics:
 	call ApplyBallSpin ; $57b0
 	call GetBallHeightSign ; $57b3
 	cp $ff ; $57b6
-	jr z, .rising ; $57b8
-	jr .falling ; $57ba
-.rising:
+	jr z, .airborne ; $57b8
+	jr .groundContact ; $57ba
+.airborne:
 	ld de, $4a00 ; $57bc
 	ld hl, wBallVelocityHeightFrac ; $57bf
 	call AddDEToMem24 ; $57c2
 	ret ; $57c5
-.falling:
+.groundContact:
 	call ApplyCourtBounceDamping ; $57c6
 	ld hl, wBallHeightFrac ; $57c9
 	ASSERT wBallHeight == wBallHeightFrac + 2, "this code walks from wBallHeightFrac into wBallHeight"
@@ -670,7 +670,7 @@ HandleBallNetCrossing:
 	sound SFX_NET_CORD ; $5841
 	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
-	ld [wBallHasBouncedFlag], a ; $5848
+	ld [wBallTouchedNetFlag], a ; $5848
 	ld hl, wBallDepthFrac ; $584b
 	ASSERT wBallDepth == wBallDepthFrac + 2, "this code walks from wBallDepthFrac into wBallDepth"
 	ld a, [hl] ; $584e
@@ -708,7 +708,7 @@ HandleBallNetCrossing:
 	ld hl, $0058 ; $587c
 	add hl, de ; $587f
 	bit 7, h ; $5880
-	jr nz, .crossed ; $5882
+	jr nz, .popBack ; $5882
 	ld hl, wBallVelocityDepth ; $5884
 	ld a, [hl+] ; $5887
 	ld d, [hl] ; $5888
@@ -726,7 +726,7 @@ HandleBallNetCrossing:
 	ld [hl], d ; $58a1
 .done:
 	ret ; $58a2
-.crossed:
+.popBack:
 	ld hl, wBallVelocityDepth ; $58a3
 	ld a, [hl+] ; $58a6
 	ld d, [hl] ; $58a7

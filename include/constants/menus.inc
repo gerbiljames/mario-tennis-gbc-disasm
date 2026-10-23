@@ -2,8 +2,9 @@
 ; GetMatchMenuItemId returns one of these; they index MatchMenuItemGfxPointers
 ; (the selected item's word art), MatchMenuItemRectPointers (its 3x2 label in
 ; the list) and the item caption at text id $013f + id (bank $30, 319+id).
-; Names follow the captions; the comment gives the word art, which several
-; ids share.
+; Names follow the menu that lists the item (the captions' wording is loose:
+; the drill menu's "Try mini-game again."); the comment gives the word art,
+; which several ids share.
 	const_def
 	const MATCHMENUITEM_RULES              ; $00 "RULES"
 	const MATCHMENUITEM_CONTROLS           ; $01 "CONTROLS"
@@ -19,16 +20,16 @@
 	const MATCHMENUITEM_SAVE_GAME          ; $0b "SAVE" (narrow; performs the save)
 	const MATCHMENUITEM_TO_MAIN_MENU       ; $0c "TO MAIN MENU"
 	const MATCHMENUITEM_TO_LEVEL_SELECT    ; $0d "TO LEVEL SELECT"
-	const MATCHMENUITEM_RETRY_MINIGAME     ; $0e "TRY AGAIN"
-	const MATCHMENUITEM_RETRY_PRACTICE     ; $0f "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_DRILL        ; $0e "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_LESSON       ; $0f "TRY AGAIN"
 	const MATCHMENUITEM_RETRY_MACHINE      ; $10 "TRY AGAIN"
-	const MATCHMENUITEM_RETRY_PRACTICE_ALT ; $11 "TRY AGAIN"
-	const MATCHMENUITEM_RETRY_GAME         ; $12 "TRY AGAIN"
-	const MATCHMENUITEM_QUIT_GAME          ; $13 "QUIT MATCH"
-	const MATCHMENUITEM_QUIT_MATCH         ; $14 "QUIT MINI-GAME"
-	const MATCHMENUITEM_QUIT_PRACTICE      ; $15 "QUIT MINI-GAME"
+	const MATCHMENUITEM_RETRY_WALL         ; $11 "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_MINIGAME     ; $12 "TRY AGAIN"
+	const MATCHMENUITEM_QUIT_MATCH         ; $13 "QUIT MATCH"
+	const MATCHMENUITEM_QUIT_DRILL         ; $14 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_LESSON        ; $15 "QUIT MINI-GAME"
 	const MATCHMENUITEM_QUIT_MACHINE       ; $16 "QUIT MINI-GAME"
-	const MATCHMENUITEM_QUIT_PRACTICE_ALT  ; $17 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_WALL          ; $17 "QUIT MINI-GAME"
 def NUM_MATCHMENUITEMS equ const_value
 
 ; --- Match pause menus (wPauseMenuId, rows of MatchMenuDefs) ---
@@ -84,7 +85,7 @@ def NUM_STORYMENUS equ const_value
 def NUM_STORYMENUITEMS equ const_value
 
 ; --- Character-select mode (wCharSelectMode) ---
-; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5
+; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing* by mode
 ; and friends). RunExhibitionCharSelectScreen takes modes 0-1 in b from
 ; wMatchFormatDoubles; RunLinkCharSelectScreen stores the link modes from
 ; wMatchIsDoubles and hLinkState. The P2 modes start the cursor at seat 2.
@@ -127,6 +128,28 @@ def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
 ; (FitWindowToText substitutes window 0) and store it after CloseWindow.
 def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
 
+; --- Window struct fields (wWindowStructs, WRAM bank $05) ---
+; NUM_WINDOWS records, reached through GetWindowStructPtr (id & 7, << 3).
+	rsreset
+def WINDOW_COL     rb ; $00 wrapped to $1f by SetWindowRect
+def WINDOW_ROW     rb ; $01 wrapped to $1f by SetWindowRect
+def WINDOW_WIDTH   rb ; $02 cells
+def WINDOW_HEIGHT  rb ; $03 cells
+def WINDOW_STATE   rb ; $04 a WINDOWSTATE_* (GetWindowState / SetWindowState)
+	rb_skip 1         ; $05
+def WINDOW_TEXT_ID rw ; $06 SetWindowTextId
+def WINDOW_SIZE equ _RS
+	ASSERT WINDOW_SIZE == 8
+def NUM_WINDOWS equ 8
+
+; --- Window state (WINDOW_STATE) ---
+; Zero from FreeWindow for a plain window. Both menu states have bit 1 set,
+; which the redraw paths test (and WINDOWSTATE_MENU) to indent the text one
+; column past the cursor arrow.
+def WINDOWSTATE_MENU       equ $02 ; CreateMenuWindowFromText
+def WINDOWSTATE_PAGED_MENU equ $03 ; CreateMenuWindowPaged: Left/Right page a long list
+def WINDOWSTATE_HIDDEN     equ $ff ; DrawTextWindowFrame skips it; ResetWindowState sets it before FreeWindow
+
 ; --- Message speed (wMessageSpeed) ---
 ; Bits 0-6 hold the speed; bit 7 draws text instantly whatever the speed
 ; (ApplyMessageSpeed, FlushGlyphRow) and is cleared before saving.
@@ -143,6 +166,29 @@ def MSGSPEED_MASK     equ $7f
 def MENUSLIDE_BACK           equ $00
 def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 
+; --- Menu cursor locks (wMenuCursorLockFlags) ---
+; A locks a cursor; B unlocks it, or, when neither is locked, sets its
+; CANCEL bit, which nothing reads.
+	const_def
+	const CURSORLOCKB_PRIMARY          ; $00
+	const CURSORLOCKB_SECONDARY        ; $01
+	const CURSORLOCKB_PRIMARY_CANCEL   ; $02
+	const CURSORLOCKB_SECONDARY_CANCEL ; $03
+def CURSORLOCKF_PRIMARY          equ 1 << CURSORLOCKB_PRIMARY
+def CURSORLOCKF_SECONDARY        equ 1 << CURSORLOCKB_SECONDARY
+def CURSORLOCKF_PRIMARY_CANCEL   equ 1 << CURSORLOCKB_PRIMARY_CANCEL
+def CURSORLOCKF_SECONDARY_CANCEL equ 1 << CURSORLOCKB_SECONDARY_CANCEL
+
+; --- Sprite bob/bounce/wobble direction (c of ApplyCursorBounceX/Y,
+; ApplySpriteBobOffsetX/Y, ApplySelectionBoxWobbleX/Y and kin) ---
+; The routines add the hVBlankCounter-driven offset to d (X) or e (Y).
+def BOBDIR_NEG equ $00 ; subtract: up/left
+def BOBDIR_POS equ $01 ; add: down/right
+
+; --- Briefing caption prompt (AdvanceFrameCheckInput's c) ---
+def BRIEFPROMPT_SHOW equ $00 ; draw the blinking prompt
+def BRIEFPROMPT_NONE equ $01 ; last caption: no prompt
+
 ; --- Menu panel slide animations (RestoreMenuBgAndDrawPanel's b) ---
 ; Rows of TilemapAssemblyDispatch_39; c picks the frame within the row.
 	const_def
@@ -156,8 +202,8 @@ def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 	const PANELANIM_UNUSED_PANEL_OUT      ; $07
 	const PANELANIM_SAVED_DATA_PICKER_IN  ; $08
 	const PANELANIM_SAVED_DATA_PICKER_OUT ; $09
-	const PANELANIM_N64_RECORD_TYPE_IN    ; $0a
-	const PANELANIM_N64_RECORD_TYPE_OUT   ; $0b
+	const PANELANIM_THREE_CHOICE_IN       ; $0a
+	const PANELANIM_THREE_CHOICE_OUT      ; $0b
 	const_skip 4                          ; $0c-$0f never passed: copies of CHOICE_TAB_IN
 	const PANELANIM_CHOICE_TAB_IN         ; $10
 	const PANELANIM_CHOICE_TAB_OUT        ; $11
@@ -176,6 +222,30 @@ def NUM_PANELANIMS equ const_value
 	const MAPROWS_BANDS_4_10   ; $01 never passed
 	const MAPROWS_BANDS_4_9    ; $02
 	const MAPROWS_BAND_7       ; $03
+
+; --- Attribute-rect highlight (c of the option-cell and tab attr fillers) ---
+; SetLinkMatchFormatOptionAttrRect, FillMatchFormatOptionCell,
+; SetChoiceTabAttrRect, SetCourtSelect4/9TabAttrRect, SetSelectPanelAttrRect(3) and
+; FillN64RecordTypeCell test c for zero: any nonzero value fills with the
+; selected attribute, zero with the inactive $0d.
+def ATTRRECT_INACTIVE equ $00
+def ATTRRECT_SELECTED equ $01
+
+; --- Match-format screen rows (cursor row; FlushMatchFormatRowAttrs's b) ---
+	const_def
+	const MATCHFMTROW_MODE  ; $00 singles / doubles (wMatchFormatDoubles)
+	const MATCHFMTROW_GAMES ; $01 wMatchFormatGames
+	const MATCHFMTROW_SETS  ; $02 wMatchFormatSets
+def NUM_MATCHFMTROWS equ const_value
+
+; --- Match-format option cells (FillMatchFormatOptionCell's b) ---
+; A row's cells run from its base: the selected cell is the base plus the
+; row's variable (`add MATCHFMTOPT_GAMES`).
+def MATCHFMTOPT_SINGLES equ $00
+def MATCHFMTOPT_DOUBLES equ $01
+def MATCHFMTOPT_GAMES   equ $02 ; + wMatchFormatGames (2 choices)
+def MATCHFMTOPT_SETS    equ $04 ; + wMatchFormatSets (3 choices)
+def NUM_MATCHFMTOPTS    equ MATCHFMTOPT_SETS + 3
 
 ; --- Character select slot (wCharSelectSlot) ---
 def CHARSELECTSLOT_DONE equ $04 ; every player slot is filled: the screen shows the wait banner
@@ -217,11 +287,18 @@ def TDICTCAT_ALL       equ $1f
 	const TDICTFLAGB_LEFT_ARROW  ; $02 flash the left page arrow this frame
 	const TDICTFLAGB_RIGHT_ARROW ; $03 flash the right page arrow this frame
 
+; --- Tennis Dictionary screen loop state (TennisDictionaryScreen's a) ---
+def TDICTSTATE_EXIT       equ $01 ; leave the dictionary
+def TDICTSTATE_INDEX      equ $02 ; index page input (HandleTennisDictionaryIndexInput)
+def TDICTSTATE_OPEN_LIST  equ $04 ; switch to the list page (ShowTennisDictionaryPageList)
+def TDICTSTATE_LIST       equ $08 ; list page input (HandleTennisDictionaryListInput)
+def TDICTSTATE_OPEN_INDEX equ $10 ; switch back to the index page (ShowTennisDictionaryPageIndex)
+
 ; --- Ranking board presentation (wRankingBoardMode) ---
 	const_def
 	const RANKINGBOARD_PLAIN     ; $00
-	const RANKINGBOARD_FANFARE   ; $01 plays fanfare $2b and the marker climb
-	const RANKINGBOARD_CURSOR    ; $02 the second fanfare and RankingCursorBobTask; no marker animation
+	const RANKINGBOARD_WIN       ; $01 won: BGM_ISLAND_OPEN_WIN, the marker climb and the CONGRATULATIONS banner
+	const RANKINGBOARD_LOSE      ; $02 lost: BGM_ISLAND_OPEN_LOSE and the bobbing GAME OVER banner (RankingGameOverBobTask); no marker animation
 	const RANKINGBOARD_SILENT    ; $03 ShowRankingBoard argument only: stored as PLAIN with wRankingBoardSilent set
 
 ; --- EXP award lines (SetPendingExpAward's b; wPendingExpAwardAmounts words) ---
@@ -267,3 +344,8 @@ def EXPSTAT_SIZE equ _RS
 	const SCOREBOARD_POINT_PIPS  ; $05 Stroke Match 1
 	const SCOREBOARD_SCORE       ; $06 wall, Tennis Machine and Boo Blast: score to a target
 	const SCOREBOARD_HIGH_SCORE  ; $07 wMinigameHighScoreMode
+
+; --- Continue-game player panel (DrawPlayerNameAndLevel) ---
+; CopyTilesAndAttrsRun reads each cell's attribute this far past its tile id,
+; so the panel's 8x5 attribute plane is decompressed there.
+def RESULTS_PANEL_ATTRS equ 200

@@ -6,12 +6,12 @@ Unused_1a_DrawCharViewerCharSprite:
 	ld_xy de, $4e, $15 ; $701e
 	call QueueSprite ; $7021
 	wram_bank WRAM_CHAR0 ; $7024
-	ld hl, wCharPosX ; $702a
+	ld hl, wCharStruct ; $702a
 	ld b, h ; $702d
 	ld c, l ; $702e
 	farcall StepCharAnimation ; $702f
 	wram_bank WRAM_SCENE ; $7032
-	ld a, [wCharDataNewLevels] ; $7038
+	ld a, [wCharDataStartLevels + TRAINSTAT_SPIN] ; $7038
 	ld d, a ; $703b
 	wram_bank WRAM_CHAR0 ; $703c
 	push de ; $7042
@@ -82,26 +82,26 @@ Unused_1a_LoadCharViewerMugshot:
 	ret ; $70bf
 Unused_1a_ApplyCharViewerPalette:
 	wram_bank WRAM_SCENE ; $70c0
-	ld a, [wCharDataLevel] ; $70c6
+	ld a, [wCharDataStartLevel] ; $70c6
 	ld_bg_pals de, 7, 1 ; $70c9
 	farcall LoadIndexedPaletteThunk ; $70cc
-	ld a, [wCharDataLevel] ; $70cf
+	ld a, [wCharDataStartLevel] ; $70cf
 	ld_obj_pals de, 7, 1 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
-Palette_1a_0:
-	INCLUDE "data/engine/menus/char_data/Palette_1a_0.asm" ; $70d9, 64 bytes (palettes)
-CharViewerScreenGfx0:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx0.bin" ; $7119, 1636 bytes
-CharViewerScreenGfx1:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx1.bin" ; $777d, 180 bytes
-CharViewerScreenGfx2:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenGfx2.bin" ; $7831, 129 bytes
-CharViewerGridTilemap0:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
-CharViewerGridTilemap1:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
-CharViewerInputLoopTable:
+CharViewerPalettes:
+	INCLUDE "data/engine/menus/char_data/CharViewerPalettes.asm" ; $70d9, 64 bytes (palettes)
+CharViewerScreenTiles:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenTiles.bin" ; $7119, 1636 bytes
+CharViewerScreenTilemap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenTilemap.bin" ; $777d, 180 bytes
+CharViewerScreenAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenAttrmap.bin" ; $7831, 129 bytes
+CharViewerGridTilemap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap.bin" ; $78b2, 58 bytes
+CharViewerGridAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerGridAttrmap.bin" ; $78ec, 67 bytes
+CharViewerCursorAnimIds:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 	db $10, $11, $12, $0b, $0c, $0d ; 0x10
@@ -110,20 +110,20 @@ RunCharDataConfirmScreen:
 	farcall LoadCharDataScreenTilemaps ; $7948
 	wram_bank WRAM_STAGING ; $794b
 	ld hl, CharDataConfirmScreenTopTilemap ; $7951
-	ld de, wTextTileBuffer tile 106 ; $7954
+	ld de, wDecompBufferHigh tile 106 ; $7954
 	call DecompressData ; $7957
-	ld hl, wTextTileBuffer tile 106 ; $795a
+	ld hl, wDecompBufferHigh tile 106 ; $795a
 	ld bc, $002a ; $795d
 	call CopyBank1ToBank3BufferAlt ; $7960
 	wram_bank WRAM_STAGING ; $7963
 	ld hl, CharDataConfirmScreenTopAttrmap ; $7969
-	ld de, wTextTileBuffer tile 106 ; $796c
+	ld de, wDecompBufferHigh tile 106 ; $796c
 	call DecompressData ; $796f
-	ld hl, wTextTileBuffer tile 106 ; $7972
+	ld hl, wDecompBufferHigh tile 106 ; $7972
 	ld bc, $002a ; $7975
 	call CopyBank1ToBank2BufferAlt ; $7978
 	ld hl, CharDataConfirmScreenTopPatchList ; $797b
-	ld bc, wTextTileBuffer tile 106 ; $797e
+	ld bc, wCharDataConfirmTopRows ; $797e
 	call ApplyTilemapPatchList_1a ; $7981
 	farcall DrawCharDataConfirmPrompt ; $7984
 	wram_bank WRAM_SCREEN ; $7987
@@ -139,30 +139,30 @@ RunCharDataConfirmScreen:
 	call EnableLCD ; $79a9
 	call AdvanceFrame ; $79ac
 	farcall StartCharDataScreenAnimTask ; $79af
-	farcall StartCharDataValuesSyncTask ; $79b2
+	farcall StartCharDataSummarySpritesTask ; $79b2
 	script_fade_in 16 ; $79b5
 	call WaitFadeEnd ; $79ba
 	wram_bank WRAM_SCENE ; $79bd
 	ld a, $01 ; $79c3
-	ld [wCharDataConfirmState], a ; $79c5
+	ld [wCharDataConfirmCursor], a ; $79c5
 .loop:
 	call DrawConfirmSelectionCursor_1a ; $79c8
 	call AdvanceFrame ; $79cb
 	ldh a, [hInputRisingEdge] ; $79ce
 	bit PADB_A, a ; $79d0
-	jr nz, .step ; $79d2
+	jr nz, .pressedA ; $79d2
 	bit PADB_B, a ; $79d4
 	jr nz, .cancel ; $79d6
 	and PADF_UP | PADF_DOWN ; $79d8
 	jr z, .loop ; $79da
 	sound SFX_MENU_MOVE ; $79dc
-	ld a, [wCharDataConfirmState] ; $79de
+	ld a, [wCharDataConfirmCursor] ; $79de
 	xor $01 ; $79e1
-	ld [wCharDataConfirmState], a ; $79e3
+	ld [wCharDataConfirmCursor], a ; $79e3
 	jr .loop ; $79e6
-.step:
+.pressedA:
 	wram_bank WRAM_SCENE ; $79e8
-	ld a, [wCharDataConfirmState] ; $79ee
+	ld a, [wCharDataConfirmCursor] ; $79ee
 	or a ; $79f1
 	jr nz, .cancel ; $79f2
 	sound SFX_MENU_SELECT ; $79f4
@@ -170,15 +170,15 @@ RunCharDataConfirmScreen:
 .cancel:
 	wram_bank WRAM_SCENE ; $79f8
 	ld a, $01 ; $79fe
-	ld [wCharDataConfirmState], a ; $7a00
+	ld [wCharDataConfirmCursor], a ; $7a00
 	sound SFX_MENU_CANCEL ; $7a03
 .beginFadeOut:
 	script_fade_out 16 ; $7a05
 	call WaitFadeEnd ; $7a0a
-	farcall StopCharDataValuesSyncTask ; $7a0d
+	farcall StopCharDataSummarySpritesTask ; $7a0d
 	farcall StopCharDataScreenAnimTask ; $7a10
 	wram_bank WRAM_SCENE ; $7a13
-	ld a, [wCharDataConfirmState] ; $7a19
+	ld a, [wCharDataConfirmCursor] ; $7a19
 	ret ; $7a1c
 	twin draw_confirm_selection_cursor, 1a ; $7a1d DrawConfirmSelectionCursor_1a
 CopyBank1ToBank3BufferAlt:
@@ -253,7 +253,7 @@ ApplyTilemapPatchList_1a:
 	inc hl ; $7ab1
 	inc hl ; $7ab2
 	jr ApplyTilemapPatchList_1a ; $7ab3
-CharDataScreen_BuildStats:
+ComputeCharDataEquipmentDeltas:
 	ld a, [wStoryCharacterSlot] ; $7ab5
 	or a ; $7ab8
 	ret nz ; $7ab9
@@ -309,111 +309,111 @@ CharDataScreen_BuildStats:
 	inc de ; $7afa
 	ld a, [hl] ; $7afb
 	ld [de], a ; $7afc
-	ld hl, wCharDataStatsNoEquipment ; $7afd
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_TOP ; $7afd
 	ld c, [hl] ; $7b00
-	ld a, [wCharDataStats] ; $7b01
+	ld a, [wCharDataStats + CHARSTAT_TOP] ; $7b01
 	dec a ; $7b04
 	sub c ; $7b05
-	ld [wCharDataEquipmentDeltas], a ; $7b06
-	ld hl, wCharDataStatsNoEquipment + 1 ; $7b09
+	ld [wCharDataEquipmentDeltas + CHARSTAT_TOP], a ; $7b06
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_SLICE ; $7b09
 	ld c, [hl] ; $7b0c
-	ld a, [wCharDataStats + 1] ; $7b0d
+	ld a, [wCharDataStats + CHARSTAT_SLICE] ; $7b0d
 	dec a ; $7b10
 	sub c ; $7b11
-	ld [wCharDataEquipmentDeltas + 1], a ; $7b12
-	ld hl, wCharDataStatsNoEquipment + 2 ; $7b15
+	ld [wCharDataEquipmentDeltas + CHARSTAT_SLICE], a ; $7b12
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_SERVE ; $7b15
 	ld c, [hl] ; $7b18
-	ld a, [wCharDataStats + 2] ; $7b19
+	ld a, [wCharDataStats + CHARSTAT_SERVE] ; $7b19
 	dec a ; $7b1c
 	sub c ; $7b1d
-	ld [wCharDataEquipmentDeltas + 2], a ; $7b1e
-	ld hl, wCharDataStatsNoEquipment + 3 ; $7b21
+	ld [wCharDataEquipmentDeltas + CHARSTAT_SERVE], a ; $7b1e
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_STROKE ; $7b21
 	ld c, [hl] ; $7b24
-	ld a, [wCharDataStats + 3] ; $7b25
+	ld a, [wCharDataStats + CHARSTAT_STROKE] ; $7b25
 	dec a ; $7b28
 	sub c ; $7b29
-	ld [wCharDataEquipmentDeltas + 3], a ; $7b2a
-	ld hl, wCharDataStatsNoEquipment + 4 ; $7b2d
+	ld [wCharDataEquipmentDeltas + CHARSTAT_STROKE], a ; $7b2a
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_VOLLEY ; $7b2d
 	ld c, [hl] ; $7b30
-	ld a, [wCharDataStats + 4] ; $7b31
+	ld a, [wCharDataStats + CHARSTAT_VOLLEY] ; $7b31
 	dec a ; $7b34
 	sub c ; $7b35
-	ld [wCharDataEquipmentDeltas + 4], a ; $7b36
-	ld hl, wCharDataStatsNoEquipment + 5 ; $7b39
+	ld [wCharDataEquipmentDeltas + CHARSTAT_VOLLEY], a ; $7b36
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_ANGLE ; $7b39
 	ld c, [hl] ; $7b3c
-	ld a, [wCharDataStats + 5] ; $7b3d
+	ld a, [wCharDataStats + CHARSTAT_ANGLE] ; $7b3d
 	dec a ; $7b40
 	sub c ; $7b41
-	ld [wCharDataEquipmentDeltas + 5], a ; $7b42
-	ld hl, wCharDataStatsNoEquipment + 6 ; $7b45
+	ld [wCharDataEquipmentDeltas + CHARSTAT_ANGLE], a ; $7b42
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_PLACEMENT ; $7b45
 	ld c, [hl] ; $7b48
-	ld a, [wCharDataStats + 6] ; $7b49
+	ld a, [wCharDataStats + CHARSTAT_PLACEMENT] ; $7b49
 	dec a ; $7b4c
 	sub c ; $7b4d
-	ld [wCharDataEquipmentDeltas + 6], a ; $7b4e
-	ld hl, wCharDataStatsNoEquipment + 7 ; $7b51
+	ld [wCharDataEquipmentDeltas + CHARSTAT_PLACEMENT], a ; $7b4e
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_SPEED ; $7b51
 	ld c, [hl] ; $7b54
-	ld a, [wCharDataStats + 7] ; $7b55
+	ld a, [wCharDataStats + CHARSTAT_SPEED] ; $7b55
 	dec a ; $7b58
 	sub c ; $7b59
-	ld [wCharDataEquipmentDeltas + 7], a ; $7b5a
-	ld hl, wCharDataStatsNoEquipment + 8 ; $7b5d
+	ld [wCharDataEquipmentDeltas + CHARSTAT_SPEED], a ; $7b5a
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_DASH ; $7b5d
 	ld c, [hl] ; $7b60
-	ld a, [wCharDataStats + 8] ; $7b61
+	ld a, [wCharDataStats + CHARSTAT_DASH] ; $7b61
 	dec a ; $7b64
 	sub c ; $7b65
-	ld [wCharDataEquipmentDeltas + 8], a ; $7b66
-	ld hl, wCharDataStatsNoEquipment + 9 ; $7b69
+	ld [wCharDataEquipmentDeltas + CHARSTAT_DASH], a ; $7b66
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_REACTION ; $7b69
 	ld c, [hl] ; $7b6c
-	ld a, [wCharDataStats + 9] ; $7b6d
+	ld a, [wCharDataStats + CHARSTAT_REACTION] ; $7b6d
 	dec a ; $7b70
 	sub c ; $7b71
-	ld [wCharDataEquipmentDeltas + 9], a ; $7b72
-	ld hl, wCharDataStatsNoEquipment + 10 ; $7b75
+	ld [wCharDataEquipmentDeltas + CHARSTAT_REACTION], a ; $7b72
+	ld hl, wCharDataStatsNoEquipment + CHARSTAT_STOP ; $7b75
 	ld c, [hl] ; $7b78
-	ld a, [wCharDataStats + 10] ; $7b79
+	ld a, [wCharDataStats + CHARSTAT_STOP] ; $7b79
 	dec a ; $7b7c
 	sub c ; $7b7d
-	ld [wCharDataEquipmentDeltas + 10], a ; $7b7e
+	ld [wCharDataEquipmentDeltas + CHARSTAT_STOP], a ; $7b7e
 	farcall RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
-CharDataScreen_LoadGfx:
-	ld hl, CharDataScreen_LoadPalette ; $7b85
+LoadStatArrowGfx:
+	ld hl, StatArrowObjPalettes ; $7b85
 	ld_obj_pals de, 4, 2 ; $7b88
 	call LoadPaletteShadow ; $7b8b
 	wram_bank WRAM_STAGING ; $7b8e
-	ld hl, CharDataScreenGfx0 ; $7b94
+	ld hl, StatArrowDownGfx ; $7b94
 	ld de, wDecompBuffer ; $7b97
 	call DecompressData ; $7b9a
 	ld hl, wDecompBuffer ; $7b9d
 	ld de, vTiles0 tile $78 + VRAM_BANK1 ; $7ba0
-	ld c, CharDataScreenGfx0_SIZE / 16 ; $7ba3
+	ld c, StatArrowDownGfx_SIZE / 16 ; $7ba3
 	call QueueVRAMCopy ; $7ba5
-	ld hl, CharDataScreenGfx1 ; $7ba8
+	ld hl, StatArrowDownDoubleGfx ; $7ba8
 	ld de, wDecompBuffer ; $7bab
 	call DecompressData ; $7bae
 	ld hl, wDecompBuffer ; $7bb1
 	ld de, vTiles0 tile $7a + VRAM_BANK1 ; $7bb4
-	ld c, CharDataScreenGfx1_SIZE / 16 ; $7bb7
+	ld c, StatArrowDownDoubleGfx_SIZE / 16 ; $7bb7
 	call QueueVRAMCopy ; $7bb9
-	ld hl, CharDataScreenGfx2 ; $7bbc
+	ld hl, StatArrowUpGfx ; $7bbc
 	ld de, wDecompBuffer ; $7bbf
 	call DecompressData ; $7bc2
 	ld hl, wDecompBuffer ; $7bc5
 	ld de, vTiles0 tile $7c + VRAM_BANK1 ; $7bc8
-	ld c, CharDataScreenGfx2_SIZE / 16 ; $7bcb
+	ld c, StatArrowUpGfx_SIZE / 16 ; $7bcb
 	call QueueVRAMCopy ; $7bcd
-	ld hl, CharDataScreenGfx3 ; $7bd0
+	ld hl, StatArrowUpDoubleGfx ; $7bd0
 	ld de, wDecompBuffer ; $7bd3
 	call DecompressData ; $7bd6
 	ld hl, wDecompBuffer ; $7bd9
 	ld de, vTiles0 tile $7e + VRAM_BANK1 ; $7bdc
-	ld c, CharDataScreenGfx3_SIZE / 16 ; $7bdf
+	ld c, StatArrowUpDoubleGfx_SIZE / 16 ; $7bdf
 	call QueueVRAMCopy ; $7be1
 	ret ; $7be4
 DrawStatChangeArrows:
 	wram_bank WRAM_SCENE ; $7be5
-	ld a, [wCharDataPageArrowMode] ; $7beb
+	ld a, [wCharDataStatPageView] ; $7beb
 	dec a ; $7bee
 	ret nz ; $7bef
 	ld hl, wCharDataStatsSlideX ; $7bf0
@@ -426,15 +426,15 @@ DrawStatChangeArrows:
 	ldh a, [hVBlankCounter] ; $7bf9
 	and $18 ; $7bfb
 	ret z ; $7bfd
-	ld a, [wCharDataEquipmentDeltas] ; $7bfe
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_TOP] ; $7bfe
 	or a ; $7c01
 	jr z, .sliceArrow ; $7c02
 	call GetStatArrowSpriteAttr ; $7c04
 	call GetStatArrowTile ; $7c07
 	push af ; $7c0a
-	ld a, [wCharDataStatsNoEquipment] ; $7c0b
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_TOP] ; $7c0b
 	ld l, a ; $7c0e
-	ld a, [wCharDataStatDeltas] ; $7c0f
+	ld a, [wCharDataStatDeltas + CHARSTAT_TOP] ; $7c0f
 	add l ; $7c12
 	ld_xy de, $14, $2c ; $7c13
 	call ComputeStatArrowSpriteX ; $7c16
@@ -448,15 +448,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7c25
 	call QueueSprite ; $7c28
 .sliceArrow:
-	ld a, [wCharDataEquipmentDeltas + 1] ; $7c2b
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_SLICE] ; $7c2b
 	or a ; $7c2e
 	jr z, .serveArrow ; $7c2f
 	call GetStatArrowSpriteAttr ; $7c31
 	call GetStatArrowTile ; $7c34
 	push af ; $7c37
-	ld a, [wCharDataStatsNoEquipment + 1] ; $7c38
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_SLICE] ; $7c38
 	ld l, a ; $7c3b
-	ld a, [wCharDataStatDeltas + 1] ; $7c3c
+	ld a, [wCharDataStatDeltas + CHARSTAT_SLICE] ; $7c3c
 	add l ; $7c3f
 	ld_xy de, $14, $3c ; $7c40
 	call ComputeStatArrowSpriteX ; $7c43
@@ -470,15 +470,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7c52
 	call QueueSprite ; $7c55
 .serveArrow:
-	ld a, [wCharDataEquipmentDeltas + 2] ; $7c58
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_SERVE] ; $7c58
 	or a ; $7c5b
 	jr z, .strokeArrow ; $7c5c
 	call GetStatArrowSpriteAttr ; $7c5e
 	call GetStatArrowTile ; $7c61
 	push af ; $7c64
-	ld a, [wCharDataStatsNoEquipment + 2] ; $7c65
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_SERVE] ; $7c65
 	ld l, a ; $7c68
-	ld a, [wCharDataStatDeltas + 2] ; $7c69
+	ld a, [wCharDataStatDeltas + CHARSTAT_SERVE] ; $7c69
 	add l ; $7c6c
 	ld_xy de, $14, $54 ; $7c6d
 	call ComputeStatArrowSpriteX ; $7c70
@@ -492,15 +492,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7c7f
 	call QueueSprite ; $7c82
 .strokeArrow:
-	ld a, [wCharDataEquipmentDeltas + 3] ; $7c85
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_STROKE] ; $7c85
 	or a ; $7c88
 	jr z, .volleyArrow ; $7c89
 	call GetStatArrowSpriteAttr ; $7c8b
 	call GetStatArrowTile ; $7c8e
 	push af ; $7c91
-	ld a, [wCharDataStatsNoEquipment + 3] ; $7c92
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_STROKE] ; $7c92
 	ld l, a ; $7c95
-	ld a, [wCharDataStatDeltas + 3] ; $7c96
+	ld a, [wCharDataStatDeltas + CHARSTAT_STROKE] ; $7c96
 	add l ; $7c99
 	ld_xy de, $14, $64 ; $7c9a
 	call ComputeStatArrowSpriteX ; $7c9d
@@ -514,15 +514,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7cac
 	call QueueSprite ; $7caf
 .volleyArrow:
-	ld a, [wCharDataEquipmentDeltas + 4] ; $7cb2
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_VOLLEY] ; $7cb2
 	or a ; $7cb5
 	jr z, .angleArrow ; $7cb6
 	call GetStatArrowSpriteAttr ; $7cb8
 	call GetStatArrowTile ; $7cbb
 	push af ; $7cbe
-	ld a, [wCharDataStatsNoEquipment + 4] ; $7cbf
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_VOLLEY] ; $7cbf
 	ld l, a ; $7cc2
-	ld a, [wCharDataStatDeltas + 4] ; $7cc3
+	ld a, [wCharDataStatDeltas + CHARSTAT_VOLLEY] ; $7cc3
 	add l ; $7cc6
 	ld_xy de, $14, $74 ; $7cc7
 	call ComputeStatArrowSpriteX ; $7cca
@@ -536,15 +536,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7cd9
 	call QueueSprite ; $7cdc
 .angleArrow:
-	ld a, [wCharDataEquipmentDeltas + 5] ; $7cdf
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_ANGLE] ; $7cdf
 	or a ; $7ce2
 	jr z, .placementArrow ; $7ce3
 	call GetStatArrowSpriteAttr ; $7ce5
 	call GetStatArrowTile ; $7ce8
 	push af ; $7ceb
-	ld a, [wCharDataStatsNoEquipment + 5] ; $7cec
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_ANGLE] ; $7cec
 	ld l, a ; $7cef
-	ld a, [wCharDataStatDeltas + 5] ; $7cf0
+	ld a, [wCharDataStatDeltas + CHARSTAT_ANGLE] ; $7cf0
 	add l ; $7cf3
 	ld_xy de, $64, $2c ; $7cf4
 	call ComputeStatArrowSpriteX ; $7cf7
@@ -558,15 +558,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7d06
 	call QueueSprite ; $7d09
 .placementArrow:
-	ld a, [wCharDataEquipmentDeltas + 6] ; $7d0c
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_PLACEMENT] ; $7d0c
 	or a ; $7d0f
 	jr z, .speedArrow ; $7d10
 	call GetStatArrowSpriteAttr ; $7d12
 	call GetStatArrowTile ; $7d15
 	push af ; $7d18
-	ld a, [wCharDataStatsNoEquipment + 6] ; $7d19
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_PLACEMENT] ; $7d19
 	ld l, a ; $7d1c
-	ld a, [wCharDataStatDeltas + 6] ; $7d1d
+	ld a, [wCharDataStatDeltas + CHARSTAT_PLACEMENT] ; $7d1d
 	add l ; $7d20
 	ld_xy de, $64, $3c ; $7d21
 	call ComputeStatArrowSpriteX ; $7d24
@@ -580,15 +580,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7d33
 	call QueueSprite ; $7d36
 .speedArrow:
-	ld a, [wCharDataEquipmentDeltas + 7] ; $7d39
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_SPEED] ; $7d39
 	or a ; $7d3c
 	jr z, .dashArrow ; $7d3d
 	call GetStatArrowSpriteAttr ; $7d3f
 	call GetStatArrowTile ; $7d42
 	push af ; $7d45
-	ld a, [wCharDataStatsNoEquipment + 7] ; $7d46
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_SPEED] ; $7d46
 	ld l, a ; $7d49
-	ld a, [wCharDataStatDeltas + 7] ; $7d4a
+	ld a, [wCharDataStatDeltas + CHARSTAT_SPEED] ; $7d4a
 	add l ; $7d4d
 	ld_xy de, $64, $54 ; $7d4e
 	call ComputeStatArrowSpriteX ; $7d51
@@ -602,15 +602,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7d60
 	call QueueSprite ; $7d63
 .dashArrow:
-	ld a, [wCharDataEquipmentDeltas + 8] ; $7d66
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_DASH] ; $7d66
 	or a ; $7d69
 	jr z, .reactionArrow ; $7d6a
 	call GetStatArrowSpriteAttr ; $7d6c
 	call GetStatArrowTile ; $7d6f
 	push af ; $7d72
-	ld a, [wCharDataStatsNoEquipment + 8] ; $7d73
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_DASH] ; $7d73
 	ld l, a ; $7d76
-	ld a, [wCharDataStatDeltas + 8] ; $7d77
+	ld a, [wCharDataStatDeltas + CHARSTAT_DASH] ; $7d77
 	add l ; $7d7a
 	ld_xy de, $64, $64 ; $7d7b
 	call ComputeStatArrowSpriteX ; $7d7e
@@ -624,15 +624,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7d8d
 	call QueueSprite ; $7d90
 .reactionArrow:
-	ld a, [wCharDataEquipmentDeltas + 9] ; $7d93
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_REACTION] ; $7d93
 	or a ; $7d96
 	jr z, .stopArrow ; $7d97
 	call GetStatArrowSpriteAttr ; $7d99
 	call GetStatArrowTile ; $7d9c
 	push af ; $7d9f
-	ld a, [wCharDataStatsNoEquipment + 9] ; $7da0
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_REACTION] ; $7da0
 	ld l, a ; $7da3
-	ld a, [wCharDataStatDeltas + 9] ; $7da4
+	ld a, [wCharDataStatDeltas + CHARSTAT_REACTION] ; $7da4
 	add l ; $7da7
 	ld_xy de, $64, $74 ; $7da8
 	call ComputeStatArrowSpriteX ; $7dab
@@ -646,15 +646,15 @@ DrawStatChangeArrows:
 	call OffsetStatArrowSpriteX ; $7dba
 	call QueueSprite ; $7dbd
 .stopArrow:
-	ld a, [wCharDataEquipmentDeltas + 10] ; $7dc0
+	ld a, [wCharDataEquipmentDeltas + CHARSTAT_STOP] ; $7dc0
 	or a ; $7dc3
 	jr z, .done ; $7dc4
 	call GetStatArrowSpriteAttr ; $7dc6
 	call GetStatArrowTile ; $7dc9
 	push af ; $7dcc
-	ld a, [wCharDataStatsNoEquipment + 10] ; $7dcd
+	ld a, [wCharDataStatsNoEquipment + CHARSTAT_STOP] ; $7dcd
 	ld l, a ; $7dd0
-	ld a, [wCharDataStatDeltas + 10] ; $7dd1
+	ld a, [wCharDataStatDeltas + CHARSTAT_STOP] ; $7dd1
 	add l ; $7dd4
 	ld_xy de, $64, $84 ; $7dd5
 	call ComputeStatArrowSpriteX ; $7dd8
@@ -743,18 +743,18 @@ CharDataConfirmScreenTopTilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenTopTilemap.bin" ; $7e53, 34 bytes
 CharDataConfirmScreenTopAttrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharDataConfirmScreenTopAttrmap.bin" ; $7e75, 9 bytes
-CharDataScreen_LoadPalette:
-	INCLUDE "data/engine/menus/char_data/CharDataScreen_LoadPalette.asm" ; $7e7e, 16 bytes (palettes)
-CharDataScreenGfx0:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx0.bin" ; $7e8e, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx0.inc" ; DEF CharDataScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx1:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx1.bin" ; $7e99, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx1.inc" ; DEF CharDataScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx2:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx2.bin" ; $7ea4, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx2.inc" ; DEF CharDataScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenGfx3:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenGfx3.bin" ; $7eaf, 11 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenGfx3.inc" ; DEF CharDataScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowObjPalettes:
+	INCLUDE "data/engine/menus/char_data/StatArrowObjPalettes.asm" ; $7e7e, 16 bytes (palettes)
+StatArrowDownGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowDownGfx.bin" ; $7e8e, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowDownGfx.inc" ; DEF StatArrowDownGfx_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowDownDoubleGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowDownDoubleGfx.bin" ; $7e99, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowDownDoubleGfx.inc" ; DEF StatArrowDownDoubleGfx_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowUpGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowUpGfx.bin" ; $7ea4, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowUpGfx.inc" ; DEF StatArrowUpGfx_SIZE EQU its decoded length, generated from the .bin by make
+StatArrowUpDoubleGfx:
+	INCBIN "data/engine/menus/char_data/lz_StatArrowUpDoubleGfx.bin" ; $7eaf, 11 bytes
+	INCLUDE "data/engine/menus/char_data/lz_StatArrowUpDoubleGfx.inc" ; DEF StatArrowUpDoubleGfx_SIZE EQU its decoded length, generated from the .bin by make
 	; $7eba, 326 bytes fill to bank end (linker-padded)

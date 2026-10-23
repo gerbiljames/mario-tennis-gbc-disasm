@@ -142,12 +142,12 @@ Unused_1a_DrawStringToTileBuffer:
 	pop af ; $4c03
 	push de ; $4c04
 	cp $9e ; $4c05
-	jr z, .altTile ; $4c07
+	jr z, .dakutenMark ; $4c07
 	cp TX_DAKUTEN ; $4c09
-	jr z, .altTile ; $4c0b
+	jr z, .dakutenMark ; $4c0b
 	ld de, $040b ; $4c0d
 	jr .writeTile ; $4c10
-.altTile:
+.dakutenMark:
 	ld de, $030b ; $4c12
 .writeTile:
 	call Unused_1a_WriteTileBufferCell ; $4c15

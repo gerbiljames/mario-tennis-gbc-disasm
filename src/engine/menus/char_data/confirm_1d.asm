@@ -133,7 +133,7 @@ PromptCharDataConfirm:
 	ld a, SCREEN_HEIGHT_PX ; $5a7b
 	ldh [rWY], a ; $5a7d
 	call ClearSpriteQueue ; $5a7f
-	call InitDrillWorkRam ; $5a82
+	call InitCharDataWorkRam ; $5a82
 	pop af ; $5a85
 	call BuildCharDataConfirmScreen ; $5a86
 	call EnableLCD ; $5a89
@@ -143,25 +143,25 @@ PromptCharDataConfirm:
 	call WaitFadeEnd ; $5a97
 	wram_bank WRAM_SCENE ; $5a9a
 	ld a, $01 ; $5aa0
-	ld [wCharDataConfirmState], a ; $5aa2
+	ld [wCharDataConfirmCursor], a ; $5aa2
 .loop:
 	call DrawConfirmSelectionCursor_1d ; $5aa5
 	call AdvanceFrame ; $5aa8
 	ldh a, [hInputRisingEdge] ; $5aab
 	bit PADB_A, a ; $5aad
-	jr nz, .step ; $5aaf
+	jr nz, .pressedA ; $5aaf
 	bit PADB_B, a ; $5ab1
 	jr nz, .cancel ; $5ab3
 	and PADF_UP | PADF_DOWN ; $5ab5
 	jr z, .loop ; $5ab7
 	sound SFX_MENU_MOVE ; $5ab9
-	ld a, [wCharDataConfirmState] ; $5abb
+	ld a, [wCharDataConfirmCursor] ; $5abb
 	xor $01 ; $5abe
-	ld [wCharDataConfirmState], a ; $5ac0
+	ld [wCharDataConfirmCursor], a ; $5ac0
 	jr .loop ; $5ac3
-.step:
+.pressedA:
 	wram_bank WRAM_SCENE ; $5ac5
-	ld a, [wCharDataConfirmState] ; $5acb
+	ld a, [wCharDataConfirmCursor] ; $5acb
 	or a ; $5ace
 	jr nz, .cancel ; $5acf
 	sound SFX_MENU_SELECT ; $5ad1
@@ -169,7 +169,7 @@ PromptCharDataConfirm:
 .cancel:
 	wram_bank WRAM_SCENE ; $5ad5
 	ld a, $01 ; $5adb
-	ld [wCharDataConfirmState], a ; $5add
+	ld [wCharDataConfirmCursor], a ; $5add
 	sound SFX_MENU_CANCEL ; $5ae0
 .beginFadeOut:
 	script_fade_out 16 ; $5ae2
@@ -177,7 +177,7 @@ PromptCharDataConfirm:
 	farcall StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed
 	wram_bank WRAM_SCENE ; $5af0
-	ld a, [wCharDataConfirmState] ; $5af6
+	ld a, [wCharDataConfirmCursor] ; $5af6
 	ret ; $5af9
 	twin draw_confirm_selection_cursor, 1d ; $5afa DrawConfirmSelectionCursor_1d
 BuildCharDataConfirmScreen:
@@ -213,19 +213,19 @@ BuildCharDataConfirmScreen:
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
 	ld hl, CharDataConfirmScreenTilemapPatch0 ; $5b87
-	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $5b8a
+	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $5b8a
 	call ApplyTilemapPatchList ; $5b8d
 	ld hl, CharDataConfirmScreenTilemapPatch1 ; $5b90
-	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $5b93
+	ld bc, wCharDataScreenCell + 20 * TILEMAP_WIDTH ; $5b93
 	call ApplyTilemapPatchList ; $5b96
 	ld hl, CharDataConfirmScreenTilemapPatch2 ; $5b99
-	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $5b9c
+	ld bc, wCharDataScreenCell + 22 * TILEMAP_WIDTH + 16 ; $5b9c
 	call ApplyTilemapPatchList ; $5b9f
 	ld hl, CharDataConfirmScreenTilemapPatch3 ; $5ba2
-	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $5ba5
+	ld bc, wCharDataScreenCell + 24 * TILEMAP_WIDTH + 16 ; $5ba5
 	call ApplyTilemapPatchList ; $5ba8
 	ld hl, CharDataConfirmScreenTilemapPatch4 ; $5bab
-	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $5bae
+	ld bc, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 16 ; $5bae
 	call ApplyTilemapPatchList ; $5bb1
 	ld hl, CharDataConfirmScreenTilemapPatch5 ; $5bb4
 	ld bc, wCharDataPagePlane + 10 * TILEMAP_WIDTH + 16 ; $5bb7
@@ -256,7 +256,7 @@ InitCharDataScreenVideo:
 	ldh [rWY], a ; $5bfc
 	call ClearSpriteQueue ; $5bfe
 	farcall LoadMenuFontGfx ; $5c01
-	call InitDrillWorkRam ; $5c04
+	call InitCharDataWorkRam ; $5c04
 	call BuildCharDataScreenPages ; $5c07
 	ret ; $5c0a
 DrawCharDataConfirmPrompt:
@@ -264,15 +264,15 @@ DrawCharDataConfirmPrompt:
 	ld bc, wCharDataPagePlane + 12 * TILEMAP_WIDTH ; $5c0e
 	call ApplyTilemapPatchList ; $5c11
 	ret ; $5c14
-StartCharDataValuesSyncTask:
-	frame_task CharDataValuesSyncTask ; $5c15
+StartCharDataSummarySpritesTask:
+	frame_task DrawCharDataSummarySpritesTask ; $5c15
 	ret ; $5c1d
-StopCharDataValuesSyncTask:
-	ld hl, CharDataValuesSyncTask ; $5c1e
+StopCharDataSummarySpritesTask:
+	ld hl, DrawCharDataSummarySpritesTask ; $5c1e
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
-DrillDisplayData_1d:
-	INCLUDE "data/engine/menus/char_data/DrillDisplayData_1d.asm" ; $5c25, 9 bytes (blit_runs)
+CharDataAttrClearPatch_1d:
+	INCLUDE "data/engine/menus/char_data/CharDataAttrClearPatch_1d.asm" ; $5c25, 9 bytes (blit_runs)
 StatPageTilemapPatch0:
 	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch0.asm" ; $5c2e, 5 bytes (blit_runs)
 CharDataSummaryPageTilemapPatch0:
@@ -297,10 +297,10 @@ StatPageTilemapPatch4:
 	INCLUDE "data/engine/menus/char_data/StatPageTilemapPatch4.asm" ; $5d34, 37 bytes (blit_runs)
 CharDataConfirmScreenTilemapPatch3:
 	INCLUDE "data/engine/menus/char_data/CharDataConfirmScreenTilemapPatch3.asm" ; $5d59, 37 bytes (blit_runs)
-CharDataSummaryFieldsTilePlot0:
-	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot0.asm" ; $5d7e, 19 bytes (bytes:2)
-CharDataSummaryFieldsTilePlot1:
-	INCLUDE "data/engine/menus/char_data/CharDataSummaryFieldsTilePlot1.asm" ; $5d91, 19 bytes (bytes:2)
+CharDataSummaryMainMugshotPlot:
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryMainMugshotPlot.asm" ; $5d7e, 19 bytes (bytes:2)
+CharDataSummaryPartnerMugshotPlot:
+	INCLUDE "data/engine/menus/char_data/CharDataSummaryPartnerMugshotPlot.asm" ; $5d91, 19 bytes (bytes:2)
 MainCharStatPageTilemapPatch00:
 	INCLUDE "data/engine/menus/char_data/MainCharStatPageTilemapPatch00.asm" ; $5da4, 13 bytes (blit_runs)
 PartnerStatPageTilemapPatch00:

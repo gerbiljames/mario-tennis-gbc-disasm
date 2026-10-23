@@ -209,7 +209,7 @@ BuildNearbyActorList:
 	jr z, .nextActor ; $5468
 	ld hl, ACTORF_STATUS ; $546a
 	add hl, bc ; $546d
-	bit ACTORSTATUSB_LIVE, [hl] ; $546e
+	bit ACTORSTATUSB_ON_SCREEN, [hl] ; $546e
 	jr z, .nextActor ; $5470
 	ld hl, ACTORF_FLAGS ; $5472
 	add hl, bc ; $5475
@@ -266,7 +266,7 @@ BuildNearbyActorList:
 	pop bc ; $54d4
 	pop af ; $54d5
 	ret ; $54d6
-BuildActorQueryList:
+BuildTalkableActorList:
 	push af ; $54d7
 	push bc ; $54d8
 	push de ; $54d9
@@ -284,7 +284,7 @@ BuildActorQueryList:
 	jr z, .nextActor ; $54e9
 	ld hl, ACTORF_STATUS ; $54eb
 	add hl, bc ; $54ee
-	bit ACTORSTATUSB_LIVE, [hl] ; $54ef
+	bit ACTORSTATUSB_ON_SCREEN, [hl] ; $54ef
 	jr z, .nextActor ; $54f1
 	ld hl, ACTORF_FLAGS ; $54f3
 	add hl, bc ; $54f6
@@ -320,7 +320,7 @@ ActorSlotPtrToIndex:
 	inc h ; $5518
 	dec h ; $5519
 	jr z, .done ; $551a
-	ld de, $3000 ; $551c
+	ld de, $10000 - wActors ; $551c
 	add hl, de ; $551f
 	add hl, hl ; $5520
 	add hl, hl ; $5521
@@ -333,7 +333,7 @@ DrawAndAnimateActor:
 	call DrawActorSprite ; $5526
 	ld hl, ACTORF_STATUS ; $5529
 	add hl, bc ; $552c
-	bit ACTORSTATUSB_LIVE, [hl] ; $552d
+	bit ACTORSTATUSB_ON_SCREEN, [hl] ; $552d
 	jr nz, .drawAndAnimate ; $552f
 	bit 3, [hl] ; $5531
 	ret z ; $5533
@@ -347,7 +347,7 @@ DrawAndAnimateActor:
 DrawActorSprite:
 	ld hl, ACTORF_STATUS ; $5542
 	add hl, bc ; $5545
-	res ACTORSTATUSB_LIVE, [hl] ; $5546
+	res ACTORSTATUSB_ON_SCREEN, [hl] ; $5546
 	ld hl, wActorScreenOriginY ; $5548
 	ld a, [hl+] ; $554b
 	ld d, [hl] ; $554c
@@ -358,7 +358,7 @@ DrawActorSprite:
 	ld h, [hl] ; $5553
 	ld l, a ; $5554
 	bit 7, h ; $5555
-	jr z, .offscreen ; $5557
+	jr z, .grounded ; $5557
 	neg_hl ; $5559
 	neg_de ; $555f
 	srl h ; $5565
@@ -373,7 +373,7 @@ DrawActorSprite:
 	ld l, a ; $5572
 	sub_hl_de ; $5573
 	jr .queue ; $5579
-.offscreen:
+.grounded:
 	ld hl, ACTORF_Y ; $557b
 	add hl, bc ; $557e
 	ld a, [hl+] ; $557f
@@ -422,7 +422,7 @@ DrawActorSprite:
 	pop bc ; $55b9
 	ld hl, ACTORF_STATUS ; $55ba
 	add hl, bc ; $55bd
-	set ACTORSTATUSB_LIVE, [hl] ; $55be
+	set ACTORSTATUSB_ON_SCREEN, [hl] ; $55be
 .done:
 	ret ; $55c0
 AdvanceActorAnimation:
@@ -498,17 +498,17 @@ AdvanceActorAnimation:
 	ld [hl-], a ; $5626
 	ld [hl], e ; $5627
 	pop de ; $5628
-	jr .checkFlip ; $5629
+	jr .applyAnimRate ; $5629
 .frameReady:
 	ld hl, ACTORF_ANIM_FRAME ; $562b
 	add hl, bc ; $562e
 	ld e, [hl] ; $562f
-.checkFlip:
+.applyAnimRate:
 	push bc ; $5630
 	ld hl, ACTORF_FLAGS ; $5631
 	add hl, bc ; $5634
 	bit ACTORFLAGB_MOVING, [hl] ; $5635
-	jr z, .noFlip ; $5637
+	jr z, .idleRate ; $5637
 	ld hl, ACTORF_ANIM_RATE_MOVING ; $5639
 	add hl, bc ; $563c
 	push hl ; $563d
@@ -522,7 +522,7 @@ AdvanceActorAnimation:
 	jr nc, .storeFrame ; $5647
 	xor a ; $5649
 	jr .storeFrame ; $564a
-.noFlip:
+.idleRate:
 	ld hl, ACTORF_ANIM_RATE ; $564c
 	add hl, bc ; $564f
 	push hl ; $5650

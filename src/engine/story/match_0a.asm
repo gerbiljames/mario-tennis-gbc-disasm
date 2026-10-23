@@ -26,7 +26,7 @@ RunStoryMatch:
 	farcall RunMatch ; $496d
 	ld a, [wSaveAndQuitRequest] ; $4970
 	or a ; $4973
-	jr z, .matchAborted ; $4974
+	jr z, .matchFinished ; $4974
 	farcall SaveStorySlotWithTimer ; $4976
 	ld a, STORYLOC_MAIN_MENU ; $4979
 	ld [wStoryModeCurrentLocation], a ; $497b
@@ -36,9 +36,9 @@ RunStoryMatch:
 	ld [wUnusedExitTriggerIdMirror], a ; $4985
 	ld [wStoryModeExitTriggerRequest], a ; $4988
 	ret ; $498b
-.matchAborted:
+.matchFinished:
 	xor a ; $498c
-	ld [wKeepMatchStatsFlag], a ; $498d
+	ld [wMatchSuspendedFlag], a ; $498d
 	ret ; $4990
 RestoreOverworldAfterMatch:
 	script_fade_out 16 ; $4991
@@ -96,7 +96,7 @@ DoublesPartnerTable_0a:
 	db CHAR_A_COZ ; CHAR_B_COZ
 	db CHAR_B_COZ ; CHAR_A_COZ
 	db CHAR_EMILY ; CHAR_KEVIN
-	db CHAR_KEVIN ; CHAR_UNUSED_15
+	db CHAR_KEVIN ; CHAR_BALL_MACHINE
 	db CHAR_LUIGI ; CHAR_UNUSED_16
 	db CHAR_UNUSED_16 ; CHAR_LUIGI
 	db CHAR_BABY_MARIO ; CHAR_DK
@@ -220,8 +220,8 @@ LoadMatchSettingsFromTable:
 	ld [wMatchOpponentChar], a ; $4a82
 	ld a, [hl+] ; $4a85
 	ld [wCurrentlyUsedCourt], a ; $4a86
-	test_flag FLAG_DEBUG_KEEP_MATCH_SETTINGS ; $4a89
-	jr nz, .minigameDefaults ; $4a8c
+	test_flag FLAG_DEBUG_SHORT_MATCH ; $4a89
+	jr nz, .debugShortMatch ; $4a8c
 	ld a, [hl+] ; $4a8e
 	ld e, a ; $4a8f
 	call ApOverrideMatchLength
@@ -234,7 +234,7 @@ LoadMatchSettingsFromTable:
 	ld a, [hl] ; $4a9d
 	ld [wMatchBGM], a ; $4a9e
 	ret ; $4aa1
-.minigameDefaults:
+.debugShortMatch:
 	ld a, $02 ; $4aa2
 	ld [wMatchTypeNumberOfGames], a ; $4aa4
 	ld a, $01 ; $4aa7
@@ -351,11 +351,11 @@ RunClearStatusSetupMenu:
 	jp .done ; $4c2e
 .checkMode:
 	or a ; $4c31
-	jp z, .defaultDoubles ; $4c32
+	jp z, .setStatus ; $4c32
 	ld a, EXIT_TEST_2_TO_SERVE_COACH ; $4c35
 	ld [wClearStatusResultCode], a ; $4c37
 	jp .done ; $4c3a
-.defaultDoubles:
+.setStatus:
 	test_flag FLAG_DOUBLES ; $4c3d
 	jr nz, .doubles ; $4c40
 	xor a ; $4c42
@@ -385,7 +385,7 @@ RunClearStatusSetupMenu:
 	ld a, [wClearStatusFormat] ; $4c7b
 	cp $ff ; $4c7e
 	jp z, .modeMenu ; $4c80
-.setsMenu:
+.classMenu:
 	ld a, [wClearStatusWindowId] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
 	ld hl, Text_ClearStatusChooseClass ; $4c89
@@ -417,22 +417,22 @@ RunClearStatusSetupMenu:
 	farcall RedrawWindowRows ; $4cd6
 	ld a, [wClearStatusDoubles] ; $4cd9
 	or a ; $4cdc
-	jp nz, .setsCancel ; $4cdd
-	ld hl, $10db ; $4ce0
-	jr .checkSets ; $4ce3
-.setsCancel:
-	ld hl, $10df ; $4ce5
-.checkSets:
+	jp nz, .doublesRankList ; $4cdd
+	ld hl, Text_MenuSinglesMinigameDrills ; $4ce0
+	jr .pickRankList ; $4ce3
+.doublesRankList:
+	ld hl, Text_MenuDoublesMinigameDrills ; $4ce5
+.pickRankList:
 	ld a, [wClearStatusFormat] ; $4ce8
 	or a ; $4ceb
-	jr z, .storeSets ; $4cec
+	jr z, .showRankMenu ; $4cec
 	ld a, [wClearStatusClass] ; $4cee
 	inc a ; $4cf1
 	add l ; $4cf2
 	ld l, a ; $4cf3
-	jr nc, .storeSets ; $4cf4
+	jr nc, .showRankMenu ; $4cf4
 	inc h ; $4cf6
-.storeSets:
+.showRankMenu:
 	ld d, $07 ; $4cf7
 	ld e, $00 ; $4cf9
 	farcall CreateMenuWindowFromText ; $4cfb
@@ -444,7 +444,7 @@ RunClearStatusSetupMenu:
 	farcall CloseWindow ; $4d0d
 	ld a, [wClearStatusRank] ; $4d10
 	cp $ff ; $4d13
-	jp z, .setsMenu ; $4d15
+	jp z, .classMenu ; $4d15
 	call ApplyClearStatusFlags ; $4d18
 	call GetClearStatusResultCode ; $4d1b
 .done:
@@ -497,9 +497,9 @@ ApplyClearStatusFlags:
 	clear_flag FLAG_DOUBLES ; $4d85
 	ld a, [wClearStatusDoubles] ; $4d88
 	or a ; $4d8b
-	jr z, .checkDoubles ; $4d8c
+	jr z, .setTrainingFlags ; $4d8c
 	set_flag FLAG_DOUBLES ; $4d8e
-.checkDoubles:
+.setTrainingFlags:
 	call SetTrainingCourtClearFlags ; $4d91
 	ld a, [wClearStatusDoubles] ; $4d94
 	or a ; $4d97

@@ -59,8 +59,8 @@ KNOWN_UNEXPLAINED = {"CallVectorEntryE"}
 # each reviewed: dead (the edge is dropped, and what only it reached must be
 # named Unused) or live (written some way the scan does not see).
 DATA_FLAGS = {
-    "hFadeState": ("dead", "bit 7 selects Unused_00_ApplyWhiteFade; the stores are $00, $01 and $02, "
-                           "and only Unused_00_BeginWhiteFadeOut sets bit 7 (docs/bugs.md)"),
+    "hFadeState": ("dead", "bit 7 selects Unused_00_ApplyPackedFade; the stores are $00, $01 and $02, "
+                           "and only Unused_00_BeginPackedFadeOut sets bit 7 (docs/bugs.md)"),
     "wSecondaryTimerMode": ("dead", "UpdateGameTimer ticks the second timer at mode 1; the only store "
                                     "is Unused_00_TickSecondaryTimerCountdown's $ff"),
     "hLinkErrorFlags": ("dead", "AdvanceFrame's link-error reset needs bits 5-7; both stores are "

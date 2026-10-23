@@ -59,7 +59,7 @@ EndCutsceneScriptMode:
 	ld [wScreenShakeOffsetY], a ; $410d
 	ld bc, wActors + 1 * ACTOR_SIZE ; $4110
 	ld de, wActors ; $4113
-	farcall AttachActorWaypointFollower ; $4116
+	farcall AttachActorChaser ; $4116
 	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $411f
@@ -72,10 +72,10 @@ EndCutsceneScriptMode:
 	pop bc ; $4138
 	pop af ; $4139
 	ret ; $413a
-Unused_0a_ActorScriptFollowWaypoints:
+Unused_0a_ActorScriptChaseAnchor:
 	; $413b, 4 bytes (actor_script)
-	as_follow_wp
-	as_jump Unused_0a_ActorScriptFollowWaypoints
+	as_chase
+	as_jump Unused_0a_ActorScriptChaseAnchor
 WaitScriptFrames:
 	push af ; $413f
 	push bc ; $4140
@@ -150,7 +150,7 @@ ScriptShowSpeakerDialogue:
 	pop hl ; $41be
 	pop af ; $41bf
 	ret ; $41c0
-ScriptShowSpeakerDialogueRestoreBG:
+ScriptShowSpeakerDialogueKeepOpen:
 	push af ; $41c1
 	push hl ; $41c2
 	ld b, a ; $41c3
@@ -165,7 +165,7 @@ ScriptShowSpeakerDialogueRestoreBG:
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41d8
 	jr nz, .advanceTextId ; $41db
 	ld a, b ; $41dd
-	farcall ShowSpeakerDialogueRestoreBG ; $41de
+	farcall ShowSpeakerDialogueKeepOpen ; $41de
 .advanceTextId:
 	inc hl ; $41e1
 	ld a, l ; $41e2
@@ -185,10 +185,10 @@ RunDialogueYesNoPrompt:
 	push hl ; $41f8
 	push_wram_bank WRAM_TEXT ; $41f9
 	call FindDialogueChoiceMarker ; $4202
-	ld a, [wTextRedrawGuard] ; $4205
+	ld a, [wTextCharDelayFrames] ; $4205
 	push af ; $4208
 	xor a ; $4209
-	ld [wTextRedrawGuard], a ; $420a
+	ld [wTextCharDelayFrames], a ; $420a
 	call ShowYesNoPromptWindow ; $420d
 	farcall RenderMenuWindowText ; $4210
 	farcall RunMenuSelection ; $4213
@@ -201,7 +201,7 @@ RunDialogueYesNoPrompt:
 	ld a, $ff ; $4224
 	ld [wMenuWindowId], a ; $4226
 	pop af ; $4229
-	ld [wTextRedrawGuard], a ; $422a
+	ld [wTextCharDelayFrames], a ; $422a
 	pop_wram_bank ; $422d
 	ld a, b ; $4232
 	pop hl ; $4233
@@ -356,7 +356,7 @@ GetActorStateAddr:
 	srl h ; $431e
 	rra ; $4320
 	ld l, a ; $4321
-	ld a, $d0 ; $4322
+	ld a, HIGH(wActors) ; $4322
 	add h ; $4324
 	ld h, a ; $4325
 .haveAddr:
@@ -365,7 +365,7 @@ GetActorStateAddr:
 	ld a, ACTORF_MODE ; $432d
 	add_hl_a ; $432f
 	ld a, [hl] ; $4334
-	cp $00 ; $4335
+	cp ACTORMODE_HIDDEN ; $4335
 	pop hl ; $4337
 	inc h ; $4338
 	dec h ; $4339
@@ -396,7 +396,7 @@ SetActorNullScript:
 	call GetActorStateAddr ; $4364
 	ld c, l ; $4367
 	ld b, h ; $4368
-	ld hl, ActorScript_0a ; $4369
+	ld hl, ActorScript_Null ; $4369
 	ldh a, [hRomBank] ; $436c
 	farcall SetActorScript ; $436e
 	ret ; $4371

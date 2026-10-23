@@ -30,7 +30,7 @@ AppendCharToName:
 	ld d, a ; $72cd
 	ld hl, NameEntryCharset_38 ; $72ce
 	wram_bank WRAM_COURT_PLANES ; $72d1
-	ld a, [wScreenAttrmap] ; $72d7
+	ld a, [wNameEntryCharsetPage] ; $72d7
 	or a ; $72da
 	jr z, .indexCharset ; $72db
 	ld hl, NameEntryCharset_38 ; $72dd
@@ -52,18 +52,18 @@ AppendCharToName:
 	wram_bank WRAM_SCREEN ; $72f6
 	call IsNameBufferFull ; $72fc
 	or a ; $72ff
-	jr z, .queueVram ; $7300
+	jr z, .storeChar ; $7300
 	dec hl ; $7302
 	ld a, [hl] ; $7303
 	cp TX_DAKUTEN ; $7304
-	jr z, .redraw ; $7306
+	jr z, .dropTrailingMark ; $7306
 	cp TX_HANDAKUTEN ; $7308
-	jr z, .redraw ; $730a
-	jr .queueVram ; $730c
-.redraw:
+	jr z, .dropTrailingMark ; $730a
+	jr .storeChar ; $730c
+.dropTrailingMark:
 	ld [hl], $00 ; $730e
 	dec hl ; $7310
-.queueVram:
+.storeChar:
 	ld [hl], d ; $7311
 	call DrawEnteredName ; $7312
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7315
@@ -207,7 +207,7 @@ RunLinkMatchSequence:
 	push de ; $7409
 	push hl ; $740a
 .rulesMenu:
-	farcall RunLinkMatchRulesMenu ; $740b
+	farcall RunLinkMatchFormatMenu ; $740b
 	cp $ff ; $740e
 	jp z, .done ; $7410
 	script_fade_out 16 ; $7413
@@ -565,47 +565,47 @@ PackUnlockFlagsForLink:
 	ld hl, wCharUnlockFlags + 8 ; $76b4
 	ld a, [hl] ; $76b7
 	or a ; $76b8
-	jr z, .storeCharFlags ; $76b9
+	jr z, .storeSlot8Flag ; $76b9
 	ld a, $01 ; $76bb
-.storeCharFlags:
+.storeSlot8Flag:
 	ld hl, wLinkUnlockFlagsSend + 1 ; $76bd
 	ld [hl], a ; $76c0
 	ld c, $00 ; $76c1
 	ld b, $01 ; $76c3
 	ld hl, wCharUnlockFlags + 15 ; $76c5
 	ld d, $00 ; $76c8
-.courtLoop:
+.slots15To22Loop:
 	ld a, [hl+] ; $76ca
 	or a ; $76cb
-	jr z, .nextCourt ; $76cc
+	jr z, .nextSlot15To22 ; $76cc
 	ld a, b ; $76ce
 	or d ; $76cf
 	ld d, a ; $76d0
-.nextCourt:
+.nextSlot15To22:
 	sla b ; $76d1
 	inc c ; $76d3
 	ld a, c ; $76d4
 	cp $08 ; $76d5
-	jr nz, .courtLoop ; $76d7
+	jr nz, .slots15To22Loop ; $76d7
 	ld hl, wLinkUnlockFlagsSend + 2 ; $76d9
 	ld [hl], d ; $76dc
 	ld c, $00 ; $76dd
 	ld b, $01 ; $76df
 	ld hl, wCharUnlockFlags + 23 ; $76e1
 	ld d, $00 ; $76e4
-.itemLoop:
+.slots23To30Loop:
 	ld a, [hl+] ; $76e6
 	or a ; $76e7
-	jr z, .nextItem ; $76e8
+	jr z, .nextSlot23To30 ; $76e8
 	ld a, b ; $76ea
 	or d ; $76eb
 	ld d, a ; $76ec
-.nextItem:
+.nextSlot23To30:
 	sla b ; $76ed
 	inc c ; $76ef
 	ld a, c ; $76f0
 	cp $08 ; $76f1
-	jr nz, .itemLoop ; $76f3
+	jr nz, .slots23To30Loop ; $76f3
 	ld hl, wLinkUnlockFlagsSend + 3 ; $76f5
 	ld [hl], d ; $76f8
 	ret ; $76f9
@@ -635,18 +635,18 @@ UnpackUnlockFlagsFromLink:
 	jr nz, .charBitLoop ; $7722
 	ld a, [wLinkUnlockFlagsSend + 1] ; $7724
 	or a ; $7727
-	jr z, .courtFlags ; $7728
+	jr z, .slots15To22 ; $7728
 	ld hl, wCharUnlockFlags + 8 ; $772a
 	ld a, $01 ; $772d
 	ld [hl], a ; $772f
-.courtFlags:
+.slots15To22:
 	ld hl, wLinkUnlockFlagsSend + 2 ; $7730
 	ld b, $01 ; $7733
 	ld c, $00 ; $7735
-.courtBitLoop:
+.slots15To22Loop:
 	ld a, [hl] ; $7737
 	and b ; $7738
-	jr z, .nextCourtBit ; $7739
+	jr z, .nextSlot15To22 ; $7739
 	push hl ; $773b
 	ld hl, wCharUnlockFlags + 15 ; $773c
 	ld a, c ; $773f
@@ -654,19 +654,19 @@ UnpackUnlockFlagsFromLink:
 	ld a, $01 ; $7745
 	ld [hl], a ; $7747
 	pop hl ; $7748
-.nextCourtBit:
+.nextSlot15To22:
 	sla b ; $7749
 	inc c ; $774b
 	ld a, c ; $774c
 	cp $08 ; $774d
-	jr nz, .courtBitLoop ; $774f
+	jr nz, .slots15To22Loop ; $774f
 	ld hl, wLinkUnlockFlagsSend + 3 ; $7751
 	ld b, $01 ; $7754
 	ld c, $00 ; $7756
-.itemBitLoop:
+.slots23To30Loop:
 	ld a, [hl] ; $7758
 	and b ; $7759
-	jr z, .nextItemBit ; $775a
+	jr z, .nextSlot23To30 ; $775a
 	push hl ; $775c
 	ld hl, wCharUnlockFlags + 23 ; $775d
 	ld a, c ; $7760
@@ -674,12 +674,12 @@ UnpackUnlockFlagsFromLink:
 	ld a, $01 ; $7766
 	ld [hl], a ; $7768
 	pop hl ; $7769
-.nextItemBit:
+.nextSlot23To30:
 	sla b ; $776a
 	inc c ; $776c
 	ld a, c ; $776d
 	cp $08 ; $776e
-	jr nz, .itemBitLoop ; $7770
+	jr nz, .slots23To30Loop ; $7770
 	ret ; $7772
 MergeLinkUnlockFlags:
 	ld hl, wLinkUnlockFlagsSend ; $7773

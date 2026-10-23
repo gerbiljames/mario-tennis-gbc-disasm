@@ -216,19 +216,19 @@ CheckExpLevelDown:
 	dec a ; $744e
 	ld [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_EXP_TO_NEXT + 1], a ; $744f
 	ret ; $7452
-.openConfirmPrompt:
+RunExpConfirmPrompt:
 	wram_bank WRAM_SCENE ; $7453
 	ld hl, wExpScreenBusyFlags ; $7459
 	set EXPBUSYB_CONFIRM_OPEN, [hl] ; $745c
 	wram_bank WRAM_SCENE ; $745e
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR] ; $7464
-	ld [wBGPalettes + 58], a ; $7467
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE], a ; $7467
 	ld a, [wExpScreenCharStats + EXPSTAT_SAVED_COLOR + 1] ; $746a
-	ld [wBGPalettes + 59], a ; $746d
+	ld [wBGPalettes + 7 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $746d
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR] ; $7470
-	ld [wBGPalettes + 34], a ; $7473
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE], a ; $7473
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_SAVED_COLOR + 1] ; $7476
-	ld [wBGPalettes + 35], a ; $7479
+	ld [wBGPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE + 1], a ; $7479
 	ld a, [wStoryMainPalette] ; $747c
 	ld_bg_pals de, 1, 1 ; $747f
 	farcall LoadIndexedPaletteThunk ; $7482
@@ -239,27 +239,27 @@ CheckExpLevelDown:
 	set 0, [hl] ; $7491
 	sound SFX_MENU_SELECT ; $7493
 	farcall BackupCharDataScreen ; $7495
-	ld hl, ExpLevelDownTilemapPatch4 ; $7498
+	ld hl, ExpPromptWindowAnimStep4 ; $7498
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $749b
 	call ApplyTilemapPatchListExpScreen ; $749e
 	call UploadExpPromptWindowRows ; $74a1
 	wait_frames 2 ; $74a4
-	ld hl, ExpLevelDownTilemapPatch3 ; $74a8
+	ld hl, ExpPromptWindowAnimStep3 ; $74a8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74ab
 	call ApplyTilemapPatchListExpScreen ; $74ae
 	call UploadExpPromptWindowRows ; $74b1
 	wait_frames 2 ; $74b4
-	ld hl, ExpLevelDownTilemapPatch2 ; $74b8
+	ld hl, ExpPromptWindowAnimStep2 ; $74b8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74bb
 	call ApplyTilemapPatchListExpScreen ; $74be
 	call UploadExpPromptWindowRows ; $74c1
 	wait_frames 2 ; $74c4
-	ld hl, ExpLevelDownTilemapPatch1 ; $74c8
+	ld hl, ExpPromptWindowAnimStep1 ; $74c8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74cb
 	call ApplyTilemapPatchListExpScreen ; $74ce
 	call UploadExpPromptWindowRows ; $74d1
 	wait_frames 2 ; $74d4
-	ld hl, ExpLevelDownTilemapPatch0 ; $74d8
+	ld hl, ExpPromptWindowAnimStep0 ; $74d8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74db
 	call ApplyTilemapPatchListExpScreen ; $74de
 	call UploadExpPromptWindowRows ; $74e1
@@ -272,7 +272,7 @@ CheckExpLevelDown:
 	wram_bank WRAM_SCENE ; $74f8
 	ld a, $01 ; $74fe
 	ld [wExpPromptCursorRow], a ; $7500
-	jr UploadExpPromptWindowRows.loop ; $7503
+	jr ExpConfirmPromptInputLoop ; $7503
 UploadExpPromptWindowRows:
 	wram_bank WRAM_SCREEN ; $7505
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $750b
@@ -285,20 +285,20 @@ UploadExpPromptWindowRows:
 	ld c, 6 * TILEMAP_WIDTH / 16 ; $7522
 	call QueueVRAMCopy ; $7524
 	ret ; $7527
-.loop:
+ExpConfirmPromptInputLoop:
 	call DrawExpPromptCursor ; $7528
 	call TickLevelUpJingle ; $752b
 	call AdvanceFrame ; $752e
 	ldh a, [hInputRisingEdge] ; $7531
 	bit PADB_UP, a ; $7533
-	jr nz, DrawExpPromptCursor.playMoveSfx ; $7535
+	jr nz, ExpConfirmPromptMoveCursor ; $7535
 	bit PADB_DOWN, a ; $7537
-	jr nz, DrawExpPromptCursor.playMoveSfx ; $7539
+	jr nz, ExpConfirmPromptMoveCursor ; $7539
 	bit PADB_A, a ; $753b
-	jr nz, DrawExpPromptCursor.pressedA ; $753d
+	jr nz, ExpConfirmPromptPressedA ; $753d
 	bit PADB_B, a ; $753f
-	jr nz, DrawExpPromptCursor.playCancelSfx ; $7541
-	jr .loop ; $7543
+	jr nz, CloseExpConfirmPrompt ; $7541
+	jr ExpConfirmPromptInputLoop ; $7543
 UploadExpPromptWindowRowsClosing:
 	wram_bank WRAM_SCREEN ; $7545
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $754b
@@ -324,46 +324,46 @@ DrawExpPromptCursor:
 .queueSprite:
 	call QueueSprite ; $757b
 	ret ; $757e
-.playMoveSfx:
+ExpConfirmPromptMoveCursor:
 	sound SFX_MENU_MOVE ; $757f
 	ld a, [wExpPromptCursorRow] ; $7581
 	xor $01 ; $7584
 	ld [wExpPromptCursorRow], a ; $7586
-	jr UploadExpPromptWindowRows.loop ; $7589
-.pressedA:
+	jr ExpConfirmPromptInputLoop ; $7589
+ExpConfirmPromptPressedA:
 	ld a, [wExpPromptCursorRow] ; $758b
 	or a ; $758e
-	jr nz, .playCancelSfx ; $758f
+	jr nz, CloseExpConfirmPrompt ; $758f
 	sound SFX_MENU_SELECT ; $7591
 	ret ; $7593
-.playCancelSfx:
+CloseExpConfirmPrompt:
 	sound SFX_MENU_CANCEL ; $7594
 	farcall RestoreCharDataScreen ; $7596
-	ld hl, ExpLevelDownTilemapPatch0 ; $7599
+	ld hl, ExpPromptWindowAnimStep0 ; $7599
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $759c
 	call ApplyTilemapPatchListExpScreen ; $759f
 	call UploadExpPromptWindowRowsClosing ; $75a2
 	wait_frames 2 ; $75a5
 	farcall RestoreCharDataScreen ; $75a9
-	ld hl, ExpLevelDownTilemapPatch1 ; $75ac
+	ld hl, ExpPromptWindowAnimStep1 ; $75ac
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75af
 	call ApplyTilemapPatchListExpScreen ; $75b2
 	call UploadExpPromptWindowRowsClosing ; $75b5
 	wait_frames 2 ; $75b8
 	farcall RestoreCharDataScreen ; $75bc
-	ld hl, ExpLevelDownTilemapPatch2 ; $75bf
+	ld hl, ExpPromptWindowAnimStep2 ; $75bf
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75c2
 	call ApplyTilemapPatchListExpScreen ; $75c5
 	call UploadExpPromptWindowRowsClosing ; $75c8
 	wait_frames 2 ; $75cb
 	farcall RestoreCharDataScreen ; $75cf
-	ld hl, ExpLevelDownTilemapPatch3 ; $75d2
+	ld hl, ExpPromptWindowAnimStep3 ; $75d2
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75d5
 	call ApplyTilemapPatchListExpScreen ; $75d8
 	call UploadExpPromptWindowRowsClosing ; $75db
 	wait_frames 2 ; $75de
 	farcall RestoreCharDataScreen ; $75e2
-	ld hl, ExpLevelDownTilemapPatch4 ; $75e5
+	ld hl, ExpPromptWindowAnimStep4 ; $75e5
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75e8
 	call ApplyTilemapPatchListExpScreen ; $75eb
 	call UploadExpPromptWindowRowsClosing ; $75ee
@@ -385,7 +385,7 @@ ApplyTilemapPatchListExpScreen:
 	inc hl ; $7616
 	ld e, [hl] ; $7617
 	push hl ; $7618
-	ld hl, wScreenAttrmap ; $7619
+	ld hl, wCharDataScreenCell ; $7619
 	add hl, de ; $761c
 	ld d, h ; $761d
 	ld e, l ; $761e
@@ -468,7 +468,7 @@ DrawExpToNextLevelTask:
 	call GetExpScreenDigitSprite ; $76b5
 	ld_xy de, $26, $2f ; $76b8
 	call QueueSprite ; $76bb
-	ld hl, DrawExpToNextLevelTask_SpriteTemplate0 ; $76be
+	ld hl, ExpToNextLevelBubbleSpriteTemplate ; $76be
 	ld_oam bc, OAM_BANK1 | 6, $2c ; $76c1
 	ld_xy de, $14, $2e ; $76c4
 	call QueueSpriteTemplate ; $76c7
@@ -503,7 +503,7 @@ DrawExpToNextLevelTask:
 	call GetExpScreenDigitSprite ; $7708
 	ld_xy de, $26, $62 ; $770b
 	call QueueSprite ; $770e
-	ld hl, DrawExpToNextLevelTask_SpriteTemplate1 ; $7711
+	ld hl, ExpToNextLevelBubblePartnerSpriteTemplate ; $7711
 	ld_oam bc, OAM_BANK1 | 6, $44 ; $7714
 	ld_xy de, $14, $61 ; $7717
 	call QueueSpriteTemplate ; $771a
@@ -518,7 +518,7 @@ GetExpScreenDigitSprite:
 DrawExpCharCursorTask:
 	wram_bank WRAM_SCENE ; $7727
 	ld a, [wExpCursorSlide] ; $772d
-	ld_hl_indexed DrawExpCharCursorTaskTable ; $7730
+	ld_hl_indexed ExpCharCursorSlideYOffsets ; $7730
 	ld a, [hl] ; $7737
 	inc a ; $7738
 	ld e, a ; $7739
@@ -527,7 +527,7 @@ DrawExpCharCursorTask:
 	ld_oam bc, OAM_BANK1 | 6, $00 ; $773f
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
-DrawExpCharCursorTaskTable:
+ExpCharCursorSlideYOffsets:
 	; $7746, 26 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $06, $08, $0a, $0d, $11, $16, $1d, $24, $2b, $32, $37 ; 0x00
 	db $3b, $3e, $40, $42, $44, $45, $46, $47, $48, $00 ; 0x10

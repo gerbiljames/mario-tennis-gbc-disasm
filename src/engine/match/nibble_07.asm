@@ -185,7 +185,7 @@ Unused_07_SendNibbleBlockSlave:
 	call PollSerialResponse ; $4465
 	jr c, .sendByte ; $4468
 	xor a ; $446a
-	ldh [hLinkCounter], a ; $446b
+	ldh [hLinkRetryCount], a ; $446b
 	dec b ; $446d
 	jr nz, .sendLoop ; $446e
 .sendBlockEnd:
@@ -270,7 +270,7 @@ Unused_07_ReceiveNibbleBlockMaster:
 	ld [hl+], a ; $44f5
 	add_de_a ; $44f6
 	xor a ; $44fb
-	ldh [hLinkCounter], a ; $44fc
+	ldh [hLinkRetryCount], a ; $44fc
 	inc b ; $44fe
 	ld a, b ; $44ff
 	cp $40 ; $4500
@@ -309,12 +309,12 @@ PollSerialResponse:
 	cp $ff ; $4538
 	jr z, .noReply ; $453a
 	xor a ; $453c
-	ldh [hLinkCounter], a ; $453d
+	ldh [hLinkRetryCount], a ; $453d
 	scf ; $453f
 	ccf ; $4540
 	jr .done ; $4541
 .noReply:
-	call IncrementLinkFrameCounter ; $4543
+	call IncrementLinkRetryCount ; $4543
 	scf ; $4546
 .done:
 	ei ; $4547
@@ -349,13 +349,13 @@ SendByteAwaitEchoMaster:
 	cp b ; $4575
 	jr z, .success ; $4576
 	xor a ; $4578
-	ldh [hLinkCounter], a ; $4579
+	ldh [hLinkRetryCount], a ; $4579
 	dec c ; $457b
 	jr nz, .sendLoop ; $457c
 	scf ; $457e
 	jr .done ; $457f
 .retry:
-	call IncrementLinkFrameCounter ; $4581
+	call IncrementLinkRetryCount ; $4581
 	jr .sendLoop ; $4584
 .success:
 	scf ; $4586
@@ -387,13 +387,13 @@ Unused_07_SendByteAwaitEchoSlave:
 	cp b ; $45ac
 	jr z, .success ; $45ad
 	xor a ; $45af
-	ldh [hLinkCounter], a ; $45b0
+	ldh [hLinkRetryCount], a ; $45b0
 	dec c ; $45b2
 	jr nz, .sendLoop ; $45b3
 	scf ; $45b5
 	jr .done ; $45b6
 .retry:
-	call IncrementLinkFrameCounter ; $45b8
+	call IncrementLinkRetryCount ; $45b8
 	jr .sendLoop ; $45bb
 .success:
 	scf ; $45bd
@@ -457,11 +457,11 @@ Unused_07_SendByteAwaitReplyMaster:
 	jr z, .retry ; $4614
 	ld b, a ; $4616
 	xor a ; $4617
-	ldh [hLinkCounter], a ; $4618
+	ldh [hLinkRetryCount], a ; $4618
 	ld a, b ; $461a
 	jr .done ; $461b
 .retry:
-	call IncrementLinkFrameCounter ; $461d
+	call IncrementLinkRetryCount ; $461d
 	jr .sendLoop ; $4620
 .done:
 	pop bc ; $4622
@@ -490,7 +490,7 @@ SendByteGetReplySlave:
 	jr z, .retry ; $4645
 	ld b, a ; $4647
 	xor a ; $4648
-	ldh [hLinkCounter], a ; $4649
+	ldh [hLinkRetryCount], a ; $4649
 	ld a, b ; $464b
 	jr .done ; $464c
 .retry:

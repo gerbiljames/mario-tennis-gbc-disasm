@@ -192,7 +192,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 	pop de ; $4aa5
 	pop bc ; $4aa6
 	ret ; $4aa7
-Unused_05_RunMenuSelectionShared:
+Unused_05_RunOptionsMenuSelection:
 	push bc ; $4aa8
 	push de ; $4aa9
 	push hl ; $4aaa
@@ -231,7 +231,7 @@ Unused_05_RunMenuSelectionShared:
 	ld [hl], e ; $4aea
 	inc hl ; $4aeb
 	ld [hl], d ; $4aec
-	frame_task Unused_05_AnimateMenuScrollArrowsTask ; $4aed
+	frame_task Unused_05_AnimateMenuAdjustArrowsTask ; $4aed
 	pop hl ; $4af5
 	pop de ; $4af6
 	pop bc ; $4af7
@@ -240,9 +240,9 @@ Unused_05_RunMenuSelectionShared:
 	ld b, a ; $4afc
 .loop:
 	call AdvanceFrame ; $4afd
-	ldh a, [hInputPressed] ; $4b00
+	ldh a, [hInputRepeat] ; $4b00
 	bit PADB_A, a ; $4b02
-	jp nz, Unused_05_LoadOverworldSpriteDef.aPressed ; $4b04
+	jp nz, .aPressed ; $4b04
 	bit PADB_UP, a ; $4b07
 	jr z, .checkDown ; $4b09
 	dec b ; $4b0b
@@ -253,9 +253,9 @@ Unused_05_RunMenuSelectionShared:
 	ld b, a ; $4b14
 	jr .playSfx ; $4b15
 .checkDown:
-	ldh a, [hInputPressed] ; $4b17
+	ldh a, [hInputRepeat] ; $4b17
 	and PADF_DOWN ; $4b19
-	jp z, Unused_05_LoadOverworldSpriteDef.checkInputRisingEdge ; $4b1b
+	jp z, .checkStart ; $4b1b
 	ld a, [wMenuRowCount] ; $4b1e
 	ld c, a ; $4b21
 	inc b ; $4b22
@@ -282,7 +282,7 @@ Unused_05_RunMenuSelectionShared:
 	ld a, [hl+] ; $4b41
 	ld h, [hl] ; $4b42
 	ld l, a ; $4b43
-	ld de, $3000 ; $4b44
+	ld de, $10000 - wActiveTilemap ; $4b44
 	add hl, de ; $4b47
 	ld de, vBGMap0 ; $4b48
 	add hl, de ; $4b4b
@@ -307,18 +307,17 @@ Unused_05_RunMenuSelectionShared:
 	call GetTilemapCellAddress ; $4b61
 	ld hl, wTextArrowCell ; $4b64
 	ld [hl], e ; $4b67
-Unused_05_LoadOverworldSpriteDef:
 	inc hl ; $4b68
 	ld [hl], d ; $4b69
 	pop hl ; $4b6a
 	pop de ; $4b6b
 	ld a, b ; $4b6c
 	ld [wMenuCursorRow], a ; $4b6d
-	jr .checkInputRisingEdge ; $4b70
+	jr .checkStart ; $4b70
 .aPressed:
 	call Unused_05_IsCursorOnAdjustRow ; $4b72
 	or a ; $4b75
-	jr nz, Unused_05_RunMenuSelectionShared.loop ; $4b76
+	jr nz, Unused_05_RunOptionsMenuSelection.loop ; $4b76
 	sound SFX_MENU_SELECT ; $4b78
 	ld a, b ; $4b7a
 	ld [wMenuCursorRow], a ; $4b7b
@@ -326,7 +325,7 @@ Unused_05_LoadOverworldSpriteDef:
 	push bc ; $4b7f
 	push de ; $4b80
 	push hl ; $4b81
-	ld hl, Unused_05_AnimateMenuScrollArrowsTask ; $4b82
+	ld hl, Unused_05_AnimateMenuAdjustArrowsTask ; $4b82
 	call UnregisterFrameTask ; $4b85
 	call AdvanceFrame ; $4b88
 	ld a, [wMenuCursorRow] ; $4b8b
@@ -343,18 +342,18 @@ Unused_05_LoadOverworldSpriteDef:
 	pop bc ; $4ba0
 	pop af ; $4ba1
 	jp .returnSelection ; $4ba2
-.checkInputRisingEdge:
+.checkStart:
 	ldh a, [hInputRisingEdge] ; $4ba5
 	and PADF_START ; $4ba7
-	jp z, .checkInputPressed ; $4ba9
+	jp z, .checkB ; $4ba9
 	sound SFX_MENU_CANCEL ; $4bac
 	ld a, [wPauseMenuOptionBits] ; $4bae
 	and $f0 ; $4bb1
 	ld [wPauseMenuOptionBits], a ; $4bb3
 	ld a, $ff ; $4bb6
 	jp .store ; $4bb8
-.checkInputPressed:
-	ldh a, [hInputPressed] ; $4bbb
+.checkB:
+	ldh a, [hInputRepeat] ; $4bbb
 	and PADF_B ; $4bbd
 	jp z, .checkAdjustRow ; $4bbf
 	sound SFX_MENU_CANCEL ; $4bc2
@@ -371,7 +370,7 @@ Unused_05_LoadOverworldSpriteDef:
 	call Unused_05_IsCursorOnAdjustRow ; $4bd5
 	or a ; $4bd8
 	jr z, .notAdjusting ; $4bd9
-	ldh a, [hInputPressed] ; $4bdb
+	ldh a, [hInputRepeat] ; $4bdb
 	and PADF_LEFT ; $4bdd
 	jp z, .checkRight ; $4bdf
 	ld a, [wPauseMenuOptionBits] ; $4be2
@@ -380,7 +379,7 @@ Unused_05_LoadOverworldSpriteDef:
 	ld [wPauseMenuOptionBits], a ; $4be9
 	jr .adjusted ; $4bec
 .checkRight:
-	ldh a, [hInputPressed] ; $4bee
+	ldh a, [hInputRepeat] ; $4bee
 	and PADF_RIGHT ; $4bf0
 	jr z, .notAdjusting ; $4bf2
 	ld a, [wPauseMenuOptionBits] ; $4bf4
@@ -394,22 +393,22 @@ Unused_05_LoadOverworldSpriteDef:
 	pop bc ; $4c02
 	pop af ; $4c03
 	call GetWindowState ; $4c04
-	cp $03 ; $4c07
-	jp nz, Unused_05_RunMenuSelectionShared.loop ; $4c09
+	cp WINDOWSTATE_PAGED_MENU ; $4c07
+	jp nz, Unused_05_RunOptionsMenuSelection.loop ; $4c09
 	ld a, [wScrollListLength] ; $4c0c
 	dec a ; $4c0f
 	sra a ; $4c10
 	sra a ; $4c12
-	jp z, Unused_05_RunMenuSelectionShared.loop ; $4c14
-	ldh a, [hInputPressed] ; $4c17
+	jp z, Unused_05_RunOptionsMenuSelection.loop ; $4c14
+	ldh a, [hInputRepeat] ; $4c17
 	and PADF_LEFT ; $4c19
-	jp z, .runMenuSelectionShared ; $4c1b
+	jp z, .checkPageRight ; $4c1b
 	ld a, $fe ; $4c1e
 	jr .store ; $4c20
-.runMenuSelectionShared:
-	ldh a, [hInputPressed] ; $4c22
+.checkPageRight:
+	ldh a, [hInputRepeat] ; $4c22
 	and PADF_RIGHT ; $4c24
-	jp z, Unused_05_RunMenuSelectionShared.loop ; $4c26
+	jp z, Unused_05_RunOptionsMenuSelection.loop ; $4c26
 	ld a, $fd ; $4c29
 .store:
 	ld [wMenuCursorRow], a ; $4c2b
@@ -425,7 +424,7 @@ Unused_05_LoadOverworldSpriteDef:
 	push bc ; $4c38
 	push de ; $4c39
 	push hl ; $4c3a
-	ld hl, Unused_05_AnimateMenuScrollArrowsTask ; $4c3b
+	ld hl, Unused_05_AnimateMenuAdjustArrowsTask ; $4c3b
 	call UnregisterFrameTask ; $4c3e
 	call AdvanceFrame ; $4c41
 	ld a, [wMenuDepth] ; $4c44

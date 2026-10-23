@@ -34,21 +34,21 @@ bank whole.
 A file can hold more copies than its live group below, since dead copies are
 included too. `apply_sprite_wobble_x`, `draw_ascii_digit_char`,
 `draw_corner_brackets`, `draw_decimal_number`,
-`compute_ranking_progress_index_13`, `get_cell_index_from_cursor_ptr`,
+`compute_ranking_progress_index_13`,
 `get_menu_cursor_index_from_ptr`, `set_menu_cursor_from_index_to_ptr`,
 `lookup_ball_pos_by_aim`, `move_menu_cursor2_grid_remote`,
 `move_menu_cursor_grid_remote`, `move_menu_cursor_grid_from_link_input` and
 `move_menu_cursor_grid_from_link_input_17` have no live copy at all.
 
 Four look-alikes stay separate because they differ: the Island Open NPC
-scripts `IslandOpenFinalDoublesNpc0B_0f` / `IslandOpenRound1DoublesNpc0B_0f`,
+scripts `IslandOpenFinalDoublesNpc0BBCoz_0f` / `IslandOpenRound1DoublesNpc0BSean_0f`,
 and the `Npc0D` pair, set different text ids. The table also has the
 families under the ten-instruction floor (`twins.py --min 4`).
 
 | file | routine | banks |
 |---|---|---|
-| `src/twins/academy_main_bldg_arrival01.asm` | `RestaurantArrival01_10`, `AcademyMainBldgArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaArrival04_13` | $10, $10, $11, $12, $13 |
-| `src/twins/academy_main_bldg_arrival02.asm` | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` | $10, $11, $12 |
+| `src/twins/academy_main_bldg_arrival01.asm` | `RestaurantArrival01_10`, `AcademyMainBldgArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaFromCourtyard_13` | $10, $10, $11, $12, $13 |
+| `src/twins/academy_main_bldg_arrival02.asm` | `AcademyMainBldgArrival02_10`, `AcademyEntranceArrival01_11`, `DormEntranceArrival02_12` | $10, $11, $12 |
 | `src/twins/academy_wing_close_door.asm` | `AcademyWingCloseDoor_<bank>` | $10, $27 |
 | `src/twins/academy_wing_open_door.asm` | `AcademyWingOpenDoor_<bank>` | $10, $27 |
 | `src/twins/advance_plane_frame_counter.asm` | `AdvancePlaneFrameCounter_14`, `AdvancePlaneFrameCounter2_14` | $14 |
@@ -66,43 +66,41 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/compute_ranking_progress_index.asm` | `ComputeRankingProgressIndex_<bank>` | $0e, $11, $12, $27 |
 | `src/twins/compute_ranking_progress_index_13.asm` | `Unused_<bank>_ComputeRankingProgressIndex` | $13, $14, $15 |
 | `src/twins/compute_story_rank_tier.asm` | `ComputeStoryRankTier_<bank>` | $13, $15 |
-| `src/twins/development_facing01.asm` | `DevelopmentFacing01_10`, `Test2Facing01_10`, `WallPracticeRoomFacing01_12`, `DormRoomFacing01_13` | $10, $10, $12, $13 |
-| `src/twins/development_tile01.asm` | `DevelopmentTile01_10`, `Test2Tile01_10` | $10 |
-| `src/twins/dorm_room_entry08_scene.asm` | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` | $13 |
+| `src/twins/development_search_event_stub.asm` | `DevelopmentSearchEventStub_10`, `Test2SearchEventStub_10`, `WallPracticeRoomSearchEventStub_12`, `DormRoomSearchEventStub_13` | $10, $10, $12, $13 |
+| `src/twins/development_trigger_event_stub.asm` | `DevelopmentTriggerEventStub_10`, `Test2TriggerEventStub_10` | $10 |
+| `src/twins/dorm_room_departure_morning_scene.asm` | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` | $13 |
 | `src/twins/draw_ascii_digit_char.asm` | `Unused_<bank>_DrawAsciiDigitChar` | $16, $17, $1b, $3b, $3e |
 | `src/twins/draw_confirm_selection_cursor.asm` | `DrawConfirmSelectionCursor_<bank>` | $1a, $1c, $1d |
-| `src/twins/draw_corner_brackets.asm` | `Unused_<bank>_DrawCornerBrackets` | $1b, $38, $3b, $3e |
+| `src/twins/draw_corner_brackets.asm` | `Unused_<bank>_DrawCornerBrackets` | $16, $1b, $38, $3b, $3e |
 | `src/twins/draw_decimal_number.asm` | `Unused_<bank>_DrawDecimalNumber` | $17, $1b, $3b, $3e |
 | `src/twins/draw_name_with_diacritics.asm` | `DrawNameWithDiacritics_<bank>` | $17, $1b, $3e |
 | `src/twins/draw_name_with_diacritics_38.asm` | `DrawNameWithDiacritics_<bank>` | $38, $3b |
 | `src/twins/extract_decimal_digit.asm` | `ExtractDecimalDigit`, `ExtractDecimalDigitUnsigned` | $00 |
 | `src/twins/fetch_text.asm` | `FetchText_<bank>` | the thirteen text banks |
-| `src/twins/flush_match_format_row_to_vram.asm` | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` | $3b, $3e |
-| `src/twins/get_cell_index_from_cursor_ptr.asm` | `Unused_<bank>_GetCellIndexFromCursorPtr` | $16, $3b, $3e |
+| `src/twins/flush_match_format_row_attrs.asm` | `FlushMatchFormatRowAttrs`, `FlushLinkMatchFormatRowAttrs` | $3b, $3e |
 | `src/twins/get_menu_cursor_index.asm` | `GetMenuCursorIndex_<bank>` | $16, $1b, $38, $3b, $3e |
-| `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $1b, $38 |
+| `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $16, $1b, $38, $3b, $3e |
 | `src/twins/init_minigame_medallion_match.asm` | the four `InitMinigame_*` tennis-machine setups | $0d |
-| `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` | $6b |
-| `src/twins/intro_cutscene_state02_exit.asm` | `IntroCutsceneState02Exit_6b`, `IntroCutsceneState04Exit_6b` | $6b |
-| `src/twins/intro_cutscene_state06_update.asm` | `IntroCutsceneState06Update_6b`, `IntroCutsceneState13Update_6b` | $6b |
-| `src/twins/intro_cutscene_state09_update.asm` | `IntroCutsceneState09Update_6b`, `IntroCutsceneState10Update_6b` | $6b |
-| `src/twins/intro_cutscene_state16_update.asm` | `IntroCutsceneState16Update_6b`, `IntroCutsceneState17Update_6b` | $6b |
+| `src/twins/intro_cutscene_alex_swing_exit.asm` | `IntroCutsceneAlexSwingExit_6b`, `IntroCutsceneNinaSwingExit_6b` | $6b |
+| `src/twins/intro_cutscene_dive_update.asm` | `IntroCutsceneDiveUpdate_6b`, `IntroCutsceneGirlSwingUpdate_6b` | $6b |
+| `src/twins/intro_cutscene_greatest_player_update.asm` | `IntroCutsceneGreatestPlayerUpdate_6b`, `IntroCutsceneMarioRevealUpdate_6b` | $6b |
+| `src/twins/intro_cutscene_opening_toss_update.asm` | `IntroCutsceneOpeningTossUpdate_6b`, `IntroCutsceneClosingTossUpdate_6b` | $6b |
+| `src/twins/intro_cutscene_rally_fade_out_update.asm` | `IntroCutsceneRallyFadeOutUpdate_6b`, `IntroCutsceneOpponentsCaptionUpdate_6b` | $6b |
 | `src/twins/is_ball_in_medallion_match_hit_zone.asm` | `IsBallInTreasureBoxHitZone`, `IsBallInMedallionMatchHitZone` | $0d |
-| `src/twins/island_open_round_doubles_npc04.asm` | `IslandOpenRoundSinglesNpc04_0f`, `IslandOpenRoundDoublesNpc04_0f` | $0f |
-| `src/twins/junior_class_court_singles_npc03_face_up.asm` | `JuniorClassCourtSinglesNpc03FaceUp_11`, `JuniorClassCourtDoublesNpc03FaceUp_11` | $11 |
+| `src/twins/island_open_round_doubles_npc04_emily.asm` | `IslandOpenRoundSinglesNpc04Emily_0f`, `IslandOpenRoundDoublesNpc04Emily_0f` | $0f |
+| `src/twins/junior_class_court_singles_npc03_junior_coach_face_up.asm` | `JuniorClassCourtSinglesNpc03JuniorCoachFaceUp_11`, `JuniorClassCourtDoublesNpc03JuniorCoachFaceUp_11` | $11 |
 | `src/twins/load_player_partner_obj_defs.asm` | `LoadPlayerPartnerObjDefs_<bank>` | $11, $14, $15 |
 | `src/twins/lookup_ball_pos_by_aim.asm` | `Unused_<bank>_LookupBallPosByAim` | $20-$23, $29-$2b |
 | `src/twins/lookup_ball_pos_by_aim_24.asm` | `LookupBallPosByAim_<bank>` | $24, $2c |
 | `src/twins/lookup_ball_pos_by_height.asm` | `LookupBallPosByHeight_<bank>` | $20-$24, $29-$2c |
 | `src/twins/lookup_ball_pos_by_shot_index.asm` | `LookupBallPosByShotIndex_<bank>` | $20-$24, $29-$2b |
-| `src/twins/match_format_slide_out.asm` | `MatchFormatSlideOut`, `CloseMatchRulesPanel` | $3b, $3e |
-| `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` | $0e, $15 |
-| `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3e |
+| `src/twins/mirror_player_sprite_if_left_handed.asm` | `MirrorPlayerSpriteIfLeftHanded`, `MirrorPlayerSpriteIfLeftHanded_15` | $0e, $15 |
+| `src/twins/move_menu_cursor2_grid_remote.asm` | `Unused_<bank>_MoveMenuCursor2GridRemote` | $16, $3b, $3e |
 | `src/twins/move_menu_cursor_grid.asm` | `MoveMenuCursorGrid_<bank>` | $38, $3b, $3e |
 | `src/twins/move_menu_cursor_grid_17.asm` | `MoveMenuCursorGrid_<bank>` | $17, $1b |
-| `src/twins/move_menu_cursor_grid_from_link_input.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $16, $38, $3e |
+| `src/twins/move_menu_cursor_grid_from_link_input.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $16, $38, $3b, $3e |
 | `src/twins/move_menu_cursor_grid_from_link_input_17.asm` | `Unused_<bank>_MoveMenuCursorGridFromLinkInput` | $17, $1b |
-| `src/twins/move_menu_cursor_grid_remote.asm` | `Unused_<bank>_MoveMenuCursorGridRemote` | $16, $38, $3e |
+| `src/twins/move_menu_cursor_grid_remote.asm` | `Unused_<bank>_MoveMenuCursorGridRemote` | $16, $38, $3b, $3e |
 | `src/twins/net_game_match1_award_point_to_side.asm` | the seven `*AwardPointToSide` minigame handlers | $0b |
 | `src/twins/net_game_practice1_handle_point_end.asm` | `NetGamePractice1/2/3HandlePointEnd` | $0b |
 | `src/twins/net_game_practice2_hook_minigame_start.asm` | `NetGamePractice2/3Hook_MinigameStart` | $0b |
@@ -111,7 +109,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/push_short_text_arg.asm` | `PushShortTextArg_<bank>` | $0e, $0f, $12 |
 | `src/twins/queue_caption_row_to_vram.asm` | `QueueCaptionRowToVRAM`, `FlushLinkMessageRows` | $17, $3e |
 | `src/twins/read_scene_tilemap_tile.asm` | `ReadSceneTilemapTile_<bank>` | $0f, $10 |
-| `src/twins/restaurant_plaza_arrival06.asm` | `RestaurantPlazaArrival06_13`, `Court2EntryWalkIn` | $13, $14 |
+| `src/twins/restaurant_plaza_from_training_court.asm` | `RestaurantPlazaFromTrainingCourt_13`, `Court2EntryWalkIn` | $13, $14 |
 | `src/twins/seek_ball_traj_entry4.asm` | `SeekBallTrajEntry4_<bank>` | $20-$24, $29-$2c |
 | `src/twins/seek_ball_traj_entry6.asm` | `SeekBallTrajEntry6_<bank>` | $20-$24, $29-$2c |
 | `src/twins/service_match1_hook_point_start.asm` | `ServiceMatch1/3Hook_PointStart` | $0b |
@@ -126,6 +124,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/set_roommate_singles_no_reply_text.asm` | `SetRoommateSinglesNoReplyText_13`, `SetRoommateSinglesYesReplyText_13` | $13 |
 | `src/twins/shot_ball_path_slice.asm` | `ShotBallPathSlice`, `ShotBallPathPowerSlice` (`twin_in`) | $20, $21 |
 | `src/twins/shot_ball_path_topspin.asm` | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` (`twin_in`) | $22, $23 |
+| `src/twins/slide_match_format_panel.asm` | `SlideMatchFormatPanel`, `SlideLinkMatchFormatPanel` | $3b, $3e |
 | `src/twins/snap_camera_to.asm` | `SnapCameraTo_<bank>` | $08, $0d |
 | `src/twins/start_drill_from_definition.asm` | `StartDrillFromDefinition`, `InitMinigameFromConfig` | $0b, $0d |
 | `src/twins/stroke_practice1_cases2.asm` | `StrokePractice1Cases2`, `StrokePractice3Cases2` | $0b |
@@ -135,7 +134,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/tennis_machine1_hook_minigame_start.asm` | `TennisMachine1/2Hook_MinigameStart` | $0d |
 | `src/twins/tennis_machine3_hook_minigame_start.asm` | `TennisMachine3/4Hook_MinigameStart`, `TennisMachineHighScoreHook_MinigameStart` | $0d |
 | `src/twins/tennis_machine4_hook__point_start.asm` | `TennisMachine4Hook_PointStart`, `TennisMachineHighScoreHook_PointStart` | $0d |
-| `src/twins/varsity_court_npc03_face_up.asm` | `VarsityCourtANpc03FaceUp_13`, `VarsityCourtBNpc03FaceUp_13` | $13 |
+| `src/twins/varsity_court_npc03_kevin_face_up.asm` | `VarsityCourtSinglesNpc03KevinFaceUp_13`, `VarsityCourtDoublesNpc03KevinFaceUp_13` | $13 |
 | `src/twins/wait_script_frames_save_a.asm` | `WaitScriptFramesSaveA_<bank>` (five instructions, under the floor; `script_delay` picks its bank's copy) | $0f, $27 |
 
 ## The families
@@ -175,10 +174,10 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 6 | 15 | $20, $21, $22, $23, $24, $2c | `BallTrajEntryPtr6_*` |
 | 6 | 30 | $20, $21, $22, $23, $24, $2c | `SetBallTargetFromAim_*` |
 | 6 | 32 | $20, $21, $22, $23, $24, $2c | `SetBallVelocityFromEntry6_*` |
-| 5 | 13 | $10, $11, $12, $13 | `AcademyMainBldgArrival01_10`, `RestaurantArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaArrival04_13` |
+| 5 | 13 | $10, $11, $12, $13 | `AcademyMainBldgArrival01_10`, `RestaurantArrival01_10`, `MapArrivalWalk_11`, `DormEntranceArrival01_12`, `RestaurantPlazaFromCourtyard_13` |
 | 5 | 22 | $20, $21, $22, $23, $2c | `SeekBallTrajEntry6_*` |
 | 4 | 12 | $1b, $38, $3b, $3e | `GetMenuCursorIndex_*` |
-| 3 | 13 | $10, $11, $12 | `AcademyMainBldgArrival02_10`, `AcademyArrivalArrival01_11`, `DormEntranceArrival02_12` |
+| 3 | 13 | $10, $11, $12 | `AcademyMainBldgArrival02_10`, `AcademyEntranceArrival01_11`, `DormEntranceArrival02_12` |
 | 3 | 31 | $0e, $11, $12 | `ComputeRankingProgressIndex_*` |
 | 3 | 12 | $1a, $1c, $1d | `DrawConfirmSelectionCursor_*` |
 | 3 | 74 | $38, $3b, $3e | `MoveMenuCursorGrid_*` |
@@ -188,21 +187,21 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 12 | $24, $2c | `BallTrajEntryPtr4_*` |
 | 2 | 24 | $13, $15 | `ComputeStoryRankTier_*` |
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
-| 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushMatchRuleRowAttrs` |
-| 2 | 10 | $13 | `DormRoomEntry08Scene`, `DormRoomEntry0aScene` |
-| 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState19Update_6b` |
+| 2 | 28 | $3b, $3e | `FlushMatchFormatRowAttrs`, `FlushLinkMatchFormatRowAttrs` |
+| 2 | 10 | $13 | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` |
+| 2 | 14 | $6b | `IntroCutsceneOpeningTossUpdate_6b`, `IntroCutsceneClosingTossUpdate_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
-| 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04_0f`, `IslandOpenRoundSinglesNpc04_0f` |
+| 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04Emily_0f`, `IslandOpenRoundSinglesNpc04Emily_0f` |
 | 3 | 21 | $11, $14, $15 | `LoadPlayerPartnerObjDefs_11`, `LoadPlayerPartnerObjDefs_14`, `LoadPlayerPartnerObjDefs_15` |
-| 2 | 27 | $3b, $3e | `MatchFormatSlideOut`, `CloseMatchRulesPanel` |
-| 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `TogglePlayerSpriteXFlip` |
+| 2 | 12 | $0e, $15 | `MirrorPlayerSpriteIfLeftHanded`, `MirrorPlayerSpriteIfLeftHanded_15` |
 | 2 | 14 | $0d | `ProjectMedallionMatchWorldPosition`, `ProjectTreasureBoxWorldPosition` |
 | 2 | 19 | $0f, $10 | `ReadSceneTilemapTile_*` |
-| 2 | 13 | $13, $14 | `RestaurantPlazaArrival06_13`, `Court2EntryWalkIn` |
+| 2 | 13 | $13, $14 | `RestaurantPlazaFromTrainingCourt_13`, `Court2EntryWalkIn` |
 | 2 | 22 | $24, $2c | `SeekBallTrajEntry4_*` |
 | 2 | 16 | $24, $2c | `SetBallVelocityFromEntry4_*` |
 | 2 | 11 | $20, $21 | `ShotBallPathSlice`, `ShotBallPathPowerSlice` |
 | 2 | 11 | $22, $23 | `ShotBallPathTopspin`, `ShotBallPathPowerTopspin` |
+| 2 | 27 | $3b, $3e | `SlideMatchFormatPanel`, `SlideLinkMatchFormatPanel` |
 | 2 | 21 | $08, $0d | `SnapCameraTo_08`, `SnapCameraTo_0d` |
 | 2 | 64 | $0b, $0d | `StartDrillFromDefinition`, `InitMinigameFromConfig` |
 | 2 | 29 | $0b | `StrokePractice1Cases2`, `StrokePractice3Cases2` |

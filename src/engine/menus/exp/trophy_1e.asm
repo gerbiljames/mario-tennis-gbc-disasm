@@ -39,14 +39,14 @@ SetupRankingBoardArgs:
 	and $01 ; $6fc2
 	ld b, a ; $6fc4
 	or a ; $6fc5
-	jr nz, .oddMatch ; $6fc6
+	jr nz, .doubles ; $6fc6
 	ld a, [wCurrentMatchIndex] ; $6fc8
 	sub STORYMATCH_ISLAND_OPEN_FINAL ; $6fcb
 	add $04 ; $6fcd
 	and $07 ; $6fcf
 	ld c, a ; $6fd1
 	jr .checkMatchWinLoseFlag ; $6fd2
-.oddMatch:
+.doubles:
 	ld a, [wCurrentMatchIndex] ; $6fd4
 	sub STORYMATCH_ISLAND_OPEN_FINAL ; $6fd7
 	add $03 ; $6fd9
@@ -56,10 +56,10 @@ SetupRankingBoardArgs:
 	ld a, [wMatchWinLoseFlag] ; $6fde
 	cp WINLOSE_WIN ; $6fe1
 	jr nz, .lost ; $6fe3
-	ld d, RANKINGBOARD_FANFARE ; $6fe5
+	ld d, RANKINGBOARD_WIN ; $6fe5
 	ret ; $6fe7
 .lost:
-	ld d, RANKINGBOARD_CURSOR ; $6fe8
+	ld d, RANKINGBOARD_LOSE ; $6fe8
 	ret ; $6fea
 GetTrophyExpValue:
 	add a ; $6feb

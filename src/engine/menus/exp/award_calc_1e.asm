@@ -1,6 +1,6 @@
 TrophyExpValueTable:
 	INCLUDE "data/engine/menus/exp/TrophyExpValueTable.asm" ; $67a7, 48 bytes (words:4)
-GamesWonExpByTier:
+GamesPlayedExpByTier:
 	; $67d7, 8 bytes (bytes:8)
 	db $02, $03, $04, $05, $06, $07, $08, $00 ; 0x00
 ServiceAceExpByTier:
@@ -60,8 +60,8 @@ ComputeMatchStatsReward:
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
 	pop de ; $685b
-	ld hl, GamesWonExpByTier ; $685c
-	ld a, [wTotalGamesWonInMatch] ; $685f
+	ld hl, GamesPlayedExpByTier ; $685c
+	ld a, [wTotalGamesPlayedInMatch] ; $685f
 	call AccumulateStatExp ; $6862
 	ld l, e ; $6865
 	ld h, d ; $6866
@@ -114,14 +114,14 @@ AccumulateStatExp:
 	ld e, l ; $68d9
 	ld d, h ; $68da
 	ret ; $68db
-ApplyMatchSettingsExpBonus:
+ApplyIronEquipmentExpBonus:
 	ld b, $00 ; $68dc
 	ld a, d ; $68de
 	and $0f ; $68df
 	cp $03 ; $68e1
-	jr nz, .checkSets ; $68e3
+	jr nz, .checkShoes ; $68e3
 	inc b ; $68e5
-.checkSets:
+.checkShoes:
 	ld a, d ; $68e6
 	swap a ; $68e7
 	and $0f ; $68e9
@@ -177,7 +177,7 @@ GetPlayerExpTier:
 	ld c, a ; $693c
 	ret ; $693d
 LookupExpTierForChar:
-	ld a, [wCharExpTier] ; $693e
+	ld a, [wCharLevel] ; $693e
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
 	cp NUM_STORY_HEROES ; $6945
@@ -188,10 +188,10 @@ LookupExpTierForChar:
 	ld e, $0a ; $694c
 	call DivAHLByE ; $694e
 	ld a, l ; $6951
-	ld_hl_indexed LookupExpTierForCharTable ; $6952
+	ld_hl_indexed ExpTierByLevelDecade ; $6952
 	ld c, [hl] ; $6959
 	ret ; $695a
-LookupExpTierForCharTable:
+ExpTierByLevelDecade:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
 LookupExpTierForChar.storedTier:
@@ -218,7 +218,7 @@ AwardExhibitionMatchExp:
 	srl a ; $6986
 	and $03 ; $6988
 	ld [wCurrentStorySlot], a ; $698a
-	farcall CheckStorySlot ; $698d
+	farcall ReadCurrentStorySlot ; $698d
 	ld d, h ; $6990
 	ld e, l ; $6991
 	ld hl, wPendingExpExhibition ; $6992
@@ -227,7 +227,7 @@ AwardExhibitionMatchExp:
 	ld l, a ; $6997
 	add hl, de ; $6998
 	jr nc, .storeTotal ; $6999
-	ld hl, rIE ; $699b
+	ld hl, $ffff ; $699b
 .storeTotal:
 	ld d, h ; $699e
 	ld e, l ; $699f
@@ -272,14 +272,14 @@ AwardLinkedPlayMatchExp:
 	srl a ; $69ed
 	and $03 ; $69ef
 	ld [wCurrentStorySlot], a ; $69f1
-	farcall CheckStorySlot ; $69f4
+	farcall ReadCurrentStorySlot ; $69f4
 	ld hl, wPendingExpLinked ; $69f7
 	ld a, [hl+] ; $69fa
 	ld h, [hl] ; $69fb
 	ld l, a ; $69fc
 	add hl, de ; $69fd
 	jr nc, .storeTotal ; $69fe
-	ld hl, rIE ; $6a00
+	ld hl, $ffff ; $6a00
 .storeTotal:
 	ld d, h ; $6a03
 	ld e, l ; $6a04
@@ -307,7 +307,7 @@ ShowExpAwardForMinigame:
 	ld c, $01 ; $6a22
 	farcall SetPendingExpAward ; $6a24
 	ld c, $01 ; $6a27
-	call ShowMatchResultsScreen ; $6a29
+	call ShowExpAwardOrContinueGameScreen ; $6a29
 	pop_wram_bank ; $6a2c
 	pop hl ; $6a31
 	pop de ; $6a32
@@ -325,7 +325,7 @@ ShowExpAwardForMatch:
 	ldh a, [hWramBank] ; $6a3d
 	push af ; $6a3f
 	farcall ClearPendingExpAwards ; $6a40
-	ld b, $03 ; $6a43
+	ld b, EXPAWARD_MATCH ; $6a43
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
 	cp GAMEMODE_ISLAND_OPEN ; $6a4a
@@ -342,7 +342,7 @@ ShowExpAwardForMatch:
 .setPendingExpAward:
 	farcall SetPendingExpAward ; $6a5c
 	ld c, $01 ; $6a5f
-	call ShowMatchResultsScreen ; $6a61
+	call ShowExpAwardOrContinueGameScreen ; $6a61
 	pop_wram_bank ; $6a64
 	pop hl ; $6a69
 	pop de ; $6a6a
@@ -371,7 +371,7 @@ ShowExpAwardForExhibition:
 	push af ; $6a8a
 	clear_flag FLAG_DOUBLES ; $6a8b
 	ld c, $01 ; $6a8e
-	call ShowMatchResultsScreen ; $6a90
+	call ShowExpAwardOrContinueGameScreen ; $6a90
 	pop af ; $6a93
 	or a ; $6a94
 	jr z, .restore ; $6a95
@@ -405,7 +405,7 @@ ShowExpAwardForLinkedPlay:
 	push af ; $6ac0
 	clear_flag FLAG_DOUBLES ; $6ac1
 	ld c, $01 ; $6ac4
-	call ShowMatchResultsScreen ; $6ac6
+	call ShowExpAwardOrContinueGameScreen ; $6ac6
 	pop af ; $6ac9
 	or a ; $6aca
 	jr z, .restore ; $6acb
@@ -433,7 +433,7 @@ Unused_1e_ShowExpAwardForN64:
 	ld c, $00 ; $6ae9
 	farcall SetPendingExpAward ; $6aeb
 	ld c, $01 ; $6aee
-	call ShowMatchResultsScreen ; $6af0
+	call ShowExpAwardOrContinueGameScreen ; $6af0
 	pop_wram_bank ; $6af3
 	pop hl ; $6af8
 	pop de ; $6af9
@@ -452,22 +452,22 @@ ApplyPendingExpAwards:
 	push af ; $6b07
 	ld a, GAMEMODE_NONE ; $6b08
 	ld [wGameMode], a ; $6b0a
-	ld hl, wPendingExpStory ; $6b0d
+	ld hl, wN64TransferMainExp ; $6b0d
 	ld a, [hl+] ; $6b10
 	ld d, [hl] ; $6b11
 	ld e, a ; $6b12
-	ld hl, wPendingExpTrophy ; $6b13
+	ld hl, wN64TransferPartnerExp ; $6b13
 	ld a, [hl+] ; $6b16
 	ld h, [hl] ; $6b17
 	ld l, a ; $6b18
 	add hl, de ; $6b19
-	jr c, .sumAwards ; $6b1a
+	jr c, .clampTotal ; $6b1a
 	ld d, h ; $6b1c
 	ld e, l ; $6b1d
 	call ScaleExpByPlayerLevel ; $6b1e
 	call ComputeTrophyExpAwards ; $6b21
 	add hl, de ; $6b24
-	jr c, .sumAwards ; $6b25
+	jr c, .clampTotal ; $6b25
 	ld d, h ; $6b27
 	ld e, l ; $6b28
 	ld hl, wPendingExpExhibition ; $6b29
@@ -475,7 +475,7 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b2d
 	ld l, a ; $6b2e
 	add hl, de ; $6b2f
-	jr c, .sumAwards ; $6b30
+	jr c, .clampTotal ; $6b30
 	ld d, h ; $6b32
 	ld e, l ; $6b33
 	ld hl, wPendingExpLinked ; $6b34
@@ -484,19 +484,19 @@ ApplyPendingExpAwards:
 	ld l, a ; $6b39
 	add hl, de ; $6b3a
 	jr nc, .checkAnyExp ; $6b3b
-.sumAwards:
-	ld hl, rIE ; $6b3d
+.clampTotal:
+	ld hl, $ffff ; $6b3d
 .checkAnyExp:
 	ld a, h ; $6b40
 	or l ; $6b41
 	jp z, .noExp ; $6b42
 	push hl ; $6b45
 	farcall ClearPendingExpAwards ; $6b46
-	ld hl, wPendingExpStory ; $6b49
+	ld hl, wN64TransferMainExp ; $6b49
 	ld a, [hl+] ; $6b4c
 	ld d, [hl] ; $6b4d
 	ld e, a ; $6b4e
-	ld hl, wPendingExpTrophy ; $6b4f
+	ld hl, wN64TransferPartnerExp ; $6b4f
 	ld a, [hl+] ; $6b52
 	ld h, [hl] ; $6b53
 	ld l, a ; $6b54
@@ -507,9 +507,9 @@ ApplyPendingExpAwards:
 	ld de, $ffff ; $6b5a
 .scaleExpByPlayerLevel:
 	call ScaleExpByPlayerLevel ; $6b5d
-	jr nc, .storyAward ; $6b60
+	jr nc, .n64Award ; $6b60
 	ld de, $ffff ; $6b62
-.storyAward:
+.n64Award:
 	ld a, d ; $6b65
 	or e ; $6b66
 	jr z, .exhibitionAward ; $6b67
@@ -534,11 +534,11 @@ ApplyPendingExpAwards:
 	ld e, a ; $6b86
 	ld a, d ; $6b87
 	or e ; $6b88
-	jr z, .applyToRecord ; $6b89
+	jr z, .trophyAward ; $6b89
 	ld b, EXPAWARD_LINKED ; $6b8b
 	ld c, $00 ; $6b8d
 	farcall SetPendingExpAward ; $6b8f
-.applyToRecord:
+.trophyAward:
 	wram_bank WRAM_SCENE ; $6b92
 	ld hl, wTrophyExpTotal ; $6b98
 	ld a, [hl+] ; $6b9b
@@ -559,7 +559,7 @@ ApplyPendingExpAwards:
 	push af ; $6bb1
 	set_flag FLAG_DOUBLES ; $6bb2
 	ld c, $01 ; $6bb5
-	call ShowMatchResultsScreen ; $6bb7
+	call ShowExpAwardOrContinueGameScreen ; $6bb7
 	pop af ; $6bba
 	or a ; $6bbb
 	jr z, .runDistribution ; $6bbc
@@ -567,16 +567,16 @@ ApplyPendingExpAwards:
 .runDistribution:
 	pop hl ; $6bc1
 	farcall RunExpDistributionFlow ; $6bc2
-	ld c, $00 ; $6bc5
+	ld c, STORYREC_MAIN ; $6bc5
 	farcall CharDataScreen_Show ; $6bc7
-	ld c, $01 ; $6bca
+	ld c, STORYREC_PARTNER ; $6bca
 	farcall CharDataScreen_Show ; $6bcc
-	call ApplyStatGapProgressFlag ; $6bcf
+	call GrantDriveRacketForSpinLead ; $6bcf
 	xor a ; $6bd2
-	ld hl, wPendingExpStory ; $6bd3
+	ld hl, wN64TransferMainExp ; $6bd3
 	ld [hl+], a ; $6bd6
 	ld [hl], a ; $6bd7
-	ld hl, wPendingExpTrophy ; $6bd8
+	ld hl, wN64TransferPartnerExp ; $6bd8
 	ld [hl+], a ; $6bdb
 	ld [hl], a ; $6bdc
 	ld hl, wPendingExpExhibition ; $6bdd

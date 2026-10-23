@@ -24,7 +24,7 @@ AiRecoverStateSingles:
 AiChooseHomePosition:
 	jumptable [wAiPositionStrategy] ; $7cae
 	dw AiChooseHomePosition.baseline ; $7cb2 jumptable
-	dw AiChooseHomePosition.net ; $7cb4 jumptable
+	dw AiChooseHomePosition.holdDepth ; $7cb4 jumptable
 	dw AiChooseHomePosition.midCourt ; $7cb6 jumptable
 	dw AiChooseHomePosition.midCourt ; $7cb8 jumptable
 	dw AiChooseHomePosition.midCourt ; $7cba jumptable
@@ -37,7 +37,7 @@ AiChooseHomePosition:
 .midCourt:
 	ld de, $0180 ; $7cc7
 	jr .apply ; $7cca
-.net:
+.holdDepth:
 	ld hl, wCharPosDepth + 1 ; $7ccc
 	ld a, [hl+] ; $7ccf
 	ld d, [hl] ; $7cd0
@@ -125,7 +125,7 @@ AiChoosePositionByStrategy:
 	jp nz, AiRushToBallLanding ; $7d6d
 	jp AiMoveBehindBallLanding ; $7d70
 AiTrackBallPhase:
-	ld a, [wBallHasBouncedFlag] ; $7d73
+	ld a, [wBallTouchedNetFlag] ; $7d73
 	ld b, a ; $7d76
 	ld a, [wBallCrossedNetFlag] ; $7d77
 	and b ; $7d7a
@@ -243,7 +243,7 @@ AiRallyStateNetPlayer:
 	dw AiPhaseNoop ; $7e60 jumptable
 	dw AiPhaseNoop ; $7e62 jumptable
 	dw AiPhaseNoop ; $7e64 jumptable
-	dw AiNetPlayerPoachCheck ; $7e66 jumptable
+	dw AiDoublesPoachCheck ; $7e66 jumptable
 AiRallyStateBaseliner:
 	jumptable [wAiPhase] ; $7e68
 	dw AiBaselinerSetReactionDelay ; $7e6c jumptable
@@ -254,7 +254,7 @@ AiRallyStateBaseliner:
 	dw AiPhaseNoop ; $7e76 jumptable
 	dw AiPhaseNoop ; $7e78 jumptable
 	dw AiPhaseNoop ; $7e7a jumptable
-	dw AiNetPlayerPoachCheck ; $7e7c jumptable
+	dw AiDoublesPoachCheck ; $7e7c jumptable
 AiNetPlayerCheckRally:
 	ld a, [wRallyLength] ; $7e7e
 	cp $02 ; $7e81
@@ -320,8 +320,8 @@ AiDoublesTrackBallPhase:
 .poachCheck:
 	ld a, $08 ; $7f0a
 	ld [wAiPhase], a ; $7f0c
-	jr AiNetPlayerPoachCheck ; $7f0f
-AiNetPlayerPoachCheck:
+	jr AiDoublesPoachCheck ; $7f0f
+AiDoublesPoachCheck:
 	ld a, [wCharServeRole] ; $7f11
 	and SERVEROLEF_PARTNER ; $7f14
 	jr z, .checkSide ; $7f16

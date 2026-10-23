@@ -1,21 +1,21 @@
-SpeakNpc03SinglesOrDoublesLine_10:
+SpeakHeadmasterSinglesOrDoublesLine_10:
 	test_flag FLAG_DOUBLES ; $73ee
-	jr z, .doubles ; $73f1
+	jr z, .singles ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
-	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73f6
+	script_speak ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $73f6
 	ret ; $73fb
-.doubles:
-	script_speak ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $73fc
+.singles:
+	script_speak ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $73fc
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404
-ShowNpc03SinglesOrDoublesPrompt_10:
+ShowHeadmasterSinglesOrDoublesPrompt_10:
 	test_flag FLAG_DOUBLES ; $7405
 	jr z, .notDoubles ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
-	script_speak_restore ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $740d
+	script_speak_restore ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $740d
 	ret ; $7412
 .notDoubles:
-	script_speak_restore ACTOR_ACADEMY_WING_INIT1_HEADMASTER ; $7413
+	script_speak_restore ACTOR_ACADEMY_WING_OPEN_WON_HEADMASTER ; $7413
 	farcall AdvanceDialogueTextCursor ; $7418
 	ret ; $741b
 ActorScript_10_0:
@@ -37,24 +37,24 @@ AcademyWingInstallDoorTriggers_10:
 	farcall WriteBehaviorMapCell ; $743f
 .done:
 	ret ; $7442
-AcademyWingHideActorByProgressFlag_10:
-	script_set_anim ACTOR_ACADEMY_WING_INIT1_TROPHY_1, ANIM_TROPHY_SINGLES ; $7443
+AcademyWingHideUnwonTrophy_10:
+	script_set_anim ACTOR_ACADEMY_WING_OPEN_WON_TROPHY_1, ANIM_TROPHY_SINGLES ; $7443
 	test_flag FLAG_DOUBLES ; $744a
-	jr z, .checkFlag ; $744d
+	jr z, .singles ; $744d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $744f
 	jr nz, .done ; $7452
-	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_1, 1.0, 1.0 ; $7454
+	script_set_position ACTOR_ACADEMY_WING_OPEN_WON_TROPHY_1, 1.0, 1.0 ; $7454
 	jr .done ; $745f
-.checkFlag:
+.singles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7461
 	jr nz, .done ; $7464
-	script_set_position ACTOR_ACADEMY_WING_INIT1_TROPHY_2, 1.0, 1.0 ; $7466
+	script_set_position ACTOR_ACADEMY_WING_OPEN_WON_TROPHY_2, 1.0, 1.0 ; $7466
 .done:
 	ret ; $7471
 SetAcademyWingDialogueStage_10:
 	ld a, ACADEMYWINGSTAGE_PRE_SENIOR_CHAMP ; $7472
 	test_flag FLAG_DOUBLES ; $7474
-	jr z, .checkFlag ; $7477
+	jr z, .singles ; $7477
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7479
 	jr z, .step ; $747c
 	ld a, ACADEMYWINGSTAGE_SENIOR_CHAMP ; $747e
@@ -65,7 +65,7 @@ SetAcademyWingDialogueStage_10:
 	jr z, .step ; $748a
 	ld a, ACADEMYWINGSTAGE_COMPLETE ; $748c
 	jr .step ; $748e
-.checkFlag:
+.singles:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7490
 	jr z, .step ; $7493
 	ld a, ACADEMYWINGSTAGE_SENIOR_CHAMP ; $7495
@@ -174,7 +174,7 @@ AcademyMainBldgNpc05_10:
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $765a
 	script_face ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
-	jr nz, AcademyMainBldgNpc05_10.setText ; $7669
+	jr nz, AcademyMainBldgNpc05_10.doubles ; $7669
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $766b
 	ld a, [wMapSceneStage] ; $7670
 	sra a ; $7673
@@ -198,19 +198,19 @@ AcademyMainBldgNpc05TextIds:
 	dw Text_RecordsClerkTravelingTeam ; record 3
 	dw Text_RecordsClerkIslandOpenChampion ; record 4
 	assert_table_length NUM_STORYTIERS
-AcademyMainBldgNpc05_10.setText:
+AcademyMainBldgNpc05_10.doubles:
 	script_set_text Text_RecordsClerkLookingUpTeam ; $76a2
 	script_wait_frames 20 ; $76a8
 	script_speak ACTOR_ACADEMY_MAIN_BLDG_RECEPTIONIST_2 ; $76af
 	call GetDoublesProgressStage_10 ; $76b4
 	add a ; $76b7
-	ld_hl_indexed AcademyMainBldgNpc05TextIds2 ; $76b8
+	ld_hl_indexed AcademyMainBldgNpc05DoublesTextIds ; $76b8
 	ld a, [hl+] ; $76bf
 	ld h, [hl] ; $76c0
 	ld l, a ; $76c1
 	farcall InitDialogueTextCursor ; $76c2
 	jr AcademyMainBldgNpc05_10.speakRecord ; $76c5
-AcademyMainBldgNpc05TextIds2:
+AcademyMainBldgNpc05DoublesTextIds:
 	; $76c7, 10 bytes (text_ids)
 	dw Text_RecordsClerkDoublesJuniorClass ; record 0
 	dw Text_RecordsClerkDoublesSeniorClass ; record 1
@@ -245,9 +245,9 @@ AcademyMainBldgNpcScripts_10:
 	map_script ACTOR_ACADEMY_MAIN_BLDG_OLD_MAN, FACEMASK_ANY, $0000, AcademyMainBldgNpc06_10, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 AcademyMainBldgFacingScripts_10:
-	ds 1, $ff ; $7715, fill
+	db $ff ; $7715
 AcademyMainBldgTileTriggers_10:
-	ds 1, $ff ; $7716, fill
+	db $ff ; $7716
 AcademyMainBldgInitScript_10:
 	call SetStoryDialogueStage_10 ; $7717
 	ld a, [wMapSceneStage] ; $771a
@@ -414,7 +414,7 @@ SetActorDrawModeFromSceneTile_10:
 	pop de ; $7a19
 	and $87 ; $7a1a
 	cp $06 ; $7a1c
-	jr nz, .checkBelow ; $7a1e
+	jr nz, .checkRight ; $7a1e
 	wram_bank WRAM_ACTORS ; $7a20
 	ld hl, ACTORF_MODE ; $7a26
 	add hl, bc ; $7a29
@@ -422,7 +422,7 @@ SetActorDrawModeFromSceneTile_10:
 	xor $01 ; $7a2b
 	ld [hl], a ; $7a2d
 	ret ; $7a2e
-.checkBelow:
+.checkRight:
 	inc d ; $7a2f
 	call ReadSceneTilemapTile_10 ; $7a30
 	and $07 ; $7a33
@@ -439,7 +439,7 @@ SetActorDrawModeFromSceneTile_10:
 	wram_bank WRAM_ACTORS ; $7a48
 	ld hl, ACTORF_MODE ; $7a4e
 	add hl, bc ; $7a51
-	ld a, $02 ; $7a52
+	ld a, ACTORMODE_VISIBLE ; $7a52
 	ld [hl], a ; $7a54
 	ret ; $7a55
 ; SetActorDrawModeFromSceneTile_10 without the push af / pop af / or a / jr z zero-argument guard. Nothing calls it.
@@ -478,7 +478,7 @@ Unused_10_SetActorDrawModeFromSceneTileSingle:
 	pop de ; $7a8b
 	and $87 ; $7a8c
 	cp $06 ; $7a8e
-	jr nz, .nextActor ; $7a90
+	jr nz, .checkRight ; $7a90
 	wram_bank WRAM_ACTORS ; $7a92
 	ld hl, ACTORF_MODE ; $7a98
 	add hl, bc ; $7a9b
@@ -486,7 +486,7 @@ Unused_10_SetActorDrawModeFromSceneTileSingle:
 	xor $01 ; $7a9d
 	ld [hl], a ; $7a9f
 	ret ; $7aa0
-.nextActor:
+.checkRight:
 	inc d ; $7aa1
 	call ReadSceneTilemapTile_10 ; $7aa2
 	and $07 ; $7aa5
@@ -503,6 +503,6 @@ Unused_10_SetActorDrawModeFromSceneTileSingle:
 	wram_bank WRAM_ACTORS ; $7aba
 	ld hl, ACTORF_MODE ; $7ac0
 	add hl, bc ; $7ac3
-	ld a, $02 ; $7ac4
+	ld a, ACTORMODE_VISIBLE ; $7ac4
 	ld [hl], a ; $7ac6
 	ret ; $7ac7

@@ -260,7 +260,7 @@ INCLUDE "src/story/academy_13.asm"
 INCLUDE "src/story/varsity_courtyard_13.asm"
 INCLUDE "src/story/varsity_tour_13.asm"
 INCLUDE "src/story/varsity_team_13.asm"
-INCLUDE "src/story/team_bracket_13.asm"
+INCLUDE "src/story/team_chart_13.asm"
 INCLUDE "src/ap/varsity_13.asm"
 
 SECTION "ROM Bank $14", ROMX[$4000], BANK[$14]
@@ -293,6 +293,7 @@ SECTION "ROM Bank $16", ROMX[$4000], BANK[$16]
 DEF ApplySpriteWobbleX_16_NAME EQUS "Unused_16_ApplySpriteWobbleX"
 DEF ApplySpriteWobbleY_16_NAME EQUS "Unused_16_ApplySpriteWobbleY"
 DEF DrawAsciiDigitChar_16_NAME EQUS "Unused_16_DrawAsciiDigitChar"
+DEF DrawCornerBrackets_16_NAME EQUS "Unused_16_DrawCornerBrackets"
 
 INCLUDE "src/engine/menus/common/cursor_16.asm"
 INCLUDE "src/engine/menus/results/result_tasks_16.asm"
@@ -399,6 +400,9 @@ SECTION "ROM Bank $20", ROMX[$4000], BANK[$20]
 
 DEF ApplyBallTrajectory4_20_NAME EQUS "Unused_20_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_20_NAME EQUS "ApplyFallbackBallTrajectoryFar_20"
+DEF BallPosBlockOffsets_20_NAME EQUS "BallPosBlockOffsetsSlice_20"
+DEF BallPosData_20_NAME EQUS "BallPosDataSlice_20"
+DEF BallPosHeightOffsets_20_NAME EQUS "BallPosHeightOffsetsSlice_20"
 DEF BallTrajEntryPtr4_20_NAME EQUS "Unused_20_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_20_NAME EQUS "BallTrajEntryPtr6_20"
 DEF SeekBallTrajEntry4_20_NAME EQUS "Unused_20_SeekBallTrajEntry4"
@@ -413,6 +417,9 @@ SECTION "ROM Bank $21", ROMX[$4000], BANK[$21]
 
 DEF ApplyBallTrajectory4_21_NAME EQUS "Unused_21_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_21_NAME EQUS "ApplyFallbackBallTrajectoryFar_21"
+DEF BallPosBlockOffsets_21_NAME EQUS "BallPosBlockOffsetsPowerSlice_21"
+DEF BallPosData_21_NAME EQUS "BallPosDataPowerSlice_21"
+DEF BallPosHeightOffsets_21_NAME EQUS "BallPosHeightOffsetsPowerSlice_21"
 DEF BallTrajEntryPtr4_21_NAME EQUS "Unused_21_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_21_NAME EQUS "BallTrajEntryPtr6_21"
 DEF SeekBallTrajEntry4_21_NAME EQUS "Unused_21_SeekBallTrajEntry4"
@@ -427,6 +434,9 @@ SECTION "ROM Bank $22", ROMX[$4000], BANK[$22]
 
 DEF ApplyBallTrajectory4_22_NAME EQUS "Unused_22_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_22_NAME EQUS "ApplyFallbackBallTrajectoryFar_22"
+DEF BallPosBlockOffsets_22_NAME EQUS "BallPosBlockOffsetsTopspin_22"
+DEF BallPosData_22_NAME EQUS "BallPosDataTopspin_22"
+DEF BallPosHeightOffsets_22_NAME EQUS "BallPosHeightOffsetsTopspin_22"
 DEF BallTrajEntryPtr4_22_NAME EQUS "Unused_22_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_22_NAME EQUS "BallTrajEntryPtr6_22"
 DEF SeekBallTrajEntry4_22_NAME EQUS "Unused_22_SeekBallTrajEntry4"
@@ -441,6 +451,9 @@ SECTION "ROM Bank $23", ROMX[$4000], BANK[$23]
 
 DEF ApplyBallTrajectory4_23_NAME EQUS "Unused_23_ApplyBallTrajectory4"
 DEF ApplyFallbackBallTrajectoryFar_23_NAME EQUS "ApplyFallbackBallTrajectoryFar_23"
+DEF BallPosBlockOffsets_23_NAME EQUS "BallPosBlockOffsetsPowerTopspin_23"
+DEF BallPosData_23_NAME EQUS "BallPosDataPowerTopspin_23"
+DEF BallPosHeightOffsets_23_NAME EQUS "BallPosHeightOffsetsPowerTopspin_23"
 DEF BallTrajEntryPtr4_23_NAME EQUS "Unused_23_BallTrajEntryPtr4"
 DEF BallTrajEntryPtr6_23_NAME EQUS "BallTrajEntryPtr6_23"
 DEF SeekBallTrajEntry4_23_NAME EQUS "Unused_23_SeekBallTrajEntry4"
@@ -643,9 +656,9 @@ INCLUDE "src/engine/menus/main_menu/ring_3b.asm"
 INCLUDE "src/engine/menus/main_menu/main_menu_3b.asm"
 INCLUDE "src/engine/menus/main_menu/saveslots_3b.asm"
 INCLUDE "src/engine/menus/minigame_select/minigame_3b.asm"
-INCLUDE "src/engine/menus/main_menu/saved_3b.asm"
+INCLUDE "src/engine/menus/main_menu/status_3b.asm"
 INCLUDE "src/engine/menus/main_menu/erase_3b.asm"
-INCLUDE "src/engine/menus/main_menu/n64transfer_3b.asm"
+INCLUDE "src/engine/menus/main_menu/status_submenus_3b.asm"
 INCLUDE "src/engine/menus/ranking/bracket_3b.asm"
 INCLUDE "src/engine/menus/ranking/victory_3b.asm"
 
@@ -664,8 +677,8 @@ DEF DrawCornerBrackets_3e_NAME EQUS "Unused_3e_DrawCornerBrackets"
 
 INCLUDE "src/engine/menus/court_select/slots_3e.asm"
 INCLUDE "src/engine/menus/common/cursor_3e.asm"
-INCLUDE "src/engine/menus/link/rules_3e.asm"
-INCLUDE "src/engine/menus/link/linkrules_3e.asm"
+INCLUDE "src/engine/menus/link/match_format_3e.asm"
+INCLUDE "src/engine/menus/link/match_format_msgs_3e.asm"
 INCLUDE "src/engine/menus/equipment/racket_choice_3e.asm"
 INCLUDE "src/engine/menus/equipment/choicetab_3e.asm"
 INCLUDE "src/engine/menus/equipment/racket_select_3e.asm"
@@ -719,7 +732,7 @@ SECTION "ROM Bank $45", ROMX[$4000], BANK[$45]
 DataPtr_MarkSpriteDesc:
 	dw MarkSpriteDesc ; $4000
 
-INCLUDE "src/data/sprites/sprite_45.asm"
+INCLUDE "src/data/sprites/mark_45.asm"
 
 SECTION "ROM Bank $46", ROMX[$4000], BANK[$46]
 
@@ -880,7 +893,7 @@ SECTION "ROM Bank $5c", ROMX[$4000], BANK[$5c]
 DataPtr_DKSpriteDesc:
 	dw DKSpriteDesc ; $4000
 
-INCLUDE "src/data/sprites/sprite_5c.asm"
+INCLUDE "src/data/sprites/dk_5c.asm"
 
 SECTION "ROM Bank $5d", ROMX[$4000], BANK[$5d]
 

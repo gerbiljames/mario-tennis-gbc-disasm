@@ -142,7 +142,7 @@ ApplyHandednessToCharRecords:
 .done:
 	pop_wram_bank ; $6055
 	ret ; $605a
-CacheStorySlotNames:
+CacheStorySlotRecords:
 	push af ; $605b
 	push bc ; $605c
 	push de ; $605d
@@ -150,22 +150,22 @@ CacheStorySlotNames:
 	push_wram_bank WRAM_STAGING ; $605f
 	ld a, $00 ; $6068
 	ld [wCurrentStorySlot], a ; $606a
-	farcall CheckStorySlot ; $606d
-	ld hl, wStoryMainName ; $6070
+	farcall ReadCurrentStorySlot ; $606d
+	ld hl, wStoryMain ; $6070
 	ld de, wDecompBuffer ; $6073
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
 	ld [wCurrentStorySlot], a ; $607e
-	farcall CheckStorySlot ; $6081
-	ld hl, wStoryMainName ; $6084
+	farcall ReadCurrentStorySlot ; $6081
+	ld hl, wStoryMain ; $6084
 	ld de, wDecompBuffer tile 16 ; $6087
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [wCurrentStorySlot], a ; $6092
-	farcall CheckStorySlot ; $6095
-	ld hl, wStoryMainName ; $6098
+	farcall ReadCurrentStorySlot ; $6095
+	ld hl, wStoryMain ; $6098
 	ld de, wDecompBuffer tile 32 ; $609b
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $609e
 	call CopyMemoryFast ; $60a1
@@ -179,7 +179,7 @@ CacheStorySlotNames:
 	farcall InitStoryModeState ; $60b2
 	farcall InitDefaultMatchSettings ; $60b5
 	ret ; $60b8
-LoadCachedStorySlotName:
+LoadCachedStorySlotRecords:
 	push af ; $60b9
 	push bc ; $60ba
 	push de ; $60bb
@@ -187,12 +187,12 @@ LoadCachedStorySlotName:
 	push_wram_bank WRAM_STAGING ; $60bd
 	ld a, b ; $60c6
 	add a ; $60c7
-	ld hl, CachedStorySlotNameTable ; $60c8
+	ld hl, CachedStorySlotRecordPtrs ; $60c8
 	add_hl_a ; $60cb
 	ld a, [hl+] ; $60d0
 	ld h, [hl] ; $60d1
 	ld l, a ; $60d2
-	ld de, wStoryMainName ; $60d3
+	ld de, wStoryMain ; $60d3
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $60d6
 	call CopyMemoryFast ; $60d9
 	pop_wram_bank ; $60dc
@@ -201,7 +201,7 @@ LoadCachedStorySlotName:
 	pop bc ; $60e3
 	pop af ; $60e4
 	ret ; $60e5
-CachedStorySlotNameTable:
+CachedStorySlotRecordPtrs:
 	; $60e6, 6 bytes (ram_ptrs:1)
 	dw wDecompBuffer ; record 0
 	dw wDecompBuffer tile 16 ; record 1
@@ -379,12 +379,12 @@ CountCharGridEntries:
 	ld hl, wCharGridEntries ; $61ae
 	ld c, $00 ; $61b1
 	ld b, $00 ; $61b3
-.countPageLoop:
+.countMarioCastLoop:
 	ld a, [hl] ; $61b5
 	cp $ff ; $61b6
-	jr z, .nextPage ; $61b8
+	jr z, .nextMarioCast ; $61b8
 	inc b ; $61ba
-.nextPage:
+.nextMarioCast:
 	inc hl ; $61bb
 	inc hl ; $61bc
 	inc hl ; $61bd
@@ -393,31 +393,31 @@ CountCharGridEntries:
 	inc a ; $61c0
 	ld c, a ; $61c1
 	cp $09 ; $61c2
-	jr nz, .countPageLoop ; $61c4
+	jr nz, .countMarioCastLoop ; $61c4
 	ld a, b ; $61c6
-	ld [wCharGridCreatedCount], a ; $61c7
+	ld [wCharGridMarioCastCount], a ; $61c7
 	ret ; $61ca
-SetCharGridPageCount:
+SetCharGridRowCount:
 	ld a, [wCharGridEntryCount] ; $61cb
-	ld hl, CharGridPageCountTable ; $61ce
+	ld hl, CharGridRowCountTable ; $61ce
 	add_hl_a ; $61d1
 	ld a, [hl] ; $61d6
-	ld [wCharGridPageCount], a ; $61d7
+	ld [wCharGridRowCount], a ; $61d7
 	ret ; $61da
-CharGridPageCountTable:
+CharGridRowCountTable:
 	; $61db, 28 bytes (bytes:16)
 	db $05, $05, $05, $05, $05, $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x00
 	db $09, $09, $09, $0a, $0a, $0a, $0b, $0b, $0b, $0c, $0c, $0c ; 0x10
 NeedsCpuDifficultyPrompt:
 	call IsMarioCastCharacter ; $61f7
 	or a ; $61fa
-	jr z, .notMarioCast ; $61fb
+	jr z, .no ; $61fb
 	ld a, [wCharSelectSlot] ; $61fd
 	or a ; $6200
-	jr z, .notMarioCast ; $6201
+	jr z, .no ; $6201
 	ld a, $01 ; $6203
 	ret ; $6205
-.notMarioCast:
+.no:
 	xor a ; $6206
 	ret ; $6207
 ; Returns 1 for character ids $17-$1f, the nine Mario-series characters
@@ -426,10 +426,10 @@ NeedsCpuDifficultyPrompt:
 ;
 ; What it gates is handedness. Both character grids reach their .toggleHandedness
 ; branch on `bit 3` (START) and refuse the toggle unless this returns 1, so only
-; the Mario cast may be flipped; created characters set handedness at name entry
-; instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
-; "START: Change Hands", and DrawCharSelectSlotLabel swaps the word in it for one
-; of three pre-rendered labels on $df00's three values -- 30:150/151/152 are
+; the Mario cast may be flipped; created characters set handedness with the START
+; toggle on the story character-select screen instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
+; "START: Change Hands", and DrawCharGridHandednessLabel swaps the word in it for one
+; of three pre-rendered labels on wCharGridHandedness's three values -- 30:150/151/152 are
 ; "START: Right-Handed", "START: Left-Handed" and "START: Change Hands".
 ; On confirm the slot's wCharSelectSlotLeftHanded is set, and
 ; ApplyHandednessToCharRecords copies it to the match record's +$0e, which

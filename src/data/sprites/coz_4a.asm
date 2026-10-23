@@ -332,48 +332,48 @@ Unused_4a_ACozSpriteFramesCopy:
 ACozFramePlace:
 	INCLUDE "data/sprites/ACozFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 ACozSpriteAnims:
-	dw ACozSpriteAnim00 ; $7f24
-	dw ACozSpriteAnim01 ; $7f26
-	dw ACozSpriteAnim02 ; $7f28
-	dw ACozSpriteAnim03 ; $7f2a
-	dw ACozSpriteAnim04 ; $7f2c
-	dw ACozSpriteAnim05 ; $7f2e
-	dw ACozSpriteAnim06 ; $7f30
-	dw ACozSpriteAnim07 ; $7f32
-	dw ACozSpriteAnim08 ; $7f34
-	dw ACozSpriteAnim09 ; $7f36
-	dw ACozSpriteAnim10 ; $7f38
-	dw ACozSpriteAnim11 ; $7f3a
-	dw ACozSpriteAnim12 ; $7f3c
-	dw ACozSpriteAnim13 ; $7f3e
-	dw ACozSpriteAnim14 ; $7f40
-	dw ACozSpriteAnim15 ; $7f42
-	dw ACozSpriteAnim16 ; $7f44
-	dw ACozSpriteAnim17 ; $7f46
-	dw ACozSpriteAnim18 ; $7f48
-ACozSpriteAnim00:
+	dw ACozStandAnim ; $7f24
+	dw ACozIdleAnim ; $7f26
+	dw ACozRunAnim ; $7f28
+	dw ACozCelebrateAnim ; $7f2a
+	dw ACozDejectedAnim ; $7f2c
+	dw ACozForehandAnim ; $7f2e
+	dw ACozBackhandAnim ; $7f30
+	dw ACozOverheadAnim ; $7f32
+	dw ACozSmashAnim ; $7f34
+	dw ACozForehandQuickAnim ; $7f36
+	dw ACozBackhandQuickAnim ; $7f38
+	dw ACozOverheadQuickAnim ; $7f3a
+	dw ACozSmashQuickAnim ; $7f3c
+	dw ACozForehandReadyAnim ; $7f3e
+	dw ACozBackhandReadyAnim ; $7f40
+	dw ACozOverheadReadyAnim ; $7f42
+	dw ACozServeReadyAnim ; $7f44
+	dw ACozServePrepAnim ; $7f46
+	dw ACozDiveAnim ; $7f48
+ACozStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-ACozSpriteAnim01:
+ACozIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-ACozSpriteAnim02:
+ACozRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-ACozSpriteAnim03:
+ACozCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 40
 	anim_frame $18, 30
 	anim_frame $19, 60
 	anim_loop $00
-ACozSpriteAnim04:
+ACozDejectedAnim:
 	; $7f65, 12 bytes (sprite_anim)
 	anim_frame $1a, 40
 	anim_frame $1b, 20
@@ -381,59 +381,59 @@ ACozSpriteAnim04:
 	anim_frame $1b, 6
 	anim_frame $1c, 6
 	anim_loop $02
-ACozSpriteAnim05:
+ACozForehandAnim:
 	; $7f71, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-ACozSpriteAnim06:
+ACozBackhandAnim:
 	; $7f77, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-ACozSpriteAnim07:
+ACozOverheadAnim:
 	; $7f7d, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-ACozSpriteAnim08:
+ACozSmashAnim:
 	; $7f83, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-ACozSpriteAnim09:
+ACozForehandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-ACozSpriteAnim10:
+ACozBackhandQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-ACozSpriteAnim11:
+ACozOverheadQuickAnim:
 	; $7f90, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-ACozSpriteAnim12:
+ACozSmashQuickAnim:
 	; $7f94, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-ACozSpriteAnim13:
+ACozForehandReadyAnim:
 	; $7f97, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-ACozSpriteAnim14:
+ACozBackhandReadyAnim:
 	; $7f9a, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-ACozSpriteAnim15:
+ACozOverheadReadyAnim:
 	; $7f9d, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-ACozSpriteAnim16:
+ACozServeReadyAnim:
 	; $7fa0, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-ACozSpriteAnim17:
+ACozServePrepAnim:
 	; $7fa3, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -441,7 +441,7 @@ ACozSpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-ACozSpriteAnim18:
+ACozDiveAnim:
 	; $7faf, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20

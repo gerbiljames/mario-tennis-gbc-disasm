@@ -9,7 +9,7 @@ Unused_02_StoryCharGenderTableTail:
 	db $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
 Unused_02_LoadMainCharacterFromRoster:
 	push de ; $443b
-	ld hl, wStoryMainName ; $443c
+	ld hl, wStoryMain ; $443c
 	ld c, CHAR_RECORD_SIZE / 16 ; $443f
 	call ClearMemory16 ; $4441
 	pop de ; $4444
@@ -18,7 +18,7 @@ Unused_02_LoadMainCharacterFromRoster:
 	and $3f ; $4447
 	ld b, a ; $4449
 	call GetStoryCharacterRecordPtr ; $444a
-	ld de, wStoryMainName ; $444d
+	ld de, wStoryMain ; $444d
 	call Unused_02_Copy64Bytes ; $4450
 	ld hl, CHARREC_CHAR ; $4453
 	add hl, de ; $4456
@@ -304,21 +304,21 @@ RecomputeCharacterStats:
 	ld hl, CHARREC_LEVEL ; $4625
 	add hl, bc ; $4628
 	ld a, [hl] ; $4629
-	ld hl, STATARCH_MODIFIERS ; $462a
+	ld hl, STATARCH_TRAIT_UNLOCKS ; $462a
 	add hl, de ; $462d
 	ld d, a ; $462e
-.modifierLoop:
+.traitLoop:
 	ld a, [hl+] ; $462f
 	cp $ff ; $4630
 	jr z, .copyStats ; $4632
 	cp d ; $4634
-	jr nz, .nextModifier ; $4635
+	jr nz, .nextTrait ; $4635
 	ld a, [hl] ; $4637
 	push hl ; $4638
 	and $0f ; $4639
 	add a ; $463b
-	ld_hl_indexed CharIconMasks_02 ; $463c
-	ld a, CHARREC_SWING ; $4643
+	ld_hl_indexed ShotTraitMasks_02 ; $463c
+	ld a, CHARREC_SHOT_TRAITS ; $4643
 	add c ; $4645
 	ld e, a ; $4646
 	ld d, b ; $4647
@@ -331,9 +331,9 @@ RecomputeCharacterStats:
 	or [hl] ; $464e
 	ld [de], a ; $464f
 	pop hl ; $4650
-.nextModifier:
+.nextTrait:
 	inc hl ; $4651
-	jr .modifierLoop ; $4652
+	jr .traitLoop ; $4652
 .copyStats:
 	ld hl, CHARREC_PHYSICS_TEMPLATE ; $4654
 	add hl, bc ; $4657
@@ -352,10 +352,10 @@ RecomputeCharacterStats:
 	push bc ; $4666
 	ld a, c ; $4667
 	or a ; $4668
-	call z, ApplyStatModifiers ; $4669
+	call z, ApplyEquipmentStatDeltas ; $4669
 	pop bc ; $466c
 	ret ; $466d
-CharIconMasks_02:
+ShotTraitMasks_02:
 	; $466e, 32 bytes (bytes:2)
 	db $01, $00 ; 0x00
 	db $02, $00 ; 0x02
@@ -373,7 +373,7 @@ CharIconMasks_02:
 	db $00, $20 ; 0x1a
 	db $00, $40 ; 0x1c
 	db $00, $80 ; 0x1e
-ApplyStatModifiers:
+ApplyEquipmentStatDeltas:
 	push af ; $468e
 	push bc ; $468f
 	push de ; $4690
@@ -384,7 +384,7 @@ ApplyStatModifiers:
 	ld a, [hl] ; $4697
 	and $0f ; $4698
 	ld d, $00 ; $469a
-	call ApplyStatModifierRow ; $469c
+	call ApplyEquipmentStatDeltaRow ; $469c
 	pop bc ; $469f
 	ld hl, CHARREC_EQUIPMENT ; $46a0
 	add hl, bc ; $46a3
@@ -392,13 +392,13 @@ ApplyStatModifiers:
 	swap a ; $46a5
 	and $0f ; $46a7
 	ld d, $01 ; $46a9
-	call ApplyStatModifierRow ; $46ab
+	call ApplyEquipmentStatDeltaRow ; $46ab
 	pop hl ; $46ae
 	pop de ; $46af
 	pop bc ; $46b0
 	pop af ; $46b1
 	ret ; $46b2
-ApplyStatModifierRow:
+ApplyEquipmentStatDeltaRow:
 	push bc ; $46b3
 	ld c, a ; $46b4
 	ld a, d ; $46b5

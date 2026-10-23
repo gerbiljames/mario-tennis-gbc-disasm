@@ -13,9 +13,9 @@
 DrawSelectedOptionBox:
 	push de ; $4018
 	push bc ; $4019
-	ld c, $00 ; $401a
+	ld c, BOBDIR_NEG ; $401a
 	call ApplySpriteBobOffsetX ; $401c
-	ld c, $00 ; $401f
+	ld c, BOBDIR_NEG ; $401f
 	call ApplySpriteBobOffsetY ; $4021
 	sprite_tile_attr $00, OAM_BANK1 ; $4024
 	call QueueSprite ; $4028
@@ -27,9 +27,9 @@ DrawSelectedOptionBox:
 	add d ; $4030
 	ld d, a ; $4031
 	push de ; $4032
-	ld c, $01 ; $4033
+	ld c, BOBDIR_POS ; $4033
 	call ApplySpriteBobOffsetX ; $4035
-	ld c, $00 ; $4038
+	ld c, BOBDIR_NEG ; $4038
 	call ApplySpriteBobOffsetY ; $403a
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP ; $403d
 	call QueueSprite ; $4041
@@ -45,9 +45,9 @@ DrawSelectedOptionBox:
 	add d ; $404d
 	ld d, a ; $404e
 	push de ; $404f
-	ld c, $01 ; $4050
+	ld c, BOBDIR_POS ; $4050
 	call ApplySpriteBobOffsetX ; $4052
-	ld c, $01 ; $4055
+	ld c, BOBDIR_POS ; $4055
 	call ApplySpriteBobOffsetY ; $4057
 	sprite_tile_attr $00, OAM_BANK1 | OAM_XFLIP | OAM_YFLIP ; $405a
 	call QueueSprite ; $405e
@@ -58,9 +58,9 @@ DrawSelectedOptionBox:
 	add c ; $4065
 	ld e, a ; $4066
 	push de ; $4067
-	ld c, $00 ; $4068
+	ld c, BOBDIR_NEG ; $4068
 	call ApplySpriteBobOffsetX ; $406a
-	ld c, $01 ; $406d
+	ld c, BOBDIR_POS ; $406d
 	call ApplySpriteBobOffsetY ; $406f
 	sprite_tile_attr $00, OAM_BANK1 | OAM_YFLIP ; $4072
 	call QueueSprite ; $4076
@@ -129,11 +129,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ldh a, [hLinkRemoteInput] ; $42e5
 	jr .gotInput ; $42e7
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf] ; $42e9
+	ldh a, [hLinkSentInput] ; $42e9
 .gotInput:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec
-	and $02 ; $42ef
+	and CURSORLOCKF_SECONDARY ; $42ef
 	ld a, h ; $42f1
 	jr nz, .checkLock ; $42f2
 	bit PADB_RIGHT, a ; $42f4
@@ -212,11 +212,11 @@ Unused_38_MoveMenuCursor2GridRemote:
 	jr z, .checkB ; $435a
 	ld a, [wMenuCursorLockFlags] ; $435c
 	ld b, a ; $435f
-	and $02 ; $4360
+	and CURSORLOCKF_SECONDARY ; $4360
 	jr nz, .compare ; $4362
 	sound SFX_MENU_SELECT ; $4364
 	ld a, b ; $4366
-	or $02 ; $4367
+	or CURSORLOCKF_SECONDARY ; $4367
 	ld [wMenuCursorLockFlags], a ; $4369
 	jr .compare ; $436c
 .checkB:
@@ -225,14 +225,14 @@ Unused_38_MoveMenuCursor2GridRemote:
 	sound SFX_MENU_CANCEL ; $4372
 	ld a, [wMenuCursorLockFlags] ; $4374
 	ld b, a ; $4377
-	and $03 ; $4378
+	and CURSORLOCKF_PRIMARY | CURSORLOCKF_SECONDARY ; $4378
 	ld a, b ; $437a
 	jr nz, .clearLock ; $437b
-	and $f5 ; $437d
-	or $08 ; $437f
+	and ~(CURSORLOCKF_SECONDARY | CURSORLOCKF_SECONDARY_CANCEL) ; $437d
+	or CURSORLOCKF_SECONDARY_CANCEL ; $437f
 	jr .storeLock ; $4381
 .clearLock:
-	and $fd ; $4383
+	and ~CURSORLOCKF_SECONDARY ; $4383
 .storeLock:
 	ld [wMenuCursorLockFlags], a ; $4385
 .compare:

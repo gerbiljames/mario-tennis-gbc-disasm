@@ -1,22 +1,22 @@
-ResultsScreenPalettes:
-	INCLUDE "data/engine/menus/exp/ResultsScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
-ResultsScreenGfx_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsScreenGfx_1e.bin" ; $4c70, 1455 bytes
-ResultsScreenTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsScreenTilemap_1e.bin" ; $521f, 205 bytes
-ResultsScreenAttrmap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsScreenAttrmap_1e.bin" ; $52ec, 87 bytes
+ContinueGameScreenPalettes:
+	INCLUDE "data/engine/menus/exp/ContinueGameScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
+ContinueGameScreenGfx_1e:
+	INCBIN "data/engine/menus/exp/lz_ContinueGameScreenGfx_1e.bin" ; $4c70, 1455 bytes
+ContinueGameScreenTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_ContinueGameScreenTilemap_1e.bin" ; $521f, 205 bytes
+ContinueGameScreenAttrmap_1e:
+	INCBIN "data/engine/menus/exp/lz_ContinueGameScreenAttrmap_1e.bin" ; $52ec, 87 bytes
 PanelFrameGfx_1e:
 	INCBIN "data/engine/menus/exp/lz_PanelFrameGfx_1e.bin" ; $5343, 156 bytes
 	INCLUDE "data/engine/menus/exp/lz_PanelFrameGfx_1e.inc" ; DEF PanelFrameGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
-ResultsSinglesLabelTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
-ResultsDoublesLabelTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
-ResultsPlayerPanelTilemap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
-ResultsPlayerPanelAttrmap_1e:
-	INCBIN "data/engine/menus/exp/lz_ResultsPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
+SuspendedMatchSinglesLabelTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
+SuspendedMatchDoublesLabelTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
+SuspendedMatchPlayerPanelTilemap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
+SuspendedMatchPlayerPanelAttrmap_1e:
+	INCBIN "data/engine/menus/exp/lz_SuspendedMatchPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
 	or a ; $543b
@@ -85,7 +85,7 @@ InitExpAwardScreenState:
 	ld d, $0a ; $54e5
 	call FillMemoryD ; $54e7
 	ld a, $01 ; $54ea
-	ld [wContinuePromptKind], a ; $54ec
+	ld [wResultsAlwaysShowPartner], a ; $54ec
 	ret ; $54ef
 FillMemoryD:
 	ld [hl+], a ; $54f0
@@ -118,9 +118,9 @@ LoadExpAwardScreenGraphics:
 	ld de, vTiles2 + VRAM_BANK1 ; $5539
 	ld c, 128 ; $553c -- 128 of ExpAwardScreenGfx_1e's 256 tiles
 	call QueueVRAMCopy ; $553e
-	ld hl, wTextTileBuffer ; $5541
+	ld hl, wDecompBufferHigh ; $5541
 	ld de, vTiles1 + VRAM_BANK1 ; $5544
-	ld c, wTextTileBuffer_SIZE / 16 ; $5547
+	ld c, wDecompBufferHigh_SIZE / 16 ; $5547
 	call QueueVRAMCopy ; $5549
 	wram_bank WRAM_STAGING ; $554c
 	ld hl, ExpAwardScreenTilemap_1e ; $5552
@@ -201,7 +201,7 @@ DrawExpSinglesPlayerPanel:
 	ld b, $04 ; $560e
 	ld c, $01 ; $5610
 	call FillTilemapRun ; $5612
-	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 3 ; $5615
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $5615
 	ld b, $05 ; $5618
 	ld c, $01 ; $561a
 	call FillTilemapRun ; $561c
@@ -211,7 +211,7 @@ DrawExpSinglesPlayerPanel:
 	ld b, $06 ; $5626
 	ld c, $01 ; $5628
 	call FillTilemapRun ; $562a
-	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH + 3 ; $562d
+	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH + 3 ; $562d
 	ld b, $07 ; $5630
 	ld c, $01 ; $5632
 	call FillTilemapRun ; $5634
@@ -221,11 +221,11 @@ DrawExpSinglesPlayerPanel:
 	ld b, $09 ; $563e
 	ld c, $01 ; $5640
 	call FillTilemapRun ; $5642
-	ld bc, wPlayer1MainName ; $5645
+	ld bc, wPlayer1Main ; $5645
 	ld a, [wLinkMatchRole] ; $5648
 	cp LINKSTATE_SLAVE ; $564b
 	jr nz, .drawName ; $564d
-	ld bc, wPlayer2MainName ; $564f
+	ld bc, wPlayer2Main ; $564f
 	ld a, [wLinkMatchCharLevel] ; $5652
 	ld [wPlayer2MainLevel], a ; $5655
 .drawName:
@@ -233,12 +233,12 @@ DrawExpSinglesPlayerPanel:
 	ld hl, CHARREC_NAME ; $5659
 	add hl, bc ; $565c
 	call CopyStringToTextBuffer ; $565d
-	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 4 ; $5660
-	ld bc, $0020 ; $5663
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 4 ; $5660
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5663
 	call WriteTextToTilemap ; $5666
 	ld hl, Text_LevelAbbrev ; $5669
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 12 ; $566c
-	ld bc, $0020 ; $566f
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $566f
 	call FetchAndDrawDialogueText ; $5672
 	pop bc ; $5675
 	ld hl, CHARREC_LEVEL ; $5676
@@ -247,7 +247,7 @@ DrawExpSinglesPlayerPanel:
 	ld h, $00 ; $567b
 	ld l, a ; $567d
 	ld a, $02 ; $567e
-	ld bc, $0020 ; $5680
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5680
 	ld de, wTextBuffer ; $5683
 	call FormatDecimalNumberUnsigned ; $5686
 	ld hl, wTextBuffer ; $5689
@@ -262,28 +262,28 @@ DrawExpDoublesPlayerPanel:
 	call FillTilemapRun ; $569f
 	ld_tile_run bc, $04, $01 ; $56a2
 	call FillTilemapRun ; $56a5
-	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $56a8
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $56a8
 	ld_tile_run bc, $05, $01 ; $56ab
 	call FillTilemapRun ; $56ae
 	ld_tile_run bc, $20, $07 ; $56b1
 	call FillTilemapRun ; $56b4
 	ld_tile_run bc, $06, $01 ; $56b7
 	call FillTilemapRun ; $56ba
-	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $56bd
+	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH ; $56bd
 	ld_tile_run bc, $05, $01 ; $56c0
 	call FillTilemapRun ; $56c3
 	ld_tile_run bc, $20, $07 ; $56c6
 	call FillTilemapRun ; $56c9
 	ld_tile_run bc, $06, $01 ; $56cc
 	call FillTilemapRun ; $56cf
-	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $56d2
+	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $56d2
 	ld_tile_run bc, $05, $01 ; $56d5
 	call FillTilemapRun ; $56d8
 	ld_tile_run bc, $20, $07 ; $56db
 	call FillTilemapRun ; $56de
 	ld_tile_run bc, $06, $01 ; $56e1
 	call FillTilemapRun ; $56e4
-	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $56e7
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $56e7
 	ld_tile_run bc, $07, $01 ; $56ea
 	call FillTilemapRun ; $56ed
 	ld_tile_run bc, $08, $07 ; $56f0
@@ -294,14 +294,14 @@ DrawExpDoublesPlayerPanel:
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $56ff
 	jr nz, .useMatchRecord ; $5700
-	ld bc, wStoryMainName ; $5702
+	ld bc, wStoryMain ; $5702
 	jr .copyStringToTextBuffer ; $5705
 .useMatchRecord:
-	ld bc, wPlayer1MainName ; $5707
+	ld bc, wPlayer1Main ; $5707
 	ld a, [wLinkMatchRole] ; $570a
 	cp LINKSTATE_SLAVE ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
-	ld bc, wPlayer2MainName ; $5711
+	ld bc, wPlayer2Main ; $5711
 	ld a, [wLinkMatchCharLevel] ; $5714
 	ld [wPlayer2MainLevel], a ; $5717
 .copyStringToTextBuffer:
@@ -309,12 +309,12 @@ DrawExpDoublesPlayerPanel:
 	ld hl, CHARREC_NAME ; $571b
 	add hl, bc ; $571e
 	call CopyStringToTextBuffer ; $571f
-	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 1 ; $5722
-	ld bc, $0020 ; $5725
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 1 ; $5722
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5725
 	call WriteTextToTilemap ; $5728
 	ld hl, Text_LevelAbbrev ; $572b
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $572e
-	ld bc, $0020 ; $5731
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5731
 	call FetchAndDrawDialogueText ; $5734
 	pop bc ; $5737
 	ld hl, CHARREC_LEVEL ; $5738
@@ -323,12 +323,12 @@ DrawExpDoublesPlayerPanel:
 	ld h, $00 ; $573d
 	ld l, a ; $573f
 	ld a, $02 ; $5740
-	ld bc, $0020 ; $5742
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5742
 	ld de, wTextBuffer ; $5745
 	call FormatDecimalNumberUnsigned ; $5748
 	ld hl, wTextBuffer ; $574b
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; $574e
-	ld bc, $0020 ; $5751
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5751
 	call WriteTextToTilemap ; $5754
 	ret ; $5757
 DrawExpDoublesPartnerPanel:
@@ -339,28 +339,28 @@ DrawExpDoublesPartnerPanel:
 	call FillTilemapRun ; $5764
 	ld_tile_run bc, $04, $01 ; $5767
 	call FillTilemapRun ; $576a
-	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 11 ; $576d
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH + 11 ; $576d
 	ld_tile_run bc, $05, $01 ; $5770
 	call FillTilemapRun ; $5773
 	ld_tile_run bc, $20, $07 ; $5776
 	call FillTilemapRun ; $5779
 	ld_tile_run bc, $06, $01 ; $577c
 	call FillTilemapRun ; $577f
-	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH + 11 ; $5782
+	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH + 11 ; $5782
 	ld_tile_run bc, $05, $01 ; $5785
 	call FillTilemapRun ; $5788
 	ld_tile_run bc, $20, $07 ; $578b
 	call FillTilemapRun ; $578e
 	ld_tile_run bc, $06, $01 ; $5791
 	call FillTilemapRun ; $5794
-	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH + 11 ; $5797
+	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH + 11 ; $5797
 	ld_tile_run bc, $05, $01 ; $579a
 	call FillTilemapRun ; $579d
 	ld_tile_run bc, $20, $07 ; $57a0
 	call FillTilemapRun ; $57a3
 	ld_tile_run bc, $06, $01 ; $57a6
 	call FillTilemapRun ; $57a9
-	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 11 ; $57ac
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH + 11 ; $57ac
 	ld_tile_run bc, $07, $01 ; $57af
 	call FillTilemapRun ; $57b2
 	ld_tile_run bc, $08, $07 ; $57b5
@@ -371,25 +371,25 @@ DrawExpDoublesPartnerPanel:
 	ASSERT GAMEMODE_NONE == 0
 	or a ; $57c4
 	jr nz, .useMatchRecord ; $57c5
-	ld bc, wStoryPartnerName ; $57c7
+	ld bc, wStoryPartner ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
 .useMatchRecord:
-	ld bc, wPlayer1PartnerName ; $57cc
+	ld bc, wPlayer1Partner ; $57cc
 	ld a, [wLinkMatchRole] ; $57cf
 	cp LINKSTATE_SLAVE ; $57d2
 	jr nz, .copyStringToTextBuffer ; $57d4
-	ld bc, wPlayer2PartnerName ; $57d6
+	ld bc, wPlayer2Partner ; $57d6
 .copyStringToTextBuffer:
 	push bc ; $57d9
 	ld hl, CHARREC_NAME ; $57da
 	add hl, bc ; $57dd
 	call CopyStringToTextBuffer ; $57de
-	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 12 ; $57e1
-	ld bc, $0020 ; $57e4
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 12 ; $57e1
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $57e4
 	call WriteTextToTilemap ; $57e7
 	ld hl, Text_LevelAbbrev ; $57ea
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 12 ; $57ed
-	ld bc, $0020 ; $57f0
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $57f0
 	call FetchAndDrawDialogueText ; $57f3
 	pop bc ; $57f6
 	ld hl, CHARREC_LEVEL ; $57f7
@@ -398,7 +398,7 @@ DrawExpDoublesPartnerPanel:
 	ld h, $00 ; $57fc
 	ld l, a ; $57fe
 	ld a, $02 ; $57ff
-	ld bc, $0020 ; $5801
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $5801
 	ld de, wTextBuffer ; $5804
 	call FormatDecimalNumberUnsigned ; $5807
 	ld hl, wTextBuffer ; $580a
@@ -406,7 +406,7 @@ DrawExpDoublesPartnerPanel:
 	call WriteTextToTilemap ; $5810
 	ret ; $5813
 DrawExpTotalPanel:
-	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $5814
+	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $5814
 	ld_tile_run bc, $02, $01 ; $5817
 	call FillTilemapRun ; $581a
 	ld_tile_run bc, $03, $08 ; $581d
@@ -419,7 +419,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5832
 	ld_tile_run bc, $04, $01 ; $5835
 	call FillTilemapRun ; $5838
-	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 2 ; $583b
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH + 2 ; $583b
 	ld_tile_run bc, $05, $01 ; $583e
 	call FillTilemapRun ; $5841
 	ld_tile_run bc, $20, $08 ; $5844
@@ -432,7 +432,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5859
 	ld_tile_run bc, $06, $01 ; $585c
 	call FillTilemapRun ; $585f
-	ld hl, wScreenAttrmap + 16 * TILEMAP_WIDTH + 2 ; $5862
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $5862
 	ld_tile_run bc, $07, $01 ; $5865
 	call FillTilemapRun ; $5868
 	ld_tile_run bc, $08, $08 ; $586b
@@ -446,40 +446,40 @@ DrawExpTotalPanel:
 	ld_tile_run bc, $09, $01 ; $5883
 	call FillTilemapRun ; $5886
 	ld hl, Text_ExpPtsLabel ; $5889
-	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 3 ; $588c
-	ld bc, $0020 ; $588f
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 3 ; $588c
+	ld_text_attr bc, 0, TILEMAP_WIDTH ; $588f
 	call FetchAndDrawDialogueText ; $5892
 	ret ; $5895
 DrawExpMessageWindow:
-	ld hl, wScreenAttrmap ; $5896
+	ld hl, wShadowTilemap ; $5896
 	ld_tile_run bc, $02, $01 ; $5899
 	call FillTilemapRun ; $589c
 	ld_tile_run bc, $03, $12 ; $589f
 	call FillTilemapRun ; $58a2
 	ld_tile_run bc, $04, $01 ; $58a5
 	call FillTilemapRun ; $58a8
-	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH ; $58ab
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $58ab
 	ld_tile_run bc, $05, $01 ; $58ae
 	call FillTilemapRun ; $58b1
 	ld_tile_run bc, $20, $12 ; $58b4
 	call FillTilemapRun ; $58b7
 	ld_tile_run bc, $06, $01 ; $58ba
 	call FillTilemapRun ; $58bd
-	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH ; $58c0
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $58c0
 	ld_tile_run bc, $05, $01 ; $58c3
 	call FillTilemapRun ; $58c6
 	ld_tile_run bc, $20, $12 ; $58c9
 	call FillTilemapRun ; $58cc
 	ld_tile_run bc, $06, $01 ; $58cf
 	call FillTilemapRun ; $58d2
-	ld hl, wScreenAttrmap + 3 * TILEMAP_WIDTH ; $58d5
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $58d5
 	ld_tile_run bc, $05, $01 ; $58d8
 	call FillTilemapRun ; $58db
 	ld_tile_run bc, $20, $12 ; $58de
 	call FillTilemapRun ; $58e1
 	ld_tile_run bc, $06, $01 ; $58e4
 	call FillTilemapRun ; $58e7
-	ld hl, wScreenAttrmap + 4 * TILEMAP_WIDTH ; $58ea
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH ; $58ea
 	ld_tile_run bc, $07, $01 ; $58ed
 	call FillTilemapRun ; $58f0
 	ld_tile_run bc, $08, $12 ; $58f3
@@ -527,7 +527,7 @@ DrawExpScreenCharSprites:
 	ret ; $5953
 UpdateExpScreenCharSprite:
 	push af ; $5954
-	ld hl, wCharPosX ; $5955
+	ld hl, wCharStruct ; $5955
 	ld b, h ; $5958
 	ld c, l ; $5959
 	farcall StepCharAnimation ; $595a
@@ -536,7 +536,7 @@ UpdateExpScreenCharSprite:
 	ld [wCharFacingOctant], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
 	ld a, [wCharFacingOctant] ; $5966
-	ld_hl_indexed UpdateExpScreenCharSpriteTable ; $5969
+	ld_hl_indexed ExpScreenFacingFlipAttrs ; $5969
 	ld a, [wCharSpriteAttr] ; $5970
 	or OAM_BANK1 ; $5973
 	xor [hl] ; $5975
@@ -544,10 +544,10 @@ UpdateExpScreenCharSprite:
 	pop af ; $5977
 	push af ; $5978
 	or a ; $5979
-	jr nz, .player2Hand ; $597a
+	jr nz, .partnerHand ; $597a
 	ld a, [wPlayer1MainLeftHanded] ; $597c
 	jr .compare ; $597f
-.player2Hand:
+.partnerHand:
 	ld a, [wPlayer2MainLeftHanded] ; $5981
 .compare:
 	or a ; $5984
@@ -560,7 +560,7 @@ UpdateExpScreenCharSprite:
 	ld c, a ; $598e
 	pop af ; $598f
 	or a ; $5990
-	jr nz, .secondSprite ; $5991
+	jr nz, .partnerPos ; $5991
 	test_flag FLAG_TEMP_RESULTS_DOUBLES_LAYOUT ; $5993
 	jr z, .singlesLayout ; $5996
 	ld d, $44 ; $5998
@@ -570,7 +570,7 @@ UpdateExpScreenCharSprite:
 	ld d, $50 ; $599e
 	ld e, $66 ; $59a0
 	jr .writeSlot ; $59a2
-.secondSprite:
+.partnerPos:
 	ld d, $5c ; $59a4
 	ld e, $66 ; $59a6
 .writeSlot:
@@ -583,7 +583,7 @@ UpdateExpScreenCharSprite:
 	ld [hl+], a ; $59b0
 	ld [hl], d ; $59b1
 	ret ; $59b2
-UpdateExpScreenCharSpriteTable:
+ExpScreenFacingFlipAttrs:
 	; $59b3, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:
@@ -606,7 +606,7 @@ DrawNextExpAwardMessage:
 	ld d, a ; $59e3
 	ld a, [wExpAwardIndex] ; $59e4
 	rlca ; $59e7
-	ld_hl_indexed DrawNextExpAwardMessageTable ; $59e8
+	ld_hl_indexed ExpAwardSourceTextBases ; $59e8
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
 	ld l, a ; $59f1
@@ -621,19 +621,19 @@ DrawNextExpAwardMessage:
 	or d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
 	ld hl, Text_ExpAndFor ; $5a0a
-	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a0d
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 2 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
 .drawProportionalTextLine:
 	ld hl, Text_ExpCalculatingFor ; $5a18
-	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a1b
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 2 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21
 .restore:
 	pop hl ; $5a24
 	ld bc, $0020 ; $5a25
-	ld de, wScreenAttrmap + 3 * TILEMAP_WIDTH + 2 ; $5a28
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $5a28
 	call DrawProportionalTextLine ; $5a2b
 	pop bc ; $5a2e
 	farcall UploadGlyphBuffer ; $5a2f
@@ -648,9 +648,15 @@ DrawNextExpAwardMessage:
 	farcall UploadGlyphBuffer ; $5a3f
 	xor a ; $5a42
 	ret ; $5a43
-DrawNextExpAwardMessageTable:
-	; $5a44, 10 bytes (bytes:10)
-	db LOW(AP_MESSAGE_TEXT), HIGH(AP_MESSAGE_TEXT), $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
+ExpAwardSourceTextBases:
+	; $5a44, 10 bytes (text_ids)
+	table_width 2
+	dw AP_MESSAGE_TEXT ; EXPAWARD_N64
+	dw Text_ExpForExhibitionMode ; EXPAWARD_EXHIBITION
+	dw Text_ExpForLinkedPlay ; EXPAWARD_LINKED
+	dw Text_ExpForMatchTypes ; EXPAWARD_MATCH
+	dw Text_ExpForWinningTrophy ; EXPAWARD_TROPHY
+	assert_table_length NUM_EXPAWARDS
 DrawExpTotalDigits:
 	wram_bank WRAM_SCENE ; $5a4e
 	ld hl, wExpAwardRunningTotal ; $5a54

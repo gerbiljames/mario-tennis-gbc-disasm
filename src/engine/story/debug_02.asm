@@ -12,7 +12,7 @@ Unused_02_DebugStoryStatsScreen:
 	farcall InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
 .reloadSlot:
-	farcall CheckStorySlot ; $4fcb
+	farcall ReadCurrentStorySlot ; $4fcb
 	or a ; $4fce
 	jr z, .slotOk ; $4fcf
 	push de ; $4fd1
@@ -29,23 +29,23 @@ Unused_02_DebugStoryStatsScreen:
 	or a ; $4feb
 	jr z, .printString ; $4fec
 	push de ; $4fee
-	ld hl, wPendingExpStory ; $4fef
+	ld hl, wN64TransferMainExp ; $4fef
 	ld a, [hl+] ; $4ff2
 	ld h, [hl] ; $4ff3
 	ld l, a ; $4ff4
 	ld_cell de, $02, $10 ; $4ff5
 	call Unused_00_PrintDecimalWord ; $4ff8
-	ld hl, wPendingExpTrophy ; $4ffb
+	ld hl, wN64TransferPartnerExp ; $4ffb
 	ld a, [hl+] ; $4ffe
 	ld h, [hl] ; $4fff
 	ld l, a ; $5000
 	ld_cell de, $0a, $10 ; $5001
 	call Unused_00_PrintDecimalWord ; $5004
 	pop de ; $5007
-	ld hl, wPendingExpStory ; $5008
-	ASSERT wPendingExpTrophy == wPendingExpStory + 2, "this code walks from wPendingExpStory into wPendingExpTrophy"
-	ASSERT wN64TransferMarker == wPendingExpStory + 4, "this code walks from wPendingExpStory into wN64TransferMarker"
-	ASSERT wN64TrophyCounts == wPendingExpStory + 5, "this code walks from wPendingExpStory into wN64TrophyCounts"
+	ld hl, wN64TransferMainExp ; $5008
+	ASSERT wN64TransferPartnerExp == wN64TransferMainExp + 2, "this code walks from wN64TransferMainExp into wN64TransferPartnerExp"
+	ASSERT wN64TransferMarker == wN64TransferMainExp + 4, "this code walks from wN64TransferMainExp into wN64TransferMarker"
+	ASSERT wN64TrophyCounts == wN64TransferMainExp + 5, "this code walks from wN64TransferMainExp into wN64TrophyCounts"
 	xor a ; $500b
 	ld [hl+], a ; $500c
 	ld [hl+], a ; $500d
@@ -67,7 +67,7 @@ Unused_02_DebugStoryStatsScreen:
 	pop de ; $5029
 .redraw:
 	push de ; $502a
-	ld bc, wStoryMainName ; $502b
+	ld bc, wStoryMain ; $502b
 	ld a, [wCurrentStorySlot] ; $502e
 	ld_cell de, $02, $02 ; $5031
 	call PrintDecimalByte ; $5034
@@ -81,7 +81,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, [hl] ; $5046
 	ld_cell de, $02, $06 ; $5047
 	call PrintDecimalByte ; $504a
-	ld hl, CHARREC_SWING ; $504d
+	ld hl, CHARREC_SHOT_TRAITS ; $504d
 	add hl, bc ; $5050
 	ld a, [hl+] ; $5051
 	ld h, [hl] ; $5052
@@ -200,21 +200,21 @@ Unused_02_DebugStoryStatsScreen:
 .inputLoop:
 	call AdvanceFrame ; $513f
 	call AdvanceRandomSeed ; $5142
-	ldh a, [hInputPressed] ; $5145
+	ldh a, [hInputRepeat] ; $5145
 	bit PADB_UP, a ; $5147
-	jr z, .levelUpPlayer ; $5149
+	jr z, .checkLeft ; $5149
 	push de ; $514b
-	ld a, $00 ; $514c
+	ld a, STORYREC_MAIN ; $514c
 	ld d, TRAINSTAT_SPIN ; $514e
 	call LevelUpPlayer ; $5150
 	pop de ; $5153
 	sound SFX_MENU_MOVE ; $5154
 	jp .redraw ; $5156
-.levelUpPlayer:
+.checkLeft:
 	bit PADB_LEFT, a ; $5159
 	jr z, .checkRight ; $515b
 	push de ; $515d
-	ld a, $00 ; $515e
+	ld a, STORYREC_MAIN ; $515e
 	ld d, TRAINSTAT_POWER ; $5160
 	call LevelUpPlayer ; $5162
 	pop de ; $5165
@@ -224,7 +224,7 @@ Unused_02_DebugStoryStatsScreen:
 	bit PADB_RIGHT, a ; $516b
 	jr z, .checkDown ; $516d
 	push de ; $516f
-	ld a, $00 ; $5170
+	ld a, STORYREC_MAIN ; $5170
 	ld d, TRAINSTAT_CONTROL ; $5172
 	call LevelUpPlayer ; $5174
 	pop de ; $5177
@@ -232,15 +232,15 @@ Unused_02_DebugStoryStatsScreen:
 	jp .redraw ; $517a
 .checkDown:
 	bit PADB_DOWN, a ; $517d
-	jr z, .positive ; $517f
+	jr z, .checkB ; $517f
 	push de ; $5181
-	ld a, $00 ; $5182
+	ld a, STORYREC_MAIN ; $5182
 	ld d, TRAINSTAT_SPEED ; $5184
 	call LevelUpPlayer ; $5186
 	pop de ; $5189
 	sound SFX_MENU_MOVE ; $518a
 	jp .redraw ; $518c
-.positive:
+.checkB:
 	bit PADB_B, a ; $518f
 	jr z, .checkA ; $5191
 	push de ; $5193
@@ -326,7 +326,7 @@ LoadStorySlot:
 	ld c, a ; $524c
 	push bc ; $524d
 	ld [wCurrentStorySlot], a ; $524e
-	farcall CheckStorySlot ; $5251
+	farcall ReadCurrentStorySlot ; $5251
 	pop bc ; $5254
 	pop de ; $5255
 	or a ; $5256
@@ -334,7 +334,7 @@ LoadStorySlot:
 	ld a, [wLinkSessionActive] ; $5259
 	or a ; $525c
 	ld a, h ; $525d
-	jr nz, .storePlayer1CurrentMainCharacter ; $525e
+	jr nz, .linkSessionNoChar ; $525e
 	ld a, CHAR_EMPTY_SLOT ; $5260
 	ld [wPlayer1MainChar], a ; $5262
 	ld a, $03 ; $5265
@@ -342,7 +342,7 @@ LoadStorySlot:
 	ld a, b ; $526a
 	ld [wCurrentStorySlot], a ; $526b
 	ret ; $526e
-.storePlayer1CurrentMainCharacter:
+.linkSessionNoChar:
 	ld a, CHAR_NONE ; $526f
 	ld [wPlayer1MainChar], a ; $5271
 	ret ; $5274
@@ -356,14 +356,14 @@ LoadStorySlot:
 	pop de ; $5281
 	pop bc ; $5282
 	ret ; $5283
-Unused_02_StorySlotVariant:
+Unused_02_LoadStorySlotOrFail:
 	push de ; $5284
 	ld hl, wStorySlotData ; $5285
 	ld b, a ; $5288
 	ld c, a ; $5289
 	push bc ; $528a
 	ld [wCurrentStorySlot], a ; $528b
-	farcall CheckStorySlot ; $528e
+	farcall ReadCurrentStorySlot ; $528e
 	pop bc ; $5291
 	pop de ; $5292
 	or a ; $5293
@@ -390,8 +390,8 @@ LoadPlayer2MainRecord:
 	jr z, .positive ; $52b0
 	res 7, a ; $52b2
 	call LoadStorySlot ; $52b4
-	ld hl, wPlayer1MainName ; $52b7
-	ld de, wPlayer2MainName ; $52ba
+	ld hl, wPlayer1Main ; $52b7
+	ld de, wPlayer2Main ; $52ba
 	ld c, (2 * CHAR_RECORD_SIZE) / 16 ; $52bd
 	call CopyMemoryFast ; $52bf
 	jr .restore ; $52c2
@@ -408,8 +408,8 @@ LoadPlayer2MainRecord:
 StoryCharacterRecords_02:
 	; $52cf, 2900 bytes (char_stats_row)
 ; 100 records x 29 bytes
-; char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
-;                delay_near, delay_far, tracking, aim_away, serve_style,
+; char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, shot_traits,
+;                delay_near, delay_far, tracking, aim_away, difficulty,
 ;                Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop,
 ;                speed_bonus
 	char_stats_row 1, $0080, $00a0, $0800, $000c, 1, $0080, 18, 12, 10, 200, 0,  5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,  0 ; $00 Alex
@@ -512,34 +512,34 @@ StoryCharacterRecords_02:
 	char_stats_row 1, $0080, $00a0, $0800, $000c, 5, $0080, 8, 7, 3, 190, 0,  1, 3, 4, 4, 6, 5, 9, 4, 7, 7, 8,  0 ; $61 Dream Doubles Hard Partner
 	char_stats_row 1, $0080, $00a0, $0800, $000c, 6, $0080, 2, 2, 0, 230, 0,  1, 3, 4, 4, 6, 5, 9, 4, 7, 7, 8,  0 ; $62 Dream Doubles Intense Partner
 	char_stats_row 1, $0080, $00a0, $0800, $000c, 7, $0080, 0, 0, 0, 255, 0,  2, 4, 5, 5, 7, 6, 9, 5, 8, 8, 9,  0 ; $63 Dream Doubles Max Partner
-CharGroupTable_02:
-	; $5e23, 144 bytes (AISHOT_* x 16 per serve style)
-	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_NEUTRAL ; serve style 0
-	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_NEUTRAL ; serve style 1
-	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_NEUTRAL, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_LOB, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_DROP ; serve style 2
-	db AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_SLICE, AISHOT_TOPSPIN, AISHOT_LOB, AISHOT_DROP ; serve style 3
-	db AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL ; serve style 4
-	db AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB ; serve style 5
-	db AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP ; serve style 6
-	db AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_SLICE, AISHOT_POWER_SLICE, AISHOT_NEUTRAL, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB ; serve style 7
-	db AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_NEUTRAL, AISHOT_POWER_SLICE, AISHOT_LOB, AISHOT_LOB, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP ; serve style 8
-GetCharGroupEntry:
+AiShotMixTable_02:
+	; $5e23, 144 bytes (AISHOT_* x 16 per wAiDifficulty)
+	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_NEUTRAL ; difficulty 0
+	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_NEUTRAL ; difficulty 1
+	db AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_TOPSPIN, AISHOT_NEUTRAL, AISHOT_SLICE, AISHOT_SLICE, AISHOT_SLICE, AISHOT_NEUTRAL, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_LOB, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_DROP ; difficulty 2
+	db AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_POWER_SLICE, AISHOT_SLICE, AISHOT_TOPSPIN, AISHOT_LOB, AISHOT_DROP ; difficulty 3
+	db AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL, AISHOT_NEUTRAL ; difficulty 4
+	db AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB ; difficulty 5
+	db AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP ; difficulty 6
+	db AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_SLICE, AISHOT_POWER_SLICE, AISHOT_NEUTRAL, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB, AISHOT_LOB ; difficulty 7
+	db AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_POWER_TOPSPIN, AISHOT_NEUTRAL, AISHOT_POWER_SLICE, AISHOT_LOB, AISHOT_LOB, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP, AISHOT_DROP ; difficulty 8
+GetAiShotMixEntry:
 	add a ; $5eb3
 	add a ; $5eb4
 	add a ; $5eb5
 	add a ; $5eb6
-	ld_hl_indexed CharGroupTable_02 ; $5eb7
+	ld_hl_indexed AiShotMixTable_02 ; $5eb7
 	ld a, b ; $5ebe
 	and $0f ; $5ebf
 	add_hl_a ; $5ec1
 	ld a, [hl] ; $5ec6
 	ret ; $5ec7
-Unused_02_CharGroupFind:
+Unused_02_AiShotMixRowHasNeutral:
 	add a ; $5ec8
 	add a ; $5ec9
 	add a ; $5eca
 	add a ; $5ecb
-	ld_hl_indexed CharGroupTable_02 ; $5ecc
+	ld_hl_indexed AiShotMixTable_02 ; $5ecc
 	ld b, $10 ; $5ed3
 .loop:
 	ld a, [hl+] ; $5ed5
@@ -552,12 +552,12 @@ Unused_02_CharGroupFind:
 .found:
 	ld a, $01 ; $5edf
 	ret ; $5ee1
-DoesCharGroupRowContain:
+AiShotMixRowContains:
 	add a ; $5ee2
 	add a ; $5ee3
 	add a ; $5ee4
 	add a ; $5ee5
-	ld_hl_indexed CharGroupTable_02 ; $5ee6
+	ld_hl_indexed AiShotMixTable_02 ; $5ee6
 	ld c, $10 ; $5eed
 .loop:
 	ld a, [hl+] ; $5eef

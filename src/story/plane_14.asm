@@ -10,11 +10,11 @@ ActorScript_14_1:
 	as_halt
 	as_halt
 	ds ALIGN[4]
-PlaneObjTiles_14:
-	INCBIN "data/story/PlaneObjTiles_14.bin" ; $5650, 1024 bytes
+PlaneFrontObjTiles_14:
+	INCBIN "data/story/PlaneFrontObjTiles_14.bin" ; $5650, 1024 bytes
 	ds ALIGN[4]
-IslandObjTiles_14:
-	INCBIN "data/story/IslandObjTiles_14.bin" ; $5a50, 1024 bytes
+PlaneRearObjTiles_14:
+	INCBIN "data/story/PlaneRearObjTiles_14.bin" ; $5a50, 1024 bytes
 PlaneSpriteTemplate_14:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -26,21 +26,21 @@ PlaneSpriteTemplate_14:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-IslandObjPalette_14:
-	INCLUDE "data/story/IslandObjPalette_14.asm" ; $5e71, 8 bytes (palettes)
-LoadPlaneObjGfx_14:
+PlaneObjPalette_14:
+	INCLUDE "data/story/PlaneObjPalette_14.asm" ; $5e71, 8 bytes (palettes)
+LoadPlaneFrontObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $5e79
-	ld hl, PlaneObjTiles_14 ; $5e82
+	ld hl, PlaneFrontObjTiles_14 ; $5e82
 	ld de, vTiles0 + VRAM_BANK1 ; $5e85
-	ld c, 96 ; $5e88
+	ld c, (PlaneRearObjTiles_14 - PlaneFrontObjTiles_14) / 16 + 32 ; $5e88
 	call QueueVRAMCopy ; $5e8a
-	ld hl, IslandObjPalette_14 ; $5e8d
+	ld hl, PlaneObjPalette_14 ; $5e8d
 	ld_obj_pals de, 0, 1 ; $5e90
 	call LoadPaletteShadow ; $5e93
 	pop_wram_bank ; $5e96
 	ret ; $5e9b
 QueuePlaneSpriteByHeight_14:
-	call GetSceneObjectScreenPos_14 ; $5e9c
+	call GetCutscenePlaneScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
 	ld a, [wCutscenePlaneY] ; $5ea1
 	sub $88 ; $5ea4
@@ -286,19 +286,19 @@ AdvanceWaterSplash1Rise_14:
 	ld [wCutsceneObjY + 1], a ; $6234
 .done:
 	ret ; $6237
-LoadPlaneObjGfx2_14:
+LoadPlaneRearObjGfx_14:
 	push_wram_bank WRAM_STAGING ; $6238
-	ld hl, IslandObjTiles_14 ; $6241
+	ld hl, PlaneRearObjTiles_14 ; $6241
 	ld de, vTiles0 + VRAM_BANK1 ; $6244
-	ld c, 96 ; $6247
+	ld c, 96 ; $6247 -- PlaneRearObjTiles_14's 64 tiles, then 512 bytes of template, palette and code
 	call QueueVRAMCopy ; $6249
-	ld hl, IslandObjPalette_14 ; $624c
+	ld hl, PlaneObjPalette_14 ; $624c
 	ld_obj_pals de, 0, 1 ; $624f
 	call LoadPaletteShadow ; $6252
 	pop_wram_bank ; $6255
 	ret ; $625a
 QueuePlaneSpriteByFrameCounter_14:
-	call GetSceneObjectScreenPos_14 ; $625b
+	call GetCutscenePlaneScreenPos_14 ; $625b
 	ld b, $10 ; $625e
 	ld a, [wCutsceneObjX] ; $6260
 	cp $14 ; $6263
@@ -322,10 +322,10 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld b, OAM_BANK1 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
-IslandSkyEntry02Scene:
-	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $628b
+IslandSkyHomeFromIslandOpenScene:
+	clear_flag FLAG_AT_ISLAND_OPEN ; $628b
 	call DisableLCDSafely ; $628e
-	call LoadPlaneObjGfx2_14 ; $6291
+	call LoadPlaneRearObjGfx_14 ; $6291
 	call EnableLCD ; $6294
 	ld a, $20 ; $6297
 	ld [wCutscenePlaneX], a ; $6299
@@ -334,8 +334,8 @@ IslandSkyEntry02Scene:
 	ld a, $00 ; $62a1
 	ld [wCutsceneObjX], a ; $62a3
 	frame_task QueuePlaneSpriteByFrameCounter_14 ; $62a6
-	script_set_active ACTOR_PLAYER, $00 ; $62ae
-	script_set_active ACTOR_ISLAND_SKY_HEADMASTER, $00 ; $62b5
+	script_set_actor_mode ACTOR_PLAYER, ACTORMODE_HIDDEN ; $62ae
+	script_set_actor_mode ACTOR_ISLAND_SKY_HEADMASTER, ACTORMODE_HIDDEN ; $62b5
 	test_flag FLAG_DOUBLES ; $62bc
 	jp z, .fadeIn ; $62bf
 	script_null_script ACTOR_PARTNER ; $62c2
@@ -345,7 +345,7 @@ IslandSkyEntry02Scene:
 	ld [wStoryModeShowLocationName], a ; $62d3
 	script_fade_in 6 ; $62d6
 	call WaitFadeEnd ; $62db
-	sound SFX_FIREWORK_LAUNCH ; $62de
+	sound SFX_PLANE_START ; $62de
 	script_wait_frames 60 ; $62e0
 	script_set_position ACTOR_PLAYER, 12.0, 19.0 ; $62e7
 	ld h, $08 ; $62f2
@@ -456,7 +456,7 @@ IslandSkyEntry02Scene:
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
 	jr nz, .slowestRiseLoop ; $63f6
-	sound SFX_FIREWORK_SPARKLE ; $63f8
+	sound SFX_PLANE_STOP ; $63f8
 	script_wait_frames 50 ; $63fa
 	script_fade_out 4 ; $6401
 	call WaitFadeEnd ; $6406

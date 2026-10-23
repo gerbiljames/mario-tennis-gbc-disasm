@@ -26,15 +26,15 @@ End7TrainingCtrExitTriggers_27:
 	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, ENTRY_TRAINING_CENTER_FROM_TENNIS_MACHINE_ROOM
 	db $ff
 End7TrainingCtrNpcScripts_27:
-	ds 1, $ff ; $61ff, fill
+	db $ff ; $61ff
 End7TrainingCtrFacingScripts_27:
-	ds 1, $ff ; $6200, fill
+	db $ff ; $6200
 End7TrainingCtrTileTriggers_27:
-	ds 1, $ff ; $6201, fill
+	db $ff ; $6201
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
 	cp ENTRY_END7_TRAINING_CTR_SCENE_A ; $6205
-	jr z, End7TrainingCtrEntry01Scene ; $6207
+	jr z, End7TennisMachineRoomScene_27 ; $6207
 	cp ENTRY_END7_TRAINING_CTR_SCENE_B ; $6209
 	jp z, End7TrainingCtrEntry02Scene ; $620b
 	ret ; $620e
@@ -60,7 +60,7 @@ ComputeMachineCourtProgress_27:
 .store:
 	ld [wMapSceneStage], a ; $626c
 	ret ; $626f
-End7TrainingCtrEntry01Scene:
+End7TennisMachineRoomScene_27:
 	ld a, $26 ; $6270
 	ld [wMapScrollMinX], a ; $6272
 	ld a, $23 ; $6275
@@ -217,11 +217,11 @@ End5ServiceAceCutscene_27:
 	farcall EndCutsceneScriptMode ; $6617
 	ret ; $661a
 End5ServiceAceNpcScripts_27:
-	ds 1, $ff ; $661b, fill
+	db $ff ; $661b
 End5ServiceAceFacingScripts_27:
-	ds 1, $ff ; $661c, fill
+	db $ff ; $661c
 End5ServiceAceTileTriggers_27:
-	ds 1, $ff ; $661d, fill
+	db $ff ; $661d
 End5ServiceAceInitScript_27:
 	call End5ServiceAceCutscene_27 ; $661e
 	ret ; $6621
@@ -253,7 +253,7 @@ End4JrCourtActors_27:
 	map_actor $0000, ActorScript_27_33, 56.0, 23.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, END4_JR_COURT_RACKET_STUDENT_6
 	map_actor $0000, ActorScript_27_27, 64.0, 64.0, FACE_UP, OBJ_BALLOON_SWEAT, ANIM_WALK, $00, END4_JR_COURT_BALLOON_SWEAT
 	map_actor_end
-End4JrCourtActorsAlt_27:
+End4JrCourtActorsDoubles_27:
 	; $671a, 192 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 19.0, 19.0, FACE_DOWN, OBJ_JUNIOR_COACH, ANIM_WALK, $00, END4_JR_COURT_ALT_JUNIOR_COACH
 	map_actor $0000, ActorScript_27_27, 35.0, 23.0, FACE_LEFT, OBJ_BOB, ANIM_WALK, $05, END4_JR_COURT_ALT_BOB
@@ -279,20 +279,20 @@ End4JrCourtExitTriggers_27:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, ENTRY_JUNIOR_CLASS_COURT_SINGLES_MATCH_RETURN, END4_JR_COURT_DONE_DOUBLES
 	db $ff
 End4JrCourtNpcScripts_27:
-	ds 1, $ff ; $67f5, fill
+	db $ff ; $67f5
 End4JrCourtFacingScripts_27:
-	ds 1, $ff ; $67f6, fill
+	db $ff ; $67f6
 End4JrCourtTileTriggers_27:
-	ds 1, $ff ; $67f7, fill
+	db $ff ; $67f7
 End4JrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $67f8
-	jr z, .checkStoryModeEntryPoint ; $67fb
-	script_respawn_actors End4JrCourtActorsAlt_27 ; $67fd
+	jr z, .checkEntry ; $67fb
+	script_respawn_actors End4JrCourtActorsDoubles_27 ; $67fd
 	farcall BeginCutsceneScriptMode ; $6805
-.checkStoryModeEntryPoint:
+.checkEntry:
 	ld a, [wStoryModeEntryPoint] ; $6808
 	cp ENTRY_END4_JR_COURT_SCENE ; $680b
-	jp z, End4JrCourtSceneSingles_27.walkPlayer ; $680d
+	jp z, End4JrCourtScene_27 ; $680d
 	ret ; $6810
 ActorScript_27_14:
 	; $6811, 15 bytes (actor_script)
@@ -316,49 +316,49 @@ ActorScript_27_16:
 	as_set_field ACTORF_SPEED, $0008
 .pace:
 	as_set_target 45.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 200
 	as_wait 240
 	as_set_target 51.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 60
 	as_set_target 45.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_wait 60
 	as_set_target 51.0, 7.0
-	as_wait_move2
+	as_wait_move_or_blocked
 	as_set_field ACTORF_HEADING, FACE_DOWN
 	as_wait 240
 	as_wait 240
 	as_jump .pace
 End4JrCourtApproachSingles_27:
 	script_wait_frames 15 ; $6866
-	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $686d
+	script_face_toward ACTOR_END4_JR_COURT_PAM, ACTOR_END4_JR_COURT_JUNIOR_COACH ; $686d
 	script_wait_frames 10 ; $6875
-	script_face_toward ACTOR_END4_JR_COURT_ALT_PAM, ACTOR_PLAYER ; $687c
+	script_face_toward ACTOR_END4_JR_COURT_PAM, ACTOR_PLAYER ; $687c
 	script_wait_frames 30 ; $6884
 	script_player_speed 1.0 ; $688b
-	script_move_player_to_actor ACTOR_END4_JR_COURT_ALT_PAM ; $6891
+	script_move_player_to_actor ACTOR_END4_JR_COURT_PAM ; $6891
 	farcall WaitPlayerMoveDone ; $6898
-	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_END4_JR_COURT_ALT_PAM ; $689b
-	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_NOD ; $68a3
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $68aa
-	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_DOWN ; $68af
+	script_face_toward ACTOR_END4_JR_COURT_JUNIOR_COACH, ACTOR_END4_JR_COURT_PAM ; $689b
+	script_set_anim ACTOR_END4_JR_COURT_PAM, ANIM_NOD ; $68a3
+	script_wait_idle ACTOR_END4_JR_COURT_PAM ; $68aa
+	script_face ACTOR_END4_JR_COURT_PAM, FACE_DOWN ; $68af
 	script_wait_frames 10 ; $68b6
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_PAM, ActorScript_27_17 ; $68bd
+	script_set_actor_script ACTOR_END4_JR_COURT_PAM, ActorScript_27_17 ; $68bd
 	script_wait_frames 20 ; $68c8
 	script_move_player_to_actor ACTOR_PLAYER ; $68cf
-	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $68d6
+	script_face ACTOR_END4_JR_COURT_JUNIOR_COACH, FACE_DOWN ; $68d6
 	script_move_player_to_actor ACTOR_PLAYER ; $68dd
-	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_PAM ; $68e4
-	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_ALT_PAM ; $68e9
-	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_BOUNCE ; $68f1
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $68f8
-	script_set_anim ACTOR_END4_JR_COURT_ALT_PAM, ANIM_NOD ; $68fd
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_PAM ; $6904
+	script_wait_actor_script ACTOR_END4_JR_COURT_PAM ; $68e4
+	script_face_toward ACTOR_PLAYER, ACTOR_END4_JR_COURT_PAM ; $68e9
+	script_set_anim ACTOR_END4_JR_COURT_PAM, ANIM_BOUNCE ; $68f1
+	script_wait_idle ACTOR_END4_JR_COURT_PAM ; $68f8
+	script_set_anim ACTOR_END4_JR_COURT_PAM, ANIM_NOD ; $68fd
+	script_wait_idle ACTOR_END4_JR_COURT_PAM ; $6904
 	script_wait_frames 15 ; $6909
-	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_UP ; $6910
+	script_face ACTOR_END4_JR_COURT_PAM, FACE_UP ; $6910
 	ret ; $6917
 ActorScript_27_17:
 	; $6918, 23 bytes (actor_script)
@@ -388,31 +388,31 @@ ActorScript_27_19:
 	as_halt
 End4JrCourtSceneSingles_27:
 	farcall BeginCutsceneScriptMode ; $6951
-	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_DOWN ; $6954
+	script_face ACTOR_END4_JR_COURT_JUNIOR_COACH, FACE_DOWN ; $6954
 	call End4JrCourtApproachSingles_27 ; $695b
 	script_face ACTOR_PLAYER, FACE_UP ; $695e
 	script_wait_frames 15 ; $6965
-	script_set_anim ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ANIM_BOUNCE ; $696c
-	script_wait_idle ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH ; $6973
-	script_face ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, FACE_RIGHT ; $6978
+	script_set_anim ACTOR_END4_JR_COURT_JUNIOR_COACH, ANIM_BOUNCE ; $696c
+	script_wait_idle ACTOR_END4_JR_COURT_JUNIOR_COACH ; $6973
+	script_face ACTOR_END4_JR_COURT_JUNIOR_COACH, FACE_RIGHT ; $6978
 	script_wait_frames 15 ; $697f
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6986
-	script_face ACTOR_END4_JR_COURT_ALT_PAM, FACE_RIGHT ; $698d
+	script_face ACTOR_END4_JR_COURT_PAM, FACE_RIGHT ; $698d
 	script_wait_frames 30 ; $6994
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_RACKET_STUDENT_3, ActorScript_27_14 ; $699b
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_RACKET_STUDENT_4, ActorScript_27_15 ; $69a6
-	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_RACKET_STUDENT_4 ; $69b1
+	script_set_actor_script ACTOR_END4_JR_COURT_RACKET_STUDENT_3, ActorScript_27_14 ; $699b
+	script_set_actor_script ACTOR_END4_JR_COURT_RACKET_STUDENT_4, ActorScript_27_15 ; $69a6
+	script_wait_actor_script ACTOR_END4_JR_COURT_RACKET_STUDENT_4 ; $69b1
 	script_move_player 23.0, 17.0 ; $69b6
-	script_set_actor_script ACTOR_END4_JR_COURT_ALT_PAM, ActorScript_27_18 ; $69c0
+	script_set_actor_script ACTOR_END4_JR_COURT_PAM, ActorScript_27_18 ; $69c0
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_19 ; $69cb
 	farcall WaitPlayerMoveDone ; $69d6
-	script_wait_actor_script ACTOR_END4_JR_COURT_ALT_PAM ; $69d9
+	script_wait_actor_script ACTOR_END4_JR_COURT_PAM ; $69d9
 	script_wait_frames 20 ; $69de
 	ld a, EXIT_END4_JR_COURT_DONE ; $69e5
 	ld [wUnusedExitTriggerIdMirror], a ; $69e7
 	ld [wStoryModeExitTriggerRequest], a ; $69ea
 	ret ; $69ed
-.doubles:
+End4JrCourtSceneDoubles_27:
 	farcall BeginCutsceneScriptMode ; $69ee
 	script_face_toward ACTOR_END4_JR_COURT_ALT_JUNIOR_COACH, ACTOR_PLAYER ; $69f1
 	script_wait_frames 30 ; $69f9
@@ -432,13 +432,13 @@ End4JrCourtSceneSingles_27:
 	ld [wUnusedExitTriggerIdMirror], a ; $6a4d
 	ld [wStoryModeExitTriggerRequest], a ; $6a50
 	ret ; $6a53
-.walkPlayer:
+End4JrCourtScene_27:
 	script_move_player 19.0, 21.0 ; $6a54
 	script_fade_in 4 ; $6a5e
 	script_move_target ACTOR_PLAYER, 19.0, 21.0 ; $6a63
 	script_wait_move ACTOR_PLAYER ; $6a6e
 	test_flag FLAG_DOUBLES ; $6a73
-	jp nz, .doubles ; $6a76
+	jp nz, End4JrCourtSceneDoubles_27 ; $6a76
 	call End4JrCourtSceneSingles_27 ; $6a79
 	ret ; $6a7c
 End4JrCourtApproachDoubles_27:

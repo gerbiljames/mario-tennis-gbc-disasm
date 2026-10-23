@@ -18,7 +18,7 @@ SeniorCourtActors_12:
 	map_actor $0000, ActorScript_12_58, 11.0, 19.0, FACE_DOWN, OBJ_CURT, ANIM_WALK, $03, SENIOR_COURT_CURT
 	map_actor $0000, ActorScript_12_56, 21.0, 23.0, FACE_UP, OBJ_BOB, ANIM_WALK, $06, SENIOR_COURT_BOB
 	map_actor $0000, ActorScript_12_55, 19.0, 11.0, FACE_DOWN, OBJ_PAM, ANIM_WALK, $03, SENIOR_COURT_PAM
-	map_actor $05e0, ActorScript_12_52, 9.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_KATE
+	map_actor FLAG_DOUBLES, ActorScript_12_52, 9.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_ROOMMATE
 	map_actor $0000, ActorScript_12_53, 34.0, 19.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_12_54, 37.0, 29.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $04, SENIOR_COURT_RACKET_STUDENT_2
 	map_actor_end
@@ -33,7 +33,7 @@ SeniorCourtActorsA_12:
 	map_actor $0000, ActorScript_12_51, 3.0, 23.0, FACE_RIGHT, OBJ_CURT, ANIM_WALK, $03, SENIOR_COURT_A_CURT
 	map_actor $0000, ActorScript_12_57, 18.0, 13.0, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $06, SENIOR_COURT_A_BOB
 	map_actor $0000, ActorScript_12_44, 21.0, 13.0, FACE_DOWN, OBJ_PAM, ANIM_SWING_LOOP, $03, SENIOR_COURT_A_PAM
-	map_actor $05e0, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_A_KATE
+	map_actor FLAG_DOUBLES, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_A_ROOMMATE
 	map_actor $0000, ActorScript_12_53, 34.0, 17.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $05, SENIOR_COURT_A_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_12_54, 38.0, 29.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_A_RACKET_STUDENT_2
 	map_actor $0000, ActorScript_12_55, 50.0, 17.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_A_RACKET_STUDENT_3
@@ -51,7 +51,7 @@ SeniorCourtActorsB_12:
 	map_actor $0000, ActorScript_12_51, 35.0, 28.0, FACE_DOWN, OBJ_CURT, ANIM_WALK, $03, SENIOR_COURT_B_CURT
 	map_actor $0000, ActorScript_12_51, 9.0, 7.0, FACE_RIGHT, OBJ_BOB, ANIM_WALK, $06, SENIOR_COURT_B_BOB
 	map_actor $0000, ActorScript_12_51, 11.0, 7.0, FACE_LEFT, OBJ_PAM, ANIM_WALK, $03, SENIOR_COURT_B_PAM
-	map_actor $05e0, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_B_KATE
+	map_actor FLAG_DOUBLES, ActorScript_12_52, 3.0, 11.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, SENIOR_COURT_B_ROOMMATE
 	map_actor $0000, ActorScript_12_53, 18.0, 11.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $05, SENIOR_COURT_B_RACKET_STUDENT_1
 	map_actor $0000, ActorScript_12_54, 22.0, 22.0, FACE_UP, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_B_RACKET_STUDENT_2
 	map_actor $0000, ActorScript_12_55, 50.0, 17.0, FACE_DOWN, OBJ_RACKET_STUDENT, ANIM_WALK, $00, SENIOR_COURT_B_RACKET_STUDENT_3
@@ -72,7 +72,7 @@ SeniorCourtExitTriggers_12:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_SENIOR_CLASS_COURT, ENTRY_SENIOR_CLASS_COURT_MATCH_RETURN, SENIOR_CLASS_COURT_RANKING_MATCH
 	db $ff
 SeniorCourtExit01_12:
-	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591
+	clear_flag FLAG_SENIOR_COURT_BOB_PAM_BLOCKING ; $5591
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, 2.0 ; $5594
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, 2.0 ; $559e
 	script_fade_out 16 ; $55a8
@@ -91,7 +91,7 @@ SpeakEmilyPostChampionLine:
 	ld hl, Text_NameHarry ; $55cb
 	add_hl_a ; $55ce
 	call PushShortTextArg_12 ; $55d3
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $55d6
+	script_speak ACTOR_SENIOR_COURT_A_EMILY ; $55d6
 	ret ; $55db
 EmilyPostChampionTextIds:
 	; $55dc, 12 bytes (text_ids)
@@ -103,25 +103,25 @@ EmilyPostChampionTextIds:
 	dw Text_SeniorRiseInspiredEveryone ; record 4
 	dw Text_SeniorEveryoneHasGoals ; record 5
 	assert_table_length NUM_SENIORCOURTSTAGES - SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP
-SeniorCourtNpc03_12:
+SeniorCourtNpc03Emily_12:
 	ld a, [wMapSceneStage2] ; $55e8
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
-	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
+	jr c, SeniorCourtNpc03EmilyFaceUp_12.checkDoubles ; $55ed
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
 	jr nc, SpeakEmilyPostChampionLine ; $55f1
-	call SeniorRankOfferScenePrep ; $55f3
+	call SeniorRankOfferScene ; $55f3
 	ret ; $55f6
-SeniorCourtNpc03FaceUpFlag0000_12:
+SeniorCourtNpc03EmilyFaceUp_12:
 	ld a, [wMapSceneStage2] ; $55f7
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55fe
 	jr nc, SpeakEmilyPostChampionLine ; $5600
-	call SeniorRankOfferScenePrepFacingUp ; $5602
+	call SeniorRankOfferSceneFacingUp ; $5602
 	ret ; $5605
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $5606
-	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.checkFlag ; $5609
+	jp nz, SeniorCourtNpc03EmilyFaceUpPartnerIntro_12.doublesIntro ; $5609
 	script_set_text Text_EmilyUsedToAcademyLife ; $560c
 	script_speak_restore ACTOR_SENIOR_COURT_EMILY ; $5612
 	farcall RunDialogueYesNoPrompt ; $5617
@@ -133,11 +133,11 @@ SeniorCourtNpc03FaceUpFlag0000_12:
 .speak:
 	script_speak ACTOR_SENIOR_COURT_EMILY ; $562a
 	ret ; $562f
-SeniorCourtNpc03FaceRight_12:
+SeniorCourtNpc03EmilyFaceRight_12:
 	test_flag FLAG_DOUBLES ; $5630
-	jr z, SeniorCourtNpc03_12 ; $5633
-	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5635
-	jp nz, SeniorCourtNpc03FaceUpFlag0840_12.setText ; $5638
+	jr z, SeniorCourtNpc03Emily_12 ; $5633
+	test_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $5635
+	jp nz, SeniorCourtNpc03EmilyFaceUpPartnerIntro_12.introDone ; $5638
 	script_set_speed ACTOR_PLAYER, 0.5 ; $563b
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5643
 	script_null_script ACTOR_PARTNER ; $564b
@@ -150,12 +150,12 @@ SeniorCourtNpc03FaceRight_12:
 	script_wait_move ACTOR_PARTNER ; $5686
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $568b
 	script_wait_move ACTOR_PLAYER ; $5693
-	jp SeniorCourtNpc03FaceUpFlag0840_12.face ; $5698
-SeniorCourtNpc03FaceUpFlag0840_12:
+	jp SeniorCourtNpc03EmilyFaceUpPartnerIntro_12.face ; $5698
+SeniorCourtNpc03EmilyFaceUpPartnerIntro_12:
 	test_flag FLAG_DOUBLES ; $569b
-	jp z, SeniorCourtNpc03FaceUpFlag0000_12 ; $569e
-	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $56a1
-	jp nz, .setText ; $56a4
+	jp z, SeniorCourtNpc03EmilyFaceUp_12 ; $569e
+	test_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $56a1
+	jp nz, .introDone ; $56a4
 	script_set_speed ACTOR_PARTNER, 0.5 ; $56a7
 	script_set_speed ACTOR_PLAYER, 0.25 ; $56af
 	script_face ACTOR_PLAYER, FACE_UP ; $56b7
@@ -166,12 +166,12 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_wait_move ACTOR_PARTNER ; $56e0
 	script_move_target ACTOR_PARTNER, 43.0, 25.0 ; $56e5
 	script_wait_move ACTOR_PARTNER ; $56f0
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $56f5
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PARTNER ; $56f5
 	script_wait_move ACTOR_PLAYER ; $56fd
 	jr .face ; $5702
-.checkFlag:
-	test_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5704
-	jp nz, .setText ; $5707
+.doublesIntro:
+	test_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $5704
+	jp nz, .introDone ; $5707
 	script_set_speed ACTOR_PLAYER, 0.5 ; $570a
 	script_set_speed ACTOR_PARTNER, 0.5 ; $5712
 	script_null_script ACTOR_PARTNER ; $571a
@@ -181,26 +181,26 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $573a
 	script_wait_move ACTOR_PLAYER ; $5742
 .face:
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PLAYER ; $5747
-	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $574f
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $5757
-	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $575e
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PLAYER ; $5747
+	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_B_EMILY ; $574f
+	script_set_anim ACTOR_SENIOR_COURT_B_EMILY, ANIM_NOD ; $5757
+	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $575e
 	script_wait_frames 30 ; $5763
-	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_EMILY ; $576a
-	script_set_anim ACTOR_SENIOR_COURT_EMILY, ANIM_NOD ; $5772
-	script_wait_idle ACTOR_SENIOR_COURT_EMILY ; $5779
+	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_B_EMILY ; $576a
+	script_set_anim ACTOR_SENIOR_COURT_B_EMILY, ANIM_NOD ; $5772
+	script_wait_idle ACTOR_SENIOR_COURT_B_EMILY ; $5779
 	script_unlock_facing ACTOR_PLAYER ; $577e
 	script_face ACTOR_PLAYER, FACE_UP ; $5785
 	script_set_text Text_EmilyPartnerIsMyStudent ; $578c
-	set_flag FLAG_SENIOR_COURT_NPC03_TURNED ; $5792
+	set_flag FLAG_SENIOR_COURT_PARTNER_INTRO_DONE ; $5792
 	ld a, [wStoryPartnerGender] ; $5795
 	or a ; $5798
 	jr nz, .speak ; $5799
 	script_set_text Text_EmilyThatsWhyPartners ; $579b
 .speak:
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $57a1
-	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $57a6
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $57ae
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $57a1
+	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_B_EMILY ; $57a6
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $57ae
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $57b3
 	script_wait_idle ACTOR_PARTNER ; $57ba
 	script_speak ACTOR_PARTNER ; $57bf
@@ -208,20 +208,20 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_set_speed ACTOR_PARTNER, 0.75 ; $57cc
 	script_move_target ACTOR_PARTNER, 43.0, 27.0 ; $57d4
 	script_wait_move ACTOR_PARTNER ; $57df
-	script_face_toward ACTOR_SENIOR_COURT_EMILY, ACTOR_PARTNER ; $57e4
-	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_EMILY ; $57ec
-.setText:
+	script_face_toward ACTOR_SENIOR_COURT_B_EMILY, ACTOR_PARTNER ; $57e4
+	script_face_toward ACTOR_PARTNER, ACTOR_SENIOR_COURT_B_EMILY ; $57ec
+.introDone:
 	script_set_text Text_EmilyCantWaitToSeeDoubles ; $57f4
-	script_speak ACTOR_SENIOR_COURT_EMILY ; $57fa
+	script_speak ACTOR_SENIOR_COURT_B_EMILY ; $57fa
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $57ff
 	script_set_anim ACTOR_PARTNER, ANIM_NOD ; $5806
 	script_wait_idle ACTOR_PARTNER ; $580d
 	script_follow ACTOR_PARTNER, ACTOR_PLAYER ; $5812
 	ret ; $581f
-SeniorCourtNpc04_12:
+SeniorCourtNpc04Fay_12:
 	ld a, [wMapSceneStage2] ; $5820
 	add a ; $5823
-	ld_hl_indexed SeniorCourtNpc04TextIds ; $5824
+	ld_hl_indexed SeniorCourtNpc04FayTextIds ; $5824
 	ld a, [hl+] ; $582b
 	ld h, [hl] ; $582c
 	ld l, a ; $582d
@@ -237,7 +237,7 @@ SeniorCourtNpc04_12:
 	jr c, .done ; $5844
 .done:
 	ret ; $5846
-SeniorCourtNpc04TextIds:
+SeniorCourtNpc04FayTextIds:
 	; $5847, 18 bytes (text_ids)
 	dw Text_FaySeniorBaselinePlay ; record 0
 	dw Text_FaySeniorBaselinePlay ; record 1
@@ -248,10 +248,10 @@ SeniorCourtNpc04TextIds:
 	dw Text_FaySeniorDoublesChamps ; record 6
 	dw Text_FaySeniorDoublesChamps ; record 7
 	dw Text_FaySeniorDoublesNewTeamSecond ; record 8
-SeniorCourtNpc05_12:
+SeniorCourtNpc05Allie_12:
 	ld a, [wMapSceneStage2] ; $5859
 	add a ; $585c
-	ld_hl_indexed SeniorCourtNpc05TextIds_12 ; $585d
+	ld_hl_indexed SeniorCourtNpc05AllieTextIds_12 ; $585d
 	ld a, [hl+] ; $5864
 	ld h, [hl] ; $5865
 	ld l, a ; $5866
@@ -270,9 +270,9 @@ SeniorCourtNpc05_12:
 	jr z, .speak ; $588a
 	farcall AdvanceDialogueTextCursor ; $588c
 .speak:
-	script_speak ACTOR_SENIOR_COURT_ALLIE ; $588f
+	script_speak ACTOR_SENIOR_COURT_A_ALLIE ; $588f
 	ret ; $5894
-SeniorCourtNpc05TextIds_12:
+SeniorCourtNpc05AllieTextIds_12:
 	; $5895, 30 bytes (text_ids)
 	table_width 2
 	dw Text_AllieSeniorPartnerIsChamp ; record 0
@@ -291,10 +291,10 @@ SeniorCourtNpc05TextIds_12:
 	dw Text_AllieSeniorEmilyBestCoach ; record 13
 	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc06_12:
+SeniorCourtNpc06Joy_12:
 	ld a, [wMapSceneStage2] ; $58b3
 	add a ; $58b6
-	ld_hl_indexed SeniorCourtNpc06TextIds_12 ; $58b7
+	ld_hl_indexed SeniorCourtNpc06JoyTextIds_12 ; $58b7
 	ld a, [hl+] ; $58be
 	ld h, [hl] ; $58bf
 	ld l, a ; $58c0
@@ -319,7 +319,7 @@ SeniorCourtNpc06_12:
 .speak:
 	script_speak ACTOR_SENIOR_COURT_B_JOY ; $58f2
 	ret ; $58f7
-SeniorCourtNpc06TextIds_12:
+SeniorCourtNpc06JoyTextIds_12:
 	; $58f8, 30 bytes (text_ids)
 	table_width 2
 	dw Text_JoySeniorDoubleVsSingleHanded ; record 0
@@ -338,17 +338,17 @@ SeniorCourtNpc06TextIds_12:
 	dw Text_JoySeniorGladYouWonOpen ; record 13
 	dw Text_JoySeniorYouTwoOpenChamps ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc07_12:
+SeniorCourtNpc07Brian_12:
 	ld a, [wMapSceneStage2] ; $5916
 	add a ; $5919
-	ld_hl_indexed SeniorCourtNpc07TextIds ; $591a
+	ld_hl_indexed SeniorCourtNpc07BrianTextIds ; $591a
 	ld a, [hl+] ; $5921
 	ld h, [hl] ; $5922
 	ld l, a ; $5923
 	farcall InitDialogueTextCursor ; $5924
 	script_speak ACTOR_SENIOR_COURT_BRIAN ; $5927
 	ret ; $592c
-SeniorCourtNpc07TextIds:
+SeniorCourtNpc07BrianTextIds:
 	; $592d, 30 bytes (text_ids)
 	table_width 2
 	dw Text_BrianSeniorSliceKeepsMeFourth ; record 0
@@ -367,10 +367,10 @@ SeniorCourtNpc07TextIds:
 	dw Text_BrianSeniorEmilyDidWell ; record 13
 	dw Text_BrianSeniorChampsPointers ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc08_12:
+SeniorCourtNpc08Beth_12:
 	apcall ApSeniorBethStage
 	add a ; $594e
-	ld_hl_indexed SeniorCourtNpc08TextIds ; $594f
+	ld_hl_indexed SeniorCourtNpc08BethTextIds ; $594f
 	ld a, [hl+] ; $5956
 	ld h, [hl] ; $5957
 	ld l, a ; $5958
@@ -391,29 +391,29 @@ SeniorCourtNpc08_12:
 	script_wait_frames 5 ; $5984
 	and a ; $598b
 	jr z, .confirmPractice ; $598c
-	script_speak ACTOR_SENIOR_COURT_BETH ; $598e
+	script_speak ACTOR_SENIOR_COURT_A_BETH ; $598e
 	ret ; $5993
 .confirmPractice:
 	farcall AdvanceDialogueTextCursor ; $5994
-	script_set_anim ACTOR_SENIOR_COURT_BETH, ANIM_BOUNCE ; $5997
-	script_wait_idle ACTOR_SENIOR_COURT_BETH ; $599e
+	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_BOUNCE ; $5997
+	script_wait_idle ACTOR_SENIOR_COURT_A_BETH ; $599e
 	script_speak_restore ACTOR_SENIOR_COURT_A_BETH ; $59a3
 	farcall RunDialogueYesNoPrompt ; $59a8
 	farcall ScriptCloseDialogueWindow ; $59ab
 	script_wait_frames 5 ; $59ae
 	and a ; $59b5
 	jr z, .playPracticeMatch ; $59b6
-	script_speak ACTOR_SENIOR_COURT_BETH ; $59b8
+	script_speak ACTOR_SENIOR_COURT_A_BETH ; $59b8
 	ret ; $59bd
 .playPracticeMatch:
 	script_wait_frames 10 ; $59be
 	script_set_actor_script ACTOR_PLAYER, ActorScript_12_50 ; $59c5
-	script_move_target ACTOR_SENIOR_COURT_BETH, 12.0, 21.0 ; $59d0
-	script_wait_move ACTOR_SENIOR_COURT_BETH ; $59db
-	script_set_actor_script ACTOR_SENIOR_COURT_BETH, ActorScript_12_49 ; $59e0
+	script_move_target ACTOR_SENIOR_COURT_A_BETH, 12.0, 21.0 ; $59d0
+	script_wait_move ACTOR_SENIOR_COURT_A_BETH ; $59db
+	script_set_actor_script ACTOR_SENIOR_COURT_A_BETH, ActorScript_12_49 ; $59e0
 	script_move_player 10.0, 17.0 ; $59eb
 	farcall WaitPlayerMoveDone ; $59f5
-	script_wait_actor_script ACTOR_SENIOR_COURT_BETH ; $59f8
+	script_wait_actor_script ACTOR_SENIOR_COURT_A_BETH ; $59f8
 	ld hl, wStoryModePlayersXPosition ; $59fd
 	ld de, wStoryModeSpawnPosition ; $5a00
 	ld bc, wStoryModeSpawnPosition_SIZE ; $5a03
@@ -427,7 +427,7 @@ SeniorCourtNpc08_12:
 	farcall RunStoryMatch ; $5a24
 	farcall RestoreOverworldAfterMatch ; $5a27
 	ret ; $5a2a
-SeniorCourtNpc08TextIds:
+SeniorCourtNpc08BethTextIds:
 	; $5a2b, 30 bytes (text_ids)
 	table_width 2
 	dw Text_BethSeniorMoveFeetForServe ; record 0
@@ -446,10 +446,10 @@ SeniorCourtNpc08TextIds:
 	dw Text_BethSeniorFocusNextOpen ; record 13
 	dw Text_BethSeniorBelieveInEachOther ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc09_12:
+SeniorCourtNpc09Curt_12:
 	ld a, [wMapSceneStage2] ; $5a49
 	add a ; $5a4c
-	ld_hl_indexed SeniorCourtNpc09TextIds ; $5a4d
+	ld_hl_indexed SeniorCourtNpc09CurtTextIds ; $5a4d
 	ld a, [hl+] ; $5a54
 	ld h, [hl] ; $5a55
 	ld l, a ; $5a56
@@ -461,7 +461,7 @@ SeniorCourtNpc09_12:
 .speak:
 	script_speak ACTOR_ROLE_SENIOR_COURT_CURT ; $5a68
 	ret ; $5a6d
-SeniorCourtNpc09TextIds:
+SeniorCourtNpc09CurtTextIds:
 	; $5a6e, 30 bytes (text_ids)
 	table_width 2
 	dw Text_CurtSeniorRhythmToToss ; record 0
@@ -480,10 +480,10 @@ SeniorCourtNpc09TextIds:
 	dw Text_CurtSeniorWhatPlayWins ; record 13
 	dw Text_CurtSeniorNeverGiveUpChamps ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc0A_12:
+SeniorCourtNpc0ABob_12:
 	apcall ApSeniorBobStage
 	add a ; $5a8f
-	ld_hl_indexed SeniorCourtNpc0ATextIds ; $5a90
+	ld_hl_indexed SeniorCourtNpc0ABobTextIds ; $5a90
 	ld a, [hl+] ; $5a97
 	ld h, [hl] ; $5a98
 	ld l, a ; $5a99
@@ -543,7 +543,7 @@ SeniorCourtNpc0A_12:
 	farcall RunStoryMatch ; $5b6e
 	farcall RestoreOverworldAfterMatch ; $5b71
 	ret ; $5b74
-SeniorCourtNpc0ATextIds:
+SeniorCourtNpc0ABobTextIds:
 	; $5b75, 30 bytes (text_ids)
 	table_width 2
 	dw Text_BobSeniorWorstWantRankings ; record 0
@@ -562,10 +562,10 @@ SeniorCourtNpc0ATextIds:
 	dw Text_BobSeniorMastersFromEffort ; record 13
 	dw Text_BobSeniorAlwaysHitToPartner ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc0B_12:
+SeniorCourtNpc0BPam_12:
 	ld a, [wMapSceneStage2] ; $5b93
 	add a ; $5b96
-	ld_hl_indexed SeniorCourtNpc0BTextIds ; $5b97
+	ld_hl_indexed SeniorCourtNpc0BPamTextIds ; $5b97
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
 	ld l, a ; $5ba0
@@ -582,7 +582,7 @@ SeniorCourtNpc0B_12:
 .speak:
 	script_speak ACTOR_ROLE_SENIOR_COURT_PAM ; $5bb9
 	ret ; $5bbe
-SeniorCourtNpc0BTextIds:
+SeniorCourtNpc0BPamTextIds:
 	; $5bbf, 30 bytes (text_ids)
 	table_width 2
 	dw Text_PamSeniorKeepOffCourt ; record 0
@@ -601,30 +601,30 @@ SeniorCourtNpc0BTextIds:
 	dw Text_PamSeniorMostUsedRacket ; record 13
 	dw Text_PamSeniorJealousPartnerSameLevel ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc0C_12:
+SeniorCourtNpc0CRoommate_12:
 	ld a, [wStoryPartnerGender] ; $5bdd
 	or a ; $5be0
 	jr nz, .partnerFemale ; $5be1
 	ld a, [wMapSceneStage2] ; $5be3
 	add a ; $5be6
-	ld_hl_indexed SeniorCourtNpc0C_12Table ; $5be7
+	ld_hl_indexed SeniorCourtNpc0CRoommateHarryTextIds ; $5be7
 	ld a, [hl+] ; $5bee
 	ld h, [hl] ; $5bef
 	ld l, a ; $5bf0
 	farcall InitDialogueTextCursor ; $5bf1
-	script_speak ACTOR_SENIOR_COURT_KATE ; $5bf4
+	script_speak ACTOR_SENIOR_COURT_ROOMMATE ; $5bf4
 	ret ; $5bf9
 .partnerFemale:
 	ld a, [wMapSceneStage2] ; $5bfa
 	add a ; $5bfd
-	ld_hl_indexed SeniorCourtNpc0CTextIds ; $5bfe
+	ld_hl_indexed SeniorCourtNpc0CRoommateKateTextIds ; $5bfe
 	ld a, [hl+] ; $5c05
 	ld h, [hl] ; $5c06
 	ld l, a ; $5c07
 	farcall InitDialogueTextCursor ; $5c08
-	script_speak ACTOR_SENIOR_COURT_KATE ; $5c0b
+	script_speak ACTOR_SENIOR_COURT_ROOMMATE ; $5c0b
 	ret ; $5c10
-SeniorCourtNpc0CTextIds:
+SeniorCourtNpc0CRoommateKateTextIds:
 	; $5c11, 30 bytes (text_ids)
 	table_width 2
 	dw Text_KateSeniorSingleHandedRange ; record 0
@@ -639,55 +639,55 @@ SeniorCourtNpc0CTextIds:
 	dw Text_KateSeniorWorkOnDoubles ; record 9
 	dw Text_SeniorStandInCoachEmilyAway ; record 10
 	dw Text_KateSeniorRootingForYou ; record 11
-	dw Text_KateSeniorJealousPartnerNoBetter ; record 12
+	dw Text_PamSeniorJealousPartnerNoBetter ; record 12
 	dw Text_KateSeniorPartnerIsOpenChamp ; record 13
 	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
-SeniorCourtNpc0C_12Table:
+SeniorCourtNpc0CRoommateHarryTextIds:
 	; $5c2f, 30 bytes (text_ids)
 	table_width 2
-	dw Text_KateSeniorSingleHandedRangeAlt ; record 0
-	dw Text_KateSeniorSingleHandedRangeAlt ; record 1
-	dw Text_KateSeniorKeepAtItRankings ; record 2
-	dw Text_KateSeniorYouBeatMeToRankings ; record 3
-	dw Text_KateSeniorYouBeatMeToRankings ; record 4
-	dw Text_KateSeniorYouBeatMeToRankings ; record 5
+	dw Text_HarrySeniorSingleHandedRange ; record 0
+	dw Text_HarrySeniorSingleHandedRange ; record 1
+	dw Text_HarrySeniorKeepAtItRankings ; record 2
+	dw Text_HarrySeniorYouBeatMeToRankings ; record 3
+	dw Text_HarrySeniorYouBeatMeToRankings ; record 4
+	dw Text_HarrySeniorYouBeatMeToRankings ; record 5
 	dw Text_BobSeniorAlwaysUnranked ; record 6
 	dw Text_EmilyOfferDoublesRanking ; record 7
 	dw Text_EmilyOfferDoublesRanking ; record 8
-	dw Text_KateSeniorFocusOnDoubles ; record 9
+	dw Text_HarrySeniorFocusOnDoubles ; record 9
 	dw Text_SeniorStandInCoachEmilyAway ; record 10
-	dw Text_KateSeniorWhoCaresRootingForYou ; record 11
-	dw Text_KateSeniorJealousPartnerNoBetter ; record 12
-	dw Text_KateSeniorLuckyChampPartner ; record 13
+	dw Text_HarrySeniorWhoCaresRootingForYou ; record 11
+	dw Text_PamSeniorJealousPartnerNoBetter ; record 12
+	dw Text_HarrySeniorLuckyChampPartner ; record 13
 	dw Text_SeniorEveryoneHasGoals ; record 14
 	assert_table_length NUM_SENIORCOURTSTAGES
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0840, SeniorCourtNpc03FaceUpFlag0840_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0000, SeniorCourtNpc03FaceUpFlag0000_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_ANY, $0000, SeniorCourtNpc03_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_FAY, FACEMASK_ANY, $0000, SeniorCourtNpc04_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_ALLIE, FACEMASK_ANY, $0000, SeniorCourtNpc05_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, $08a0, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, $0000, SeniorCourtNpc06_12, NPC_FACE_PLAYER | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $08a0, SeniorCourtNpc07_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
-	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $0000, SeniorCourtNpc07_12, NPC_FACE_PLAYER, $00
-	map_script ACTOR_SENIOR_COURT_BETH, FACEMASK_ANY, $0000, SeniorCourtNpc08_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_CURT, FACEMASK_ANY, $0000, SeniorCourtNpc09_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_BOB, FACEMASK_ANY, $0000, SeniorCourtNpc0A_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
-	map_script ACTOR_ROLE_SENIOR_COURT_PAM, FACEMASK_ANY, $0000, SeniorCourtNpc0B_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
-	map_script ACTOR_SENIOR_COURT_KATE, FACEMASK_ANY, $0000, SeniorCourtNpc0C_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_RIGHT, FLAG_WON_JUNIOR_DOUBLES_RANK_1, SeniorCourtNpc03EmilyFaceRight_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, FLAG_WON_JUNIOR_DOUBLES_RANK_1, SeniorCourtNpc03EmilyFaceUpPartnerIntro_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_UP, $0000, SeniorCourtNpc03EmilyFaceUp_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_EMILY, FACEMASK_ANY, $0000, SeniorCourtNpc03Emily_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_FAY, FACEMASK_ANY, $0000, SeniorCourtNpc04Fay_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_SENIOR_COURT_ALLIE, FACEMASK_ANY, $0000, SeniorCourtNpc05Allie_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, FLAG_WON_SENIOR_DOUBLES_RANK_2, SeniorCourtNpc06Joy_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_JOY, FACEMASK_ANY, $0000, SeniorCourtNpc06Joy_12, NPC_FACE_PLAYER | NPC_FREEZE, $00
+	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, FLAG_WON_SENIOR_DOUBLES_RANK_2, SeniorCourtNpc07Brian_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING, $00
+	map_script ACTOR_SENIOR_COURT_BRIAN, FACEMASK_ANY, $0000, SeniorCourtNpc07Brian_12, NPC_FACE_PLAYER, $00
+	map_script ACTOR_SENIOR_COURT_BETH, FACEMASK_ANY, $0000, SeniorCourtNpc08Beth_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_CURT, FACEMASK_ANY, $0000, SeniorCourtNpc09Curt_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_BOB, FACEMASK_ANY, $0000, SeniorCourtNpc0ABob_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
+	map_script ACTOR_ROLE_SENIOR_COURT_PAM, FACEMASK_ANY, $0000, SeniorCourtNpc0BPam_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_IDLE_ANIM | NPC_FREEZE, $00
+	map_script ACTOR_SENIOR_COURT_ROOMMATE, FACEMASK_ANY, $0000, SeniorCourtNpc0CRoommate_12, NPC_FACE_PLAYER | NPC_RESTORE_FACING | NPC_FREEZE, $00
 	db $ff
 SeniorCourtFacingScripts_12:
-	ds 1, $ff ; $5cc6, fill
+	db $ff ; $5cc6
 SeniorCourtTileTriggers_12:
 	; $5cc7, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0f80, SeniorCourtTile01_12, $00, $00
+	map_script $01, FACEMASK_ANY, FLAG_SENIOR_COURT_BOB_PAM_BLOCKING, SeniorCourtBobPamBlockCourt_12, $00, $00
 	db $ff
-SeniorCourtTile01_12:
-	set_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5cd0
+SeniorCourtBobPamBlockCourt_12:
+	set_flag FLAG_SENIOR_COURT_BOB_PAM_BLOCKING ; $5cd0
 	script_null_script ACTOR_ROLE_SENIOR_COURT_BOB ; $5cd3
 	script_null_script ACTOR_ROLE_SENIOR_COURT_PAM ; $5cd8
 	script_set_anim ACTOR_ROLE_SENIOR_COURT_BOB, ANIM_WALK ; $5cdd
@@ -704,7 +704,7 @@ SeniorCourtInitScript_12:
 	call ComputeSeniorCourtStage ; $5d1f
 	ld a, [wMapSceneStage2] ; $5d22
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5d25
-	jr nc, .fromMatch ; $5d27
+	jr nc, .respawnActors ; $5d27
 	ld b, $00 ; $5d29
 	ld c, $2a ; $5d2b
 	ld d, $10 ; $5d2d
@@ -712,8 +712,8 @@ SeniorCourtInitScript_12:
 	ld h, $08 ; $5d31
 	ld l, $0e ; $5d33
 	farcall CopyBehaviorMapRect ; $5d35
-	test_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5d38
-	jr z, .fromMatch ; $5d3b
+	test_flag FLAG_SENIOR_COURT_BOB_PAM_BLOCKING ; $5d38
+	jr z, .respawnActors ; $5d3b
 	script_null_script ACTOR_SENIOR_COURT_BOB ; $5d3d
 	script_null_script ACTOR_SENIOR_COURT_PAM ; $5d42
 	script_set_anim ACTOR_SENIOR_COURT_BOB, ANIM_WALK ; $5d47
@@ -722,7 +722,7 @@ SeniorCourtInitScript_12:
 	script_set_position ACTOR_SENIOR_COURT_PAM, 20.0, 15.0 ; $5d60
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_BOB ; $5d6b
 	script_face_toward ACTOR_PLAYER, ACTOR_SENIOR_COURT_PAM ; $5d73
-.fromMatch:
+.respawnActors:
 	test_flag FLAG_DOUBLES ; $5d7b
 	jr nz, .doubles ; $5d7e
 	ap_pass AP_ARC_SINGLES, 1
@@ -773,17 +773,17 @@ SeniorCourtPositionActorsByProgressB:
 	cp SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $5df7
 	jr c, .done ; $5df9
 	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, 63.0, 63.0 ; $5dfb
-	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 63.0, 63.0 ; $5e06
+	script_set_position ACTOR_SENIOR_COURT_B_ALLIE, 63.0, 63.0 ; $5e06
 	ret ; $5e11
 SeniorCourtPositionActorsByProgressA:
 	test_flag FLAG_DOUBLES ; $5e12
 	jr nz, .isDoubles ; $5e15
 	ld a, [wMapSceneStage2] ; $5e17
 	cp SENIORCOURTSTAGE_SINGLES_RANK3 ; $5e1a
-	jr c, .checkStage9 ; $5e1c
+	jr c, .checkSinglesChamp ; $5e1c
 	script_set_position ACTOR_SENIOR_COURT_A_BRIAN, 27.0, 13.0 ; $5e1e
 	script_face ACTOR_SENIOR_COURT_A_BRIAN, FACE_LEFT ; $5e29
-.checkStage9:
+.checkSinglesChamp:
 	ld a, [wMapSceneStage2] ; $5e30
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5e33
 	jr c, .done ; $5e35
@@ -792,19 +792,19 @@ SeniorCourtPositionActorsByProgressA:
 .isDoubles:
 	ld a, [wMapSceneStage2] ; $5e38
 	cp SENIORCOURTSTAGE_DOUBLES_RANK2 ; $5e3b
-	jr c, .checkStage10 ; $5e3d
+	jr c, .checkDoublesChamp ; $5e3d
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5e3f
-	jr nc, .checkStage10 ; $5e41
-	script_set_position ACTOR_SENIOR_COURT_A_CURT, 27.0, 11.0 ; $5e43
-	script_set_position ACTOR_SENIOR_COURT_A_BETH, 27.0, 13.0 ; $5e4e
-	script_face ACTOR_SENIOR_COURT_A_CURT, FACE_LEFT ; $5e59
-	script_face ACTOR_SENIOR_COURT_A_BETH, FACE_LEFT ; $5e60
-	script_null_script ACTOR_SENIOR_COURT_A_BETH ; $5e67
-	script_set_anim ACTOR_SENIOR_COURT_A_BETH, ANIM_WALK ; $5e6c
-.checkStage10:
+	jr nc, .checkDoublesChamp ; $5e41
+	script_set_position ACTOR_SENIOR_COURT_B_CURT, 27.0, 11.0 ; $5e43
+	script_set_position ACTOR_SENIOR_COURT_B_BETH, 27.0, 13.0 ; $5e4e
+	script_face ACTOR_SENIOR_COURT_B_CURT, FACE_LEFT ; $5e59
+	script_face ACTOR_SENIOR_COURT_B_BETH, FACE_LEFT ; $5e60
+	script_null_script ACTOR_SENIOR_COURT_B_BETH ; $5e67
+	script_set_anim ACTOR_SENIOR_COURT_B_BETH, ANIM_WALK ; $5e6c
+.checkDoublesChamp:
 	ld a, [wMapSceneStage2] ; $5e73
 	cp SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $5e76
-	jr c, .checkStage9 ; $5e78
+	jr c, .checkSinglesChamp ; $5e78
 	script_set_position ACTOR_ROLE_SENIOR_COURT_FAY, 63.0, 63.0 ; $5e7a
-	script_set_position ACTOR_SENIOR_COURT_A_ALLIE, 63.0, 63.0 ; $5e85
+	script_set_position ACTOR_SENIOR_COURT_B_ALLIE, 63.0, 63.0 ; $5e85
 	ret ; $5e90

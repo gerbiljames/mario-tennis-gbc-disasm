@@ -33,38 +33,38 @@ EraseStorySlotSaveData:
 	cp $01 ; $4e4f
 	jr z, .slot1 ; $4e51
 	push de ; $4e53
-	ld de, SAVEFLAG_STORY_SLOT2_A ; $4e54
+	ld de, SAVEFLAG_STORY_SLOT2_MUSIC_MUTED ; $4e54
 	farcall ClearSaveFlag ; $4e57
 	pop de ; $4e5a
 	push de ; $4e5b
-	ld de, SAVEFLAG_STORY_SLOT2_B ; $4e5c
+	ld de, SAVEFLAG_STORY_SLOT2_COURT_VIEW ; $4e5c
 	farcall ClearSaveFlag ; $4e5f
 	pop de ; $4e62
 	jr .ok ; $4e63
 .slot0:
 	push de ; $4e65
-	ld de, SAVEFLAG_STORY_SLOT0_A ; $4e66
+	ld de, SAVEFLAG_STORY_SLOT0_MUSIC_MUTED ; $4e66
 	farcall ClearSaveFlag ; $4e69
 	pop de ; $4e6c
 	push de ; $4e6d
-	ld de, SAVEFLAG_STORY_SLOT0_B ; $4e6e
+	ld de, SAVEFLAG_STORY_SLOT0_COURT_VIEW ; $4e6e
 	farcall ClearSaveFlag ; $4e71
 	pop de ; $4e74
 	jr .ok ; $4e75
 .slot1:
 	push de ; $4e77
-	ld de, SAVEFLAG_STORY_SLOT1_A ; $4e78
+	ld de, SAVEFLAG_STORY_SLOT1_MUSIC_MUTED ; $4e78
 	farcall ClearSaveFlag ; $4e7b
 	pop de ; $4e7e
 	push de ; $4e7f
-	ld de, SAVEFLAG_STORY_SLOT1_B ; $4e80
+	ld de, SAVEFLAG_STORY_SLOT1_COURT_VIEW ; $4e80
 	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
 .ok:
 	ld a, [ApOptCameraMode]
 	and a
 	jr z, .cameraNormal
-	farcall SetStorySlotFlagB
+	farcall SetStorySlotCourtView
 .cameraNormal:
 	xor a ; $4e87
 	jr .done ; $4e88
@@ -240,14 +240,14 @@ ClearSaveBlockEntry:
 	pop de ; $4f7a
 	pop hl ; $4f7b
 	ret ; $4f7c
-ReinitSaveRamPreservingBlock6:
+ReinitSaveRamKeepingPreservedBlock:
 	push af ; $4f7d
 	push bc ; $4f7e
 	push de ; $4f7f
 	push hl ; $4f80
 	push_wram_bank WRAM_STAGING ; $4f81
 	ld hl, wDecompBuffer ; $4f8a
-	call ReadBlock6 ; $4f8d
+	call ReadPreservedBlock ; $4f8d
 	ld b, a ; $4f90
 	push bc ; $4f91
 	call EraseAndInitSaveRam ; $4f92
@@ -256,7 +256,7 @@ ReinitSaveRamPreservingBlock6:
 	cp $fe ; $4f97
 	jr z, .initAllMinigameRecordBlocks ; $4f99
 	ld hl, wDecompBuffer ; $4f9b
-	call WriteBlock6WithBackup ; $4f9e
+	call WritePreservedBlockWithBackup ; $4f9e
 .initAllMinigameRecordBlocks:
 	call InitAllMinigameRecordBlocks ; $4fa1
 	pop_wram_bank ; $4fa4
@@ -313,7 +313,7 @@ ReadExhibitionSaveBlock:
 	pop de ; $4ffb
 	pop bc ; $4ffc
 	ret ; $4ffd
-ClearSaveBlock11:
+ClearN64RecordsSaveBlock:
 	push bc ; $4ffe
 	push de ; $4fff
 	push hl ; $5000
@@ -441,7 +441,7 @@ UpdateMinigameRecord:
 	ld [hl+], a ; $50be
 	ld [hl], d ; $50bf
 	ld a, b ; $50c0
-	sub $02 ; $50c1
+	sub MGRECORD_BOO_BLAST ; $50c1
 	jr nc, .writeSlot0 ; $50c3
 	ld a, [wCurrentStorySlot] ; $50c5
 	jr .write ; $50c8
@@ -458,7 +458,7 @@ UpdateMinigameRecord:
 	or a ; $50d9
 	jr nz, .failed ; $50da
 	ld a, b ; $50dc
-	sub $02 ; $50dd
+	sub MGRECORD_BOO_BLAST ; $50dd
 	jr nc, .verifySlot0 ; $50df
 	ld a, [wCurrentStorySlot] ; $50e1
 	jr .verify ; $50e4
@@ -474,7 +474,7 @@ UpdateMinigameRecord:
 	or a ; $50f2
 	jr nz, .failed ; $50f3
 	ld a, b ; $50f5
-	sub $02 ; $50f6
+	sub MGRECORD_BOO_BLAST ; $50f6
 	jr nc, .backupSlot0 ; $50f8
 	ld a, [wCurrentStorySlot] ; $50fa
 	jr .writeBackup ; $50fd
@@ -491,7 +491,7 @@ UpdateMinigameRecord:
 	or a ; $510e
 	jr nz, .failed ; $510f
 	ld a, b ; $5111
-	sub $02 ; $5112
+	sub MGRECORD_BOO_BLAST ; $5112
 	jr nc, .backupVerifySlot0 ; $5114
 	ld a, [wCurrentStorySlot] ; $5116
 	jr .verifyBackup ; $5119

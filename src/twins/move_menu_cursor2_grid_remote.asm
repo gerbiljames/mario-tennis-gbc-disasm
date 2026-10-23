@@ -1,5 +1,6 @@
 ; Shared by Unused_16_MoveMenuCursor2GridRemote,
-; Unused_3e_MoveMenuCursor2GridRemote (banks $16, $3e).
+; Unused_3b_MoveMenuCursor2GridRemote, Unused_3e_MoveMenuCursor2GridRemote
+; (banks $16, $3b, $3e).
 
 {TWIN_LABEL}:
 	ld a, [wMenuCursor2X]
@@ -16,11 +17,11 @@
 	ldh a, [hLinkRemoteInput]
 	jr .haveInput
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf]
+	ldh a, [hLinkSentInput]
 .haveInput:
 	ld h, a
 	ld a, [wMenuCursorLockFlags]
-	and $02
+	and CURSORLOCKF_SECONDARY
 	ld a, h
 	jr nz, .checkLock
 	bit PADB_RIGHT, a
@@ -99,11 +100,11 @@
 	jr z, .checkUnlock
 	ld a, [wMenuCursorLockFlags]
 	ld b, a
-	and $02
+	and CURSORLOCKF_SECONDARY
 	jr nz, .compare
 	sound SFX_MENU_SELECT
 	ld a, b
-	or $02
+	or CURSORLOCKF_SECONDARY
 	ld [wMenuCursorLockFlags], a
 	jr .compare
 .checkUnlock:
@@ -112,14 +113,14 @@
 	sound SFX_MENU_CANCEL
 	ld a, [wMenuCursorLockFlags]
 	ld b, a
-	and $03
+	and CURSORLOCKF_PRIMARY | CURSORLOCKF_SECONDARY
 	ld a, b
 	jr nz, .clearLock
-	and $f5
-	or $08
+	and ~(CURSORLOCKF_SECONDARY | CURSORLOCKF_SECONDARY_CANCEL)
+	or CURSORLOCKF_SECONDARY_CANCEL
 	jr .storeLock
 .clearLock:
-	and $fd
+	and ~CURSORLOCKF_SECONDARY
 .storeLock:
 	ld [wMenuCursorLockFlags], a
 .compare:

@@ -93,7 +93,7 @@ the fixed build restores the header from the mirror and keeps every block.
 `AdvanceFrame` (ROM0, `$2631`) guards every frame with:
 
 ```
-        ldh a, [hLinkCounter]
+        ldh a, [hLinkRetryCount]
         or a
         jr z, .linkOk
         ldh a, [hLinkErrorFlags]
@@ -178,7 +178,7 @@ open question in `docs/story_mode.md`).
 cell `ReadCollisionMapCell` returns. No shipped collision map has a `$0b`
 cell, so the fix only shows on an edited map.
 
-### The white fade can never be selected
+### The packed fade curve can never be selected
 
 `UpdateFadeOut` and `UpdateFadeIn` share a tail that picks a palette-scaling
 method on bit 7 of `hFadeState`:
@@ -188,27 +188,27 @@ method on bit 7 of `hFadeState`:
         add a
         jr nc, .adjustBrightness ; -> AdjustColorsBrightness
         ld a, c / and $04
-        call z, Unused_00_ApplyWhiteFade
+        call z, Unused_00_ApplyPackedFade
 ```
 
 Of `hFadeState`'s five writers (`$1d28` stores `$01`, `$1d36` `$02`, `$1d97`
 and `$261e` `$00`), only `$1d1b` sets bit 7 — with `or $80`, inside
-`Unused_00_BeginWhiteFadeOut` (`$00:$1d0f`), which nothing references. So
-`Unused_00_ApplyWhiteFade` (`$00:$1dcc`) never runs despite a live `call z`:
+`Unused_00_BeginPackedFadeOut` (`$00:$1d0f`), which nothing references. So
+`Unused_00_ApplyPackedFade` (`$00:$1dcc`) never runs despite a live `call z`:
 a flag with no writer, like the link-error check.
 
 The live fade, `AdjustColorsBrightness`, adds a clamped delta to each
 component, fading through white (`docs/screens_and_ui.md` §6.3). The bank `$03`
-engine's live entry fades to grayscale, and its fade-to-black setup,
+engine's live entry fades to sepia, and its fade-to-black setup,
 `Unused_03_InitBlackPaletteFade`, is unreachable too
 (`docs/graphics_formats.md` §5.4).
 
-### `LoadMenuTilesBStaged` uploads palettes and code to VRAM as tiles
+### `LoadMenuFontTilesStaged` uploads palettes and code to VRAM as tiles
 
 Bank `$01` has two loaders for the same menu tile set. The plain one:
 
 ```
-LoadMenuTilesB:
+LoadMenuFontTiles_01:
         ld hl, MenuFontTiles_01     / ld de, vTiles2 tile $20 / ld c, $60 / call QueueVRAMCopy
         ld hl, MenuFontFillTiles_01 / ld de, vTiles1 / ld c, $60 / call QueueVRAMCopy
 ```
@@ -228,13 +228,18 @@ then does this as its fourth:
 `MenuFontPalettes_01` is a palette (`LoadMenuFontPalette` hands it to
 `LoadPaletteShadow`). The copy puts its 64 bytes plus 448 bytes of what follows
 at `$5050`-`$520f` (the bank's loaders, `CharObjPalettes_01` at `$50f6`, the
-start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuTilesBStaged`
+start of `Unused_01_JpWindowTiles` at `$51b0`, and `LoadMenuFontTilesStaged`
 itself) into VRAM `$8e00`-`$8fff`, tiles `$e0`-`$ff` of the `$8800` block.
 
 `MenuFontFillTiles_01` is never uploaded, so `$8800`-`$8dff` keeps whatever the
 previous screen left. The chunks go to `$9200`, `$9400`, `$9600`, then `$8e00`
 — the last of four slices that would have covered `$8800`-`$8fff`, with the
 first three missing and the survivor's source label wrong.
+
+Bank `$14` over-reads the same way: `LoadPlaneRearObjGfx_14` copies 96 tiles from
+the 64-tile `PlaneRearObjTiles_14`, and `LoadRainbowObjGfx_14` 48 from the
+12-tile `RainbowEndTiles_14`, putting templates, palettes, code and other tiles into object
+tiles `$40`-`$5f` (VRAM bank 1) and `$2c`-`$4f`.
 
 ### Fifteen drill messages point past their text bank
 
@@ -248,8 +253,8 @@ fetches from wherever that points: id 74 shows "ear.", 77 "this!", 80 "Empire
 team!", and the other twelve point into cartridge RAM at `$a788`-`$b692`. Bank
 `$26`'s strings 0-14 are never shown.
 
-The drills reach them. `QueueDrillResultMessage` (when
-`wCurrentServingPlayer` is nonzero) and `SetDrillMessageByServer` (when it is
+The drills reach them. `SetDrillServerMessage` (when
+`wCurrentServingPlayer` is nonzero) and `SetDrillReceiverMessage` (when it is
 zero) add an offset in `b` to the id, and Stroke Match 2 passes `b = 13` with
 ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes 64). Seen in PyBoy: id 74
 twice in six Stroke Match 2 sessions.
@@ -269,7 +274,7 @@ routine ends in an endless `AdvanceFrame` loop without touching the scroll.
 `LoadCompressedTileBlock` decompresses a stream and copies `c` tiles of the
 buffer to VRAM. The court-select screen (`$3e:$5d6e`-`$5dc8`) asks for 18 tiles
 of 16-tile streams (20 of Gfx4's 18), the minigame menu (`$3b:$63b9`) 18 of
-`SharedMenuGfx111`'s 16, and the intro (`$6b:$60b3`) 4 of `IntroGfx6`'s 2, so
+`QuestionMarksLabelGfx`'s 16, and the intro (`$6b:$60b3`) 4 of `IntroGfx6`'s 2, so
 each copy brings two stale tiles from the buffer. In the court-select chain
 later loads overwrite them except at `$50`-`$51`; the minigame menu leaves them
 at `$60`-`$61`, the intro at `$4a`-`$4b` (VRAM bank 1). Nothing draws those
@@ -296,7 +301,7 @@ screens nothing reaches. The short-text copy is reached only from
 `LoadMenuObjPalettes3To7` (`$01:$5188`), called once at boot (`$01:$4088`),
 hands `LoadPaletteShadow` the source `vTiles0 tile $7c + 8` (`$87c8`)
 for object palettes 3-7. That is VRAM; bank `$01` has no palette data at the
-matching ROM address (`$47c8` is inside `MenuTilesBStagedTiles0`). Its
+matching ROM address (`$47c8` is inside `MenuFontUppercaseTiles_01`). Its
 unreachable twin `Unused_01_LoadMenuBgPalettes3To7` does the same for
 background palettes 3-7.
 
@@ -304,6 +309,15 @@ It does no harm: the call comes on frame 71 with the LCD off, the 40 bytes it
 reads are zero, and the five palettes in `wOBJPalettes` and `wMasterPalettes`
 are already zero. Story screens load the real ones with `LoadStoryObjPalettes`
 (`$0a:$5337`, from `StoryObjPalettes`).
+
+### Two object-palette loads read past their block
+
+`LoadTennisDictionaryScreen` (`$3f:$43af`) loads eight object palettes from
+the 48-byte `TennisDictionaryPalettes`, so palettes 6-7 are the first 16 bytes
+of `EndTennisDictionaryAnim`'s code. `LoadWaterSpriteMinigameHudGfx`
+(`$15:$58ac`) loads two from the 8-byte `WaterSpriteHudPalette_15`, palette 1
+being its own first 8 bytes of code. `test_palette_loads_fit_their_block`
+pins both.
 
 ### The debug console's SELECT test has no branch
 
@@ -432,8 +446,8 @@ A full table still drops the new task silently, as it always did in effect.
 struct and should report whether the actor is active:
 
 ```
-        ld a, [hl]               ; the actor's activity byte, struct + $20
-        cp $00
+        ld a, [hl]               ; ACTORF_MODE, struct + $20
+        cp ACTORMODE_HIDDEN
         pop hl
         inc h                    ; <- clobbers Z
         dec h
@@ -445,16 +459,16 @@ pointer's high byte (`$d0`-`$d5`, or `$d0` for the out-of-range case, which
 uses `hl = wActors`), so the routine always returns NZ. The idiom is a guard on
 a caller-supplied `hl` elsewhere in the bank — `CheckActorScriptEnd`
 (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`, after an `xor a`) and
-`Unused_0a_SetActorMoveTarget` (`$0a:$4750`) open with it, and
+`Unused_0a_SetActorAnchor` (`$0a:$4750`) open with it, and
 `CheckActorScriptEnd` returns its own `cp $00` intact. Here it sits after the
 answer.
 
 Eleven call sites — `ScriptSetActorMoveSpeed` (`$433b`),
-`ScriptSetActorMoveTarget` (`$4408`), `SetActorActive` (`$472e`) and eight more
+`ScriptSetActorMoveTarget` (`$4408`), `ScriptSetActorMode` (`$472e`) and eight more
 — do `ret z` or `jr z, .done` right after the call. All those guards are dead,
 so the script engine writes into inactive actors' state. Nothing visible
 follows: the draw loop (`$04:$4aae`) calls `DrawAndAnimateActor` only when the
-activity byte is `$02`, so an inactive actor given a move target walks
+mode is `ACTORMODE_VISIBLE`, so an inactive actor given a move target walks
 invisibly and is re-initialised when it next spawns. An id of `$18` or more
 would alias the player via `wActors`, but the highest actor id any `script_*`
 command names is `$17` (`$15:$4f5e`).
@@ -480,7 +494,7 @@ frame the ball is in swing range (`$08:$6ebb`), loads the X half-width from
 .checkX:
 ```
 
-All four arms target `$6fed`, the fall-through. `CharRallyEndState`
+All four arms target `$6fed`, the fall-through. `CharFinishSwingPhase`
 (`$08:$6a90`) tests the same membership (`$05`, `$06`, `$07`, `$09`, `$0a`,
 `$0b`, `$12`) with a real body; the ids are swing animations (`$05`/`$06` are
 the forehand and backhand `$08:$6e58`/`$6e5e` select into `wCharSwingAnim`).
@@ -661,13 +675,24 @@ opcode; left as is.
 so the cursor `MeasureNextArgNumberWidth` reads the number queue at becomes the
 window's top row. `OpenSpeechBubble` zeroes the string and short-text measure
 cursors after its fit but not this one, and on a page break
-`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueRestoreBG` (`$598f`)
+`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueKeepOpen` (`$598f`)
 fit the next page without resetting it, so a `TX_ARG_NUMBER` on page 2 or later
 is measured from queue entry `row` (past the 16-entry queue for rows 16-31), not
 the next unread one, and the window is sized for the wrong digit count. Drawing
 uses the write cursor, so the printed number is right. One shipped message puts
 a number after a page break (`TextStrings_35.s412`, the game-over "Your
 score is N consecutive hits."). Left as is.
+
+### The results screens mirror the doubles partner by the wrong record
+
+`UpdateExpScreenCharSprite` (`$1e:$5954`) and `UpdateContinueGameCharSprite`
+(`$1e:$4aa8`) flip a character's sprite when its record is left-handed, and pick
+the record by `a` alone: `wPlayer1MainLeftHanded` for the main sprite,
+`wPlayer2MainLeftHanded` (`$5981`, `$4acb`) for the partner. The partner sprite
+is char struct 2, loaded from `wStoryPartner`, `wPlayer1Partner` or (link
+slave) `wPlayer2Partner`, the same records the partner name panel uses, so in
+doubles the partner faces by the opposing main character's handedness; on the
+link slave the main sprite reads player 1's record too. Left as is.
 
 ## Dead stores
 
@@ -712,7 +737,7 @@ shot-placement row (`CHARREC_SPEED_BONUS`).
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
 | `hLinkLastRxMirror` | serial init, bank `$07` | written beside `hLinkLastRxByte`, never compared |
 | `hUnusedLinkSelectByte` | bank `$38` | written twice by `RunLinkCharSelectScreen` |
-| `wCharSwingHoldFrames` | bank `$08` | `CheckSwingRelease` increments it once per windup frame (`ld hl, wCharSwingHoldFrames` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
+| `wCharSwingHoldFrames` | bank `$08` | `CheckSwingCancel` increments it once per windup frame (`ld hl, wCharSwingHoldFrames` / `inc [hl]`) and zeroes it on release; no site reads the count, so the charge mechanic it fed is gone |
 | `wCharSwingHoldButton` | bank `$08` | written on three paths beside the frame count, consumed on none |
 | `wCharWalkTargetFlag` | bank `$08` | zeroed immediately after each write of `wCharWalkTargetX`/`Depth`, at `$69bc` and `$7c82` |
 
@@ -752,7 +777,7 @@ have no consumer.
 
 ### `ProjectBooSprite` reads the hit-streak table and throws the value away
 
-`ProjectBooSprite` (`$0d:$5848`) indexes `MinigameHitStreakValueTable_0d` by
+`ProjectBooSprite` (`$0d:$5848`) indexes `BooBlastSpriteOamAttrByHitStreak` by
 `wMinigameHitStreak` (deliberately, via the split-base `ld_hl_indexed`), loads
 the entry into `b`, and overwrites it:
 
@@ -762,11 +787,19 @@ the entry into `b`, and overwrites it:
         ret
 ```
 
-The table holds `$0f, $0e ×6, $0d`, apparently a per-streak sprite tile (or
-size) flattened to the middle value. The eight bytes and the lookup have no
-effect.
+The table holds `$0f, $0e ×6, $0d`, a per-streak OAM attribute for
+`QueueSprite24x32` (palettes 7, 6, 5) flattened to the middle value. The eight bytes and the
+lookup have no effect.
 
-### `ObjectArrayBUpdateCallback_18` stores the wrong register
+### `ShowExpAwardOrContinueGameScreen` compares the game mode and never branches
+
+`ShowExpAwardOrContinueGameScreen` (`$1e:$400e`) sends the drill, Tennis Machine and wall
+modes to `.checkExpScreen` with `cp` / `jr z` pairs. The fourth,
+`cp GAMEMODE_MARIO_MINIGAME` (`$4020`), has no `jr`: the `test_flag
+FLAG_DOUBLES` after it replaces the flags, so the Mario minigame takes the
+doubles-layout path like a match.
+
+### `UpdateDreamMatchEpilogueConfettiPiece` stores the wrong register
 
 The two per-object movement callbacks in bank `$18` advance an animation nibble
 in object field `+$07` every 8 frames. Callback A does it correctly:
@@ -777,6 +810,17 @@ in object field `+$07` every 8 frames. Callback A does it correctly:
 
 Callback B ends the identical sequence with `ld [hl], d` (`$7ec4`), storing the
 new low nibble alone, so the field's high nibble is zeroed every time.
+
+### `SetActorAnimation` clears a match character's flip bits
+
+`SetActorAnimation` (`$04:$4bd6`) was copied from `SetCharAnimation`, which on a
+new animation clears the flip bits of `wCharSpriteAttr` (`and $0f`) for the
+`$fb` flip command to rebuild. The copy kept the absolute operand: it masks
+`$df37` in WRAM bank `$04`, on-court character 0's attribute byte, not the
+slot's `ACTORF_OAM_ATTR`, and `AdvanceActorAnimation` has no `$fb` command
+to need it. Outside a match nothing reads that byte; the one scene with both
+live, the unreachable character viewer (`$1a:$6f78`), sets the attribute after
+its `SetActorAnimationChecked` calls.
 
 ### The text interpreter's column-32 wrap is popped away
 
@@ -818,17 +862,17 @@ event code to that drill's `JudgePoint`:
 | `<Drill>JudgeOnPointEnd` | `<Drill>Hook_PointEnd` | 0 |
 | `<Drill>JudgeOnBallHit` | `<Drill>Hook_BallHit` | 1 |
 | `<Drill>JudgeOnBounce` | `<Drill>Hook_Bounce` | 2 |
-| `<Drill>JudgeOnRallyTick` | `<Drill>Hook_RallyTick` | 3 |
+| `<Drill>JudgeOnNetCross` | `<Drill>Hook_NetCross` | 3 |
 
 `JudgePoint` dispatches on `wRallyLength` and then on the event code, and
 returns early if `wDrillPointJudgement` is already set, so the first event to
 judge a point wins. Of the fifteen drills' 60 judges, 20 begin with `ret`:
 
-* 9 drills disable `JudgeOnRallyTick` only (`StrokeMatch1`-`3`,
+* 9 drills disable `JudgeOnNetCross` only (`StrokeMatch1`-`3`,
   `StrokePractice1`-`3`, `NetGamePractice1`-`3`);
-* 5 disable `JudgeOnBounce` and `JudgeOnRallyTick` (`ServiceMatch1`/`3`,
+* 5 disable `JudgeOnBounce` and `JudgeOnNetCross` (`ServiceMatch1`/`3`,
   `NetGameMatch1`/`2`/`3`);
-* 1 disables `JudgeOnBounce` while leaving `JudgeOnRallyTick` live
+* 1 disables `JudgeOnBounce` while leaving `JudgeOnNetCross` live
   (`ServiceMatch2`).
 
 No drill disables `JudgeOnPointEnd` or `JudgeOnBallHit`. The effect is a
@@ -844,14 +888,14 @@ are named for the body, with the leading `ret` recorded in the note:
 
 | routine | body |
 | --- | --- |
-| `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
-| `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
+| `NetGamePractice1JudgeOnNetCross` | the drill's fourth judge |
+| `StrokePractice1JudgeOnNetCross` | the drill's fourth judge |
 | `Unused_18_LoadFontTiles` | copies `FontTiles` to `$9000` |
 | `Unused_1b_LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
 | `Unused_02_CheckExpAwardAllowed` | the EXP-award gate — see below |
 | `Unused_05_PagedMenuFrameTask` | a frame task whose body has no effect |
 
-The 58 routines named `StubNop` (most of them `Unused_<bank>_StubNop*`) have a
+The routines named `StubNop` (most of them `Unused_<bank>_StubNop*`) have a
 bare `ret` for a body, which the name describes.
 
 `Unused_02_AddExpToMatchRecordChecked` calls `Unused_02_CheckExpAwardAllowed`
@@ -914,10 +958,10 @@ slot at `$4078`.
 `$03:$553b`-`$5669`, between `RestoreStoryBlockFromBackup`'s `ret` and
 `RepairAllSaveSlots`, holds **eight complete routines** with no way in: an
 earlier, hardcoded version of the live repair.
-`Unused_03_RestoreBlock06FromBackup` through `..._RestoreBlock0aFromBackup` are
-five copies of one routine with the block id baked in, flanked by
-`Unused_03_RestoreBlockOrClear`, `Unused_03_InvalidateBlockIfUnwritten` and
-`Unused_03_ClearBlockIfSet`. Their replacement, `RepairAllSaveSlots`
+`Unused_03_RestorePreservedBlockFromBackup` and `Unused_03_RestoreBlock07FromBackup`
+through `..._RestoreBlock0aFromBackup` are five copies of one routine with the block id baked in, flanked by
+`Unused_03_RestoreBlockOrClear`, `Unused_03_InvalidateBlockIfCorrupt` and
+`Unused_03_ResetBlockIfInvalid`. Their replacement, `RepairAllSaveSlots`
 (`$03:$5669`), calls `RestoreStoryBlockFromBackup` three times with `b` = 0, 2,
 4, and the callee derives the backup block with `ld a, $1b / add b`.
 
@@ -969,7 +1013,7 @@ state and match settings, enables the LCD, and at `.runMainMenu` (`$40a5`) sets
 Past that call, `.buildStampLoop` (`$40b2`-`$40eb`) prints the build stamp, sets
 `hDebugStepMode` to 3, sets the save flag on A and reruns the overworld on
 START, ending in `jp .buildStampLoop`. After it sits a **complete debug dispatcher**
-(`$01:$40ec` onward) that polls `hInputPressed`:
+(`$01:$40ec` onward) that polls `hInputRepeat`:
 
 | bit | button | what it runs |
 | --- | --- | --- |
@@ -977,7 +1021,7 @@ START, ending in `jp .buildStampLoop`. After it sits a **complete debug dispatch
 | 2 | SELECT | `Unused_01_RunSoundTest` |
 | 0 | A | `Unused_07_RunDebugTestMatch`, looping |
 | 1 | B | `RunMatch`, looping |
-| 6 | UP | two `ShowTournamentBracket` calls, then `RunMatchWinLoseScreen` looping over result ids |
+| 6 | UP | two `ShowVarsityTeamChart` calls, then `RunMatchWinLoseScreen` looping over result ids |
 | 7 | DOWN | `RunIntroCutscene` then `RunTitleScreen`, looping |
 | 4 | RIGHT | the overworld at `STORYLOC_TEST` |
 | 5 | LEFT | `Unused_1a_RunDebugCharViewer` |

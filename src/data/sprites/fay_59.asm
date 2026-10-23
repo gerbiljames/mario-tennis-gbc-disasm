@@ -332,106 +332,106 @@ Unused_59_FaySpriteFramesCopy:
 FayFramePlace:
 	INCLUDE "data/sprites/FayFramePlace.asm" ; $7ce0, 580 bytes (frame_place)
 FaySpriteAnims:
-	dw FaySpriteAnim00 ; $7f24
-	dw FaySpriteAnim01 ; $7f26
-	dw FaySpriteAnim02 ; $7f28
-	dw FaySpriteAnim03 ; $7f2a
-	dw FaySpriteAnim04 ; $7f2c
-	dw FaySpriteAnim05 ; $7f2e
-	dw FaySpriteAnim06 ; $7f30
-	dw FaySpriteAnim07 ; $7f32
-	dw FaySpriteAnim08 ; $7f34
-	dw FaySpriteAnim09 ; $7f36
-	dw FaySpriteAnim10 ; $7f38
-	dw FaySpriteAnim11 ; $7f3a
-	dw FaySpriteAnim12 ; $7f3c
-	dw FaySpriteAnim13 ; $7f3e
-	dw FaySpriteAnim14 ; $7f40
-	dw FaySpriteAnim15 ; $7f42
-	dw FaySpriteAnim16 ; $7f44
-	dw FaySpriteAnim17 ; $7f46
-	dw FaySpriteAnim18 ; $7f48
-FaySpriteAnim00:
+	dw FayStandAnim ; $7f24
+	dw FayIdleAnim ; $7f26
+	dw FayRunAnim ; $7f28
+	dw FayCelebrateAnim ; $7f2a
+	dw FayDejectedAnim ; $7f2c
+	dw FayForehandAnim ; $7f2e
+	dw FayBackhandAnim ; $7f30
+	dw FayOverheadAnim ; $7f32
+	dw FaySmashAnim ; $7f34
+	dw FayForehandQuickAnim ; $7f36
+	dw FayBackhandQuickAnim ; $7f38
+	dw FayOverheadQuickAnim ; $7f3a
+	dw FaySmashQuickAnim ; $7f3c
+	dw FayForehandReadyAnim ; $7f3e
+	dw FayBackhandReadyAnim ; $7f40
+	dw FayOverheadReadyAnim ; $7f42
+	dw FayServeReadyAnim ; $7f44
+	dw FayServePrepAnim ; $7f46
+	dw FayDiveAnim ; $7f48
+FayStandAnim:
 	; $7f4a, 3 bytes (sprite_anim)
 	anim_frame $00, ANIM_FOREVER
 	anim_hold $fd
-FaySpriteAnim01:
+FayIdleAnim:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, 12
 	anim_frame $04, 6
 	anim_frame $03, 12
 	anim_frame $04, 7
 	anim_loop $00
-FaySpriteAnim02:
+FayRunAnim:
 	; $7f57, 6 bytes (sprite_anim)
 	anim_frame $00, 10
 	anim_frame $01, 10
 	anim_loop $00
-FaySpriteAnim03:
+FayCelebrateAnim:
 	; $7f5d, 8 bytes (sprite_anim)
 	anim_frame $17, 15
 	anim_frame $18, 10
 	anim_frame $19, 30
 	anim_loop $00
-FaySpriteAnim04:
+FayDejectedAnim:
 	; $7f65, 8 bytes (sprite_anim)
 	anim_frame $1a, 30
 	anim_frame $1b, 15
 	anim_frame $1c, 15
 	anim_loop $02
-FaySpriteAnim05:
+FayForehandAnim:
 	; $7f6d, 6 bytes (sprite_anim)
 	anim_frame $06, 4
 	anim_frame $07, 23
 	anim_set CHARANIM_IDLE
-FaySpriteAnim06:
+FayBackhandAnim:
 	; $7f73, 6 bytes (sprite_anim)
 	anim_frame $09, 4
 	anim_frame $0a, 23
 	anim_set CHARANIM_IDLE
-FaySpriteAnim07:
+FayOverheadAnim:
 	; $7f79, 6 bytes (sprite_anim)
 	anim_frame $0c, 4
 	anim_frame $0d, 20
 	anim_set CHARANIM_IDLE
-FaySpriteAnim08:
+FaySmashAnim:
 	; $7f7f, 5 bytes (sprite_anim)
 	anim_frame $15, 4
 	anim_frame $16, 20
 	anim_hold $fd
-FaySpriteAnim09:
+FayForehandQuickAnim:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, 25
 	anim_set CHARANIM_IDLE
-FaySpriteAnim10:
+FayBackhandQuickAnim:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $09, 25
 	anim_set CHARANIM_IDLE
-FaySpriteAnim11:
+FayOverheadQuickAnim:
 	; $7f8c, 4 bytes (sprite_anim)
 	anim_frame $0c, 25
 	anim_set CHARANIM_IDLE
-FaySpriteAnim12:
+FaySmashQuickAnim:
 	; $7f90, 3 bytes (sprite_anim)
 	anim_frame $15, 24
 	anim_hold $fd
-FaySpriteAnim13:
+FayForehandReadyAnim:
 	; $7f93, 3 bytes (sprite_anim)
 	anim_frame $05, ANIM_FOREVER
 	anim_hold $fd
-FaySpriteAnim14:
+FayBackhandReadyAnim:
 	; $7f96, 3 bytes (sprite_anim)
 	anim_frame $08, ANIM_FOREVER
 	anim_hold $fd
-FaySpriteAnim15:
+FayOverheadReadyAnim:
 	; $7f99, 3 bytes (sprite_anim)
 	anim_frame $0b, ANIM_FOREVER
 	anim_hold $fd
-FaySpriteAnim16:
+FayServeReadyAnim:
 	; $7f9c, 3 bytes (sprite_anim)
 	anim_frame $0e, ANIM_FOREVER
 	anim_hold $fd
-FaySpriteAnim17:
+FayServePrepAnim:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, 7
 	anim_frame $10, 7
@@ -439,7 +439,7 @@ FaySpriteAnim17:
 	anim_frame $10, 7
 	anim_frame $0f, 7
 	anim_set CHARANIM_SERVE_READY
-FaySpriteAnim18:
+FayDiveAnim:
 	; $7fab, 8 bytes (sprite_anim)
 	anim_frame $11, 18
 	anim_frame $12, 20
