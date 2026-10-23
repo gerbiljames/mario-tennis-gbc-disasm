@@ -297,21 +297,21 @@ ReadCharLinkInput:
 ReadCharLinkMasterInput:
 	ldh a, [hLinkState] ; $7833
 	cp LINKSTATE_SLAVE ; $7835
-	jr z, ReadCharLinkSlaveInput.remoteLive ; $7837
+	jr z, ReadCharLinkSlaveInput.remoteInput ; $7837
 	cp LINKSTATE_MASTER ; $7839
-	jr z, ReadCharLinkSlaveInput.remoteBuffered ; $783b
+	jr z, ReadCharLinkSlaveInput.sentInput ; $783b
 	jr ReadCharPadInput ; $783d
 ReadCharLinkSlaveInput:
 	ldh a, [hLinkState] ; $783f
 	cp LINKSTATE_SLAVE ; $7841
-	jr z, .remoteBuffered ; $7843
+	jr z, .sentInput ; $7843
 	cp LINKSTATE_MASTER ; $7845
-	jr z, .remoteLive ; $7847
+	jr z, .remoteInput ; $7847
 	jr ReadCharPadInput ; $7849
-.remoteBuffered:
-	ldh a, [hLinkRemoteInputBuf] ; $784b
+.sentInput:
+	ldh a, [hLinkSentInput] ; $784b
 	jr .store ; $784d
-.remoteLive:
+.remoteInput:
 	ldh a, [hLinkRemoteInput] ; $784f
 .store:
 	ld [wCharInputBits], a ; $7851

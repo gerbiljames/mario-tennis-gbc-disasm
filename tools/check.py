@@ -1140,7 +1140,7 @@ _NOT_WRAM_ADDRESSES = {
 _SLOT_CONSUMERS = frozenset(
     "CopyDataFromBank DecompressDataFromBank FarCallVector Unused_00_FarQueueVRAMCopyIndexed "
     "Unused_00_FarVRAMDMAIndexed Unused_00_FarCopyMemoryFastIndexed Unused_00_FarCopyIndexed Unused_00_FarDecompressIndexed "
-    "Unused_00_FarReadPtrIndexed".split())
+    "Unused_00_CallFarVectorEntry".split())
 
 
 def _drop_unresolved(names, list_name, check, fail):

@@ -60,7 +60,7 @@ Unused_17_MoveMenuCursorGridRemote:
 	jr z, .asMaster ; $4213
 	call LinkErrorReset ; $4215
 .asMaster:
-	ldh a, [hLinkRemoteInputBuf] ; $4218
+	ldh a, [hLinkSentInput] ; $4218
 	jr .gotInput ; $421a
 .asSlave:
 	ldh a, [hLinkRemoteInput] ; $421c
@@ -197,7 +197,7 @@ Unused_17_MoveMenuCursor2GridRemote:
 	ldh a, [hLinkRemoteInput] ; $42e3
 	jr .gotInput ; $42e5
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf] ; $42e7
+	ldh a, [hLinkSentInput] ; $42e7
 .gotInput:
 	ld h, a ; $42e9
 	ld a, [wMenuCursorLockFlags] ; $42ea

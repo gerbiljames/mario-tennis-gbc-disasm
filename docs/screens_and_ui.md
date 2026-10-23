@@ -901,7 +901,7 @@ cursor moved; they differ only in input source and cursor pair:
 | `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `Unused_3b_MoveMenuCursorGridFromLinkInput` `$41a8` | `Unused_3b_MoveMenuCursorGridRemote` `$4225` | `Unused_3b_MoveMenuCursor2GridRemote` `$42f0` |
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `Unused_3e_MoveMenuCursorGridFromLinkInput` `$41b8` | `Unused_3e_MoveMenuCursorGridRemote` `$4235` | `Unused_3e_MoveMenuCursor2GridRemote` `$4300` |
 
-"Remote" variants pick `hLinkRemoteInputBuf` or `hLinkRemoteInput` at run time
+"Remote" variants pick `hLinkSentInput` or `hLinkRemoteInput` at run time
 on `hLinkState == $02` (e.g. `$38:$420d`, `$3b:$422d`); cursor-2 variants use
 `wMenuCursor2X`/`Y`.
 

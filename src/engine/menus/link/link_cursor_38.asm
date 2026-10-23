@@ -194,7 +194,7 @@ Unused_38_LinkCpuDifficultyDebugLoop:
 	push af ; $6b42
 	farcall RunLinkInputFrame ; $6b43
 	pop af ; $6b46
-	ldh a, [hLinkRemoteInputBuf] ; $6b47
+	ldh a, [hLinkSentInput] ; $6b47
 	ld [wMenuInputPressed], a ; $6b49
 	ld a, [wMenuInputPressed] ; $6b4c
 	xor PADF_BUTTONS ; $6b4f

@@ -708,7 +708,7 @@ HandleBallNetCrossing:
 	ld hl, $0058 ; $587c
 	add hl, de ; $587f
 	bit 7, h ; $5880
-	jr nz, .crossed ; $5882
+	jr nz, .popBack ; $5882
 	ld hl, wBallVelocityDepth ; $5884
 	ld a, [hl+] ; $5887
 	ld d, [hl] ; $5888
@@ -726,7 +726,7 @@ HandleBallNetCrossing:
 	ld [hl], d ; $58a1
 .done:
 	ret ; $58a2
-.crossed:
+.popBack:
 	ld hl, wBallVelocityDepth ; $58a3
 	ld a, [hl+] ; $58a6
 	ld d, [hl] ; $58a7

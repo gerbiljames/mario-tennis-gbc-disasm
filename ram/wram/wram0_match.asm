@@ -198,7 +198,7 @@ wCourtLimitX:: dw
 ; [16-bit] In-bounds depth limit, stored negated: $fb20 (-$4e0, the baseline) normally, $fd60 (-$2a0, the service line) while a serve is in flight. CheckBallOutOfBounds adds it to |wBallDepth| and sets bit 1 of the out mask on carry
 wCourtLimitDepth:: dw
 
-; [16-bit] Net height in ball-height units: $0060 in a match, $0000 in the netless solo minigames. When the ball crosses depth 0, HandleBallNetCrossing adds it to wBallHeight (negative is up); a non-negative sum means the ball clipped the net: sound $5a, bounce effect, wBallTouchedNetFlag set, depth position and velocity negated
+; [16-bit] Net height in ball-height units: $0060 in a match, $0000 in the netless solo minigames. When the ball crosses depth 0, HandleBallNetCrossing adds it to wBallHeight (negative is up); a non-negative sum means the ball clipped the net: SFX_NET_CORD, bounce effect, wBallTouchedNetFlag set, X velocity quartered, depth position negated, and the depth velocity negated and cut to 1/8 unless the ball met the top of the net (above $5a), where it keeps its sign at 1/4 and dribbles over
 wNetHeight:: dw
 
 ; [16-bit] Shot solver: distance along the aim line from the ball to depth $0140 past the net, (|wBallDepth| + $0140) / sin(wShotAimAngle), from ComputeShotTrajectory. Every court bank's ApplyBallTrajectory passes it to BallTrajEntryPtr6/4 as the starting trajectory-table row
@@ -304,7 +304,7 @@ wBallHitEvent:: db
 ; [8-bit] Character index (0-3) of the hitter, from wCharIndex in ExecuteShot. Selects the wCharacterN stat block (index * 8) when crediting an ace/winner, its low bit gives the point outcome's side sign, and the bank $0d minigames test it for player vs machine
 wLastShotCharIndex:: db
 
-; [8-bit] The hitter's wCharServeRole, from ExecuteShot. Read only by DetectServeReturnFault: on a point's second hit with the ball unbounced, role 1 (receiver) gives POINTOUTCOME_SERVE_VOLLEYED and any other role POINTOUTCOME_WRONG_RECEIVER
+; [8-bit] The hitter's wCharServeRole, from ExecuteShot. Read only by DetectServeReturnFault: on a point's second hit any role but SERVEROLE_RECEIVER gives POINTOUTCOME_WRONG_RECEIVER, and the receiver gives POINTOUTCOME_SERVE_VOLLEYED if the ball has not bounced
 wLastShotServeRole:: db
 
 ; [8-bit] Nonzero draws the ball sprite slot

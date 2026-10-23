@@ -129,7 +129,7 @@ Unused_38_MoveMenuCursor2GridRemote:
 	ldh a, [hLinkRemoteInput] ; $42e5
 	jr .gotInput ; $42e7
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf] ; $42e9
+	ldh a, [hLinkSentInput] ; $42e9
 .gotInput:
 	ld h, a ; $42eb
 	ld a, [wMenuCursorLockFlags] ; $42ec

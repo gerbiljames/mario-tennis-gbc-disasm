@@ -189,9 +189,9 @@ GetGfxSourcePtr:
 ScoreDigitGfxPtrs_09:
 	dw TennisCallDigitGfx_09, NumeralDigitGfx_09 ; $616d
 FirstScoreDigitGfxSource:
-	dw Player1TennisCallDigitGfx_09, Player1NumeralDigitGfx_09 ; $6171
+	dw FirstScoreTennisCallDigitGfx_09, FirstScoreNumeralDigitGfx_09 ; $6171
 SecondScoreDigitGfxSource:
-	dw Player2TennisCallDigitGfx_09, Player2NumeralDigitGfx_09 ; $6175
+	dw SecondScoreTennisCallDigitGfx_09, SecondScoreNumeralDigitGfx_09 ; $6175
 	ds ALIGN[4]
 TennisCallDigitGfx_09:
 	INCBIN "data/engine/match/TennisCallDigitGfx_09.bin" ; $6180, 384 bytes
@@ -199,17 +199,17 @@ TennisCallDigitGfx_09:
 NumeralDigitGfx_09:
 	INCBIN "data/engine/match/NumeralDigitGfx_09.bin" ; $6300, 576 bytes
 	ds ALIGN[4]
-Player1TennisCallDigitGfx_09:
-	INCBIN "data/engine/match/Player1TennisCallDigitGfx_09.bin" ; $6540, 320 bytes
+FirstScoreTennisCallDigitGfx_09:
+	INCBIN "data/engine/match/FirstScoreTennisCallDigitGfx_09.bin" ; $6540, 320 bytes
 	ds ALIGN[4]
-Player1NumeralDigitGfx_09:
-	INCBIN "data/engine/match/Player1NumeralDigitGfx_09.bin" ; $6680, 512 bytes
+FirstScoreNumeralDigitGfx_09:
+	INCBIN "data/engine/match/FirstScoreNumeralDigitGfx_09.bin" ; $6680, 512 bytes
 	ds ALIGN[4]
-Player2TennisCallDigitGfx_09:
-	INCBIN "data/engine/match/Player2TennisCallDigitGfx_09.bin" ; $6880, 320 bytes
+SecondScoreTennisCallDigitGfx_09:
+	INCBIN "data/engine/match/SecondScoreTennisCallDigitGfx_09.bin" ; $6880, 320 bytes
 	ds ALIGN[4]
-Player2NumeralDigitGfx_09:
-	INCBIN "data/engine/match/Player2NumeralDigitGfx_09.bin" ; $69c0, 512 bytes
+SecondScoreNumeralDigitGfx_09:
+	INCBIN "data/engine/match/SecondScoreNumeralDigitGfx_09.bin" ; $69c0, 512 bytes
 	ds ALIGN[4]
 DeuceTiles:
 	INCBIN "data/engine/match/DeuceTiles.bin" ; $6bc0, 128 bytes
