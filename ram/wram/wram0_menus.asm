@@ -260,7 +260,7 @@ wDigitSpriteTileBase:: db
 ; [8-bit] OAM attribute DrawDigitSprite_39 queues digits with
 wDigitSpriteAttr:: db
 
-; [8-bit] Scene selector RunStorySceneByMode stores from c; each LookupScreen<N>AssetId indexes its Screen<N>AssetIdTable with it
+; [8-bit] Scene selector RunStorySceneByMode stores from c: (main gender << 1) | (main xor partner gender) for doubles, main gender + 4 for singles. LookupTravelingTeamVictoryAssetId, LookupAwardsCeremonyAssetId, LookupDreamMatchEpilogueAssetId and LookupChampionMedalAssetId index their *AssetIds tables with it
 wStorySceneAssetIndex:: db
 
 ; [16-bit] Rules/briefing screens: base text id of the minigame's rules pages, from MinigameRulesTextIdBases_17. Each page offset from the minigame's MinigameRulesPageLists_17 row is added to it and rendered with PrepareGlyphBuffer / RenderProportionalTextAt

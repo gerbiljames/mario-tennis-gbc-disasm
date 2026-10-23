@@ -408,7 +408,7 @@ DrawMinigameDataMugshotsScrolled:
 	push bc ; $7613
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7614
 	pop bc ; $7617
-	cp CHAR_UNUSED_15 ; $7618
+	cp CHAR_BALL_MACHINE ; $7618
 	jr nz, .unlocked ; $761a
 	push bc ; $761c
 	ld c, $09 ; $761d
@@ -434,7 +434,7 @@ DrawMinigameDataMugshotsStatic:
 	push bc ; $7641
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7642
 	pop bc ; $7645
-	cp CHAR_UNUSED_15 ; $7646
+	cp CHAR_BALL_MACHINE ; $7646
 	jr nz, .unlocked ; $7648
 	push bc ; $764a
 	ld c, $09 ; $764b

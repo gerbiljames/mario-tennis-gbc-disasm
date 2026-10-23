@@ -58,7 +58,7 @@ MinigameTargetZoneBounds:
 	db $50, $fe, $20, $fb, $b0, $01, $00, $00 ; 0x30
 MinigameConfig_ShootingStar:
 	; $5194, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
+	drill_def CHAR_BALL_MACHINE, COURT_SHOOTING_STAR, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_SHOOTING_STAR, BGM_TARGET_MINIGAMES, CHAR_LUIGI, MinigameHooks_ShootingStar, MinigamePointLayoutDuo, InitMinigame_ShootingStar
 	twin_named init_minigame_medallion_match, InitMinigame_ShootingStar ; $51a4
 MinigameHooks_ShootingStar:
 	; $51b6, 16 bytes (mode_hooks)

@@ -50,7 +50,7 @@ GetUnlockedMarioCastCharAtGridSlot:
 	ld a, [wMarioCastUnlockMask] ; $66cd
 	and b ; $66d0
 	jr nz, .unlocked ; $66d1
-	ld a, CHAR_UNUSED_15 ; $66d3
+	ld a, CHAR_BALL_MACHINE ; $66d3
 	ret ; $66d5
 .unlocked:
 	ld a, d ; $66d6
@@ -72,7 +72,7 @@ MarioCastCharAtGridSlotTable:
 CheckMinigameGridExpanded:
 	ld c, MARIOGAME_TREASURE_BOX ; $66f2
 	call GetUnlockedMarioCastCharAtGridSlot ; $66f4
-	cp CHAR_UNUSED_15 ; $66f7
+	cp CHAR_BALL_MACHINE ; $66f7
 	jr nz, .expanded ; $66f9
 	xor a ; $66fb
 	ret ; $66fc

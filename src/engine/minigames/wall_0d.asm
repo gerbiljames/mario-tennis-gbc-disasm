@@ -135,7 +135,7 @@ WallPractice4Hook_BallHit:
 	ret ; $4cd8
 MinigameConfig_TennisMachineHighScore:
 	; $4cd9, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachineHighScore, MinigamePointLayoutDuo, InitMinigame_TennisMachineHighScore
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_HIGH_SCORE, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachineHighScore, MinigamePointLayoutDuo, InitMinigame_TennisMachineHighScore
 InitMinigame_TennisMachineHighScore:
 	ld a, $01 ; $4ce9
 	ld [wMinigameUsesTennisMachine], a ; $4ceb
@@ -219,7 +219,7 @@ WallPracticeHighScoreHook_BallHit:
 	ret ; $4d8a
 MinigameConfig_TargetShot:
 	; $4d8b, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TARGET_SHOT, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TARGET_SHOT, BGM_TARGET_MINIGAMES, CHAR_BABY_MARIO, MinigameHooks_TargetShot, MinigamePointLayoutDuo, InitMinigame_TargetShot
+	drill_def CHAR_BALL_MACHINE, COURT_TARGET_SHOT, 2, GAMEMODE_MARIO_MINIGAME, MINIGAME_TARGET_SHOT, BGM_TARGET_MINIGAMES, CHAR_BABY_MARIO, MinigameHooks_TargetShot, MinigamePointLayoutDuo, InitMinigame_TargetShot
 	twin_named init_minigame_medallion_match, InitMinigame_TargetShot ; $4d9b
 MinigameHooks_TargetShot:
 	; $4dad, 16 bytes (mode_hooks)

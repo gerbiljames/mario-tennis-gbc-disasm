@@ -308,76 +308,32 @@ wGameFlags:: flag_array NUM_GAME_FLAGS
 NEXTU
 	ds 5
 
-; [8-bit] Singles/Doubles Indicator (Story & Exhibition Mode)
-;
-; 0x00 - Singles
-; 0x01 - Doubles
+; [8-bit] wGameFlags byte $05: mask $01 = FLAG_DOUBLES (0 singles, 1 doubles), mask $02 = FLAG_STORY_MENU_LOCKED
 wSinglesDoublesIndicator:: db
 
-; [Lower4] Story Mode - Match Completion Flags (1/6)
-;
-; Bit 0 - Doubles Island Open Round 1
-; Bit 1 - Doubles Island Open Semifinals
-; Bit 2 - Doubles Island Open Finals
-; Bit 3 - Doubles Dream Match
-wStoryModeMatchCompletionFlags1:: db
+; [8-bit] wGameFlags byte $06: FLAG_WON_ISLAND_OPEN_DOUBLES_*, FLAG_WON_DREAM_MATCH_DOUBLES, and the two *_PAUSE_*_MENU_OPEN bits
+wIslandOpenDoublesWinFlags:: db
 
-; [8-bit] Story Mode - Match Completion Flags (2/6)
-;
-; Bit 0 - Singles Island Open Round 1
-; Bit 1 - Singles Island Open Round 2
-; Bit 2 - Singles Island Open Semifinals
-; Bit 3 - Singles Island Open Finals
-; Bit 4 - Singles Dream Match
-wStoryModeMatchCompletionFlags2:: db
+; [8-bit] wGameFlags byte $07: FLAG_WON_ISLAND_OPEN_SINGLES_*, FLAG_WON_DREAM_MATCH_SINGLES
+wIslandOpenSinglesWinFlags:: db
 
-; [8-bit] Story Mode - Match Completion Flags (3/6)
-;
-; Bit 7 - Doubles Junior Rank 3
-; Bit 6 - Doubles Junior Rank 2
-; Bit 5 - Doubles Junior Rank 1
-; Bit 3 - Doubles Senior Rank 3
-; Bit 2 - Doubles Senior Rank 2
-; Bit 1 - Doubles Senior Rank 1
-wStoryModeMatchCompletionFlags3:: db
+; [8-bit] wGameFlags byte $08: FLAG_WON_JUNIOR_DOUBLES_RANK_* and FLAG_WON_SENIOR_DOUBLES_RANK_*
+wDoublesRankWinFlags:: db
 
-; [Upper4] Story Mode - Match Completion Flags (4/6)
-;
-; Bit 7 - Doubles Varsity Rank 2
-wStoryModeMatchCompletionFlags4:: db
+; [8-bit] wGameFlags byte $09: FLAG_WON_VARSITY_DOUBLES_RANK_2, FLAG_AT_ISLAND_OPEN
+wVarsityDoublesWinFlags:: db
 
-; [8-bit] Story Mode - Match Completion Flags (5/6)
-;
-; Bit 7 - Singles Junior Rank 4
-; Bit 6 - Singles Junior Rank 3
-; Bit 5 - Singles Junior Rank 2
-; Bit 4 - Singles Junior Rank 1
-; Bit 3 - Singles Senior Rank 4
-; Bit 2 - Singles Senior Rank 3
-; Bit 1 - Singles Senior Rank 2
-; Bit 0 - Singles Senior Rank 1
-wStoryModeMatchCompletionFlags5:: db
+; [8-bit] wGameFlags byte $0a: FLAG_WON_JUNIOR_SINGLES_RANK_* and FLAG_WON_SENIOR_SINGLES_RANK_*
+wSinglesRankWinFlags:: db
 
-; [Upper4] Story Mode - Match Completion Flags (6/6)
-;
-; Bit 7 - Singles Varsity Rank 4
-wStoryModeMatchCompletionFlags6:: db
+; [8-bit] wGameFlags byte $0b: FLAG_WON_VARSITY_SINGLES_RANK_4
+wVarsitySinglesWinFlags:: db
 
-; [8-bit] Story Mode - Equipment Flags (1/2)
-;
-; Bit 6 - Large Racket
-; Bit 5 - Small Racket
-; Bit 4 - Iron Racket
-; Bit 3 - Silver Racket
-; Bit 2 - Gold Racket
-; Bit 1 - Drive Racket
-; Bit 0 - Iron Shoes
-wStoryModeEquipmentFlags1:: db
+; [8-bit] wGameFlags byte $0c: FLAG_HAVE_* for every racket and the Iron Shoes
+wEquipmentOwnedFlags:: db
 
-; [Upper4] Story Mode - Equipment Flags (2/2)
-;
-; Bit 7 - Light Shoes
-wStoryModeEquipmentFlags2:: db
+; [8-bit] wGameFlags byte $0d: FLAG_HAVE_LIGHT_SHOES, FLAG_ENDING_CREDITS_PENDING/RUNNING, FLAG_ACTORS_FROZEN
+wLightShoesAndCreditsFlags:: db
 
 ; [3 bytes] wGameFlags bytes $0e-$10 (flags 112-135): NPC talked/moved/turned and scene-seen flags (FLAG_*_TALKED_*, FLAG_*_MOVED, FLAG_REPAIR_COUNTER_*, FLAG_AWARDS_CEREMONY_SEEN_*, ...; include/flag_constants.inc)
 wStoryModeNpcEventFlags:: ds 3
@@ -391,51 +347,8 @@ wStoryCastUnlockFlags:: dw
 ; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_LESSON_PASSED_THIS_VISIT bits
 wStoryProgressFlags:: dw
 
-; [8-bit] Story Mode - Minigame Completion Flags (1/4)
-;
-; Bit 7 - Service Match 1
-; Bit 6 - Service Match 2
-; Bit 5 - Service Match 3
-; Bit 4 - Service Practice 1
-; Bit 3 - Service Practice 2
-; Bit 2 - Service Practice 3
-; Bit 1 - Net Play Match 1
-; Bit 0 - Net Play Match 2
-wStoryModeMinigameCompletionFlags1:: db
-
-; [8-bit] Story Mode - Minigame Completion Flags (2/4)
-;
-; Bit 7 - Net Play Match 3
-; Bit 6 - Net Play Practice 1
-; Bit 5 - Net Play Practice 2
-; Bit 4 - Net Play Practice 3
-; Bit 3 - Stroke Match 1
-; Bit 2 - Stroke Match 2
-; Bit 1 - Stroke Match 3
-; Bit 0 - Stroke Practice 1
-wStoryModeMinigameCompletionFlags2:: db
-
-; [8-bit] Story Mode - Minigame Completion Flags (3/4)
-;
-; Bit 7 - Stroke Practice 2
-; Bit 6 - Stroke Practice 3
-; Bit 5 - Machine Level 1
-; Bit 4 - Machine Level 2
-; Bit 3 - Machine Level 3
-; Bit 2 - Machine Level 4
-; Bit 1 - Wall Level 1
-; Bit 0 - Wall Level 2
-wStoryModeMinigameCompletionFlags3:: db
-
-; Story Mode - Minigame Completion Flags (4/4)
-;
-; Bit 7 - Wall Level 3
-; Bit 6 - Wall Level 4
-; Bit 5 - Tennis Machine master (FLAG_CLEARED_MACHINE_MASTER)
-; Bit 4 - Wall master
-; Bit 3 - Tennis Machine expert
-; Bit 2 - Wall expert
-wStoryModeMinigameCompletionFlags4:: db
+; [4 bytes] wGameFlags bytes $18-$1b (flags 192-223): FLAG_CLEARED_<drill>_<level> for every training drill, then the Tennis Machine/Wall master and expert clears
+wDrillClearFlags:: ds 4
 
 ; [4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff), temporary: ClearTemporaryStoryFlags zeroes them at the top of RunStoryLocation, so they last until the next location load. Used for per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear ($1f)
 wGameFlagsTemp:: ds 4

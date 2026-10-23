@@ -94,18 +94,18 @@ DataPtr_IntroGfx5:
 	dw IntroGfx5 ; $405c
 DataPtr_IntroGfx6:
 	dw IntroGfx6 ; $405e
-DataPtr_ChampionMedalTilemap5:
-	dw ChampionMedalTilemap5 ; $4060
-DataPtr_ChampionMedalAttrmap5:
-	dw ChampionMedalAttrmap5 ; $4062
-DataPtr_ChampionMedalTilemap6:
-	dw ChampionMedalTilemap6 ; $4064
-DataPtr_ChampionMedalAttrmap6:
-	dw ChampionMedalAttrmap6 ; $4066
-DataPtr_DreamMatchEpilogueTilemap6:
-	dw DreamMatchEpilogueTilemap6 ; $4068
-DataPtr_DreamMatchEpilogueAttrmap6:
-	dw DreamMatchEpilogueAttrmap6 ; $406a
+DataPtr_ChampionMedalSinglesBoyTilemap:
+	dw ChampionMedalSinglesBoyTilemap ; $4060
+DataPtr_ChampionMedalSinglesBoyAttrmap:
+	dw ChampionMedalSinglesBoyAttrmap ; $4062
+DataPtr_ChampionMedalSinglesGirlTilemap:
+	dw ChampionMedalSinglesGirlTilemap ; $4064
+DataPtr_ChampionMedalSinglesGirlAttrmap:
+	dw ChampionMedalSinglesGirlAttrmap ; $4066
+DataPtr_DreamMatchEpilogueSinglesGirlTilemap:
+	dw DreamMatchEpilogueSinglesGirlTilemap ; $4068
+DataPtr_DreamMatchEpilogueSinglesGirlAttrmap:
+	dw DreamMatchEpilogueSinglesGirlAttrmap ; $406a
 CompanyLogosTiles:
 	INCBIN "data/gfx/lz_CompanyLogosTiles.bin" ; $406c, 1804 bytes
 CompanyLogosTilemap:
@@ -202,16 +202,16 @@ IntroGfx5:
 	INCBIN "data/gfx/lz_IntroGfx5.bin" ; $7836, 55 bytes
 IntroGfx6:
 	INCBIN "data/gfx/lz_IntroGfx6.bin" ; $786d, 39 bytes
-ChampionMedalTilemap5:
-	INCBIN "data/gfx/lz_ChampionMedalTilemap5.bin" ; $7894, 265 bytes
-ChampionMedalAttrmap5:
-	INCBIN "data/gfx/lz_ChampionMedalAttrmap5.bin" ; $799d, 121 bytes
-ChampionMedalTilemap6:
-	INCBIN "data/gfx/lz_ChampionMedalTilemap6.bin" ; $7a16, 265 bytes
-ChampionMedalAttrmap6:
-	INCBIN "data/gfx/lz_ChampionMedalAttrmap6.bin" ; $7b1f, 115 bytes
-DreamMatchEpilogueTilemap6:
-	INCBIN "data/gfx/lz_DreamMatchEpilogueTilemap6.bin" ; $7b92, 278 bytes
-DreamMatchEpilogueAttrmap6:
-	INCBIN "data/gfx/lz_DreamMatchEpilogueAttrmap6.bin" ; $7ca8, 118 bytes
+ChampionMedalSinglesBoyTilemap:
+	INCBIN "data/gfx/lz_ChampionMedalSinglesBoyTilemap.bin" ; $7894, 265 bytes
+ChampionMedalSinglesBoyAttrmap:
+	INCBIN "data/gfx/lz_ChampionMedalSinglesBoyAttrmap.bin" ; $799d, 121 bytes
+ChampionMedalSinglesGirlTilemap:
+	INCBIN "data/gfx/lz_ChampionMedalSinglesGirlTilemap.bin" ; $7a16, 265 bytes
+ChampionMedalSinglesGirlAttrmap:
+	INCBIN "data/gfx/lz_ChampionMedalSinglesGirlAttrmap.bin" ; $7b1f, 115 bytes
+DreamMatchEpilogueSinglesGirlTilemap:
+	INCBIN "data/gfx/lz_DreamMatchEpilogueSinglesGirlTilemap.bin" ; $7b92, 278 bytes
+DreamMatchEpilogueSinglesGirlAttrmap:
+	INCBIN "data/gfx/lz_DreamMatchEpilogueSinglesGirlAttrmap.bin" ; $7ca8, 118 bytes
 	; $7d1e, 738 bytes fill to bank end (linker-padded)

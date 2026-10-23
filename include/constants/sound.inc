@@ -160,7 +160,7 @@ def SFX_MARKER                 equ $78 ; a marker landing: the ranking-board mar
 def SFX_PLANE_START            equ $7a ; the island-sky plane flight starting, after the fade-in (bank $14)
 def SFX_PLANE_STOP             equ $7d ; the island-sky plane's last move ending, before the fade-out or touchdown roll (bank $14)
 def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)
-def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
+def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingAnimSingles/DoublesClimbRound*/MarkRound* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
 	const_def $86
 	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0DBoo_0e, the welcome cutscene) and a Boo Blast hit (AwardBooBlastHitScore $0d)

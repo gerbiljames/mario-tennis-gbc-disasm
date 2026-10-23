@@ -35,10 +35,10 @@ DataPtr_DreamMatchEpilogueTilesAlias4:
 	dw DreamMatchEpilogueTiles ; $403a
 DataPtr_DreamMatchEpiloguePalettes:
 	dw DreamMatchEpiloguePalettes ; $403c
-DataPtr_DreamMatchEpilogueTilemap5:
-	dw DreamMatchEpilogueTilemap5 ; $403e
-DataPtr_DreamMatchEpilogueAttrmap5:
-	dw DreamMatchEpilogueAttrmap5 ; $4040
+DataPtr_DreamMatchEpilogueSinglesBoyTilemap:
+	dw DreamMatchEpilogueSinglesBoyTilemap ; $403e
+DataPtr_DreamMatchEpilogueSinglesBoyAttrmap:
+	dw DreamMatchEpilogueSinglesBoyAttrmap ; $4040
 DataPtr_ClearStatusLabelGfx:
 	dw ClearStatusLabelGfx ; $4042
 DataPtr_MarioStarGetsLabelGfx:

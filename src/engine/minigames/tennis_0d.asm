@@ -69,7 +69,7 @@ GetMinigameFeederPosition:
 	twin snap_camera_to, 0d ; $493a SnapCameraTo_0d
 MinigameConfig_TennisMachine2:
 	; $4959, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_2, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine2, MinigamePointLayoutDuo, InitMinigame_TennisMachine2
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_2, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine2, MinigamePointLayoutDuo, InitMinigame_TennisMachine2
 InitMinigame_TennisMachine2:
 	ld a, $01 ; $4969
 	ld [wMinigameUsesTennisMachine], a ; $496b
@@ -119,7 +119,7 @@ TennisMachine2Hook_BallHit:
 	ret ; $49b5
 MinigameConfig_TennisMachine3:
 	; $49b6, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_3, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine3, MinigamePointLayoutDuo, InitMinigame_TennisMachine3
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_3, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine3, MinigamePointLayoutDuo, InitMinigame_TennisMachine3
 InitMinigame_TennisMachine3:
 	ld a, $01 ; $49c6
 	ld [wMinigameUsesTennisMachine], a ; $49c8
@@ -169,7 +169,7 @@ TennisMachine3Hook_BallHit:
 	ret ; $4a12
 MinigameConfig_TennisMachine4:
 	; $4a13, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_4, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine4, MinigamePointLayoutDuo, InitMinigame_TennisMachine4
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_4, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine4, MinigamePointLayoutDuo, InitMinigame_TennisMachine4
 InitMinigame_TennisMachine4:
 	ld a, $01 ; $4a23
 	ld [wMinigameUsesTennisMachine], a ; $4a25

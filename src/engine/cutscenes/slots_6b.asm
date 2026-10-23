@@ -18,19 +18,19 @@ DataPtr_UnusedIntroScreenPalettes:
 	farptr ScrollOutIntroLogo ; $4014
 	farptr LoadIntroTilesAndPalette ; $4016
 	farptr QueueIntroSpinningBallFrame ; $4018
-DataPtr_DreamMatchEpilogueTilemap:
-	dw DreamMatchEpilogueTilemap ; $401a
-DataPtr_DreamMatchEpilogueAttrmap:
-	dw DreamMatchEpilogueAttrmap ; $401c
-DataPtr_DreamMatchEpilogueTilemap2:
-	dw DreamMatchEpilogueTilemap2 ; $401e
-DataPtr_DreamMatchEpilogueAttrmap2:
-	dw DreamMatchEpilogueAttrmap2 ; $4020
-DataPtr_DreamMatchEpilogueTilemap3:
-	dw DreamMatchEpilogueTilemap3 ; $4022
-DataPtr_DreamMatchEpilogueAttrmap3:
-	dw DreamMatchEpilogueAttrmap3 ; $4024
-DataPtr_DreamMatchEpilogueTilemap4:
-	dw DreamMatchEpilogueTilemap4 ; $4026
-DataPtr_DreamMatchEpilogueAttrmap4:
-	dw DreamMatchEpilogueAttrmap4 ; $4028
+DataPtr_DreamMatchEpilogueDoublesBoysTilemap:
+	dw DreamMatchEpilogueDoublesBoysTilemap ; $401a
+DataPtr_DreamMatchEpilogueDoublesBoysAttrmap:
+	dw DreamMatchEpilogueDoublesBoysAttrmap ; $401c
+DataPtr_DreamMatchEpilogueDoublesBoyGirlTilemap:
+	dw DreamMatchEpilogueDoublesBoyGirlTilemap ; $401e
+DataPtr_DreamMatchEpilogueDoublesBoyGirlAttrmap:
+	dw DreamMatchEpilogueDoublesBoyGirlAttrmap ; $4020
+DataPtr_DreamMatchEpilogueDoublesGirlBoyTilemap:
+	dw DreamMatchEpilogueDoublesGirlBoyTilemap ; $4022
+DataPtr_DreamMatchEpilogueDoublesGirlBoyAttrmap:
+	dw DreamMatchEpilogueDoublesGirlBoyAttrmap ; $4024
+DataPtr_DreamMatchEpilogueDoublesGirlsTilemap:
+	dw DreamMatchEpilogueDoublesGirlsTilemap ; $4026
+DataPtr_DreamMatchEpilogueDoublesGirlsAttrmap:
+	dw DreamMatchEpilogueDoublesGirlsAttrmap ; $4028
