@@ -1577,7 +1577,7 @@ RAW_ID_FAMILIES = {
     "SetLinkMatchFormatOptionAttrRect(b)": "MATCHFMTOPT",
     "FillMatchFormatOptionCell(b)": "MATCHFMTOPT",
     "FlushLinkMatchFormatRowAttrs(b)": "MATCHFMTROW",
-    "FlushMatchFormatRowToVram(b)": "MATCHFMTROW",
+    "FlushMatchFormatRowAttrs(b)": "MATCHFMTROW",
     "LoadScoreDigitGfx(b)": "DIGITGFX",
     "LoadPlayer1PointsDigitGfx(b)": "DIGITGFX",
     "LoadPlayer2PointsDigitGfx(b)": "DIGITGFX",

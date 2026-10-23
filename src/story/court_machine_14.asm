@@ -136,10 +136,10 @@ MachineCourtHandleRetryChoice:
 MachineCourtRestartLevel:
 	ld a, [wCurrentMatchIndex] ; $47cd
 	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $47d0
-	jr z, .storeStoryModeCurrentLocation ; $47d2
+	jr z, .toLevelResultEntry ; $47d2
 	sub MINIGAME_TENNIS_MACHINE_1 ; $47d4
 	call TestMachineLevelClearedFlag ; $47d6
-	jr z, .storeStoryModeCurrentLocation ; $47d9
+	jr z, .toLevelResultEntry ; $47d9
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
 	ld a, ENTRY_TENNIS_MACHINE_ROOM_PRACTICE_RESULT ; $47e0
@@ -148,7 +148,7 @@ MachineCourtRestartLevel:
 	ld [wUnusedExitTriggerIdMirror], a ; $47e7
 	ld [wStoryModeExitTriggerRequest], a ; $47ea
 	jr .runTrainingDrillByID ; $47ed
-.storeStoryModeCurrentLocation:
+.toLevelResultEntry:
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
 	ld a, ENTRY_TENNIS_MACHINE_ROOM_LEVEL_RESULT ; $47f4

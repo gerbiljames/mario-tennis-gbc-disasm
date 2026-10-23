@@ -82,7 +82,7 @@ LinkMatchFormatOptionAttrAddrs_3e:
 LinkMatchFormatOptionSelectedAttrs_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
-	twin_named flush_match_format_row_to_vram, FlushLinkMatchFormatRowAttrs ; $48bb
+	twin_named flush_match_format_row_attrs, FlushLinkMatchFormatRowAttrs ; $48bb
 LinkMatchFormatCursorSpriteTask:
 	ld c, $01 ; $48f1
 	call GetMenuCursorIndex_3e ; $48f3

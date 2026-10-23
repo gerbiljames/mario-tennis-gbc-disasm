@@ -275,7 +275,7 @@ IntroCutsceneOpeningTossExit_6b:
 	ld [wCameraY], a ; $41f1
 	ld [wCameraY + 1], a ; $41f4
 	jp DispatchCutsceneStateInit.nextState ; $41f7
-	twin_named intro_cutscene_state00_update, IntroCutsceneOpeningTossUpdate_6b ; $41fa
+	twin_named intro_cutscene_opening_toss_update, IntroCutsceneOpeningTossUpdate_6b ; $41fa
 IntroCutsceneAlexRallyInit_6b:
 	call DisableLCDSafely ; $421f
 	xor a ; $4222
@@ -374,7 +374,7 @@ IntroCutsceneAlexSwingInit_6b:
 	jp DispatchCutsceneStateInit.runUpdate ; $436c
 IntroCutsceneAlexSwingInitPalette_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneAlexSwingInitPalette_6b.asm" ; $436f, 64 bytes (palettes)
-	twin_named intro_cutscene_state03_exit, IntroCutsceneAlexSwingExit_6b ; $43af
+	twin_named intro_cutscene_alex_swing_exit, IntroCutsceneAlexSwingExit_6b ; $43af
 IntroCutsceneAlexSwingUpdate_6b:
 	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
@@ -473,7 +473,7 @@ IntroCutsceneNinaSwingInit_6b:
 	jp DispatchCutsceneStateInit.runUpdate ; $44cd
 IntroCutsceneNinaSwingInitPalettes:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneNinaSwingInitPalettes.asm" ; $44d0, 64 bytes (palettes)
-	twin_named intro_cutscene_state03_exit, IntroCutsceneNinaSwingExit_6b ; $4510
+	twin_named intro_cutscene_alex_swing_exit, IntroCutsceneNinaSwingExit_6b ; $4510
 IntroCutsceneNinaSwingUpdate_6b:
 	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
@@ -578,7 +578,7 @@ IntroCutsceneRallyFadeOutExit_6b:
 	script_fade_out 16 ; $4644
 	call WaitFadeEnd ; $4649
 	jp DispatchCutsceneStateInit.nextState ; $464c
-	twin_named intro_cutscene_state07_update, IntroCutsceneRallyFadeOutUpdate_6b ; $464f
+	twin_named intro_cutscene_rally_fade_out_update, IntroCutsceneRallyFadeOutUpdate_6b ; $464f
 IntroCutsceneOpponentsPanInit_6b:
 	call InitIntroOpponentsPanorama ; $465e
 	call LoadIntroAwesomeOpponentsCaption ; $4661
@@ -669,7 +669,7 @@ IntroCutsceneOpponentsCaptionExit_6b:
 	xor a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
 	jp DispatchCutsceneStateInit.nextState ; $4748
-	twin_named intro_cutscene_state07_update, IntroCutsceneOpponentsCaptionUpdate_6b ; $474b
+	twin_named intro_cutscene_rally_fade_out_update, IntroCutsceneOpponentsCaptionUpdate_6b ; $474b
 IntroCutsceneOpponentsCaptionInitPalettes_6b:
 	INCLUDE "data/engine/cutscenes/IntroCutsceneOpponentsCaptionInitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneWaveInit_6b:
@@ -724,7 +724,7 @@ IntroCutsceneDiveExit_6b:
 	xor a ; $4821
 	ldh [hScrollX], a ; $4822
 	jp DispatchCutsceneStateInit.nextState ; $4824
-	twin_named intro_cutscene_state11_update, IntroCutsceneDiveUpdate_6b ; $4827
+	twin_named intro_cutscene_dive_update, IntroCutsceneDiveUpdate_6b ; $4827
 IntroCutsceneGirlSwingInit_6b:
 	call DisableLCDSafely ; $4836
 	ld c, SCREENASSET_IntroGirlSwing ; $4839
@@ -748,7 +748,7 @@ IntroCutsceneGirlSwingExit_6b:
 	xor a ; $4870
 	ldh [hScrollX], a ; $4871
 	jp DispatchCutsceneStateInit.nextState ; $4873
-	twin_named intro_cutscene_state11_update, IntroCutsceneGirlSwingUpdate_6b ; $4876
+	twin_named intro_cutscene_dive_update, IntroCutsceneGirlSwingUpdate_6b ; $4876
 Unused_6b_IntroCutsceneStateAInit:
 	call DisableLCDSafely ; $4885
 	ld c, SCREENASSET_LoadIntroAwesomeOpponentsCaptionPtrs ; $4888

@@ -59,7 +59,7 @@ WallPracticeLevelResultScript:
 	ld [wStoryModeShowLocationName], a ; $4ab6
 	ld a, [wPointWinLoseFlag] ; $4ab9
 	cp WINLOSE_WIN ; $4abc
-	jp nz, .checkLevel ; $4abe
+	jp nz, .notWon ; $4abe
 	ld a, [wMapSceneStage] ; $4ac1
 	sub $01 ; $4ac4
 	jumptable a ; $4ac6
@@ -67,7 +67,7 @@ WallPracticeLevelResultScript:
 	dw WallPracticeLevelResultScript.clearedLevel2 ; $4aca jumptable
 	dw WallPracticeLevelResultScript.clearedLevel3 ; $4acc jumptable
 	dw WallPracticeLevelResultScript.clearedLevel4 ; $4ace jumptable
-.checkLevel:
+.notWon:
 	ld a, [wMapSceneStage] ; $4ad0
 	cp WALLPRACTICESTAGE_MASTER ; $4ad3
 	jp z, WallPracticeScoreRetryPrompt ; $4ad5
@@ -177,9 +177,9 @@ WallPracticeLevelResultScript.wait:
 	ret ; $4c9f
 WallPracticeRoomFacingScripts_12:
 	; $4ca0, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomFacing01_12, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, WallPracticeRoomSearchEventStub_12, $00, $00
 	db $ff
-	twin_named development_facing01, WallPracticeRoomFacing01_12 ; $4ca9
+	twin_named development_search_event_stub, WallPracticeRoomSearchEventStub_12 ; $4ca9
 WallPracticeRoomTileTriggers_12:
 	; $4cc0, 41 bytes (map_scripts)
 	map_script $02, FACEMASK_ANY, ~FLAG_TEMP_SCENE_VARIANT_A, WallPracticeRoomLeaveSignArea_12, $00, $00
@@ -464,11 +464,11 @@ SetupWallPracticeLevelSigns:
 	ret ; $50cb
 WallPracticeRoomNpc07MachineEngineer_12:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $50cc
-	jr z, .scoreLine ; $50cf
+	jr z, .stagePrompt ; $50cf
 	script_set_text Text_WallEngineerStandOnSign ; $50d1
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $50d7
 	ret ; $50dc
-.scoreLine:
+.stagePrompt:
 	ld a, [wMapSceneStage] ; $50dd
 	add a ; $50e0
 	ld_hl_indexed WallPracticeRoomNpc07MachineEngineerTextIds ; $50e1
@@ -510,7 +510,7 @@ WallPracticeRoomNpc07MachineEngineer_12:
 	jp nz, .declined ; $514b
 	ld a, [wMapSceneStage] ; $514e
 	and a ; $5151
-	jp z, .speakDeclined ; $5152
+	jp z, .speakReply ; $5152
 	script_move_target ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, 3.0, 55.0 ; $5155
 	script_wait_move ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $5160
 	script_face ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER, FACE_RIGHT ; $5165
@@ -530,7 +530,7 @@ WallPracticeRoomNpc07MachineEngineer_12:
 	ret ; $51b0
 .declined:
 	farcall AdvanceDialogueTextCursor ; $51b1
-.speakDeclined:
+.speakReply:
 	script_speak ACTOR_WALL_PRACTICE_ROOM_MACHINE_ENGINEER ; $51b4
 	ret ; $51b9
 .accepted:

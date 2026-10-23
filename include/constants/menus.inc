@@ -230,7 +230,7 @@ def NUM_PANELANIMS equ const_value
 def ATTRRECT_INACTIVE equ $00
 def ATTRRECT_SELECTED equ $01
 
-; --- Match-format screen rows (cursor row; FlushMatchFormatRowToVram's b) ---
+; --- Match-format screen rows (cursor row; FlushMatchFormatRowAttrs's b) ---
 	const_def
 	const MATCHFMTROW_MODE  ; $00 singles / doubles (wMatchFormatDoubles)
 	const MATCHFMTROW_GAMES ; $01 wMatchFormatGames

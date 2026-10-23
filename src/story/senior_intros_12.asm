@@ -26,13 +26,13 @@ SeniorCourtWalkPlayersOntoCourt:
 	script_move_angle ACTOR_PLAYER, FACE_UP, 2.0 ; $5ee6
 .done:
 	ret ; $5ef0
-SeniorRankOfferScenePrep:
+SeniorRankOfferScene:
 	script_set_speed ACTOR_PLAYER, 0.5 ; $5ef1
 	test_flag FLAG_DOUBLES ; $5ef9
 	jp z, SeniorSinglesRankOfferScene ; $5efc
 	call SeniorDoublesRankOfferScene ; $5eff
 	ret ; $5f02
-SeniorRankOfferScenePrepFacingUp:
+SeniorRankOfferSceneFacingUp:
 	script_set_speed ACTOR_PLAYER, 0.25 ; $5f03
 	script_face ACTOR_PLAYER, FACE_UP ; $5f0b
 	script_lock_facing ACTOR_PLAYER ; $5f12

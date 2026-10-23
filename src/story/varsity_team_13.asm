@@ -1,4 +1,4 @@
-	twin_named varsity_court_npc03_face_up, VarsityCourtSinglesNpc03KevinFaceUp_13 ; $6c13
+	twin_named varsity_court_npc03_kevin_face_up, VarsityCourtSinglesNpc03KevinFaceUp_13 ; $6c13
 VarsityCourtSinglesNpc03Kevin_13:
 	script_set_text Text_KevinChallengeTravelingTeam ; $6c40
 	script_speak_restore ACTOR_VARSITY_COURT_SINGLES_KEVIN ; $6c46
@@ -91,7 +91,7 @@ VarsityCourtSinglesNpc03Kevin_13:
 	script_speak ACTOR_VARSITY_COURT_SINGLES_KEVIN ; $6e17
 	call ReturnVarsityCourtSinglesBobToSpawn_13 ; $6e1c
 	ret ; $6e1f
-	twin_named varsity_court_npc03_face_up, VarsityCourtDoublesNpc03KevinFaceUp_13 ; $6e20
+	twin_named varsity_court_npc03_kevin_face_up, VarsityCourtDoublesNpc03KevinFaceUp_13 ; $6e20
 VarsityCourtDoublesNpc03Kevin_13:
 	script_null_script ACTOR_PARTNER ; $6e4d
 	script_set_text Text_KevinDoublesChallengeOffer ; $6e52

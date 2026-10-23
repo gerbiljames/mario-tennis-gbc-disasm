@@ -3,11 +3,11 @@ SetRoommateDoublesNoReplyText_13:
 	cp $01 ; $5b8e
 	jp nz, .done ; $5b90
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5b93
-	jr z, .setText ; $5b96
-	script_set_text Text_RoommateDoublesHurryGetThemAlt ; $5b98
+	jr z, .kate ; $5b96
+	script_set_text Text_HarryDoublesHurryGetThem ; $5b98
 	jr .done ; $5b9e
-.setText:
-	script_set_text Text_RoommateDoublesHurryGetThem ; $5ba0
+.kate:
+	script_set_text Text_KateDoublesHurryGetThem ; $5ba0
 .done:
 	ret ; $5ba6
 	twin_named set_roommate_singles_no_reply_text, SetRoommateSinglesNoReplyText_13 ; $5ba7
@@ -17,11 +17,11 @@ SetRoommateDoublesYesReplyText_13:
 	cp $01 ; $5be2
 	jp nz, .done ; $5be4
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5be7
-	jr z, .setText ; $5bea
-	script_set_text Text_RoommateDoublesDontForgetAlt ; $5bec
+	jr z, .kate ; $5bea
+	script_set_text Text_HarryDoublesDontForget ; $5bec
 	jr .done ; $5bf2
-.setText:
-	script_set_text Text_RoommateDoublesDontForget ; $5bf4
+.kate:
+	script_set_text Text_KateDoublesDontForget ; $5bf4
 .done:
 	ret ; $5bfa
 ComputeEmoteActorPosition_13:
@@ -371,10 +371,10 @@ CourtyardInitScript_13:
 	jp VarsityCourtTourCutscene ; $6193
 .notTour:
 	cp ENTRY_COURTYARD_VARSITY_MATCH_RETURN ; $6196
-	jr nz, .notBracket ; $6198
+	jr nz, .notMatchReturn ; $6198
 	call RunTravelingTeamChartIfWon_13 ; $619a
 	ret ; $619d
-.notBracket:
+.notMatchReturn:
 	cp ENTRY_COURTYARD_TRAVELING_TEAM_WON ; $619e
 	jr nz, .walkIn ; $61a0
 	jp RunTravelingTeamVictoryCutscene_13 ; $61a2

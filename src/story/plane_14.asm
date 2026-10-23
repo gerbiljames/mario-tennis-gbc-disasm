@@ -40,7 +40,7 @@ LoadPlaneFrontObjGfx_14:
 	pop_wram_bank ; $5e96
 	ret ; $5e9b
 QueuePlaneSpriteByHeight_14:
-	call GetSceneObjectScreenPos_14 ; $5e9c
+	call GetCutscenePlaneScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
 	ld a, [wCutscenePlaneY] ; $5ea1
 	sub $88 ; $5ea4
@@ -298,7 +298,7 @@ LoadPlaneRearObjGfx_14:
 	pop_wram_bank ; $6255
 	ret ; $625a
 QueuePlaneSpriteByFrameCounter_14:
-	call GetSceneObjectScreenPos_14 ; $625b
+	call GetCutscenePlaneScreenPos_14 ; $625b
 	ld b, $10 ; $625e
 	ld a, [wCutsceneObjX] ; $6260
 	cp $14 ; $6263

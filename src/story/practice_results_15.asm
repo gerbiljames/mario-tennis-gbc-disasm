@@ -79,7 +79,7 @@ VolleyLessonWrongSideScene:
 	ret ; $76bf
 NetLessonAlmostScene:
 	call InitNetCoachScene ; $76c0
-	script_set_text Text_BethVolleyAlmostThere ; $76c3
+	script_set_text Text_BethAlmostNextTime ; $76c3
 	call NetCoachRetryPrompt ; $76c9
 	ret ; $76cc
 SmashLessonNotAllSidesScene:
@@ -156,7 +156,7 @@ StrokePractice1ResultScene:
 	dw ReturnLessonPassedScene ; $77af jumptable
 	dw ReturnLessonAllOutScene ; $77b1 jumptable
 	dw ReturnLessonInaccurateScene ; $77b3 jumptable
-	dw ReturnLessonNoPassesScene ; $77b5 jumptable
+	dw ReturnLessonMissedEveryTargetScene ; $77b5 jumptable
 	dw ReturnLessonInconsistentScene ; $77b7 jumptable
 	dw StrokeLessonAlmostScene ; $77b9 jumptable
 	dw StrokeLessonAlmostScene ; $77bb jumptable
@@ -250,7 +250,7 @@ ReturnLessonInaccurateScene:
 	script_set_text Text_ReturnCoachPoorAccuracy ; $7905
 	call ReturnCoachResultRetryPrompt ; $790b
 	ret ; $790e
-ReturnLessonNoPassesScene:
+ReturnLessonMissedEveryTargetScene:
 	call InitReturnCoachScene ; $790f
 	script_set_text Text_ReturnCoachMissedEveryTarget ; $7912
 	call ReturnCoachResultRetryPrompt ; $7918

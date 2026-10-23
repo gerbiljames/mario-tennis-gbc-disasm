@@ -236,14 +236,14 @@ DevelopmentNpcScripts_10:
 	db $ff
 DevelopmentFacingScripts_10:
 	; $4e30, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, DevelopmentFacing01_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, DevelopmentSearchEventStub_10, $00, $00
 	db $ff
-	twin_named development_facing01, DevelopmentFacing01_10 ; $4e39
+	twin_named development_search_event_stub, DevelopmentSearchEventStub_10 ; $4e39
 DevelopmentTileTriggers_10:
 	; $4e50, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, DevelopmentTile01_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, DevelopmentTriggerEventStub_10, $00, $00
 	db $ff
-	twin_named development_tile01, DevelopmentTile01_10 ; $4e59
+	twin_named development_trigger_event_stub, DevelopmentTriggerEventStub_10 ; $4e59
 DevelopmentInitScript_10:
 	ret ; $4e6b
 MainMenuMapScripts_10:

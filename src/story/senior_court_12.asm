@@ -109,7 +109,7 @@ SeniorCourtNpc03Emily_12:
 	jr c, SeniorCourtNpc03EmilyFaceUp_12.checkDoubles ; $55ed
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55ef
 	jr nc, SpeakEmilyPostChampionLine ; $55f1
-	call SeniorRankOfferScenePrep ; $55f3
+	call SeniorRankOfferScene ; $55f3
 	ret ; $55f6
 SeniorCourtNpc03EmilyFaceUp_12:
 	ld a, [wMapSceneStage2] ; $55f7
@@ -117,7 +117,7 @@ SeniorCourtNpc03EmilyFaceUp_12:
 	jr c, .checkDoubles ; $55fc
 	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55fe
 	jr nc, SpeakEmilyPostChampionLine ; $5600
-	call SeniorRankOfferScenePrepFacingUp ; $5602
+	call SeniorRankOfferSceneFacingUp ; $5602
 	ret ; $5605
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $5606

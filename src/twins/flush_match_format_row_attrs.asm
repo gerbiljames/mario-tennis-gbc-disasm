@@ -1,4 +1,4 @@
-; Shared by FlushMatchFormatRowToVram, FlushLinkMatchFormatRowAttrs (banks $3b,
+; Shared by FlushMatchFormatRowAttrs, FlushLinkMatchFormatRowAttrs (banks $3b,
 ; $3e).
 
 {TWIN_LABEL}:

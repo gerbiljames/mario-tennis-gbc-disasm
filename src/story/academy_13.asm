@@ -396,10 +396,10 @@ GetDormRoomStoryStage_13:
 DormRoomArrivalCutscene_13:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5aee
 	jr z, .kate ; $5af1
-	script_set_text Text_RoommateForgotLuckySocksAlt ; $5af3
+	script_set_text Text_HarryForgotLuckySocks ; $5af3
 	jr .placeActors ; $5af9
 .kate:
-	script_set_text Text_RoommateForgotLuckySocks ; $5afb
+	script_set_text Text_KateForgotLuckySocks ; $5afb
 .placeActors:
 	script_null_script ACTOR_PARTNER ; $5b01
 	script_set_position ACTOR_PARTNER, 11.0, 30.0 ; $5b06

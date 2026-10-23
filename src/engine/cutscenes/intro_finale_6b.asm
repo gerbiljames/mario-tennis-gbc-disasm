@@ -1,4 +1,4 @@
-	twin_named intro_cutscene_state13_update, IntroCutsceneGreatestPlayerUpdate_6b ; $4a42
+	twin_named intro_cutscene_greatest_player_update, IntroCutsceneGreatestPlayerUpdate_6b ; $4a42
 IntroCutsceneGreatestPlayerExit_6b:
 	xor a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
@@ -31,7 +31,7 @@ IntroCutsceneMarioRevealInit_6b:
 	xor a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
 	jp DispatchCutsceneStateInit.runUpdate ; $4add
-	twin_named intro_cutscene_state13_update, IntroCutsceneMarioRevealUpdate_6b ; $4ae0
+	twin_named intro_cutscene_greatest_player_update, IntroCutsceneMarioRevealUpdate_6b ; $4ae0
 IntroCutsceneMarioRevealExit_6b:
 	jp DispatchCutsceneStateInit.nextState ; $4aef
 IntroCutsceneMarioCloseupScrollInit_6b:
@@ -163,7 +163,7 @@ IntroCutsceneClosingTossExit_6b:
 	script_fade_out 4 ; $4c6e
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.nextState ; $4c76
-	twin_named intro_cutscene_state00_update, IntroCutsceneClosingTossUpdate_6b ; $4c79
+	twin_named intro_cutscene_opening_toss_update, IntroCutsceneClosingTossUpdate_6b ; $4c79
 UpdateIntroScrollY:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, IntroScrollYDeltaTable ; $4ca1

@@ -92,9 +92,9 @@ DormRoomNpcScripts_13:
 	db $ff
 DormRoomFacingScripts_13:
 	; $4ecb, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, DormRoomFacing01_13, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, DormRoomSearchEventStub_13, $00, $00
 	db $ff
-	twin_named development_facing01, DormRoomFacing01_13 ; $4ed4
+	twin_named development_search_event_stub, DormRoomSearchEventStub_13 ; $4ed4
 DormRoomTileTriggers_13:
 	; $4eeb, 9 bytes (map_scripts)
 	map_script $0f, FACEMASK_DOWN, $0000, DormRoomTravelingTeamMeetingTrigger_13, $00, $00
@@ -104,9 +104,9 @@ DormRoomTravelingTeamMeetingTrigger_13:
 	ld a, $03 ; $4ef9
 	script_set_text Text_RoommateOhNoForgotToTell ; $4efb
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $4f01
-	jr z, .notTempSceneVariantA ; $4f04
+	jr z, .haveText ; $4f04
 	script_set_text Text_RoommateOhShootForgotToTell ; $4f06
-.notTempSceneVariantA:
+.haveText:
 	script_jump_velocity ACTOR_DORM_ROOM_ROOMMATE, -2.0 ; $4f0c
 	ld a, $03 ; $4f14
 	call ComputeEmoteActorPosition_13 ; $4f16
@@ -313,13 +313,13 @@ PlaceDormRoomArrivalActors_13:
 	cp STORYENTRY_NONE ; $51b3
 	jr z, .noEntryPoint ; $51b5
 	cp ENTRY_DORM_ROOM_CONTINUE ; $51b7
-	jr z, .entry01 ; $51b9
+	jr z, .continue ; $51b9
 	wram_bank WRAM_ACTORS ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
 	jp nz, PlaceDormRoomArrivalActors_13.isDoubles ; $51c4
 	script_set_position ACTOR_DORM_ROOM_ROOMMATE, 11.0, 10.0 ; $51c7
 	ret ; $51d2
-.entry01:
+.continue:
 	test_flag FLAG_DOUBLES ; $51d3
 	jr z, .placeRoommateSingles ; $51d6
 	script_set_position ACTOR_DORM_ROOM_ROOMMATE, 11.0, 10.0 ; $51d8
@@ -411,10 +411,10 @@ DormRoomContinueScene:
 	jp z, DormRoomArrivalCutscene_13 ; $52ec
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52ef
 	jr z, .kate ; $52f2
-	script_set_text Text_RoommateGoodDayOfPracticeAlt ; $52f4
+	script_set_text Text_HarryGoodDayOfPractice ; $52f4
 	jr .placeActors ; $52fa
 .kate:
-	script_set_text Text_RoommateGoodDayOfPractice ; $52fc
+	script_set_text Text_KateGoodDayOfPractice ; $52fc
 .placeActors:
 	script_null_script ACTOR_PARTNER ; $5302
 	script_set_position ACTOR_PARTNER, 11.0, 30.0 ; $5307

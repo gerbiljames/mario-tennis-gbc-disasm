@@ -286,10 +286,10 @@ End4JrCourtTileTriggers_27:
 	db $ff ; $67f7
 End4JrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $67f8
-	jr z, .checkStoryModeEntryPoint ; $67fb
+	jr z, .checkEntry ; $67fb
 	script_respawn_actors End4JrCourtActorsDoubles_27 ; $67fd
 	farcall BeginCutsceneScriptMode ; $6805
-.checkStoryModeEntryPoint:
+.checkEntry:
 	ld a, [wStoryModeEntryPoint] ; $6808
 	cp ENTRY_END4_JR_COURT_SCENE ; $680b
 	jp z, End4JrCourtScene_27 ; $680d

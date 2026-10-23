@@ -57,7 +57,7 @@ WaterSpriteRacketRewardScene:
 	call LoadPalettesImmediate ; $4e1d
 	sound SFX_WATER_SPRITE_MAGIC ; $4e20
 	ld a, $10 ; $4e22
-.handOver:
+.materializeFlickerLoop:
 	ld d, a ; $4e24
 	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e25
 	script_wait_frames 4 ; $4e2c
@@ -68,7 +68,7 @@ WaterSpriteRacketRewardScene:
 	pop af ; $4e3f
 	ld a, d ; $4e40
 	sub $02 ; $4e41
-	jp nz, .handOver ; $4e43
+	jp nz, .materializeFlickerLoop ; $4e43
 	script_set_actor_mode ACTOR_TRAINING_COURT_WATER_SPRITE, ACTORMODE_VISIBLE ; $4e46
 	script_wait_frames 60 ; $4e4d
 	script_set_position ACTOR_TRAINING_COURT_BALLOON_SCRIBBLE, 63.0, 63.0 ; $4e54

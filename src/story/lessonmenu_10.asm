@@ -442,14 +442,14 @@ Test2NpcScripts_10:
 	db $ff
 Test2FacingScripts_10:
 	; $4b60, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, Test2Facing01_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, Test2SearchEventStub_10, $00, $00
 	db $ff
-	twin_named development_facing01, Test2Facing01_10 ; $4b69
+	twin_named development_search_event_stub, Test2SearchEventStub_10 ; $4b69
 Test2TileTriggers_10:
 	; $4b80, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, Test2Tile01_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, Test2TriggerEventStub_10, $00, $00
 	db $ff
-	twin_named development_tile01, Test2Tile01_10 ; $4b89
+	twin_named development_trigger_event_stub, Test2TriggerEventStub_10 ; $4b89
 Test2InitScript_10:
 	ld a, [wStoryModeEntryPoint] ; $4b9b
 	cp ENTRY_TEST_2_SKIP_MENU ; $4b9e

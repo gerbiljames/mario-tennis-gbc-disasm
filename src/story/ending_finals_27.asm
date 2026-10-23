@@ -57,10 +57,10 @@ End17AwardCeremonyInitScript_27:
 	script_respawn_actors End17AwardCeremonyActorsDoubles_27 ; $41a4
 	script_copy_scene_rect 26, 13, 8, 13, 8, 3 ; $41ac
 	farcall BeginCutsceneScriptMode ; $41bb
-	jr .setEnd17CeremonyObjectDefs ; $41be
+	jr .setObjDefs ; $41be
 .singles:
 	script_set_anim ACTOR_END17_AWARD_CEREMONY_TROPHY, ANIM_TROPHY_SINGLES ; $41c0
-.setEnd17CeremonyObjectDefs:
+.setObjDefs:
 	call SetEnd17CeremonyObjectDefs_27 ; $41c7
 	jr .placeActors ; $41ca
 	ret ; $41cc
@@ -212,7 +212,7 @@ End17AwardCeremonyInitScript_27:
 	ret ; $45bd
 SetEnd17CeremonyObjectDefs_27:
 	test_flag FLAG_DOUBLES ; $45be
-	jp z, .checkStoryModeGenderOfMainCharacter ; $45c1
+	jp z, .loadPlayerStandIn ; $45c1
 	ld a, [wStoryPartnerGender] ; $45c4
 	ld d, OBJ_HARRY_B ; $45c7
 	add d ; $45c9
@@ -225,7 +225,7 @@ SetEnd17CeremonyObjectDefs_27:
 	script_null_script ACTOR_PARTNER ; $45dc
 	script_set_position ACTOR_PARTNER, 15.0, 13.375 ; $45e1
 	script_face ACTOR_PARTNER, FACE_DOWN ; $45ec
-.checkStoryModeGenderOfMainCharacter:
+.loadPlayerStandIn:
 	ld a, [wStoryMainGender] ; $45f3
 	ld d, OBJ_ALEX_B ; $45f6
 	add d ; $45f8

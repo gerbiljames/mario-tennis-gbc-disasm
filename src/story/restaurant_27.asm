@@ -74,7 +74,7 @@ End3DormEntMapScripts_27:
 End3DormEntActors_27:
 	; $6c26, 66 bytes (map_actors)
 	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_EMILY, ANIM_WALK, $00, END3_DORM_ENT_EMILY
-	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, END3_DORM_ENT_KATE
+	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_KATE, ANIM_WALK, $00, END3_DORM_ENT_ROOMMATE
 	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_BALLOON_EXCLAIM, ANIM_WALK, $00, END3_DORM_ENT_BALLOON_EXCLAIM
 	map_actor $0000, ActorScript_27_27, 1.0, 1.0, FACE_DOWN, OBJ_BALLOON_QUESTION, ANIM_WALK, $00, END3_DORM_ENT_BALLOON_QUESTION
 	map_actor_end
@@ -106,7 +106,7 @@ End3DormEntCutscene_27:
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $6ca4
 .notDoubles:
 	script_set_speed ACTOR_END3_DORM_ENT_EMILY, 0.5 ; $6caf
-	script_set_speed ACTOR_END3_DORM_ENT_KATE, 0.5 ; $6cb7
+	script_set_speed ACTOR_END3_DORM_ENT_ROOMMATE, 0.5 ; $6cb7
 	script_set_speed ACTOR_PLAYER, 0.5 ; $6cbf
 	script_player_speed 0.5 ; $6cc7
 	script_set_position ACTOR_PLAYER, 22.0, 31.0 ; $6ccd
@@ -151,7 +151,7 @@ End3DormEntCutscene_27:
 	script_set_position ACTOR_END3_DORM_ENT_BALLOON_EXCLAIM, 1.0, 1.0 ; $6de8
 	script_move_target ACTOR_END3_DORM_ENT_EMILY, 22.0, 11.0 ; $6df3
 	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6dfe
-	script_set_position ACTOR_END3_DORM_ENT_KATE, 23.0, 11.0 ; $6e03
+	script_set_position ACTOR_END3_DORM_ENT_ROOMMATE, 23.0, 11.0 ; $6e03
 	script_wait_frames 60 ; $6e0e
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6e15
 	script_wait_frames 20 ; $6e1c
@@ -164,24 +164,24 @@ End3DormEntCutscene_27:
 	ld a, [wStoryPartnerGender] ; $6e4f
 	or a ; $6e52
 	jr nz, .walk ; $6e53
-	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_KATE ; $6e55
-	script_set_anim ACTOR_END3_DORM_ENT_KATE, ANIM_WALK ; $6e61
+	script_set_objdef OBJ_HARRY, ACTOR_END3_DORM_ENT_ROOMMATE ; $6e55
+	script_set_anim ACTOR_END3_DORM_ENT_ROOMMATE, ANIM_WALK ; $6e61
 .walk:
 	script_move_target ACTOR_END3_DORM_ENT_EMILY, 21.0, 15.0 ; $6e68
 	script_wait_move ACTOR_END3_DORM_ENT_EMILY ; $6e73
-	script_move_target ACTOR_END3_DORM_ENT_KATE, 23.0, 15.0 ; $6e78
-	script_wait_move ACTOR_END3_DORM_ENT_KATE ; $6e83
+	script_move_target ACTOR_END3_DORM_ENT_ROOMMATE, 23.0, 15.0 ; $6e78
+	script_wait_move ACTOR_END3_DORM_ENT_ROOMMATE ; $6e83
 	sound SFX_EMOTE ; $6e88
 	script_set_position ACTOR_END3_DORM_ENT_BALLOON_QUESTION, 23.5, 17.0 ; $6e8a
 	script_wait_frames 60 ; $6e95
 	script_set_anim ACTOR_END3_DORM_ENT_EMILY, ANIM_SHAKE ; $6e9c
 	script_wait_idle ACTOR_END3_DORM_ENT_EMILY ; $6ea3
 	script_set_position ACTOR_END3_DORM_ENT_BALLOON_QUESTION, 1.0, 1.0 ; $6ea8
-	script_face_toward ACTOR_END3_DORM_ENT_KATE, ACTOR_END3_DORM_ENT_EMILY ; $6eb3
+	script_face_toward ACTOR_END3_DORM_ENT_ROOMMATE, ACTOR_END3_DORM_ENT_EMILY ; $6eb3
 	script_wait_frames 60 ; $6ebb
 	script_face_toward ACTOR_PLAYER, ACTOR_END3_DORM_ENT_EMILY ; $6ec2
-	script_set_anim ACTOR_END3_DORM_ENT_KATE, ANIM_NOD ; $6eca
-	script_wait_idle ACTOR_END3_DORM_ENT_KATE ; $6ed1
+	script_set_anim ACTOR_END3_DORM_ENT_ROOMMATE, ANIM_NOD ; $6eca
+	script_wait_idle ACTOR_END3_DORM_ENT_ROOMMATE ; $6ed1
 	ld a, $0f ; $6ed6
 	ld [wUnusedExitTriggerIdMirror], a ; $6ed8
 	ld [wStoryModeExitTriggerRequest], a ; $6edb

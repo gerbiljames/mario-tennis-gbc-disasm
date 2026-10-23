@@ -104,7 +104,7 @@ LoadDistantPlaneObjGfx_14:
 	pop_wram_bank ; $7556
 	ret ; $755b
 QueueDistantPlaneSprite_14:
-	call GetSceneObjectScreenPos_14 ; $755c
+	call GetCutscenePlaneScreenPos_14 ; $755c
 	ld a, [wCutsceneObjPhase] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
@@ -112,7 +112,7 @@ QueueDistantPlaneSprite_14:
 	ld b, OAM_BANK1 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
-GetSceneObjectScreenPos_14:
+GetCutscenePlaneScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
 	ld a, [wCutscenePlaneX] ; $7570

@@ -158,9 +158,9 @@ NEXTU
 wChallengerActor:: db
 NEXTU
 ; plane cutscenes (bank $14: IslandSkyInitScript_14, IslandSkyHomeFromIslandOpenScene, IslandSkyHomeFromPeachsCastleScene, IslandSkyToPeachsCastleScene and the plane sprite drawers)
-; [8-bit] World X of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollX
+; [8-bit] World X of the plane sprite; GetCutscenePlaneScreenPos_14 subtracts hScrollX
 wCutscenePlaneX:: db
-; [8-bit] World Y of the plane sprite; GetSceneObjectScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
+; [8-bit] World Y of the plane sprite; GetCutscenePlaneScreenPos_14 subtracts hScrollY, QueuePlaneSpriteByHeight_14 picks the sprite size from it
 wCutscenePlaneY:: db
 NEXTU
 ; courts-tour pointer sprite (bank $13: AcademyCourtsTourCutscene, AnimateTourPointerSprite_13)

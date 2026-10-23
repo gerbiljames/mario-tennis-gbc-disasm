@@ -83,9 +83,9 @@ End12PrincipalsOfficeInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $4c80
 	cp ENTRY_END12_PRINCIPALS_OFFICE_SCENE_B ; $4c83
 	jp z, .altScene ; $4c85
-	jp .clearStoryModeShowLocationName ; $4c88
+	jp .sceneA ; $4c88
 	ret ; $4c8b
-.clearStoryModeShowLocationName:
+.sceneA:
 	xor a ; $4c8c
 	ld [wStoryModeShowLocationName], a ; $4c8d
 	script_set_position ACTOR_PLAYER, 43.0, 59.0 ; $4c90
@@ -195,7 +195,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_move_target ACTOR_PLAYER, 31.0, 50.0 ; $4f44
 	script_move_target ACTOR_PARTNER, 33.0, 50.0 ; $4f4f
 	script_wait_move ACTOR_PARTNER ; $4f5a
-	jp .storeStoryModeExitLocationRequest ; $4f5f
+	jp .exit ; $4f5f
 .singles:
 	sound SFX_APPEAR2 ; $4f62
 	script_set_position ACTOR_END12_PRINCIPALS_OFFICE_BALLOON_SWEAT_1, 33.5, 51.5 ; $4f64
@@ -217,7 +217,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_anim ACTOR_PLAYER, ANIM_NOD ; $4fd0
 	script_move_target ACTOR_PLAYER, 32.0, 50.0 ; $4fd7
 	script_wait_move ACTOR_PLAYER ; $4fe2
-.storeStoryModeExitLocationRequest:
+.exit:
 	ld a, EXIT_END12_PRINCIPALS_OFFICE_DONE ; $4fe7
 	ld [wUnusedExitTriggerIdMirror], a ; $4fe9
 	ld [wStoryModeExitTriggerRequest], a ; $4fec
@@ -341,16 +341,16 @@ End11TrainingCourtTileTriggers_27:
 End11TrainingCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $5270
 	cp ENTRY_END11_TRAINING_COURT_SCENE_A ; $5273
-	jp z, .checkDoubles ; $5275
+	jp z, .sceneA ; $5275
 	cp ENTRY_END11_TRAINING_COURT_SCENE_B ; $5278
 	jp z, .altScene ; $527a
 	ret ; $527d
-.checkDoubles:
+.sceneA:
 	test_flag FLAG_DOUBLES ; $527e
-	jr z, .checkStoryModeMainCharacterLeftHanded ; $5281
+	jr z, .mirrorIfLeftHanded ; $5281
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_27 ; $5283
 	script_set_position ACTOR_PARTNER, 63.0, 63.0 ; $528e
-.checkStoryModeMainCharacterLeftHanded:
+.mirrorIfLeftHanded:
 	ld a, [wStoryMainLeftHanded] ; $5299
 	and a ; $529c
 	jr z, .face ; $529d
