@@ -34,7 +34,7 @@ ENDM
 ; turns into the wChar*/wAi* fields (docs/match_engine.md "Character stats
 ; into the engine").
 ;   char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
-;                  delay_near, delay_far, tracking, aim_away, serve_style,
+;                  delay_near, delay_far, tracking, aim_away, difficulty,
 ;                  Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
 ;                  Dash, Reaction, Stop, speed_bonus
 MACRO char_stats_row
@@ -48,9 +48,9 @@ MACRO char_stats_row
 ENDM
 
 ; One ShotTypePresets_07 row, read by ApplyShotTypePresets: the contact sound,
-; the ApplyShotRecoil variant, the SetBallTrailColor index and the nominal
+; the SHOTCLASS_*, the SetBallTrailColor index and the nominal
 ; landing depth past the net that ComputeShotTrajectory aims at.
-;   shot_preset sound, recoil, trail, depth
+;   shot_preset sound, class, trail, depth
 MACRO shot_preset
 	db \1, \2, \3
 	dw \4
@@ -59,8 +59,8 @@ ENDM
 ; One CpuDifficultyParams* row: the four AI bytes ApplyCpuDifficultyToCharRecords
 ; writes to a CPU record's +$1b-+$1e (frames of inertness after a stroke near
 ; the net and away from it, the tracking countdown, the aim-away RNG threshold),
-; then the partner's difficulty and EXP tier.
-;   cpu_difficulty delay_near, delay_far, tracking, aim_away, partner_difficulty, partner_tier
+; then the record's 0-3 difficulty (+$1f) and EXP tier.
+;   cpu_difficulty delay_near, delay_far, tracking, aim_away, difficulty, tier
 MACRO cpu_difficulty
 	db \1, \2, \3, \4, \5, \6
 ENDM

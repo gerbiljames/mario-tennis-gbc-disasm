@@ -362,7 +362,7 @@ Unused_18_DebugScreenAssetViewer:
 	call WaitFadeEnd ; $7684
 .inputLoop:
 	call AdvanceFrame ; $7687
-	ldh a, [hInputPressed] ; $768a
+	ldh a, [hInputRepeat] ; $768a
 	or a ; $768c
 	jr z, .inputLoop ; $768d
 	pop bc ; $768f
@@ -402,7 +402,7 @@ PlayTravelingTeamVictoryScene:
 	farcall AnimatePaletteFadeToTarget ; $76e9
 .waitInput:
 	call AdvanceFrame ; $76ec
-	ldh a, [hInputPressed] ; $76ef
+	ldh a, [hInputRepeat] ; $76ef
 	and PADF_A | PADF_B ; $76f1
 	jr z, .waitInput ; $76f3
 	script_fade_out 16 ; $76f5
@@ -415,7 +415,7 @@ PlayTravelingTeamVictoryScene:
 	frame_task QueueToBeContinuedSprites ; $770e
 .waitDismiss:
 	call AdvanceFrame ; $7716
-	ldh a, [hInputPressed] ; $7719
+	ldh a, [hInputRepeat] ; $7719
 	and PADF_A | PADF_B ; $771b
 	jr z, .waitDismiss ; $771d
 	ret ; $771f

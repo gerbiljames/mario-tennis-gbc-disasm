@@ -6,26 +6,26 @@ SetMinigamePointTable:
 	ld [hl], d ; $672e
 	pop hl ; $672f
 	ret ; $6730
-SetBallGatePoint1:
+SetDrillGateLeftPost:
 	ld c, l ; $6731
 	ld b, h ; $6732
-	ld hl, wDrillGate1 + 2 ; $6733
+	ld hl, wDrillGateLeftPost + 2 ; $6733
 	ld a, e ; $6736
 	ld [hl+], a ; $6737
 	ld [hl], d ; $6738
-	ld hl, wDrillGate1 ; $6739
+	ld hl, wDrillGateLeftPost ; $6739
 	ld a, c ; $673c
 	ld [hl+], a ; $673d
 	ld [hl], b ; $673e
 	ret ; $673f
-SetBallGatePoint2:
+SetDrillGateRightPost:
 	ld c, l ; $6740
 	ld b, h ; $6741
-	ld hl, wDrillGate2 + 2 ; $6742
+	ld hl, wDrillGateRightPost + 2 ; $6742
 	ld a, e ; $6745
 	ld [hl+], a ; $6746
 	ld [hl], d ; $6747
-	ld hl, wDrillGate2 ; $6748
+	ld hl, wDrillGateRightPost ; $6748
 	ld a, c ; $674b
 	ld [hl+], a ; $674c
 	ld [hl], b ; $674d
@@ -55,7 +55,7 @@ SetTargetZoneCorner2:
 	ld [hl], b ; $676b
 	ret ; $676c
 DidBallCrossGate:
-	ld hl, wDrillGate1 + 2 ; $676d
+	ld hl, wDrillGateLeftPost + 2 ; $676d
 	ld a, [hl+] ; $6770
 	ld b, [hl] ; $6771
 	ld c, a ; $6772
@@ -78,7 +78,7 @@ DidBallCrossGate:
 	xor d ; $678c
 	bit 7, a ; $678d
 	jr z, .no ; $678f
-	ld hl, wDrillGate1 ; $6791
+	ld hl, wDrillGateLeftPost ; $6791
 	ld a, [hl+] ; $6794
 	ld d, [hl] ; $6795
 	ld e, a ; $6796
@@ -89,7 +89,7 @@ DidBallCrossGate:
 	sub_hl_de ; $679d
 	bit 7, h ; $67a3
 	jr nz, .no ; $67a5
-	ld hl, wDrillGate2 ; $67a7
+	ld hl, wDrillGateRightPost ; $67a7
 	ld a, [hl+] ; $67aa
 	ld d, [hl] ; $67ab
 	ld e, a ; $67ac
@@ -451,7 +451,7 @@ UpdateCharStateMachine:
 	dw CharRallyState ; $6a7d jumptable
 	dw CharRecoverState ; $6a7f jumptable
 	dw CharServeState ; $6a81 jumptable
-	dw CharAwaitServeState ; $6a83 jumptable
+	dw CharServerPartnerState ; $6a83 jumptable
 	dw CharStandbyState ; $6a85 jumptable
 	dw CharWalkState ; $6a87 jumptable
 	dw CharPointEndState ; $6a89 jumptable

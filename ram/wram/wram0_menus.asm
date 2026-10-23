@@ -39,7 +39,7 @@ wAnimatedTileSet:: db
 ; [8-bit] Frame period of the animated-tile task; usually $03 ($05 on a link screen, $06 on the match result screen)
 wAnimatedTilePeriod:: db
 
-; [8-bit] Menu loop's copy of hInputPressed (same bit layout as hPlayerInputFlags)
+; [8-bit] Menu loop's copy of hInputRepeat (same bit layout as hPlayerInputFlags)
 wMenuInputPressed:: db
 
 ; [8-bit] Match-format menu: singles (0) / doubles (1) selection; copied to wMatchIsDoubles

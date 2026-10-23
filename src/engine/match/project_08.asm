@@ -27,7 +27,7 @@ Unused_08_MulHLSignedByDE:
 	jp z, MulHLByDE ; $59d6
 	neg_hl ; $59d9
 	call MulHLByDE ; $59df
-NegateMulResultLow:
+NegateMulResult32:
 	ldh a, [hMulResult] ; $59e2
 	cpl ; $59e4
 	add $01 ; $59e5
@@ -54,7 +54,7 @@ MulHLByDESigned32:
 	call MulHLByDE ; $5a13
 	ldh a, [hMathSign] ; $5a16
 	bit 7, a ; $5a18
-	jr nz, NegateMulResultLow ; $5a1a
+	jr nz, NegateMulResult32 ; $5a1a
 	ret ; $5a1c
 MulHLByDEAbs:
 	ld a, h ; $5a1d

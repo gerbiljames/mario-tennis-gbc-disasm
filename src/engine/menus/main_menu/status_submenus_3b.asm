@@ -110,7 +110,7 @@ RunN64RecordTypeSelect:
 	wram_bank WRAM_SCREEN ; $71e5
 .loop:
 	call AdvanceFrame ; $71eb
-	ldh a, [hInputPressed] ; $71ee
+	ldh a, [hInputRepeat] ; $71ee
 	ld [wMenuInputPressed], a ; $71f0
 	ld b, $03 ; $71f3
 	ld c, $01 ; $71f5
@@ -489,7 +489,7 @@ RunGbDataItemSelect:
 	wram_bank WRAM_SCREEN ; $74f4
 .loop:
 	call AdvanceFrame ; $74fa
-	ldh a, [hInputPressed] ; $74fd
+	ldh a, [hInputRepeat] ; $74fd
 	ld [wMenuInputPressed], a ; $74ff
 	ld b, $02 ; $7502
 	ld c, $02 ; $7504

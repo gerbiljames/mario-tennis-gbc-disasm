@@ -108,7 +108,7 @@ ApplyShotRecoil:
 	ld hl, wCharFlags ; $546b
 	set CHARB_RECOIL, [hl] ; $546e
 	res CHARB_CHARGING, [hl] ; $5470
-	ld a, [wShotRecoilVariant] ; $5472
+	ld a, [wShotClass] ; $5472
 	add a ; $5475
 	ld_hl_indexed ShotRecoilVarPtrs_07 ; $5476
 	ld a, [hl+] ; $547d
@@ -169,7 +169,7 @@ ShotRecoilVarPtrs_07:
 ShotRecoilTable_07:
 	; $54d4, 10 bytes (bytes:10)
 	db $58, $50, $48, $40, $38, $30, $28, $20, $18, $10 ; 0x00
-WeakenShotByCharge:
+ShortenShotDepthByCharge:
 	ld a, [wShotChargeLevel] ; $54de
 	ld l, a ; $54e1
 	ld h, $00 ; $54e2
@@ -182,7 +182,7 @@ WeakenShotByCharge:
 	sbc h ; $54ea
 	ld b, a ; $54eb
 	ret ; $54ec
-BoostShotByCharge:
+LengthenShotDepthByCharge:
 	ld a, [wShotChargeLevel] ; $54ed
 	ld l, a ; $54f0
 	ld h, $00 ; $54f1
@@ -274,7 +274,7 @@ ApplyShotTypePresets:
 	ld a, [hl+] ; $558c
 	call PlaySoundManaged ; $558d
 	ld a, [hl+] ; $5590
-	ld [wShotRecoilVariant], a ; $5591
+	ld [wShotClass], a ; $5591
 	ld a, [hl+] ; $5594
 	push hl ; $5595
 	farcall SetBallTrailColor ; $5596
@@ -286,22 +286,22 @@ ApplyShotTypePresets:
 ShotTypePresets_07:
 	; $559e, 75 bytes (shot_preset)
 	table_width 5
-; shot_preset sound, recoil variant, trail colour, target depth
-	shot_preset SFX_HIT_TOPSPIN, 0, 0, $0280 ; SHOTTYPE_TOPSPIN
-	shot_preset SFX_HIT_TOPSPIN, 0, 1, $03c0 ; SHOTTYPE_POWER_TOPSPIN
-	shot_preset SFX_HIT_SLICE, 0, 0, $0280 ; SHOTTYPE_SLICE
-	shot_preset SFX_HIT_SLICE, 0, 2, $03c0 ; SHOTTYPE_POWER_SLICE
-	shot_preset SFX_HIT_TOPSPIN, 0, 0, $03c0 ; SHOTTYPE_NEUTRAL
-	shot_preset SFX_HIT_TOPSPIN, 1, 0, $03c0 ; SHOTTYPE_REACH
-	shot_preset SFX_HIT_TOPSPIN, 1, 0, $0480 ; SHOTTYPE_REACH_POWER_TOPSPIN
-	shot_preset SFX_HIT_TOPSPIN, 1, 0, $0380 ; SHOTTYPE_REACH_POWER_SLICE
-	shot_preset SFX_HIT_TOPSPIN, 1, 0, $03c0 ; SHOTTYPE_REACH_BASIC
-	shot_preset SFX_HIT_SLICE, 2, 3, $0440 ; SHOTTYPE_SMASH
-	shot_preset SFX_HIT_LOB, 3, 0, $0200 ; SHOTTYPE_LOB
-	shot_preset SFX_HIT_DROP, 3, 0, $0200 ; SHOTTYPE_DROP
-	shot_preset SFX_HIT_SERVE, 4, 1, $02a0 ; SHOTTYPE_SERVE_TOPSPIN
-	shot_preset SFX_HIT_SERVE, 4, 2, $02a0 ; SHOTTYPE_SERVE_SLICE
-	shot_preset SFX_HIT_SERVE, 4, 3, $02a0 ; SHOTTYPE_SERVE_FLAT
+; shot_preset sound, shot class, trail colour, target depth
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_GROUND, 0, $0280 ; SHOTTYPE_TOPSPIN
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_GROUND, 1, $03c0 ; SHOTTYPE_POWER_TOPSPIN
+	shot_preset SFX_HIT_SLICE, SHOTCLASS_GROUND, 0, $0280 ; SHOTTYPE_SLICE
+	shot_preset SFX_HIT_SLICE, SHOTCLASS_GROUND, 2, $03c0 ; SHOTTYPE_POWER_SLICE
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_GROUND, 0, $03c0 ; SHOTTYPE_NEUTRAL
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_VOLLEY, 0, $03c0 ; SHOTTYPE_REACH
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_VOLLEY, 0, $0480 ; SHOTTYPE_REACH_POWER_TOPSPIN
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_VOLLEY, 0, $0380 ; SHOTTYPE_REACH_POWER_SLICE
+	shot_preset SFX_HIT_TOPSPIN, SHOTCLASS_VOLLEY, 0, $03c0 ; SHOTTYPE_REACH_BASIC
+	shot_preset SFX_HIT_SLICE, SHOTCLASS_SMASH, 3, $0440 ; SHOTTYPE_SMASH
+	shot_preset SFX_HIT_LOB, SHOTCLASS_LOB_DROP, 0, $0200 ; SHOTTYPE_LOB
+	shot_preset SFX_HIT_DROP, SHOTCLASS_LOB_DROP, 0, $0200 ; SHOTTYPE_DROP
+	shot_preset SFX_HIT_SERVE, SHOTCLASS_SERVE, 1, $02a0 ; SHOTTYPE_SERVE_TOPSPIN
+	shot_preset SFX_HIT_SERVE, SHOTCLASS_SERVE, 2, $02a0 ; SHOTTYPE_SERVE_SLICE
+	shot_preset SFX_HIT_SERVE, SHOTCLASS_SERVE, 3, $02a0 ; SHOTTYPE_SERVE_FLAT
 	assert_table_length NUM_SHOTTYPES
 GetServeTargetX:
 	ld hl, WallServeAimX ; $55e9
@@ -405,9 +405,9 @@ ComputeShotTargetX:
 	ld a, e ; $56a7
 	sub h ; $56a8
 	ld e, a ; $56a9
-	jr nc, .absTarget ; $56aa
+	jr nc, .addJitter ; $56aa
 	dec d ; $56ac
-.absTarget:
+.addJitter:
 	call GetRandomAimJitter ; $56ad
 	ld a, h ; $56b0
 	add_de_a ; $56b1

@@ -36,8 +36,8 @@
 	farptr ApplyCameraProjection ; $4046
 	farptr SetModeHookTable ; $4048
 	farptr SetMinigamePointTable ; $404a
-	farptr SetBallGatePoint1 ; $404c
-	farptr SetBallGatePoint2 ; $404e
+	farptr SetDrillGateLeftPost ; $404c
+	farptr SetDrillGateRightPost ; $404e
 	farptr DidBallCrossGate ; $4050
 	farptr SetTargetZoneCorner1 ; $4052
 	farptr SetTargetZoneCorner2 ; $4054

@@ -84,7 +84,7 @@ Unused_38_RunMatchTypeMenu:
 	script_fade_in 16 ; $44a5
 	call WaitFadeEnd ; $44aa
 .inputLoop:
-	ldh a, [hInputPressed] ; $44ad
+	ldh a, [hInputRepeat] ; $44ad
 	ld [wMenuInputPressed], a ; $44af
 	call Unused_38_AdjustMatchTypeSetting ; $44b2
 	ld b, $01 ; $44b5

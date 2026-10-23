@@ -255,7 +255,7 @@ Unused_03_SaveSlotDebugEditor:
 	pop de ; $53f7
 .advanceFrame:
 	call AdvanceFrame ; $53f8
-	ldh a, [hInputPressed] ; $53fb
+	ldh a, [hInputRepeat] ; $53fb
 	bit PADB_UP, a ; $53fd
 	jr z, .checkLeft ; $53ff
 	ld bc, $f0f8 ; $5401

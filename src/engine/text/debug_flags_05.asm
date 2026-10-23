@@ -435,7 +435,7 @@ RunDebugWarpMenu:
 	ld [wStoryModeExitTriggerRequest], a ; $6810
 	jr .closeWindow ; $6813
 .checkUpDown:
-	ldh a, [hInputPressed] ; $6815
+	ldh a, [hInputRepeat] ; $6815
 	and PADF_UP | PADF_DOWN ; $6817
 	jr z, .adjustValue ; $6819
 	ld hl, wDebugWarpCursorRow ; $681b
@@ -481,7 +481,7 @@ RunDebugWarpMenu:
 DebugStepValueWithDpad:
 	push bc ; $6862
 	ld b, a ; $6863
-	ldh a, [hInputPressed] ; $6864
+	ldh a, [hInputRepeat] ; $6864
 	bit PADB_RIGHT, a ; $6866
 	jr nz, .next ; $6868
 	bit PADB_LEFT, a ; $686a

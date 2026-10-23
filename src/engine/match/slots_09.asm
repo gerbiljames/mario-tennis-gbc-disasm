@@ -21,7 +21,7 @@
 	farptr LoadScoreDigitGfx ; $4028
 	farptr LoadPlayer1PointsDigitGfx ; $402a
 	farptr LoadPlayer2PointsDigitGfx ; $402c
-	farptr LoadPlayer1ScoreDigitGfx ; $402e
-	farptr LoadPlayer2ScoreDigitGfx ; $4030
+	farptr LoadFirstScoreDigitGfx ; $402e
+	farptr LoadSecondScoreDigitGfx ; $4030
 	farptr SpawnGameResultObj ; $4032
 	farptr DismissGameResultObj ; $4034

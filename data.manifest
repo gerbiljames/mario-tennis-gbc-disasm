@@ -162,7 +162,7 @@ engine/match/ShotPlacementDataDrop_07.asm 01d061 10 words:4
 engine/match/ShotPlacementDataServeTopspin_07.asm 01d071 50 words:4
 engine/match/ShotPlacementDataServeSlice_07.asm 01d0c1 50 words:4
 engine/match/ShotPlacementDataServeFlat_07.asm 01d111 50 words:4
-engine/match/SetupCharacterSprite_CharTileBaseTable.asm 01daaf 4 bytes:4
+engine/match/CharTileBaseByIndex.asm 01daaf 4 bytes:4
 engine/match/MoveCurve00_09.asm 0247ce d move_curve
 engine/match/MoveCurve01_09.asm 0247db d move_curve
 engine/match/MoveCurve02_09.asm 0247e8 d move_curve
@@ -948,7 +948,7 @@ engine/match/MinigameObjTiles_28.bin 0a0bf0 140 gfx
 engine/match/ShotDirectionArrowObjTiles.bin 0a0d30 100 gfx
 engine/match/FruitObjTiles.bin 0a0e30 300 gfx
 engine/match/BananaBunchObjTiles.bin 0a1130 100 gfx
-engine/match/TargetStarObjTiles.bin 0a1230 240 gfx
+engine/match/ShootingStarObjTiles.bin 0a1230 240 gfx
 engine/match/BonusStarObjTiles.bin 0a1470 20 gfx
 engine/match/MedallionObjTiles.bin 0a1490 100 gfx
 engine/match/MinigameScoreAndTargetTiles_28.bin 0a1590 8a0 gfx

@@ -167,7 +167,7 @@ SetDrillGateForPoint:
 	ld h, [hl] ; $4178
 	ld l, a ; $4179
 	push bc ; $417a
-	farcall SetBallGatePoint1 ; $417b
+	farcall SetDrillGateLeftPost ; $417b
 	pop bc ; $417e
 	ld hl, $0006 ; $417f
 	add hl, bc ; $4182
@@ -179,7 +179,7 @@ SetDrillGateForPoint:
 	ld a, [hl+] ; $418a
 	ld h, [hl] ; $418b
 	ld l, a ; $418c
-	farcall SetBallGatePoint2 ; $418d
+	farcall SetDrillGateRightPost ; $418d
 	ret ; $4190
 SetDrillTargetZoneForPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4191

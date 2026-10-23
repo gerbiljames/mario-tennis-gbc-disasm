@@ -1581,8 +1581,8 @@ RAW_ID_FAMILIES = {
     "LoadScoreDigitGfx(b)": "DIGITGFX",
     "LoadPlayer1PointsDigitGfx(b)": "DIGITGFX",
     "LoadPlayer2PointsDigitGfx(b)": "DIGITGFX",
-    "LoadPlayer1ScoreDigitGfx(b)": "DIGITGFX",
-    "LoadPlayer2ScoreDigitGfx(b)": "DIGITGFX",
+    "LoadFirstScoreDigitGfx(b)": "DIGITGFX",
+    "LoadSecondScoreDigitGfx(b)": "DIGITGFX",
     "wScoreDigitGfxStyle": "DIGITGFX",
 }
 # Text-id arguments with too few named sites to infer them: no raw number.

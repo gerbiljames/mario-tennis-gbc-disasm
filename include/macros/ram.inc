@@ -215,9 +215,9 @@ NEXTU
 \1CharSwingFrames:: db
 ; [8-bit] Set when the swing was quick (uncharged): written by StartCharSwing; its only reader copies it into the write-only wShotWasQuickSwing (ExecuteShot), so it has no effect
 \1CharQuickSwing:: db
-; [8-bit] Shot button latched while the swing is held, from b in CheckSwingCancel; cleared there when SELECT is down and by CharRallyReadyPhase. Write-only
+; [8-bit] Shot button latched from b, only by the unreached Unused_08_LatchSwingHoldButton; cleared by CheckSwingCancel when SELECT is down and by CharRallyReadyPhase. Write-only
 \1CharSwingHoldButton:: db
-; [8-bit] Frames the swing has been held: CheckSwingCancel increments it per frame and zeroes it on release or with SELECT down. Write-only
+; [8-bit] Frames the swing has been held: CheckSwingCancel increments it per frame (TickSwingHoldFrames) and zeroes it with SELECT down; CharRallyReadyPhase also clears it. Write-only
 \1CharSwingHoldFrames:: db
 ; [8-bit] Shot button already recorded, so BufferShotButtonPress ignores it while held
 \1CharLastShotButton:: db
@@ -286,11 +286,11 @@ NEXTU
 \1AiTrackingParam:: db
 ; [8-bit] RNG threshold in AiRollAimAwayFromChar: the AI aims away from the opponent when the roll is under it. Attribute record +$1e
 \1AiAimAwayChance:: db
-; [8-bit] AI play style: low nibble indexes AiServeQuickStrikeChancePtrs for the serve strike timing; AiPickShotButtons picks its AiShotMixTable_02 row with it. Attribute record +$1f
-\1AiPlayStyle:: db
+; [8-bit] AI difficulty: 0-3 is the CPU difficulty the menus set (easy - intense), 4-8 drill-feeder rows from the story records; the low nibble indexes AiServeQuickStrikeChancePtrs for the serve strike timing; AiPickShotButtons picks its AiShotMixTable_02 row with it. Attribute record +$1f
+\1AiDifficulty:: db
 ; [8-bit] Character id after RemapExtendedCharId; LookupCharSpriteSet and bank $09's LoadOnCourtCharacterGfx find the sprite bank with it
 \1CharSpriteSetId:: db
-; [8-bit] Where the AI stands between shots (0/5 baseline, 1 net, others mid-court); RST00 index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
+; [8-bit] Where the AI stands between shots (0/5 baseline, 1 hold its current depth, others mid-court); RST00 index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
 \1AiPositionStrategy:: db
 ; [4 bytes] Sprite-slot record [tile, attr, screenY, screenX] (SPRSLOT_*) for the character sprite
 \1CharSpriteSlot:: ds 4

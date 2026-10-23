@@ -240,8 +240,8 @@ NetGameMatch1Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_THE_BALL_SO_YOU_FAIL ; $55ca
 	ld b, DRILLWORDING_NET ; $55cc
 	call SetDrillServerMessage ; $55ce
-	ld a, [wShotRecoilVariant] ; $55d1
-	cp $01 ; $55d4
+	ld a, [wShotClass] ; $55d1
+	cp SHOTCLASS_VOLLEY ; $55d4
 	jp nz, DrillPointLost_4 ; $55d6
 	xor a ; $55d9
 	ret ; $55da
@@ -567,8 +567,8 @@ NetGameMatch2Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_HIT_A_SMASH_SO_YOU_FAIL ; $5845
 	ld b, DRILLWORDING_NET ; $5847
 	call SetDrillServerMessage ; $5849
-	ld a, [wShotRecoilVariant] ; $584c
-	cp $02 ; $584f
+	ld a, [wShotClass] ; $584c
+	cp SHOTCLASS_SMASH ; $584f
 	jp nz, NetGameMatch2Cases4.abortLose ; $5851
 	xor a ; $5854
 	ret ; $5855

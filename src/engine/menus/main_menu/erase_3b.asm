@@ -43,7 +43,7 @@ RunEraseSavedDataSelect:
 	call DrawEraseSavedDataGrid ; $6cb2
 	wram_bank WRAM_SCREEN ; $6cb5
 .loop:
-	ldh a, [hInputPressed] ; $6cbb
+	ldh a, [hInputRepeat] ; $6cbb
 	ld [wMenuInputPressed], a ; $6cbd
 	call MoveSavedDataPickerCursor ; $6cc0
 	or a ; $6cc3

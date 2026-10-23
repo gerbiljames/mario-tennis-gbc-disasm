@@ -133,7 +133,7 @@ wShotRecoilVelocityDepth:: dw
 ; [16-bit] Shot speed as FinalizeShotSpeed leaves it, after momentum and the character-flag penalty and clamped up to $0100. Write-only, like the three term traces above it
 wShotSpeedFinal:: dw
 
-; [16-bit] The incoming ball's contribution to the shot speed, as AddBallSpeedEighth computed it, forced negative. Write-only
+; [16-bit] The incoming ball's contribution to the shot speed, as SubBallPaceEighth computed it, forced negative. Write-only
 wShotSpeedBallTerm:: dw
 
 ; [16-bit] The striker's own depth velocity contribution, halved and signed by which end of the court the character is on (AddPlayerMomentumToShot). Write-only
@@ -232,10 +232,10 @@ wScoreboardLayout:: db
 ; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAceStat/RecordLobWinnerStat/RecordDropShotWinnerStat)
 wCurrentShotType:: db
 
-; [8-bit] Recoil kind for the shot in flight, from the ShotTypePresets_07 record (ApplyShotTypePresets); ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it
-wShotRecoilVariant:: db
+; [8-bit] SHOTCLASS_* of the shot in flight, from the ShotTypePresets_07 record (ApplyShotTypePresets); ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it and the drills test it for volleys and smashes
+wShotClass:: db
 
-; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's wCharSwingFrames clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and WeakenShotByCharge / BoostShotByCharge; $3f (fully charged) picks the special hit flash over the normal spark
+; [8-bit] Charge level of the shot being executed, 0-$3f, from the hitter's wCharSwingFrames clamped by ExecuteShot. Scales shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf (offset by $ffe0 first) and the target depth in ShortenShotDepthByCharge / LengthenShotDepthByCharge; $3f (fully charged) picks the special hit flash over the normal spark
 wShotChargeLevel:: db
 
 ; [8-bit] The striker's wCharQuickSwing, stored by ExecuteShot. Write-only
@@ -304,7 +304,7 @@ wBallHitEvent:: db
 ; [8-bit] Character index (0-3) of the hitter, from wCharIndex in ExecuteShot. Selects the wCharacterN stat block (index * 8) when crediting an ace/winner, its low bit gives the point outcome's side sign, and the bank $0d minigames test it for player vs machine
 wLastShotCharIndex:: db
 
-; [8-bit] The hitter's wCharServeRole, from ExecuteShot. Read only by DetectServeAceOutcome: on a point's second hit with the ball unbounced, role 1 (receiver) gives POINTOUTCOME_SERVE_VOLLEYED and any other role POINTOUTCOME_WRONG_RECEIVER
+; [8-bit] The hitter's wCharServeRole, from ExecuteShot. Read only by DetectServeReturnFault: on a point's second hit with the ball unbounced, role 1 (receiver) gives POINTOUTCOME_SERVE_VOLLEYED and any other role POINTOUTCOME_WRONG_RECEIVER
 wLastShotServeRole:: db
 
 ; [8-bit] Nonzero draws the ball sprite slot

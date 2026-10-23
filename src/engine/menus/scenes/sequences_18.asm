@@ -35,7 +35,7 @@ PlayAwardsCeremonyScene:
 	sound BGM_THE_END ; $7829
 .waitInput:
 	call AdvanceFrame ; $782b
-	ldh a, [hInputPressed] ; $782e
+	ldh a, [hInputRepeat] ; $782e
 	and PADF_A | PADF_B ; $7830
 	jr z, .waitInput ; $7832
 	ret ; $7834
@@ -140,7 +140,7 @@ PlayDreamMatchEpilogueScene:
 	call WaitFadeEnd ; $7955
 .waitWinScreenInput:
 	call AdvanceFrame ; $7958
-	ldh a, [hInputPressed] ; $795b
+	ldh a, [hInputRepeat] ; $795b
 	and PADF_A | PADF_B ; $795d
 	jr z, .waitWinScreenInput ; $795f
 	script_fade_out 2 ; $7961
@@ -189,7 +189,7 @@ PlayDreamMatchEpilogueScene:
 	sound BGM_THE_END ; $79dc
 .waitTheEndInput:
 	call AdvanceFrame ; $79de
-	ldh a, [hInputPressed] ; $79e1
+	ldh a, [hInputRepeat] ; $79e1
 	and PADF_A | PADF_B ; $79e3
 	jr z, .waitTheEndInput ; $79e5
 	ld de, SAVEFLAG_OPENING_SEEN ; $79e7

@@ -491,8 +491,8 @@ NetGamePractice1Cases3:
 	ld a, DRILLMSG_YOU_DIDNT_VOLLEY_SO_YOU_FAIL ; $5e40
 	ld b, DRILLWORDING_SAME ; $5e42
 	call SetDrillServerMessage ; $5e44
-	ld a, [wShotRecoilVariant] ; $5e47
-	cp $01 ; $5e4a
+	ld a, [wShotClass] ; $5e47
+	cp SHOTCLASS_VOLLEY ; $5e4a
 	jp nz, .pointLost ; $5e4c
 	ld hl, wDrillCounters + DRILLCTR_SHOTS_LEFT ; $5e4f
 	dec [hl] ; $5e52

@@ -110,19 +110,19 @@ bytes in the `PADF_*` layout (buttons low nibble, d-pad high):
 |---|---|---|
 | `hPlayerInputFlags` | `$ff90` | held |
 | `hInputRisingEdge` | `$ff94` | newly pressed (`old xor new and new`, `$0310`) |
-| `hInputPressed` | `$ff91` | auto-repeat output |
+| `hInputRepeat` | `$ff91` | auto-repeat output |
 
 Repeat (`$031b`-`$0343`): a held set not overlapping the previously repeating set
 fires immediately, is recorded in `hInputRepeatButtons` and arms
-`hInputRepeatTimer = $12` (18 frames); after that `hInputPressed` is nonzero only
+`hInputRepeatTimer = $12` (18 frames); after that `hInputRepeat` is nonzero only
 when the timer expires, reloading from `hInputRepeatDelay`. Menus read
-`hInputPressed`, so held directions scroll.
+`hInputRepeat`, so held directions scroll.
 
 `hPlayerInputFlags == $0f` (all four face buttons) jumps to `SoftReset`
 (`$00:$2582`; the `jp z` is at `$27bd`).
 
 Menus mostly read `wMenuInputPressed` (`$cb0d`), a per-loop copy of
-`hInputPressed` (e.g. `$16:$450c`, `$3e:$452a`), so a screen can substitute link
+`hInputRepeat` (e.g. `$16:$450c`, `$3e:$452a`), so a screen can substitute link
 input without touching HRAM.
 
 ### 1.5 The debug single-stepper

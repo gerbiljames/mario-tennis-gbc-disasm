@@ -149,15 +149,15 @@ LoadPlayer2PointsDigitGfx:
 	ld c, 4 ; $6124
 	call QueueVRAMCopy ; $6126
 	ret ; $6129
-LoadPlayer1ScoreDigitGfx:
-	ld hl, Player1ScoreDigitGfxSource ; $612a
+LoadFirstScoreDigitGfx:
+	ld hl, FirstScoreDigitGfxSource ; $612a
 	call GetGfxSourcePtr ; $612d
 	ld de, vTiles0 tile $30 ; $6130
 	ld c, 4 ; $6133
 	call QueueVRAMCopy ; $6135
 	ret ; $6138
-LoadPlayer2ScoreDigitGfx:
-	ld hl, Player2ScoreDigitGfxSource ; $6139
+LoadSecondScoreDigitGfx:
+	ld hl, SecondScoreDigitGfxSource ; $6139
 	call GetGfxSourcePtr ; $613c
 	ld de, vTiles0 tile $34 ; $613f
 	ld c, 4 ; $6142
@@ -188,9 +188,9 @@ GetGfxSourcePtr:
 	ret ; $616c
 ScoreDigitGfxPtrs_09:
 	dw TennisCallDigitGfx_09, NumeralDigitGfx_09 ; $616d
-Player1ScoreDigitGfxSource:
+FirstScoreDigitGfxSource:
 	dw Player1TennisCallDigitGfx_09, Player1NumeralDigitGfx_09 ; $6171
-Player2ScoreDigitGfxSource:
+SecondScoreDigitGfxSource:
 	dw Player2TennisCallDigitGfx_09, Player2NumeralDigitGfx_09 ; $6175
 	ds ALIGN[4]
 TennisCallDigitGfx_09:

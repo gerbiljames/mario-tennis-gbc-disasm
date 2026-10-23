@@ -1002,7 +1002,7 @@ state and match settings, enables the LCD, and at `.runMainMenu` (`$40a5`) sets
 Past that call, `.buildStampLoop` (`$40b2`-`$40eb`) prints the build stamp, sets
 `hDebugStepMode` to 3, sets the save flag on A and reruns the overworld on
 START, ending in `jp .buildStampLoop`. After it sits a **complete debug dispatcher**
-(`$01:$40ec` onward) that polls `hInputPressed`:
+(`$01:$40ec` onward) that polls `hInputRepeat`:
 
 | bit | button | what it runs |
 | --- | --- | --- |

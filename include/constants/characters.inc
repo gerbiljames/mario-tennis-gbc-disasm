@@ -15,7 +15,7 @@ def CHARREC_REACH            rb 8 ; $10 the reach box
 def CHARREC_LEVEL            rb   ; $18 1-99; each level-up also raises one of CHARREC_TRAIN_LEVELS
 def CHARREC_SKILL_ICONS      rw   ; $19 bitmask of the icons earned at STATARCH_MODIFIERS levels
 def CHARREC_AI_PARAMS        rb 4 ; $1b reaction delays near and far, tracking, aim-away chance
-def CHARREC_DIFFICULTY       rb   ; $1f CPU difficulty 0 easy - 3 intense, the AI's play style on court
+def CHARREC_DIFFICULTY       rb   ; $1f AI difficulty: 0 easy - 3 intense from the CPU menus, 4-8 drill-feeder shot rows (wAiDifficulty)
 def CHARREC_STAT_TOP         rb   ; $20 the eleven 0-9 stats, in this order
 def CHARREC_STAT_SLICE       rb   ; $21
 def CHARREC_STAT_SERVE       rb   ; $22

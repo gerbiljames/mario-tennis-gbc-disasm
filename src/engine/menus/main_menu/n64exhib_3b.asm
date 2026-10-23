@@ -314,7 +314,7 @@ RunTrophiesScreen:
 	call WaitFadeEnd ; $4987
 	wram_bank WRAM_SCREEN ; $498a
 .loop:
-	ldh a, [hInputPressed] ; $4990
+	ldh a, [hInputRepeat] ; $4990
 	ld [wMenuInputPressed], a ; $4992
 	call AdvanceFrame ; $4995
 	ld a, [wMenuInputPressed] ; $4998

@@ -160,7 +160,7 @@ def wAiReactionDelayNear equ $df79
 def wAiReactionDelayFar equ $df7a
 def wAiTrackingParam equ $df7b
 def wAiAimAwayChance equ $df7c
-def wAiPlayStyle equ $df7d
+def wAiDifficulty equ $df7d
 def wCharSpriteSetId equ $df7e
 def wAiPositionStrategy equ $df7f
 def wCharSpriteSlot equ $df80

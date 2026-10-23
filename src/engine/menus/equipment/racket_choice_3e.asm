@@ -19,7 +19,7 @@ RunEraseDataConfirmMenu:
 	wram_bank WRAM_SCREEN ; $4c54
 .loop:
 	call AdvanceFrame ; $4c5a
-	ldh a, [hInputPressed] ; $4c5d
+	ldh a, [hInputRepeat] ; $4c5d
 	ld [wMenuInputPressed], a ; $4c5f
 	bit PADB_A, a ; $4c62
 	jr nz, .pressedA ; $4c64
@@ -270,7 +270,7 @@ RunRacketShoesChoiceMenu:
 	wram_bank WRAM_SCREEN ; $4ed5
 .loop:
 	call AdvanceFrame ; $4edb
-	ldh a, [hInputPressed] ; $4ede
+	ldh a, [hInputRepeat] ; $4ede
 	ld [wMenuInputPressed], a ; $4ee0
 	ld b, $02 ; $4ee3
 	ld c, $01 ; $4ee5

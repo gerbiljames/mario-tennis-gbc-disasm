@@ -59,12 +59,12 @@ UpdateScorePanelDisplay:
 	ld a, [wScoreDigitGfxStyle] ; $409f
 	ld b, a ; $40a2
 	ld a, d ; $40a3
-	call LoadPlayer1ScoreDigitGfx ; $40a4
+	call LoadFirstScoreDigitGfx ; $40a4
 	pop de ; $40a7
 	ld a, [wScoreDigitGfxStyle] ; $40a8
 	ld b, a ; $40ab
 	ld a, e ; $40ac
-	call LoadPlayer2ScoreDigitGfx ; $40ad
+	call LoadSecondScoreDigitGfx ; $40ad
 	ret ; $40b0
 .deuce:
 	call LoadDeuceGfx ; $40b1
@@ -423,14 +423,14 @@ SetObjDrawMode:
 	add hl, bc ; $45f5
 	ld [hl], d ; $45f6
 	ret ; $45f7
-Unused_09_ToggleObjMoveCurveBits_1:
+Unused_09_ToggleObjMoveCurveBit1:
 	ld hl, OBJSLOT_CURVE ; $45f8
 	add hl, bc ; $45fb
 	ld a, [hl] ; $45fc
 	xor $02 ; $45fd
 	ld [hl], a ; $45ff
 	ret ; $4600
-Unused_09_ToggleObjMoveCurveBits_2:
+Unused_09_ToggleObjMoveCurveLowBits:
 	ld hl, OBJSLOT_CURVE ; $4601
 	add hl, bc ; $4604
 	ld a, [hl] ; $4605

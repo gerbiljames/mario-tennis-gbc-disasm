@@ -142,7 +142,7 @@ wTreasureBoxAnimTimer:: db
 NEXTU
 ; training drills (bank $0b)
 	ds 11
-; [8-bit] Set while the serve gate stands: RecordGateCrossOnServe clears it when the serve passes through (recording the bit in wDrillGateCrossBits); QueueDrillGate1Pole/QueueDrillGate2Pole draw the gate markers only while set
+; [8-bit] Set while the serve gate stands: RecordGateCrossOnServe clears it when the serve passes through (recording the bit in wDrillGateCrossBits); QueueDrillGateLeftPole/QueueDrillGateRightPole draw the gate markers only while set
 wDrillGateActive:: db
 NEXTU
 ; scoreboard (bank $18)
@@ -189,11 +189,11 @@ wTargetZoneX2:: dw
 ; [16-bit] Target zone depth bound 2 (world units)
 wTargetZoneDepth2:: dw
 
-; [4 bytes] First drill gate: two 16-bit coordinates (+$00 from hl, +$02 from de in SetBallGatePoint1). DidBallCrossGate tests the ball against it each frame; QueueDrillGate1Pole draws its pole there
-wDrillGate1:: ds 4
+; [4 bytes] Drill gate's left post: X (+$00, hl) and depth (+$02, de) from SetDrillGateLeftPost. DidBallCrossGate counts a crossing when the ball passes this depth with wBallX between the two posts' X; QueueDrillGateLeftPole draws its pole there
+wDrillGateLeftPost:: ds 4
 
-; [4 bytes] The second gate, set and tested the same way
-wDrillGate2:: ds 4
+; [4 bytes] The same gate's right post (SetDrillGateRightPost); only its X is tested
+wDrillGateRightPost:: ds 4
 
 ; Mode-local scratch, the first five bytes above $c780, used by the
 ; minigame banks. Bank $1b loads its 32-byte nav grids from the same
@@ -221,8 +221,8 @@ wTargetGridClearCount:: db
 ; [8-bit] 1 when the opponent is CHAR_UNUSED_15 (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
 wMinigameServerIsMachine:: db
 
-; [8-bit] Nonzero makes AiServePressToss release the serve at once instead of running the wAiPlayStyle toss table (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
-wAiServeSkipToss:: db
+; [8-bit] Nonzero makes AiServePressToss skip the AiServeQuickStrikeChance roll and always wait the long toss-to-strike gap (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
+wAiServeNoQuickStrike:: db
 	ds 7
 
 ; [16-bit] Pointer to the layout table for the current minigame point, set by SetMinigamePointTable and walked by LoadMinigamePointLayout and RunMinigamePointLoop
@@ -234,7 +234,7 @@ wModeHookTable:: dw
 ; [8-bit] ROM bank of the mode callback table (0 = no hooks registered)
 wModeHookBank:: db
 
-; [8-bit] Aim AiApplyServeAim uses for the next serve; $ff (set by RunMatch) = random from AiApplyServeAimTable. The drill point-start hooks write a fixed aim
+; [8-bit] Aim AiApplyServeAim uses for the next serve; $ff (set by RunMatch) = random from AiRandomServeAimDirs. The drill point-start hooks write a fixed aim
 wAiServeAimOverride:: db
 
 ; [16-bit] Spot the serving CPU walks to; zero makes AiServeWalkToSpot roll a new one. The drill runner clears it before each match
@@ -255,7 +255,7 @@ wDrillIsPracticeLesson:: db
 ; [8-bit] Set to 1 for a high-score attempt: outright by the InitMinigame_*HighScore entries, and by ordinary minigames at wMinigameLevel 2. SelectScoreboardLayout picks layout 7
 wMinigameHighScoreMode:: db
 
-; [8-bit] DIGITGFX_* glyph set passed in b to LoadPlayer1ScoreDigitGfx/LoadPlayer2ScoreDigitGfx for the score panel. PlayTiebreakGame and InitMinigameMatchSettings set DIGITGFX_NUMERALS; PlayGame resets it to DIGITGFX_TENNIS_CALLS
+; [8-bit] DIGITGFX_* glyph set passed in b to LoadFirstScoreDigitGfx/LoadSecondScoreDigitGfx for the score panel. PlayTiebreakGame and InitMinigameMatchSettings set DIGITGFX_NUMERALS; PlayGame resets it to DIGITGFX_TENNIS_CALLS
 wScoreDigitGfxStyle:: db
 
 ; Mode-local scratch above the named mode flags; as with the $c780 block,

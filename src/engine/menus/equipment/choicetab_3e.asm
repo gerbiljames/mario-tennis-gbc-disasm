@@ -166,7 +166,7 @@ RunPlayAlonePartnerMenu:
 	wram_bank WRAM_SCREEN ; $51c5
 .loop:
 	call AdvanceFrame ; $51cb
-	ldh a, [hInputPressed] ; $51ce
+	ldh a, [hInputRepeat] ; $51ce
 	ld [wMenuInputPressed], a ; $51d0
 	ld b, $02 ; $51d3
 	ld c, $01 ; $51d5
@@ -388,7 +388,7 @@ ShowEquipmentStatusScreen:
 	script_fade_in 16 ; $53aa
 	call WaitFadeEnd ; $53af
 .inputLoop:
-	ldh a, [hInputPressed] ; $53b2
+	ldh a, [hInputRepeat] ; $53b2
 	bit PADB_A, a ; $53b4
 	jr nz, .exit ; $53b6
 	bit PADB_B, a ; $53b8

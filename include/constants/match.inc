@@ -75,7 +75,17 @@ def SPRSLOT_SIZE equ _RS
 	const SHOTTYPE_SERVE_FLAT          ; $0e serve, A+B
 def NUM_SHOTTYPES equ const_value
 
-; AI shot habits (AiShotMixTable_02, one 16-entry row per AI play style;
+; Shot class (wShotClass), the second ShotTypePresets_07 byte: picks the
+; ShotRecoilVarPtrs_07 speed index for ApplyShotRecoil, and the drills test it
+; to tell volleys and smashes apart.
+	const_def
+	const SHOTCLASS_GROUND   ; $00 ground strokes and the neutral shot
+	const SHOTCLASS_VOLLEY   ; $01 the reach (net) variants
+	const SHOTCLASS_SMASH    ; $02
+	const SHOTCLASS_LOB_DROP ; $03
+	const SHOTCLASS_SERVE    ; $04
+
+; AI shot habits (AiShotMixTable_02, one 16-entry row per wAiDifficulty;
 ; AiPickShotButtons draws one by AdvanceMatchRng & $0f): the stroke's two
 ; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
 	const_def $10
@@ -228,14 +238,14 @@ def NUM_COURTS equ const_value
 ; -> state at the start of a point) and SetCharStateOnBallHitTable (the state
 ; every character is remapped through on every strike).
 	const_def
-	const CHARSTATE_INERT       ; $00 slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
-	const CHARSTATE_RALLY       ; $01 CharRallyState: ready -> windup -> contact
-	const CHARSTATE_RECOVER     ; $02 CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
-	const CHARSTATE_SERVE       ; $03 CharServeState: indicator, toss, swing window, strike
-	const CHARSTATE_AWAIT_SERVE ; $04 CharAwaitServeState
-	const CHARSTATE_STANDBY     ; $05 CharStandbyState: end-state, then state 4's movement phase
-	const CHARSTATE_WALK        ; $06 CharWalkState: the scripted changeover and walk-off walks
-	const CHARSTATE_POINT_END   ; $07 CharPointEndState: walk to target, then the win/lose reaction
+	const CHARSTATE_INERT          ; $00 slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
+	const CHARSTATE_RALLY          ; $01 CharRallyState: ready -> windup -> contact
+	const CHARSTATE_RECOVER        ; $02 CharRecoverState: let the swing finish, then movement only. Whoever struck the ball is put here
+	const CHARSTATE_SERVE          ; $03 CharServeState: indicator, toss, swing window, strike
+	const CHARSTATE_SERVER_PARTNER ; $04 CharServerPartnerState: the server's doubles partner; moving back past depth $0200 dismisses the serve indicator
+	const CHARSTATE_STANDBY        ; $05 CharStandbyState: CharFinishSwingPhase, then state 4's movement phase
+	const CHARSTATE_WALK           ; $06 CharWalkState: the scripted changeover and walk-off walks
+	const CHARSTATE_POINT_END      ; $07 CharPointEndState: walk to target, then the win/lose reaction
 def NUM_CHARSTATES equ const_value
 
 ; --- On-court character flags (wCharFlags) ---
@@ -282,7 +292,7 @@ def COURTPOS_NONE        equ $09 ; no character in this slot
 
 ; --- Serve role (wCharServeRole, wLastShotServeRole) ---
 ; Bit 0 is the receiving side, bit 1 the doubles partner (the AI's net-player
-; tables); ToggleCharCourtRow swaps a player with its partner.
+; tables); ToggleCharServePartnerRole swaps a player with its partner.
 def SERVEROLEB_RECEIVING equ 0
 def SERVEROLEB_PARTNER   equ 1
 def SERVEROLEF_RECEIVING equ 1 << SERVEROLEB_RECEIVING
@@ -316,7 +326,7 @@ def POINTOUTCOME_MINIGAME_CLEARED equ $0b ; bank $0d only, set right after IsMin
 ; A signed -1/0/+1 shared by both flags and the set/game-level ones: AwardPoint
 ; (`add a / ret z / jr nc`) credits nobody on $00, the player-1 side on +1 and
 ; the player-2 side on -1.
-def AISERVEAIM_RANDOM equ $ff ; wAiServeAimOverride: AiApplyServeAim rolls the aim from AiApplyServeAimTable; otherwise the PADF_LEFT/PADF_RIGHT bits it ORs into the serve input
+def AISERVEAIM_RANDOM equ $ff ; wAiServeAimOverride: AiApplyServeAim rolls the aim from AiRandomServeAimDirs; otherwise the PADF_LEFT/PADF_RIGHT bits it ORs into the serve input
 
 def WINLOSE_NONE             equ $00 ; nothing decided yet
 def WINLOSE_WIN              equ $01 ; the player-1 side took it
@@ -329,8 +339,8 @@ def WINLOSE_LOSE             equ $ff ; the player-2 side took it
 	const MATCHCONTEXT_MINIGAME   ; $02 InitMinigameMatchSettings, RunTwoOnOneMatch: fixed view, doubles scoreboard
 
 ; --- Score-digit glyph set (b of the Load*DigitGfx loaders, wScoreDigitGfxStyle) ---
-; GetGfxSourcePtr's index into ScoreDigitGfxPtrs_09 / Player1ScoreDigitGfxSource /
-; Player2ScoreDigitGfxSource.
+; GetGfxSourcePtr's index into ScoreDigitGfxPtrs_09 / FirstScoreDigitGfxSource /
+; SecondScoreDigitGfxSource.
 def DIGITGFX_TENNIS_CALLS    equ $00 ; 0/15/30/40/Ad: a normal game's points
 def DIGITGFX_NUMERALS        equ $01 ; plain numbers: tiebreak points, minigame counters, games and sets
 

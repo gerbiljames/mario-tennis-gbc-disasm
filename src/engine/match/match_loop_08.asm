@@ -170,9 +170,9 @@ FlipPlayer1TeamPositions:
 	ret ; $4874
 .toggleRows:
 	wram_bank WRAM_CHAR0 ; $4875
-	call ToggleCharCourtRow ; $487b
+	call ToggleCharServePartnerRole ; $487b
 	wram_bank WRAM_CHAR2 ; $487e
-	call ToggleCharCourtRow ; $4884
+	call ToggleCharServePartnerRole ; $4884
 	ret ; $4887
 FlipPlayer2CharPosition:
 	ld b, COURTPOSF_LEFT ; $4888
@@ -192,9 +192,9 @@ FlipPlayer2TeamPositions:
 	ret ; $48b5
 .toggleRows:
 	wram_bank WRAM_CHAR1 ; $48b6
-	call ToggleCharCourtRow ; $48bc
+	call ToggleCharServePartnerRole ; $48bc
 	wram_bank WRAM_CHAR3 ; $48bf
-	call ToggleCharCourtRow ; $48c5
+	call ToggleCharServePartnerRole ; $48c5
 	ret ; $48c8
 LoadTiebreakCourtPositions:
 	ld a, [wOnCourtCharCountMinus1] ; $48c9
@@ -270,7 +270,7 @@ LoadPositionRecord:
 	ld a, [hl+] ; $496e
 	ld [de], a ; $496f
 	ret ; $4970
-ToggleCharCourtRow:
+ToggleCharServePartnerRole:
 	ld hl, wCharServeRole ; $4971
 	ld a, [hl] ; $4974
 	xor SERVEROLEF_PARTNER ; $4975

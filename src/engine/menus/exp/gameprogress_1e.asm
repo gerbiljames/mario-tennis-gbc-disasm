@@ -105,7 +105,7 @@ BuildGameProgressScreen:
 .loop:
 	call AdvanceFrame ; $7353
 	wram_bank WRAM_TEXT ; $7356
-	ldh a, [hInputPressed] ; $735c
+	ldh a, [hInputRepeat] ; $735c
 	bit PADB_UP, a ; $735e
 	call nz, ScrollProgressListUp ; $7360
 	bit PADB_DOWN, a ; $7363

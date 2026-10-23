@@ -246,14 +246,14 @@ StrokePractice2EvaluateResult:
 	ld a, [wRallyLength] ; $6e6a
 	cp $03 ; $6e6d
 	jr nc, .noControl ; $6e6f
-	ld a, [wShotRecoilVariant] ; $6e71
-	cp $01 ; $6e74
+	ld a, [wShotClass] ; $6e71
+	cp SHOTCLASS_VOLLEY ; $6e74
 	jr nz, .checkSmashed ; $6e76
 	ld a, LESSON_LOB_VOLLEYED ; $6e78
 	ld [wDrillLessonResult], a ; $6e7a
 	jr .lessonFailed ; $6e7d
 .checkSmashed:
-	cp $02 ; $6e7f
+	cp SHOTCLASS_SMASH ; $6e7f
 	jr nz, .noControl ; $6e81
 	ld a, LESSON_LOB_SMASHED ; $6e83
 	ld [wDrillLessonResult], a ; $6e85

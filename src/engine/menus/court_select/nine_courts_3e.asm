@@ -33,7 +33,7 @@ RunCourtSelect9Menu:
 	wram_bank WRAM_SCREEN ; $6555
 .loop:
 	call AdvanceFrame ; $655b
-	ldh a, [hInputPressed] ; $655e
+	ldh a, [hInputRepeat] ; $655e
 	ld [wMenuInputPressed], a ; $6560
 	ld b, $03 ; $6563
 	ld c, $03 ; $6565

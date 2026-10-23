@@ -36,10 +36,10 @@ RestorePalettesFromMaster:
 ApplyPendingPaletteUpdates:
 	ldh a, [hPaletteDirtyFlags] ; $060d
 	rrca ; $060f
-	jr nc, .checkPaletteDirtyFlags ; $0610
+	jr nc, .checkOBJDirty ; $0610
 	ld hl, wBGPalettes ; $0612
 	call LoadBGPaletteData ; $0615
-.checkPaletteDirtyFlags:
+.checkOBJDirty:
 	ldh a, [hPaletteDirtyFlags] ; $0618
 	rrca ; $061a
 	rrca ; $061b

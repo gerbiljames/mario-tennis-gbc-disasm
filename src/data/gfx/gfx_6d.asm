@@ -202,7 +202,7 @@ Unused_6d_ShowPlaceholderScreen:
 	call WaitFadeEnd ; $6aa7
 .loop:
 	call AdvanceFrame ; $6aaa
-	ldh a, [hInputPressed] ; $6aad
+	ldh a, [hInputRepeat] ; $6aad
 	and PADF_A | PADF_B ; $6aaf
 	jr z, .loop ; $6ab1
 	script_fade_out 1 ; $6ab3

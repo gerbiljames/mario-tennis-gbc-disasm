@@ -283,7 +283,7 @@ DrawShootingStarSprite:
 	ld a, [hl] ; $5376
 	cp $ff ; $5377
 	ret z ; $5379
-	farcall LoadTargetStarFrameTiles ; $537a
+	farcall LoadShootingStarFrameTiles ; $537a
 	ret ; $537d
 ShootingStarAnimFrames:
 	; $537e, 32 bytes (bytes:8)

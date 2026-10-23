@@ -31,7 +31,7 @@ RunMainMenu:
 .loop:
 	call AdvanceFrame ; $5626
 	farcall UpdateCheatCodeEntry ; $5629
-	ldh a, [hInputPressed] ; $562c
+	ldh a, [hInputRepeat] ; $562c
 	ld [wMenuInputPressed], a ; $562e
 	ld b, $03 ; $5631
 	ld c, $03 ; $5633

@@ -165,14 +165,14 @@ BuildBallSlot:
 	call ApplyCameraProjection ; $51c3
 	pop hl ; $51c6
 	bit 7, h ; $51c7
-	jr nz, .midHeight ; $51c9
+	jr nz, .negativeDepth ; $51c9
 	ld a, $42 ; $51cb
 	ld bc, $fe60 ; $51cd
 	add hl, bc ; $51d0
 	jr nc, .fillSlot ; $51d1
 	ld a, $44 ; $51d3
 	jr .fillSlot ; $51d5
-.midHeight:
+.negativeDepth:
 	ld a, $42 ; $51d7
 	ld bc, $01a0 ; $51d9
 	add hl, bc ; $51dc

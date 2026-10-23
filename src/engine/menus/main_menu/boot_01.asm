@@ -76,7 +76,7 @@ ENDC
 	ld a, DEBUGSTEP_CONSOLE_ON ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
 .waitStartLoop:
-	ldh a, [hInputPressed] ; $40bf
+	ldh a, [hInputRepeat] ; $40bf
 	bit PADB_A, a ; $40c1
 	jr z, .checkStart ; $40c3
 	push de ; $40c5
@@ -105,7 +105,7 @@ Unused_01_DebugBootMenu:
 	ld a, DEBUGSTEP_CONSOLE_ON ; $40f5
 	ldh [hDebugStepMode], a ; $40f7
 .loop:
-	ldh a, [hInputPressed] ; $40f9
+	ldh a, [hInputRepeat] ; $40f9
 	bit PADB_START, a ; $40fb
 	jr z, .checkSelect ; $40fd
 	ld a, DEBUGSTEP_CONSOLE_OFF ; $40ff
@@ -462,7 +462,7 @@ Unused_01_RunSoundTest:
 	pop hl ; $6a89
 .loop:
 	call AdvanceFrame ; $6a8a
-	ldh a, [hInputPressed] ; $6a8d
+	ldh a, [hInputRepeat] ; $6a8d
 	and PADF_UP | PADF_DOWN ; $6a8f
 	jr z, .checkRow ; $6a91
 	ld a, b ; $6a93
@@ -472,7 +472,7 @@ Unused_01_RunSoundTest:
 	ld a, b ; $6a97
 	or a ; $6a98
 	jr nz, .editSfx ; $6a99
-	ldh a, [hInputPressed] ; $6a9b
+	ldh a, [hInputRepeat] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
 	jr z, .checkTrackLeft ; $6a9f
 	inc d ; $6aa1
@@ -495,7 +495,7 @@ Unused_01_RunSoundTest:
 	ld d, $00 ; $6ab9
 	jr .drawCursor ; $6abb
 .editSfx:
-	ldh a, [hInputPressed] ; $6abd
+	ldh a, [hInputRepeat] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
 	jr z, .checkSfxLeft ; $6ac1
 	inc e ; $6ac3
@@ -565,7 +565,7 @@ Unused_01_RunSoundTest:
 	call PrintDecimalByte ; $6b28
 	pop af ; $6b2b
 	pop de ; $6b2c
-	ldh a, [hInputPressed] ; $6b2d
+	ldh a, [hInputRepeat] ; $6b2d
 	bit PADB_A, a ; $6b2f
 	jr z, .continue ; $6b31
 	bit 0, b ; $6b33
