@@ -10,7 +10,7 @@ wStorySlotData::
 
 	char_record wSavedPartner
 
-; [4 bytes] Signature that tells story saves apart. CacheStorySlotSummaries copies each slot's to $d400 + slot * 4, CheckStorySignatureCollision compares them, GenerateUniqueStorySaveSignature rerolls from wStoryRandomBytes until no slot matches
+; [4 bytes] Signature that tells story saves apart. CacheStorySlotSignatures copies each slot's to $d400 + slot * 4, CheckStorySignatureCollision compares them, GenerateUniqueStorySaveSignature rerolls from wStoryRandomBytes until no slot matches
 wStorySaveSignature:: ds 4
 
 ; [3 bytes] Tag InitStoryModeState stamps on a fresh story slot: $56 then two zero bytes

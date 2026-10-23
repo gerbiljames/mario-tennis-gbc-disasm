@@ -286,7 +286,7 @@ End12PrincipalsOfficeInitScript_27:
 .closeDoorBehind:
 	call AcademyWingCloseDoor_27 ; $514f
 	script_delay 60 ; $5152
-	set_flag FLAG_ENDING_CREDITS_PENDING ; $5157
+	set_flag FLAG_ENDING_SKIP_STAFF_PAGE ; $5157
 	script_fade_out 4 ; $515a
 	call WaitFadeEnd ; $515f
 	ld a, EXIT_END12_PRINCIPALS_OFFICE_DONE ; $5162

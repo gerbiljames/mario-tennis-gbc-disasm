@@ -80,7 +80,7 @@ class Source(unittest.TestCase):
         self.assertEqual(count(r"\(BANK\([\w.]+\) << 8\) \| LOW\("), 0, "a slot pair not written with ld_slot")
 
     def test_named_ids(self):
-        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 275)
+        self.assertEqual(count(r"ld hl, Text_\w+ ;"), 277)
         self.assertEqual(count(r"^\tdw Text_\w+"), 820)
         self.assertGreaterEqual(count(r"\bDRILLMSG_\w+"), 65)
         self.assertGreaterEqual(count(r"\bBEHAVIOR_\w+"), 43)

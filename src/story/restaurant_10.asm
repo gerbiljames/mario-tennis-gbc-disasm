@@ -445,10 +445,10 @@ RestaurantEntryPoints_10:
 	twin_named academy_main_bldg_arrival01, RestaurantArrival01_10 ; $5b97
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts:exit)
-	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_RESTAURANT, RESTAURANT_TO_RESTAURANT_PLAZA
+	map_script $01, FACEMASK_ANY, $0000, RestaurantExitResetNpc08Seat_10, STORYLOC_RESTAURANT_PLAZA, ENTRY_RESTAURANT_PLAZA_FROM_RESTAURANT, RESTAURANT_TO_RESTAURANT_PLAZA
 	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_CAFETERIA, ENTRY_CAFETERIA_FROM_RESTAURANT, RESTAURANT_TO_CAFETERIA
 	db $ff
-RestaurantExit01_10:
+RestaurantExitResetNpc08Seat_10:
 	clear_flag FLAG_RESTAURANT_NPC08_MOVED ; $5bee
 	ret ; $5bf1
 RestaurantNpc03_10:

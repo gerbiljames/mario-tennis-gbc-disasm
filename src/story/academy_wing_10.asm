@@ -70,13 +70,13 @@ AcademyWingNpcScripts_10:
 	db $ff
 AcademyWingFacingScripts_10:
 	; $62bf, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, AcademyWingFacing01_10, $00, $00
-	map_script $02, FACEMASK_ANY, $0000, AcademyWingFacing02_10, $00, $00
+	map_script $01, FACEMASK_ANY, $0000, AcademyWingOfficeDoorLocked_10, $00, $00
+	map_script $02, FACEMASK_ANY, $0000, AcademyWingKnockOfficeDoor_10, $00, $00
 	db $ff
-AcademyWingFacing02_10:
+AcademyWingKnockOfficeDoor_10:
 	ld a, [wMapSceneStage] ; $62d0
 	cp ACADEMYWINGSTAGE_SENIOR_CHAMP ; $62d3
-	jr nz, AcademyWingFacing01_10 ; $62d5
+	jr nz, AcademyWingOfficeDoorLocked_10 ; $62d5
 	farcall BeginCutsceneScriptMode ; $62d7
 	script_player_speed 1.0 ; $62da
 	script_move_player 33.0, 51.0 ; $62e0
@@ -98,16 +98,16 @@ AcademyWingFacing02_10:
 	script_wait_idle ACTOR_PLAYER ; $634c
 	farcall EndCutsceneScriptMode ; $6351
 	ret ; $6354
-AcademyWingFacing01_10:
+AcademyWingOfficeDoorLocked_10:
 	script_set_text Text_AcademyWingDoorLocked ; $6355
 	script_speak ACTOR_PLAYER ; $635b
 	ret ; $6360
 AcademyWingTileTriggers_10:
 	; $6361, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_UP, $0000, AcademyWingTile01_10, $00, $00
-	map_script $02, FACEMASK_DOWN, $0000, AcademyWingTile02_10, $00, $00
+	map_script $01, FACEMASK_UP, $0000, AcademyWingEnterOfficeDoor_10, $00, $00
+	map_script $02, FACEMASK_DOWN, $0000, AcademyWingLeaveOfficeDoor_10, $00, $00
 	db $ff
-AcademyWingTile01_10:
+AcademyWingEnterOfficeDoor_10:
 	script_set_speed ACTOR_PLAYER, 0.625 ; $6372
 	script_face ACTOR_PLAYER, FACE_UP ; $637a
 	call AcademyWingOpenDoor_10 ; $6381
@@ -127,7 +127,7 @@ AcademyWingTile01_10:
 	script_face ACTOR_PLAYER, FACE_UP ; $63d5
 	call AcademyWingCloseDoor_10 ; $63dc
 	ret ; $63df
-AcademyWingTile02_10:
+AcademyWingLeaveOfficeDoor_10:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $63e0
 	script_set_speed ACTOR_PLAYER, 0.5 ; $63e7
 	call AcademyWingOpenDoor_10 ; $63ef

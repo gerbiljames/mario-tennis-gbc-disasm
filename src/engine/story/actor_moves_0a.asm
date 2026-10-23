@@ -361,7 +361,7 @@ ScriptSetActorFacingLock:
 	and a ; $45c5
 	ld c, l ; $45c6
 	ld b, h ; $45c7
-	jr nz, .setBit ; $45c8
+	jr nz, .lock ; $45c8
 	ld hl, ACTORF_HEADING ; $45ca
 	add hl, bc ; $45cd
 	ld a, [hl] ; $45ce
@@ -372,7 +372,7 @@ ScriptSetActorFacingLock:
 	add hl, bc ; $45d7
 	res ACTORSTATUSB_FACING_LOCKED, [hl] ; $45d8
 	ret ; $45da
-.setBit:
+.lock:
 	ld hl, ACTORF_STATUS ; $45db
 	add hl, bc ; $45de
 	set ACTORSTATUSB_FACING_LOCKED, [hl] ; $45df

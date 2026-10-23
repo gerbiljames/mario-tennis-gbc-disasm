@@ -81,7 +81,7 @@ Unused_02_DebugStoryStatsScreen:
 	ld a, [hl] ; $5046
 	ld_cell de, $02, $06 ; $5047
 	call PrintDecimalByte ; $504a
-	ld hl, CHARREC_SKILL_ICONS ; $504d
+	ld hl, CHARREC_SHOT_TRAITS ; $504d
 	add hl, bc ; $5050
 	ld a, [hl+] ; $5051
 	ld h, [hl] ; $5052
@@ -356,7 +356,7 @@ LoadStorySlot:
 	pop de ; $5281
 	pop bc ; $5282
 	ret ; $5283
-Unused_02_StorySlotVariant:
+Unused_02_LoadStorySlotOrFail:
 	push de ; $5284
 	ld hl, wStorySlotData ; $5285
 	ld b, a ; $5288
@@ -408,7 +408,7 @@ LoadPlayer2MainRecord:
 StoryCharacterRecords_02:
 	; $52cf, 2900 bytes (char_stats_row)
 ; 100 records x 29 bytes
-; char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
+; char_stats_row strategy, reach_h, reach_x, smash_jump, dive, tier, shot_traits,
 ;                delay_near, delay_far, tracking, aim_away, serve_style,
 ;                Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop,
 ;                speed_bonus

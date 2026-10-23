@@ -202,7 +202,7 @@ GetMatchRecordPtr:
 	ld_bc_indexed wPlayer1Main ; $4214
 	ret ; $421b
 InitStoryModeState:
-	call CacheStorySlotSummaries ; $421c
+	call CacheStorySlotSignatures ; $421c
 	ld hl, wStorySlotData ; $421f
 	ld c, $30 ; $4222
 	call ClearMemory16 ; $4224
@@ -236,7 +236,7 @@ Unused_02_SignExtendL:
 .negative:
 	ld h, $ff ; $425e
 	ret ; $4260
-CacheStorySlotSummaries:
+CacheStorySlotSignatures:
 	push af ; $4261
 	push bc ; $4262
 	push de ; $4263

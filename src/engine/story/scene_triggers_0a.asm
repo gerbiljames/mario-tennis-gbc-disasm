@@ -107,7 +107,7 @@ RunLocationExit:
 	call FindStoryScriptEntry ; $5619
 	ld a, h ; $561c
 	or l ; $561d
-	jr z, .saveSlot ; $561e
+	jr z, .done ; $561e
 	ld a, [wStoryLocationBank] ; $5620
 	ld de, wStoryMapRecord ; $5623
 	ld bc, wStoryMapRecord_SIZE ; $5626
@@ -122,7 +122,7 @@ RunLocationExit:
 	ld [wStoryModeCurrentLocation], a ; $563a
 	ld a, [wStoryMapRecord + MAPSCRIPT_ARG1] ; $563d
 	ld [wStoryModeEntryPoint], a ; $5640
-.saveSlot:
+.done:
 	xor a ; $5643
 	sram_bank a ; $5644
 	pop hl ; $564a

@@ -163,10 +163,10 @@ Unused_0a_SetActorAnchor:
 Unused_0a_ActorScriptSpinForever:
 	; $475f, 3 bytes (actor_script)
 	as_jump Unused_0a_ActorScriptSpinForever
-Unused_0a_ActorScriptFollowWaypoints2:
+Unused_0a_ActorScriptChaseAnchor2:
 	; $4762, 4 bytes (actor_script)
-	as_follow_wp
-	as_jump Unused_0a_ActorScriptFollowWaypoints2
+	as_chase
+	as_jump Unused_0a_ActorScriptChaseAnchor2
 ActorScript_Null:
 	; $4766, 6 bytes (actor_script)
 	as_halt

@@ -20,8 +20,8 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
 ; Overworld / story actor slots: 24 records of ACTOR_SIZE bytes, the array
 ; SpawnActor allocates from and the bank $04 engine walks once a frame.
-; Several helpers (GetActorStateAddr, AttachActorWaypointFollower,
-; AttachActorStepMover, script_get_actor_state) select WRAM bank $04
+; Several helpers (GetActorStateAddr, AttachActorChaser,
+; AttachActorTrailer, script_get_actor_state) select WRAM bank $04
 ; themselves, so callers such as the bank $0e-$15 cutscene scripts load slot
 ; addresses (`ld de, wActors` / `ld bc, wActors + ACTOR_SIZE`) with another bank selected.
 ; Fields are ACTORF_* offsets (`ld hl, ACTORF_* / add hl, bc`); the
@@ -33,11 +33,11 @@ wActors:: ds 1536
 
 	ds 1024
 
-; List of actor slots near the player, rebuilt by BuildNearbyActorList
+; List of actor slots, rebuilt by BuildNearbyActorList or BuildTalkableActorList
 ; (banks $18/$1b/$28/$38 keep unrelated screen state at the same addresses
 ; in WRAM bank $03).
 ; actor engine (bank $04)
-; [up to 24 x 2 bytes + terminator] Pointers to the live actor slots BuildNearbyActorList selected (nonzero +$01, +$30 bit 7 and +$05 bit 3 set, close enough to the player). A zero word ends the list; FindActorAtPoint and the proximity searches walk it
+; [up to 24 x 2 bytes + terminator] Pointers to the live, on-screen actor slots BuildNearbyActorList (+$05 bit 3 set, close enough to the player) or BuildTalkableActorList (+$05 bit 4 set, any distance) selected. A zero word ends the list; FindActorAtPoint and the proximity searches walk it
 wNearbyActorList:: ds 50
 
 	ds 142
@@ -46,7 +46,7 @@ wNearbyActorList:: ds 50
 ; they live in whichever bank the caller was running and the engine wants
 ; them at a fixed address.
 ; actor engine (bank $04)
-; [14 bytes] One map_actor record, copied from the ROM list by SpawnActorsFromList and passed to SpawnActorFromTemplate. +$09 (obj_id) is $ff on the list terminator
+; [14 bytes] One map_actor record, copied from the ROM list by SpawnActorsFromList and passed to SpawnActorFromTemplate. +$09 (the pad byte after facing) is $ff on the list terminator
 wActorTemplate:: ds 14
 	export_size wActorTemplate
 	ds 2

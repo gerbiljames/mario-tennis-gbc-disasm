@@ -75,7 +75,7 @@ def FLAG_HAVE_DRIVE_RACKET equ 102 ; wGameFlags byte $0c bit 6
 def FLAG_HAVE_IRON_SHOES equ 103 ; wGameFlags byte $0c bit 7
 
 def FLAG_HAVE_LIGHT_SHOES equ 104 ; wGameFlags byte $0d bit 0
-def FLAG_ENDING_CREDITS_PENDING equ 109 ; wGameFlags byte $0d bit 5
+def FLAG_ENDING_SKIP_STAFF_PAGE equ 109 ; wGameFlags byte $0d bit 5
 def FLAG_ENDING_CREDITS_RUNNING equ 110 ; wGameFlags byte $0d bit 6
 def FLAG_ACTORS_FROZEN equ 111 ; wGameFlags byte $0d bit 7
 
@@ -94,7 +94,7 @@ def FLAG_RESTAURANT_NPC08_MOVED equ 123 ; wGameFlags byte $0f bit 3
 def FLAG_SENIOR_COURT_BOB_PAM_BLOCKING equ 124 ; wGameFlags byte $0f bit 4
 def FLAG_PRACTICE_ROOM_SESSION_ACTIVE equ 125 ; wGameFlags byte $0f bit 5
 def FLAG_REPAIR_COUNTER_GREETED equ 126 ; wGameFlags byte $0f bit 6
-def FLAG_REPAIR_COUNTER_EQUIP_CHANGED equ 127 ; wGameFlags byte $0f bit 7
+def FLAG_REPAIR_COUNTER_SKIP_SENIOR_WELCOME equ 127 ; wGameFlags byte $0f bit 7
 
 def FLAG_SWING_PRACTICE_KID_LEFT equ 128 ; wGameFlags byte $10 bit 0
 def FLAG_TALKED_TO_ALLIE_ISLAND_OPEN equ 130 ; wGameFlags byte $10 bit 2

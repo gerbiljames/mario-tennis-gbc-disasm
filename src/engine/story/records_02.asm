@@ -4,11 +4,11 @@ RemapExtendedCharId:
 	push hl ; $4c5b
 	sub $20 ; $4c5c
 	and $7f ; $4c5e
-	ld_hl_indexed NameTextRemap_02 ; $4c60
+	ld_hl_indexed ExtendedCharIdRemap_02 ; $4c60
 	ld a, [hl] ; $4c67
 	pop hl ; $4c68
 	ret ; $4c69
-NameTextRemap_02:
+ExtendedCharIdRemap_02:
 	; $4c6a, 71 bytes (bytes:16)
 	db $08, $09, $0b, $07, $06, $0a, $04, $05, $0a, $04, $05, $06, $09, $0b, $08, $07 ; 0x00
 	db $14, $11, $0c, $08, $0a, $0b, $09, $08, $08, $08, $0b, $0b, $0b, $06, $06, $06 ; 0x10

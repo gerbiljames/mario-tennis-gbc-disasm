@@ -90,7 +90,7 @@ ActorScriptOpHandlers_04:
 	dw ActorScriptOp_MoveRel ; record 8
 	dw ActorScriptOp_RandBox ; record 9
 	dw ActorScriptOp_Step ; record 10
-	dw ActorScriptOp_FollowWaypoint ; record 11
+	dw ActorScriptOp_ChaseAnchor ; record 11
 	dw ActorScriptOp_Jump ; record 12
 	dw ActorScriptOp_SetField ; record 13
 	dw ActorScriptOp_AddField ; record 14
@@ -373,7 +373,7 @@ ActorScriptOp_Wait:
 	inc de ; $4620
 	xor a ; $4621
 	ret ; $4622
-ActorScriptOp_FollowWaypoint:
+ActorScriptOp_ChaseAnchor:
 	inc de ; $4623
 	push de ; $4624
 	ld hl, hActorPtr ; $4625

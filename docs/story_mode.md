@@ -395,7 +395,7 @@ speaker/actor id in `a`:
 resets screen shake, and only when `hDebugStepMode` is nonzero registers
 `ToggleCutsceneFastForward` (Start fast-forwards cutscenes in debug only).
 `EndCutsceneScriptMode` re-attaches the follower
-(`AttachActorWaypointFollower`, slot 1 following slot 0) and copies the
+(`AttachActorChaser`, slot 1 following slot 0) and copies the
 player's heading (`+$14`) into `wPlayerMoveAngle`.
 
 An NPC handler's speaker id is the actor slot `FindActorFacingPlayer`
@@ -663,7 +663,7 @@ location load. Match internals: [`match_engine.md`](match_engine.md).
 walks `EndingCutsceneLocationList` (`$0a:$6e40`), 21 (location, entry point)
 pairs: the twelve `$27` "End*" rooms plus Island Sky, Center Court, Peach's
 Castle and Special Court. After each `RunStoryLocation`, unless
-`FLAG_ENDING_CREDITS_PENDING` was raised, it freezes the actors, fades to
+`FLAG_ENDING_SKIP_STAFF_PAGE` was raised, it freezes the actors, fades to
 sepia and shows the next staff page, `ShowEndingCreditsStaffPage` (bank `$03`).
 `ShowFinalCreditsCard` closes the sequence. The index is read with `ld a,
 [wStoryCharacterSlot]`; the `byte0 == 0` branch at `$0a:$6ea4`-`$6eab`
@@ -701,7 +701,7 @@ Fields (code in `src/engine/story/*_02.asm`):
 | +$0c | palette index (`GetCharPaletteIndex`) |
 | +$0d | gender (0 male, 1 female) |
 | +$0e | left-handed flag |
-| +$0f-$1e | AI / physics attributes (home-position strategy, reach windows, smash and dive speeds, skill-icon bits, reaction delays) |
+| +$0f-$1e | AI / physics attributes (home-position strategy, reach windows, smash and dive speeds, shot-trait bits, reaction delays) |
 | +$1f | CPU difficulty (0 easy - 3 intense), the AI's play style on court |
 | +$18 | level for player characters (1-99, capped `$63`), class tier for roster NPCs |
 | +$20-$2a | eleven stat bars, 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop |
@@ -738,7 +738,7 @@ bar  = count of thresholds raw clears (0-9)     ; LookupStatBarLevel, 9-entry si
 `StatArchetypePtrs_02` (`AlexStatArchetype_02`-`KateStatArchetype_02` by hero
 id, laid out as `STATARCH_*`):
 a tier byte, the 12-byte template copied to `+$30`-`+$3b` at build time,
-eleven `stat_thresholds` rows, then (level, icon) modifier pairs to a `$ff`
+eleven `stat_thresholds` rows, then (level, trait) pairs OR'd into the shot traits, to a `$ff`
 (every archetype has none).
 
 | trainable level | feeds |
@@ -753,7 +753,7 @@ ahead of the overall level: growth is a budget across categories.
 
 It then copies `+$30`-`+$37` to `+$10`-`+$17` and, **only when the record
 base's low byte is zero** (`$c800`, `$c900`, `$ca00`; not
-`$c840`/`$c940`/`$ca40`/`$ca80`/`$cac0`), calls `ApplyStatModifiers`
+`$c840`/`$c940`/`$ca40`/`$ca80`/`$cac0`), calls `ApplyEquipmentStatDeltas`
 (`$02:$468e`), so equipment bonuses apply to the main character only. That
 adds a signed per-stat row for each nibble of `+$3c` from
 `RacketStatDeltas_02` (7 rows) and `ShoeStatDeltas_02` (`$02:$475f`, 3 rows),
@@ -789,7 +789,7 @@ the next slot load; `ScaleExpByPlayerLevel` averages the two story records'
 slots. `GenerateUniqueStorySaveSignature` (`src/engine/story/story_02.asm`)
 seeds it from `wStoryRandomBytes` and re-rolls until
 `CheckStorySignatureCollision` passes against the cached per-slot signatures
-(`CacheStorySlotSummaries` puts each at `$d400 + slot*4`); all-zero counts as
+(`CacheStorySlotSignatures` puts each at `$d400 + slot*4`); all-zero counts as
 a collision. Called once, on new game (`$10:$5076`).
 
 The image `$c800`-`$caff` is saved as block `2N` for slot *N* plus a backup at

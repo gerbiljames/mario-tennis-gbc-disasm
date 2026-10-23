@@ -59,7 +59,7 @@ MACRO as_step        ; $0a trail the ACTORF_ANCHOR actor (2 tiles behind, its sp
 	db $0a
 ENDM
 
-MACRO as_follow_wp   ; $0b head for the ACTORF_ANCHOR actor's position, then yield
+MACRO as_chase       ; $0b head for the ACTORF_ANCHOR actor's position, then yield
 	db $0b
 ENDM
 

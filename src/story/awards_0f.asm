@@ -12,11 +12,11 @@ ReplacePlayerWithStandInActor:
 	ld d, OBJ_ALEX_B ; $5644
 	add d ; $5646
 	ld d, a ; $5647
-	script_get_actor_state ACTOR_AWARDS_CEREMONY_ALEX ; $5648
+	script_get_actor_state ACTOR_AWARDS_CEREMONY_PLAYER_STAND_IN ; $5648
 	ld c, l ; $564d
 	ld b, h ; $564e
 	farcall LoadActorObjectDefIfValid ; $564f
-	script_set_anim ACTOR_AWARDS_CEREMONY_ALEX, ANIM_WALK ; $5652
+	script_set_anim ACTOR_AWARDS_CEREMONY_PLAYER_STAND_IN, ANIM_WALK ; $5652
 	script_set_position ACTOR_PLAYER, 63.0, 63.0 ; $5659
 	ret ; $5664
 ActorScript_0f_00:

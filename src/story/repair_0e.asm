@@ -198,7 +198,7 @@ TrainingGymRunnerCheckClearance:
 	ld a, $00 ; $4d85
 	ret ; $4d87
 RunRepairCounterDialogue:
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4d88
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4d88
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4d90
 	jp z, .juniorRefusal ; $4d93
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4d96
@@ -217,8 +217,8 @@ RunRepairCounterDialogue:
 	script_set_text Text_RepairCounterJuniorRefused ; $4db7
 	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4dbd
 .speak:
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4dc0
-	script_face ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, FACE_RIGHT ; $4dc5
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4dc0
+	script_face ACTOR_TRAINING_GYM_REPAIR_CLERK, FACE_RIGHT ; $4dc5
 	ret ; $4dcc
 .doublesGreeting:
 	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4dcd
@@ -244,16 +244,16 @@ RunRepairCounterDialogue:
 	jr .speakWelcome ; $4e0b
 .seniorWelcome:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4e0d
-	test_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e10
+	test_flag FLAG_REPAIR_COUNTER_SKIP_SENIOR_WELCOME ; $4e10
 	jr z, .firstSeniorWelcome ; $4e13
 	script_set_text Text_RepairCounterWelcome ; $4e15
 	jr .speakWelcome ; $4e1b
 .firstSeniorWelcome:
 	script_set_text Text_RepairCounterWelcomeSenior ; $4e1d
-	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
+	set_flag FLAG_REPAIR_COUNTER_SKIP_SENIOR_WELCOME ; $4e23
 .speakWelcome:
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e26
-	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e2e
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4e26
+	script_speak_restore ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4e2e
 	farcall RunDialogueYesNoPrompt ; $4e33
 	farcall ScriptCloseDialogueWindow ; $4e36
 	script_wait_frames 5 ; $4e39
@@ -261,11 +261,11 @@ RunRepairCounterDialogue:
 	jr z, RepairCounterAskWhatToDo ; $4e41
 RepairCounterFarewell:
 	script_set_text Text_RepairCounterComeBackAnytime ; $4e43
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e49
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4e49
 	ret ; $4e4e
 RepairCounterAskWhatToDo:
 	script_set_text Text_RepairCounterWhatCanIDo ; $4e4f
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e55
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4e55
 	script_wait_frames 5 ; $4e5a
 RepairCounterServiceMenu:
 	ld hl, Text_MenuEquipChange ; $4e61
@@ -282,16 +282,16 @@ RepairCounterServiceMenu:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4e7c
 	jp nz, RepairCounterChangeShoes ; $4e7f
 	script_set_text Text_RepairCounterNormalShoesOnly ; $4e82
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e88
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4e88
 	script_set_text Text_RepairCounterPastTextTable ; $4e8d
-	script_speak_restore ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4e93
+	script_speak_restore ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4e93
 	farcall RunDialogueYesNoPrompt ; $4e98
 	farcall ScriptCloseDialogueWindow ; $4e9b
 	script_wait_frames 5 ; $4e9e
 	and a ; $4ea5
 	jr z, RepairCounterServiceMenu ; $4ea6
 	jr RepairCounterFarewell ; $4ea8
-	script_face ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2, FACE_RIGHT ; $4eaa
+	script_face ACTOR_TRAINING_GYM_REPAIR_CLERK, FACE_RIGHT ; $4eaa
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
 	ld a, [wStoryMainEquipment] ; $4eb2
@@ -317,25 +317,25 @@ PrepareEquipmentSelectScreen:
 	ret ; $4ee8
 RepairCounterChangeRackets:
 	script_set_text Text_RepairCounterWhichRacket ; $4ee9
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4eef
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4eef
 	call PrepareEquipmentSelectScreen ; $4ef4
 	farcall RunRacketSelectScreen ; $4ef7
 	and a ; $4efa
-	jr nz, RestoreScreenAfterEquipSelect.advanceStage ; $4efb
+	jr nz, RestoreScreenAfterEquipSelect.cancelled ; $4efb
 	jr RestoreScreenAfterEquipSelect ; $4efd
 RepairCounterChangeShoes:
 	script_set_text Text_RepairCounterWhichShoes ; $4eff
-	script_speak ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4f05
+	script_speak ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4f05
 	call PrepareEquipmentSelectScreen ; $4f0a
 	farcall RunShoesSelectScreen ; $4f0d
 	and a ; $4f10
-	jr nz, RestoreScreenAfterEquipSelect.advanceStage ; $4f11
+	jr nz, RestoreScreenAfterEquipSelect.cancelled ; $4f11
 RestoreScreenAfterEquipSelect:
 	call DisableLCDSafely ; $4f13
 	farcall LoadMenuFontGfx ; $4f16
 	call EnableLCD ; $4f19
 	ret ; $4f1c
-.advanceStage:
+.cancelled:
 	ld a, [wMapSceneStage2] ; $4f1d
 	add $02 ; $4f20
 	ld [wMapSceneStage2], a ; $4f22
@@ -400,7 +400,7 @@ InitEquipmentHandoutDialogue:
 RepairCounterReturnA:
 	ld a, ENTRY_TRAINING_CENTER_REPAIR_COUNTER_A ; $4fbf
 	ld [wMapSceneStage2], a ; $4fc1
-	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_STUDENT_SIDE_PART_BOY_2 ; $4fc4
+	script_face_toward ACTOR_PLAYER, ACTOR_TRAINING_GYM_REPAIR_CLERK ; $4fc4
 	script_set_position ACTOR_PARTNER, 15.0, 15.0 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda

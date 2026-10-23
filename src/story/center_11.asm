@@ -338,16 +338,16 @@ AcademyEntranceNpc03_11:
 AcademyEntranceNpc03TextIds:
 	; $45e1, 20 bytes (text_ids)
 	table_width 2
-	dw Text_ArrivalStudentBumpedHeadmaster ; record 0
-	dw Text_ArrivalStudentFormedDoubles ; record 1
-	dw Text_ArrivalStudentLegendOfMario ; record 2
-	dw Text_ArrivalStudentLegendOfMario ; record 3
-	dw Text_ArrivalStudentMetHeadmaster ; record 4
-	dw Text_ArrivalStudentMetHeadmaster ; record 5
-	dw Text_ArrivalStudentBeenToOpen ; record 6
-	dw Text_ArrivalStudentBeenToOpen ; record 7
-	dw Text_ArrivalStudentLieInSun ; record 8
-	dw Text_ArrivalStudentLieInSun ; record 9
+	dw Text_AcademyEntranceStudentBumpedHeadmaster ; record 0
+	dw Text_AcademyEntranceStudentFormedDoubles ; record 1
+	dw Text_AcademyEntranceStudentLegendOfMario ; record 2
+	dw Text_AcademyEntranceStudentLegendOfMario ; record 3
+	dw Text_AcademyEntranceStudentMetHeadmaster ; record 4
+	dw Text_AcademyEntranceStudentMetHeadmaster ; record 5
+	dw Text_AcademyEntranceStudentBeenToOpen ; record 6
+	dw Text_AcademyEntranceStudentBeenToOpen ; record 7
+	dw Text_AcademyEntranceStudentLieInSun ; record 8
+	dw Text_AcademyEntranceStudentLieInSun ; record 9
 	assert_table_length NUM_STORYRANKS
 AcademyEntranceNpc04_11:
 	ld a, [wMapSceneStage] ; $45f5
@@ -362,16 +362,16 @@ AcademyEntranceNpc04_11:
 AcademyEntranceNpc04TextIds:
 	; $460c, 20 bytes (text_ids)
 	table_width 2
-	dw Text_ArrivalGirlYoureNewStudent ; record 0
-	dw Text_ArrivalGirlLikesAcademyName ; record 1
-	dw Text_ArrivalGirlDreamToGoPro ; record 2
-	dw Text_ArrivalGirlDreamToGoPro ; record 3
-	dw Text_ArrivalGirlHeadmasterReturns ; record 4
-	dw Text_ArrivalGirlHeadmasterReturns ; record 5
-	dw Text_ArrivalGirlHeadmasterChairman ; record 6
-	dw Text_ArrivalGirlHeadmasterChairman ; record 7
-	dw Text_ArrivalGirlHowToSucceed ; record 8
-	dw Text_ArrivalGirlHowToSucceed ; record 9
+	dw Text_AcademyEntranceGirlYoureNewStudent ; record 0
+	dw Text_AcademyEntranceGirlLikesAcademyName ; record 1
+	dw Text_AcademyEntranceGirlDreamToGoPro ; record 2
+	dw Text_AcademyEntranceGirlDreamToGoPro ; record 3
+	dw Text_AcademyEntranceGirlHeadmasterReturns ; record 4
+	dw Text_AcademyEntranceGirlHeadmasterReturns ; record 5
+	dw Text_AcademyEntranceGirlHeadmasterChairman ; record 6
+	dw Text_AcademyEntranceGirlHeadmasterChairman ; record 7
+	dw Text_AcademyEntranceGirlHowToSucceed ; record 8
+	dw Text_AcademyEntranceGirlHowToSucceed ; record 9
 	assert_table_length NUM_STORYRANKS
 AcademyEntranceNpc05_11:
 	ld a, [wMapSceneStage] ; $4620
@@ -387,14 +387,14 @@ AcademyEntranceNpc05_11:
 AcademyEntranceNpc05TextIds:
 	; $4639, 10 bytes (text_ids)
 	table_width 2
-	dw Text_ArrivalBoyKingFoundedAcademy ; record 0
-	dw Text_ArrivalBoyEveryoneWantsOpen ; record 1
-	dw Text_ArrivalBoyHeadmasterHappy ; record 2
-	dw Text_ArrivalBoyHeadmasterTrophy ; record 3
-	dw Text_ArrivalBoyDreamNotImpossible ; record 4
+	dw Text_AcademyEntranceBoyKingFoundedAcademy ; record 0
+	dw Text_AcademyEntranceBoyEveryoneWantsOpen ; record 1
+	dw Text_AcademyEntranceBoyHeadmasterHappy ; record 2
+	dw Text_AcademyEntranceBoyHeadmasterTrophy ; record 3
+	dw Text_AcademyEntranceBoyDreamNotImpossible ; record 4
 	assert_table_length NUM_STORYTIERS
 AcademyEntranceNpc14_11:
-	script_set_text Text_ArrivalStudentNoLeavingCampus ; $4643
+	script_set_text Text_AcademyEntranceStudentNoLeavingCampus ; $4643
 	test_flag FLAG_DOUBLES ; $4649
 	jr nz, .doubles ; $464c
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $464e
@@ -427,9 +427,9 @@ AcademyEntranceFacingScripts_11:
 	db $ff ; $46a3
 AcademyEntranceTileTriggers_11:
 	; $46a4, 9 bytes (map_scripts)
-	map_script $0f, FACEMASK_ANY, $0000, AcademyEntranceTile0F_11, $00, $00
+	map_script $0f, FACEMASK_ANY, $0000, AcademyEntranceResumeTourTrigger_11, $00, $00
 	db $ff
-AcademyEntranceTile0F_11:
+AcademyEntranceResumeTourTrigger_11:
 	call ResumeAcademyGuideTour ; $46ad
 	ret ; $46b0
 AcademyEntranceInitScript_11:

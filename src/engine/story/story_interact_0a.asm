@@ -66,7 +66,7 @@ FindActorFacingPlayer:
 	push de ; $5228
 	push hl ; $5229
 	wram_bank WRAM_ACTORS ; $522a
-	farcall BuildActorQueryList ; $5230
+	farcall BuildTalkableActorList ; $5230
 	ld hl, wActors ; $5233
 	ld de, $01c0 ; $5236
 	ld a, $00 ; $5239

@@ -417,10 +417,10 @@ RunClearStatusSetupMenu:
 	ld a, [wClearStatusDoubles] ; $4cd9
 	or a ; $4cdc
 	jp nz, .doublesRankList ; $4cdd
-	ld hl, $10db ; $4ce0
+	ld hl, Text_MenuSinglesMinigameDrills ; $4ce0
 	jr .pickRankList ; $4ce3
 .doublesRankList:
-	ld hl, $10df ; $4ce5
+	ld hl, Text_MenuDoublesMinigameDrills ; $4ce5
 .pickRankList:
 	ld a, [wClearStatusFormat] ; $4ce8
 	or a ; $4ceb
@@ -496,9 +496,9 @@ ApplyClearStatusFlags:
 	clear_flag FLAG_DOUBLES ; $4d85
 	ld a, [wClearStatusDoubles] ; $4d88
 	or a ; $4d8b
-	jr z, .checkDoubles ; $4d8c
+	jr z, .setTrainingFlags ; $4d8c
 	set_flag FLAG_DOUBLES ; $4d8e
-.checkDoubles:
+.setTrainingFlags:
 	call SetTrainingCourtClearFlags ; $4d91
 	ld a, [wClearStatusDoubles] ; $4d94
 	or a ; $4d97

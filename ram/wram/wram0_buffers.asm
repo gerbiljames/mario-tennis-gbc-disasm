@@ -169,7 +169,7 @@ UNION
 ; [8-bit] Type of the target the ball just hit, an index into MinigameTargetTypeScores; $ff = scores nothing
 wMinigameHitTargetType:: db
 ; [8-bit] Set whenever wBallCrossedNetFlag is (before any position test); ScoreMinigameTargetHitOrDeflectBall clears it whether or not a target was hit
-wMinigameHitPending:: db
+wMinigameNetCrossPending:: db
 	ds 1
 NEXTU
 ; scoreboard (bank $18)

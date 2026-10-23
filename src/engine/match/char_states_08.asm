@@ -98,7 +98,7 @@ UpdateCharRunAnimation:
 	call SetCharAnimation ; $6d56
 	ret ; $6d59
 StartCharSwing:
-	ld a, [wCharSkillIcons] ; $6d5a
+	ld a, [wCharShotTraits] ; $6d5a
 	bit 7, a ; $6d5d
 	call PredictBallLateralOffset ; $6d5f
 	bit 7, h ; $6d62

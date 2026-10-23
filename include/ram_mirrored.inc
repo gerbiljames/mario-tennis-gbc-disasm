@@ -167,7 +167,7 @@ def wCharSpriteSlot equ $df80
 def wCharSpriteSlotFrame equ $df84
 def wCharAirShadowSlot equ $df88
 def wCharGroundShadowSlot equ $df8c
-def wCharSkillIcons equ $df90
+def wCharShotTraits equ $df90
 def wLobPlacementIndex equ $df92
 def wDropPlacementIndex equ $df93
 def wCharMirrorAttrMask equ $df94
