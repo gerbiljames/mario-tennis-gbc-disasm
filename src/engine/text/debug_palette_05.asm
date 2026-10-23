@@ -91,12 +91,12 @@ RunDebugColorEditor:
 	bit PADB_UP, a ; $69fe
 	jr z, .checkDown ; $6a00
 	ld d, $01 ; $6a02
-	jr .getSelectedBGPaletteColorPtr ; $6a04
+	jr .adjustComponent ; $6a04
 .checkDown:
 	bit PADB_DOWN, a ; $6a06
 	jr z, .advanceFrame ; $6a08
 	ld d, $ff ; $6a0a
-	jr .getSelectedBGPaletteColorPtr ; $6a0c
+	jr .adjustComponent ; $6a0c
 .advanceFrame:
 	call AdvanceFrame ; $6a0e
 	jr .loop ; $6a11
@@ -112,7 +112,7 @@ RunDebugColorEditor:
 .debugDrawColorComponents:
 	call DebugDrawColorComponents ; $6a20
 	jr .loop ; $6a23
-.getSelectedBGPaletteColorPtr:
+.adjustComponent:
 	call GetSelectedPaletteColorPtr ; $6a25
 	ld a, [hl+] ; $6a28
 	ld c, a ; $6a29

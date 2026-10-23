@@ -253,12 +253,13 @@ ServiceMatch1JudgeOnBallHit:
 ; Judges the point on the ball-bounce event -- except that the leading `ret`
 ; means the body never runs, so this drill does not judge on a bounce.
 ;
-; Each drill has four of these, one per hook: PointEnd, BallHit, Bounce and
-; NetCross, passing 0-3 to its JudgePoint as the event code. 20 of the 60 in
-; this bank start with `ret`, and which ones varies by drill -- most disable
-; only NetCross, the serve and net drills also disable Bounce, and
-; ServiceMatch2 disables Bounce while leaving NetCross live, so each drill
-; scores on its own subset of events. See docs/bugs.md.
+; Each drill with judges (the Service Practices have none) has four of these,
+; one per hook: PointEnd, BallHit, Bounce and NetCross, passing 0-3 to its
+; JudgePoint as the event code. Some start with `ret`, and which ones varies by
+; drill -- most disable only NetCross, the Service Match and Net Game Match
+; drills also disable Bounce, and ServiceMatch2 disables Bounce while leaving
+; NetCross live, so each drill scores on its own subset of events. See
+; docs/bugs.md.
 ServiceMatch1JudgeOnBounce:
 	ret ; $490e
 	ld a, JUDGEEVENT_BOUNCE ; $490f
