@@ -83,7 +83,7 @@ RunStatusMenuFlow:
 	cp NUM_STORY_SLOTS ; $52d9
 	jp nc, .pickNonFileMenu ; $52db
 	ld [wCurrentStorySlot], a ; $52de
-	farcall CheckStorySlot ; $52e1
+	farcall ReadCurrentStorySlot ; $52e1
 .gbDataMenu:
 	farcall RunGbDataItemSelect ; $52e4
 	cp $ff ; $52e7
@@ -283,7 +283,7 @@ EraseSavedDataFlowHandlers_10:
 EraseStoryFileFlow:
 	ld a, b ; $54f6
 	ld [wCurrentStorySlot], a ; $54f7
-	farcall CheckStorySlot ; $54fa
+	farcall ReadCurrentStorySlot ; $54fa
 	push bc ; $54fd
 	script_fade_out 16 ; $54fe
 	call WaitFadeEnd ; $5503

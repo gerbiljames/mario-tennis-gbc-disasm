@@ -20,7 +20,7 @@
 	farptr MeasureDialogueWidthTiles ; $4026
 	farptr ResetWindowState ; $4028
 	farptr Unused_05_SetFixedMenuWindowTextId ; $402a
-	farptr Unused_05_RunFixedTextMenu ; $402c
+	farptr Unused_05_RunYesNoMenu ; $402c
 	farptr RenderTextString ; $402e
 	farptr RenderActiveWindowText ; $4030
 	farptr SetActiveWindowTextId ; $4032

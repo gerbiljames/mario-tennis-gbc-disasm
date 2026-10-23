@@ -144,7 +144,7 @@ Unused_01_DebugBootMenu:
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
 	ld [wCurrentStorySlot], a ; $4143
-	farcall CheckStorySlot ; $4146
+	farcall ReadCurrentStorySlot ; $4146
 	ld b, $00 ; $4149
 	ld c, $04 ; $414b
 	farcall ShowVarsityTeamChart ; $414d
@@ -159,7 +159,7 @@ Unused_01_DebugBootMenu:
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
 	ld [wCurrentStorySlot], a ; $4168
-	farcall CheckStorySlot ; $416b
+	farcall ReadCurrentStorySlot ; $416b
 	ld a, CHAR_LUIGI ; $416e
 	ld [wPlayer1MainChar], a ; $4170
 	ld a, CHAR_DK ; $4173

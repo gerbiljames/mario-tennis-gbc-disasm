@@ -37,9 +37,9 @@ Unused_05_ShowDialogueAtPosition:
 	pop_wram_bank ; $5a08
 	call SetActiveWindowTextId ; $5a0d
 	ld a, [wDialogueWindowId] ; $5a10
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5a13
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5a13
 	call DrawTextWindowFrame ; $5a16
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5a19
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5a19
 	call RedrawWindowRowsPadded ; $5a1c
 	call RenderActiveWindowText ; $5a1f
 	ld a, [wTextPageBreakRequest] ; $5a22

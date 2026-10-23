@@ -379,7 +379,7 @@ SaveStorySlotWithTimer:
 	pop_wram_bank ; $4d5c
 	ld a, $ff ; $4d61
 	ret ; $4d63
-CheckStorySlot:
+ReadCurrentStorySlot:
 	push bc ; $4d64
 	push de ; $4d65
 	push hl ; $4d66

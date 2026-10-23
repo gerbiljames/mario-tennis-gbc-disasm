@@ -150,21 +150,21 @@ CacheStorySlotRecords:
 	push_wram_bank WRAM_STAGING ; $605f
 	ld a, $00 ; $6068
 	ld [wCurrentStorySlot], a ; $606a
-	farcall CheckStorySlot ; $606d
+	farcall ReadCurrentStorySlot ; $606d
 	ld hl, wStoryMain ; $6070
 	ld de, wDecompBuffer ; $6073
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
 	ld [wCurrentStorySlot], a ; $607e
-	farcall CheckStorySlot ; $6081
+	farcall ReadCurrentStorySlot ; $6081
 	ld hl, wStoryMain ; $6084
 	ld de, wDecompBuffer tile 16 ; $6087
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [wCurrentStorySlot], a ; $6092
-	farcall CheckStorySlot ; $6095
+	farcall ReadCurrentStorySlot ; $6095
 	ld hl, wStoryMain ; $6098
 	ld de, wDecompBuffer tile 32 ; $609b
 	ld bc, (2 * CHAR_RECORD_SIZE) / 16 ; $609e

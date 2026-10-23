@@ -510,10 +510,10 @@ UpdateTennisDictionarySprites:
 	push hl ; $4e93
 	wram_bank WRAM_SCENE ; $4e94
 	test_flag FLAG_TEXT_PAGE_ADVANCED ; $4e9a
-	jr z, .notTextWaitingForButton ; $4e9d
+	jr z, .noPageAdvance ; $4e9d
 	sound SFX_MENU_SELECT ; $4e9f
 	call StartTennisDictionaryAnim ; $4ea1
-.notTextWaitingForButton:
+.noPageAdvance:
 	ld a, [wTennisDictAnimState] ; $4ea4
 	cp $04 ; $4ea7
 	jr nz, .compare ; $4ea9

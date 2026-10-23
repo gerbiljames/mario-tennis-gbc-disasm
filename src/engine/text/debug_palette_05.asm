@@ -1,7 +1,7 @@
 	ds ALIGN[4]
 PaletteEditorCursorTiles_05:
 	INCBIN "data/engine/text/PaletteEditorCursorTiles_05.bin" ; $6890, 192 bytes
-GetSelectedBGPaletteColorPtr:
+GetSelectedPaletteColorPtr:
 	ld hl, wDebugPaletteIndex ; $6950
 	ld a, [hl] ; $6953
 	add a ; $6954
@@ -17,7 +17,7 @@ DebugDrawColorComponents:
 	push bc ; $6965
 	push de ; $6966
 	push hl ; $6967
-	call GetSelectedBGPaletteColorPtr ; $6968
+	call GetSelectedPaletteColorPtr ; $6968
 	ld a, [hl+] ; $696b
 	ld b, [hl] ; $696c
 	ld c, a ; $696d
@@ -113,7 +113,7 @@ RunDebugColorEditor:
 	call DebugDrawColorComponents ; $6a20
 	jr .loop ; $6a23
 .getSelectedBGPaletteColorPtr:
-	call GetSelectedBGPaletteColorPtr ; $6a25
+	call GetSelectedPaletteColorPtr ; $6a25
 	ld a, [hl+] ; $6a28
 	ld c, a ; $6a29
 	ld a, [hl-] ; $6a2a
@@ -308,7 +308,7 @@ DrawPaletteCursorSprites:
 StartDebugPaletteEditor:
 	ld hl, PaletteEditorCursorTiles_05 ; $6b6c
 	ld de, vTiles0 tile $60 ; $6b6f
-	ld c, (GetSelectedBGPaletteColorPtr - PaletteEditorCursorTiles_05) / 16 ; $6b72
+	ld c, (GetSelectedPaletteColorPtr - PaletteEditorCursorTiles_05) / 16 ; $6b72
 	call QueueVRAMCopy ; $6b74
 	xor a ; $6b77
 	ld [wDebugPaletteColorIndex], a ; $6b78

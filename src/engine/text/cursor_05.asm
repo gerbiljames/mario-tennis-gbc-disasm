@@ -24,7 +24,7 @@ Unused_05_IsCursorOnAdjustRow:
 	pop bc ; $4c9a
 	xor a ; $4c9b
 	ret ; $4c9c
-Unused_05_AnimateMenuScrollArrowsTask:
+Unused_05_AnimateMenuAdjustArrowsTask:
 	wram_bank WRAM_TEXT ; $4c9d
 	ld a, [wMenuAdjustRowMask] ; $4ca3
 	bit 7, a ; $4ca6
@@ -267,7 +267,7 @@ TextInterpreterLoop:
 	ld b, a ; $4e77
 	or a ; $4e78
 	jr nz, .compare ; $4e79
-	test_flag FLAG_TEXT_RENDER_ACTIVE ; $4e7b
+	test_flag FLAG_TEXT_REDRAW_IN_PLACE ; $4e7b
 	jr nz, .restore ; $4e7e
 	call FlushGlyphRow ; $4e80
 .restore:

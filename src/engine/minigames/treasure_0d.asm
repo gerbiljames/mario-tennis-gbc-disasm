@@ -18,13 +18,13 @@ PerfectShotHook_PerFrame:
 	ret ; $58b9
 PerfectShotHook_PointStart:
 	call StartMinigameSoloPoint ; $58ba
-	call ResetTargetGrid ; $58bd
+	call ResetPerfectShotGrid ; $58bd
 	ret ; $58c0
 PerfectShotHook_PointEnd:
 	call HandleMinigamePointEnd ; $58c1
 	ret ; $58c4
 PerfectShotHook_NetCross:
-	call ProcessTargetTileHit ; $58c5
+	call ProcessPerfectShotTileHit ; $58c5
 	ret ; $58c8
 PerfectShotHook_Bounce:
 	call StubNop_0d_0 ; $58c9
@@ -32,7 +32,7 @@ PerfectShotHook_Bounce:
 PerfectShotHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $58cd
 	ret ; $58d0
-ProcessTargetTileHit:
+ProcessPerfectShotTileHit:
 	call ReflectBallVelocity ; $58d1
 	call GetMinigameGridCellIndex ; $58d4
 	cp $ff ; $58d7
@@ -63,7 +63,7 @@ ProcessTargetTileHit:
 	ld [wPointOutcome], a ; $5914
 	ret ; $5917
 .areAllTargetsHit:
-	call AreAllTargetsHit ; $5918
+	call AreAllPerfectShotTilesHit ; $5918
 	and a ; $591b
 	ret z ; $591c
 	ld hl, wTargetGridClearCount ; $591d
@@ -75,7 +75,7 @@ ProcessTargetTileHit:
 	push_wram_bank WRAM_COURT_PLANES ; $5926
 	ld a, $01 ; $592f
 	ld [wMatchSimFrozen], a ; $5931
-	call AnimateTargetGridClear ; $5934
+	call AnimatePerfectShotGridRefill ; $5934
 	xor a ; $5937
 	ld [wMatchSimFrozen], a ; $5938
 	pop_wram_bank ; $593b
@@ -91,7 +91,7 @@ Unused_0d_PerfectShotTargetGridLayout2:
 	db $01, $01, $01, $01, $01, $01, $01, $00 ; 0x08
 	db $01, $01, $01, $03, $01, $01, $01, $00 ; 0x10
 	db $03, $03, $03, $03, $03, $03, $03, $00 ; 0x18
-ResetTargetGrid:
+ResetPerfectShotGrid:
 	ld hl, PerfectShotTargetGridLayout ; $5979
 	call LoadMinigameTargetGrid ; $597c
 	ld a, $01 ; $597f
@@ -99,7 +99,7 @@ ResetTargetGrid:
 	ld [wMinigameTargetGrid + 15], a ; $5984
 	ld [wMinigameTargetGrid + 23], a ; $5987
 	ret ; $598a
-AnimateTargetGridClear:
+AnimatePerfectShotGridRefill:
 	ld a, 2 ; $598b
 	farcall StepMatchFrames ; $598d
 	ld hl, PerfectShotTargetGridLayout ; $5990
@@ -124,9 +124,9 @@ AnimateTargetGridClear:
 	inc c ; $59af
 	dec b ; $59b0
 	jr nz, .loop ; $59b1
-	call ResetTargetGrid ; $59b3
+	call ResetPerfectShotGrid ; $59b3
 	ret ; $59b6
-AreAllTargetsHit:
+AreAllPerfectShotTilesHit:
 	ld hl, wMinigameTargetGrid ; $59b7
 	ld c, $18 ; $59ba
 	xor a ; $59bc
@@ -200,7 +200,7 @@ TreasureBoxHook_Bounce:
 	ld a, [wPointOutcome] ; $5a45
 	and a ; $5a48
 	ret nz ; $5a49
-	call AwardWinnerOnFourthShotBounce ; $5a4a
+	call AwardWinnerOnReturnBounce ; $5a4a
 	call CheckBallMissedTargetZone ; $5a4d
 	ld a, [wPointOutcome] ; $5a50
 	cp POINTOUTCOME_WINNER ; $5a53
@@ -215,7 +215,7 @@ TreasureBoxHook_Bounce:
 	sound SFX_CHIME ; $5a65
 	ret ; $5a67
 TreasureBoxHook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $5a68
+	call FreezeFeederAfterLaunch ; $5a68
 	ret ; $5a6b
 UpdateTreasureBoxScorePopup:
 	call UpdateScorePopup ; $5a6c

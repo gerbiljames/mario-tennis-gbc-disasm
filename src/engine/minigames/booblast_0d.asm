@@ -215,15 +215,15 @@ UpdateBooBlastHitStreak:
 	ld a, [wMinigameHitScored] ; $56f7
 	and a ; $56fa
 	jr z, .clearHitScored ; $56fb
-	jr .incrementCappedCounter ; $56fd
+	jr .extendStreak ; $56fd
 .opponentShot:
 	ld a, [wMinigameHitScored] ; $56ff
 	and a ; $5702
-	jr nz, .incrementCappedCounter ; $5703
+	jr nz, .extendStreak ; $5703
 	xor a ; $5705
 	ld [wMinigameHitStreak], a ; $5706
 	jr .clearHitScored ; $5709
-.incrementCappedCounter:
+.extendStreak:
 	ld b, $07 ; $570b
 	call IncrementMinigameHitStreak ; $570d
 .clearHitScored:
@@ -247,10 +247,10 @@ BooBlastTargetStart:
 	call AdvanceBooBlastActorState ; $572c
 BooBlastTargetAwaitHit:
 	call DrawBooBlastTargetSprite ; $572f
-	call IsBallWithinTargetZone ; $5732
+	call IsBallInBooHitZone ; $5732
 	and a ; $5735
 	ret z ; $5736
-	call ScoreBallHit ; $5737
+	call AwardBooBlastHitScore ; $5737
 	jp AdvanceBooBlastActorState ; $573a
 BooBlastTargetHitBurst:
 	call DrawBooBlastHitBurst ; $573d
@@ -271,7 +271,7 @@ BooBlastTargetHitBurst:
 BooBlastTargetIdle:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
-IsBallWithinTargetZone:
+IsBallInBooHitZone:
 	ld hl, wMinigameSceneActor + MGACTOR_X ; $575f
 	ld a, [hl+] ; $5762
 	ld d, [hl] ; $5763
@@ -311,7 +311,7 @@ IsBallWithinTargetZone:
 .returnZero:
 	xor a ; $57bc
 	ret ; $57bd
-ScoreBallHit:
+AwardBooBlastHitScore:
 	ld a, $10 ; $57be
 	ld [wMinigameSceneActor + MGACTOR_TIMER], a ; $57c0
 	ld a, $01 ; $57c3

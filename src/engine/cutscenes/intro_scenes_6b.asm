@@ -396,11 +396,11 @@ CycleBgPalettes4To7Task:
 	ld hl, CycleBgPalettes4To7Task ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
-ScrollCutsceneXRightTask:
+ScrollIntroWaveTask:
 	ld a, [wCutsceneStepTimer] ; $7366
 	cp $10 ; $7369
 	jr nc, .done ; $736b
-	ld hl, ScrollCutsceneXRightTaskTable ; $736d
+	ld hl, ScrollIntroWaveSteps ; $736d
 	add_hl_a ; $7370
 	ld a, [hl] ; $7375
 	ld b, a ; $7376
@@ -410,15 +410,15 @@ ScrollCutsceneXRightTask:
 	ldh [hScrollX], a ; $737e
 .done:
 	ret ; $7380
-ScrollCutsceneXRightTaskTable:
+ScrollIntroWaveSteps:
 	; $7381, 20 bytes (bytes:16)
 	db $0a, $0a, $0a, $0a, $0a, $0a, $01, $01, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00, $00 ; 0x10
-ScrollCutsceneXLeftTask:
+ScrollIntroDiveTask:
 	ld a, [wCutsceneStepTimer] ; $7395
 	cp $10 ; $7398
 	jr nc, .done ; $739a
-	ld hl, ScrollCutsceneXLeftTaskTable ; $739c
+	ld hl, ScrollIntroDiveSteps ; $739c
 	add_hl_a ; $739f
 	ld a, [hl] ; $73a4
 	ld b, a ; $73a5
@@ -428,15 +428,15 @@ ScrollCutsceneXLeftTask:
 	ldh [hScrollX], a ; $73ad
 .done:
 	ret ; $73af
-ScrollCutsceneXLeftTaskTable:
+ScrollIntroDiveSteps:
 	; $73b0, 20 bytes (bytes:16)
 	db $0a, $0a, $0a, $0a, $0a, $0a, $08, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00, $00 ; 0x10
-ScrollCutsceneLeftTask:
+ScrollIntroGirlSwingTask:
 	ld a, [wCutsceneStepTimer] ; $73c4
 	cp $10 ; $73c7
 	jr nc, .done ; $73c9
-	ld hl, ScrollCutsceneLeftTaskTable ; $73cb
+	ld hl, ScrollIntroGirlSwingSteps ; $73cb
 	add_hl_a ; $73ce
 	ld a, [hl] ; $73d3
 	ld b, a ; $73d4
@@ -446,7 +446,7 @@ ScrollCutsceneLeftTask:
 	ldh [hScrollX], a ; $73dc
 .done:
 	ret ; $73de
-ScrollCutsceneLeftTaskTable:
+ScrollIntroGirlSwingSteps:
 	; $73df, 19 bytes (bytes:16)
 	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $02, $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00 ; 0x10

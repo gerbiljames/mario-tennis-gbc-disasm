@@ -764,13 +764,13 @@ Unused_0b_NetGameMatch3JudgePoint:
 	dec a ; $59a4
 	and $03 ; $59a5
 	add a ; $59a7
-	ld hl, NetGameMatch3HandlePointEndTable ; $59a8
+	ld hl, Unused_0b_NetGameMatch3JudgeByRallyTable ; $59a8
 	add_hl_a ; $59ab
 	ld a, [hl+] ; $59b0
 	ld h, [hl] ; $59b1
 	ld l, a ; $59b2
 	jp hl ; $59b3
-NetGameMatch3HandlePointEndTable:
+Unused_0b_NetGameMatch3JudgeByRallyTable:
 	dw Unused_0b_NetGameMatch3JudgePoint.judgeRally1 ; $59b4 jumptable
 	dw Unused_0b_NetGameMatch3JudgePoint.judgeRally2 ; $59b6 jumptable
 	dw Unused_0b_NetGameMatch3JudgePoint.judgeRally3 ; $59b8 jumptable

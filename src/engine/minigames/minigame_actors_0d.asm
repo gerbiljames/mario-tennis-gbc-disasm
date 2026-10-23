@@ -223,10 +223,10 @@ TennisMachine1Hook_NetCross:
 	call KeepMinigameCameraFixed ; $453a
 	ret ; $453d
 TennisMachine1Hook_Bounce:
-	call AwardWinnerOnFourthShotBounce ; $453e
+	call AwardWinnerOnReturnBounce ; $453e
 	ret ; $4541
 TennisMachine1Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4542
+	call FreezeFeederAfterLaunch ; $4542
 	ret ; $4545
 MinigameShotButtonPoolColumn:
 	; $4546, 1 bytes (bytes:4)
@@ -254,7 +254,7 @@ MinigameShotButtonPools:
 MinigameAimDirectionPool:
 	; $4643, 8 bytes (bytes:8)
 	db $00, $00, $ff, $ff, $ff, $01, $01, $01 ; 0x00
-MinigameCharCoordsTable:
+MinigameFeederPositions:
 	; $464b, 36 bytes (bytes:4)
 	db $a0, $fe, $00, $fc ; 0x00
 	db $00, $00, $00, $fc ; 0x04
@@ -296,7 +296,7 @@ StartMinigameMatch:
 	farcall SetCharState ; $46a7
 	wram_bank WRAM_CHAR1 ; $46aa
 	ld a, [wMinigameFeederPos] ; $46b0
-	call GetMinigameCharCoordsEntry ; $46b3
+	call GetMinigameFeederPosition ; $46b3
 	farcall SetCharPosAndTarget ; $46b6
 	ld a, CHARSTATE_WALK ; $46b9
 	farcall SetCharState ; $46bb
@@ -413,7 +413,7 @@ KeepMinigameCameraFixed:
 	xor a ; $47be
 	ld [wCameraFollowBall], a ; $47bf
 	ret ; $47c2
-AwardWinnerOnFourthShotBounce:
+AwardWinnerOnReturnBounce:
 	ld a, [wPointOutcome] ; $47c3
 	and a ; $47c6
 	jr nz, .done ; $47c7
@@ -429,7 +429,7 @@ AwardWinnerOnFourthShotBounce:
 	ld [wPointOutcomeSide], a ; $47de
 .done:
 	ret ; $47e1
-FreezeMinigameOpponentOnReturn:
+FreezeFeederAfterLaunch:
 	ld a, [wRallyLength] ; $47e2
 	cp $03 ; $47e5
 	jr nz, .done ; $47e7

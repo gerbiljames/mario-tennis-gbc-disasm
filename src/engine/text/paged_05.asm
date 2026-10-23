@@ -231,7 +231,7 @@ Unused_05_RunOptionsMenuSelection:
 	ld [hl], e ; $4aea
 	inc hl ; $4aeb
 	ld [hl], d ; $4aec
-	frame_task Unused_05_AnimateMenuScrollArrowsTask ; $4aed
+	frame_task Unused_05_AnimateMenuAdjustArrowsTask ; $4aed
 	pop hl ; $4af5
 	pop de ; $4af6
 	pop bc ; $4af7
@@ -325,7 +325,7 @@ Unused_05_RunOptionsMenuSelection:
 	push bc ; $4b7f
 	push de ; $4b80
 	push hl ; $4b81
-	ld hl, Unused_05_AnimateMenuScrollArrowsTask ; $4b82
+	ld hl, Unused_05_AnimateMenuAdjustArrowsTask ; $4b82
 	call UnregisterFrameTask ; $4b85
 	call AdvanceFrame ; $4b88
 	ld a, [wMenuCursorRow] ; $4b8b
@@ -424,7 +424,7 @@ Unused_05_RunOptionsMenuSelection:
 	push bc ; $4c38
 	push de ; $4c39
 	push hl ; $4c3a
-	ld hl, Unused_05_AnimateMenuScrollArrowsTask ; $4c3b
+	ld hl, Unused_05_AnimateMenuAdjustArrowsTask ; $4c3b
 	call UnregisterFrameTask ; $4c3e
 	call AdvanceFrame ; $4c41
 	ld a, [wMenuDepth] ; $4c44

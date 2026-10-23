@@ -1,7 +1,7 @@
 ApplyMinigameCharTargetFromTable:
 	push_wram_bank WRAM_CHAR1 ; $48b6
 	ld a, [wMinigameFeederPos] ; $48bf
-	call GetMinigameCharCoordsEntry ; $48c2
+	call GetMinigameFeederPosition ; $48c2
 	farcall SetCharTarget ; $48c5
 	pop_wram_bank ; $48c8
 	ret ; $48cd
@@ -51,10 +51,10 @@ PlayMinigameCountdown:
 	call PlaySoundManaged ; $4922
 .done:
 	ret ; $4925
-GetMinigameCharCoordsEntry:
+GetMinigameFeederPosition:
 	add a ; $4926
 	add a ; $4927
-	ld_hl_indexed MinigameCharCoordsTable ; $4928
+	ld_hl_indexed MinigameFeederPositions ; $4928
 	ld a, [hl+] ; $492f
 	ld c, a ; $4930
 	ld a, [hl+] ; $4931
@@ -112,10 +112,10 @@ TennisMachine2Hook_NetCross:
 	call KeepMinigameCameraFixed ; $49aa
 	ret ; $49ad
 TennisMachine2Hook_Bounce:
-	call AwardWinnerOnFourthShotBounce ; $49ae
+	call AwardWinnerOnReturnBounce ; $49ae
 	ret ; $49b1
 TennisMachine2Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $49b2
+	call FreezeFeederAfterLaunch ; $49b2
 	ret ; $49b5
 MinigameConfig_TennisMachine3:
 	; $49b6, 16 bytes
@@ -162,10 +162,10 @@ TennisMachine3Hook_NetCross:
 	call KeepMinigameCameraFixed ; $4a07
 	ret ; $4a0a
 TennisMachine3Hook_Bounce:
-	call AwardWinnerOnFourthShotBounce ; $4a0b
+	call AwardWinnerOnReturnBounce ; $4a0b
 	ret ; $4a0e
 TennisMachine3Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4a0f
+	call FreezeFeederAfterLaunch ; $4a0f
 	ret ; $4a12
 MinigameConfig_TennisMachine4:
 	; $4a13, 16 bytes
@@ -200,10 +200,10 @@ TennisMachine4Hook_NetCross:
 	call KeepMinigameCameraFixed ; $4a64
 	ret ; $4a67
 TennisMachine4Hook_Bounce:
-	call AwardWinnerOnFourthShotBounce ; $4a68
+	call AwardWinnerOnReturnBounce ; $4a68
 	ret ; $4a6b
 TennisMachine4Hook_BallHit:
-	call FreezeMinigameOpponentOnReturn ; $4a6c
+	call FreezeFeederAfterLaunch ; $4a6c
 	ret ; $4a6f
 MinigameConfig_WallPractice1:
 	; $4a70, 16 bytes
@@ -258,16 +258,16 @@ UpdateMinigameHudAndBallTrail:
 	push_wram_bank WRAM_ACTORS ; $4ac7
 	ld hl, wBallHistory + 2 * BALLHIST_SIZE ; $4ad0
 	ld de, wBallTrailSlots + 2 * SPRSLOT_SIZE ; $4ad3
-	call MarkMinigameObjectOffscreen ; $4ad6
+	call HideBallTrailSlotAboveWall ; $4ad6
 	ld hl, wBallHistory + 1 * BALLHIST_SIZE ; $4ad9
 	ld de, wBallTrailSlots + 3 * SPRSLOT_SIZE ; $4adc
-	call MarkMinigameObjectOffscreen ; $4adf
+	call HideBallTrailSlotAboveWall ; $4adf
 	ld hl, wBallHistory ; $4ae2
 	ld de, wBallTrailSlots + 4 * SPRSLOT_SIZE ; $4ae5
-	call MarkMinigameObjectOffscreen ; $4ae8
+	call HideBallTrailSlotAboveWall ; $4ae8
 	pop_wram_bank ; $4aeb
 	ret ; $4af0
-MarkMinigameObjectOffscreen:
+HideBallTrailSlotAboveWall:
 	inc hl ; $4af1
 	inc hl ; $4af2
 	ld a, [hl+] ; $4af3

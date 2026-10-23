@@ -165,7 +165,7 @@ ApplyUnlockEverythingCheat:
 	push bc ; $4be7
 	ld a, c ; $4be8
 	ld [wCurrentStorySlot], a ; $4be9
-	farcall CheckStorySlot ; $4bec
+	farcall ReadCurrentStorySlot ; $4bec
 	cp $fe ; $4bef
 	jr z, .restore ; $4bf1
 	ld_flag_id de, FLAG_UNLOCKED_PAM ; $4bf3

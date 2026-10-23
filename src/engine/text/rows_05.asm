@@ -323,10 +323,10 @@ RenderMenuWindowText:
 	jr nz, .draw ; $723a
 	call PrepareGlyphBuffer ; $723c
 .draw:
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $723f
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $723f
 	ld a, [wMenuWindowId] ; $7242
 	call DrawTextWindowFrame ; $7245
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $7248
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $7248
 	farcall GetWindowStructPtr ; $724b
 	ld b, h ; $724e
 	ld c, l ; $724f

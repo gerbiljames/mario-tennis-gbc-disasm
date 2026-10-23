@@ -1,4 +1,4 @@
-TextCmdNop2:
+TextCmdNop08:
 	ret ; $5297
 GetNextArgShortTextLength:
 	push bc ; $5298
@@ -341,7 +341,7 @@ ControlCodeHandlers_05:
 	dw TextCmdDelay30 ; record 5
 	dw TextCmdDelay15Skippable ; record 6
 	dw TextCmdPrintPlayerName ; record 7
-	dw TextCmdNop2 ; record 8
+	dw TextCmdNop08 ; record 8
 	dw TextCmdPrintArgNumber ; record 9
 	dw TextCmdNop ; record 10
 	dw TextCmdPrintPartnerName ; record 11

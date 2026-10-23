@@ -73,7 +73,7 @@ StrokePractice1JudgeOnBounce:
 	call StrokePractice1JudgePoint ; $6ce4
 	ld [wDrillPointJudgement], a ; $6ce7
 	ret ; $6cea
-; Judges the point on the rally-tick event -- except that the leading `ret`
+; Judges the point on the net-cross event -- except that the leading `ret`
 ; means the body never runs. Called from StrokePractice1Hook_NetCross, the
 ; fourth of this drill's four judges; see docs/bugs.md.
 StrokePractice1JudgeOnNetCross:
@@ -129,7 +129,7 @@ StrokePractice1Cases1:
 	jumptable a ; $6d40
 	dw StrokePractice1Cases1.rally2PointEnd ; $6d42 jumptable
 	dw StrokePractice1Cases2 ; $6d44 jumptable
-	dw StrokePractice1Cases2.checkBallBounceCount ; $6d46 jumptable
+	dw StrokePractice1Cases2.judgeBounce ; $6d46 jumptable
 	dw StrokePractice1Cases2.ignoreNetCross ; $6d48 jumptable
 .rally2PointEnd:
 	ld a, [wPointOutcome] ; $6d4a
@@ -607,7 +607,7 @@ StrokePractice3Cases1:
 	jumptable a ; $71ea
 	dw StrokePractice3Cases1.rally2PointEnd ; $71ec jumptable
 	dw StrokePractice3Cases2 ; $71ee jumptable
-	dw StrokePractice3Cases2.checkBallBounceCount ; $71f0 jumptable
+	dw StrokePractice3Cases2.judgeBounce ; $71f0 jumptable
 	dw StrokePractice3Cases2.ignoreNetCross ; $71f2 jumptable
 .rally2PointEnd:
 	ld a, [wPointOutcome] ; $71f4

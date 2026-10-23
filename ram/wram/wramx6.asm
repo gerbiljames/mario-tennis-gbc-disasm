@@ -114,8 +114,8 @@ wUnusedExpAwardByte:: db
 NEXTU
 ; cutscene text window (bank $03)
 	ds 1
-; [8-bit] First byte of the current CreditsStaffPageDescriptors_03 entry: rows the page scrolls by. ScrollCreditsStaffWindow masks it to two bits and treats zero as one
-wCreditsStaffScrollRows:: db
+; [8-bit] First byte of the current CreditsStaffPageDescriptors_03 entry: its (first line, line count) groups, one 20-column panel each. DrawCreditsStaffLines draws group c at column 20*c of the 80-column buffer; ScrollCreditsStaffWindow slides one panel per group, masking the count to two bits and treating zero as one
+wCreditsStaffPanelCount:: db
 NEXTU
 ; trophy EXP awards (bank $1e)
 	ds 40
@@ -185,7 +185,7 @@ wPaletteFadeTarget:: ds 128
 ; [128 bytes] The palettes the fade shows: seeded from wMasterPalettes, stepped +/-1 per component toward wPaletteFadeTarget on each AnimatePaletteFadeToTarget pass for masked palettes, uploaded by LoadPalettesImmediate
 wPaletteFadeLive:: ds 128
 	ds 32
-; [16 bytes] One byte per palette; only flagged palettes are stepped. InitSepiaPaletteFade clears all 16, SetupPaletteFadeMask sets the first eight from the bits of b (bit 7 = palette 0)
+; [16 bytes] One byte per palette; only flagged palettes are stepped. InitSepiaPaletteFade clears all 16, SetupPaletteFadeMask flags BG palettes 0-7 from the bits of b and OBJ palettes 0-7 from c (bit 7 = palette 0)
 wPaletteFadeMask:: ds 16
 ; [8-bit] Passes remaining (from d); AnimatePaletteFadeToTarget decrements it per pass and snaps at zero
 wPaletteFadeAmount:: db

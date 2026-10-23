@@ -344,9 +344,9 @@ HandleTennisDictionaryListInput:
 	ld a, MSGSPEEDF_INSTANT | MSGSPEED_FAST ; $5673
 	ld [wMessageSpeed], a ; $5675
 	xor a ; $5678
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5679
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $5679
 	farcall RedrawWindowText ; $567c
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $567f
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $567f
 	pop af ; $5682
 	ld [wMessageSpeed], a ; $5683
 	xor a ; $5686

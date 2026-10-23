@@ -12,7 +12,7 @@ Unused_02_DebugStoryStatsScreen:
 	farcall InitStoryModeState ; $4fc6
 	ld d, $00 ; $4fc9
 .reloadSlot:
-	farcall CheckStorySlot ; $4fcb
+	farcall ReadCurrentStorySlot ; $4fcb
 	or a ; $4fce
 	jr z, .slotOk ; $4fcf
 	push de ; $4fd1
@@ -326,7 +326,7 @@ LoadStorySlot:
 	ld c, a ; $524c
 	push bc ; $524d
 	ld [wCurrentStorySlot], a ; $524e
-	farcall CheckStorySlot ; $5251
+	farcall ReadCurrentStorySlot ; $5251
 	pop bc ; $5254
 	pop de ; $5255
 	or a ; $5256
@@ -363,7 +363,7 @@ Unused_02_StorySlotVariant:
 	ld c, a ; $5289
 	push bc ; $528a
 	ld [wCurrentStorySlot], a ; $528b
-	farcall CheckStorySlot ; $528e
+	farcall ReadCurrentStorySlot ; $528e
 	pop bc ; $5291
 	pop de ; $5292
 	or a ; $5293

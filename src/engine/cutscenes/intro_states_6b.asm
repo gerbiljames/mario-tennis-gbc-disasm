@@ -291,7 +291,7 @@ IntroCutsceneAlexRallyInit_6b:
 	ld [wCutsceneSpriteBY], a ; $423a
 	ld c, SCREENASSET_IntroRallies ; $423d
 	farcall LoadScreenAssetRecord ; $423f
-	call LoadCutsceneTileset ; $4242
+	call LoadIntroRallySpriteTiles ; $4242
 	push_wram_bank WRAM_SCREEN ; $4245
 	ld h, $8a ; $424e
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4250
@@ -681,7 +681,7 @@ IntroCutsceneWaveInit_6b:
 	ld [wCutsceneStepTimer], a ; $47a6
 	ld a, $b0 ; $47a9
 	ld [wCutsceneScrollX], a ; $47ab
-	frame_task ScrollCutsceneXRightTask ; $47ae
+	frame_task ScrollIntroWaveTask ; $47ae
 	call EnableLCD ; $47b6
 	script_fade_in 16 ; $47b9
 	call WaitFadeEnd ; $47be
@@ -689,7 +689,7 @@ IntroCutsceneWaveInit_6b:
 IntroCutsceneWaveExit_6b:
 	script_fade_out 10 ; $47c4
 	call WaitFadeEnd ; $47c9
-	ld hl, ScrollCutsceneXRightTask ; $47cc
+	ld hl, ScrollIntroWaveTask ; $47cc
 	call UnregisterFrameTask ; $47cf
 	xor a ; $47d2
 	ldh [hScrollX], a ; $47d3
@@ -711,7 +711,7 @@ IntroCutsceneDiveInit_6b:
 	ldh [hScrollX], a ; $47f7
 	xor a ; $47f9
 	ld [wCutsceneStepTimer], a ; $47fa
-	frame_task ScrollCutsceneXLeftTask ; $47fd
+	frame_task ScrollIntroDiveTask ; $47fd
 	call EnableLCD ; $4805
 	script_fade_in 16 ; $4808
 	call WaitFadeEnd ; $480d
@@ -719,7 +719,7 @@ IntroCutsceneDiveInit_6b:
 IntroCutsceneDiveExit_6b:
 	script_fade_out 10 ; $4813
 	call WaitFadeEnd ; $4818
-	ld hl, ScrollCutsceneXLeftTask ; $481b
+	ld hl, ScrollIntroDiveTask ; $481b
 	call UnregisterFrameTask ; $481e
 	xor a ; $4821
 	ldh [hScrollX], a ; $4822
@@ -735,7 +735,7 @@ IntroCutsceneGirlSwingInit_6b:
 	ldh [hScrollX], a ; $4846
 	xor a ; $4848
 	ld [wCutsceneStepTimer], a ; $4849
-	frame_task ScrollCutsceneLeftTask ; $484c
+	frame_task ScrollIntroGirlSwingTask ; $484c
 	call EnableLCD ; $4854
 	script_fade_in 16 ; $4857
 	call WaitFadeEnd ; $485c
@@ -743,7 +743,7 @@ IntroCutsceneGirlSwingInit_6b:
 IntroCutsceneGirlSwingExit_6b:
 	script_fade_out 10 ; $4862
 	call WaitFadeEnd ; $4867
-	ld hl, ScrollCutsceneLeftTask ; $486a
+	ld hl, ScrollIntroGirlSwingTask ; $486a
 	call UnregisterFrameTask ; $486d
 	xor a ; $4870
 	ldh [hScrollX], a ; $4871
@@ -751,7 +751,7 @@ IntroCutsceneGirlSwingExit_6b:
 	twin_named intro_cutscene_state11_update, IntroCutsceneGirlSwingUpdate_6b ; $4876
 Unused_6b_IntroCutsceneStateAInit:
 	call DisableLCDSafely ; $4885
-	ld c, SCREENASSET_LoadIntroAwesomeOpponentsCaptionPtrs ; $4888
+	ld c, SCREENASSET_UnusedIntroScreen ; $4888
 	farcall LoadScreenAssetRecord ; $488a
 	ld a, BGVIEW_DEBUG_CONSOLE ; $488d
 	ldh [hBGViewMode], a ; $488f

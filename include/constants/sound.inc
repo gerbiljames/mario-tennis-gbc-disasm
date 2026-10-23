@@ -163,7 +163,7 @@ def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingB
 def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
 def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
 	const_def $86
-	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0DBoo_0e, the welcome cutscene) and a Boo Blast hit (ScoreBallHit $0d)
+	const SFX_VOICE_BOO          ; $86 Boo speaking in Mario World (MarioWorldNpc0DBoo_0e, the welcome cutscene) and a Boo Blast hit (AwardBooBlastHitScore $0d)
 	const SFX_VOICE_YOSHI        ; $87 Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
 	const SFX_VOICE_DK           ; $88 Donkey Kong speaking in Mario World (MarioWorldNpc0CDonkeyKong_0e)
 	const SFX_VOICE_BABY_MARIO   ; $89 Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
@@ -176,7 +176,7 @@ def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (C
 	const SFX_RACKET_GET          ; $90 receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
 	const SFX_SWING_THROUGH       ; $91 the player trying out a newly equipped racket at the repair counter (ActorScript_0e_03)
 	const SFX_SIDESTEP            ; $92 each sidestep of the player trying out newly equipped shoes there (ActorScript_0e_04)
-def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTargetGridClear $0d)
+def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimatePerfectShotGridRefill $0d)
 	const_def $96
 	const SFX_APPEAR2 ; $96 the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)
 	const SFX_CHIME   ; $97 a minigame target hit / score popup, and a success cue in cutscenes

@@ -77,7 +77,7 @@ CheckServicePractice2ServeSpin:
 	ld a, [wCurrentShotType] ; $5102
 	ld [wDrillCounters + DRILLCTR_SERVE_SHOT_TYPE], a ; $5105
 	cp b ; $5108
-	jr nz, .checkTotalPointsScoredInCurrentGame ; $5109
+	jr nz, .wrongSpin ; $5109
 	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
 	add a ; $510e
 	ld hl, ServicePractice2ServeCounterPtrs ; $510f
@@ -90,7 +90,7 @@ CheckServicePractice2ServeSpin:
 	ld l, a ; $5122
 	dec [hl] ; $5123
 	ret ; $5124
-.checkTotalPointsScoredInCurrentGame:
+.wrongSpin:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5125
 	and $01 ; $5128
 	add DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $512a

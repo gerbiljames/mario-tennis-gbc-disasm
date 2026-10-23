@@ -949,8 +949,8 @@ slot at `$4078`.
 earlier, hardcoded version of the live repair.
 `Unused_03_RestorePreservedBlockFromBackup` and `Unused_03_RestoreBlock07FromBackup`
 through `..._RestoreBlock0aFromBackup` are five copies of one routine with the block id baked in, flanked by
-`Unused_03_RestoreBlockOrClear`, `Unused_03_InvalidateBlockIfUnwritten` and
-`Unused_03_ClearBlockIfSet`. Their replacement, `RepairAllSaveSlots`
+`Unused_03_RestoreBlockOrClear`, `Unused_03_InvalidateBlockIfCorrupt` and
+`Unused_03_ResetBlockIfInvalid`. Their replacement, `RepairAllSaveSlots`
 (`$03:$5669`), calls `RestoreStoryBlockFromBackup` three times with `b` = 0, 2,
 4, and the callee derives the backup block with `ld a, $1b / add b`.
 

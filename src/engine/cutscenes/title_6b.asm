@@ -43,7 +43,7 @@ RunTitleScreen:
 	ldh [hScrollY], a ; $75bb
 	ld [wScreenScratch], a ; $75bd
 	ld [wTitleSpriteFrame], a ; $75c0
-	ld [wTitleSpriteTimer], a ; $75c3
+	ld [wTitleSpriteHoldTimer], a ; $75c3
 	ld a, $98 ; $75c6
 	ld [wScreenScratch], a ; $75c8
 	script_fade_out 127 ; $75cb
@@ -171,15 +171,15 @@ QueueTitleSprite_SpriteTemplate:
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
 StepTitleSpriteAnimation:
-	ld a, [wTitleSpriteTimer] ; $771f
+	ld a, [wTitleSpriteHoldTimer] ; $771f
 	or a ; $7722
 	jr z, .advanceFrame ; $7723
 	inc a ; $7725
-	ld [wTitleSpriteTimer], a ; $7726
+	ld [wTitleSpriteHoldTimer], a ; $7726
 	cp $10 ; $7729
 	jr nz, .done ; $772b
 	xor a ; $772d
-	ld [wTitleSpriteTimer], a ; $772e
+	ld [wTitleSpriteHoldTimer], a ; $772e
 	ret ; $7731
 .advanceFrame:
 	ldh a, [hVBlankCounter] ; $7732
@@ -193,7 +193,7 @@ StepTitleSpriteAnimation:
 	cp $07 ; $7743
 	jr nz, .done ; $7745
 	ld a, $01 ; $7747
-	ld [wTitleSpriteTimer], a ; $7749
+	ld [wTitleSpriteHoldTimer], a ; $7749
 .done:
 	ret ; $774c
 	ret ; $774d

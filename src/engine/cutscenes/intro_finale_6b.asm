@@ -331,7 +331,7 @@ ScrollOutIntroLogo:
 	xor a ; $5206
 	ldh [hScrollY], a ; $5207
 	ret ; $5209
-LoadCutsceneTileset:
+LoadIntroRallySpriteTiles:
 	ld b, TILEBLOCK_IntroRalliesAlexGfx0 ; $520a
 	ld c, IntroRalliesAlexGfx0_SIZE / 16 ; $520c
 	ld de, vTiles0 + VRAM_BANK1 ; $520e
@@ -360,12 +360,12 @@ LoadCutsceneTileset:
 	ld c, IntroRalliesNinaGfx3_SIZE / 16 ; $5248
 	ld de, vTiles0 tile $48 + VRAM_BANK1 ; $524a
 	farcall LoadCompressedTileBlock ; $524d
-	ld hl, CutsceneTilesetPalettes ; $5250
+	ld hl, IntroRallySpritePalettes ; $5250
 	ld_obj_pals de, 0, 2 ; $5253
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
-CutsceneTilesetPalettes:
-	INCLUDE "data/engine/cutscenes/CutsceneTilesetPalettes.asm" ; $525a, 16 bytes (palettes)
+IntroRallySpritePalettes:
+	INCLUDE "data/engine/cutscenes/IntroRallySpritePalettes.asm" ; $525a, 16 bytes (palettes)
 QueueIntroAlexSprite:
 	ld hl, QueueIntroAlexSprite_SpriteTemplate0 ; $526a
 	ld a, [wCutsceneSpriteAX] ; $526d

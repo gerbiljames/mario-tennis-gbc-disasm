@@ -1,8 +1,9 @@
 ; --- Drill result messages (wDrillMessageId, DrillMessageTextIds_0b) ---
 ; Named after the text each id shows. SetDrillServerMessage adds an offset
 ; in b (DRILLWORDING_*) when the other side served, to reach the same
-; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md)
-; and get no name.
+; outcome's other wording. Ids 72-86 point past text bank $25 (docs/bugs.md);
+; the two the drill tables use are named after the bank $26 string FIXES gives
+; them, the rest get no name.
 def DRILLMSG_NONE equ $00 ; ShowQueuedDrillMessage substitutes DRILLMSG_THERE_IS_NO_MESSAGE_FOR_THIS_CASE
 def DRILLMSG_HIDE equ $ff ; show nothing
 	const_def $01
@@ -77,6 +78,8 @@ def DRILLMSG_HIDE equ $ff ; show nothing
 	const DRILLMSG_I_HIT_A_SMASH_SO_YOU_FAIL                           ; $45
 	const DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2     ; $46
 	const DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL ; $47
+	const DRILLMSG_YOUR_LOB_DIDNT_REACH_MY_COURT_SO_YOU_FAIL           ; $48
+	const DRILLMSG_YOU_DIDNT_RETURN_IT_TO_MY_COURT_SO_YOU_FAIL         ; $49
 	const_def $57
 	const DRILLMSG_NICE_RETURN_YOU_DID_IT                                 ; $57
 	const DRILLMSG_NICE_LOB_YOU_DID_IT                                    ; $58

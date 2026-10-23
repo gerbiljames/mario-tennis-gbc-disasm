@@ -181,7 +181,7 @@ DrawCreditsStaffPage:
 	add_hl_a ; $7346
 	wram_bank WRAM_SCENE ; $734b
 	ld a, [hl] ; $7351
-	ld [wCreditsStaffScrollRows], a ; $7352
+	ld [wCreditsStaffPanelCount], a ; $7352
 	ld b, a ; $7355
 	inc hl ; $7356
 	ld c, $00 ; $7357
@@ -251,7 +251,7 @@ DrawCreditsStaffLines:
 	push af ; $7423
 	ld a, [hl] ; $7424
 	ld b, a ; $7425
-	ld hl, Text_5e_171 ; $7426
+	ld hl, Text_CreditsStaffPageLines ; $7426
 	pop af ; $7429
 	add_hl_a ; $742a
 	wram_bank WRAM_STAGING ; $742f
@@ -276,7 +276,7 @@ ScrollCreditsStaffWindow:
 	push de ; $7454
 	push hl ; $7455
 	push_wram_bank WRAM_SCENE ; $7456
-	ld a, [wCreditsStaffScrollRows] ; $745f
+	ld a, [wCreditsStaffPanelCount] ; $745f
 	and $03 ; $7462
 	jr nz, .gotSteps ; $7464
 	ld a, $01 ; $7466
@@ -284,7 +284,7 @@ ScrollCreditsStaffWindow:
 	ld b, a ; $7468
 	ld d, $00 ; $7469
 	ld c, $00 ; $746b
-.scrollRowLoop:
+.panelLoop:
 	call AdvanceFrame ; $746d
 	ld e, $14 ; $7470
 .blitLoop:
@@ -300,7 +300,7 @@ ScrollCreditsStaffWindow:
 	inc d ; $7481
 	ld a, d ; $7482
 	cp b ; $7483
-	jr nz, .scrollRowLoop ; $7484
+	jr nz, .panelLoop ; $7484
 	pop_wram_bank ; $7486
 	pop hl ; $748b
 	pop de ; $748c

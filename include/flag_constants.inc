@@ -26,7 +26,7 @@ def FLAG_DEBUG_FLAG_EDITOR_INITED equ 31 ; wGameFlags byte $03 bit 7
 def FLAG_DEBUG_SHOW_PLAYER_POS equ 32 ; wGameFlags byte $04 bit 0
 def FLAG_DEBUG_SHORT_MATCH equ 33 ; wGameFlags byte $04 bit 1
 def FLAG_DEBUG_SHORT_GLYPH_UPLOAD equ 34 ; wGameFlags byte $04 bit 2
-def FLAG_TEXT_RENDER_ACTIVE equ 35 ; wGameFlags byte $04 bit 3
+def FLAG_TEXT_REDRAW_IN_PLACE equ 35 ; wGameFlags byte $04 bit 3
 def FLAG_PROPORTIONAL_TEXT_MODE equ 36 ; wGameFlags byte $04 bit 4
 
 def FLAG_STORY_MENU_LOCKED equ 46 ; wGameFlags byte $05 bit 6

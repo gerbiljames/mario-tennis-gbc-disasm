@@ -253,7 +253,7 @@ CacheStorySlotSummaries:
 	push af ; $427b
 	ld a, $00 ; $427c
 	ld [wCurrentStorySlot], a ; $427e
-	farcall CheckStorySlot ; $4281
+	farcall ReadCurrentStorySlot ; $4281
 	cp $fe ; $4284
 	jr z, .checkSlot1 ; $4286
 	ld hl, wStorySaveSignature ; $4288
@@ -262,7 +262,7 @@ CacheStorySlotSummaries:
 .checkSlot1:
 	ld a, $01 ; $4291
 	ld [wCurrentStorySlot], a ; $4293
-	farcall CheckStorySlot ; $4296
+	farcall ReadCurrentStorySlot ; $4296
 	cp $fe ; $4299
 	jr z, .checkSlot2 ; $429b
 	ld hl, wStorySaveSignature ; $429d
@@ -271,7 +271,7 @@ CacheStorySlotSummaries:
 .checkSlot2:
 	ld a, $02 ; $42a6
 	ld [wCurrentStorySlot], a ; $42a8
-	farcall CheckStorySlot ; $42ab
+	farcall ReadCurrentStorySlot ; $42ab
 	cp $fe ; $42ae
 	jr z, .restore ; $42b0
 	ld hl, wStorySaveSignature ; $42b2

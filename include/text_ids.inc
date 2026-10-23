@@ -2950,5 +2950,6 @@ def Text_ToadMarioWorldLovesTennis equ Text_5e_167
 def Text_BobOmbWorldBelowExit equ Text_5e_168
 def Text_PeachSinglesExhibitionBegin equ Text_5e_169
 def Text_PeachDoublesExhibitionBegin equ Text_5e_170
+def Text_CreditsStaffPageLines equ Text_5e_171
 def Text_CreditCamelot equ Text_5e_320
 def Text_CreditNintendo equ Text_5e_322

@@ -86,9 +86,9 @@ BuildGameProgressScreen:
 	call CreateProgressListWindow ; $7310
 	ld [wProgressWindowId], a ; $7313
 	ld a, [wProgressWindowId] ; $7316
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $7319
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $7319
 	farcall DrawTextWindowFrame ; $731c
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $731f
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $731f
 	call DrawProgressListRows ; $7322
 	farcall RedrawWindowRows ; $7325
 	call LoadGameProgressScreenTiles ; $7328
@@ -142,9 +142,9 @@ ScrollProgressListDown:
 	ld [hl], a ; $739c
 	sound SFX_MENU_MOVE ; $739d
 	ld a, [wProgressWindowId] ; $739f
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73a2
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73a8
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73a8
 	call DrawProgressListRows ; $73ab
 .restore:
 	pop af ; $73ae
@@ -161,9 +161,9 @@ ScrollProgressListUp:
 	ld [hl], a ; $73c3
 	sound SFX_MENU_MOVE ; $73c4
 	ld a, [wProgressWindowId] ; $73c6
-	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73c9
+	set_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73c9
 	farcall DrawTextWindowFrame ; $73cc
-	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73cf
+	clear_flag FLAG_TEXT_REDRAW_IN_PLACE ; $73cf
 	call DrawProgressListRows ; $73d2
 .restore:
 	pop af ; $73d5

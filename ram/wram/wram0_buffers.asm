@@ -44,7 +44,7 @@ wDebugColorEditorWindowId:: db
 ; [8-bit] Which of the four colours in the selected palette the debug cursor is on, masked to $03
 wDebugPaletteColorIndex:: db
 
-; [8-bit] Palette under the debug cursor, masked to $0f. GetSelectedBGPaletteColorPtr indexes wBGPalettes with (palette * 4 + colour) * 2, so 8-15 run on into wOBJPalettes
+; [8-bit] Palette under the debug cursor, masked to $0f. GetSelectedPaletteColorPtr indexes wBGPalettes with (palette * 4 + colour) * 2, so 8-15 run on into wOBJPalettes
 wDebugPaletteIndex:: db
 
 ; [8-bit] Page of 64 game flags shown by the debug flag editor; the flag number DebugToggleSelectedFlag builds is page * 64 + byte * 8 + bit
@@ -127,7 +127,7 @@ wMinigameServeCount:: dw
 wScorePopupValue:: dw
 ; [8-bit] Difficulty tier of this serve: wMinigameServeCount / 10, capped at 25; LaunchBall indexes MinigameShotButtonPoolColumn/MinigameShotSpeedColumn with it
 wMinigameServeTier:: db
-; [8-bit] Cell (0-8) of the 3x3 MinigameCharCoordsTable grid the feeding opponent serves from; the hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable walks the opponent there
+; [8-bit] Cell (0-8) of the 3x3 MinigameFeederPositions grid the feeding opponent serves from; the hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable walks the opponent there
 wMinigameFeederPos:: db
 ; [8-bit] wMinigameFeederPos / 3 (the depth row), taken by LaunchMinigameServe; LaunchBall picks the aim scale and launch height by it
 wMinigameFeederRow:: db
@@ -215,7 +215,7 @@ ENDU
 ; [8-bit] Target zone picked at random from the level's zone pool by SelectRandomTargetShotZone and SelectRandomTreasureBoxTargetZone; LoadTargetZoneConfig, the score rules and the treasure-box spawn points key on it
 wMinigameTargetZone:: db
 
-; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessTargetTileHit scores each tile hit at this + 1 and increments it when AreAllTargetsHit. Zeroed with wModeScratch at match start
+; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessPerfectShotTileHit scores each tile hit at this + 1 and increments it when AreAllPerfectShotTilesHit. Zeroed with wModeScratch at match start
 wTargetGridClearCount:: db
 
 ; [8-bit] 1 when the opponent is CHAR_UNUSED_15 (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
@@ -266,7 +266,7 @@ UNION
 wMinigameTargetsActive:: db
 ; [8-bit] Grid cell the ball last bounced off, recorded by the Banana Bunch / Fruit Fantasy deflection handlers and read when the hit is scored
 wMinigameLastHitCell:: db
-; [24 bytes] The 3 x 8 target grid, one byte per cell. AreAllTargetsHit passes when all 24 are 1; ResetTargetGrid clears it a row at a time (+$07, +$0f, +$17 are the row ends)
+; [24 bytes] The 3 x 8 target grid, one cell type per byte (0 = empty), copied from a layout by LoadMinigameTargetGrid. Perfect Shot sets a cell to 1 when hit: ResetPerfectShotGrid loads PerfectShotTargetGridLayout and marks the unused eighth column (+$07, +$0f, +$17) hit, and AreAllPerfectShotTilesHit passes when all 24 are 1
 wMinigameTargetGrid:: ds 24
 	export_size wMinigameTargetGrid
 NEXTU

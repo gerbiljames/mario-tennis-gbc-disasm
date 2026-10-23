@@ -546,7 +546,7 @@ StrokeMatch1Cases2:
 	ld a, DRILLMSG_YOUR_BALL_DIDNT_LAND_PAST_MY_SERVICE_LINE_MY_POINT ; $65ad
 	ld b, DRILLWORDING_STROKE ; $65af
 	call SetDrillMessageByRallyParity ; $65b1
-	call TestBallBounceDepth ; $65b4
+	call IsBounceBeyondServiceLine ; $65b4
 	or a ; $65b7
 	jp z, StrokeMatch1Cases4.abortLose ; $65b8
 	xor a ; $65bb
@@ -594,7 +594,7 @@ StrokeMatch1Cases3:
 	ld a, DRILLMSG_YOUR_BALL_DIDNT_LAND_PAST_MY_SERVICE_LINE_MY_POINT ; $660d
 	ld b, DRILLWORDING_STROKE ; $660f
 	call SetDrillMessageByRallyParity ; $6611
-	call TestBallBounceDepth ; $6614
+	call IsBounceBeyondServiceLine ; $6614
 	or a ; $6617
 	jp z, StrokeMatch1Cases4.abortWin ; $6618
 	xor a ; $661b
@@ -642,7 +642,7 @@ StrokeMatch1Cases4:
 	ld a, DRILLMSG_YOUR_BALL_DIDNT_LAND_PAST_MY_SERVICE_LINE_MY_POINT ; $666d
 	ld b, DRILLWORDING_STROKE ; $666f
 	call SetDrillMessageByRallyParity ; $6671
-	call TestBallBounceDepth ; $6674
+	call IsBounceBeyondServiceLine ; $6674
 	or a ; $6677
 	jp z, .abortLose ; $6678
 	xor a ; $667b

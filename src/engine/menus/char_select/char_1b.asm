@@ -386,7 +386,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld hl, wStorySlotData ; $630c
 	ld b, a ; $630f
 	ld [wCurrentStorySlot], a ; $6310
-	farcall CheckStorySlot ; $6313
+	farcall ReadCurrentStorySlot ; $6313
 	or a ; $6316
 	jp z, .slotLoaded ; $6317
 	call RunNewGameSetup ; $631a
@@ -417,7 +417,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld b, a ; $634e
 	ld hl, wPlayer1MainName ; $634f
 	ld [wCurrentStorySlot], a ; $6352
-	farcall CheckStorySlot ; $6355
+	farcall ReadCurrentStorySlot ; $6355
 	or a ; $6358
 	jr z, .slotOk ; $6359
 	sound SFX_MENU_CANCEL ; $635b
