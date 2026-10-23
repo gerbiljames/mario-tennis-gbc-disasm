@@ -325,10 +325,10 @@ N64TnmtScrollArrowsTask:
 	push_wram_bank WRAM_SCREEN ; $50d6
 	ld a, [wN64TnmtHasSecondPage] ; $50df
 	or a ; $50e2
-	jr z, .applyCursorBounceX ; $50e3
+	jr z, .checkLeftArrow ; $50e3
 	ld a, [wDataScreenPage] ; $50e5
 	or a ; $50e8
-	jr nz, .applyCursorBounceX ; $50e9
+	jr nz, .checkLeftArrow ; $50e9
 	ld_xy de, $93, $2f ; $50eb
 	ld c, BOBDIR_POS ; $50ee
 	call ApplyCursorBounceX ; $50f0
@@ -336,7 +336,7 @@ N64TnmtScrollArrowsTask:
 	ld c, $00 ; $50f5
 	ld h, $00 ; $50f7
 	farcall QueueStackedSpritePair ; $50f9
-.applyCursorBounceX:
+.checkLeftArrow:
 	ld a, [wDataScreenPage] ; $50fc
 	or a ; $50ff
 	jr z, .checkUpArrow ; $5100

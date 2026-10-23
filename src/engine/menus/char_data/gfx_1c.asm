@@ -112,7 +112,7 @@ CharDataScreen_LoadScreen:
 	ld de, vTiles0 + VRAM_BANK1 ; $713a
 	ld c, CharDataLargeDigitGfx_SIZE / 16 ; $713d
 	call QueueVRAMCopy ; $713f
-	farcall CharDataScreen_LoadGfx ; $7142
+	farcall LoadStatArrowGfx ; $7142
 	wram_bank WRAM_STAGING ; $7145
 	ld hl, CharDataScreenTiles ; $714b
 	ld de, wDecompBuffer ; $714e
@@ -324,15 +324,15 @@ RestoreCharData:
 	dec b ; $73f0
 	jr nz, .loop ; $73f1
 	ret ; $73f3
-LoadCharDataScreenGraphics:
-	call LoadCharDataScreenPalettes ; $73f4
-	call LoadCharDataScreenMugshots ; $73f7
+LoadExpDistributionScreenGraphics:
+	call LoadExpDistributionScreenPalettes ; $73f4
+	call LoadExpDistributionScreenMugshots ; $73f7
 	ret ; $73fa
-LoadCharDataScreenPalettes:
-	ld hl, CharDataScreenBgObjPalettes ; $73fb
+LoadExpDistributionScreenPalettes:
+	ld hl, ExpDistributionScreenBgObjPalettes ; $73fb
 	ld_bg_pals de, 0, 8 ; $73fe
 	call LoadPaletteShadow ; $7401
-	ld hl, CharDataScreenBgObjPalettes ; $7404
+	ld hl, ExpDistributionScreenBgObjPalettes ; $7404
 	ld_obj_pals de, 0, 8 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank WRAM_SCENE ; $740d
@@ -349,33 +349,33 @@ LoadCharDataScreenPalettes:
 	ld hl, wMasterPalettes + 4 * PAL_SIZE + 1 * COLOR_SIZE ; $7431
 	farcall GrayscalePaletteColorInPlace ; $7434
 	wram_bank WRAM_STAGING ; $7437
-	ld hl, CharDataScreenBgGfx ; $743d
+	ld hl, ExpDistributionScreenBgGfx ; $743d
 	ld de, wDecompBuffer ; $7440
 	call DecompressData ; $7443
 	ld hl, wDecompBuffer ; $7446
 	ld de, vTiles2 + VRAM_BANK1 ; $7449
-	ld c, 128 ; $744c -- 128 of CharDataScreenBgGfx's 256 tiles
+	ld c, 128 ; $744c -- 128 of ExpDistributionScreenBgGfx's 256 tiles
 	call QueueVRAMCopy ; $744e
 	ld hl, wDecompBufferHigh ; $7451
 	ld de, vTiles1 + VRAM_BANK1 ; $7454
 	ld c, wDecompBufferHigh_SIZE / 16 ; $7457
 	call QueueVRAMCopy ; $7459
 	wram_bank WRAM_STAGING ; $745c
-	ld hl, CharDataScreenBgTilemap ; $7462
+	ld hl, ExpDistributionScreenBgTilemap ; $7462
 	ld de, wDecompBuffer ; $7465
 	call DecompressData ; $7468
 	ld hl, wDecompBuffer ; $746b
-	ld bc, CharDataScreenBgTilemap_SIZE ; $746e
+	ld bc, ExpDistributionScreenBgTilemap_SIZE ; $746e
 	call CopyWram1ToWram3 ; $7471
 	wram_bank WRAM_STAGING ; $7474
-	ld hl, CharDataScreenBgAttrmap ; $747a
+	ld hl, ExpDistributionScreenBgAttrmap ; $747a
 	ld de, wDecompBuffer ; $747d
 	call DecompressData ; $7480
 	ld hl, wDecompBuffer ; $7483
-	ld bc, CharDataScreenBgAttrmap_SIZE ; $7486
+	ld bc, ExpDistributionScreenBgAttrmap_SIZE ; $7486
 	call CopyWram1ToWram2 ; $7489
 	ret ; $748c
-LoadCharDataScreenMugshots:
+LoadExpDistributionScreenMugshots:
 	xor a ; $748d
 	ld [wStoryCharacterSlot], a ; $748e
 	push af ; $7491
@@ -423,14 +423,14 @@ LoadCharDataScreenMugshots:
 	ld hl, wMasterPalettes + 2 * PAL_SIZE + 3 * COLOR_SIZE ; $753a
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
-CharDataScreenBgObjPalettes:
-	INCLUDE "data/engine/menus/char_data/CharDataScreenBgObjPalettes.asm" ; $7541, 64 bytes (palettes)
-CharDataScreenBgGfx:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgGfx.bin" ; $7581, 1886 bytes
-CharDataScreenBgTilemap:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.bin" ; $7cdf, 320 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgTilemap.inc" ; DEF CharDataScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make
-CharDataScreenBgAttrmap:
-	INCBIN "data/engine/menus/char_data/lz_CharDataScreenBgAttrmap.bin" ; $7e1f, 216 bytes
-	INCLUDE "data/engine/menus/char_data/lz_CharDataScreenBgAttrmap.inc" ; DEF CharDataScreenBgAttrmap_SIZE EQU its decoded length, generated from the .bin by make
+ExpDistributionScreenBgObjPalettes:
+	INCLUDE "data/engine/menus/char_data/ExpDistributionScreenBgObjPalettes.asm" ; $7541, 64 bytes (palettes)
+ExpDistributionScreenBgGfx:
+	INCBIN "data/engine/menus/char_data/lz_ExpDistributionScreenBgGfx.bin" ; $7581, 1886 bytes
+ExpDistributionScreenBgTilemap:
+	INCBIN "data/engine/menus/char_data/lz_ExpDistributionScreenBgTilemap.bin" ; $7cdf, 320 bytes
+	INCLUDE "data/engine/menus/char_data/lz_ExpDistributionScreenBgTilemap.inc" ; DEF ExpDistributionScreenBgTilemap_SIZE EQU its decoded length, generated from the .bin by make
+ExpDistributionScreenBgAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_ExpDistributionScreenBgAttrmap.bin" ; $7e1f, 216 bytes
+	INCLUDE "data/engine/menus/char_data/lz_ExpDistributionScreenBgAttrmap.inc" ; DEF ExpDistributionScreenBgAttrmap_SIZE EQU its decoded length, generated from the .bin by make
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

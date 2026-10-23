@@ -15,7 +15,7 @@ RunCourtSelect9Menu:
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
 	res B_IE_TIMER, [hl] ; $6527
-	farcall InitMenuBgScroll ; $6529
+	farcall InitMenuTitleScroller ; $6529
 	ld b, $01 ; $652c
 	ld c, $01 ; $652e
 	farcall LoadMenuSpritePalettePair ; $6530
@@ -99,7 +99,7 @@ RunLinkCourtSelect9Menu:
 	or b ; $65de
 	ld b, a ; $65df
 	call StoreCourtUnlockBits ; $65e0
-	farcall InitMenuBgScroll ; $65e3
+	farcall InitMenuTitleScroller ; $65e3
 	ld b, $01 ; $65e6
 	ld c, $01 ; $65e8
 	farcall LoadMenuSpritePalettePair ; $65ea
@@ -256,7 +256,7 @@ CloseCourtSelect9Panel:
 	jr nz, .slideBackLoop ; $6711
 	ret ; $6713
 CourtSelect9CursorSpriteTask:
-	farcall TickMenuBgScroll ; $6714
+	farcall TickMenuTitleScroller ; $6714
 	ld c, $03 ; $6717
 	call GetMenuCursorIndex_3e ; $6719
 	push af ; $671c

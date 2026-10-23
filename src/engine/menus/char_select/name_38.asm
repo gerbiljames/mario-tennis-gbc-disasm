@@ -39,7 +39,7 @@ MoveLinkCursorDown:
 .nextPage:
 	inc a ; $6d48
 	ld e, a ; $6d49
-	ld a, [wCharGridPageCount] ; $6d4a
+	ld a, [wCharGridRowCount] ; $6d4a
 	dec a ; $6d4d
 	ld b, a ; $6d4e
 	ld a, e ; $6d4f
@@ -119,7 +119,7 @@ Unused_38_RetreatLinkGridSelection:
 	ret ; $6dc3
 Unused_38_ConfirmRemoteGridSelection:
 	ld a, [wCharSelectSlot] ; $6dc4
-	ld a, [wCharGridPage] ; $6dc7
+	ld a, [wCharGridTopRow] ; $6dc7
 	ld c, a ; $6dca
 	ld a, [wMenuCursor2X] ; $6dcb
 	ld d, a ; $6dce
@@ -178,7 +178,7 @@ RunNameEntryScreen:
 	call WaitFadeEnd ; $6e4b
 	ld hl, rIE ; $6e4e
 	res B_IE_TIMER, [hl] ; $6e51
-	frame_task TickMenuBgScrollTask_38 ; $6e53
+	frame_task TickMenuTitleScrollerTask_38 ; $6e53
 .redraw:
 	ld a, [wMenuCursorX] ; $6e5b
 	push de ; $6e5e
@@ -354,13 +354,13 @@ SetupNameEntryScreen:
 	ld d, $04 ; $7010
 	farcall LoadIndexedPalette_18 ; $7012
 	pop_wram_bank ; $7015
-	farcall InitMenuBgScroll ; $701a
+	farcall InitMenuTitleScroller ; $701a
 	ld b, $01 ; $701d
 	ld c, $01 ; $701f
 	farcall LoadMenuSpritePalettePair ; $7021
 	ld a, $10 ; $7024
-	ld [wMenuBgScrollTile], a ; $7026
-	ld [wMenuBgScrollTile + 1], a ; $7029
+	ld [wMenuTitleScrollTile], a ; $7026
+	ld [wMenuTitleScrollTile + 1], a ; $7029
 	ld b, TILEBLOCK_CreateACharacterTitleGfx ; $702c
 	ld c, CreateACharacterTitleGfx_SIZE / 16 ; $702e
 	ld de, vTiles0 tile $10 ; $7030

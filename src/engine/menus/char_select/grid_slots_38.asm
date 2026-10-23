@@ -86,7 +86,7 @@ GetGridSlotFromCursor:
 	ld a, d ; $5ccc
 	add e ; $5ccd
 	ld b, a ; $5cce
-	ld a, [wCharGridPage] ; $5ccf
+	ld a, [wCharGridTopRow] ; $5ccf
 	ld c, a ; $5cd2
 .addPageLoop:
 	ld a, c ; $5cd3
@@ -108,7 +108,7 @@ BuildVisiblePageSpriteList:
 	push hl ; $5ce8
 	push_wram_bank WRAM_SCREEN ; $5ce9
 	ld hl, wCharGridEntries ; $5cf2
-	ld a, [wCharGridPage] ; $5cf5
+	ld a, [wCharGridTopRow] ; $5cf5
 	ld bc, $000c ; $5cf8
 .seekPage:
 	or a ; $5cfb

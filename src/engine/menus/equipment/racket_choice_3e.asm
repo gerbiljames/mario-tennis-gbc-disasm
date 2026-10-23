@@ -99,7 +99,7 @@ LoadEraseDataConfirmScreen:
 	farcall CreateWindowFromScreenRect ; $4d22
 	farcall DrawTextWindowFrame ; $4d25
 	farcall RedrawWindowRows ; $4d28
-	farcall InitMenuBgScroll ; $4d2b
+	farcall InitMenuTitleScroller ; $4d2b
 	ld b, $01 ; $4d2e
 	ld c, $01 ; $4d30
 	farcall LoadMenuSpritePalettePair ; $4d32
@@ -206,7 +206,7 @@ QueueEraseConfirmCursorSprites:
 	ld d, a ; $4e28
 	sprite_tile_attr $02, OAM_BANK1 ; $4e29
 	call QueueSprite ; $4e2d
-	farcall TickMenuBgScroll ; $4e30
+	farcall TickMenuTitleScroller ; $4e30
 	ret ; $4e33
 AnimateEraseConfirmPalette:
 	push_wram_bank WRAM_SCREEN ; $4e34
@@ -257,7 +257,7 @@ RunRacketShoesChoiceMenu:
 	ld a, [wMenuSlideDirection] ; $4eb0
 	ld b, a ; $4eb3
 	call OpenChoiceTabPanel ; $4eb4
-	farcall InitMenuBgScroll ; $4eb7
+	farcall InitMenuTitleScroller ; $4eb7
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
 	farcall LoadMenuSpritePalettePair ; $4ebe
@@ -316,7 +316,7 @@ LoadRacketShoesChoiceGraphics:
 .loop:
 	ld a, c ; $4f3e
 	add a ; $4f3f
-	ld hl, RacketShoesChoiceGfxParams_3e ; $4f40
+	ld hl, RacketShoesChoiceIconTilePtrs_3e ; $4f40
 	add_hl_a ; $4f43
 	ld a, [hl+] ; $4f48
 	ld h, [hl] ; $4f49
@@ -381,7 +381,7 @@ LoadRacketShoesChoiceGraphics:
 	farcall LoadIndexedPalette ; $4fba
 	pop_wram_bank ; $4fbd
 	ret ; $4fc2
-RacketShoesChoiceGfxParams_3e:
+RacketShoesChoiceIconTilePtrs_3e:
 	; $4fc3, 3 slot words
 	dslot DataPtr_RacketIconTiles ; record 0
 	dslot DataPtr_ShoesIconTiles ; record 1

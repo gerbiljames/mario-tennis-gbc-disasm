@@ -143,25 +143,25 @@ PromptCharDataConfirm:
 	call WaitFadeEnd ; $5a97
 	wram_bank WRAM_SCENE ; $5a9a
 	ld a, $01 ; $5aa0
-	ld [wCharDataConfirmState], a ; $5aa2
+	ld [wCharDataConfirmCursor], a ; $5aa2
 .loop:
 	call DrawConfirmSelectionCursor_1d ; $5aa5
 	call AdvanceFrame ; $5aa8
 	ldh a, [hInputRisingEdge] ; $5aab
 	bit PADB_A, a ; $5aad
-	jr nz, .step ; $5aaf
+	jr nz, .pressedA ; $5aaf
 	bit PADB_B, a ; $5ab1
 	jr nz, .cancel ; $5ab3
 	and PADF_UP | PADF_DOWN ; $5ab5
 	jr z, .loop ; $5ab7
 	sound SFX_MENU_MOVE ; $5ab9
-	ld a, [wCharDataConfirmState] ; $5abb
+	ld a, [wCharDataConfirmCursor] ; $5abb
 	xor $01 ; $5abe
-	ld [wCharDataConfirmState], a ; $5ac0
+	ld [wCharDataConfirmCursor], a ; $5ac0
 	jr .loop ; $5ac3
-.step:
+.pressedA:
 	wram_bank WRAM_SCENE ; $5ac5
-	ld a, [wCharDataConfirmState] ; $5acb
+	ld a, [wCharDataConfirmCursor] ; $5acb
 	or a ; $5ace
 	jr nz, .cancel ; $5acf
 	sound SFX_MENU_SELECT ; $5ad1
@@ -169,7 +169,7 @@ PromptCharDataConfirm:
 .cancel:
 	wram_bank WRAM_SCENE ; $5ad5
 	ld a, $01 ; $5adb
-	ld [wCharDataConfirmState], a ; $5add
+	ld [wCharDataConfirmCursor], a ; $5add
 	sound SFX_MENU_CANCEL ; $5ae0
 .beginFadeOut:
 	script_fade_out 16 ; $5ae2
@@ -177,7 +177,7 @@ PromptCharDataConfirm:
 	farcall StopCharDataScreenAnimTask ; $5aea
 	call ClearFrameTasks ; $5aed
 	wram_bank WRAM_SCENE ; $5af0
-	ld a, [wCharDataConfirmState] ; $5af6
+	ld a, [wCharDataConfirmCursor] ; $5af6
 	ret ; $5af9
 	twin draw_confirm_selection_cursor, 1d ; $5afa DrawConfirmSelectionCursor_1d
 BuildCharDataConfirmScreen:

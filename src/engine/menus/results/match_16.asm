@@ -213,7 +213,7 @@ InitMatchStatsScreen:
 SetMatchStatsPortraitPaletteAttrs:
 	ld de, FLAG_DOUBLES ; $5cdc
 	call TestGameFlagByNumber ; $5cdf
-	jr z, .fillTilemapRect ; $5ce2
+	jr z, .singles ; $5ce2
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 1 ; $5ce4
 	rect_size $03, $03 ; $5ce7
 	ld h, $0c ; $5ceb
@@ -231,7 +231,7 @@ SetMatchStatsPortraitPaletteAttrs:
 	ld h, $0f ; $5d0f
 	farcall FillTilemapRect ; $5d11
 	jr .done ; $5d14
-.fillTilemapRect:
+.singles:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $5d16
 	rect_size $03, $03 ; $5d19
 	ld h, $0c ; $5d1d

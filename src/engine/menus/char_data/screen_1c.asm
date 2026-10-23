@@ -10,7 +10,7 @@
 	farptr StartCharDataScreenAnimTask ; $4012
 	farptr StopCharDataScreenAnimTask ; $4014
 	farptr FlushCharDataTilemapsFar ; $4016
-	farptr LoadCharDataScreenGraphics ; $4018
+	farptr LoadExpDistributionScreenGraphics ; $4018
 CharDataScreen_Show:
 	push_wram_bank WRAM_SCENE ; $401a
 	push bc ; $4023
@@ -55,7 +55,7 @@ CharDataScreen_Show:
 	call AnimateCharDataStatsReveal ; $4092
 	wram_bank WRAM_SCENE ; $4095
 	xor a ; $409b
-	ld [wCharDataLevelPreview], a ; $409c
+	ld [wCharDataHideLevelPreview], a ; $409c
 	call CharDataScreen_DrawPageColumns ; $409f
 	call FlushCharDataTilemaps ; $40a2
 	frame_task DrawStatArrowIndicators ; $40a5
@@ -113,7 +113,7 @@ CharDataScreen_InitState:
 	ld [wCharDataDigitFlyInStep], a ; $4125
 	ld a, $03 ; $4128
 	ld [wCharDataRevealStep], a ; $412a
-	ld [wCharDataLevelPreview], a ; $412d
+	ld [wCharDataHideLevelPreview], a ; $412d
 	ld a, [wCharDataViewOnly] ; $4130
 	or a ; $4133
 	ret nz ; $4134
@@ -481,7 +481,7 @@ CharDataScreen_DrawStatBar:
 	jr nz, .ruledBar ; $4505
 	ld a, b ; $4507
 	rlca ; $4508
-	ld_hl_indexed CharDataScreen_DrawStatBarPtrs ; $4509
+	ld_hl_indexed CharDataScreen_StatBarTilePtrs ; $4509
 	ld a, [hl+] ; $4510
 	ld h, [hl] ; $4511
 	ld l, a ; $4512
@@ -533,7 +533,7 @@ CharDataScreen_DrawStatBar:
 	ld a, [hl] ; $4555
 	ld [de], a ; $4556
 	ret ; $4557
-CharDataScreen_DrawStatBarPtrs:
+CharDataScreen_StatBarTilePtrs:
 	; $4558, 22 bytes (records:2)
 	dw CharDataScreenStatBar00 ; record 0
 	dw CharDataScreenStatBar01 ; record 1

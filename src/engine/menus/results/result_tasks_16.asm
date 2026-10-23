@@ -160,7 +160,7 @@ RunMatchWinLoseScreen:
 	ld [wRasterScrollEndLY], a ; $44ea
 	xor a ; $44ed
 	ld [wRasterScrollX], a ; $44ee
-	frame_task AdvanceResultScreenTimer ; $44f1
+	frame_task ScrollResultRasterBandTask ; $44f1
 .loop:
 	call AdvanceFrame ; $44f9
 	ld a, [wCurrentMatchIndex] ; $44fc
@@ -332,7 +332,7 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $4998
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
-	jr .doneResult ; $49a1
+	jr .done ; $49a1
 .singles:
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $49a3
 	rect_size $04, $04 ; $49a6
@@ -342,12 +342,12 @@ SetWinLosePortraitPaletteAttrs:
 	rect_size $03, $03 ; $49b2
 	ld h, $0e ; $49b6
 	farcall FillTilemapRect ; $49b8
-.doneResult:
+.done:
 	ret ; $49bb
 .versusMatch:
 	ld de, FLAG_DOUBLES ; $49bc
 	call TestGameFlagByNumber ; $49bf
-	jr z, .fillTilemapRect ; $49c2
+	jr z, .versusSingles ; $49c2
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $49c4
 	rect_size $03, $03 ; $49c7
 	ld h, $0c ; $49cb
@@ -365,7 +365,7 @@ SetWinLosePortraitPaletteAttrs:
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
 	jr .doneVersus ; $49f4
-.fillTilemapRect:
+.versusSingles:
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 13 ; $49f6
 	rect_size $03, $03 ; $49f9
 	ld h, $0c ; $49fd

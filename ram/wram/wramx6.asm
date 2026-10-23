@@ -86,14 +86,14 @@ wCharDataStats:: ds 11
 wCharDataStatDeltas:: ds 11
 ; [8-bit] Level-up choice under the cursor (0-3), or $04 for the confirm cell; CharDataScreen_DrawPageColumns and DrawStatValueSprites key off it
 wCharDataPage:: db
-; [8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawConfirmSelectionCursor_1a draws the cursor from it
-wCharDataConfirmState:: db
+; [8-bit] Confirm-prompt cursor: 0 = confirm, 1 = cancel (Up/Down toggle it, B forces 1); returned as the prompt's result and drawn by DrawConfirmSelectionCursor_*
+wCharDataConfirmCursor:: db
 ; [8-bit] Stat-digit fly-in step: GetStatDigitSpritePos indexes the StatDigitFlyInOffsetPtrs ramps with it. CharDataScreen_InitState seeds $0a and AnimateCharDataStatsReveal stores $09, $07, $05, $03, $02, $01, $00 as the reveal advances; nothing decrements it
 wCharDataDigitFlyInStep:: db
 ; [8-bit] AnimateCharDataStatsReveal step; CharDataScreen_InitState seeds it with $03
 wCharDataRevealStep:: db
-; [8-bit] 0 while the allocation page is live: DrawStatValueSprites then draws the level one higher, in palette $0f, as a preview. CharDataScreen_InitState sets $03 on re-entry, CharDataScreen_Show clears it
-wCharDataLevelPreview:: db
+; [8-bit] Nonzero hides the level preview; 0 while the allocation page is live: DrawStatValueSprites then draws the level one higher, in palette $0f, as a preview. CharDataScreen_InitState sets $03 on re-entry, CharDataScreen_Show clears it
+wCharDataHideLevelPreview:: db
 ; [8-bit] Entries written to wCharDataChoiceLog so far (also the write index)
 wCharDataChoiceCount:: db
 NEXTU
@@ -142,7 +142,7 @@ wTrophyExpByGroup:: ds 10
 wTrophyExpGroupAccum:: dw
 ; [16-bit] The sum of all six groups, which ApplyPendingExpAwards adds to the match award
 wTrophyExpTotal:: dw
-; [8-bit] Character group being totalled; indexes TrophyExpGroupThresholds, TrophyExpGroupMasks and TrophyExpTierFlags, and selects GetTrophyExpValue's row
+; [8-bit] Trophy group being totalled (0-2: the low 2-bit trophy field of each wN64TrophyCounts nibble at grade 1/2/3, 3-5: the high field); indexes TrophyExpGroupThresholds, TrophyExpGroupMasks and TrophyExpTierFlags, and selects GetTrophyExpValue's row
 wTrophyExpGroup:: db
 NEXTU
 ; character-data screen (bank $1a)
@@ -250,7 +250,7 @@ NEXTU
 	ds 296
 ; [10 bytes] Five 16-bit EXP amounts, one per line of the results award list (EXPAWARD_*). SetPendingExpAward takes the line in b and dispatches through PendingExpAwardSetters_1d, each storing de at base + 2 * line; ClearPendingExpAwards zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads it split-base (`add $52 / adc $d1`) and skips zero lines; HasPendingExpAwards ORs the five words to decide whether to show the screen
 wPendingExpAwardAmounts:: ds 10
-; [5 bytes] One byte per award line, the c argument of SetPendingExpAward, added by DrawNextExpAwardMessage to the line's base text id from DrawNextExpAwardMessageTable to pick a wording. ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match; the trophy pass numbers the six trophy groups
+; [5 bytes] One byte per award line, the c argument of SetPendingExpAward, added by DrawNextExpAwardMessage to the line's base text id from ExpAwardSourceTextBases to pick a wording. ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match; the trophy pass numbers the six trophy groups
 wPendingExpAwardVariants:: ds 5
 NEXTU
 ; EXP award screen (bank $1a)

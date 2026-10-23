@@ -7,7 +7,7 @@ RunMainMenu:
 	xor a ; $55de
 	ld [wCheatCodeLength], a ; $55df
 	call LoadMainMenuGfx ; $55e2
-	farcall InitMenuBgScroll ; $55e5
+	farcall InitMenuTitleScroller ; $55e5
 	ld b, $01 ; $55e8
 	ld c, $01 ; $55ea
 	farcall LoadMenuSpritePalettePair ; $55ec
@@ -16,9 +16,9 @@ RunMainMenu:
 	ld c, a ; $55f4
 	call SetMenuCursorFromIndex_3b ; $55f5
 	ld a, $00 ; $55f8
-	ld [wMenuBgScrollTile + 1], a ; $55fa
+	ld [wMenuTitleScrollTile + 1], a ; $55fa
 	ld a, $01 ; $55fd
-	ld [wMenuBgScrollAttr + 1], a ; $55ff
+	ld [wMenuTitleScrollAttr + 1], a ; $55ff
 	wram_bank WRAM_SCREEN ; $5602
 	ld a, [wMenuSlideDirection] ; $5608
 	ld b, a ; $560b
@@ -45,7 +45,7 @@ RunMainMenu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5642
 	bit PADB_A, a ; $5645
-	jr nz, .clearFrameTasks ; $5647
+	jr nz, .pressedA ; $5647
 	bit PADB_B, a ; $5649
 	jr nz, .playCancelSfx ; $564b
 	bit PADB_SELECT, a ; $564d
@@ -53,7 +53,7 @@ RunMainMenu:
 	jr .loop ; $5651
 .pressedSelect:
 	jr .loop ; $5653
-.clearFrameTasks:
+.pressedA:
 	ld a, $01 ; $5655
 	ld [wCheatUnlockTriggered], a ; $5657
 	sound SFX_MENU_SELECT ; $565a
@@ -307,7 +307,7 @@ MainMenuSlideOut:
 	jr nz, .slideBackLoop ; $5860
 	ret ; $5862
 MainMenuCursorSpriteTask:
-	farcall TickMenuBgScroll ; $5863
+	farcall TickMenuTitleScroller ; $5863
 	ld c, $03 ; $5866
 	call GetMenuCursorIndex_3b ; $5868
 	push af ; $586b

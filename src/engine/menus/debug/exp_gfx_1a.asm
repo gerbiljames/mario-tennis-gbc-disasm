@@ -259,14 +259,14 @@ Unused_1a_RunCharViewerSelectGrid:
 	ret ; $69ea
 Unused_1a_LoadCharViewerGridTilemap:
 	wram_bank WRAM_STAGING ; $69eb
-	ld hl, CharViewerGridTilemap0 ; $69f1
+	ld hl, CharViewerGridTilemap ; $69f1
 	ld de, wDecompBuffer ; $69f4
 	call DecompressData ; $69f7
 	ld hl, wDecompBuffer ; $69fa
 	ld bc, SCREEN_HEIGHT * TILEMAP_WIDTH ; $69fd
 	call Unused_1a_CopyBank1ToBank3Buffer ; $6a00
 	wram_bank WRAM_STAGING ; $6a03
-	ld hl, CharViewerGridTilemap1 ; $6a09
+	ld hl, CharViewerGridAttrmap ; $6a09
 	ld de, wDecompBuffer ; $6a0c
 	call DecompressData ; $6a0f
 	ld hl, wDecompBuffer ; $6a12

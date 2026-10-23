@@ -385,7 +385,7 @@ DrawContinuePromptCursor:
 	ld a, [wContinuePromptRow] ; $4b91
 	or a ; $4b94
 	jr z, .acceptWarning ; $4b95
-.loop:
+.backToFirstPage:
 	xor a ; $4b97
 	ld [wContinuePromptPage], a ; $4b98
 	call RefreshContinuePromptText ; $4b9b
@@ -411,7 +411,7 @@ DrawContinuePromptCursor:
 	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
 .cancelWarning:
-	jr .loop ; $4bc8
+	jr .backToFirstPage ; $4bc8
 RefreshContinuePromptText:
 	ld a, [wContinuePromptPage] ; $4bca
 	or a ; $4bcd

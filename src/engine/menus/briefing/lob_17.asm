@@ -15,7 +15,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	sla a ; $6972
 	sla a ; $6974
 	ld c, a ; $6976
-	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnimTable ; $6977
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_PlayerPosTable ; $6977
 	ld a, [hl] ; $697e
 	inc hl ; $697f
 	inc hl ; $6980
@@ -83,7 +83,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $6a06
 	ld [wBriefingDiagArrowY], a ; $6a07
 	ret ; $6a0a
-ReturnToTargetBriefing_AdvanceAnimTable:
+ReturnToTargetBriefing_AdvanceAnim_PlayerPosTable:
 	; $6a0b, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -198,7 +198,7 @@ ReturnLobBriefing_AdvanceAnim:
 	sla a ; $6bb3
 	sla a ; $6bb5
 	ld c, a ; $6bb7
-	ld_hl_indexed ReturnLobBriefing_AdvanceAnimTable ; $6bb8
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_PlayerPosTable ; $6bb8
 	ld a, [hl] ; $6bbf
 	inc hl ; $6bc0
 	inc hl ; $6bc1
@@ -280,7 +280,7 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c69
 	ld [wBriefingCmdPromptY], a ; $6c6a
 	ret ; $6c6d
-ReturnLobBriefing_AdvanceAnimTable:
+ReturnLobBriefing_AdvanceAnim_PlayerPosTable:
 	; $6c6e, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1

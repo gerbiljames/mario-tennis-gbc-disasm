@@ -683,6 +683,17 @@ uses the write cursor, so the printed number is right. One shipped message puts
 a number after a page break (`TextStrings_35.s412`, the game-over "Your
 score is N consecutive hits."). Left as is.
 
+### The results screens mirror the doubles partner by the wrong record
+
+`UpdateExpScreenCharSprite` (`$1e:$5954`) and `UpdateContinueGameCharSprite`
+(`$1e:$4aa8`) flip a character's sprite when its record is left-handed, and pick
+the record by `a` alone: `wPlayer1MainLeftHanded` for the main sprite,
+`wPlayer2MainLeftHanded` (`$5981`, `$4acb`) for the partner. The partner sprite
+is char struct 2, loaded from `wStoryPartner`, `wPlayer1Partner` or (link
+slave) `wPlayer2Partner`, the same records the partner name panel uses, so in
+doubles the partner faces by the opposing main character's handedness; on the
+link slave the main sprite reads player 1's record too. Left as is.
+
 ## Dead stores
 
 Values written and never read, and one table written past its end (the menu

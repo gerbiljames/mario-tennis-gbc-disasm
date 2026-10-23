@@ -31,18 +31,18 @@ ShowCharDataScreen:
 	ld de, vTiles0 tile $60 + VRAM_BANK1 ; $404f
 	ld c, CharStatusTitleGfx_SIZE / 16 ; $4052
 	call QueueVRAMCopy ; $4054
-	farcall InitMenuBgScroll ; $4057
+	farcall InitMenuTitleScroller ; $4057
 	ld b, $05 ; $405a
 	ld c, $05 ; $405c
 	farcall LoadMenuSpritePalettePair ; $405e
 	ld a, $0d ; $4061
-	ld [wMenuBgScrollAttr], a ; $4063
+	ld [wMenuTitleScrollAttr], a ; $4063
 	ld a, $0d ; $4066
-	ld [wMenuBgScrollAttr + 1], a ; $4068
+	ld [wMenuTitleScrollAttr + 1], a ; $4068
 	ld a, $60 ; $406b
-	ld [wMenuBgScrollTile], a ; $406d
+	ld [wMenuTitleScrollTile], a ; $406d
 	ld a, $60 ; $4070
-	ld [wMenuBgScrollTile + 1], a ; $4072
+	ld [wMenuTitleScrollTile + 1], a ; $4072
 	ld hl, rIE ; $4075
 	res B_IE_TIMER, [hl] ; $4078
 	call EnableLCD ; $407a
@@ -68,7 +68,7 @@ ShowCharDataScreen:
 	call ClearFrameTasks ; $40c8
 	ret ; $40cb
 CharDataScreenBgScrollTask:
-	farcall TickMenuBgScroll ; $40cc
+	farcall TickMenuTitleScroller ; $40cc
 	ret ; $40cf
 InitCharDataWorkRam:
 	wram_bank WRAM_SCENE ; $40d0

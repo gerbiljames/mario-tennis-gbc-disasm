@@ -61,7 +61,7 @@ CloseChoiceTabPanel:
 	jr nz, .rewindInLoop ; $50f2
 	ret ; $50f4
 ChoiceTabCursorSpriteTask:
-	farcall TickMenuBgScroll ; $50f5
+	farcall TickMenuTitleScroller ; $50f5
 	ld c, $02 ; $50f8
 	call GetMenuCursorIndex_3e ; $50fa
 	push af ; $50fd
@@ -153,7 +153,7 @@ RunPlayAlonePartnerMenu:
 	ld a, [wMenuSlideDirection] ; $51a2
 	ld b, a ; $51a5
 	call OpenChoiceTabPanel ; $51a6
-	farcall InitMenuBgScroll ; $51a9
+	farcall InitMenuTitleScroller ; $51a9
 	ld b, $01 ; $51ac
 	ld c, $01 ; $51ae
 	farcall LoadMenuSpritePalettePair ; $51b0
@@ -216,7 +216,7 @@ LoadPlayAlonePartnerGraphics:
 .loop:
 	ld a, c ; $5234
 	add a ; $5235
-	ld hl, PlayAlonePartnerGfxParams_3e ; $5236
+	ld hl, PlayAlonePartnerIconTilePtrs_3e ; $5236
 	add_hl_a ; $5239
 	ld a, [hl+] ; $523e
 	ld h, [hl] ; $523f
@@ -277,7 +277,7 @@ LoadPlayAlonePartnerGraphics:
 	farcall LoadIndexedPalette ; $52a6
 	pop_wram_bank ; $52a9
 	ret ; $52ae
-PlayAlonePartnerGfxParams_3e:
+PlayAlonePartnerIconTilePtrs_3e:
 	; $52af, 2 slot words
 	dslot DataPtr_SinglesIconTiles ; record 0
 	dslot DataPtr_DoublesIconTiles ; record 1
@@ -362,7 +362,7 @@ DrawPlayAlonePartnerCaption:
 	ld d, [hl] ; $536e
 	ld e, a ; $536f
 	ld a, b ; $5370
-	ld hl, Text_EquipPlayAlone ; $5371
+	ld hl, Text_PlayAlone ; $5371
 	add_hl_a ; $5374
 	ld c, $20 ; $5379
 	farcall RenderTextToBuffer64 ; $537b

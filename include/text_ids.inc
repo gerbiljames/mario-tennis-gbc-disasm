@@ -1550,7 +1550,7 @@ def Text_EraseCurrentGame equ Text_30_221
 def Text_EraseCurrentGameWillBeErased equ Text_30_222
 def Text_EraseThisDataPrompt equ Text_30_223
 def Text_EquipChooseRacket equ Text_30_224
-def Text_EquipPlayAlone equ Text_30_226
+def Text_PlayAlone equ Text_30_226
 def Text_DebugRacketTest equ Text_30_228
 def Text_RacketNormal equ Text_30_229
 def Text_RacketLarge equ Text_30_230

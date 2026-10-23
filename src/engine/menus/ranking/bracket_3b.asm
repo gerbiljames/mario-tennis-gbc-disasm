@@ -30,7 +30,7 @@ BuildVarsityTeamChartScreen:
 	ld a, [wScreenScratch] ; $77a7
 	or a ; $77aa
 	jr nz, .doubles ; $77ab
-	ld c, SCREENASSET_VarsityTeamChart ; $77ad
+	ld c, SCREENASSET_VarsityTeamChartSingles ; $77ad
 	farcall LoadScreenAssetRecord ; $77af
 	ld b, TILEBLOCK_VarsityTeamChartNameBoxTiles ; $77b2
 	ld c, VarsityTeamChartNameBoxTiles_SIZE / 16 ; $77b4
@@ -44,7 +44,7 @@ BuildVarsityTeamChartScreen:
 	farcall QueueWram3MapToVRAM ; $77ce
 	ret ; $77d1
 .doubles:
-	ld c, SCREENASSET_VarsityTeamChart2 ; $77d2
+	ld c, SCREENASSET_VarsityTeamChartDoubles ; $77d2
 	farcall LoadScreenAssetRecord ; $77d4
 	ld b, TILEBLOCK_VarsityTeamChartNameBoxTiles ; $77d7
 	ld c, VarsityTeamChartNameBoxTiles_SIZE / 16 ; $77d9

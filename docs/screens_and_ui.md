@@ -407,9 +407,9 @@ tileset.
   `wAnimatedTilePeriod` (usually 3); on wrap it advances `wAnimatedTileFrame`,
   looks up `wAnimatedTileSet` in `AnimatedTileFrameLists` and decompresses the
   frame's tiles.
-- `InitMenuBgScroll` / `TickMenuBgScroll` (`$39:$4b13` / `$4b6d`): the two-lane
-  scrolling sprite band behind menus, alternating lanes each frame, a 10-sprite
-  row through `QueueSpriteTemplate`.
+- `InitMenuTitleScroller` / `TickMenuTitleScroller` (`$39:$4b13` / `$4b6d`): the menu title
+  that scrolls up the screen: two lanes of the screen's title gfx, alternating
+  lanes each frame, a 10-sprite row through `QueueSpriteTemplate`.
 - `LoadIndexedPalette` (`$39:$457f`, `c` = palette data index, `b` = destination
   slot) and `Unused_39_LoadFixedPaletteSet` (`$39:$4661`): palette loaders.
 

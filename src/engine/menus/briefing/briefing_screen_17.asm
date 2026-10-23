@@ -86,7 +86,7 @@ ShowDrillBriefingScreen:
 	dw DrillBriefing_ServeThroughPoles ; $44d9 jumptable
 	dw DrillBriefing_ServeAndVolley ; $44db jumptable
 	dw DrillBriefing_ServeAndSmash ; $44dd jumptable
-	dw DrillBriefing_ServeAndSmash2 ; $44df jumptable
+	dw DrillBriefing_DropShot ; $44df jumptable
 	dw DrillBriefing_ReturnToTarget ; $44e1 jumptable
 	dw DrillBriefing_ReturnLob ; $44e3 jumptable
 	dw DrillBriefing_ReturnDownLine ; $44e5 jumptable

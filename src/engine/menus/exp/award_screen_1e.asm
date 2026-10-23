@@ -606,7 +606,7 @@ DrawNextExpAwardMessage:
 	ld d, a ; $59e3
 	ld a, [wExpAwardIndex] ; $59e4
 	rlca ; $59e7
-	ld_hl_indexed DrawNextExpAwardMessageTable ; $59e8
+	ld_hl_indexed ExpAwardSourceTextBases ; $59e8
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
 	ld l, a ; $59f1
@@ -648,7 +648,7 @@ DrawNextExpAwardMessage:
 	farcall UploadGlyphBuffer ; $5a3f
 	xor a ; $5a42
 	ret ; $5a43
-DrawNextExpAwardMessageTable:
+ExpAwardSourceTextBases:
 	; $5a44, 10 bytes (text_ids)
 	table_width 2
 	dw Text_ExpForMarioTennisN64 ; EXPAWARD_N64

@@ -3,7 +3,7 @@ RunCourtSelect4Menu:
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
 	res B_IE_TIMER, [hl] ; $5ba1
-	farcall InitMenuBgScroll ; $5ba3
+	farcall InitMenuTitleScroller ; $5ba3
 	ld b, $01 ; $5ba6
 	ld c, $01 ; $5ba8
 	farcall LoadMenuSpritePalettePair ; $5baa
@@ -73,7 +73,7 @@ RunLinkCourtSelect4Menu:
 	call ClearFrameTasks ; $5c3e
 	call EnableTimerInterrupt ; $5c41
 	sound BGM_MENU ; $5c44
-	farcall InitMenuBgScroll ; $5c46
+	farcall InitMenuTitleScroller ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
 	farcall LoadMenuSpritePalettePair ; $5c4d
@@ -375,7 +375,7 @@ CloseCourtSelect4Panel:
 	jr nz, .rewindInLoop ; $5e90
 	ret ; $5e92
 CourtSelect4CursorSpriteTask:
-	farcall TickMenuBgScroll ; $5e93
+	farcall TickMenuTitleScroller ; $5e93
 	ld c, $02 ; $5e96
 	call GetMenuCursorIndex_3e ; $5e98
 	push af ; $5e9b

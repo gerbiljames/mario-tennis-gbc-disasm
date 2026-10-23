@@ -540,7 +540,7 @@ UpdateTennisDictionarySprites:
 .checkTennisDictMode:
 	ld a, [wTennisDictMode] ; $4ed4
 	cp TENNISDICT_INDEX ; $4ed7
-	jp nz, .checkScrollAnim ; $4ed9
+	jp nz, .drawListSprites ; $4ed9
 	ld a, [wTennisDictSpriteTimer] ; $4edc
 	dec a ; $4edf
 	ld [wTennisDictSpriteTimer], a ; $4ee0
@@ -634,7 +634,7 @@ UpdateTennisDictionarySprites:
 .queueBottom:
 	ld hl, TennisDictDemoRowTemplate ; $4f7f
 	call QueueSpriteTemplate ; $4f82
-.checkScrollAnim:
+.drawListSprites:
 	ld a, [wTennisDictFlags] ; $4f85
 	bit TDICTFLAGB_LIST_SHOWN, a ; $4f88
 	jr z, .restore ; $4f8a
@@ -848,7 +848,7 @@ ScrollTennisDictionaryToPrevLetter:
 	ld [wTennisDictCursorRow], a ; $51a2
 	ld a, [wTennisDictCategoryMask] ; $51a5
 	ld e, a ; $51a8
-	jr WrapTennisDictionaryScanToEnd.findEntryLoop ; $51a9
+	jr ScrollTennisDictionaryToPrevLetter.findEntryLoop ; $51a9
 WrapTennisDictionaryScanToEnd:
 	push af ; $51ab
 	ld a, [wTennisDictEntryCount] ; $51ac
@@ -861,65 +861,65 @@ WrapTennisDictionaryScanToEnd:
 	dec hl ; $51b9
 	pop af ; $51ba
 	ret ; $51bb
-.findEntryLoop:
+ScrollTennisDictionaryToPrevLetter.findEntryLoop:
 	ld a, [hl+] ; $51bc
 	and e ; $51bd
-	jr z, .findEntryLoop ; $51be
+	jr z, ScrollTennisDictionaryToPrevLetter.findEntryLoop ; $51be
 	dec b ; $51c0
-	jr nz, .findEntryLoop ; $51c1
+	jr nz, ScrollTennisDictionaryToPrevLetter.findEntryLoop ; $51c1
 	dec hl ; $51c3
-.toLetterStartLoop:
+ScrollTennisDictionaryToPrevLetter.toLetterStartLoop:
 	ld a, [hl-] ; $51c4
 	ld d, a ; $51c5
 	and e ; $51c6
-	jr z, .notInCategory ; $51c7
+	jr z, ScrollTennisDictionaryToPrevLetter.notInCategory ; $51c7
 	dec c ; $51c9
-.notInCategory:
+ScrollTennisDictionaryToPrevLetter.notInCategory:
 	ld a, d ; $51ca
 	cp $40 ; $51cb
-	jr z, .wrapAtLetterStart ; $51cd
+	jr z, ScrollTennisDictionaryToPrevLetter.wrapAtLetterStart ; $51cd
 	cp $00 ; $51cf
-	jr nz, .toLetterStartLoop ; $51d1
-	jr .findPrevMatchLoop ; $51d3
-.wrapAtLetterStart:
+	jr nz, ScrollTennisDictionaryToPrevLetter.toLetterStartLoop ; $51d1
+	jr ScrollTennisDictionaryToPrevLetter.findPrevMatchLoop ; $51d3
+ScrollTennisDictionaryToPrevLetter.wrapAtLetterStart:
 	call WrapTennisDictionaryScanToEnd ; $51d5
-.findPrevMatchLoop:
+ScrollTennisDictionaryToPrevLetter.findPrevMatchLoop:
 	ld a, [hl-] ; $51d8
 	cp $40 ; $51d9
-	jr nz, .testPrevMatch ; $51db
+	jr nz, ScrollTennisDictionaryToPrevLetter.testPrevMatch ; $51db
 	call WrapTennisDictionaryScanToEnd ; $51dd
-.testPrevMatch:
+ScrollTennisDictionaryToPrevLetter.testPrevMatch:
 	and e ; $51e0
-	jr z, .findPrevMatchLoop ; $51e1
+	jr z, ScrollTennisDictionaryToPrevLetter.findPrevMatchLoop ; $51e1
 	dec c ; $51e3
-.toPrevLetterStartLoop:
+ScrollTennisDictionaryToPrevLetter.toPrevLetterStartLoop:
 	ld a, [hl-] ; $51e4
 	ld d, a ; $51e5
 	and e ; $51e6
-	jr z, .prevNotInCategory ; $51e7
+	jr z, ScrollTennisDictionaryToPrevLetter.prevNotInCategory ; $51e7
 	dec c ; $51e9
-.prevNotInCategory:
+ScrollTennisDictionaryToPrevLetter.prevNotInCategory:
 	ld a, d ; $51ea
 	cp $40 ; $51eb
-	jr z, .wrapAtPrevLetterStart ; $51ed
+	jr z, ScrollTennisDictionaryToPrevLetter.wrapAtPrevLetterStart ; $51ed
 	cp $00 ; $51ef
-	jr nz, .toPrevLetterStartLoop ; $51f1
+	jr nz, ScrollTennisDictionaryToPrevLetter.toPrevLetterStartLoop ; $51f1
 	inc hl ; $51f3
 	inc c ; $51f4
-	jr .findFirstMatchLoop ; $51f5
-.wrapAtPrevLetterStart:
+	jr ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop ; $51f5
+ScrollTennisDictionaryToPrevLetter.wrapAtPrevLetterStart:
 	call WrapTennisDictionaryScanToEnd ; $51f7
 	inc hl ; $51fa
-.findFirstMatchLoop:
+ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop:
 	ld a, [hl+] ; $51fb
 	cp $40 ; $51fc
-	jr nz, .testFirstMatch ; $51fe
+	jr nz, ScrollTennisDictionaryToPrevLetter.testFirstMatch ; $51fe
 	ld c, $00 ; $5200
 	ld hl, TennisDictEntryCategories ; $5202
-	jr .findFirstMatchLoop ; $5205
-.testFirstMatch:
+	jr ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop ; $5205
+ScrollTennisDictionaryToPrevLetter.testFirstMatch:
 	and e ; $5207
-	jr z, .findFirstMatchLoop ; $5208
+	jr z, ScrollTennisDictionaryToPrevLetter.findFirstMatchLoop ; $5208
 	ld a, c ; $520a
 	ld [wTennisDictScrollTop], a ; $520b
 	ret ; $520e

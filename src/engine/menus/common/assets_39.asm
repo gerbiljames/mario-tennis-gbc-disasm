@@ -7,7 +7,7 @@ FlushWram3MapRows:
 	ld a, b ; $4cb8
 	ASSERT MAPROWS_BANDS_3_7_11 == 0
 	or a ; $4cb9
-	jr nz, .mode1 ; $4cba
+	jr nz, .bands4_10 ; $4cba
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4cbc
 	ld hl, wShadowTilemap ; $4cbe
 	ld de, vBGMap0 ; $4cc1
@@ -42,9 +42,9 @@ FlushWram3MapRows:
 	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $4d11
 	call QueueVRAMCopy ; $4d14
 	jp .done ; $4d17
-.mode1:
+.bands4_10:
 	cp MAPROWS_BANDS_4_10 ; $4d1a
-	jr nz, .mode2 ; $4d1c
+	jr nz, .bands4_9 ; $4d1c
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d1e
 	ld hl, wShadowTilemap ; $4d20
 	ld de, vBGMap0 ; $4d23
@@ -71,9 +71,9 @@ FlushWram3MapRows:
 	ld de, vBGMap0 + 10 * TILEMAP_WIDTH + VRAM_BANK1 ; $4d5d
 	call QueueVRAMCopy ; $4d60
 	jr .done ; $4d63
-.mode2:
+.bands4_9:
 	cp MAPROWS_BANDS_4_9 ; $4d65
-	jr nz, .mode3 ; $4d67
+	jr nz, .band7 ; $4d67
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4d69
 	ld hl, wShadowTilemap ; $4d6b
 	ld de, vBGMap0 ; $4d6e
@@ -100,7 +100,7 @@ FlushWram3MapRows:
 	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $4da8
 	call QueueVRAMCopy ; $4dab
 	jr .done ; $4dae
-.mode3:
+.band7:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $4db0
 	ld hl, wShadowTilemap ; $4db2
 	ld de, vBGMap0 ; $4db5

@@ -90,7 +90,7 @@ LoadScoreboardModeGfx:
 .trainingDrill:
 	ld a, [wCurrentMatchIndex] ; $5c9b
 	add a ; $5c9e
-	ld_hl_indexed ScoreboardMinigameGfxPointers ; $5c9f
+	ld_hl_indexed ScoreboardDrillGfxPointers ; $5c9f
 .loadGfx:
 	push_wram_bank WRAM_STAGING ; $5ca6
 	ld a, [hl+] ; $5caf
@@ -119,7 +119,7 @@ ScoreboardModeGfxPointers:
 	dw ScoreboardModeGfx_LinkedMatch ; record 9
 	dw ScoreboardModeGfx_Exhibition ; record 10
 	assert_table_length NUM_GAMEMODES
-ScoreboardMinigameGfxPointers:
+ScoreboardDrillGfxPointers:
 	; $5cdf, 84 bytes (records:2)
 	dw ScoreboardModeGfx_ServiceMatch ; record 0
 	dw ScoreboardModeGfx_ServiceMatch ; record 1

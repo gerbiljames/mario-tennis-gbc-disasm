@@ -22,9 +22,9 @@ RunCharacterSelectScreen:
 	farcall ResetMatchState ; $480b
 	call ClearFrameTasks ; $480e
 	xor a ; $4811
-	ld [wCharSelectIdleAnimState], a ; $4812
+	ld [wCharSelectIdleFrameCount], a ; $4812
 	ld [wCharSelectHandedness], a ; $4815
-	ld [wCharSelectIdleTimer], a ; $4818
+	ld [wCharSelectIdleSwingCount], a ; $4818
 	call DisableLCDSafely ; $481b
 	call ClearFrameTasks ; $481e
 	call SetupCharacterSelectScreen ; $4821
@@ -37,7 +37,7 @@ RunCharacterSelectScreen:
 	call WaitFadeEnd ; $4847
 	ld hl, rIE ; $484a
 	res B_IE_TIMER, [hl] ; $484d
-	frame_task TickMenuBgScrollTask_38 ; $484f
+	frame_task TickMenuTitleScrollerTask_38 ; $484f
 .redraw:
 	ldh a, [hInputPressed] ; $4857
 	ld [wMenuInputPressed], a ; $4859
@@ -111,7 +111,7 @@ RunCharacterSelectScreen:
 	ld [wCharSelectHandedness], a ; $4901
 	pop_wram_bank ; $4904
 	jp .redraw ; $4909
-; DrawCharGridCursorBox with a different palette (c = 2), template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it.
+; DrawCharGridCursorBox for a 2-wide grid (c = 2 instead of 3), with its own template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it.
 Unused_38_DrawCharSelectCursorBox:
 	ld c, $02 ; $490c
 	call GetMenuCursorIndex_38 ; $490e
@@ -174,9 +174,9 @@ SetupCharacterSelectScreen:
 	ldh [hScrollY], a ; $4978
 	wram_bank WRAM_COURT_PLANES ; $497a
 	xor a ; $4980
-	ld [wCharSelectIdleAnimState], a ; $4981
+	ld [wCharSelectIdleFrameCount], a ; $4981
 	ld [wCharSelectHandedness], a ; $4984
-	ld [wCharSelectIdleTimer], a ; $4987
+	ld [wCharSelectIdleSwingCount], a ; $4987
 	ld [wCameraX], a ; $498a
 	ld [wCameraX + 1], a ; $498d
 	ld [wCameraY], a ; $4990
@@ -263,16 +263,16 @@ SetupCharacterSelectScreen:
 	farcall QueueWram3MapToVRAM ; $4a72
 	wram_bank WRAM_COURT_PLANES ; $4a75
 	xor a ; $4a7b
-	ld [wCharSelectIdleAnimState], a ; $4a7c
-	ld [wCharSelectIdleTimer], a ; $4a7f
+	ld [wCharSelectIdleFrameCount], a ; $4a7c
+	ld [wCharSelectIdleSwingCount], a ; $4a7f
 	ld [wCharSelectHandedness], a ; $4a82
-	farcall InitMenuBgScroll ; $4a85
+	farcall InitMenuTitleScroller ; $4a85
 	ld b, $01 ; $4a88
 	ld c, $01 ; $4a8a
 	farcall LoadMenuSpritePalettePair ; $4a8c
 	ld a, $10 ; $4a8f
-	ld [wMenuBgScrollTile], a ; $4a91
-	ld [wMenuBgScrollTile + 1], a ; $4a94
+	ld [wMenuTitleScrollTile], a ; $4a91
+	ld [wMenuTitleScrollTile + 1], a ; $4a94
 	ld b, TILEBLOCK_CreateACharacterTitleGfx ; $4a97
 	ld c, CreateACharacterTitleGfx_SIZE / 16 ; $4a99
 	ld de, vTiles0 tile $10 ; $4a9b
@@ -290,7 +290,7 @@ RefreshCharacterSelectHighlight:
 	call ReloadSelectedCharGfx ; $4ab9
 	push_wram_bank WRAM_COURT_PLANES ; $4abc
 	xor a ; $4ac5
-	ld [wCharSelectIdleTimer], a ; $4ac6
+	ld [wCharSelectIdleSwingCount], a ; $4ac6
 	pop_wram_bank ; $4ac9
 	ret ; $4ace
 DrawCharacterSelectPrompt:
@@ -347,21 +347,21 @@ InitCharacterSelectChars:
 	farcall GetCharPaletteIndex ; $4b5b
 	ld e, a ; $4b5e
 	ld d, $00 ; $4b5f
-	wram_bank WRAM_ACTORS ; $4b61
+	wram_bank WRAM_CHAR0 ; $4b61
 	ld a, $00 ; $4b67
 	farcall InitChar ; $4b69
 	ld a, CHAR_NINA ; $4b6c
 	farcall GetCharPaletteIndex ; $4b6e
 	ld e, a ; $4b71
 	ld d, $01 ; $4b72
-	wram_bank WRAM_TEXT ; $4b74
+	wram_bank WRAM_CHAR1 ; $4b74
 	ld a, $01 ; $4b7a
 	farcall InitChar ; $4b7c
 	ld a, CHAR_HARRY ; $4b7f
 	farcall GetCharPaletteIndex ; $4b81
 	ld e, a ; $4b84
 	ld d, $02 ; $4b85
-	wram_bank WRAM_SCENE ; $4b87
+	wram_bank WRAM_CHAR2 ; $4b87
 	ld a, $02 ; $4b8d
 	farcall InitChar ; $4b8f
 	ld a, CHAR_KATE ; $4b92

@@ -2,8 +2,9 @@
 ; GetMatchMenuItemId returns one of these; they index MatchMenuItemGfxPointers
 ; (the selected item's word art), MatchMenuItemRectPointers (its 3x2 label in
 ; the list) and the item caption at text id $013f + id (bank $30, 319+id).
-; Names follow the captions; the comment gives the word art, which several
-; ids share.
+; Names follow the menu that lists the item (the captions' wording is loose:
+; the drill menu's "Try mini-game again."); the comment gives the word art,
+; which several ids share.
 	const_def
 	const MATCHMENUITEM_RULES              ; $00 "RULES"
 	const MATCHMENUITEM_CONTROLS           ; $01 "CONTROLS"
@@ -19,16 +20,16 @@
 	const MATCHMENUITEM_SAVE_GAME          ; $0b "SAVE" (narrow; performs the save)
 	const MATCHMENUITEM_TO_MAIN_MENU       ; $0c "TO MAIN MENU"
 	const MATCHMENUITEM_TO_LEVEL_SELECT    ; $0d "TO LEVEL SELECT"
-	const MATCHMENUITEM_RETRY_MINIGAME     ; $0e "TRY AGAIN"
-	const MATCHMENUITEM_RETRY_PRACTICE     ; $0f "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_DRILL        ; $0e "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_LESSON       ; $0f "TRY AGAIN"
 	const MATCHMENUITEM_RETRY_MACHINE      ; $10 "TRY AGAIN"
-	const MATCHMENUITEM_RETRY_PRACTICE_ALT ; $11 "TRY AGAIN"
-	const MATCHMENUITEM_RETRY_GAME         ; $12 "TRY AGAIN"
-	const MATCHMENUITEM_QUIT_GAME          ; $13 "QUIT MATCH"
-	const MATCHMENUITEM_QUIT_MATCH         ; $14 "QUIT MINI-GAME"
-	const MATCHMENUITEM_QUIT_PRACTICE      ; $15 "QUIT MINI-GAME"
+	const MATCHMENUITEM_RETRY_WALL         ; $11 "TRY AGAIN"
+	const MATCHMENUITEM_RETRY_MINIGAME     ; $12 "TRY AGAIN"
+	const MATCHMENUITEM_QUIT_MATCH         ; $13 "QUIT MATCH"
+	const MATCHMENUITEM_QUIT_DRILL         ; $14 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_LESSON        ; $15 "QUIT MINI-GAME"
 	const MATCHMENUITEM_QUIT_MACHINE       ; $16 "QUIT MINI-GAME"
-	const MATCHMENUITEM_QUIT_PRACTICE_ALT  ; $17 "QUIT MINI-GAME"
+	const MATCHMENUITEM_QUIT_WALL          ; $17 "QUIT MINI-GAME"
 def NUM_MATCHMENUITEMS equ const_value
 
 ; --- Match pause menus (wPauseMenuId, rows of MatchMenuDefs) ---

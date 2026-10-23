@@ -565,7 +565,7 @@ def check_db_pointers(manifest, fail):
 # they are.
 KNOWN_ADDR_SHAPED = {
     "TennisDictionaryIndexCursorNormalTiles": "2x2 tile-id cells, $84 the blank tile",
-    "MinigameHighScoreNumberTable": "sprite y, x pairs",
+    "MinigameHighScoreNumberPositions": "sprite y, x pairs",
 }
 _DB_HEX_RE = re.compile(r"\$([0-9a-fA-F]{2})")
 

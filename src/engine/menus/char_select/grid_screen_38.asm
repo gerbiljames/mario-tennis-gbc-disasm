@@ -27,16 +27,16 @@ UpdateCharSelectCharSprite:
 	call CopyMemoryFast ; $4d10
 	ret ; $4d13
 SetCharSelectAnimations:
-	wram_bank WRAM_ACTORS ; $4d14
+	wram_bank WRAM_CHAR0 ; $4d14
 	ld d, CHARANIM_STAND ; $4d1a
 	farcall SetCharAnimation ; $4d1c
-	wram_bank WRAM_TEXT ; $4d1f
+	wram_bank WRAM_CHAR1 ; $4d1f
 	ld d, CHARANIM_STAND ; $4d25
 	farcall SetCharAnimation ; $4d27
-	wram_bank WRAM_SCENE ; $4d2a
+	wram_bank WRAM_CHAR2 ; $4d2a
 	ld d, CHARANIM_STAND ; $4d30
 	farcall SetCharAnimation ; $4d32
-	wram_bank WRAM_SOUND ; $4d35
+	wram_bank WRAM_CHAR3 ; $4d35
 	ld d, CHARANIM_STAND ; $4d3b
 	farcall SetCharAnimation ; $4d3d
 	call GetSelectedCharWramBank ; $4d40
@@ -46,7 +46,7 @@ SetCharSelectAnimations:
 	wram_bank WRAM_ACTORS ; $4d4d
 	push_wram_bank WRAM_COURT_PLANES ; $4d53
 	xor a ; $4d5c
-	ld [wCharSelectIdleAnimState], a ; $4d5d
+	ld [wCharSelectIdleFrameCount], a ; $4d5d
 	pop_wram_bank ; $4d60
 	ret ; $4d65
 ReloadSelectedCharGfx:
@@ -80,9 +80,9 @@ TickCharSelectIdleAnim:
 	cp CHARANIM_IDLE ; $4dab
 	jr nz, .done ; $4dad
 	push_wram_bank WRAM_COURT_PLANES ; $4daf
-	ld a, [wCharSelectIdleAnimState] ; $4db8
+	ld a, [wCharSelectIdleFrameCount] ; $4db8
 	inc a ; $4dbb
-	ld [wCharSelectIdleAnimState], a ; $4dbc
+	ld [wCharSelectIdleFrameCount], a ; $4dbc
 	ld d, a ; $4dbf
 	pop_wram_bank ; $4dc0
 	ld a, d ; $4dc5
@@ -91,13 +91,13 @@ TickCharSelectIdleAnim:
 	ld d, CHARANIM_FOREHAND ; $4dca
 	farcall SetCharAnimation ; $4dcc
 	push_wram_bank WRAM_COURT_PLANES ; $4dcf
-	ld a, [wCharSelectIdleTimer] ; $4dd8
+	ld a, [wCharSelectIdleSwingCount] ; $4dd8
 	inc a ; $4ddb
-	ld [wCharSelectIdleTimer], a ; $4ddc
+	ld [wCharSelectIdleSwingCount], a ; $4ddc
 	cp $0f ; $4ddf
 	jr nz, .restore ; $4de1
 	xor a ; $4de3
-	ld [wCharSelectIdleTimer], a ; $4de4
+	ld [wCharSelectIdleSwingCount], a ; $4de4
 	call GetSelectedCharWramBank ; $4de7
 	wram_bank b ; $4dea
 	ld d, CHARANIM_OVERHEAD ; $4def
@@ -146,8 +146,8 @@ DrawCharSelectHandednessMarker:
 CharSelectHandednessMarkerPositions:
 	; $4e4a, 8 bytes (bytes:8)
 	db $54, $2c, $54, $6d, $6d, $2c, $6d, $6d ; 0x00
-TickMenuBgScrollTask_38:
-	farcall TickMenuBgScroll ; $4e52
+TickMenuTitleScrollerTask_38:
+	farcall TickMenuTitleScroller ; $4e52
 	ret ; $4e55
 Unused_38_WramBank3Nop:
 	push_wram_bank WRAM_SCREEN ; $4e56
@@ -174,7 +174,7 @@ RunExhibitionCharSelectScreen:
 	call WaitFadeEnd ; $4e97
 	ld hl, rIE ; $4e9a
 	res B_IE_TIMER, [hl] ; $4e9d
-	frame_task TickMenuBgScrollTask_38 ; $4e9f
+	frame_task TickMenuTitleScrollerTask_38 ; $4e9f
 	call RefreshCharInfoPanel ; $4ea7
 .frameLoop:
 	call AdvanceFrame ; $4eaa
@@ -341,16 +341,16 @@ SetupCharGridScreen:
 	ld c, $0b ; $5050
 	ld b, $0a ; $5052
 	farcall LoadIndexedPalette ; $5054
-	farcall InitMenuBgScroll ; $5057
+	farcall InitMenuTitleScroller ; $5057
 	ld b, $01 ; $505a
 	ld c, $01 ; $505c
 	farcall LoadMenuSpritePalettePair ; $505e
 	ld a, $30 ; $5061
-	ld [wMenuBgScrollTile], a ; $5063
-	ld [wMenuBgScrollTile + 1], a ; $5066
+	ld [wMenuTitleScrollTile], a ; $5063
+	ld [wMenuTitleScrollTile + 1], a ; $5066
 	ld a, $09 ; $5069
-	ld [wMenuBgScrollAttr], a ; $506b
-	ld [wMenuBgScrollAttr + 1], a ; $506e
+	ld [wMenuTitleScrollAttr], a ; $506b
+	ld [wMenuTitleScrollAttr + 1], a ; $506e
 	ld b, TILEBLOCK_SelectACharacterTitleGfx ; $5071
 	ld c, SelectACharacterTitleGfx_SIZE / 16 ; $5073
 	ld de, vTiles0 tile $30 + VRAM_BANK1 ; $5075
@@ -419,7 +419,7 @@ MoveCharGridCursorUp:
 	sound SFX_MENU_MOVE ; $51fe
 	jr .refresh ; $5200
 .prevPage:
-	ld a, [wCharGridPage] ; $5202
+	ld a, [wCharGridTopRow] ; $5202
 	or a ; $5205
 	ret z ; $5206
 	dec a ; $5207
@@ -430,7 +430,7 @@ MoveCharGridCursorUp:
 .beep:
 	sound SFX_MENU_MOVE ; $5210
 .storePage:
-	ld [wCharGridPage], a ; $5212
+	ld [wCharGridTopRow], a ; $5212
 	call BuildVisiblePageSpriteList ; $5215
 .refresh:
 	call RefreshCharInfoPanel ; $5218
@@ -444,7 +444,7 @@ MoveCharGridCursorDown:
 	sound SFX_MENU_MOVE ; $5227
 	jr .refresh ; $5229
 .nextPage:
-	ld a, [wCharGridPage] ; $522b
+	ld a, [wCharGridTopRow] ; $522b
 	cp $02 ; $522e
 	jr nc, .checkLastPage ; $5230
 	cp $01 ; $5232
@@ -453,12 +453,12 @@ MoveCharGridCursorDown:
 	cp $07 ; $5238
 	jr c, .refresh ; $523a
 	ld a, $01 ; $523c
-	ld [wCharGridPage], a ; $523e
+	ld [wCharGridTopRow], a ; $523e
 	jr .playMoveSound ; $5241
 .checkLastPage:
 	inc a ; $5243
 	ld e, a ; $5244
-	ld a, [wCharGridPageCount] ; $5245
+	ld a, [wCharGridRowCount] ; $5245
 	dec a ; $5248
 	ld b, a ; $5249
 	ld a, e ; $524a
@@ -470,7 +470,7 @@ MoveCharGridCursorDown:
 .playMoveSound:
 	sound SFX_MENU_MOVE ; $5252
 .storePage:
-	ld [wCharGridPage], a ; $5254
+	ld [wCharGridTopRow], a ; $5254
 	call BuildVisiblePageSpriteList ; $5257
 .refresh:
 	call RefreshCharInfoPanel ; $525a
@@ -480,17 +480,17 @@ MoveCharGridCursorRight:
 	inc a ; $5261
 	cp $03 ; $5262
 	jr nz, .store ; $5264
-	ld a, [wCharGridPage] ; $5266
+	ld a, [wCharGridTopRow] ; $5266
 	cp $02 ; $5269
 	jr c, .toRosterRows ; $526b
-	ld a, [wCharGridPage] ; $526d
-	ld [wCharGridPrevPage], a ; $5270
+	ld a, [wCharGridTopRow] ; $526d
+	ld [wCharGridPrevTopRow], a ; $5270
 	xor a ; $5273
-	ld [wCharGridPage], a ; $5274
+	ld [wCharGridTopRow], a ; $5274
 	jr .firstColumn ; $5277
 .toRosterRows:
 	ld a, $03 ; $5279
-	ld [wCharGridPage], a ; $527b
+	ld [wCharGridTopRow], a ; $527b
 .firstColumn:
 	xor a ; $527e
 .store:
@@ -504,17 +504,17 @@ MoveCharGridCursorLeft:
 	dec a ; $528e
 	cp $ff ; $528f
 	jr nz, .store ; $5291
-	ld a, [wCharGridPage] ; $5293
+	ld a, [wCharGridTopRow] ; $5293
 	cp $02 ; $5296
 	jr c, .toRosterRows ; $5298
-	ld a, [wCharGridPage] ; $529a
-	ld [wCharGridPrevPage], a ; $529d
+	ld a, [wCharGridTopRow] ; $529a
+	ld [wCharGridPrevTopRow], a ; $529d
 	xor a ; $52a0
-	ld [wCharGridPage], a ; $52a1
+	ld [wCharGridTopRow], a ; $52a1
 	jr .lastColumn ; $52a4
 .toRosterRows:
 	ld a, $03 ; $52a6
-	ld [wCharGridPage], a ; $52a8
+	ld [wCharGridTopRow], a ; $52a8
 .lastColumn:
 	call BuildVisiblePageSpriteList ; $52ab
 	ld a, $02 ; $52ae
@@ -567,7 +567,7 @@ HandleCharGridButtons:
 ConfirmCharGridSelection:
 	push_wram_bank WRAM_SCREEN ; $5302
 	ld a, [wCharSelectSlot] ; $530b
-	ld a, [wCharGridPage] ; $530e
+	ld a, [wCharGridTopRow] ; $530e
 	ld c, a ; $5311
 	ld a, [wMenuCursorX] ; $5312
 	ld d, a ; $5315
@@ -769,7 +769,7 @@ DrawCharGridScrollArrows:
 	call ApplySpriteBobOffsetX ; $54f0
 	sprite_tile_attr $12, OAM_BANK1 | 7 ; $54f3
 	call QueueSprite ; $54f7
-	ld a, [wCharGridPage] ; $54fa
+	ld a, [wCharGridTopRow] ; $54fa
 	or a ; $54fd
 	jr z, .checkDownArrow ; $54fe
 	cp $03 ; $5500
@@ -780,7 +780,7 @@ DrawCharGridScrollArrows:
 	sprite_tile_attr $14, OAM_BANK1 | 7 ; $550c
 	call QueueSprite ; $5510
 .checkDownArrow:
-	ld a, [wCharGridPage] ; $5513
+	ld a, [wCharGridTopRow] ; $5513
 	cp $01 ; $5516
 	jr z, .done ; $5518
 	or a ; $551a
@@ -789,9 +789,9 @@ DrawCharGridScrollArrows:
 	cp $07 ; $5520
 	jr c, .done ; $5522
 .drawDownArrow:
-	ld a, [wCharGridPage] ; $5524
+	ld a, [wCharGridTopRow] ; $5524
 	ld b, a ; $5527
-	ld a, [wCharGridPageCount] ; $5528
+	ld a, [wCharGridRowCount] ; $5528
 	dec a ; $552b
 	dec a ; $552c
 	cp b ; $552d
