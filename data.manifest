@@ -182,10 +182,10 @@ engine/match/MoveCurve12_09.asm 024868 b move_curve
 engine/match/CourtBannerTiles_09.bin 024900 1800 gfx
 engine/match/TennisCallDigitGfx_09.bin 026180 180 gfx
 engine/match/NumeralDigitGfx_09.bin 026300 240 gfx
-engine/match/Player1TennisCallDigitGfx_09.bin 026540 140 gfx
-engine/match/Player1NumeralDigitGfx_09.bin 026680 200 gfx
-engine/match/Player2TennisCallDigitGfx_09.bin 026880 140 gfx
-engine/match/Player2NumeralDigitGfx_09.bin 0269c0 200 gfx
+engine/match/FirstScoreTennisCallDigitGfx_09.bin 026540 140 gfx
+engine/match/FirstScoreNumeralDigitGfx_09.bin 026680 200 gfx
+engine/match/SecondScoreTennisCallDigitGfx_09.bin 026880 140 gfx
+engine/match/SecondScoreNumeralDigitGfx_09.bin 0269c0 200 gfx
 engine/match/DeuceTiles.bin 026bc0 80 gfx
 engine/match/ServeIndicatorP1Gfx_09.bin 026c80 100 gfx
 engine/match/ServeIndicatorP2Gfx_09.bin 026d80 100 gfx

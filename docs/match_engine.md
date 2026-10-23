@@ -1198,9 +1198,10 @@ cannot drift.
 ### The wire format during play
 
 `SerialEncodeInput` packs a **6-bit payload plus a 2-bit alternating tag**,
-draining the local input a piece at a time:
+and stores back into `hLinkTxInput` exactly what it encoded (what the peer
+decodes); other buttons pressed that frame are dropped:
 
-| Local input | Payload | Residue kept for the next frame |
+| Local input | Payload | Stored back |
 |---|---|---|
 | low nibble is all four buttons | `$3f` | `$0f` |
 | START held | `$30` | `$08` |
@@ -1224,12 +1225,12 @@ Kinds 1 and 3 are in the table but never selected.
 
 `UpdateLinkSession` (`$07:$4846`) sets `wCharInputSource` to `$05` in bank `$04`
 and `$06` in bank `$05`. Those handlers read `hLinkRemoteInput` and
-`hLinkRemoteInputBuf` **with polarity keyed on `hLinkState`**
+`hLinkSentInput` **with polarity keyed on `hLinkState`**
 (`$08:$7833`/`$783f`), so the master always drives character 0 and the slave
 character 1, on either console.
 
-`hLinkRemoteInputBuf` is not remote in a match: `PrepareLinkStatePayload` seeds
-it with the previous frame's *local* residue, so each console reads its own
+`PrepareLinkStatePayload` seeds `hLinkSentInput` with the previous frame's
+*local* input as encoded, so each console reads its own
 slightly delayed input for its character and the decoded peer byte for the
 other. Doubles partners keep AI handler `$01`, which works because the AI is
 bit-reproducible: `ResetMatchState` normally seeds `wMatchRngState` from
@@ -1379,7 +1380,7 @@ set, less addresses already given in the text:
 | `$c8ec`/`$c8ed` | `wTotalGamesPlayedInMatch` / `wTotalPointsScoredInCurrentGame` | drive ends and service boxes |
 | `$c8ee` | `wServeFaultFlag` | 1 after a first-serve fault |
 | `$ffc2` | `hLinkState` | 0 idle, 1 master, 2 slave |
-| `$ffd3`-`$ffd6` | `hLinkInput`, `hLinkRemoteInput`, `hLinkRemoteInputBuf`, `hLinkTxInput` | per-frame input plumbing |
+| `$ffd3`-`$ffd6` | `hLinkInput`, `hLinkRemoteInput`, `hLinkSentInput`, `hLinkTxInput` | per-frame input plumbing |
 | `$ffd8` | `hLinkExchangeActive` | the `StepMatchFrame` fork |
 | `$ffe9` | `hMatchFrameCounter` | stepped identically on local and link paths |
 | `$ff96` | `hWramBank` | effectively the current character |

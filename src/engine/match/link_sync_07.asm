@@ -367,7 +367,7 @@ UpdateLinkSession:
 	call SerialEncodeInput ; $48b1
 	farcall PrimeSlaveSerialReply ; $48b4
 	xor a ; $48b7
-	ldh [hLinkRemoteInputPrev], a ; $48b8
+	ldh [hLinkSentInputPrev], a ; $48b8
 	ld hl, wCharInputSource ; $48ba
 	wram_bank WRAM_CHAR0 ; $48bd
 	ld [hl], $05 ; $48c3

@@ -17,7 +17,7 @@
 	ldh a, [hLinkRemoteInput]
 	jr .haveInput
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf]
+	ldh a, [hLinkSentInput]
 .haveInput:
 	ld h, a
 	ld a, [wMenuCursorLockFlags]

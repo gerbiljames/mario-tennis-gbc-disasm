@@ -272,7 +272,7 @@ InitSerialLink:
 	ldh [hLinkRetryCount], a ; $28d3
 	ldh [hLinkInput], a ; $28d5
 	ldh [hLinkRemoteInput], a ; $28d7
-	ldh [hLinkRemoteInputBuf], a ; $28d9
+	ldh [hLinkSentInput], a ; $28d9
 	ldh [hLinkTxInput], a ; $28db
 	ldh [hLinkTransferDone], a ; $28dd
 	ldh [hLinkExchangeActive], a ; $28df
@@ -281,7 +281,7 @@ InitSerialLink:
 	ldh [hLinkLastRxMirror], a ; $28e5
 	ldh [hLinkLastRxByte], a ; $28e7
 	ldh [hLinkPayloadKind], a ; $28e9
-	ldh [hLinkRemoteInputPrev], a ; $28eb
+	ldh [hLinkSentInputPrev], a ; $28eb
 	ldh [hLinkAckRequired], a ; $28ed
 	ldh [hLinkShiftQueue], a ; $28ef
 	ldh [hLinkPlayerCount], a ; $28f1
@@ -297,7 +297,7 @@ ResetSerialState:
 	ldh [hLinkRetryCount], a ; $2901
 	ldh [hLinkInput], a ; $2903
 	ldh [hLinkRemoteInput], a ; $2905
-	ldh [hLinkRemoteInputBuf], a ; $2907
+	ldh [hLinkSentInput], a ; $2907
 	ldh [hLinkTxInput], a ; $2909
 	ldh [hLinkTransferDone], a ; $290b
 	ldh [hLinkTxSeqBits], a ; $290d
@@ -305,7 +305,7 @@ ResetSerialState:
 	ldh [hLinkLastRxMirror], a ; $2911
 	ldh [hLinkLastRxByte], a ; $2913
 	ldh [hLinkPayloadKind], a ; $2915
-	ldh [hLinkRemoteInputPrev], a ; $2917
+	ldh [hLinkSentInputPrev], a ; $2917
 	ldh [hLinkShiftQueue], a ; $2919
 	ldh [hLinkAckRequired], a ; $291b
 	ldh [hLinkPlayerCount], a ; $291d
@@ -313,10 +313,10 @@ ResetSerialState:
 	ldh [hMatchFrameCounter], a ; $2921
 	ret ; $2923
 ; Sends the local player's input over the link, a few bits per frame.
-; hLinkTxInput holds what is still owed: the whole low nibble goes as $3f, else
-; bit 3 as $30, else bit 2 as $0c, else the low pair -- and the remainder is
-; stored back, so a burst of presses is spread over several frames rather than
-; dropped. hLinkTxSeqBits is OR'd into every byte sent and inverted each frame,
+; From hLinkTxInput the whole low nibble goes as $3f, else bit 3 as $30, else
+; bit 2 as $0c, else the d-pad and the low pair. What was encoded (what the peer
+; will decode) is stored back, so both consoles act on the same value; other
+; buttons pressed that frame are lost. hLinkTxSeqBits is OR'd into every byte sent and inverted each frame,
 ; which is how the peer tells a fresh frame from a repeat.
 SerialEncodeInput:
 	push bc ; $2924
@@ -365,7 +365,7 @@ SerialEncodeInput:
 	jr z, .checkSlaveWait ; $2964
 	sound SFX_BEEP ; $2966
 	xor a ; $2968
-	ldh [hLinkRemoteInputBuf], a ; $2969
+	ldh [hLinkSentInput], a ; $2969
 	ldh [hLinkTxInput], a ; $296b
 	ld a, LINKMSG_NONE ; $296d
 	ldh [hLinkTxByte], a ; $296f
@@ -440,22 +440,22 @@ SerialDecodeInput:
 	ldh a, [hLinkState] ; $29d1
 	cp LINKSTATE_MASTER ; $29d3
 	jr nz, .asSlave ; $29d5
-	ldh a, [hLinkRemoteInputBuf] ; $29d7
+	ldh a, [hLinkSentInput] ; $29d7
 	or a ; $29d9
 	jr nz, .storeInput ; $29da
 	ldh a, [hLinkRemoteInput] ; $29dc
 	jr .storeInput ; $29de
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf] ; $29e0
+	ldh a, [hLinkSentInput] ; $29e0
 	ld b, a ; $29e2
-	ldh a, [hLinkRemoteInputPrev] ; $29e3
-	ldh [hLinkRemoteInputBuf], a ; $29e5
+	ldh a, [hLinkSentInputPrev] ; $29e3
+	ldh [hLinkSentInput], a ; $29e5
 	ld a, b ; $29e7
-	ldh [hLinkRemoteInputPrev], a ; $29e8
+	ldh [hLinkSentInputPrev], a ; $29e8
 	ldh a, [hLinkRemoteInput] ; $29ea
 	or a ; $29ec
 	jr nz, .storeInput ; $29ed
-	ldh a, [hLinkRemoteInputBuf] ; $29ef
+	ldh a, [hLinkSentInput] ; $29ef
 .storeInput:
 	ldh [hLinkInput], a ; $29f1
 .done:

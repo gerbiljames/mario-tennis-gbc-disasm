@@ -194,9 +194,9 @@ hSoundEngineBusy:: db
 hLinkInput:: db
 ; [8-bit] Input byte decoded from the last received link frame
 hLinkRemoteInput:: db
-; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
-hLinkRemoteInputBuf:: db
-; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputRepeat) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back
+; [8-bit] This console's own input as sent in the previous exchange: PrepareLinkInputPayload/PrepareLinkStatePayload copy hLinkTxInput here before reloading it. In a link match each console drives its own character from this and the peer's from hLinkRemoteInput
+hLinkSentInput:: db
+; [8-bit] Local input byte queued for transmission, loaded by PrepareLinkInputPayload (hInputRepeat) or PrepareLinkStatePayload (ComposeLinkStateByte). SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores back the input as encoded (what the peer will decode); other buttons pressed that frame are lost
 hLinkTxInput:: db
 ; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
 hLinkTransferDone:: db
@@ -212,8 +212,8 @@ hLinkLastRxByte:: db
 hLinkTxSeqBits:: db
 ; [8-bit] Record of LinkStateBytePtrs_07 that ComposeLinkStateByte builds the transmitted state byte from; set per screen by the match and story pause menus and ResetMatchState
 hLinkPayloadKind:: db
-; [8-bit] One-deep history of hLinkRemoteInputBuf on the slave decode path: SerialDecodeInput swaps the two so a dropped frame can fall back to the previous remote input
-hLinkRemoteInputPrev:: db
+; [8-bit] One-deep history of hLinkSentInput on the slave decode path: SerialDecodeInput/SerialDecodeCommand swap the two, delaying the slave's own sent input by a further frame
+hLinkSentInputPrev:: db
 ; [8-bit] Nonzero makes a slave (hLinkState $02) wait for hLinkTxPending to clear before sending, so it never gets ahead of the master
 hLinkAckRequired:: db
 ; [8-bit] The byte handed to the serial port, held until SerialHandler sees the transfer finish and clears it; the slave's ack wait spins on it

@@ -79,7 +79,7 @@ FarReadWordDI:
 	ld [rROMB0], a ; $065c
 	ei ; $065f
 	ret ; $0660
-; Unused_00_FarReadPtrIndexed that returns instead of tail-jumping through the entry it read. Nothing calls it.
+; Unused_00_CallFarVectorEntry that returns the entry it read instead of calling it. Nothing calls it.
 Unused_00_ReadFarVectorEntry:
 	push bc ; $0661
 	ldh a, [hRomBank] ; $0662
@@ -290,7 +290,7 @@ Unused_00_FarCopyMemoryFastIndexed:
 	pop bc ; $07a7
 	pop af ; $07a8
 	ret ; $07a9
-Unused_00_FarReadPtrIndexed:
+Unused_00_CallFarVectorEntry:
 	push bc ; $07aa
 	ldh a, [hRomBank] ; $07ab
 	ld b, a ; $07ad

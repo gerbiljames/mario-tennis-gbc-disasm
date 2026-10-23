@@ -274,14 +274,14 @@ RaiseBallHeightForLob:
 	ld hl, $0080 ; $589f
 	add hl, de ; $58a2
 	bit 7, h ; $58a3
-	jr nz, .raise ; $58a5
+	jr nz, .lowerBy20 ; $58a5
 	ld de, $ffa0 ; $58a7
 	ld hl, wBallHeight ; $58aa
 	ld a, e ; $58ad
 	ld [hl+], a ; $58ae
 	ld [hl], d ; $58af
 	ret ; $58b0
-.raise:
+.lowerBy20:
 	ld hl, $0020 ; $58b1
 	add hl, de ; $58b4
 	ld e, l ; $58b5

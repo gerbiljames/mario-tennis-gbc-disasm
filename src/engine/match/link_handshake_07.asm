@@ -58,7 +58,7 @@ PrepareLinkStatePayload:
 	xor LINKTAG_MASK ; $49fc
 	ldh [hLinkTxSeqBits], a ; $49fe
 	ldh a, [hLinkTxInput] ; $4a00
-	ldh [hLinkRemoteInputBuf], a ; $4a02
+	ldh [hLinkSentInput], a ; $4a02
 	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
 	and PADF_DPAD ; $4a09
@@ -74,7 +74,7 @@ PrepareLinkInputPayload:
 	xor LINKTAG_MASK ; $4a18
 	ldh [hLinkTxSeqBits], a ; $4a1a
 	ldh a, [hLinkTxInput] ; $4a1c
-	ldh [hLinkRemoteInputBuf], a ; $4a1e
+	ldh [hLinkSentInput], a ; $4a1e
 	call ReadJoypadThunk ; $4a20
 	ldh a, [hInputRepeat] ; $4a23
 	ldh [hLinkTxInput], a ; $4a25
@@ -151,7 +151,7 @@ ResyncLinkSession:
 	call SerialEncodeInput ; $4a93
 	farcall PrimeSlaveSerialReply ; $4a96
 	xor a ; $4a99
-	ldh [hLinkRemoteInputPrev], a ; $4a9a
+	ldh [hLinkSentInputPrev], a ; $4a9a
 	ld a, $01 ; $4a9c
 	ldh [hLinkAckRequired], a ; $4a9e
 	call EnableLCD ; $4aa0
@@ -196,7 +196,7 @@ ResyncLinkSessionWithTimer:
 	call SerialEncodeInput ; $4ae8
 	farcall PrimeSlaveSerialReply ; $4aeb
 	xor a ; $4aee
-	ldh [hLinkRemoteInputPrev], a ; $4aef
+	ldh [hLinkSentInputPrev], a ; $4aef
 	ld a, $01 ; $4af1
 	ldh [hLinkAckRequired], a ; $4af3
 	call EnableTimerInterrupt ; $4af5
@@ -398,7 +398,7 @@ SerialEncodeCommand:
 	jr z, .checkSlaveWait ; $4c39
 	sound SFX_BEEP ; $4c3b
 	xor a ; $4c3d
-	ldh [hLinkRemoteInputBuf], a ; $4c3e
+	ldh [hLinkSentInput], a ; $4c3e
 	ldh [hLinkTxInput], a ; $4c40
 	ld a, LINKMSG_NONE ; $4c42
 	ldh [hLinkTxByte], a ; $4c44
@@ -449,26 +449,26 @@ SerialDecodeCommand:
 	ldh a, [hLinkState] ; $4c84
 	cp LINKSTATE_MASTER ; $4c86
 	jr nz, .asSlave ; $4c88
-	ldh a, [hLinkRemoteInputBuf] ; $4c8a
+	ldh a, [hLinkSentInput] ; $4c8a
 	or a ; $4c8c
 	jr nz, .storeInput ; $4c8d
 	ldh a, [hLinkRemoteInput] ; $4c8f
 	call DecodeLinkCommandCode ; $4c91
 	jr .storeInput ; $4c94
 .asSlave:
-	ldh a, [hLinkRemoteInputBuf] ; $4c96
+	ldh a, [hLinkSentInput] ; $4c96
 	ld b, a ; $4c98
-	ldh a, [hLinkRemoteInputPrev] ; $4c99
-	ldh [hLinkRemoteInputBuf], a ; $4c9b
+	ldh a, [hLinkSentInputPrev] ; $4c99
+	ldh [hLinkSentInput], a ; $4c9b
 	ld a, b ; $4c9d
-	ldh [hLinkRemoteInputPrev], a ; $4c9e
+	ldh [hLinkSentInputPrev], a ; $4c9e
 	ldh a, [hLinkRemoteInput] ; $4ca0
 	or a ; $4ca2
 	jr z, .useBuffered ; $4ca3
 	call DecodeLinkCommandCode ; $4ca5
 	jr .storeInput ; $4ca8
 .useBuffered:
-	ldh a, [hLinkRemoteInputBuf] ; $4caa
+	ldh a, [hLinkSentInput] ; $4caa
 .storeInput:
 	ldh [hLinkInput], a ; $4cac
 .done:

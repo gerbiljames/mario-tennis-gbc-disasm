@@ -250,7 +250,7 @@ RunLinkCharSelectScreen:
 	ld [wMenuCursor2Y], a ; $644d
 	ldh [hLinkCursorPage], a ; $6450
 	xor a ; $6452
-	ldh [hLinkRemoteInputBuf], a ; $6453
+	ldh [hLinkSentInput], a ; $6453
 	ldh [hLinkRemoteInput], a ; $6455
 	ld [wLinkSelectCmdResult], a ; $6457
 	ld [wLinkSelectStartupFrames], a ; $645a
@@ -261,7 +261,7 @@ RunLinkCharSelectScreen:
 	push af ; $646e
 	farcall RunLinkCommandFrame ; $646f
 	pop af ; $6472
-	ldh a, [hLinkRemoteInputBuf] ; $6473
+	ldh a, [hLinkSentInput] ; $6473
 	ld [wMenuInputPressed], a ; $6475
 	ld a, [wMenuInputPressed] ; $6478
 	xor PADF_BUTTONS ; $647b

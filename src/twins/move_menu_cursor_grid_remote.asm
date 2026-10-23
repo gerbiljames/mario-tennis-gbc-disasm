@@ -14,7 +14,7 @@
 	jr z, .asMaster
 	call LinkErrorReset
 .asMaster:
-	ldh a, [hLinkRemoteInputBuf]
+	ldh a, [hLinkSentInput]
 	jr .haveInput
 .asSlave:
 	ldh a, [hLinkRemoteInput]
