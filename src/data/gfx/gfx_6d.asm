@@ -212,7 +212,7 @@ Unused_6d_ShowPlaceholderScreen:
 Unused_6d_PlaceholderScreenFrameTask:
 	ld de, $4020 ; $6abf
 	ld c, $03 ; $6ac2
-	farcall QueueIntroSpriteBlock ; $6ac4
+	farcall QueueIntroSpinningBallFrame ; $6ac4
 	ret ; $6ac7
 TennisBallAnimFrame00:
 	INCBIN "data/gfx/lz_TennisBallAnimFrame00.bin" ; $6ac8, 75 bytes

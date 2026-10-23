@@ -101,16 +101,16 @@ wRacketShoesTabIndex:: db
 ; [8-bit] The same for the Status -> MARIO CHARACTERS exhibition/mini-game data choice (RunMarioCharDataTypeSelect)
 wMarioCharDataTypeTabIndex:: db
 
-; [8-bit] Window handle of bank $1a's menu code, from CreateMenuWindowFromText or CreateWindow; passed to Unused_05_RunMenuSelectionShared, CloseWindow, WriteStringToWindow and GetWindowStructPtr
+; [8-bit] Window handle of bank $1a's menu code, from CreateMenuWindowFromText or CreateWindow; passed to Unused_05_RunOptionsMenuSelection, CloseWindow, WriteStringToWindow and GetWindowStructPtr
 wPauseMenuWindowId:: db
 
-; [8-bit] Preset cursor row for the next Unused_05_RunMenuSelectionShared: copied into the live row ($d830, WRAM bank $05) at menu open, then cleared so the default is row 0. Bank $1a stores the last selected row here before rebuilding the pause menu, and clears it when the menu closes for good
+; [8-bit] Preset cursor row for the next Unused_05_RunOptionsMenuSelection: copied into the live row ($d830, WRAM bank $05) at menu open, then cleared so the default is row 0. Bank $1a stores the last selected row here before rebuilding the pause menu, and clears it when the menu closes for good
 wMenuInitialRow:: db
 
 ; [8-bit] Menu rows on which LEFT/RIGHT adjust a value: bit 7 = mask present, bits 0-6 = one bit per row. Gates the menu driver's LEFT/RIGHT branch (Unused_05_IsCursorOnAdjustRow) and makes Unused_05_AnimateMenuScrollArrowsTask draw the arrows on that row. Bank $1a sets $83 (rows 0-1) for the pause menu and $8c (rows 2-3) for the minigame pause menu
 wMenuAdjustRowMask:: db
 
-; [8-bit] Menu rows that do not close the window when chosen (encoding as wMenuAdjustRowMask): bank $1a skips CloseWindow after Unused_05_RunMenuSelectionShared when the chosen row's bit is set. Same values as wMenuAdjustRowMask
+; [8-bit] Menu rows that do not close the window when chosen (encoding as wMenuAdjustRowMask): bank $1a skips CloseWindow after Unused_05_RunOptionsMenuSelection when the chosen row's bit is set. Same values as wMenuAdjustRowMask
 wMenuKeepOpenRowMask:: db
 
 ; [8-bit] Pause-menu options state: low nibble = toggle bits the music/sound rows flip, bit 5 gates Unused_1a_DrawPauseMenuSettingValues, bits 6-7 set once a row has been visited. Cleared by Unused_1a_ResetPauseMenuState
@@ -169,37 +169,37 @@ wCutsceneStep:: db
 ; [8-bit] Bank $6b cutscene driver: frame counter for the current step, compared with per-step thresholds to advance wCutsceneStep
 wCutsceneStepTimer:: db
 
-; [8-bit] Nonzero ends the intro: set by CheckIntroSkipInput (A or Start) or by the last state, IntroCutsceneState17Init_6b
+; [8-bit] Nonzero ends the intro: set by CheckIntroSkipInput (A or Start) or by the last state, IntroCutsceneEndInit_6b
 wIntroCutsceneDone:: db
 
 ; [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame
 wCutsceneScrollX:: db
 
-; [8-bit] Second pan position, stepped 3 px the opposite way to wCutsceneScrollX: hScrollX in IntroCutsceneState04Update_6b, wRasterScrollX in UpdateCutsceneScroll
+; [8-bit] Second pan position, stepped 3 px the opposite way to wCutsceneScrollX: hScrollX in IntroCutsceneNinaRallyUpdate_6b, wRasterScrollX in UpdateCutsceneScroll
 wCutsceneReverseScrollX:: db
 
-; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueCutsceneSpriteGroupA. IntroCutsceneState15 reuses it as the BG scroll Y (ApplyScrollYFromWram copies it to hScrollY)
+; [8-bit] X of the intro cutscene's first sprite group; moved by the state Update routines, added to each template offset by QueueIntroAlexSprite. IntroCutsceneMarioCloseupScroll reuses it as the BG scroll Y (ApplyScrollYFromWram copies it to hScrollY)
 wCutsceneSpriteAX:: db
 
 ; [8-bit] Y of the intro cutscene's first sprite group
 wCutsceneSpriteAY:: db
 
-; [8-bit] X of the intro cutscene's second sprite group (QueueCutsceneSpriteGroupB)
+; [8-bit] X of the intro cutscene's second sprite group (QueueIntroNinaSprite)
 wCutsceneSpriteBX:: db
 
 ; [8-bit] Y of the intro cutscene's second sprite group
 wCutsceneSpriteBY:: db
 
-; [16-bit] Intro cutscene scroll position: UpdateCutsceneScrollY subtracts the frame's CutsceneScrollYTable entry from it; QueueScrollingSprite places sprites against it
-wIntroScrollingSpriteY:: dw
+; [16-bit] World Y of the intro's spinning ball: UpdateIntroBallY subtracts the frame's IntroBallYStepTable entry from it; QueueIntroSpinningBall draws the ball at it minus wIntroCutsceneScrollY
+wIntroBallY:: dw
 
-; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 at the start of scenes 00/12/19 and decremented each frame by UpdateIntroScrollY from IntroScrollYDeltaTable indexed by wCutsceneStepTimer. ApplyIntroScrollToSpriteY subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpriteBlock's object
+; [16-bit] Intro cutscene (bank $6b) world-space vertical camera position. Set to $0120 by IntroCutsceneOpeningTossInit_6b and IntroCutsceneClosingTossInit_6b (and the unused state B) and decremented each frame by UpdateIntroScrollY from IntroScrollYDeltaTable indexed by wCutsceneStepTimer. ApplyIntroScrollToSpriteY subtracts it from QueueSpriteTemplate's Y coordinate (the sp+0 slot); SetCameraYFromScrollPos shifts it left 5 into wCameraY; ($cb48 - $cb4a) is the on-screen Y of QueueIntroSpinningBallFrame's object
 wIntroCutsceneScrollY:: dw
 
 ; [8-bit] Frame the intro cutscene's scrolling sprites draw with: bits 4-5 of wCutsceneSpriteAnimTick, so it steps every 16 ticks
 wCutsceneSpriteAnimFrame:: db
 
-; [8-bit] Free-running counter incremented by AdvanceSpriteAnimTimer; cleared with wCutsceneSpriteAnimFrame by the intro state inits
+; [8-bit] Free-running counter incremented by AdvanceIntroBallSpinFrame; cleared with wCutsceneSpriteAnimFrame by the intro state inits
 wCutsceneSpriteAnimTick:: db
 	ds 1
 
@@ -238,7 +238,7 @@ wCompanionCharId:: db
 ; [8-bit] Written as RunStoryModeOverworld starts; nothing reads it
 wOverworldEnterFlag:: db
 
-; [8-bit] Frame counter of bank $03's scrolling story cutscene. AnimateWindowSlideUpTask increments it and sets rWY to $90 minus its low 6 bits; UpdateSceneAnimation steps the animation frame on its low 2 bits
+; [8-bit] Frame counter of bank $03's ending-credits staff page window slide. AnimateWindowSlideUpTask increments it and sets rWY to $90 minus its low 6 bits; UpdateEpilogueEndAnimation steps the animation frame on its low 2 bits
 wCutsceneSlideTimer:: db
 
 ; [8-bit] Dirty flags for the bank $18 BG map shadow buffers: low nibble queues the $d800 -> $9800 tilemap copy, high nibble the $dc00 -> VRAM1 $9800 attribute copy; cleared by Unused_18_FlushBgMapShadowToVram

@@ -1,4 +1,4 @@
-; Shared by IntroCutsceneState13Update_6b, IntroCutsceneState14Update_6b (bank $6b).
+; Shared by IntroCutsceneGreatestPlayerUpdate_6b, IntroCutsceneMarioRevealUpdate_6b (bank $6b).
 
 {TWIN_LABEL}:
 	ld a, [wCutsceneStepTimer]

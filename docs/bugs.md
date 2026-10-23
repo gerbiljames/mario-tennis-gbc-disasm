@@ -199,7 +199,7 @@ a flag with no writer, like the link-error check.
 
 The live fade, `AdjustColorsBrightness`, adds a clamped delta to each
 component, fading through white (`docs/screens_and_ui.md` §6.3). The bank `$03`
-engine's live entry fades to grayscale, and its fade-to-black setup,
+engine's live entry fades to sepia, and its fade-to-black setup,
 `Unused_03_InitBlackPaletteFade`, is unreachable too
 (`docs/graphics_formats.md` §5.4).
 
@@ -253,8 +253,8 @@ fetches from wherever that points: id 74 shows "ear.", 77 "this!", 80 "Empire
 team!", and the other twelve point into cartridge RAM at `$a788`-`$b692`. Bank
 `$26`'s strings 0-14 are never shown.
 
-The drills reach them. `QueueDrillResultMessage` (when
-`wCurrentServingPlayer` is nonzero) and `SetDrillMessageByServer` (when it is
+The drills reach them. `SetDrillServerMessage` (when
+`wCurrentServingPlayer` is nonzero) and `SetDrillReceiverMessage` (when it is
 zero) add an offset in `b` to the id, and Stroke Match 2 passes `b = 13` with
 ids 61-70 (`StrokeMatch2Cases2`, `$0b:$6892`, passes 64). Seen in PyBoy: id 74
 twice in six Stroke Match 2 sessions.
@@ -675,7 +675,7 @@ opcode; left as is.
 so the cursor `MeasureNextArgNumberWidth` reads the number queue at becomes the
 window's top row. `OpenSpeechBubble` zeroes the string and short-text measure
 cursors after its fit but not this one, and on a page break
-`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueRestoreBG` (`$598f`)
+`ShowSpeakerDialogue` (`$58c4`) and `ShowSpeakerDialogueKeepOpen` (`$598f`)
 fit the next page without resetting it, so a `TX_ARG_NUMBER` on page 2 or later
 is measured from queue entry `row` (past the 16-entry queue for rows 16-31), not
 the next unread one, and the window is sized for the wrong digit count. Drawing
@@ -947,8 +947,8 @@ slot at `$4078`.
 `$03:$553b`-`$5669`, between `RestoreStoryBlockFromBackup`'s `ret` and
 `RepairAllSaveSlots`, holds **eight complete routines** with no way in: an
 earlier, hardcoded version of the live repair.
-`Unused_03_RestoreBlock06FromBackup` through `..._RestoreBlock0aFromBackup` are
-five copies of one routine with the block id baked in, flanked by
+`Unused_03_RestorePreservedBlockFromBackup` and `Unused_03_RestoreBlock07FromBackup`
+through `..._RestoreBlock0aFromBackup` are five copies of one routine with the block id baked in, flanked by
 `Unused_03_RestoreBlockOrClear`, `Unused_03_InvalidateBlockIfUnwritten` and
 `Unused_03_ClearBlockIfSet`. Their replacement, `RepairAllSaveSlots`
 (`$03:$5669`), calls `RestoreStoryBlockFromBackup` three times with `b` = 0, 2,

@@ -184,7 +184,7 @@ ProportionalTextCodeEnd_05:
 	ld [wGlyphRowStartCol], a ; $5efd
 	pop de ; $5f00
 	pop bc ; $5f01
-	call SaveGlyphPenColumns ; $5f02
+	call SetPendingGlyphUploadRange ; $5f02
 	clear_flag FLAG_PROPORTIONAL_TEXT_MODE ; $5f05
 	pop hl ; $5f08
 	pop de ; $5f09

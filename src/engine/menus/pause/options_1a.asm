@@ -31,7 +31,7 @@ Unused_1a_RunPauseMenuWindow:
 .menuLoop:
 	call Unused_1a_DrawPauseMenuSettingValues ; $4048
 	ld a, [wPauseMenuWindowId] ; $404b
-	farcall Unused_05_RunMenuSelectionShared ; $404e
+	farcall Unused_05_RunOptionsMenuSelection ; $404e
 	push af ; $4051
 	push bc ; $4052
 	cp $ff ; $4053

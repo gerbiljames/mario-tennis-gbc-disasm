@@ -160,7 +160,7 @@ because the layout is recomputed rather than restated:
   `dw Pool.sN - Pool`, so the assembler recomputes them. Breaks are `line` /
   `page` / `done`, the other control codes are named
   (`include/text_codes.inc`), and a roster name in a string is
-  `TX_SHORT_TEXT, CHAR_EMILY`. `tools/strings.py baserom.gbc --index --bank
+  `TX_CHAR_NAME, CHAR_EMILY`. `tools/strings.py baserom.gbc --index --bank
   <bank>` finds a string; a text id in code is named for what it says,
   an alias of its `Text_<bank>_<index>` coordinate (`include/text_ids.inc`).
 - **Data files are named after their labels**

@@ -5,7 +5,7 @@
 	farcall AdvanceMatchRng
 	and $07
 	inc a
-	ld hl, wMinigameServeSlot
+	ld hl, wMinigameFeederPos
 	add [hl]
 	cp $09
 	jr c, .store

@@ -409,7 +409,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jr nz, .slotPicked ; $6340
 	or a ; $6342
 	jr nz, .saveMenuLoop ; $6343
-	farcall ReinitSaveRamPreservingBlock6 ; $6345
+	farcall ReinitSaveRamKeepingPreservedBlock ; $6345
 	ld b, $01 ; $6348
 	jr .saveMenuLoop ; $634a
 .slotPicked:

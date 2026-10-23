@@ -102,7 +102,7 @@ ClearWindowGlyphTiles:
 	ld h, $00 ; $7400
 	call MulHLByA ; $7402
 	ld b, l ; $7405
-	ld de, wWindowShadowTilemap + 24 * TILEMAP_WIDTH ; $7406
+	ld de, wGlyphTileBuffer ; $7406
 	ld a, [wGlyphRowStartCol] ; $7409
 	ld l, a ; $740c
 	ld h, $00 ; $740d

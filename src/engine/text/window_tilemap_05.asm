@@ -21,14 +21,14 @@ FetchShortTextToBuffer:
 	pop bc ; $40bb
 	pop af ; $40bc
 	ret ; $40bd
-Unused_05_ClearWindowGlyphPage:
+Unused_05_ClearWindowShadowMaps:
 	push_wram_bank WRAM_TEXT ; $40be
 	ld hl, wWindowShadowTilemap ; $40c7
 	ld c, (2 * TILEMAP_AREA) / 16 ; $40ca
 	call ClearMemory16 ; $40cc
 	pop_wram_bank ; $40cf
 	ret ; $40d4
-Unused_05_QueueGlyphPageDMAOnA:
+Unused_05_DMAShadowTilemapIfAHeld:
 	ldh a, [hPlayerInputFlags] ; $40d5
 	bit PADB_A, a ; $40d7
 	jr nz, .startDMA ; $40d9
@@ -302,7 +302,7 @@ Unused_05_CopyTilemapRowsToVRAM:
 	pop de ; $4282
 .done:
 	ret ; $4283
-Unused_05_CopyTilemapRowsAnimated:
+Unused_05_CopyTilemapRowsChunked:
 	push af ; $4284
 	push bc ; $4285
 	push de ; $4286

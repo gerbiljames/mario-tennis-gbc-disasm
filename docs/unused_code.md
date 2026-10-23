@@ -236,6 +236,6 @@ tables after the first one. `Unused_08_AdvanceCharStatePhase`, a copy of
 `AdvanceCharStatePhase` after `CharPointEndState`'s jump table, had been read
 as two more table entries.
 Three were carved as raw `db`: `Unused_02_GetCharArchetypeField`,
-`Unused_0a_FarcallUpdateSceneAnimation`, and
+`Unused_0a_FarcallUpdateEpilogueEndAnimation`, and
 `Unused_12_PushPartnerGenderShortTextArg`, a `ld a, [wStoryPartnerGender]`
 falling into `PushShortTextArg_12`.

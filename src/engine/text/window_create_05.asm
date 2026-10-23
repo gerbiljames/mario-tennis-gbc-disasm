@@ -355,14 +355,14 @@ RunMenuSelection:
 	jp z, .checkB ; $4871
 	sound SFX_MENU_CANCEL ; $4874
 	ld a, $ff ; $4876
-	jp .cancel ; $4878
+	jp .exitMenu ; $4878
 .checkB:
 	ldh a, [hInputPressed] ; $487b
 	and PADF_B ; $487d
 	jp z, .checkSideScroll ; $487f
 	sound SFX_MENU_CANCEL ; $4882
 	ld a, $ff ; $4884
-	jr .cancel ; $4886
+	jr .exitMenu ; $4886
 .checkSideScroll:
 	call GetWindowState ; $4888
 	cp WINDOWSTATE_PAGED_MENU ; $488b
@@ -376,13 +376,13 @@ RunMenuSelection:
 	and PADF_LEFT ; $489d
 	jp z, .checkRight ; $489f
 	ld a, $fe ; $48a2
-	jr .cancel ; $48a4
+	jr .exitMenu ; $48a4
 .checkRight:
 	ldh a, [hInputPressed] ; $48a6
 	and PADF_RIGHT ; $48a8
 	jp z, .inputLoop ; $48aa
 	ld a, $fd ; $48ad
-.cancel:
+.exitMenu:
 	ld [wMenuCursorRow], a ; $48af
 	push af ; $48b2
 	push bc ; $48b3
@@ -393,7 +393,7 @@ RunMenuSelection:
 	call AdvanceFrame ; $48bc
 	ld a, [wMenuDepth] ; $48bf
 	or a ; $48c2
-	jr z, .restored ; $48c3
+	jr z, .noParentMenu ; $48c3
 	dec a ; $48c5
 	ld hl, wMenuStack ; $48c6
 	sla a ; $48c9
@@ -411,7 +411,7 @@ RunMenuSelection:
 	ld c, $20 ; $48db
 	ld b, TILEATTR_PRIORITY ; $48dd
 	call WriteWindowCellTileAttr ; $48df
-.restored:
+.noParentMenu:
 	pop hl ; $48e2
 	pop de ; $48e3
 	pop bc ; $48e4

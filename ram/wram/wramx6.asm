@@ -18,13 +18,13 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ; story cutscenes and the star warp.
 UNION
 ; scrolling story cutscene slide flag (bank $03)
-; [8-bit] Set to 1 by AnimateWindowSlideUpTask when the text window finishes sliding; PlayScrollingStoryCutscene clears it, registers the task and waits for it
+; [8-bit] Set to 1 by AnimateWindowSlideUpTask when the text window finishes sliding; ShowEndingCreditsStaffPage clears it, registers the task and waits for it
 wCutsceneSlideDone:: db
 	ds 41
 NEXTU
 ; scene animation frame counter (bank $03)
-; [8-bit] Frame of the epilogue's animated "END..." text: zeroed by SetupSceneAnimationPalettes, stepped by UpdateSceneAnimation every fourth tick of wCutsceneSlideTimer up to $36, read by the six AnimateEpilogueEnd* loaders
-wSceneAnimFrame:: db
+; [8-bit] Frame of the epilogue's animated "END..." text: zeroed by SetupEpilogueEndAnimation, stepped by UpdateEpilogueEndAnimation every fourth tick of wCutsceneSlideTimer up to $36, read by the six AnimateEpilogueEnd* loaders
+wEpilogueEndAnimFrame:: db
 NEXTU
 ; star warp transition (bank $0e)
 ; [8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite
@@ -114,8 +114,8 @@ wUnusedExpAwardByte:: db
 NEXTU
 ; cutscene text window (bank $03)
 	ds 1
-; [8-bit] First byte of the current TextPageDescriptors_03 entry: rows the page scrolls by. ScrollCutsceneTextWindow masks it to two bits and treats zero as one
-wCutsceneTextScrollRows:: db
+; [8-bit] First byte of the current CreditsStaffPageDescriptors_03 entry: rows the page scrolls by. ScrollCreditsStaffWindow masks it to two bits and treats zero as one
+wCreditsStaffScrollRows:: db
 NEXTU
 ; trophy EXP awards (bank $1e)
 	ds 40
@@ -179,13 +179,13 @@ wExpScreenCharStats:: ds 30
 NEXTU
 ; palette fade engine (bank $03)
 	ds 118
-; [128 bytes] The fade's endpoint: 16 palettes of four 16-bit colours. CopyMasterPalettesToFadeBuffers seeds it from wMasterPalettes and the caller rewrites it (Unused_03_ClearFadeTargetPalettes: black; DesaturateFadeTargetPalettes: grey via SplitColorComponents). Read by StepPaletteColorsTowardTarget, copied over wPaletteFadeLive by SnapPalettesToTarget; AdvanceToPaletteEntry walks it 8 bytes at a time
+; [128 bytes] The fade's endpoint: 16 palettes of four 16-bit colours. CopyMasterPalettesToFadeBuffers seeds it from wMasterPalettes and the caller rewrites it (Unused_03_ClearFadeTargetPalettes: black; SepiaToneFadeTargetPalettes: sepia via SplitColorComponents). Read by StepPaletteColorsTowardTarget, copied over wPaletteFadeLive by SnapPalettesToTarget; AdvanceToPaletteEntry walks it 8 bytes at a time
 wPaletteFadeTarget:: ds 128
 	ds 32
 ; [128 bytes] The palettes the fade shows: seeded from wMasterPalettes, stepped +/-1 per component toward wPaletteFadeTarget on each AnimatePaletteFadeToTarget pass for masked palettes, uploaded by LoadPalettesImmediate
 wPaletteFadeLive:: ds 128
 	ds 32
-; [16 bytes] One byte per palette; only flagged palettes are stepped. InitGrayscalePaletteFade clears all 16, SetupPaletteFadeMask sets the first eight from the bits of b (bit 7 = palette 0)
+; [16 bytes] One byte per palette; only flagged palettes are stepped. InitSepiaPaletteFade clears all 16, SetupPaletteFadeMask sets the first eight from the bits of b (bit 7 = palette 0)
 wPaletteFadeMask:: ds 16
 ; [8-bit] Passes remaining (from d); AnimatePaletteFadeToTarget decrements it per pass and snaps at zero
 wPaletteFadeAmount:: db
@@ -197,8 +197,8 @@ wPaletteColorSplit:: ds 6
 ; [8-bit] wPaletteFadeAmount / $1f: frames AnimatePaletteFadeToTarget waits before each pass (the step is always +/-1 per component, StepColorComponentTowardTarget)
 wPaletteFadeFrameDelay:: db
 	ds 4
-; [8-bit] Set while a cutscene text window is sliding, by AnimateWindowSlideUpTask and the scrolling-story player
-wCutsceneWindowSliding:: db
+; [8-bit] Ending-credits staff page shown (the a passed to ShowEndingCreditsStaffPage, wStoryCharacterSlot); AnimateWindowSlideUpTask indexes WindowSlideStepTable_03 with it
+wCreditsStaffPageIndex:: db
 NEXTU
 ; character-data page arrows (banks $1a/$1c/$1d)
 	ds 280
@@ -262,14 +262,14 @@ ENDU
 	ds 49
 
 ; Scrolling text screen (the staff-roll crawl), owned by bank $03's
-; RunScrollingTextScreen. The bank $1a EXP award screen keeps its gauge
+; RunStaffCreditsRoll. The bank $1a EXP award screen keeps its gauge
 ; state in the same bytes, and banks $1c/$1d put the character-data screen's
 ; $40-byte stat blocks at $d240/$d280/$d2d0.
 UNION
 ; scrolling text screen (bank $03)
 ; [8-bit] Frames until the crawl scrolls one line; reloaded with 2 each time it hits 0
 wScrollTextDelay:: db
-; [8-bit] Write-only: seeded with 2 beside wScrollTextDelay, but RunScrollingTextScreen's reload uses the literal $02
+; [8-bit] Write-only: seeded with 2 beside wScrollTextDelay, but RunStaffCreditsRoll's reload uses the literal $02
 wUnusedScrollTextDelayReload:: db
 ; [16-bit] Text id the crawl is rendering, seeded with Text_StaffCreditsLines
 wScrollTextId:: dw

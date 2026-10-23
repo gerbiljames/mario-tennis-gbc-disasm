@@ -9,7 +9,7 @@ RunTrainingDrillByID:
 	farcall InitMinigameMatchSettings ; $4706
 	pop af ; $4709
 	cp MINIGAME_TWO_ON_ONE ; $470a
-	jp z, .doublesDrill ; $470c
+	jp z, .twoOnOne ; $470c
 	cp MINIGAME_TENNIS_MACHINE_1 ; $470f
 	jr nc, .minigame ; $4711
 	ld l, a ; $4713
@@ -83,8 +83,8 @@ RunTrainingDrillByID:
 	clear_flag FLAG_DRILL_FROM_MENU ; $47a7
 	farcall ProcessMatchRewards ; $47aa
 	ret ; $47ad
-.doublesDrill:
-	call RunDoublesDrillMatch ; $47ae
+.twoOnOne:
+	call RunTwoOnOneMatch ; $47ae
 	jp .afterMatch ; $47b1
 DrillDefinitionPtrs:
 	; $47b4, 36 bytes (records:2)
@@ -181,17 +181,17 @@ ServiceMatch1Hook_PointEnd:
 	ld hl, wDrillCounters + DRILLCTR_P2_SUCCESSES ; $4880
 	ld a, [hl-] ; $4883
 	sub [hl] ; $4884
-	jr z, .clearPointWinLoseFlag ; $4885
-	jr nc, .storePointWinLoseFlag ; $4887
+	jr z, .tied ; $4885
+	jr nc, .player2Ahead ; $4887
 	ld a, WINLOSE_WIN ; $4889
 	ld [wPointWinLoseFlag], a ; $488b
 	ret ; $488e
-.clearPointWinLoseFlag:
+.tied:
 	ASSERT WINLOSE_NONE == 0
 	xor a ; $488f
 	ld [wPointWinLoseFlag], a ; $4890
 	ret ; $4893
-.storePointWinLoseFlag:
+.player2Ahead:
 	ld a, WINLOSE_LOSE ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
@@ -280,28 +280,28 @@ ServiceMatch1JudgePoint:
 	dec a ; $492b
 	jumptable a ; $492c
 	dw ServiceMatch1JudgePoint.rally1 ; $492e jumptable
-	dw ServiceMatch1Cases1.dispatchResult ; $4930 jumptable
+	dw ServiceMatch1Cases1.rally2 ; $4930 jumptable
 .rally1:
 	ld a, b ; $4932
 	jumptable a ; $4933
-	dw ServiceMatch1JudgePoint.result0 ; $4935 jumptable
+	dw ServiceMatch1JudgePoint.rally1PointEnd ; $4935 jumptable
 	dw ServiceMatch1Cases1 ; $4937 jumptable
 	dw ServiceMatch1Cases1.ignoreBounce ; $4939 jumptable
 	dw ServiceMatch1Cases1.ignoreNetCross ; $493b jumptable
-.result0:
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $493d
-	ld hl, ServiceMatch1JudgePointMessages ; $4940
+	ld hl, ServiceMatch1Rally1Messages ; $4940
 	add_hl_a ; $4943
 	ld a, [hl] ; $4948
 	ld a, a ; $4949
 	ld b, DRILLWORDING_SERVICE ; $494a
-	call QueueDrillResultMessage ; $494c
+	call SetDrillServerMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
 	ld hl, OddRallyVerdicts ; $4952
 	add_hl_a ; $4955
 	ld a, [hl] ; $495a
 	ret ; $495b
-ServiceMatch1JudgePointMessages:
+ServiceMatch1Rally1Messages:
 	; $495c, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch1Cases1:
@@ -313,27 +313,27 @@ ServiceMatch1Cases1:
 .ignoreNetCross:
 	xor a ; $496a
 	ret ; $496b
-.dispatchResult:
+.rally2:
 	ld a, b ; $496c
 	jumptable a ; $496d
-	dw ServiceMatch1Cases1.checkPointOutcome ; $496f jumptable
+	dw ServiceMatch1Cases1.rally2PointEnd ; $496f jumptable
 	dw ServiceMatch1Cases2 ; $4971 jumptable
 	dw ServiceMatch1Cases2.ignoreBounce ; $4973 jumptable
 	dw ServiceMatch1Cases2.ignoreNetCross ; $4975 jumptable
-.checkPointOutcome:
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $4977
-	ld hl, ServiceMatch1Cases1Messages ; $497a
+	ld hl, ServiceMatch1Rally2Messages ; $497a
 	add_hl_a ; $497d
 	ld a, [hl] ; $4982
 	ld a, a ; $4983
 	ld b, DRILLWORDING_SERVICE ; $4984
-	call QueueDrillResultMessage ; $4986
+	call SetDrillServerMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
 	ld hl, EvenRallyVerdicts ; $498c
 	add_hl_a ; $498f
 	ld a, [hl] ; $4994
 	ret ; $4995
-ServiceMatch1Cases1Messages:
+ServiceMatch1Rally2Messages:
 	; $4996, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch1Cases2:
@@ -343,7 +343,7 @@ ServiceMatch1Cases2:
 	ret z ; $49a7
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $49a8
 	ld b, DRILLWORDING_SERVICE ; $49aa
-	call QueueDrillResultMessage ; $49ac
+	call SetDrillServerMessage ; $49ac
 	jr DrillPointLost_1 ; $49af
 .unreachable:
 	xor a ; $49b1
@@ -431,17 +431,17 @@ ServiceMatch2Hook_PointEnd:
 	ld hl, wDrillCounters + DRILLCTR_P2_SUCCESSES ; $4a44
 	ld a, [hl-] ; $4a47
 	sub [hl] ; $4a48
-	jr z, .clearPointWinLoseFlag ; $4a49
-	jr nc, .storePointWinLoseFlag ; $4a4b
+	jr z, .tied ; $4a49
+	jr nc, .player2Ahead ; $4a4b
 	ld a, WINLOSE_WIN ; $4a4d
 	ld [wPointWinLoseFlag], a ; $4a4f
 	ret ; $4a52
-.clearPointWinLoseFlag:
+.tied:
 	ASSERT WINLOSE_NONE == 0
 	xor a ; $4a53
 	ld [wPointWinLoseFlag], a ; $4a54
 	ret ; $4a57
-.storePointWinLoseFlag:
+.player2Ahead:
 	ld a, WINLOSE_LOSE ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
@@ -491,9 +491,9 @@ ServiceMatch2HandlePointEnd:
 	add_hl_a ; $4adc
 	ld a, [hl] ; $4ae1
 	or a ; $4ae2
-	jr z, .serviceMatch2AwardPointToSide ; $4ae3
+	jr z, .awardPoint ; $4ae3
 	farcall UpdatePointStats ; $4ae5
-.serviceMatch2AwardPointToSide:
+.awardPoint:
 	call ServiceMatch2AwardPointToSide ; $4ae8
 	ld a, [wPlayer1PointsWon] ; $4aeb
 	ld b, DIGITGFX_NUMERALS ; $4aee
@@ -536,28 +536,28 @@ ServiceMatch2JudgePoint:
 	dec a ; $4b5c
 	jumptable a ; $4b5d
 	dw ServiceMatch2JudgePoint.rally1 ; $4b5f jumptable
-	dw ServiceMatch2Cases1.dispatchResult ; $4b61 jumptable
+	dw ServiceMatch2Cases1.rally2 ; $4b61 jumptable
 .rally1:
 	ld a, b ; $4b63
 	jumptable a ; $4b64
-	dw ServiceMatch2JudgePoint.result0 ; $4b66 jumptable
+	dw ServiceMatch2JudgePoint.rally1PointEnd ; $4b66 jumptable
 	dw ServiceMatch2Cases1 ; $4b68 jumptable
 	dw ServiceMatch2Cases1.ignoreBounce ; $4b6a jumptable
-	dw ServiceMatch2Cases1.checkBallTouchedNetFlag ; $4b6c jumptable
-.result0:
+	dw ServiceMatch2Cases1.judgeGate ; $4b6c jumptable
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $4b6e
-	ld hl, ServiceMatch2JudgePointMessages ; $4b71
+	ld hl, ServiceMatch2Rally1Messages ; $4b71
 	add_hl_a ; $4b74
 	ld a, [hl] ; $4b79
 	ld a, a ; $4b7a
 	ld b, DRILLWORDING_SERVICE ; $4b7b
-	call QueueDrillResultMessage ; $4b7d
+	call SetDrillServerMessage ; $4b7d
 	ld a, [wPointOutcome] ; $4b80
 	ld hl, OddRallyVerdicts ; $4b83
 	add_hl_a ; $4b86
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
-ServiceMatch2JudgePointMessages:
+ServiceMatch2Rally1Messages:
 	; $4b8d, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_FAILED, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_SERVICE_ACE_YOU_GET_A_POINT
 ServiceMatch2Cases1:
@@ -566,14 +566,14 @@ ServiceMatch2Cases1:
 .ignoreBounce:
 	xor a ; $4b99
 	ret ; $4b9a
-.checkBallTouchedNetFlag:
+.judgeGate:
 	ld a, [wBallTouchedNetFlag] ; $4b9b
 	or a ; $4b9e
 	ld a, $00 ; $4b9f
 	ret nz ; $4ba1
 	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAILED ; $4ba2
 	ld b, DRILLWORDING_SERVICE ; $4ba4
-	call QueueDrillResultMessage ; $4ba6
+	call SetDrillServerMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
 	jr z, DrillPointLost_2 ; $4bac
 	xor a ; $4bae
@@ -582,27 +582,27 @@ ServiceMatch2Cases1:
 	ld [wDrillGateActive], a ; $4bb3
 	xor a ; $4bb6
 	ret ; $4bb7
-.dispatchResult:
+.rally2:
 	ld a, b ; $4bb8
 	jumptable a ; $4bb9
-	dw ServiceMatch2Cases1.checkPointOutcome ; $4bbb jumptable
+	dw ServiceMatch2Cases1.rally2PointEnd ; $4bbb jumptable
 	dw ServiceMatch2Cases2 ; $4bbd jumptable
 	dw ServiceMatch2Cases2.ignoreBounce ; $4bbf jumptable
 	dw ServiceMatch2Cases2.ignoreNetCross ; $4bc1 jumptable
-.checkPointOutcome:
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $4bc3
-	ld hl, ServiceMatch2Cases1Messages ; $4bc6
+	ld hl, ServiceMatch2Rally2Messages ; $4bc6
 	add_hl_a ; $4bc9
 	ld a, [hl] ; $4bce
 	ld a, a ; $4bcf
 	ld b, DRILLWORDING_SERVICE ; $4bd0
-	call QueueDrillResultMessage ; $4bd2
+	call SetDrillServerMessage ; $4bd2
 	ld a, [wPointOutcome] ; $4bd5
 	ld hl, EvenRallyVerdicts ; $4bd8
 	add_hl_a ; $4bdb
 	ld a, [hl] ; $4be0
 	ret ; $4be1
-ServiceMatch2Cases1Messages:
+ServiceMatch2Rally2Messages:
 	; $4be2, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_I_RETURNED_THE_SERVE_BEFORE_IT_BOUNCED_SO_YOU_GET, DRILLMSG_HIDE
 ServiceMatch2Cases2:
@@ -612,7 +612,7 @@ ServiceMatch2Cases2:
 	ret z ; $4bf3
 	ld a, DRILLMSG_I_RETURNED_IT_SO_YOU_FAILED ; $4bf4
 	ld b, DRILLWORDING_SERVICE ; $4bf6
-	call QueueDrillResultMessage ; $4bf8
+	call SetDrillServerMessage ; $4bf8
 	jr DrillPointLost_2 ; $4bfb
 .unreachable:
 	xor a ; $4bfd

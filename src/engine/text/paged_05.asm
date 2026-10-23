@@ -192,7 +192,7 @@ Unused_05_RunPagedTextMenuAutoSize:
 	pop de ; $4aa5
 	pop bc ; $4aa6
 	ret ; $4aa7
-Unused_05_RunMenuSelectionShared:
+Unused_05_RunOptionsMenuSelection:
 	push bc ; $4aa8
 	push de ; $4aa9
 	push hl ; $4aaa
@@ -255,7 +255,7 @@ Unused_05_RunMenuSelectionShared:
 .checkDown:
 	ldh a, [hInputPressed] ; $4b17
 	and PADF_DOWN ; $4b19
-	jp z, .checkInputRisingEdge ; $4b1b
+	jp z, .checkStart ; $4b1b
 	ld a, [wMenuRowCount] ; $4b1e
 	ld c, a ; $4b21
 	inc b ; $4b22
@@ -313,11 +313,11 @@ Unused_05_RunMenuSelectionShared:
 	pop de ; $4b6b
 	ld a, b ; $4b6c
 	ld [wMenuCursorRow], a ; $4b6d
-	jr .checkInputRisingEdge ; $4b70
+	jr .checkStart ; $4b70
 .aPressed:
 	call Unused_05_IsCursorOnAdjustRow ; $4b72
 	or a ; $4b75
-	jr nz, Unused_05_RunMenuSelectionShared.loop ; $4b76
+	jr nz, Unused_05_RunOptionsMenuSelection.loop ; $4b76
 	sound SFX_MENU_SELECT ; $4b78
 	ld a, b ; $4b7a
 	ld [wMenuCursorRow], a ; $4b7b
@@ -342,17 +342,17 @@ Unused_05_RunMenuSelectionShared:
 	pop bc ; $4ba0
 	pop af ; $4ba1
 	jp .returnSelection ; $4ba2
-.checkInputRisingEdge:
+.checkStart:
 	ldh a, [hInputRisingEdge] ; $4ba5
 	and PADF_START ; $4ba7
-	jp z, .checkInputPressed ; $4ba9
+	jp z, .checkB ; $4ba9
 	sound SFX_MENU_CANCEL ; $4bac
 	ld a, [wPauseMenuOptionBits] ; $4bae
 	and $f0 ; $4bb1
 	ld [wPauseMenuOptionBits], a ; $4bb3
 	ld a, $ff ; $4bb6
 	jp .store ; $4bb8
-.checkInputPressed:
+.checkB:
 	ldh a, [hInputPressed] ; $4bbb
 	and PADF_B ; $4bbd
 	jp z, .checkAdjustRow ; $4bbf
@@ -394,21 +394,21 @@ Unused_05_RunMenuSelectionShared:
 	pop af ; $4c03
 	call GetWindowState ; $4c04
 	cp WINDOWSTATE_PAGED_MENU ; $4c07
-	jp nz, Unused_05_RunMenuSelectionShared.loop ; $4c09
+	jp nz, Unused_05_RunOptionsMenuSelection.loop ; $4c09
 	ld a, [wScrollListLength] ; $4c0c
 	dec a ; $4c0f
 	sra a ; $4c10
 	sra a ; $4c12
-	jp z, Unused_05_RunMenuSelectionShared.loop ; $4c14
+	jp z, Unused_05_RunOptionsMenuSelection.loop ; $4c14
 	ldh a, [hInputPressed] ; $4c17
 	and PADF_LEFT ; $4c19
-	jp z, .runMenuSelectionShared ; $4c1b
+	jp z, .checkPageRight ; $4c1b
 	ld a, $fe ; $4c1e
 	jr .store ; $4c20
-.runMenuSelectionShared:
+.checkPageRight:
 	ldh a, [hInputPressed] ; $4c22
 	and PADF_RIGHT ; $4c24
-	jp z, Unused_05_RunMenuSelectionShared.loop ; $4c26
+	jp z, Unused_05_RunOptionsMenuSelection.loop ; $4c26
 	ld a, $fd ; $4c29
 .store:
 	ld [wMenuCursorRow], a ; $4c2b

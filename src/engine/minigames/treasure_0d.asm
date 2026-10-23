@@ -93,7 +93,7 @@ Unused_0d_PerfectShotTargetGridLayout2:
 	db $03, $03, $03, $03, $03, $03, $03, $00 ; 0x18
 ResetTargetGrid:
 	ld hl, PerfectShotTargetGridLayout ; $5979
-	call CopyMinigameTilemapBlock ; $597c
+	call LoadMinigameTargetGrid ; $597c
 	ld a, $01 ; $597f
 	ld [wMinigameTargetGrid + 7], a ; $5981
 	ld [wMinigameTargetGrid + 15], a ; $5984
@@ -160,7 +160,7 @@ MinigameHooks_TreasureBox:
 TreasureBoxHook_MinigameStart:
 	call ClearMinigameActors ; $59fd
 	ld a, $01 ; $5a00
-	ld [wMinigameServeSlot], a ; $5a02
+	ld [wMinigameFeederPos], a ; $5a02
 	call StartMinigameMatch ; $5a05
 	ld a, $01 ; $5a08
 	ld [wTargetZoneEnabled], a ; $5a0a
@@ -180,7 +180,7 @@ TreasureBoxHook_PointStart:
 	farcall AdvanceMatchRng ; $5a25
 	and $01 ; $5a28
 	inc a ; $5a2a
-	ld hl, wMinigameServeSlot ; $5a2b
+	ld hl, wMinigameFeederPos ; $5a2b
 	add [hl] ; $5a2e
 	cp $03 ; $5a2f
 	jr c, .store ; $5a31
@@ -201,7 +201,7 @@ TreasureBoxHook_Bounce:
 	and a ; $5a48
 	ret nz ; $5a49
 	call AwardWinnerOnFourthShotBounce ; $5a4a
-	call CheckBallLandedOut ; $5a4d
+	call CheckBallMissedTargetZone ; $5a4d
 	ld a, [wPointOutcome] ; $5a50
 	cp POINTOUTCOME_WINNER ; $5a53
 	ret nz ; $5a55
@@ -260,16 +260,16 @@ StubNop_0d_3:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
 	jumptable [wMinigameSceneActor + MGACTOR_STATE] ; $5acc
-	dw TreasureBoxTargetState0 ; $5ad0 jumptable
-	dw TreasureBoxTargetState1 ; $5ad2 jumptable
-	dw TreasureBoxTargetState2 ; $5ad4 jumptable
-	dw TreasureBoxTargetState3 ; $5ad6 jumptable
+	dw TreasureBoxTargetSpawn ; $5ad0 jumptable
+	dw TreasureBoxTargetAwaitHit ; $5ad2 jumptable
+	dw TreasureBoxTargetHitBurst ; $5ad4 jumptable
+	dw TreasureBoxTargetGone ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
 AdvanceTreasureBoxActorState:
 	ld hl, wMinigameSceneActor + MGACTOR_STATE ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
-TreasureBoxTargetState0:
+TreasureBoxTargetSpawn:
 	xor a ; $5adf
 	ld [wTreasureBoxAnimTimer], a ; $5ae0
 	ld hl, wMinigameServeCount ; $5ae3
@@ -311,22 +311,22 @@ TreasureBoxTargetState0:
 	ld h, b ; $5b28
 	call SetMinigameActorWorldPos ; $5b29
 	call AdvanceTreasureBoxActorState ; $5b2c
-TreasureBoxTargetState1:
+TreasureBoxTargetAwaitHit:
 	call DrawTreasureBoxSprite ; $5b2f
 	call IsBallInTreasureBoxHitZone ; $5b32
 	and a ; $5b35
 	ret z ; $5b36
 	call AwardTreasureBoxHitScore ; $5b37
 	jp AdvanceTreasureBoxActorState ; $5b3a
-TreasureBoxTargetState2:
-	call DrawTreasureBoxHitCountdown ; $5b3d
+TreasureBoxTargetHitBurst:
+	call DrawTreasureBoxHitBurst ; $5b3d
 	ld hl, wMinigameSceneActor + MGACTOR_TIMER ; $5b40
 	dec [hl] ; $5b43
 	ld a, [hl] ; $5b44
 	and a ; $5b45
 	ret nz ; $5b46
 	jp AdvanceTreasureBoxActorState ; $5b47
-TreasureBoxTargetState3:
+TreasureBoxTargetGone:
 	ret ; $5b4a
 TreasureBoxTypePoolLate:
 	; $5b4b, 16 bytes (bytes:16)

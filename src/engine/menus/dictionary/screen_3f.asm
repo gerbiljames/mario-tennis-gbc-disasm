@@ -509,7 +509,7 @@ UpdateTennisDictionarySprites:
 	push de ; $4e92
 	push hl ; $4e93
 	wram_bank WRAM_SCENE ; $4e94
-	test_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4e9a
+	test_flag FLAG_TEXT_PAGE_ADVANCED ; $4e9a
 	jr z, .notTextWaitingForButton ; $4e9d
 	sound SFX_MENU_SELECT ; $4e9f
 	call StartTennisDictionaryAnim ; $4ea1

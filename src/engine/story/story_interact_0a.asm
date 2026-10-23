@@ -180,7 +180,7 @@ ShowLocationNamePopup:
 	set MSGSPEEDB_INSTANT, a ; $5308
 	ld [wMessageSpeed], a ; $530a
 	ld a, $83 ; $530d
-	farcall ShowSpeakerDialogueRestoreBG ; $530f
+	farcall ShowSpeakerDialogueKeepOpen ; $530f
 	ld b, $50 ; $5312
 .waitLoop:
 	call AdvanceFrame ; $5314

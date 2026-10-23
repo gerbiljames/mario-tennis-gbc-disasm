@@ -607,7 +607,7 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 | `$0b` | `TextCmdPrintPartnerName` | `wStoryPartnerName` |
 | `$0c` | `TextCmdDelay150Skippable` | 150 frames, skippable |
 | `$0d` | `TextCmdNextGlyphStreamRow` | `wGlyphStampCellPtr` += `$40` and `wTextRowStartPtr` += two row pitches |
-| `$0e` | `TextCmdPrintShortText` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |
+| `$0e` | `TextCmdPrintCharName` | **+1 operand**: short-text id `$001b + operand` (the 27-entry roster bias) → `wInlineTextBuffer` |
 | `$0f`, `$14`-`$1d` | `TextCmdNewline` | eleven aliases |
 | `$10`-`$13` | `TextCmdNop10`-`13` | four separate bare `ret`s |
 | `$1e` (`$de`) | `TextCmdApplyDakuten` | adds a voiced-sound mark to the *previous* cell |
@@ -615,8 +615,8 @@ return address, indexes `ControlCodeHandlers_05` (`$05:$548f`, 32 records, codes
 
 The string pools (`data/text/TextStrings_*.asm`) spell these with the `TX_*`
 names of `include/text_codes.inc` (`$01`/`$02`/`$03` as `line`/`page`/`done`),
-with `TX_SHORT_TEXT`'s operand as a `CHAR_*` constant
-(`TX_SHORT_TEXT, CHAR_EMILY` in "Oh, Coach Emily!"). Codes used: `$07` (246
+with `TX_CHAR_NAME`'s operand as a `CHAR_*` constant
+(`TX_CHAR_NAME, CHAR_EMILY` in "Oh, Coach Emily!"). Codes used: `$07` (246
 times), `$0e` (95), `$06` (67), `$0b` (41), `$09` (34), `$04` (11), plus
 `$01`-`$03`; never `$05`, `$08` or the dakuten pair.
 
@@ -727,7 +727,7 @@ Creation entry points, all into `AllocWindowStruct` (`$05:$6e6d`):
 `wShadowTilemapPtr + row * 32 + col` with the §3.3 tiles, alternating interior
 rows between blanks and glyph rows (`bit 0, d`, `$6ff3`), then repeats the
 rectangle at `+$0400` with `wWindowTileAttr`. Every cell step goes through
-`WrapCellPtrToRowStart` / `ClampCellPtrToShadowMap`, so windows may wrap the
+`WrapCellPtrToRowStart` / `WrapCellPtrToShadowMap`, so windows may wrap the
 32×32 plane. No VRAM access.
 
 `ResetTextWindowState` (`$05:$6e09`), the cold init, clears `$d000`-`$dfff` in
@@ -754,7 +754,7 @@ held throughout.
 
 ### 7.7 Menus over windows
 
-`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunMenuSelectionShared`
+`RunMenuSelection` (`$05:$477f`) and `Unused_05_RunOptionsMenuSelection`
 (`$05:$4aa8`) run the cursor loop over a text-derived menu window:
 
 | return | meaning |
@@ -782,7 +782,7 @@ Bank `$1a` holds an unreached pause-menu layer (all `Unused_1a_*`);
 `$05`, `CreateMenuWindowFromText` (→ `wPauseMenuWindowId`), then
 `RestoreShadowTilemap` / `RenderMenuWindowText` under `FLAG_VRAM_UPDATE_BUSY`,
 then a loop of `Unused_1a_DrawPauseMenuSettingValues`,
-`Unused_05_RunMenuSelectionShared` and `CloseWindow` unless the chosen row's bit
+`Unused_05_RunOptionsMenuSelection` and `CloseWindow` unless the chosen row's bit
 is set in `wMenuKeepOpenRowMask` (`$cb29`; bit 7 = present, rotated by the row
 index) — the rows that keep the window open after a change. Menu
 contents are `menu_def` records (`include/macros/`). Item ids are the
@@ -964,7 +964,7 @@ its notes and `include/ram_mirrored.inc`):
 
 Framework flags (bits of `wGameFlags`, `$c9c0`; `include/flag_constants.inc`):
 `FLAG_CUTSCENE_FAST_FORWARD` (22), `FLAG_VRAM_UPDATE_BUSY` (24),
-`FLAG_TEXT_WAITING_FOR_BUTTON` (25), `FLAG_TEXT_RENDER_ACTIVE` (35),
+`FLAG_TEXT_PAGE_ADVANCED` (25), `FLAG_TEXT_RENDER_ACTIVE` (35),
 `FLAG_PROPORTIONAL_TEXT_MODE` (36), `FLAG_PAUSE_OPTIONS_MENU_OPEN` (48),
 `FLAG_MINIGAME_PAUSE_MENU_OPEN` (49); debug: `FLAG_DEBUG_FREEZE_TILE_ANIM` (26),
 `FLAG_DEBUG_STATIC_TEXT_WINDOW` (27), `FLAG_DEBUG_SHORT_GLYPH_UPLOAD` (34).

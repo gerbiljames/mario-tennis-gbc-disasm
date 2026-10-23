@@ -3,7 +3,7 @@
 	farptr WaitScriptFrames ; $4004
 	farptr ScriptRespawnLocationActors ; $4006
 	farptr ScriptShowSpeakerDialogue ; $4008
-	farptr ScriptShowSpeakerDialogueRestoreBG ; $400a
+	farptr ScriptShowSpeakerDialogueKeepOpen ; $400a
 	farptr ScriptCloseDialogueWindow ; $400c
 	farptr InitDialogueTextCursor ; $400e
 	farptr AdvanceDialogueTextCursor ; $4010

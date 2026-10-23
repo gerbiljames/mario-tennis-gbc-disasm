@@ -642,18 +642,18 @@ toward a target:
 1. `CopyMasterPalettesToFadeBuffers` (`$03:$75e9`) seeds both buffers from
    `wMasterPalettes`;
 2. the target is rewritten by `Unused_03_ClearFadeTargetPalettes`
-   (`$03:$7606`, → black) or `DesaturateFadeTargetPalettes` (`$03:$7616`,
-   → grayscale);
+   (`$03:$7606`, → black) or `SepiaToneFadeTargetPalettes` (`$03:$7616`,
+   → sepia: R = (R+G+B)/2 capped at 31, G = sum/4, B = sum/8);
 3. `AnimatePaletteFadeToTarget` (`$03:$7719`) waits `wPaletteFadeFrameDelay`
    frames, steps every masked live palette with
    `StepPaletteColorsTowardTarget` (`$03:$7764`), uploads, and repeats
    `wPaletteFadeAmount` times; `SnapPalettesToTarget` (`$03:$77e2`) then copies
    the target over.
 
-Farptr entry slots: `$03:$4040` (`InitGrayscalePaletteFade`), `$03:$4042`
+Farptr entry slots: `$03:$4040` (`InitSepiaPaletteFade`), `$03:$4042`
 (`SetupPaletteFadeMask`), `$03:$4044` (`AnimatePaletteFadeToTarget`). The live
 callers, `RunEndingCreditsSequence` (`$0a:$6ece`) and `PlayTravelingTeamVictoryScene`
-(`$18:$76dd`), fade to grayscale; `Unused_03_InitBlackPaletteFade`
+(`$18:$76dd`), fade to sepia; `Unused_03_InitBlackPaletteFade`
 (`$03:$75ca`) is unreachable, so nothing fades to black.
 
 ---

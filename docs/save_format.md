@@ -128,7 +128,7 @@ runs are `SAVEBLOCK_UNUSED_BANK0`-`_BANK6` + n, one base per SRAM bank
 |---|---|---|---|
 | 0/2/4 | 0:`$0800/$0d00/$1200` | `$300` | story slot N primary: image of WRAM `$c800-$caff` |
 | 1/3/5 | 0:`$0b00/$1000/$1500` | `$200` | story slot N secondary block: never written with data, only zero-filled by `EraseStorySlotSaveData` or invalidated |
-| 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamPreservingBlock6`) |
+| 6 | 0:`$1700` | `$30` | small record; the only block preserved across a full save wipe (`ReinitSaveRamKeepingPreservedBlock`) |
 | 7-10 | 0:`$1730+` | `$20/$10` | small records; accessors (`Unused_03_WriteBlock7WithBackup` ... `Unused_03_ReadBlock10`, 03:587b+) are unreachable — never valid in a real save |
 | 11 (`$0b`) | 0:`$1800` | `$200` | N64 (Transfer Pak) records block, see below |
 | 12-26 | 0:`$1a00+` | `$20/$80` | defined, never written by GBC code |

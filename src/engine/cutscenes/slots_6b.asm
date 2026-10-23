@@ -13,7 +13,7 @@ DataPtr_TitleScreenPalettes:
 	farptr ShowIntroLogoScreen ; $4012
 	farptr ScrollOutIntroLogo ; $4014
 	farptr LoadIntroTilesAndPalette ; $4016
-	farptr QueueIntroSpriteBlock ; $4018
+	farptr QueueIntroSpinningBallFrame ; $4018
 DataPtr_DreamMatchEpilogueTilemap:
 	dw DreamMatchEpilogueTilemap ; $401a
 DataPtr_DreamMatchEpilogueAttrmap:

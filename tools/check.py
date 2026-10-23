@@ -497,7 +497,7 @@ def check_blob_pointers(rom, manifest, fail):
 KNOWN_DB_WORDS = {
     ("ArcTanTable", 6): "arctangent steps",
     ("WavePatterns", 30): "wave RAM samples",
-    ("TextPageDescriptors_03", 116): "7-byte records, not word-aligned",
+    ("CreditsStaffPageDescriptors_03", 116): "7-byte records, not word-aligned",
     ("ShotRecoilTable_07", 2): "recoil speeds",
     ("TargetShotZoneOverlayTiles", 32): "tile ids",
     ("StarWarpPathY", 146): "Y coordinates",
@@ -1631,7 +1631,7 @@ TEXT_POINTER_LABELS = {
     "FitWindowToText.checkMainCharName": "a",
     "FitWindowToText.checkArgString": "a",
     "FitWindowToText.checkPartnerName": "a",
-    "FitWindowToText.checkIndexedShortText": "a",
+    "FitWindowToText.checkCharName": "a",
     "MeasureTextDimensions.notLineBreak": "a",
     "MeasureTextDimensions.notShortTextArg": "a",
 }
@@ -3024,7 +3024,7 @@ _CHECK_LOCAL_RE = re.compile(r"\.check([A-Z]\w*?)\d*$")
 # Locals whose return value contradicts their name, but hold anyway: (routine, local) -> why.
 KNOWN_RETURN_NAMES = {
     ("EraseStorySlotSaveData", ".ok"): "a status code: 0 is success, .badSlot returns 1",
-    ("LookupMinigameShotResult", ".noMatch"): "a is the score, 1 point when no rule matches",
+    ("LookupTargetShotPoints", ".noMatch"): "a is the score, 1 point when no rule matches",
 }
 _POS_WORDS = {"busy", "found", "reached", "pending", "selected", "yes", "accepted", "success", "valid", "taken",
               "ok", "hit", "active", "ready", "true", "allowed"}

@@ -12,7 +12,7 @@ def TX_NOP            equ $0a ; ret
 def TX_PARTNER_NAME   equ $0b ; the story partner's name
 def TX_DELAY_150      equ $0c ; wait 150 frames, skippable
 def TX_NEXT_GLYPH_ROW equ $0d ; move the glyph stamp cell and the text row down two rows
-def TX_SHORT_TEXT     equ $0e ; one operand byte follows: roster short text $1b + n
+def TX_CHAR_NAME     equ $0e ; one operand byte follows: roster short text $1b + n
 def TX_NEWLINE_0F     equ $0f ; alias of $01 (TextCmdNewline)
 def TX_NOP_10         equ $10 ; ret
 def TX_NOP_11         equ $11 ; ret

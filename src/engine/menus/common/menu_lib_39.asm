@@ -128,7 +128,7 @@ TileBlockPtrs_39:
 	tileblock IntroRalliesNinaGfx0 ; record 80
 	tileblock IntroRalliesNinaGfx1 ; record 81
 	tileblock IntroRalliesNinaGfx2 ; record 82
-	tileblock CutsceneGfx6 ; record 83
+	tileblock IntroRalliesNinaGfx3 ; record 83
 	tileblock IntroSpinningBallFrame0 ; record 84
 	tileblock IntroSpinningBallFrame1 ; record 85
 	tileblock IntroSpinningBallFrame2 ; record 86

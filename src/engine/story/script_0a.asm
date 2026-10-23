@@ -150,7 +150,7 @@ ScriptShowSpeakerDialogue:
 	pop hl ; $41be
 	pop af ; $41bf
 	ret ; $41c0
-ScriptShowSpeakerDialogueRestoreBG:
+ScriptShowSpeakerDialogueKeepOpen:
 	push af ; $41c1
 	push hl ; $41c2
 	ld b, a ; $41c3
@@ -165,7 +165,7 @@ ScriptShowSpeakerDialogueRestoreBG:
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41d8
 	jr nz, .advanceTextId ; $41db
 	ld a, b ; $41dd
-	farcall ShowSpeakerDialogueRestoreBG ; $41de
+	farcall ShowSpeakerDialogueKeepOpen ; $41de
 .advanceTextId:
 	inc hl ; $41e1
 	ld a, l ; $41e2

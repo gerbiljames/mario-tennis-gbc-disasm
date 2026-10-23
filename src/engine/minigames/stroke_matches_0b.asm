@@ -166,30 +166,30 @@ StrokeMatch2JudgePoint:
 	dec a ; $6819
 	jumptable a ; $681a
 	dw StrokeMatch2JudgePoint.rally1 ; $681c jumptable
-	dw StrokeMatch2Cases1.dispatchResult ; $681e jumptable
-	dw StrokeMatch2Cases2.dispatchResult ; $6820 jumptable
-	dw StrokeMatch2Cases3.dispatchResult ; $6822 jumptable
+	dw StrokeMatch2Cases1.rally2 ; $681e jumptable
+	dw StrokeMatch2Cases2.rally3 ; $6820 jumptable
+	dw StrokeMatch2Cases3.rally4 ; $6822 jumptable
 .rally1:
 	ld a, b ; $6824
 	jumptable a ; $6825
-	dw StrokeMatch2JudgePoint.result0 ; $6827 jumptable
+	dw StrokeMatch2JudgePoint.rally1PointEnd ; $6827 jumptable
 	dw StrokeMatch2Cases1 ; $6829 jumptable
 	dw StrokeMatch2Cases1.ignoreBounce ; $682b jumptable
 	dw StrokeMatch2Cases1.ignoreNetCross ; $682d jumptable
-.result0:
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $682f
-	ld hl, StrokeMatch2JudgePointMessages ; $6832
+	ld hl, StrokeMatch2Rally1Messages ; $6832
 	add_hl_a ; $6835
 	ld a, [hl] ; $683a
 	ld a, a ; $683b
 	ld b, DRILLWORDING_NET ; $683c
-	call SetDrillMessageByServer ; $683e
+	call SetDrillReceiverMessage ; $683e
 	ld a, [wPointOutcome] ; $6841
 	ld hl, EvenRallyVerdicts ; $6844
 	add_hl_a ; $6847
 	ld a, [hl] ; $684c
 	ret ; $684d
-StrokeMatch2JudgePointMessages:
+StrokeMatch2Rally1Messages:
 	; $684e, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_SO_YOU_FAIL
 StrokeMatch2Cases1:
@@ -201,27 +201,27 @@ StrokeMatch2Cases1:
 .ignoreNetCross:
 	xor a ; $685c
 	ret ; $685d
-.dispatchResult:
+.rally2:
 	ld a, b ; $685e
 	jumptable a ; $685f
-	dw StrokeMatch2Cases1.checkPointOutcome ; $6861 jumptable
+	dw StrokeMatch2Cases1.rally2PointEnd ; $6861 jumptable
 	dw StrokeMatch2Cases2 ; $6863 jumptable
 	dw StrokeMatch2Cases2.ignoreBounce ; $6865 jumptable
 	dw StrokeMatch2Cases2.ignoreNetCross ; $6867 jumptable
-.checkPointOutcome:
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $6869
-	ld hl, StrokeMatch2Cases1Messages ; $686c
+	ld hl, StrokeMatch2Rally2Messages ; $686c
 	add_hl_a ; $686f
 	ld a, [hl] ; $6874
 	ld a, a ; $6875
 	ld b, DRILLWORDING_NET ; $6876
-	call SetDrillMessageByServer ; $6878
+	call SetDrillReceiverMessage ; $6878
 	ld a, [wPointOutcome] ; $687b
 	ld hl, OddRallyVerdicts ; $687e
 	add_hl_a ; $6881
 	ld a, [hl] ; $6886
 	ret ; $6887
-StrokeMatch2Cases1Messages:
+StrokeMatch2Rally2Messages:
 	; $6888, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, $48, $48, DRILLMSG_NICE_LOB_YOU_GET_A_POINT, DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_LOB_YOU_GET_A_POINT
 StrokeMatch2Cases2:
@@ -230,10 +230,10 @@ StrokeMatch2Cases2:
 	ret z ; $6896
 	ld a, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_WITH_A_LOB_SO_YOU ; $6897
 	ld b, DRILLWORDING_NET ; $6899
-	call SetDrillMessageByServer ; $689b
+	call SetDrillReceiverMessage ; $689b
 	ld a, [wCurrentShotType] ; $689e
 	cp SHOTTYPE_LOB ; $68a1
-	jp nz, StrokeMatch2Cases3.storeMatchAbortFlag ; $68a3
+	jp nz, StrokeMatch2Cases3.pointLost ; $68a3
 	xor a ; $68a6
 	ret ; $68a7
 .ignoreBounce:
@@ -242,33 +242,33 @@ StrokeMatch2Cases2:
 .ignoreNetCross:
 	xor a ; $68aa
 	ret ; $68ab
-.dispatchResult:
+.rally3:
 	ld a, b ; $68ac
 	jumptable a ; $68ad
-	dw StrokeMatch2Cases2.checkPointOutcome ; $68af jumptable
+	dw StrokeMatch2Cases2.rally3PointEnd ; $68af jumptable
 	dw StrokeMatch2Cases3 ; $68b1 jumptable
 	dw StrokeMatch2Cases3.ignoreBounce ; $68b3 jumptable
 	dw StrokeMatch2Cases3.ignoreNetCross ; $68b5 jumptable
-.checkPointOutcome:
+.rally3PointEnd:
 	ld a, [wPointOutcome] ; $68b7
-	ld hl, StrokeMatch2Cases2Messages ; $68ba
+	ld hl, StrokeMatch2Rally3Messages ; $68ba
 	add_hl_a ; $68bd
 	ld a, [hl] ; $68c2
 	ld a, a ; $68c3
 	ld b, DRILLWORDING_NET ; $68c4
-	call SetDrillMessageByServer ; $68c6
+	call SetDrillReceiverMessage ; $68c6
 	ld a, [wPointOutcome] ; $68c9
 	ld hl, EvenRallyVerdicts ; $68cc
 	add_hl_a ; $68cf
 	ld a, [hl] ; $68d4
 	ret ; $68d5
-StrokeMatch2Cases2Messages:
+StrokeMatch2Rally3Messages:
 	; $68d6, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_NICE_LOB_YOU_GET_A_POINT, DRILLMSG_NICE_LOB_YOU_GET_A_POINT, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL
 StrokeMatch2Cases3:
 	ld a, DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $68e0
 	ld b, DRILLWORDING_NET ; $68e2
-	call SetDrillMessageByServer ; $68e4
+	call SetDrillReceiverMessage ; $68e4
 	ld a, [wTotalPointsScoredInCurrentGame] ; $68e7
 	and $01 ; $68ea
 	xor $01 ; $68ec
@@ -283,7 +283,7 @@ StrokeMatch2Cases3:
 .ignoreNetCross:
 	xor a ; $68f9
 	ret ; $68fa
-.dispatchResult:
+.rally4:
 	ld a, b ; $68fb
 	jumptable a ; $68fc
 	dw StrokeMatch2Cases3.rally4IgnorePointEnd ; $68fe jumptable
@@ -296,8 +296,8 @@ StrokeMatch2Cases3:
 .rally4FailBallHit:
 	ld a, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL ; $6908
 	ld b, DRILLWORDING_NET ; $690a
-	call SetDrillMessageByServer ; $690c
-	jp .storeMatchAbortFlag ; $690f
+	call SetDrillReceiverMessage ; $690c
+	jp .pointLost ; $690f
 .rally4IgnoreBounce:
 	xor a ; $6912
 	ret ; $6913
@@ -309,7 +309,7 @@ StrokeMatch2Cases3:
 	ld [wMatchAbortFlag], a ; $6918
 	ld a, WINLOSE_WIN ; $691b
 	ret ; $691d
-.storeMatchAbortFlag:
+.pointLost:
 	ld a, MATCHABORT_POINT ; $691e
 	ld [wMatchAbortFlag], a ; $6920
 	ld a, WINLOSE_LOSE ; $6923
@@ -466,30 +466,30 @@ StrokeMatch3JudgePoint:
 	dec a ; $6a64
 	jumptable a ; $6a65
 	dw StrokeMatch3JudgePoint.rally1 ; $6a67 jumptable
-	dw StrokeMatch3Cases1.dispatchResult ; $6a69 jumptable
-	dw StrokeMatch3Cases2.dispatchResult ; $6a6b jumptable
-	dw StrokeMatch3Cases3.dispatchResult ; $6a6d jumptable
+	dw StrokeMatch3Cases1.rally2 ; $6a69 jumptable
+	dw StrokeMatch3Cases2.rally3 ; $6a6b jumptable
+	dw StrokeMatch3Cases3.rally4 ; $6a6d jumptable
 .rally1:
 	ld a, b ; $6a6f
 	jumptable a ; $6a70
-	dw StrokeMatch3JudgePoint.result0 ; $6a72 jumptable
+	dw StrokeMatch3JudgePoint.rally1PointEnd ; $6a72 jumptable
 	dw StrokeMatch3Cases1 ; $6a74 jumptable
 	dw StrokeMatch3Cases1.ignoreBounce ; $6a76 jumptable
 	dw StrokeMatch3Cases1.ignoreNetCross ; $6a78 jumptable
-.result0:
+.rally1PointEnd:
 	ld a, [wPointOutcome] ; $6a7a
-	ld hl, StrokeMatch3JudgePointMessages ; $6a7d
+	ld hl, StrokeMatch3Rally1Messages ; $6a7d
 	add_hl_a ; $6a80
 	ld a, [hl] ; $6a85
 	ld a, a ; $6a86
 	ld b, DRILLWORDING_NET ; $6a87
-	call SetDrillMessageByServer ; $6a89
+	call SetDrillReceiverMessage ; $6a89
 	ld a, [wPointOutcome] ; $6a8c
 	ld hl, EvenRallyVerdicts ; $6a8f
 	add_hl_a ; $6a92
 	ld a, [hl] ; $6a97
 	ret ; $6a98
-StrokeMatch3JudgePointMessages:
+StrokeMatch3Rally1Messages:
 	; $6a99, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_DOUBLE_FAULT_YOU_GET_A_POINT, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_SO_YOU_FAIL
 StrokeMatch3Cases1:
@@ -501,27 +501,27 @@ StrokeMatch3Cases1:
 .ignoreNetCross:
 	xor a ; $6aa7
 	ret ; $6aa8
-.dispatchResult:
+.rally2:
 	ld a, b ; $6aa9
 	jumptable a ; $6aaa
-	dw StrokeMatch3Cases1.checkPointOutcome ; $6aac jumptable
+	dw StrokeMatch3Cases1.rally2PointEnd ; $6aac jumptable
 	dw StrokeMatch3Cases2 ; $6aae jumptable
 	dw StrokeMatch3Cases2.ignoreBounce ; $6ab0 jumptable
 	dw StrokeMatch3Cases2.ignoreNetCross ; $6ab2 jumptable
-.checkPointOutcome:
+.rally2PointEnd:
 	ld a, [wPointOutcome] ; $6ab4
-	ld hl, StrokeMatch3Cases1Messages ; $6ab7
+	ld hl, StrokeMatch3Rally2Messages ; $6ab7
 	add_hl_a ; $6aba
 	ld a, [hl] ; $6abf
 	ld a, a ; $6ac0
 	ld b, DRILLWORDING_NET ; $6ac1
-	call SetDrillMessageByServer ; $6ac3
+	call SetDrillReceiverMessage ; $6ac3
 	ld a, [wPointOutcome] ; $6ac6
 	ld hl, OddRallyVerdicts ; $6ac9
 	add_hl_a ; $6acc
 	ld a, [hl] ; $6ad1
 	ret ; $6ad2
-StrokeMatch3Cases1Messages:
+StrokeMatch3Rally2Messages:
 	; $6ad3, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_YOU_DIDNT_RETURN_MY_SERVE_SO_YOU_FAIL, $49, DRILLMSG_NICE_RETURN_YOU_GET_A_POINT, DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_YOU_RETURNED_MY_SERVE_BEFORE_IT_BOUNCED_SO_YOU_FAIL, DRILLMSG_NICE_RETURN_YOU_GET_A_POINT
 StrokeMatch3Cases2:
@@ -533,33 +533,33 @@ StrokeMatch3Cases2:
 .ignoreNetCross:
 	xor a ; $6ae1
 	ret ; $6ae2
-.dispatchResult:
+.rally3:
 	ld a, b ; $6ae3
 	jumptable a ; $6ae4
-	dw StrokeMatch3Cases2.checkPointOutcome ; $6ae6 jumptable
+	dw StrokeMatch3Cases2.rally3PointEnd ; $6ae6 jumptable
 	dw StrokeMatch3Cases3 ; $6ae8 jumptable
 	dw StrokeMatch3Cases3.ignoreBounce ; $6aea jumptable
 	dw StrokeMatch3Cases3.ignoreNetCross ; $6aec jumptable
-.checkPointOutcome:
+.rally3PointEnd:
 	ld a, [wPointOutcome] ; $6aee
-	ld hl, StrokeMatch3Cases2Messages ; $6af1
+	ld hl, StrokeMatch3Rally3Messages ; $6af1
 	add_hl_a ; $6af4
 	ld a, [hl] ; $6af9
 	ld a, a ; $6afa
 	ld b, DRILLWORDING_NET ; $6afb
-	call SetDrillMessageByServer ; $6afd
+	call SetDrillReceiverMessage ; $6afd
 	ld a, [wPointOutcome] ; $6b00
 	ld hl, EvenRallyVerdicts ; $6b03
 	add_hl_a ; $6b06
 	ld a, [hl] ; $6b0b
 	ret ; $6b0c
-StrokeMatch3Cases2Messages:
+StrokeMatch3Rally3Messages:
 	; $6b0d, 10 bytes (drill_messages)
 	drill_messages DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_NICE_RETURN_YOU_GET_A_POINT, DRILLMSG_NICE_RETURN_YOU_GET_A_POINT, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL, DRILLMSG_HIDE, DRILLMSG_HIDE, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL
 StrokeMatch3Cases3:
 	ld a, DRILLMSG_I_DIDNT_HIT_FROM_IN_FRONT_OF_THE_SERVICE_LINE_2 ; $6b17
 	ld b, DRILLWORDING_NET ; $6b19
-	call SetDrillMessageByServer ; $6b1b
+	call SetDrillReceiverMessage ; $6b1b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6b1e
 	and $01 ; $6b21
 	xor $01 ; $6b23
@@ -574,7 +574,7 @@ StrokeMatch3Cases3:
 .ignoreNetCross:
 	xor a ; $6b30
 	ret ; $6b31
-.dispatchResult:
+.rally4:
 	ld a, b ; $6b32
 	jumptable a ; $6b33
 	dw StrokeMatch3Cases3.rally4IgnorePointEnd ; $6b35 jumptable
@@ -587,8 +587,8 @@ StrokeMatch3Cases3:
 .rally4FailBallHit:
 	ld a, DRILLMSG_I_PLAYED_THE_NET_SO_YOU_FAIL ; $6b3f
 	ld b, DRILLWORDING_NET ; $6b41
-	call SetDrillMessageByServer ; $6b43
-	jp .storeMatchAbortFlag ; $6b46
+	call SetDrillReceiverMessage ; $6b43
+	jp .pointLost ; $6b46
 .rally4IgnoreBounce:
 	xor a ; $6b49
 	ret ; $6b4a
@@ -600,7 +600,7 @@ StrokeMatch3Cases3:
 	ld [wMatchAbortFlag], a ; $6b4f
 	ld a, WINLOSE_WIN ; $6b52
 	ret ; $6b54
-.storeMatchAbortFlag:
+.pointLost:
 	ld a, MATCHABORT_POINT ; $6b55
 	ld [wMatchAbortFlag], a ; $6b57
 	ld a, WINLOSE_LOSE ; $6b5a

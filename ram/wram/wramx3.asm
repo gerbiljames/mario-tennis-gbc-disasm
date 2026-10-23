@@ -443,8 +443,8 @@ wCharGridRightPressCount:: db
 wCharGridHandedness:: db
 NEXTU
 ; intro swing scene (bank $6b)
-; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroSwingTilemap. IntroCutsceneState03Init and State05Init queue rows 4-13 of it to $9880 in VRAM bank 0
+; [1024 bytes] Tile plane of the intro's swing scene, decompressed from DataPtr_IntroAlexSwingTilemap (IntroCutsceneAlexRallyInit_6b) or DataPtr_IntroNinaSwingTilemap (IntroCutsceneNinaRallyInit_6b). IntroCutsceneAlexSwingInit_6b and IntroCutsceneNinaSwingInit_6b queue rows 4-13 of it to $9880 in VRAM bank 0
 wIntroSwingTilemap:: ds 1024
-; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroSwingAttrmap; copied to the same VRAM addresses in bank 1
+; [1024 bytes] CGB attribute plane for wIntroSwingTilemap, cell for cell, from DataPtr_IntroAlexSwingAttrmap or DataPtr_IntroNinaSwingAttrmap; copied to the same VRAM addresses in bank 1
 wIntroSwingAttrmap:: ds 1024
 ENDU

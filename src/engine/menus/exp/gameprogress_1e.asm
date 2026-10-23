@@ -6,9 +6,9 @@ ShowGameProgressScreen:
 	jr z, .buildScreen ; $726b
 	set_flag FLAG_TEMP_COURT_STAR_EARNED ; $726d
 .buildScreen:
-	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
+	set_flag FLAG_TEMP_NO_MENU_TEXT_INDENT ; $7270
 	call BuildGameProgressScreen ; $7273
-	clear_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7276
+	clear_flag FLAG_TEMP_NO_MENU_TEXT_INDENT ; $7276
 	call ClearFrameTasks ; $7279
 	ret ; $727c
 InitGameProgressScreen:

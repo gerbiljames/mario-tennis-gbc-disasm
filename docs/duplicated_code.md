@@ -81,11 +81,11 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | `src/twins/get_menu_cursor_index.asm` | `GetMenuCursorIndex_<bank>` | $16, $1b, $38, $3b, $3e |
 | `src/twins/get_menu_cursor_index_from_ptr.asm` | `Unused_<bank>_GetMenuCursorIndexFromPtr` | $16, $1b, $38, $3b, $3e |
 | `src/twins/init_minigame_medallion_match.asm` | the four `InitMinigame_*` tennis-machine setups | $0d |
-| `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneState00Update_6b`, `IntroCutsceneState16Update_6b` | $6b |
-| `src/twins/intro_cutscene_state03_exit.asm` | `IntroCutsceneState03Exit_6b`, `IntroCutsceneState05Exit_6b` | $6b |
-| `src/twins/intro_cutscene_state07_update.asm` | `IntroCutsceneState07Update_6b`, `IntroCutsceneState09Update_6b` | $6b |
-| `src/twins/intro_cutscene_state11_update.asm` | `IntroCutsceneState11Update_6b`, `IntroCutsceneState12Update_6b` | $6b |
-| `src/twins/intro_cutscene_state13_update.asm` | `IntroCutsceneState13Update_6b`, `IntroCutsceneState14Update_6b` | $6b |
+| `src/twins/intro_cutscene_state00_update.asm` | `IntroCutsceneOpeningTossUpdate_6b`, `IntroCutsceneClosingTossUpdate_6b` | $6b |
+| `src/twins/intro_cutscene_state03_exit.asm` | `IntroCutsceneAlexSwingExit_6b`, `IntroCutsceneNinaSwingExit_6b` | $6b |
+| `src/twins/intro_cutscene_state07_update.asm` | `IntroCutsceneRallyFadeOutUpdate_6b`, `IntroCutsceneOpponentsCaptionUpdate_6b` | $6b |
+| `src/twins/intro_cutscene_state11_update.asm` | `IntroCutsceneDiveUpdate_6b`, `IntroCutsceneGirlSwingUpdate_6b` | $6b |
+| `src/twins/intro_cutscene_state13_update.asm` | `IntroCutsceneGreatestPlayerUpdate_6b`, `IntroCutsceneMarioRevealUpdate_6b` | $6b |
 | `src/twins/is_ball_in_medallion_match_hit_zone.asm` | `IsBallInTreasureBoxHitZone`, `IsBallInMedallionMatchHitZone` | $0d |
 | `src/twins/island_open_round_doubles_npc04_emily.asm` | `IslandOpenRoundSinglesNpc04Emily_0f`, `IslandOpenRoundDoublesNpc04Emily_0f` | $0f |
 | `src/twins/junior_class_court_singles_npc03_junior_coach_face_up.asm` | `JuniorClassCourtSinglesNpc03JuniorCoachFaceUp_11`, `JuniorClassCourtDoublesNpc03JuniorCoachFaceUp_11` | $11 |
@@ -189,7 +189,7 @@ families under the ten-instruction floor (`twins.py --min 4`).
 | 2 | 43 | $38, $3b | `DrawNameWithDiacritics_*` |
 | 2 | 28 | $3b, $3e | `FlushMatchFormatRowToVram`, `FlushLinkMatchFormatRowAttrs` |
 | 2 | 10 | $13 | `DormRoomDepartureMorningAltScene`, `DormRoomDepartureMorningScene` |
-| 2 | 14 | $6b | `IntroCutsceneState00Update_6b`, `IntroCutsceneState16Update_6b` |
+| 2 | 14 | $6b | `IntroCutsceneOpeningTossUpdate_6b`, `IntroCutsceneClosingTossUpdate_6b` |
 | 2 | 72 | $0d | `IsBallInMedallionMatchHitZone`, `IsBallInTreasureBoxHitZone` |
 | 2 | 11 | $0f | `IslandOpenRoundDoublesNpc04Emily_0f`, `IslandOpenRoundSinglesNpc04Emily_0f` |
 | 3 | 21 | $11, $14, $15 | `LoadPlayerPartnerObjDefs_11`, `LoadPlayerPartnerObjDefs_14`, `LoadPlayerPartnerObjDefs_15` |

@@ -278,7 +278,7 @@ TextInterpreterLoop:
 	jr z, .dakuten ; $4e87
 	cp TX_HANDAKUTEN ; $4e89
 	jr z, .handakuten ; $4e8b
-	cp TX_SHORT_TEXT ; $4e8d
+	cp TX_CHAR_NAME ; $4e8d
 	jr z, .charNameArg ; $4e8f
 	cp $20 ; $4e91
 	jr nc, .printGlyph ; $4e93
@@ -442,9 +442,9 @@ TextCmdWaitButtonPage:
 	call AdvanceFrame ; $4fa1
 	ld hl, TextContinueArrowBlinkTask ; $4fa4
 	call UnregisterFrameTask ; $4fa7
-	set_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4faa
+	set_flag FLAG_TEXT_PAGE_ADVANCED ; $4faa
 	call AdvanceFrame ; $4fad
-	clear_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4fb0
+	clear_flag FLAG_TEXT_PAGE_ADVANCED ; $4fb0
 	pop hl ; $4fb3
 	pop de ; $4fb4
 	pop bc ; $4fb5

@@ -323,7 +323,7 @@ WrapCellPtrToRowStart:
 .done:
 	pop af ; $6f36
 	ret ; $6f37
-ClampCellPtrToShadowMap:
+WrapCellPtrToShadowMap:
 	push af ; $6f38
 	push_wram_bank WRAM_TEXT ; $6f39
 	ld a, [wShadowTilemapPtr + 1] ; $6f42
@@ -336,7 +336,7 @@ ClampCellPtrToShadowMap:
 	pop_wram_bank ; $6f4d
 	pop af ; $6f52
 	ret ; $6f53
-ClampCellPtrToAttrMap:
+WrapCellPtrToAttrMap:
 	push af ; $6f54
 	push_wram_bank WRAM_TEXT ; $6f55
 	ld a, [wShadowTilemapPtr + 1] ; $6f5e
@@ -426,7 +426,7 @@ DrawTextWindowFrame:
 	pop hl ; $6fe0
 	ld a, $20 ; $6fe1
 	add_hl_a ; $6fe3
-	call ClampCellPtrToShadowMap ; $6fe8
+	call WrapCellPtrToShadowMap ; $6fe8
 .midRowLoop:
 	push hl ; $6feb
 	ld [hl], $05 ; $6fec
@@ -465,7 +465,7 @@ DrawTextWindowFrame:
 	pop hl ; $7020
 	ld a, $20 ; $7021
 	add_hl_a ; $7023
-	call ClampCellPtrToShadowMap ; $7028
+	call WrapCellPtrToShadowMap ; $7028
 	dec d ; $702b
 	jr nz, .midRowLoop ; $702c
 	push hl ; $702e
@@ -485,7 +485,7 @@ DrawTextWindowFrame:
 	pop hl ; $7045
 	ld a, $20 ; $7046
 	add_hl_a ; $7048
-	call ClampCellPtrToShadowMap ; $704d
+	call WrapCellPtrToShadowMap ; $704d
 	pop hl ; $7050
 	ld bc, $0400 ; $7051
 	add hl, bc ; $7054
@@ -512,7 +512,7 @@ DrawTextWindowFrame:
 	pop hl ; $706e
 	ld a, $20 ; $706f
 	add_hl_a ; $7071
-	call ClampCellPtrToAttrMap ; $7076
+	call WrapCellPtrToAttrMap ; $7076
 	dec d ; $7079
 	jr nz, .attrRowLoop ; $707a
 .done:

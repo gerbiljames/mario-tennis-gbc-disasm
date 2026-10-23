@@ -192,7 +192,7 @@ wOnCourtCharCount:: db
 ; 0x18 - Training Court (Match)
 wCurrentlyUsedCourt:: db
 
-; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). At 2, SelectScoreboardLayout picks SCOREBOARD_LESSON/HIGH_SCORE/SCORE/DRILL from the drill flags instead of the player count, and InitViewFlipPreference the fixed court view
+; [8-bit] Kind of match running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunTwoOnOneMatch). At 2, SelectScoreboardLayout picks SCOREBOARD_LESSON/HIGH_SCORE/SCORE/DRILL from the drill flags instead of the player count, and InitViewFlipPreference the fixed court view
 wMatchContext:: db
 
 UNION

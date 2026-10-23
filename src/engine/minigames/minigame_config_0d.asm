@@ -111,13 +111,13 @@ MinigamePracticeTargetScores:
 	dw $000f ; record 0
 	dw $001e ; record 1
 	dw $003c ; record 2
-MinigameDefaultRecordValue00:
+TennisMachine4TargetScore:
 	; $4150, 8 bytes (records:2)
 	dw $0064 ; record 0
 	dw $0032 ; record 1
 	dw $0032 ; record 2
 	dw $0032 ; record 3
-MinigameDefaultRecordValue01:
+WallPractice4TargetScore:
 	; $4158, 6 bytes (records:2)
 	dw $0032 ; record 0
 	dw $270f ; record 1
@@ -125,55 +125,55 @@ MinigameDefaultRecordValue01:
 MinigameTargetScores:
 	; $415e, 2 bytes (records:2)
 	dw $001e ; record 0
-MinigameDefaultRecordValue02:
+BooBlastLevel2TargetScore:
 	; $4160, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $001e ; record 3
-MinigameDefaultRecordValue03:
+ShootingStarLevel2TargetScore:
 	; $4168, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0015 ; record 3
-MinigameDefaultRecordValue04:
+PerfectShotLevel2TargetScore:
 	; $4170, 8 bytes (records:2)
 	dw $0015 ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $001e ; record 3
-MinigameDefaultRecordValue05:
+TargetShotLevel2TargetScore:
 	; $4178, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0032 ; record 3
-MinigameDefaultRecordValue06:
+FruitFantasyLevel2TargetScore:
 	; $4180, 8 bytes (records:2)
 	dw $0064 ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $001e ; record 3
-MinigameDefaultRecordValue07:
+BananaBunchLevel2TargetScore:
 	; $4188, 8 bytes (records:2)
 	dw $003c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $00c8 ; record 3
-MinigameDefaultRecordValue08:
+TreasureBoxLevel2TargetScore:
 	; $4190, 8 bytes (records:2)
 	dw $012c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0064 ; record 3
-MinigameDefaultRecordValue09:
+MedallionMatchLevel2TargetScore:
 	; $4198, 8 bytes (records:2)
 	dw $012c ; record 0
 	dw $270f ; record 1
 	dw $0000 ; record 2
 	dw $0001 ; record 3
-MinigameDefaultRecordValue10:
+TwoOnOneLevel2TargetScore:
 	; $41a0, 6 bytes (records:2)
 	dw $0001 ; record 0
 	dw $270f ; record 1
@@ -190,18 +190,18 @@ GetDefaultMinigameRecordValue:
 	ret ; $41b4
 MinigameDefaultRecordValuePointers:
 	; $41b5, 22 bytes (records:2)
-	dw MinigameDefaultRecordValue01 ; record 0
-	dw MinigameDefaultRecordValue00 ; record 1
-	dw MinigameDefaultRecordValue02 ; record 2
-	dw MinigameDefaultRecordValue03 ; record 3
-	dw MinigameDefaultRecordValue04 ; record 4
-	dw MinigameDefaultRecordValue05 ; record 5
-	dw MinigameDefaultRecordValue06 ; record 6
-	dw MinigameDefaultRecordValue07 ; record 7
-	dw MinigameDefaultRecordValue08 ; record 8
-	dw MinigameDefaultRecordValue09 ; record 9
-	dw MinigameDefaultRecordValue10 ; record 10
-IncrementCappedCounter:
+	dw WallPractice4TargetScore ; record 0
+	dw TennisMachine4TargetScore ; record 1
+	dw BooBlastLevel2TargetScore ; record 2
+	dw ShootingStarLevel2TargetScore ; record 3
+	dw PerfectShotLevel2TargetScore ; record 4
+	dw TargetShotLevel2TargetScore ; record 5
+	dw FruitFantasyLevel2TargetScore ; record 6
+	dw BananaBunchLevel2TargetScore ; record 7
+	dw TreasureBoxLevel2TargetScore ; record 8
+	dw MedallionMatchLevel2TargetScore ; record 9
+	dw TwoOnOneLevel2TargetScore ; record 10
+IncrementMinigameHitStreak:
 	ld hl, wMinigameHitStreak ; $41cb
 	ld a, [hl] ; $41ce
 	cp b ; $41cf

@@ -17,12 +17,12 @@ ServicePractice2Hook_BallHit:
 .done:
 	ret ; $505f
 ServicePractice2TargetZones:
-	; $5060, 34 bytes (drill_gates)
-; drill_gates x1, depth1, x2, depth2
-	drill_gates $fe50, $fd60, $fee0, $fe40 ; point 0
-	drill_gates $0120, $fd60, $01b0, $fe40 ; point 1
-	drill_gates $0120, $01c0, $01b0, $02a0 ; point 2
-	drill_gates $fe50, $01c0, $fee0, $02a0 ; point 3
+	; $5060, 34 bytes (drill_target_zone)
+; drill_target_zone x1, depth1, x2, depth2
+	drill_target_zone $fe50, $fd60, $fee0, $fe40 ; point 0
+	drill_target_zone $0120, $fd60, $01b0, $fe40 ; point 1
+	drill_target_zone $0120, $01c0, $01b0, $02a0 ; point 2
+	drill_target_zone $fe50, $01c0, $fee0, $02a0 ; point 3
 	db $ff, $ff ; end
 ServicePractice2HandlePointEnd:
 	call CheckServicePractice2ServeSpin ; $5082
@@ -113,12 +113,12 @@ ServicePractice2QueueOutcomeMessage:
 	jr nz, .notDoubleFault ; $5151
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $5153
 	ld b, DRILLWORDING_SAME ; $5155
-	call QueueDrillResultMessage ; $5157
+	call SetDrillServerMessage ; $5157
 	jr .serveFailed ; $515a
 .notDoubleFault:
 	ld a, DRILLMSG_YOU_DIDNT_USE_TOPSPIN_TO_BOUNCE_IT_OUT_OF_BOUNDS ; $515c
 	ld b, DRILLWORDING_SAME ; $515e
-	call QueueDrillResultMessage ; $5160
+	call SetDrillServerMessage ; $5160
 	ld a, [wStoryMainLeftHanded] ; $5163
 	and $01 ; $5166
 	ld b, a ; $5168
@@ -141,19 +141,19 @@ ServicePractice2QueueOutcomeMessage:
 	jr nz, .serveFailed ; $5191
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $5193
 	ld b, DRILLWORDING_SAME ; $5195
-	call QueueDrillResultMessage ; $5197
+	call SetDrillServerMessage ; $5197
 	call CheckDrillTargetZoneHit ; $519a
 	or a ; $519d
 	jr z, .serveFailed ; $519e
 	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $51a0
 	ld b, DRILLWORDING_SAME ; $51a2
-	call QueueDrillResultMessage ; $51a4
+	call SetDrillServerMessage ; $51a4
 	ld a, [wPointOutcome] ; $51a7
 	cp POINTOUTCOME_WINNER ; $51aa
 	jr z, .winner ; $51ac
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $51ae
 	ld b, DRILLWORDING_SAME ; $51b0
-	call QueueDrillResultMessage ; $51b2
+	call SetDrillServerMessage ; $51b2
 	jr .serveFailed ; $51b5
 .winner:
 	ld hl, wDrillCounters + DRILLCTR_SERVES_SCORED ; $51b7
@@ -260,11 +260,11 @@ ServicePractice3EvaluateResult:
 .countTargetZoneMisses:
 	call CountDrillTargetZoneMisses ; $5273
 	or a ; $5276
-	jr z, .checkCounter1 ; $5277
+	jr z, .checkTimedServesLeft ; $5277
 	ld a, LESSON_SERVE_MISSED_TARGET ; $5279
 	ld [wDrillLessonResult], a ; $527b
 	jr .lessonFailed ; $527e
-.checkCounter1:
+.checkTimedServesLeft:
 	ld a, [wDrillCounters + DRILLCTR_TIMED_SERVES_LEFT] ; $5280
 	or a ; $5283
 	jr z, .countGateCrosses ; $5284
@@ -375,31 +375,31 @@ ServicePractice3QueueOutcomeMessage:
 	jr z, .doubleFault ; $538d
 	ld a, DRILLMSG_YOU_DIDNT_SERVE_WITH_NICE_TIMING_SO_YOU_FAIL ; $538f
 	ld b, DRILLWORDING_SAME ; $5391
-	call QueueDrillResultMessage ; $5393
+	call SetDrillServerMessage ; $5393
 	ld a, [wPowerServeFlag] ; $5396
 	or a ; $5399
 	jr z, .serveFailed ; $539a
 	ld a, DRILLMSG_YOU_DIDNT_HIT_IT_THROUGH_THE_POLES_SO_YOU_FAIL ; $539c
 	ld b, DRILLWORDING_SAME ; $539e
-	call QueueDrillResultMessage ; $53a0
+	call SetDrillServerMessage ; $53a0
 	call TestDrillGateCrossThisPoint ; $53a3
 	jr z, .serveFailed ; $53a6
 	ld a, DRILLMSG_YOU_DIDNT_HIT_THE_TARGET_AREA_SO_YOU_FAIL ; $53a8
 	ld b, DRILLWORDING_SAME ; $53aa
-	call QueueDrillResultMessage ; $53ac
+	call SetDrillServerMessage ; $53ac
 	call CheckDrillTargetZoneHit ; $53af
 	or a ; $53b2
 	jr z, .serveFailed ; $53b3
 	ld a, DRILLMSG_NICE_SERVE_YOU_GET_A_POINT ; $53b5
 	ld b, DRILLWORDING_SAME ; $53b7
-	call QueueDrillResultMessage ; $53b9
+	call SetDrillServerMessage ; $53b9
 	ld a, [wPointOutcome] ; $53bc
 	cp POINTOUTCOME_WINNER ; $53bf
 	jr z, .winner ; $53c1
 .doubleFault:
 	ld a, DRILLMSG_DOUBLE_FAULT_YOU_FAILED_2 ; $53c3
 	ld b, DRILLWORDING_SAME ; $53c5
-	call QueueDrillResultMessage ; $53c7
+	call SetDrillServerMessage ; $53c7
 	jr .serveFailed ; $53ca
 .winner:
 	ld hl, wDrillCounters + DRILLCTR_SERVES_SCORED ; $53cc

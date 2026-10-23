@@ -210,11 +210,11 @@ CheckUnlockCondition:
 	cp MGRECORD_BOO_BLAST ; $57ef
 	jr nc, .saveFlagCondition ; $57f1
 	or a ; $57f3
-	jr nz, .machineWall ; $57f4
+	jr nz, .machine ; $57f4
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $57f6
 	jr z, .locked ; $57f9
 	jr .checkRecord ; $57fb
-.machineWall:
+.machine:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $57fd
 	jr z, .locked ; $5800
 	jr .checkRecord ; $5802
@@ -257,7 +257,7 @@ CheckUnlockCondition:
 	pop de ; $5841
 	pop bc ; $5842
 	ret ; $5843
-WriteBlock6WithBackup:
+WritePreservedBlockWithBackup:
 	push bc ; $5844
 	push de ; $5845
 	push hl ; $5846
@@ -285,7 +285,7 @@ WriteBlock6WithBackup:
 	pop de ; $586c
 	pop bc ; $586d
 	ret ; $586e
-ReadBlock6:
+ReadPreservedBlock:
 	push bc ; $586f
 	push de ; $5870
 	push hl ; $5871
