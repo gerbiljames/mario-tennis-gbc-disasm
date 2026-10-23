@@ -117,7 +117,7 @@ siblings), `Unused_13_ActorScriptHopNod`/`BounceShake` (`$13:$62db`),
 `Unused_15_ActorScriptBlink3`/`5` (`$15:$7a23`), and three loops in bank
 `$0a`: `Unused_0a_ActorScriptChaseAnchor` and `…ChaseAnchor2`,
 copies of `ActorScript_ChaseAnchor`, and
-`Unused_0a_ActorScriptSpinForever`, an `as_jump` to itself. `Unused_27_ActorLists` (`$27:$4b41`) stays `db` rows.
+`Unused_0a_ActorScriptSpinForever`, an `as_jump` to itself. `Unused_27_SixByteRecordLists` (`$27:$4b41`) stays `db` rows.
 
 ## What follows a script
 
