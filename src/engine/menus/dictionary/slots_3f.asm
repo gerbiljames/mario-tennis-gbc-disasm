@@ -29,16 +29,16 @@ DataPtr_CompositionCourtNameGfx:
 	dw CompositionCourtNameGfx ; $401c
 DataPtr_VarsityTeamChartTiles:
 	dw VarsityTeamChartTiles ; $401e
-DataPtr_VarsityTeamChartTilemap:
-	dw VarsityTeamChartTilemap ; $4020
-DataPtr_VarsityTeamChartAttrmap:
-	dw VarsityTeamChartAttrmap ; $4022
+DataPtr_VarsityTeamChartSinglesTilemap:
+	dw VarsityTeamChartSinglesTilemap ; $4020
+DataPtr_VarsityTeamChartSinglesAttrmap:
+	dw VarsityTeamChartSinglesAttrmap ; $4022
 DataPtr_VarsityTeamChartPalettes:
 	dw VarsityTeamChartPalettes ; $4024
-DataPtr_VarsityTeamChartTilemap2:
-	dw VarsityTeamChartTilemap2 ; $4026
-DataPtr_VarsityTeamChartAttrmap2:
-	dw VarsityTeamChartAttrmap2 ; $4028
+DataPtr_VarsityTeamChartDoublesTilemap:
+	dw VarsityTeamChartDoublesTilemap ; $4026
+DataPtr_VarsityTeamChartDoublesAttrmap:
+	dw VarsityTeamChartDoublesAttrmap ; $4028
 DataPtr_VarsityTeamChartNameBoxTiles:
 	dw VarsityTeamChartNameBoxTiles ; $402a
 DataPtr_MugshotTiles:

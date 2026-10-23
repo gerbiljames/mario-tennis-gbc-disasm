@@ -382,11 +382,11 @@ HandleTennisDictionaryListInput:
 	ld a, [wTennisDictCursorRow] ; $56c6
 	dec a ; $56c9
 	cp $ff ; $56ca
-	jr z, .checkTennisDictScrollTop ; $56cc
+	jr z, .scrollListUp ; $56cc
 	ld [wTennisDictCursorRow], a ; $56ce
 	call DrawTennisDictionaryLetterLabels ; $56d1
 	jr .restore ; $56d4
-.checkTennisDictScrollTop:
+.scrollListUp:
 	ld a, [wTennisDictScrollTop] ; $56d6
 	dec a ; $56d9
 	cp $ff ; $56da
@@ -404,11 +404,11 @@ HandleTennisDictionaryListInput:
 	ld a, [wTennisDictCursorRow] ; $56f0
 	inc a ; $56f3
 	cp $06 ; $56f4
-	jr nc, .checkTennisDictEntryCount ; $56f6
+	jr nc, .scrollListDown ; $56f6
 	ld [wTennisDictCursorRow], a ; $56f8
 	call DrawTennisDictionaryLetterLabels ; $56fb
 	jr .restore ; $56fe
-.checkTennisDictEntryCount:
+.scrollListDown:
 	ld a, [wTennisDictEntryCount] ; $5700
 	ld b, a ; $5703
 	ld a, [wTennisDictScrollTop] ; $5704
@@ -541,16 +541,16 @@ CompositionCourtNameGfx:
 	INCBIN "data/engine/menus/dictionary/lz_CompositionCourtNameGfx.bin" ; $6219, 196 bytes
 VarsityTeamChartTiles:
 	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTiles.bin" ; $62dd, 1314 bytes
-VarsityTeamChartTilemap:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap.bin" ; $67ff, 325 bytes
-VarsityTeamChartAttrmap:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap.bin" ; $6944, 141 bytes
+VarsityTeamChartSinglesTilemap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartSinglesTilemap.bin" ; $67ff, 325 bytes
+VarsityTeamChartSinglesAttrmap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartSinglesAttrmap.bin" ; $6944, 141 bytes
 VarsityTeamChartPalettes:
 	INCLUDE "data/engine/menus/dictionary/VarsityTeamChartPalettes.asm" ; $69d1, 64 bytes (palettes)
-VarsityTeamChartTilemap2:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartTilemap2.bin" ; $6a11, 317 bytes
-VarsityTeamChartAttrmap2:
-	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartAttrmap2.bin" ; $6b4e, 143 bytes
+VarsityTeamChartDoublesTilemap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartDoublesTilemap.bin" ; $6a11, 317 bytes
+VarsityTeamChartDoublesAttrmap:
+	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartDoublesAttrmap.bin" ; $6b4e, 143 bytes
 VarsityTeamChartNameBoxTiles:
 	INCBIN "data/engine/menus/dictionary/lz_VarsityTeamChartNameBoxTiles.bin" ; $6bdd, 38 bytes
 MugshotTiles:

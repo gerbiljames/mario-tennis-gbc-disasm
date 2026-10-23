@@ -379,12 +379,12 @@ CountCharGridEntries:
 	ld hl, wCharGridEntries ; $61ae
 	ld c, $00 ; $61b1
 	ld b, $00 ; $61b3
-.countPageLoop:
+.countMarioCastLoop:
 	ld a, [hl] ; $61b5
 	cp $ff ; $61b6
-	jr z, .nextPage ; $61b8
+	jr z, .nextMarioCast ; $61b8
 	inc b ; $61ba
-.nextPage:
+.nextMarioCast:
 	inc hl ; $61bb
 	inc hl ; $61bc
 	inc hl ; $61bd
@@ -393,18 +393,18 @@ CountCharGridEntries:
 	inc a ; $61c0
 	ld c, a ; $61c1
 	cp $09 ; $61c2
-	jr nz, .countPageLoop ; $61c4
+	jr nz, .countMarioCastLoop ; $61c4
 	ld a, b ; $61c6
 	ld [wCharGridMarioCastCount], a ; $61c7
 	ret ; $61ca
-SetCharGridPageCount:
+SetCharGridRowCount:
 	ld a, [wCharGridEntryCount] ; $61cb
-	ld hl, CharGridPageCountTable ; $61ce
+	ld hl, CharGridRowCountTable ; $61ce
 	add_hl_a ; $61d1
 	ld a, [hl] ; $61d6
-	ld [wCharGridPageCount], a ; $61d7
+	ld [wCharGridRowCount], a ; $61d7
 	ret ; $61da
-CharGridPageCountTable:
+CharGridRowCountTable:
 	; $61db, 28 bytes (bytes:16)
 	db $05, $05, $05, $05, $05, $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x00
 	db $09, $09, $09, $0a, $0a, $0a, $0b, $0b, $0b, $0c, $0c, $0c ; 0x10

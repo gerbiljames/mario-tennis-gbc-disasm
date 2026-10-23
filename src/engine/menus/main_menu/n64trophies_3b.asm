@@ -404,10 +404,10 @@ LoadN64TnmtDataRecords:
 	ld a, [hl] ; $4e20
 	ld b, a ; $4e21
 	and $01 ; $4e22
-	jr nz, .maskSet ; $4e24
+	jr nz, .entry14Unlocked ; $4e24
 	ld a, $10 ; $4e26
 	ld [wN64TnmtRowChars + 14], a ; $4e28
-.maskSet:
+.entry14Unlocked:
 	ld a, b ; $4e2b
 	and $02 ; $4e2c
 	jr nz, .buildN64TnmtTrophyGrid ; $4e2e

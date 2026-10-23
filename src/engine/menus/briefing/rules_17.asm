@@ -15,7 +15,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	sla a ; $6e1a
 	sla a ; $6e1c
 	ld c, a ; $6e1e
-	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnimTable ; $6e1f
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_PlayerPosTable ; $6e1f
 	ld a, [hl] ; $6e26
 	inc hl ; $6e27
 	inc hl ; $6e28
@@ -83,7 +83,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6eae
 	ld [wBriefingDownArrowY], a ; $6eaf
 	ret ; $6eb2
-ReturnDownLineBriefing_AdvanceAnimTable:
+ReturnDownLineBriefing_AdvanceAnim_PlayerPosTable:
 	; $6eb3, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1

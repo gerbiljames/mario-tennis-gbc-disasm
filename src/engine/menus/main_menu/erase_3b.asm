@@ -32,7 +32,7 @@ RunEraseSavedDataSelect:
 	ld a, [wMenuSlideDirection] ; $6c92
 	ld b, a ; $6c95
 	call SavedDataPickerSlideIn ; $6c96
-	farcall InitMenuBgScroll ; $6c99
+	farcall InitMenuTitleScroller ; $6c99
 	ld b, $01 ; $6c9c
 	ld c, $01 ; $6c9e
 	farcall LoadMenuSpritePalettePair ; $6ca0
@@ -372,7 +372,7 @@ SavedDataPickerBottomToTopColumnMap:
 	db $00 ; $6f59
 	db $02 ; $6f5a
 EraseSavedDataCursorSpriteTask:
-	farcall TickMenuBgScroll ; $6f5b
+	farcall TickMenuTitleScroller ; $6f5b
 	ld c, $03 ; $6f5e
 	call GetMenuCursorIndex_3b ; $6f60
 	push af ; $6f63

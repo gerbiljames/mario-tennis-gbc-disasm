@@ -214,7 +214,7 @@ MatchResultTilemapScripts_16:
 	result_copy 0, 0, 0, 20, 20
 	result_copy 12, 16, 25, 26, 7
 	tilemap_copy_end
-AdvanceResultScreenTimer:
+ScrollResultRasterBandTask:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp WINLOSE_LOSE ; $4ca0
 	jr nz, .scroll ; $4ca2

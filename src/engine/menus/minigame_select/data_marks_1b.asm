@@ -54,12 +54,12 @@ DrawMinigameDataScrollArrows:
 	ret ; $76ed
 DrawMinigameDataMarks:
 	call ClearMinigameMarkColumns ; $76ee
-	call DrawMinigameClearMarks ; $76f1
-	call DrawMinigameStarMarks ; $76f4
+	call DrawMinigameLevel1Marks ; $76f1
+	call DrawMinigameLevel2Marks ; $76f4
 	call DrawTwoOnOneChallengeMark ; $76f7
 	ret ; $76fa
-DrawMinigameClearMarks:
-	ld hl, wMinigameDataClearFlags ; $76fb
+DrawMinigameLevel1Marks:
+	ld hl, wMinigameDataLevel1Cleared ; $76fb
 	ld a, [wMenuCursorY] ; $76fe
 	add_hl_a ; $7701
 	ld c, $00 ; $7706
@@ -76,8 +76,8 @@ DrawMinigameClearMarks:
 	cp $05 ; $7714
 	jr nz, .loop ; $7716
 	ret ; $7718
-DrawMinigameStarMarks:
-	ld hl, wMinigameDataStarFlags ; $7719
+DrawMinigameLevel2Marks:
+	ld hl, wMinigameDataLevel2Cleared ; $7719
 	ld a, [wMenuCursorY] ; $771c
 	add_hl_a ; $771f
 	ld c, $00 ; $7724
@@ -85,9 +85,9 @@ DrawMinigameStarMarks:
 	ld b, $01 ; $7726
 	ld a, [hl+] ; $7728
 	or a ; $7729
-	jr z, .noStar ; $772a
+	jr z, .notCleared ; $772a
 	call DrawMinigameMarkTile ; $772c
-.noStar:
+.notCleared:
 	ld a, c ; $772f
 	inc a ; $7730
 	ld c, a ; $7731
@@ -195,7 +195,7 @@ ClearMinigameMarkColumns:
 	farcall CopyTilemapRect ; $77f7
 	ret ; $77fa
 DrawChallengeColumnHeader:
-	ld hl, wMinigameDataStarFlags ; $77fb
+	ld hl, wMinigameDataLevel2Cleared ; $77fb
 	ld c, $00 ; $77fe
 .loop:
 	ld a, [hl+] ; $7800
@@ -238,13 +238,13 @@ DrawMinigameHighScoreNumber:
 	ret z ; $784a
 	ld a, b ; $784b
 	add a ; $784c
-	ld hl, MinigameHighScoreNumberTable ; $784d
+	ld hl, MinigameHighScoreNumberPositions ; $784d
 	add_hl_a ; $7850
 	ld a, [hl+] ; $7855
 	ld d, [hl] ; $7856
 	ld e, a ; $7857
 	ld a, c ; $7858
-	ld hl, wMinigameDataStarFlags ; $7859
+	ld hl, wMinigameDataLevel2Cleared ; $7859
 	add_hl_a ; $785c
 	ld a, [hl] ; $7861
 	or a ; $7862
@@ -258,7 +258,7 @@ DrawMinigameHighScoreNumber:
 	ld l, a ; $7870
 	farcall DrawDecimalNumberSprites_39 ; $7871
 	ret ; $7874
-MinigameHighScoreNumberTable:
+MinigameHighScoreNumberPositions:
 	; $7875, 10 bytes (bytes:10)
 	db $35, $84, $45, $84, $55, $84, $65, $84, $75, $84 ; 0x00
 CheckMinigameDataScrollable:
@@ -282,10 +282,10 @@ CheckMinigameDataScrollable:
 	ret ; $7895
 CompactMinigameDataRows:
 	push_wram_bank WRAM_SCREEN ; $7896
-	ld a, [wMinigameDataClearFlags + 5] ; $789f
-	ld [wMinigameDataClearFlags + 4], a ; $78a2
-	ld a, [wMinigameDataStarFlags + 5] ; $78a5
-	ld [wMinigameDataStarFlags + 4], a ; $78a8
+	ld a, [wMinigameDataLevel1Cleared + 5] ; $789f
+	ld [wMinigameDataLevel1Cleared + 4], a ; $78a2
+	ld a, [wMinigameDataLevel2Cleared + 5] ; $78a5
+	ld [wMinigameDataLevel2Cleared + 4], a ; $78a8
 	ld a, [wMinigameDataHighScores + 10] ; $78ab
 	ld [wMinigameDataHighScores + 8], a ; $78ae
 	ld a, [wMinigameDataHighScores + 11] ; $78b1

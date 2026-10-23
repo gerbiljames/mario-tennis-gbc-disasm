@@ -17,7 +17,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4e5a
 	ld a, [wCharDataLevels + TRAINSTAT_SPIN] ; $4e5c
 	ld l, a ; $4e5f
-	ld a, [wCharDataLevelPreview] ; $4e60
+	ld a, [wCharDataHideLevelPreview] ; $4e60
 	or a ; $4e63
 	jr nz, .spinDigits ; $4e64
 	ld a, [wCharDataPage] ; $4e66
@@ -67,7 +67,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4eb3
 	ld a, [wCharDataLevels + TRAINSTAT_POWER] ; $4eb5
 	ld l, a ; $4eb8
-	ld a, [wCharDataLevelPreview] ; $4eb9
+	ld a, [wCharDataHideLevelPreview] ; $4eb9
 	or a ; $4ebc
 	jr nz, .powerDigits ; $4ebd
 	ld a, [wCharDataPage] ; $4ebf
@@ -116,7 +116,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4f10
 	ld a, [wCharDataLevels + TRAINSTAT_CONTROL] ; $4f12
 	ld l, a ; $4f15
-	ld a, [wCharDataLevelPreview] ; $4f16
+	ld a, [wCharDataHideLevelPreview] ; $4f16
 	or a ; $4f19
 	jr nz, .controlDigits ; $4f1a
 	ld a, [wCharDataPage] ; $4f1c
@@ -165,7 +165,7 @@ DrawStatValueSprites:
 	ld b, $0e ; $4f6d
 	ld a, [wCharDataLevels + TRAINSTAT_SPEED] ; $4f6f
 	ld l, a ; $4f72
-	ld a, [wCharDataLevelPreview] ; $4f73
+	ld a, [wCharDataHideLevelPreview] ; $4f73
 	or a ; $4f76
 	jr nz, .speedDigits ; $4f77
 	ld a, [wCharDataPage] ; $4f79
@@ -409,8 +409,8 @@ CharDataScreen_InputLoop:
 	wram_bank WRAM_SCENE ; $51d4
 	ld a, $01 ; $51da
 	ld [wCharDataRevealStep], a ; $51dc
-	ld [wCharDataConfirmState], a ; $51df
-	ld [wCharDataLevelPreview], a ; $51e2
+	ld [wCharDataConfirmCursor], a ; $51df
+	ld [wCharDataHideLevelPreview], a ; $51e2
 	call FlushCharDataTilemaps ; $51e5
 	call RestoreCharDataScreen ; $51e8
 	call DrawCharStatRows ; $51eb
@@ -480,13 +480,13 @@ CharDataScreen_InputLoop:
 	and PADF_UP | PADF_DOWN ; $52a1
 	jr z, .confirmLoop ; $52a3
 	sound SFX_MENU_MOVE ; $52a5
-	ld a, [wCharDataConfirmState] ; $52a7
+	ld a, [wCharDataConfirmCursor] ; $52a7
 	xor $01 ; $52aa
-	ld [wCharDataConfirmState], a ; $52ac
+	ld [wCharDataConfirmCursor], a ; $52ac
 	jr .confirmLoop ; $52af
 .confirmA:
 	wram_bank WRAM_SCENE ; $52b1
-	ld a, [wCharDataConfirmState] ; $52b7
+	ld a, [wCharDataConfirmCursor] ; $52b7
 	or a ; $52ba
 	jr nz, .cancel ; $52bb
 	sound SFX_MENU_SELECT ; $52bd
@@ -555,7 +555,7 @@ CharDataScreen_InputLoop:
 	call FlushCharDataTilemaps ; $537c
 	wram_bank WRAM_SCENE ; $537f
 	xor a ; $5385
-	ld [wCharDataLevelPreview], a ; $5386
+	ld [wCharDataHideLevelPreview], a ; $5386
 	ld [wCharDataRevealStep], a ; $5389
 	call RestoreCharDataScreen ; $538c
 	call DrawCharStatsAndFlush ; $538f

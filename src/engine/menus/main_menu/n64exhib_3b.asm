@@ -8,10 +8,10 @@ BuildN64ExhibColumnList:
 	ld a, [hl] ; $4758
 	ld b, a ; $4759
 	and $01 ; $475a
-	jr nz, .maskSet ; $475c
+	jr nz, .entry14Unlocked ; $475c
 	ld a, $10 ; $475e
 	ld [wChartColumnList + 14], a ; $4760
-.maskSet:
+.entry14Unlocked:
 	ld a, b ; $4763
 	and $02 ; $4764
 	jr nz, .buildN64ExhibResultsGrid ; $4766
@@ -362,11 +362,11 @@ BuildTrophiesScreen:
 	ld a, [wTrophySecondSetPresent] ; $49ee
 	or a ; $49f1
 	jr nz, .bothSets ; $49f2
-	ld c, SCREENASSET_N64Tournament2 ; $49f4
+	ld c, SCREENASSET_N64TournamentOneSet ; $49f4
 	farcall LoadScreenAssetRecord ; $49f6
 	jr .drawTrophiesWonRows ; $49f9
 .bothSets:
-	ld c, SCREENASSET_N64Tournament ; $49fb
+	ld c, SCREENASSET_N64TournamentTwoSets ; $49fb
 	farcall LoadScreenAssetRecord ; $49fd
 .drawTrophiesWonRows:
 	wram_bank WRAM_SCREEN ; $4a00

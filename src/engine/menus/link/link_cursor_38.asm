@@ -135,7 +135,7 @@ InitLinkMatchCharsFromSelection:
 	ld c, MATCHREC_P1_PARTNER ; $6adb
 	farcall InitMatchRecordFromCharId ; $6add
 .p1SlotsDone:
-	jr .applySettings ; $6ae0
+	jr .done ; $6ae0
 .p2Slots:
 	ld a, [wCharSelectSlotChars + 2] ; $6ae2
 	cp CHAR_NONE ; $6ae5
@@ -160,7 +160,7 @@ InitLinkMatchCharsFromSelection:
 .slot4:
 	ld a, [wCharSelectSlotChars + 3] ; $6b07
 	cp CHAR_NONE ; $6b0a
-	jr z, .applySettings ; $6b0c
+	jr z, .done ; $6b0c
 	cp CHAR_STORY_MAIN ; $6b0e
 	jr c, .slot4Roster ; $6b10
 	ld c, a ; $6b12
@@ -173,12 +173,12 @@ InitLinkMatchCharsFromSelection:
 	ld b, a ; $6b1e
 	ld c, MATCHREC_P2_PARTNER ; $6b1f
 	farcall InitMatchRecordFromCharId ; $6b21
-	jr .applySettings ; $6b24
+	jr .done ; $6b24
 .slot4Roster:
 	ld b, a ; $6b26
 	ld c, MATCHREC_P2_PARTNER ; $6b27
 	farcall InitMatchRecordFromCharId ; $6b29
-.applySettings:
+.done:
 	pop_wram_bank ; $6b2c
 	ret ; $6b31
 Unused_38_LinkCpuDifficultyDebugLoop:

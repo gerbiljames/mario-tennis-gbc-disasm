@@ -52,12 +52,12 @@ MugshotGfxWario_1b:
 	INCBIN "data/engine/menus/ranking/lz_MugshotGfxWario_1b.bin" ; $4999, 162 bytes
 MugshotGfxPeach_1b:
 	INCBIN "data/engine/menus/ranking/lz_MugshotGfxPeach_1b.bin" ; $4a3b, 153 bytes
-MugshotGfxStorySlot1_1b:
-	INCBIN "data/engine/menus/ranking/lz_MugshotGfxStorySlot1_1b.bin" ; $4ad4, 110 bytes
-MugshotGfxStorySlot2_1b:
-	INCBIN "data/engine/menus/ranking/lz_MugshotGfxStorySlot2_1b.bin" ; $4b42, 147 bytes
-MugshotGfxStorySlot3_1b:
-	INCBIN "data/engine/menus/ranking/lz_MugshotGfxStorySlot3_1b.bin" ; $4bd5, 153 bytes
+MugshotGfxEmptySlot1_1b:
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxEmptySlot1_1b.bin" ; $4ad4, 110 bytes
+MugshotGfxEmptySlot2_1b:
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxEmptySlot2_1b.bin" ; $4b42, 147 bytes
+MugshotGfxEmptySlot3_1b:
+	INCBIN "data/engine/menus/ranking/lz_MugshotGfxEmptySlot3_1b.bin" ; $4bd5, 153 bytes
 MugshotGfxPlaceholder_1b:
 	INCBIN "data/engine/menus/ranking/lz_MugshotGfxPlaceholder_1b.bin" ; $4c6e, 126 bytes
 CharMugshotGfxPointers:
@@ -125,10 +125,10 @@ CharMugshotGfxPointers:
 	dw MugshotGfxPlaceholder_1b, .unused ; $3c no character
 	dw MugshotGfxPlaceholder_1b, .unused ; $3d no character
 	dw MugshotGfxPlaceholder_1b, .unused ; $3e no character
-	dw MugshotGfxPlaceholder_1b, .unused ; $3f story hero (remapped to $40 + save slot)
-	dw MugshotGfxStorySlot1_1b, .unusedAlt ; $40 story hero, save slot 1
-	dw MugshotGfxStorySlot2_1b, .unusedAlt ; $41 story hero, save slot 2
-	dw MugshotGfxStorySlot3_1b, .unusedAlt ; $42 story hero, save slot 3
+	dw MugshotGfxPlaceholder_1b, .unused ; $3f CHAR_EMPTY_SLOT (remapped to $40 + save slot)
+	dw MugshotGfxEmptySlot1_1b, .unusedAlt ; $40 empty save slot 1
+	dw MugshotGfxEmptySlot2_1b, .unusedAlt ; $41 empty save slot 2
+	dw MugshotGfxEmptySlot3_1b, .unusedAlt ; $42 empty save slot 3
 .unused:
 	dw $6400, $00ff
 .unusedAlt:

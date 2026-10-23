@@ -174,10 +174,10 @@ Unused_16_StubRet:
 DecompressResultPortrait:
 	ld a, c ; $60c0
 	or a ; $60c1
-	jr z, .compare ; $60c2
+	jr z, .neutralPose ; $60c2
 	call DecompressWinLosePortraitVariant ; $60c4
 	ret ; $60c7
-.compare:
+.neutralPose:
 	cp $20 ; $60c8
 	jr c, .decompressCharacterPortrait ; $60ca
 	ld a, b ; $60cc

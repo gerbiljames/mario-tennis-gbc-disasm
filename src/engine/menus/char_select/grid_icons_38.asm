@@ -22,7 +22,7 @@ CharPlayTypeTable:
 	db $00, $00, $00, $00, $04, $01, $02, $02, $00, $04, $00, $03, $02, $02, $01, $04 ; 0x00
 	db $02, $04, $00, $03, $05, $05, $05, $02, $00, $04, $02, $01, $04, $00, $00, $01 ; 0x10
 DrawCharGridHandednessLabel:
-	ld a, [wCharGridPage] ; $591b
+	ld a, [wCharGridTopRow] ; $591b
 	cp $02 ; $591e
 	jr nc, .setLabelAttrs ; $5920
 	ld a, [wCharGridHandedness] ; $5922
@@ -152,7 +152,7 @@ WriteSlotIconTiles:
 InitCharGridState:
 	push_wram_bank WRAM_SCREEN ; $5a1b
 	ld a, $00 ; $5a24
-	ld [wCharGridPage], a ; $5a26
+	ld [wCharGridTopRow], a ; $5a26
 	ASSERT CHARSELECT_RUNNING == 0
 	xor a ; $5a29
 	ld [wCharSelectExitCode], a ; $5a2a
@@ -185,7 +185,7 @@ InitCharGridState:
 	call CompactRosterGridEntries ; $5a6d
 	call CompactMarioCastGridEntries ; $5a70
 	call CountCharGridEntries ; $5a73
-	call SetCharGridPageCount ; $5a76
+	call SetCharGridRowCount ; $5a76
 	call BuildVisiblePageSpriteList ; $5a79
 	pop_wram_bank ; $5a7c
 	ret ; $5a81

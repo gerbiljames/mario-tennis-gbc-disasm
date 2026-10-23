@@ -52,16 +52,16 @@ DataPtr_ExhibitionRecordsPalettes:
 	dw ExhibitionRecordsPalettes ; $4032
 DataPtr_N64TournamentTiles:
 	dw N64TournamentTiles ; $4034
-DataPtr_N64TournamentTilemap:
-	dw N64TournamentTilemap ; $4036
-DataPtr_N64TournamentAttrmap:
-	dw N64TournamentAttrmap ; $4038
+DataPtr_N64TournamentTwoSetsTilemap:
+	dw N64TournamentTwoSetsTilemap ; $4036
+DataPtr_N64TournamentTwoSetsAttrmap:
+	dw N64TournamentTwoSetsAttrmap ; $4038
 DataPtr_N64TournamentPalettes:
 	dw N64TournamentPalettes ; $403a
-DataPtr_N64TournamentTilemap2:
-	dw N64TournamentTilemap2 ; $403c
-DataPtr_N64TournamentAttrmap2:
-	dw N64TournamentAttrmap2 ; $403e
+DataPtr_N64TournamentOneSetTilemap:
+	dw N64TournamentOneSetTilemap ; $403c
+DataPtr_N64TournamentOneSetAttrmap:
+	dw N64TournamentOneSetAttrmap ; $403e
 DataPtr_WarningScreenTiles:
 	dw WarningScreenTiles ; $4040
 DataPtr_WarningScreenTilemap:
@@ -118,16 +118,16 @@ ExhibitionRecordsPalettes:
 	INCLUDE "data/gfx/ExhibitionRecordsPalettes.asm" ; $63bf, 64 bytes (palettes)
 N64TournamentTiles:
 	INCBIN "data/gfx/lz_N64TournamentTiles.bin" ; $63ff, 1650 bytes
-N64TournamentTilemap:
-	INCBIN "data/gfx/lz_N64TournamentTilemap.bin" ; $6a71, 268 bytes
-N64TournamentAttrmap:
-	INCBIN "data/gfx/lz_N64TournamentAttrmap.bin" ; $6b7d, 121 bytes
+N64TournamentTwoSetsTilemap:
+	INCBIN "data/gfx/lz_N64TournamentTwoSetsTilemap.bin" ; $6a71, 268 bytes
+N64TournamentTwoSetsAttrmap:
+	INCBIN "data/gfx/lz_N64TournamentTwoSetsAttrmap.bin" ; $6b7d, 121 bytes
 N64TournamentPalettes:
 	INCLUDE "data/gfx/N64TournamentPalettes.asm" ; $6bf6, 64 bytes (palettes)
-N64TournamentTilemap2:
-	INCBIN "data/gfx/lz_N64TournamentTilemap2.bin" ; $6c36, 268 bytes
-N64TournamentAttrmap2:
-	INCBIN "data/gfx/lz_N64TournamentAttrmap2.bin" ; $6d42, 123 bytes
+N64TournamentOneSetTilemap:
+	INCBIN "data/gfx/lz_N64TournamentOneSetTilemap.bin" ; $6c36, 268 bytes
+N64TournamentOneSetAttrmap:
+	INCBIN "data/gfx/lz_N64TournamentOneSetAttrmap.bin" ; $6d42, 123 bytes
 WarningScreenTiles:
 	INCBIN "data/gfx/lz_WarningScreenTiles.bin" ; $6dbd, 631 bytes
 WarningScreenTilemap:

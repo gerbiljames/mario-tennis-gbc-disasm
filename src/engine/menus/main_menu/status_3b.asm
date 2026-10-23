@@ -175,7 +175,7 @@ RunStatusSourceSelect:
 	res B_IE_TIMER, [hl] ; $67a6
 	call BuildSaveSlotSummaries ; $67a8
 	call LoadStatusSourceGfx ; $67ab
-	farcall InitMenuBgScroll ; $67ae
+	farcall InitMenuTitleScroller ; $67ae
 	ld b, $01 ; $67b1
 	ld c, $01 ; $67b3
 	farcall LoadMenuSpritePalettePair ; $67b5
@@ -424,7 +424,7 @@ Unused_3b_SlideMenuPanel_2:
 	jr nz, .slideBackLoop ; $69d9
 	ret ; $69db
 StatusSourceCursorSpriteTask:
-	farcall TickMenuBgScroll ; $69dc
+	farcall TickMenuTitleScroller ; $69dc
 	ld c, $03 ; $69df
 	call GetMenuCursorIndex_3b ; $69e1
 	push af ; $69e4

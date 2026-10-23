@@ -1,5 +1,5 @@
-TickMenuBgScrollTask_1b:
-	farcall TickMenuBgScroll ; $72a4
+TickMenuTitleScrollerTask_1b:
+	farcall TickMenuTitleScroller ; $72a4
 	ret ; $72a7
 DrawMarioCharDataTypeSelectCursor:
 	ld c, $02 ; $72a8
@@ -102,7 +102,7 @@ DrawMarioCharDataTypeDescription:
 	ld c, $03 ; $738c
 	call GetMenuCursorIndex_1b ; $738e
 	ld b, a ; $7391
-	ld hl, MarioCharDataTypeDescriptionTable ; $7392
+	ld hl, MarioCharDataTypeDescriptionDests ; $7392
 	add a ; $7395
 	add_hl_a ; $7396
 	ld a, [hl+] ; $739b
@@ -115,7 +115,7 @@ DrawMarioCharDataTypeDescription:
 	farcall RenderTextToBuffer64 ; $73a9
 	pop_wram_bank ; $73ac
 	ret ; $73b1
-MarioCharDataTypeDescriptionTable:
+MarioCharDataTypeDescriptionDests:
 	; $73b2, 4 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
@@ -238,25 +238,25 @@ ScrollMinigameDataList:
 	ret ; $74c9
 LoadMinigameDataState:
 	farcall BuildMarioCastUnlockMask ; $74ca
-	call LoadMinigameClearFlags ; $74cd
-	call LoadMinigameStarFlags ; $74d0
+	call LoadMinigameLevel1ClearFlags ; $74cd
+	call LoadMinigameLevel2ClearFlags ; $74d0
 	call LoadMinigameHighScores ; $74d3
 	call CheckMinigameDataScrollable ; $74d6
 	jr nz, .done ; $74d9
 	call CompactMinigameDataRows ; $74db
 .done:
 	ret ; $74de
-LoadMinigameClearFlags:
-	ld hl, wMinigameDataClearFlags ; $74df
+LoadMinigameLevel1ClearFlags:
+	ld hl, wMinigameDataLevel1Cleared ; $74df
 	ld bc, $0009 ; $74e2
 	call ClearBytes ; $74e5
 	ld c, $00 ; $74e8
-	ld hl, wMinigameDataClearFlags ; $74ea
+	ld hl, wMinigameDataLevel1Cleared ; $74ea
 .loop:
 	ld a, c ; $74ed
 	add a ; $74ee
 	push hl ; $74ef
-	ld hl, MinigameClearFlagsTable ; $74f0
+	ld hl, MinigameLevel1ClearFlagIds ; $74f0
 	add_hl_a ; $74f3
 	ld a, [hl+] ; $74f8
 	ld d, [hl] ; $74f9
@@ -274,7 +274,7 @@ LoadMinigameClearFlags:
 	cp $09 ; $7508
 	jr nz, .loop ; $750a
 	ret ; $750c
-MinigameClearFlagsTable:
+MinigameLevel1ClearFlagIds:
 	; $750d, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; record 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; record 1
@@ -285,17 +285,17 @@ MinigameClearFlagsTable:
 	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; record 6
 	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; record 7
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; record 8
-LoadMinigameStarFlags:
-	ld hl, wMinigameDataStarFlags ; $751f
-	ld bc, wMinigameDataStarFlags_SIZE ; $7522
+LoadMinigameLevel2ClearFlags:
+	ld hl, wMinigameDataLevel2Cleared ; $751f
+	ld bc, wMinigameDataLevel2Cleared_SIZE ; $7522
 	call ClearBytes ; $7525
 	ld c, $00 ; $7528
-	ld hl, wMinigameDataStarFlags ; $752a
+	ld hl, wMinigameDataLevel2Cleared ; $752a
 .loop:
 	ld a, c ; $752d
 	add a ; $752e
 	push hl ; $752f
-	ld hl, MinigameStarFlagsTable ; $7530
+	ld hl, MinigameLevel2ClearFlagIds ; $7530
 	add_hl_a ; $7533
 	ld a, [hl+] ; $7538
 	ld d, [hl] ; $7539
@@ -313,7 +313,7 @@ LoadMinigameStarFlags:
 	cp $09 ; $7548
 	jr nz, .loop ; $754a
 	ret ; $754c
-MinigameStarFlagsTable:
+MinigameLevel2ClearFlagIds:
 	; $754d, 18 bytes (save_flag_ids)
 	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; record 0
 	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; record 1

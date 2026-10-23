@@ -105,8 +105,8 @@ wDataScreenScrollRow:: db
 NEXTU
 ; minigame data screen (bank $1b, $73dd-$78bd)
 	ds 9
-; [7 of 9 bytes] One byte per list row, nonzero when that row's minigame has its level-1 clear flag. LoadMinigameClearFlags clears nine bytes and fills them from MinigameClearFlagsTable (the SAVEFLAG_CLEARED_*_1 of Boo Blast through Two-On-One) through TestSaveFlag; DrawMinigameClearMarks indexes it by wMenuCursorY for the five visible rows. The array runs to $d811, into the $d810 block
-wMinigameDataClearFlags:: ds 7
+; [7 of 9 bytes] One byte per list row, nonzero when that row's minigame has its level-1 clear flag. LoadMinigameLevel1ClearFlags clears nine bytes and fills them from MinigameLevel1ClearFlagIds (the SAVEFLAG_CLEARED_*_1 of Boo Blast through Two-On-One) through TestSaveFlag; DrawMinigameLevel1Marks indexes it by wMenuCursorY for the five visible rows. The array runs to $d811, into the $d810 block
+wMinigameDataLevel1Cleared:: ds 7
 NEXTU
 ; trophies screen (bank $3b, $49e5-$4cfa)
 ; [6 bytes] One trophy row: six cells, each 0 or 1, one icon per set cell drawn by DrawTrophyRowPair (three, a gap, three). DecodeTrophyCounts fills the first three from wN64TrophyCounts bits 0-1 and the next three from bits 4-5, one 1 per unit of the 0-3 count. The main character's first set, drawn beside wStoryMainChar
@@ -221,9 +221,9 @@ NEXTU
 ; character-select grid (banks $38/$10)
 	ds 1
 ; [8-bit] Character-select grid: top row shown (wMenuCursorX/Y address the cell within it); MoveCharGridCursor* wrap it and rebuild the page sprite list
-wCharGridPage:: db
-; [8-bit] Character-select grid: number of pages, looked up from wCharGridEntryCount through CharGridPageCountTable
-wCharGridPageCount:: db
+wCharGridTopRow:: db
+; [8-bit] Character-select grid: number of rows (one more per three entries past six), looked up from wCharGridEntryCount through CharGridRowCountTable
+wCharGridRowCount:: db
 ; [8-bit] Character-select mode id stored on entry by RunExhibitionCharSelectScreen / RunLinkCharSelectScreen; picks the slot-box table and starting slot (3 and 5 start at slot 2)
 wCharSelectMode:: db
 ; [8-bit] Character-select: player slot being chosen (0-3); $04 means every slot is filled and the screen shows the wait banner
@@ -234,8 +234,8 @@ wCharSelectExitCode:: db
 wCharSelectSlotChars:: ds 4
 ; [8-bit] Character-select grid: roster entries present from $da24 on (CountCharGridEntries)
 wCharGridEntryCount:: db
-; [8-bit] Character-select grid: wCharGridPage as MoveCharGridCursorLeft/Right wrap to the roster pages. Write-only
-wCharGridPrevPage:: db
+; [8-bit] Character-select grid: wCharGridTopRow as MoveCharGridCursorLeft/Right jump between the Mario-cast and roster rows. Write-only
+wCharGridPrevTopRow:: db
 ; [8-bit] Set to 1 by BuildCharGridFromUnlockFlags as it builds the grid; nothing reads it
 wCharGridBuilt:: db
 ; [8-bit] Link character-select: slot the remote player is choosing; Advance/RetreatRemotePlayerSlot step it
@@ -283,9 +283,9 @@ wStatsPrintBuffer:: ds 8
 NEXTU
 ; minigame data screen (bank $1b, $73dd-$78bd)
 	ds 2
-; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag; LoadMinigameStarFlags fills it from MinigameStarFlagsTable (the SAVEFLAG_CLEARED_*_2 run) as wMinigameDataClearFlags is filled. DrawMinigameStarMarks draws mark 1 per set row, DrawChallengeColumnHeader draws the column-14 header if any is set, and DrawMinigameHighScoreNumber shows no number for a row without a star
-wMinigameDataStarFlags:: ds 9
-	export_size wMinigameDataStarFlags
+; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag; LoadMinigameLevel2ClearFlags fills it from MinigameLevel2ClearFlagIds (the SAVEFLAG_CLEARED_*_2 run) as wMinigameDataLevel1Cleared is filled. DrawMinigameLevel2Marks draws mark 1 per set row, DrawChallengeColumnHeader draws the column-14 header if any is set, and DrawMinigameHighScoreNumber shows no number for a row without it
+wMinigameDataLevel2Cleared:: ds 9
+	export_size wMinigameDataLevel2Cleared
 ; [8 x 16-bit] The number shown on each of the first eight rows: LoadMinigameHighScores reads record row + 2 of the block $38 minigame records with ReadMinigameRecord (value in wMinigameRecordValue, WRAM bank $07) and stores it at row * 2. Row 8 has no record; its slot is wMinigameDataTwoOnOneCleared
 wMinigameDataHighScores:: ds 16
 ; [2 bytes] Row 8's slot, used as a flag pair: LoadMinigameHighScores writes $01 to both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set (after clearing all 18 bytes from $d81b). DrawTwoOnOneChallengeMark draws mark 2 for it when the list is scrolled to the bottom (wMenuCursorY = 4)

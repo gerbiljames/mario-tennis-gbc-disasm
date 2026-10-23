@@ -97,10 +97,10 @@ CharViewerScreenTilemap:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenTilemap.bin" ; $777d, 180 bytes
 CharViewerScreenAttrmap:
 	INCBIN "data/engine/menus/char_data/lz_CharViewerScreenAttrmap.bin" ; $7831, 129 bytes
-CharViewerGridTilemap0:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
-CharViewerGridTilemap1:
-	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
+CharViewerGridTilemap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerGridTilemap.bin" ; $78b2, 58 bytes
+CharViewerGridAttrmap:
+	INCBIN "data/engine/menus/char_data/lz_CharViewerGridAttrmap.bin" ; $78ec, 67 bytes
 CharViewerCursorAnimIds:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
@@ -144,25 +144,25 @@ RunCharDataConfirmScreen:
 	call WaitFadeEnd ; $79ba
 	wram_bank WRAM_SCENE ; $79bd
 	ld a, $01 ; $79c3
-	ld [wCharDataConfirmState], a ; $79c5
+	ld [wCharDataConfirmCursor], a ; $79c5
 .loop:
 	call DrawConfirmSelectionCursor_1a ; $79c8
 	call AdvanceFrame ; $79cb
 	ldh a, [hInputRisingEdge] ; $79ce
 	bit PADB_A, a ; $79d0
-	jr nz, .step ; $79d2
+	jr nz, .pressedA ; $79d2
 	bit PADB_B, a ; $79d4
 	jr nz, .cancel ; $79d6
 	and PADF_UP | PADF_DOWN ; $79d8
 	jr z, .loop ; $79da
 	sound SFX_MENU_MOVE ; $79dc
-	ld a, [wCharDataConfirmState] ; $79de
+	ld a, [wCharDataConfirmCursor] ; $79de
 	xor $01 ; $79e1
-	ld [wCharDataConfirmState], a ; $79e3
+	ld [wCharDataConfirmCursor], a ; $79e3
 	jr .loop ; $79e6
-.step:
+.pressedA:
 	wram_bank WRAM_SCENE ; $79e8
-	ld a, [wCharDataConfirmState] ; $79ee
+	ld a, [wCharDataConfirmCursor] ; $79ee
 	or a ; $79f1
 	jr nz, .cancel ; $79f2
 	sound SFX_MENU_SELECT ; $79f4
@@ -170,7 +170,7 @@ RunCharDataConfirmScreen:
 .cancel:
 	wram_bank WRAM_SCENE ; $79f8
 	ld a, $01 ; $79fe
-	ld [wCharDataConfirmState], a ; $7a00
+	ld [wCharDataConfirmCursor], a ; $7a00
 	sound SFX_MENU_CANCEL ; $7a03
 .beginFadeOut:
 	script_fade_out 16 ; $7a05
@@ -178,7 +178,7 @@ RunCharDataConfirmScreen:
 	farcall StopCharDataSummarySpritesTask ; $7a0d
 	farcall StopCharDataScreenAnimTask ; $7a10
 	wram_bank WRAM_SCENE ; $7a13
-	ld a, [wCharDataConfirmState] ; $7a19
+	ld a, [wCharDataConfirmCursor] ; $7a19
 	ret ; $7a1c
 	twin draw_confirm_selection_cursor, 1a ; $7a1d DrawConfirmSelectionCursor_1a
 CopyBank1ToBank3BufferAlt:
@@ -377,7 +377,7 @@ ComputeCharDataEquipmentDeltas:
 	ld [wCharDataEquipmentDeltas + CHARSTAT_STOP], a ; $7b7e
 	farcall RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
-CharDataScreen_LoadGfx:
+LoadStatArrowGfx:
 	ld hl, StatArrowObjPalettes ; $7b85
 	ld_obj_pals de, 4, 2 ; $7b88
 	call LoadPaletteShadow ; $7b8b

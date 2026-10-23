@@ -192,7 +192,7 @@ SweepExpBarMarkerLeft:
 	wram_bank WRAM_SCENE ; $7105
 	ld a, [wExpBarMarkerX] ; $710b
 	cp $a8 ; $710e
-	jr z, .checkStoryCharacterSlot ; $7110
+	jr z, .restartAtBarEnd ; $7110
 	sub b ; $7112
 	ld [wExpBarMarkerX], a ; $7113
 	cp $18 ; $7116
@@ -200,15 +200,15 @@ SweepExpBarMarkerLeft:
 	ld a, $a8 ; $7119
 	ld [wExpBarMarkerX], a ; $711b
 	ret ; $711e
-.checkStoryCharacterSlot:
+.restartAtBarEnd:
 	ld a, [wStoryCharacterSlot] ; $711f
 	or a ; $7122
 	jr nz, .partner ; $7123
 	ld a, [wExpScreenCharStats + EXPSTAT_BAR] ; $7125
-	jr .getExpBarSweepStep ; $7128
+	jr .setMarkerX ; $7128
 .partner:
 	ld a, [wExpScreenCharStats + EXPSTAT_SIZE + EXPSTAT_BAR] ; $712a
-.getExpBarSweepStep:
+.setMarkerX:
 	add $36 ; $712d
 	ld [wExpBarMarkerX], a ; $712f
 	ret ; $7132

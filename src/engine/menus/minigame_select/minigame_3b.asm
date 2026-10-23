@@ -16,17 +16,17 @@ RunMinigameSelect:
 	wram_bank WRAM_SCREEN ; $6201
 	call CheckMinigameGridExpanded ; $6207
 	or a ; $620a
-	jr nz, .checkMenuSlideDirection ; $620b
+	jr nz, .slideInGrid9 ; $620b
 	ld a, [wMenuSlideDirection] ; $620d
 	ld b, a ; $6210
 	call MinigameSelectSlideIn6 ; $6211
-	jr .initMenuBgScroll ; $6214
-.checkMenuSlideDirection:
+	jr .initMenuTitleScroller ; $6214
+.slideInGrid9:
 	ld a, [wMenuSlideDirection] ; $6216
 	ld b, a ; $6219
 	call MinigameSelectSlideIn9 ; $621a
-.initMenuBgScroll:
-	farcall InitMenuBgScroll ; $621d
+.initMenuTitleScroller:
+	farcall InitMenuTitleScroller ; $621d
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
 	farcall LoadMenuSpritePalettePair ; $6224
@@ -310,7 +310,7 @@ MinigameSelectSlideOut9:
 	jr nz, .slideBackLoop ; $646a
 	ret ; $646c
 MinigameSelectCursorSpriteTask:
-	farcall TickMenuBgScroll ; $646d
+	farcall TickMenuTitleScroller ; $646d
 	ld c, $03 ; $6470
 	call GetMenuCursorIndex_3b ; $6472
 	push af ; $6475
@@ -449,16 +449,16 @@ RenderMinigameNameText:
 	ld c, a ; $65ac
 	call GetUnlockedMarioCastCharAtGridSlot ; $65ad
 	cp CHAR_BALL_MACHINE ; $65b0
-	jr nz, .restore ; $65b2
+	jr nz, .unlocked ; $65b2
 	pop af ; $65b4
 	ld hl, Text_MinigameCantPlayYet ; $65b5
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $65b8
 	jr .renderTextToBuffer64 ; $65bb
-.restore:
+.unlocked:
 	pop af ; $65bd
 	ld b, a ; $65be
 	add a ; $65bf
-	ld hl, RenderMinigameNameTextTable ; $65c0
+	ld hl, MinigameNameTextDests ; $65c0
 	add_hl_a ; $65c3
 	ld a, [hl+] ; $65c8
 	ld d, [hl] ; $65c9
@@ -473,7 +473,7 @@ RenderMinigameNameText:
 	ld c, $20 ; $65d4
 	farcall RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
-RenderMinigameNameTextTable:
+MinigameNameTextDests:
 	; $65da, 18 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
@@ -534,7 +534,7 @@ FillMinigameSelectCell:
 	ld h, $0d ; $6647
 .fill:
 	push hl ; $6649
-	ld hl, FillMinigameSelectCellTable ; $664a
+	ld hl, MinigameSelectCellAttrDests ; $664a
 	ld a, e ; $664d
 	add a ; $664e
 	add_hl_a ; $664f
@@ -548,7 +548,7 @@ FillMinigameSelectCell:
 	pop bc ; $665d
 	pop af ; $665e
 	ret ; $665f
-FillMinigameSelectCellTable:
+MinigameSelectCellAttrDests:
 	; $6660, 18 bytes (ram_ptrs:3)
 	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; record 0
 	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 8 ; record 1

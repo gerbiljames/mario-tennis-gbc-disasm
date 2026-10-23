@@ -15,7 +15,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	sla a ; $5728
 	sla a ; $572a
 	ld c, a ; $572c
-	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnimTable ; $572d
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_PlayerPosTable ; $572d
 	ld a, [hl] ; $5734
 	inc hl ; $5735
 	inc hl ; $5736
@@ -77,7 +77,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld b, [hl] ; $57b6
 	call DrawDiagramTargetOverlay ; $57b7
 	ret ; $57ba
-ServeToTargetsBriefing_AdvanceAnimTable:
+ServeToTargetsBriefing_AdvanceAnim_PlayerPosTable:
 	; $57bb, 16 bytes (records:2)
 	dw $0054 ; record 0
 	dw $0044 ; record 1
@@ -222,7 +222,7 @@ DrillBriefing_SpinServe:
 	frame_task UpdateAnimatedTilesTask_17 ; $59bb
 	ld a, $00 ; $59c3
 	ld [wBriefingAnimStep], a ; $59c5
-	call SpinServeBriefing_AdvanceAnim2 ; $59c8
+	call SpinServeBriefing_AdvanceTopspinAnim ; $59c8
 	frame_task DrawBriefingPlayerSprite ; $59cb
 	frame_task DrawBriefingBallSprite ; $59d3
 	frame_task DrawBriefingDiagonalArrow ; $59db
@@ -240,7 +240,7 @@ DrillBriefing_SpinServe:
 	ld [wBriefingAnimTimer], a ; $5a0b
 	ld [wBriefingAnimStep], a ; $5a0e
 .animSwingCaption:
-	call SpinServeBriefing_TickAnim2 ; $5a11
+	call SpinServeBriefing_TickTopspinAnim ; $5a11
 	ld c, BRIEFPROMPT_SHOW ; $5a14
 	call AdvanceFrameCheckInput ; $5a16
 	and a ; $5a19
@@ -285,7 +285,7 @@ SpinServeBriefing_AdvanceAnim:
 	sla a ; $5a8e
 	sla a ; $5a90
 	ld c, a ; $5a92
-	ld_hl_indexed SpinServeBriefing_AdvanceAnimTable ; $5a93
+	ld_hl_indexed SpinServeBriefing_PlayerPosTable ; $5a93
 	ld a, [hl] ; $5a9a
 	inc hl ; $5a9b
 	inc hl ; $5a9c
@@ -347,14 +347,14 @@ SpinServeBriefing_AdvanceAnim:
 	ld b, [hl] ; $5b1c
 	call DrawDiagramTargetOverlay ; $5b1d
 	ret ; $5b20
-SpinServeBriefing_TickAnim2:
+SpinServeBriefing_TickTopspinAnim:
 	ld a, [wBriefingAnimTimer] ; $5b21
 	inc a ; $5b24
 	ld [wBriefingAnimTimer], a ; $5b25
 	cp $78 ; $5b28
-	jr nc, SpinServeBriefing_AdvanceAnim2 ; $5b2a
+	jr nc, SpinServeBriefing_AdvanceTopspinAnim ; $5b2a
 	ret ; $5b2c
-SpinServeBriefing_AdvanceAnim2:
+SpinServeBriefing_AdvanceTopspinAnim:
 	xor a ; $5b2d
 	ld [wBriefingAnimTimer], a ; $5b2e
 	ld a, [wBriefingAnimStep] ; $5b31
@@ -363,7 +363,7 @@ SpinServeBriefing_AdvanceAnim2:
 	sla a ; $5b39
 	sla a ; $5b3b
 	ld c, a ; $5b3d
-	ld_hl_indexed SpinServeBriefing_AdvanceAnimTable ; $5b3e
+	ld_hl_indexed SpinServeBriefing_PlayerPosTable ; $5b3e
 	ld a, [hl] ; $5b45
 	inc hl ; $5b46
 	inc hl ; $5b47
@@ -373,7 +373,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b4d
 	ld [wBriefingPlayerY], a ; $5b4e
 	ld a, c ; $5b51
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_BallPosTable ; $5b52
+	ld_hl_indexed SpinServeBriefing_AdvanceTopspinAnim_BallPosTable ; $5b52
 	ld a, [hl] ; $5b59
 	inc hl ; $5b5a
 	inc hl ; $5b5b
@@ -387,7 +387,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, [hl] ; $5b6f
 	ld [wBriefingDiagArrowDir], a ; $5b70
 	ld a, c ; $5b73
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_DiagArrowPosTable ; $5b74
+	ld_hl_indexed SpinServeBriefing_AdvanceTopspinAnim_DiagArrowPosTable ; $5b74
 	ld a, [hl] ; $5b7b
 	inc hl ; $5b7c
 	inc hl ; $5b7d
@@ -397,11 +397,11 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b83
 	ld [wBriefingDiagArrowY], a ; $5b84
 	ld a, [wBriefingAnimStep] ; $5b87
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_LeftArrowUnflippedTable ; $5b8a
+	ld_hl_indexed SpinServeBriefing_AdvanceTopspinAnim_LeftArrowUnflippedTable ; $5b8a
 	ld a, [hl] ; $5b91
 	ld [wBriefingLeftArrowUnflipped], a ; $5b92
 	ld a, c ; $5b95
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_LeftArrowPosTable ; $5b96
+	ld_hl_indexed SpinServeBriefing_AdvanceTopspinAnim_LeftArrowPosTable ; $5b96
 	ld a, [hl] ; $5b9d
 	inc hl ; $5b9e
 	inc hl ; $5b9f
@@ -418,11 +418,11 @@ SpinServeBriefing_AdvanceAnim2:
 .rightHanded:
 	ld a, [wBriefingAnimStep] ; $5bb3
 	add b ; $5bb6
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_CmdPromptTable ; $5bb7
+	ld_hl_indexed SpinServeBriefing_AdvanceTopspinAnim_CmdPromptTable ; $5bb7
 	ld a, [hl] ; $5bbe
 	ld [wBriefingCmdPrompt], a ; $5bbf
 	ld a, c ; $5bc2
-	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable ; $5bc3
+	ld_hl_indexed SpinServeBriefing_AdvanceTopspinAnim_CmdPromptPosTable ; $5bc3
 	ld a, [hl] ; $5bca
 	inc hl ; $5bcb
 	inc hl ; $5bcc
@@ -436,7 +436,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld b, [hl] ; $5be0
 	call DrawDiagramTargetOverlay ; $5be1
 	ret ; $5be4
-SpinServeBriefing_AdvanceAnimTable:
+SpinServeBriefing_PlayerPosTable:
 	; $5be5, 16 bytes (records:2)
 	dw $0052 ; record 0
 	dw $0044 ; record 1
@@ -460,16 +460,16 @@ SpinServeBriefing_TargetOverlayTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_TargetOverlayTable.asm" ; $5c2d, 4 bytes (bytes:4)
 SpinServeBriefing_AdvanceAnim_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim_BracketPosTable.asm" ; $5c31, 16 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_BallPosTable.asm" ; $5c41, 8 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_DiagArrowPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_DiagArrowPosTable.asm" ; $5c49, 8 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_LeftArrowUnflippedTable:
+SpinServeBriefing_AdvanceTopspinAnim_BallPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceTopspinAnim_BallPosTable.asm" ; $5c41, 8 bytes (words:2)
+SpinServeBriefing_AdvanceTopspinAnim_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceTopspinAnim_DiagArrowPosTable.asm" ; $5c49, 8 bytes (words:2)
+SpinServeBriefing_AdvanceTopspinAnim_LeftArrowUnflippedTable:
 	db $01 ; $5c51
 	db $00 ; $5c52
-SpinServeBriefing_AdvanceAnim2_LeftArrowPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_LeftArrowPosTable.asm" ; $5c53, 8 bytes (words:2)
-SpinServeBriefing_AdvanceAnim2_CmdPromptTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_CmdPromptTable.asm" ; $5c5b, 4 bytes (bytes:4)
-SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable:
-	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceAnim2_CmdPromptPosTable.asm" ; $5c5f, 8 bytes (words:2)
+SpinServeBriefing_AdvanceTopspinAnim_LeftArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceTopspinAnim_LeftArrowPosTable.asm" ; $5c53, 8 bytes (words:2)
+SpinServeBriefing_AdvanceTopspinAnim_CmdPromptTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceTopspinAnim_CmdPromptTable.asm" ; $5c5b, 4 bytes (bytes:4)
+SpinServeBriefing_AdvanceTopspinAnim_CmdPromptPosTable:
+	INCLUDE "data/engine/menus/briefing/SpinServeBriefing_AdvanceTopspinAnim_CmdPromptPosTable.asm" ; $5c5f, 8 bytes (words:2)

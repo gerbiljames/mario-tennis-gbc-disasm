@@ -205,7 +205,7 @@ ShowExpDistributionScreen:
 	call ClearSpriteQueue ; $68c1
 	pop hl ; $68c4
 	call InitLevelUpScreenState ; $68c5
-	farcall LoadCharDataScreenGraphics ; $68c8
+	farcall LoadExpDistributionScreenGraphics ; $68c8
 	call BuildExpDistributionScreen ; $68cb
 	call EnableLCD ; $68ce
 	call AdvanceFrame ; $68d1

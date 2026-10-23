@@ -43,7 +43,7 @@ RunMinigameLevelSelect2:
 	ld a, [wMenuSlideDirection] ; $6e41
 	ld b, a ; $6e44
 	farcall OpenChoiceTabPanel ; $6e45
-	farcall InitMenuBgScroll ; $6e48
+	farcall InitMenuTitleScroller ; $6e48
 	ld b, $01 ; $6e4b
 	ld c, $01 ; $6e4d
 	farcall LoadMenuSpritePalettePair ; $6e4f
@@ -171,7 +171,7 @@ SelectPanelAttrRectTable:
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 3 ; record 0
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 12 ; record 1
 DrawMinigameLevelSelect2Cursor:
-	farcall TickMenuBgScroll ; $6f62
+	farcall TickMenuTitleScroller ; $6f62
 	ld c, $03 ; $6f65
 	call GetMenuCursorIndex_1b ; $6f67
 	push af ; $6f6a
@@ -230,7 +230,7 @@ RunMinigameLevelSelect3:
 	ld a, [wMenuSlideDirection] ; $6fe2
 	ld b, a ; $6fe5
 	farcall ThreeChoiceSlideIn ; $6fe6
-	farcall InitMenuBgScroll ; $6fe9
+	farcall InitMenuTitleScroller ; $6fe9
 	ld b, $01 ; $6fec
 	ld c, $01 ; $6fee
 	farcall LoadMenuSpritePalettePair ; $6ff0
@@ -348,7 +348,7 @@ SelectPanelAttrRect3Table:
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 7 ; record 1
 	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 13 ; record 2
 DrawMinigameLevelSelect3Cursor:
-	farcall TickMenuBgScroll ; $70ed
+	farcall TickMenuTitleScroller ; $70ed
 	ld c, $03 ; $70f0
 	call GetMenuCursorIndex_1b ; $70f2
 	push af ; $70f5
@@ -407,7 +407,7 @@ RunMarioCharDataTypeSelect:
 	ld a, [wMenuSlideDirection] ; $716d
 	ld b, a ; $7170
 	farcall OpenChoiceTabPanel ; $7171
-	farcall InitMenuBgScroll ; $7174
+	farcall InitMenuTitleScroller ; $7174
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
 	farcall LoadMenuSpritePalettePair ; $717b
@@ -415,7 +415,7 @@ RunMarioCharDataTypeSelect:
 	ld c, a ; $7181
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
-	frame_task TickMenuBgScrollTask_1b ; $7187
+	frame_task TickMenuTitleScrollerTask_1b ; $7187
 	frame_task DrawMarioCharDataTypeSelectCursor ; $718f
 	call RedrawMarioCharDataTypeSelect ; $7197
 	wram_bank WRAM_SCREEN ; $719a
@@ -470,7 +470,7 @@ LoadMarioCharDataTypeSelectGfx:
 .loop:
 	ld a, c ; $7215
 	add a ; $7216
-	ld hl, MarioCharDataTypeLabelTilePtrs ; $7217
+	ld hl, MarioCharDataTypeIconTilePtrs ; $7217
 	add_hl_a ; $721a
 	ld a, [hl+] ; $721f
 	ld h, [hl] ; $7220
@@ -485,7 +485,7 @@ LoadMarioCharDataTypeSelectGfx:
 	pop de ; $722d
 	pop bc ; $722e
 	pop af ; $722f
-	ld hl, MarioCharDataTypeLabelTileVramDests ; $7230
+	ld hl, MarioCharDataTypeIconVramDests ; $7230
 	ld a, c ; $7233
 	add a ; $7234
 	add_hl_a ; $7235
@@ -535,11 +535,11 @@ LoadMarioCharDataTypeSelectGfx:
 	farcall LoadIndexedPalette ; $7291
 	pop_wram_bank ; $7294
 	ret ; $7299
-MarioCharDataTypeLabelTilePtrs:
+MarioCharDataTypeIconTilePtrs:
 	; $729a, 2 slot words
 	dslot DataPtr_ExhibitionIconTiles ; record 0
 	dslot DataPtr_MushroomIconTiles ; record 1
-MarioCharDataTypeLabelTileVramDests:
+MarioCharDataTypeIconVramDests:
 	; $729e, 6 bytes (records:2)
 	dw vTiles1 + VRAM_BANK1 ; record 0
 	dw vTiles1 tile $10 + VRAM_BANK1 ; record 1

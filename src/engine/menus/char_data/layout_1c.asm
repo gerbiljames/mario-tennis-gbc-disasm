@@ -183,8 +183,8 @@ SetupCharDataScreen:
 	ld a, $03 ; $55d6
 	ld [wCharDataRevealStep], a ; $55d8
 	ld a, $01 ; $55db
-	ld [wCharDataConfirmState], a ; $55dd
-	ld [wCharDataLevelPreview], a ; $55e0
+	ld [wCharDataConfirmCursor], a ; $55dd
+	ld [wCharDataHideLevelPreview], a ; $55e0
 	call EnableLCD ; $55e3
 	call AdvanceFrame ; $55e6
 	frame_task DrawStatValueSprites ; $55e9

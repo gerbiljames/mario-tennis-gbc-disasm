@@ -93,7 +93,7 @@ RunN64RecordTypeSelect:
 	ld hl, rIE ; $71b2
 	res B_IE_TIMER, [hl] ; $71b5
 	call LoadN64RecordTypeGfx ; $71b7
-	farcall InitMenuBgScroll ; $71ba
+	farcall InitMenuTitleScroller ; $71ba
 	ld b, $01 ; $71bd
 	ld c, $01 ; $71bf
 	farcall LoadMenuSpritePalettePair ; $71c1
@@ -299,7 +299,7 @@ ThreeChoiceSlideOut:
 	jr nz, .slideBackLoop ; $734c
 	ret ; $734e
 N64RecordTypeCursorSpriteTask:
-	farcall TickMenuBgScroll ; $734f
+	farcall TickMenuTitleScroller ; $734f
 	ld c, $03 ; $7352
 	call GetMenuCursorIndex_3b ; $7354
 	push af ; $7357
@@ -476,7 +476,7 @@ RunGbDataItemSelect:
 	ld a, [wMenuSlideDirection] ; $74cf
 	ld b, a ; $74d2
 	farcall OpenCourtSelect4Panel ; $74d3
-	farcall InitMenuBgScroll ; $74d6
+	farcall InitMenuTitleScroller ; $74d6
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
 	farcall LoadMenuSpritePalettePair ; $74dd
@@ -710,7 +710,7 @@ DrawGbDataItemCaption:
 	pop_wram_bank ; $76e4
 	ret ; $76e9
 GbDataItemCursorSpriteTask:
-	farcall TickMenuBgScroll ; $76ea
+	farcall TickMenuTitleScroller ; $76ea
 	ld c, $02 ; $76ed
 	call GetMenuCursorIndex_3b ; $76ef
 	push af ; $76f2

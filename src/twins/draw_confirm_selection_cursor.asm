@@ -2,7 +2,7 @@
 
 DrawConfirmSelectionCursor_{TWIN}:
 	wram_bank WRAM_SCENE
-	ld a, [wCharDataConfirmState]
+	ld a, [wCharDataConfirmCursor]
 	or a
 	jr nz, .secondOption
 	ld_oam bc, OAM_BANK1 | 7, $d4

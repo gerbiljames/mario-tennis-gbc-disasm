@@ -271,7 +271,7 @@ wMinigameTargetGrid:: ds 24
 	export_size wMinigameTargetGrid
 NEXTU
 ; character select and new game (bank $1b)
-; [8-bit] Cursor column carried in and out of RunCharacterSelectScreen, so the new-game roster loop resumes where the player left off
+; [8-bit] Cursor column RunNewGameSetup passes to RunCharacterSelectScreen in d and stores back from d after it; that routine never reads d/e and returns them clobbered, so nothing uses the value
 wCharSelectCursorCol:: db
 ; [8-bit] Cursor row, the same
 wCharSelectCursorRow:: db

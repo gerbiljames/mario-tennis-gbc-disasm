@@ -167,9 +167,9 @@ ProcessMatchRewards:
 	cp GAMEMODE_LINK_MATCH ; $6552
 	jp z, .linkMatch ; $6554
 	cp GAMEMODE_TENNIS_MACHINE ; $6557
-	jp z, .checkMatchExitRequest ; $6559
+	jp z, .machineOrWallPractice ; $6559
 	cp GAMEMODE_WALL_PRACTICE ; $655c
-	jp z, .checkMatchExitRequest ; $655e
+	jp z, .machineOrWallPractice ; $655e
 	cp GAMEMODE_DREAM_MATCH ; $6561
 	jp z, .computeMatchStatsReward ; $6563
 	cp GAMEMODE_EXHIBITION ; $6566
@@ -184,7 +184,7 @@ ProcessMatchRewards:
 	ld l, e ; $657d
 	call SetRewardGameFlag ; $657e
 	jp .runExpDistributionFlow ; $6581
-.checkMatchExitRequest:
+.machineOrWallPractice:
 	ld a, [wMatchExitRequest] ; $6584
 	and a ; $6587
 	jp nz, .runExpDistributionFlow ; $6588

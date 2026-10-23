@@ -57,7 +57,7 @@ RunLinkMatchFormatMenu:
 	ld a, [wMenuSlideDirection] ; $44e9
 	ld b, a ; $44ec
 	call OpenLinkMatchFormatPanel ; $44ed
-	farcall InitMenuBgScroll ; $44f0
+	farcall InitMenuTitleScroller ; $44f0
 	ld b, $01 ; $44f3
 	ld c, $01 ; $44f5
 	farcall LoadMenuSpritePalettePair ; $44f7
@@ -78,7 +78,7 @@ RunLinkMatchFormatMenu:
 	res B_IE_TIMER, [hl] ; $451d
 	wram_bank WRAM_SCREEN ; $451f
 .loop:
-	farcall TickMenuBgScroll ; $4525
+	farcall TickMenuTitleScroller ; $4525
 	ldh a, [hLinkInput] ; $4528
 	ld [wMenuInputPressed], a ; $452a
 	call HandleLinkMatchFormatToggleInput ; $452d

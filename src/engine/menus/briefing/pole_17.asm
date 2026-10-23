@@ -22,7 +22,7 @@ DrillBriefing_ServeThroughPoles:
 	frame_task UpdateAnimatedTilesTask_17 ; $5cb3
 	ld a, $03 ; $5cbb
 	ld [wBriefingAnimStep], a ; $5cbd
-	call PoleServeBriefing_AdvanceAnim2 ; $5cc0
+	call PoleServeBriefing_AdvancePoleAnim ; $5cc0
 	frame_task DrawBriefingPlayerSprite ; $5cc3
 	frame_task DrawBriefingPointingHand ; $5ccb
 	frame_task CycleDiagramTargetPalette ; $5cd3
@@ -37,11 +37,11 @@ DrillBriefing_ServeThroughPoles:
 	ld [wBriefingAnimTimer], a ; $5cf4
 	ld [wBriefingAnimStep], a ; $5cf7
 .animSecondCaption:
-	call PoleServeBriefing_TickAnim2 ; $5cfa
+	call PoleServeBriefing_TickPoleAnim ; $5cfa
 	ld a, [wBriefingAnimStep] ; $5cfd
 	sla a ; $5d00
 	sla a ; $5d02
-	ld_hl_indexed DrillBriefing_ServeThroughPolesTable ; $5d04
+	ld_hl_indexed PoleServeBriefing_PlayerPosTable ; $5d04
 	ld a, [hl] ; $5d0b
 	inc hl ; $5d0c
 	inc hl ; $5d0d
@@ -58,7 +58,7 @@ DrillBriefing_ServeThroughPoles:
 	frame_task UpdateAnimatedTilesTask_17 ; $5d23
 	ld a, $03 ; $5d2b
 	ld [wBriefingAnimStep], a ; $5d2d
-	call PoleServeBriefing_AdvanceAnim2 ; $5d30
+	call PoleServeBriefing_AdvancePoleAnim ; $5d30
 	frame_task DrawBriefingPlayerSprite ; $5d33
 	ld a, $00 ; $5d3b
 	ld [wBriefingHandUnflipped], a ; $5d3d
@@ -81,7 +81,7 @@ DrillBriefing_ServeThroughPoles:
 	frame_task UpdateAnimatedTilesTask_17 ; $5d80
 	ld a, $03 ; $5d88
 	ld [wBriefingAnimStep], a ; $5d8a
-	call PoleServeBriefing_AdvanceAnim2 ; $5d8d
+	call PoleServeBriefing_AdvancePoleAnim ; $5d8d
 	frame_task DrawBriefingPlayerSprite ; $5d90
 	frame_task DrawBriefingPoleSprites ; $5d98
 	frame_task CycleDiagramTargetPalette ; $5da0
@@ -93,7 +93,7 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, Text_BriefPoleServeDownLineTiming ; $5dba
 	call DrawBriefingCaption ; $5dbd
 .animLastCaption:
-	call PoleServeBriefing_TickAnim2 ; $5dc0
+	call PoleServeBriefing_TickPoleAnim ; $5dc0
 	ld c, BRIEFPROMPT_NONE ; $5dc3
 	call AdvanceFrameCheckInput ; $5dc5
 	and a ; $5dc8
@@ -117,7 +117,7 @@ PoleServeBriefing_AdvanceAnim:
 	sla a ; $5de9
 	sla a ; $5deb
 	ld c, a ; $5ded
-	ld_hl_indexed DrillBriefing_ServeThroughPolesTable ; $5dee
+	ld_hl_indexed PoleServeBriefing_PlayerPosTable ; $5dee
 	ld a, [hl] ; $5df5
 	inc hl ; $5df6
 	inc hl ; $5df7
@@ -169,14 +169,14 @@ PoleServeBriefing_AdvanceAnim:
 	ld b, [hl] ; $5e63
 	call DrawDiagramTargetOverlay ; $5e64
 	ret ; $5e67
-PoleServeBriefing_TickAnim2:
+PoleServeBriefing_TickPoleAnim:
 	ld a, [wBriefingAnimTimer] ; $5e68
 	inc a ; $5e6b
 	ld [wBriefingAnimTimer], a ; $5e6c
 	cp $78 ; $5e6f
-	jr nc, PoleServeBriefing_AdvanceAnim2 ; $5e71
+	jr nc, PoleServeBriefing_AdvancePoleAnim ; $5e71
 	ret ; $5e73
-PoleServeBriefing_AdvanceAnim2:
+PoleServeBriefing_AdvancePoleAnim:
 	xor a ; $5e74
 	ld [wBriefingAnimTimer], a ; $5e75
 	ld a, [wBriefingAnimStep] ; $5e78
@@ -186,7 +186,7 @@ PoleServeBriefing_AdvanceAnim2:
 	sla a ; $5e81
 	sla a ; $5e83
 	ld c, a ; $5e85
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_PlayerPosTable ; $5e86
+	ld_hl_indexed PoleServeBriefing_AdvancePoleAnim_PlayerPosTable ; $5e86
 	ld a, [hl] ; $5e8d
 	inc hl ; $5e8e
 	inc hl ; $5e8f
@@ -196,7 +196,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5e95
 	ld [wBriefingPlayerY], a ; $5e96
 	ld a, c ; $5e99
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_BracketPosTable ; $5e9a
+	ld_hl_indexed PoleServeBriefing_AdvancePoleAnim_BracketPosTable ; $5e9a
 	ld a, [hl] ; $5ea1
 	inc hl ; $5ea2
 	inc hl ; $5ea3
@@ -206,7 +206,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ea9
 	ld [wBriefingBracketY], a ; $5eaa
 	ld a, c ; $5ead
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_PolePosTable ; $5eae
+	ld_hl_indexed PoleServeBriefing_AdvancePoleAnim_PolePosTable ; $5eae
 	ld a, [hl] ; $5eb5
 	inc hl ; $5eb6
 	inc hl ; $5eb7
@@ -216,7 +216,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ebd
 	ld [wBriefingPole1Y], a ; $5ebe
 	ld a, c ; $5ec1
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_PolePosTable ; $5ec2
+	ld_hl_indexed PoleServeBriefing_AdvancePoleAnim_PolePosTable ; $5ec2
 	ld a, [hl] ; $5ec9
 	add $08 ; $5eca
 	ld [wBriefingPole2X], a ; $5ecc
@@ -227,7 +227,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, [hl] ; $5edf
 	ld [wBriefingHandUnflipped], a ; $5ee0
 	ld a, c ; $5ee3
-	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_HandPosTable ; $5ee4
+	ld_hl_indexed PoleServeBriefing_AdvancePoleAnim_HandPosTable ; $5ee4
 	ld a, [hl] ; $5eeb
 	inc hl ; $5eec
 	inc hl ; $5eed
@@ -241,7 +241,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld b, [hl] ; $5f01
 	call DrawDiagramTargetOverlay ; $5f02
 	ret ; $5f05
-DrillBriefing_ServeThroughPolesTable:
+PoleServeBriefing_PlayerPosTable:
 	; $5f06, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -251,26 +251,26 @@ DrillBriefing_ServeThroughPolesTable:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-PoleServeBriefing_AdvanceAnim2_PlayerPosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm" ; $5f16, 16 bytes (words:2)
+PoleServeBriefing_AdvancePoleAnim_PlayerPosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvancePoleAnim_PlayerPosTable.asm" ; $5f16, 16 bytes (words:2)
 PoleServeBriefing_AdvanceAnim_BallPosTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5f26, 16 bytes (words:2)
 PoleServeBriefing_HandUnflippedTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_HandUnflippedTable.asm" ; $5f36, 4 bytes (bytes:4)
 PoleServeBriefing_AdvanceAnim_HandPosTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_HandPosTable.asm" ; $5f3a, 16 bytes (words:2)
-PoleServeBriefing_AdvanceAnim2_HandPosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_HandPosTable.asm" ; $5f4a, 16 bytes (words:2)
+PoleServeBriefing_AdvancePoleAnim_HandPosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvancePoleAnim_HandPosTable.asm" ; $5f4a, 16 bytes (words:2)
 PoleServeBriefing_AdvanceAnim_DiagArrowDirTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_DiagArrowDirTable.asm" ; $5f5a, 4 bytes (bytes:4)
 PoleServeBriefing_AdvanceAnim_DiagArrowPosTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim_DiagArrowPosTable.asm" ; $5f5e, 16 bytes (words:2)
 PoleServeBriefing_TargetOverlayTable:
 	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_TargetOverlayTable.asm" ; $5f6e, 4 bytes (bytes:4)
-PoleServeBriefing_AdvanceAnim2_BracketPosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_BracketPosTable.asm" ; $5f72, 16 bytes (words:2)
-PoleServeBriefing_AdvanceAnim2_PolePosTable:
-	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvanceAnim2_PolePosTable.asm" ; $5f82, 16 bytes (words:2)
+PoleServeBriefing_AdvancePoleAnim_BracketPosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvancePoleAnim_BracketPosTable.asm" ; $5f72, 16 bytes (words:2)
+PoleServeBriefing_AdvancePoleAnim_PolePosTable:
+	INCLUDE "data/engine/menus/briefing/PoleServeBriefing_AdvancePoleAnim_PolePosTable.asm" ; $5f82, 16 bytes (words:2)
 DrillBriefing_ServeAndVolley:
 	ld a, $52 ; $5f92
 	ld [wBriefingPlayerX], a ; $5f94
@@ -373,7 +373,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	sla a ; $60f9
 	sla a ; $60fb
 	ld c, a ; $60fd
-	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnimTable ; $60fe
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_PlayerPosTable ; $60fe
 	ld a, [hl] ; $6105
 	inc hl ; $6106
 	inc hl ; $6107
@@ -455,7 +455,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $61af
 	ld [wBriefingDownArrowY], a ; $61b0
 	ret ; $61b3
-ServeAndVolleyBriefing_AdvanceAnimTable:
+ServeAndVolleyBriefing_AdvanceAnim_PlayerPosTable:
 	; $61b4, 16 bytes (records:2)
 	dw $0052 ; record 0
 	dw $0030 ; record 1

@@ -121,12 +121,12 @@ CheckLinkSelectionComplete:
 .checkSlots:
 	ld a, [wCharSelectSlot] ; $6705
 	cp CHARSELECTSLOT_BACKED_OUT ; $6708
-	jr z, .allChosen ; $670a
+	jr z, .backedOut ; $670a
 	ld a, [wCharSelectRemoteSlot] ; $670c
 	cp CHARSELECTSLOT_BACKED_OUT ; $670f
-	jr z, .allChosen ; $6711
+	jr z, .backedOut ; $6711
 	jr .done ; $6713
-.allChosen:
+.backedOut:
 	ld a, CHARSELECT_CANCELLED ; $6715
 	ld [wCharSelectExitCode], a ; $6717
 .done:
@@ -188,7 +188,7 @@ ConfirmLinkGridSelection:
 	ldh [hLinkRemoteInput], a ; $6787
 	jr .reject ; $6789
 .readEntry:
-	ld a, [wCharGridPage] ; $678b
+	ld a, [wCharGridTopRow] ; $678b
 	ld c, a ; $678e
 	ld a, [wMenuCursorX] ; $678f
 	ld d, a ; $6792
@@ -258,7 +258,7 @@ CancelLinkGridSelection:
 	ld [wMenuCursorY], a ; $6823
 	ld [wMenuCursor2X], a ; $6826
 	ld [wMenuCursor2Y], a ; $6829
-	ld [wCharGridPage], a ; $682c
+	ld [wCharGridTopRow], a ; $682c
 	ldh [hLinkCursorPage], a ; $682f
 	call RefreshCharInfoPanel ; $6831
 .clearTaken:

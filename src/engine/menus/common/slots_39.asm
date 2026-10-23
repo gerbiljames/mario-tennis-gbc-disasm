@@ -16,9 +16,9 @@
 	farptr FlushWram3MapRows ; $401e
 	farptr RestoreMenuBgAndDrawPanel ; $4020
 	farptr ResetScreenAndTextWindows ; $4022
-	farptr InitMenuBgScroll ; $4024
+	farptr InitMenuTitleScroller ; $4024
 	farptr LoadMenuSpritePalettePair ; $4026
-	farptr TickMenuBgScroll ; $4028
+	farptr TickMenuTitleScroller ; $4028
 	farptr LoadMenuFontTiles ; $402a
 	farptr QueueWram3MapToVRAMAlias1, QueueWram3MapToVRAM ; $402c
 	farptr QueueWram3MapToVRAMAlias2, QueueWram3MapToVRAM ; $402e

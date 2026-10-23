@@ -54,20 +54,20 @@ wMatchFormatSets:: db
 ; [8-bit] Menu transition direction (1 = forward into a submenu, 0 = back), passed to the *SlideIn/*SlideOut transitions
 wMenuSlideDirection:: db
 
-; [2 bytes] Y of each scrolling menu-background lane; TickMenuBgScroll decrements both and wraps $b0 back to $a0
-wMenuBgScrollY:: dw
+; [2 bytes] Y of each lane of the scrolling menu title (two copies of the title sprite row); TickMenuTitleScroller decrements both and wraps $b0 back to $a0
+wMenuTitleScrollY:: dw
 
 ; [8-bit] X shared by both lanes (passed in e to QueueSpriteTemplate)
-wMenuBgScrollX:: db
+wMenuTitleScrollX:: db
 
-; [2 bytes] Per-lane tile argument (c) for TickMenuBgScroll_SpriteTemplate
-wMenuBgScrollTile:: dw
+; [2 bytes] Per-lane tile argument (c) for TickMenuTitleScroller_SpriteTemplate
+wMenuTitleScrollTile:: dw
 
-; [2 bytes] Per-lane attribute argument (b) for TickMenuBgScroll_SpriteTemplate
-wMenuBgScrollAttr:: dw
+; [2 bytes] Per-lane attribute argument (b) for TickMenuTitleScroller_SpriteTemplate
+wMenuTitleScrollAttr:: dw
 
-; [8-bit] Which lane TickMenuBgScroll queues this tick; it alternates 0/1
-wMenuBgScrollLane:: db
+; [8-bit] Which lane TickMenuTitleScroller queues this tick; it alternates 0/1
+wMenuTitleScrollLane:: db
 
 ; [8-bit] Cheat-code button presses entered so far; indexes the 32-byte buffer at WRAM bank $01 $d000 (masked to $1f) that UpdateCheatCodeEntry compares with CheatCodeEntryTable. ResetCheatCodeBuffer zeroes both
 wCheatCodeLength:: db
@@ -203,14 +203,14 @@ wCutsceneSpriteAnimFrame:: db
 wCutsceneSpriteAnimTick:: db
 	ds 1
 
-; [8-bit] Idle-animation state of the character-select portrait, cleared with wCharSelectIdleTimer and wCharSelectHandedness and stepped by TickCharSelectIdleAnim when the timer expires
-wCharSelectIdleAnimState:: db
+; [8-bit] Frames the character-select portrait has spent in CHARANIM_IDLE; TickCharSelectIdleAnim swings a forehand each time the low 5 bits wrap to 0
+wCharSelectIdleFrameCount:: db
 
 ; [8-bit] Story character select (bank $38): handedness, 0 = default, 1 = mirrored (left-handed). Cleared on entry, flipped by START (prompt text 30:118 "START: Change Hands"). When set, DrawCharacterSelectChars sets OAM X-flip in wCharSpriteSlot+1 for the four shown characters and DrawCharSelectHandednessMarker uses tile base $00 instead of $02. Stored into the story character record at +$0e
 wCharSelectHandedness:: db
 
-; [8-bit] Frames until the character-select portrait idles: TickCharSelectIdleAnim counts to $0f, switches the character from animation 5 to 7 and restarts
-wCharSelectIdleTimer:: db
+; [8-bit] Idle forehand swings so far: TickCharSelectIdleAnim plays CHARANIM_OVERHEAD on the 15th and restarts the count
+wCharSelectIdleSwingCount:: db
 
 ; [8-bit] Story character select (bank $38): 0 = picking the main character, 1 = the partner; the b argument of RunCharacterSelectScreen. Picks the prompt (30:117 "Pick a Character" / 30:119 "Choose Partner"), mugshots 2/3 and the sprite positions, and the character id = 2 * this + cursor
 wCharSelectIsPartner:: db

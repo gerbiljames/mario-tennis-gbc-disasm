@@ -512,12 +512,12 @@ LoadMinigameLevelSelectGfx:
 	pop_wram_bank ; $6cdf
 	ld a, b ; $6ce4
 	or a ; $6ce5
-	jr z, .noneClearedIcons ; $6ce6
+	jr z, .noneClearedLabel ; $6ce6
 	ld b, TILEBLOCK_Level2LabelGfx ; $6ce8
-	jr .loadIconBlock ; $6cea
-.noneClearedIcons:
+	jr .loadSecondLabel ; $6cea
+.noneClearedLabel:
 	ld b, TILEBLOCK_QuestionMarksLabelGfx ; $6cec
-.loadIconBlock:
+.loadSecondLabel:
 	ld c, QuestionMarksLabelGfx_SIZE / 16 ; $6cee
 	ld de, vTiles0 tile $10 + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
@@ -572,7 +572,7 @@ DrawMinigameLevelDescription:
 	ld c, $03 ; $6d69
 	call GetMenuCursorIndex_1b ; $6d6b
 	ld b, a ; $6d6e
-	ld hl, MinigameLevelDescriptionTable ; $6d6f
+	ld hl, MinigameLevelDescriptionDests ; $6d6f
 	add a ; $6d72
 	add_hl_a ; $6d73
 	ld a, [hl+] ; $6d78
@@ -589,7 +589,7 @@ DrawMinigameLevelDescription:
 	farcall RenderTextToBuffer64 ; $6d86
 	pop_wram_bank ; $6d89
 	ret ; $6d8e
-MinigameLevelDescriptionTable:
+MinigameLevelDescriptionDests:
 	; $6d8f, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1

@@ -237,7 +237,7 @@ Unused_17_ServeAndSmash_DiagArrowPosTable1:
 	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash_DiagArrowPosTable1.asm" ; $6519, 16 bytes (words:2)
 DrillBriefing_ServeAndSmash_BracketPosTable:
 	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash_BracketPosTable.asm" ; $6529, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash2:
+DrillBriefing_DropShot:
 	ld a, $55 ; $6539
 	ld [wBriefingPlayerX], a ; $653b
 	ld a, $44 ; $653e
@@ -396,7 +396,7 @@ DrillBriefing_ServeAndSmash2:
 	sla a ; $6743
 	sla a ; $6745
 	ld c, a ; $6747
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_PlayerPosTable ; $6748
+	ld_hl_indexed DrillBriefing_DropShot_PlayerPosTable ; $6748
 	ld a, [hl] ; $674f
 	inc hl ; $6750
 	inc hl ; $6751
@@ -406,7 +406,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6757
 	ld [wBriefingPlayerY], a ; $6758
 	ld a, c ; $675b
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_OpponentPosTable ; $675c
+	ld_hl_indexed DrillBriefing_DropShot_OpponentPosTable ; $675c
 	ld a, [hl] ; $6763
 	inc hl ; $6764
 	inc hl ; $6765
@@ -416,7 +416,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $676b
 	ld [wBriefingOpponentY], a ; $676c
 	ld a, c ; $676f
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_BracketPosTable ; $6770
+	ld_hl_indexed DrillBriefing_DropShot_BracketPosTable ; $6770
 	ld a, [hl] ; $6777
 	inc hl ; $6778
 	inc hl ; $6779
@@ -426,7 +426,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $677f
 	ld [wBriefingBracketY], a ; $6780
 	ld a, c ; $6783
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_BallPosTable ; $6784
+	ld_hl_indexed DrillBriefing_DropShot_BallPosTable ; $6784
 	ld a, [hl] ; $678b
 	inc hl ; $678c
 	inc hl ; $678d
@@ -436,11 +436,11 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6793
 	ld [wBriefingBallY], a ; $6794
 	ld a, [wBriefingAnimStep] ; $6797
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_DiagArrowDirTable ; $679a
+	ld_hl_indexed DrillBriefing_DropShot_DiagArrowDirTable ; $679a
 	ld a, [hl] ; $67a1
 	ld [wBriefingDiagArrowDir], a ; $67a2
 	ld a, c ; $67a5
-	ld_hl_indexed DrillBriefing_ServeAndSmash2_DiagArrowPosTable ; $67a6
+	ld_hl_indexed DrillBriefing_DropShot_DiagArrowPosTable ; $67a6
 	ld a, [hl] ; $67ad
 	inc hl ; $67ae
 	inc hl ; $67af
@@ -456,26 +456,26 @@ DrillBriefing_ServeAndSmash2:
 	jp z, .loop ; $67bf
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
-DrillBriefing_ServeAndSmash2_PlayerPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_PlayerPosTable.asm" ; $67c6, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash2_OpponentPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_OpponentPosTable.asm" ; $67d6, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash2_BallPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BallPosTable.asm" ; $67e6, 16 bytes (words:2)
-Unused_17_ServeAndSmash2_DiagArrowDirTable0:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowDirTable0.asm" ; $67f6, 4 bytes (bytes:4)
-Unused_17_ServeAndSmash2_DiagArrowPosTable0:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowPosTable0.asm" ; $67fa, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash2_DiagArrowDirTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_DiagArrowDirTable.asm" ; $680a, 4 bytes (bytes:4)
-DrillBriefing_ServeAndSmash2_DiagArrowPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_DiagArrowPosTable.asm" ; $680e, 16 bytes (words:2)
-Unused_17_ServeAndSmash2_DiagArrowDirTable1:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowDirTable1.asm" ; $681e, 4 bytes (bytes:4)
-Unused_17_ServeAndSmash2_DiagArrowPosTable1:
-	INCLUDE "data/engine/menus/briefing/Unused_17_ServeAndSmash2_DiagArrowPosTable1.asm" ; $6822, 16 bytes (words:2)
-DrillBriefing_ServeAndSmash2_BracketPosTable:
-	INCLUDE "data/engine/menus/briefing/DrillBriefing_ServeAndSmash2_BracketPosTable.asm" ; $6832, 16 bytes (words:2)
+DrillBriefing_DropShot_PlayerPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_DropShot_PlayerPosTable.asm" ; $67c6, 16 bytes (words:2)
+DrillBriefing_DropShot_OpponentPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_DropShot_OpponentPosTable.asm" ; $67d6, 16 bytes (words:2)
+DrillBriefing_DropShot_BallPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_DropShot_BallPosTable.asm" ; $67e6, 16 bytes (words:2)
+Unused_17_DropShot_DiagArrowDirTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_DropShot_DiagArrowDirTable0.asm" ; $67f6, 4 bytes (bytes:4)
+Unused_17_DropShot_DiagArrowPosTable0:
+	INCLUDE "data/engine/menus/briefing/Unused_17_DropShot_DiagArrowPosTable0.asm" ; $67fa, 16 bytes (words:2)
+DrillBriefing_DropShot_DiagArrowDirTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_DropShot_DiagArrowDirTable.asm" ; $680a, 4 bytes (bytes:4)
+DrillBriefing_DropShot_DiagArrowPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_DropShot_DiagArrowPosTable.asm" ; $680e, 16 bytes (words:2)
+Unused_17_DropShot_DiagArrowDirTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_DropShot_DiagArrowDirTable1.asm" ; $681e, 4 bytes (bytes:4)
+Unused_17_DropShot_DiagArrowPosTable1:
+	INCLUDE "data/engine/menus/briefing/Unused_17_DropShot_DiagArrowPosTable1.asm" ; $6822, 16 bytes (words:2)
+DrillBriefing_DropShot_BracketPosTable:
+	INCLUDE "data/engine/menus/briefing/DrillBriefing_DropShot_BracketPosTable.asm" ; $6832, 16 bytes (words:2)
 DrillBriefing_ReturnToTarget:
 	ld a, $55 ; $6842
 	ld [wBriefingPlayerX], a ; $6844

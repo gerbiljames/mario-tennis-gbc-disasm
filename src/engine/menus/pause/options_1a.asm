@@ -6,7 +6,7 @@
 	farptr Unused_1a_ShowExpGainScreen ; $400a
 	farptr RunCharDataConfirmScreen ; $400c
 	farptr ComputeCharDataEquipmentDeltas ; $400e
-	farptr CharDataScreen_LoadGfx ; $4010
+	farptr LoadStatArrowGfx ; $4010
 	farptr DrawStatChangeArrows ; $4012
 Unused_1a_RunMinigameModePauseMenu:
 	ldh a, [hWramBank] ; $4014

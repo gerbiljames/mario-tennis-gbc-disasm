@@ -46,7 +46,7 @@ RunCpuDifficultySubmenu:
 	ld [hl], a ; $6284
 	call ClearPlayerSlotPortrait ; $6285
 	call BuildVisiblePageSpriteList ; $6288
-	jr .advanceSlot ; $628b
+	jr .redrawSlotPrompt ; $628b
 .confirm:
 	sound SFX_MENU_SELECT ; $628d
 	call CloseCpuDifficultyPanel ; $628f
@@ -60,10 +60,10 @@ RunCpuDifficultySubmenu:
 	call DrawPlayerSlotPortrait ; $62a5
 	call AdvanceToNextPlayerSlot ; $62a8
 	cp $ff ; $62ab
-	jr nz, .advanceSlot ; $62ad
+	jr nz, .redrawSlotPrompt ; $62ad
 	ld a, CHARSELECT_DONE ; $62af
 	ld [wCharSelectExitCode], a ; $62b1
-.advanceSlot:
+.redrawSlotPrompt:
 	call DrawCharGridSlotPrompt ; $62b4
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $62b7
 	ld de, vBGMap0 + 2 * TILEMAP_WIDTH ; $62ba
@@ -254,7 +254,7 @@ RunLinkCharSelectScreen:
 	ldh [hLinkRemoteInput], a ; $6455
 	ld [wLinkSelectCmdResult], a ; $6457
 	ld [wLinkSelectStartupFrames], a ; $645a
-	frame_task TickMenuBgScrollTask_38 ; $645d
+	frame_task TickMenuTitleScrollerTask_38 ; $645d
 	wram_bank WRAM_SCREEN ; $6465
 	call RefreshCharInfoPanel ; $646b
 .frameLoop:

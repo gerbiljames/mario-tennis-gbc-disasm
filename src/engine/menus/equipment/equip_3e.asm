@@ -76,16 +76,16 @@ FlushEquipSelectTextRows:
 	ld c, 2 * TILEMAP_WIDTH / 16 ; $58b5
 	call QueueVRAMCopy ; $58b7
 	ret ; $58ba
-; GetItemStatModListPtr over lists of stat-change text ids in place of the stat-mod lists: the same two-level pointer lookup. Nothing calls it.
+; GetItemStatModListPtr over lists of stat-change text ids in place of the stat-mod lists: the same per-kind pointer lookup. Nothing calls it.
 Unused_3e_GetItemStatModTextListPtr:
 	push af ; $58bb
 	push bc ; $58bc
-	ld hl, ItemStatModTextListPtrPtrs_3e ; $58bd
+	ld hl, RacketStatModTextListPtrs_3e ; $58bd
 	ld a, [wEquipItemKind] ; $58c0
 	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $58c3
 	jr z, .readEntry ; $58c4
-	ld hl, ItemStatModTextListPtrTable_3e ; $58c6
+	ld hl, ShoesStatModTextListPtrs_3e ; $58c6
 .readEntry:
 	ld a, b ; $58c9
 	add a ; $58ca
@@ -96,7 +96,7 @@ Unused_3e_GetItemStatModTextListPtr:
 	pop bc ; $58d3
 	pop af ; $58d4
 	ret ; $58d5
-ItemStatModTextListPtrPtrs_3e:
+RacketStatModTextListPtrs_3e:
 	; $58d6, 14 bytes (records:2)
 	dw NormalItemStatModTexts_3e ; record 0
 	dw LargeRacketStatModTexts_3e ; record 1
@@ -105,7 +105,7 @@ ItemStatModTextListPtrPtrs_3e:
 	dw GoldRacketStatModTexts_3e ; record 4
 	dw SilverRacketStatModTexts_3e ; record 5
 	dw DriveRacketStatModTexts_3e ; record 6
-ItemStatModTextListPtrTable_3e:
+ShoesStatModTextListPtrs_3e:
 	; $58e4, 6 bytes (records:2)
 	dw NormalItemStatModTexts_3e ; record 0
 	dw IronShoesStatModTexts_3e ; record 1
@@ -309,12 +309,12 @@ DrawStatModEntry:
 GetItemStatModListPtr:
 	push af ; $5a44
 	push bc ; $5a45
-	ld hl, ItemStatModListPtrPtrs ; $5a46
+	ld hl, RacketStatModListPtrs ; $5a46
 	ld a, [wEquipItemKind] ; $5a49
 	ASSERT EQUIPKIND_RACKETS == 0
 	or a ; $5a4c
 	jr z, .readEntry ; $5a4d
-	ld hl, ItemStatModListPtrTable ; $5a4f
+	ld hl, ShoesStatModListPtrs ; $5a4f
 .readEntry:
 	ld a, b ; $5a52
 	add a ; $5a53
@@ -325,7 +325,7 @@ GetItemStatModListPtr:
 	pop bc ; $5a5c
 	pop af ; $5a5d
 	ret ; $5a5e
-ItemStatModListPtrPtrs:
+RacketStatModListPtrs:
 	; $5a5f, 14 bytes (records:2)
 	dw NormalItemStatMods ; record 0
 	dw LargeRacketStatMods ; record 1
@@ -334,7 +334,7 @@ ItemStatModListPtrPtrs:
 	dw GoldRacketStatMods ; record 4
 	dw SilverRacketStatMods ; record 5
 	dw DriveRacketStatMods ; record 6
-ItemStatModListPtrTable:
+ShoesStatModListPtrs:
 	; $5a6d, 6 bytes (records:2)
 	dw NormalItemStatMods ; record 0
 	dw IronShoesStatMods ; record 1

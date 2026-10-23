@@ -321,7 +321,7 @@ RunMatchFormatSelect:
 	ld a, [wMenuSlideDirection] ; $5d03
 	ld b, a ; $5d06
 	call MatchFormatSlideIn ; $5d07
-	farcall InitMenuBgScroll ; $5d0a
+	farcall InitMenuTitleScroller ; $5d0a
 	ld b, $01 ; $5d0d
 	ld c, $01 ; $5d0f
 	farcall LoadMenuSpritePalettePair ; $5d11
@@ -743,7 +743,7 @@ MatchFormatOptionSelectedAttrs:
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
 	twin_named flush_match_format_row_attrs, FlushMatchFormatRowAttrs ; $609a
 MatchFormatCursorSpriteTask:
-	farcall TickMenuBgScroll ; $60d0
+	farcall TickMenuTitleScroller ; $60d0
 	ld c, $01 ; $60d3
 	call GetMenuCursorIndex_3b ; $60d5
 	or a ; $60d8
