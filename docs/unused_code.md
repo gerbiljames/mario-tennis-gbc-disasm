@@ -156,7 +156,7 @@ the text engine's unused API: `Unused_05_RenderInlineHexByte` / `HexWord` /
 `Unused_05_WriteDialogueToTilemapStreamed`) and the
 whole-plane queue helpers. Same shape as pattern 3, one bank up.
 
-**6. Templates and stubs.** `Unused_10_Test2Npc04ServiceMatch3`-`Npc0ANetGameMatch3` are seven
+**6. Templates and stubs.** `Unused_10_Test2Npc03ServiceMatch2`-`Npc0ANetGameMatch3` are eight
 drill-launcher handlers for the "Test 2" debug map, the template of its live
 NPCs `0B`-`12` with their own test number and minigame id; three lone `ret`s in bank `$11` sit after list terminators
 (`Unused_11_NullScriptA`-`C`) and three more after the last row of a table

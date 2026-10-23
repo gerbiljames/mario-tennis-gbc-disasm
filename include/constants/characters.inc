@@ -156,7 +156,7 @@ def NUM_STORY_HEROES equ const_value ; the four story heroes, always unlocked
 	const CHAR_B_COZ      ; $12 "B. Coz"
 	const CHAR_A_COZ      ; $13 "A. Coz"
 	const CHAR_KEVIN      ; $14
-	const CHAR_UNUSED_15  ; $15 roster slot reading "Not used"; see below
+	const CHAR_BALL_MACHINE ; $15 roster slot reading "Not used", drawn as BallMachineSprite; see below
 	const CHAR_UNUSED_16  ; $16 roster slot reading "Not used"
 	const CHAR_LUIGI      ; $17
 	const CHAR_DK         ; $18
@@ -252,9 +252,10 @@ def CHAR_DRILL_STROKE_MATCH_3_RECEIVING   equ $59
 ; bit 7 set names a story character record instead -- bit 0 selects $c900
 ; (main) or $c940 (partner). Ids $20 and up are remapped into 4-31 by
 ; RemapExtendedCharId for their name and portrait.
-; CHAR_UNUSED_15 doubles as a "no visible opponent / locked" marker: it is the
-; opponent of every Tennis Machine config and of Shooting Star, and
-; GetUnlockedMarioCastCharAtGridSlot returns it for a locked Mario-cast slot.
+; CHAR_BALL_MACHINE is the ball launcher (sprite set $1a) standing in as the
+; opponent of every Tennis Machine config and of Shooting Star. It doubles as a
+; locked marker: GetUnlockedMarioCastCharAtGridSlot returns it for a locked
+; Mario-cast slot.
 def CHAR_NONE          equ $ff ; empty court slot
 def CHAR_STORY_MAIN    equ $80 ; the story slot's own character ($c900 record)
 def CHAR_STORY_PARTNER equ $81 ; its doubles partner ($c940 record)

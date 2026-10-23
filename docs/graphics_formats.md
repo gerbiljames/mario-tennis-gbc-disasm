@@ -234,7 +234,7 @@ and destination wrapping independently:
 
 The tile half repeats this with `rVBK = 0`: a 64×64 map in WRAM, a 32×32
 window into it in VRAM. The story scenes and the intro cutscenes
-(`CutsceneScene*Tilemap`/`Attrmap`, `IntroOpponentsPanoramaTilemap`/`Attrmap`) decompress
+(`IntroOpeningToss`/`IntroClosingToss` `Tilemap`/`Attrmap`, `IntroOpponentsPanoramaTilemap`/`Attrmap`) decompress
 whole 4096-byte planes into it.
 
 Court and menu screens use flat 32×32 planes: `wShadowTilemap` (1024 bytes,

@@ -190,7 +190,7 @@ UpdateMinigameActor:
 	ret ; $44f9
 MinigameConfig_TennisMachine1:
 	; $44fa, 16 bytes
-	drill_def CHAR_UNUSED_15, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_1, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine1, MinigamePointLayoutDuo, InitMinigame_TennisMachine1
+	drill_def CHAR_BALL_MACHINE, COURT_TENNIS_MACHINE, 2, GAMEMODE_TENNIS_MACHINE, MINIGAME_TENNIS_MACHINE_1, BGM_TENNIS_MACHINE, CHAR_STORY_MAIN, MinigameHooks_TennisMachine1, MinigamePointLayoutDuo, InitMinigame_TennisMachine1
 InitMinigame_TennisMachine1:
 	ld a, $01 ; $450a
 	ld [wMinigameUsesTennisMachine], a ; $450c
@@ -305,7 +305,7 @@ StartMinigameMatch:
 	xor a ; $46c3
 	ld [wMinigameServerIsMachine], a ; $46c4
 	ld a, [wCharId] ; $46c7
-	cp CHAR_UNUSED_15 ; $46ca
+	cp CHAR_BALL_MACHINE ; $46ca
 	jr nz, .countdown ; $46cc
 	ld a, $01 ; $46ce
 	ld [wMinigameServerIsMachine], a ; $46d0

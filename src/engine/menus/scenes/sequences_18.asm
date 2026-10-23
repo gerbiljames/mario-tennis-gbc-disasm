@@ -53,10 +53,10 @@ LookupAwardsCeremonyAssetId:
 	ret ; $784e
 AwardsCeremonyAssetIds:
 	; $784f, 6 bytes (bytes:6)
-	db SCREENASSET_AwardsCeremonyCutscene, SCREENASSET_AwardsCeremonyCutscene2, SCREENASSET_AwardsCeremonyCutscene4, SCREENASSET_AwardsCeremonyCutscene3, SCREENASSET_AwardsCeremonyCutscene5, SCREENASSET_AwardsCeremonyCutscene6 ; 0x00
+	db SCREENASSET_AwardsCeremonyCutsceneDoublesBoys, SCREENASSET_AwardsCeremonyCutsceneDoublesBoyGirl, SCREENASSET_AwardsCeremonyCutsceneDoublesGirls, SCREENASSET_AwardsCeremonyCutsceneDoublesGirlBoy, SCREENASSET_AwardsCeremonyCutsceneSinglesBoy, SCREENASSET_AwardsCeremonyCutsceneSinglesGirl ; 0x00
 LoadAwardsCeremonyScreenBlackedOut:
 	call ResetScrollAndCamera ; $7855
-	ld c, SCREENASSET_AwardsCeremonyCutscene ; $7858
+	ld c, SCREENASSET_AwardsCeremonyCutsceneDoublesBoys ; $7858
 	farcall LoadScreenAssetRecord ; $785a
 	ld hl, BlackPalette_18 ; $785d
 	ld_bg_pals de, 0, 1 ; $7860
@@ -214,7 +214,7 @@ LookupDreamMatchEpilogueAssetId:
 	ret ; $7a13
 DreamMatchEpilogueAssetIds:
 	; $7a14, 6 bytes (bytes:6)
-	db SCREENASSET_DreamMatchEpilogue, SCREENASSET_DreamMatchEpilogue2, SCREENASSET_DreamMatchEpilogue4, SCREENASSET_DreamMatchEpilogue3, SCREENASSET_DreamMatchEpilogue5, SCREENASSET_DreamMatchEpilogue6 ; 0x00
+	db SCREENASSET_DreamMatchEpilogueDoublesBoys, SCREENASSET_DreamMatchEpilogueDoublesBoyGirl, SCREENASSET_DreamMatchEpilogueDoublesGirls, SCREENASSET_DreamMatchEpilogueDoublesGirlBoy, SCREENASSET_DreamMatchEpilogueSinglesBoy, SCREENASSET_DreamMatchEpilogueSinglesGirl ; 0x00
 LookupChampionMedalAssetId:
 	ld a, [wStorySceneAssetIndex] ; $7a1a
 	ld hl, ChampionMedalAssetIds ; $7a1d
@@ -223,7 +223,7 @@ LookupChampionMedalAssetId:
 	ret ; $7a26
 ChampionMedalAssetIds:
 	; $7a27, 6 bytes (bytes:6)
-	db SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x00
+	db SCREENASSET_ChampionMedalDoublesBoys, SCREENASSET_ChampionMedalDoublesBoyGirl, SCREENASSET_ChampionMedalDoublesGirls, SCREENASSET_ChampionMedalDoublesGirlBoy, SCREENASSET_ChampionMedalSinglesBoy, SCREENASSET_ChampionMedalSinglesGirl ; 0x00
 LoadTheEndGfx:
 	ld b, TILEBLOCK_TheEndGfx ; $7a2d
 	ld c, TheEndGfx_SIZE / 16 ; $7a2f

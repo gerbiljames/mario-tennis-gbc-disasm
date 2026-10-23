@@ -205,20 +205,20 @@ TitleScreenPalettes:
 	INCLUDE "data/engine/cutscenes/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
 TitleSpritePalette:
 	INCLUDE "data/engine/cutscenes/TitleSpritePalette.asm" ; $794f, 8 bytes (palettes)
-DreamMatchEpilogueTilemap:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap.bin" ; $7957, 293 bytes
-DreamMatchEpilogueAttrmap:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap.bin" ; $7a7c, 114 bytes
-DreamMatchEpilogueTilemap2:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap2.bin" ; $7aee, 292 bytes
-DreamMatchEpilogueAttrmap2:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap2.bin" ; $7c12, 125 bytes
-DreamMatchEpilogueTilemap3:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap3.bin" ; $7c8f, 296 bytes
-DreamMatchEpilogueAttrmap3:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap3.bin" ; $7db7, 120 bytes
-DreamMatchEpilogueTilemap4:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueTilemap4.bin" ; $7e2f, 296 bytes
-DreamMatchEpilogueAttrmap4:
-	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueAttrmap4.bin" ; $7f57, 129 bytes
+DreamMatchEpilogueDoublesBoysTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoysTilemap.bin" ; $7957, 293 bytes
+DreamMatchEpilogueDoublesBoysAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoysAttrmap.bin" ; $7a7c, 114 bytes
+DreamMatchEpilogueDoublesBoyGirlTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoyGirlTilemap.bin" ; $7aee, 292 bytes
+DreamMatchEpilogueDoublesBoyGirlAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesBoyGirlAttrmap.bin" ; $7c12, 125 bytes
+DreamMatchEpilogueDoublesGirlBoyTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlBoyTilemap.bin" ; $7c8f, 296 bytes
+DreamMatchEpilogueDoublesGirlBoyAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlBoyAttrmap.bin" ; $7db7, 120 bytes
+DreamMatchEpilogueDoublesGirlsTilemap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlsTilemap.bin" ; $7e2f, 296 bytes
+DreamMatchEpilogueDoublesGirlsAttrmap:
+	INCBIN "data/engine/cutscenes/lz_DreamMatchEpilogueDoublesGirlsAttrmap.bin" ; $7f57, 129 bytes
 	; $7fd8, 40 bytes fill to bank end (linker-padded)

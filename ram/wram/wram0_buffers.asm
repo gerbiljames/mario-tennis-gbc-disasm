@@ -218,7 +218,7 @@ wMinigameTargetZone:: db
 ; [8-bit] Perfect Shot boards cleared so far (capped at 9): ProcessTargetTileHit scores each tile hit at this + 1 and increments it when AreAllTargetsHit. Zeroed with wModeScratch at match start
 wTargetGridClearCount:: db
 
-; [8-bit] 1 when the opponent is CHAR_UNUSED_15 (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
+; [8-bit] 1 when the opponent is CHAR_BALL_MACHINE (the ball launcher of Tennis Machine, Target Shot and Shooting Star), set by StartMinigameMatch: DrawMinigameScoreHud then unflips its sprite and LaunchMinigameServe waits 15 frames before the launch
 wMinigameServerIsMachine:: db
 
 ; [8-bit] Nonzero makes AiServePressToss release the serve at once instead of running the wAiPlayStyle toss table (the coach drills' plain feed). The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch

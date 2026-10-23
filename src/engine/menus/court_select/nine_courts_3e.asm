@@ -565,10 +565,10 @@ DreamMatchEpilogueTiles:
 	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueTiles.bin" ; $69d5, 2641 bytes
 DreamMatchEpiloguePalettes:
 	INCLUDE "data/engine/menus/court_select/DreamMatchEpiloguePalettes.asm" ; $7426, 64 bytes (palettes)
-DreamMatchEpilogueTilemap5:
-	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueTilemap5.bin" ; $7466, 279 bytes
-DreamMatchEpilogueAttrmap5:
-	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueAttrmap5.bin" ; $757d, 107 bytes
+DreamMatchEpilogueSinglesBoyTilemap:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueSinglesBoyTilemap.bin" ; $7466, 279 bytes
+DreamMatchEpilogueSinglesBoyAttrmap:
+	INCBIN "data/engine/menus/court_select/lz_DreamMatchEpilogueSinglesBoyAttrmap.bin" ; $757d, 107 bytes
 ClearStatusLabelGfx:
 	INCBIN "data/engine/menus/court_select/lz_ClearStatusLabelGfx.bin" ; $75e8, 179 bytes
 MarioStarGetsLabelGfx:

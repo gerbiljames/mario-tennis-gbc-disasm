@@ -80,7 +80,7 @@ RunMinigameSelect:
 	call GetMenuCursorIndex_3b ; $628e
 	ld c, a ; $6291
 	call GetUnlockedMarioCastCharAtGridSlot ; $6292
-	cp CHAR_UNUSED_15 ; $6295
+	cp CHAR_BALL_MACHINE ; $6295
 	jr nz, .playSelectSfx ; $6297
 	sound SFX_MENU_LOCKED ; $6299
 	jr .loop ; $629b
@@ -408,7 +408,7 @@ OverrideMinigameCursorIfLocked:
 	call GetMenuCursorIndex_3b ; $6552
 	ld c, a ; $6555
 	call GetUnlockedMarioCastCharAtGridSlot ; $6556
-	cp CHAR_UNUSED_15 ; $6559
+	cp CHAR_BALL_MACHINE ; $6559
 	jr z, .locked ; $655b
 	pop de ; $655d
 	pop hl ; $655e
@@ -448,7 +448,7 @@ RenderMinigameNameText:
 	push af ; $65ab
 	ld c, a ; $65ac
 	call GetUnlockedMarioCastCharAtGridSlot ; $65ad
-	cp CHAR_UNUSED_15 ; $65b0
+	cp CHAR_BALL_MACHINE ; $65b0
 	jr nz, .restore ; $65b2
 	pop af ; $65b4
 	ld hl, Text_MinigameCantPlayYet ; $65b5

@@ -49,7 +49,7 @@ CharSpriteSetTable:
 	db $0b ; $12 B. Coz
 	db $0a ; $13 A. Coz
 	db $0a ; $14 Kevin
-	db $1a ; $15 Not used
+	db $1a ; $15 ball machine
 	db $0c ; $16 Not used
 	db $1b ; $17 Luigi
 	db $1c ; $18 DK
