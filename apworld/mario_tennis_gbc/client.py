@@ -32,6 +32,8 @@ LOCATION_BYTES = constants["AP_LOCATION_BYTES"]
 DEATH_LEVELS = {"off": 0, "point": constants["AP_DEATHLINK_POINT"], "game": constants["AP_DEATHLINK_GAME"],
                 "match": constants["AP_DEATHLINK_MATCH"]}
 DEATH_LEVEL_NAMES = {v: k for k, v in DEATH_LEVELS.items()}
+# a received death older than this (the emulator was away) is dropped, not applied late
+DEATH_MAX_AGE = 5.0
 LOSSES = {DEATH_LEVELS["point"]: "lost a point", DEATH_LEVELS["game"]: "lost a game",
           DEATH_LEVELS["match"]: "lost a match"}
 
@@ -116,9 +118,8 @@ class MarioTennisGBCClient(BizHawkClient):
         super().__init__()
         # {"send": level, "receive": level} once connected
         self.death_levels: dict[str, int] | None = None
-        # the source of a death received and not yet handed to the game
-        self.death_source: str | None = None
-        self.deaths_sent: set[float] = set()
+        # (source, when) of a death received and not yet handed to the game
+        self.death_source: tuple[str, float] | None = None
 
     @staticmethod
     def death_levels_key(ctx: BizHawkClientContext) -> str:
@@ -147,8 +148,10 @@ class MarioTennisGBCClient(BizHawkClient):
                 self.set_death_levels(ctx, store=False, **levels)
         elif cmd == "Bounced" and "DeathLink" in args.get("tags", []):
             data = args.get("data", {})
-            if data.get("time") not in self.deaths_sent and self.death_levels and self.death_levels["receive"]:
-                self.death_source = str(data.get("source", ""))
+            source = str(data.get("source", ""))
+            # slot names are unique, so this is our own death coming back
+            if source != ctx.player_names.get(ctx.slot) and self.death_levels and self.death_levels["receive"]:
+                self.death_source = source, time.monotonic()
 
     async def validate_rom(self, ctx: BizHawkClientContext) -> bool:
         title, ident, remote = await read(ctx.bizhawk_ctx, [
@@ -213,14 +216,16 @@ class MarioTennisGBCClient(BizHawkClient):
         if out[0] and await guarded_write(ctx.bizhawk_ctx, [(ram("wApDeathOut"), [0], domain)],
                                           [(ram("wApDeathOut"), out, domain)]):
             if out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
-                await self.send_death(ctx, f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
+                await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
         if self.death_source is None:
             return
-        source, self.death_source = self.death_source, None
+        (source, when), self.death_source = self.death_source, None
         level = self.death_levels["receive"]
         if not level:
             return
-        if not in_match[0]:
+        if time.monotonic() - when > DEATH_MAX_AGE:
+            logger.info("DeathLink: received while the game was away, so it does nothing.")
+        elif not in_match[0]:
             logger.info("DeathLink: not in a match, mini-game or drill, so it does nothing.")
         elif pending[0]:
             logger.info("DeathLink: the last death has not happened yet, so this one does nothing.")
@@ -229,12 +234,3 @@ class MarioTennisGBCClient(BizHawkClient):
                 [(ram("wApDeathSource"), fit(source, "from !") + b"\0", domain), (ram("wApDeathIn"), [level], domain)],
                 [(in_match_at, in_match, domain), (ram("wApDeathIn"), [0], domain)]):
             logger.info("DeathLink: the match ended first, so it does nothing.")
-
-    async def send_death(self, ctx: BizHawkClientContext, cause: str) -> None:
-        """ctx.send_death, with the time noted before the Bounce can come back to us."""
-        ctx.last_death_link = time.time()
-        self.deaths_sent.add(ctx.last_death_link)
-        logger.info("DeathLink: Sending death to your friends...")
-        await ctx.send_msgs([{"cmd": "Bounce", "tags": ["DeathLink"],
-                              "data": {"time": ctx.last_death_link, "source": ctx.player_names[ctx.slot],
-                                       "cause": cause}}])
