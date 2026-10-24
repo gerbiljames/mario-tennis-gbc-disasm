@@ -51,12 +51,6 @@ class Context:
         self.client_handler = None
         self.command_processor = type("Commands", (), {"commands": {}})
 
-    async def send_death(self, death_text=""):
-        self.last_death_link = time.time()
-        await self.send_msgs([{"cmd": "Bounce", "tags": ["DeathLink"],
-                               "data": {"time": self.last_death_link, "source": self.player_names[self.slot],
-                                        "cause": death_text}}])
-
     async def update_death_link(self, death_link):
         self.tags = self.tags | {"DeathLink"} if death_link else self.tags - {"DeathLink"}
 
@@ -369,12 +363,24 @@ def deathlink_own_bounce_is_ignored(t):
     poll(t.client, t.ctx)
     own = next(m for m in t.ctx.sent if m["cmd"] == "Bounce")
     g.wram("wApDeathInMatch", 1)
-    bounced(t, "Me")
+    bounced(t, "Me", own["data"]["time"])
     poll(t.client, t.ctx)
     assert g.mem[g.addr("wApDeathIn")] == 0, "our own death came back to us"
     bounced(t, "Alice", own["data"]["time"])
     poll(t.client, t.ctx)
     assert g.mem[g.addr("wApDeathIn")] == 1, "a death stamped like ours was taken for ours"
+
+
+@test
+def deathlink_from_another_client_on_our_slot(t):
+    g = t.game
+    connected(t, send=1, receive=1)
+    g.wram("wApDeathInMatch", 1)
+    bounced(t, "Me")
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 1, "our partner's death was taken for ours"
+    source = bytes(g.mem[g.addr("wApDeathSource") + i] for i in range(13))
+    assert source == b"your partner\0", source
 
 
 @test

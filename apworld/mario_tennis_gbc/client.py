@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import logging
+import time
 from typing import TYPE_CHECKING, Any
 
 from NetUtils import ClientStatus
@@ -119,6 +120,8 @@ class MarioTennisGBCClient(BizHawkClient):
         self.death_defaults: dict[str, int] = {}
         # the source of a death received and not yet handed to the game
         self.death_source: str | None = None
+        # the times of the deaths we sent, which tell our own apart from another client's on this slot
+        self.deaths_sent: set[float] = set()
 
     @staticmethod
     def death_levels_key(ctx: BizHawkClientContext) -> str:
@@ -149,9 +152,11 @@ class MarioTennisGBCClient(BizHawkClient):
         elif cmd == "Bounced" and "DeathLink" in args.get("tags", []):
             data = args.get("data", {})
             source = str(data.get("source", ""))
-            # names hold the slot name, unique per multiworld: this is our own death coming back
-            if source != ctx.player_names.get(ctx.slot) and self.death_levels and self.death_levels["receive"]:
-                self.death_source = source
+            own_slot = source == ctx.player_names.get(ctx.slot)
+            if own_slot and data.get("time") in self.deaths_sent:
+                return
+            if self.death_levels and self.death_levels["receive"]:
+                self.death_source = "your partner" if own_slot else source
 
     async def validate_rom(self, ctx: BizHawkClientContext) -> bool:
         title, ident, remote = await read(ctx.bizhawk_ctx, [
@@ -212,6 +217,14 @@ class MarioTennisGBCClient(BizHawkClient):
                                 [(ram("sApClientRegion"), client_region(items), "CartRAM")],
                                 [(ram("sApHeader"), header, "CartRAM")])
 
+    async def send_death(self, ctx: BizHawkClientContext, cause: str) -> None:
+        """ctx.send_death, but noting the time before the Bounce goes out, so the echo can't beat it."""
+        ctx.last_death_link = time.time()
+        self.deaths_sent.add(ctx.last_death_link)
+        logger.info("DeathLink: Sending death to your friends...")
+        await ctx.send_msgs([{"cmd": "Bounce", "tags": ["DeathLink"], "data": {
+            "time": ctx.last_death_link, "source": ctx.player_names[ctx.slot], "cause": cause}}])
+
     async def death_link(self, ctx: BizHawkClientContext) -> None:
         """Sends the game's reported loss if it is big enough, and hands it a received death while it is in a match
         (dropped otherwise)."""
@@ -223,7 +236,7 @@ class MarioTennisGBCClient(BizHawkClient):
         if out[0] and await guarded_write(ctx.bizhawk_ctx, [(ram("wApDeathOut"), [0], domain)],
                                           [(ram("wApDeathOut"), out, domain)]):
             if out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
-                await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
+                await self.send_death(ctx, f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
         if self.death_source is None:
             return
         source, self.death_source = self.death_source, None
