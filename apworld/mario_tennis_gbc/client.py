@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 from NetUtils import ClientStatus
 from Utils import async_start
-from worlds._bizhawk import RequestFailedError, guarded_write, read
+from worlds._bizhawk import NotConnectedError, RequestFailedError, guarded_write, read
 from worlds._bizhawk.client import BizHawkClient
 
 from .items import GAME
@@ -185,8 +185,10 @@ class MarioTennisGBCClient(BizHawkClient):
     async def game_watcher(self, ctx: BizHawkClientContext) -> None:
         try:
             await self.watch(ctx)
-        except RequestFailedError:
-            pass  # BizHawk timed out or went away; the next tick retries (else this ends the watcher task)
+        except (RequestFailedError, NotConnectedError):
+            # BizHawk timed out or went away (uncaught, this ends the watcher task); the next tick retries, and a
+            # loss the game reported meanwhile is dropped, as it would be over a server reconnect
+            self.drop_reported_loss = True
 
     async def watch(self, ctx: BizHawkClientContext) -> None:
         if ctx.server is None or ctx.slot is None:
@@ -224,11 +226,14 @@ class MarioTennisGBCClient(BizHawkClient):
         in_match_at, domain = wram("wApDeathInMatch")
         in_match, out, pending = await read(ctx.bizhawk_ctx, [
             (in_match_at, 1, domain), (ram("wApDeathOut"), 1, domain), (ram("wApDeathIn"), 1, domain)])
-        drop, self.drop_reported_loss = self.drop_reported_loss, False
         if out[0] and await guarded_write(ctx.bizhawk_ctx, [(ram("wApDeathOut"), [0], domain)],
                                           [(ram("wApDeathOut"), out, domain)]):
-            if not drop and out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
+            if (not self.drop_reported_loss and out[0] in LOSSES and self.death_levels["send"]
+                    and out[0] >= self.death_levels["send"]):
                 await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
+            self.drop_reported_loss = False
+        elif not out[0]:
+            self.drop_reported_loss = False
         if self.death_source is None:
             return
         (source, when), self.death_source = self.death_source, None

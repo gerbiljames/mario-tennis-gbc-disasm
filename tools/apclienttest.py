@@ -275,7 +275,9 @@ def deathlink_ignores_an_unknown_loss(t):
 
 
 @test
-def deathlink_keeps_a_loss_while_disconnected(t):
+def deathlink_keeps_a_loss_while_the_socket_closes(t):
+    """A loss read while the socket is closing waits rather than being
+    cleared unsent (a real reconnect brings a new Connected, which drops it)."""
     g = t.game
     connected(t, send=1)
     socket, t.ctx.server.socket = t.ctx.server.socket, None
@@ -320,18 +322,33 @@ def deathlink_waits_for_the_stored_levels(t):
     package(t, "Retrieved", {"keys": {t.client.death_levels_key(t.ctx): {"send": 0, "receive": 0}}})
     poll(t.client, t.ctx)
     assert t.ctx.deaths() == [] and "DeathLink" not in t.ctx.tags
+    g.wram("wApDeathOut", 3)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [], "sent at slot_data's level over the stored off"
 
 
 @test
-def deathlink_survives_a_bizhawk_timeout(t):
-    connected(t)
-    real = t.module.read
-
-    async def timeout(*_):
-        raise t.module.RequestFailedError("Connection timed out")
-    t.module.read = timeout
+def deathlink_survives_bizhawk_going_away(t):
+    """A BizHawk timeout or disconnect, even mid-DeathLink, leaves the watcher
+    running; a loss reported meanwhile is dropped, and later ones are sent."""
+    g = t.game
+    connected(t, send=1)
+    real_read, real_write = t.module.read, t.module.guarded_write
+    for error in (t.module.RequestFailedError("Connection timed out"), t.module.NotConnectedError()):
+        async def fail(*_, error=error):
+            raise error
+        t.module.read = fail
+        poll(t.client, t.ctx)
+        t.module.read = real_read
+    g.wram("wApDeathOut", 2)
+    t.module.guarded_write = fail
     poll(t.client, t.ctx)
-    t.module.read = real
+    t.module.guarded_write = real_write
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, "a loss from while BizHawk was away went out"
+    g.wram("wApDeathOut", 2)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == ["Me lost a game."], t.ctx.deaths()
 
 
 @test
