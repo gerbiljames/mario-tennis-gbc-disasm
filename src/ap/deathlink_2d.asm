@@ -36,12 +36,18 @@ ApDeathLinkMinigameEnd:
 	ld a, [wApDeathApplied]
 	and a
 	jr nz, .report
+	ld a, [wGameMode]
+	cp GAMEMODE_TRAINING_DRILL
+	jr nz, .minigame
+	; a drill match can end tied (WINLOSE_NONE), which fails it too
+	ld a, [wPointWinLoseFlag]
+	cp WINLOSE_WIN
+	jr nz, .failed
+	jr .report
+.minigame:
 	ld a, [wPointWinLoseFlag]
 	cp WINLOSE_LOSE
 	jr nz, .report
-	ld a, [wGameMode]
-	cp GAMEMODE_TRAINING_DRILL
-	jr z, .failed
 	ld a, [wMinigameHighScoreMode]
 	and a
 	jr nz, .report
@@ -216,6 +222,13 @@ ApDeathLinkMinigamePoll:
 	; a drill may leave wMinigameHighScoreMode set from an earlier minigame
 	ld a, WINLOSE_LOSE
 	ld [wPointWinLoseFlag], a
+	; the story coaches pick their scene from it, and it is still
+	; LESSON_PASSED: code 1 fails every lesson
+	ASSERT LESSON_SERVE_NO_POINTS == LESSON_NET_ALL_FAULTS
+	ASSERT LESSON_SERVE_NO_POINTS == LESSON_RETURN_ALL_OUT
+	ASSERT LESSON_SERVE_NO_POINTS == LESSON_LOB_TOO_FEW
+	ld a, LESSON_SERVE_NO_POINTS
+	ld [wDrillLessonResult], a
 .result:
 	ld a, MATCHABORT_MATCH | MATCHABORT_POINT
 	ld [wMatchAbortFlag], a
@@ -228,10 +241,11 @@ ApDeathLinkMinigamePoll:
 	sound BGM_WIN
 	ret
 
-; RunMinigamePointLoop, after the point-end hook (every drill sets
-; wPointWinLoseFlag there, from the player's side): a lost drill point waits
-; in wApDeathDrillPending, as the drill may end on it
-ApDeathLinkMinigamePointEnd:
+; RecordDrillPointResultBits: every drill's point-end handler calls it once
+; with the point's own result in wPointWinLoseFlag, from the player's side,
+; before a drill's last point replaces it with the drill's. A lost drill
+; point waits in wApDeathDrillPending, as the drill may end on it.
+ApDeathLinkDrillPoint:
 	ld a, [wGameMode]
 	cp GAMEMODE_TRAINING_DRILL
 	ret nz

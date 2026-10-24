@@ -359,6 +359,10 @@ def deathlink_commands(t):
     assert run_command(t, "deathlink_receive", "sometimes") == ["Choose off, point, game or match."]
     assert run_command(t, "deathlink_send") == ["DeathLink send: game"]
     assert "DeathLink" in t.ctx.tags
+    socket, t.ctx.server.socket = t.ctx.server.socket, None
+    assert run_command(t, "deathlink_send", "off") == ["Connect to the server with Mario Tennis GBC loaded first."]
+    assert t.client.death_levels["send"] == 2, "a level changed offline, where it cannot be stored"
+    t.ctx.server.socket = socket
     stored = [m["operations"][0]["value"] for m in t.ctx.sent if m["cmd"] == "Set"]
     assert stored[-1] == {"send": 2, "receive": 3}, stored
     key = t.client.death_levels_key(t.ctx)

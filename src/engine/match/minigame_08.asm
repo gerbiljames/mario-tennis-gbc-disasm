@@ -314,7 +314,6 @@ RunMinigamePointLoop:
 	jr nz, .done ; $6607
 	ld d, MODEHOOK_POINT_END ; $6609
 	call CallModeHook ; $660b
-	apcall ApDeathLinkMinigamePointEnd
 	ld a, [wMatchAbortFlag] ; $660e
 	and MATCHABORT_MATCH ; $6611
 	jr nz, .done ; $6613

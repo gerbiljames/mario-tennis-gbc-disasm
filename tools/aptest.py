@@ -1687,13 +1687,17 @@ def receive_in_minigame(g, mode, minigame, at_death=None):
         b, a = g.sym["ApComposeDeathLinkMessage"]
         g.pb.hook_register(b, a, lambda _: at_death(g), None)
     points = []
-    b, a = g.sym["ApDeathLinkMinigamePointEnd"]
+    b, a = g.sym["RunMinigamePointLoop.pointLoop"]
     g.pb.hook_register(b, a, lambda _: fired and points.append(1), None)
     text = None
     seen = []
+    lesson = []
     b, a = g.sym["ShowMatchResultScreens"]
-    g.pb.hook_register(b, a, lambda _: seen.append((g.mem[g.addr("wApDeathOut")],
-                                                    g.mem[g.addr("wPointWinLoseFlag")])), None)
+
+    def results(_):
+        seen.append((g.mem[g.addr("wApDeathOut")], g.mem[g.addr("wPointWinLoseFlag")]))
+        lesson.append(g.mem[g.addr("wDrillLessonResult")])
+    g.pb.hook_register(b, a, results, None)
     for i in range(30000):
         g.tick()
         buf = bytes(g.mem[g.addr("wTextBuffer") + j] for j in range(48))
@@ -1704,6 +1708,7 @@ def receive_in_minigame(g, mode, minigame, at_death=None):
         if i % 30 == 29:
             g.press("a")
     assert fired, "no rally"
+    g.lesson_result = lesson[0] if lesson else None
     return text, (seen[0] if seen else None), len(points)
 
 
@@ -1731,13 +1736,17 @@ def deathlink_send_from_a_minigame(g, c):
     assert minigame_result(g) == (AP_DEATHLINK_MATCH, WINLOSE_LOSE)
 
 
-def drill_reports(g):
+def drill_reports(g, at_end=None):
     """Act as the client through a drill: every value wApDeathOut takes,
     cleared as it is read, up to ShowMatchResultScreens -> (the reports,
-    wPointWinLoseFlag at each point end, the drill's result)."""
+    each point's own result as its handler records it, the drill's result).
+    at_end runs as the drill's points end."""
     reports, flags, done = [], [], []
-    b, a = g.sym["ApDeathLinkMinigamePointEnd"]
+    b, a = g.sym["RecordDrillPointResultBits"]
     g.pb.hook_register(b, a, lambda _: flags.append(g.mem[g.addr("wPointWinLoseFlag")]), None)
+    if at_end:
+        b, a = g.sym["ApDeathLinkMinigameEnd"]
+        g.pb.hook_register(b, a, lambda _: at_end(g), None)
     b, a = g.sym["ShowMatchResultScreens"]
     g.pb.hook_register(b, a, lambda _: done.append(g.mem[g.addr("wPointWinLoseFlag")]), None)
     for i in range(80000):
@@ -1753,21 +1762,27 @@ def drill_reports(g):
     raise AssertionError("the drill never ended")
 
 
+def expected_drill_reports(flags, result):
+    """A point per lost point, the last one merged into a match if the drill
+    failed (lost or tied)."""
+    lost = [AP_DEATHLINK_POINT for f in flags[:-1] if f == WINLOSE_LOSE]
+    if result != include_value("WINLOSE_WIN"):
+        lost.append(AP_DEATHLINK_MATCH)
+    elif flags[-1] == WINLOSE_LOSE:
+        lost.append(AP_DEATHLINK_POINT)
+    return lost
+
+
 def drill_send_test(minigame):
     """Every lost point of the drill sends a point, from the player's side
-    (wPointWinLoseFlag, which match drills negate on odd points), and the
-    failed drill a match in place of its last point."""
+    (match drills negate wDrillPointJudgement on odd points), and a failed
+    drill a match in place of its last point."""
     def fn(g, c):
         cpu_serves_for_player(g)
         start_minigame(g, "GAMEMODE_TRAINING_DRILL", c[minigame])
         reports, flags, result = drill_reports(g)
         assert flags, "no points"
-        lost = [AP_DEATHLINK_POINT for f in flags[:-1] if f == WINLOSE_LOSE]
-        if result == WINLOSE_LOSE:
-            lost.append(AP_DEATHLINK_MATCH)
-        elif flags[-1] == WINLOSE_LOSE:
-            lost.append(AP_DEATHLINK_POINT)
-        assert reports == lost, (reports, [hex(f) for f in flags], hex(result))
+        assert reports == expected_drill_reports(flags, result), (reports, [hex(f) for f in flags], hex(result))
     return fn
 
 
@@ -1785,6 +1800,15 @@ def deathlink_send_from_a_failed_lesson(g, c):
     assert len(flags) == include_value("DRILL_LESSON_POINTS"), flags
 
 
+@test
+def deathlink_send_from_a_tied_drill(g, c):
+    """A drill match that ends tied (WINLOSE_NONE) has failed."""
+    cpu_serves_for_player(g)
+    start_minigame(g, "GAMEMODE_TRAINING_DRILL", c["MINIGAME_STROKE_MATCH_1"])
+    reports, flags, result = drill_reports(g, at_end=lambda g: g.wram("wPointWinLoseFlag", 0))
+    assert result == 0 and reports and reports[-1] == AP_DEATHLINK_MATCH, (reports, hex(result))
+
+
 def drill_receive_test(minigame):
     """A received death ends the drill at once, failed, and sends nothing."""
     def fn(g, c):
@@ -1792,6 +1816,7 @@ def drill_receive_test(minigame):
         text, result, points = receive_in_minigame(g, "GAMEMODE_TRAINING_DRILL", c[minigame])
         assert text == "DeathLink/from Tester!", text
         assert result == (0, WINLOSE_LOSE) and points == 0, (result, points)
+        assert g.lesson_result == 1, f"the coach would say the lesson passed ({g.lesson_result})"
     return fn
 
 

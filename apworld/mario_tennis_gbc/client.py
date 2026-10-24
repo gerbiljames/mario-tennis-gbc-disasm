@@ -72,10 +72,16 @@ def client_region(items: list[tuple[int, str]]) -> bytes:
     return body + checksum(body)
 
 
+def server_up(ctx: BizHawkClientContext) -> bool:
+    """Whether a message sent now reaches the server (CommonContext.send_msgs drops it otherwise)."""
+    socket = getattr(ctx.server, "socket", None)
+    return socket is not None and getattr(socket, "open", True) and not getattr(socket, "closed", False)
+
+
 def death_link_command(processor: ClientCommandProcessor, which: str, level: str) -> None:
     ctx = processor.ctx
     handler = getattr(ctx, "client_handler", None)
-    if not isinstance(handler, MarioTennisGBCClient) or handler.death_levels is None:
+    if not isinstance(handler, MarioTennisGBCClient) or handler.death_levels is None or not server_up(ctx):
         processor.output("Connect to the server with Mario Tennis GBC loaded first.")
         return
     if not level:
@@ -198,7 +204,7 @@ class MarioTennisGBCClient(BizHawkClient):
     async def death_link(self, ctx: BizHawkClientContext) -> None:
         """Sends the game's reported loss if it is big enough, and hands it a received death while it is in a match
         (dropped otherwise)."""
-        if self.death_levels is None or not getattr(ctx.server, "socket", None):
+        if self.death_levels is None or not server_up(ctx):
             return  # a loss stays in wApDeathOut until it can be sent
         in_match_at, domain = wram("wApDeathInMatch")
         in_match, out, pending = await read(ctx.bizhawk_ctx, [
