@@ -247,7 +247,9 @@ RunMinigameMatch:
 	script_fade_in 32 ; $6571
 	xor a ; $6576
 	ld [wMatchSimFrozen], a ; $6577
+	apcall ApDeathLinkMatchStart
 	call RunMinigamePointLoop ; $657a
+	apcall ApDeathLinkMinigameEnd
 	call ShowMatchResultScreens ; $657d
 	script_fade_out 32 ; $6580
 	call WaitFadeEnd ; $6585
@@ -292,6 +294,7 @@ RunMinigamePointLoop:
 	and MATCHABORT_MATCH ; $65dd
 	jr nz, .done ; $65df
 .pointLoop:
+	apcall ApDeathLinkMinigamePointStart
 	call LoadMinigamePointLayout ; $65e1
 	call ResetPointState ; $65e4
 	ld d, MODEHOOK_POINT_START ; $65e7
@@ -311,6 +314,7 @@ RunMinigamePointLoop:
 	jr nz, .done ; $6607
 	ld d, MODEHOOK_POINT_END ; $6609
 	call CallModeHook ; $660b
+	apcall ApDeathLinkMinigamePointEnd
 	ld a, [wMatchAbortFlag] ; $660e
 	and MATCHABORT_MATCH ; $6611
 	jr nz, .done ; $6613
@@ -336,6 +340,7 @@ PlayMinigamePoint:
 	ld [wUnusedMinigamePointFlag], a ; $6639
 .rallyLoop:
 	call StepMatchFrame ; $663c
+	apcall ApDeathLinkMinigamePoll
 	ld a, [wMatchAbortFlag] ; $663f
 	and MATCHABORT_POINT ; $6642
 	jr nz, .pointOver ; $6644

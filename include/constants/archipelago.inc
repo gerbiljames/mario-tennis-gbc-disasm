@@ -247,4 +247,13 @@ DEF AP_LOCATION_NAMES_SIZE EQU 2 * (AP_NAME_LENGTH + 1)
 ASSERT AP_NUM_LOCATIONS <= AP_LOCATION_BYTES * 8
 ASSERT AP_NUM_ITEMS <= AP_ITEM_SLOTS
 
+; DeathLink: how much a loss cost, or a received death takes (wApDeathOut,
+; wApDeathIn); the client's send and receive levels use the same values
+DEF AP_DEATHLINK_POINT EQU 1
+DEF AP_DEATHLINK_GAME EQU 2
+DEF AP_DEATHLINK_MATCH EQU 3
+; a rally ended by a received death; ResolvePointWinner scores it against
+; the player
+DEF POINTOUTCOME_DEATHLINK EQU $0c
+
 ENDC

@@ -289,7 +289,25 @@ wGlyphStampCellPtr:: dw
 
 ; [8-bit] Nonzero when the text belongs to a window other than wMenuWindowId; StampGlyphTileAtPen writes glyph tiles through wGlyphStampCellPtr only then. Menu text goes through the tilemap alone
 wGlyphStampEnabled:: db
-	ds 119
+
+; DeathLink (src/ap/deathlink_2d.asm), shared with the apworld's client.
+; [8-bit] Nonzero while a match or minigame takes DeathLink: the client
+; writes wApDeathIn only then
+wApDeathInMatch:: db
+; [8-bit] The biggest loss not yet sent, AP_DEATHLINK_*; the client clears it
+wApDeathOut:: db
+; [8-bit] A received death to apply, AP_DEATHLINK_*; the game clears it
+wApDeathIn:: db
+; [25 bytes] Who sent wApDeathIn, NUL-terminated (empty: nobody named)
+wApDeathSource:: ds AP_NAME_LENGTH + 1
+; [8-bit] Nonzero once a received death was applied in this match or minigame
+wApDeathApplied:: db
+; [8-bit] The received death applied to this minigame point, AP_DEATHLINK_*
+wApDeathPoint:: db
+; [8-bit] A lost drill point, reported when the next point starts unless the
+; drill ends first (one loss, one death)
+wApDeathDrillPending:: db
+	ds 119 - 6 - (AP_NAME_LENGTH + 1)
 
 ; [8-bit] Frames Unused_0a_StepCourtSceneGfxStream waits before queuing the next stream record; decremented each call, reloaded from the record's fourth byte
 wCourtSceneGfxStreamDelay:: db

@@ -143,7 +143,9 @@ RunMatch:
 	call PlayCourtIntro ; $41c5
 	xor a ; $41c8
 	ld [wMatchSimFrozen], a ; $41c9
+	apcall ApDeathLinkMatchStart
 	call RunMatchPlayLoop ; $41cc
+	apcall ApDeathLinkMatchEnd
 	ldh a, [hLinkState] ; $41cf
 	ld [wMatchEndLinkState], a ; $41d1
 	farcall EndLinkSession ; $41d4

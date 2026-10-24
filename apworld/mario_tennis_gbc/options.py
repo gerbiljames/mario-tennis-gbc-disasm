@@ -151,6 +151,35 @@ class RemoteItems(Toggle):
     display_name = "Remote Items"
 
 
+class DeathLinkSend(Choice):
+    """
+    DeathLink: send a death when you lose a point, a game or a match (the smallest loss that counts; a lost match
+    point is still one death). A failed mini-game or drill counts as a lost match, and a failed drill point as a
+    lost point. Change it while playing with the client's /deathlink_send command.
+    """
+    display_name = "DeathLink Send"
+    option_off = 0
+    option_point = 1
+    option_game = 2
+    option_match = 3
+    default = option_off
+
+
+class DeathLinkReceive(Choice):
+    """
+    DeathLink: what a death from another player costs you: the current point, game or match. In a mini-game any
+    death is a game over; in a drill a point fails the current drill point, a game or a match the drill. Outside a
+    match, mini-game or drill, deaths are ignored. Change it while playing with the client's /deathlink_receive
+    command.
+    """
+    display_name = "DeathLink Receive"
+    option_off = 0
+    option_point = 1
+    option_game = 2
+    option_match = 3
+    default = option_off
+
+
 @dataclass
 class MarioTennisGBCOptions(PerGameCommonOptions):
     story_arcs: StoryArcs
@@ -169,6 +198,8 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     dream_match_difficulty: DreamMatchDifficulty
     shot_items: ShotItems
     remote_items: RemoteItems
+    death_link_send: DeathLinkSend
+    death_link_receive: DeathLinkReceive
 
 
 option_groups = [
@@ -176,8 +207,10 @@ option_groups = [
     OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne, ExperienceModifier,
                              DreamMatchDifficulty]),
     OptionGroup("Quality of Life", [SkipIntro, SkipCeremony, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
-    OptionGroup("Multiworld", [RemoteItems]),
+    OptionGroup("Multiworld", [RemoteItems, DeathLinkSend, DeathLinkReceive]),
 ]
 
 # options that shape regions, locations or rules: sent in slot data for Universal Tracker
 LOGIC_OPTIONS = ("story_arcs", "goal", "minigames", "shot_items")
+# the client's starting DeathLink levels (it can change them while playing)
+CLIENT_OPTIONS = ("death_link_send", "death_link_receive")

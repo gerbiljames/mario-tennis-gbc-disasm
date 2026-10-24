@@ -215,6 +215,9 @@ ScorePoint:
 	call ResolvePointWinner ; $5add
 	ld [wPointWinLoseFlag], a ; $5ae0
 	call UpdatePointStats ; $5ae3
+	call ApplyPointToScore
+	apcall ApDeathLinkScored
+	ret
 ApplyPointToScore:
 	ld a, [wTiebreakerIndicator] ; $5ae6
 	and a ; $5ae9

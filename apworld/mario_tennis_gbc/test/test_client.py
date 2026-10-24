@@ -1,6 +1,8 @@
 import unittest
 
-from ..client import checksum, client_region, done_locations, valid
+from . import MarioTennisGBCTestBase
+from ..client import DEATH_LEVELS, checksum, client_region, done_locations, valid
+from ..options import DeathLinkReceive, DeathLinkSend
 from ..rom_addresses import constants
 from ..text import fit, width
 
@@ -37,3 +39,15 @@ class TestNames(unittest.TestCase):
 
     def test_unprintable(self) -> None:
         self.assertEqual(fit("a~b{c}é"), b"a-b(c)?")
+
+
+class TestDeathLink(MarioTennisGBCTestBase):
+    options = {"death_link_send": "game", "death_link_receive": "point"}
+
+    def test_levels_are_the_option_values(self) -> None:
+        for option in (DeathLinkSend, DeathLinkReceive):
+            self.assertEqual(DEATH_LEVELS, {name: option.options[name] for name in DEATH_LEVELS})
+
+    def test_slot_data_holds_the_starting_levels(self) -> None:
+        slot_data = self.world.fill_slot_data()
+        self.assertEqual((slot_data["death_link_send"], slot_data["death_link_receive"]), (2, 1))

@@ -570,6 +570,7 @@ INCLUDE "src/ap/checks_2d.asm"
 INCLUDE "src/ap/items_2d.asm"
 INCLUDE "src/ap/gates_2d.asm"
 INCLUDE "src/ap/shots_2d.asm"
+INCLUDE "src/ap/deathlink_2d.asm"
 
 SECTION "ROM Bank $2e", ROMX[$4000], BANK[$2e]
 

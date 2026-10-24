@@ -31,7 +31,7 @@ class Static(unittest.TestCase):
 
     def test_ram_free(self):
         import ram_free
-        self.assertEqual(sum(e - s for _, _, s, e in ram_free.free_ranges()), 4280)
+        self.assertEqual(sum(e - s for _, _, s, e in ram_free.free_ranges()), 4249)
 
     def test_twins(self):
         import twins

@@ -98,6 +98,7 @@ class MarioTennisGBCWorld(World):
             multidata["connect_names"][self.player_name]
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        return {**self.options.as_dict(*mtgbc_options.LOGIC_OPTIONS), "starting_shots": self.starting_shots}
+        return {**self.options.as_dict(*mtgbc_options.LOGIC_OPTIONS, *mtgbc_options.CLIENT_OPTIONS),
+                "starting_shots": self.starting_shots}
 
 

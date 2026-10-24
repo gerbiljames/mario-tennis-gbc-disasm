@@ -15,6 +15,7 @@ import asyncio
 import base64
 import shutil
 import sys
+import time
 import traceback
 from pathlib import Path
 
@@ -46,6 +47,17 @@ class Context:
         self.player_names = {ME: "Me", ALICE: "Alice"}
         self.sent = []
         self.game = self.items_handling = None
+        self.team, self.tags, self.last_death_link = 0, set(), 0.0
+        self.client_handler = None
+        self.command_processor = type("Commands", (), {"commands": {}})
+
+    async def send_death(self, death_text=""):
+        self.last_death_link = time.time()
+        await self.send_msgs([{"cmd": "Bounce", "tags": ["DeathLink"],
+                               "data": {"time": self.last_death_link, "source": "Me", "cause": death_text}}])
+
+    async def update_death_link(self, death_link):
+        self.tags = self.tags | {"DeathLink"} if death_link else self.tags - {"DeathLink"}
 
     async def check_locations(self, locations):
         locations = set(locations) & self.missing_locations
@@ -63,11 +75,18 @@ class Context:
     def checks(self):
         return {loc for m in self.sent if m["cmd"] == "LocationChecks" for loc in m["locations"]}
 
+    def deaths(self):
+        return [m["data"]["cause"] for m in self.sent if m["cmd"] == "Bounce"]
+
 
 def connect(client_module, game, rom_bytes):
     """Point the client module's BizHawk calls at this game."""
     def cart(off):
         return off // 0x2000, 0xa000 + off % 0x2000
+
+    def wram(off):
+        assert off < 0x1000, "only WRAM0 is mapped here"
+        return 0xc000 + off
 
     async def read(_, reads):
         out = []
@@ -76,19 +95,21 @@ def connect(client_module, game, rom_bytes):
                 out.append(bytes(rom_bytes[addr:addr + size]))
             elif domain == "CartRAM":
                 out.append(bytes(game.mem[cart(addr + i)] for i in range(size)))
+            elif domain == "WRAM":
+                out.append(bytes(game.mem[wram(addr + i)] for i in range(size)))
             else:
                 raise ValueError(domain)
         return out
 
     async def guarded_write(_, writes, guards):
+        def at(addr, domain):
+            return cart(addr) if domain == "CartRAM" else wram(addr)
         for addr, data, domain in guards:
-            assert domain == "CartRAM"
-            if bytes(game.mem[cart(addr + i)] for i in range(len(data))) != bytes(data):
+            if bytes(game.mem[at(addr + i, domain)] for i in range(len(data))) != bytes(data):
                 return False
         for addr, data, domain in writes:
-            assert domain == "CartRAM"
             for i, v in enumerate(data):
-                game.mem[cart(addr + i)] = v
+                game.mem[at(addr + i, domain)] = v
         return True
 
     client_module.read, client_module.guarded_write = read, guarded_write
@@ -96,6 +117,35 @@ def connect(client_module, game, rom_bytes):
 
 def poll(client, ctx):
     asyncio.run(client.game_watcher(ctx))
+
+
+def package(t, cmd, args):
+    """Hand the client a server package, and let what it starts finish."""
+    async def go():
+        t.client.on_package(t.ctx, cmd, args)
+        for _ in range(5):
+            await asyncio.sleep(0)
+    asyncio.run(go())
+
+
+def connected(t, send=0, receive=0):
+    package(t, "Connected", {"slot_data": {"death_link_send": send, "death_link_receive": receive}})
+
+
+def bounced(t, source="Alice", when=None):
+    package(t, "Bounced", {"tags": ["DeathLink"], "data": {"time": when or time.time(), "source": source}})
+
+
+def run_command(t, name, *args):
+    out = []
+    processor = type("Processor", (), {"ctx": t.ctx, "output": lambda self, text: out.append(text)})()
+
+    async def go():
+        t.ctx.command_processor.commands[name](processor, *args)
+        for _ in range(5):
+            await asyncio.sleep(0)
+    asyncio.run(go())
+    return out
 
 
 TESTS = {}
@@ -194,6 +244,96 @@ def remote_items_mode(t):
 
 
 remote_items_mode.tokens = {"ApOptRemoteItems": b"\x01"}
+
+
+@test
+def deathlink_sends_big_enough_losses(t):
+    g = t.game
+    connected(t, send=2)
+    assert "DeathLink" in t.ctx.tags
+    g.wram("wApDeathOut", 1)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, "a lost point was sent at level game"
+    g.wram("wApDeathOut", 3)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == ["Me lost a match."], t.ctx.deaths()
+    assert g.mem[g.addr("wApDeathOut")] == 0
+
+
+@test
+def deathlink_off_by_default(t):
+    connected(t)
+    assert "DeathLink" not in t.ctx.tags
+    t.game.wram("wApDeathOut", 3)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == []
+
+
+@test
+def deathlink_received_outside_a_match_is_dropped(t):
+    g = t.game
+    connected(t, receive=1)
+    bounced(t)
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 0 and t.client.death_source is None
+    g.wram("wApDeathInMatch", 1)
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 0, "a dropped death came back"
+
+
+@test
+def deathlink_own_bounce_is_ignored(t):
+    g = t.game
+    connected(t, send=1, receive=1)
+    g.wram("wApDeathOut", 1)
+    poll(t.client, t.ctx)
+    own = next(m for m in t.ctx.sent if m["cmd"] == "Bounce")
+    g.wram("wApDeathInMatch", 1)
+    bounced(t, "Me", own["data"]["time"])
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 0, "our own death came back to us"
+
+
+@test
+def deathlink_in_a_match(t):
+    """A death from Alice loses the point, says who sent it, and is not sent back."""
+    g = t.game
+    connected(t, send=1, receive=2)
+    aptest.start_story_match(g)
+    assert aptest.until(g, lambda: g.mem[g.addr("wApDeathInMatch")], 3000), "the match never started"
+    bounced(t, "Alice")
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 2
+    assert bytes(g.mem[g.addr("wApDeathSource") + i] for i in range(6)) == b"Alice\0"
+    assert aptest.until(g, lambda: g.mem[g.addr("wGameWinLoseFlag")] == aptest.WINLOSE_LOSE, 3000), "no game lost"
+    for _ in range(20):
+        g.tick(10)
+        poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [], "the received death was sent back"
+
+
+@test
+def deathlink_commands(t):
+    assert asyncio.run(t.client.validate_rom(t.ctx))
+    t.ctx.client_handler = t.client
+    assert run_command(t, "deathlink_send") == ["Connect to the server with Mario Tennis GBC loaded first."]
+    connected(t)
+    t.ctx.sent.clear()
+    assert run_command(t, "deathlink_send", "game") == ["DeathLink send: game"]
+    assert run_command(t, "deathlink_receive", "Match") == ["DeathLink receive: match"]
+    assert run_command(t, "deathlink_receive", "sometimes") == ["Choose off, point, game or match."]
+    assert run_command(t, "deathlink_send") == ["DeathLink send: game"]
+    assert "DeathLink" in t.ctx.tags
+    stored = [m["operations"][0]["value"] for m in t.ctx.sent if m["cmd"] == "Set"]
+    assert stored[-1] == {"send": 2, "receive": 3}, stored
+    key = t.client.death_levels_key(t.ctx)
+    connected(t)
+    assert t.client.death_levels == {"send": 0, "receive": 0}
+    package(t, "Retrieved", {"keys": {key: stored[-1]}})
+    assert t.client.death_levels == {"send": 2, "receive": 3}, "the stored levels were not restored"
+    run_command(t, "deathlink_send", "off")
+    run_command(t, "deathlink_receive", "off")
+    assert "DeathLink" not in t.ctx.tags
 
 
 class Run:

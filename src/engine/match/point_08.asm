@@ -46,6 +46,7 @@ PlayPoint:
 	call ForEachCharBank ; $4d23
 .rallyLoop:
 	call StepMatchFrame ; $4d26
+	apcall ApDeathLinkPoll
 	ld a, [wMatchAbortFlag] ; $4d29
 	and MATCHABORT_POINT ; $4d2c
 	jr nz, .aborted ; $4d2e
@@ -171,6 +172,10 @@ ResolvePointOutcome:
 	dw ResolveServeVolleyedPoint ; $4e1c jumptable
 	dw ResolveWrongReceiverPoint ; $4e1e jumptable
 	dw RetStub ; $4e20 jumptable
+	dw RetStub
+	dw RetStub
+	ASSERT POINTOUTCOME_DEATHLINK == $0c
+	dw ResolveDeathLinkPoint
 ResolvePointResultSequence:
 	ld hl, DelayAfterPointResolution ; $4e22
 	push hl ; $4e25
@@ -222,6 +227,9 @@ ResolveWinnerPoint:
 	ld a, 10 ; $4e87
 	call StepMatchFrames ; $4e89
 	ret ; $4e8c
+ResolveDeathLinkPoint:
+	apcall ApShowDeathLinkMessage
+	ret
 ResolveCalledPoint:
 	ld a, [wPointOutcome] ; $4e8d
 	add BANNER_FAULT - POINTOUTCOME_FAULT ; $4e90

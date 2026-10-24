@@ -180,6 +180,8 @@ EvalWinByTwo:
 	ret ; $5d99
 ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
+	cp POINTOUTCOME_DEATHLINK
+	jr z, .deathLink
 	cp POINTOUTCOME_FAULT ; $5d9d
 	jr z, .noWinner ; $5d9f
 	cp POINTOUTCOME_LET ; $5da1
@@ -205,6 +207,9 @@ ResolvePointWinner:
 	add a ; $5dc1
 	dec a ; $5dc2
 	ret ; $5dc3
+.deathLink:
+	ld a, WINLOSE_LOSE
+	ret
 CourtSceneDataTable:
 	; $5dc4, 100 bytes (court_scene)
 	table_width 4

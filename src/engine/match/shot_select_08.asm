@@ -137,36 +137,8 @@ RallyStandardShotTypeTable:
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_POWER_TOPSPIN, SHOTTYPE_DROP, SHOTTYPE_NEUTRAL ; 0x04
 	db SHOTTYPE_TOPSPIN, SHOTTYPE_LOB, SHOTTYPE_POWER_SLICE, SHOTTYPE_NEUTRAL ; 0x08
 	db SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL, SHOTTYPE_NEUTRAL ; 0x0c
-Unused_08_ComputeBallEtaToChar:
-	ld hl, wBallVelocityDepth ; $70c4
-	ld a, [hl+] ; $70c7
-	ld d, [hl] ; $70c8
-	ld e, a ; $70c9
-	ld hl, wBallRelCharDepth + 1 ; $70ca
-	bit 7, [hl] ; $70cd
-	jr nz, .farSide ; $70cf
-	ld l, $00 ; $70d1
-	ld a, [wBallRelCharDepth] ; $70d3
-	ld h, a ; $70d6
-	ld a, [wBallRelCharDepth + 1] ; $70d7
-	call DivAHLByDE ; $70da
-	ld e, l ; $70dd
-	ld d, h ; $70de
-	ret ; $70df
-.farSide:
-	ld l, $ff ; $70e0
-	ld a, [wBallRelCharDepth] ; $70e2
-	cpl ; $70e5
-	ld h, a ; $70e6
-	ld a, [wBallRelCharDepth + 1] ; $70e7
-	cpl ; $70ea
-	call DivAHLByDE ; $70eb
-	ld e, l ; $70ee
-	ld d, h ; $70ef
-	ret ; $70f0
-Unused_08_ComputeBallEtaToCharWrapper:
-	call Unused_08_ComputeBallEtaToChar ; $70f1
-	ret ; $70f4
+; Archipelago: Unused_08_ComputeBallEtaToChar and its wrapper ($70c4-$70f4)
+; are dropped to make room in this bank for DeathLink.
 PredictBallLateralOffset:
 	ld hl, wBallHeadingAngle ; $70f5
 	ld a, [hl+] ; $70f8
