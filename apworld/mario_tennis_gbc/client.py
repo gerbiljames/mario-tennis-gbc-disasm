@@ -227,7 +227,7 @@ class MarioTennisGBCClient(BizHawkClient):
         """Sends the game's reported loss if it is big enough, and hands it a received death while it is in a match
         (dropped otherwise)."""
         if self.death_levels is None or not server_up(ctx):
-            return  # a loss waits in wApDeathOut; a new connection drops it (Connected)
+            return  # a loss waits in wApDeathOut; a new server or BizHawk connection drops it
         in_match_at, domain = wram("wApDeathInMatch")
         in_match, out, pending = await read(ctx.bizhawk_ctx, [
             (in_match_at, 1, domain), (ram("wApDeathOut"), 1, domain), (ram("wApDeathIn"), 1, domain)])

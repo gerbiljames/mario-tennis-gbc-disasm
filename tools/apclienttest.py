@@ -330,12 +330,15 @@ def deathlink_waits_for_the_stored_levels(t):
 @test
 def deathlink_survives_bizhawk_errors(t):
     """A BizHawk timeout or disconnect, even mid-DeathLink, leaves the watcher
-    running (0.6.8 calls game_watcher outside its own try)."""
+    running (0.6.8 calls game_watcher outside its own try). As in 0.6.8, a
+    failed request drops the connection, so the core reconnects (new streams)
+    and the loss caught mid-clear is dropped, not sent late."""
     g = t.game
     connected(t, send=1)
     real_read, real_write = t.module.read, t.module.guarded_write
     for error in (t.module.RequestFailedError("Connection timed out"), t.module.NotConnectedError()):
         async def fail(*_, error=error):
+            t.ctx.bizhawk_ctx.streams = object()
             raise error
         t.module.read = fail
         poll(t.client, t.ctx)
@@ -344,6 +347,9 @@ def deathlink_survives_bizhawk_errors(t):
     t.module.guarded_write = fail
     poll(t.client, t.ctx)
     t.module.guarded_write = real_write
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, t.ctx.deaths()
+    g.wram("wApDeathOut", 2)
     poll(t.client, t.ctx)
     assert t.ctx.deaths() == ["Me lost a game."], t.ctx.deaths()
 
