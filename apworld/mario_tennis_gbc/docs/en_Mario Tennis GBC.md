@@ -47,8 +47,7 @@ DeathLink has separate settings for what you send and what you receive, each `of
 - **Receiving:** in a match, a death from another player costs you the current point, game or match. For a game or
   the match, the score jumps so that one point decides it; a game lost in a tiebreak also loses the set. Any death
   ends a mini-game or drill at once as failed; a high-score run already past its record ends as a high score. Outside
-  a match, mini-game or drill, and in link-cable matches, deaths are ignored, and they are never sent back out
-  (link-cable matches don't send either).
+  a match, mini-game or drill, deaths are ignored, and they are never sent back out.
 
 The settings in your options are where you start. Change them while playing with the client commands
 `/deathlink_send <off|point|game|match>` and `/deathlink_receive <off|point|game|match>`; with no argument they show

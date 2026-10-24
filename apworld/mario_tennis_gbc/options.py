@@ -169,8 +169,8 @@ class DeathLinkReceive(Choice):
     """
     DeathLink: what a death from another player costs you in a match: the current point, game or match (a game in
     a tiebreak takes the set with it). Any death ends a mini-game or drill as failed (a high-score run already past
-    its record ends as a high score); Two-on-One is a match. Outside a match, mini-game or drill, and in link-cable
-    matches, deaths are ignored. Change it while playing with the client's /deathlink_receive command.
+    its record ends as a high score); Two-on-One is a match. Outside a match, mini-game or drill, deaths are
+    ignored. Change it while playing with the client's /deathlink_receive command.
     """
     display_name = "DeathLink Receive"
     option_off = 0
