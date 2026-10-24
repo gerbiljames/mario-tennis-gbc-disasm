@@ -37,7 +37,7 @@ class Context:
     """What the client reads of CommonContext, and what it sends."""
 
     def __init__(self):
-        self.bizhawk_ctx = None
+        self.bizhawk_ctx = type("BizHawk", (), {"streams": object()})()
         self.server, self.slot = type("Server", (), {"socket": object()})(), ME
         self.auth = None
         self.checked_locations = set()
@@ -328,9 +328,9 @@ def deathlink_waits_for_the_stored_levels(t):
 
 
 @test
-def deathlink_survives_bizhawk_going_away(t):
+def deathlink_survives_bizhawk_errors(t):
     """A BizHawk timeout or disconnect, even mid-DeathLink, leaves the watcher
-    running; a loss reported meanwhile is dropped, and later ones are sent."""
+    running (0.6.8 calls game_watcher outside its own try)."""
     g = t.game
     connected(t, send=1)
     real_read, real_write = t.module.read, t.module.guarded_write
@@ -344,6 +344,18 @@ def deathlink_survives_bizhawk_going_away(t):
     t.module.guarded_write = fail
     poll(t.client, t.ctx)
     t.module.guarded_write = real_write
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == ["Me lost a game."], t.ctx.deaths()
+
+
+@test
+def deathlink_drops_a_loss_from_while_bizhawk_was_away(t):
+    """BizHawk reconnecting (new streams, noticed by the core's ping, with no
+    error reaching the client) drops a loss the game reported meanwhile."""
+    g = t.game
+    connected(t, send=1)
+    g.wram("wApDeathOut", 2)
+    t.ctx.bizhawk_ctx.streams = object()
     poll(t.client, t.ctx)
     assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, "a loss from while BizHawk was away went out"
     g.wram("wApDeathOut", 2)
