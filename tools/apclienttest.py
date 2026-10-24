@@ -54,7 +54,8 @@ class Context:
     async def send_death(self, death_text=""):
         self.last_death_link = time.time()
         await self.send_msgs([{"cmd": "Bounce", "tags": ["DeathLink"],
-                               "data": {"time": self.last_death_link, "source": "Me", "cause": death_text}}])
+                               "data": {"time": self.last_death_link, "source": self.player_names[self.slot],
+                                        "cause": death_text}}])
 
     async def update_death_link(self, death_link):
         self.tags = self.tags | {"DeathLink"} if death_link else self.tags - {"DeathLink"}
@@ -128,8 +129,12 @@ def package(t, cmd, args):
     asyncio.run(go())
 
 
-def connected(t, send=0, receive=0):
+def connected(t, send=0, receive=0, stored=None):
+    """Connect with these slot_data levels; data storage answers with `stored`,
+    and a first poll lets the client drop what the game reported before."""
     package(t, "Connected", {"slot_data": {"death_link_send": send, "death_link_receive": receive}})
+    package(t, "Retrieved", {"keys": {t.client.death_levels_key(t.ctx): stored}})
+    poll(t.client, t.ctx)
 
 
 def bounced(t, source="Alice", when=None):
@@ -296,6 +301,40 @@ def deathlink_does_not_overwrite_a_waiting_death(t):
 
 
 @test
+def deathlink_loss_from_before_connecting_is_dropped(t):
+    g = t.game
+    g.wram("wApDeathOut", 3)
+    connected(t, send=1)
+    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0
+
+
+@test
+def deathlink_waits_for_the_stored_levels(t):
+    g = t.game
+    package(t, "Connected", {"slot_data": {"death_link_send": 1, "death_link_receive": 1}})
+    assert "DeathLink" not in t.ctx.tags
+    poll(t.client, t.ctx)
+    g.wram("wApDeathOut", 3)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [], "sent at slot_data's level before the stored one came back"
+    package(t, "Retrieved", {"keys": {t.client.death_levels_key(t.ctx): {"send": 0, "receive": 0}}})
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [] and "DeathLink" not in t.ctx.tags
+
+
+@test
+def deathlink_survives_a_bizhawk_timeout(t):
+    connected(t)
+    real = t.module.read
+
+    async def timeout(*_):
+        raise t.module.RequestFailedError("Connection timed out")
+    t.module.read = timeout
+    poll(t.client, t.ctx)
+    t.module.read = real
+
+
+@test
 def deathlink_off_by_default(t):
     connected(t)
     assert "DeathLink" not in t.ctx.tags
@@ -336,9 +375,12 @@ def deathlink_own_bounce_is_ignored(t):
     poll(t.client, t.ctx)
     own = next(m for m in t.ctx.sent if m["cmd"] == "Bounce")
     g.wram("wApDeathInMatch", 1)
-    bounced(t, "Me", own["data"]["time"])
+    bounced(t, "Me")
     poll(t.client, t.ctx)
     assert g.mem[g.addr("wApDeathIn")] == 0, "our own death came back to us"
+    bounced(t, "Alice", own["data"]["time"])
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 1, "a death stamped like ours was taken for ours"
 
 
 @test
@@ -377,10 +419,7 @@ def deathlink_commands(t):
     t.ctx.server.socket = socket
     stored = [m["operations"][0]["value"] for m in t.ctx.sent if m["cmd"] == "Set"]
     assert stored[-1] == {"send": 2, "receive": 3}, stored
-    key = t.client.death_levels_key(t.ctx)
-    connected(t)
-    assert t.client.death_levels == {"send": 0, "receive": 0}
-    package(t, "Retrieved", {"keys": {key: stored[-1]}})
+    connected(t, stored=stored[-1])
     assert t.client.death_levels == {"send": 2, "receive": 3}, "the stored levels were not restored"
     run_command(t, "deathlink_send", "off")
     run_command(t, "deathlink_receive", "off")

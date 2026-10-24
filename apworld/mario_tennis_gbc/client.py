@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 from NetUtils import ClientStatus
 from Utils import async_start
-from worlds._bizhawk import guarded_write, read
+from worlds._bizhawk import RequestFailedError, guarded_write, read
 from worlds._bizhawk.client import BizHawkClient
 
 from .items import GAME
@@ -116,8 +116,12 @@ class MarioTennisGBCClient(BizHawkClient):
 
     def __init__(self) -> None:
         super().__init__()
-        # {"send": level, "receive": level} once connected
+        # {"send": level, "receive": level} once connected and the stored levels are back
         self.death_levels: dict[str, int] | None = None
+        # slot_data's levels, until data storage answers
+        self.death_defaults: dict[str, int] = {}
+        # a loss the game reported before this connection is dropped, not sent late
+        self.drop_reported_loss = False
         # (source, when) of a death received and not yet handed to the game
         self.death_source: tuple[str, float] | None = None
 
@@ -137,19 +141,20 @@ class MarioTennisGBCClient(BizHawkClient):
     def on_package(self, ctx: BizHawkClientContext, cmd: str, args: dict[str, Any]) -> None:
         if cmd == "Connected":
             slot_data = args.get("slot_data") or {}
-            self.death_source = None
-            self.set_death_levels(ctx, store=False, send=slot_data.get("death_link_send", 0),
-                                  receive=slot_data.get("death_link_receive", 0))
+            self.death_source, self.death_levels, self.drop_reported_loss = None, None, True
+            self.death_defaults = {"send": slot_data.get("death_link_send", 0),
+                                   "receive": slot_data.get("death_link_receive", 0)}
             async_start(ctx.send_msgs([{"cmd": "Get", "keys": [self.death_levels_key(ctx)]}]))
-        elif cmd == "Retrieved":
-            stored = args.get("keys", {}).get(self.death_levels_key(ctx))
+        elif cmd == "Retrieved" and self.death_levels_key(ctx) in args.get("keys", {}):
+            stored = args["keys"][self.death_levels_key(ctx)]
+            levels = dict(self.death_defaults)
             if isinstance(stored, dict):
-                levels = {k: stored[k] for k in ("send", "receive") if stored.get(k) in DEATH_LEVEL_NAMES}
-                self.set_death_levels(ctx, store=False, **levels)
+                levels.update({k: stored[k] for k in ("send", "receive") if stored.get(k) in DEATH_LEVEL_NAMES})
+            self.set_death_levels(ctx, store=False, **levels)
         elif cmd == "Bounced" and "DeathLink" in args.get("tags", []):
             data = args.get("data", {})
             source = str(data.get("source", ""))
-            # slot names are unique, so this is our own death coming back
+            # names hold the slot name, unique per multiworld: this is our own death coming back
             if source != ctx.player_names.get(ctx.slot) and self.death_levels and self.death_levels["receive"]:
                 self.death_source = source, time.monotonic()
 
@@ -178,6 +183,12 @@ class MarioTennisGBCClient(BizHawkClient):
         ctx.auth = base64.b64encode(auth).decode()
 
     async def game_watcher(self, ctx: BizHawkClientContext) -> None:
+        try:
+            await self.watch(ctx)
+        except RequestFailedError:
+            pass  # BizHawk timed out or went away; the next tick retries (else this ends the watcher task)
+
+    async def watch(self, ctx: BizHawkClientContext) -> None:
         if ctx.server is None or ctx.slot is None:
             return
         header_size = ram("sApHeaderEnd") - ram("sApHeader")
@@ -209,13 +220,14 @@ class MarioTennisGBCClient(BizHawkClient):
         """Sends the game's reported loss if it is big enough, and hands it a received death while it is in a match
         (dropped otherwise)."""
         if self.death_levels is None or not server_up(ctx):
-            return  # a loss stays in wApDeathOut until it can be sent
+            return  # a loss waits in wApDeathOut; a new connection drops it (Connected)
         in_match_at, domain = wram("wApDeathInMatch")
         in_match, out, pending = await read(ctx.bizhawk_ctx, [
             (in_match_at, 1, domain), (ram("wApDeathOut"), 1, domain), (ram("wApDeathIn"), 1, domain)])
+        drop, self.drop_reported_loss = self.drop_reported_loss, False
         if out[0] and await guarded_write(ctx.bizhawk_ctx, [(ram("wApDeathOut"), [0], domain)],
                                           [(ram("wApDeathOut"), out, domain)]):
-            if out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
+            if not drop and out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
                 await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
         if self.death_source is None:
             return
