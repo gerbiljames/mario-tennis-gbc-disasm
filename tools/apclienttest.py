@@ -250,7 +250,7 @@ remote_items_mode.tokens = {"ApOptRemoteItems": b"\x01"}
 def deathlink_sends_big_enough_losses(t):
     g = t.game
     connected(t, send=2)
-    assert "DeathLink" in t.ctx.tags
+    assert "DeathLink" not in t.ctx.tags, "tagged for deaths it would ignore"
     g.wram("wApDeathOut", 1)
     poll(t.client, t.ctx)
     assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, "a lost point was sent at level game"

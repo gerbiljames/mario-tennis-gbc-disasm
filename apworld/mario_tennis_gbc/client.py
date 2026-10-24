@@ -126,7 +126,8 @@ class MarioTennisGBCClient(BizHawkClient):
 
     def set_death_levels(self, ctx: BizHawkClientContext, store: bool = True, **levels: int) -> None:
         self.death_levels = {**(self.death_levels or {"send": 0, "receive": 0}), **levels}
-        async_start(ctx.update_death_link(any(self.death_levels.values())))
+        # the tag only routes deaths to us; sending works without it
+        async_start(ctx.update_death_link(bool(self.death_levels["receive"])))
         if store:
             async_start(ctx.send_msgs([{"cmd": "Set", "key": self.death_levels_key(ctx), "default": {},
                                         "want_reply": False,
@@ -220,7 +221,7 @@ class MarioTennisGBCClient(BizHawkClient):
         if not level:
             return
         if not in_match[0]:
-            logger.info("DeathLink: not in a match, so it does nothing.")
+            logger.info("DeathLink: not in a match, mini-game or drill, so it does nothing.")
         elif pending[0]:
             logger.info("DeathLink: the last death has not happened yet, so this one does nothing.")
         elif not await guarded_write(
