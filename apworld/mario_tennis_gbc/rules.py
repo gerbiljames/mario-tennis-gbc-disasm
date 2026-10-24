@@ -62,6 +62,7 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     # can't be done without the shot: the drill checks it on every point that counts
     rules: dict[str, Rule] = {
         "Stroke Lesson 2": Has(LOB),
+        "Stroke Match 2": Has(LOB),
         "Service Lesson 2": And(Has(TOPSPIN_SERVE), Has(SLICE_SERVE)),
         "Service Lesson 3": nice_serve,
         "Net Game Lesson 2": Has(FLAT_SHOT, count=2),
@@ -78,7 +79,6 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         "Net Game Lesson 1": volley,
         "Net Game Match 2": And(Has(FLAT_SHOT, count=2), Has(LOB)),
         "Net Game Lesson 3": Has(DROP_SHOT),
-        "Stroke Match 2": Has(LOB),
         **{f"Service Match {n}": nice_serve for n in (1, 2, 3)},
     }
     if world.options.minigames != world.options.minigames.option_excluded:
