@@ -66,6 +66,7 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
         "Service Lesson 2": And(Has(TOPSPIN_SERVE), Has(SLICE_SERVE)),
         "Service Lesson 3": nice_serve,
         "Net Game Lesson 2": Has(FLAT_SHOT, count=2),
+        "Net Game Match 2": Has(FLAT_SHOT, count=2),
     }
     if world.options.minigames != world.options.minigames.option_excluded:
         # playtested: Perfect Shot can't be scored in without lobbing, nor Target Shot's later levels without
@@ -77,7 +78,7 @@ def shot_rules(world: MarioTennisGBCWorld) -> dict[str, Rule]:
     possible = {
         "Net Game Match 1": volley,
         "Net Game Lesson 1": volley,
-        "Net Game Match 2": And(Has(FLAT_SHOT, count=2), Has(LOB)),
+        "Net Game Match 2": Has(LOB),
         "Net Game Lesson 3": Has(DROP_SHOT),
         **{f"Service Match {n}": nice_serve for n in (1, 2, 3)},
     }

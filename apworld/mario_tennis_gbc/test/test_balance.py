@@ -122,8 +122,11 @@ class TestShotItems(MarioTennisGBCTestBase):
         self.assertFalse(self.can_reach_location("Net Game Lesson 2"), "a strict shot rule went glitched")
         self.collect_by_name("Progressive Stroke Match")
         self.assertFalse(self.can_reach_location("Stroke Match 2"), "a strict shot rule went glitched")
+        self.collect_by_name("Progressive Net Game Match")
+        self.assertFalse(self.can_reach_location("Net Game Match 2"), "a strict shot rule went glitched")
         self.collect_by_name("Progressive Flat Shot")
         self.assertTrue(self.can_reach_location("Net Game Lesson 3"))
+        self.assertTrue(self.can_reach_location("Net Game Match 2"), "the lob stays glitched")
 
 
 class TestShotItemsOff(MarioTennisGBCTestBase):
