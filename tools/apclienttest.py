@@ -362,18 +362,6 @@ def deathlink_received_outside_a_match_is_dropped(t):
 
 
 @test
-def deathlink_stale_death_is_dropped(t):
-    g = t.game
-    connected(t, receive=1)
-    g.wram("wApDeathInMatch", 1)
-    bounced(t)
-    source, when = t.client.death_source
-    t.client.death_source = source, when - t.module.DEATH_MAX_AGE - 1
-    poll(t.client, t.ctx)
-    assert g.mem[g.addr("wApDeathIn")] == 0, "a death from before the game came back was applied"
-
-
-@test
 def deathlink_own_bounce_is_ignored(t):
     g = t.game
     connected(t, send=1, receive=1)

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import base64
 import logging
-import time
 from typing import TYPE_CHECKING, Any
 
 from NetUtils import ClientStatus
@@ -32,8 +31,6 @@ LOCATION_BYTES = constants["AP_LOCATION_BYTES"]
 DEATH_LEVELS = {"off": 0, "point": constants["AP_DEATHLINK_POINT"], "game": constants["AP_DEATHLINK_GAME"],
                 "match": constants["AP_DEATHLINK_MATCH"]}
 DEATH_LEVEL_NAMES = {v: k for k, v in DEATH_LEVELS.items()}
-# a received death older than this (the emulator was away) is dropped, not applied late
-DEATH_MAX_AGE = 5.0
 LOSSES = {DEATH_LEVELS["point"]: "lost a point", DEATH_LEVELS["game"]: "lost a game",
           DEATH_LEVELS["match"]: "lost a match"}
 
@@ -120,8 +117,8 @@ class MarioTennisGBCClient(BizHawkClient):
         self.death_levels: dict[str, int] | None = None
         # slot_data's levels, until data storage answers
         self.death_defaults: dict[str, int] = {}
-        # (source, when) of a death received and not yet handed to the game
-        self.death_source: tuple[str, float] | None = None
+        # the source of a death received and not yet handed to the game
+        self.death_source: str | None = None
 
     @staticmethod
     def death_levels_key(ctx: BizHawkClientContext) -> str:
@@ -154,7 +151,7 @@ class MarioTennisGBCClient(BizHawkClient):
             source = str(data.get("source", ""))
             # names hold the slot name, unique per multiworld: this is our own death coming back
             if source != ctx.player_names.get(ctx.slot) and self.death_levels and self.death_levels["receive"]:
-                self.death_source = source, time.monotonic()
+                self.death_source = source
 
     async def validate_rom(self, ctx: BizHawkClientContext) -> bool:
         title, ident, remote = await read(ctx.bizhawk_ctx, [
@@ -229,13 +226,11 @@ class MarioTennisGBCClient(BizHawkClient):
                 await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
         if self.death_source is None:
             return
-        (source, when), self.death_source = self.death_source, None
+        source, self.death_source = self.death_source, None
         level = self.death_levels["receive"]
         if not level:
             return
-        if time.monotonic() - when > DEATH_MAX_AGE:
-            logger.info("DeathLink: received while the game was away, so it does nothing.")
-        elif not in_match[0]:
+        if not in_match[0]:
             logger.info("DeathLink: not in a match, mini-game or drill, so it does nothing.")
         elif pending[0]:
             logger.info("DeathLink: the last death has not happened yet, so this one does nothing.")
