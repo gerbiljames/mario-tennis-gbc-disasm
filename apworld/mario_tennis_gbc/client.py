@@ -120,10 +120,6 @@ class MarioTennisGBCClient(BizHawkClient):
         self.death_levels: dict[str, int] | None = None
         # slot_data's levels, until data storage answers
         self.death_defaults: dict[str, int] = {}
-        # a loss the game reported before this server and BizHawk connection is dropped, not sent late
-        self.drop_reported_loss = False
-        # the BizHawk connection last seen: worlds._bizhawk opens new streams on every connect
-        self.bizhawk_streams: object = None
         # (source, when) of a death received and not yet handed to the game
         self.death_source: tuple[str, float] | None = None
 
@@ -143,7 +139,7 @@ class MarioTennisGBCClient(BizHawkClient):
     def on_package(self, ctx: BizHawkClientContext, cmd: str, args: dict[str, Any]) -> None:
         if cmd == "Connected":
             slot_data = args.get("slot_data") or {}
-            self.death_source, self.death_levels, self.drop_reported_loss = None, None, True
+            self.death_source, self.death_levels = None, None
             self.death_defaults = {"send": slot_data.get("death_link_send", 0),
                                    "receive": slot_data.get("death_link_receive", 0)}
             async_start(ctx.send_msgs([{"cmd": "Get", "keys": [self.death_levels_key(ctx)]}]))
@@ -185,14 +181,10 @@ class MarioTennisGBCClient(BizHawkClient):
         ctx.auth = base64.b64encode(auth).decode()
 
     async def game_watcher(self, ctx: BizHawkClientContext) -> None:
-        streams = getattr(ctx.bizhawk_ctx, "streams", None)
-        if streams is not self.bizhawk_streams:
-            # BizHawk reconnected: a loss the game reported meanwhile is dropped, as over a server reconnect
-            self.bizhawk_streams, self.drop_reported_loss = streams, True
         try:
             await self.watch(ctx)
         except (RequestFailedError, NotConnectedError) as exc:
-            # uncaught, this would end the watcher task; the next tick retries on a new connection
+            # uncaught, this would end the watcher task; the next tick retries
             logger.info(f"Lost connection to BizHawk: {exc}")
 
     async def watch(self, ctx: BizHawkClientContext) -> None:
@@ -227,18 +219,14 @@ class MarioTennisGBCClient(BizHawkClient):
         """Sends the game's reported loss if it is big enough, and hands it a received death while it is in a match
         (dropped otherwise)."""
         if self.death_levels is None or not server_up(ctx):
-            return  # a loss waits in wApDeathOut; a new server or BizHawk connection drops it
+            return  # a loss waits in wApDeathOut until it can be sent
         in_match_at, domain = wram("wApDeathInMatch")
         in_match, out, pending = await read(ctx.bizhawk_ctx, [
             (in_match_at, 1, domain), (ram("wApDeathOut"), 1, domain), (ram("wApDeathIn"), 1, domain)])
         if out[0] and await guarded_write(ctx.bizhawk_ctx, [(ram("wApDeathOut"), [0], domain)],
                                           [(ram("wApDeathOut"), out, domain)]):
-            if (not self.drop_reported_loss and out[0] in LOSSES and self.death_levels["send"]
-                    and out[0] >= self.death_levels["send"]):
+            if out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
                 await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
-            self.drop_reported_loss = False
-        elif not out[0]:
-            self.drop_reported_loss = False
         if self.death_source is None:
             return
         (source, when), self.death_source = self.death_source, None

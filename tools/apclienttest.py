@@ -37,7 +37,7 @@ class Context:
     """What the client reads of CommonContext, and what it sends."""
 
     def __init__(self):
-        self.bizhawk_ctx = type("BizHawk", (), {"streams": object()})()
+        self.bizhawk_ctx = None
         self.server, self.slot = type("Server", (), {"socket": object()})(), ME
         self.auth = None
         self.checked_locations = set()
@@ -130,8 +130,7 @@ def package(t, cmd, args):
 
 
 def connected(t, send=0, receive=0, stored=None):
-    """Connect with these slot_data levels; data storage answers with `stored`,
-    and a first poll lets the client drop what the game reported before."""
+    """Connect with these slot_data levels; data storage answers with `stored`."""
     package(t, "Connected", {"slot_data": {"death_link_send": send, "death_link_receive": receive}})
     package(t, "Retrieved", {"keys": {t.client.death_levels_key(t.ctx): stored}})
     poll(t.client, t.ctx)
@@ -275,9 +274,9 @@ def deathlink_ignores_an_unknown_loss(t):
 
 
 @test
-def deathlink_keeps_a_loss_while_the_socket_closes(t):
-    """A loss read while the socket is closing waits rather than being
-    cleared unsent (a real reconnect brings a new Connected, which drops it)."""
+def deathlink_keeps_a_loss_while_disconnected(t):
+    """A loss waits in the game while the client can't send it, rather than
+    being cleared unsent."""
     g = t.game
     connected(t, send=1)
     socket, t.ctx.server.socket = t.ctx.server.socket, None
@@ -303,14 +302,6 @@ def deathlink_does_not_overwrite_a_waiting_death(t):
 
 
 @test
-def deathlink_loss_from_before_connecting_is_dropped(t):
-    g = t.game
-    g.wram("wApDeathOut", 3)
-    connected(t, send=1)
-    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0
-
-
-@test
 def deathlink_waits_for_the_stored_levels(t):
     g = t.game
     package(t, "Connected", {"slot_data": {"death_link_send": 1, "death_link_receive": 1}})
@@ -330,15 +321,13 @@ def deathlink_waits_for_the_stored_levels(t):
 @test
 def deathlink_survives_bizhawk_errors(t):
     """A BizHawk timeout or disconnect, even mid-DeathLink, leaves the watcher
-    running (0.6.8 calls game_watcher outside its own try). As in 0.6.8, a
-    failed request drops the connection, so the core reconnects (new streams)
-    and the loss caught mid-clear is dropped, not sent late."""
+    running (0.6.8 calls game_watcher outside its own try), and the loss it
+    interrupted is still sent."""
     g = t.game
     connected(t, send=1)
     real_read, real_write = t.module.read, t.module.guarded_write
     for error in (t.module.RequestFailedError("Connection timed out"), t.module.NotConnectedError()):
         async def fail(*_, error=error):
-            t.ctx.bizhawk_ctx.streams = object()
             raise error
         t.module.read = fail
         poll(t.client, t.ctx)
@@ -347,24 +336,6 @@ def deathlink_survives_bizhawk_errors(t):
     t.module.guarded_write = fail
     poll(t.client, t.ctx)
     t.module.guarded_write = real_write
-    poll(t.client, t.ctx)
-    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, t.ctx.deaths()
-    g.wram("wApDeathOut", 2)
-    poll(t.client, t.ctx)
-    assert t.ctx.deaths() == ["Me lost a game."], t.ctx.deaths()
-
-
-@test
-def deathlink_drops_a_loss_from_while_bizhawk_was_away(t):
-    """BizHawk reconnecting (new streams, noticed by the core's ping, with no
-    error reaching the client) drops a loss the game reported meanwhile."""
-    g = t.game
-    connected(t, send=1)
-    g.wram("wApDeathOut", 2)
-    t.ctx.bizhawk_ctx.streams = object()
-    poll(t.client, t.ctx)
-    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0, "a loss from while BizHawk was away went out"
-    g.wram("wApDeathOut", 2)
     poll(t.client, t.ctx)
     assert t.ctx.deaths() == ["Me lost a game."], t.ctx.deaths()
 
