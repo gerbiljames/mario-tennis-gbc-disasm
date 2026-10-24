@@ -181,11 +181,13 @@ ApShowDeathLinkMessage:
 	farcall StepMatchFrames
 	ret
 
-; the composed message, until a button press; the sim runs again after
+; the composed message, until a button press; the sim runs again after.
+; 19 wide: ShowMessageWindow rounds the court's scroll up to a tile, so the
+; window can start up to 7 pixels right of the screen edge.
 ApDeathLinkWindow:
 	ld hl, AP_MESSAGE_TEXT
 	ld_cell de, $00, $05
-	ld_size bc, $14, $06
+	ld_size bc, $13, $06
 	farcall ShowMessageWindow
 	ret
 

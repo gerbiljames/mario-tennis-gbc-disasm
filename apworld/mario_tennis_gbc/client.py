@@ -32,6 +32,8 @@ LOCATION_BYTES = constants["AP_LOCATION_BYTES"]
 DEATH_LEVELS = {"off": 0, "point": constants["AP_DEATHLINK_POINT"], "game": constants["AP_DEATHLINK_GAME"],
                 "match": constants["AP_DEATHLINK_MATCH"]}
 DEATH_LEVEL_NAMES = {v: k for k, v in DEATH_LEVELS.items()}
+# the text width inside ApDeathLinkWindow
+DEATH_LINE_WIDTH = (19 - 2) * 8
 LOSSES = {DEATH_LEVELS["point"]: "lost a point", DEATH_LEVELS["game"]: "lost a game",
           DEATH_LEVELS["match"]: "lost a match"}
 
@@ -249,6 +251,6 @@ class MarioTennisGBCClient(BizHawkClient):
             logger.info("DeathLink: the last death has not happened yet, so this one does nothing.")
         elif not await guarded_write(
                 ctx.bizhawk_ctx,
-                [(ram("wApDeathSource"), fit(source, "from !") + b"\0", domain), (ram("wApDeathIn"), [level], domain)],
+                [(ram("wApDeathSource"), fit(source, "from !", DEATH_LINE_WIDTH) + b"\0", domain), (ram("wApDeathIn"), [level], domain)],
                 [(in_match_at, in_match, domain), (ram("wApDeathIn"), [0], domain)]):
             logger.info("DeathLink: the match ended first, so it does nothing.")

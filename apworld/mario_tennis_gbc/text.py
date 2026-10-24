@@ -31,10 +31,10 @@ def width(text: str) -> int:
     return sum(WIDTHS[ord(ch) - 0x20] for ch in text)
 
 
-def fit(name: str, fixed: str = "") -> bytes:
+def fit(name: str, fixed: str = "", line_width: int = LINE_WIDTH) -> bytes:
     """`name` in the font, cut with "..." so that it and `fixed` (the line's other text) fit a line."""
     name = to_font(name)
-    room = LINE_WIDTH - width(fixed)
+    room = line_width - width(fixed)
     if len(name) <= NAME_LENGTH and width(name) <= room:
         return name.encode()
     while name and (len(name) + 3 > NAME_LENGTH or width(name + "...") > room):
