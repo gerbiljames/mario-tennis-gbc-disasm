@@ -38,7 +38,7 @@ class Context:
 
     def __init__(self):
         self.bizhawk_ctx = None
-        self.server, self.slot = object(), ME
+        self.server, self.slot = type("Server", (), {"socket": object()})(), ME
         self.auth = None
         self.checked_locations = set()
         self.missing_locations = set(range(1, 129))
@@ -258,6 +258,41 @@ def deathlink_sends_big_enough_losses(t):
     poll(t.client, t.ctx)
     assert t.ctx.deaths() == ["Me lost a match."], t.ctx.deaths()
     assert g.mem[g.addr("wApDeathOut")] == 0
+
+
+@test
+def deathlink_ignores_an_unknown_loss(t):
+    g = t.game
+    connected(t, send=1)
+    g.wram("wApDeathOut", 0x5a)
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == [] and g.mem[g.addr("wApDeathOut")] == 0
+
+
+@test
+def deathlink_keeps_a_loss_while_disconnected(t):
+    g = t.game
+    connected(t, send=1)
+    socket, t.ctx.server.socket = t.ctx.server.socket, None
+    g.wram("wApDeathOut", 2)
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathOut")] == 2, "the loss was cleared unsent"
+    t.ctx.server.socket = socket
+    poll(t.client, t.ctx)
+    assert t.ctx.deaths() == ["Me lost a game."], t.ctx.deaths()
+
+
+@test
+def deathlink_does_not_overwrite_a_waiting_death(t):
+    g = t.game
+    connected(t, receive=1)
+    g.wram("wApDeathInMatch", 1)
+    g.wram("wApDeathIn", 3)
+    g.wram("wApDeathSource", *b"Bob", 0)
+    bounced(t, "Alice")
+    poll(t.client, t.ctx)
+    assert g.mem[g.addr("wApDeathIn")] == 3
+    assert bytes(g.mem[g.addr("wApDeathSource") + i] for i in range(4)) == b"Bob\0"
 
 
 @test

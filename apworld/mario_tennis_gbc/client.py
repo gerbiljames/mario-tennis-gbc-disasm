@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import logging
+import time
 from typing import TYPE_CHECKING, Any
 
 from NetUtils import ClientStatus
@@ -197,24 +198,36 @@ class MarioTennisGBCClient(BizHawkClient):
     async def death_link(self, ctx: BizHawkClientContext) -> None:
         """Sends the game's reported loss if it is big enough, and hands it a received death while it is in a match
         (dropped otherwise)."""
-        if self.death_levels is None:
-            return
+        if self.death_levels is None or not getattr(ctx.server, "socket", None):
+            return  # a loss stays in wApDeathOut until it can be sent
         in_match_at, domain = wram("wApDeathInMatch")
         in_match, out, pending = await read(ctx.bizhawk_ctx, [
             (in_match_at, 1, domain), (ram("wApDeathOut"), 1, domain), (ram("wApDeathIn"), 1, domain)])
         if out[0] and await guarded_write(ctx.bizhawk_ctx, [(ram("wApDeathOut"), [0], domain)],
                                           [(ram("wApDeathOut"), out, domain)]):
-            if self.death_levels["send"] and out[0] >= self.death_levels["send"]:
-                await ctx.send_death(f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
-                self.deaths_sent.add(ctx.last_death_link)
+            if out[0] in LOSSES and self.death_levels["send"] and out[0] >= self.death_levels["send"]:
+                await self.send_death(ctx, f"{ctx.player_names[ctx.slot]} {LOSSES[out[0]]}.")
         if self.death_source is None:
             return
         source, self.death_source = self.death_source, None
         level = self.death_levels["receive"]
         if not level:
             return
-        name = fit(source, "from !") + b"\0" if source else b"\0"
-        if not (in_match[0] and not pending[0] and await guarded_write(
-                ctx.bizhawk_ctx, [(ram("wApDeathSource"), name, domain), (ram("wApDeathIn"), [level], domain)],
-                [(in_match_at, in_match, domain), (ram("wApDeathIn"), [0], domain)])):
+        if not in_match[0]:
             logger.info("DeathLink: not in a match, so it does nothing.")
+        elif pending[0]:
+            logger.info("DeathLink: the last death has not happened yet, so this one does nothing.")
+        elif not await guarded_write(
+                ctx.bizhawk_ctx,
+                [(ram("wApDeathSource"), fit(source, "from !") + b"\0", domain), (ram("wApDeathIn"), [level], domain)],
+                [(in_match_at, in_match, domain), (ram("wApDeathIn"), [0], domain)]):
+            logger.info("DeathLink: the match ended first, so it does nothing.")
+
+    async def send_death(self, ctx: BizHawkClientContext, cause: str) -> None:
+        """ctx.send_death, with the time noted before the Bounce can come back to us."""
+        ctx.last_death_link = time.time()
+        self.deaths_sent.add(ctx.last_death_link)
+        logger.info("DeathLink: Sending death to your friends...")
+        await ctx.send_msgs([{"cmd": "Bounce", "tags": ["DeathLink"],
+                              "data": {"time": ctx.last_death_link, "source": ctx.player_names[ctx.slot],
+                                       "cause": cause}}])

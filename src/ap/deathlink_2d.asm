@@ -9,7 +9,6 @@ ApDeathLinkMatchStart:
 	xor a
 	ld [wApDeathIn], a
 	ld [wApDeathApplied], a
-	ld [wApDeathPoint], a
 	ld [wApDeathDrillPending], a
 	ld a, [wGameMode]
 	cp GAMEMODE_LINK_MATCH
@@ -26,8 +25,8 @@ ApDeathLinkMatchStart:
 	ret
 
 ; RunMinigameMatch, after play: a failed minigame or drill is a lost match,
-; unless the player quit or a received death had a hand in it. A high-score
-; run always ends in a game over, so it never counts.
+; unless the player quit or a received death ended it. A high-score run
+; always ends in a game over, so it never counts.
 ApDeathLinkMinigameEnd:
 	ld a, [wApDeathDrillPending]
 	ld b, a
@@ -101,7 +100,8 @@ ApDeathLinkScored:
 ; PlayPoint, every rally frame: a received death ends the rally as a lost
 ; point. For a game or the match, the score is first set so that this one
 ; point decides it: the opponent at 40-0 (6-0 in a tiebreak), and for the
-; match also a game and a set short of winning.
+; match also a game and a set short of winning. Not while the point is being
+; given up (a pause menu's quit or save): it waits for the next one.
 ApDeathLinkPoll:
 	ld a, [wApDeathIn]
 	and a
@@ -110,7 +110,13 @@ ApDeathLinkPoll:
 	ld a, [wPointOutcome]
 	and a
 	ret nz
+	ld a, [wMatchAbortFlag]
+	and a
+	ret nz
 	ld [wApDeathIn], a
+	push bc
+	call ApComposeDeathLinkMessage
+	pop bc
 	ld a, b
 	cp AP_DEATHLINK_GAME
 	jr c, .point
@@ -138,22 +144,21 @@ ApDeathLinkPoll:
 	dec a
 	ld [wPlayer2SetsWon], a
 .point:
-	ld a, 1
-	ld [wApDeathApplied], a
 	xor a
 	ld [wPointOutcomeSide], a
 	ld a, POINTOUTCOME_DEATHLINK
 	ld [wPointOutcome], a
 	ret
 
-; ResolvePointOutcome, for POINTOUTCOME_DEATHLINK: "DeathLink from <name>!"
-ApShowDeathLinkMessage:
+; "DeathLink from <name>!" into wApMessage, composed as the death is
+; applied: the client may write the next one's source before it shows
+ApComposeDeathLinkMessage:
 	ld de, wApMessage
 	ld hl, ApTextDeathLink
 	call ApCopyString
 	ld a, [wApDeathSource]
 	and a
-	jr z, .end
+	jp z, ApEndMessage
 	ld a, AP_TEXT_LINE
 	ld [de], a
 	inc de
@@ -161,25 +166,32 @@ ApShowDeathLinkMessage:
 	call ApCopyString
 	ld hl, wApDeathSource
 	call ApCopyName
-.end:
-	call ApEndMessage
-	ld hl, AP_MESSAGE_TEXT
-	ld_cell de, $00, $05
-	ld_size bc, $14, $06
-	farcall ShowMessageWindow
+	jp ApEndMessage
+
+; ResolvePointOutcome, for POINTOUTCOME_DEATHLINK
+ApShowDeathLinkMessage:
+	call ApDeathLinkWindow
 	ld a, 10
 	farcall StepMatchFrames
 	ret
 
-; PlayMinigamePoint, every rally frame. In a drill a received death fails
-; the point (the drill's judgement is first come, first served); a game or
-; the match also fails the drill once the point is scored
-; (ApDeathLinkMinigamePointEnd). Any other minigame is over at once.
+; the composed message, until a button press; the sim runs again after
+ApDeathLinkWindow:
+	ld hl, AP_MESSAGE_TEXT
+	ld_cell de, $00, $05
+	ld_size bc, $14, $06
+	farcall ShowMessageWindow
+	ret
+
+; PlayMinigamePoint, every rally frame: a received death ends a minigame or
+; drill at once as failed. A minigame's own result decides it (a high-score
+; run past its record still ends as one); a drill is a game over. The sim
+; stays frozen, as ShowMatchResultScreens follows with no frame between, so
+; there is no banner (object sprites are not drawn while frozen).
 ApDeathLinkMinigamePoll:
 	ld a, [wApDeathIn]
 	and a
 	ret z
-	ld b, a
 	ld a, [wPointOutcome]
 	and a
 	ret nz
@@ -187,59 +199,52 @@ ApDeathLinkMinigamePoll:
 	and a
 	ret nz
 	ld [wApDeathIn], a
-	ld a, b
-	ld [wApDeathPoint], a
+	inc a
 	ld [wApDeathApplied], a
-	ld a, [wGameMode]
-	cp GAMEMODE_TRAINING_DRILL
-	jr nz, .gameOver
-	ld a, WINLOSE_LOSE
-	ld [wDrillPointJudgement], a
-	ld a, MATCHABORT_POINT
-	ld [wMatchAbortFlag], a
-	ret
-.gameOver:
+	call ApComposeDeathLinkMessage
+	call ApDeathLinkWindow
 	ld a, 1
 	ld [wMatchSimFrozen], a
+	ld a, [wGameMode]
+	cp GAMEMODE_TRAINING_DRILL
+	jr z, .drill
+	ld a, BANK(DetermineMinigamePointResult)
+	ld hl, DetermineMinigamePointResult
+	call CallHLInBankA
+	jr .result
+.drill:
+	; a drill may leave wMinigameHighScoreMode set from an earlier minigame
 	ld a, WINLOSE_LOSE
 	ld [wPointWinLoseFlag], a
-	ld d, BANNER_GAME_OVER
-	farcall ShowMinigamePointResult
-	xor a
-	ld [wMatchSimFrozen], a
+.result:
 	ld a, MATCHABORT_MATCH | MATCHABORT_POINT
 	ld [wMatchAbortFlag], a
+	ld a, [wPointWinLoseFlag]
+	cp WINLOSE_WIN
+	jr z, .won
+	sound BGM_LOSE
+	ret
+.won:
+	sound BGM_WIN
 	ret
 
-; RunMinigamePointLoop, after the point-end hook: a drill point lost to the
-; player's own play waits in wApDeathDrillPending, as the drill may end on it
+; RunMinigamePointLoop, after the point-end hook (every drill sets
+; wPointWinLoseFlag there, from the player's side): a lost drill point waits
+; in wApDeathDrillPending, as the drill may end on it
 ApDeathLinkMinigamePointEnd:
 	ld a, [wGameMode]
 	cp GAMEMODE_TRAINING_DRILL
 	ret nz
-	ld a, [wApDeathPoint]
-	and a
-	jr nz, .received
-	ld a, [wDrillPointJudgement]
+	ld a, [wPointWinLoseFlag]
 	cp WINLOSE_LOSE
 	ret nz
 	ld a, AP_DEATHLINK_POINT
 	ld [wApDeathDrillPending], a
 	ret
-.received:
-	cp AP_DEATHLINK_GAME
-	ret c
-	ld a, WINLOSE_LOSE
-	ld [wPointWinLoseFlag], a
-	ld hl, wMatchAbortFlag
-	set MATCHABORTB_MATCH, [hl]
-	ret
 
 ; RunMinigamePointLoop, as each point starts: the drill went on, so the
 ; point lost before this one is reported
 ApDeathLinkMinigamePointStart:
-	xor a
-	ld [wApDeathPoint], a
 	ld a, [wApDeathDrillPending]
 	and a
 	ret z

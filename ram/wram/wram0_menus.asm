@@ -300,14 +300,12 @@ wApDeathOut:: db
 wApDeathIn:: db
 ; [25 bytes] Who sent wApDeathIn, NUL-terminated (empty: nobody named)
 wApDeathSource:: ds AP_NAME_LENGTH + 1
-; [8-bit] Nonzero once a received death was applied in this match or minigame
+; [8-bit] Nonzero once a received death ended this minigame or drill
 wApDeathApplied:: db
-; [8-bit] The received death applied to this minigame point, AP_DEATHLINK_*
-wApDeathPoint:: db
 ; [8-bit] A lost drill point, reported when the next point starts unless the
 ; drill ends first (one loss, one death)
 wApDeathDrillPending:: db
-	ds 119 - 6 - (AP_NAME_LENGTH + 1)
+	ds 119 - 5 - (AP_NAME_LENGTH + 1)
 
 ; [8-bit] Frames Unused_0a_StepCourtSceneGfxStream waits before queuing the next stream record; decremented each call, reloaded from the record's fourth byte
 wCourtSceneGfxStreamDelay:: db

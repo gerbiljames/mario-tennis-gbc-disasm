@@ -155,7 +155,7 @@ class DeathLinkSend(Choice):
     """
     DeathLink: send a death when you lose a point, a game or a match (the smallest loss that counts; a lost match
     point is still one death). A failed mini-game or drill counts as a lost match, and a failed drill point as a
-    lost point. Change it while playing with the client's /deathlink_send command.
+    lost point; Two-on-One is a match. Change it while playing with the client's /deathlink_send command.
     """
     display_name = "DeathLink Send"
     option_off = 0
@@ -167,10 +167,10 @@ class DeathLinkSend(Choice):
 
 class DeathLinkReceive(Choice):
     """
-    DeathLink: what a death from another player costs you: the current point, game or match. In a mini-game any
-    death is a game over; in a drill a point fails the current drill point, a game or a match the drill. Outside a
-    match, mini-game or drill, deaths are ignored. Change it while playing with the client's /deathlink_receive
-    command.
+    DeathLink: what a death from another player costs you in a match: the current point, game or match (a game in
+    a tiebreak takes the set with it). Any death ends a mini-game or drill as failed; Two-on-One is a match.
+    Outside a match, mini-game or drill, deaths are ignored. Change it while playing with the client's
+    /deathlink_receive command.
     """
     display_name = "DeathLink Receive"
     option_off = 0

@@ -111,7 +111,7 @@ wMatchCameraTargetY:: dw
 ; [16-bit] wBallX minus the current character's X, signed; written by UpdateCharBallGeometry for the mapped character bank. Read by AiSteerTowardBall and the swing/contact range checks in bank $08
 wBallRelCharX:: dw
 
-; [16-bit] Ball depth minus the current character's depth, signed. Read by CheckBallContactWindow, CheckBallInSwingRange, Unused_08_ComputeBallEtaToChar (divided by wBallVelocityDepth for frames to arrival), PredictBallLateralOffset and the AI
+; [16-bit] Ball depth minus the current character's depth, signed. Read by CheckBallContactWindow, CheckBallInSwingRange, PredictBallLateralOffset and the AI
 wBallRelCharDepth:: dw
 
 ; [16-bit] Ball height minus the current character's height, signed; the reach/height gates compare |value| with the character's reach field wCharReachHeight

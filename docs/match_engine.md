@@ -1404,7 +1404,8 @@ set, less addresses already given in the text:
   the master. Net latency is probably equal on both sides; the frame alignment
   is not established.
 - **Unreachable code**: `Unused_08_ComputeBallEtaToChar` and its only caller
-  `Unused_08_ComputeBallEtaToCharWrapper` (`$08:$70f1`); the lob check after
+  `Unused_08_ComputeBallEtaToCharWrapper` (`$08:$70c4-$70f4`, dropped on the
+  archipelago branch for room); the lob check after
   `AiChoosePositionByStrategy`'s jump table (`$08:$7d37`, no slot points at it);
   `Unused_07_SetPowerServeFlagAboveHeight` (`$07:$59ec`);
   `Unused_07_ApplyCharStatPreset` (`$07:$5d1e`). The prologue of
