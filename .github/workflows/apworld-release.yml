@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: cp LICENSE "${APWORLD_PATH}/LICENSE"
-      - uses: Eijebong/ap-actions/package-apworld@7f1641d73c59edfbcbb564c9c0f24fd59033cbd8 # main as of 2026-10-05
+      - uses: Eijebong/ap-actions/package-apworld@b20e0a29832ad8296953488b8ae41a6e0795c726 # main as of 2026-10-25
         id: apworld
         with:
           path: ${{ env.APWORLD_PATH }}
@@ -32,7 +32,7 @@ jobs:
   template:
     runs-on: ubuntu-latest
     steps:
-      - uses: Eijebong/ap-actions/generate-template@7f1641d73c59edfbcbb564c9c0f24fd59033cbd8 # main as of 2026-10-05
+      - uses: Eijebong/ap-actions/generate-template@b20e0a29832ad8296953488b8ae41a6e0795c726 # main as of 2026-10-25
         id: template
         with:
           apworld-path: ${{ env.APWORLD_PATH }}
