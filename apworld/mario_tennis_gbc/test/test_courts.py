@@ -13,7 +13,8 @@ class TestCourtShuffle(MarioTennisGBCTestBase):
     def test_vanilla_keeps_every_court(self) -> None:
         self.assertEqual(self.table(0), bytes([KEEP] * len(VANILLA)))
 
-    def test_shuffled_maps_each_story_court_to_its_own(self) -> None:
+    def test_shuffled_permutes_the_story_courts(self) -> None:
+        story = {GRASS if c == GRASS_ISLAND_OPEN else c for c in VANILLA if c is not None}
         for _ in range(20):
             table = self.table(1)
             mapping = {}
@@ -21,9 +22,9 @@ class TestCourtShuffle(MarioTennisGBCTestBase):
                 if vanilla is None:
                     self.assertEqual(court, KEEP)
                     continue
-                self.assertIn(court, POOL)
+                self.assertIn(court, story)
                 self.assertEqual(mapping.setdefault(GRASS if vanilla == GRASS_ISLAND_OPEN else vanilla, court), court)
-            self.assertEqual(len(set(mapping.values())), len(mapping))
+            self.assertEqual(set(mapping.values()), story)
 
     def test_randomized_picks_from_the_pool(self) -> None:
         table = self.table(2)

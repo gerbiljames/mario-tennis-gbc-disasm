@@ -32,7 +32,7 @@ def court_table(world: MarioTennisGBCWorld) -> bytes:
     if option == option.option_shuffled:
         # the Island Open's grass is the exhibition grass under another id
         story = sorted({GRASS if c == GRASS_ISLAND_OPEN else c for c in VANILLA if c is not None})
-        mapping = dict(zip(story, rng.sample(POOL, len(story))))
+        mapping = dict(zip(story, rng.sample(story, len(story))))
         mapping[GRASS_ISLAND_OPEN] = mapping[GRASS]
         return bytes(keep if c is None else mapping[c] for c in VANILLA)
     if option == option.option_randomized:
