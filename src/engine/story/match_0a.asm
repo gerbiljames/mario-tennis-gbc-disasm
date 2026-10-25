@@ -219,6 +219,7 @@ LoadMatchSettingsFromTable:
 	ld a, [hl+] ; $4a81
 	ld [wMatchOpponentChar], a ; $4a82
 	ld a, [hl+] ; $4a85
+	call ApOverrideCourt
 	ld [wCurrentlyUsedCourt], a ; $4a86
 	test_flag FLAG_DEBUG_SHORT_MATCH ; $4a89
 	jr nz, .debugShortMatch ; $4a8c

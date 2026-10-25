@@ -589,6 +589,20 @@ def match_length_override(g, c):
 match_length_override.tokens = lambda c: {"ApOptMatchSets": b"\x01", "ApOptMatchGames": b"\x02"}
 
 
+@test
+def court_override(g, c):
+    courts = {}
+    for match_list, index in ((0, 19), (1, 2), (0, 2)):
+        g.wram("wCurrentMinigameStoryMatch", match_list, index)
+        g.call("LoadMatchSettingsFromTable")
+        courts[match_list, index] = g.mem[g.addr("wCurrentlyUsedCourt")]
+    # singles final -> Jungle, doubles Junior #3 -> Star, singles Junior #3 kept on Hard
+    assert courts == {(0, 19): 0x07, (1, 2): 0x04, (0, 2): 0x00}, courts
+
+
+court_override.tokens = lambda c: {("ApCourtTable", 19): b"\x07", ("ApCourtTable", include_value("AP_STORY_MATCH_ROWS") + 2): b"\x04"}
+
+
 STORYLOC_ACADEMY_ENTRANCE, STORYLOC_DORM_ROOM = 0x14, 0x0a
 
 

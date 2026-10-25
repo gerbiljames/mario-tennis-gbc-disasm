@@ -129,6 +129,7 @@ def generate_output(world: MarioTennisGBCWorld, output_directory: str) -> None:
         patch.write_bytes(rom_addresses[label], value)
     patch.write_bytes(rom_addresses["ApSlotAuth"], world.auth)
     patch.write_bytes(rom_addresses["ApStartInventory"], start_inventory(world))
+    patch.write_bytes(rom_addresses["ApCourtTable"], world.court_table)
     placements, names = placement_tables(world)
     patch.write_bytes(rom_addresses["ApPlacements"], placements)
     patch.write_bytes(rom_addresses["ApLocationNames"], names)

@@ -7,7 +7,7 @@ import settings
 
 from worlds.AutoWorld import World
 
-from . import items, locations, regions, rom, rules, web_world
+from . import courts, items, locations, regions, rom, rules, web_world
 from . import options as mtgbc_options
 from .rom import MarioTennisGBCProcedurePatch
 
@@ -42,6 +42,7 @@ class MarioTennisGBCWorld(World):
     glitches_item_name = items.UT_GLITCH
 
     auth: bytes
+    court_table: bytes
     starting_shots: list[str]
 
     def generate_early(self) -> None:
@@ -88,6 +89,7 @@ class MarioTennisGBCWorld(World):
 
     def generate_basic(self) -> None:
         self.auth = self.random.randbytes(16)
+        self.court_table = courts.court_table(self)
 
     def generate_output(self, output_directory: str) -> None:
         rom.generate_output(self, output_directory)

@@ -55,3 +55,28 @@ ApOverrideMatchLength:
 .done:
 	ld a, e
 	ret
+
+; a = a story match's court -> a, this seed's court for the match unless its
+; ApCourtTable entry is AP_COURT_VANILLA; keeps hl, clobbers de
+ApOverrideCourt:
+	ld e, a
+	push hl
+	ld a, [wCurrentMatchList]
+	cp MATCHLIST_DOUBLES
+	ld a, [wCurrentMatchIndex]
+	jr nz, .haveRow
+	add AP_STORY_MATCH_ROWS
+.haveRow:
+	ld hl, ApCourtTable
+	add_hl_a
+	ld a, [hl]
+	pop hl
+	cp AP_COURT_VANILLA
+	ret nz
+	ld a, e
+	ret
+
+; the singles rows, then the doubles rows
+ApCourtTable:
+	ASSERT DoublesMatchSettingsTable_0a - SinglesMatchSettingsTable_0a == AP_STORY_MATCH_ROWS * 5
+	ds 2 * AP_STORY_MATCH_ROWS, AP_COURT_VANILLA

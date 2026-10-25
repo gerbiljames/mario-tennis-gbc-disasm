@@ -60,6 +60,20 @@ class StoryMatchGames(Choice):
     default = option_vanilla
 
 
+class CourtShuffle(Choice):
+    """
+    The courts story matches are played on, from the nine exhibition courts and Center Court.
+    Shuffled: each court the story uses (Hard, Clay, Composition, Grass, Center Court, Castle) becomes a different
+    court wherever it appears, so a class still plays all its matches on one court.
+    Randomized: every match picks its own court.
+    """
+    display_name = "Court Shuffle"
+    option_vanilla = 0
+    option_shuffled = 1
+    option_randomized = 2
+    default = option_vanilla
+
+
 class SkipIntro(Toggle):
     """A new story game skips the opening tour and starts in the Dorm Room."""
     display_name = "Skip Intro"
@@ -187,6 +201,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     minigames: Minigames
     story_match_sets: StoryMatchSets
     story_match_games: StoryMatchGames
+    court_shuffle: CourtShuffle
     skip_intro: SkipIntro
     skip_ceremony: SkipCeremony
     default_text_speed: DefaultTextSpeed
@@ -204,7 +219,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, NerfSwingContest, NerfTwoOnOne, ExperienceModifier,
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, CourtShuffle, NerfSwingContest, NerfTwoOnOne, ExperienceModifier,
                              DreamMatchDifficulty]),
     OptionGroup("Quality of Life", [SkipIntro, SkipCeremony, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems, DeathLinkSend, DeathLinkReceive]),
