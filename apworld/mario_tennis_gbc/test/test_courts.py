@@ -1,4 +1,4 @@
-from ..courts import GRASS, GRASS_ISLAND_OPEN, POOL, VANILLA, court_table
+from ..courts import POOL, VANILLA, court_table
 from ..rom_addresses import constants
 from . import MarioTennisGBCTestBase
 
@@ -13,18 +13,11 @@ class TestCourtShuffle(MarioTennisGBCTestBase):
     def test_vanilla_keeps_every_court(self) -> None:
         self.assertEqual(self.table(0), bytes([KEEP] * len(VANILLA)))
 
-    def test_shuffled_permutes_the_story_courts(self) -> None:
-        story = {GRASS if c == GRASS_ISLAND_OPEN else c for c in VANILLA if c is not None}
-        for _ in range(20):
-            table = self.table(1)
-            mapping = {}
-            for vanilla, court in zip(VANILLA, table):
-                if vanilla is None:
-                    self.assertEqual(court, KEEP)
-                    continue
-                self.assertIn(court, story)
-                self.assertEqual(mapping.setdefault(GRASS if vanilla == GRASS_ISLAND_OPEN else vanilla, court), court)
-            self.assertEqual(set(mapping.values()), story)
+    def test_shuffled_moves_the_story_courts_between_matches(self) -> None:
+        table = self.table(1)
+        self.assertEqual([c for v, c in zip(VANILLA, table) if v is None], [KEEP] * VANILLA.count(None))
+        self.assertEqual(sorted(c for v, c in zip(VANILLA, table) if v is not None),
+                         sorted(c for c in VANILLA if c is not None))
 
     def test_randomized_picks_from_the_pool(self) -> None:
         table = self.table(2)
