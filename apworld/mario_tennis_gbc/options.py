@@ -63,8 +63,8 @@ class StoryMatchGames(Choice):
 class CourtShuffle(Choice):
     """
     The courts story matches are played on, from the nine exhibition courts and Center Court.
-    Shuffled: each court the story uses (Hard, Clay, Composition, Grass, Center Court, Castle) becomes a different
-    court wherever it appears, so a class still plays all its matches on one court.
+    Shuffled: each court the story uses (Hard, Clay, Composition, Grass, Center Court, Castle) is drawn a court of
+    its own, which may be the same one, used wherever it appears; a class still plays all its matches on one court.
     Randomized: every match picks its own court.
     """
     display_name = "Court Shuffle"
