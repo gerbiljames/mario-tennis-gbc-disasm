@@ -55,8 +55,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: template
+      - id: title
+        run: echo "title=Mario Tennis GBC apworld ${GITHUB_REF_NAME#apworld-}" >> "$GITHUB_OUTPUT"
       - uses: ncipollo/release-action@v1
         with:
+          name: ${{ steps.title.outputs.title }}
           artifacts: '*'
           allowUpdates: true
           prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc') }}
