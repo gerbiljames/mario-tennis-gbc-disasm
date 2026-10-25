@@ -603,6 +603,21 @@ def court_override(g, c):
 court_override.tokens = lambda c: {("ApCourtTable", 19): b"\x07", ("ApCourtTable", include_value("AP_STORY_MATCH_ROWS") + 2): b"\x04"}
 
 
+@test
+def opponent_strategy_override(g, c):
+    strategies = {}
+    for match_list, index in ((0, 19), (1, 19), (0, 2)):
+        g.wram("wCurrentMinigameStoryMatch", match_list, index)
+        g.call("LoadMatchSettingsFromTable")
+        g.call("AssignStoryMatchCharacters")
+        strategies[match_list, index] = g.mem[g.addr("wPlayer2MainAiPosition")]
+    # singles final -> net rusher; the doubles final and singles Junior #3 keep adaptive
+    assert strategies == {(0, 19): 6, (1, 19): 1, (0, 2): 1}, strategies
+
+
+opponent_strategy_override.tokens = lambda c: {("ApStrategyTable", 19): b"\x06"}
+
+
 STORYLOC_ACADEMY_ENTRANCE, STORYLOC_DORM_ROOM = 0x14, 0x0a
 
 

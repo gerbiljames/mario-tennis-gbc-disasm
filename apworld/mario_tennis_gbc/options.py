@@ -74,6 +74,19 @@ class CourtShuffle(Choice):
     default = option_vanilla
 
 
+class OpponentStrategy(Choice):
+    """
+    Where singles story opponents stand and move: every one is adaptive in the vanilla game.
+    Randomized: each singles match's opponent gets one of the game's eight positioning strategies, such as staying
+    on the baseline, sliding sideways or rushing the net. Their skill is unchanged. Doubles opponents always keep
+    their vanilla positioning.
+    """
+    display_name = "Opponent Strategy"
+    option_vanilla = 0
+    option_randomized = 1
+    default = option_vanilla
+
+
 class SkipIntro(Toggle):
     """A new story game skips the opening tour and starts in the Dorm Room."""
     display_name = "Skip Intro"
@@ -202,6 +215,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
     story_match_sets: StoryMatchSets
     story_match_games: StoryMatchGames
     court_shuffle: CourtShuffle
+    opponent_strategy: OpponentStrategy
     skip_intro: SkipIntro
     skip_ceremony: SkipCeremony
     default_text_speed: DefaultTextSpeed
@@ -219,7 +233,7 @@ class MarioTennisGBCOptions(PerGameCommonOptions):
 
 option_groups = [
     OptionGroup("Logic", [StoryArcs, Goal, Minigames, ShotItems]),
-    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, CourtShuffle, NerfSwingContest, NerfTwoOnOne, ExperienceModifier,
+    OptionGroup("Gameplay", [StoryMatchSets, StoryMatchGames, CourtShuffle, OpponentStrategy, NerfSwingContest, NerfTwoOnOne, ExperienceModifier,
                              DreamMatchDifficulty]),
     OptionGroup("Quality of Life", [SkipIntro, SkipCeremony, DefaultTextSpeed, DefaultCameraMode, ItemMessages]),
     OptionGroup("Multiworld", [RemoteItems, DeathLinkSend, DeathLinkReceive]),

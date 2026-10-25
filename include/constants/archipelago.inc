@@ -45,6 +45,8 @@ DEF AP_MINIGAMES_EXCLUDED EQU 3
 ; keeps a match's own court
 DEF AP_STORY_MATCH_ROWS EQU 25
 DEF AP_COURT_VANILLA EQU $ff
+; ApStrategyTable: the entry that keeps the opponent's own strategy
+DEF AP_STRATEGY_VANILLA EQU $ff
 ; ApOptStoryArcs
 DEF AP_ARCS_BOTH EQU 0
 DEF AP_ARCS_SINGLES EQU 1

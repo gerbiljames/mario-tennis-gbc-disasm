@@ -59,6 +59,7 @@ AssignStoryMatchCharacters:
 	ld b, a ; $49b4
 	ld c, MATCHREC_P2_MAIN ; $49b5
 	farcall InitMatchRecordFromCharId ; $49b7
+	call ApOverrideOpponentStrategy
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a ; $49bd
 	jr z, .done ; $49be
