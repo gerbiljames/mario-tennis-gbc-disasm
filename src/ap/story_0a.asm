@@ -81,8 +81,9 @@ ApCourtTable:
 	ASSERT DoublesMatchSettingsTable_0a - SinglesMatchSettingsTable_0a == AP_STORY_MATCH_ROWS * 5
 	ds 2 * AP_STORY_MATCH_ROWS, AP_COURT_VANILLA
 
-; Sets a singles story opponent's home-position strategy (doubles AI never
-; reads it) to the match's ApStrategyTable entry unless AP_STRATEGY_VANILLA
+; Sets a singles story opponent's positioning strategy (doubles AI never
+; reads it) to the match's ApStrategyTable entry unless AP_STRATEGY_VANILLA;
+; clobbers a and hl
 ApOverrideOpponentStrategy:
 	ld a, [wCurrentMatchList]
 	cp MATCHLIST_SINGLES
